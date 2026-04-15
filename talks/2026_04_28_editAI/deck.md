@@ -1,10 +1,10 @@
 ---
-theme: ./theme
+theme: ../../theme
 colorSchema: dark
 transition: fade
 aspectRatio: 16/10
 canvasWidth: 1280
-title: CERN Crash Course
+title: editAI Seminar
 info: |
   Outreach talk — crash course on CERN and how research is done there.
   EditAI Seminar, 2026-04-28.
@@ -18,10 +18,7 @@ background: /figures/background_intro.jpg
 ## Mindaugas ir Gedinimas Šarpiai
 
 Kodėl mums reikia CERN ir kokie tyrimai ten atliekai
+
 ---
 
 <VideoPlayer src="Milky_Way_Sim_Audio.mp4" />
-
----
-
-<VideoPlayer src="Milky_Way_Sim_Audio.mp4" hq />
