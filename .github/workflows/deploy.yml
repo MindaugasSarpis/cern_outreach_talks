@@ -43,6 +43,9 @@ jobs:
             (cd "$d" && pnpm build \
               --base "/${REPO_NAME}/${talk}/" \
               --out "${GITHUB_WORKSPACE}/site/${talk}")
+            # GH Pages has no SPA rewrite; mirror index.html -> 404.html
+            # so deep links like /<talk>/3 don't 404.
+            cp "site/${talk}/index.html" "site/${talk}/404.html"
             echo "::endgroup::"
           done
 
