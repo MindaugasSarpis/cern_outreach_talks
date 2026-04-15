@@ -2,8 +2,10 @@
 """Video asset pipeline: sync, encode, publish, check.
 
 Reads videos/manifest.toml as the source of truth. Raws live in videos/raw/;
-encoded web copies are written to lectures/content/public/videos/ and
-published to a long-lived GitHub Release (default tag: videos).
+encoded web copies are written to public/videos/ and published to a
+long-lived GitHub Release (default tag: videos). Raw masters can also be
+exposed as public/videos-hq/ (symlink) and published to the `videos-hq`
+release for HQ playback.
 
 Subcommands:
     sync     rclone mirror raw files from the configured remote
@@ -23,12 +25,40 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
-MANIFEST = REPO / "videos" / "manifest.toml"
-RAW_DIR = REPO / "videos" / "raw"
-WEB_DIR = REPO / "public" / "videos"
-HQ_LINK_DIR = REPO / "public" / "videos-hq"
-SLIDES_DIR = REPO
+# Talk root = current working directory (a talks/<name>/ dir in the monorepo).
+# Monorepo root is located by walking up from TALK looking for outreach.toml.
+TALK = Path.cwd().resolve()
+MANIFEST = TALK / "videos" / "manifest.toml"
+RAW_DIR = TALK / "videos" / "raw"
+WEB_DIR = TALK / "public" / "videos"
+HQ_LINK_DIR = TALK / "public" / "videos-hq"
+SLIDES_DIR = TALK
+# Back-compat alias: some logging still references REPO.
+REPO = TALK
+
+
+def _find_monorepo_root(start: Path) -> Path | None:
+    for p in [start, *start.parents]:
+        if (p / "outreach.toml").exists():
+            return p
+    return None
+
+
+def _load_global_defaults() -> dict:
+    root = _find_monorepo_root(TALK)
+    if not root:
+        return {}
+    global_cfg = root / "outreach.toml"
+    try:
+        with global_cfg.open("rb") as f:
+            return tomllib.load(f).get("defaults", {})
+    except OSError:
+        return {}
+
+
+def _auto_release_tag(prefix: str) -> str:
+    slug = TALK.name.lower().replace("_", "-")
+    return f"{prefix}-{slug}"
 
 # ---------------------------------------------------------------------------
 # Encoding profiles
@@ -54,7 +84,7 @@ PROFILES: dict[str, list[str]] = {
         "-c:v", "libx265", "-tag:v", "hvc1",
         "-preset", "slow", "-crf", "24",
         "-pix_fmt", "yuv420p",
-        "-vf", "scale='min(1920,iw)':-2",
+        "-vf", "scale='min({LONG_EDGE},iw)':-2",
         "-c:a", "aac", "-b:a", "128k", "-ac", "2",
         "-movflags", "+faststart",
     ],
@@ -62,7 +92,7 @@ PROFILES: dict[str, list[str]] = {
         "-c:v", "libx265", "-tag:v", "hvc1",
         "-preset", "slow", "-crf", "26",
         "-pix_fmt", "yuv420p",
-        "-vf", "scale='min(1920,iw)':-2",
+        "-vf", "scale='min({LONG_EDGE},iw)':-2",
         "-an",
         "-movflags", "+faststart",
     ],
@@ -70,7 +100,7 @@ PROFILES: dict[str, list[str]] = {
         "-c:v", "libx265", "-tag:v", "hvc1",
         "-preset", "slow", "-crf", "27",
         "-pix_fmt", "yuv420p",
-        "-vf", "scale='min(1920,iw)':-2",
+        "-vf", "scale='min({LONG_EDGE},iw)':-2",
         "-c:a", "aac", "-b:a", "128k", "-ac", "2",
         "-movflags", "+faststart",
     ],
@@ -78,7 +108,7 @@ PROFILES: dict[str, list[str]] = {
         "-c:v", "libx265", "-tag:v", "hvc1",
         "-preset", "slow", "-crf", "22",
         "-pix_fmt", "yuv420p",
-        "-vf", "scale='min(1920,iw)':-2",
+        "-vf", "scale='min({LONG_EDGE},iw)':-2",
         "-c:a", "aac", "-b:a", "192k", "-ac", "2",
         "-movflags", "+faststart",
     ],
@@ -91,18 +121,23 @@ class VideoEntry:
     profile: str
     used_in: list[str]
     notes: str = ""
+    long_edge_px: int | None = None  # override for [defaults].long_edge_px
 
 
 def load_manifest() -> tuple[dict, list[VideoEntry]]:
     with MANIFEST.open("rb") as f:
         data = tomllib.load(f)
-    defaults = data.get("defaults", {})
+    # Merge: talk [defaults] wins over global outreach.toml [defaults].
+    defaults = {**_load_global_defaults(), **data.get("defaults", {})}
+    defaults.setdefault("release_tag", _auto_release_tag("videos"))
+    defaults.setdefault("release_tag_hq", _auto_release_tag("videos-hq"))
     videos = [
         VideoEntry(
             name=v["name"],
             profile=v.get("profile", "remux"),
             used_in=v.get("used_in", []),
             notes=v.get("notes", ""),
+            long_edge_px=v.get("long_edge_px"),
         )
         for v in data.get("videos", [])
     ]
@@ -142,7 +177,11 @@ def cmd_sync(args: argparse.Namespace) -> int:
 # encode — ffmpeg raw -> web per manifest profile
 # ---------------------------------------------------------------------------
 
-def _encode_one(entry: VideoEntry, force: bool) -> tuple[VideoEntry, str, int, int]:
+def _profile_args(profile: str, long_edge: int) -> list[str]:
+    return [a.replace("{LONG_EDGE}", str(long_edge)) for a in PROFILES[profile]]
+
+
+def _encode_one(entry: VideoEntry, force: bool, default_long_edge: int) -> tuple[VideoEntry, str, int, int]:
     """Returns (entry, status, raw_size, web_size). status in {skipped, ok, missing, failed}."""
     raw = RAW_DIR / entry.name
     web = WEB_DIR / entry.name
@@ -156,11 +195,12 @@ def _encode_one(entry: VideoEntry, force: bool) -> tuple[VideoEntry, str, int, i
         print(f"  ! unknown profile {entry.profile!r} for {entry.name}", file=sys.stderr)
         return entry, "failed", raw_size, 0
 
+    long_edge = entry.long_edge_px or default_long_edge
     tmp = web.with_name(f"{web.stem}.partial{web.suffix}")
     cmd = [
         "ffmpeg", "-y", "-hide_banner", "-nostdin", "-loglevel", "error",
         "-i", str(raw),
-        *PROFILES[entry.profile],
+        *_profile_args(entry.profile, long_edge),
         str(tmp),
     ]
     try:
@@ -188,7 +228,8 @@ def cmd_encode(args: argparse.Namespace) -> int:
     WEB_DIR.mkdir(parents=True, exist_ok=True)
 
     max_mb = defaults.get("max_size_mb", 200)
-    print(f"Encoding {len(videos)} video(s). raw -> {WEB_DIR.relative_to(REPO)}")
+    default_long_edge = int(defaults.get("long_edge_px", 1920))
+    print(f"Encoding {len(videos)} video(s). raw -> {WEB_DIR.relative_to(REPO)} (default long edge: {default_long_edge}px)")
 
     # Remux jobs are IO-bound and cheap — run them in parallel.
     # Re-encode jobs are CPU-bound — run them one at a time to avoid thrashing.
@@ -225,12 +266,12 @@ def cmd_encode(args: argparse.Namespace) -> int:
 
     if remuxes:
         with ThreadPoolExecutor(max_workers=4) as pool:
-            futures = [pool.submit(_encode_one, v, args.force) for v in remuxes]
+            futures = [pool.submit(_encode_one, v, args.force, default_long_edge) for v in remuxes]
             for fut in as_completed(futures):
                 report(*fut.result())
 
     for v in encodes:
-        report(*_encode_one(v, args.force))
+        report(*_encode_one(v, args.force, default_long_edge))
 
     print()
     print(f"Total raw: {human_size(total_raw)}")

@@ -7,6 +7,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Outreach talk — crash course on CERN and how research is done there. Delivered as an interactive **Slidev** deck. Seminar date: 2026-04-28.
 Audience: later-grade students, teachers, school principals. Content is video/image-heavy.
 
+## Environment setup (fresh machine)
+
+Single conda env covers everything: Python (for the video pipeline), `ffmpeg`/`rclone`/`gh`, plus `nodejs` and `pnpm` for Slidev.
+
+```bash
+conda env create -f env.yaml
+conda activate edit-ai-seminar
+pnpm install          # fetches @slidev/cli per-project
+pnpm dev              # start dev server on deck.md
+```
+
 ## Commands
 
 ```bash
@@ -54,11 +65,13 @@ Inherited verbatim from the CERN lectures project, paths adjusted for this flat 
 
 ### Encoding profiles (in `scripts/videos.py`)
 
-- `remux` — lossless stream copy + faststart. Use when source is already a web-friendly codec ≤~5 Mbps.
-- `standard` — HEVC CRF 24, 1080p cap, AAC 128k.
+- `remux` — lossless stream copy + faststart. Use when source is already a web-friendly codec ≤~5 Mbps. Ignores resolution cap.
+- `standard` — HEVC CRF 24, AAC 128k.
 - `standard-tight` — HEVC CRF 27 for long clips that blow the 200 MB budget.
 - `silent-loop` — HEVC CRF 26, audio stripped. Background loops.
 - `high-motion` — HEVC CRF 22, AAC 192k. Sims, fast action, CGI.
+
+Resolution cap is a `{LONG_EDGE}` token in each re-encode profile, resolved at encode time from `[defaults].long_edge_px` in `videos/manifest.toml` (default: **2880**, matched to the 2880×1600 venue screen). Override per-video with `long_edge_px = 1920` on a `[[videos]]` entry for bandwidth-sensitive clips.
 
 ### VideoPlayer usage
 
@@ -69,6 +82,10 @@ Inherited verbatim from the CERN lectures project, paths adjusted for this flat 
 ```
 
 `videos:check` scrapes `VideoPlayer src="..."` references from slide markdown and compares against the manifest, so keep that attribute syntax.
+
+## Aspect ratio
+
+Deck canvas is **16:10** (`aspectRatio: 16/10`, `canvasWidth: 1280`) to match the 2880×1600 venue screen. Videos keep their native aspect via `object-fit: contain` in `VideoPlayer.vue`; 16:9 clips letterbox top/bottom inside the 16:10 slide — expected.
 
 ## Slide Authoring Conventions (inherited theme)
 
@@ -82,9 +99,13 @@ Inherited verbatim from the CERN lectures project, paths adjusted for this flat 
 
 - Git conflict markers inside fenced code blocks crash Slidev's snippet plugin (`ENOENT` on `<<<<<<< HEAD`). Wrap them in `{{'<<<<<<< HEAD'}}` inside a ```` ```text {*}{lines:false} ```` block.
 
+## Git remotes
+
+GitHub is set up as the remote named `github` (not `origin`). Use `git push github <branch>` explicitly.
+
 ## TODO before first deploy
 
-1. Create the GitHub repo and update `REPO_RELEASES` in `components/VideoPlayer.vue` if the slug differs from the `EditAI_Seminar_2026` placeholder.
+1. Update `REPO_RELEASES` in `components/VideoPlayer.vue` to match the actual GitHub slug (currently placeholder `MindaugasSarpis/EditAI_Seminar_2026`).
 2. Set `[defaults].source_remote` in `videos/manifest.toml` to the rclone remote holding raws.
-3. Create the `videos` and (optionally) `videos-hq` releases on first `videos:publish` / `videos:publish-hq`.
-4. Add a `.github/workflows/deploy.yml` if GH Pages deploy is desired (pattern: `teaching/CERN_lessons_on_data_analysis`).
+3. First `videos:publish` / `videos:publish-hq` will auto-create the `videos` and `videos-hq` releases.
+4. Add `.github/workflows/deploy.yml` for GH Pages (pattern: `teaching/CERN_lessons_on_data_analysis`).

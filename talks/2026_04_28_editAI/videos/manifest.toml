@@ -20,15 +20,19 @@
 
 [defaults]
 # TODO: set to your rclone remote, e.g. "gdrive:EditAI_videos/raw"
-source_remote = "gdrive:EditAI_videos/raw"
-release_tag    = "videos"        # encoded web copies
-release_tag_hq = "videos-hq"     # raw masters for HQ playback
+source_remote  = "gdrive:Work/Outreach/Resources/Videos/released"
+release_tag    = "videos-2026-04-28-editai"      # encoded web copies
+release_tag_hq = "videos-hq-2026-04-28-editai"   # raw masters for HQ playback
 max_size_mb    = 200             # warn if encoded output exceeds this
+long_edge_px   = 2880            # scale cap for re-encode profiles (ignored by `remux`).
+                                 # Matched to the 2880x1600 venue screen. Per-entry override:
+                                 # add `long_edge_px = 1920` on a [[videos]] block for
+                                 # bandwidth-sensitive clips.
 
 # Add [[videos]] entries as you drop raws into videos/raw/.
-#
-# [[videos]]
-# name    = "Example.mp4"
-# profile = "remux"
-# used_in = ["deck"]
-# notes   = "..."
+
+[[videos]]
+name    = "Milky_Way_Sim_Audio.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Milky Way galaxy simulation, HEVC 7.3 Mbps CGI"

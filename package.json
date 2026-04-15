@@ -1,23 +1,8 @@
 {
-  "name": "edit-ai-seminar-2026",
+  "name": "outreach-talks",
   "private": true,
-  "description": "Outreach talk: crash course on CERN and how research is done at CERN (EditAI Seminar, 2026-04-28)",
+  "description": "Monorepo of CERN outreach talks (Slidev decks + shared theme/pipeline)",
   "scripts": {
-    "dev": "slidev deck.md",
-    "build": "slidev build deck.md",
-    "export": "slidev export deck.md",
-    "videos:sync": "python3 scripts/videos.py sync",
-    "videos:encode": "python3 scripts/videos.py encode",
-    "videos:publish": "python3 scripts/videos.py publish",
-    "videos:check": "python3 scripts/videos.py check",
-    "videos:link-hq": "python3 scripts/videos.py link-hq",
-    "videos:publish-hq": "python3 scripts/videos.py publish-hq"
-  },
-  "dependencies": {
-    "@slidev/cli": "^52.14.2"
-  },
-  "devDependencies": {
-    "mermaid": "^11.12.0",
-    "playwright-chromium": "^1.56.1"
+    "videos:check-all": "for d in talks/*; do echo \"[$d]\"; (cd \"$d\" && python3 ../../scripts/videos.py check) || true; done"
   }
 }

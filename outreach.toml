@@ -1,0 +1,15 @@
+# Global defaults for the outreach-talks monorepo.
+#
+# Every talk under talks/<name>/ inherits these. Override per-talk in
+# talks/<name>/videos/manifest.toml under [defaults], or per-video on a
+# [[videos]] entry. Merge order (wins top-down): per-video > talk > global.
+#
+# Release tags default to `videos-<talk-dirname>` and `videos-hq-<talk-dirname>`
+# (lowercased, underscores -> dashes). Override in a talk's [defaults] if needed.
+
+[defaults]
+long_edge_px  = 1920   # scale cap for re-encode profiles; talks with 4K venue
+                       # screens should bump this to 2880 in their manifest.
+max_size_mb   = 200    # warn if an encoded web file exceeds this
+# source_remote is intentionally not set globally — each talk points at its
+# own rclone path.

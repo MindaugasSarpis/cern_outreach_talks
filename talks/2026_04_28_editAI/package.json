@@ -1,0 +1,23 @@
+{
+  "name": "talk-2026-04-28-editai",
+  "private": true,
+  "description": "CERN Crash Course — EditAI Seminar, 2026-04-28",
+  "scripts": {
+    "dev": "VITE_VIDEO_RELEASE=videos-2026-04-28-editai VITE_VIDEO_RELEASE_HQ=videos-hq-2026-04-28-editai slidev deck.md",
+    "build": "VITE_VIDEO_RELEASE=videos-2026-04-28-editai VITE_VIDEO_RELEASE_HQ=videos-hq-2026-04-28-editai slidev build deck.md",
+    "export": "VITE_VIDEO_RELEASE=videos-2026-04-28-editai VITE_VIDEO_RELEASE_HQ=videos-hq-2026-04-28-editai slidev export deck.md",
+    "videos:sync": "python3 ../../scripts/videos.py sync",
+    "videos:encode": "python3 ../../scripts/videos.py encode",
+    "videos:publish": "python3 ../../scripts/videos.py publish",
+    "videos:check": "python3 ../../scripts/videos.py check",
+    "videos:link-hq": "python3 ../../scripts/videos.py link-hq",
+    "videos:publish-hq": "python3 ../../scripts/videos.py publish-hq"
+  },
+  "dependencies": {
+    "@slidev/cli": "^52.14.2"
+  },
+  "devDependencies": {
+    "mermaid": "^11.12.0",
+    "playwright-chromium": "^1.56.1"
+  }
+}
