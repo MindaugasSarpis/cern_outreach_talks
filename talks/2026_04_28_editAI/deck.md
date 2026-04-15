@@ -16,7 +16,7 @@ background: /figures/background_intro.jpg
 
 # Nuo Mokslo Salos iki Visatos pakraščio
 
-## Mindaugas ir Gedinimas Šarpiai
+## Mindaugas ir Gediminas Šarpiai
 
 Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 
