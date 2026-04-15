@@ -10,6 +10,7 @@ info: |
   EditAI Seminar, 2026-04-28.
   Audience: later-grade students, teachers, school principals.
 layout: cover
+background: /figures/background_intro.jpg
 ---
 
 # Nuo Mokslo Salos iki Visatos pakraščio
@@ -17,15 +18,10 @@ layout: cover
 ## Mindaugas ir Gedinimas Šarpiai
 
 Kodėl mums reikia CERN ir kokie tyrimai ten atliekai
-
----
-layout: center-bkg
 ---
 
 <VideoPlayer src="Milky_Way_Sim_Audio.mp4" />
 
----
-layout: center-bkg
 ---
 
 <VideoPlayer src="Milky_Way_Sim_Audio.mp4" hq />
