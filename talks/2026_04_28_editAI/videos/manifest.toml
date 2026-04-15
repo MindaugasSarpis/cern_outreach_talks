@@ -1,35 +1,21 @@
-# Source of truth for all video assets used in this deck.
+# Video assets for this talk. Global defaults live in /outreach.toml;
+# talk-level [defaults] overrides them; per-video fields on a [[videos]]
+# block win over both.
 #
-# Raws live in `videos/raw/` (gitignored, mirrored from Google Drive via
-# `pnpm videos:sync`). Encoded web copies go to `public/videos/` (also
-# gitignored, published to the GitHub Release tagged `videos`).
-#
-# Workflow:
-#   1. Drop a new raw in videos/raw/ (or `pnpm videos:sync` from Drive)
-#   2. Add an entry below with the right profile
-#   3. `pnpm videos:encode`  - regenerates web copies (idempotent)
-#   4. `pnpm videos:publish` - uploads to GH Release for the deployed build
-#
-# Profiles:
-#   remux          - lossless stream copy + faststart. Use when source is already
-#                    a well-encoded web codec (HEVC/H.264 <= ~5 Mbps).
-#   standard       - HEVC CRF 24, 1080p cap, AAC 128k. General-purpose re-encode.
-#   standard-tight - HEVC CRF 27, 1080p cap. Aggressive for long clips.
-#   silent-loop    - HEVC CRF 26, 1080p cap, audio stripped. Background loops.
-#   high-motion    - HEVC CRF 22, 1080p cap, AAC 192k. Sims, fast action, CGI.
+# Profiles (in scripts/videos.py):
+#   remux          - lossless stream copy + faststart. For clips already in a
+#                    web-friendly codec (HEVC/H.264 <= ~5 Mbps).
+#   standard       - HEVC CRF 24, AAC 128k.
+#   standard-tight - HEVC CRF 27 for long clips that blow the size budget.
+#   silent-loop    - HEVC CRF 26, audio stripped. Background loops.
+#   high-motion    - HEVC CRF 22, AAC 192k. Sims, fast action, CGI.
 
 [defaults]
-# TODO: set to your rclone remote, e.g. "gdrive:EditAI_videos/raw"
-source_remote  = "gdrive:Work/Outreach/Resources/Videos/released"
-release_tag    = "videos-2026-04-28-editai"      # encoded web copies
-release_tag_hq = "videos-hq-2026-04-28-editai"   # raw masters for HQ playback
-max_size_mb    = 200             # warn if encoded output exceeds this
-long_edge_px   = 2880            # scale cap for re-encode profiles (ignored by `remux`).
-                                 # Matched to the 2880x1600 venue screen. Per-entry override:
-                                 # add `long_edge_px = 1920` on a [[videos]] block for
-                                 # bandwidth-sensitive clips.
+source_remote = "gdrive:Work/Outreach/Resources/Videos/released"
+long_edge_px  = 2880   # venue screen is 2880x1600; override global 1920
 
-# Add [[videos]] entries as you drop raws into videos/raw/.
+# release_tag / release_tag_hq auto-derive from talk dirname.
+# max_size_mb inherited from /outreach.toml.
 
 [[videos]]
 name    = "Milky_Way_Sim_Audio.mp4"

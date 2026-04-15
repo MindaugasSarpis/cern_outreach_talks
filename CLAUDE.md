@@ -1,111 +1,152 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code working in this repository.
 
-## Project Overview
+## Project overview
 
-Outreach talk — crash course on CERN and how research is done there. Delivered as an interactive **Slidev** deck. Seminar date: 2026-04-28.
-Audience: later-grade students, teachers, school principals. Content is video/image-heavy.
+Monorepo of CERN outreach talks delivered as **Slidev** decks. Shared
+theme, components, and video pipeline live at the repo root; each talk
+is a pnpm workspace under `talks/<name>/`.
+
+Current talks:
+
+- `talks/2026_04_28_editAI/` — EditAI Seminar crash course, 2026-04-28.
+  Audience: later-grade students, teachers, school principals.
 
 ## Environment setup (fresh machine)
 
-Single conda env covers everything: Python (for the video pipeline), `ffmpeg`/`rclone`/`gh`, plus `nodejs` and `pnpm` for Slidev.
-
 ```bash
 conda env create -f env.yaml
-conda activate edit-ai-seminar
-pnpm install          # fetches @slidev/cli per-project
-pnpm dev              # start dev server on deck.md
+conda activate outreach_talks
+pnpm install                      # installs all talks' deps into node_modules
+cd talks/2026_04_28_editAI
+pnpm dev                          # opens http://localhost:3030
 ```
+
+The conda env bundles everything: `nodejs`, `pnpm`, `python>=3.11`,
+`ffmpeg`, `rclone`, `gh`.
+
+## Repo layout
+
+```
+/
+├── outreach.toml                 # global defaults (long_edge_px, max_size_mb)
+├── pnpm-workspace.yaml           # workspace: talks/*
+├── theme/                        # shared Slidev theme (@slidev/theme-scienced fork)
+├── components/                   # shared Vue components (VideoPlayer)
+├── scripts/videos.py             # video pipeline (sync/encode/publish/check)
+└── talks/<name>/
+    ├── deck.md                   # Slidev entry — theme: ../../theme
+    ├── .env                      # VITE_VIDEO_REPO / VITE_VIDEO_RELEASE[_HQ]
+    ├── package.json              # slidev + per-talk scripts
+    ├── components/ -> ../../components   (symlink; required for auto-import)
+    ├── slides/                   # per-section markdown (optional)
+    ├── public/                   # static assets (figures, encoded videos)
+    │   ├── figures/              # images, gifs
+    │   ├── videos/               # encoded web copies (gitignored)
+    │   └── videos-hq/            # symlink to videos/raw/ (gitignored)
+    └── videos/
+        ├── manifest.toml         # per-talk + per-video overrides
+        └── raw/                  # originals (gitignored, rclone-synced)
+```
+
+**Theme** is referenced as `theme: ../../theme` in each deck's
+frontmatter. Don't use a `theme` symlink — Vite's glob scanner doesn't
+traverse symlinked theme dirs and silently drops custom layouts.
+**Components** must stay as a symlink: Slidev auto-imports from
+`<deck>/components/` and can't be redirected in frontmatter.
+
+## Config layering (video pipeline)
+
+`scripts/videos.py` resolves paths relative to cwd (the talk dir) and
+merges `[defaults]` from:
+
+1. `<repo>/outreach.toml` — global (long_edge_px=1920, max_size_mb=200)
+2. `talks/<name>/videos/manifest.toml` `[defaults]` — talk overrides
+3. Per-video `[[videos]]` fields — most specific
+
+Release tags default to `videos-<talk-dirname-lowercased>` and
+`videos-hq-<talk-dirname-lowercased>` unless set in talk `[defaults]`.
 
 ## Commands
 
+Run from inside a talk directory:
+
 ```bash
-pnpm install
+pnpm dev                # live dev server (http://localhost:3030)
+pnpm build              # static bundle in dist/
+pnpm export             # PDF export (requires playwright-chromium; install locally if needed)
 
-# Dev server
-pnpm dev
-
-# Production build / PDF export
-pnpm build
-pnpm export
-
-# Video pipeline (raws in videos/raw/, encoded web copies in public/videos/)
-pnpm videos:sync        # rclone raw files from the configured remote
-pnpm videos:encode      # ffmpeg raw -> web per manifest profile (idempotent)
-pnpm videos:publish     # upload encoded files to GH Release `videos`
-pnpm videos:check       # sanity-check manifest vs raw/web/slide refs
-
-# HQ raw playback (serve untouched masters instead of web copies)
-pnpm videos:link-hq     # symlink public/videos-hq/ -> videos/raw/ (local only)
-pnpm videos:publish-hq  # upload raw masters to GH Release `videos-hq`
+pnpm videos:sync        # rclone raws from [defaults].source_remote
+pnpm videos:encode      # ffmpeg raw -> public/videos/ (idempotent)
+pnpm videos:publish     # upload encoded files to GH Release (web)
+pnpm videos:check       # manifest vs raw/web/slide consistency
+pnpm videos:link-hq     # symlink public/videos-hq/ -> videos/raw/ (local HQ playback)
+pnpm videos:publish-hq  # upload raws to GH Release (HQ)
 ```
 
-No tests or linters.
+From repo root:
 
-## Architecture
+```bash
+pnpm videos:check-all   # run videos:check in every talk
+```
 
-### Deck structure
-
-- `deck.md` — Slidev entry point. Add per-section imports via `src:` frontmatter pointing at `slides/*.md`.
-- `slides/` — per-section markdown files (create as content lands).
-- `theme/` — local Slidev theme (`@slidev/theme-scienced`), inherited from the CERN lectures project. Custom layouts: `cover`, `section`, `quote`, `fact`, `statement`, `intro`, `center-bkg`. Card system + grid utilities in `theme/styles/custom-slides.css`.
-- `components/VideoPlayer.vue` — local-first / remote-fallback video player.
-- `public/` — static assets referenced as `/filename.ext` from slides (images, gifs, web-encoded videos under `public/videos/`, HQ raws symlinked at `public/videos-hq/`).
-
-### Video pipeline
-
-Inherited verbatim from the CERN lectures project, paths adjusted for this flat layout.
-
-- Source of truth: `videos/manifest.toml`. Every video must have an entry; `videos:check` enforces it against raws, encoded files, and slide references.
-- `videos/raw/` — originals pulled via rclone (gitignored). Mirror of `[defaults].source_remote`.
-- `public/videos/` — encoded web copies (gitignored). Produced by `videos:encode`, uploaded to GH Release `videos` by `videos:publish`.
-- `public/videos-hq/` — symlink to `videos/raw/` (gitignored). Created by `videos:link-hq` so HQ playback works in dev without duplication.
-- GH Releases are the deployed CDN: `videos` for web copies, `videos-hq` for raw masters. `VideoPlayer` loads from `public/` first, falls back to the appropriate release on 404.
-
-### Encoding profiles (in `scripts/videos.py`)
-
-- `remux` — lossless stream copy + faststart. Use when source is already a web-friendly codec ≤~5 Mbps. Ignores resolution cap.
-- `standard` — HEVC CRF 24, AAC 128k.
-- `standard-tight` — HEVC CRF 27 for long clips that blow the 200 MB budget.
-- `silent-loop` — HEVC CRF 26, audio stripped. Background loops.
-- `high-motion` — HEVC CRF 22, AAC 192k. Sims, fast action, CGI.
-
-Resolution cap is a `{LONG_EDGE}` token in each re-encode profile, resolved at encode time from `[defaults].long_edge_px` in `videos/manifest.toml` (default: **2880**, matched to the 2880×1600 venue screen). Override per-video with `long_edge_px = 1920` on a `[[videos]]` entry for bandwidth-sensitive clips.
-
-### VideoPlayer usage
+## VideoPlayer
 
 ```html
-<VideoPlayer src="My_Clip.mp4" />                   <!-- web-encoded, from public/videos/ -->
-<VideoPlayer src="My_Clip.mp4" hq />                <!-- HQ raw, from public/videos-hq/ -->
+<VideoPlayer src="Clip.mp4" />                   <!-- web copy -->
+<VideoPlayer src="Clip.mp4" hq />                <!-- raw master -->
 <VideoPlayer src="Loop.mp4" loop muted :controls="false" />
 ```
 
-`videos:check` scrapes `VideoPlayer src="..."` references from slide markdown and compares against the manifest, so keep that attribute syntax.
+Loads from `public/videos{,-hq}/` first, falls back to the per-talk GH
+Release on 404. The release URL is built from `VITE_VIDEO_REPO` and
+`VITE_VIDEO_RELEASE[_HQ]` (set in the talk's `.env`).
 
-## Aspect ratio
+`videos:check` greps `VideoPlayer src="..."` against the manifest, so
+keep that attribute syntax.
 
-Deck canvas is **16:10** (`aspectRatio: 16/10`, `canvasWidth: 1280`) to match the 2880×1600 venue screen. Videos keep their native aspect via `object-fit: contain` in `VideoPlayer.vue`; 16:9 clips letterbox top/bottom inside the 16:10 slide — expected.
+## Encoding profiles (`scripts/videos.py`)
 
-## Slide Authoring Conventions (inherited theme)
+- `remux` — `-c copy` + faststart. Use when source is already web-friendly HEVC/H.264 ≤~5 Mbps. Ignores resolution cap.
+- `standard` — HEVC CRF 24, AAC 128k.
+- `standard-tight` — HEVC CRF 27 for long clips that blow the size budget.
+- `silent-loop` — HEVC CRF 26, audio stripped.
+- `high-motion` — HEVC CRF 22, AAC 192k. Sims, fast action, CGI.
 
-- Frontmatter: `theme: ./theme`, `colorSchema: dark`, `transition: fade`, optional `background: /…`.
+`{LONG_EDGE}` in profiles is resolved at encode time from the merged
+`long_edge_px`. Override per-video with `long_edge_px = 2880` on a
+`[[videos]]` entry for venue-screen clips.
+
+## Slidev gotchas
+
+- Use `routerMode: hash` in frontmatter when deploying to GH Pages so deep links (`/#/3`) survive a refresh.
+- Git conflict markers inside fenced code blocks crash Slidev's snippet plugin (`ENOENT` on `<<<<<<< HEAD`). Wrap in `{{'<<<<<<< HEAD'}}` inside a ```` ```text {*}{lines:false} ```` block.
+
+## Slide authoring conventions (inherited theme)
+
+- Frontmatter: `theme: ../../theme`, `colorSchema: dark`, `transition: fade`, optional `background: /figures/…`.
+- Custom layouts: `cover`, `section`, `quote`, `fact`, `statement`, `intro`, `center-bkg`.
 - Structure: cover → quote → motivation → section breaks (`layout: section` + `hideInToc: true`).
 - Card system: `<div class="card card-primary pad-tight">…</div>`. Colors: `primary|secondary|accent|info|success|warning`. Padding: `pad-tight|compact|snug|balanced`.
 - Grids: `grid-2`, `grid-3` with `gap-md mt-md`.
 - Emoji format: `## 📊 **Title**` — emoji outside bold.
 
-## Slidev gotchas
+## Aspect ratio
 
-- Git conflict markers inside fenced code blocks crash Slidev's snippet plugin (`ENOENT` on `<<<<<<< HEAD`). Wrap them in `{{'<<<<<<< HEAD'}}` inside a ```` ```text {*}{lines:false} ```` block.
+Default deck canvas is 16:10 (`aspectRatio: 16/10`, `canvasWidth: 1280`)
+to match a 2880×1600 venue screen. Videos keep native aspect via
+`object-fit: contain` in `VideoPlayer`; 16:9 clips letterbox inside
+16:10 — expected.
+
+## Deployment
+
+`.github/workflows/deploy.yml` builds every `talks/<name>/` with base
+`/<repo>/<name>/` and deploys to GH Pages. A simple index at the site
+root links to each talk. Enable under repo Settings → Pages → Source:
+"GitHub Actions".
 
 ## Git remotes
 
-GitHub is set up as the remote named `github` (not `origin`). Use `git push github <branch>` explicitly.
-
-## TODO before first deploy
-
-1. Update `REPO_RELEASES` in `components/VideoPlayer.vue` to match the actual GitHub slug (currently placeholder `MindaugasSarpis/EditAI_Seminar_2026`).
-2. Set `[defaults].source_remote` in `videos/manifest.toml` to the rclone remote holding raws.
-3. First `videos:publish` / `videos:publish-hq` will auto-create the `videos` and `videos-hq` releases.
-4. Add `.github/workflows/deploy.yml` for GH Pages (pattern: `teaching/CERN_lessons_on_data_analysis`).
+GitHub remote is named `github` (not `origin`). Push with
+`git push github <branch>`.

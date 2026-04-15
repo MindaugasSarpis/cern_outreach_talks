@@ -1,71 +1,89 @@
-# CERN Crash Course — EditAI Seminar (2026-04-28)
+# CERN Outreach Talks
 
-Outreach talk: a crash course on CERN and how research is done there.
-Audience: later-grade students, teachers, school principals.
-Delivered as a [Slidev](https://sli.dev) deck with heavy video/image content.
+Monorepo of [Slidev](https://sli.dev) decks for CERN outreach talks.
+Shared theme, components, and video pipeline at the root; each talk is
+a pnpm workspace under `talks/<name>/`.
+
+## Talks
+
+| Date       | Path                               | Deployed |
+| ---------- | ---------------------------------- | -------- |
+| 2026-04-28 | `talks/2026_04_28_editAI/`         | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_04_28_editAI/) |
+
+Index of all talks: https://mindaugassarpis.github.io/cern_outreach_talks/
 
 ## Running from scratch
 
 Prerequisite: [conda](https://docs.conda.io) (or mamba/miniforge).
 
 ```bash
-# 1. Clone and enter the repo
-git clone <this-repo> edit-ai-seminar
-cd edit-ai-seminar
-
-# 2. Create the environment (node, pnpm, python, ffmpeg, rclone, gh)
+git clone <this-repo>
+cd Outreach_Talks
 conda env create -f env.yaml
-conda activate edit-ai-seminar
-
-# 3. Install Slidev + JS deps into node_modules/
+conda activate outreach_talks
 pnpm install
 
-# 4. Start the dev server (opens http://localhost:3030)
-pnpm dev
+cd talks/2026_04_28_editAI
+pnpm dev                            # http://localhost:3030
 ```
 
-Edit `deck.md` (or files in `slides/`) and the browser reloads automatically.
-
-## Common tasks
+## Common tasks (inside a talk directory)
 
 ```bash
-pnpm dev              # live dev server on deck.md
-pnpm build            # static bundle in dist/
-pnpm export           # PDF export of the deck
+pnpm dev                # live dev server on deck.md
+pnpm build              # static bundle in dist/
+pnpm export             # PDF (requires playwright-chromium; install locally)
 
-# Video pipeline (all operate on videos/manifest.toml)
-pnpm videos:sync      # rclone raws from the configured remote -> videos/raw/
-pnpm videos:encode    # ffmpeg videos/raw/ -> public/videos/ (idempotent)
-pnpm videos:publish   # upload encoded files to GH Release `videos`
-pnpm videos:check     # sanity-check manifest vs raws / encoded / slide refs
-
-pnpm videos:link-hq   # symlink public/videos-hq/ -> videos/raw/ for local HQ playback
-pnpm videos:publish-hq  # upload raw masters to GH Release `videos-hq`
+pnpm videos:sync        # rclone raws from the configured remote
+pnpm videos:encode      # ffmpeg raw -> public/videos/ (idempotent)
+pnpm videos:publish     # upload encoded files to GH Release
+pnpm videos:check       # sanity-check manifest vs raws / encoded / slide refs
+pnpm videos:link-hq     # symlink public/videos-hq/ -> videos/raw/
+pnpm videos:publish-hq  # upload raw masters to GH Release `videos-hq-…`
 ```
+
+From the repo root: `pnpm videos:check-all` runs `videos:check` in every talk.
+
+## Adding a new talk
+
+```bash
+scripts/new-talk.sh <name>          # scaffolds talks/<name>/
+```
+
+Or manually:
+
+```bash
+mkdir -p talks/<name>/{public/figures,videos/raw,slides}
+ln -s ../../components talks/<name>/components
+```
+
+Then create `deck.md`, `.env`, `package.json`, and `videos/manifest.toml`
+(copy from an existing talk).
 
 ## Adding media to a slide
 
-**Image or GIF** — drop the file under `public/` and reference it with an absolute path:
+**Image / GIF** — drop into `talks/<name>/public/` and reference with an
+absolute path:
 
 ```md
 ![](/my-photo.jpg)
 ```
 
-**Video** — add an entry in `videos/manifest.toml`, drop the raw in `videos/raw/`,
-then `pnpm videos:encode`. Reference it from a slide:
+**Video** — add an entry in `videos/manifest.toml`, drop the raw in
+`videos/raw/`, run `pnpm videos:encode`, then reference it:
 
 ```md
 <VideoPlayer src="My_Clip.mp4" />              <!-- web-encoded copy -->
-<VideoPlayer src="My_Clip.mp4" hq />           <!-- untouched raw master -->
+<VideoPlayer src="My_Clip.mp4" hq />           <!-- raw master -->
 <VideoPlayer src="Loop.mp4" loop muted :controls="false" />
 ```
 
-The player streams from `public/videos/` locally and falls back to the
-GitHub Release when deployed.
+Local: streams from `public/videos{,-hq}/`. Deployed: falls back to the
+per-talk GitHub Release on 404.
 
 ## Before the talk
 
-1. `pnpm videos:check` — catch orphan raws, missing manifest entries, or broken slide refs.
+1. `pnpm videos:check` — catch orphan raws, missing manifest entries, broken slide refs.
 2. `pnpm videos:encode` — regenerate any stale web copies.
-3. `pnpm videos:publish` (and `publish-hq` if you use HQ playback) — push assets to the Releases.
-4. `pnpm build` and deploy `dist/` (GitHub Pages, or serve locally for an offline venue).
+3. `pnpm videos:publish` (and `publish-hq` if you use HQ playback).
+4. `git push github main` — GH Pages rebuilds and deploys all talks.
