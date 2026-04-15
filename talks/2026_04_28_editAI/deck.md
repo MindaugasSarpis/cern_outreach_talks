@@ -17,3 +17,15 @@ layout: cover
 ## Mindaugas ir Gedinimas Šarpiai
 
 Kodėl mums reikia CERN ir kokie tyrimai ten atliekai
+
+---
+layout: center-bkg
+---
+
+<VideoPlayer src="Milky_Way_Sim_Audio.mp4" />
+
+---
+layout: center-bkg
+---
+
+<VideoPlayer src="Milky_Way_Sim_Audio.mp4" hq />

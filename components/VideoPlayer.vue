@@ -2,10 +2,15 @@
 import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { useIsSlideActive } from '@slidev/client'
 
-// TODO: update slug after creating the GitHub repo + `videos` / `videos-hq` releases for this deck.
-const REPO_RELEASES = 'https://github.com/MindaugasSarpis/EditAI_Seminar_2026/releases/download'
-const REMOTE_BASE    = `${REPO_RELEASES}/videos`
-const REMOTE_BASE_HQ = `${REPO_RELEASES}/videos-hq`
+// Per-talk config injected via Vite env (see each talk's package.json scripts):
+//   VITE_VIDEO_REPO         e.g. "MindaugasSarpis/cern_outreach_talks"
+//   VITE_VIDEO_RELEASE      e.g. "videos-2026-04-28-editai"
+//   VITE_VIDEO_RELEASE_HQ   e.g. "videos-hq-2026-04-28-editai"
+const REPO        = import.meta.env.VITE_VIDEO_REPO       || 'MindaugasSarpis/cern_outreach_talks'
+const RELEASE     = import.meta.env.VITE_VIDEO_RELEASE    || 'videos'
+const RELEASE_HQ  = import.meta.env.VITE_VIDEO_RELEASE_HQ || 'videos-hq'
+const REMOTE_BASE    = `https://github.com/${REPO}/releases/download/${RELEASE}`
+const REMOTE_BASE_HQ = `https://github.com/${REPO}/releases/download/${RELEASE_HQ}`
 
 const props = defineProps({
   src:      { type: String, required: true },
