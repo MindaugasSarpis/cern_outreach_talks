@@ -1,0 +1,136 @@
+:root {
+  --slidev-theme-primary: #ffffff;
+}
+
+.slidev-layout {
+  h1 {
+    color: var(--slidev-theme-primary);
+  }
+
+  h1 + p {
+    @apply -mt-2 opacity-50 mb-4;
+  }
+
+  p + h2, ul + h2, table + h2 {
+    @apply mt-10;
+  }
+
+  h1 {
+    @apply text-4xl mb-4 -ml-[0.05em];
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+
+  h4 {
+    @apply text-xl;
+  }
+
+  h5 {
+    @apply text-base;
+  }
+
+  h6 {
+    @apply text-sm pt-1 uppercase tracking-widest font-500 -ml-[0.05em];
+  }
+
+  h6:not(.opacity-100) {
+    @apply opacity-40;
+  }
+}
+
+.slidev-layout.cover {
+  @apply h-full;
+}
+
+.slidev-layout.intro {
+  @apply h-full grid;
+
+  h1 {
+    color: inherit;
+    @apply text-6xl leading-20;
+  }
+}
+
+.slidev-layout.fact {
+  @apply text-center grid h-full;
+  h1 {
+    @apply text-8xl font-700;
+  }
+  h1 + p {
+    @apply font-700 text-2xl;
+  }
+}
+
+.slidev-layout.statement {
+  @apply text-center grid h-full;
+
+  h1 {
+    @apply text-6xl font-700;
+  }
+}
+
+.slidev-layout.quote {
+  @apply grid h-full;
+
+  h1 + p {
+    @apply mt-2;
+  }
+}
+
+.slidev-layout.section {
+  h1 {
+    @apply text-6xl font-500 leading-20;
+  }
+}
+
+.slidev-layout {
+  background: url('/figures/background_default.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+/* Mermaid diagram styling */
+.slidev-layout .mermaid {
+  @apply mx-auto my-4;
+  max-width: 95%;
+  max-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slidev-layout .mermaid svg {
+  max-width: 100%;
+  max-height: 70vh;
+  height: auto;
+  width: auto;
+}
+
+/* Improve mermaid diagram readability on dark backgrounds */
+.slidev-layout .mermaid .node rect,
+.slidev-layout .mermaid .node circle,
+.slidev-layout .mermaid .node ellipse,
+.slidev-layout .mermaid .node polygon {
+  stroke-width: 2px;
+}
+
+.slidev-layout .mermaid .edgeLabel {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.slidev-layout .mermaid .label {
+  color: #000;
+}
+
+/* Force H1 color override (flat CSS for compatibility) */
+.slidev-layout h1 {
+  color: #ffffff !important;
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@slidev/theme-scienced",
+  "version": "0.0.1",
+  "description": "Scienced theme for Slidev",
+  "license": "MIT",
+  "keywords": [
+    "slidev-theme",
+    "slidev"
+  ],
+  "engines": {
+    "node": "latest",
+    "slidev": ">51.0.0"
+  },
+  "slidev": {
+    "defaults": {
+      "fonts": {
+        "mono": "PT Mono",
+        "sans": "PT Serif",
+        "serif": "PT Serif",
+        "italic": true,
+        "weights": "400, 700"
+      }
+    }
+  },
+  "dependencies": {
+    "@slidev/types": "latest",
+    "codemirror-theme-vars": "latest",
+    "prism-theme-vars": "latest"
+  }
+}

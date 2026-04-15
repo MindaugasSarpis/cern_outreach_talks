@@ -1,0 +1,617 @@
+/* ============================================
+   CUSTOM SLIDE STYLES - PROBABILITY & STATISTICS
+   ============================================
+
+   NOTE: For Mermaid diagram configurations and styles,
+   see:
+   - Mermaid styles: ./mermaid-styles.css
+   - Mermaid config reference: ../mermaid-config.md
+
+   USAGE GUIDE:
+
+   1. CARDS:
+      <div class="card card-primary">Content</div>
+      Colors: card-primary, card-secondary, card-accent, card-success, card-warning, card-info
+      Padding: pad-tight, pad-snug, pad-compact, pad-balanced
+
+   2. GRIDS:
+      <div class="grid-2">...</div>  (2 columns)
+      <div class="grid-3">...</div>  (3 columns)
+      <div class="grid-auto">...</div>  (1 column, stacked)
+      <div class="grid-2-large">...</div>  (2 columns with large gap)
+      <div class="stack-tight">...</div>  (vertical stack with tight gap)
+
+   3. DICE/NUMBER BOXES:
+      <div class="dice-grid">
+        <div class="dice-box dice-box-primary">1</div>
+        <div class="dice-box dice-box-success">2</div>
+      </div>
+      Colors: dice-box-primary, dice-box-success, dice-box-info, dice-box-warning, dice-box-accent
+
+   4. SPACING:
+      Classes: mt-sm, mt-md, mt-lg, mt-xl (margin-top)
+               mb-sm, mb-md, mb-lg (margin-bottom)
+               gap-tight (for grids)
+
+   5. TYPOGRAPHY:
+      Classes: text-sm, text-base, text-md, text-lg
+               caption-text (for explanatory text below diagrams)
+
+   6. CARD CONTENT:
+      <div class="card-content">Text inside cards</div>
+
+   7. CENTERED CONTAINER:
+      <div class="container-centered">Content</div>
+
+   EXAMPLE:
+   <div class="grid-2 mt-lg">
+     <div class="card card-primary">
+       <h2>Title</h2>
+       <div class="card-content">Text</div>
+     </div>
+   </div>
+
+   TO CHANGE COLORS: Edit CSS variables in :root below
+   ============================================ */
+
+/* Color Variables - Deep Blue Theme */
+:root {
+  --color-primary: #031633;
+  --color-primary-light: #0f4c81;
+  --color-secondary: #051a3d;
+  --color-secondary-light: #102b5c;
+  --color-accent: #042f4e;
+  --color-accent-light: #0ea5e9;
+  --color-success: #063c34;
+  --color-success-light: #14b8a6;
+  --color-warning: #3b1f09;
+  --color-warning-light: #f59e0b;
+  --color-info: #051933;
+  --color-info-light: #38bdf8;
+
+  /* Spacing */
+  --card-padding: 1.1rem;
+  --card-padding-sm: 0.9rem;
+  --card-padding-lg: 1.5rem;
+  --gap-sm: 0.85rem;
+  --gap-md: 1.1rem;
+  --gap-lg: 1.4rem;
+  --gap-xl: 1.7rem;
+
+  /* Typography */
+  --font-size-sm: 0.92em;
+  --font-size-base: 1em;
+  --font-size-md: 1.05em;
+  --font-size-lg: 1.18em;
+  --font-size-xl: 1.25em;
+
+  /* Border Radius */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+
+  /* Shadows */
+  --shadow-sm: 0 10px 20px rgba(2, 6, 23, 0.25);
+  --shadow-md: 0 18px 35px rgba(2, 6, 23, 0.45);
+  --shadow-lg: 0 25px 65px rgba(2, 6, 23, 0.6);
+}
+
+/* Card Styles */
+.card {
+  --card-shadow-default: var(--shadow-md);
+  --card-shadow-hover: var(--shadow-lg);
+  position: relative;
+  padding: var(--card-padding-lg);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    140deg,
+    var(--card-bg-start, rgba(2, 6, 23, 0.92)),
+    var(--card-bg-end, rgba(15, 23, 42, 0.88))
+  );
+  border: 1px solid var(--card-border-color, rgba(148, 163, 184, 0.35));
+  box-shadow: var(--card-shadow-default);
+  color: #e2e8f0;
+  overflow: hidden;
+  isolation: isolate;
+  backdrop-filter: blur(8px);
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.3), transparent 55%);
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 360ms ease;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(var(--radius-lg) - 1px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover = brighter border + stronger inner sheen + shadow. No scale: scaling
+   a wide card with backdrop-filter stutters because the blur re-samples every
+   frame. Non-transform properties animate smoothly on the compositor. */
+.card:hover,
+.card:focus-within {
+  transform: translate3d(0, -3px, 0);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: var(--card-shadow-hover);
+}
+.card:hover::before,
+.card:focus-within::before {
+  opacity: 0.45;
+}
+/* Glass cards have box-shadow: none !important on their base rule, so re-enable
+   a soft glow on hover specifically for them. */
+.card-glass:hover,
+.card-glass:focus-within {
+  box-shadow: 0 10px 40px rgba(148, 163, 184, 0.25) !important;
+  border-left-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.card-primary {
+  --card-bg-start: var(--color-primary);
+  --card-bg-end: var(--color-primary-light);
+  --card-border-color: rgba(96, 165, 250, 0.45);
+  --card-shadow-default: var(--shadow-md), 0 20px 55px rgba(59, 130, 246, 0.35);
+  --card-shadow-hover: var(--shadow-lg), 0 35px 80px rgba(59, 130, 246, 0.45);
+}
+
+.card-secondary {
+  --card-bg-start: var(--color-secondary);
+  --card-bg-end: var(--color-secondary-light);
+  --card-border-color: rgba(147, 197, 253, 0.35);
+  --card-shadow-default: var(--shadow-md), 0 18px 45px rgba(37, 99, 235, 0.35);
+  --card-shadow-hover: var(--shadow-lg), 0 30px 70px rgba(37, 99, 235, 0.45);
+}
+
+.card-accent {
+  --card-bg-start: var(--color-accent);
+  --card-bg-end: var(--color-accent-light);
+  --card-border-color: rgba(103, 232, 249, 0.55);
+  --card-shadow-default: var(--shadow-md), 0 20px 50px rgba(14, 165, 233, 0.4);
+  --card-shadow-hover: var(--shadow-lg), 0 32px 75px rgba(14, 165, 233, 0.45);
+}
+
+.card-success {
+  --card-bg-start: var(--color-success);
+  --card-bg-end: var(--color-success-light);
+  --card-border-color: rgba(52, 211, 153, 0.5);
+  --card-shadow-default: var(--shadow-md), 0 20px 50px rgba(16, 185, 129, 0.35);
+  --card-shadow-hover: var(--shadow-lg), 0 32px 70px rgba(16, 185, 129, 0.45);
+}
+
+.card-warning {
+  --card-bg-start: var(--color-warning);
+  --card-bg-end: var(--color-warning-light);
+  --card-border-color: rgba(251, 191, 36, 0.45);
+  --card-shadow-default: var(--shadow-md), 0 18px 45px rgba(245, 158, 11, 0.35);
+  --card-shadow-hover: var(--shadow-lg), 0 30px 65px rgba(245, 158, 11, 0.45);
+}
+
+.card-info {
+  --card-bg-start: var(--color-info);
+  --card-bg-end: var(--color-info-light);
+  --card-border-color: rgba(125, 211, 252, 0.45);
+  --card-shadow-default: var(--shadow-md), 0 20px 55px rgba(56, 189, 248, 0.35);
+  --card-shadow-hover: var(--shadow-lg), 0 32px 80px rgba(56, 189, 248, 0.45);
+}
+
+/* Glass fade card — background fades to transparent on right, text stays solid */
+.card-glass {
+  border: none !important;
+  border-left: 5px solid var(--card-border-color, rgba(148, 163, 184, 0.35)) !important;
+  box-shadow: none !important;
+  background: none !important;
+  overflow: visible !important;
+}
+.card-glass::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  background: rgba(2, 6, 23, 0.85) !important;
+  -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%) !important;
+  mask-image: linear-gradient(to right, black 60%, transparent 100%) !important;
+  opacity: 1 !important;
+  pointer-events: none;
+  z-index: -1;
+}
+.card-glass::after {
+  display: none !important;
+}
+/* Fly-in animation for glass cards. Use the base .card transition (220ms)
+   so fly-in and hover share the same timing — glass cards now zoom on hover
+   like solid cards, via the .card:hover rule above. */
+.card-glass.slidev-vclick-hidden {
+  transform: translateX(-80px) translateY(12px) scale(0.97);
+  opacity: 0 !important;
+  visibility: visible !important;
+  pointer-events: none;
+}
+
+/* Inline code inside cards — ensure readable on dark backgrounds */
+.card :not(pre) > code {
+  color: #e2e8f0 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* Grid Layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-lg);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-md);
+  width: 100%;
+}
+
+.grid-auto {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap-md);
+}
+
+/* Content Spacing */
+.mt-xs { margin-top: 0.3rem; }
+.mt-sm { margin-top: 0.5rem; }
+.mt-md { margin-top: var(--gap-md); }
+.mt-lg { margin-top: var(--gap-lg); }
+.mt-xl { margin-top: var(--gap-xl); }
+
+.mb-sm { margin-bottom: 0.5rem; }
+.mb-md { margin-bottom: var(--gap-md); }
+.mb-lg { margin-bottom: var(--gap-lg); }
+
+/* Typography Utilities */
+.text-sm { font-size: var(--font-size-sm); line-height: 1.5; }
+.text-base { font-size: var(--font-size-base); line-height: 1.5; }
+.text-md { font-size: var(--font-size-md); line-height: 1.5; }
+.text-lg { font-size: var(--font-size-lg); line-height: 1.6; }
+
+.card-content {
+  margin-top: 0.5rem;
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+}
+
+/* Centered Container */
+.container-centered {
+  max-width: 950px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Flexbox Utilities */
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prob-value {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* Utility Padding Helpers */
+.pad-tight {
+  padding: 0.8rem 1rem;
+}
+
+.pad-snug {
+  padding: 0.8rem 1.2rem;
+}
+
+.pad-compact {
+  padding: 0.7rem 0.9rem;
+}
+
+.pad-balanced {
+  padding: 0.9rem 1.1rem;
+}
+
+/* Gap and Margin Helpers */
+.gap-tight {
+  gap: 1rem;
+}
+
+.mt-xxl {
+  margin-top: 2rem;
+}
+
+/* Text Utilities */
+.lead-block {
+  margin-top: 1.5rem;
+  font-size: 1.1em;
+  line-height: 1.55;
+}
+
+.lead-block-lg {
+  margin-top: 1.5rem;
+  font-size: 1.15em;
+  line-height: 1.55;
+}
+
+.note-text {
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.note-text-lg {
+  font-size: 0.9em;
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+
+.meta-strong {
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.meta-caption {
+  font-size: 0.85em;
+  margin-top: 0.3rem;
+}
+
+.mono-strong {
+  font-family: monospace;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.text-subhead {
+  font-size: 1.05em;
+}
+
+.text-xl-strong {
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+.emoji-xl {
+  font-size: 1.8em;
+  line-height: 1;
+}
+
+.text-tight {
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.example-math {
+  margin-top: 0.4rem;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+/* Layout helpers */
+.text-center {
+  text-align: center;
+}
+
+.mermaid-note {
+  margin-top: 0.8rem;
+}
+
+.mermaid-note .text-tight {
+  margin: 0;
+}
+
+/* Dice/Number Box Styles */
+.dice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+  max-width: 380px;
+}
+
+.dice-box {
+  padding: 1.2rem;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 2em;
+  font-weight: 700;
+  color: #f8fafc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dice-box-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+}
+
+.dice-box-success {
+  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%);
+}
+
+.dice-box-info {
+  background: linear-gradient(135deg, var(--color-info) 0%, var(--color-info-light) 100%);
+}
+
+.dice-box-warning {
+  background: linear-gradient(135deg, var(--color-warning) 0%, var(--color-warning-light) 100%);
+}
+
+.dice-box-accent {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+}
+
+/* Caption text for explanations */
+.caption-text {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+/* Two-column layout with large gap */
+.grid-2-large {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+  align-items: start;
+}
+
+/* Vertical stack with gap */
+.stack-tight {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+}
+
+/* Reusable dropdown-card pattern:
+   wrap <details class="dd-card card card-X card-glass"> inside a
+   container with .dd-stack (plus optional grid-2 / grid-3 / stack-tight).
+   Only the opened card grows; row-mates stay collapsed. */
+.dd-stack {
+  align-items: start;
+  grid-auto-rows: min-content;
+}
+.dd-stack .dd-card.card {
+  padding: 0.5rem 0.9rem !important;
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+}
+.dd-stack .dd-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.08);
+}
+.dd-stack .dd-card > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 2.8rem;
+}
+.dd-stack .dd-card > summary::-webkit-details-marker { display: none; }
+.dd-stack .dd-card > summary::after {
+  content: "▸";
+  font-size: 0.9em;
+  opacity: 0.7;
+  flex: 0 0 auto;
+  transition: transform 0.25s ease;
+}
+.dd-stack .dd-card[open] > summary::after {
+  transform: rotate(90deg);
+  opacity: 1;
+}
+.dd-stack .dd-card[open] {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55), 0 8px 24px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+  z-index: 2;
+}
+.dd-stack .dd-title {
+  flex: 1 1 auto;
+  font-weight: 600;
+  font-size: 1.05em;
+  line-height: 1.25;
+}
+.dd-stack .dd-body {
+  font-size: 0.92em;
+  line-height: 1.4;
+  margin-top: 0.45rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  opacity: 0.9;
+}
+
+/* ============================================
+   CARD TYPOGRAPHY - default, consistent across deck
+   Cards shouldn't render headings at the global
+   slide h2 scale — it crowds grids. Keep headings
+   readable but compact; body text slightly smaller.
+   Opt-out by restyling within a local <style>.
+   ============================================ */
+.card h2 {
+  font-size: 1rem;
+  line-height: 1.25;
+  margin: 0;
+}
+.card p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0.3rem 0 0;
+}
+.card h2 + p,
+.card h2 + ul,
+.card h2 + ol {
+  margin-top: 0.35rem;
+}
+
+/* Legacy `tidy-cards` class kept as an extra-compact
+   variant for dense grids (uses slightly smaller sizes
+   than the default). */
+.tidy-cards .card {
+  padding: 0.55rem 0.9rem !important;
+}
+.tidy-cards .card h2 {
+  font-size: 0.92rem;
+}
+.tidy-cards .card p {
+  font-size: 0.78rem;
+}
+
+/* ============================================
+   MISSING-DATA MECHANISMS - expanding card row
+   Used on the MCAR / MAR / MNAR slide. The active
+   card (with visible .miss-ex body) grows wider;
+   inactive cards collapse to the heading only.
+   ============================================ */
+.miss-row {
+  display: flex;
+  gap: 0.9rem;
+  align-items: stretch;
+}
+.miss-card.card {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0.7rem 1rem !important;
+}
+.miss-card h2 {
+  font-size: 1.2em;
+  line-height: 1.15;
+  margin: 0;
+}
+.miss-card p { font-size: 0.8em; margin: 0.2rem 0 0; }
+.miss-ex {
+  font-size: 0.8em;
+  margin-top: 0.4rem;
+  line-height: 1.35;
+}
+.miss-ex p { margin: 0; font-size: inherit; }
+.miss-ex ul { margin: 0.2rem 0 0; padding-left: 1.1rem; }
+.miss-ex li { margin: 0.1rem 0; }
+
