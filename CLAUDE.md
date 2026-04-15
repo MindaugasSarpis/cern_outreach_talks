@@ -134,10 +134,14 @@ keep that attribute syntax.
 
 ## Aspect ratio
 
-Default deck canvas is 16:10 (`aspectRatio: 16/10`, `canvasWidth: 1280`)
-to match a 2880×1600 venue screen. Videos keep native aspect via
-`object-fit: contain` in `VideoPlayer`; 16:9 clips letterbox inside
-16:10 — expected.
+Per-talk — set `aspectRatio` and `canvasWidth` in the deck frontmatter
+to match the venue. The `2026_04_28_editAI` venue is a **2.5 × 4.5 m
+LED wall at 2880 × 1600** (pixel pitch 1.56 mm), aspect **9:5** (= 1.8,
+*not* 16:10 which is 1.6). The deck uses `aspectRatio: 9/5` and
+`canvasWidth: 2880` so raster assets render at native resolution.
+
+Videos keep native aspect via `object-fit: contain` in `VideoPlayer`;
+16:9 clips letterbox inside a 9:5 slide — expected.
 
 ## Deployment
 

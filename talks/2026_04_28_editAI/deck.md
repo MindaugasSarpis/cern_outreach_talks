@@ -3,8 +3,8 @@ theme: ../../theme
 colorSchema: dark
 transition: fade
 routerMode: hash
-aspectRatio: 16/10
-canvasWidth: 1280
+aspectRatio: 9/5
+canvasWidth: 2880
 title: editAI Seminar
 info: |
   Outreach talk — crash course on CERN and how research is done there.
