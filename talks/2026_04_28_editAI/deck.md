@@ -2,6 +2,7 @@
 theme: ../../theme
 colorSchema: dark
 transition: fade
+routerMode: hash
 aspectRatio: 16/10
 canvasWidth: 1280
 title: editAI Seminar
@@ -17,7 +18,7 @@ background: /figures/background_intro.jpg
 
 ## Mindaugas ir Gedinimas Šarpiai
 
-Kodėl mums reikia CERN ir kokie tyrimai ten atliekai
+Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 
 ---
 
