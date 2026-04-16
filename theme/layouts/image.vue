@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { onSlideEnter } from '@slidev/client'
+import { ref, watch } from 'vue'
+import { useIsSlideActive } from '@slidev/client'
 
 const props = defineProps({
   image: { type: String, required: true },
@@ -8,17 +8,22 @@ const props = defineProps({
   backgroundPosition: { type: String, default: 'center' },
 })
 
-// Bumped on every slide entry so Vue remounts the <img>, forcing
-// browsers to restart GIFs from frame 1.
+const isActive = useIsSlideActive()
 const renderKey = ref(0)
-onSlideEnter(() => { renderKey.value++ })
+
+// Chromium caches decoded animated GIFs by URL and reuses the animation
+// state across remounts of the same src — a plain :key bump won't
+// restart the GIF. Changing the URL via a query-string cache-buster
+// forces the browser to treat each slide entry as a fresh resource,
+// restarting from frame 1.
+watch(isActive, (v) => { if (v) renderKey.value++ }, { immediate: true })
 </script>
 
 <template>
   <div class="slidev-layout image-layout">
     <img
       :key="renderKey"
-      :src="props.image"
+      :src="`${props.image}?k=${renderKey}`"
       :style="{ objectFit: props.backgroundSize, objectPosition: props.backgroundPosition }"
       alt=""
     />

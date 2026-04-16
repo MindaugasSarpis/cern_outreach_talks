@@ -74,12 +74,6 @@ backgroundSize: contain
 
 ---
 layout: image
-image: /figures/higgs_signal.gif
-backgroundSize: contain
----
-
----
-layout: image
 image: /figures/higgs_sigbkg.gif
 backgroundSize: contain
 ---
