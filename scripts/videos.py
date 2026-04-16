@@ -598,89 +598,6 @@ def cmd_encode_hq(args: argparse.Namespace) -> int:
 
 
 # ---------------------------------------------------------------------------
-# link-hq — expose videos/raw/ at public/videos-hq/ for local HQ playback
-# ---------------------------------------------------------------------------
-
-def cmd_link_hq(_: argparse.Namespace) -> int:
-    HQ_LINK_DIR.parent.mkdir(parents=True, exist_ok=True)
-    if HQ_LINK_DIR.is_symlink() or HQ_LINK_DIR.exists():
-        if HQ_LINK_DIR.is_symlink():
-            HQ_LINK_DIR.unlink()
-        else:
-            print(f"error: {HQ_LINK_DIR} exists and is not a symlink; remove it manually.",
-                  file=sys.stderr)
-            return 2
-    HQ_LINK_DIR.symlink_to(RAW_DIR.resolve(), target_is_directory=True)
-    print(f"linked {HQ_LINK_DIR.relative_to(REPO)} -> {RAW_DIR.relative_to(REPO)}")
-    return 0
-
-
-# ---------------------------------------------------------------------------
-# publish-hq — upload raw masters to a separate GH Release
-# ---------------------------------------------------------------------------
-
-def cmd_publish_hq(args: argparse.Namespace) -> int:
-    defaults, videos = load_manifest()
-    tag = defaults.get("release_tag_hq", "videos-hq")
-    if not shutil.which("gh"):
-        print("error: gh CLI not installed. brew install gh", file=sys.stderr)
-        return 2
-
-    if args.only:
-        wanted = set(args.only)
-        videos = [v for v in videos if v.name in wanted]
-
-    existing = subprocess.run(
-        ["gh", "release", "view", tag], capture_output=True, text=True
-    )
-    if existing.returncode != 0:
-        print(f"Creating release {tag!r}...")
-        subprocess.run(
-            ["gh", "release", "create", tag,
-             "--title", "HQ raw video assets",
-             "--notes", "Unencoded raw masters. Managed by scripts/videos.py publish-hq."],
-            check=True,
-        )
-
-    remote_sizes: dict[str, int] = {}
-    if not args.force:
-        listing = subprocess.run(
-            ["gh", "release", "view", tag, "--json", "assets"],
-            capture_output=True, text=True,
-        )
-        if listing.returncode == 0:
-            import json
-            try:
-                for a in json.loads(listing.stdout).get("assets", []):
-                    remote_sizes[a["name"]] = a.get("size", -1)
-            except (ValueError, KeyError):
-                pass
-
-    files = []
-    for v in videos:
-        raw = RAW_DIR / v.name
-        if not raw.exists():
-            print(f"  ! skip {v.name}: missing in videos/raw/")
-            continue
-        size = raw.stat().st_size
-        if not args.force and remote_sizes.get(v.name) == size:
-            print(f"  = {v.name}: unchanged ({human_size(size)})")
-            continue
-        files.append(str(raw))
-
-    if not files:
-        print("Nothing to upload.")
-        return 0
-
-    print(f"Uploading {len(files)} raw master(s) to release {tag!r}...")
-    cmd = ["gh", "release", "upload", tag, *files, "--clobber"]
-    if args.dry_run:
-        print(" ".join(cmd))
-        return 0
-    return subprocess.call(cmd)
-
-
-# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -706,19 +623,10 @@ def main() -> int:
     p_chk = sub.add_parser("check", help="sanity-check manifest vs raw/web/slides")
     p_chk.set_defaults(func=cmd_check)
 
-    p_lhq = sub.add_parser("link-hq", help="symlink videos/raw/ -> public/videos-hq/ for local HQ playback")
-    p_lhq.set_defaults(func=cmd_link_hq)
-
     p_ehq = sub.add_parser("encode-hq", help="ffmpeg raw -> videos/hq/ (visually-lossless venue masters, local-only)")
     p_ehq.add_argument("--force", action="store_true", help="re-encode even if up to date")
     p_ehq.add_argument("--only", nargs="+", metavar="NAME", help="limit to named file(s)")
     p_ehq.set_defaults(func=cmd_encode_hq)
-
-    p_phq = sub.add_parser("publish-hq", help="upload raw masters to the `videos-hq` GH Release")
-    p_phq.add_argument("--dry-run", action="store_true")
-    p_phq.add_argument("--only", nargs="+", metavar="NAME", help="limit to named file(s)")
-    p_phq.add_argument("--force", action="store_true", help="re-upload even if remote size matches")
-    p_phq.set_defaults(func=cmd_publish_hq)
 
     args = parser.parse_args()
     return args.func(args)
