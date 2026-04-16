@@ -25,79 +25,53 @@ Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 <VideoPlayer src="Milky_Way_Sim_Audio.mp4" />
 
 ---
-layout: image
-image: /figures/gaussian.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="gaussian.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/gaussian_highstats.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="gaussian_highstats.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/cmb_data.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="cmb_data.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/cmb_fit.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="cmb_fit.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/cmb_power_spectrum.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="cmb_power_spectrum.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/g2_data.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="g2_data.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/g2_fit.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="g2_fit.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/higgs_bkg.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="higgs_bkg.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/higgs_sigbkg.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="higgs_sigbkg.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/higgs_data.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="higgs_data.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/z_data.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="z_data.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/z_fit3.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="z_fit3.mp4" loop muted :controls="false" />
 
 ---
-layout: image
-image: /figures/z_alternatives.gif
-backgroundSize: contain
----
+
+<VideoPlayer src="z_alternatives.mp4" loop muted :controls="false" />
