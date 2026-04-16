@@ -155,3 +155,15 @@ onMounted(() => {
   opacity: 1;
 }
 </style>
+
+<style>
+/* Chromium sizes the native media-controls panel to the video's intrinsic
+   resolution (e.g. 1920px for 1080p) rather than the element's CSS width,
+   so on the 2880px-wide venue canvas the control bar sits centered at
+   roughly half width. Force it to span the full element. */
+video::-webkit-media-controls-enclosure,
+video::-webkit-media-controls-panel {
+  width: 100%;
+  max-width: none;
+}
+</style>
