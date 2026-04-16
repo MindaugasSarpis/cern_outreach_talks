@@ -22,3 +22,87 @@ name    = "Milky_Way_Sim_Audio.mp4"
 profile = "remux"
 used_in = ["deck"]
 notes   = "Milky Way galaxy simulation, HEVC 7.3 Mbps CGI"
+
+[[videos]]
+name    = "Cassini_Grand_Finale_No_Vo.mp4"
+profile = "silent-loop"
+used_in = ["deck"]
+notes   = "Cassini Grand Finale, no voiceover; loops silently"
+
+[[videos]]
+name    = "CERN-FOOTAGE-2022-042-001.mov"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN documentary B-roll (2022)"
+
+[[videos]]
+name    = "CERN-FOOTAGE-2026-012-001.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN documentary B-roll (2026)"
+
+[[videos]]
+name    = "cmb_data.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "CMB data chart render"
+
+[[videos]]
+name    = "cmb_fit.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "CMB fit chart render"
+
+[[videos]]
+name    = "cmb_power_spectrum.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "CMB power-spectrum chart render"
+
+[[videos]]
+name    = "g2_data.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "g-2 data chart render"
+
+[[videos]]
+name    = "g2_fit.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "g-2 fit chart render"
+
+[[videos]]
+name    = "gaussian.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Gaussian fit demo render"
+
+[[videos]]
+name    = "gaussian_highstats.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Gaussian fit demo render (high statistics)"
+
+[[videos]]
+name    = "higgs_bkg.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Higgs background-only chart render"
+
+[[videos]]
+name    = "higgs_data.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Higgs data chart render"
+
+[[videos]]
+name    = "higgs_sigbkg.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Higgs signal+background chart render"
+
+[[videos]]
+name    = "higgs_signal.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Higgs signal-only chart render"
