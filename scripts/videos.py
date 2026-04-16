@@ -490,37 +490,40 @@ def _encode_one_hq(entry: VideoEntry, force: bool, default_long_edge: int) -> tu
         *ff_args,
         str(tmp),
     ]
-    try:
-        subprocess.run(cmd, check=True)
-    except subprocess.CalledProcessError:
-        # Audio-codec mismatches are the most common failure with `-c:a copy`.
-        # Auto-retry once with re-encoded AAC. Drop -an (silent-loop already
-        # had -an above; harmless duplicate is overwritten by the retry path).
+    result = subprocess.run(cmd, capture_output=True)
+    if result.returncode != 0:
         tmp.unlink(missing_ok=True)
-        if "-c:a" in ff_args and "copy" in ff_args:
-            retry_args = []
-            i = 0
-            while i < len(ff_args):
-                if ff_args[i] == "-c:a" and i + 1 < len(ff_args) and ff_args[i + 1] == "copy":
-                    retry_args.extend(["-c:a", "aac", "-b:a", "256k", "-ac", "2"])
-                    i += 2
-                else:
-                    retry_args.append(ff_args[i])
-                    i += 1
-            cmd_retry = [
-                "ffmpeg", "-y", "-hide_banner", "-nostdin", "-loglevel", "error",
-                "-i", str(raw),
-                *retry_args,
-                str(tmp),
-            ]
-            try:
-                subprocess.run(cmd_retry, check=True)
-            except subprocess.CalledProcessError as e:
-                tmp.unlink(missing_ok=True)
-                print(f"  ! ffmpeg HQ failed for {entry.name} (retry also failed): {e}", file=sys.stderr)
-                return entry, "failed", raw_size, 0
-        else:
+        stderr_text = result.stderr.decode("utf-8", errors="replace")
+        codec_failure = (
+            "-c:a" in ff_args
+            and "copy" in ff_args
+            and ("codec" in stderr_text.lower() or "audio" in stderr_text.lower())
+        )
+        if not codec_failure:
+            sys.stderr.write(stderr_text)
             print(f"  ! ffmpeg HQ failed for {entry.name}", file=sys.stderr)
+            return entry, "failed", raw_size, 0
+        # Audio-codec mismatch with -c:a copy. Retry once with AAC.
+        retry_args = []
+        i = 0
+        while i < len(ff_args):
+            if ff_args[i] == "-c:a" and i + 1 < len(ff_args) and ff_args[i + 1] == "copy":
+                retry_args.extend(["-c:a", "aac", "-b:a", "256k", "-ac", "2"])
+                i += 2
+            else:
+                retry_args.append(ff_args[i])
+                i += 1
+        cmd_retry = [
+            "ffmpeg", "-y", "-hide_banner", "-nostdin", "-loglevel", "error",
+            "-i", str(raw),
+            *retry_args,
+            str(tmp),
+        ]
+        retry_result = subprocess.run(cmd_retry, capture_output=True)
+        if retry_result.returncode != 0:
+            tmp.unlink(missing_ok=True)
+            sys.stderr.write(retry_result.stderr.decode("utf-8", errors="replace"))
+            print(f"  ! ffmpeg HQ failed for {entry.name} (AAC retry also failed)", file=sys.stderr)
             return entry, "failed", raw_size, 0
     tmp.replace(hq)
     return entry, "ok", raw_size, hq.stat().st_size
@@ -542,6 +545,8 @@ def cmd_encode_hq(args: argparse.Namespace) -> int:
     _ensure_hq_symlink()
 
     default_long_edge = int(defaults.get("long_edge_px", 1920))
+    # Note: no over_budget warning here. HQ files are local-only and expected
+    # to be large; the max_size_mb cap only applies to the web tier.
     print(f"HQ-encoding {len(videos)} video(s). raw -> {HQ_DIR.relative_to(REPO)} (long edge: {default_long_edge}px)")
 
     # Remuxes can run in parallel; full encodes serially (CPU-bound).
