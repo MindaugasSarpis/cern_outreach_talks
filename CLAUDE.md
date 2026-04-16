@@ -78,11 +78,10 @@ pnpm build              # static bundle in dist/
 pnpm export             # PDF export (requires playwright-chromium; install locally if needed)
 
 pnpm videos:sync        # rclone raws from [defaults].source_remote
-pnpm videos:encode      # ffmpeg raw -> public/videos/ (idempotent)
-pnpm videos:publish     # upload encoded files to GH Release (web)
+pnpm videos:encode      # ffmpeg raw -> public/videos/ (web tier, idempotent)
+pnpm videos:encode-hq   # ffmpeg raw -> videos/hq/ (visually-lossless venue masters, local-only)
+pnpm videos:publish     # upload encoded web files to GH Release
 pnpm videos:check       # manifest vs raw/web/slide consistency
-pnpm videos:link-hq     # symlink public/videos-hq/ -> videos/raw/ (local HQ playback)
-pnpm videos:publish-hq  # upload raws to GH Release (HQ)
 ```
 
 From repo root:
@@ -94,14 +93,16 @@ pnpm videos:check-all   # run videos:check in every talk
 ## VideoPlayer
 
 ```html
-<VideoPlayer src="Clip.mp4" />                   <!-- web copy -->
-<VideoPlayer src="Clip.mp4" hq />                <!-- raw master -->
+<VideoPlayer src="Clip.mp4" />                   <!-- web copy (default) -->
+<VideoPlayer src="Clip.mp4" hq />                <!-- visually-lossless venue master (local only; falls back to web if absent) -->
 <VideoPlayer src="Loop.mp4" loop muted :controls="false" />
 ```
 
-Loads from `public/videos{,-hq}/` first, falls back to the per-talk GH
-Release on 404. The release URL is built from `VITE_VIDEO_REPO` and
-`VITE_VIDEO_RELEASE[_HQ]` (set in the talk's `.env`).
+Loads from `public/videos{,-hq}/` first; the web tier falls back to the
+per-talk GH Release on 404. The release URL is built from `VITE_VIDEO_REPO`
+and `VITE_VIDEO_RELEASE` (set in the talk's `.env`). When `hq` is requested
+but the local HQ file is missing, playback transparently degrades to the
+web copy (local, then GH Release).
 
 `videos:check` greps `VideoPlayer src="..."` against the manifest, so
 keep that attribute syntax.

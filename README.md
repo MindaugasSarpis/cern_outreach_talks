@@ -35,11 +35,10 @@ pnpm build              # static bundle in dist/
 pnpm export             # PDF (requires playwright-chromium; install locally)
 
 pnpm videos:sync        # rclone raws from the configured remote
-pnpm videos:encode      # ffmpeg raw -> public/videos/ (idempotent)
-pnpm videos:publish     # upload encoded files to GH Release
+pnpm videos:encode      # ffmpeg raw -> public/videos/ (web tier, idempotent)
+pnpm videos:encode-hq   # ffmpeg raw -> videos/hq/ (visually-lossless venue masters, local-only)
+pnpm videos:publish     # upload encoded web files to GH Release
 pnpm videos:check       # sanity-check manifest vs raws / encoded / slide refs
-pnpm videos:link-hq     # symlink public/videos-hq/ -> videos/raw/
-pnpm videos:publish-hq  # upload raw masters to GH Release `videos-hq-…`
 ```
 
 From the repo root: `pnpm videos:check-all` runs `videos:check` in every talk.
@@ -74,16 +73,18 @@ absolute path:
 
 ```md
 <VideoPlayer src="My_Clip.mp4" />              <!-- web-encoded copy -->
-<VideoPlayer src="My_Clip.mp4" hq />           <!-- raw master -->
+<VideoPlayer src="My_Clip.mp4" hq />           <!-- visually-lossless venue master (local only) -->
 <VideoPlayer src="Loop.mp4" loop muted :controls="false" />
 ```
 
-Local: streams from `public/videos{,-hq}/`. Deployed: falls back to the
-per-talk GitHub Release on 404.
+Local: streams from `public/videos{,-hq}/`. Deployed: web tier falls back
+to the per-talk GitHub Release on 404; HQ tier is local-only and silently
+degrades to the web copy if requested but unavailable.
 
 ## Before the talk
 
 1. `pnpm videos:check` — catch orphan raws, missing manifest entries, broken slide refs.
 2. `pnpm videos:encode` — regenerate any stale web copies.
-3. `pnpm videos:publish` (and `publish-hq` if you use HQ playback).
-4. `git push github main` — GH Pages rebuilds and deploys all talks.
+3. `pnpm videos:encode-hq` — regenerate any stale HQ venue masters (local-only).
+4. `pnpm videos:publish` — upload web copies to the GH Release.
+5. `git push github main` — GH Pages rebuilds and deploys all talks.

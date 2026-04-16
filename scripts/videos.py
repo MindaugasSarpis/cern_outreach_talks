@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
-"""Video asset pipeline: sync, encode, publish, check.
+"""Video asset pipeline: sync, encode, publish, check, encode-hq.
 
 Reads videos/manifest.toml as the source of truth. Raws live in videos/raw/;
 encoded web copies are written to public/videos/ and published to a
-long-lived GitHub Release (default tag: videos). Raw masters can also be
-exposed as public/videos-hq/ (symlink) and published to the `videos-hq`
-release for HQ playback.
+long-lived GitHub Release (default tag: videos-<talk>). A separate
+visually-lossless HQ tier is encoded into videos/hq/ and exposed via a
+public/videos-hq/ symlink for venue playback. HQ files are local-only —
+they are never uploaded to a release.
 
 Subcommands:
-    sync     rclone mirror raw files from the configured remote
-    encode   ffmpeg raw -> web, per the profile in manifest.toml (idempotent)
-    publish  gh release upload web files, clobbering existing assets
-    check    sanity check: orphans, missing, over-budget, slide-ref mismatches
+    sync       rclone mirror raw files from the configured remote
+    encode     ffmpeg raw -> public/videos/ (web tier, idempotent)
+    publish    gh release upload web files, clobbering existing assets
+    check      sanity check: orphans, missing, over-budget, slide-ref mismatches
+    encode-hq  ffmpeg raw -> videos/hq/ (visually-lossless venue masters, local-only)
 """
 from __future__ import annotations
 
