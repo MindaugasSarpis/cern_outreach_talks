@@ -433,6 +433,166 @@ def cmd_check(_: argparse.Namespace) -> int:
 
 
 # ---------------------------------------------------------------------------
+# encode-hq — ffmpeg raw -> videos/hq/ (visually-lossless venue masters)
+# ---------------------------------------------------------------------------
+
+def _ensure_hq_symlink() -> None:
+    """Make public/videos-hq a symlink to videos/hq (idempotent).
+
+    If the path already exists as a symlink to the correct target, do nothing.
+    If it exists as a different symlink, replace it.
+    If it exists as a real file or directory, raise — user must remove it.
+    """
+    HQ_DIR.mkdir(parents=True, exist_ok=True)
+    target = HQ_DIR.resolve()
+    if HQ_LINK_DIR.is_symlink():
+        if HQ_LINK_DIR.resolve() == target:
+            return
+        HQ_LINK_DIR.unlink()
+    elif HQ_LINK_DIR.exists():
+        raise RuntimeError(
+            f"{HQ_LINK_DIR} exists and is not a symlink; remove it manually."
+        )
+    HQ_LINK_DIR.parent.mkdir(parents=True, exist_ok=True)
+    HQ_LINK_DIR.symlink_to(target, target_is_directory=True)
+
+
+def _encode_one_hq(entry: VideoEntry, force: bool, default_long_edge: int) -> tuple[VideoEntry, str, int, int]:
+    """HQ counterpart of _encode_one. Writes to videos/hq/<name>.
+
+    Profile selection (driven by the existing per-video `profile` field):
+      - remux       → stream-copy (already web-friendly, no scale needed)
+      - silent-loop → hq-visually-lossless + -an (strip audio)
+      - everything else → hq-visually-lossless
+
+    Returns (entry, status, raw_size, hq_size). status in {skipped, ok, missing, failed}.
+    """
+    raw = RAW_DIR / entry.name
+    hq = HQ_DIR / entry.name
+    if not raw.exists():
+        return entry, "missing", 0, 0
+    raw_size = raw.stat().st_size
+    if hq.exists() and not force and hq.stat().st_mtime >= raw.stat().st_mtime:
+        return entry, "skipped", raw_size, hq.stat().st_size
+
+    if entry.profile == "remux":
+        ff_args = _profile_args("remux", default_long_edge)
+    else:
+        long_edge = entry.long_edge_px or default_long_edge
+        ff_args = _profile_args("hq-visually-lossless", long_edge)
+        if entry.profile == "silent-loop":
+            ff_args = ff_args + ["-an"]
+
+    tmp = hq.with_name(f"{hq.stem}.partial{hq.suffix}")
+    cmd = [
+        "ffmpeg", "-y", "-hide_banner", "-nostdin", "-loglevel", "error",
+        "-i", str(raw),
+        *ff_args,
+        str(tmp),
+    ]
+    try:
+        subprocess.run(cmd, check=True)
+    except subprocess.CalledProcessError:
+        # Audio-codec mismatches are the most common failure with `-c:a copy`.
+        # Auto-retry once with re-encoded AAC. Drop -an (silent-loop already
+        # had -an above; harmless duplicate is overwritten by the retry path).
+        tmp.unlink(missing_ok=True)
+        if "-c:a" in ff_args and "copy" in ff_args:
+            retry_args = []
+            i = 0
+            while i < len(ff_args):
+                if ff_args[i] == "-c:a" and i + 1 < len(ff_args) and ff_args[i + 1] == "copy":
+                    retry_args.extend(["-c:a", "aac", "-b:a", "256k", "-ac", "2"])
+                    i += 2
+                else:
+                    retry_args.append(ff_args[i])
+                    i += 1
+            cmd_retry = [
+                "ffmpeg", "-y", "-hide_banner", "-nostdin", "-loglevel", "error",
+                "-i", str(raw),
+                *retry_args,
+                str(tmp),
+            ]
+            try:
+                subprocess.run(cmd_retry, check=True)
+            except subprocess.CalledProcessError as e:
+                tmp.unlink(missing_ok=True)
+                print(f"  ! ffmpeg HQ failed for {entry.name} (retry also failed): {e}", file=sys.stderr)
+                return entry, "failed", raw_size, 0
+        else:
+            print(f"  ! ffmpeg HQ failed for {entry.name}", file=sys.stderr)
+            return entry, "failed", raw_size, 0
+    tmp.replace(hq)
+    return entry, "ok", raw_size, hq.stat().st_size
+
+
+def cmd_encode_hq(args: argparse.Namespace) -> int:
+    defaults, videos = load_manifest()
+    if args.only:
+        wanted = set(args.only)
+        videos = [v for v in videos if v.name in wanted]
+        if not videos:
+            print(f"error: no manifest entries match {args.only}", file=sys.stderr)
+            return 2
+
+    if not shutil.which("ffmpeg"):
+        print("error: ffmpeg not installed. brew install ffmpeg", file=sys.stderr)
+        return 2
+    HQ_DIR.mkdir(parents=True, exist_ok=True)
+    _ensure_hq_symlink()
+
+    default_long_edge = int(defaults.get("long_edge_px", 1920))
+    print(f"HQ-encoding {len(videos)} video(s). raw -> {HQ_DIR.relative_to(REPO)} (long edge: {default_long_edge}px)")
+
+    # Remuxes can run in parallel; full encodes serially (CPU-bound).
+    remuxes = [v for v in videos if v.profile == "remux"]
+    encodes = [v for v in videos if v.profile != "remux"]
+
+    total_raw = 0
+    total_hq = 0
+    failed: list[str] = []
+
+    def report(entry, status, raw_size, hq_size):
+        nonlocal total_raw, total_hq
+        total_raw += raw_size
+        total_hq += hq_size
+        if status == "missing":
+            print(f"  - {entry.name}: MISSING in raw/")
+            failed.append(entry.name)
+        elif status == "failed":
+            print(f"  x {entry.name}: FAILED")
+            failed.append(entry.name)
+        elif status == "skipped":
+            print(f"  = {entry.name}: skipped (up to date, {human_size(hq_size)})")
+        else:
+            delta = raw_size - hq_size
+            sign = "-" if delta >= 0 else "+"
+            pct = (abs(delta) / raw_size * 100) if raw_size else 0
+            print(
+                f"  + {entry.name}: hq "
+                f"[{human_size(raw_size)} -> {human_size(hq_size)}, {sign}{pct:.0f}%]"
+            )
+
+    if remuxes:
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            futures = [pool.submit(_encode_one_hq, v, args.force, default_long_edge) for v in remuxes]
+            for fut in as_completed(futures):
+                report(*fut.result())
+
+    for v in encodes:
+        report(*_encode_one_hq(v, args.force, default_long_edge))
+
+    print()
+    print(f"Total raw: {human_size(total_raw)}")
+    print(f"Total hq:  {human_size(total_hq)}")
+    if failed:
+        print()
+        print(f"FAILED: {len(failed)} file(s): {', '.join(failed)}")
+        return 1
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # link-hq — expose videos/raw/ at public/videos-hq/ for local HQ playback
 # ---------------------------------------------------------------------------
 
@@ -543,6 +703,11 @@ def main() -> int:
 
     p_lhq = sub.add_parser("link-hq", help="symlink videos/raw/ -> public/videos-hq/ for local HQ playback")
     p_lhq.set_defaults(func=cmd_link_hq)
+
+    p_ehq = sub.add_parser("encode-hq", help="ffmpeg raw -> videos/hq/ (visually-lossless venue masters, local-only)")
+    p_ehq.add_argument("--force", action="store_true", help="re-encode even if up to date")
+    p_ehq.add_argument("--only", nargs="+", metavar="NAME", help="limit to named file(s)")
+    p_ehq.set_defaults(func=cmd_encode_hq)
 
     p_phq = sub.add_parser("publish-hq", help="upload raw masters to the `videos-hq` GH Release")
     p_phq.add_argument("--dry-run", action="store_true")
