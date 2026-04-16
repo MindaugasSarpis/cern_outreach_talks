@@ -3,14 +3,11 @@ import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { useIsSlideActive } from '@slidev/client'
 
 // Per-talk config injected via Vite env (see each talk's package.json scripts):
-//   VITE_VIDEO_REPO         e.g. "MindaugasSarpis/cern_outreach_talks"
-//   VITE_VIDEO_RELEASE      e.g. "videos-2026-04-28-editai"
-//   VITE_VIDEO_RELEASE_HQ   e.g. "videos-hq-2026-04-28-editai"
-const REPO        = import.meta.env.VITE_VIDEO_REPO       || 'MindaugasSarpis/cern_outreach_talks'
-const RELEASE     = import.meta.env.VITE_VIDEO_RELEASE    || 'videos'
-const RELEASE_HQ  = import.meta.env.VITE_VIDEO_RELEASE_HQ || 'videos-hq'
-const REMOTE_BASE    = `https://github.com/${REPO}/releases/download/${RELEASE}`
-const REMOTE_BASE_HQ = `https://github.com/${REPO}/releases/download/${RELEASE_HQ}`
+//   VITE_VIDEO_REPO     e.g. "MindaugasSarpis/cern_outreach_talks"
+//   VITE_VIDEO_RELEASE  e.g. "videos-2026-04-28-editai"
+const REPO    = import.meta.env.VITE_VIDEO_REPO    || 'MindaugasSarpis/cern_outreach_talks'
+const RELEASE = import.meta.env.VITE_VIDEO_RELEASE || 'videos'
+const REMOTE_BASE = `https://github.com/${REPO}/releases/download/${RELEASE}`
 
 const props = defineProps({
   src:      { type: String, required: true },
@@ -19,23 +16,27 @@ const props = defineProps({
   loop:     { type: Boolean, default: false },
   muted:    { type: Boolean, default: false },
   controls: { type: Boolean, default: true },
-  // Serve the untouched raw master instead of the web-encoded copy.
-  // Local: public/videos-hq/<src> (symlink to videos/raw/ — run `pnpm videos:link-hq`).
-  // Deployed: fetched from the `videos-hq` GH Release.
+  // Serve the visually-lossless venue master instead of the web-encoded copy.
+  // Local dev: public/videos-hq/<src> (symlink to videos/hq/ — run
+  //   `pnpm videos:encode-hq`).
+  // Deployed: HQ is local-only, so this falls back transparently to the web
+  //   copy (local public/videos/, then GH Release).
   hq:       { type: Boolean, default: false },
 })
 
-const baseDir = computed(() => props.hq ? 'videos-hq' : 'videos')
-const remoteBase = computed(() => props.hq ? REMOTE_BASE_HQ : REMOTE_BASE)
-const localSrc = computed(() => `${import.meta.env.BASE_URL || '/'}${baseDir.value}/${props.src}`)
-const remoteSrc = computed(() => props.fallback || `${remoteBase.value}/${props.src}`)
+// Three-step fallback chain when hq=true: hqLocal → webLocal → webRemote.
+// Two-step when hq=false: webLocal → webRemote.
+const base = computed(() => import.meta.env.BASE_URL || '/')
+const hqLocalSrc = computed(() => `${base.value}videos-hq/${props.src}`)
+const webLocalSrc = computed(() => `${base.value}videos/${props.src}`)
+const webRemoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`)
+const localSrc = computed(() => props.hq ? hqLocalSrc.value : webLocalSrc.value)
 
 const videoRef = ref(null)
 const sourceRef = ref(null)
 const currentSrc = ref(localSrc.value)
 const status = ref('idle')
 const isActive = useIsSlideActive()
-const isLocal = computed(() => currentSrc.value === localSrc.value)
 const hasBeenActive = ref(false)
 
 const mimeType = computed(() => {
@@ -47,17 +48,22 @@ const mimeType = computed(() => {
 let switching = false
 function onError() {
   if (switching || !hasBeenActive.value) return
-  if (currentSrc.value === localSrc.value) {
-    switching = true
-    status.value = 'loading'
-    currentSrc.value = remoteSrc.value
-    nextTick(() => {
-      videoRef.value?.load()
-      switching = false
-    })
-  } else {
+  // Walk the fallback chain: hqLocal (if hq) → webLocal → webRemote → error.
+  const chain = props.hq
+    ? [hqLocalSrc.value, webLocalSrc.value, webRemoteSrc.value]
+    : [webLocalSrc.value, webRemoteSrc.value]
+  const idx = chain.indexOf(currentSrc.value)
+  if (idx === -1 || idx === chain.length - 1) {
     status.value = 'error'
+    return
   }
+  switching = true
+  status.value = 'loading'
+  currentSrc.value = chain[idx + 1]
+  nextTick(() => {
+    videoRef.value?.load()
+    switching = false
+  })
 }
 
 function syncPlayback() {
