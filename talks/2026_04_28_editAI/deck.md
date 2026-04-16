@@ -23,3 +23,87 @@ Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 ---
 
 <VideoPlayer src="Milky_Way_Sim_Audio.mp4" />
+
+---
+layout: image
+image: /figures/gaussian.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/gaussian_highstats.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/cmb_data.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/cmb_fit.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/cmb_power_spectrum.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/g2_data.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/g2_fit.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/higgs_bkg.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/higgs_signal.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/higgs_sigbkg.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/higgs_data.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/z_data.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/z_fit3.gif
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /figures/z_alternatives.gif
+backgroundSize: contain
+---

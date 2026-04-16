@@ -73,12 +73,12 @@ onMounted(() => {
   border-radius: 50%;
   pointer-events: none;
   z-index: 1;
-  filter: blur(70px);
+  filter: blur(4.375rem);
 }
 
 .vol-1 {
-  width: 450px;
-  height: 280px;
+  width: 28rem;
+  height: 17.5rem;
   top: 25%;
   left: 10%;
   background: rgba(50, 190, 200, 0.15);
@@ -87,8 +87,8 @@ onMounted(() => {
 }
 
 .vol-2 {
-  width: 380px;
-  height: 220px;
+  width: 24rem;
+  height: 14rem;
   top: 35%;
   right: 5%;
   background: rgba(70, 210, 220, 0.12);
@@ -114,13 +114,13 @@ onMounted(() => {
   z-index: 2;
   margin-left: 4.5rem;
   width: 0;
-  height: 2px;
+  height: 0.25rem;
   background: linear-gradient(90deg, #5ec4c4, rgba(94, 196, 196, 0.15));
   transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
 }
 
 .cover-accent.is-mounted {
-  width: min(35%, 280px);
+  width: 35%;
 }
 
 /* === Content === */
@@ -130,7 +130,7 @@ onMounted(() => {
   padding: 1.75rem 4.5rem 3.5rem;
   max-width: 80%;
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(1rem);
   transition: opacity 0.7s ease-out 0.15s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
 }
 
@@ -139,17 +139,19 @@ onMounted(() => {
   transform: translateY(0);
 }
 
-/* === Typography === */
+/* === Typography — sized for 2880px-wide LED wall === */
 .cover-root :deep(h1) {
   color: #f0f0f0 !important;
   font-weight: 600;
+  font-size: 6rem;
   letter-spacing: -0.01em;
-  line-height: 1.25;
-  margin: 0.35rem 0;
+  line-height: 1.1;
+  margin: 0.5rem 0;
 }
 
-.cover-root :deep(h1:first-child) {
-  font-size: 1.5rem;
+/* Kicker/pre-title: only when a second h1 follows */
+.cover-root :deep(h1:first-child:has(~ h1)) {
+  font-size: 2.25rem;
   font-weight: 400;
   color: rgba(220, 220, 220, 0.7) !important;
   letter-spacing: 0.02em;
@@ -158,15 +160,16 @@ onMounted(() => {
 .cover-root :deep(h2) {
   color: #5ec4c4 !important;
   font-weight: 500;
-  font-size: 1.35rem;
+  font-size: 2.5rem;
   letter-spacing: 0.03em;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 
 .cover-root :deep(p) {
-  color: rgba(240, 240, 240, 0.5);
-  margin-top: 0.5rem;
-  font-size: 0.95rem;
+  color: rgba(240, 240, 240, 0.65);
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  line-height: 1.4;
 }
 
 /* Mobile: disable heavy animations to save GPU/battery */
