@@ -75,3 +75,23 @@ Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 ---
 
 <VideoPlayer src="z_alternatives.mp4" loop muted :controls="false" />
+
+---
+
+<VideoPlayer src="CERN-FOOTAGE-2022-042-001.mov" />
+
+---
+
+<VideoPlayer src="Cassini_Grand_Finale_No_Vo.mp4" />
+
+---
+
+<VideoPlayer src="higgs_signal.mp4" loop muted :controls="false" />
+
+---
+
+<VideoPlayer src="cmb_power_spectrum_data.mp4" loop muted :controls="false" />
+
+---
+
+<VideoPlayer src="cmb_power_spectrum_fit.mp4" loop muted :controls="false" />
