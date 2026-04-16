@@ -31,6 +31,7 @@ TALK = Path.cwd().resolve()
 MANIFEST = TALK / "videos" / "manifest.toml"
 RAW_DIR = TALK / "videos" / "raw"
 WEB_DIR = TALK / "public" / "videos"
+HQ_DIR = TALK / "videos" / "hq"
 HQ_LINK_DIR = TALK / "public" / "videos-hq"
 SLIDES_DIR = TALK
 # Back-compat alias: some logging still references REPO.
@@ -110,6 +111,14 @@ PROFILES: dict[str, list[str]] = {
         "-pix_fmt", "yuv420p",
         "-vf", "scale='min({LONG_EDGE},iw)':-2",
         "-c:a", "aac", "-b:a", "192k", "-ac", "2",
+        "-movflags", "+faststart",
+    ],
+    "hq-visually-lossless": [
+        "-c:v", "libx265", "-tag:v", "hvc1",
+        "-preset", "slow", "-crf", "16",
+        "-pix_fmt", "yuv420p",
+        "-vf", "scale='min({LONG_EDGE},iw)':-2",
+        "-c:a", "copy",
         "-movflags", "+faststart",
     ],
 }
