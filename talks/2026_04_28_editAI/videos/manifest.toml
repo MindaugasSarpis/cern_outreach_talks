@@ -36,12 +36,6 @@ used_in = ["deck"]
 notes   = "CERN documentary B-roll (2022)"
 
 [[videos]]
-name    = "CERN-FOOTAGE-2026-012-001.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "CERN documentary B-roll (2026)"
-
-[[videos]]
 name    = "cmb_data.mp4"
 profile = "remux"
 used_in = ["deck"]
@@ -58,6 +52,18 @@ name    = "cmb_power_spectrum.mp4"
 profile = "remux"
 used_in = ["deck"]
 notes   = "CMB power-spectrum chart render"
+
+[[videos]]
+name    = "cmb_power_spectrum_data.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "CMB power-spectrum data variant chart render"
+
+[[videos]]
+name    = "cmb_power_spectrum_fit.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "CMB power-spectrum fit variant chart render"
 
 [[videos]]
 name    = "g2_data.mp4"
@@ -106,3 +112,21 @@ name    = "higgs_signal.mp4"
 profile = "remux"
 used_in = ["deck"]
 notes   = "Higgs signal-only chart render"
+
+[[videos]]
+name    = "z_data.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Z-boson data chart render"
+
+[[videos]]
+name    = "z_fit3.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Z-boson fit chart render"
+
+[[videos]]
+name    = "z_alternatives.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Z-boson alternative-models chart render"
