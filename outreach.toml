@@ -4,8 +4,8 @@
 # talks/<name>/videos/manifest.toml under [defaults], or per-video on a
 # [[videos]] entry. Merge order (wins top-down): per-video > talk > global.
 #
-# Release tags default to `videos-<talk-dirname>` and `videos-hq-<talk-dirname>`
-# (lowercased, underscores -> dashes). Override in a talk's [defaults] if needed.
+# Release tags default to `videos-<talk-dirname>` (lowercased, underscores ->
+# dashes). Override in a talk's [defaults] if needed.
 
 [defaults]
 long_edge_px  = 1920   # scale cap for re-encode profiles; talks with 4K venue

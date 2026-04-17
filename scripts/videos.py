@@ -141,7 +141,6 @@ def load_manifest() -> tuple[dict, list[VideoEntry]]:
     # Merge: talk [defaults] wins over global outreach.toml [defaults].
     defaults = {**_load_global_defaults(), **data.get("defaults", {})}
     defaults.setdefault("release_tag", _auto_release_tag("videos"))
-    defaults.setdefault("release_tag_hq", _auto_release_tag("videos-hq"))
     videos = [
         VideoEntry(
             name=v["name"],

@@ -65,8 +65,8 @@ merges `[defaults]` from:
 2. `talks/<name>/videos/manifest.toml` `[defaults]` — talk overrides
 3. Per-video `[[videos]]` fields — most specific
 
-Release tags default to `videos-<talk-dirname-lowercased>` and
-`videos-hq-<talk-dirname-lowercased>` unless set in talk `[defaults]`.
+Release tags default to `videos-<talk-dirname-lowercased>` unless set
+in talk `[defaults]`.
 
 ## Commands
 
