@@ -37,17 +37,18 @@ The conda env bundles everything: `nodejs`, `pnpm`, `python>=3.11`,
 ├── scripts/videos.py             # video pipeline (sync/encode/publish/check)
 └── talks/<name>/
     ├── deck.md                   # Slidev entry — theme: ../../theme
-    ├── .env                      # VITE_VIDEO_REPO / VITE_VIDEO_RELEASE[_HQ]
+    ├── .env                      # VITE_VIDEO_REPO / VITE_VIDEO_RELEASE
     ├── package.json              # slidev + per-talk scripts
     ├── components/ -> ../../components   (symlink; required for auto-import)
     ├── slides/                   # per-section markdown (optional)
     ├── public/                   # static assets (figures, encoded videos)
     │   ├── figures/              # images, gifs
     │   ├── videos/               # encoded web copies (gitignored)
-    │   └── videos-hq/            # symlink to videos/raw/ (gitignored)
+    │   └── videos-hq/            # symlink to videos/hq/ (gitignored)
     └── videos/
         ├── manifest.toml         # per-talk + per-video overrides
-        └── raw/                  # originals (gitignored, rclone-synced)
+        ├── raw/                  # originals (gitignored, rclone-synced)
+        └── hq/                   # visually-lossless venue masters (gitignored)
 ```
 
 **Theme** is referenced as `theme: ../../theme` in each deck's

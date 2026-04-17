@@ -36,8 +36,6 @@ WEB_DIR = TALK / "public" / "videos"
 HQ_DIR = TALK / "videos" / "hq"
 HQ_LINK_DIR = TALK / "public" / "videos-hq"
 SLIDES_DIR = TALK
-# Back-compat alias: some logging still references REPO.
-REPO = TALK
 
 
 def _find_monorepo_root(start: Path) -> Path | None:
@@ -223,38 +221,31 @@ def _encode_one(entry: VideoEntry, force: bool, default_long_edge: int) -> tuple
     return entry, "ok", raw_size, web.stat().st_size
 
 
-def cmd_encode(args: argparse.Namespace) -> int:
-    defaults, videos = load_manifest()
-    if args.only:
-        wanted = set(args.only)
-        videos = [v for v in videos if v.name in wanted]
-        if not videos:
-            print(f"error: no manifest entries match {args.only}", file=sys.stderr)
-            return 2
+def _run_encode_batch(
+    videos: list[VideoEntry],
+    worker,
+    force: bool,
+    default_long_edge: int,
+    label: str,
+    max_mb: int | None = None,
+) -> int:
+    """Shared driver for cmd_encode and cmd_encode_hq.
 
-    if not shutil.which("ffmpeg"):
-        print("error: ffmpeg not installed. brew install ffmpeg", file=sys.stderr)
-        return 2
-    WEB_DIR.mkdir(parents=True, exist_ok=True)
-
-    max_mb = defaults.get("max_size_mb", 200)
-    default_long_edge = int(defaults.get("long_edge_px", 1920))
-    print(f"Encoding {len(videos)} video(s). raw -> {WEB_DIR.relative_to(REPO)} (default long edge: {default_long_edge}px)")
-
-    # Remux jobs are IO-bound and cheap — run them in parallel.
-    # Re-encode jobs are CPU-bound — run them one at a time to avoid thrashing.
+    Splits remux (parallel) from re-encode (serial) jobs, prints per-video
+    reports, and returns 0 on success / 1 on any failure.
+    """
     remuxes = [v for v in videos if v.profile == "remux"]
     encodes = [v for v in videos if v.profile != "remux"]
 
     total_raw = 0
-    total_web = 0
+    total_out = 0
     failed: list[str] = []
     over_budget: list[tuple[str, int]] = []
 
-    def report(entry, status, raw_size, web_size):
-        nonlocal total_raw, total_web
+    def report(entry, status, raw_size, out_size):
+        nonlocal total_raw, total_out
         total_raw += raw_size
-        total_web += web_size
+        total_out += out_size
         if status == "missing":
             print(f"  - {entry.name}: MISSING in raw/")
             failed.append(entry.name)
@@ -262,32 +253,32 @@ def cmd_encode(args: argparse.Namespace) -> int:
             print(f"  x {entry.name}: FAILED")
             failed.append(entry.name)
         elif status == "skipped":
-            print(f"  = {entry.name}: skipped (up to date, {human_size(web_size)})")
+            print(f"  = {entry.name}: skipped (up to date, {human_size(out_size)})")
         else:
-            delta = raw_size - web_size
+            delta = raw_size - out_size
             sign = "-" if delta >= 0 else "+"
             pct = (abs(delta) / raw_size * 100) if raw_size else 0
             print(
-                f"  + {entry.name}: {entry.profile} "
-                f"[{human_size(raw_size)} -> {human_size(web_size)}, {sign}{pct:.0f}%]"
+                f"  + {entry.name}: {label} "
+                f"[{human_size(raw_size)} -> {human_size(out_size)}, {sign}{pct:.0f}%]"
             )
-            if web_size > max_mb * 1024 * 1024:
-                over_budget.append((entry.name, web_size))
+            if max_mb is not None and out_size > max_mb * 1024 * 1024:
+                over_budget.append((entry.name, out_size))
 
     if remuxes:
         with ThreadPoolExecutor(max_workers=4) as pool:
-            futures = [pool.submit(_encode_one, v, args.force, default_long_edge) for v in remuxes]
+            futures = [pool.submit(worker, v, force, default_long_edge) for v in remuxes]
             for fut in as_completed(futures):
                 report(*fut.result())
 
     for v in encodes:
-        report(*_encode_one(v, args.force, default_long_edge))
+        report(*worker(v, force, default_long_edge))
 
     print()
-    print(f"Total raw: {human_size(total_raw)}")
-    print(f"Total web: {human_size(total_web)}")
+    print(f"Total raw:    {human_size(total_raw)}")
+    print(f"Total {label + ':':8s} {human_size(total_out)}")
     if total_raw:
-        print(f"Saved:     {human_size(total_raw - total_web)} ({(1 - total_web/total_raw)*100:.0f}%)")
+        print(f"Saved:        {human_size(total_raw - total_out)} ({(1 - total_out/total_raw)*100:.0f}%)")
     if over_budget:
         print()
         print(f"WARNING: {len(over_budget)} file(s) exceed max_size_mb={max_mb}:")
@@ -298,6 +289,24 @@ def cmd_encode(args: argparse.Namespace) -> int:
         print(f"FAILED: {len(failed)} file(s): {', '.join(failed)}")
         return 1
     return 0
+
+
+def cmd_encode(args: argparse.Namespace) -> int:
+    defaults, videos = load_manifest()
+    if args.only:
+        wanted = set(args.only)
+        videos = [v for v in videos if v.name in wanted]
+        if not videos:
+            print(f"error: no manifest entries match {args.only}", file=sys.stderr)
+            return 2
+    if not shutil.which("ffmpeg"):
+        print("error: ffmpeg not installed. brew install ffmpeg", file=sys.stderr)
+        return 2
+    WEB_DIR.mkdir(parents=True, exist_ok=True)
+    default_long_edge = int(defaults.get("long_edge_px", 1920))
+    max_mb = defaults.get("max_size_mb", 200)
+    print(f"Encoding {len(videos)} video(s). raw -> {WEB_DIR.relative_to(TALK)} (default long edge: {default_long_edge}px)")
+    return _run_encode_batch(videos, _encode_one, args.force, default_long_edge, label="web", max_mb=max_mb)
 
 
 # ---------------------------------------------------------------------------
@@ -538,64 +547,15 @@ def cmd_encode_hq(args: argparse.Namespace) -> int:
         if not videos:
             print(f"error: no manifest entries match {args.only}", file=sys.stderr)
             return 2
-
     if not shutil.which("ffmpeg"):
         print("error: ffmpeg not installed. brew install ffmpeg", file=sys.stderr)
         return 2
     HQ_DIR.mkdir(parents=True, exist_ok=True)
     _ensure_hq_symlink()
-
     default_long_edge = int(defaults.get("long_edge_px", 1920))
-    # Note: no over_budget warning here. HQ files are local-only and expected
-    # to be large; the max_size_mb cap only applies to the web tier.
-    print(f"HQ-encoding {len(videos)} video(s). raw -> {HQ_DIR.relative_to(REPO)} (long edge: {default_long_edge}px)")
-
-    # Remuxes can run in parallel; full encodes serially (CPU-bound).
-    remuxes = [v for v in videos if v.profile == "remux"]
-    encodes = [v for v in videos if v.profile != "remux"]
-
-    total_raw = 0
-    total_hq = 0
-    failed: list[str] = []
-
-    def report(entry, status, raw_size, hq_size):
-        nonlocal total_raw, total_hq
-        total_raw += raw_size
-        total_hq += hq_size
-        if status == "missing":
-            print(f"  - {entry.name}: MISSING in raw/")
-            failed.append(entry.name)
-        elif status == "failed":
-            print(f"  x {entry.name}: FAILED")
-            failed.append(entry.name)
-        elif status == "skipped":
-            print(f"  = {entry.name}: skipped (up to date, {human_size(hq_size)})")
-        else:
-            delta = raw_size - hq_size
-            sign = "-" if delta >= 0 else "+"
-            pct = (abs(delta) / raw_size * 100) if raw_size else 0
-            print(
-                f"  + {entry.name}: hq "
-                f"[{human_size(raw_size)} -> {human_size(hq_size)}, {sign}{pct:.0f}%]"
-            )
-
-    if remuxes:
-        with ThreadPoolExecutor(max_workers=4) as pool:
-            futures = [pool.submit(_encode_one_hq, v, args.force, default_long_edge) for v in remuxes]
-            for fut in as_completed(futures):
-                report(*fut.result())
-
-    for v in encodes:
-        report(*_encode_one_hq(v, args.force, default_long_edge))
-
-    print()
-    print(f"Total raw: {human_size(total_raw)}")
-    print(f"Total hq:  {human_size(total_hq)}")
-    if failed:
-        print()
-        print(f"FAILED: {len(failed)} file(s): {', '.join(failed)}")
-        return 1
-    return 0
+    # No over_budget warning: HQ files are local-only and expected to be large.
+    print(f"HQ-encoding {len(videos)} video(s). raw -> {HQ_DIR.relative_to(TALK)} (long edge: {default_long_edge}px)")
+    return _run_encode_batch(videos, _encode_one_hq, args.force, default_long_edge, label="hq")
 
 
 # ---------------------------------------------------------------------------

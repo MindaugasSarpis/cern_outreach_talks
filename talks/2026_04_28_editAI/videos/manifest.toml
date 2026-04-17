@@ -14,7 +14,7 @@
 source_remote = "gdrive:Work/Outreach/Resources/Videos/released"
 long_edge_px  = 2880   # venue screen is 2880x1600; override global 1920
 
-# release_tag / release_tag_hq auto-derive from talk dirname.
+# release_tag auto-derives from talk dirname.
 # max_size_mb inherited from /outreach.toml.
 
 [[videos]]

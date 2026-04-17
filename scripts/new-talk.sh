@@ -25,8 +25,6 @@ fi
 SLUG="$(echo "$NAME" | tr '[:upper:]_' '[:lower:]-')"
 PKG_NAME="talk-$SLUG"
 RELEASE="videos-$SLUG"
-RELEASE_HQ="videos-hq-$SLUG"
-
 REPO_SLUG="$(cd "$ROOT" && git remote get-url github 2>/dev/null \
   | sed -E 's#.*github\.com[:/](.+)(\.git)?$#\1#; s#\.git$##' \
   || echo 'OWNER/REPO')"
@@ -37,7 +35,6 @@ ln -s ../../components "$DIR/components"
 cat > "$DIR/.env" <<EOF
 VITE_VIDEO_REPO=$REPO_SLUG
 VITE_VIDEO_RELEASE=$RELEASE
-VITE_VIDEO_RELEASE_HQ=$RELEASE_HQ
 EOF
 
 cat > "$DIR/package.json" <<EOF
@@ -53,8 +50,7 @@ cat > "$DIR/package.json" <<EOF
     "videos:encode": "python3 ../../scripts/videos.py encode",
     "videos:publish": "python3 ../../scripts/videos.py publish",
     "videos:check": "python3 ../../scripts/videos.py check",
-    "videos:link-hq": "python3 ../../scripts/videos.py link-hq",
-    "videos:publish-hq": "python3 ../../scripts/videos.py publish-hq"
+    "videos:encode-hq": "python3 ../../scripts/videos.py encode-hq"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2"
