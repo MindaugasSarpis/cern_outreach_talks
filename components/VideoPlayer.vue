@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, nextTick, onMounted } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { useIsSlideActive } from '@slidev/client'
 
 // Per-talk config injected via Vite env (see each talk's package.json scripts):
@@ -45,10 +45,69 @@ const mimeType = computed(() => {
   return 'video/mp4'
 })
 
+// --- Custom controls state ---
+const playing = ref(false)
+const currentTime = ref(0)
+const duration = ref(0)
+const isMuted = ref(true)
+const progressPercent = computed(() => duration.value ? (currentTime.value / duration.value) * 100 : 0)
+const controlsVisible = ref(true)
+let hideTimer = null
+
+function formatTime(s) {
+  if (!isFinite(s)) return '0:00'
+  const m = Math.floor(s / 60)
+  const sec = Math.floor(s % 60)
+  return `${m}:${sec.toString().padStart(2, '0')}`
+}
+
+function onTimeUpdate() {
+  const v = videoRef.value
+  if (!v) return
+  currentTime.value = v.currentTime
+  duration.value = v.duration || 0
+  playing.value = !v.paused
+  isMuted.value = v.muted
+}
+
+function togglePlay() {
+  const v = videoRef.value
+  if (!v) return
+  if (v.paused) {
+    v.play().catch(() => {})
+  } else {
+    v.pause()
+  }
+  playing.value = !v.paused
+}
+
+function toggleMute() {
+  const v = videoRef.value
+  if (!v) return
+  v.muted = !v.muted
+  isMuted.value = v.muted
+}
+
+function seek(e) {
+  const v = videoRef.value
+  if (!v || !duration.value) return
+  const rect = e.currentTarget.getBoundingClientRect()
+  const ratio = (e.clientX - rect.left) / rect.width
+  v.currentTime = ratio * duration.value
+}
+
+function showControls() {
+  controlsVisible.value = true
+  clearTimeout(hideTimer)
+  hideTimer = setTimeout(() => {
+    if (playing.value) controlsVisible.value = false
+  }, 3000)
+}
+
+// --- Fallback chain ---
 let switching = false
 function onError() {
   if (switching || !hasBeenActive.value) return
-  // Walk the fallback chain: hqLocal (if hq) → webLocal → webRemote → error.
   const chain = props.hq
     ? [hqLocalSrc.value, webLocalSrc.value, webRemoteSrc.value]
     : [webLocalSrc.value, webRemoteSrc.value]
@@ -70,7 +129,6 @@ function syncPlayback() {
   const video = videoRef.value
   if (!video) return
   if (isActive.value) {
-    // First activation: attach source and start loading
     if (!hasBeenActive.value) {
       hasBeenActive.value = true
       status.value = 'loading'
@@ -92,21 +150,22 @@ watch(isActive, syncPlayback, { immediate: true })
 
 function onLoaded() {
   status.value = 'ready'
+  duration.value = videoRef.value?.duration || 0
   syncPlayback()
 }
 
 onMounted(() => {
-  // Source error events don't bubble to <video> on iOS Safari.
-  // Attach error listener directly on the <source> DOM element.
   sourceRef.value?.addEventListener('error', onError)
-  // The immediate watcher above may fire before refs are populated —
-  // re-run once refs exist so the initially-active slide actually loads.
   syncPlayback()
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(hideTimer)
 })
 </script>
 
 <template>
-  <div class="video-player">
+  <div class="video-player" @mousemove="controls && showControls()" @click="controls && togglePlay()">
     <div v-if="status === 'loading' || status === 'idle'" class="video-status">Loading video&hellip;</div>
     <div v-if="status === 'error'" class="video-status video-error">
       Video not available: <code>{{ src }}</code>
@@ -114,17 +173,27 @@ onMounted(() => {
     <video
       ref="videoRef"
       :loop="loop"
-      :controls="controls"
       muted
       playsinline
       webkit-playsinline
       preload="none"
       @loadeddata="onLoaded"
       @error="onError"
+      @timeupdate="onTimeUpdate"
+      @play="playing = true"
+      @pause="playing = false"
       :class="{ 'video-ready': status === 'ready' }"
     >
       <source ref="sourceRef" :src="hasBeenActive ? currentSrc : ''" :type="mimeType" />
     </video>
+    <div v-if="controls && status === 'ready'" class="custom-controls" :class="{ visible: controlsVisible }" @click.stop>
+      <button class="ctrl-btn" @click="togglePlay">{{ playing ? '⏸' : '▶' }}</button>
+      <span class="ctrl-time">{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</span>
+      <div class="ctrl-progress" @click="seek">
+        <div class="ctrl-progress-fill" :style="{ width: progressPercent + '%' }"></div>
+      </div>
+      <button class="ctrl-btn" @click="toggleMute">{{ isMuted ? '🔇' : '🔊' }}</button>
+    </div>
   </div>
 </template>
 
@@ -136,12 +205,12 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   background: black;
+  cursor: pointer;
 }
 .video-player video {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  /* keep in layout so iOS Safari loads it, but hide visually until ready */
   opacity: 0;
   pointer-events: none;
 }
@@ -160,16 +229,56 @@ onMounted(() => {
   color: #ef4444;
   opacity: 1;
 }
-</style>
 
-<style>
-/* Chromium sizes the native media-controls panel to the video's intrinsic
-   resolution (e.g. 1920px for 1080p) rather than the element's CSS width,
-   so on the 2880px-wide venue canvas the control bar sits centered at
-   roughly half width. Force it to span the full element. */
-video::-webkit-media-controls-enclosure,
-video::-webkit-media-controls-panel {
-  width: 100%;
-  max-width: none;
+/* Custom controls — always spans full width of the slide */
+.custom-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  opacity: 0;
+  transition: opacity 0.3s;
+  cursor: default;
+}
+.custom-controls.visible {
+  opacity: 1;
+}
+.ctrl-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+}
+.ctrl-btn:hover {
+  opacity: 0.8;
+}
+.ctrl-time {
+  color: rgba(255,255,255,0.8);
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  min-width: 120px;
+}
+.ctrl-progress {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+.ctrl-progress-fill {
+  height: 100%;
+  background: white;
+  border-radius: 4px;
+  transition: width 0.1s linear;
 }
 </style>

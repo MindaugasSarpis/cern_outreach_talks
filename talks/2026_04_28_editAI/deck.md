@@ -26,55 +26,55 @@ Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 
 ---
 
-<VideoPlayer src="gaussian.mp4" loop muted :controls="false" />
+<VideoPlayer src="gaussian.mp4" muted />
 
 ---
 
-<VideoPlayer src="gaussian_highstats.mp4" loop muted :controls="false" />
+<VideoPlayer src="gaussian_highstats.mp4" muted />
 
 ---
 
-<VideoPlayer src="cmb_data.mp4" loop muted :controls="false" />
+<VideoPlayer src="cmb_data.mp4" muted />
 
 ---
 
-<VideoPlayer src="cmb_fit.mp4" loop muted :controls="false" />
+<VideoPlayer src="cmb_fit.mp4" muted />
 
 ---
 
-<VideoPlayer src="cmb_power_spectrum.mp4" loop muted :controls="false" />
+<VideoPlayer src="cmb_power_spectrum.mp4" muted />
 
 ---
 
-<VideoPlayer src="g2_data.mp4" loop muted :controls="false" />
+<VideoPlayer src="g2_data.mp4" muted />
 
 ---
 
-<VideoPlayer src="g2_fit.mp4" loop muted :controls="false" />
+<VideoPlayer src="g2_fit.mp4" muted />
 
 ---
 
-<VideoPlayer src="higgs_bkg.mp4" loop muted :controls="false" />
+<VideoPlayer src="higgs_bkg.mp4" muted />
 
 ---
 
-<VideoPlayer src="higgs_sigbkg.mp4" loop muted :controls="false" />
+<VideoPlayer src="higgs_sigbkg.mp4" muted />
 
 ---
 
-<VideoPlayer src="higgs_data.mp4" loop muted :controls="false" />
+<VideoPlayer src="higgs_data.mp4" muted />
 
 ---
 
-<VideoPlayer src="z_data.mp4" loop muted :controls="false" />
+<VideoPlayer src="z_data.mp4" muted />
 
 ---
 
-<VideoPlayer src="z_fit3.mp4" loop muted :controls="false" />
+<VideoPlayer src="z_fit3.mp4" muted />
 
 ---
 
-<VideoPlayer src="z_alternatives.mp4" loop muted :controls="false" />
+<VideoPlayer src="z_alternatives.mp4" muted />
 
 ---
 
@@ -86,12 +86,12 @@ Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 
 ---
 
-<VideoPlayer src="higgs_signal.mp4" loop muted :controls="false" />
+<VideoPlayer src="higgs_signal.mp4" muted />
 
 ---
 
-<VideoPlayer src="cmb_power_spectrum_data.mp4" loop muted :controls="false" />
+<VideoPlayer src="cmb_power_spectrum_data.mp4" muted />
 
 ---
 
-<VideoPlayer src="cmb_power_spectrum_fit.mp4" loop muted :controls="false" />
+<VideoPlayer src="cmb_power_spectrum_fit.mp4" muted />
