@@ -6,6 +6,6 @@ __pycache__/
 
 dist/
 **/public/videos/
-**/public/videos-hq/
+**/public/videos-hq
 **/videos/raw/
 **/videos/hq/
