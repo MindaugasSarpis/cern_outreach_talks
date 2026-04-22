@@ -78,10 +78,6 @@ Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 
 ---
 
-<VideoPlayer src="CERN-FOOTAGE-2022-042-001.mov" />
-
----
-
 <VideoPlayer src="Cassini_Grand_Finale_No_Vo.mp4" />
 
 ---

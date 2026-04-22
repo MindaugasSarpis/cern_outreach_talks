@@ -96,16 +96,16 @@ pnpm videos:check-all   # run videos:check in every talk
 ## VideoPlayer
 
 ```html
-<VideoPlayer src="Clip.mp4" />                   <!-- web copy (default) -->
-<VideoPlayer src="Clip.mp4" hq />                <!-- visually-lossless venue master (local only; falls back to web if absent) -->
+<VideoPlayer src="Clip.mp4" />                   <!-- HQ if present, else web (default) -->
+<VideoPlayer src="Clip.mp4" :hq="false" />       <!-- force web tier -->
 <VideoPlayer src="Loop.mp4" loop muted :controls="false" />
 ```
 
-Loads from `public/videos{,-hq}/` first; the web tier falls back to the
-per-talk web GH Release on 404. The release URL is built from `VITE_VIDEO_REPO`
-and `VITE_VIDEO_RELEASE` (set in the talk's `.env`). When `hq` is requested
-but the local HQ file is missing, playback transparently degrades to the
-web copy (local, then GH Release).
+`hq` defaults to `true`. Chain is `public/videos-hq/<src>` →
+`public/videos/<src>` → web GH Release. Local dev with `videos/hq/` populated
+gets venue masters automatically; deployed builds (no HQ files) transparently
+fall back to the web tier. The release URL is built from `VITE_VIDEO_REPO` and
+`VITE_VIDEO_RELEASE` (set in the talk's `.env`).
 
 HQ masters are uploaded to a parallel GH Release (`videos-hq-<talk>`) by
 `pnpm videos:publish-hq`. On a fresh machine, pull them with

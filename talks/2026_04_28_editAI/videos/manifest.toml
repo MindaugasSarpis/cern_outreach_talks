@@ -25,9 +25,9 @@ notes   = "Milky Way galaxy simulation, HEVC 7.3 Mbps CGI"
 
 [[videos]]
 name    = "Cassini_Grand_Finale_No_Vo.mp4"
-profile = "silent-loop"
+profile = "standard"
 used_in = ["deck"]
-notes   = "Cassini Grand Finale, no voiceover; loops silently"
+notes   = "Cassini Grand Finale, ambient audio (no voiceover)"
 
 [[videos]]
 name    = "CERN-FOOTAGE-2022-042-001.mov"

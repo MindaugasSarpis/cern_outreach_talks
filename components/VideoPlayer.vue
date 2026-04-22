@@ -21,7 +21,7 @@ const props = defineProps({
   // with `pnpm videos:encode-hq` or `gh release download videos-hq-<talk>
   // -D videos/hq/`. If the HQ file is missing the chain falls back to the
   // web copy (local public/videos/, then the web GH Release).
-  hq:       { type: Boolean, default: false },
+  hq:       { type: Boolean, default: true },
 })
 
 // Three-step fallback chain when hq=true: hqLocal → webLocal → webRemote.
