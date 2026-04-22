@@ -10,7 +10,8 @@
     "videos:encode": "python3 ../../scripts/videos.py encode",
     "videos:publish": "python3 ../../scripts/videos.py publish",
     "videos:check": "python3 ../../scripts/videos.py check",
-    "videos:encode-hq": "python3 ../../scripts/videos.py encode-hq"
+    "videos:encode-hq": "python3 ../../scripts/videos.py encode-hq",
+    "videos:publish-hq": "python3 ../../scripts/videos.py publish-hq"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2"

@@ -66,8 +66,9 @@ merges `[defaults]` from:
 2. `talks/<name>/videos/manifest.toml` `[defaults]` — talk overrides
 3. Per-video `[[videos]]` fields — most specific
 
-Release tags default to `videos-<talk-dirname-lowercased>` unless set
-in talk `[defaults]`.
+Release tags default to `videos-<talk-dirname-lowercased>` (web tier) and
+`videos-hq-<talk-dirname-lowercased>` (HQ tier) unless overridden in talk
+`[defaults]` as `release_tag` / `release_tag_hq`.
 
 ## Commands
 
@@ -80,8 +81,9 @@ pnpm export             # PDF export (requires playwright-chromium; install loca
 
 pnpm videos:sync        # rclone raws from [defaults].source_remote
 pnpm videos:encode      # ffmpeg raw -> public/videos/ (web tier, idempotent)
-pnpm videos:encode-hq   # ffmpeg raw -> videos/hq/ (visually-lossless venue masters, local-only)
-pnpm videos:publish     # upload encoded web files to GH Release
+pnpm videos:encode-hq   # ffmpeg raw -> videos/hq/ (visually-lossless venue masters)
+pnpm videos:publish     # upload encoded web files to the web GH Release
+pnpm videos:publish-hq  # upload HQ files to the parallel HQ GH Release
 pnpm videos:check       # manifest vs raw/web/slide consistency
 ```
 
@@ -100,10 +102,16 @@ pnpm videos:check-all   # run videos:check in every talk
 ```
 
 Loads from `public/videos{,-hq}/` first; the web tier falls back to the
-per-talk GH Release on 404. The release URL is built from `VITE_VIDEO_REPO`
+per-talk web GH Release on 404. The release URL is built from `VITE_VIDEO_REPO`
 and `VITE_VIDEO_RELEASE` (set in the talk's `.env`). When `hq` is requested
 but the local HQ file is missing, playback transparently degrades to the
 web copy (local, then GH Release).
+
+HQ masters are uploaded to a parallel GH Release (`videos-hq-<talk>`) by
+`pnpm videos:publish-hq`. On a fresh machine, pull them with
+`gh release download videos-hq-<talk> -D videos/hq/` instead of re-running
+`encode-hq`. VideoPlayer does not fetch HQ from the release automatically —
+HQ is only served from the local `public/videos-hq/` symlink.
 
 `videos:check` greps `VideoPlayer src="..."` against the manifest, so
 keep that attribute syntax.

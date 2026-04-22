@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
-"""Video asset pipeline: sync, encode, publish, check, encode-hq.
+"""Video asset pipeline: sync, encode, publish, check, encode-hq, publish-hq.
 
 Reads videos/manifest.toml as the source of truth. Raws live in videos/raw/;
 encoded web copies are written to public/videos/ and published to a
 long-lived GitHub Release (default tag: videos-<talk>). A separate
-visually-lossless HQ tier is encoded into videos/hq/ and exposed via a
-public/videos-hq/ symlink for venue playback. HQ files are local-only —
-they are never uploaded to a release.
+visually-lossless HQ tier is encoded into videos/hq/ for venue playback
+and can be published to a parallel release (default tag: videos-hq-<talk>)
+so any machine can `gh release download` the venue masters instead of
+re-encoding them.
 
 Subcommands:
-    sync       rclone mirror raw files from the configured remote
-    encode     ffmpeg raw -> public/videos/ (web tier, idempotent)
-    publish    gh release upload web files, clobbering existing assets
-    check      sanity check: orphans, missing, over-budget, slide-ref mismatches
-    encode-hq  ffmpeg raw -> videos/hq/ (visually-lossless venue masters, local-only)
+    sync        rclone mirror raw files from the configured remote
+    encode      ffmpeg raw -> public/videos/ (web tier, idempotent)
+    publish     gh release upload web files, clobbering existing assets
+    check       sanity check: orphans, missing, over-budget, slide-ref mismatches
+    encode-hq   ffmpeg raw -> videos/hq/ (visually-lossless venue masters)
+    publish-hq  gh release upload HQ files to the parallel release
 """
 from __future__ import annotations
 
@@ -313,19 +315,18 @@ def cmd_encode(args: argparse.Namespace) -> int:
 # publish — upload encoded files to GitHub Release
 # ---------------------------------------------------------------------------
 
-def cmd_publish(args: argparse.Namespace) -> int:
-    defaults, videos = load_manifest()
-    tag = defaults.get("release_tag", "videos")
+def _publish_tier(
+    videos: list[VideoEntry],
+    src_dir: Path,
+    tag: str,
+    release_title: str,
+    release_notes: str,
+    force: bool,
+    dry_run: bool,
+) -> int:
     if not shutil.which("gh"):
         print("error: gh CLI not installed. brew install gh", file=sys.stderr)
         return 2
-
-    if args.only:
-        wanted = set(args.only)
-        videos = [v for v in videos if v.name in wanted]
-        if not videos:
-            print(f"error: no manifest entries match {args.only}", file=sys.stderr)
-            return 2
 
     # Ensure release exists.
     existing = subprocess.run(
@@ -335,14 +336,14 @@ def cmd_publish(args: argparse.Namespace) -> int:
         print(f"Creating release {tag!r}...")
         subprocess.run(
             ["gh", "release", "create", tag,
-             "--title", "Video assets",
-             "--notes", "Bulk video assets for slide decks. Managed by scripts/videos.py."],
+             "--title", release_title,
+             "--notes", release_notes],
             check=True,
         )
 
     # Map remote asset -> size (bytes), so we can skip unchanged files.
     remote_sizes: dict[str, int] = {}
-    if not args.force:
+    if not force:
         listing = subprocess.run(
             ["gh", "release", "view", tag, "--json", "assets"],
             capture_output=True, text=True,
@@ -357,15 +358,15 @@ def cmd_publish(args: argparse.Namespace) -> int:
 
     files = []
     for v in videos:
-        web = WEB_DIR / v.name
-        if not web.exists():
+        src = src_dir / v.name
+        if not src.exists():
             print(f"  ! skip {v.name}: not encoded yet")
             continue
-        local_size = web.stat().st_size
-        if not args.force and remote_sizes.get(v.name) == local_size:
+        local_size = src.stat().st_size
+        if not force and remote_sizes.get(v.name) == local_size:
             print(f"  = {v.name}: unchanged ({human_size(local_size)}), skipping")
             continue
-        files.append(str(web))
+        files.append(str(src))
 
     if not files:
         print("Nothing to upload.")
@@ -373,10 +374,49 @@ def cmd_publish(args: argparse.Namespace) -> int:
 
     print(f"Uploading {len(files)} file(s) to release {tag!r}...")
     cmd = ["gh", "release", "upload", tag, *files, "--clobber"]
-    if args.dry_run:
+    if dry_run:
         print(" ".join(cmd))
         return 0
     return subprocess.call(cmd)
+
+
+def _filter_videos(videos: list[VideoEntry], only: list[str] | None) -> list[VideoEntry] | int:
+    if not only:
+        return videos
+    wanted = set(only)
+    filtered = [v for v in videos if v.name in wanted]
+    if not filtered:
+        print(f"error: no manifest entries match {only}", file=sys.stderr)
+        return 2
+    return filtered
+
+
+def cmd_publish(args: argparse.Namespace) -> int:
+    defaults, videos = load_manifest()
+    filtered = _filter_videos(videos, args.only)
+    if isinstance(filtered, int):
+        return filtered
+    return _publish_tier(
+        filtered, WEB_DIR,
+        tag=defaults.get("release_tag", "videos"),
+        release_title="Video assets",
+        release_notes="Bulk video assets for slide decks. Managed by scripts/videos.py.",
+        force=args.force, dry_run=args.dry_run,
+    )
+
+
+def cmd_publish_hq(args: argparse.Namespace) -> int:
+    defaults, videos = load_manifest()
+    filtered = _filter_videos(videos, args.only)
+    if isinstance(filtered, int):
+        return filtered
+    return _publish_tier(
+        filtered, HQ_DIR,
+        tag=defaults.get("release_tag_hq", _auto_release_tag("videos-hq")),
+        release_title="Video assets (HQ)",
+        release_notes="Visually-lossless venue masters. Run scripts/videos.py publish-hq to update.",
+        force=args.force, dry_run=args.dry_run,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -584,10 +624,16 @@ def main() -> int:
     p_chk = sub.add_parser("check", help="sanity-check manifest vs raw/web/slides")
     p_chk.set_defaults(func=cmd_check)
 
-    p_ehq = sub.add_parser("encode-hq", help="ffmpeg raw -> videos/hq/ (visually-lossless venue masters, local-only)")
+    p_ehq = sub.add_parser("encode-hq", help="ffmpeg raw -> videos/hq/ (visually-lossless venue masters)")
     p_ehq.add_argument("--force", action="store_true", help="re-encode even if up to date")
     p_ehq.add_argument("--only", nargs="+", metavar="NAME", help="limit to named file(s)")
     p_ehq.set_defaults(func=cmd_encode_hq)
+
+    p_phq = sub.add_parser("publish-hq", help="upload HQ files to the parallel GH Release")
+    p_phq.add_argument("--dry-run", action="store_true")
+    p_phq.add_argument("--only", nargs="+", metavar="NAME", help="limit to named file(s)")
+    p_phq.add_argument("--force", action="store_true", help="re-upload even if remote size matches local")
+    p_phq.set_defaults(func=cmd_publish_hq)
 
     args = parser.parse_args()
     return args.func(args)

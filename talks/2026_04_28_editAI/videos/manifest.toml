@@ -130,3 +130,99 @@ name    = "z_alternatives.mp4"
 profile = "remux"
 used_in = ["deck"]
 notes   = "Z-boson alternative-models chart render"
+
+[[videos]]
+name    = "ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "ATLAS shaft B-roll, H.264 3.9 Mbps silent"
+
+[[videos]]
+name    = "Beyond_CMB_2.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "Beyond-CMB science reel, H.264 11.6 Mbps 720p silent"
+
+[[videos]]
+name    = "CERN_Overview_Short.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN overview short cut, H.264 15 Mbps 1080p silent"
+
+[[videos]]
+name    = "CERN-FOOTAGE-2024-006-001.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN documentary B-roll (2024), 4K H.264 silent"
+
+[[videos]]
+name    = "CERN-FOOTAGE-2025-049-001.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "CERN documentary B-roll (2025), 4K H.264 2.4 Mbps silent"
+
+[[videos]]
+name    = "CERN-VIDEO-2019-050-007.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN video 2019-050-007, H.264 12 Mbps 1080p silent"
+
+[[videos]]
+name    = "CERN-VIDEO-2019-050-008-1080ph265.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN video 2019-050-008, HEVC 6 Mbps 1080p silent"
+
+[[videos]]
+name    = "Cloud_Chamber_Audio.mp4"
+profile = "standard-tight"
+used_in = ["deck"]
+notes   = "Cloud chamber demo with audio, 2:29 long — tight CRF to fit budget"
+
+[[videos]]
+name    = "Drone_Climbing_Mountain.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Drone ascent, 4K high-bitrate B-roll — CRF 22 preserves motion detail"
+
+[[videos]]
+name    = "Expansion_Funnel_H264_1080p.webm"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Expansion funnel animation, VP8 in WebM (name says H.264 but source is VP8)"
+
+[[videos]]
+name    = "LHCb_Thanks.mp4"
+profile = "standard-tight"
+used_in = ["deck"]
+notes   = "LHCb thanks reel, 2:28 with audio — tight CRF to fit budget"
+
+[[videos]]
+name    = "LHCb.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "LHCb overview, 48s with audio"
+
+[[videos]]
+name    = "Mokslo_Sala.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Mokslo Sala intro, 2880x1600 venue-native — CRF 22 keeps detail"
+
+[[videos]]
+name    = "QGP_Formation.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Quark-gluon plasma formation sim with audio — CGI"
+
+[[videos]]
+name    = "Voyage_in_to_the_world_of_atoms.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "Voyage into the world of atoms animation, 2:01 silent"
+
+[[videos]]
+name    = "Webb_Reel.mp4"
+profile = "standard-tight"
+used_in = ["deck"]
+notes   = "Webb telescope reel, 2:58 with audio — tight CRF to fit budget"

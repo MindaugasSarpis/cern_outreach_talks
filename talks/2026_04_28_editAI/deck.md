@@ -95,3 +95,67 @@ Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 ---
 
 <VideoPlayer src="cmb_power_spectrum_fit.mp4" muted />
+
+---
+
+<VideoPlayer src="ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4" muted />
+
+---
+
+<VideoPlayer src="Beyond_CMB_2.mp4" muted />
+
+---
+
+<VideoPlayer src="CERN_Overview_Short.mp4" muted />
+
+---
+
+<VideoPlayer src="CERN-FOOTAGE-2024-006-001.mp4" muted />
+
+---
+
+<VideoPlayer src="CERN-FOOTAGE-2025-049-001.mp4" muted />
+
+---
+
+<VideoPlayer src="CERN-VIDEO-2019-050-007.mp4" muted />
+
+---
+
+<VideoPlayer src="CERN-VIDEO-2019-050-008-1080ph265.mp4" muted />
+
+---
+
+<VideoPlayer src="Cloud_Chamber_Audio.mp4" />
+
+---
+
+<VideoPlayer src="Drone_Climbing_Mountain.mp4" muted />
+
+---
+
+<VideoPlayer src="Expansion_Funnel_H264_1080p.webm" muted />
+
+---
+
+<VideoPlayer src="LHCb.mp4" />
+
+---
+
+<VideoPlayer src="LHCb_Thanks.mp4" />
+
+---
+
+<VideoPlayer src="Mokslo_Sala.mp4" muted />
+
+---
+
+<VideoPlayer src="QGP_Formation.mp4" />
+
+---
+
+<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" muted />
+
+---
+
+<VideoPlayer src="Webb_Reel.mp4" />

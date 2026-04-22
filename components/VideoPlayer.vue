@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { useIsSlideActive } from '@slidev/client'
 
 // Per-talk config injected via Vite env (see each talk's package.json scripts):
@@ -17,10 +17,10 @@ const props = defineProps({
   muted:    { type: Boolean, default: false },
   controls: { type: Boolean, default: true },
   // Serve the visually-lossless venue master instead of the web-encoded copy.
-  // Local dev: public/videos-hq/<src> (symlink to videos/hq/ — run
-  //   `pnpm videos:encode-hq`).
-  // Deployed: HQ is local-only, so this falls back transparently to the web
-  //   copy (local public/videos/, then GH Release).
+  // Played only from public/videos-hq/<src> (symlink to videos/hq/). Populate
+  // with `pnpm videos:encode-hq` or `gh release download videos-hq-<talk>
+  // -D videos/hq/`. If the HQ file is missing the chain falls back to the
+  // web copy (local public/videos/, then the web GH Release).
   hq:       { type: Boolean, default: false },
 })
 
@@ -51,8 +51,7 @@ const currentTime = ref(0)
 const duration = ref(0)
 const isMuted = ref(true)
 const progressPercent = computed(() => duration.value ? (currentTime.value / duration.value) * 100 : 0)
-const controlsVisible = ref(true)
-let hideTimer = null
+const controlsVisible = ref(false)
 
 function formatTime(s) {
   if (!isFinite(s)) return '0:00'
@@ -98,10 +97,9 @@ function seek(e) {
 
 function showControls() {
   controlsVisible.value = true
-  clearTimeout(hideTimer)
-  hideTimer = setTimeout(() => {
-    if (playing.value) controlsVisible.value = false
-  }, 3000)
+}
+function hideControls() {
+  controlsVisible.value = false
 }
 
 // --- Fallback chain ---
@@ -159,13 +157,10 @@ onMounted(() => {
   syncPlayback()
 })
 
-onBeforeUnmount(() => {
-  clearTimeout(hideTimer)
-})
 </script>
 
 <template>
-  <div class="video-player" @mousemove="controls && showControls()" @click="controls && togglePlay()">
+  <div class="video-player" @mouseenter="controls && showControls()" @mouseleave="controls && hideControls()" @click="controls && togglePlay()">
     <div v-if="status === 'loading' || status === 'idle'" class="video-status">Loading video&hellip;</div>
     <div v-if="status === 'error'" class="video-status video-error">
       Video not available: <code>{{ src }}</code>
