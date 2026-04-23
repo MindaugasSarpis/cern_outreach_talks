@@ -1,4 +1,5 @@
 ---
+theme: ../../theme
 colorSchema: dark
 transition: fade
 routerMode: hash
@@ -9,6 +10,10 @@ info: |
   Outreach talk — crash course on CERN and how research is done there.
   EditAI Seminar, 2026-04-28.
   Audience: later-grade students, teachers, school principals.
+layout: default
+---
+
+<VideoPlayer src="Skylapse.mp4"/>
 
 ---
 

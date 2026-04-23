@@ -9,3 +9,12 @@ dist/
 **/public/videos-hq
 **/videos/raw/
 **/videos/hq/
+
+# Safety net: videos only belong in the managed dirs above.
+# Keeps stray masters from landing at a talk root and bypassing LFS/releases.
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.m4v
+*.avi
