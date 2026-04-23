@@ -1,5 +1,4 @@
 ---
-theme: ../../theme
 colorSchema: dark
 transition: fade
 routerMode: hash
@@ -10,15 +9,6 @@ info: |
   Outreach talk — crash course on CERN and how research is done there.
   EditAI Seminar, 2026-04-28.
   Audience: later-grade students, teachers, school principals.
-layout: cover
-background: /figures/background_intro.jpg
----
-
-# Nuo Mokslo Salos iki Visatos pakraščio
-
-## Mindaugas ir Gediminas Šarpiai
-
-Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 
 ---
 
@@ -30,11 +20,11 @@ Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 
 ---
 
-# Mariner 5 video
+<VideoPlayer src="NASA_Mars_Mariner_4_Pan_Audio.mp4" />
 
 ---
 
-# MARS VIDEO
+<VideoPlayer src="Mars_Surface.mp4" muted />
 
 ---
 
@@ -67,18 +57,6 @@ Kodėl mums reikia CERN ir kokie tyrimai ten atliekami
 ---
 
 <VideoPlayer src="CERN_Overview_Short.mp4" muted />
-
----
-
-<VideoPlayer src="CERN-FOOTAGE-2024-006-001.mp4" muted />
-
----
-
-<VideoPlayer src="CERN-FOOTAGE-2025-049-001.mp4" muted />
-
----
-
-<VideoPlayer src="CERN-VIDEO-2019-050-007.mp4" muted />
 
 ---
 

@@ -204,16 +204,34 @@ used_in = ["deck"]
 notes   = "LHCb overview, 48s with audio"
 
 [[videos]]
+name    = "Mars_Surface.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "Mars surface footage, H.264 15 Mbps 1080p 55s silent"
+
+[[videos]]
 name    = "Mokslo_Sala.mp4"
 profile = "high-motion"
 used_in = ["deck"]
 notes   = "Mokslo Sala intro, 2880x1600 venue-native — CRF 22 keeps detail"
 
 [[videos]]
+name    = "NASA_Mars_Mariner_4_Pan_Audio.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "NASA Mariner 4 Mars flyby pan, H.264 20 Mbps 1080p 20s with audio"
+
+[[videos]]
 name    = "QGP_Formation.mp4"
 profile = "high-motion"
 used_in = ["deck"]
 notes   = "Quark-gluon plasma formation sim with audio — CGI"
+
+[[videos]]
+name    = "Skylapse.mp4"
+profile = "standard-tight"
+used_in = ["deck"]
+notes   = "Night-sky timelapse, H.264 20 Mbps 1080p 7:30 with audio — tight CRF to fit budget"
 
 [[videos]]
 name    = "Voyage_in_to_the_world_of_atoms.mp4"
