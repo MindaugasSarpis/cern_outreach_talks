@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed, watch, nextTick, onMounted } from 'vue'
-import { useIsSlideActive } from '@slidev/client'
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
+import { useIsSlideActive, useNav, useSlideContext } from '@slidev/client'
 
 // Per-talk config injected via Vite env (see each talk's package.json scripts):
 //   VITE_VIDEO_REPO     e.g. "MindaugasSarpis/cern_outreach_talks"
@@ -156,6 +156,41 @@ onMounted(() => {
   sourceRef.value?.addEventListener('error', onError)
   syncPlayback()
 })
+
+// Look-ahead preload: warm the browser cache for the upcoming slides' videos
+// via <link rel="preload" as="video">. Skipped in dev, where files are served
+// locally and there's nothing to warm.
+const PRELOAD_AHEAD = 3
+const { currentPage } = useNav()
+const { $page } = useSlideContext()
+
+const shouldPreload = computed(() => {
+  if (!import.meta.env.PROD) return false
+  const here = $page?.value
+  const now = currentPage?.value
+  if (!here || !now) return false
+  const distance = here - now
+  return distance > 0 && distance <= PRELOAD_AHEAD
+})
+
+let preloadLink = null
+function addPreload() {
+  if (preloadLink || typeof document === 'undefined') return
+  preloadLink = document.createElement('link')
+  preloadLink.rel = 'preload'
+  preloadLink.as = 'video'
+  preloadLink.href = webRemoteSrc.value
+  preloadLink.type = mimeType.value
+  document.head.appendChild(preloadLink)
+}
+function removePreload() {
+  if (!preloadLink) return
+  preloadLink.remove()
+  preloadLink = null
+}
+
+watch(shouldPreload, (yes) => yes ? addPreload() : removePreload(), { immediate: true })
+onUnmounted(removePreload)
 
 </script>
 

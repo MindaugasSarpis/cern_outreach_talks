@@ -129,10 +129,6 @@ layout: default
 
 ---
 
-<VideoPlayer src="higgs_signal.mp4" muted />
-
----
-
 <VideoPlayer src="cmb_power_spectrum_data.mp4" muted />
 
 ---
