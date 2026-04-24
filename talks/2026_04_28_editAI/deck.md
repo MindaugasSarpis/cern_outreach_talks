@@ -10,7 +10,15 @@ info: |
   Outreach talk — crash course on CERN and how research is done there.
   EditAI Seminar, 2026-04-28.
   Audience: later-grade students, teachers, school principals.
-layout: default
+layout: cover
+background: /figures/background_intro.jpg
+---
+
+# Dr. Mindaugas Šarpis<br>Dr. Gediminas Šarpis
+
+## Nuo Mokslo Salos iki Visatos pakraščio
+
+### Kaip CERN prieinama prie svarbiausių mokslinių atradimų
 
 ---
 
