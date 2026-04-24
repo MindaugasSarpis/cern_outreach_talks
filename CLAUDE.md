@@ -76,7 +76,8 @@ Run from inside a talk directory:
 
 ```bash
 pnpm dev                # live dev server (http://localhost:3030)
-pnpm build              # static bundle in dist/
+pnpm build              # static bundle in dist/ (absolute base, for GH Pages)
+pnpm build:portable     # portable bundle in dist-portable/ (relative base, offline-safe)
 pnpm export             # PDF export (requires playwright-chromium; install locally if needed)
 
 pnpm videos:sync        # rclone raws from [defaults].source_remote
@@ -84,8 +85,25 @@ pnpm videos:encode      # ffmpeg raw -> public/videos/ (web tier, idempotent)
 pnpm videos:encode-hq   # ffmpeg raw -> videos/hq/ (visually-lossless venue masters)
 pnpm videos:publish     # upload encoded web files to the web GH Release
 pnpm videos:publish-hq  # upload HQ files to the parallel HQ GH Release
+pnpm videos:pull        # download web files from the release -> public/videos/
+pnpm videos:pull-hq     # download HQ masters from the parallel release -> videos/hq/
 pnpm videos:check       # manifest vs raw/web/slide consistency
 ```
+
+`publish` / `publish-hq` and `pull` / `pull-hq` are manifest-driven and
+idempotent: unchanged remote/local files (size match) are skipped. Both
+directions accept `--prune` to delete counterparts absent from the
+manifest — `publish --prune` removes orphan release assets, `pull --prune`
+removes orphan local files. Fresh-machine rehearsal flow is
+`pnpm install && pnpm videos:pull-hq` (skips the multi-hour HQ encode).
+
+**Oversize files (`hq_from_raw = true`)**: GH Release assets cap at 2 GB
+per file. For masters whose raw is already a pixel-perfect venue target
+and whose encoded HQ would exceed the cap (e.g., 2880×1600@60 HEVC
+sources), set `hq_from_raw = true` on the `[[videos]]` entry. The HQ
+tier then hard-links the raw (zero extra disk), `publish-hq` skips the
+file, and `pull-hq` rclones it from `[defaults].source_remote` instead
+of the release. Quality = raw bits, no re-encode.
 
 From repo root:
 
@@ -152,6 +170,27 @@ LED wall at 2880 × 1600** (pixel pitch 1.56 mm), aspect **9:5** (= 1.8,
 
 Videos keep native aspect via `object-fit: contain` in `VideoPlayer`;
 16:9 clips letterbox inside a 9:5 slide — expected.
+
+## Portable/offline bundle
+
+`pnpm build:portable` produces `dist-portable/` with a relative base,
+safe to zip and transport (e.g., upload to gdrive as a venue backup).
+The bundle includes `public/videos/` and follows the `public/videos-hq`
+symlink into `videos/hq/`, so all three VideoPlayer fallback tiers
+resolve to local files — no internet required at the venue.
+
+Browsers block ES-module SPAs on `file://`; the recipient serves it
+with a trivial static server instead:
+
+```bash
+cd dist-portable && python3 -m http.server 8000
+open http://localhost:8000
+```
+
+Run `pnpm build:portable` **after** HQ encodes finish (otherwise HQ
+tier is incomplete). For `hq_from_raw` files, ensure the raw file is
+present locally (hard link into `videos/hq/` — already in place after
+`pnpm videos:encode-hq`).
 
 ## Deployment
 

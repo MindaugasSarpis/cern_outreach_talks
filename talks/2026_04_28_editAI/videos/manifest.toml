@@ -30,12 +30,6 @@ used_in = ["deck"]
 notes   = "Cassini Grand Finale, ambient audio (no voiceover)"
 
 [[videos]]
-name    = "CERN-FOOTAGE-2022-042-001.mov"
-profile = "standard"
-used_in = ["deck"]
-notes   = "CERN documentary B-roll (2022)"
-
-[[videos]]
 name    = "cmb_data.mp4"
 profile = "remux"
 used_in = ["deck"]
@@ -138,7 +132,7 @@ used_in = ["deck"]
 notes   = "ATLAS shaft B-roll, H.264 3.9 Mbps silent"
 
 [[videos]]
-name    = "Beyond_CMB_2.mp4"
+name    = "Beyond_CMB.mp4"
 profile = "standard"
 used_in = ["deck"]
 notes   = "Beyond-CMB science reel, H.264 11.6 Mbps 720p silent"
@@ -210,10 +204,11 @@ used_in = ["deck"]
 notes   = "Mars surface footage, H.264 15 Mbps 1080p 55s silent"
 
 [[videos]]
-name    = "Mokslo_Sala.mp4"
+name    = "mokslo_sala.mov"
 profile = "high-motion"
 used_in = ["deck"]
-notes   = "Mokslo Sala intro, 2880x1600 venue-native — CRF 22 keeps detail"
+hq_from_raw = true
+notes   = "Mokslo Sala intro, 2880x1600 venue-native — raw is pixel-perfect HEVC, 5.1 GB. HQ tier hard-links raw (over 2 GB GH Release cap)."
 
 [[videos]]
 name    = "NASA_Mars_Mariner_4_Pan_Audio.mp4"

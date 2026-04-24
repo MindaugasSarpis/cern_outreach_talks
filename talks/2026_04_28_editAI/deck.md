@@ -11,9 +11,6 @@ info: |
   EditAI Seminar, 2026-04-28.
   Audience: later-grade students, teachers, school principals.
 layout: default
----
-
-<VideoPlayer src="Skylapse.mp4"/>
 
 ---
 
@@ -21,7 +18,7 @@ layout: default
 
 ---
 
-<VideoPlayer src="Mokslo_Sala.mp4" muted />
+<VideoPlayer src="mokslo_sala.mov" muted />
 
 ---
 
@@ -49,7 +46,7 @@ layout: default
 
 ---
 
-<VideoPlayer src="Beyond_CMB_2.mp4" muted />
+<VideoPlayer src="Beyond_CMB.mp4" muted />
 
 ---
 
