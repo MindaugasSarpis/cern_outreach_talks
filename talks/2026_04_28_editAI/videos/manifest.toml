@@ -207,8 +207,8 @@ notes   = "Mars surface footage, H.264 15 Mbps 1080p 55s silent"
 name    = "mokslo_sala.mov"
 profile = "high-motion"
 used_in = ["deck"]
-hq_from_raw = true
-notes   = "Mokslo Sala intro, 2880x1600 venue-native — raw is pixel-perfect HEVC, 5.1 GB. HQ tier hard-links raw (over 2 GB GH Release cap)."
+hq_crf  = 20
+notes   = "Mokslo Sala intro, 2880x1600 venue-native. Raw is 153 Mbps HEVC — too hot for browser decode. HQ encoded at CRF 20 for smooth playback."
 
 [[videos]]
 name    = "NASA_Mars_Mariner_4_Pan_Audio.mp4"

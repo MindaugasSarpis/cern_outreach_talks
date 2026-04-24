@@ -135,6 +135,12 @@ class VideoEntry:
     used_in: list[str]
     notes: str = ""
     long_edge_px: int | None = None  # override for [defaults].long_edge_px
+    # Override HQ CRF per-video. hq-visually-lossless uses CRF 16 by default
+    # (transparent at viewing distance); lower for more detail, higher for
+    # smaller files. Useful for sources whose raw bitrate is too high for
+    # browser decode, where a CRF 20 re-encode plays smoothly without visible
+    # quality loss for the audience.
+    hq_crf: int | None = None
     # When true, HQ tier hard-links the raw file instead of re-encoding and
     # pull-hq sources this file from [defaults].source_remote rather than the
     # parallel GH Release. Use for files whose raw is already a pixel-perfect
@@ -155,6 +161,7 @@ def load_manifest() -> tuple[dict, list[VideoEntry]]:
             used_in=v.get("used_in", []),
             notes=v.get("notes", ""),
             long_edge_px=v.get("long_edge_px"),
+            hq_crf=v.get("hq_crf"),
             hq_from_raw=v.get("hq_from_raw", False),
         )
         for v in data.get("videos", [])
@@ -703,6 +710,11 @@ def _encode_one_hq(entry: VideoEntry, force: bool, default_long_edge: int) -> tu
     else:
         long_edge = entry.long_edge_px or default_long_edge
         ff_args = _profile_args("hq-visually-lossless", long_edge)
+        if entry.hq_crf is not None:
+            for i, arg in enumerate(ff_args):
+                if arg == "-crf" and i + 1 < len(ff_args):
+                    ff_args[i + 1] = str(entry.hq_crf)
+                    break
         if entry.profile == "silent-loop":
             ff_args = ff_args + ["-an"]
 

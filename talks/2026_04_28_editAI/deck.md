@@ -18,7 +18,7 @@ layout: default
 
 ---
 
-<VideoPlayer src="mokslo_sala.mov" muted />
+<VideoPlayer src="mokslo_sala.mov"/>
 
 ---
 
@@ -35,10 +35,6 @@ layout: default
 ---
 
 <VideoPlayer src="Webb_Reel.mp4" />
-
----
-
-<VideoPlayer src="Milky_Way_Sim_Audio.mp4" />
 
 ---
 
