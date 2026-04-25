@@ -22,7 +22,7 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="Drone_Climbing_Mountain.mp4" muted />
+<VideoPlayer src="Drone_Climbing_Mountain_2.mp4" muted />
 
 ---
 

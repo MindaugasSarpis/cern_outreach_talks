@@ -180,6 +180,12 @@ used_in = ["deck"]
 notes   = "Drone ascent, 4K high-bitrate B-roll — CRF 22 preserves motion detail"
 
 [[videos]]
+name    = "Drone_Climbing_Mountain_2.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Drone ascent (alt take), 4K high-bitrate B-roll — CRF 22 preserves motion detail"
+
+[[videos]]
 name    = "Expansion_Funnel_H264_1080p.webm"
 profile = "remux"
 used_in = ["deck"]
