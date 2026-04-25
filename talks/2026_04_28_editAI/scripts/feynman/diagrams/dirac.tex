@@ -1,0 +1,15 @@
+\input{../common.tex}
+\begin{document}
+\begin{tikzpicture}
+\begin{feynman}
+  \vertex (top) {\(\times\)};
+  \vertex [below=1.6cm of top] (vtx);
+  \vertex [below left=1.5cm and 1.3cm of vtx] (lmu) {\(\mu\)};
+  \vertex [below right=1.5cm and 1.3cm of vtx] (rmu) {\(\mu\)};
+  \diagram* {
+    (lmu) -- [fermion] (vtx) -- [fermion] (rmu),
+    (vtx) -- [photon, edge label=\(\gamma\)] (top),
+  };
+\end{feynman}
+\end{tikzpicture}
+\end{document}

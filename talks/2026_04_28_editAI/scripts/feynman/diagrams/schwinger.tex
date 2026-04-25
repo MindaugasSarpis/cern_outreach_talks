@@ -1,0 +1,18 @@
+\input{../common.tex}
+\begin{document}
+\begin{tikzpicture}
+\begin{feynman}
+  \vertex (top) {\(\times\)};
+  \vertex [below=1.6cm of top] (vtx);
+  \vertex [below left=1.0cm and 0.85cm of vtx] (lmid);
+  \vertex [below right=1.0cm and 0.85cm of vtx] (rmid);
+  \vertex [below left=1.0cm and 0.85cm of lmid] (lmu) {\(\mu\)};
+  \vertex [below right=1.0cm and 0.85cm of rmid] (rmu) {\(\mu\)};
+  \diagram* {
+    (lmu) -- [fermion] (lmid) -- [fermion] (vtx) -- [fermion] (rmid) -- [fermion] (rmu),
+    (lmid) -- [photon, edge label'=\(\gamma\)] (rmid),
+    (vtx) -- [photon, edge label=\(\gamma\)] (top),
+  };
+\end{feynman}
+\end{tikzpicture}
+\end{document}
