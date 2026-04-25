@@ -24,7 +24,7 @@ used_in = ["deck"]
 notes   = "Milky Way galaxy simulation, HEVC 7.3 Mbps CGI"
 
 [[videos]]
-name    = "Cassini_Grand_Finale_No_Vo.mp4"
+name    = "Cassini.mov"
 profile = "standard"
 used_in = ["deck"]
 notes   = "Cassini Grand Finale, ambient audio (no voiceover)"
@@ -186,10 +186,11 @@ used_in = ["deck"]
 notes   = "Expansion funnel animation, VP8 in WebM (name says H.264 but source is VP8)"
 
 [[videos]]
-name    = "LHCb_Thanks.mp4"
-profile = "standard-tight"
-used_in = ["deck"]
-notes   = "LHCb thanks reel, 2:28 with audio — tight CRF to fit budget"
+name        = "LHCb_Aciu.mov"
+profile     = "standard-tight"
+used_in     = ["deck"]
+hq_from_raw = true
+notes       = "LHCb thanks reel, 2:28 with audio — tight CRF to fit budget. Raw is 2880x1600 HEVC venue master (>2 GB), so HQ hard-links raw and ships via gdrive pull."
 
 [[videos]]
 name    = "LHCb.mp4"

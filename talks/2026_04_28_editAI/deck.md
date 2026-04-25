@@ -38,7 +38,7 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="Cassini_Grand_Finale_No_Vo.mp4" />
+<VideoPlayer src="Cassini.mov" />
 
 ---
 
@@ -138,4 +138,4 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="LHCb_Thanks.mp4" />
+<VideoPlayer src="LHCb_Aciu.mov" />
