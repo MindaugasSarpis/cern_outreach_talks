@@ -105,7 +105,7 @@ background: /figures/background_intro.jpg
 
 ---
 
-NEEDS SM 
+<VideoPlayer src="sm.mov" />
 
 ---
 

@@ -182,6 +182,12 @@ used_in = ["deck"]
 notes   = "Quark-gluon plasma formation sim with audio — CGI"
 
 [[videos]]
+name    = "sm.mov"
+profile = "standard"
+used_in = ["deck"]
+notes   = "23s 2880x1600 HEVC venue clip with audio"
+
+[[videos]]
 name    = "Voyage_in_to_the_world_of_atoms.mp4"
 profile = "standard"
 used_in = ["deck"]
