@@ -42,6 +42,14 @@ background: /figures/background_intro.jpg
 
 ---
 
+<VideoPlayer src="gaussian.mp4" muted />
+
+---
+
+<VideoPlayer src="gaussian_highstats.mp4" muted />
+
+---
+
 <VideoPlayer src="Webb_Reel.mp4" />
 
 ---
@@ -78,14 +86,6 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="gaussian.mp4" muted />
-
----
-
-<VideoPlayer src="gaussian_highstats.mp4" muted />
-
----
-
 <VideoPlayer src="cmb_data.mp4" muted />
 
 ---
@@ -94,7 +94,11 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="cmb_power_spectrum.mp4" muted />
+<VideoPlayer src="cmb_power_spectrum_data.mp4" muted />
+
+---
+
+<VideoPlayer src="cmb_power_spectrum_fit.mp4" muted />
 
 ---
 
@@ -106,15 +110,15 @@ background: /figures/background_intro.jpg
 
 ---
 
+<VideoPlayer src="higgs_data.mp4" muted />
+
+---
+
 <VideoPlayer src="higgs_bkg.mp4" muted />
 
 ---
 
 <VideoPlayer src="higgs_sigbkg.mp4" muted />
-
----
-
-<VideoPlayer src="higgs_data.mp4" muted />
 
 ---
 
@@ -127,14 +131,6 @@ background: /figures/background_intro.jpg
 ---
 
 <VideoPlayer src="z_alternatives.mp4" muted />
-
----
-
-<VideoPlayer src="cmb_power_spectrum_data.mp4" muted />
-
----
-
-<VideoPlayer src="cmb_power_spectrum_fit.mp4" muted />
 
 ---
 
