@@ -18,12 +18,6 @@ long_edge_px  = 2880   # venue screen is 2880x1600; override global 1920
 # max_size_mb inherited from /outreach.toml.
 
 [[videos]]
-name    = "Milky_Way_Sim_Audio.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Milky Way galaxy simulation, HEVC 7.3 Mbps CGI"
-
-[[videos]]
 name    = "Cassini.mov"
 profile = "standard"
 used_in = ["deck"]
@@ -40,12 +34,6 @@ name    = "cmb_fit.mp4"
 profile = "remux"
 used_in = ["deck"]
 notes   = "CMB fit chart render"
-
-[[videos]]
-name    = "cmb_power_spectrum.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB power-spectrum chart render"
 
 [[videos]]
 name    = "cmb_power_spectrum_data.mp4"
@@ -120,12 +108,6 @@ used_in = ["deck"]
 notes   = "Z-boson alternative-models chart render"
 
 [[videos]]
-name    = "ATLAS-FOOTAGE-2022-004-002-1080p_Shaft.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "ATLAS shaft B-roll, H.264 3.9 Mbps silent"
-
-[[videos]]
 name    = "Beyond_CMB.mp4"
 profile = "standard"
 used_in = ["deck"]
@@ -138,24 +120,6 @@ used_in = ["deck"]
 notes   = "CERN overview short cut, H.264 15 Mbps 1080p silent"
 
 [[videos]]
-name    = "CERN-FOOTAGE-2024-006-001.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "CERN documentary B-roll (2024), 4K H.264 silent"
-
-[[videos]]
-name    = "CERN-FOOTAGE-2025-049-001.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CERN documentary B-roll (2025), 4K H.264 2.4 Mbps silent"
-
-[[videos]]
-name    = "CERN-VIDEO-2019-050-007.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "CERN video 2019-050-007, H.264 12 Mbps 1080p silent"
-
-[[videos]]
 name    = "CERN-VIDEO-2019-050-008-1080ph265.mp4"
 profile = "standard"
 used_in = ["deck"]
@@ -166,12 +130,6 @@ name    = "Cloud_Chamber_Audio.mp4"
 profile = "standard-tight"
 used_in = ["deck"]
 notes   = "Cloud chamber demo with audio, 2:29 long — tight CRF to fit budget"
-
-[[videos]]
-name    = "Drone_Climbing_Mountain.mp4"
-profile = "high-motion"
-used_in = ["deck"]
-notes   = "Drone ascent, 4K high-bitrate B-roll — CRF 22 preserves motion detail"
 
 [[videos]]
 name    = "Drone_Climbing_Mountain_2.mp4"
@@ -222,12 +180,6 @@ name    = "QGP_Formation.mp4"
 profile = "high-motion"
 used_in = ["deck"]
 notes   = "Quark-gluon plasma formation sim with audio — CGI"
-
-[[videos]]
-name    = "Skylapse.mp4"
-profile = "standard-tight"
-used_in = ["deck"]
-notes   = "Night-sky timelapse, H.264 20 Mbps 1080p 7:30 with audio — tight CRF to fit budget"
 
 [[videos]]
 name    = "Voyage_in_to_the_world_of_atoms.mp4"
