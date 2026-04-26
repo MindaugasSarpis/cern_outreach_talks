@@ -162,7 +162,7 @@ background: /figures/background_intro.jpg
 
 ---
 
-<img src="/figures/g2/g.0021.png" class="absolute inset-0 w-full
+<img src="/figures/g2/g.002.png" class="absolute inset-0 w-full
     h-full object-cover" />
 ---
 
