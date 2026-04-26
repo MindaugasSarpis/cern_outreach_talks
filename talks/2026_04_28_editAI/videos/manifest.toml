@@ -18,6 +18,12 @@ long_edge_px  = 2880   # venue screen is 2880x1600; override global 1920
 # max_size_mb inherited from /outreach.toml.
 
 [[videos]]
+name    = "cmb_sonification_drone.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "CMB sonification drone render, H.264 2.8 Mbps 1800x1040"
+
+[[videos]]
 name    = "Cassini.mov"
 profile = "standard"
 used_in = ["deck"]
