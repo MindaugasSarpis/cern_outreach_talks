@@ -50,6 +50,21 @@ background: /figures/background_intro.jpg
 
 ---
 
+<img src="/figures/math_vbe.png" class="absolute inset-0 w-full
+    h-full object-cover" />
+
+---
+
+<img src="/figures/math_vbe_fix.png" class="absolute inset-0 w-full
+    h-full object-cover" />
+
+--- 
+
+<img src="/figures/cat_weight_plot.png" class="absolute inset-0 w-full
+    h-full object-cover" />
+
+---
+
 <VideoPlayer src="Webb_Reel.mp4" />
 
 ---
@@ -59,6 +74,22 @@ background: /figures/background_intro.jpg
 ---
 
 <VideoPlayer src="Beyond_CMB.mp4" muted />
+
+---
+
+<VideoPlayer src="cmb_data.mp4" muted />
+
+---
+
+<VideoPlayer src="cmb_fit.mp4" muted />
+
+---
+
+<VideoPlayer src="cmb_power_spectrum_data.mp4" muted />
+
+---
+
+<VideoPlayer src="cmb_power_spectrum_fit.mp4" muted />
 
 ---
 
@@ -83,22 +114,6 @@ background: /figures/background_intro.jpg
 ---
 
 <VideoPlayer src="QGP_Formation.mp4" />
-
----
-
-<VideoPlayer src="cmb_data.mp4" muted />
-
----
-
-<VideoPlayer src="cmb_fit.mp4" muted />
-
----
-
-<VideoPlayer src="cmb_power_spectrum_data.mp4" muted />
-
----
-
-<VideoPlayer src="cmb_power_spectrum_fit.mp4" muted />
 
 ---
 
