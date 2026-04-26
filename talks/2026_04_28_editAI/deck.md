@@ -157,4 +157,30 @@ background: /figures/background_intro.jpg
 
 ---
 
+<img src="/figures/g2/g.001.png" class="absolute inset-0 w-full
+    h-full object-cover" />
+
+---
+
+<img src="/figures/g2/g.0021.png" class="absolute inset-0 w-full
+    h-full object-cover" />
+---
+
+<img src="/figures/g2/g.003.png" class="absolute inset-0 w-full
+    h-full object-cover" />
+---
+
+<img src="/figures/g2/g.004.png" class="absolute inset-0 w-full
+    h-full object-cover" />
+---
+
+<img src="/figures/g2/g.005.png" class="absolute inset-0 w-full
+    h-full object-cover" />
+---
+
+<img src="/figures/g2/g.006.png" class="absolute inset-0 w-full
+    h-full object-cover" />
+
+---
+
 <VideoPlayer src="LHCb_Aciu.mov" />
