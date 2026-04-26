@@ -93,11 +93,43 @@ background: /figures/background_intro.jpg
 
 ---
 
+<VideoPlayer src="cmb_sonification_drone.mp4" />
+
+---
+
 <VideoPlayer src="Cloud_Chamber_Audio.mp4" />
 
 ---
 
 <VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" muted />
+
+---
+
+NEEDS SM 
+
+---
+
+<VideoPlayer src="z_data.mp4" muted />
+
+---
+
+<VideoPlayer src="z_fit3.mp4" muted />
+
+---
+
+<VideoPlayer src="z_alternatives.mp4" muted />
+
+---
+
+<VideoPlayer src="higgs_data.mp4" muted />
+
+---
+
+<VideoPlayer src="higgs_bkg.mp4" muted />
+
+---
+
+<VideoPlayer src="higgs_sigbkg.mp4" muted />
 
 ---
 
@@ -122,30 +154,6 @@ background: /figures/background_intro.jpg
 ---
 
 <VideoPlayer src="g2_fit.mp4" muted />
-
----
-
-<VideoPlayer src="higgs_data.mp4" muted />
-
----
-
-<VideoPlayer src="higgs_bkg.mp4" muted />
-
----
-
-<VideoPlayer src="higgs_sigbkg.mp4" muted />
-
----
-
-<VideoPlayer src="z_data.mp4" muted />
-
----
-
-<VideoPlayer src="z_fit3.mp4" muted />
-
----
-
-<VideoPlayer src="z_alternatives.mp4" muted />
 
 ---
 
