@@ -102,12 +102,6 @@ used_in = ["deck"]
 notes   = "Higgs signal+background chart render"
 
 [[videos]]
-name    = "higgs_signal.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Higgs signal-only chart render"
-
-[[videos]]
 name    = "z_data.mp4"
 profile = "remux"
 used_in = ["deck"]
