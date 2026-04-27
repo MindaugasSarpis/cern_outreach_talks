@@ -63,6 +63,11 @@ background: /figures/background_intro.jpg
 <img src="/figures/cat_weight_plot.png" class="absolute inset-0 w-full
     h-full object-cover" />
 
+--- 
+
+<img src="/figures/munis.png" class="absolute inset-0 w-full
+    h-full object-cover" />
+
 ---
 
 <VideoPlayer src="Webb_Reel.mp4" />
