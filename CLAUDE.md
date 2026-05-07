@@ -157,19 +157,64 @@ keep that attribute syntax.
 - Custom layouts: `cover`, `section`, `quote`, `fact`, `statement`, `intro`, `center-bkg`.
 - Structure: cover → quote → motivation → section breaks (`layout: section` + `hideInToc: true`).
 - Card system: `<div class="card card-primary pad-tight">…</div>`. Colors: `primary|secondary|accent|info|success|warning`. Padding: `pad-tight|compact|snug|balanced`.
-- Grids: `grid-2`, `grid-3` with `gap-md mt-md`.
+- Grids: `grid-2`, `grid-3` (theme classes — built-in gap; do **not** add `class="grid ..."` or `gap-md`).
 - Emoji format: `## 📊 **Title**` — emoji outside bold.
 
-## Aspect ratio
+## Aspect ratio and canvas
 
-Per-talk — set `aspectRatio` and `canvasWidth` in the deck frontmatter
-to match the venue. The `2026_04_28_editAI` venue is a **2.5 × 4.5 m
-LED wall at 2880 × 1600** (pixel pitch 1.56 mm), aspect **9:5** (= 1.8,
-*not* 16:10 which is 1.6). The deck uses `aspectRatio: 9/5` and
-`canvasWidth: 2880` so raster assets render at native resolution.
+The scienced theme's typography (`text-4xl` h1, `text-3xl` h2, etc.) is
+calibrated against Slidev's default `canvasWidth = 980`. Slidev
+transform-scales the slide to fit the viewport, so the deck visually
+fills any venue at any resolution — `canvasWidth` only affects the
+unscaled grid the theme is calibrated for, raster-asset alignment,
+and PDF export pixel resolution.
+
+**Rule of thumb: don't set `canvasWidth` in deck frontmatter.** Leave
+it at Slidev's default 980. Then theme proportions match the CERN
+lessons reference exactly.
+
+Per-venue knobs (in deck frontmatter):
+- `aspectRatio` — `9/5` for the editAI LED wall, `16/9` for projectors.
+
+Per-venue knobs (in `videos/manifest.toml` `[defaults]`):
+- `long_edge_px` — venue's pixel width (1920 for 1080p, 2880 for the
+  LED wall, 3840 for 4K) so videos encode at native resolution.
+
+Reference setups:
+- `2026_04_28_editAI` — 2.5 × 4.5 m LED wall, 2880×1600, **9:5**. `aspectRatio: 9/5`, `long_edge_px = 2880`.
+- `2026_05_11_Sceptics` — 4K projector, 3840×2160, **16:9**. `aspectRatio: 16/9`, `long_edge_px = 3840`.
 
 Videos keep native aspect via `object-fit: contain` in `VideoPlayer`;
-16:9 clips letterbox inside a 9:5 slide — expected.
+mismatched clips letterbox inside the slide — expected. The
+`VideoPlayer` itself is `position: absolute; inset: 0` (full-bleed),
+so video slides should not also have an h1 — the video covers it. Add
+descriptive copy on the preceding/following slide instead.
+
+## Embedded iframe slides
+
+A naive `<iframe class="absolute inset-0 w-full h-full" />` renders the
+embedded site at the slide's canvas size (~980×552 with default
+`canvasWidth`). Slidev then transform-scales the slide ~4× to hit a 4K
+screen, so the embedded UI ends up oversized and pixelated.
+
+Trick: oversize the iframe DOM by 2× and `transform: scale(0.5)` it
+back. The embedded site sees a ~1960×1104 viewport (UI sizes itself
+properly), and the outer Slidev scale lands at native 4K crisp:
+
+```html
+<div class="absolute inset-0 overflow-hidden bg-black">
+  <iframe
+    src="..."
+    class="absolute top-0 left-0 border-0"
+    style="width: 200%; height: 200%; transform: scale(0.5); transform-origin: top left;"
+    allow="fullscreen"
+    scrolling="no"
+  ></iframe>
+</div>
+```
+
+Bump to `300%` / `scale(0.333)` for higher-DPI sites; `400%` / `scale(0.25)`
+shrinks UI dramatically (good only for sites where the UI is incidental).
 
 ## Portable/offline bundle
 

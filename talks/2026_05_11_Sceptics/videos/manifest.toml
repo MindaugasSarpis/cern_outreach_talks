@@ -18,3 +18,18 @@ long_edge_px  = 3840   # venue is 4K 16:9 (3840x2160); override global 1920
 # max_size_mb inherited from /outreach.toml.
 
 # [[videos]] entries go here as the deck grows.
+
+# g-2 charts — masters in gdrive should be regenerated at 16:9 (1920x1080 min,
+# 3840x2160 ideal) to match the 4K 16:9 venue. The editAI versions are 1800x1000
+# (9:5) and would upscale ~2.1x on a 4K slide.
+[[videos]]
+name    = "g2_data.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Muon g-2 measured-vs-theory chart. REGENERATE at 16:9 from master."
+
+[[videos]]
+name    = "g2_fit.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = "Muon g-2 fit chart. REGENERATE at 16:9 from master."
