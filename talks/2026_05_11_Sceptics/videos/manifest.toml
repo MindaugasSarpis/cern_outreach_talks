@@ -1,0 +1,20 @@
+# Video assets for this talk. Global defaults live in /outreach.toml;
+# talk-level [defaults] overrides them; per-video fields on a [[videos]]
+# block win over both.
+#
+# Profiles (in scripts/videos.py):
+#   remux          - lossless stream copy + faststart. For clips already in a
+#                    web-friendly codec (HEVC/H.264 <= ~5 Mbps).
+#   standard       - HEVC CRF 24, AAC 128k.
+#   standard-tight - HEVC CRF 27 for long clips that blow the size budget.
+#   silent-loop    - HEVC CRF 26, audio stripped. Background loops.
+#   high-motion    - HEVC CRF 22, AAC 192k. Sims, fast action, CGI.
+
+[defaults]
+source_remote = "gdrive:Work/Outreach/Resources/Videos/released"
+long_edge_px  = 3840   # venue is 4K 16:9 (3840x2160); override global 1920
+
+# release_tag auto-derives from talk dirname.
+# max_size_mb inherited from /outreach.toml.
+
+# [[videos]] entries go here as the deck grows.
