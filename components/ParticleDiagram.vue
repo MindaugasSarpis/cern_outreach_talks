@@ -2,61 +2,60 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 
 const props = withDefaults(defineProps<{
+  mode?: 'ballistic' | 'random'
   speed?: number
 }>(), {
+  mode: 'ballistic',
   speed: 1,
 })
 
-type Phase = 'ballistic' | 'random'
-
 const trail = ref<{ x: number; y: number }[]>([])
-const pos = ref({ x: 100, y: 800 })
-const phase = ref<Phase>('ballistic')
+const pos = ref({ x: 100, y: 950 })
 let phaseTick = 0
 let raf: number | null = null
 
-// ~6 s per phase at 60 fps. Slow enough that the eye can follow the dot.
-const BALLISTIC_FRAMES = 360
-const RANDOM_FRAMES = 360
+// ~30 s per cycle at 60 fps. Each slide shows one mode.
+const FRAMES_PER_CYCLE = 1800
 
-// Brownian state held outside Vue's reactive system; only pos.value is published.
 let bx = 960
 let by = 540
 let bvx = 0
 let bvy = 0
+let bInit = false
 
 function resetBallistic() {
   trail.value = []
-  pos.value = { x: 100, y: 800 }
-  phase.value = 'ballistic'
+  pos.value = { x: 100, y: 950 }
   phaseTick = 0
 }
 
-function resetRandom() {
-  trail.value = []
+function initRandom() {
   bx = 960
   by = 540
   bvx = (Math.random() - 0.5) * 8
   bvy = (Math.random() - 0.5) * 8
   pos.value = { x: bx, y: by }
-  phase.value = 'random'
-  phaseTick = 0
+  bInit = true
 }
 
 function step() {
   phaseTick += 1
-  if (phase.value === 'ballistic') {
-    const t = (phaseTick / BALLISTIC_FRAMES) * props.speed
-    const x = 100 + 1700 * t
-    const y = 800 - 1100 * t + 600 * t * t
+  if (props.mode === 'ballistic') {
+    const t = phaseTick / FRAMES_PER_CYCLE
+    if (t > 1) {
+      resetBallistic()
+      raf = requestAnimationFrame(step)
+      return
+    }
+    // Symmetric parabola: launch (100, 950) → peak (960, 250) → land (1820, 950).
+    const x = 100 + 1720 * t
+    const y = 950 - 4 * 700 * t * (1 - t)
     pos.value = { x, y }
     trail.value.push({ x, y })
-    if (phaseTick >= BALLISTIC_FRAMES || x > 1900) {
-      resetRandom()
-    }
   } else {
-    bvx += (Math.random() - 0.5) * 2.5
-    bvy += (Math.random() - 0.5) * 2.5
+    if (!bInit) initRandom()
+    bvx += (Math.random() - 0.5) * 2.5 * props.speed
+    bvy += (Math.random() - 0.5) * 2.5 * props.speed
     bvx *= 0.95
     bvy *= 0.95
     bx += bvx * props.speed
@@ -67,11 +66,9 @@ function step() {
     if (by > 1020) { by = 1020; bvy = -bvy }
     pos.value = { x: bx, y: by }
     trail.value.push({ x: bx, y: by })
-    if (phaseTick >= RANDOM_FRAMES) {
-      resetBallistic()
-    }
+    // Rolling buffer ≈ 25 s of trail at 60 fps.
+    if (trail.value.length > 1500) trail.value.shift()
   }
-  if (trail.value.length > 300) trail.value.shift()
   raf = requestAnimationFrame(step)
 }
 

@@ -64,91 +64,20 @@ Kur ji bandoma prie pat ribos.
 </div>
 
 ---
-layout: section
-hideInToc: true
----
 
-# 1 dalis — Kai fizika sulūžo
-
-<!-- image candidate: vintage physics lab / Solvay 1927 -->
+<ParticleDiagram mode="ballistic" />
 
 ---
 
-# 🧱 **Klasikinė intuicija vs. tikrovė**
-
-<div class="grid-2 mt-md">
-
-<div class="card card-info pad-tight">
-
-### Ko tikisi mūsų intuicija
-
-- Daiktai — **dalelės** arba **bangos**.
-- Padėtis ir greitis — visada apibrėžti.
-- Nežiūrėjimas nieko nekeičia.
-- Lokalu, priežastis → pasekmė.
-
-</div>
-
-<div class="card card-warning pad-tight">
-
-### Ką iš tikrųjų daro Visata
-
-- **Nei** rutuliukai, **nei** klasikinės bangos.
-- Padėtis ir greitis vienu metu — **ne**.
-- „Nežiūrėjimas“ — ne neutralus aktas.
-- Nutolę objektai — **susieti**.
-
-</div>
-
-</div>
-
-<div class="mt-md opacity-70 text-center">
-Tai ne filosofija. Tai išmatuota.
-</div>
+<ParticleDiagram mode="random" />
 
 ---
 
 <WaveDiagram />
 
-<div class="absolute bottom-8 left-8 right-8 max-w-[60%]">
-  <div class="card card-info pad-tight">
-
-  ## 🌊 **Banga**
-
-  Vandens paviršiuje, garse, šviesoje. Užima erdvę, neša energiją, gali interferuoti.
-
-  </div>
-</div>
-
----
-
-<ParticleDiagram />
-
-<div class="absolute bottom-8 left-8 right-8 max-w-[60%]">
-  <div class="card card-warning pad-tight">
-
-  ## ⚪ **Taškinė dalelė**
-
-  Biliardo rutuliukas. Tiksli padėtis, tikslus greitis, lokalus poveikis.
-
-  </div>
-</div>
-
 ---
 
 <WavePacketDiagram />
-
-<div class="absolute bottom-8 left-8 right-8 max-w-[60%]">
-  <div class="card card-primary pad-tight">
-
-  ## ⚛️ **Bangos paketas**
-
-  Kvantinis objektas — nei viena, nei kita. Lokalizuota banga. Padėtis ir greitis vienu metu — neapibrėžti.
-
-  <div class="opacity-70 mt-1 text-sm">Spausk ant skaidrės — paketas „kolapsuoja" į dalelę.</div>
-
-  </div>
-</div>
 
 ---
 
@@ -711,11 +640,10 @@ layout: quote
 — Richard Feynman
 
 ---
-layout: fact
----
 
-# Ačiū
+<VideoPlayer src="LHCb_Aciu.mov" />
 
-Klausimai, prieštaravimai ir „o kaip dėl…“ — visi laukiami.
+<!-- LHCb thanks reel (~2:28 with audio). Source: gdrive Outreach/Resources/Videos/released. -->
+<!-- Same master as the editAI talk uses; hq_from_raw=true means the HQ ships via gdrive pull, -->
+<!-- not via the GH release (raw 2880x1600 HEVC > 2 GB cap). -->
 
-<!-- video candidate: LHCb_Aciu.mov -->
