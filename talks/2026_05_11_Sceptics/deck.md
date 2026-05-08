@@ -397,6 +397,159 @@ hideInToc: true
 <!-- image candidate: CERN aerial / LHC tunnel / Higgs detection -->
 
 ---
+layout: statement
+---
+
+<!-- speaker: once /public/figures/cern/aerial.jpg exists, add `background: /figures/cern/aerial.jpg` to this slide's frontmatter for an aerial backdrop -->
+
+# Kas yra CERN
+
+<div class="card card-primary pad-tight max-w-[60%] mx-auto mt-md">
+
+- **23 valstybės narės**, 110+ šalys dalyvauja
+- Įkurtas **1954**, atviras (publikacijos viešos), recenzuojamas
+- **17 000+** tyrėjų, viešas finansavimas
+- Vienas LHC eksperimentas → **tūkstančiai autorių vienoje publikacijoje**
+
+</div>
+
+<div class="mt-md opacity-80 text-center text-lg">
+Jei tai būtų sąmokslas — jis būtų prasčiausiai paslėptas pasaulio sąmokslas.
+</div>
+
+---
+
+# ✅ **Ką CERN patvirtino**
+
+<div class="grid-3 mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🎯 **Higgsas (2012)**
+
+<div class="w-full h-24 rounded my-1 bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center text-xs opacity-60">ATLAS / CMS event</div>
+<!-- speaker: replace the placeholder div above with <img src="/figures/cern/higgs_event.png" class="w-full rounded my-1" /> once the CC-BY image is in place -->
+
+Paskutinis trūkstamas Standartinio modelio elementas. ATLAS + CMS, ~5σ, dvi nepriklausomos grupės.
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## ⚛️ **Antimaterija (ALPHA)**
+
+<div class="w-full h-24 rounded my-1 bg-gradient-to-br from-emerald-900 to-teal-900 flex items-center justify-center text-xs opacity-60">ALPHA antihydrogen</div>
+<!-- speaker: replace with <img src="/figures/cern/alpha_antihydrogen.png" class="w-full rounded my-1" /> -->
+
+Antivandenilio spektrai 2017–2020. Tokie patys kaip vandenilio ribose paklaidų.
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## ⚖️ **W bozono masė**
+
+<div class="w-full h-24 rounded my-1 bg-gradient-to-br from-amber-900 to-rose-900 flex items-center justify-center text-xs opacity-60">CMS 2024 measurement</div>
+<!-- speaker: replace with <img src="/figures/cern/cms_w_mass.png" class="w-full rounded my-1" /> -->
+
+Sub-promilė tikslumu, sutampa su Standartiniu modeliu (CMS 2024 pataisė ankstesnį Tevatron neatitikimą).
+
+</div>
+
+</div>
+
+---
+layout: statement
+---
+
+# ❌ **Ką CERN paneigė**
+
+<div class="card card-warning pad-tight max-w-[70%] mx-auto mt-md">
+
+> *Mes ieškojome supersimetrijos. Pigios versijos — neradome. Tai irgi mokslas.*
+
+</div>
+
+<div class="grid-2 mt-md max-w-[80%] mx-auto">
+
+<div class="card card-info pad-tight">
+
+- Lengvosios SUSY versijos — **atmestos** LHC duomenimis 2010–2024.
+- Kai kurie tamsiosios materijos kandidatai (WIMP > 1 TeV, kai kurie sub-GeV) — **atmesti**.
+
+</div>
+
+<div class="card card-info pad-tight">
+
+- Dauguma „naujosios fizikos" prognozių iš 2000-ųjų — **neišlaikė bandymo**.
+- Tas pats LHC, kuris rado Higgsą, **atmetė** dešimtis kitų hipotezių.
+
+</div>
+
+</div>
+
+<div class="mt-md opacity-80 text-center text-lg">
+Falsifikacija veikia. Hipotezė, kuri negali pralošti — ne mokslas.
+</div>
+
+---
+
+# ❓ **Ką CERN klausia dabar**
+
+<div class="grid-3 mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 🌑 **Tamsioji materija**
+
+Kas tai yra? LHC + tiesioginiai detektoriai (LZ, XENONnT) + dangaus stebėjimai.
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## ⚖️ **Materijos / antimaterijos asimetrija**
+
+Kodėl Visata yra, o ne išnyko? LHCb, ALPHA, neutrinų eksperimentai.
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🌫️ **Neutrinų masė**
+
+KATRIN, JUNO, DUNE; CERN tiekia pluoštus, infrastruktūrą.
+
+</div>
+
+</div>
+
+---
+
+# 🔬 **Mano dalis — LHCb**
+
+<div class="grid-2 mt-md">
+
+<div class="w-full h-64 rounded bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center text-sm opacity-60">LHCb event display</div>
+<!-- speaker: replace placeholder div with <img src="/figures/cern/lhcb_event.png" class="w-full rounded" /> once available -->
+
+<div class="card card-primary pad-tight">
+
+### Ką aš matau
+
+LHCb — vienas iš keturių didžiųjų LHC eksperimentų. Specializuojasi **b ir c kvarkų skilimuose**: vieta, kur ieškoma smulkių neatitikimų tarp materijos ir antimaterijos.
+
+<!-- speaker: optionally add 1 line here about your specific role / subsystem -->
+
+</div>
+
+</div>
+
+<div class="mt-md opacity-80 text-center">
+Štai kur „kvantinė mechanika" virsta darbo užduotimi.
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
