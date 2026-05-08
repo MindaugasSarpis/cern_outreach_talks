@@ -219,6 +219,118 @@ hideInToc: true
 <!-- image candidate: phone chip / MRI / laser collage -->
 
 ---
+
+# 🔌 **Be QM nebūtų...**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 📱 **Tranzistorius**
+
+Telefonai, kompiuteriai, automobiliai. Pusės XX a. revoliucija stovi ant juostinės teorijos — gryno QM.
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔬 **Lazeris**
+
+Stimuliuota emisija (Einstein, 1917). Šiandien — pluošto internetas, parduotuvės, akių chirurgija.
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🧲 **MRT**
+
+Branduolinio sukinio rezonansas. Be Pauli ir Diraco — nėra MRT skenerių.
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🛰️ **GPS**
+
+Atominiai laikrodžiai (cezio kvantinis perėjimas) + reliatyvistinė pataisa. Be jų — ±11 km per dieną.
+
+</div>
+
+</div>
+
+<div class="mt-md opacity-70 text-center">
+Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
+</div>
+
+---
+
+# 🧮 **Pažangos riba 2026 — kvantiniai kompiuteriai**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-info pad-tight">
+
+### Kur jie tikrai yra (2026)
+
+Triukšmingi, ~1000 fizinių kubitų, klaidų korekcija — ankstyvieji demonstracijos eksperimentai.
+
+Nė vienas dar nepralenkė klasikinio kompiuterio realioje užduotyje, kuri **nebūtų sukonstruota tam, kad QC laimėtų**.
+
+</div>
+
+<div class="card card-warning pad-tight">
+
+### Ko greitai **NE**padarys
+
+- Nepalauš RSA ryt.
+- Nesukurs DI.
+- Neišgydys ligų magija.
+
+</div>
+
+</div>
+
+<div class="card card-success pad-tight mt-md">
+
+### Ko greičiausiai pasieks per 5–10 metų
+
+Kvantinė chemija (vaistai, baterijos), kombinatorinis optimizavimas, kvantinė kriptografija (post-kvantinė — **jau diegiama**).
+
+</div>
+
+---
+
+# 📡 **Kvantinis jutimas + tinklai (jau dabar)**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-primary pad-tight">
+
+### Kvantinis jutimas
+
+- **Atominiai gravitometrai** — požeminių struktūrų vaizdinimas.
+- **Magnetometrai** — smegenų magnetoencefalografija be šaldymo.
+- **Atominiai laikrodžiai** — 10⁻¹⁹ tikslumu.
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+### Kvantiniai tinklai
+
+- **Mičio palydovas** (Kinija, 2017+) — kvantinis raktų pasiskirstymas iš orbitos.
+- **EuroQCI** — ES kvantinis ryšio tinklas.
+- **BB84** komerciniuose duomenų centruose.
+
+</div>
+
+</div>
+
+<div class="mt-md opacity-70 text-center">
+Tai ne ateitis. Tai šiandiena, tik mažiau garsi nei „kvantinis kompiuteris".
+</div>
+
+---
 layout: section
 hideInToc: true
 ---
