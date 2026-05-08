@@ -61,6 +61,8 @@ const dotOpacity = computed(() => {
   return 0
 })
 
+const pathOpacity = computed(() => 1 - dotOpacity.value)
+
 const path = computed(() => {
   const w = 1920
   const cy = 540
@@ -80,9 +82,11 @@ const path = computed(() => {
 </script>
 
 <template>
-  <div
-    class="absolute inset-0"
+  <svg
+    viewBox="0 0 1920 1080"
+    class="absolute inset-0 w-full h-full"
     :class="{ 'cursor-pointer': props.interactive }"
+    preserveAspectRatio="xMidYMid meet"
     @click.stop="handleClick"
     @mousedown.stop
     @mouseup.stop
@@ -92,27 +96,21 @@ const path = computed(() => {
     @touchstart.stop
     @touchend.stop
   >
-    <svg
-      viewBox="0 0 1920 1080"
-      class="absolute inset-0 w-full h-full"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <line x1="0" y1="540" x2="1920" y2="540" stroke="currentColor" stroke-width="1" stroke-opacity="0.15" />
-      <path
-        :d="path"
-        stroke="currentColor"
-        stroke-width="6"
-        fill="none"
-        stroke-linecap="round"
-        :opacity="1 - dotOpacity"
-      />
-      <circle
-        :cx="x0"
-        cy="540"
-        r="18"
-        fill="currentColor"
-        :opacity="dotOpacity"
-      />
-    </svg>
-  </div>
+    <line x1="0" y1="540" x2="1920" y2="540" stroke="currentColor" stroke-width="1" stroke-opacity="0.15" />
+    <path
+      :d="path"
+      stroke="currentColor"
+      stroke-width="6"
+      fill="none"
+      stroke-linecap="round"
+      :opacity="pathOpacity"
+    />
+    <circle
+      :cx="x0"
+      cy="540"
+      r="18"
+      fill="currentColor"
+      :opacity="dotOpacity"
+    />
+  </svg>
 </template>
