@@ -96,21 +96,29 @@ const path = computed(() => {
     @touchstart.stop
     @touchend.stop
   >
-    <line x1="0" y1="540" x2="1920" y2="540" stroke="currentColor" stroke-width="1" stroke-opacity="0.15" />
+    <line
+      x1="0"
+      y1="540"
+      x2="1920"
+      y2="540"
+      stroke="white"
+      stroke-width="2"
+      stroke-opacity="0.15"
+    />
     <path
       :d="path"
-      stroke="currentColor"
+      stroke="white"
       stroke-width="6"
       fill="none"
       stroke-linecap="round"
-      :opacity="pathOpacity"
+      :style="{ opacity: pathOpacity }"
     />
     <circle
       :cx="x0"
       cy="540"
       r="18"
-      fill="currentColor"
-      :opacity="dotOpacity"
+      fill="white"
+      :style="{ opacity: dotOpacity }"
     />
   </svg>
 </template>
