@@ -345,6 +345,25 @@ Schrödingeris šitą **juokavo**. Sugalvojo katę, kad **paneigtų** superpozic
 
 </div>
 
+<div class="mt-md flex justify-center">
+  <div class="card card-accent pad-tight max-w-[80%]">
+
+  <div class="grid-2 items-center text-center">
+    <div>
+      <div class="opacity-70 text-sm">Žmogaus reakcija</div>
+      <div class="text-3xl font-mono">~10⁻¹ s</div>
+    </div>
+    <div>
+      <div class="opacity-70 text-sm">Katės dekoherencija</div>
+      <div class="text-3xl font-mono">~10⁻²⁰ s</div>
+    </div>
+  </div>
+
+  <div class="text-center mt-2 opacity-90">Skirtumas — **19 eilių didesnis**.</div>
+
+  </div>
+</div>
+
 ---
 
 # 🚫 **Mitas Nr. 3 — „Susietumas = greičiau už šviesą“**
@@ -391,7 +410,19 @@ Heisenbergo principas yra apie matavimo trūkumus. Su geresne įranga galėsime 
 
 Neapibrėžtumas — **sistemos savybė**, ne matavimo trūkumas.
 
-Dalelė su tiksliai apibrėžta padėtimi **neturi** apibrėžto impulso. Ne „nežinome“ — **jo nėra**.
+<div class="grid-2 mt-2">
+  <div class="relative h-32 overflow-hidden rounded">
+    <WavePacketDiagram :sigma="40" :interactive="false" />
+  </div>
+  <div class="relative h-32 overflow-hidden rounded">
+    <WavePacketDiagram :sigma="320" :interactive="false" />
+  </div>
+</div>
+
+<div class="grid-2 mt-1 text-sm opacity-80">
+  <div>Tiksli padėtis → neapibrėžtas impulsas.</div>
+  <div>Tikslus impulsas → neapibrėžta padėtis.</div>
+</div>
 
 </div>
 
