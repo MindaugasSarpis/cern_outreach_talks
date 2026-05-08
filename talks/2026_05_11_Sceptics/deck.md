@@ -108,6 +108,50 @@ Tai ne filosofija. Tai išmatuota.
 
 ---
 
+<WaveDiagram />
+
+<div class="absolute bottom-8 left-8 right-8 max-w-[60%]">
+  <div class="card card-info pad-tight">
+
+  ## 🌊 **Banga**
+
+  Vandens paviršiuje, garse, šviesoje. Užima erdvę, neša energiją, gali interferuoti.
+
+  </div>
+</div>
+
+---
+
+<ParticleDiagram />
+
+<div class="absolute bottom-8 left-8 right-8 max-w-[60%]">
+  <div class="card card-warning pad-tight">
+
+  ## ⚪ **Taškinė dalelė**
+
+  Biliardo rutuliukas. Tiksli padėtis, tikslus greitis, lokalus poveikis.
+
+  </div>
+</div>
+
+---
+
+<WavePacketDiagram />
+
+<div class="absolute bottom-8 left-8 right-8 max-w-[60%]">
+  <div class="card card-primary pad-tight">
+
+  ## ⚛️ **Bangos paketas**
+
+  Kvantinis objektas — nei viena, nei kita. Lokalizuota banga. Padėtis ir greitis vienu metu — neapibrėžti.
+
+  <div class="opacity-70 mt-1 text-sm">Spausk ant skaidrės — paketas „kolapsuoja" į dalelę.</div>
+
+  </div>
+</div>
+
+---
+
 <div
   class="absolute inset-0 overflow-hidden bg-black"
   @click.stop
