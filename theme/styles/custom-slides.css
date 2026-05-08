@@ -100,6 +100,7 @@
 .card {
   --card-shadow-default: var(--shadow-md);
   --card-shadow-hover: var(--shadow-lg);
+  font-size: 1.1em;
   position: relative;
   padding: var(--card-padding-lg);
   border-radius: var(--radius-lg);
@@ -614,4 +615,25 @@
 .miss-ex p { margin: 0; font-size: inherit; }
 .miss-ex ul { margin: 0.2rem 0 0; padding-left: 1.1rem; }
 .miss-ex li { margin: 0.1rem 0; }
+
+/* Figure frame — lift white-background plots off the dark deck background
+   so they don't look like bare MS-Paint rectangles. Apply as `class="fig"`
+   on any img that lives on a dark slide without a surrounding card. */
+.fig {
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 0.5rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Same frame, but sized for figures that sit inside a card grid cell
+   (e.g. the three-panel comparison slides). Less padding, smaller radius
+   so the figure doesn't fight the enclosing card's rounding. */
+.card .fig,
+.fig-inline {
+  padding: 0.25rem 0.3rem;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(2, 6, 23, 0.35);
+}
 
