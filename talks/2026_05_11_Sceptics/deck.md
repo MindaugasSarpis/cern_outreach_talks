@@ -15,9 +15,9 @@ background: /figures/background_intro.jpg
 
 # Dr. Mindaugas Šarpis
 
-# Kvantinė mechanika skeptikams
+# Ar paranormalu tampa normalu? Kvantinė fizika 
 
-## Kas ji yra, kas ne, ir kodėl tuo rūpinasi CERN
+## Skeptics meetup
 
 <div class="mt-md opacity-70">2026-05-11</div>
 
@@ -25,9 +25,9 @@ background: /figures/background_intro.jpg
 layout: quote
 ---
 
-> „Manau, galiu drąsiai pasakyti, kad niekas iš tikrųjų nesupranta kvantinės mechanikos.“
+# „Manau, galiu drąsiai pasakyti, kad niekas iš tikrųjų nesupranta kvantinės mechanikos.“
 
-— Richard Feynman, 1965
+Richard Feynman, 1965
 
 ---
 layout: statement
@@ -152,34 +152,11 @@ Tai ne filosofija. Tai išmatuota.
 
 ---
 
-<div
-  class="absolute inset-0 overflow-hidden bg-black"
-  @click.stop
-  @mousedown.stop
-  @mouseup.stop
-  @mousemove.stop
-  @pointerdown.stop
-  @pointerup.stop
-  @pointermove.stop
-  @wheel.stop
-  @touchstart.stop
-  @touchmove.stop
-  @touchend.stop
-  @contextmenu.stop
->
-  <iframe
-    src="https://asliceofcuriosity.fr/assets/atom/orbitalsApp-Metropolis.html"
-    class="absolute top-0 left-0 border-0"
-    style="width: 200%; height: 200%; transform: scale(0.5); transform-origin: top left;"
-    allow="fullscreen"
-    scrolling="no"
-  ></iframe>
-</div>
+<VideoPlayer src="orbitals.mp4" loop muted :controls="false" />
 
-<!-- Interactive 3D atomic-orbital viewer. Source: asliceofcuriosity.fr -->
-<!-- @click.stop / @mousedown.stop / @wheel.stop block Slidev's slide-level event handlers -->
-<!-- so drag-to-rotate and scroll-to-zoom inside the iframe work uninterrupted. -->
-<!-- Use ←/→ or Space on the keyboard to navigate slides while the mouse is inside the iframe. -->
+<!-- Pre-rendered hydrogen-like orbital surfaces (s, p, d, f; m=0) rotating around z. -->
+<!-- Replaces the asliceofcuriosity iframe (broken on Mac). Render via:        -->
+<!--   python3 scripts/orbital_animation.py    (then `pnpm videos:encode`)     -->
 
 ---
 
