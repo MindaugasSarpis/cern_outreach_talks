@@ -64,6 +64,14 @@ Kur QM tyrinėjama iki galo.
 
 ---
 
+<ParticleDiagram mode="ballistic" />
+
+---
+
+<ParticleDiagram mode="random" />
+
+---
+
 <VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" loop muted :controls="false" />
 
 ---
@@ -75,14 +83,6 @@ Kur QM tyrinėjama iki galo.
      they create is an irreversible interaction with the supersaturated vapor.
      Concrete example for "matavimas = bet kokia negrįžtama sąveika".
      Inherited from /videos/shared.toml. -->
-
----
-
-<ParticleDiagram mode="ballistic" />
-
----
-
-<ParticleDiagram mode="random" />
 
 ---
 
@@ -100,6 +100,10 @@ Kur QM tyrinėjama iki galo.
 
 ---
 
+<WaveDiagram />
+
+---
+
 <DoubleSlitDiagram mode="quantum" />
 
 <!-- Beat 3: same setup, but quantum particles. Wavefronts emerge from BOTH
@@ -108,7 +112,22 @@ Kur QM tyrinėjama iki galo.
 
 ---
 
-<WaveDiagram />
+<DoubleSlitDiagram mode="classical-electrons" />
+
+<!-- Beat 4: classical EXPECTATION for electrons. They're tiny balls, right?
+     So shooting them at the slits should give two bands behind the slits,
+     just like the marbles. This is what intuition predicts before we run
+     the experiment. -->
+
+---
+
+<DoubleSlitDiagram mode="quantum-electrons" />
+
+<!-- Beat 5: what ACTUALLY happens. Single e⁻ particles fly from the source
+     one at a time and visibly disappear at the barrier; a faint wavelet
+     expands from BOTH slits per electron, then a single dot lands on the
+     screen. Fringe pattern builds up — punchline: each electron interferes
+     with itself, even though we're sending them through one at a time. -->
 
 ---
 
