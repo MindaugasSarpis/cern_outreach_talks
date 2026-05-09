@@ -9,15 +9,23 @@ and can be published to a parallel release (default tag: videos-hq-<talk>)
 so any machine can `gh release download` the venue masters instead of
 re-encoding them.
 
+A monorepo-wide shared registry at /videos/shared.toml declares clips
+that live in a shared GH Release and are inherited by talks at runtime
+(via VideoPlayer's fallback chain). Per-talk commands (sync, encode,
+publish, pull) operate ONLY on talk-owned clips; shared clips are not
+downloaded or re-encoded when working on a specific talk. The `check`
+command treats slide refs satisfied by the shared registry as OK.
+
 Subcommands:
-    sync        rclone mirror raw files from the configured remote
-    encode      ffmpeg raw -> public/videos/ (web tier, idempotent)
-    publish     gh release upload web files, clobbering existing assets
-    pull        gh release download web files -> public/videos/
-    check       sanity check: orphans, missing, over-budget, slide-ref mismatches
-    encode-hq   ffmpeg raw -> videos/hq/ (visually-lossless venue masters)
-    publish-hq  gh release upload HQ files to the parallel release
-    pull-hq     gh release download HQ files -> videos/hq/
+    sync           rclone mirror raw files from the configured remote
+    encode         ffmpeg raw -> public/videos/ (web tier, idempotent)
+    publish        gh release upload web files, clobbering existing assets
+    pull           gh release download web files -> public/videos/
+    check          sanity check: orphans, missing, over-budget, slide-ref mismatches
+    encode-hq      ffmpeg raw -> videos/hq/ (visually-lossless venue masters)
+    publish-hq     gh release upload HQ files to the parallel release
+    pull-hq        gh release download HQ files -> videos/hq/
+    shared-check   sanity-check the shared registry (run from repo root)
 """
 from __future__ import annotations
 
@@ -148,13 +156,8 @@ class VideoEntry:
     hq_from_raw: bool = False
 
 
-def load_manifest() -> tuple[dict, list[VideoEntry]]:
-    with MANIFEST.open("rb") as f:
-        data = tomllib.load(f)
-    # Merge: talk [defaults] wins over global outreach.toml [defaults].
-    defaults = {**_load_global_defaults(), **data.get("defaults", {})}
-    defaults.setdefault("release_tag", _auto_release_tag("videos"))
-    videos = [
+def _videos_from_data(data: dict) -> list[VideoEntry]:
+    return [
         VideoEntry(
             name=v["name"],
             profile=v.get("profile", "remux"),
@@ -166,7 +169,34 @@ def load_manifest() -> tuple[dict, list[VideoEntry]]:
         )
         for v in data.get("videos", [])
     ]
-    return defaults, videos
+
+
+def load_manifest() -> tuple[dict, list[VideoEntry]]:
+    with MANIFEST.open("rb") as f:
+        data = tomllib.load(f)
+    # Merge: talk [defaults] wins over global outreach.toml [defaults].
+    defaults = {**_load_global_defaults(), **data.get("defaults", {})}
+    defaults.setdefault("release_tag", _auto_release_tag("videos"))
+    return defaults, _videos_from_data(data)
+
+
+def load_shared_manifest() -> tuple[dict, list[VideoEntry]]:
+    """Load /videos/shared.toml from the monorepo root.
+
+    Returns ({}, []) if the file is absent. The shared registry declares
+    clips inherited from a shared GH Release; talks reference them in
+    decks but don't keep local raws/encodes.
+    """
+    root = _find_monorepo_root(TALK)
+    if not root:
+        return {}, []
+    shared = root / "videos" / "shared.toml"
+    if not shared.exists():
+        return {}, []
+    with shared.open("rb") as f:
+        data = tomllib.load(f)
+    defaults = {**_load_global_defaults(), **data.get("defaults", {})}
+    return defaults, _videos_from_data(data)
 
 
 def human_size(n: int) -> str:
@@ -354,7 +384,16 @@ def _publish_tier(
     force: bool,
     dry_run: bool,
     prune: bool = False,
+    protected: set[str] | None = None,
 ) -> int:
+    """Upload encoded files to a GH Release.
+
+    `protected` is a set of asset names that --prune must NEVER delete.
+    Used when a talk's release tag coincides with the shared release tag —
+    pruning by talk-manifest membership alone would erase shared assets that
+    other talks depend on.
+    """
+    protected = protected or set()
     if not shutil.which("gh"):
         print("error: gh CLI not installed. brew install gh", file=sys.stderr)
         return 2
@@ -401,7 +440,12 @@ def _publish_tier(
 
     if prune:
         wanted = {v.name for v in videos}
-        orphans = [n for n in remote_sizes if n not in wanted]
+        orphans = [n for n in remote_sizes if n not in wanted and n not in protected]
+        protected_skipped = sorted(
+            n for n in remote_sizes if n not in wanted and n in protected
+        )
+        for name in protected_skipped:
+            print(f"  ~ {name}: protected (in shared registry), skipping prune")
         for name in orphans:
             print(f"  - {name}: deleting from release {tag!r} (not in manifest)")
             if dry_run:
@@ -424,7 +468,15 @@ def _pull_tier(
     force: bool,
     dry_run: bool,
     prune: bool = False,
+    protected: set[str] | None = None,
 ) -> int:
+    """Download release files into a local dir.
+
+    `protected` is a set of filenames that --prune must NEVER delete locally
+    (used to keep shared-registry overlap files in place when the talk's
+    public/videos/ tree was populated for a previous architecture).
+    """
+    protected = protected or set()
     if not shutil.which("gh"):
         print("error: gh CLI not installed. brew install gh", file=sys.stderr)
         return 2
@@ -466,6 +518,9 @@ def _pull_tier(
                 continue
             if existing.name.endswith(".partial.mp4") or existing.name.endswith(".partial.mov"):
                 continue
+            if existing.name in protected:
+                print(f"  ~ {existing.name}: protected (in shared registry), skipping prune")
+                continue
             print(f"  - {existing.name}: pruning local (not in manifest)")
             if not dry_run:
                 existing.unlink()
@@ -484,17 +539,35 @@ def _filter_videos(videos: list[VideoEntry], only: list[str] | None) -> list[Vid
     return filtered
 
 
+def _shared_protect(tier_tag: str, *, hq: bool) -> set[str]:
+    """Names that prune must skip when this release tag overlaps with shared.
+
+    Returns a set if the talk's release tag matches the shared release tag for
+    the given tier, otherwise empty (talk-only release; nothing to protect).
+    """
+    shared_defaults, shared_videos = load_shared_manifest()
+    if not shared_videos:
+        return set()
+    key = "release_tag_hq" if hq else "release_tag"
+    shared_tag = shared_defaults.get(key)
+    if not shared_tag or shared_tag != tier_tag:
+        return set()
+    return {v.name for v in shared_videos}
+
+
 def cmd_publish(args: argparse.Namespace) -> int:
     defaults, videos = load_manifest()
     filtered = _filter_videos(videos, args.only)
     if isinstance(filtered, int):
         return filtered
+    tag = defaults.get("release_tag", "videos")
     return _publish_tier(
         filtered, WEB_DIR,
-        tag=defaults.get("release_tag", "videos"),
+        tag=tag,
         release_title="Video assets",
         release_notes="Bulk video assets for slide decks. Managed by scripts/videos.py.",
         force=args.force, dry_run=args.dry_run, prune=args.prune,
+        protected=_shared_protect(tag, hq=False),
     )
 
 
@@ -509,12 +582,14 @@ def cmd_publish_hq(args: argparse.Namespace) -> int:
     skipped = [v.name for v in filtered if v.hq_from_raw]
     for name in skipped:
         print(f"  ~ {name}: hq_from_raw — served from source_remote, not the release")
+    tag = defaults.get("release_tag_hq", _auto_release_tag("videos-hq"))
     return _publish_tier(
         to_publish, HQ_DIR,
-        tag=defaults.get("release_tag_hq", _auto_release_tag("videos-hq")),
+        tag=tag,
         release_title="Video assets (HQ)",
         release_notes="Visually-lossless venue masters. Run scripts/videos.py publish-hq to update.",
         force=args.force, dry_run=args.dry_run, prune=args.prune,
+        protected=_shared_protect(tag, hq=True),
     )
 
 
@@ -523,10 +598,12 @@ def cmd_pull(args: argparse.Namespace) -> int:
     filtered = _filter_videos(videos, args.only)
     if isinstance(filtered, int):
         return filtered
+    tag = defaults.get("release_tag", _auto_release_tag("videos"))
     return _pull_tier(
         filtered, WEB_DIR,
-        tag=defaults.get("release_tag", _auto_release_tag("videos")),
+        tag=tag,
         force=args.force, dry_run=args.dry_run, prune=args.prune,
+        protected=_shared_protect(tag, hq=False),
     )
 
 
@@ -574,12 +651,18 @@ def cmd_pull_hq(args: argparse.Namespace) -> int:
 
     if args.prune:
         wanted = {v.name for v in filtered}
+        protected_names = _shared_protect(
+            defaults.get("release_tag_hq", _auto_release_tag("videos-hq")), hq=True,
+        )
         for existing in HQ_DIR.iterdir():
             if not existing.is_file():
                 continue
             if existing.name in wanted:
                 continue
             if existing.name.endswith(".partial.mp4") or existing.name.endswith(".partial.mov"):
+                continue
+            if existing.name in protected_names:
+                print(f"  ~ {existing.name}: protected (in shared registry), skipping prune")
                 continue
             print(f"  - {existing.name}: pruning local (not in manifest)")
             if not args.dry_run:
@@ -610,7 +693,9 @@ def _slide_references() -> dict[str, list[str]]:
 
 def cmd_check(_: argparse.Namespace) -> int:
     _, videos = load_manifest()
+    _, shared_videos = load_shared_manifest()
     manifest_names = {v.name for v in videos}
+    shared_names = {v.name for v in shared_videos}
     raw_files = {p.name for p in RAW_DIR.glob("*") if p.is_file() and not p.name.startswith(".")}
     web_files = {p.name for p in WEB_DIR.glob("*") if p.is_file() and not p.name.startswith(".")}
     refs = _slide_references()
@@ -622,18 +707,19 @@ def cmd_check(_: argparse.Namespace) -> int:
         print(f"  MISSING RAW:      {name}")
         problems += 1
 
-    # Raw files not in the manifest.
-    for name in sorted(raw_files - manifest_names):
+    # Raw / web files not declared by the talk OR the shared registry.
+    # Shared-overlap files in public/videos/ are valid talk overrides; they're
+    # only flagged if they're absent from both manifests.
+    for name in sorted(raw_files - manifest_names - shared_names):
         print(f"  ORPHAN RAW:       {name}")
         problems += 1
 
-    # Web files not in the manifest (stale encodes).
-    for name in sorted(web_files - manifest_names):
+    for name in sorted(web_files - manifest_names - shared_names):
         print(f"  ORPHAN WEB:       {name}")
         problems += 1
 
-    # Slide references with no manifest entry.
-    for name in sorted(set(refs) - manifest_names):
+    # Slide references not satisfied by the talk manifest OR the shared registry.
+    for name in sorted(set(refs) - manifest_names - shared_names):
         where = ", ".join(sorted(set(refs[name])))
         print(f"  UNKNOWN REF:      {name}  (in {where})")
         problems += 1
@@ -644,8 +730,101 @@ def cmd_check(_: argparse.Namespace) -> int:
             print(f"  UNUSED MANIFEST:  {v.name}")
             problems += 1
 
+    # Informational: deck refs satisfied ONLY by the shared registry
+    # (i.e., not also in the talk manifest). Clips that appear in both are
+    # talk-owned with a shared-registry duplicate, not inherited.
+    inherited = sorted((set(refs) & shared_names) - manifest_names)
+    duplicated = sorted(manifest_names & shared_names)
+
     if problems == 0:
-        print(f"OK: {len(manifest_names)} videos, {len(refs)} referenced, all consistent.")
+        owned = len(manifest_names)
+        print(
+            f"OK: {owned} talk-owned, {len(inherited)} inherited from shared, "
+            f"{len(refs)} referenced, all consistent."
+        )
+        if inherited:
+            print("  inherited from shared:")
+            for name in inherited:
+                print(f"    - {name}")
+        if duplicated:
+            print("  also in shared registry (talk currently owns):")
+            for name in duplicated:
+                print(f"    - {name}")
+        return 0
+    print(f"\n{problems} issue(s) found.")
+    return 1
+
+
+def cmd_shared_check(_: argparse.Namespace) -> int:
+    """Sanity-check /videos/shared.toml. Run from the monorepo root.
+
+    Validates that all shared entries have valid profiles, that the shared
+    release tag is reachable, and surfaces deck refs across all talks that
+    are satisfied by the shared registry.
+    """
+    root = _find_monorepo_root(TALK)
+    if not root:
+        print("error: not inside a monorepo (no outreach.toml found)", file=sys.stderr)
+        return 2
+
+    shared_path = root / "videos" / "shared.toml"
+    if not shared_path.exists():
+        print(f"error: {shared_path} not found", file=sys.stderr)
+        return 2
+
+    with shared_path.open("rb") as f:
+        data = tomllib.load(f)
+    defaults = {**_load_global_defaults(), **data.get("defaults", {})}
+    videos = _videos_from_data(data)
+    shared_names = {v.name for v in videos}
+
+    problems = 0
+
+    # Profile sanity.
+    for v in videos:
+        if v.profile not in PROFILES:
+            print(f"  BAD PROFILE:      {v.name} -> {v.profile!r}")
+            problems += 1
+
+    # Cross-talk reference scan: are these clips actually used?
+    used_in_talks: dict[str, list[str]] = {}
+    for talk_dir in sorted((root / "talks").glob("*")):
+        if not talk_dir.is_dir():
+            continue
+        for md in talk_dir.rglob("*.md"):
+            try:
+                text = md.read_text(encoding="utf-8", errors="ignore")
+            except OSError:
+                continue
+            for m in VIDEO_REF_RE.finditer(text):
+                if m.group(1) in shared_names:
+                    used_in_talks.setdefault(m.group(1), []).append(talk_dir.name)
+
+    unused = sorted(shared_names - set(used_in_talks))
+    for name in unused:
+        print(f"  UNUSED SHARED:    {name}  (not referenced by any talk)")
+        # Not an error — a shared registry is allowed to hold spare clips.
+
+    # Release reachability (best-effort; gh may be unavailable).
+    tag = defaults.get("release_tag")
+    if tag and shutil.which("gh"):
+        sizes = _remote_asset_sizes(tag)
+        if sizes is None:
+            print(f"  RELEASE MISSING:  {tag}  (cannot reach via gh)")
+            problems += 1
+        else:
+            missing_assets = sorted(shared_names - set(sizes))
+            for name in missing_assets:
+                print(f"  MISSING ASSET:    {name}  (declared in shared.toml, not on release {tag})")
+                problems += 1
+
+    print()
+    print(f"Shared registry: {len(videos)} clip(s), release_tag = {tag!r}")
+    if used_in_talks:
+        print(f"Referenced by talks ({sum(len(v) for v in used_in_talks.values())} ref(s)):")
+        for name, talks_list in sorted(used_in_talks.items()):
+            print(f"  {name}: {', '.join(sorted(set(talks_list)))}")
+    if problems == 0:
         return 0
     print(f"\n{problems} issue(s) found.")
     return 1
@@ -835,6 +1014,9 @@ def main() -> int:
     p_pull_hq.add_argument("--force", action="store_true", help="re-download even if local size matches")
     p_pull_hq.add_argument("--prune", action="store_true", help="delete local files not in manifest")
     p_pull_hq.set_defaults(func=cmd_pull_hq)
+
+    p_shared = sub.add_parser("shared-check", help="sanity-check /videos/shared.toml (run from monorepo root)")
+    p_shared.set_defaults(func=cmd_shared_check)
 
     args = parser.parse_args()
     return args.func(args)

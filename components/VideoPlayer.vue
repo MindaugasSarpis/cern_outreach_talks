@@ -2,12 +2,25 @@
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useIsSlideActive, useNav, useSlideContext } from '@slidev/client'
 
-// Per-talk config injected via Vite env (see each talk's package.json scripts):
-//   VITE_VIDEO_REPO     e.g. "MindaugasSarpis/cern_outreach_talks"
-//   VITE_VIDEO_RELEASE  e.g. "videos-2026-04-28-editai"
-const REPO    = import.meta.env.VITE_VIDEO_REPO    || 'MindaugasSarpis/cern_outreach_talks'
-const RELEASE = import.meta.env.VITE_VIDEO_RELEASE || 'videos'
-const REMOTE_BASE = `https://github.com/${REPO}/releases/download/${RELEASE}`
+// Per-talk config injected via Vite env (see each talk's .env file):
+//   VITE_VIDEO_REPO            e.g. "MindaugasSarpis/cern_outreach_talks"
+//   VITE_VIDEO_RELEASE         talk's own release (talk-specific assets)
+//   VITE_VIDEO_SHARED_RELEASE  shared release (inherited; /videos/shared.toml)
+//
+// Fallback chain (front-to-back) when hq=true:
+//   public/videos-hq/<src>      (local HQ symlink)
+//   public/videos/<src>         (bundled web tier)
+//   <talk release>/<src>        (assets the talk publishes itself)
+//   <shared release>/<src>      (assets inherited from the shared registry)
+// hq=false drops the first step. Identical talk and shared tags are deduped
+// so we don't probe the same URL twice.
+const REPO           = import.meta.env.VITE_VIDEO_REPO           || 'MindaugasSarpis/cern_outreach_talks'
+const RELEASE        = import.meta.env.VITE_VIDEO_RELEASE        || 'videos'
+const SHARED_RELEASE = import.meta.env.VITE_VIDEO_SHARED_RELEASE || ''
+const REMOTE_BASE        = `https://github.com/${REPO}/releases/download/${RELEASE}`
+const SHARED_REMOTE_BASE = SHARED_RELEASE
+  ? `https://github.com/${REPO}/releases/download/${SHARED_RELEASE}`
+  : ''
 
 const props = defineProps({
   src:      { type: String, required: true },
@@ -24,12 +37,22 @@ const props = defineProps({
   hq:       { type: Boolean, default: true },
 })
 
-// Three-step fallback chain when hq=true: hqLocal → webLocal → webRemote.
-// Two-step when hq=false: webLocal → webRemote.
+// Fallback chain (deduped). hq=true adds hqLocal at the front; hq=false drops it.
 const base = computed(() => import.meta.env.BASE_URL || '/')
 const hqLocalSrc = computed(() => `${base.value}videos-hq/${props.src}`)
 const webLocalSrc = computed(() => `${base.value}videos/${props.src}`)
 const webRemoteSrc = computed(() => props.fallback || `${REMOTE_BASE}/${props.src}`)
+const sharedRemoteSrc = computed(
+  () => SHARED_REMOTE_BASE ? `${SHARED_REMOTE_BASE}/${props.src}` : ''
+)
+const fallbackChain = computed(() => {
+  const chain = props.hq
+    ? [hqLocalSrc.value, webLocalSrc.value, webRemoteSrc.value]
+    : [webLocalSrc.value, webRemoteSrc.value]
+  if (sharedRemoteSrc.value) chain.push(sharedRemoteSrc.value)
+  // Dedupe consecutive (e.g., when talk RELEASE === SHARED_RELEASE).
+  return chain.filter((url, i) => i === 0 || url !== chain[i - 1])
+})
 const localSrc = computed(() => props.hq ? hqLocalSrc.value : webLocalSrc.value)
 
 const videoRef = ref(null)
@@ -106,9 +129,7 @@ function hideControls() {
 let switching = false
 function onError() {
   if (switching || !hasBeenActive.value) return
-  const chain = props.hq
-    ? [hqLocalSrc.value, webLocalSrc.value, webRemoteSrc.value]
-    : [webLocalSrc.value, webRemoteSrc.value]
+  const chain = fallbackChain.value
   const idx = chain.indexOf(currentSrc.value)
   if (idx === -1 || idx === chain.length - 1) {
     status.value = 'error'
@@ -176,10 +197,16 @@ const shouldPreload = computed(() => {
 let preloadLink = null
 function addPreload() {
   if (preloadLink || typeof document === 'undefined') return
+  // Warm the most-reliable URL — the last entry in the fallback chain. If a
+  // shared release is configured the talk release may 404 for inherited clips,
+  // so preloading the talk URL is a wasted request.
+  const chain = fallbackChain.value
+  const url = chain[chain.length - 1]
+  if (!url) return
   preloadLink = document.createElement('link')
   preloadLink.rel = 'preload'
   preloadLink.as = 'video'
-  preloadLink.href = webRemoteSrc.value
+  preloadLink.href = url
   preloadLink.type = mimeType.value
   document.head.appendChild(preloadLink)
 }

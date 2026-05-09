@@ -33,11 +33,13 @@ The conda env bundles everything: `nodejs`, `pnpm`, `python>=3.11`,
 ├── outreach.toml                 # global defaults (long_edge_px, max_size_mb)
 ├── pnpm-workspace.yaml           # workspace: talks/*
 ├── theme/                        # shared Slidev theme (@slidev/theme-scienced fork)
-├── components/                   # shared Vue components (VideoPlayer)
+├── components/                   # shared Vue components (VideoPlayer, ParticleDiagram, …)
 ├── scripts/videos.py             # video pipeline (sync/encode/publish/check)
+├── videos/
+│   └── shared.toml               # shared registry: clips inherited by talks at runtime
 └── talks/<name>/
     ├── deck.md                   # Slidev entry — theme: ../../theme
-    ├── .env                      # VITE_VIDEO_REPO / VITE_VIDEO_RELEASE
+    ├── .env                      # VITE_VIDEO_REPO / VITE_VIDEO_RELEASE / VITE_VIDEO_SHARED_RELEASE
     ├── package.json              # slidev + per-talk scripts
     ├── components/ -> ../../components   (symlink; required for auto-import)
     ├── slides/                   # per-section markdown (optional)
@@ -46,7 +48,7 @@ The conda env bundles everything: `nodejs`, `pnpm`, `python>=3.11`,
     │   ├── videos/               # encoded web copies (gitignored)
     │   └── videos-hq/            # symlink to videos/hq/ (gitignored)
     └── videos/
-        ├── manifest.toml         # per-talk + per-video overrides
+        ├── manifest.toml         # talk-OWNED clips only (shared clips live in /videos/shared.toml)
         ├── raw/                  # originals (gitignored, rclone-synced)
         └── hq/                   # visually-lossless venue masters (gitignored)
 ```
@@ -69,6 +71,32 @@ merges `[defaults]` from:
 Release tags default to `videos-<talk-dirname-lowercased>` (web tier) and
 `videos-hq-<talk-dirname-lowercased>` (HQ tier) unless overridden in talk
 `[defaults]` as `release_tag` / `release_tag_hq`.
+
+## Shared video registry (`/videos/shared.toml`)
+
+Widely-reused external clips (CERN footage, LHCb, generic B-roll) live
+in a shared GH Release and are **inherited at runtime** by talks via
+VideoPlayer's fallback chain. They are NOT downloaded or re-encoded
+when working on an individual talk.
+
+- `/videos/shared.toml` lists shared clips (same schema as a talk
+  manifest) and declares the shared `release_tag` / `release_tag_hq`.
+- The shared release currently reuses `videos-2026-04-28-editai`
+  (editAI's own release also serves as the de-facto shared release).
+  When a dedicated `videos-shared` release is created, point the tags
+  there and republish; both are easy because schemas match.
+- A talk references shared clips simply by using the filename in its
+  deck. The talk's `manifest.toml` does NOT list them.
+- `videos:check` (per-talk) treats deck refs satisfied by shared as OK
+  and reports them under "inherited from shared".
+- `pnpm videos:shared:check` (run from repo root) sanity-checks the
+  shared registry: profile validity, release reachability, and
+  cross-talk usage.
+
+**To override a shared clip with a talk-specific encode** (e.g., a
+different aspect ratio): list the same filename in the talk's
+manifest, encode/publish to the talk's own release. Talk release wins
+the fallback chain (it's earlier than shared).
 
 ## Commands
 
@@ -94,8 +122,12 @@ pnpm videos:check       # manifest vs raw/web/slide consistency
 idempotent: unchanged remote/local files (size match) are skipped. Both
 directions accept `--prune` to delete counterparts absent from the
 manifest — `publish --prune` removes orphan release assets, `pull --prune`
-removes orphan local files. Fresh-machine rehearsal flow is
-`pnpm install && pnpm videos:pull-hq` (skips the multi-hour HQ encode).
+removes orphan local files. **When the talk's release tag matches the
+shared release tag** (i.e. the talk's release doubles as the shared
+host), `--prune` automatically protects shared-registry entries so
+they aren't deleted out from under other talks. Fresh-machine
+rehearsal flow is `pnpm install && pnpm videos:pull-hq` (skips the
+multi-hour HQ encode).
 
 **Oversize files (`hq_from_raw = true`)**: GH Release assets cap at 2 GB
 per file. For masters whose raw is already a pixel-perfect venue target
@@ -108,7 +140,8 @@ of the release. Quality = raw bits, no re-encode.
 From repo root:
 
 ```bash
-pnpm videos:check-all   # run videos:check in every talk
+pnpm videos:check-all     # run videos:check in every talk
+pnpm videos:shared:check  # sanity-check /videos/shared.toml
 ```
 
 ## VideoPlayer
@@ -119,11 +152,18 @@ pnpm videos:check-all   # run videos:check in every talk
 <VideoPlayer src="Loop.mp4" loop muted :controls="false" />
 ```
 
-`hq` defaults to `true`. Chain is `public/videos-hq/<src>` →
-`public/videos/<src>` → web GH Release. Local dev with `videos/hq/` populated
-gets venue masters automatically; deployed builds (no HQ files) transparently
-fall back to the web tier. The release URL is built from `VITE_VIDEO_REPO` and
-`VITE_VIDEO_RELEASE` (set in the talk's `.env`).
+`hq` defaults to `true`. Fallback chain (front-to-back):
+
+1. `public/videos-hq/<src>` (skipped when `hq=false`)
+2. `public/videos/<src>` (bundled web tier)
+3. talk release at `$VITE_VIDEO_REPO/$VITE_VIDEO_RELEASE/<src>`
+4. shared release at `$VITE_VIDEO_REPO/$VITE_VIDEO_SHARED_RELEASE/<src>`
+
+Identical talk and shared release tags are deduped, so a talk that
+doubles as the shared host (e.g., editAI today) probes only one URL.
+Local dev with `videos/hq/` populated gets venue masters; deployed
+builds (no HQ files) transparently fall back to the web tier and then
+to releases.
 
 HQ masters are uploaded to a parallel GH Release (`videos-hq-<talk>`) by
 `pnpm videos:publish-hq`. On a fresh machine, pull them with

@@ -1,6 +1,11 @@
-# Video assets for this talk. Global defaults live in /outreach.toml;
-# talk-level [defaults] overrides them; per-video fields on a [[videos]]
-# block win over both.
+# Talk-OWNED video assets for the editAI talk. Clips inherited from the
+# shared registry (/videos/shared.toml) — generic CERN/LHC/B-roll footage —
+# are NOT listed here; they're served at runtime via VideoPlayer's fallback
+# chain from the shared release.
+#
+# Note: editAI's own GH Release (videos-2026-04-28-editai) currently
+# doubles as the shared release. Both VITE_VIDEO_RELEASE and
+# VITE_VIDEO_SHARED_RELEASE point at it; VideoPlayer dedupes the URL.
 #
 # Profiles (in scripts/videos.py):
 #   remux          - lossless stream copy + faststart. For clips already in a
@@ -17,17 +22,9 @@ long_edge_px  = 2880   # venue screen is 2880x1600; override global 1920
 # release_tag auto-derives from talk dirname.
 # max_size_mb inherited from /outreach.toml.
 
-[[videos]]
-name    = "cmb_sonification_drone.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB sonification drone render, H.264 2.8 Mbps 1800x1040"
-
-[[videos]]
-name    = "Cassini.mov"
-profile = "standard"
-used_in = ["deck"]
-notes   = "Cassini Grand Finale, ambient audio (no voiceover)"
+# ---------------------------------------------------------------------------
+# Chart renders (Python/matplotlib output, deck-specific)
+# ---------------------------------------------------------------------------
 
 [[videos]]
 name    = "cmb_data.mp4"
@@ -57,13 +54,13 @@ notes   = "CMB power-spectrum fit variant chart render"
 name    = "g2_data.mp4"
 profile = "remux"
 used_in = ["deck"]
-notes   = "g-2 data chart render"
+notes   = "g-2 data chart render (1800x1000, editAI 9:5)"
 
 [[videos]]
 name    = "g2_fit.mp4"
 profile = "remux"
 used_in = ["deck"]
-notes   = "g-2 fit chart render"
+notes   = "g-2 fit chart render (1800x1000, editAI 9:5)"
 
 [[videos]]
 name    = "gaussian.mp4"
@@ -113,60 +110,15 @@ profile = "remux"
 used_in = ["deck"]
 notes   = "Z-boson alternative-models chart render"
 
-[[videos]]
-name    = "Beyond_CMB.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "Beyond-CMB science reel, H.264 11.6 Mbps 720p silent"
+# ---------------------------------------------------------------------------
+# editAI venue-specific footage (2880x1600, Mokslo Sala)
+# ---------------------------------------------------------------------------
 
 [[videos]]
-name    = "CERN_Overview_Short.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "CERN overview short cut, H.264 15 Mbps 1080p silent"
-
-[[videos]]
-name    = "CERN-VIDEO-2019-050-008-1080ph265.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "CERN video 2019-050-008, HEVC 6 Mbps 1080p silent"
-
-[[videos]]
-name    = "Cloud_Chamber_Audio.mp4"
-profile = "standard-tight"
-used_in = ["deck"]
-notes   = "Cloud chamber demo with audio, 2:29 long — tight CRF to fit budget"
-
-[[videos]]
-name    = "Drone_Climbing_Mountain_2.mp4"
-profile = "high-motion"
-used_in = ["deck"]
-notes   = "Drone ascent (alt take), 4K high-bitrate B-roll — CRF 22 preserves motion detail"
-
-[[videos]]
-name    = "Expansion_Funnel_H264_1080p.webm"
+name    = "cmb_sonification_drone.mp4"
 profile = "remux"
 used_in = ["deck"]
-notes   = "Expansion funnel animation, VP8 in WebM (name says H.264 but source is VP8)"
-
-[[videos]]
-name        = "LHCb_Aciu.mov"
-profile     = "standard-tight"
-used_in     = ["deck"]
-hq_from_raw = true
-notes       = "LHCb thanks reel, 2:28 with audio — tight CRF to fit budget. Raw is 2880x1600 HEVC venue master (>2 GB), so HQ hard-links raw and ships via gdrive pull."
-
-[[videos]]
-name    = "LHCb.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "LHCb overview, 48s with audio"
-
-[[videos]]
-name    = "Mars_Surface.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "Mars surface footage, H.264 15 Mbps 1080p 55s silent"
+notes   = "CMB sonification drone render, H.264 2.8 Mbps 1800x1040"
 
 [[videos]]
 name    = "mokslo_sala.mov"
@@ -174,33 +126,3 @@ profile = "high-motion"
 used_in = ["deck"]
 hq_crf  = 20
 notes   = "Mokslo Sala intro, 2880x1600 venue-native. Raw is 153 Mbps HEVC — too hot for browser decode. HQ encoded at CRF 20 for smooth playback."
-
-[[videos]]
-name    = "NASA_Mars_Mariner_4_Pan_Audio.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "NASA Mariner 4 Mars flyby pan, H.264 20 Mbps 1080p 20s with audio"
-
-[[videos]]
-name    = "QGP_Formation.mp4"
-profile = "high-motion"
-used_in = ["deck"]
-notes   = "Quark-gluon plasma formation sim with audio — CGI"
-
-[[videos]]
-name    = "sm.mov"
-profile = "standard"
-used_in = ["deck"]
-notes   = "23s 2880x1600 HEVC venue clip with audio"
-
-[[videos]]
-name    = "Voyage_in_to_the_world_of_atoms.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "Voyage into the world of atoms animation, 2:01 silent"
-
-[[videos]]
-name    = "Webb_Reel.mp4"
-profile = "standard-tight"
-used_in = ["deck"]
-notes   = "Webb telescope reel, 2:58 with audio — tight CRF to fit budget"

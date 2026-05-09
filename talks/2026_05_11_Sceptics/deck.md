@@ -57,11 +57,24 @@ Technologijos, kuriomis naudojatės kasdien.
 
 ## 🏛️ **CERN**
 
-Kur ji bandoma prie pat ribos.
-
+Kur QM tyrinėjama iki galo.
 </div>
 
 </div>
+
+---
+
+<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" loop muted :controls="false" />
+
+---
+
+
+<VideoPlayer src="Cloud_Chamber_Audio.mp4" muted />
+
+<!-- Cloud chamber: charged particles leave visible tracks because each ion
+     they create is an irreversible interaction with the supersaturated vapor.
+     Concrete example for "matavimas = bet kokia negrįžtama sąveika".
+     Inherited from /videos/shared.toml. -->
 
 ---
 
@@ -81,38 +94,39 @@ Kur ji bandoma prie pat ribos.
 
 ---
 
-<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" loop muted :controls="false" />
-
-<!-- CERN zoom-into-quarks footage. Source: gdrive Outreach/Resources/Videos/released. -->
-
----
-
-<div
-  class="absolute inset-0 overflow-hidden bg-black"
-  @click.stop
-  @mousedown.stop
-  @mouseup.stop
-  @mousemove.stop
-  @pointerdown.stop
-  @pointerup.stop
-  @pointermove.stop
-  @wheel.stop
-  @touchstart.stop
-  @touchmove.stop
-  @touchend.stop
-  @contextmenu.stop
->
+<div class="absolute inset-0 overflow-hidden bg-black" style="pointer-events: none;">
   <iframe
     src="https://asliceofcuriosity.fr/assets/atom/orbitalsApp-Metropolis.html"
     class="absolute top-0 left-0 border-0"
-    style="width: 200%; height: 200%; transform: scale(0.5); transform-origin: top left;"
+    style="width: 200%; height: 200%; transform: scale(0.5); transform-origin: top left; pointer-events: auto;"
     allow="fullscreen"
     scrolling="no"
+    tabindex="0"
   ></iframe>
+  <a
+    href="https://asliceofcuriosity.fr/assets/atom/orbitalsApp-Metropolis.html"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Atidaryti naujame lange"
+    class="absolute bottom-4 right-4 flex items-center justify-center text-white"
+    style="pointer-events: auto; width: 40px; height: 40px; font-size: 22px; line-height: 1; border-radius: 8px; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.25);"
+  >↗</a>
 </div>
 
 <!-- Interactive 3D atomic-orbital viewer. Drag to rotate, wheel to zoom. -->
-<!-- Doesn't work on Mac per upstream issue — backup for non-Mac venues. -->
+<!-- Doesn't work on Mac per upstream issue — the top-right link opens the -->
+<!-- viewer in a new browser tab as a fallback for venues where the iframe -->
+<!-- can't render (or for any time you want hands-on interaction). -->
+
+---
+
+<VideoPlayer src="sm.mov" />
+
+<!-- Standard Model overview reel — inventory of fundamental particles after
+     the atomic-orbital exploration; sets up the transition to "where this
+     knowledge becomes useful". Inherited from /videos/shared.toml.
+     Native aspect 9:5 (encoded for editAI's 2880x1600 venue), so it will
+     letterbox left/right on the Sceptics 16:9 venue. -->
 
 ---
 
@@ -160,6 +174,19 @@ Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
 
 ---
 
+
+<VideoPlayer src="g2_data.mp4" muted />
+
+<!-- Fermilab Muon g-2 — muonų sukinio osciliacija (duomenys). -->
+
+---
+
+<VideoPlayer src="g2_fit.mp4" muted />
+
+<!-- Tas pats matavimas su modelio kreive. -->
+
+---
+
 <img src="/figures/g2/g.001.png" class="absolute inset-0 w-full h-full object-cover" />
 
 <!-- Dirac, 1928. g = 2. -->
@@ -194,17 +221,6 @@ Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
 
 <!-- Eksperimentinis matavimas. 12 ženklų po kablelio. -->
 
----
-
-<VideoPlayer src="g2_data.mp4" muted />
-
-<!-- Fermilab Muon g-2 — muonų sukinio osciliacija (duomenys). -->
-
----
-
-<VideoPlayer src="g2_fit.mp4" muted />
-
-<!-- Tas pats matavimas su modelio kreive. -->
 
 ---
 
@@ -231,6 +247,7 @@ Pikseliui PhD nereikia.
 </div>
 
 </div>
+
 
 ---
 
@@ -305,6 +322,7 @@ Atskiras matavimas — atsitiktinis triukšmas. Koreliacija matosi tik palyginus
 
 ---
 
+
 # 🚫 **Mitas Nr. 4 — „Neapibrėžtumas = bloga įranga“**
 
 <div class="grid-2 mt-md">
@@ -377,15 +395,19 @@ layout: statement
 layout: quote
 ---
 
-> „Pirmoji taisyklė — neapgaudinėk savęs. O save apgauti yra lengviausia.“
+# „Pirmoji taisyklė — neapgaudinėk savęs. O save apgauti yra lengviausia.“
 
-— Richard Feynman
+ Richard Feynman
+
+---
+
+<VideoPlayer src="CERN_Overview_Short.mp4" muted :controls="false" />
+
+---
+
+<VideoPlayer src="LHCb.mp4" muted />
 
 ---
 
 <VideoPlayer src="LHCb_Aciu.mov" />
-
-<!-- LHCb thanks reel (~2:28 with audio). Source: gdrive Outreach/Resources/Videos/released. -->
-<!-- Same master as the editAI talk uses; hq_from_raw=true means the HQ ships via gdrive pull, -->
-<!-- not via the GH release (raw 2880x1600 HEVC > 2 GB cap). -->
 

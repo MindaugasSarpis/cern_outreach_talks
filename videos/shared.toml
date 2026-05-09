@@ -1,0 +1,111 @@
+# Shared video registry for the outreach-talks monorepo.
+#
+# Lists clips that live in a shared GitHub Release and are inherited by
+# multiple talks. Talks reference these by filename in their decks; the
+# pipeline does NOT download or re-encode them when working on an
+# individual talk — they're served at runtime via VideoPlayer's
+# fallback chain (… → talk release → shared release).
+#
+# Profiles, hq_from_raw, etc. follow the same schema as a talk's
+# videos/manifest.toml. See scripts/videos.py for details.
+#
+# release_tag / release_tag_hq: which GH Release(s) hold these assets.
+# We currently reuse the editAI release as the de-facto shared release
+# (it already holds web-encoded copies of all the external clips).
+# When a dedicated `videos-shared` release is later established, point
+# these tags at it and republish.
+
+[defaults]
+release_tag    = "videos-2026-04-28-editai"
+release_tag_hq = "videos-hq-2026-04-28-editai"
+source_remote  = "gdrive:Work/Outreach/Resources/Videos/released"
+long_edge_px   = 2880   # current shared encodes were produced for editAI's
+                        # 2880 venue. Raise to 3840 once a dedicated shared
+                        # release is republished for 4K venues.
+
+# ---------------------------------------------------------------------------
+# CERN / LHC institutional footage
+# ---------------------------------------------------------------------------
+
+[[videos]]
+name    = "CERN_Overview_Short.mp4"
+profile = "standard"
+notes   = "CERN overview short cut, H.264 15 Mbps 1080p silent."
+
+[[videos]]
+name    = "CERN-VIDEO-2019-050-008-1080ph265.mp4"
+profile = "standard"
+notes   = "CERN video 2019-050-008, HEVC 6 Mbps 1080p silent."
+
+[[videos]]
+name    = "Voyage_in_to_the_world_of_atoms.mp4"
+profile = "remux"
+notes   = "CERN zoom-from-cosmos-to-quarks reel, 2:01 silent. Source already web-friendly."
+
+[[videos]]
+name    = "LHCb.mp4"
+profile = "standard"
+notes   = "LHCb overview, 48s with audio."
+
+[[videos]]
+name        = "LHCb_Aciu.mov"
+profile     = "standard-tight"
+hq_from_raw = true
+notes       = """\
+LHCb thanks reel, 2:28 with audio — tight CRF to fit budget. Raw is 2880x1600 \
+HEVC venue master (>2 GB), so HQ hard-links raw and ships via gdrive pull \
+instead of the GH release."""
+
+# ---------------------------------------------------------------------------
+# Generic science / B-roll footage
+# ---------------------------------------------------------------------------
+
+[[videos]]
+name    = "Beyond_CMB.mp4"
+profile = "standard"
+notes   = "Beyond-CMB science reel, H.264 11.6 Mbps 720p silent."
+
+[[videos]]
+name    = "Cassini.mov"
+profile = "standard"
+notes   = "Cassini Grand Finale, ambient audio (no voiceover)."
+
+[[videos]]
+name    = "Cloud_Chamber_Audio.mp4"
+profile = "standard-tight"
+notes   = "Cloud chamber demo with audio, 2:29 long — tight CRF to fit budget."
+
+[[videos]]
+name    = "Drone_Climbing_Mountain_2.mp4"
+profile = "high-motion"
+notes   = "Drone ascent, 4K high-bitrate B-roll — CRF 22 preserves motion detail."
+
+[[videos]]
+name    = "Expansion_Funnel_H264_1080p.webm"
+profile = "remux"
+notes   = "Expansion funnel animation, VP8 in WebM (filename misleading)."
+
+[[videos]]
+name    = "Mars_Surface.mp4"
+profile = "standard"
+notes   = "Mars surface footage, H.264 15 Mbps 1080p 55s silent."
+
+[[videos]]
+name    = "NASA_Mars_Mariner_4_Pan_Audio.mp4"
+profile = "standard"
+notes   = "NASA Mariner 4 Mars flyby pan, H.264 20 Mbps 1080p 20s with audio."
+
+[[videos]]
+name    = "QGP_Formation.mp4"
+profile = "high-motion"
+notes   = "Quark-gluon plasma formation sim with audio — CGI."
+
+[[videos]]
+name    = "Webb_Reel.mp4"
+profile = "standard-tight"
+notes   = "Webb telescope reel, 2:58 with audio — tight CRF to fit budget."
+
+[[videos]]
+name    = "sm.mov"
+profile = "standard"
+notes   = "Standard Model overview, 23s with audio. Encoded at 2880x1600 (9:5) for editAI's venue; letterboxes on 16:9 venues."

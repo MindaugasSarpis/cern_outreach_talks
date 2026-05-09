@@ -3,6 +3,7 @@
   "private": true,
   "description": "Monorepo of CERN outreach talks (Slidev decks + shared theme/pipeline)",
   "scripts": {
-    "videos:check-all": "for d in talks/*; do echo \"[$d]\"; (cd \"$d\" && python3 ../../scripts/videos.py check) || true; done"
+    "videos:check-all": "for d in talks/*; do echo \"[$d]\"; (cd \"$d\" && python3 ../../scripts/videos.py check) || true; done",
+    "videos:shared:check": "python3 scripts/videos.py shared-check"
   }
 }
