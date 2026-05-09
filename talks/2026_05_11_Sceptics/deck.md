@@ -69,7 +69,7 @@ Kur QM tyrinėjama iki galo.
 ---
 
 
-<VideoPlayer src="Cloud_Chamber_Audio.mp4" muted />
+<VideoPlayer src="Cloud_Chamber_Audio.mp4"/>
 
 <!-- Cloud chamber: charged particles leave visible tracks because each ion
      they create is an irreversible interaction with the supersaturated vapor.
@@ -83,6 +83,28 @@ Kur QM tyrinėjama iki galo.
 ---
 
 <ParticleDiagram mode="random" />
+
+---
+
+<DoubleSlitDiagram mode="classical-no-barrier" />
+
+<!-- Double-slit story, beat 1 of 3: source fires balls, they fly straight,
+     pile up in a single tight spot. Establishes "balls go where you aim". -->
+
+---
+
+<DoubleSlitDiagram mode="classical-slits" />
+
+<!-- Beat 2: a barrier with two slits. Each ball visibly takes ONE slit,
+     accumulating into TWO distinct bands. The classical expectation. -->
+
+---
+
+<DoubleSlitDiagram mode="quantum" />
+
+<!-- Beat 3: same setup, but quantum particles. Wavefronts emerge from BOTH
+     slits and overlap; the dot pattern builds into interference fringes —
+     bright bands AND dark gaps where classically you'd expect bright. -->
 
 ---
 
@@ -401,11 +423,15 @@ layout: quote
 
 ---
 
+<VideoPlayer src="QGP_Formation.mp4" :controls="false" />
+
+---
+
 <VideoPlayer src="CERN_Overview_Short.mp4" muted :controls="false" />
 
 ---
 
-<VideoPlayer src="LHCb.mp4" muted />
+<VideoPlayer src="LHCb.mp4" />
 
 ---
 
