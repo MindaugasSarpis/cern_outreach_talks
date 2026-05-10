@@ -179,7 +179,7 @@ Kur QM tyrinėjama iki galo.
 
 ## 📱 **Tranzistorius**
 
-Telefonai, kompiuteriai, automobiliai. Pusės XX a. revoliucija stovi ant juostinės teorijos — gryno QM.
+Telefonai, kompiuteriai, automobiliai. Antrosios XX a. pusės revoliucija remiasi juostine teorija — gryna kvantine mechanika.
 
 </div>
 
@@ -187,7 +187,7 @@ Telefonai, kompiuteriai, automobiliai. Pusės XX a. revoliucija stovi ant juosti
 
 ## 🔬 **Lazeris**
 
-Stimuliuota emisija (Einstein, 1917). Šiandien — pluošto internetas, parduotuvės, akių chirurgija.
+Skatinamoji emisija (Einsteinas, 1917). Šiandien — optinio pluošto internetas, brūkšninių kodų skaitytuvai, akių chirurgija.
 
 </div>
 
@@ -195,7 +195,7 @@ Stimuliuota emisija (Einstein, 1917). Šiandien — pluošto internetas, parduot
 
 ## 🧲 **MRT**
 
-Branduolinio sukinio rezonansas. Be Pauli ir Diraco — nėra MRT skenerių.
+Branduolio sukinio rezonansas. Be Paulio ir Diraco MRT skenerių nebūtų.
 
 </div>
 
@@ -273,7 +273,7 @@ Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
 
 ### Ką teigia mitas
 
-Reikia **sąmoningo stebėtojo**, kad „sukolapsuotų banginę funkciją“. Realybės be žiūrėjimo nėra.
+Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be matavimo nėra.
 
 </div>
 
@@ -289,7 +289,7 @@ Reikia **sąmoningo stebėtojo**, kad „sukolapsuotų banginę funkciją“. Re
 
 ### Ką teigia mitas
 
-Reikia **sąmoningo stebėtojo**, kad „sukolapsuotų banginę funkciją“. Realybės be žiūrėjimo nėra.
+Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be matavimo nėra.
 
 </div>
 
@@ -340,9 +340,9 @@ Katė dėžėje yra tikrojoje superpozicijoje, kol kažkas atidaro dangtį.
 
 ### Ką sako fizika
 
-Schrödingeris šitą **juokavo**. Sugalvojo katę, kad **paneigtų** superpozicijos perkėlimą į makroobjektus.
+Schrödingeris šį pavyzdį sugalvojo **kaip pajuokavimą** — norėdamas **paneigti**, kad superpozicija galėtų galioti makroobjektams.
 
-Šilta, drėgna katė pasirenka būseną per **$10^-20$s** s.
+Šiltos, drėgnos katės būsena nusistovi per **~10⁻²⁰ s**.
 
 </div>
 
@@ -362,14 +362,14 @@ Schrödingeris šitą **juokavo**. Sugalvojo katę, kad **paneigtų** superpozic
     </div>
   </div>
 
-  <div class="text-center mt-2 opacity-90">Skirtumas — **19 eilių didesnis**.</div>
+  <div class="text-center mt-2 opacity-90">Skirtumas — **10¹⁹ kartų**.</div>
 
   </div>
 </div>
 
 ---
 
-# 🚫 **Mitas Nr. 3 — „Susietumas = greičiau už šviesą“**
+# 🚫 **Mitas Nr. 3 — „Susipynimas = greičiau už šviesą“**
 
 <div class="grid-2 mt-md">
 
@@ -377,7 +377,7 @@ Schrödingeris šitą **juokavo**. Sugalvojo katę, kad **paneigtų** superpozic
 
 ### Ką teigia mitas
 
-Susietos dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis internetas, telepatija, „nuotolinis gydymas“.
+Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis internetas, telepatija, „nuotolinis gydymas“.
 
 </div>
 
@@ -385,7 +385,7 @@ Susietos dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis i
 
 ---
 
-# 🚫 **Mitas Nr. 3 — „Susietumas = greičiau už šviesą“**
+# 🚫 **Mitas Nr. 3 — „Susipynimas = greičiau už šviesą“**
 
 <div class="grid-2 mt-md">
 
@@ -393,7 +393,7 @@ Susietos dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis i
 
 ### Ką teigia mitas
 
-Susietos dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis internetas, telepatija, „nuotolinis gydymas“.
+Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis internetas, telepatija, „nuotolinis gydymas“.
 
 </div>
 
@@ -403,7 +403,7 @@ Susietos dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis i
 
 Koreliacijos — taip, akimirksniu. **Informacija — ne.**
 
-Atskiras matavimas — atsitiktinis triukšmas. Koreliacija matosi tik palyginus du įrašus, **šviesos greičiu**.
+Atskiras matavimas — atsitiktinis triukšmas. Koreliacija išryškėja tik palyginus du įrašus, o tas palyginimas keliauja **ne greičiau už šviesą**.
 
 </div>
 
@@ -420,7 +420,7 @@ Atskiras matavimas — atsitiktinis triukšmas. Koreliacija matosi tik palyginus
 
 ### Ką teigia mitas
 
-Heisenbergo principas yra apie matavimo trūkumus. Su geresne įranga galėsime žinoti viską tiksliai.
+Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą, viską žinosime tiksliai.
 
 </div>
 
@@ -436,7 +436,7 @@ Heisenbergo principas yra apie matavimo trūkumus. Su geresne įranga galėsime 
 
 ### Ką teigia mitas
 
-Heisenbergo principas yra apie matavimo trūkumus. Su geresne įranga galėsime žinoti viską tiksliai.
+Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą, viską žinosime tiksliai.
 
 </div>
 
@@ -465,10 +465,101 @@ Neapibrėžtumas — **sistemos savybė**, ne matavimo trūkumas.
 </div>
 
 ---
+
+# 🚫 **Mitas Nr. 5 — „Kvantinis = sveikatai naudinga“**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-warning pad-tight">
+
+### Ką teigia mitas
+
+Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus, „kvantinės rezonansinės terapijos“, Reiki ar energetinio gydymo. Skamba moksliškai — vadinasi, veikia.
+
+</div>
+
+</div>
+
+---
+
+# 🚫 **Mitas Nr. 5 — „Kvantinis = sveikatai naudinga“**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-warning pad-tight">
+
+### Ką teigia mitas
+
+Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus, „kvantinės rezonansinės terapijos“, Reiki ar energetinio gydymo. Skamba moksliškai — vadinasi, veikia.
+
+</div>
+
+<div class="card card-success pad-tight">
+
+### Ką sako fizika
+
+Kvantiniai efektai išlieka tik **šaltose, izoliuotose, mažose** sistemose. Šiltame, drėgname kūne dekoherencija įvyksta per **~10⁻²⁰ s** — lygiai tas pats argumentas, kaip ir su kate.
+
+„Vandens atmintis“ — H₂O ryšiai persitvarko per pikosekundes; vandens molekulei nėra kuo „atsiminti“.
+
+Klinikinės meta-analizės (NHMRC 2015, Lancet 2005): efektas neatskiriamas nuo placebo.
+
+</div>
+
+</div>
+
+---
+
+# 🚫 **Mitas Nr. 6 — „Kvantiniai kompiuteriai išspręs viską akimirksniu“**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-warning pad-tight">
+
+### Ką teigia mitas
+
+Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą šifravimą, išspręs bet kokią problemą, paaiškins sąmonę.
+
+</div>
+
+</div>
+
+---
+
+# 🚫 **Mitas Nr. 6 — „Kvantiniai kompiuteriai išspręs viską akimirksniu“**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-warning pad-tight">
+
+### Ką teigia mitas
+
+Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą šifravimą, išspręs bet kokią problemą, paaiškins sąmonę.
+
+</div>
+
+<div class="card card-success pad-tight">
+
+### Ką sako fizika
+
+Eksponentinis pagreitėjimas pasiekiamas **tik konkretiems** uždaviniams: Shoro algoritmas (faktorizacija), kvantinė simuliacija, kai kurios tiesinės algebros problemos.
+
+Groverio paieška — **kvadratinis**, ne eksponentinis pagreitėjimas.
+
+NP-pilnoms problemoms (komivojažieriaus, SAT) — jokio žinomo eksponentinio pagreitėjimo.
+
+**2026 m. realybė:** ~1000 kubitų prototipai, klaidų taisymas tik prasideda.
+
+</div>
+
+</div>
+
+
+---
 layout: statement
 ---
 
-# Kaip atpažinti „kvantinį“ marketingą
+# Kaip atpažinti „kvantinę“ rinkodarą
 
 <div class="grid-2 mt-md">
 
@@ -476,9 +567,9 @@ layout: statement
 
 ### Raudonos vėliavos 🚩
 
-- „Kvantinis“ + sveikatos / finansų / dvasingumo produktas
+- „Kvantinis“ + sveikatos, finansų ar dvasingumo produktas
 - „Stebėtojo efektas“, taikomas **nuotaikai**
-- Susietumas + „momentinis bendravimas“ / „nuotolinis gydymas“
+- Susipynimas + „momentinis bendravimas“ ar „nuotolinis gydymas“
 - Bet kas, parduodantis jums **tikrumą**
 
 </div>
@@ -489,20 +580,9 @@ layout: statement
 layout: statement
 ---
 
-# Kaip atpažinti „kvantinį“ marketingą
+# Kaip atpažinti „kvantinę“ rinkodarą
 
 <div class="grid-2 mt-md">
-
-<div class="card card-warning pad-tight">
-
-### Raudonos vėliavos 🚩
-
-- „Kvantinis“ + sveikatos / finansų / dvasingumo produktas
-- „Stebėtojo efektas“, taikomas **nuotaikai**
-- Susietumas + „momentinis bendravimas“ / „nuotolinis gydymas“
-- Bet kas, parduodantis jums **tikrumą**
-
-</div>
 
 <div class="card card-success pad-tight">
 
@@ -510,7 +590,7 @@ layout: statement
 
 - Konkreti, paneigiama prognozė
 - Skaičiai, paklaidos, vienetai
-- „Štai kur galiu klysti“
+- Sakinys „štai kur galiu klysti“
 - Recenzuotas straipsnis, kurį iš principo galite perskaityti
 
 </div>
