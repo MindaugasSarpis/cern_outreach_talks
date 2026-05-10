@@ -37,3 +37,23 @@ name    = "g2_fit.mp4"
 profile = "remux"
 used_in = ["deck"]
 notes   = "Muon g-2 fit chart. REGENERATE at 16:9 from master."
+
+# Additional CERN institutional footage for the closing CERN section.
+# Could be promoted to /videos/shared.toml if other talks pick them up.
+[[videos]]
+name    = "CERN-FOOTAGE-2022-013-001-1080p_LHC.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN footage 2022-013-001, LHC tunnel/operations, 1080p."
+
+[[videos]]
+name    = "CERN-FOOTAGE-2024-010-002.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN footage 2024-010-002."
+
+[[videos]]
+name    = "CERN-FOOTAGE-2025-014-002.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN footage 2025-014-002."

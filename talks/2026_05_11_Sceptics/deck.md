@@ -277,6 +277,22 @@ Reikia **sąmoningo stebėtojo**, kad „sukolapsuotų banginę funkciją“. Re
 
 </div>
 
+</div>
+
+---
+
+# 🚫 **Mitas Nr. 1 — „Stebėtojas sukuria tikrovę“**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-warning pad-tight">
+
+### Ką teigia mitas
+
+Reikia **sąmoningo stebėtojo**, kad „sukolapsuotų banginę funkciją“. Realybės be žiūrėjimo nėra.
+
+</div>
+
 <div class="card card-success pad-tight">
 
 ### Ką sako fizika
@@ -289,6 +305,22 @@ Pikseliui PhD nereikia.
 
 </div>
 
+
+---
+
+# 🚫 **Mitas Nr. 2 — „Schrödingerio katė tikrai gyva ir mirusi“**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-warning pad-tight">
+
+### Ką teigia mitas
+
+Katė dėžėje yra tikrojoje superpozicijoje, kol kažkas atidaro dangtį.
+
+</div>
+
+</div>
 
 ---
 
@@ -349,6 +381,22 @@ Susietos dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis i
 
 </div>
 
+</div>
+
+---
+
+# 🚫 **Mitas Nr. 3 — „Susietumas = greičiau už šviesą“**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-warning pad-tight">
+
+### Ką teigia mitas
+
+Susietos dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis internetas, telepatija, „nuotolinis gydymas“.
+
+</div>
+
 <div class="card card-success pad-tight">
 
 ### Ką sako fizika
@@ -363,6 +411,22 @@ Atskiras matavimas — atsitiktinis triukšmas. Koreliacija matosi tik palyginus
 
 ---
 
+
+# 🚫 **Mitas Nr. 4 — „Neapibrėžtumas = bloga įranga“**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-warning pad-tight">
+
+### Ką teigia mitas
+
+Heisenbergo principas yra apie matavimo trūkumus. Su geresne įranga galėsime žinoti viską tiksliai.
+
+</div>
+
+</div>
+
+---
 
 # 🚫 **Mitas Nr. 4 — „Neapibrėžtumas = bloga įranga“**
 
@@ -419,6 +483,27 @@ layout: statement
 
 </div>
 
+</div>
+
+---
+layout: statement
+---
+
+# Kaip atpažinti „kvantinį“ marketingą
+
+<div class="grid-2 mt-md">
+
+<div class="card card-warning pad-tight">
+
+### Raudonos vėliavos 🚩
+
+- „Kvantinis“ + sveikatos / finansų / dvasingumo produktas
+- „Stebėtojo efektas“, taikomas **nuotaikai**
+- Susietumas + „momentinis bendravimas“ / „nuotolinis gydymas“
+- Bet kas, parduodantis jums **tikrumą**
+
+</div>
+
 <div class="card card-success pad-tight">
 
 ### Žalios vėliavos ✅
@@ -447,6 +532,18 @@ layout: quote
 ---
 
 <VideoPlayer src="CERN_Overview_Short.mp4" muted :controls="false" />
+
+---
+
+<VideoPlayer src="CERN-FOOTAGE-2022-013-001-1080p_LHC.mp4" muted :controls="false" />
+
+---
+
+<VideoPlayer src="CERN-FOOTAGE-2024-010-002.mp4" muted :controls="false" />
+
+---
+
+<VideoPlayer src="CERN-FOOTAGE-2025-014-002.mp4" muted :controls="false" />
 
 ---
 
