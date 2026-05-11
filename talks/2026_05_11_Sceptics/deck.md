@@ -72,7 +72,7 @@ Kur QM tyrinėjama iki galo.
 
 ---
 
-<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" loop muted :controls="false" />
+<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" />
 
 ---
 
