@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
-// A four-slide pedagogical story (set `mode`):
+// A five-slide pedagogical story (set `mode`):
 //
 // 1. classical-no-barrier — balls fly straight from source to detector and
 //    pile up in a single tight Gaussian. Establishes "balls go where you aim."
@@ -10,13 +10,20 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 // 3. quantum (default) — a plane wave is emitted from the source; when it hits
 //    the barrier, two new circular wavefronts emerge from the slits and
 //    interfere. No visible flying particles between source and barrier — the
-//    wave does the travelling. Dots accumulate on the detector at sampled
-//    positions, building up the cos²·Gaussian fringe pattern one at a time.
-// 4. quantum-electrons — visible single e⁻ particles fly source → barrier,
-//    vanish, then a faint wavelet expands from BOTH slits (a per-electron
-//    halo, no continuous wave). A single dot then registers on the screen.
-//    Same cos²·Gaussian fringes build up — the punchline is that each
-//    electron interferes with itself.
+//    wave does the travelling. The detector shows the cos²·Gaussian intensity
+//    as a continuous envelope (no dots) — pure wave picture, no particle
+//    counting. The envelope fades in as the first wavefronts reach the screen.
+// 4. quantum-electrons-dots — the experimental puzzle: visible single e⁻
+//    fly source → barrier one at a time, vanish at the barrier, then a
+//    single DOT lands on the detector at a position sampled from
+//    cos²·Gaussian (de Broglie λ fixed). NO wave is drawn — that is the
+//    point. After many electrons the dots organise into the interference
+//    fringe pattern, and the audience has to wonder how particles ended
+//    up there. The wave explanation arrives on the NEXT slide.
+// 5. quantum-electrons — the wave-picture explanation of the same experiment:
+//    same single-e⁻ launches and per-electron wavelets, but NO dot is
+//    registered — instead each electron's arrival fades up a bright
+//    cos²·Gaussian intensity envelope, the pure wave description.
 //
 // The launch cadence ramps from one-per-second to a spray, so the audience
 // sees individual events first and then watches the pattern fill in.
@@ -29,7 +36,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 // Interactive controls (when `interactive`): reset, pause, speed slider,
 // flux slider. Clicking on empty SVG area also resets.
 const props = withDefaults(defineProps<{
-  mode?: 'classical-no-barrier' | 'classical-slits' | 'classical-electrons' | 'quantum' | 'quantum-electrons'
+  mode?: 'classical-no-barrier' | 'classical-slits' | 'classical-electrons' | 'quantum' | 'quantum-electrons' | 'quantum-electrons-dots'
   // Steady-state ticks between launches (60 ticks/s). Smaller = faster spray.
   launchInterval?: number
   // Launches at the slow opening pace before the ramp begins.
@@ -108,11 +115,13 @@ function currentFringeSpacing(): number {
   return (currentWavelength() * (SCREEN_X - BARRIER_X)) / (2 * SLIT_SEP)
 }
 
-// Baseline fringe spacing — used for the quantum-electrons mode where flux
-// means "electrons per second" (not wavelength), so each electron carries a
-// fixed de Broglie wavelength and the fringe pattern stays put.
-const BASELINE_FRINGE_SPACING =
-  (WAVE_SPEED * WAVE_INTERVAL * (SCREEN_X - BARRIER_X)) / (2 * SLIT_SEP)
+// Electron de Broglie wavelength is fixed (flux means "electrons per second"
+// here, not wavelength), so the fringe pattern stays put on the
+// quantum-electrons / quantum-electrons-dots slides. Decoupled from the
+// wave-mode wavelength so we can dial it tight: a lot of narrow stripes
+// reads unmistakably as wave interference, where a handful of wide fringes
+// could be mistaken for "just two smeared spots".
+const ELECTRON_FRINGE_SPACING = 60
 
 interface Particle {
   startTick: number
@@ -122,7 +131,6 @@ interface Particle {
   finalHitY?: number   // mode=classical-slits
   blocked?: boolean    // mode=classical-slits — stopped at the barrier
   blockedY?: number    // mode=classical-slits — y on the barrier where it died
-  electronHitY?: number // mode=quantum-electrons — pre-sampled cos² hit
 }
 
 interface Hit {
@@ -147,6 +155,9 @@ const wavefronts = ref<Wavefront[]>([])
 const launchedCount = ref(0)
 const lastLaunchTick = ref(-Infinity)
 const lastWaveTick = ref(-Infinity)
+// Quantum (wave) mode: count of wavefronts that have reached the screen.
+// Drives the intensity envelope's fade-in — no particle dots are deposited.
+const waveArrivals = ref(0)
 let raf: number | null = null
 let lastTimestamp: number | null = null
 
@@ -223,11 +234,13 @@ function createParticle(): Particle {
       base.slit = (Math.random() < 0.5 ? -1 : 1) as -1 | 1
       base.finalHitY = CY + base.slit * SLIT_SEP + gaussian() * CLASSICAL_SLIT_BAND_SIGMA
     }
-  } else if (props.mode === 'quantum-electrons') {
-    // Each electron has a fixed de Broglie wavelength — flux only changes
-    // the rate, not the fringe geometry. Use the baseline spacing.
-    base.electronHitY = sampleQuantumHitY(BASELINE_FRINGE_SPACING)
+  } else if (props.mode === 'quantum-electrons-dots') {
+    // Each electron lands as a single dot drawn from cos²·Gaussian. Fixed
+    // de Broglie wavelength → ELECTRON_FRINGE_SPACING (independent of flux).
+    base.finalHitY = sampleQuantumHitY(ELECTRON_FRINGE_SPACING)
   }
+  // quantum-electrons: no per-particle landing y is sampled — the wave
+  // picture shows continuous intensity, not discrete hits.
   return base
 }
 
@@ -252,15 +265,17 @@ function currentInterval(): number {
 }
 
 // Quantum-mode wavefront emission cadence. Mapped non-linearly off the flux
-// slider so the LOW end gives a single-wave-at-a-time demo (interval ≥ wave
-// lifetime, ~one pulse on screen) and the HIGH end matches the dense
-// interference picture this constant was originally tuned for.
-//   f = 0.25 → ≈1024 ticks  (one pulse traverses, dot lands, next emits)
-//   f = 1.0  → 32 ticks     (current default)
-//   f = 4.0  → 8 ticks      (busy interference)
+// slider: LOW end gives an isolated-pulse demo, HIGH end packs the screen
+// with tightly-spaced fringes (λ = c·T, so shortening T shrinks both the
+// wavelength and the fringe spacing s = λ·L/d). Exponent and floor are tuned
+// so the full slider range produces visible change — earlier values clamped
+// at f ≈ 1.74 and the top ~57% of the slider was a no-op.
+//   f = 0.25 → 512 ticks  (slow pulse demo, envelope-only fringes)
+//   f = 1.0  → 32 ticks   (default, ~5 wide fringes)
+//   f = 4.0  → 2 ticks    (busy interference, ~40 narrow fringes)
 function waveInterval(): number {
   const f = Math.max(0.01, fluxMul.value)
-  return Math.max(8, WAVE_INTERVAL / Math.pow(f, 2.5))
+  return Math.max(2, WAVE_INTERVAL / Math.pow(f, 2))
 }
 
 function frame(timestamp: number) {
@@ -293,14 +308,18 @@ function frame(timestamp: number) {
         continue
       }
       if (age >= TRAVEL_FRAMES) {
-        let hitY: number
-        if (props.mode === 'classical-no-barrier') hitY = p.aimedHitY!
-        else if (props.mode === 'classical-electrons') hitY = p.finalHitY!
-        else if (props.mode === 'classical-slits') hitY = p.finalHitY!
-        else if (props.mode === 'quantum-electrons') hitY = p.electronHitY!
-        else hitY = sampleQuantumHitY()
-        hits.value.push({ y: hitY, age: 0 })
-        if (hits.value.length > props.maxHits) hits.value.shift()
+        if (props.mode === 'quantum-electrons') {
+          // Wave picture: each electron's arrival fades the intensity
+          // envelope up a notch — no point is deposited.
+          waveArrivals.value += 1
+        } else {
+          let hitY: number
+          if (props.mode === 'classical-no-barrier') hitY = p.aimedHitY!
+          // classical-slits / classical-electrons / quantum-electrons-dots
+          else hitY = p.finalHitY!
+          hits.value.push({ y: hitY, age: 0 })
+          if (hits.value.length > props.maxHits) hits.value.shift()
+        }
       } else {
         remaining.push(p)
       }
@@ -309,28 +328,26 @@ function frame(timestamp: number) {
 
     for (const h of hits.value) h.age += tickDelta
 
-    // Continuous-wave quantum mode: flux controls wave emission rate, and each
-    // wave carries a pre-sampled hit position that lands the moment the
-    // wavefront's circular ring reaches the detector. Low flux ≈ one wave
-    // traverses end-to-end before the next emits; high flux ≈ dense interference.
+    // Continuous-wave quantum mode: flux controls wave emission rate. No dots
+    // are deposited — the wave picture shows the continuous cos²·Gaussian
+    // intensity on the screen (the envelope), not particle counts. Each
+    // wavefront that reaches the screen ticks the arrival counter so the
+    // envelope fades in as the first wavefronts arrive.
     if (props.mode === 'quantum') {
       if (tickN.value - lastWaveTick.value >= waveInterval()) {
         wavefronts.value.push({
           startTick: tickN.value,
-          hitY: sampleQuantumHitY(),
           hitDeposited: false,
         })
         lastWaveTick.value = tickN.value
       }
-      // Deposit the dot when the wavefront arrives at the screen.
       const screenDist = SCREEN_X - BARRIER_X
       for (const w of wavefronts.value) {
         if (w.hitDeposited) continue
         const age = tickN.value - w.startTick
         const r = age * WAVE_SPEED - PRE_BARRIER_DIST
         if (r >= screenDist) {
-          hits.value.push({ y: w.hitY!, age: 0 })
-          if (hits.value.length > props.maxHits) hits.value.shift()
+          waveArrivals.value += 1
           w.hitDeposited = true
         }
       }
@@ -374,7 +391,7 @@ const flyingDots = computed<FlyingDot[]>(() => {
 
     const isElectron = props.mode === 'classical-electrons'
 
-    if (props.mode === 'quantum-electrons') {
+    if (props.mode === 'quantum-electrons' || props.mode === 'quantum-electrons-dots') {
       // Visible e⁻ flies source → barrier on the optical axis (we deliberately
       // don't aim at a slit — the punchline is "the electron didn't pick").
       // After it reaches the barrier it disappears; the per-electron wavelet
@@ -438,6 +455,10 @@ const flyingDots = computed<FlyingDot[]>(() => {
 // This is what makes the "single electron interferes with itself" point read.
 interface ElectronWavelet { r: number; opacity: number }
 const electronWavelets = computed<ElectronWavelet[]>(() => {
+  // Only the wave-picture mode shows wavelets. The quantum-electrons-dots
+  // slide is the "puzzle" beat: particles fly in, vanish, dots eventually
+  // organise into fringes — no wave hint is visible, so the audience has
+  // to ask the question "how?" before the wave answer arrives next slide.
   if (props.mode !== 'quantum-electrons') return []
   const out: ElectronWavelet[] = []
   const span = TRAVEL_FRAMES - TIME_TO_BARRIER
@@ -501,13 +522,37 @@ const detectorSegments = computed(() => {
 const ENV_BASELINE = SCREEN_X - 10
 const ENV_PEAK = 220
 
-// Envelope grows as hits accumulate — it starts as a flat line at the baseline
-// and inflates to the full curve over the first ~25 detector hits, so the
-// curve visibly fills in alongside the dot pattern.
-const envelopeGrowth = computed(() => Math.min(1, hits.value.length / 25))
+// Envelope grows from a flat line at the baseline into the full curve.
+// Classical / quantum-electrons modes: filled in by accumulating detector hits
+// (curve visibly emerges alongside the dot pattern).
+// Quantum (wave) mode: no dots — the curve fades in as the first wavefronts
+// reach the screen, since the envelope IS the visible intensity pattern.
+const envelopeGrowth = computed(() => {
+  if (props.mode === 'quantum') return Math.min(1, waveArrivals.value / 6)
+  // quantum-electrons fires at a slower cadence (one electron per ~1 s of
+  // real time during the slow opening), so a smaller denominator gives a
+  // build-up that's visible while the speaker is narrating the punchline.
+  if (props.mode === 'quantum-electrons') return Math.min(1, waveArrivals.value / 8)
+  return Math.min(1, hits.value.length / 25)
+})
+
+// In the wave-picture modes the envelope is the main visual (no dots competing
+// for attention), so render it brighter. Other modes keep the faint
+// reference-curve look so the dots remain the focus.
+const envelopeStyle = computed(() => {
+  if (props.mode === 'quantum' || props.mode === 'quantum-electrons') {
+    return { fill: 0.22, stroke: 0.95 }
+  }
+  return { fill: 0.07, stroke: 0.45 }
+})
 
 const envelopePath = computed(() => {
   if (!props.showEnvelope) return ''
+  // Puzzle slide: the whole point is the audience watching dots organise into
+  // fringes. Drawing the analytical cos²·Gaussian curve would telegraph every
+  // peak at half-opacity before any dot has landed there — giving the answer
+  // away. The dots have to do the talking on their own.
+  if (props.mode === 'quantum-electrons-dots') return ''
   const peak = ENV_PEAK * envelopeGrowth.value
   if (peak < 1) return ''
   const pts: string[] = []
@@ -529,9 +574,9 @@ const envelopePath = computed(() => {
     }
   } else {
     // quantum: live spacing (flux moves the peaks).
-    // quantum-electrons: baseline spacing (de Broglie λ is fixed).
-    const s = props.mode === 'quantum-electrons'
-      ? BASELINE_FRINGE_SPACING
+    // quantum-electrons / quantum-electrons-dots: fixed spacing (de Broglie λ is constant).
+    const s = (props.mode === 'quantum-electrons' || props.mode === 'quantum-electrons-dots')
+      ? ELECTRON_FRINGE_SPACING
       : currentFringeSpacing()
     // Step finer when fringes get tight, otherwise the polyline aliases and
     // the curve looks like noise instead of well-resolved peaks.
@@ -556,6 +601,7 @@ function reset() {
   flying.value = []
   wavefronts.value = []
   launchedCount.value = 0
+  waveArrivals.value = 0
   lastLaunchTick.value = -Infinity
   lastWaveTick.value = -Infinity
   lastTimestamp = null
@@ -567,6 +613,18 @@ function togglePause() {
   // duration as a giant burst (and would-be lost-tab dt is already capped).
   lastTimestamp = null
 }
+
+// Quantum (wave) mode: changing flux changes the wavelength, so the existing
+// in-flight wavefronts and the rendered envelope are at the OLD spacing.
+// Wipe them on slider change — the new pattern then fades in only as new
+// wavefronts (at the new spacing) reach the screen, which is what the
+// audience expects to see.
+watch(fluxMul, () => {
+  if (props.mode !== 'quantum') return
+  wavefronts.value = []
+  waveArrivals.value = 0
+  lastWaveTick.value = tickN.value
+})
 
 onMounted(() => {
   raf = requestAnimationFrame(frame)
@@ -742,11 +800,13 @@ onUnmounted(() => {
           :x1="SCREEN_X" :y1="seg.y1" :x2="SCREEN_X" :y2="seg.y2"
           stroke="white" stroke-width="3" stroke-opacity="0.4" />
 
-    <!-- Analytical envelope: grows in opacity along with peak height as hits fill in. -->
+    <!-- Analytical envelope: grows in opacity along with peak height as the
+         pattern fills in. Bolder in quantum (wave) mode where it stands alone
+         as the intensity visualisation; faint elsewhere where dots dominate. -->
     <path v-if="envelopePath" :d="envelopePath"
-          fill="white" :fill-opacity="0.07 * envelopeGrowth"
+          fill="white" :fill-opacity="envelopeStyle.fill * envelopeGrowth"
           stroke="white"
-          stroke-width="1.5" :stroke-opacity="0.45 * envelopeGrowth" />
+          stroke-width="1.5" :stroke-opacity="envelopeStyle.stroke * envelopeGrowth" />
 
     <!-- Flying particles (classical + quantum-electrons modes).
          Sphere stack, painted bottom-up:

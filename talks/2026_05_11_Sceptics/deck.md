@@ -88,46 +88,63 @@ Kur QM tyrinėjama iki galo.
 
 <DoubleSlitDiagram mode="classical-no-barrier" />
 
-<!-- Double-slit story, beat 1 of 3: source fires balls, they fly straight,
-     pile up in a single tight spot. Establishes "balls go where you aim". -->
+<!-- Beat 1: source fires balls, they fly straight, pile up in a single
+     tight spot. Establishes "balls go where you aim". -->
 
 ---
 
 <DoubleSlitDiagram mode="classical-slits" />
 
 <!-- Beat 2: a barrier with two slits. Each ball visibly takes ONE slit,
-     accumulating into TWO distinct bands. The classical expectation. -->
-
----
-
-<WaveDiagram />
-
----
-
-<DoubleSlitDiagram mode="quantum" />
-
-<!-- Beat 3: same setup, but quantum particles. Wavefronts emerge from BOTH
-     slits and overlap; the dot pattern builds into interference fringes —
-     bright bands AND dark gaps where classically you'd expect bright. -->
+     accumulating into TWO distinct bands. The classical baseline the
+     audience will be asked to predict from in the next slide. -->
 
 ---
 
 <DoubleSlitDiagram mode="classical-electrons" />
 
-<!-- Beat 4: classical EXPECTATION for electrons. They're tiny balls, right?
+<!-- Beat 3: ask the audience to predict. Electrons are tiny balls, right?
      So shooting them at the slits should give two bands behind the slits,
-     just like the marbles. This is what intuition predicts before we run
-     the experiment. -->
+     just like the marbles. This is what intuition predicts; the diagram
+     shows that prediction so the next slide's contrast lands hard. -->
+
+---
+
+<DoubleSlitDiagram mode="quantum-electrons-dots" />
+
+<!-- Beat 4: the surprise. Same setup, single e⁻ fired one at a time, as
+     particles — but each electron lands on the detector as a single DOT,
+     and after many electrons the dots do NOT pile into two bands. They
+     organise into FRINGES. Narrate: "we are still firing them ONE AT A
+     TIME — count them — but look where they land. Not two bands. Stripes."
+     Audience is now puzzled — that is the cue to introduce waves. -->
+
+---
+
+<WaveDiagram />
+
+<!-- Beat 5: the answer starts here — what a wave is, why waves can produce
+     bright-AND-dark stripes via interference. Pure wave intuition, no
+     particles yet. -->
+
+---
+
+<DoubleSlitDiagram mode="quantum" />
+
+<!-- Beat 6: a wave hits the same barrier. Wavefronts emerge from BOTH
+     slits and overlap; the cos²·Gaussian interference INTENSITY fades up
+     on the detector. The audience now SEES the wave producing the same
+     fringe pattern the electrons made on Beat 4. -->
 
 ---
 
 <DoubleSlitDiagram mode="quantum-electrons" />
 
-<!-- Beat 5: what ACTUALLY happens. Single e⁻ particles fly from the source
-     one at a time and visibly disappear at the barrier; a faint wavelet
-     expands from BOTH slits per electron, then a single dot lands on the
-     screen. Fringe pattern builds up — punchline: each electron interferes
-     with itself, even though we're sending them through one at a time. -->
+<!-- Beat 7: closing the loop — the same electron experiment, depicted
+     purely as waves. Single-e⁻ launches, per-electron wavelet from BOTH
+     slits, bright continuous envelope (no dots). The picture says: each
+     electron's amplitude went through both slits and interfered with
+     ITSELF. That is why the dots on Beat 4 chose the bright fringes. -->
 
 ---
 
