@@ -171,50 +171,52 @@ Kur QM tyrinėjama iki galo.
 
 ---
 
-# 🔌 **Be QM nebūtų...**
-
-<div class="grid-2 mt-md">
-
-<div class="card card-primary pad-tight">
-
-## 📱 **Tranzistorius**
-
-Telefonai, kompiuteriai, automobiliai. Antrosios XX a. pusės revoliucija remiasi juostine teorija — gryna kvantine mechanika.
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-## 🔬 **Lazeris**
-
-Skatinamoji emisija (Einsteinas, 1917). Šiandien — optinio pluošto internetas, brūkšninių kodų skaitytuvai, akių chirurgija.
-
-</div>
-
-<div class="card card-info pad-tight">
-
-## 🧲 **MRT**
-
-Branduolio sukinio rezonansas. Be Paulio ir Diraco MRT skenerių nebūtų.
-
-</div>
-
-<div class="card card-accent pad-tight">
-
-## 🛰️ **GPS**
-
-Atominiai laikrodžiai (cezio kvantinis perėjimas) + reliatyvistinė pataisa. Be jų — ±11 km per dieną.
-
-</div>
-
-</div>
-
-<div class="mt-md opacity-70 text-center">
-Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
-</div>
+<img src="/figures/ChargeAPE5LQanimXs30.gif" class="absolute inset-0 w-full
+h-full object-cover" />
 
 ---
 
+<img src="/figures/g2/g.001.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Dirac, 1928. g = 2. -->
+
+---
+
+<img src="/figures/g2/g.002.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Schwinger, 1948. Pirmoji kilpa: pataisa α/(2π). -->
+
+---
+
+<img src="/figures/g2/g.003.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Schwingerio antkapyje. -->
+
+---
+
+<img src="/figures/g2/g.004.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Karplus, Kroll, Sommerfeld, Petermann (1950–1957). -->
+
+---
+
+<img src="/figures/g2/g.005.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Aoyama, 2012. ~12 000 diagramų. -->
+
+---
+
+<img src="/figures/g2/g.006.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Eksperimentinis matavimas. 12 ženklų po kablelio. -->
+
+---
 
 <VideoPlayer src="g2_data.mp4" muted />
 
@@ -226,42 +228,6 @@ Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
 
 <!-- Tas pats matavimas su modelio kreive. -->
 
----
-
-<img src="/figures/g2/g.001.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Dirac, 1928. g = 2. -->
-
----
-
-<img src="/figures/g2/g.002.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Schwinger, 1948. Pirmoji kilpa: pataisa α/(2π). -->
-
----
-
-<img src="/figures/g2/g.003.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Schwingerio antkapyje. -->
-
----
-
-<img src="/figures/g2/g.004.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Karplus, Kroll, Sommerfeld, Petermann (1950–1957). -->
-
----
-
-<img src="/figures/g2/g.005.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Aoyama, 2012. ~12 000 diagramų. -->
-
----
-
-<img src="/figures/g2/g.006.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Eksperimentinis matavimas. 12 ženklų po kablelio. -->
-
 
 ---
 
@@ -273,7 +239,8 @@ Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
 
 ### Ką teigia mitas
 
-Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be matavimo nėra.
+Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be matavimo
+nėra.
 
 </div>
 
@@ -289,7 +256,8 @@ Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be mata
 
 ### Ką teigia mitas
 
-Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be matavimo nėra.
+Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be matavimo
+nėra.
 
 </div>
 
@@ -297,7 +265,8 @@ Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be mata
 
 ### Ką sako fizika
 
-„Matavimas“ = **bet kokia negrįžtama sąveika**. Detektoriaus pikselis. Dujų molekulė. Paklydęs fotonas.
+„Matavimas“ = **bet kokia negrįžtama sąveika**. Detektoriaus pikselis. Dujų
+molekulė. Paklydęs fotonas.
 
 Pikseliui PhD nereikia.
 
@@ -340,7 +309,8 @@ Katė dėžėje yra tikrojoje superpozicijoje, kol kažkas atidaro dangtį.
 
 ### Ką sako fizika
 
-Schrödingeris šį pavyzdį sugalvojo **kaip pajuokavimą** — norėdamas **paneigti**, kad superpozicija galėtų galioti makroobjektams.
+Schrödingeris šį pavyzdį sugalvojo **kaip pajuokavimą** — norėdamas
+**paneigti**, kad superpozicija galėtų galioti makroobjektams.
 
 Šiltos, drėgnos katės būsena nusistovi per **~10⁻²⁰ s**.
 
@@ -377,7 +347,8 @@ Schrödingeris šį pavyzdį sugalvojo **kaip pajuokavimą** — norėdamas **pa
 
 ### Ką teigia mitas
 
-Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis internetas, telepatija, „nuotolinis gydymas“.
+Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis
+internetas, telepatija, „nuotolinis gydymas“.
 
 </div>
 
@@ -393,7 +364,8 @@ Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantin
 
 ### Ką teigia mitas
 
-Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis internetas, telepatija, „nuotolinis gydymas“.
+Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis
+internetas, telepatija, „nuotolinis gydymas“.
 
 </div>
 
@@ -403,7 +375,8 @@ Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantin
 
 Koreliacijos — taip, akimirksniu. **Informacija — ne.**
 
-Atskiras matavimas — atsitiktinis triukšmas. Koreliacija išryškėja tik palyginus du įrašus, o tas palyginimas keliauja **ne greičiau už šviesą**.
+Atskiras matavimas — atsitiktinis triukšmas. Koreliacija išryškėja tik palyginus
+du įrašus, o tas palyginimas keliauja **ne greičiau už šviesą**.
 
 </div>
 
@@ -420,7 +393,8 @@ Atskiras matavimas — atsitiktinis triukšmas. Koreliacija išryškėja tik pal
 
 ### Ką teigia mitas
 
-Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą, viską žinosime tiksliai.
+Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą,
+viską žinosime tiksliai.
 
 </div>
 
@@ -436,7 +410,8 @@ Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą
 
 ### Ką teigia mitas
 
-Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą, viską žinosime tiksliai.
+Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą,
+viską žinosime tiksliai.
 
 </div>
 
@@ -474,7 +449,9 @@ Neapibrėžtumas — **sistemos savybė**, ne matavimo trūkumas.
 
 ### Ką teigia mitas
 
-Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus, „kvantinės rezonansinės terapijos“, Reiki ar energetinio gydymo. Skamba moksliškai — vadinasi, veikia.
+Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus,
+„kvantinės rezonansinės terapijos“, Reiki ar energetinio gydymo. Skamba
+moksliškai — vadinasi, veikia.
 
 </div>
 
@@ -490,7 +467,9 @@ Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus,
 
 ### Ką teigia mitas
 
-Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus, „kvantinės rezonansinės terapijos“, Reiki ar energetinio gydymo. Skamba moksliškai — vadinasi, veikia.
+Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus,
+„kvantinės rezonansinės terapijos“, Reiki ar energetinio gydymo. Skamba
+moksliškai — vadinasi, veikia.
 
 </div>
 
@@ -498,11 +477,15 @@ Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus,
 
 ### Ką sako fizika
 
-Kvantiniai efektai išlieka tik **šaltose, izoliuotose, mažose** sistemose. Šiltame, drėgname kūne dekoherencija įvyksta per **~10⁻²⁰ s** — lygiai tas pats argumentas, kaip ir su kate.
+Kvantiniai efektai išlieka tik **šaltose, izoliuotose, mažose** sistemose.
+Šiltame, drėgname kūne dekoherencija įvyksta per **~10⁻²⁰ s** — lygiai tas pats
+argumentas, kaip ir su kate.
 
-„Vandens atmintis“ — H₂O ryšiai persitvarko per pikosekundes; vandens molekulei nėra kuo „atsiminti“.
+„Vandens atmintis“ — H₂O ryšiai persitvarko per pikosekundes; vandens molekulei
+nėra kuo „atsiminti“.
 
-Klinikinės meta-analizės (NHMRC 2015, Lancet 2005): efektas neatskiriamas nuo placebo.
+Klinikinės meta-analizės (NHMRC 2015, Lancet 2005): efektas neatskiriamas nuo
+placebo.
 
 </div>
 
@@ -518,7 +501,8 @@ Klinikinės meta-analizės (NHMRC 2015, Lancet 2005): efektas neatskiriamas nuo 
 
 ### Ką teigia mitas
 
-Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą šifravimą, išspręs bet kokią problemą, paaiškins sąmonę.
+Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą
+šifravimą, išspręs bet kokią problemą, paaiškins sąmonę.
 
 </div>
 
@@ -534,7 +518,8 @@ Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą
 
 ### Ką teigia mitas
 
-Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą šifravimą, išspręs bet kokią problemą, paaiškins sąmonę.
+Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą
+šifravimą, išspręs bet kokią problemą, paaiškins sąmonę.
 
 </div>
 
@@ -542,11 +527,14 @@ Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą
 
 ### Ką sako fizika
 
-Eksponentinis pagreitėjimas pasiekiamas **tik konkretiems** uždaviniams: Shoro algoritmas (faktorizacija), kvantinė simuliacija, kai kurios tiesinės algebros problemos.
+Eksponentinis pagreitėjimas pasiekiamas **tik konkretiems** uždaviniams: Shoro
+algoritmas (faktorizacija), kvantinė simuliacija, kai kurios tiesinės algebros
+problemos.
 
 Groverio paieška — **kvadratinis**, ne eksponentinis pagreitėjimas.
 
-NP-pilnoms problemoms (komivojažieriaus, SAT) — jokio žinomo eksponentinio pagreitėjimo.
+NP-pilnoms problemoms (komivojažieriaus, SAT) — jokio žinomo eksponentinio
+pagreitėjimo.
 
 **2026 m. realybė:** ~1000 kubitų prototipai, klaidų taisymas tik prasideda.
 
@@ -554,6 +542,52 @@ NP-pilnoms problemoms (komivojažieriaus, SAT) — jokio žinomo eksponentinio p
 
 </div>
 
+---
+
+# 🔌 **Be QM nebūtų...**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 📱 **Tranzistorius**
+
+Telefonai, kompiuteriai, automobiliai. Antrosios XX a. pusės revoliucija remiasi
+juostine teorija — gryna kvantine mechanika.
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔬 **Lazeris**
+
+Stimuliuota emisija (Einsteinas, 1917). Šiandien — šviesolaidinis internetas,
+brūkšninių kodų skaitytuvai, akių chirurgija.
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🧲 **MRT**
+
+Branduolio sukinio rezonansas. Be Paulio ir Diraco MRT skenerių nebūtų.
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🛰️ **GPS**
+
+Atominiai laikrodžiai (cezio kvantinis šuolis) + reliatyvistinė pataisa. 
+Be jų — ±11 km per dieną.
+
+</div>
+
+</div>
+
+<div class="mt-md opacity-70 text-center">
+Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
+</div>
 
 ---
 layout: statement
@@ -588,10 +622,10 @@ layout: statement
 
 ### Žalios vėliavos ✅
 
-- Konkreti, paneigiama prognozė
+- Konkreti, paneigiama  hipotezė
 - Skaičiai, paklaidos, vienetai
-- Sakinys „štai kur galiu klysti“
-- Recenzuotas straipsnis, kurį iš principo galite perskaityti
+- Teiginys „štai kur galiu klysti“
+- Recenzuotas straipsnis, kurį *iš principo* galite perskaityti
 
 </div>
 
@@ -615,7 +649,8 @@ layout: quote
 
 ---
 
-<VideoPlayer src="CERN-FOOTAGE-2022-013-001-1080p_LHC.mp4" muted :controls="false" />
+<VideoPlayer src="CERN-FOOTAGE-2022-013-001-1080p_LHC.mp4" muted
+:controls="false" />
 
 ---
 
@@ -632,4 +667,3 @@ layout: quote
 ---
 
 <VideoPlayer src="LHCb_Aciu.mov" />
-
