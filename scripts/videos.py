@@ -993,6 +993,29 @@ def cmd_encode_hq(args: argparse.Namespace) -> int:
 # CLI
 # ---------------------------------------------------------------------------
 
+def cmd_build(args: argparse.Namespace) -> int:
+    """One-shot pipeline: (sync) -> encode (web) -> encode-hq (masters) -> check.
+
+    Render generated animations first with the talk's own render script (e.g.
+    `python3 scripts/orbital_animation.py`); `build` then encodes + checks.
+    """
+    steps = []
+    if args.sync:
+        steps.append(("sync", cmd_sync))
+    steps.append(("encode", cmd_encode))
+    if not args.web_only:
+        steps.append(("encode-hq", cmd_encode_hq))
+    steps.append(("check", cmd_check))
+    for name, fn in steps:
+        print(f"\n=== videos:build -> {name} ===")
+        rc = fn(args)
+        if rc != 0:
+            print(f"videos:build stopped at {name} (exit {rc})", file=sys.stderr)
+            return rc
+    print("\nvideos:build complete.")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -1044,6 +1067,14 @@ def main() -> int:
 
     p_shared = sub.add_parser("shared-check", help="sanity-check /videos/shared.toml (run from monorepo root)")
     p_shared.set_defaults(func=cmd_shared_check)
+
+    p_build = sub.add_parser("build", help="one-shot: (sync) -> encode -> encode-hq -> check")
+    p_build.add_argument("--sync", action="store_true", help="rclone raws from Drive first")
+    p_build.add_argument("--web-only", action="store_true", help="skip the HQ master encode")
+    p_build.add_argument("--force", action="store_true", help="re-encode even if up to date")
+    p_build.add_argument("--only", nargs="+", metavar="NAME", help="limit to named file(s)")
+    p_build.add_argument("--dry-run", action="store_true", help="dry-run the sync step")
+    p_build.set_defaults(func=cmd_build)
 
     args = parser.parse_args()
     return args.func(args)
