@@ -116,6 +116,7 @@ pnpm videos:publish-hq  # upload HQ files to the parallel HQ GH Release
 pnpm videos:pull        # download web files from the release -> public/videos/
 pnpm videos:pull-hq     # download HQ masters from the parallel release -> videos/hq/
 pnpm videos:check       # manifest vs raw/web/slide consistency
+pnpm videos:build       # one-shot: (--sync) -> encode -> encode-hq -> check
 ```
 
 `publish` / `publish-hq` and `pull` / `pull-hq` are manifest-driven and
@@ -176,15 +177,28 @@ keep that attribute syntax.
 
 ## Encoding profiles (`scripts/videos.py`)
 
-- `remux` — `-c copy` + faststart. Use when source is already web-friendly HEVC/H.264 ≤~5 Mbps. Ignores resolution cap.
-- `standard` — HEVC CRF 24, AAC 128k.
-- `standard-tight` — HEVC CRF 27 for long clips that blow the size budget.
-- `silent-loop` — HEVC CRF 26, audio stripped.
-- `high-motion` — HEVC CRF 22, AAC 192k. Sims, fast action, CGI.
+Profiles are quality *targets*; concrete ffmpeg args are built per selected encoder.
 
-`{LONG_EDGE}` in profiles is resolved at encode time from the merged
-`long_edge_px`. Override per-video with `long_edge_px = 2880` on a
-`[[videos]]` entry for venue-screen clips.
+- `remux` — `-c copy` + faststart. Use when the source is already web-friendly H.264/VP8/AV1 ≤~5 Mbps. Ignores resolution cap and encoder.
+- `standard` — H.264 web, cq 23 (NVENC) / crf 21 (libx264), AAC 128k.
+- `standard-tight` — cq 27 / crf 24 for long clips that blow the size budget.
+- `silent-loop` — cq 25 / crf 23, audio stripped.
+- `high-motion` — cq 20 / crf 19, AAC 192k. Sims, fast action, CGI.
+- `hq-visually-lossless` — HEVC master, cq 18 (NVENC) / crf 16 (libx265). Used by `encode-hq`; per-video `hq_crf` overrides.
+
+**Encoder:** NVENC (GPU) is the default, auto-detected at runtime via a real
+`h264_nvenc` probe, falling back to **CPU** (libx264 web / libx265 masters) when
+NVENC is unavailable (CI, non-NVIDIA). Web tier is **H.264** (universal browser
+playback); HQ masters are **HEVC**. Force per clip with `encoder = "nvenc" |
+"cpu"` on a `[[videos]]` entry, or talk-wide in `[defaults]`.
+
+`{LONG_EDGE}` is resolved at encode time from the merged `long_edge_px`.
+Override per-video with `long_edge_px = 2880` for venue-screen clips.
+
+**Generated animations:** render frames in parallel → NVENC via
+`scripts/render_lib.py` (reference: `talks/2026_05_11_Sceptics/scripts/orbital_animation.py`).
+Needs `numpy`/`scipy`/`matplotlib` from `env.yaml` — run `conda env update -f
+env.yaml` if a fresh clone is missing them.
 
 ## Slidev gotchas
 

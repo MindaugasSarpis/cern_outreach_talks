@@ -48,9 +48,13 @@ cat > "$DIR/package.json" <<EOF
     "export": "slidev export deck.md",
     "videos:sync": "python3 ../../scripts/videos.py sync",
     "videos:encode": "python3 ../../scripts/videos.py encode",
+    "videos:encode-hq": "python3 ../../scripts/videos.py encode-hq",
     "videos:publish": "python3 ../../scripts/videos.py publish",
+    "videos:publish-hq": "python3 ../../scripts/videos.py publish-hq",
+    "videos:pull": "python3 ../../scripts/videos.py pull",
+    "videos:pull-hq": "python3 ../../scripts/videos.py pull-hq",
     "videos:check": "python3 ../../scripts/videos.py check",
-    "videos:encode-hq": "python3 ../../scripts/videos.py encode-hq"
+    "videos:build": "python3 ../../scripts/videos.py build"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2"
