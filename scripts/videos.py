@@ -30,6 +30,7 @@ Subcommands:
 from __future__ import annotations
 
 import argparse
+import functools
 import re
 import shutil
 import subprocess
@@ -74,66 +75,77 @@ def _auto_release_tag(prefix: str) -> str:
     return f"{prefix}-{slug}"
 
 # ---------------------------------------------------------------------------
-# Encoding profiles
+# Encoder selection + profiles
 # ---------------------------------------------------------------------------
 #
-# Common flags across re-encode profiles:
-#   -c:v libx265          HEVC for ~40% size win over H.264 at equal quality
-#   -tag:v hvc1           Safari-compatible tag for HEVC-in-MP4
-#   -preset slow          encode once, watch many times
-#   -pix_fmt yuv420p      universal chroma subsampling
-#   -vf scale=...         cap long edge at 1920, keep aspect, even dimensions
-#   -movflags +faststart  move MOOV atom to file start so browsers stream
+# Profiles are quality *targets* (a constant-quality number + audio policy);
+# the concrete ffmpeg args are built per selected encoder:
+#   nvenc  GPU hardware encode (RTX). `-rc vbr -cq N -b:v 0` = constant-quality
+#          VBR. ~1-2 orders of magnitude faster than libx26x preset slow.
+#   cpu    libx264 (web) / libx265 (HQ) preset slow — the graceful fallback for
+#          machines/CI without a working NVENC.
 #
-# `remux` is special: `-c copy` streams the original bits through losslessly
-# and just rewrites the container with +faststart. Zero quality change.
+# Web tier is H.264 (universal browser playback); HQ masters are HEVC.
+# `remux` is special: `-c copy` passes the original bits through + faststart.
 
-PROFILES: dict[str, list[str]] = {
-    "remux": [
-        "-c", "copy",
-        "-movflags", "+faststart",
-    ],
-    "standard": [
-        "-c:v", "libx265", "-tag:v", "hvc1",
-        "-preset", "slow", "-crf", "24",
-        "-pix_fmt", "yuv420p",
-        "-vf", "scale='min({LONG_EDGE},iw)':-2",
-        "-c:a", "aac", "-b:a", "128k", "-ac", "2",
-        "-movflags", "+faststart",
-    ],
-    "silent-loop": [
-        "-c:v", "libx265", "-tag:v", "hvc1",
-        "-preset", "slow", "-crf", "26",
-        "-pix_fmt", "yuv420p",
-        "-vf", "scale='min({LONG_EDGE},iw)':-2",
-        "-an",
-        "-movflags", "+faststart",
-    ],
-    "standard-tight": [
-        "-c:v", "libx265", "-tag:v", "hvc1",
-        "-preset", "slow", "-crf", "27",
-        "-pix_fmt", "yuv420p",
-        "-vf", "scale='min({LONG_EDGE},iw)':-2",
-        "-c:a", "aac", "-b:a", "128k", "-ac", "2",
-        "-movflags", "+faststart",
-    ],
-    "high-motion": [
-        "-c:v", "libx265", "-tag:v", "hvc1",
-        "-preset", "slow", "-crf", "22",
-        "-pix_fmt", "yuv420p",
-        "-vf", "scale='min({LONG_EDGE},iw)':-2",
-        "-c:a", "aac", "-b:a", "192k", "-ac", "2",
-        "-movflags", "+faststart",
-    ],
-    "hq-visually-lossless": [
-        "-c:v", "libx265", "-tag:v", "hvc1",
-        "-preset", "slow", "-crf", "16", "-tune", "grain",
-        "-pix_fmt", "yuv420p",
-        "-vf", "scale='min({LONG_EDGE},iw)':-2",
-        "-c:a", "copy",
-        "-movflags", "+faststart",
-    ],
+
+@functools.lru_cache(maxsize=1)
+def nvenc_available() -> bool:
+    """True iff h264_nvenc actually *encodes* here (compiled-in != runtime-ok)."""
+    if not shutil.which("ffmpeg"):
+        return False
+    probe = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-loglevel", "error",
+         "-f", "lavfi", "-i", "testsrc2=size=256x144:rate=30:duration=1",
+         "-c:v", "h264_nvenc", "-f", "null", "-"],
+        capture_output=True,
+    )
+    return probe.returncode == 0
+
+
+def select_encoder(entry_encoder: str | None) -> str:
+    """Per-video override wins; else auto (nvenc if available, else cpu)."""
+    if entry_encoder in ("nvenc", "cpu"):
+        return entry_encoder
+    return "nvenc" if nvenc_available() else "cpu"
+
+
+# Web H.264 quality targets: nvenc -cq, libx264 -crf, audio bitrate (None = -an).
+WEB_PROFILES: dict[str, dict] = {
+    "standard":       {"cq": 23, "crf": 21, "audio": "128k"},
+    "standard-tight": {"cq": 27, "crf": 24, "audio": "128k"},
+    "silent-loop":    {"cq": 25, "crf": 23, "audio": None},
+    "high-motion":    {"cq": 20, "crf": 19, "audio": "192k"},
 }
+# HQ master HEVC quality target (visually lossless): nvenc -cq / libx265 -crf.
+HQ_CQ, HQ_CRF = 18, 16
+PROFILE_NAMES = {"remux", "hq-visually-lossless", *WEB_PROFILES}
+
+
+def _scale(long_edge: int) -> list[str]:
+    return ["-vf", f"scale='min({long_edge},iw)':-2"]
+
+
+def _web_args(cq: int, crf: int, long_edge: int, audio: str | None, encoder: str) -> list[str]:
+    if encoder == "nvenc":
+        v = ["-c:v", "h264_nvenc", "-preset", "p5", "-tune", "hq",
+             "-rc", "vbr", "-cq", str(cq), "-b:v", "0",
+             "-profile:v", "high", "-pix_fmt", "yuv420p"]
+    else:
+        v = ["-c:v", "libx264", "-preset", "slow", "-crf", str(crf),
+             "-profile:v", "high", "-pix_fmt", "yuv420p"]
+    a = ["-an"] if audio is None else ["-c:a", "aac", "-b:a", audio, "-ac", "2"]
+    return v + _scale(long_edge) + a + ["-movflags", "+faststart"]
+
+
+def _hq_args(cq: int, crf: int, long_edge: int, encoder: str) -> list[str]:
+    if encoder == "nvenc":
+        v = ["-c:v", "hevc_nvenc", "-tag:v", "hvc1", "-preset", "p7", "-tune", "hq",
+             "-rc", "vbr", "-cq", str(cq), "-b:v", "0", "-pix_fmt", "yuv420p"]
+    else:
+        v = ["-c:v", "libx265", "-tag:v", "hvc1", "-preset", "slow",
+             "-crf", str(crf), "-tune", "grain", "-pix_fmt", "yuv420p"]
+    return v + _scale(long_edge) + ["-c:a", "copy", "-movflags", "+faststart"]
 
 
 @dataclass
@@ -154,6 +166,9 @@ class VideoEntry:
     # parallel GH Release. Use for files whose raw is already a pixel-perfect
     # master and/or whose encoded HQ would exceed the 2 GB release asset cap.
     hq_from_raw: bool = False
+    # Force the encoder for this clip: "nvenc" (GPU) or "cpu" (libx26x).
+    # None = auto (nvenc if available at runtime, else cpu).
+    encoder: str | None = None
 
 
 def _videos_from_data(data: dict) -> list[VideoEntry]:
@@ -166,6 +181,7 @@ def _videos_from_data(data: dict) -> list[VideoEntry]:
             long_edge_px=v.get("long_edge_px"),
             hq_crf=v.get("hq_crf"),
             hq_from_raw=v.get("hq_from_raw", False),
+            encoder=v.get("encoder"),
         )
         for v in data.get("videos", [])
     ]
@@ -177,7 +193,13 @@ def load_manifest() -> tuple[dict, list[VideoEntry]]:
     # Merge: talk [defaults] wins over global outreach.toml [defaults].
     defaults = {**_load_global_defaults(), **data.get("defaults", {})}
     defaults.setdefault("release_tag", _auto_release_tag("videos"))
-    return defaults, _videos_from_data(data)
+    videos = _videos_from_data(data)
+    default_encoder = defaults.get("encoder")
+    if default_encoder in ("nvenc", "cpu"):
+        for v in videos:
+            if v.encoder is None:
+                v.encoder = default_encoder
+    return defaults, videos
 
 
 def load_shared_manifest() -> tuple[dict, list[VideoEntry]]:
@@ -232,8 +254,16 @@ def cmd_sync(args: argparse.Namespace) -> int:
 # encode — ffmpeg raw -> web per manifest profile
 # ---------------------------------------------------------------------------
 
-def _profile_args(profile: str, long_edge: int) -> list[str]:
-    return [a.replace("{LONG_EDGE}", str(long_edge)) for a in PROFILES[profile]]
+def _profile_args(profile: str, long_edge: int, encoder: str, cq_override: int | None = None) -> list[str]:
+    """Build ffmpeg output args for a profile under the selected encoder."""
+    if profile == "remux":
+        return ["-c", "copy", "-movflags", "+faststart"]
+    if profile == "hq-visually-lossless":
+        cq = cq_override if cq_override is not None else HQ_CQ
+        crf = cq_override if cq_override is not None else HQ_CRF
+        return _hq_args(cq, crf, long_edge, encoder)
+    spec = WEB_PROFILES[profile]
+    return _web_args(spec["cq"], spec["crf"], long_edge, spec["audio"], encoder)
 
 
 def _encode_one(entry: VideoEntry, force: bool, default_long_edge: int) -> tuple[VideoEntry, str, int, int]:
@@ -246,16 +276,17 @@ def _encode_one(entry: VideoEntry, force: bool, default_long_edge: int) -> tuple
     if web.exists() and not force and web.stat().st_mtime >= raw.stat().st_mtime:
         return entry, "skipped", raw_size, web.stat().st_size
 
-    if entry.profile not in PROFILES:
+    if entry.profile not in PROFILE_NAMES:
         print(f"  ! unknown profile {entry.profile!r} for {entry.name}", file=sys.stderr)
         return entry, "failed", raw_size, 0
 
+    encoder = select_encoder(entry.encoder)
     long_edge = entry.long_edge_px or default_long_edge
     tmp = web.with_name(f"{web.stem}.partial{web.suffix}")
     cmd = [
         "ffmpeg", "-y", "-hide_banner", "-nostdin", "-loglevel", "error",
         "-i", str(raw),
-        *_profile_args(entry.profile, long_edge),
+        *_profile_args(entry.profile, long_edge, encoder),
         str(tmp),
     ]
     try:
@@ -782,7 +813,7 @@ def cmd_shared_check(_: argparse.Namespace) -> int:
 
     # Profile sanity.
     for v in videos:
-        if v.profile not in PROFILES:
+        if v.profile not in PROFILE_NAMES:
             print(f"  BAD PROFILE:      {v.name} -> {v.profile!r}")
             problems += 1
 
@@ -884,16 +915,12 @@ def _encode_one_hq(entry: VideoEntry, force: bool, default_long_edge: int) -> tu
             shutil.copy2(raw, hq)
         return entry, "ok", raw_size, raw_size
 
+    encoder = select_encoder(entry.encoder)
     if entry.profile == "remux":
-        ff_args = _profile_args("remux", default_long_edge)
+        ff_args = _profile_args("remux", default_long_edge, encoder)
     else:
         long_edge = entry.long_edge_px or default_long_edge
-        ff_args = _profile_args("hq-visually-lossless", long_edge)
-        if entry.hq_crf is not None:
-            for i, arg in enumerate(ff_args):
-                if arg == "-crf" and i + 1 < len(ff_args):
-                    ff_args[i + 1] = str(entry.hq_crf)
-                    break
+        ff_args = _profile_args("hq-visually-lossless", long_edge, encoder, cq_override=entry.hq_crf)
         if entry.profile == "silent-loop":
             ff_args = ff_args + ["-an"]
 
