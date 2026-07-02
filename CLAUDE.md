@@ -176,15 +176,29 @@ keep that attribute syntax.
 
 ## Encoding profiles (`scripts/videos.py`)
 
-- `remux` — `-c copy` + faststart. Use when source is already web-friendly HEVC/H.264 ≤~5 Mbps. Ignores resolution cap.
-- `standard` — HEVC CRF 24, AAC 128k.
-- `standard-tight` — HEVC CRF 27 for long clips that blow the size budget.
-- `silent-loop` — HEVC CRF 26, audio stripped.
-- `high-motion` — HEVC CRF 22, AAC 192k. Sims, fast action, CGI.
+**Two codecs by tier, on purpose.** The **web** tier (profiles below) is
+**H.264** — it's the fallback that plays in arbitrary *deployed* browsers,
+where HEVC doesn't hardware-decode (Firefox: never; Chrome: only where the OS
+ships a decoder). Each web profile carries a `-maxrate/-bufsize` ceiling so a
+high-motion clip streams instead of stalling. The **HQ** tier
+(`hq-visually-lossless`) stays **HEVC CRF 16** — it's played locally at the
+venue on a machine that hardware-decodes HEVC, so the size win is free there.
 
-`{LONG_EDGE}` in profiles is resolved at encode time from the merged
-`long_edge_px`. Override per-video with `long_edge_px = 2880` on a
-`[[videos]]` entry for venue-screen clips.
+Web profiles (H.264 High, `+faststart`):
+
+- `remux` — `-c copy` + faststart. Use only when source is ALREADY web-friendly H.264 (or low-bitrate HEVC you accept won't play in Firefox). Ignores resolution cap.
+- `standard` — H.264 CRF 23, ≤6 Mbps, AAC 128k.
+- `standard-tight` — H.264 CRF 26, ≤3.5 Mbps, for long clips that blow the size budget.
+- `silent-loop` — H.264 CRF 24, ≤5 Mbps, audio stripped.
+- `high-motion` — H.264 CRF 22, ≤8 Mbps, AAC 192k. Sims, fast action, CGI.
+
+`{LONG_EDGE}` in profiles is resolved at encode time. The **web** tier resolves
+it from `web_long_edge_px` (global default **1920** — the web copy is never
+shown on the venue wall, so 1080p-class H.264 that decodes everywhere is
+plenty). The **HQ** tier resolves it from `long_edge_px` (the venue/native
+width). Override per-video with `long_edge_px = 3840` on a `[[videos]]` entry
+for a venue-screen master; the web copy of that clip is still capped at
+`web_long_edge_px`.
 
 ## Slidev gotchas
 
@@ -218,7 +232,9 @@ Per-venue knobs (in deck frontmatter):
 
 Per-venue knobs (in `videos/manifest.toml` `[defaults]`):
 - `long_edge_px` — venue's pixel width (1920 for 1080p, 2880 for the
-  LED wall, 3840 for 4K) so videos encode at native resolution.
+  LED wall, 3840 for 4K) so the **HQ venue-master** tier encodes at native
+  resolution. The **web** tier ignores this and caps at `web_long_edge_px`
+  (default 1920) — the web copy is a browser fallback, not a venue master.
 
 Reference setups:
 - `2026_04_28_editAI` — 2.5 × 4.5 m LED wall, 2880×1600, **9:5**. `aspectRatio: 9/5`, `long_edge_px = 2880`.

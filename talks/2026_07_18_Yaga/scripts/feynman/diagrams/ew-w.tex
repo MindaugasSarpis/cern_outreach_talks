@@ -1,0 +1,20 @@
+\input{../common.tex}
+\begin{document}
+\begin{tikzpicture}
+\begin{feynman}
+  \vertex (top) {\(\times\)};
+  \vertex [below=0.7cm of top] (gtop);
+  \vertex [below=0.7cm of gtop] (vtx);
+  \vertex [below left=0.85cm and 0.85cm of vtx] (lW);
+  \vertex [below right=0.85cm and 0.85cm of vtx] (rW);
+  \vertex [below left=1.0cm and 0.95cm of lW] (lmu) {\(\mu\)};
+  \vertex [below right=1.0cm and 0.95cm of rW] (rmu) {\(\mu\)};
+  \diagram* {
+    (lmu) -- [fermion] (lW) -- [fermion, edge label=\(\nu_\mu\)] (rW) -- [fermion] (rmu),
+    (lW) -- [boson, edge label=\(W\)] (vtx),
+    (rW) -- [boson, edge label'=\(W\)] (vtx),
+    (vtx) -- [photon, edge label=\(\gamma\)] (top),
+  };
+\end{feynman}
+\end{tikzpicture}
+\end{document}

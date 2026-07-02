@@ -77,16 +77,34 @@ def _auto_release_tag(prefix: str) -> str:
 # Encoding profiles
 # ---------------------------------------------------------------------------
 #
-# Common flags across re-encode profiles:
-#   -c:v libx265          HEVC for ~40% size win over H.264 at equal quality
-#   -tag:v hvc1           Safari-compatible tag for HEVC-in-MP4
-#   -preset slow          encode once, watch many times
-#   -pix_fmt yuv420p      universal chroma subsampling
-#   -vf scale=...         cap long edge at 1920, keep aspect, even dimensions
-#   -movflags +faststart  move MOOV atom to file start so browsers stream
+# TWO CODECS BY TIER — this is deliberate:
+#   WEB tier (standard / standard-tight / silent-loop / high-motion) is
+#   encoded H.264 (libx264). The web tier is the fallback that plays in
+#   arbitrary DEPLOYED browsers (GH Pages, remote viewers). HEVC does NOT
+#   hardware-decode there — Firefox has no HEVC at all, and Chrome only where
+#   the OS ships a decoder — so an HEVC "web" clip stalls or fails. H.264 High
+#   is hardware-decoded on essentially every device made in the last decade.
+#   Each web profile also carries a -maxrate/-bufsize ceiling so a high-motion
+#   clip can't balloon past what a normal connection streams, and scales to
+#   web_long_edge_px (default 1920) — the venue width is an HQ concern.
+#
+#   HQ tier (`hq-visually-lossless`) stays HEVC (libx265): it is played
+#   LOCALLY at the venue on a machine that hardware-decodes HEVC (macOS), so
+#   the ~40% HEVC size win at equal quality is pure upside there.
+#
+# Common flags:
+#   -c:v libx264 -profile:v high   web: universal hardware decode
+#   -maxrate/-bufsize              web: cap peak bitrate so it streams
+#   -c:v libx265 -tag:v hvc1       HQ: HEVC with Safari-compatible tag
+#   -preset slow                   encode once, watch many times
+#   -pix_fmt yuv420p               universal chroma subsampling
+#   -vf scale=...                  cap long edge, keep aspect, even dimensions
+#   -movflags +faststart           move MOOV atom to file start so it streams
 #
 # `remux` is special: `-c copy` streams the original bits through losslessly
-# and just rewrites the container with +faststart. Zero quality change.
+# and just rewrites the container with +faststart. Zero quality change — use
+# it only when the source is ALREADY a web-friendly H.264 (or low-bitrate
+# HEVC that you accept won't play in Firefox).
 
 PROFILES: dict[str, list[str]] = {
     "remux": [
@@ -94,32 +112,36 @@ PROFILES: dict[str, list[str]] = {
         "-movflags", "+faststart",
     ],
     "standard": [
-        "-c:v", "libx265", "-tag:v", "hvc1",
-        "-preset", "slow", "-crf", "24",
+        "-c:v", "libx264", "-profile:v", "high",
+        "-preset", "slow", "-crf", "23",
+        "-maxrate", "6M", "-bufsize", "12M",
         "-pix_fmt", "yuv420p",
         "-vf", "scale='min({LONG_EDGE},iw)':-2",
         "-c:a", "aac", "-b:a", "128k", "-ac", "2",
         "-movflags", "+faststart",
     ],
     "silent-loop": [
-        "-c:v", "libx265", "-tag:v", "hvc1",
-        "-preset", "slow", "-crf", "26",
+        "-c:v", "libx264", "-profile:v", "high",
+        "-preset", "slow", "-crf", "24",
+        "-maxrate", "5M", "-bufsize", "10M",
         "-pix_fmt", "yuv420p",
         "-vf", "scale='min({LONG_EDGE},iw)':-2",
         "-an",
         "-movflags", "+faststart",
     ],
     "standard-tight": [
-        "-c:v", "libx265", "-tag:v", "hvc1",
-        "-preset", "slow", "-crf", "27",
+        "-c:v", "libx264", "-profile:v", "high",
+        "-preset", "slow", "-crf", "26",
+        "-maxrate", "3500k", "-bufsize", "7M",
         "-pix_fmt", "yuv420p",
         "-vf", "scale='min({LONG_EDGE},iw)':-2",
         "-c:a", "aac", "-b:a", "128k", "-ac", "2",
         "-movflags", "+faststart",
     ],
     "high-motion": [
-        "-c:v", "libx265", "-tag:v", "hvc1",
+        "-c:v", "libx264", "-profile:v", "high",
         "-preset", "slow", "-crf", "22",
+        "-maxrate", "8M", "-bufsize", "16M",
         "-pix_fmt", "yuv420p",
         "-vf", "scale='min({LONG_EDGE},iw)':-2",
         "-c:a", "aac", "-b:a", "192k", "-ac", "2",
@@ -142,7 +164,10 @@ class VideoEntry:
     profile: str
     used_in: list[str]
     notes: str = ""
-    long_edge_px: int | None = None  # override for [defaults].long_edge_px
+    # Venue/HQ width override for [defaults].long_edge_px. Drives the HQ tier
+    # and is CAPPED to web_long_edge_px for the web tier (a venue clip encoded
+    # at 3840 still ships a 1920 web copy).
+    long_edge_px: int | None = None
     # Override HQ CRF per-video. hq-visually-lossless uses CRF 16 by default
     # (transparent at viewing distance); lower for more detail, higher for
     # smaller files. Useful for sources whose raw bitrate is too high for
@@ -250,7 +275,10 @@ def _encode_one(entry: VideoEntry, force: bool, default_long_edge: int) -> tuple
         print(f"  ! unknown profile {entry.profile!r} for {entry.name}", file=sys.stderr)
         return entry, "failed", raw_size, 0
 
-    long_edge = entry.long_edge_px or default_long_edge
+    # default_long_edge is the WEB cap (web_long_edge_px, typically 1920). A
+    # per-video long_edge_px is a venue/HQ override — honor it only when it
+    # would make the web copy SMALLER, never larger than the web cap.
+    long_edge = min(entry.long_edge_px or default_long_edge, default_long_edge)
     tmp = web.with_name(f"{web.stem}.partial{web.suffix}")
     cmd = [
         "ffmpeg", "-y", "-hide_banner", "-nostdin", "-loglevel", "error",
@@ -350,10 +378,14 @@ def cmd_encode(args: argparse.Namespace) -> int:
         print("error: ffmpeg not installed. brew install ffmpeg", file=sys.stderr)
         return 2
     WEB_DIR.mkdir(parents=True, exist_ok=True)
-    default_long_edge = int(defaults.get("long_edge_px", 1920))
+    # The web tier caps at web_long_edge_px (default 1920), NOT the venue
+    # long_edge_px — the web copy is a browser fallback, not the venue master,
+    # so it never needs the venue's native width. long_edge_px drives the HQ
+    # tier only (see cmd_encode_hq).
+    web_long_edge = int(defaults.get("web_long_edge_px", 1920))
     max_mb = defaults.get("max_size_mb", 200)
-    print(f"Encoding {len(videos)} video(s). raw -> {WEB_DIR.relative_to(TALK)} (default long edge: {default_long_edge}px)")
-    return _run_encode_batch(videos, _encode_one, args.force, default_long_edge, label="web", max_mb=max_mb)
+    print(f"Encoding {len(videos)} video(s). raw -> {WEB_DIR.relative_to(TALK)} (web long edge: {web_long_edge}px)")
+    return _run_encode_batch(videos, _encode_one, args.force, web_long_edge, label="web", max_mb=max_mb)
 
 
 # ---------------------------------------------------------------------------

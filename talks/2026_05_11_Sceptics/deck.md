@@ -72,12 +72,12 @@ Kur QM tyrinėjama iki galo.
 
 ---
 
-<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" />
+<VideoPlayer src="voyage_in_to_the_world_of_atoms.mp4" />
 
 ---
 
 
-<VideoPlayer src="Cloud_Chamber_Audio.mp4"/>
+<VideoPlayer src="cloud_chamber_audio.mp4"/>
 
 <!-- Cloud chamber: charged particles leave visible tracks because each ion
      they create is an irreversible interaction with the supersaturated vapor.
@@ -658,29 +658,29 @@ layout: quote
 
 ---
 
-<VideoPlayer src="QGP_Formation.mp4" :controls="false" />
+<VideoPlayer src="qgp_formation.mp4" :controls="false" />
 
 ---
 
-<VideoPlayer src="CERN_Overview_Short.mp4" muted :controls="false" />
+<VideoPlayer src="cern_overview_short.mp4" muted :controls="false" />
 
 ---
 
-<VideoPlayer src="CERN-FOOTAGE-2022-013-001-1080p_LHC.mp4" muted
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" muted
 :controls="false" />
 
 ---
 
-<VideoPlayer src="CERN-FOOTAGE-2024-010-002.mp4" muted :controls="false" />
+<VideoPlayer src="cern_footage_2024_010_002.mp4" muted :controls="false" />
 
 ---
 
-<VideoPlayer src="CERN-FOOTAGE-2025-014-002.mp4" muted :controls="false" />
+<VideoPlayer src="cern_footage_2025_014_002.mp4" muted :controls="false" />
 
 ---
 
-<VideoPlayer src="LHCb.mp4" />
+<VideoPlayer src="lhcb.mp4" />
 
 ---
 
-<VideoPlayer src="LHCb_Aciu.mov" />
+<VideoPlayer src="lhcb_aciu.mov" />

@@ -22,7 +22,7 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="Drone_Climbing_Mountain_2.mp4" muted />
+<VideoPlayer src="drone_climbing_mountain_2.mp4" muted />
 
 ---
 
@@ -30,15 +30,15 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="NASA_Mars_Mariner_4_Pan_Audio.mp4" />
+<VideoPlayer src="nasa_mars_mariner_4_pan_audio.mp4" />
 
 ---
 
-<VideoPlayer src="Mars_Surface.mp4" muted />
+<VideoPlayer src="mars_surface.mp4" muted />
 
 ---
 
-<VideoPlayer src="Cassini.mov" />
+<VideoPlayer src="cassini.mov" />
 
 ---
 
@@ -70,15 +70,15 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="Webb_Reel.mp4" />
+<VideoPlayer src="webb_reel.mp4" />
 
 ---
 
-<VideoPlayer src="Expansion_Funnel_H264_1080p.webm" muted />
+<VideoPlayer src="expansion_funnel_h264_1080p.webm" muted />
 
 ---
 
-<VideoPlayer src="Beyond_CMB.mp4" muted />
+<VideoPlayer src="beyond_cmb.mp4" muted />
 
 ---
 
@@ -102,11 +102,11 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="Cloud_Chamber_Audio.mp4" />
+<VideoPlayer src="cloud_chamber_audio.mp4" />
 
 ---
 
-<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" muted />
+<VideoPlayer src="voyage_in_to_the_world_of_atoms.mp4" muted />
 
 ---
 
@@ -138,19 +138,19 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="CERN_Overview_Short.mp4" muted />
+<VideoPlayer src="cern_overview_short.mp4" muted />
 
 ---
 
-<VideoPlayer src="CERN-VIDEO-2019-050-008-1080ph265.mp4" muted />
+<VideoPlayer src="cern_video_2019_050_008_1080ph265.mp4" muted />
 
 ---
 
-<VideoPlayer src="LHCb.mp4" />
+<VideoPlayer src="lhcb.mp4" />
 
 ---
 
-<VideoPlayer src="QGP_Formation.mp4" />
+<VideoPlayer src="qgp_formation.mp4" />
 
 ---
 
@@ -188,4 +188,4 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="LHCb_Aciu.mov" />
+<VideoPlayer src="lhcb_aciu.mov" />

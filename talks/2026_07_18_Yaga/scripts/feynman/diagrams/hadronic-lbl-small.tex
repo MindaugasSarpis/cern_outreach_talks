@@ -1,0 +1,19 @@
+\input{../common.tex}
+\begin{document}
+\begin{tikzpicture}
+\begin{feynman}
+  \vertex at (0, 3.6) (top) {\(\times\)};
+  \vertex [circle, draw, fill=gray!12, minimum size=22pt, inner sep=0pt] at (0, 2.6) (H) {\(H\)};
+  \vertex at (-0.7, 1.0) (l1);
+  \vertex at ( 0.7, 1.0) (r1);
+  \vertex at (-2.0,-0.4) (lmu) {\(\mu\)};
+  \vertex at ( 2.0,-0.4) (rmu) {\(\mu\)};
+  \diagram* {
+    (lmu) -- [fermion] (l1) -- [fermion] (r1) -- [fermion] (rmu),
+    (l1) -- [photon] (H),
+    (r1) -- [photon] (H),
+    (H) -- [photon] (top),
+  };
+\end{feynman}
+\end{tikzpicture}
+\end{document}

@@ -28,27 +28,27 @@ long_edge_px   = 2880   # current shared encodes were produced for editAI's
 # ---------------------------------------------------------------------------
 
 [[videos]]
-name    = "CERN_Overview_Short.mp4"
+name    = "cern_overview_short.mp4"
 profile = "standard"
 notes   = "CERN overview short cut, H.264 15 Mbps 1080p silent."
 
 [[videos]]
-name    = "CERN-VIDEO-2019-050-008-1080ph265.mp4"
+name    = "cern_video_2019_050_008_1080ph265.mp4"
 profile = "standard"
 notes   = "CERN video 2019-050-008, HEVC 6 Mbps 1080p silent."
 
 [[videos]]
-name    = "Voyage_in_to_the_world_of_atoms.mp4"
+name    = "voyage_in_to_the_world_of_atoms.mp4"
 profile = "remux"
 notes   = "CERN zoom-from-cosmos-to-quarks reel, 2:01 silent. Source already web-friendly."
 
 [[videos]]
-name    = "LHCb.mp4"
+name    = "lhcb.mp4"
 profile = "standard"
 notes   = "LHCb overview, 48s with audio."
 
 [[videos]]
-name        = "LHCb_Aciu.mov"
+name        = "lhcb_aciu.mov"
 profile     = "standard-tight"
 hq_from_raw = true
 notes       = """\
@@ -61,47 +61,47 @@ instead of the GH release."""
 # ---------------------------------------------------------------------------
 
 [[videos]]
-name    = "Beyond_CMB.mp4"
+name    = "beyond_cmb.mp4"
 profile = "standard"
 notes   = "Beyond-CMB science reel, H.264 11.6 Mbps 720p silent."
 
 [[videos]]
-name    = "Cassini.mov"
+name    = "cassini.mov"
 profile = "standard"
 notes   = "Cassini Grand Finale, ambient audio (no voiceover)."
 
 [[videos]]
-name    = "Cloud_Chamber_Audio.mp4"
+name    = "cloud_chamber_audio.mp4"
 profile = "standard-tight"
 notes   = "Cloud chamber demo with audio, 2:29 long — tight CRF to fit budget."
 
 [[videos]]
-name    = "Drone_Climbing_Mountain_2.mp4"
+name    = "drone_climbing_mountain_2.mp4"
 profile = "high-motion"
 notes   = "Drone ascent, 4K high-bitrate B-roll — CRF 22 preserves motion detail."
 
 [[videos]]
-name    = "Expansion_Funnel_H264_1080p.webm"
+name    = "expansion_funnel_h264_1080p.webm"
 profile = "remux"
 notes   = "Expansion funnel animation, VP8 in WebM (filename misleading)."
 
 [[videos]]
-name    = "Mars_Surface.mp4"
+name    = "mars_surface.mp4"
 profile = "standard"
 notes   = "Mars surface footage, H.264 15 Mbps 1080p 55s silent."
 
 [[videos]]
-name    = "NASA_Mars_Mariner_4_Pan_Audio.mp4"
+name    = "nasa_mars_mariner_4_pan_audio.mp4"
 profile = "standard"
 notes   = "NASA Mariner 4 Mars flyby pan, H.264 20 Mbps 1080p 20s with audio."
 
 [[videos]]
-name    = "QGP_Formation.mp4"
+name    = "qgp_formation.mp4"
 profile = "high-motion"
 notes   = "Quark-gluon plasma formation sim with audio — CGI."
 
 [[videos]]
-name    = "Webb_Reel.mp4"
+name    = "webb_reel.mp4"
 profile = "standard-tight"
 notes   = "Webb telescope reel, 2:58 with audio — tight CRF to fit budget."
 

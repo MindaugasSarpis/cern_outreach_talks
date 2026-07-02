@@ -1,11 +1,13 @@
-# Talk-OWNED video assets for the editAI talk. Clips inherited from the
+# Talk-OWNED video assets for the Yaga talk. Clips inherited from the
 # shared registry (/videos/shared.toml) — generic CERN/LHC/B-roll footage —
 # are NOT listed here; they're served at runtime via VideoPlayer's fallback
 # chain from the shared release.
 #
-# Note: editAI's own GH Release (videos-2026-04-28-editai) currently
-# doubles as the shared release. Both VITE_VIDEO_RELEASE and
-# VITE_VIDEO_SHARED_RELEASE point at it; VideoPlayer dedupes the URL.
+# Starting point: this manifest was cloned from editAI. Yaga's deck currently
+# reuses editAI's clips, which resolve via the shared release (see .env:
+# VITE_VIDEO_SHARED_RELEASE -> videos-2026-04-28-editai). Re-encode any clip
+# at Yaga's 4K width and publish to Yaga's own release to override. Prune
+# entries as the deck diverges from editAI.
 #
 # Profiles (in scripts/videos.py):
 #   remux          - lossless stream copy + faststart. For clips already in a
@@ -18,10 +20,21 @@
 
 [defaults]
 source_remote = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
-long_edge_px  = 2880   # venue screen is 2880x1600; override global 1920
+long_edge_px  = 3840   # venue is 4K 16:9 (3840x2160); override global 1920
+                       # (web tier still ships 1920 H.264 via web_long_edge_px)
 
 # release_tag auto-derives from talk dirname.
 # max_size_mb inherited from /outreach.toml.
+
+# ---------------------------------------------------------------------------
+# Yaga venue-specific footage
+# ---------------------------------------------------------------------------
+
+[[videos]]
+name    = "skylapse.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Opening sky timelapse. Raw from gdrive released/ (1.05 GB). Web H.264@1920; HQ HEVC master @ venue width."
 
 # ---------------------------------------------------------------------------
 # Chart renders (Python/matplotlib output, deck-specific)
