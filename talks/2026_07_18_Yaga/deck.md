@@ -13,12 +13,6 @@ layout: cover
 background: /figures/background_intro.jpg
 ---
 
-# Dr. Mindaugas Šarpis
-
-### Kaip CERN prieinama prie svarbiausių mokslinių atradimų
-
----
-
 <VideoPlayer src="skylapse.mp4"/>
 
 ---

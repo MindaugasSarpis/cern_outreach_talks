@@ -1,13 +1,17 @@
 # Talk-OWNED video assets for the Yaga talk. Clips inherited from the
-# shared registry (/videos/shared.toml) — generic CERN/LHC/B-roll footage —
-# are NOT listed here; they're served at runtime via VideoPlayer's fallback
-# chain from the shared release.
+# shared registry (/videos/shared.toml) — generic CERN/LHC/B-roll footage,
+# the crash-course chart renders, and the editAI-lineage venue clips — are
+# NOT listed here; they're served at runtime via VideoPlayer's fallback
+# chain from the shared release (see .env: VITE_VIDEO_SHARED_RELEASE).
 #
-# Starting point: this manifest was cloned from editAI. Yaga's deck currently
-# reuses editAI's clips, which resolve via the shared release (see .env:
-# VITE_VIDEO_SHARED_RELEASE -> videos-2026-04-28-editai). Re-encode any clip
-# at Yaga's 4K width and publish to Yaga's own release to override. Prune
-# entries as the deck diverges from editAI.
+# For OFFLINE/venue use the inherited clips must be made local first:
+#   pnpm videos:pull -- --include-shared      # web tier -> public/videos/
+#   pnpm videos:pull-hq -- --include-shared   # HQ tier  -> videos/hq/
+# then pnpm build:portable.
+#
+# To override an inherited clip (e.g., re-encode at this venue's 4K width):
+# add a [[videos]] entry with the same filename, encode/publish to Yaga's
+# own release — the talk release wins VideoPlayer's fallback chain.
 #
 # Profiles (in scripts/videos.py):
 #   remux          - lossless stream copy + faststart. For clips already in a
@@ -31,112 +35,13 @@ long_edge_px  = 3840   # venue is 4K 16:9 (3840x2160); override global 1920
 # ---------------------------------------------------------------------------
 
 [[videos]]
-name    = "skylapse.mp4"
-profile = "high-motion"
-used_in = ["deck"]
-notes   = "Opening sky timelapse. Raw from gdrive released/ (1.05 GB). Web H.264@1920; HQ HEVC master @ venue width."
-
-# ---------------------------------------------------------------------------
-# Chart renders (Python/matplotlib output, deck-specific)
-# ---------------------------------------------------------------------------
-
-[[videos]]
-name    = "cmb_data.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB data chart render"
-
-[[videos]]
-name    = "cmb_fit.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB fit chart render"
-
-[[videos]]
-name    = "cmb_power_spectrum_data.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB power-spectrum data variant chart render"
-
-[[videos]]
-name    = "cmb_power_spectrum_fit.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB power-spectrum fit variant chart render"
-
-[[videos]]
-name    = "g2_data.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "g-2 data chart render (1800x1000, editAI 9:5)"
-
-[[videos]]
-name    = "g2_fit.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "g-2 fit chart render (1800x1000, editAI 9:5)"
-
-[[videos]]
-name    = "gaussian.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Gaussian fit demo render"
-
-[[videos]]
-name    = "gaussian_highstats.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Gaussian fit demo render (high statistics)"
-
-[[videos]]
-name    = "higgs_bkg.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Higgs background-only chart render"
-
-[[videos]]
-name    = "higgs_data.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Higgs data chart render"
-
-[[videos]]
-name    = "higgs_sigbkg.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Higgs signal+background chart render"
-
-[[videos]]
-name    = "z_data.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Z-boson data chart render"
-
-[[videos]]
-name    = "z_fit3.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Z-boson fit chart render"
-
-[[videos]]
-name    = "z_alternatives.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Z-boson alternative-models chart render"
-
-# ---------------------------------------------------------------------------
-# editAI venue-specific footage (2880x1600, Mokslo Sala)
-# ---------------------------------------------------------------------------
-
-[[videos]]
-name    = "cmb_sonification_drone.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB sonification drone render, H.264 2.8 Mbps 1800x1040"
-
-[[videos]]
-name    = "mokslo_sala.mov"
-profile = "high-motion"
-used_in = ["deck"]
-hq_crf  = 20
-notes   = "Mokslo Sala intro, 2880x1600 venue-native. Raw is 153 Mbps HEVC — too hot for browser decode. HQ encoded at CRF 20 for smooth playback."
+name        = "skylapse.mp4"
+profile     = "standard-tight"
+used_in     = ["deck"]
+hq_from_raw = true
+notes       = """\
+Opening sky timelapse, 7:30 silent-ish. Raw is 1080p H.264 @ 20 Mbps (1.05 GB \
+on gdrive released/) — already the best master available, so the HQ tier \
+hard-links the raw instead of re-encoding (an HEVC CRF 16 pass landed at \
+18 Mbps: same size, one generation worse). Web tier uses the tight CRF so a \
+7.5-minute clip fits the 200 MB budget."""

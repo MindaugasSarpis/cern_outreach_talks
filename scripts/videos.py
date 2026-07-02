@@ -17,14 +17,17 @@ downloaded or re-encoded when working on a specific talk. The `check`
 command treats slide refs satisfied by the shared registry as OK.
 
 Subcommands:
-    sync           rclone mirror raw files from the configured remote
+    sync           rclone manifest-listed raw files from the remote (--all: whole folder)
     encode         ffmpeg raw -> public/videos/ (web tier, idempotent)
     publish        gh release upload web files, clobbering existing assets
     pull           gh release download web files -> public/videos/
-    check          sanity check: orphans, missing, over-budget, slide-ref mismatches
+                   (--include-shared: also deck-referenced shared clips)
+    check          sanity check: profiles, missing/orphaned files per tier,
+                   over-budget web copies, slide-ref mismatches
     encode-hq      ffmpeg raw -> videos/hq/ (visually-lossless venue masters)
     publish-hq     gh release upload HQ files to the parallel release
     pull-hq        gh release download HQ files -> videos/hq/
+                   (--include-shared: also deck-referenced shared HQ masters)
     shared-check   sanity-check the shared registry (run from repo root)
 """
 from __future__ import annotations
@@ -237,7 +240,7 @@ def human_size(n: int) -> str:
 # ---------------------------------------------------------------------------
 
 def cmd_sync(args: argparse.Namespace) -> int:
-    defaults, _ = load_manifest()
+    defaults, videos = load_manifest()
     remote = defaults.get("source_remote")
     if not remote:
         print("error: [defaults].source_remote not set in manifest.toml", file=sys.stderr)
@@ -245,8 +248,17 @@ def cmd_sync(args: argparse.Namespace) -> int:
     if not shutil.which("rclone"):
         print("error: rclone not installed. brew install rclone", file=sys.stderr)
         return 2
+    if not videos and not args.all:
+        print("Manifest lists no [[videos]]; nothing to sync (use --all to mirror the whole remote).")
+        return 0
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     cmd = ["rclone", "sync", remote, str(RAW_DIR), "--progress", "--transfers", "4"]
+    if not args.all:
+        # Only manifest-listed raws: the remote folder holds every talk's
+        # sources, so a full mirror drags tens of GB into each talk. Filters
+        # also shield unlisted local files from sync's delete pass.
+        for v in videos:
+            cmd += ["--include", f"/{v.name}"]
     if args.dry_run:
         cmd.append("--dry-run")
     print(" ".join(cmd))
@@ -571,6 +583,51 @@ def _filter_videos(videos: list[VideoEntry], only: list[str] | None) -> list[Vid
     return filtered
 
 
+def _shared_names() -> set[str]:
+    """All filenames declared by the shared registry.
+
+    Local pulls protect these from --prune unconditionally: a local copy of
+    an inherited clip (fetched via --include-shared for offline/portable
+    builds) is legitimate even though the talk manifest doesn't list it.
+    """
+    return {v.name for v in load_shared_manifest()[1]}
+
+
+def _shared_deck_videos(only: list[str] | None) -> tuple[dict, list[VideoEntry]]:
+    """Shared-registry entries this talk's deck references but does not own."""
+    shared_defaults, shared_videos = load_shared_manifest()
+    _, talk_videos = load_manifest()
+    talk_names = {v.name for v in talk_videos}
+    refs = set(_slide_references())
+    entries = [v for v in shared_videos if v.name in refs and v.name not in talk_names]
+    if only:
+        wanted = set(only)
+        entries = [v for v in entries if v.name in wanted]
+    return shared_defaults, entries
+
+
+def _rclone_from_raw(entries: list[VideoEntry], source_remote: str | None, dry_run: bool) -> int:
+    """Fetch hq_from_raw entries into videos/hq/ via rclone from the source remote."""
+    if not entries:
+        return 0
+    if not source_remote:
+        print("error: hq_from_raw entries present but source_remote not set", file=sys.stderr)
+        return 2
+    if not shutil.which("rclone"):
+        print("error: rclone not installed. brew install rclone", file=sys.stderr)
+        return 2
+    for v in entries:
+        src = f"{source_remote.rstrip('/')}/{v.name}"
+        dst = HQ_DIR / v.name
+        print(f"  + {v.name}: rclone from {src} (hq_from_raw)")
+        if dry_run:
+            continue
+        rc = subprocess.call(["rclone", "copyto", src, str(dst), "--progress"])
+        if rc != 0:
+            return rc
+    return 0
+
+
 def _shared_protect(tier_tag: str, *, hq: bool) -> set[str]:
     """Names that prune must skip when this release tag overlaps with shared.
 
@@ -629,13 +686,34 @@ def cmd_pull(args: argparse.Namespace) -> int:
     defaults, videos = load_manifest()
     filtered = _filter_videos(videos, args.only)
     if isinstance(filtered, int):
-        return filtered
+        if not args.include_shared:
+            return filtered
+        filtered = []  # --only may name inherited clips; shared pass below
     tag = defaults.get("release_tag", _auto_release_tag("videos"))
+    if filtered:
+        rc = _pull_tier(
+            filtered, WEB_DIR,
+            tag=tag,
+            force=args.force, dry_run=args.dry_run, prune=args.prune,
+            protected=_shared_names(),
+        )
+        if rc != 0:
+            return rc
+    if not args.include_shared:
+        return 0
+    shared_defaults, extra = _shared_deck_videos(args.only)
+    if not extra:
+        print("No inherited deck clips to pull from shared.")
+        return 0
+    shared_tag = shared_defaults.get("release_tag")
+    if not shared_tag:
+        print("error: shared registry sets no release_tag", file=sys.stderr)
+        return 2
+    print(f"Pulling {len(extra)} inherited clip(s) from shared release {shared_tag!r}...")
     return _pull_tier(
-        filtered, WEB_DIR,
-        tag=tag,
-        force=args.force, dry_run=args.dry_run, prune=args.prune,
-        protected=_shared_protect(tag, hq=False),
+        extra, WEB_DIR,
+        tag=shared_tag,
+        force=args.force, dry_run=args.dry_run, prune=False,
     )
 
 
@@ -643,7 +721,9 @@ def cmd_pull_hq(args: argparse.Namespace) -> int:
     defaults, videos = load_manifest()
     filtered = _filter_videos(videos, args.only)
     if isinstance(filtered, int):
-        return filtered
+        if not args.include_shared:
+            return filtered
+        filtered = []  # --only may name inherited clips; shared pass below
     _ensure_hq_symlink()
 
     # hq_from_raw entries come from source_remote via rclone; the rest come
@@ -651,41 +731,46 @@ def cmd_pull_hq(args: argparse.Namespace) -> int:
     from_raw = [v for v in filtered if v.hq_from_raw]
     from_release = [v for v in filtered if not v.hq_from_raw]
 
-    rc = _pull_tier(
-        from_release, HQ_DIR,
-        tag=defaults.get("release_tag_hq", _auto_release_tag("videos-hq")),
-        force=args.force, dry_run=args.dry_run,
-        # Defer prune to after the rclone pass so hq_from_raw files aren't
-        # flagged as orphans by the release-tier pull.
-        prune=False,
-    )
+    if from_release:
+        rc = _pull_tier(
+            from_release, HQ_DIR,
+            tag=defaults.get("release_tag_hq", _auto_release_tag("videos-hq")),
+            force=args.force, dry_run=args.dry_run,
+            # Defer prune to after the rclone pass so hq_from_raw files aren't
+            # flagged as orphans by the release-tier pull.
+            prune=False,
+        )
+        if rc != 0:
+            return rc
+
+    rc = _rclone_from_raw(from_raw, defaults.get("source_remote"), args.dry_run)
     if rc != 0:
         return rc
 
-    if from_raw:
-        source_remote = defaults.get("source_remote")
-        if not source_remote:
-            print("error: hq_from_raw entries present but [defaults].source_remote not set", file=sys.stderr)
-            return 2
-        if not shutil.which("rclone"):
-            print("error: rclone not installed. brew install rclone", file=sys.stderr)
-            return 2
-        for v in from_raw:
-            src = f"{source_remote.rstrip('/')}/{v.name}"
-            dst = HQ_DIR / v.name
-            print(f"  + {v.name}: rclone from {src} (hq_from_raw)")
-            if args.dry_run:
-                continue
-            cmd = ["rclone", "copyto", src, str(dst), "--progress"]
-            rc = subprocess.call(cmd)
+    if args.include_shared:
+        shared_defaults, extra = _shared_deck_videos(args.only)
+        s_from_raw = [v for v in extra if v.hq_from_raw]
+        s_from_release = [v for v in extra if not v.hq_from_raw]
+        if s_from_release:
+            s_tag = shared_defaults.get("release_tag_hq")
+            if not s_tag:
+                print("error: shared registry sets no release_tag_hq", file=sys.stderr)
+                return 2
+            print(f"Pulling {len(s_from_release)} inherited HQ master(s) from shared release {s_tag!r}...")
+            rc = _pull_tier(
+                s_from_release, HQ_DIR,
+                tag=s_tag,
+                force=args.force, dry_run=args.dry_run, prune=False,
+            )
             if rc != 0:
                 return rc
+        rc = _rclone_from_raw(s_from_raw, shared_defaults.get("source_remote"), args.dry_run)
+        if rc != 0:
+            return rc
 
     if args.prune:
         wanted = {v.name for v in filtered}
-        protected_names = _shared_protect(
-            defaults.get("release_tag_hq", _auto_release_tag("videos-hq")), hq=True,
-        )
+        protected_names = _shared_names()
         for existing in HQ_DIR.iterdir():
             if not existing.is_file():
                 continue
@@ -709,11 +794,22 @@ def cmd_pull_hq(args: argparse.Namespace) -> int:
 
 VIDEO_REF_RE = re.compile(r'VideoPlayer\s+src="([^"]+)"')
 
+# Directories whose .md files are never slides (deps, build output).
+SKIP_SCAN_DIRS = {"node_modules", "dist", "dist-portable", ".git"}
+
+
+def _deck_markdown(root: Path):
+    """Yield slide .md files under root, skipping deps/build directories."""
+    for md in root.rglob("*.md"):
+        if any(part in SKIP_SCAN_DIRS for part in md.relative_to(root).parts):
+            continue
+        yield md
+
 
 def _slide_references() -> dict[str, list[str]]:
     """Walk slides and return {filename: [slide_files_that_reference_it]}."""
     refs: dict[str, list[str]] = {}
-    for md in SLIDES_DIR.rglob("*.md"):
+    for md in _deck_markdown(SLIDES_DIR):
         try:
             text = md.read_text(encoding="utf-8", errors="ignore")
         except OSError:
@@ -724,30 +820,55 @@ def _slide_references() -> dict[str, list[str]]:
 
 
 def cmd_check(_: argparse.Namespace) -> int:
-    _, videos = load_manifest()
+    defaults, videos = load_manifest()
     _, shared_videos = load_shared_manifest()
     manifest_names = {v.name for v in videos}
     shared_names = {v.name for v in shared_videos}
     raw_files = {p.name for p in RAW_DIR.glob("*") if p.is_file() and not p.name.startswith(".")}
     web_files = {p.name for p in WEB_DIR.glob("*") if p.is_file() and not p.name.startswith(".")}
+    hq_files = {p.name for p in HQ_DIR.glob("*") if p.is_file() and not p.name.startswith(".")}
     refs = _slide_references()
 
     problems = 0
+    infos: list[str] = []
 
-    # Manifest entries that are missing a raw.
-    for name in sorted(manifest_names - raw_files):
-        print(f"  MISSING RAW:      {name}")
+    # Unknown encoding profiles (would otherwise only surface at encode time).
+    for v in videos:
+        if v.profile not in PROFILES:
+            print(f"  BAD PROFILE:      {v.name} -> {v.profile!r}")
+            problems += 1
+
+    # Manifest entries with no local copy in ANY tier: nothing to encode,
+    # publish, or bundle. A missing raw alone is normal on a fresh machine
+    # (encodes pull from the releases); resync raws before re-encoding.
+    for name in sorted(manifest_names - raw_files - web_files - hq_files):
+        print(f"  MISSING LOCAL:    {name}  (no raw/web/hq copy — videos:sync or videos:pull)")
         problems += 1
+    for name in sorted((manifest_names - raw_files) & (web_files | hq_files)):
+        infos.append(f"raw not synced (encoded copy present): {name}")
 
-    # Raw / web files not declared by the talk OR the shared registry.
-    # Shared-overlap files in public/videos/ are valid talk overrides; they're
-    # only flagged if they're absent from both manifests.
+    # Encoded web copies of talk-owned clips exceeding the size budget.
+    max_mb = int(defaults.get("max_size_mb", 200))
+    for name in sorted(manifest_names & web_files):
+        size = (WEB_DIR / name).stat().st_size
+        if size > max_mb * 1024 * 1024:
+            print(f"  OVER BUDGET:      {name}  ({human_size(size)} > max_size_mb={max_mb})")
+            problems += 1
+
+    # Local files not declared by the talk OR the shared registry.
+    # Shared-overlap files in any tier are valid (inherited copies pulled
+    # for offline use, or talk overrides); they're only flagged if absent
+    # from both manifests.
     for name in sorted(raw_files - manifest_names - shared_names):
         print(f"  ORPHAN RAW:       {name}")
         problems += 1
 
     for name in sorted(web_files - manifest_names - shared_names):
         print(f"  ORPHAN WEB:       {name}")
+        problems += 1
+
+    for name in sorted(hq_files - manifest_names - shared_names):
+        print(f"  ORPHAN HQ:        {name}")
         problems += 1
 
     # Slide references not satisfied by the talk manifest OR the shared registry.
@@ -768,6 +889,16 @@ def cmd_check(_: argparse.Namespace) -> int:
     inherited = sorted((set(refs) & shared_names) - manifest_names)
     duplicated = sorted(manifest_names & shared_names)
 
+    # Inherited clips with no local copy play fine online (release fallback)
+    # but silently drop out of offline/portable/venue builds.
+    inherited_not_local = [n for n in inherited if n not in web_files and n not in hq_files]
+    if inherited_not_local:
+        infos.append(
+            f"{len(inherited_not_local)} inherited clip(s) have no local copy — offline/"
+            "portable builds will lack them; fix with videos:pull/pull-hq --include-shared:"
+        )
+        infos.extend(f"  - {n}" for n in inherited_not_local)
+
     if problems == 0:
         owned = len(manifest_names)
         print(
@@ -782,6 +913,11 @@ def cmd_check(_: argparse.Namespace) -> int:
             print("  also in shared registry (talk currently owns):")
             for name in duplicated:
                 print(f"    - {name}")
+    if infos:
+        print("  info:")
+        for line in infos:
+            print(f"    {line}")
+    if problems == 0:
         return 0
     print(f"\n{problems} issue(s) found.")
     return 1
@@ -823,7 +959,7 @@ def cmd_shared_check(_: argparse.Namespace) -> int:
     for talk_dir in sorted((root / "talks").glob("*")):
         if not talk_dir.is_dir():
             continue
-        for md in talk_dir.rglob("*.md"):
+        for md in _deck_markdown(talk_dir):
             try:
                 text = md.read_text(encoding="utf-8", errors="ignore")
             except OSError:
@@ -1002,8 +1138,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="cmd", required=True)
 
-    p_sync = sub.add_parser("sync", help="rclone raw files from Drive")
+    p_sync = sub.add_parser("sync", help="rclone manifest-listed raw files from Drive")
     p_sync.add_argument("--dry-run", action="store_true")
+    p_sync.add_argument("--all", action="store_true", help="mirror the whole remote folder, not just manifest-listed raws")
     p_sync.set_defaults(func=cmd_sync)
 
     p_enc = sub.add_parser("encode", help="ffmpeg raw -> web")
@@ -1022,7 +1159,8 @@ def main() -> int:
     p_pull.add_argument("--dry-run", action="store_true")
     p_pull.add_argument("--only", nargs="+", metavar="NAME", help="limit to named file(s)")
     p_pull.add_argument("--force", action="store_true", help="re-download even if local size matches")
-    p_pull.add_argument("--prune", action="store_true", help="delete local files not in manifest")
+    p_pull.add_argument("--prune", action="store_true", help="delete local files not in manifest (shared-registry names are protected)")
+    p_pull.add_argument("--include-shared", action="store_true", help="also pull deck-referenced shared clips (offline/portable builds)")
     p_pull.set_defaults(func=cmd_pull)
 
     p_chk = sub.add_parser("check", help="sanity-check manifest vs raw/web/slides")
@@ -1044,7 +1182,8 @@ def main() -> int:
     p_pull_hq.add_argument("--dry-run", action="store_true")
     p_pull_hq.add_argument("--only", nargs="+", metavar="NAME", help="limit to named file(s)")
     p_pull_hq.add_argument("--force", action="store_true", help="re-download even if local size matches")
-    p_pull_hq.add_argument("--prune", action="store_true", help="delete local files not in manifest")
+    p_pull_hq.add_argument("--prune", action="store_true", help="delete local files not in manifest (shared-registry names are protected)")
+    p_pull_hq.add_argument("--include-shared", action="store_true", help="also pull deck-referenced shared HQ masters (offline/venue builds)")
     p_pull_hq.set_defaults(func=cmd_pull_hq)
 
     p_shared = sub.add_parser("shared-check", help="sanity-check /videos/shared.toml (run from monorepo root)")

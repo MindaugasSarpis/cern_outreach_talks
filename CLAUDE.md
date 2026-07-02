@@ -12,6 +12,11 @@ Current talks:
 
 - `talks/2026_04_28_editAI/` — EditAI Seminar crash course, 2026-04-28.
   Audience: later-grade students, teachers, school principals.
+  2880×1600 LED wall, 9:5. Its GH Release doubles as the shared release.
+- `talks/2026_05_11_Sceptics/` — Sceptics Society talk, 2026-05-11.
+  4K projector, 16:9.
+- `talks/2026_07_18_Yaga/` — Yaga crash course (Lithuanian), 2026-07-18.
+  4K 16:9 venue. Cloned from editAI; deck under construction.
 
 ## Environment setup (fresh machine)
 
@@ -74,10 +79,11 @@ Release tags default to `videos-<talk-dirname-lowercased>` (web tier) and
 
 ## Shared video registry (`/videos/shared.toml`)
 
-Widely-reused external clips (CERN footage, LHCb, generic B-roll) live
-in a shared GH Release and are **inherited at runtime** by talks via
-VideoPlayer's fallback chain. They are NOT downloaded or re-encoded
-when working on an individual talk.
+Widely-reused clips — CERN/LHC footage, generic B-roll, and the
+crash-course chart renders + editAI-lineage venue clips reused across
+decks — live in a shared GH Release and are **inherited at runtime**
+by talks via VideoPlayer's fallback chain. They are NOT downloaded or
+re-encoded when working on an individual talk.
 
 - `/videos/shared.toml` lists shared clips (same schema as a talk
   manifest) and declares the shared `release_tag` / `release_tag_hq`.
@@ -98,6 +104,15 @@ different aspect ratio): list the same filename in the talk's
 manifest, encode/publish to the talk's own release. Talk release wins
 the fallback chain (it's earlier than shared).
 
+**Inherited clips and offline builds**: at runtime inherited clips
+stream from the shared release, so deployed (online) decks need
+nothing local. Offline/portable/venue builds DO need local copies —
+fetch them with `pnpm videos:pull -- --include-shared` (web tier) and
+`pnpm videos:pull-hq -- --include-shared` (HQ masters) before
+`pnpm build:portable`. `videos:check` prints an info list of inherited
+clips that aren't local yet. Local copies of shared-registry names are
+never deleted by `--prune`.
+
 ## Commands
 
 Run from inside a talk directory:
@@ -108,14 +123,18 @@ pnpm build              # static bundle in dist/ (absolute base, for GH Pages)
 pnpm build:portable     # portable bundle in dist-portable/ (relative base, offline-safe)
 pnpm export             # PDF export (requires playwright-chromium; install locally if needed)
 
-pnpm videos:sync        # rclone raws from [defaults].source_remote
+pnpm videos:sync        # rclone manifest-listed raws from [defaults].source_remote
+                        #   (--all mirrors the whole remote folder)
 pnpm videos:encode      # ffmpeg raw -> public/videos/ (web tier, idempotent)
 pnpm videos:encode-hq   # ffmpeg raw -> videos/hq/ (visually-lossless venue masters)
 pnpm videos:publish     # upload encoded web files to the web GH Release
 pnpm videos:publish-hq  # upload HQ files to the parallel HQ GH Release
 pnpm videos:pull        # download web files from the release -> public/videos/
 pnpm videos:pull-hq     # download HQ masters from the parallel release -> videos/hq/
-pnpm videos:check       # manifest vs raw/web/slide consistency
+                        #   (both pulls: --include-shared also fetches the deck's
+                        #    inherited shared clips, for offline/portable builds)
+pnpm videos:check       # profiles, per-tier missing/orphans, web size budget,
+                        # slide-ref consistency; info list of non-local inherited clips
 ```
 
 `publish` / `publish-hq` and `pull` / `pull-hq` are manifest-driven and
@@ -292,6 +311,16 @@ Run `pnpm build:portable` **after** HQ encodes finish (otherwise HQ
 tier is incomplete). For `hq_from_raw` files, ensure the raw file is
 present locally (hard link into `videos/hq/` — already in place after
 `pnpm videos:encode-hq`).
+
+**Inherited shared clips are NOT in the bundle by default** — they
+resolve from the shared GH Release at runtime, which offline venues
+can't reach. Before a portable build, localize them:
+
+```bash
+pnpm videos:pull -- --include-shared      # web tier of inherited clips
+pnpm videos:pull-hq -- --include-shared   # HQ masters of inherited clips
+pnpm build:portable
+```
 
 ## Deployment
 

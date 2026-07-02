@@ -18,7 +18,7 @@
 [defaults]
 release_tag    = "videos-2026-04-28-editai"
 release_tag_hq = "videos-hq-2026-04-28-editai"
-source_remote  = "gdrive:Work/Outreach/Resources/Videos/released"
+source_remote  = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
 long_edge_px   = 2880   # current shared encodes were produced for editAI's
                         # 2880 venue. Raise to 3840 once a dedicated shared
                         # release is republished for 4K venues.
@@ -109,3 +109,100 @@ notes   = "Webb telescope reel, 2:58 with audio — tight CRF to fit budget."
 name    = "sm.mov"
 profile = "standard"
 notes   = "Standard Model overview, 23s with audio. Encoded at 2880x1600 (9:5) for editAI's venue; letterboxes on 16:9 venues."
+
+# ---------------------------------------------------------------------------
+# Crash-course chart renders (Python/matplotlib output, editAI lineage)
+#
+# Originally editAI talk-owned; promoted to shared once Sceptics and Yaga
+# started reusing them. Raws live on the gdrive source_remote like everything
+# else; the shared release serves the encodes at runtime. Rendered at
+# 1800x1000-class (editAI 9:5); letterbox on 16:9 venues. Regenerate at the
+# venue's aspect and override in the talk manifest if that matters.
+# ---------------------------------------------------------------------------
+
+[[videos]]
+name    = "cmb_data.mp4"
+profile = "remux"
+notes   = "CMB data chart render"
+
+[[videos]]
+name    = "cmb_fit.mp4"
+profile = "remux"
+notes   = "CMB fit chart render"
+
+[[videos]]
+name    = "cmb_power_spectrum_data.mp4"
+profile = "remux"
+notes   = "CMB power-spectrum data variant chart render"
+
+[[videos]]
+name    = "cmb_power_spectrum_fit.mp4"
+profile = "remux"
+notes   = "CMB power-spectrum fit variant chart render"
+
+[[videos]]
+name    = "g2_data.mp4"
+profile = "remux"
+notes   = "g-2 data chart render (1800x1000, editAI 9:5)"
+
+[[videos]]
+name    = "g2_fit.mp4"
+profile = "remux"
+notes   = "g-2 fit chart render (1800x1000, editAI 9:5)"
+
+[[videos]]
+name    = "gaussian.mp4"
+profile = "remux"
+notes   = "Gaussian fit demo render"
+
+[[videos]]
+name    = "gaussian_highstats.mp4"
+profile = "remux"
+notes   = "Gaussian fit demo render (high statistics)"
+
+[[videos]]
+name    = "higgs_bkg.mp4"
+profile = "remux"
+notes   = "Higgs background-only chart render"
+
+[[videos]]
+name    = "higgs_data.mp4"
+profile = "remux"
+notes   = "Higgs data chart render"
+
+[[videos]]
+name    = "higgs_sigbkg.mp4"
+profile = "remux"
+notes   = "Higgs signal+background chart render"
+
+[[videos]]
+name    = "z_data.mp4"
+profile = "remux"
+notes   = "Z-boson data chart render"
+
+[[videos]]
+name    = "z_fit3.mp4"
+profile = "remux"
+notes   = "Z-boson fit chart render"
+
+[[videos]]
+name    = "z_alternatives.mp4"
+profile = "remux"
+notes   = "Z-boson alternative-models chart render"
+
+# ---------------------------------------------------------------------------
+# Venue footage of editAI lineage, reused by later crash-course decks
+# ---------------------------------------------------------------------------
+
+[[videos]]
+name    = "cmb_sonification_drone.mp4"
+profile = "remux"
+notes   = "CMB sonification drone render, H.264 2.8 Mbps 1800x1040"
+
+[[videos]]
+name    = "mokslo_sala.mov"
+profile = "high-motion"
+hq_crf  = 20
+notes   = """\
+Mokslo Sala intro, 2880x1600 venue-native. Raw is 153 Mbps HEVC — too hot \
+for browser decode. HQ encoded at CRF 20 for smooth playback."""
