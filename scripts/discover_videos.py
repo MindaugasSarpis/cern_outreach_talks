@@ -362,3 +362,52 @@ def search_djangoplicity(keyword: str, limit: int = 5, pages: int = 5,
                 return out
         url = data.get("Next")
     return out
+
+
+SOURCE_LABELS = {
+    "cds": "CERN CDS Videos",
+    "nasa": "NASA Image & Video Library",
+    "eso": "ESO",
+    "hubble": "ESA/Hubble",
+    "webb": "ESA/Webb",
+    "noirlab": "NOIRLab",
+    "commons": "Wikimedia Commons",
+}
+D2D_SOURCES = ("eso", "hubble", "webb", "noirlab")
+
+
+def render_report(candidates: list[Candidate], pages: int) -> str:
+    lines: list[str] = []
+    by_source: dict[str, list[Candidate]] = {}
+    for c in candidates:
+        by_source.setdefault(c.source, []).append(c)
+    for source, label in SOURCE_LABELS.items():
+        group = by_source.get(source)
+        if not group:
+            continue
+        if source in D2D_SOURCES:
+            label += f" (newest {pages} feed pages only — raise --pages for deeper history)"
+        lines.append(f"== {label} ==")
+        for c in sorted(group, key=lambda c: c.date, reverse=True):
+            flag = "  [already in registry]" if c.in_registry else ""
+            lines.append(f"* {c.title}{flag}")
+            details = [x for x in (
+                c.date or None,
+                fmt_duration(c.duration_s) if c.duration_s is not None else None,
+                c.resolution,
+                c.license,
+            ) if x]
+            lines.append(f"    {' | '.join(details)}")
+            lines.append(f"    page:     {c.page_url}")
+            lines.append(f"    download: {c.download_url}")
+        lines.append("")
+    fresh = [c for c in candidates if not c.in_registry]
+    if fresh:
+        lines.append("== Manifest snippets "
+                     "(paste into videos/manifest.toml or /videos/shared.toml) ==")
+        lines.append("")
+        for c in fresh:
+            lines.append(toml_snippet(c))
+    if not candidates:
+        lines.append("No candidates found.")
+    return "\n".join(lines)

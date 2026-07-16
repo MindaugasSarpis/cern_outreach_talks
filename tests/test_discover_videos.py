@@ -253,5 +253,27 @@ class CommonsTest(unittest.TestCase):
             len(dv.search_commons("cloud chamber", limit=1, fetch=fetch)), 1)
 
 
+class ReportTest(unittest.TestCase):
+    def test_report_groups_flags_and_snippets(self):
+        fresh = dv.Candidate(source="eso", id="eso1", title="Nebula flight",
+                             date="2026-07-15", duration_s=83.0, resolution="3840x2160",
+                             license="CC BY 4.0", credit="ESO", page_url="http://p1",
+                             download_url="http://d1.mp4")
+        known = dv.Candidate(source="cds", id="123", title="LHC overview",
+                             date="2019-01-01", duration_s=None, resolution=None,
+                             license="CERN", credit=None, page_url="http://p2",
+                             download_url="http://d2.mp4", in_registry=True)
+        report = dv.render_report([fresh, known], pages=5)
+        self.assertIn("== ESO (newest 5 feed pages only", report)
+        self.assertIn("[already in registry]", report)
+        self.assertIn("download: http://d1.mp4", report)
+        self.assertIn("nebula_flight.mp4", report)   # snippet emitted for fresh
+        self.assertNotIn("lhc_overview.mp4", report)  # none for the known clip
+        self.assertIn("1:23", report)
+
+    def test_report_empty(self):
+        self.assertEqual(dv.render_report([], pages=5), "No candidates found.")
+
+
 if __name__ == "__main__":
     unittest.main()
