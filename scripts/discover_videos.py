@@ -73,3 +73,33 @@ def parse_hms(s: str) -> float | None:
     for n in nums:
         total = total * 60 + n
     return total
+
+
+def fmt_duration(seconds: float | None) -> str:
+    if seconds is None:
+        return "?"
+    m, s = divmod(int(round(seconds)), 60)
+    return f"{m}:{s:02d}"
+
+
+def toml_snippet(c: Candidate) -> str:
+    """Paste-ready [[videos]] block for a candidate.
+
+    notes is emitted via json.dumps: JSON string escaping is a subset of
+    TOML basic-string escaping, so the output is always valid TOML.
+    """
+    bits = [c.title]
+    if c.duration_s is not None:
+        bits.append(fmt_duration(c.duration_s))
+    bits.append(f"Source: {c.source} {c.id}")
+    bits.append(c.license)
+    if c.credit:
+        bits.append(f"credit: {c.credit}")
+    bits.append(c.page_url)
+    notes = ". ".join(b.strip().rstrip(".") for b in bits if b and b.strip()) + "."
+    return (
+        "[[videos]]\n"
+        f'name    = "{slugify_name(c.title, c.download_url)}"\n'
+        'profile = "standard"   # default guess; adjust per clip\n'
+        f"notes   = {json.dumps(notes)}\n"
+    )

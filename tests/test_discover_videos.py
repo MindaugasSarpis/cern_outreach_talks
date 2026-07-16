@@ -48,5 +48,28 @@ class HelpersTest(unittest.TestCase):
         self.assertIsNone(dv.parse_hms(""))
 
 
+class TomlSnippetTest(unittest.TestCase):
+    def test_snippet_round_trips_and_escapes(self):
+        c = dv.Candidate(source="eso", id="eso2609b",
+                         title='Beta "Pictoris" time-lapse',
+                         date="2026-07-15", duration_s=247.0, resolution="3840x2160",
+                         license="CC BY 4.0", credit="ESO/B. Sutlieff",
+                         page_url="https://www.eso.org/public/videos/eso2609b/",
+                         download_url="https://cdn.eso.org/videos/ultra_hd/eso2609b.mp4")
+        snippet = dv.toml_snippet(c)
+        video = tomllib.loads(snippet)["videos"][0]
+        self.assertEqual(video["name"], "beta_pictoris_time_lapse.mp4")
+        self.assertEqual(video["profile"], "standard")
+        self.assertIn('Beta "Pictoris" time-lapse', video["notes"])
+        self.assertIn("4:07", video["notes"])
+        self.assertIn("CC BY 4.0", video["notes"])
+        self.assertIn("credit: ESO/B. Sutlieff", video["notes"])
+        self.assertIn("https://www.eso.org/public/videos/eso2609b/", video["notes"])
+
+    def test_fmt_duration(self):
+        self.assertEqual(dv.fmt_duration(247.0), "4:07")
+        self.assertEqual(dv.fmt_duration(None), "?")
+
+
 if __name__ == "__main__":
     unittest.main()
