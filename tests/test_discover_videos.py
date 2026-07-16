@@ -175,5 +175,57 @@ class NasaTest(unittest.TestCase):
         self.assertIsNone(dv._nasa_best_asset(["a.jpg"]))
 
 
+class DjangoplicityTest(unittest.TestCase):
+    def test_parses_real_feed_item(self):
+        fetch = fixture_fetch({"eso.org/public/videos/d2d": "eso_d2d_page1.json"})
+        cands = dv.search_djangoplicity("beta pictoris", limit=5, pages=3,
+                                        site="eso", fetch=fetch)
+        self.assertEqual(len(cands), 1)
+        c = cands[0]
+        self.assertEqual(c.source, "eso")
+        self.assertEqual(c.id, "eso2609b")
+        self.assertEqual(c.date, "2026-07-15")
+        self.assertEqual(c.download_url, "https://cdn.eso.org/videos/ultra_hd/eso2609b.mp4")
+        self.assertEqual(c.resolution, "3840x2160")
+        self.assertEqual(c.license, "Creative Commons Attribution 4.0 International License")
+        self.assertEqual(c.page_url, "https://www.eso.org/public/videos/eso2609b/")
+        self.assertEqual(c.credit, "ESO/B. Sutlieff, M. Bonse et al.")
+
+    def test_no_keyword_match(self):
+        fetch = fixture_fetch({"eso.org/public/videos/d2d": "eso_d2d_page1.json"})
+        self.assertEqual(
+            dv.search_djangoplicity("plasma wakefield", site="eso", fetch=fetch), [])
+
+    def _page(self, next_url, item_id, title):
+        return {"Count": 2, "Next": next_url, "Collections": [{
+            "ID": item_id, "Title": title, "Description": "<p>desc</p>",
+            "Credit": "ESO", "Rights": "CC BY 4.0",
+            "PublicationDate": "2026-01-01T00:00:00Z",
+            "ReferenceURL": f"https://www.eso.org/public/videos/{item_id}/",
+            "Assets": [{"MediaType": "Video", "Resources": [
+                {"ResourceType": "Original", "Dimensions": [1920.0, 1080.0],
+                 "URL": f"https://cdn.eso.org/videos/{item_id}.mp4"}]}],
+        }]}
+
+    def test_walks_pages_until_limit_or_exhausted(self):
+        page1 = self._page("https://www.eso.org/public/videos/d2d/?page=2",
+                           "esoA", "Galaxy spin")
+        page2 = self._page(None, "esoB", "Nebula flight")
+        fetch = fixture_fetch({"page=2": page2, "d2d": page1})
+        hits = dv.search_djangoplicity("nebula", limit=5, pages=5, site="eso", fetch=fetch)
+        self.assertEqual([c.id for c in hits], ["esoB"])
+        self.assertEqual(
+            dv.search_djangoplicity("nebula", limit=5, pages=1, site="eso", fetch=fetch),
+            [])
+
+    def test_best_resource_prefers_original_then_area(self):
+        item = {"Assets": [{"MediaType": "Video", "Resources": [
+            {"ResourceType": "Preview", "Dimensions": [1280.0, 720.0], "URL": "http://x/p.m4v"},
+            {"ResourceType": "Original", "Dimensions": [3840.0, 2160.0], "URL": "http://x/o.mp4"},
+            {"ResourceType": "Thumbnail", "Dimensions": [220.0, 140.0], "URL": "http://x/t.jpg"},
+        ]}]}
+        self.assertEqual(dv._d2d_best_resource(item), ("http://x/o.mp4", "3840x2160"))
+
+
 if __name__ == "__main__":
     unittest.main()

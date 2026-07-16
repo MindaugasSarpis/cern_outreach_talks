@@ -246,3 +246,70 @@ def search_nasa(keyword: str, limit: int = 5, fetch=http_get_json) -> list[Candi
             download_url=urllib.parse.quote(best, safe=":/~"),
         ))
     return out
+
+
+DJANGOPLICITY_SITES = {
+    "eso": "https://www.eso.org/public/videos/d2d/",
+    "hubble": "https://esahubble.org/videos/d2d/",
+    "webb": "https://esawebb.org/videos/d2d/",
+    "noirlab": "https://noirlab.edu/public/videos/d2d/",
+}
+_VIDEO_EXTS = (".mp4", ".m4v", ".mov", ".webm")
+
+
+def _d2d_best_resource(item: dict) -> tuple[str | None, str | None]:
+    """(download_url, 'WxH') of the best video rendition: Original wins,
+    then largest pixel area."""
+    best_url, best_dims, best_score = None, None, -1.0
+    for asset in item.get("Assets") or []:
+        if asset.get("MediaType") != "Video":
+            continue
+        for res in asset.get("Resources") or []:
+            url = res.get("URL") or ""
+            if Path(urllib.parse.urlparse(url).path).suffix.lower() not in _VIDEO_EXTS:
+                continue
+            dims = res.get("Dimensions") or []
+            area = float(dims[0]) * float(dims[1]) if len(dims) == 2 else 0.0
+            score = area + (1e12 if res.get("ResourceType") == "Original" else 0.0)
+            if score > best_score:
+                best_score = score
+                best_url = url
+                best_dims = f"{int(dims[0])}x{int(dims[1])}" if len(dims) == 2 else None
+    return best_url, best_dims
+
+
+def search_djangoplicity(keyword: str, limit: int = 5, pages: int = 5,
+                         site: str = "eso", fetch=http_get_json) -> list[Candidate]:
+    """One djangoplicity site's d2d feed (newest-first; no server-side
+    search) — walk up to `pages` pages and keyword-filter client-side."""
+    kw = keyword.lower()
+    out: list[Candidate] = []
+    url: str | None = DJANGOPLICITY_SITES[site]
+    for _ in range(pages):
+        if not url:
+            break
+        data = fetch(url)
+        for item in data.get("Collections") or []:
+            text = (item.get("Title", "") + " "
+                    + strip_html(item.get("Description") or "")).lower()
+            if kw not in text:
+                continue
+            download, resolution = _d2d_best_resource(item)
+            if not download:
+                continue
+            out.append(Candidate(
+                source=site,
+                id=item.get("ID", ""),
+                title=item.get("Title", ""),
+                date=(item.get("PublicationDate") or "")[:10],
+                duration_s=None,
+                resolution=resolution,
+                license=item.get("Rights") or "CC BY 4.0",
+                credit=strip_html(item.get("Credit") or "") or None,
+                page_url=item.get("ReferenceURL") or "",
+                download_url=download,
+            ))
+            if len(out) >= limit:
+                return out
+        url = data.get("Next")
+    return out
