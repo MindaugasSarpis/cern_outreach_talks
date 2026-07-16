@@ -1,0 +1,47 @@
+# Talk-OWNED video assets for the Yaga talk. Clips inherited from the
+# shared registry (/videos/shared.toml) — generic CERN/LHC/B-roll footage,
+# the crash-course chart renders, and the editAI-lineage venue clips — are
+# NOT listed here; they're served at runtime via VideoPlayer's fallback
+# chain from the shared release (see .env: VITE_VIDEO_SHARED_RELEASE).
+#
+# For OFFLINE/venue use the inherited clips must be made local first:
+#   pnpm videos:pull -- --include-shared      # web tier -> public/videos/
+#   pnpm videos:pull-hq -- --include-shared   # HQ tier  -> videos/hq/
+# then pnpm build:portable.
+#
+# To override an inherited clip (e.g., re-encode at this venue's 4K width):
+# add a [[videos]] entry with the same filename, encode/publish to Yaga's
+# own release — the talk release wins VideoPlayer's fallback chain.
+#
+# Profiles (in scripts/videos.py):
+#   remux          - lossless stream copy + faststart. For clips already in a
+#                    web-friendly codec (H.264, or low-bitrate HEVC).
+#   standard       - web H.264 CRF 23 (<=6 Mbps), AAC 128k.
+#   standard-tight - web H.264 CRF 26 (<=3.5 Mbps) for long clips.
+#   silent-loop    - web H.264 CRF 24 (<=5 Mbps), audio stripped. Loops.
+#   high-motion    - web H.264 CRF 22 (<=8 Mbps), AAC 192k. Sims/CGI/fast.
+# (The HQ venue-master tier is HEVC CRF 16 regardless of profile.)
+
+[defaults]
+source_remote = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
+long_edge_px  = 3840   # venue is 4K 16:9 (3840x2160); override global 1920
+                       # (web tier still ships 1920 H.264 via web_long_edge_px)
+
+# release_tag auto-derives from talk dirname.
+# max_size_mb inherited from /outreach.toml.
+
+# ---------------------------------------------------------------------------
+# Yaga venue-specific footage
+# ---------------------------------------------------------------------------
+
+[[videos]]
+name        = "skylapse.mp4"
+profile     = "standard-tight"
+used_in     = ["deck"]
+hq_from_raw = true
+notes       = """\
+Opening sky timelapse, 7:30 silent-ish. Raw is 1080p H.264 @ 20 Mbps (1.05 GB \
+on gdrive released/) — already the best master available, so the HQ tier \
+hard-links the raw instead of re-encoding (an HEVC CRF 16 pass landed at \
+18 Mbps: same size, one generation worse). Web tier uses the tight CRF so a \
+7.5-minute clip fits the 200 MB budget."""

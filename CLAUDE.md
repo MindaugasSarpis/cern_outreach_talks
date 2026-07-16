@@ -12,6 +12,11 @@ Current talks:
 
 - `talks/2026_04_28_editAI/` — EditAI Seminar crash course, 2026-04-28.
   Audience: later-grade students, teachers, school principals.
+  2880×1600 LED wall, 9:5. Its GH Release doubles as the shared release.
+- `talks/2026_05_11_Sceptics/` — Sceptics Society talk, 2026-05-11.
+  4K projector, 16:9.
+- `talks/2026_07_18_Yaga/` — Yaga crash course (Lithuanian), 2026-07-18.
+  4K 16:9 venue. Cloned from editAI; deck under construction.
 
 ## Environment setup (fresh machine)
 
@@ -74,10 +79,11 @@ Release tags default to `videos-<talk-dirname-lowercased>` (web tier) and
 
 ## Shared video registry (`/videos/shared.toml`)
 
-Widely-reused external clips (CERN footage, LHCb, generic B-roll) live
-in a shared GH Release and are **inherited at runtime** by talks via
-VideoPlayer's fallback chain. They are NOT downloaded or re-encoded
-when working on an individual talk.
+Widely-reused clips — CERN/LHC footage, generic B-roll, and the
+crash-course chart renders + editAI-lineage venue clips reused across
+decks — live in a shared GH Release and are **inherited at runtime**
+by talks via VideoPlayer's fallback chain. They are NOT downloaded or
+re-encoded when working on an individual talk.
 
 - `/videos/shared.toml` lists shared clips (same schema as a talk
   manifest) and declares the shared `release_tag` / `release_tag_hq`.
@@ -98,6 +104,15 @@ different aspect ratio): list the same filename in the talk's
 manifest, encode/publish to the talk's own release. Talk release wins
 the fallback chain (it's earlier than shared).
 
+**Inherited clips and offline builds**: at runtime inherited clips
+stream from the shared release, so deployed (online) decks need
+nothing local. Offline/portable/venue builds DO need local copies —
+fetch them with `pnpm videos:pull -- --include-shared` (web tier) and
+`pnpm videos:pull-hq -- --include-shared` (HQ masters) before
+`pnpm build:portable`. `videos:check` prints an info list of inherited
+clips that aren't local yet. Local copies of shared-registry names are
+never deleted by `--prune`.
+
 ## Commands
 
 Run from inside a talk directory:
@@ -108,14 +123,18 @@ pnpm build              # static bundle in dist/ (absolute base, for GH Pages)
 pnpm build:portable     # portable bundle in dist-portable/ (relative base, offline-safe)
 pnpm export             # PDF export (requires playwright-chromium; install locally if needed)
 
-pnpm videos:sync        # rclone raws from [defaults].source_remote
+pnpm videos:sync        # rclone manifest-listed raws from [defaults].source_remote
+                        #   (--all mirrors the whole remote folder)
 pnpm videos:encode      # ffmpeg raw -> public/videos/ (web tier, idempotent)
 pnpm videos:encode-hq   # ffmpeg raw -> videos/hq/ (visually-lossless venue masters)
 pnpm videos:publish     # upload encoded web files to the web GH Release
 pnpm videos:publish-hq  # upload HQ files to the parallel HQ GH Release
 pnpm videos:pull        # download web files from the release -> public/videos/
 pnpm videos:pull-hq     # download HQ masters from the parallel release -> videos/hq/
-pnpm videos:check       # manifest vs raw/web/slide consistency
+                        #   (both pulls: --include-shared also fetches the deck's
+                        #    inherited shared clips, for offline/portable builds)
+pnpm videos:check       # profiles, per-tier missing/orphans, web size budget,
+                        # slide-ref consistency; info list of non-local inherited clips
 pnpm videos:build       # one-shot: (--sync) -> encode -> encode-hq -> check
 ```
 
@@ -177,23 +196,35 @@ keep that attribute syntax.
 
 ## Encoding profiles (`scripts/videos.py`)
 
+**Two codecs by tier, on purpose.** The **web** tier (profiles below) is
+**H.264** — it's the fallback that plays in arbitrary *deployed* browsers,
+where HEVC doesn't hardware-decode (Firefox: never; Chrome: only where the OS
+ships a decoder). Each web profile carries a `-maxrate/-bufsize` ceiling so a
+high-motion clip streams instead of stalling. The **HQ** tier
+(`hq-visually-lossless`) stays **HEVC** — it's played locally at the venue on
+a machine that hardware-decodes HEVC, so the size win is free there.
+
 Profiles are quality *targets*; concrete ffmpeg args are built per selected encoder.
 
-- `remux` — `-c copy` + faststart. Use when the source is already web-friendly H.264/VP8/AV1 ≤~5 Mbps. Ignores resolution cap and encoder.
-- `standard` — H.264 web, cq 23 (NVENC) / crf 21 (libx264), AAC 128k.
-- `standard-tight` — cq 27 / crf 24 for long clips that blow the size budget.
-- `silent-loop` — cq 25 / crf 23, audio stripped.
-- `high-motion` — cq 20 / crf 19, AAC 192k. Sims, fast action, CGI.
-- `hq-visually-lossless` — HEVC master, cq 18 (NVENC) / crf 16 (libx265). Used by `encode-hq`; per-video `hq_crf` overrides.
+- `remux` — `-c copy` + faststart. Use only when source is ALREADY web-friendly H.264 (or low-bitrate HEVC you accept won't play in Firefox). Ignores resolution cap and encoder.
+- `standard` — H.264 web, cq 23 (NVENC) / crf 23 (libx264), ≤6 Mbps, AAC 128k.
+- `standard-tight` — cq 27 / crf 26, ≤3.5 Mbps, for long clips that blow the size budget.
+- `silent-loop` — cq 25 / crf 24, ≤5 Mbps, audio stripped.
+- `high-motion` — cq 20 / crf 22, ≤8 Mbps, AAC 192k. Sims, fast action, CGI.
+- `hq-visually-lossless` — HEVC master, cq 18 (NVENC) / crf 16 (libx265), no bitrate ceiling. Used by `encode-hq`; per-video `hq_crf` overrides.
 
 **Encoder:** NVENC (GPU) is the default, auto-detected at runtime via a real
 `h264_nvenc` probe, falling back to **CPU** (libx264 web / libx265 masters) when
-NVENC is unavailable (CI, non-NVIDIA). Web tier is **H.264** (universal browser
-playback); HQ masters are **HEVC**. Force per clip with `encoder = "nvenc" |
+NVENC is unavailable (CI, non-NVIDIA). Force per clip with `encoder = "nvenc" |
 "cpu"` on a `[[videos]]` entry, or talk-wide in `[defaults]`.
 
-`{LONG_EDGE}` is resolved at encode time from the merged `long_edge_px`.
-Override per-video with `long_edge_px = 2880` for venue-screen clips.
+`{LONG_EDGE}` in profiles is resolved at encode time. The **web** tier resolves
+it from `web_long_edge_px` (global default **1920** — the web copy is never
+shown on the venue wall, so 1080p-class H.264 that decodes everywhere is
+plenty). The **HQ** tier resolves it from `long_edge_px` (the venue/native
+width). Override per-video with `long_edge_px = 3840` on a `[[videos]]` entry
+for a venue-screen master; the web copy of that clip is still capped at
+`web_long_edge_px`.
 
 **Generated animations:** render frames in parallel → NVENC via
 `scripts/render_lib.py` (reference: `talks/2026_05_11_Sceptics/scripts/orbital_animation.py`).
@@ -232,7 +263,9 @@ Per-venue knobs (in deck frontmatter):
 
 Per-venue knobs (in `videos/manifest.toml` `[defaults]`):
 - `long_edge_px` — venue's pixel width (1920 for 1080p, 2880 for the
-  LED wall, 3840 for 4K) so videos encode at native resolution.
+  LED wall, 3840 for 4K) so the **HQ venue-master** tier encodes at native
+  resolution. The **web** tier ignores this and caps at `web_long_edge_px`
+  (default 1920) — the web copy is a browser fallback, not a venue master.
 
 Reference setups:
 - `2026_04_28_editAI` — 2.5 × 4.5 m LED wall, 2880×1600, **9:5**. `aspectRatio: 9/5`, `long_edge_px = 2880`.
@@ -290,6 +323,16 @@ Run `pnpm build:portable` **after** HQ encodes finish (otherwise HQ
 tier is incomplete). For `hq_from_raw` files, ensure the raw file is
 present locally (hard link into `videos/hq/` — already in place after
 `pnpm videos:encode-hq`).
+
+**Inherited shared clips are NOT in the bundle by default** — they
+resolve from the shared GH Release at runtime, which offline venues
+can't reach. Before a portable build, localize them:
+
+```bash
+pnpm videos:pull -- --include-shared      # web tier of inherited clips
+pnpm videos:pull-hq -- --include-shared   # HQ masters of inherited clips
+pnpm build:portable
+```
 
 ## Deployment
 

@@ -8,8 +8,13 @@
 # dashes). Override in a talk's [defaults] if needed.
 
 [defaults]
-long_edge_px  = 1920   # scale cap for re-encode profiles; talks with 4K venue
-                       # screens should bump this to 2880 in their manifest.
-max_size_mb   = 200    # warn if an encoded web file exceeds this
+long_edge_px     = 1920   # VENUE/HQ width. Drives the HQ (venue-master) tier;
+                          # talks with 2880/4K venue screens bump this in their
+                          # manifest. The web tier does NOT use this.
+web_long_edge_px = 1920   # WEB-tier width cap (H.264 browser fallback). Kept at
+                          # 1080p-class regardless of venue: nobody views the
+                          # web copy on the LED wall, and 1920 H.264 decodes
+                          # everywhere. Raise only if remote viewers need more.
+max_size_mb      = 200    # warn if an encoded web file exceeds this
 # source_remote is intentionally not set globally — each talk points at its
 # own rclone path.

@@ -72,12 +72,12 @@ Kur QM tyrinėjama iki galo.
 
 ---
 
-<VideoPlayer src="Voyage_in_to_the_world_of_atoms.mp4" loop muted :controls="false" />
+<VideoPlayer src="voyage_in_to_the_world_of_atoms.mp4" />
 
 ---
 
 
-<VideoPlayer src="Cloud_Chamber_Audio.mp4"/>
+<VideoPlayer src="cloud_chamber_audio.mp4"/>
 
 <!-- Cloud chamber: charged particles leave visible tracks because each ion
      they create is an irreversible interaction with the supersaturated vapor.
@@ -88,46 +88,63 @@ Kur QM tyrinėjama iki galo.
 
 <DoubleSlitDiagram mode="classical-no-barrier" />
 
-<!-- Double-slit story, beat 1 of 3: source fires balls, they fly straight,
-     pile up in a single tight spot. Establishes "balls go where you aim". -->
+<!-- Beat 1: source fires balls, they fly straight, pile up in a single
+     tight spot. Establishes "balls go where you aim". -->
 
 ---
 
 <DoubleSlitDiagram mode="classical-slits" />
 
 <!-- Beat 2: a barrier with two slits. Each ball visibly takes ONE slit,
-     accumulating into TWO distinct bands. The classical expectation. -->
-
----
-
-<WaveDiagram />
-
----
-
-<DoubleSlitDiagram mode="quantum" />
-
-<!-- Beat 3: same setup, but quantum particles. Wavefronts emerge from BOTH
-     slits and overlap; the dot pattern builds into interference fringes —
-     bright bands AND dark gaps where classically you'd expect bright. -->
+     accumulating into TWO distinct bands. The classical baseline the
+     audience will be asked to predict from in the next slide. -->
 
 ---
 
 <DoubleSlitDiagram mode="classical-electrons" />
 
-<!-- Beat 4: classical EXPECTATION for electrons. They're tiny balls, right?
+<!-- Beat 3: ask the audience to predict. Electrons are tiny balls, right?
      So shooting them at the slits should give two bands behind the slits,
-     just like the marbles. This is what intuition predicts before we run
-     the experiment. -->
+     just like the marbles. This is what intuition predicts; the diagram
+     shows that prediction so the next slide's contrast lands hard. -->
+
+---
+
+<DoubleSlitDiagram mode="quantum-electrons-dots" />
+
+<!-- Beat 4: the surprise. Same setup, single e⁻ fired one at a time, as
+     particles — but each electron lands on the detector as a single DOT,
+     and after many electrons the dots do NOT pile into two bands. They
+     organise into FRINGES. Narrate: "we are still firing them ONE AT A
+     TIME — count them — but look where they land. Not two bands. Stripes."
+     Audience is now puzzled — that is the cue to introduce waves. -->
+
+---
+
+<WaveDiagram />
+
+<!-- Beat 5: the answer starts here — what a wave is, why waves can produce
+     bright-AND-dark stripes via interference. Pure wave intuition, no
+     particles yet. -->
+
+---
+
+<DoubleSlitDiagram mode="quantum" />
+
+<!-- Beat 6: a wave hits the same barrier. Wavefronts emerge from BOTH
+     slits and overlap; the cos²·Gaussian interference INTENSITY fades up
+     on the detector. The audience now SEES the wave producing the same
+     fringe pattern the electrons made on Beat 4. -->
 
 ---
 
 <DoubleSlitDiagram mode="quantum-electrons" />
 
-<!-- Beat 5: what ACTUALLY happens. Single e⁻ particles fly from the source
-     one at a time and visibly disappear at the barrier; a faint wavelet
-     expands from BOTH slits per electron, then a single dot lands on the
-     screen. Fringe pattern builds up — punchline: each electron interferes
-     with itself, even though we're sending them through one at a time. -->
+<!-- Beat 7: closing the loop — the same electron experiment, depicted
+     purely as waves. Single-e⁻ launches, per-electron wavelet from BOTH
+     slits, bright continuous envelope (no dots). The picture says: each
+     electron's amplitude went through both slits and interfered with
+     ITSELF. That is why the dots on Beat 4 chose the bright fringes. -->
 
 ---
 
@@ -171,50 +188,52 @@ Kur QM tyrinėjama iki galo.
 
 ---
 
-# 🔌 **Be QM nebūtų...**
-
-<div class="grid-2 mt-md">
-
-<div class="card card-primary pad-tight">
-
-## 📱 **Tranzistorius**
-
-Telefonai, kompiuteriai, automobiliai. Antrosios XX a. pusės revoliucija remiasi juostine teorija — gryna kvantine mechanika.
-
-</div>
-
-<div class="card card-secondary pad-tight">
-
-## 🔬 **Lazeris**
-
-Skatinamoji emisija (Einsteinas, 1917). Šiandien — optinio pluošto internetas, brūkšninių kodų skaitytuvai, akių chirurgija.
-
-</div>
-
-<div class="card card-info pad-tight">
-
-## 🧲 **MRT**
-
-Branduolio sukinio rezonansas. Be Paulio ir Diraco MRT skenerių nebūtų.
-
-</div>
-
-<div class="card card-accent pad-tight">
-
-## 🛰️ **GPS**
-
-Atominiai laikrodžiai (cezio kvantinis perėjimas) + reliatyvistinė pataisa. Be jų — ±11 km per dieną.
-
-</div>
-
-</div>
-
-<div class="mt-md opacity-70 text-center">
-Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
-</div>
+<img src="/figures/ChargeAPE5LQanimXs30.gif" class="absolute inset-0 w-full
+h-full object-cover" />
 
 ---
 
+<img src="/figures/g2/g.001.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Dirac, 1928. g = 2. -->
+
+---
+
+<img src="/figures/g2/g.002.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Schwinger, 1948. Pirmoji kilpa: pataisa α/(2π). -->
+
+---
+
+<img src="/figures/g2/g.003.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Schwingerio antkapyje. -->
+
+---
+
+<img src="/figures/g2/g.004.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Karplus, Kroll, Sommerfeld, Petermann (1950–1957). -->
+
+---
+
+<img src="/figures/g2/g.005.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Aoyama, 2012. ~12 000 diagramų. -->
+
+---
+
+<img src="/figures/g2/g.006.png" class="absolute inset-0 w-full h-full
+object-cover" />
+
+<!-- Eksperimentinis matavimas. 12 ženklų po kablelio. -->
+
+---
 
 <VideoPlayer src="g2_data.mp4" muted />
 
@@ -226,42 +245,6 @@ Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
 
 <!-- Tas pats matavimas su modelio kreive. -->
 
----
-
-<img src="/figures/g2/g.001.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Dirac, 1928. g = 2. -->
-
----
-
-<img src="/figures/g2/g.002.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Schwinger, 1948. Pirmoji kilpa: pataisa α/(2π). -->
-
----
-
-<img src="/figures/g2/g.003.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Schwingerio antkapyje. -->
-
----
-
-<img src="/figures/g2/g.004.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Karplus, Kroll, Sommerfeld, Petermann (1950–1957). -->
-
----
-
-<img src="/figures/g2/g.005.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Aoyama, 2012. ~12 000 diagramų. -->
-
----
-
-<img src="/figures/g2/g.006.png" class="absolute inset-0 w-full h-full object-cover" />
-
-<!-- Eksperimentinis matavimas. 12 ženklų po kablelio. -->
-
 
 ---
 
@@ -273,7 +256,8 @@ Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
 
 ### Ką teigia mitas
 
-Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be matavimo nėra.
+Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be matavimo
+nėra.
 
 </div>
 
@@ -289,7 +273,8 @@ Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be mata
 
 ### Ką teigia mitas
 
-Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be matavimo nėra.
+Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be matavimo
+nėra.
 
 </div>
 
@@ -297,7 +282,8 @@ Be **sąmoningo stebėtojo** banginė funkcija nesukolapsuoja. Realybės be mata
 
 ### Ką sako fizika
 
-„Matavimas“ = **bet kokia negrįžtama sąveika**. Detektoriaus pikselis. Dujų molekulė. Paklydęs fotonas.
+„Matavimas“ = **bet kokia negrįžtama sąveika**. Detektoriaus pikselis. Dujų
+molekulė. Paklydęs fotonas.
 
 Pikseliui PhD nereikia.
 
@@ -340,7 +326,8 @@ Katė dėžėje yra tikrojoje superpozicijoje, kol kažkas atidaro dangtį.
 
 ### Ką sako fizika
 
-Schrödingeris šį pavyzdį sugalvojo **kaip pajuokavimą** — norėdamas **paneigti**, kad superpozicija galėtų galioti makroobjektams.
+Schrödingeris šį pavyzdį sugalvojo **kaip pajuokavimą** — norėdamas
+**paneigti**, kad superpozicija galėtų galioti makroobjektams.
 
 Šiltos, drėgnos katės būsena nusistovi per **~10⁻²⁰ s**.
 
@@ -377,7 +364,8 @@ Schrödingeris šį pavyzdį sugalvojo **kaip pajuokavimą** — norėdamas **pa
 
 ### Ką teigia mitas
 
-Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis internetas, telepatija, „nuotolinis gydymas“.
+Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis
+internetas, telepatija, „nuotolinis gydymas“.
 
 </div>
 
@@ -393,7 +381,8 @@ Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantin
 
 ### Ką teigia mitas
 
-Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis internetas, telepatija, „nuotolinis gydymas“.
+Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantinis
+internetas, telepatija, „nuotolinis gydymas“.
 
 </div>
 
@@ -403,7 +392,8 @@ Susipynusios dalelės leidžia perduoti **informaciją** akimirksniu — kvantin
 
 Koreliacijos — taip, akimirksniu. **Informacija — ne.**
 
-Atskiras matavimas — atsitiktinis triukšmas. Koreliacija išryškėja tik palyginus du įrašus, o tas palyginimas keliauja **ne greičiau už šviesą**.
+Atskiras matavimas — atsitiktinis triukšmas. Koreliacija išryškėja tik palyginus
+du įrašus, o tas palyginimas keliauja **ne greičiau už šviesą**.
 
 </div>
 
@@ -420,7 +410,8 @@ Atskiras matavimas — atsitiktinis triukšmas. Koreliacija išryškėja tik pal
 
 ### Ką teigia mitas
 
-Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą, viską žinosime tiksliai.
+Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą,
+viską žinosime tiksliai.
 
 </div>
 
@@ -436,7 +427,8 @@ Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą
 
 ### Ką teigia mitas
 
-Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą, viską žinosime tiksliai.
+Heisenbergo principas kalba apie matavimo trūkumus. Turėdami geresnę įrangą,
+viską žinosime tiksliai.
 
 </div>
 
@@ -474,7 +466,9 @@ Neapibrėžtumas — **sistemos savybė**, ne matavimo trūkumas.
 
 ### Ką teigia mitas
 
-Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus, „kvantinės rezonansinės terapijos“, Reiki ar energetinio gydymo. Skamba moksliškai — vadinasi, veikia.
+Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus,
+„kvantinės rezonansinės terapijos“, Reiki ar energetinio gydymo. Skamba
+moksliškai — vadinasi, veikia.
 
 </div>
 
@@ -490,7 +484,9 @@ Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus,
 
 ### Ką teigia mitas
 
-Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus, „kvantinės rezonansinės terapijos“, Reiki ar energetinio gydymo. Skamba moksliškai — vadinasi, veikia.
+Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus,
+„kvantinės rezonansinės terapijos“, Reiki ar energetinio gydymo. Skamba
+moksliškai — vadinasi, veikia.
 
 </div>
 
@@ -498,11 +494,15 @@ Etiketė „kvantinis“ — ant homeopatinių lašelių, vandens jonizatoriaus,
 
 ### Ką sako fizika
 
-Kvantiniai efektai išlieka tik **šaltose, izoliuotose, mažose** sistemose. Šiltame, drėgname kūne dekoherencija įvyksta per **~10⁻²⁰ s** — lygiai tas pats argumentas, kaip ir su kate.
+Kvantiniai efektai išlieka tik **šaltose, izoliuotose, mažose** sistemose.
+Šiltame, drėgname kūne dekoherencija įvyksta per **~10⁻²⁰ s** — lygiai tas pats
+argumentas, kaip ir su kate.
 
-„Vandens atmintis“ — H₂O ryšiai persitvarko per pikosekundes; vandens molekulei nėra kuo „atsiminti“.
+„Vandens atmintis“ — H₂O ryšiai persitvarko per pikosekundes; vandens molekulei
+nėra kuo „atsiminti“.
 
-Klinikinės meta-analizės (NHMRC 2015, Lancet 2005): efektas neatskiriamas nuo placebo.
+Klinikinės meta-analizės (NHMRC 2015, Lancet 2005): efektas neatskiriamas nuo
+placebo.
 
 </div>
 
@@ -518,7 +518,8 @@ Klinikinės meta-analizės (NHMRC 2015, Lancet 2005): efektas neatskiriamas nuo 
 
 ### Ką teigia mitas
 
-Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą šifravimą, išspręs bet kokią problemą, paaiškins sąmonę.
+Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą
+šifravimą, išspręs bet kokią problemą, paaiškins sąmonę.
 
 </div>
 
@@ -534,7 +535,8 @@ Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą
 
 ### Ką teigia mitas
 
-Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą šifravimą, išspręs bet kokią problemą, paaiškins sąmonę.
+Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą
+šifravimą, išspręs bet kokią problemą, paaiškins sąmonę.
 
 </div>
 
@@ -542,11 +544,14 @@ Kvantiniai kompiuteriai eksponentiškai greitesni už klasikinius. Nulauš visą
 
 ### Ką sako fizika
 
-Eksponentinis pagreitėjimas pasiekiamas **tik konkretiems** uždaviniams: Shoro algoritmas (faktorizacija), kvantinė simuliacija, kai kurios tiesinės algebros problemos.
+Eksponentinis pagreitėjimas pasiekiamas **tik konkretiems** uždaviniams: Shoro
+algoritmas (faktorizacija), kvantinė simuliacija, kai kurios tiesinės algebros
+problemos.
 
 Groverio paieška — **kvadratinis**, ne eksponentinis pagreitėjimas.
 
-NP-pilnoms problemoms (komivojažieriaus, SAT) — jokio žinomo eksponentinio pagreitėjimo.
+NP-pilnoms problemoms (komivojažieriaus, SAT) — jokio žinomo eksponentinio
+pagreitėjimo.
 
 **2026 m. realybė:** ~1000 kubitų prototipai, klaidų taisymas tik prasideda.
 
@@ -554,6 +559,52 @@ NP-pilnoms problemoms (komivojažieriaus, SAT) — jokio žinomo eksponentinio p
 
 </div>
 
+---
+
+# 🔌 **Be QM nebūtų...**
+
+<div class="grid-2 mt-md">
+
+<div class="card card-primary pad-tight">
+
+## 📱 **Tranzistorius**
+
+Telefonai, kompiuteriai, automobiliai. Antrosios XX a. pusės revoliucija remiasi
+juostine teorija — gryna kvantine mechanika.
+
+</div>
+
+<div class="card card-secondary pad-tight">
+
+## 🔬 **Lazeris**
+
+Stimuliuota emisija (Einsteinas, 1917). Šiandien — šviesolaidinis internetas,
+brūkšninių kodų skaitytuvai, akių chirurgija.
+
+</div>
+
+<div class="card card-info pad-tight">
+
+## 🧲 **MRT**
+
+Branduolio sukinio rezonansas. Be Paulio ir Diraco MRT skenerių nebūtų.
+
+</div>
+
+<div class="card card-accent pad-tight">
+
+## 🛰️ **GPS**
+
+Atominiai laikrodžiai (cezio kvantinis šuolis) + reliatyvistinė pataisa. 
+Be jų — ±11 km per dieną.
+
+</div>
+
+</div>
+
+<div class="mt-md opacity-70 text-center">
+Jeigu QM klystų 12 ženklų po kablelio — jūsų telefonas neįsijungtų.
+</div>
 
 ---
 layout: statement
@@ -588,10 +639,10 @@ layout: statement
 
 ### Žalios vėliavos ✅
 
-- Konkreti, paneigiama prognozė
+- Konkreti, paneigiama  hipotezė
 - Skaičiai, paklaidos, vienetai
-- Sakinys „štai kur galiu klysti“
-- Recenzuotas straipsnis, kurį iš principo galite perskaityti
+- Teiginys „štai kur galiu klysti“
+- Recenzuotas straipsnis, kurį *iš principo* galite perskaityti
 
 </div>
 
@@ -607,29 +658,29 @@ layout: quote
 
 ---
 
-<VideoPlayer src="QGP_Formation.mp4" :controls="false" />
+<VideoPlayer src="qgp_formation.mp4" :controls="false" />
 
 ---
 
-<VideoPlayer src="CERN_Overview_Short.mp4" muted :controls="false" />
+<VideoPlayer src="cern_overview_short.mp4" muted :controls="false" />
 
 ---
 
-<VideoPlayer src="CERN-FOOTAGE-2022-013-001-1080p_LHC.mp4" muted :controls="false" />
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" muted
+:controls="false" />
 
 ---
 
-<VideoPlayer src="CERN-FOOTAGE-2024-010-002.mp4" muted :controls="false" />
+<VideoPlayer src="cern_footage_2024_010_002.mp4" muted :controls="false" />
 
 ---
 
-<VideoPlayer src="CERN-FOOTAGE-2025-014-002.mp4" muted :controls="false" />
+<VideoPlayer src="cern_footage_2025_014_002.mp4" muted :controls="false" />
 
 ---
 
-<VideoPlayer src="LHCb.mp4" />
+<VideoPlayer src="lhcb.mp4" />
 
 ---
 
-<VideoPlayer src="LHCb_Aciu.mov" />
-
+<VideoPlayer src="lhcb_aciu.mov" />

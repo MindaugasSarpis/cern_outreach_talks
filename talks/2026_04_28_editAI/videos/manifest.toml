@@ -1,128 +1,30 @@
-# Talk-OWNED video assets for the editAI talk. Clips inherited from the
-# shared registry (/videos/shared.toml) — generic CERN/LHC/B-roll footage —
-# are NOT listed here; they're served at runtime via VideoPlayer's fallback
-# chain from the shared release.
+# Talk-OWNED video assets for the editAI talk.
 #
-# Note: editAI's own GH Release (videos-2026-04-28-editai) currently
-# doubles as the shared release. Both VITE_VIDEO_RELEASE and
-# VITE_VIDEO_SHARED_RELEASE point at it; VideoPlayer dedupes the URL.
+# This talk currently owns NO clips: everything its deck references —
+# generic CERN/LHC/B-roll footage, the crash-course chart renders, and the
+# Mokslo Sala venue clips — lives in the shared registry
+# (/videos/shared.toml) and is served at runtime via VideoPlayer's fallback
+# chain. editAI's own GH Release (videos-2026-04-28-editai) doubles as the
+# shared release, so "inherited" clips still resolve to assets this talk
+# originally published; publish/pull --prune protects shared-registry
+# entries from deletion.
+#
+# To take ownership of a clip again (e.g., a venue-specific re-encode),
+# add a [[videos]] entry here and encode/publish as usual — the talk
+# release wins VideoPlayer's fallback chain over shared.
 #
 # Profiles (in scripts/videos.py):
 #   remux          - lossless stream copy + faststart. For clips already in a
-#                    web-friendly codec (HEVC/H.264 <= ~5 Mbps).
-#   standard       - HEVC CRF 24, AAC 128k.
-#   standard-tight - HEVC CRF 27 for long clips that blow the size budget.
-#   silent-loop    - HEVC CRF 26, audio stripped. Background loops.
-#   high-motion    - HEVC CRF 22, AAC 192k. Sims, fast action, CGI.
+#                    web-friendly codec (H.264, or low-bitrate HEVC).
+#   standard       - web H.264 CRF 23 (<=6 Mbps), AAC 128k.
+#   standard-tight - web H.264 CRF 26 (<=3.5 Mbps) for long clips.
+#   silent-loop    - web H.264 CRF 24 (<=5 Mbps), audio stripped. Loops.
+#   high-motion    - web H.264 CRF 22 (<=8 Mbps), AAC 192k. Sims/CGI/fast.
+# (The HQ venue-master tier is HEVC CRF 16 regardless of profile.)
 
 [defaults]
-source_remote = "gdrive:Work/Outreach/Resources/Videos/released"
+source_remote = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
 long_edge_px  = 2880   # venue screen is 2880x1600; override global 1920
 
 # release_tag auto-derives from talk dirname.
 # max_size_mb inherited from /outreach.toml.
-
-# ---------------------------------------------------------------------------
-# Chart renders (Python/matplotlib output, deck-specific)
-# ---------------------------------------------------------------------------
-
-[[videos]]
-name    = "cmb_data.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB data chart render"
-
-[[videos]]
-name    = "cmb_fit.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB fit chart render"
-
-[[videos]]
-name    = "cmb_power_spectrum_data.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB power-spectrum data variant chart render"
-
-[[videos]]
-name    = "cmb_power_spectrum_fit.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB power-spectrum fit variant chart render"
-
-[[videos]]
-name    = "g2_data.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "g-2 data chart render (1800x1000, editAI 9:5)"
-
-[[videos]]
-name    = "g2_fit.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "g-2 fit chart render (1800x1000, editAI 9:5)"
-
-[[videos]]
-name    = "gaussian.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Gaussian fit demo render"
-
-[[videos]]
-name    = "gaussian_highstats.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Gaussian fit demo render (high statistics)"
-
-[[videos]]
-name    = "higgs_bkg.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Higgs background-only chart render"
-
-[[videos]]
-name    = "higgs_data.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Higgs data chart render"
-
-[[videos]]
-name    = "higgs_sigbkg.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Higgs signal+background chart render"
-
-[[videos]]
-name    = "z_data.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Z-boson data chart render"
-
-[[videos]]
-name    = "z_fit3.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Z-boson fit chart render"
-
-[[videos]]
-name    = "z_alternatives.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "Z-boson alternative-models chart render"
-
-# ---------------------------------------------------------------------------
-# editAI venue-specific footage (2880x1600, Mokslo Sala)
-# ---------------------------------------------------------------------------
-
-[[videos]]
-name    = "cmb_sonification_drone.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = "CMB sonification drone render, H.264 2.8 Mbps 1800x1040"
-
-[[videos]]
-name    = "mokslo_sala.mov"
-profile = "high-motion"
-used_in = ["deck"]
-hq_crf  = 20
-notes   = "Mokslo Sala intro, 2880x1600 venue-native. Raw is 153 Mbps HEVC — too hot for browser decode. HQ encoded at CRF 20 for smooth playback."

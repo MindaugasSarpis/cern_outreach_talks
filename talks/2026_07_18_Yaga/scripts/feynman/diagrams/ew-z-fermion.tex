@@ -1,0 +1,20 @@
+\input{../common.tex}
+\begin{document}
+\begin{tikzpicture}
+\begin{feynman}
+  \vertex at (0, 3.4) (top) {\(\times\)};
+  \vertex [circle, draw, fill=gray!12, minimum size=22pt, inner sep=0pt] at (0, 2.2) (Z) {\(Z_0\)};
+  \node[anchor=west, font=\small] at ($(Z.east)+(0.05,0.12)$) {\(f\)};
+  \node[anchor=west, font=\small] at ($(Z.east)+(0.05,-0.18)$) {\(\bar{f}\)};
+  \draw ($(Z.east)+(0.05,-0.02)$) -- ($(Z.east)+(0.30,-0.02)$);
+  \vertex at (0, 1.0) (vtx);
+  \vertex at (-1.5, -0.5) (lmu) {\(\mu\)};
+  \vertex at ( 1.5, -0.5) (rmu) {\(\mu\)};
+  \diagram* {
+    (lmu) -- [fermion] (vtx) -- [fermion] (rmu),
+    (vtx) -- [boson] (Z),
+    (Z) -- [photon, edge label=\(\gamma\)] (top),
+  };
+\end{feynman}
+\end{tikzpicture}
+\end{document}

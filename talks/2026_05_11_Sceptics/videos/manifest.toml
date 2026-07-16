@@ -8,14 +8,15 @@
 #
 # Profiles (in scripts/videos.py):
 #   remux          - lossless stream copy + faststart. For clips already in a
-#                    web-friendly codec (HEVC/H.264 <= ~5 Mbps).
-#   standard       - HEVC CRF 24, AAC 128k.
-#   standard-tight - HEVC CRF 27 for long clips that blow the size budget.
-#   silent-loop    - HEVC CRF 26, audio stripped. Background loops.
-#   high-motion    - HEVC CRF 22, AAC 192k. Sims, fast action, CGI.
+#                    web-friendly codec (H.264, or low-bitrate HEVC).
+#   standard       - web H.264 CRF 23 (<=6 Mbps), AAC 128k.
+#   standard-tight - web H.264 CRF 26 (<=3.5 Mbps) for long clips.
+#   silent-loop    - web H.264 CRF 24 (<=5 Mbps), audio stripped. Loops.
+#   high-motion    - web H.264 CRF 22 (<=8 Mbps), AAC 192k. Sims/CGI/fast.
+# (The HQ venue-master tier is HEVC CRF 16 regardless of profile.)
 
 [defaults]
-source_remote = "gdrive:Work/Outreach/Resources/Videos/released"
+source_remote = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
 long_edge_px  = 3840   # venue is 4K 16:9 (3840x2160); override global 1920
 
 # release_tag auto-derives from talk dirname.
@@ -41,19 +42,19 @@ notes   = "Muon g-2 fit chart. REGENERATE at 16:9 from master."
 # Additional CERN institutional footage for the closing CERN section.
 # Could be promoted to /videos/shared.toml if other talks pick them up.
 [[videos]]
-name    = "CERN-FOOTAGE-2022-013-001-1080p_LHC.mp4"
+name    = "cern_footage_2022_013_001_1080p_lhc.mp4"
 profile = "standard"
 used_in = ["deck"]
 notes   = "CERN footage 2022-013-001, LHC tunnel/operations, 1080p."
 
 [[videos]]
-name    = "CERN-FOOTAGE-2024-010-002.mp4"
+name    = "cern_footage_2024_010_002.mp4"
 profile = "standard"
 used_in = ["deck"]
 notes   = "CERN footage 2024-010-002."
 
 [[videos]]
-name    = "CERN-FOOTAGE-2025-014-002.mp4"
+name    = "cern_footage_2025_014_002.mp4"
 profile = "standard"
 used_in = ["deck"]
 notes   = "CERN footage 2025-014-002."

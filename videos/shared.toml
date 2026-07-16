@@ -18,7 +18,7 @@
 [defaults]
 release_tag    = "videos-2026-04-28-editai"
 release_tag_hq = "videos-hq-2026-04-28-editai"
-source_remote  = "gdrive:Work/Outreach/Resources/Videos/released"
+source_remote  = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
 long_edge_px   = 2880   # current shared encodes were produced for editAI's
                         # 2880 venue. Raise to 3840 once a dedicated shared
                         # release is republished for 4K venues.
@@ -28,27 +28,27 @@ long_edge_px   = 2880   # current shared encodes were produced for editAI's
 # ---------------------------------------------------------------------------
 
 [[videos]]
-name    = "CERN_Overview_Short.mp4"
+name    = "cern_overview_short.mp4"
 profile = "standard"
 notes   = "CERN overview short cut, H.264 15 Mbps 1080p silent."
 
 [[videos]]
-name    = "CERN-VIDEO-2019-050-008-1080ph265.mp4"
+name    = "cern_video_2019_050_008_1080ph265.mp4"
 profile = "standard"
 notes   = "CERN video 2019-050-008, HEVC 6 Mbps 1080p silent."
 
 [[videos]]
-name    = "Voyage_in_to_the_world_of_atoms.mp4"
+name    = "voyage_in_to_the_world_of_atoms.mp4"
 profile = "remux"
 notes   = "CERN zoom-from-cosmos-to-quarks reel, 2:01 silent. Source already web-friendly."
 
 [[videos]]
-name    = "LHCb.mp4"
+name    = "lhcb.mp4"
 profile = "standard"
 notes   = "LHCb overview, 48s with audio."
 
 [[videos]]
-name        = "LHCb_Aciu.mov"
+name        = "lhcb_aciu.mov"
 profile     = "standard-tight"
 hq_from_raw = true
 notes       = """\
@@ -61,47 +61,47 @@ instead of the GH release."""
 # ---------------------------------------------------------------------------
 
 [[videos]]
-name    = "Beyond_CMB.mp4"
+name    = "beyond_cmb.mp4"
 profile = "standard"
 notes   = "Beyond-CMB science reel, H.264 11.6 Mbps 720p silent."
 
 [[videos]]
-name    = "Cassini.mov"
+name    = "cassini.mov"
 profile = "standard"
 notes   = "Cassini Grand Finale, ambient audio (no voiceover)."
 
 [[videos]]
-name    = "Cloud_Chamber_Audio.mp4"
+name    = "cloud_chamber_audio.mp4"
 profile = "standard-tight"
 notes   = "Cloud chamber demo with audio, 2:29 long — tight CRF to fit budget."
 
 [[videos]]
-name    = "Drone_Climbing_Mountain_2.mp4"
+name    = "drone_climbing_mountain_2.mp4"
 profile = "high-motion"
 notes   = "Drone ascent, 4K high-bitrate B-roll — CRF 22 preserves motion detail."
 
 [[videos]]
-name    = "Expansion_Funnel_H264_1080p.webm"
+name    = "expansion_funnel_h264_1080p.webm"
 profile = "remux"
 notes   = "Expansion funnel animation, VP8 in WebM (filename misleading)."
 
 [[videos]]
-name    = "Mars_Surface.mp4"
+name    = "mars_surface.mp4"
 profile = "standard"
 notes   = "Mars surface footage, H.264 15 Mbps 1080p 55s silent."
 
 [[videos]]
-name    = "NASA_Mars_Mariner_4_Pan_Audio.mp4"
+name    = "nasa_mars_mariner_4_pan_audio.mp4"
 profile = "standard"
 notes   = "NASA Mariner 4 Mars flyby pan, H.264 20 Mbps 1080p 20s with audio."
 
 [[videos]]
-name    = "QGP_Formation.mp4"
+name    = "qgp_formation.mp4"
 profile = "high-motion"
 notes   = "Quark-gluon plasma formation sim with audio — CGI."
 
 [[videos]]
-name    = "Webb_Reel.mp4"
+name    = "webb_reel.mp4"
 profile = "standard-tight"
 notes   = "Webb telescope reel, 2:58 with audio — tight CRF to fit budget."
 
@@ -109,3 +109,100 @@ notes   = "Webb telescope reel, 2:58 with audio — tight CRF to fit budget."
 name    = "sm.mov"
 profile = "standard"
 notes   = "Standard Model overview, 23s with audio. Encoded at 2880x1600 (9:5) for editAI's venue; letterboxes on 16:9 venues."
+
+# ---------------------------------------------------------------------------
+# Crash-course chart renders (Python/matplotlib output, editAI lineage)
+#
+# Originally editAI talk-owned; promoted to shared once Sceptics and Yaga
+# started reusing them. Raws live on the gdrive source_remote like everything
+# else; the shared release serves the encodes at runtime. Rendered at
+# 1800x1000-class (editAI 9:5); letterbox on 16:9 venues. Regenerate at the
+# venue's aspect and override in the talk manifest if that matters.
+# ---------------------------------------------------------------------------
+
+[[videos]]
+name    = "cmb_data.mp4"
+profile = "remux"
+notes   = "CMB data chart render"
+
+[[videos]]
+name    = "cmb_fit.mp4"
+profile = "remux"
+notes   = "CMB fit chart render"
+
+[[videos]]
+name    = "cmb_power_spectrum_data.mp4"
+profile = "remux"
+notes   = "CMB power-spectrum data variant chart render"
+
+[[videos]]
+name    = "cmb_power_spectrum_fit.mp4"
+profile = "remux"
+notes   = "CMB power-spectrum fit variant chart render"
+
+[[videos]]
+name    = "g2_data.mp4"
+profile = "remux"
+notes   = "g-2 data chart render (1800x1000, editAI 9:5)"
+
+[[videos]]
+name    = "g2_fit.mp4"
+profile = "remux"
+notes   = "g-2 fit chart render (1800x1000, editAI 9:5)"
+
+[[videos]]
+name    = "gaussian.mp4"
+profile = "remux"
+notes   = "Gaussian fit demo render"
+
+[[videos]]
+name    = "gaussian_highstats.mp4"
+profile = "remux"
+notes   = "Gaussian fit demo render (high statistics)"
+
+[[videos]]
+name    = "higgs_bkg.mp4"
+profile = "remux"
+notes   = "Higgs background-only chart render"
+
+[[videos]]
+name    = "higgs_data.mp4"
+profile = "remux"
+notes   = "Higgs data chart render"
+
+[[videos]]
+name    = "higgs_sigbkg.mp4"
+profile = "remux"
+notes   = "Higgs signal+background chart render"
+
+[[videos]]
+name    = "z_data.mp4"
+profile = "remux"
+notes   = "Z-boson data chart render"
+
+[[videos]]
+name    = "z_fit3.mp4"
+profile = "remux"
+notes   = "Z-boson fit chart render"
+
+[[videos]]
+name    = "z_alternatives.mp4"
+profile = "remux"
+notes   = "Z-boson alternative-models chart render"
+
+# ---------------------------------------------------------------------------
+# Venue footage of editAI lineage, reused by later crash-course decks
+# ---------------------------------------------------------------------------
+
+[[videos]]
+name    = "cmb_sonification_drone.mp4"
+profile = "remux"
+notes   = "CMB sonification drone render, H.264 2.8 Mbps 1800x1040"
+
+[[videos]]
+name    = "mokslo_sala.mov"
+profile = "high-motion"
+hq_crf  = 20
+notes   = """\
+Mokslo Sala intro, 2880x1600 venue-native. Raw is 153 Mbps HEVC — too hot \
+for browser decode. HQ encoded at CRF 20 for smooth playback."""
