@@ -67,9 +67,13 @@ one).
 Source-specific behavior:
 
 - **CDS**: raw keyword hits are dominated by lecture recordings (736 of
-  ~880 in the probe), so the LECTURES category is excluded by default via
-  the Invenio query syntax; `--include-lectures` restores it. Asset URLs
-  come from the record's file links (prefer highest-resolution mp4).
+  ~880 in the probe), so the LECTURES category is excluded by default.
+  The exclusion is client-side (over-fetch, then filter on
+  `metadata.category`): `-category:` negation inside `q` makes the
+  endpoint return an HTML error page (verified live 2026-07-16).
+  `--include-lectures` restores lectures. The download URL is the
+  `context_type == "master"` mp4 from the record's `_files` (its
+  `links.self`); width/height come from the master's `tags`.
 - **NASA**: each hit's `collection.json` is fetched to resolve the actual
   mp4 rendition (prefer `~orig`, fall back to largest available).
 - **djangoplicity**: the d2d feed is walked up to `--pages` pages per
