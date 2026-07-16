@@ -326,5 +326,15 @@ class CliTest(unittest.TestCase):
                 dv.main(["kw", "--source", "bogus"])
 
 
+@unittest.skipUnless(os.environ.get("DISCOVER_LIVE") == "1",
+                     "live network smoke test; set DISCOVER_LIVE=1 to run")
+class LiveSmokeTest(unittest.TestCase):
+    def test_each_source_returns_candidates(self):
+        self.assertTrue(dv.search_cds("lhc", limit=2, include_lectures=True))
+        self.assertTrue(dv.search_nasa("mars", limit=2))
+        self.assertTrue(dv.search_djangoplicity("nebula", limit=1, pages=2, site="eso"))
+        self.assertTrue(dv.search_commons("cloud chamber", limit=2))
+
+
 if __name__ == "__main__":
     unittest.main()

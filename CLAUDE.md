@@ -162,6 +162,8 @@ From repo root:
 ```bash
 pnpm videos:check-all     # run videos:check in every talk
 pnpm videos:shared:check  # sanity-check /videos/shared.toml
+pnpm videos:discover -- <kw>…   # search open archives (CDS/NASA/ESO/Hubble/Webb/NOIRLab/Commons)
+                                # for new clips; prints report + [[videos]] snippets
 ```
 
 ## VideoPlayer
