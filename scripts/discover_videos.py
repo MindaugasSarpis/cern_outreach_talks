@@ -103,3 +103,36 @@ def toml_snippet(c: Candidate) -> str:
         'profile = "standard"   # default guess; adjust per clip\n'
         f"notes   = {json.dumps(notes)}\n"
     )
+
+
+def load_registry_stems(repo_root: Path = REPO_ROOT) -> set[str]:
+    """Lowercased stems of every clip name already in shared + talk manifests."""
+    stems: set[str] = set()
+    manifests = [repo_root / "videos" / "shared.toml"]
+    manifests += sorted(repo_root.glob("talks/*/videos/manifest.toml"))
+    for path in manifests:
+        if not path.exists():
+            continue
+        data = tomllib.loads(path.read_text(encoding="utf-8"))
+        for video in data.get("videos", []):
+            name = video.get("name")
+            if name:
+                stems.add(Path(name).stem.lower())
+    return stems
+
+
+def mark_in_registry(candidates: list[Candidate], stems: set[str]) -> None:
+    for c in candidates:
+        slug_stem = Path(slugify_name(c.title, c.download_url)).stem
+        url_stem = Path(urllib.parse.urlparse(c.download_url).path).stem.lower()
+        c.in_registry = slug_stem in stems or url_stem in stems
+
+
+def dedupe(candidates: list[Candidate]) -> list[Candidate]:
+    seen: set[str] = set()
+    out: list[Candidate] = []
+    for c in candidates:
+        if c.download_url not in seen:
+            seen.add(c.download_url)
+            out.append(c)
+    return out

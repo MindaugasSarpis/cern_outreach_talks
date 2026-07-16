@@ -71,5 +71,42 @@ class TomlSnippetTest(unittest.TestCase):
         self.assertEqual(dv.fmt_duration(None), "?")
 
 
+class RegistryTest(unittest.TestCase):
+    def _repo(self, tmp):
+        root = Path(tmp)
+        (root / "videos").mkdir(parents=True)
+        (root / "videos" / "shared.toml").write_text(
+            '[[videos]]\nname = "cern_overview_short.mp4"\n', encoding="utf-8")
+        talk = root / "talks" / "demo" / "videos"
+        talk.mkdir(parents=True)
+        (talk / "manifest.toml").write_text(
+            '[[videos]]\nname = "skylapse.mp4"\n', encoding="utf-8")
+        return root
+
+    def _cand(self, cid, title, url):
+        return dv.Candidate(source="x", id=cid, title=title, date="",
+                            duration_s=None, resolution=None, license="",
+                            credit=None, page_url="", download_url=url)
+
+    def test_load_registry_stems(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            stems = dv.load_registry_stems(self._repo(tmp))
+        self.assertEqual(stems, {"cern_overview_short", "skylapse"})
+
+    def test_mark_in_registry_by_slug_and_url(self):
+        cands = [
+            self._cand("1", "Skylapse", "http://h/other.mp4"),        # slug match
+            self._cand("2", "Different name", "http://h/SKYLAPSE.mp4"),  # url-stem match
+            self._cand("3", "Brand new", "http://h/new.mp4"),
+        ]
+        dv.mark_in_registry(cands, {"skylapse"})
+        self.assertEqual([c.in_registry for c in cands], [True, True, False])
+
+    def test_dedupe_by_download_url(self):
+        a = self._cand("1", "A", "http://same.mp4")
+        b = self._cand("2", "B", "http://same.mp4")
+        self.assertEqual(dv.dedupe([a, b]), [a])
+
+
 if __name__ == "__main__":
     unittest.main()
