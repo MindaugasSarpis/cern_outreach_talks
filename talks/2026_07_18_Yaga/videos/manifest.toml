@@ -25,7 +25,9 @@
 [defaults]
 source_remote = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
 long_edge_px  = 3840   # venue is 4K 16:9 (3840x2160); override global 1920
-                       # (web tier still ships 1920 H.264 via web_long_edge_px)
+web_long_edge_px = 3840  # 4K venue streams the release web tier too — ship 4K
+                         # H.264 web copies; scale=min(...,iw) never upscales,
+                         # so sub-4K raws (e.g. skylapse 1080p) stay native
 
 # release_tag auto-derives from talk dirname.
 # max_size_mb inherited from /outreach.toml.
@@ -33,6 +35,17 @@ long_edge_px  = 3840   # venue is 4K 16:9 (3840x2160); override global 1920
 # ---------------------------------------------------------------------------
 # Yaga venue-specific footage
 # ---------------------------------------------------------------------------
+
+[[videos]]
+name    = "drone_climbing_mountain_2.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = """\
+Drone ascent, 4K high-bitrate B-roll — Yaga 4K override of the shared clip \
+(shared tiers are 2880 HQ / 1920 web from editAI). Raw is 3840x2160; this \
+entry re-encodes web+HQ at native 4K into Yaga's own release, which wins \
+VideoPlayer's fallback chain. The only deck clip with a true 4K raw — the \
+rest are 1080p/2880-native, so they stay inherited (no upscaling)."""
 
 [[videos]]
 name        = "skylapse.mp4"
