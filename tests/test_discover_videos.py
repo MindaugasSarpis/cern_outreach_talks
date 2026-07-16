@@ -320,6 +320,16 @@ class CliTest(unittest.TestCase):
         self.assertEqual(data[0]["download_url"], "http://d.mp4")
         self.assertFalse(data[0]["in_registry"])
 
+    def test_main_strips_pnpm_forwarded_double_dash(self):
+        with mock.patch.object(dv, "search_nasa", return_value=[self._cand()]), \
+             mock.patch.object(dv, "load_registry_stems", return_value=set()):
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                rc = dv.main(["--", "kw", "--source", "nasa", "--json"])
+        self.assertEqual(rc, 0)
+        data = json.loads(buf.getvalue())   # flags parsed as flags -> pure JSON
+        self.assertEqual(data[0]["download_url"], "http://d.mp4")
+
     def test_main_rejects_unknown_source(self):
         with self.assertRaises(SystemExit):
             with contextlib.redirect_stderr(io.StringIO()):

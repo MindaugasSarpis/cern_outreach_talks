@@ -452,7 +452,12 @@ def main(argv: list[str] | None = None) -> int:
                     help="keep CDS LECTURES category (excluded by default)")
     ap.add_argument("--json", action="store_true", dest="as_json",
                     help="emit candidates as JSON instead of the report")
-    args = ap.parse_args(argv)
+    # pnpm >=7 forwards the `--` delimiter verbatim; argparse would then
+    # treat every following flag as a positional keyword. Strip it.
+    args_list = list(sys.argv[1:] if argv is None else argv)
+    if args_list[:1] == ["--"]:
+        args_list = args_list[1:]
+    args = ap.parse_args(args_list)
 
     sources = {s.strip() for s in args.source.split(",") if s.strip()}
     unknown = sources - VALID_SOURCES
