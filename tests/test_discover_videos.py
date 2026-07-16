@@ -275,5 +275,56 @@ class ReportTest(unittest.TestCase):
         self.assertEqual(dv.render_report([], pages=5), "No candidates found.")
 
 
+class CliTest(unittest.TestCase):
+    def _cand(self, **kw):
+        base = dict(source="nasa", id="x", title="T", date="2026-01-01",
+                    duration_s=None, resolution=None, license="PD",
+                    credit=None, page_url="http://p", download_url="http://d.mp4")
+        base.update(kw)
+        return dv.Candidate(**base)
+
+    def test_build_jobs_enumerates_sources_per_keyword(self):
+        jobs = dv.build_jobs(["a"], {"cds", "nasa", "djangoplicity", "commons"},
+                             5, 5, False)
+        labels = sorted(label for label, _ in jobs)
+        self.assertEqual(labels, sorted(
+            ["cds:a", "nasa:a", "eso:a", "hubble:a", "webb:a", "noirlab:a",
+             "commons:a"]))
+
+    def test_main_isolates_failing_source(self):
+        with mock.patch.object(dv, "search_cds", side_effect=RuntimeError("boom")), \
+             mock.patch.object(dv, "search_nasa", return_value=[self._cand()]), \
+             mock.patch.object(dv, "load_registry_stems", return_value=set()):
+            out_buf, err_buf = io.StringIO(), io.StringIO()
+            with contextlib.redirect_stdout(out_buf), contextlib.redirect_stderr(err_buf):
+                rc = dv.main(["kw", "--source", "cds,nasa"])
+        self.assertEqual(rc, 0)
+        self.assertIn("WARN cds:kw", err_buf.getvalue())   # warnings go to stderr
+        self.assertIn("* T", out_buf.getvalue())           # report stays on stdout
+
+    def test_main_fails_when_all_sources_fail(self):
+        with mock.patch.object(dv, "search_cds", side_effect=RuntimeError("boom")), \
+             mock.patch.object(dv, "load_registry_stems", return_value=set()):
+            with contextlib.redirect_stderr(io.StringIO()):
+                rc = dv.main(["kw", "--source", "cds"])
+        self.assertEqual(rc, 1)
+
+    def test_main_json_output(self):
+        with mock.patch.object(dv, "search_nasa", return_value=[self._cand()]), \
+             mock.patch.object(dv, "load_registry_stems", return_value=set()):
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                rc = dv.main(["kw", "--source", "nasa", "--json"])
+        self.assertEqual(rc, 0)
+        data = json.loads(buf.getvalue())
+        self.assertEqual(data[0]["download_url"], "http://d.mp4")
+        self.assertFalse(data[0]["in_registry"])
+
+    def test_main_rejects_unknown_source(self):
+        with self.assertRaises(SystemExit):
+            with contextlib.redirect_stderr(io.StringIO()):
+                dv.main(["kw", "--source", "bogus"])
+
+
 if __name__ == "__main__":
     unittest.main()

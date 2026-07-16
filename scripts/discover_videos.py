@@ -411,3 +411,82 @@ def render_report(candidates: list[Candidate], pages: int) -> str:
     if not candidates:
         lines.append("No candidates found.")
     return "\n".join(lines)
+
+VALID_SOURCES = {"cds", "nasa", "djangoplicity", "commons"}
+
+
+def build_jobs(keywords: list[str], sources: set[str], limit: int, pages: int,
+               include_lectures: bool) -> list[tuple[str, object]]:
+    """One (label, thunk) per source-site x keyword. Adapters are resolved
+    as module globals at call time so tests can patch them."""
+    jobs: list[tuple[str, object]] = []
+    for kw in keywords:
+        if "cds" in sources:
+            jobs.append((f"cds:{kw}",
+                         lambda kw=kw: search_cds(kw, limit, include_lectures)))
+        if "nasa" in sources:
+            jobs.append((f"nasa:{kw}", lambda kw=kw: search_nasa(kw, limit)))
+        if "djangoplicity" in sources:
+            for site in DJANGOPLICITY_SITES:
+                jobs.append((f"{site}:{kw}",
+                             lambda kw=kw, site=site: search_djangoplicity(
+                                 kw, limit, pages, site)))
+        if "commons" in sources:
+            jobs.append((f"commons:{kw}", lambda kw=kw: search_commons(kw, limit)))
+    return jobs
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(
+        prog="videos:discover",
+        description="Search open-licensed archives for outreach video candidates.",
+        epilog='Example: pnpm videos:discover -- "cloud chamber" --limit 3')
+    ap.add_argument("keywords", nargs="+", help="search keywords (each queried everywhere)")
+    ap.add_argument("--source", default="cds,nasa,djangoplicity,commons",
+                    help="comma-separated subset of: cds,nasa,djangoplicity,commons")
+    ap.add_argument("--limit", type=int, default=5,
+                    help="max results per source per keyword (default 5)")
+    ap.add_argument("--pages", type=int, default=5,
+                    help="d2d feed pages to walk per djangoplicity site (default 5)")
+    ap.add_argument("--include-lectures", action="store_true",
+                    help="keep CDS LECTURES category (excluded by default)")
+    ap.add_argument("--json", action="store_true", dest="as_json",
+                    help="emit candidates as JSON instead of the report")
+    args = ap.parse_args(argv)
+
+    sources = {s.strip() for s in args.source.split(",") if s.strip()}
+    unknown = sources - VALID_SOURCES
+    if unknown or not sources:
+        ap.error(f"unknown --source value(s): {', '.join(sorted(unknown)) or '(empty)'}")
+
+    jobs = build_jobs(args.keywords, sources, args.limit, args.pages,
+                      args.include_lectures)
+    candidates: list[Candidate] = []
+    warnings: list[str] = []
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(fn): label for label, fn in jobs}
+        for fut in as_completed(futures):
+            label = futures[fut]
+            try:
+                candidates.extend(fut.result())
+            except Exception as exc:  # per-job isolation: one bad source can't kill the run
+                warnings.append(f"{label}: {type(exc).__name__}: {exc}")
+
+    for w in warnings:
+        print(f"WARN {w}", file=sys.stderr)
+    if jobs and len(warnings) == len(jobs):
+        print("All sources failed.", file=sys.stderr)
+        return 1
+
+    candidates = dedupe(candidates)
+    mark_in_registry(candidates, load_registry_stems())
+
+    if args.as_json:
+        print(json.dumps([asdict(c) for c in candidates], indent=2))
+        return 0
+    print(render_report(candidates, args.pages))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
