@@ -24,6 +24,7 @@ import tomllib
 import unicodedata
 import urllib.parse
 import urllib.request
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -53,7 +54,10 @@ class Candidate:
 
 def slugify_name(title: str, download_url: str) -> str:
     """Lowercase ASCII slug + the download URL's extension (default .mp4)."""
-    ext = Path(urllib.parse.urlparse(download_url).path).suffix.lower() or ".mp4"
+    ext = Path(urllib.parse.urlparse(download_url).path).suffix.lower()
+    ext = re.sub(r"[^a-z0-9.]", "", ext)
+    if ext in ("", "."):
+        ext = ".mp4"
     ascii_title = unicodedata.normalize("NFKD", title).encode("ascii", "ignore").decode()
     slug = re.sub(r"[^a-z0-9]+", "_", ascii_title.lower()).strip("_")
     return (slug or "clip") + ext
@@ -113,7 +117,11 @@ def load_registry_stems(repo_root: Path = REPO_ROOT) -> set[str]:
     for path in manifests:
         if not path.exists():
             continue
-        data = tomllib.loads(path.read_text(encoding="utf-8"))
+        try:
+            data = tomllib.loads(path.read_text(encoding="utf-8"))
+        except tomllib.TOMLDecodeError as exc:
+            print(f"WARN skipping malformed manifest {path}: {exc}", file=sys.stderr)
+            continue
         for video in data.get("videos", []):
             name = video.get("name")
             if name:
@@ -226,7 +234,10 @@ def search_nasa(keyword: str, limit: int = 5, fetch=http_get_json) -> list[Candi
         href = item.get("href", "")
         if not href:
             continue
-        assets = fetch(urllib.parse.quote(href, safe=":/"))
+        try:
+            assets = fetch(urllib.parse.quote(href, safe=":/"))
+        except Exception:
+            continue
         if not isinstance(assets, list):
             continue
         best = _nasa_best_asset([u for u in assets if isinstance(u, str)])
@@ -416,10 +427,10 @@ VALID_SOURCES = {"cds", "nasa", "djangoplicity", "commons"}
 
 
 def build_jobs(keywords: list[str], sources: set[str], limit: int, pages: int,
-               include_lectures: bool) -> list[tuple[str, object]]:
+               include_lectures: bool) -> list[tuple[str, Callable[[], list[Candidate]]]]:
     """One (label, thunk) per source-site x keyword. Adapters are resolved
     as module globals at call time so tests can patch them."""
-    jobs: list[tuple[str, object]] = []
+    jobs: list[tuple[str, Callable[[], list[Candidate]]]] = []
     for kw in keywords:
         if "cds" in sources:
             jobs.append((f"cds:{kw}",

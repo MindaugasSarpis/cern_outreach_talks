@@ -62,6 +62,14 @@ class HelpersTest(unittest.TestCase):
         self.assertEqual(dv.parse_hms("90"), 90.0)
         self.assertIsNone(dv.parse_hms(""))
 
+    def test_slugify_sanitizes_pathological_extension(self):
+        self.assertEqual(dv.slugify_name("Clip", 'https://h/x.mp"4'), "clip.mp4")
+        snippet = dv.toml_snippet(dv.Candidate(
+            source="x", id="1", title="Clip", date="", duration_s=None,
+            resolution=None, license="", credit=None, page_url="",
+            download_url='https://h/x.mp"4'))
+        self.assertEqual(tomllib.loads(snippet)["videos"][0]["name"], "clip.mp4")
+
 
 class TomlSnippetTest(unittest.TestCase):
     def test_snippet_round_trips_and_escapes(self):
@@ -122,6 +130,18 @@ class RegistryTest(unittest.TestCase):
         b = self._cand("2", "B", "http://same.mp4")
         self.assertEqual(dv.dedupe([a, b]), [a])
 
+    def test_malformed_manifest_skipped_with_warning(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._repo(tmp)
+            bad = root / "talks" / "broken" / "videos"
+            bad.mkdir(parents=True)
+            (bad / "manifest.toml").write_text("[[videos]\nname = oops", encoding="utf-8")
+            buf = io.StringIO()
+            with contextlib.redirect_stderr(buf):
+                stems = dv.load_registry_stems(root)
+        self.assertEqual(stems, {"cern_overview_short", "skylapse"})
+        self.assertIn("WARN skipping malformed manifest", buf.getvalue())
+
 
 class CdsTest(unittest.TestCase):
     def test_lectures_filtered_by_default(self):
@@ -173,6 +193,13 @@ class NasaTest(unittest.TestCase):
                          "a~orig.mp4")
         self.assertEqual(dv._nasa_best_asset(["a.srt", "b.mp4"]), "b.mp4")
         self.assertIsNone(dv._nasa_best_asset(["a.jpg"]))
+
+    def test_failing_collection_fetch_skips_item(self):
+        def fetch(url, timeout=15.0):
+            if "collection.json" in url:
+                raise OSError("boom")
+            return json.loads((FIXTURES / "nasa_search_mars.json").read_text(encoding="utf-8"))
+        self.assertEqual(dv.search_nasa("mars", limit=5, fetch=fetch), [])
 
 
 class DjangoplicityTest(unittest.TestCase):
