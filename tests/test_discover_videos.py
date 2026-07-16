@@ -22,6 +22,21 @@ import discover_videos as dv
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
 
+def fixture_fetch(mapping):
+    """Offline fetch stub: first URL-substring match wins.
+
+    Values are fixture filenames (str) or inline response objects (dict).
+    """
+    def fetch(url, timeout=15.0):
+        for fragment, value in mapping.items():
+            if fragment in url:
+                if isinstance(value, str):
+                    return json.loads((FIXTURES / value).read_text(encoding="utf-8"))
+                return value
+        raise AssertionError(f"unexpected URL fetched: {url}")
+    return fetch
+
+
 class HelpersTest(unittest.TestCase):
     def test_slugify_basic(self):
         self.assertEqual(
@@ -106,6 +121,29 @@ class RegistryTest(unittest.TestCase):
         a = self._cand("1", "A", "http://same.mp4")
         b = self._cand("2", "B", "http://same.mp4")
         self.assertEqual(dv.dedupe([a, b]), [a])
+
+
+class CdsTest(unittest.TestCase):
+    def test_lectures_filtered_by_default(self):
+        fetch = fixture_fetch({"videos.cern.ch/api/records": "cds_lhc.json"})
+        self.assertEqual(dv.search_cds("lhc", limit=5, fetch=fetch), [])
+
+    def test_parses_record_with_lectures_included(self):
+        fetch = fixture_fetch({"videos.cern.ch/api/records": "cds_lhc.json"})
+        cands = dv.search_cds("lhc", limit=5, include_lectures=True, fetch=fetch)
+        self.assertEqual(len(cands), 1)
+        c = cands[0]
+        self.assertEqual(c.source, "cds")
+        self.assertEqual(c.id, "3016316")
+        self.assertEqual(c.title, "HL-LHC/HE-LHC")
+        self.assertEqual(c.date, "2018-11-16")
+        self.assertEqual(c.duration_s, 2834.0)
+        self.assertEqual(c.resolution, "1920x1080")
+        self.assertEqual(c.license, "CERN")
+        self.assertEqual(c.credit, "CERN")
+        self.assertEqual(c.page_url, "https://videos.cern.ch/record/3016316")
+        self.assertTrue(c.download_url.startswith("https://videos.cern.ch/api/files/"))
+        self.assertIn("LECTURES-VIDEO-2025-16059-001.mp4", c.download_url)
 
 
 if __name__ == "__main__":

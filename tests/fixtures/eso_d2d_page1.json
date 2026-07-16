@@ -1,0 +1,83 @@
+{
+ "Count": 4386,
+ "Next": null,
+ "Collections": [
+  {
+   "Creator": "European Southern Observatory",
+   "URL": "https://www.eso.org",
+   "Contact": {
+    "Address": "Karl-Schwarzschild-Strasse 2",
+    "City": "Garching bei M\u00fcnchen",
+    "Country": "Germany",
+    "PostalCode": "D-85748"
+   },
+   "ID": "eso2609b",
+   "Title": "Time-lapse of exoplanet Beta Pictoris d orbiting around its host star",
+   "Description": "<div>\r\n<p>This time-lapse video shows the exoplanet Beta Pictoris d orbiting around its host star Beta Pictoris over more than a decade. The planet was discovered with the <a href=\"https://www.eso.org/public/teles-instr/paranal-observatory/vlt/vlt-instr/eris/\">ERIS</a> instrument on ESO\u2019s Very Large Telescope (<a href=\"https://www.eso.org/public/teles-instr/paranal-observatory/vlt/\">VLT</a>). The observations were performed in 2025, and it prompted astronomers to search for the planet in previous archival observations. The planet turned up in data from the NASA/ESA/CSA James Webb Space Telescope taken earlier in 2025 and 2023, as well as observations with the <a href=\"https://www.eso.org/public/teles-instr/paranal-observatory/vlt/vlt-instr/sphere/\">SPHERE</a> instrument at the VLT going as far back as 2014.</p>\r\n</div>\r\n<div>\r\n<p>The star Beta Pictoris hosts two already known additional planets: Beta Pictoris b \u2013\u2013the other bright source at the end of the time-lapse\u2013\u2013 and Beta Pictoris c, not seen here as it orbits too close to the star.</p>\r\n</div>\r\n<div>\r\n<p>The orbits of the three planets are seen almost edge-on from Earth. At the end of this clip, the orbits the three planets are displayed face-on, together with the orbits of Solar System planets for comparison.</p>\r\n</div>\r\n<div>\u00a0</div>",
+   "Credit": "ESO/B. Sutlieff, M. Bonse et al.",
+   "PublicationDate": "2026-07-15T12:00:00Z",
+   "Subject": {
+    "Category": [
+     "Milky Way : Planet"
+    ],
+    "Name": [
+     "Beta Pictoris d"
+    ]
+   },
+   "ReferenceURL": "https://www.eso.org/public/videos/eso2609b/",
+   "Rights": "Creative Commons Attribution 4.0 International License",
+   "Priority": 70,
+   "Assets": [
+    {
+     "MediaType": "Video",
+     "Resources": [
+      {
+       "ResourceType": "Original",
+       "MediaType": "Video",
+       "URL": "https://cdn.eso.org/videos/ultra_hd/eso2609b.mp4",
+       "FileSize": 38682152,
+       "Dimensions": [
+        3840.0,
+        2160.0
+       ],
+       "ProjectionType": "Tan"
+      },
+      {
+       "ResourceType": "Preview",
+       "MediaType": "Video",
+       "URL": "https://cdn.eso.org/videos/hd_and_apple/eso2609b.m4v",
+       "FileSize": 4381716,
+       "Dimensions": [
+        1280.0,
+        720.0
+       ],
+       "ProjectionType": "Tan"
+      },
+      {
+       "ResourceType": "Thumbnail",
+       "MediaType": "Image",
+       "URL": "https://www.eso.org/public/archives/videos/potwmedium/eso2609b.jpg",
+       "FileSize": 7194,
+       "Dimensions": [
+        220.0,
+        140.0
+       ],
+       "ProjectionType": "Tan"
+      },
+      {
+       "ResourceType": "Icon",
+       "MediaType": "Image",
+       "URL": "https://www.eso.org/public/archives/videos/newsmini/eso2609b.jpg",
+       "FileSize": 4229,
+       "Dimensions": [
+        60.0,
+        34.0
+       ],
+       "ProjectionType": "Tan"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

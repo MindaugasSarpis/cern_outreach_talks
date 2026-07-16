@@ -136,3 +136,68 @@ def dedupe(candidates: list[Candidate]) -> list[Candidate]:
             seen.add(c.download_url)
             out.append(c)
     return out
+
+
+def http_get_json(url: str, timeout: float = TIMEOUT_S) -> object:
+    req = urllib.request.Request(
+        url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        return json.load(resp)
+
+
+CDS_API = "https://videos.cern.ch/api/records/"
+
+
+def search_cds(keyword: str, limit: int = 5, include_lectures: bool = False,
+               fetch=http_get_json) -> list[Candidate]:
+    """CERN CDS Videos (Invenio). Lecture recordings are dropped by default.
+
+    The filter is client-side (over-fetch, then check metadata.category):
+    `-category:LECTURES` inside `q` makes the endpoint return an HTML
+    error page (verified live 2026-07-16).
+    """
+    size = limit if include_lectures else max(limit * 5, 25)
+    url = CDS_API + "?" + urllib.parse.urlencode(
+        {"q": keyword, "size": size, "sort": "-date"})
+    data = fetch(url)
+    out: list[Candidate] = []
+    for hit in data.get("hits", {}).get("hits", []):
+        meta = hit.get("metadata", {})
+        if meta.get("type") != "VIDEO":
+            continue
+        if not include_lectures and meta.get("category") == "LECTURES":
+            continue
+        master = next(
+            (f for f in meta.get("_files", [])
+             if f.get("context_type") == "master" and f.get("content_type") == "mp4"),
+            None)
+        if master is None:
+            continue
+        download = (master.get("links") or {}).get("self", "")
+        if not download:
+            continue
+        tags = master.get("tags") or {}
+        resolution = None
+        if tags.get("width") and tags.get("height"):
+            resolution = f"{tags['width']}x{tags['height']}"
+        licenses = meta.get("license") or []
+        license_str = ", ".join(
+            l.get("license", "") for l in licenses if l.get("license")
+        ) or "CERN (copyright.web.cern.ch)"
+        recid = str(meta.get("recid") or hit.get("id", ""))
+        duration_raw = meta.get("duration") or ""
+        out.append(Candidate(
+            source="cds",
+            id=recid,
+            title=strip_html(str((meta.get("title") or {}).get("title", ""))),
+            date=str(meta.get("date") or meta.get("publication_date") or ""),
+            duration_s=parse_hms(duration_raw) if duration_raw else None,
+            resolution=resolution,
+            license=license_str,
+            credit=(meta.get("copyright") or {}).get("holder"),
+            page_url=f"https://videos.cern.ch/record/{recid}",
+            download_url=download,
+        ))
+        if len(out) >= limit:
+            break
+    return out

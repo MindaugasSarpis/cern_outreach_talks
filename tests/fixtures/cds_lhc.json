@@ -1,0 +1,2269 @@
+{
+ "aggregations": {
+  "category": {
+   "buckets": [
+    {
+     "doc_count": 2715,
+     "key": "LECTURES"
+    },
+    {
+     "doc_count": 1433,
+     "key": "CERN"
+    },
+    {
+     "doc_count": 274,
+     "key": "OPEN"
+    },
+    {
+     "doc_count": 65,
+     "key": "ATLAS"
+    },
+    {
+     "doc_count": 11,
+     "key": "CMS"
+    }
+   ],
+   "doc_count_error_upper_bound": 0,
+   "sum_other_doc_count": 0
+  },
+  "collections": {
+   "buckets": [
+    {
+     "doc_count": 320,
+     "key": "Lectures::Academic Training Lectures"
+    },
+    {
+     "doc_count": 58,
+     "key": "Lectures::CERN Accelerator School"
+    },
+    {
+     "doc_count": 4,
+     "key": "Lectures::E-learning modules"
+    },
+    {
+     "doc_count": 2279,
+     "key": "Lectures::Talks, Seminars and Other Events"
+    },
+    {
+     "doc_count": 2583,
+     "key": "Lectures::Video Lectures"
+    }
+   ],
+   "doc_count_error_upper_bound": 0,
+   "sum_other_doc_count": 0
+  },
+  "language": {
+   "buckets": [
+    {
+     "doc_count": 3980,
+     "key": "en"
+    },
+    {
+     "doc_count": 159,
+     "key": "silent"
+    },
+    {
+     "doc_count": 111,
+     "key": "fr"
+    },
+    {
+     "doc_count": 64,
+     "key": "en-fr"
+    },
+    {
+     "doc_count": 36,
+     "key": "it"
+    },
+    {
+     "doc_count": 31,
+     "key": "pt"
+    },
+    {
+     "doc_count": 29,
+     "key": "de"
+    },
+    {
+     "doc_count": 26,
+     "key": "es"
+    },
+    {
+     "doc_count": 21,
+     "key": "el"
+    },
+    {
+     "doc_count": 9,
+     "key": "uk"
+    }
+   ],
+   "doc_count_error_upper_bound": 0,
+   "sum_other_doc_count": 32
+  },
+  "type": {
+   "buckets": [
+    {
+     "doc_count": 3945,
+     "key": "VIDEO"
+    },
+    {
+     "doc_count": 553,
+     "key": "FOOTAGE"
+    }
+   ],
+   "doc_count_error_upper_bound": 0,
+   "sum_other_doc_count": 0
+  },
+  "years": {
+   "buckets": [
+    {
+     "doc_count": 27,
+     "key": 0,
+     "key_as_string": "1970"
+    },
+    {
+     "doc_count": 0,
+     "key": 31536000000,
+     "key_as_string": "1971"
+    },
+    {
+     "doc_count": 0,
+     "key": 63072000000,
+     "key_as_string": "1972"
+    },
+    {
+     "doc_count": 0,
+     "key": 94694400000,
+     "key_as_string": "1973"
+    },
+    {
+     "doc_count": 0,
+     "key": 126230400000,
+     "key_as_string": "1974"
+    },
+    {
+     "doc_count": 0,
+     "key": 157766400000,
+     "key_as_string": "1975"
+    },
+    {
+     "doc_count": 0,
+     "key": 189302400000,
+     "key_as_string": "1976"
+    },
+    {
+     "doc_count": 0,
+     "key": 220924800000,
+     "key_as_string": "1977"
+    },
+    {
+     "doc_count": 0,
+     "key": 252460800000,
+     "key_as_string": "1978"
+    },
+    {
+     "doc_count": 0,
+     "key": 283996800000,
+     "key_as_string": "1979"
+    },
+    {
+     "doc_count": 0,
+     "key": 315532800000,
+     "key_as_string": "1980"
+    },
+    {
+     "doc_count": 0,
+     "key": 347155200000,
+     "key_as_string": "1981"
+    },
+    {
+     "doc_count": 0,
+     "key": 378691200000,
+     "key_as_string": "1982"
+    },
+    {
+     "doc_count": 0,
+     "key": 410227200000,
+     "key_as_string": "1983"
+    },
+    {
+     "doc_count": 0,
+     "key": 441763200000,
+     "key_as_string": "1984"
+    },
+    {
+     "doc_count": 0,
+     "key": 473385600000,
+     "key_as_string": "1985"
+    },
+    {
+     "doc_count": 0,
+     "key": 504921600000,
+     "key_as_string": "1986"
+    },
+    {
+     "doc_count": 1,
+     "key": 536457600000,
+     "key_as_string": "1987"
+    },
+    {
+     "doc_count": 0,
+     "key": 567993600000,
+     "key_as_string": "1988"
+    },
+    {
+     "doc_count": 0,
+     "key": 599616000000,
+     "key_as_string": "1989"
+    },
+    {
+     "doc_count": 4,
+     "key": 631152000000,
+     "key_as_string": "1990"
+    },
+    {
+     "doc_count": 22,
+     "key": 662688000000,
+     "key_as_string": "1991"
+    },
+    {
+     "doc_count": 35,
+     "key": 694224000000,
+     "key_as_string": "1992"
+    },
+    {
+     "doc_count": 13,
+     "key": 725846400000,
+     "key_as_string": "1993"
+    },
+    {
+     "doc_count": 15,
+     "key": 757382400000,
+     "key_as_string": "1994"
+    },
+    {
+     "doc_count": 15,
+     "key": 788918400000,
+     "key_as_string": "1995"
+    },
+    {
+     "doc_count": 12,
+     "key": 820454400000,
+     "key_as_string": "1996"
+    },
+    {
+     "doc_count": 9,
+     "key": 852076800000,
+     "key_as_string": "1997"
+    },
+    {
+     "doc_count": 34,
+     "key": 883612800000,
+     "key_as_string": "1998"
+    },
+    {
+     "doc_count": 32,
+     "key": 915148800000,
+     "key_as_string": "1999"
+    },
+    {
+     "doc_count": 28,
+     "key": 946684800000,
+     "key_as_string": "2000"
+    },
+    {
+     "doc_count": 30,
+     "key": 978307200000,
+     "key_as_string": "2001"
+    },
+    {
+     "doc_count": 43,
+     "key": 1009843200000,
+     "key_as_string": "2002"
+    },
+    {
+     "doc_count": 60,
+     "key": 1041379200000,
+     "key_as_string": "2003"
+    },
+    {
+     "doc_count": 63,
+     "key": 1072915200000,
+     "key_as_string": "2004"
+    },
+    {
+     "doc_count": 90,
+     "key": 1104537600000,
+     "key_as_string": "2005"
+    },
+    {
+     "doc_count": 82,
+     "key": 1136073600000,
+     "key_as_string": "2006"
+    },
+    {
+     "doc_count": 101,
+     "key": 1167609600000,
+     "key_as_string": "2007"
+    },
+    {
+     "doc_count": 213,
+     "key": 1199145600000,
+     "key_as_string": "2008"
+    },
+    {
+     "doc_count": 140,
+     "key": 1230768000000,
+     "key_as_string": "2009"
+    },
+    {
+     "doc_count": 122,
+     "key": 1262304000000,
+     "key_as_string": "2010"
+    },
+    {
+     "doc_count": 141,
+     "key": 1293840000000,
+     "key_as_string": "2011"
+    },
+    {
+     "doc_count": 226,
+     "key": 1325376000000,
+     "key_as_string": "2012"
+    },
+    {
+     "doc_count": 205,
+     "key": 1356998400000,
+     "key_as_string": "2013"
+    },
+    {
+     "doc_count": 245,
+     "key": 1388534400000,
+     "key_as_string": "2014"
+    },
+    {
+     "doc_count": 172,
+     "key": 1420070400000,
+     "key_as_string": "2015"
+    },
+    {
+     "doc_count": 162,
+     "key": 1451606400000,
+     "key_as_string": "2016"
+    },
+    {
+     "doc_count": 117,
+     "key": 1483228800000,
+     "key_as_string": "2017"
+    },
+    {
+     "doc_count": 149,
+     "key": 1514764800000,
+     "key_as_string": "2018"
+    },
+    {
+     "doc_count": 156,
+     "key": 1546300800000,
+     "key_as_string": "2019"
+    },
+    {
+     "doc_count": 181,
+     "key": 1577836800000,
+     "key_as_string": "2020"
+    },
+    {
+     "doc_count": 407,
+     "key": 1609459200000,
+     "key_as_string": "2021"
+    },
+    {
+     "doc_count": 351,
+     "key": 1640995200000,
+     "key_as_string": "2022"
+    },
+    {
+     "doc_count": 190,
+     "key": 1672531200000,
+     "key_as_string": "2023"
+    },
+    {
+     "doc_count": 205,
+     "key": 1704067200000,
+     "key_as_string": "2024"
+    },
+    {
+     "doc_count": 293,
+     "key": 1735689600000,
+     "key_as_string": "2025"
+    },
+    {
+     "doc_count": 107,
+     "key": 1767225600000,
+     "key_as_string": "2026"
+    }
+   ]
+  }
+ },
+ "hits": {
+  "hits": [
+   {
+    "created": "2018-11-21T17:24:13+00:00",
+    "id": "3016316",
+    "links": {},
+    "metadata": {
+     "$schema": "https://videos.cern.ch/schemas/records/videos/video/video-v1.0.0.json",
+     "_access": {
+      "update": [
+       "weblecture-service@cern.ch",
+       "carlos.lacasta@cern.ch"
+      ]
+     },
+     "_buckets": {
+      "deposit": "7b8d8794-3332-4034-842c-632ca87e8528",
+      "record": "a9add83a-c680-449f-8c3f-8f4da09c2e4f"
+     },
+     "_cds": {
+      "extracted_metadata": {
+       "avg_frame_rate": "25/1",
+       "bit_rate": "4204303",
+       "bits_per_raw_sample": "8",
+       "chroma_location": "center",
+       "closed_captions": 0,
+       "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+       "codec_name": "h264",
+       "codec_tag": "0x31637661",
+       "codec_tag_string": "avc1",
+       "codec_type": "video",
+       "coded_height": 1080,
+       "coded_width": 1920,
+       "color_range": "pc",
+       "color_space": "bt470bg",
+       "display_aspect_ratio": "16:9",
+       "disposition": {
+        "attached_pic": 0,
+        "captions": 0,
+        "clean_effects": 0,
+        "comment": 0,
+        "default": 1,
+        "dependent": 0,
+        "descriptions": 0,
+        "dub": 0,
+        "forced": 0,
+        "hearing_impaired": 0,
+        "karaoke": 0,
+        "lyrics": 0,
+        "metadata": 0,
+        "original": 0,
+        "still_image": 0,
+        "timed_thumbnails": 0,
+        "visual_impaired": 0
+       },
+       "duration": "2834.960000",
+       "duration_ts": 36287488,
+       "extradata_size": 50,
+       "field_order": "progressive",
+       "filename": "/media/videos/22108b66-fddd-4418-83cc-92aef59d6c05/data",
+       "film_grain": 0,
+       "format_long_name": "QuickTime / MOV",
+       "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+       "has_b_frames": 2,
+       "height": 1080,
+       "id": "0x1",
+       "index": 0,
+       "is_avc": "true",
+       "level": 40,
+       "nal_length_size": "4",
+       "nb_frames": "70874",
+       "nb_programs": 0,
+       "nb_streams": 2,
+       "pix_fmt": "yuvj420p",
+       "probe_score": 100,
+       "profile": "High",
+       "r_frame_rate": "25/1",
+       "refs": 1,
+       "size": "1526276854",
+       "start_pts": 0,
+       "start_time": "0.000000",
+       "tags": {
+        "encoder": "Lavc62.12.100 libx264",
+        "handler_name": "VideoHandler",
+        "language": "und",
+        "vendor_id": "[0][0][0][0]"
+       },
+       "time_base": "1/12800",
+       "width": 1920
+      },
+      "modified_by": 3516,
+      "state": {
+       "file_transcode": "SUCCESS",
+       "file_video_extract_chapter_frames": "STARTED",
+       "file_video_extract_frames": "SUCCESS",
+       "file_video_metadata_extraction": "SUCCESS"
+      }
+     },
+     "_deposit": {
+      "created_by": 3516,
+      "id": "a48a2a3659f94ee3b630c47f70a12ffd",
+      "owners": [
+       3516
+      ],
+      "pid": {
+       "revision_id": 5,
+       "type": "recid",
+       "value": "3016316"
+      },
+      "status": "published"
+     },
+     "_files": [
+      {
+       "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+       "checksum": "md5:4edfeef4697fb406318c5279c8e12463",
+       "completed": true,
+       "content_type": "png",
+       "context_type": "poster",
+       "file_id": "2302b7d7-f216-4d31-8e4e-234ad861b391",
+       "key": "20181116081849.png",
+       "links": {
+        "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/20181116081849.png",
+        "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/20181116081849.png?versionId=b4e0698d-224c-40af-beca-4bee9479fb42"
+       },
+       "media_type": "image",
+       "size": 21754,
+       "tags": {
+        "content_type": "png"
+       },
+       "version_id": "b4e0698d-224c-40af-beca-4bee9479fb42"
+      },
+      {
+       "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+       "checksum": "md5:bfe37c6294e33ee8ff01e0b72fa970e6",
+       "completed": true,
+       "content_type": "mp4",
+       "context_type": "additional_file",
+       "file_id": "cb3f2403-e200-416d-b5b9-57494735714b",
+       "key": "759130c16_desktop_camera_1080p_4000.mp4",
+       "links": {
+        "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/759130c16_desktop_camera_1080p_4000.mp4",
+        "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/759130c16_desktop_camera_1080p_4000.mp4?versionId=2c4d75b9-d21e-4d20-af57-7dc56356fc58"
+       },
+       "media_type": "video",
+       "size": 1504760335,
+       "tags": {
+        "content_type": "mp4"
+       },
+       "version_id": "2c4d75b9-d21e-4d20-af57-7dc56356fc58"
+      },
+      {
+       "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+       "checksum": "md5:e9b3182d94a055de77b61976a5bd4a37",
+       "completed": true,
+       "content_type": "mp4",
+       "context_type": "additional_file",
+       "file_id": "1fdaa55f-2215-4ba9-ab34-4052325a6e68",
+       "key": "759130c16_desktop_slides_1080p_4000.mp4",
+       "links": {
+        "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/759130c16_desktop_slides_1080p_4000.mp4",
+        "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/759130c16_desktop_slides_1080p_4000.mp4?versionId=8fca7b28-5f63-4f7b-972c-a687de0fc65f"
+       },
+       "media_type": "video",
+       "size": 1356161078,
+       "tags": {
+        "content_type": "mp4"
+       },
+       "version_id": "8fca7b28-5f63-4f7b-972c-a687de0fc65f"
+      },
+      {
+       "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+       "checksum": "md5:b6a3049039cbc10722eef620a4e5743c",
+       "completed": true,
+       "content_type": "vtt",
+       "context_type": "subtitle",
+       "file_id": "fcd2e31d-52ef-434b-8c86-d730e006873d",
+       "key": "LECTURES-VIDEO-2025-16059-001_en.vtt",
+       "links": {
+        "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/LECTURES-VIDEO-2025-16059-001_en.vtt",
+        "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/LECTURES-VIDEO-2025-16059-001_en.vtt?versionId=1891cc17-8fa9-425f-b243-19edbc64b0f4"
+       },
+       "media_type": "subtitle",
+       "size": 60686,
+       "tags": {
+        "content_type": "vtt",
+        "language": "en"
+       },
+       "version_id": "1891cc17-8fa9-425f-b243-19edbc64b0f4"
+      },
+      {
+       "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+       "checksum": "md5:6fae5c91fc7f63b4da20782c837408e0",
+       "completed": true,
+       "content_type": "vtt",
+       "context_type": "subtitle",
+       "file_id": "5a45f3c6-584a-4aea-9092-a2cc0dda778d",
+       "key": "LECTURES-VIDEO-2025-16059-001_fr.vtt",
+       "links": {
+        "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/LECTURES-VIDEO-2025-16059-001_fr.vtt",
+        "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/LECTURES-VIDEO-2025-16059-001_fr.vtt?versionId=75c0227d-56c9-4505-a91f-517ea7c3a910"
+       },
+       "media_type": "subtitle",
+       "size": 67241,
+       "tags": {
+        "content_type": "vtt",
+        "language": "fr"
+       },
+       "version_id": "75c0227d-56c9-4505-a91f-517ea7c3a910"
+      },
+      {
+       "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+       "checksum": "md5:b9673e200b26f5c4a9a12edf5d5b647c",
+       "completed": true,
+       "content_type": "mp4",
+       "context_type": "master",
+       "file_id": "22108b66-fddd-4418-83cc-92aef59d6c05",
+       "frame": [
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:1150e5741095f6ce75d183aede119748",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "92376578-788a-4902-8ae3-fbb007ae0e80",
+         "key": "chapter-0.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-0.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-0.jpg?versionId=f4f6bc12-e22b-459f-b7cb-dc202aca5947"
+         },
+         "media_type": "image",
+         "size": 82144,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "0.1"
+         },
+         "version_id": "f4f6bc12-e22b-459f-b7cb-dc202aca5947"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:69cd29526808b4f864d4a94fcfc980b2",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "e3da8e8b-0425-41af-9202-6ba6e190c416",
+         "key": "chapter-1004.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1004.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1004.jpg?versionId=bccba880-b09e-4ce5-b4ea-6b4f37c7fdc1"
+         },
+         "media_type": "image",
+         "size": 105396,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1004"
+         },
+         "version_id": "bccba880-b09e-4ce5-b4ea-6b4f37c7fdc1"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:33f63bc2ab4a0265ee8c8b99d38eb516",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "e69152d1-e9a5-4e5c-acb4-f2cab641de54",
+         "key": "chapter-1050.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1050.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1050.jpg?versionId=f7e70514-8ca3-4986-adb5-492a19cbf59a"
+         },
+         "media_type": "image",
+         "size": 109428,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1050"
+         },
+         "version_id": "f7e70514-8ca3-4986-adb5-492a19cbf59a"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:b28774f02173241c4c6dde3a67dba647",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "84f71170-474e-4e6f-9d10-9bd309c8d2cc",
+         "key": "chapter-106.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-106.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-106.jpg?versionId=002b2981-0940-41eb-a6ee-809a3b5fb8a2"
+         },
+         "media_type": "image",
+         "size": 118269,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "106"
+         },
+         "version_id": "002b2981-0940-41eb-a6ee-809a3b5fb8a2"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:8394f92867c803c58613df84a6b1a024",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "20f2c623-f59c-44c5-957c-f7906d2a15a1",
+         "key": "chapter-1159.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1159.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1159.jpg?versionId=079a48eb-e407-4af9-bd61-5bf2a3ce3dec"
+         },
+         "media_type": "image",
+         "size": 103614,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1159"
+         },
+         "version_id": "079a48eb-e407-4af9-bd61-5bf2a3ce3dec"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:6ab8747f412bf2de245f55994764e7fe",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "88a5f425-bd5d-4004-8da0-2c12e4d52c68",
+         "key": "chapter-1192.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1192.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1192.jpg?versionId=085cb714-06b4-4750-b104-152da57966f3"
+         },
+         "media_type": "image",
+         "size": 133223,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1192"
+         },
+         "version_id": "085cb714-06b4-4750-b104-152da57966f3"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:dfcc50b38cf2acebaa5a91e9ecfdc8cc",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "6864b28d-8672-4d5c-9456-6e395b5f920c",
+         "key": "chapter-1272.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1272.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1272.jpg?versionId=1fa3306b-6857-416c-92d2-2177aada48a6"
+         },
+         "media_type": "image",
+         "size": 122772,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1272"
+         },
+         "version_id": "1fa3306b-6857-416c-92d2-2177aada48a6"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:d89812da256135c6817075668edc488a",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "8f95d1ec-e153-41f4-8d25-9f1d6d0e15c9",
+         "key": "chapter-1330.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1330.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1330.jpg?versionId=3963f44e-d51a-4596-92c9-8c9c1ad9f495"
+         },
+         "media_type": "image",
+         "size": 95176,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1330"
+         },
+         "version_id": "3963f44e-d51a-4596-92c9-8c9c1ad9f495"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:9570b17768ae4afd21c2ffd6edf073da",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "1246b1e8-896e-4117-833a-4808107dcdc5",
+         "key": "chapter-1335.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1335.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1335.jpg?versionId=c1f0105b-3f41-4bb7-840f-a7a8052cc5ad"
+         },
+         "media_type": "image",
+         "size": 114498,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1335"
+         },
+         "version_id": "c1f0105b-3f41-4bb7-840f-a7a8052cc5ad"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:ffc9595bc8bd3e65be5482132030b513",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "3d99e11e-f0b2-437e-baf0-349b848eb85c",
+         "key": "chapter-1392.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1392.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1392.jpg?versionId=2342cc14-a73f-4a7c-880c-89598f99dd66"
+         },
+         "media_type": "image",
+         "size": 120739,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1392"
+         },
+         "version_id": "2342cc14-a73f-4a7c-880c-89598f99dd66"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:41f6a303e2c8586c6408ffbf4e31f3d0",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "3405ec99-5a98-439b-8a52-e87837e81a7c",
+         "key": "chapter-1426.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1426.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1426.jpg?versionId=26fa8f3b-7ff3-4624-9544-2277e372d6f7"
+         },
+         "media_type": "image",
+         "size": 112541,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1426"
+         },
+         "version_id": "26fa8f3b-7ff3-4624-9544-2277e372d6f7"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:3faef4b812277b5c3ce5e0c8e93022da",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "60224414-8045-4bea-8c18-b9450fd0e341",
+         "key": "chapter-1479.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1479.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1479.jpg?versionId=0b61e116-f489-4f20-a788-9b3f34c44dc4"
+         },
+         "media_type": "image",
+         "size": 124976,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1479"
+         },
+         "version_id": "0b61e116-f489-4f20-a788-9b3f34c44dc4"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:560029ca6e2fb9f3814786027df67d63",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "93b6178a-b32b-4bae-9193-3638d73534ea",
+         "key": "chapter-1526.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1526.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1526.jpg?versionId=5f2ea7cc-1067-41ea-b705-f7793f40fa0d"
+         },
+         "media_type": "image",
+         "size": 133266,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1526"
+         },
+         "version_id": "5f2ea7cc-1067-41ea-b705-f7793f40fa0d"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:9349fac52ad6cbf3e07b63d7dc149984",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "1346b1ec-3ce6-4861-a09e-90dd5c040d63",
+         "key": "chapter-156.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-156.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-156.jpg?versionId=1e3e1ec3-a576-4433-a3bb-4b77193559f0"
+         },
+         "media_type": "image",
+         "size": 111345,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "156"
+         },
+         "version_id": "1e3e1ec3-a576-4433-a3bb-4b77193559f0"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:678f5dec33a61cea59d2a2b57314b9f2",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "d036a46e-c95e-47ef-a797-7954b4413296",
+         "key": "chapter-1574.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1574.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1574.jpg?versionId=250be670-752c-49b2-9638-ebb2e4bfa0c0"
+         },
+         "media_type": "image",
+         "size": 125141,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1574"
+         },
+         "version_id": "250be670-752c-49b2-9638-ebb2e4bfa0c0"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:a31512efc4cd5c5b6343cb2b90a2a16f",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "cd4ef5a7-1504-41e4-8218-30ef17a58bdd",
+         "key": "chapter-1621.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1621.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1621.jpg?versionId=265193d2-37ce-4088-bc08-90ab5b558818"
+         },
+         "media_type": "image",
+         "size": 110073,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1621"
+         },
+         "version_id": "265193d2-37ce-4088-bc08-90ab5b558818"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:30aff80e31664d6f135f120f8c3cc380",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "632534a8-ccf4-4aec-89b4-5b4630d9a436",
+         "key": "chapter-1678.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1678.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1678.jpg?versionId=a00e5965-e410-4e66-8f25-2b80633841ff"
+         },
+         "media_type": "image",
+         "size": 118803,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1678"
+         },
+         "version_id": "a00e5965-e410-4e66-8f25-2b80633841ff"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:3edd3400bca7a438551e12d1fe37e88b",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "806139f8-93ea-4443-9f8e-5c34f73081dc",
+         "key": "chapter-1719.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1719.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1719.jpg?versionId=c333dc4d-5566-40b8-8480-0b35d5e4c0ac"
+         },
+         "media_type": "image",
+         "size": 105235,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1719"
+         },
+         "version_id": "c333dc4d-5566-40b8-8480-0b35d5e4c0ac"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:55d883780949a4ce242a4c31d4d8b86b",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "255ebc0b-f7e4-4bef-a1f9-c1bda1c92317",
+         "key": "chapter-1762.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1762.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1762.jpg?versionId=a8c88b9b-86ed-4b11-b9d8-c107677326a8"
+         },
+         "media_type": "image",
+         "size": 96805,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1762"
+         },
+         "version_id": "a8c88b9b-86ed-4b11-b9d8-c107677326a8"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:ad0bdbf7554885e0d6533d729350ef0f",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "8d843287-204f-4e43-aab9-75e889f16229",
+         "key": "chapter-1785.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1785.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1785.jpg?versionId=013d7780-85a2-4a26-b59c-440a16a43c92"
+         },
+         "media_type": "image",
+         "size": 107000,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1785"
+         },
+         "version_id": "013d7780-85a2-4a26-b59c-440a16a43c92"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:8661aee82d880558ebdd852c03c2480f",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "9f4e4f4f-126d-4885-bcfe-19ad904cd1eb",
+         "key": "chapter-1840.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1840.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1840.jpg?versionId=de9daca6-5c59-42ba-9164-78db7034e1d6"
+         },
+         "media_type": "image",
+         "size": 112893,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1840"
+         },
+         "version_id": "de9daca6-5c59-42ba-9164-78db7034e1d6"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:aad56174ef84a80cfe76f7a5575f3c90",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "0d59cb22-002b-40c6-b72a-edb2d30ac8a6",
+         "key": "chapter-1872.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1872.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1872.jpg?versionId=0e4b9ee1-b3ba-4ace-8a57-9f25a9764c98"
+         },
+         "media_type": "image",
+         "size": 114563,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1872"
+         },
+         "version_id": "0e4b9ee1-b3ba-4ace-8a57-9f25a9764c98"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:26a480380ecb70c9dfcff72a7ae1ba3e",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "ae5c5473-870b-46f4-a9e9-f9c8c7e74709",
+         "key": "chapter-1899.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1899.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1899.jpg?versionId=869a3b09-8fc7-4f92-9e62-b9867640fa6e"
+         },
+         "media_type": "image",
+         "size": 116243,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1899"
+         },
+         "version_id": "869a3b09-8fc7-4f92-9e62-b9867640fa6e"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:ef40db3e808ed86ceeb5856f58ab3afa",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "2497c878-709f-4b28-8abb-b92147f739f8",
+         "key": "chapter-1908.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1908.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1908.jpg?versionId=f15b5302-1293-4004-8560-f5a8508e024e"
+         },
+         "media_type": "image",
+         "size": 123964,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1908"
+         },
+         "version_id": "f15b5302-1293-4004-8560-f5a8508e024e"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:b221a75a7aad1560f3aeb12e8599ae6d",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "937c9532-1f0c-48b7-9254-734051b91beb",
+         "key": "chapter-1948.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1948.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1948.jpg?versionId=85ba8e3c-7148-45ac-ab31-446a0280c89f"
+         },
+         "media_type": "image",
+         "size": 104290,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1948"
+         },
+         "version_id": "85ba8e3c-7148-45ac-ab31-446a0280c89f"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:c9583b7cdffc5880515b5ec9797b7ba3",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "ed739c04-e416-4a66-bf4d-42f2c8b22d68",
+         "key": "chapter-1959.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1959.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1959.jpg?versionId=117119fb-eee1-40a5-91c4-86e07b324308"
+         },
+         "media_type": "image",
+         "size": 128929,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1959"
+         },
+         "version_id": "117119fb-eee1-40a5-91c4-86e07b324308"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:57c5188726c9205e9c2d050213405238",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "0ce8e35b-a65a-42be-9344-d33de0f5ef38",
+         "key": "chapter-1987.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1987.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-1987.jpg?versionId=1ad53d5e-2723-4201-9ebb-520b0615e043"
+         },
+         "media_type": "image",
+         "size": 116527,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1987"
+         },
+         "version_id": "1ad53d5e-2723-4201-9ebb-520b0615e043"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:f3d98515b584158447bc61e221c2b98a",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "1030c9d3-ea43-4570-ad4f-a1eb6816cd7f",
+         "key": "chapter-2012.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2012.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2012.jpg?versionId=7d5a5402-26a0-4bea-b683-39aba2711840"
+         },
+         "media_type": "image",
+         "size": 115140,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2012"
+         },
+         "version_id": "7d5a5402-26a0-4bea-b683-39aba2711840"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:fa61d87ae29d50c73cf30882dc7f3224",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "a24afbc2-aac1-485e-8272-8743b4b93b07",
+         "key": "chapter-2025.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2025.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2025.jpg?versionId=4da93e28-1012-4b9e-bd83-31cafdf35e4d"
+         },
+         "media_type": "image",
+         "size": 114665,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2025"
+         },
+         "version_id": "4da93e28-1012-4b9e-bd83-31cafdf35e4d"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:875d1198e0302e1a9414c0ccd73da119",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "29106d62-bc6a-46da-9c49-5abf5b9fb80a",
+         "key": "chapter-2043.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2043.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2043.jpg?versionId=08296046-05e7-47cb-8b80-11807cc1c4eb"
+         },
+         "media_type": "image",
+         "size": 130278,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2043"
+         },
+         "version_id": "08296046-05e7-47cb-8b80-11807cc1c4eb"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:68e09f98006a9621cdda4f5411f9d9a7",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "b56e79ee-f822-4ea2-8bdc-0296b936580e",
+         "key": "chapter-2056.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2056.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2056.jpg?versionId=ccf4358c-938b-43ba-975b-a4de2ae827c5"
+         },
+         "media_type": "image",
+         "size": 126158,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2056"
+         },
+         "version_id": "ccf4358c-938b-43ba-975b-a4de2ae827c5"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:3b908b1675da4284ead2fb9eb73a7d92",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "b0271bc6-e49c-4c9d-88ec-b20ded51e484",
+         "key": "chapter-2157.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2157.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2157.jpg?versionId=9c46695b-41a5-4058-849c-aef304017dea"
+         },
+         "media_type": "image",
+         "size": 108405,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2157"
+         },
+         "version_id": "9c46695b-41a5-4058-849c-aef304017dea"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:99ec8dcf2b18d54a2d9e8bfb6468da43",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "874a790b-1142-4beb-aa95-02445fd5b1bb",
+         "key": "chapter-2287.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2287.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2287.jpg?versionId=29645f3e-b19b-4920-a174-31865e24546a"
+         },
+         "media_type": "image",
+         "size": 115885,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2287"
+         },
+         "version_id": "29645f3e-b19b-4920-a174-31865e24546a"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:0e7bbb8e3fbf7199b18a9f45d0c8bfdb",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "a82e7a50-4755-4be1-bed0-8a9a1ca22a8f",
+         "key": "chapter-2291.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2291.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2291.jpg?versionId=bcbec190-f2c0-4434-91d3-490fdbed3052"
+         },
+         "media_type": "image",
+         "size": 110433,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2291"
+         },
+         "version_id": "bcbec190-f2c0-4434-91d3-490fdbed3052"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:98f8a863720044c52337120aec715cc9",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "edf423c1-91ed-4e38-9a91-122fb8f83d9e",
+         "key": "chapter-2295.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2295.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2295.jpg?versionId=9432ead5-80eb-4583-9ddf-dd51f7b46092"
+         },
+         "media_type": "image",
+         "size": 114158,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2295"
+         },
+         "version_id": "9432ead5-80eb-4583-9ddf-dd51f7b46092"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:46166278e886ca9937c746651fce3242",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "9908e442-4a9d-48f2-a2fa-1ab6714a48bc",
+         "key": "chapter-2395.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2395.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2395.jpg?versionId=dc3cfaaf-5d05-44e8-919c-d3d4572d5e38"
+         },
+         "media_type": "image",
+         "size": 52440,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2395"
+         },
+         "version_id": "dc3cfaaf-5d05-44e8-919c-d3d4572d5e38"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:57d408f3d8f5366191ed533f841c3054",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "5f4bfe65-3825-4791-a97f-ded50b90a526",
+         "key": "chapter-2399.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2399.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2399.jpg?versionId=c5f444df-884d-44f0-a511-ac48c6061f3d"
+         },
+         "media_type": "image",
+         "size": 105777,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2399"
+         },
+         "version_id": "c5f444df-884d-44f0-a511-ac48c6061f3d"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:0770263537f96c4821469650516f3989",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "da9ae9f9-beac-4858-b317-9fce96f3ccf8",
+         "key": "chapter-2404.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2404.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2404.jpg?versionId=f5d985bd-a7bc-4f1c-b306-f68c0b2f5b09"
+         },
+         "media_type": "image",
+         "size": 98544,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2404"
+         },
+         "version_id": "f5d985bd-a7bc-4f1c-b306-f68c0b2f5b09"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:587ccdd1e077e482a90e90c9e23c699a",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "c4d9b867-98af-4c76-9d57-b5c768f1c1ea",
+         "key": "chapter-2419.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2419.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2419.jpg?versionId=55946f85-d346-43f4-99ea-17323220ea25"
+         },
+         "media_type": "image",
+         "size": 142372,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2419"
+         },
+         "version_id": "55946f85-d346-43f4-99ea-17323220ea25"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:b31ad61ba4ab969c40207767ef30c21e",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "005c0e6c-0ef7-48df-917e-7b9b36a99fb7",
+         "key": "chapter-2508.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2508.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2508.jpg?versionId=d8d237e9-8e31-4b7a-9b14-d2dbaecb41f9"
+         },
+         "media_type": "image",
+         "size": 120045,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2508"
+         },
+         "version_id": "d8d237e9-8e31-4b7a-9b14-d2dbaecb41f9"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:49694da1183cf269c95654061bfdc2a6",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "7ce7bc5d-612e-44d0-9994-75ddf79e62ab",
+         "key": "chapter-2512.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2512.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2512.jpg?versionId=d1fed41e-ab41-474a-a86f-ff4a14177aab"
+         },
+         "media_type": "image",
+         "size": 109910,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2512"
+         },
+         "version_id": "d1fed41e-ab41-474a-a86f-ff4a14177aab"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:f44544df5b2e87854bce87e8a0960dd8",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "4643f342-a551-4478-8c4c-e2d329cf19e1",
+         "key": "chapter-2516.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2516.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2516.jpg?versionId=b5def868-5b01-4cfa-87a0-cbf869eb9477"
+         },
+         "media_type": "image",
+         "size": 111378,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2516"
+         },
+         "version_id": "b5def868-5b01-4cfa-87a0-cbf869eb9477"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:3f4b91e913921aead8fc5df0466be0ab",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "e5fd093c-b756-4566-abac-0ce21ab25b3e",
+         "key": "chapter-2520.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2520.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2520.jpg?versionId=06898648-0755-4ec8-a62d-b186754cb406"
+         },
+         "media_type": "image",
+         "size": 111863,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2520"
+         },
+         "version_id": "06898648-0755-4ec8-a62d-b186754cb406"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:01f45707eee6bdbb82e105e055c52c83",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "b95eb497-fea3-4421-8466-47f9e8f413d1",
+         "key": "chapter-254.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-254.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-254.jpg?versionId=d172bc1a-b8f9-433f-9c46-c10bc4ff9d7d"
+         },
+         "media_type": "image",
+         "size": 99223,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "254"
+         },
+         "version_id": "d172bc1a-b8f9-433f-9c46-c10bc4ff9d7d"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:77fed7fac300fae42e68b36d3aea470c",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "12e80b83-186e-4b9c-b8c4-99ff3d4258fe",
+         "key": "chapter-2596.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2596.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2596.jpg?versionId=136ec66c-903a-4b13-8a37-d3c30280cea8"
+         },
+         "media_type": "image",
+         "size": 94766,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2596"
+         },
+         "version_id": "136ec66c-903a-4b13-8a37-d3c30280cea8"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:ee22da766fba494783ef9c362e826d43",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "9c73d4e1-3e90-4eb7-aca2-b73996adc1b8",
+         "key": "chapter-2602.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2602.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-2602.jpg?versionId=18d01626-3740-486f-88ee-b492ce8eb9d0"
+         },
+         "media_type": "image",
+         "size": 101761,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2602"
+         },
+         "version_id": "18d01626-3740-486f-88ee-b492ce8eb9d0"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:425bb8928797a2fd030c1a4ea9670f7f",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "66b96508-3fd7-4325-9ac7-6a6363bf2a0e",
+         "key": "chapter-301.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-301.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-301.jpg?versionId=fd7b35ff-d9f7-443b-b5d3-0c88c6e1966b"
+         },
+         "media_type": "image",
+         "size": 101476,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "301"
+         },
+         "version_id": "fd7b35ff-d9f7-443b-b5d3-0c88c6e1966b"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:41799166e6812320e6b2d354fcd6d38f",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "9746b274-c7f1-4609-9137-99650b4d43dc",
+         "key": "chapter-386.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-386.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-386.jpg?versionId=a4053991-3907-4c2d-8e2c-813402c6cf44"
+         },
+         "media_type": "image",
+         "size": 141835,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "386"
+         },
+         "version_id": "a4053991-3907-4c2d-8e2c-813402c6cf44"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:703d285c81db95cc8deb06eaf0a8b3e8",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "717b9ccf-e3a6-4977-b4d6-37054f3aa845",
+         "key": "chapter-438.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-438.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-438.jpg?versionId=788e0107-9892-448d-b5b6-2c849caeadc6"
+         },
+         "media_type": "image",
+         "size": 133430,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "438"
+         },
+         "version_id": "788e0107-9892-448d-b5b6-2c849caeadc6"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:46474c66d963fa8ad72a5f9dbf921195",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "b35aa471-08c1-4281-9404-902b328cf287",
+         "key": "chapter-588.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-588.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-588.jpg?versionId=4bde8d29-4496-4287-a6d9-205f9a935ce9"
+         },
+         "media_type": "image",
+         "size": 122686,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "588"
+         },
+         "version_id": "4bde8d29-4496-4287-a6d9-205f9a935ce9"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:5e7acd40194b6cfd3cb7fd94bfd15b77",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "e8b97a96-f3c7-48e6-b93b-b22f91fe8ac8",
+         "key": "chapter-653.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-653.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-653.jpg?versionId=dba775cf-ceb7-434a-bcfb-0d8443ab4622"
+         },
+         "media_type": "image",
+         "size": 132594,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "653"
+         },
+         "version_id": "dba775cf-ceb7-434a-bcfb-0d8443ab4622"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:bec0558b6488847afc243bc9578a402f",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "1fbcc258-dcec-42a5-82ad-e571ba31199b",
+         "key": "chapter-698.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-698.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-698.jpg?versionId=40aeb249-4677-497a-b061-e6a5a6a44377"
+         },
+         "media_type": "image",
+         "size": 84026,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "698"
+         },
+         "version_id": "40aeb249-4677-497a-b061-e6a5a6a44377"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:fb41a08fc8e0ad76ad4185ee14e2e98f",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "8e2d3231-a856-4cf3-b334-4dddca4abbf0",
+         "key": "chapter-705.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-705.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-705.jpg?versionId=2c5b30c8-45fe-47df-a6fe-11d48382e44d"
+         },
+         "media_type": "image",
+         "size": 117210,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "705"
+         },
+         "version_id": "2c5b30c8-45fe-47df-a6fe-11d48382e44d"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:5b47977eadb7d9555d3c65994596ecb9",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "4068e577-ca18-437a-865c-d53bf8e0a41e",
+         "key": "chapter-857.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-857.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-857.jpg?versionId=111781fd-4d36-40dd-a68d-5c3119c002ff"
+         },
+         "media_type": "image",
+         "size": 127784,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "857"
+         },
+         "version_id": "111781fd-4d36-40dd-a68d-5c3119c002ff"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:290826791fa46f764dcfca3ac536604a",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "69b2dbcb-254e-4ffa-acf6-5fa238a967d2",
+         "key": "chapter-931.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-931.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapter-931.jpg?versionId=4053f754-e4bf-456b-a0ed-1d4437e87245"
+         },
+         "media_type": "image",
+         "size": 137100,
+         "tags": {
+          "is_chapter_frame": "true",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "931"
+         },
+         "version_id": "4053f754-e4bf-456b-a0ed-1d4437e87245"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:96f34f10a418c2e04ca4898ad4091917",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "0142912b-dddb-4a5e-9e58-3f66f3f72d93",
+         "key": "frame-10.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-10.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-10.jpg?versionId=102135a9-6995-4f13-b17e-c14471f77540"
+         },
+         "media_type": "image",
+         "size": 230085,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2835.0"
+         },
+         "version_id": "102135a9-6995-4f13-b17e-c14471f77540"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:2650b58548f985054cbe13fdb0de463c",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "ebfe8ac6-2caa-4794-8d9a-28ead8fd1df5",
+         "key": "frame-1.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-1.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-1.jpg?versionId=89069164-bd92-40ce-ad73-ffabf0667d25"
+         },
+         "media_type": "image",
+         "size": 187892,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "283.5"
+         },
+         "version_id": "89069164-bd92-40ce-ad73-ffabf0667d25"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:53062fb2a41fae641e6934a834a1e15e",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "ff31f1e0-e003-44fa-be15-25e79b1b1fe4",
+         "key": "frame-2.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-2.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-2.jpg?versionId=5301e7fb-def6-4885-b213-35bbd87f5bd3"
+         },
+         "media_type": "image",
+         "size": 227991,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "567.0"
+         },
+         "version_id": "5301e7fb-def6-4885-b213-35bbd87f5bd3"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:c027e5b12e13c7237c96fc4415f9b2fa",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "5e577ffd-93fe-4a2a-a00a-d7bb3a44b47f",
+         "key": "frame-3.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-3.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-3.jpg?versionId=401e5049-ca6a-461a-88cd-1fd307596658"
+         },
+         "media_type": "image",
+         "size": 297397,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "850.5"
+         },
+         "version_id": "401e5049-ca6a-461a-88cd-1fd307596658"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:74891cd8ca456affc3606750c4835da2",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "046923ec-3322-458f-8e81-223eb1b9d3c0",
+         "key": "frame-4.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-4.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-4.jpg?versionId=8d7b08fa-44eb-4bb0-8431-2d9015fa991a"
+         },
+         "media_type": "image",
+         "size": 329456,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1134.0"
+         },
+         "version_id": "8d7b08fa-44eb-4bb0-8431-2d9015fa991a"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:01dbff5ccfd859dec605942195e846a3",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "f33c878f-2f82-42c6-b57c-a3047391fd00",
+         "key": "frame-5.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-5.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-5.jpg?versionId=7bd3d893-78e5-41dd-8857-aa2fba182a99"
+         },
+         "media_type": "image",
+         "size": 310236,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1417.5"
+         },
+         "version_id": "7bd3d893-78e5-41dd-8857-aa2fba182a99"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:97f666ee3510501ff4851025290046cb",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "31307352-dc25-4cad-94e1-df81a59464ab",
+         "key": "frame-6.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-6.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-6.jpg?versionId=24d041e1-4353-49fb-afbb-13858885263c"
+         },
+         "media_type": "image",
+         "size": 287935,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1701.0"
+         },
+         "version_id": "24d041e1-4353-49fb-afbb-13858885263c"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:849d39df588ea637fd92cec2d534d3c1",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "01a09f7e-0cf6-4144-9764-7794964a22c2",
+         "key": "frame-7.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-7.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-7.jpg?versionId=38ab5b34-83a4-4a9d-afcf-72ada868cdf7"
+         },
+         "media_type": "image",
+         "size": 273920,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "1984.5"
+         },
+         "version_id": "38ab5b34-83a4-4a9d-afcf-72ada868cdf7"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:7a6338771a3c663dda560883041dacf5",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "d1e3168c-0c16-4d43-9e0c-aab0a0642cc6",
+         "key": "frame-8.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-8.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-8.jpg?versionId=885c6722-1415-4899-a59f-1018addfbc11"
+         },
+         "media_type": "image",
+         "size": 259057,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2268.0"
+         },
+         "version_id": "885c6722-1415-4899-a59f-1018addfbc11"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:92ef6918e742aaae3bd73d4586ada70c",
+         "completed": true,
+         "content_type": "jpg",
+         "context_type": "frame",
+         "file_id": "d3987802-3216-41f2-8654-902b3aaa7bed",
+         "key": "frame-9.jpg",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-9.jpg",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frame-9.jpg?versionId=8f52eb93-e4c4-4311-bc3d-837381595f31"
+         },
+         "media_type": "image",
+         "size": 261761,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "timestamp": "2551.5"
+         },
+         "version_id": "8f52eb93-e4c4-4311-bc3d-837381595f31"
+        }
+       ],
+       "frames-preview": [
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:de7dfad990910593d15b7f3867f4e229",
+         "completed": true,
+         "content_type": "gif",
+         "context_type": "frames-preview",
+         "file_id": "633d2c6a-f539-4866-803c-ad87825b7571",
+         "key": "frames.gif",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frames.gif",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/frames.gif?versionId=c6e7c286-a26e-4a4a-b8ee-cad3ebd99242"
+         },
+         "media_type": "image",
+         "size": 3997518,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655"
+         },
+         "version_id": "c6e7c286-a26e-4a4a-b8ee-cad3ebd99242"
+        }
+       ],
+       "key": "LECTURES-VIDEO-2025-16059-001.mp4",
+       "links": {
+        "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/LECTURES-VIDEO-2025-16059-001.mp4",
+        "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/LECTURES-VIDEO-2025-16059-001.mp4?versionId=693adc18-021d-4453-b66e-16d9510f6655"
+       },
+       "media_type": "video",
+       "playlist": [
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:cc453abb94cf2a91dc8f1b98342fad17",
+         "completed": true,
+         "content_type": "smil",
+         "context_type": "playlist",
+         "file_id": "035461f7-151d-40c7-9bfd-4b04fa1bb17f",
+         "key": "LECTURES-VIDEO-2025-16059-001.smil",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/LECTURES-VIDEO-2025-16059-001.smil",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/LECTURES-VIDEO-2025-16059-001.smil?versionId=958402b0-c63e-44b6-abfc-4c2762e25a0a"
+         },
+         "media_type": "text",
+         "size": 595,
+         "tags": {
+          "master": "693adc18-021d-4453-b66e-16d9510f6655"
+         },
+         "version_id": "958402b0-c63e-44b6-abfc-4c2762e25a0a"
+        }
+       ],
+       "size": 1526276854,
+       "subformat": [
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:b9673e200b26f5c4a9a12edf5d5b647c",
+         "completed": true,
+         "content_type": "mp4",
+         "context_type": "subformat",
+         "file_id": "22108b66-fddd-4418-83cc-92aef59d6c05",
+         "key": "1080p.mp4",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/1080p.mp4",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/1080p.mp4?versionId=14e8b5e4-a913-4d34-a796-8554f9a679ba"
+         },
+         "media_type": "video",
+         "size": 1526276854,
+         "tags": {
+          "download": "true",
+          "frame_rate": "25",
+          "height": "1080",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "preset_quality": "1080p",
+          "smil": "true",
+          "type": "hd",
+          "video_bitrate": "5872",
+          "width": "1920"
+         },
+         "version_id": "14e8b5e4-a913-4d34-a796-8554f9a679ba"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:199f65ccbf55efb3f0158e14db527e47",
+         "completed": true,
+         "content_type": "mp4",
+         "context_type": "subformat",
+         "file_id": "d63bc56f-1ed4-48a3-85ff-f6783d872458",
+         "key": "759130c16-composite-360p-quality.mp4",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/759130c16-composite-360p-quality.mp4",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/759130c16-composite-360p-quality.mp4?versionId=09236488-07d5-4a53-8f3a-bd4b61575fa8"
+         },
+         "media_type": "video",
+         "size": 66977072,
+         "tags": {
+          "frame_rate": "25",
+          "height": "360",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "preset_quality": "360p",
+          "smil": "true",
+          "video_bitrate": "836",
+          "width": "640"
+         },
+         "version_id": "09236488-07d5-4a53-8f3a-bd4b61575fa8"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:5569724a30190b12fb854ce9a6b2a93d",
+         "completed": true,
+         "content_type": "mp4",
+         "context_type": "subformat",
+         "file_id": "da212b47-b5ce-416e-911f-dfe66808a5e8",
+         "key": "759130c16-composite-480p-quality.mp4",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/759130c16-composite-480p-quality.mp4",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/759130c16-composite-480p-quality.mp4?versionId=efd3f728-a457-420e-afe7-7e4ac7a8beec"
+         },
+         "media_type": "video",
+         "size": 80594245,
+         "tags": {
+          "frame_rate": "25",
+          "height": "480",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "preset_quality": "480p",
+          "smil": "true",
+          "video_bitrate": "1436",
+          "width": "854"
+         },
+         "version_id": "efd3f728-a457-420e-afe7-7e4ac7a8beec"
+        },
+        {
+         "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+         "checksum": "md5:901b0d671850df7a317d4b9dae6330fa",
+         "completed": true,
+         "content_type": "mp4",
+         "context_type": "subformat",
+         "file_id": "e1c94891-ddd7-4ed3-8e26-3043d2c0ce6b",
+         "key": "759130c16-composite-720p-quality.mp4",
+         "links": {
+          "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/759130c16-composite-720p-quality.mp4",
+          "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/759130c16-composite-720p-quality.mp4?versionId=30793fd0-e81e-453c-bbf6-ca3f30d1dc70"
+         },
+         "media_type": "video",
+         "size": 121355854,
+         "tags": {
+          "frame_rate": "25",
+          "height": "720",
+          "master": "693adc18-021d-4453-b66e-16d9510f6655",
+          "preset_quality": "720p",
+          "smil": "true",
+          "video_bitrate": "2672",
+          "width": "1280"
+         },
+         "version_id": "30793fd0-e81e-453c-bbf6-ca3f30d1dc70"
+        }
+       ],
+       "tags": {
+        "avg_frame_rate": "25/1",
+        "bit_rate": "4204303",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "codec_name": "h264",
+        "color_range": "pc",
+        "display_aspect_ratio": "16:9",
+        "duration": "2834.960000",
+        "flow_id": "05c7e9ef-211b-4fa1-b64d-a7f4ff940090",
+        "height": "1080",
+        "nb_frames": "70874",
+        "preview": "true",
+        "size": "1526276854",
+        "width": "1920"
+       },
+       "version_id": "693adc18-021d-4453-b66e-16d9510f6655"
+      },
+      {
+       "bucket_id": "a9add83a-c680-449f-8c3f-8f4da09c2e4f",
+       "checksum": "md5:02a9876814652ba1da5e24da0b2f95a7",
+       "completed": true,
+       "content_type": "vtt",
+       "context_type": "chapters",
+       "file_id": "159ba41e-834b-426f-92d7-684c1064d530",
+       "key": "chapters.vtt",
+       "links": {
+        "deleteFile": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapters.vtt",
+        "self": "https://videos.cern.ch/api/files/a9add83a-c680-449f-8c3f-8f4da09c2e4f/chapters.vtt?versionId=ca5e697f-3721-4392-832a-46a32e814a94"
+       },
+       "media_type": "chapters",
+       "size": 2355,
+       "tags": {
+        "content_type": "vtt"
+       },
+       "version_id": "ca5e697f-3721-4392-832a-46a32e814a94"
+      }
+     ],
+     "_project_id": "435a2d0e23264128b9e17252699d67a6",
+     "additional_descriptions": [
+      {
+       "description": "Plenary ECFA",
+       "type": "SeriesInformation"
+      },
+      {
+       "description": "103rd Plenary ECFA meeting - CERN",
+       "type": "SeriesInformation"
+      }
+     ],
+     "category": "LECTURES",
+     "collections": [
+      "Lectures",
+      "Lectures::Video Lectures",
+      "Lectures::Talks, Seminars and Other Events",
+      "Lectures::Talks, Seminars and Other Events::CERN-wide meetings, trainings and events"
+     ],
+     "contributors": [
+      {
+       "name": "CERN",
+       "role": "Producer"
+      },
+      {
+       "affiliations": [
+        "INFN Padova (IT)"
+       ],
+       "name": "Azzi, Patrizia",
+       "role": "Speaker"
+      }
+     ],
+     "copyright": {
+      "holder": "CERN",
+      "url": "http://copyright.web.cern.ch",
+      "year": "2018"
+     },
+     "date": "2018-11-16",
+     "description": "HL-LHC/HE-LHC.<br>\n<br>\n0:00:00 Slide 1<br>\n0:01:46 Slide 2<br>\n0:02:36 Slide 3<br>\n0:04:14 Slide 4<br>\n0:05:01 Slide 5<br>\n0:06:26 Slide 6<br>\n0:07:18 Slide 7<br>\n0:09:48 Slide 8<br>\n0:10:53 Slide 9<br>\n0:11:38 Slide 10<br>\n0:11:45 Slide 11<br>\n0:14:17 Slide 12<br>\n0:15:31 Slide 13<br>\n0:16:44 Slide 14<br>\n0:17:30 Slide 15<br>\n0:19:19 Slide 16<br>\n0:19:52 Slide 17<br>\n0:21:12 Slide 18<br>\n0:22:10 Slide 19<br>\n0:22:15 Slide 20<br>\n0:23:12 Slide 21<br>\n0:23:46 Slide 22<br>\n0:24:39 Slide 23<br>\n0:25:26 Slide 24<br>\n0:26:14 Slide 25<br>\n0:27:01 Slide 26<br>\n0:27:58 Slide 27<br>\n0:28:39 Slide 28<br>\n0:29:22 Slide 29<br>\n0:29:45 Slide 30<br>\n0:30:40 Slide 31<br>\n0:31:12 Slide 32<br>\n0:31:39 Slide 33<br>\n0:31:48 Slide 34<br>\n0:32:28 Slide 35<br>\n0:32:39 Slide 36<br>\n0:33:07 Slide 37<br>\n0:33:32 Slide 38<br>\n0:33:45 Slide 39<br>\n0:34:03 Slide 40<br>\n0:34:16 Slide 41<br>\n0:35:57 Slide 42<br>\n0:38:07 Slide 43<br>\n0:38:11 Slide 44<br>\n0:38:15 Slide 45<br>\n0:39:55 Slide 46<br>\n0:39:59 Slide 47<br>\n0:40:04 Slide 48<br>\n0:40:19 Slide 49<br>\n0:41:48 Slide 50<br>\n0:41:52 Slide 51<br>\n0:41:56 Slide 52<br>\n0:42:00 Slide 53<br>\n0:43:16 Slide 54<br>\n0:43:22 Slide 55",
+     "duration": "00:47:14",
+     "keywords": [
+      {
+       "name": "Plenary ECFA"
+      },
+      {
+       "name": "103rd Plenary ECFA meeting - CERN"
+      },
+      {
+       "name": "Event"
+      },
+      {
+       "name": "TALK"
+      },
+      {
+       "name": "CERN"
+      }
+     ],
+     "language": "en",
+     "legacy_recid": 2648512,
+     "license": [
+      {
+       "license": "CERN",
+       "material": "",
+       "url": "http://copyright.web.cern.ch"
+      }
+     ],
+     "location": "-",
+     "publication_date": "2018-11-16",
+     "recid": 3016316,
+     "related_identifiers": [
+      {
+       "identifier": "759130",
+       "relation_type": "IsPartOf",
+       "scheme": "Indico"
+      },
+      {
+       "identifier": "https://indico.cern.ch/event/759130/contributions/3148640/",
+       "relation_type": "IsPartOf",
+       "scheme": "URL"
+      },
+      {
+       "identifier": "https://indico.cern.ch/event/759130/",
+       "relation_type": "IsPartOf",
+       "scheme": "URL"
+      }
+     ],
+     "report_number": [
+      "LECTURES-VIDEO-2025-16059-001"
+     ],
+     "title": {
+      "title": "HL-LHC/HE-LHC"
+     },
+     "type": "VIDEO"
+    },
+    "updated": "2026-03-08T22:41:06.976628+00:00"
+   }
+  ],
+  "total": 4498
+ },
+ "links": {
+  "next": "https://videos.cern.ch/api/records/?sort=bestmatch&q=lhc&size=2&page=2",
+  "self": "https://videos.cern.ch/api/records/?sort=bestmatch&q=lhc&size=2&page=1"
+ }
+}
