@@ -146,5 +146,34 @@ class CdsTest(unittest.TestCase):
         self.assertIn("LECTURES-VIDEO-2025-16059-001.mp4", c.download_url)
 
 
+class NasaTest(unittest.TestCase):
+    def test_parses_search_and_resolves_orig_asset(self):
+        fetch = fixture_fetch({
+            "images-api.nasa.gov/search": "nasa_search_mars.json",
+            "collection.json": "nasa_collection_mars.json",
+        })
+        cands = dv.search_nasa("mars", limit=5, fetch=fetch)
+        self.assertEqual(len(cands), 1)
+        c = cands[0]
+        self.assertEqual(c.source, "nasa")
+        self.assertEqual(c.title, "NASA Chopper Ready for a Spin on Mars")
+        self.assertEqual(c.date, "2019-06-06")
+        self.assertEqual(c.credit, "JPL")
+        self.assertIn("Public domain", c.license)
+        self.assertEqual(
+            c.download_url,
+            "http://images-assets.nasa.gov/video/JPL-20190606-TECHf-0001-Mars%20Chopper"
+            "%20Ready%20for%20a%20Spin%20on%20Mars/JPL-20190606-TECHf-0001-Mars%20Chopper"
+            "%20Ready%20for%20a%20Spin%20on%20Mars~orig.mp4")
+        self.assertNotIn(" ", c.download_url)
+        self.assertNotIn(" ", c.page_url)
+
+    def test_best_asset_preference(self):
+        self.assertEqual(dv._nasa_best_asset(["a~large.mp4", "a~orig.mp4", "a.vtt"]),
+                         "a~orig.mp4")
+        self.assertEqual(dv._nasa_best_asset(["a.srt", "b.mp4"]), "b.mp4")
+        self.assertIsNone(dv._nasa_best_asset(["a.jpg"]))
+
+
 if __name__ == "__main__":
     unittest.main()

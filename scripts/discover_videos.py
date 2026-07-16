@@ -201,3 +201,48 @@ def search_cds(keyword: str, limit: int = 5, include_lectures: bool = False,
         if len(out) >= limit:
             break
     return out
+
+
+NASA_API = "https://images-api.nasa.gov/search"
+
+
+def _nasa_best_asset(urls: list[str]) -> str | None:
+    mp4s = [u for u in urls if u.lower().endswith(".mp4")]
+    for marker in ("~orig", "~large", "~medium", "~small"):
+        for u in mp4s:
+            if marker in u:
+                return u
+    return mp4s[0] if mp4s else None
+
+
+def search_nasa(keyword: str, limit: int = 5, fetch=http_get_json) -> list[Candidate]:
+    """NASA Image & Video Library. Asset URLs contain spaces -> quoted."""
+    url = NASA_API + "?" + urllib.parse.urlencode(
+        {"q": keyword, "media_type": "video", "page_size": limit})
+    data = fetch(url)
+    out: list[Candidate] = []
+    for item in data.get("collection", {}).get("items", [])[:limit]:
+        d = (item.get("data") or [{}])[0]
+        href = item.get("href", "")
+        if not href:
+            continue
+        assets = fetch(urllib.parse.quote(href, safe=":/"))
+        if not isinstance(assets, list):
+            continue
+        best = _nasa_best_asset([u for u in assets if isinstance(u, str)])
+        if not best:
+            continue
+        nasa_id = d.get("nasa_id", "")
+        out.append(Candidate(
+            source="nasa",
+            id=nasa_id,
+            title=d.get("title", ""),
+            date=(d.get("date_created") or "")[:10],
+            duration_s=None,
+            resolution=None,
+            license="Public domain (NASA media guidelines)",
+            credit=d.get("center"),
+            page_url="https://images.nasa.gov/details/" + urllib.parse.quote(nasa_id),
+            download_url=urllib.parse.quote(best, safe=":/~"),
+        ))
+    return out
