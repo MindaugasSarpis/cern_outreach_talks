@@ -227,5 +227,31 @@ class DjangoplicityTest(unittest.TestCase):
         self.assertEqual(dv._d2d_best_resource(item), ("http://x/o.mp4", "3840x2160"))
 
 
+class CommonsTest(unittest.TestCase):
+    def test_parses_results_ordered_by_search_rank(self):
+        fetch = fixture_fetch({"commons.wikimedia.org": "commons_cloud_chamber.json"})
+        cands = dv.search_commons("cloud chamber", limit=5, fetch=fetch)
+        self.assertEqual(len(cands), 2)
+        first, second = cands
+        self.assertEqual(first.title, "Wilson chamber")
+        self.assertEqual(first.id, "113180907")
+        self.assertEqual(first.resolution, "1920x1080")
+        self.assertAlmostEqual(first.duration_s, 62.936, places=3)
+        self.assertEqual(first.license, "CC BY 4.0")
+        self.assertEqual(
+            first.download_url,
+            "https://upload.wikimedia.org/wikipedia/commons/5/5c/Wilson_chamber.webm")
+        self.assertEqual(
+            first.page_url,
+            "https://commons.wikimedia.org/wiki/File:Wilson_chamber.webm")
+        self.assertEqual(second.title, "Cloud Chamber")
+        self.assertEqual(second.license, "CC BY 3.0")
+
+    def test_limit(self):
+        fetch = fixture_fetch({"commons.wikimedia.org": "commons_cloud_chamber.json"})
+        self.assertEqual(
+            len(dv.search_commons("cloud chamber", limit=1, fetch=fetch)), 1)
+
+
 if __name__ == "__main__":
     unittest.main()

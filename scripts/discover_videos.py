@@ -256,6 +256,55 @@ DJANGOPLICITY_SITES = {
 }
 _VIDEO_EXTS = (".mp4", ".m4v", ".mov", ".webm")
 
+COMMONS_API = "https://commons.wikimedia.org/w/api.php"
+
+
+def search_commons(keyword: str, limit: int = 5, fetch=http_get_json) -> list[Candidate]:
+    """Wikimedia Commons file search. Results are often webm/ogv — fine,
+    the pipeline's encode step re-encodes anything ffmpeg can read."""
+    params = {
+        "action": "query", "format": "json",
+        "generator": "search",
+        "gsrsearch": f"{keyword} filetype:video",
+        "gsrnamespace": 6, "gsrlimit": limit,
+        "prop": "imageinfo",
+        "iiprop": "url|size|extmetadata",
+        "iiextmetadatafilter": "LicenseShortName|UsageTerms|Artist|DateTimeOriginal",
+    }
+    data = fetch(COMMONS_API + "?" + urllib.parse.urlencode(params))
+    pages = (data.get("query") or {}).get("pages") or {}
+    out: list[Candidate] = []
+    for page in sorted(pages.values(), key=lambda p: p.get("index", 0)):
+        infos = page.get("imageinfo") or []
+        if not infos:
+            continue
+        ii = infos[0]
+        meta = ii.get("extmetadata") or {}
+
+        def ext(key: str) -> str | None:
+            return strip_html(str((meta.get(key) or {}).get("value", ""))) or None
+
+        resolution = None
+        if ii.get("width") and ii.get("height"):
+            resolution = f"{ii['width']}x{ii['height']}"
+        title = re.sub(r"^File:", "", page.get("title", ""))
+        out.append(Candidate(
+            source="commons",
+            id=str(page.get("pageid", "")),
+            title=Path(title).stem,
+            date=ext("DateTimeOriginal") or "",
+            duration_s=float(ii["duration"]) if ii.get("duration") else None,
+            resolution=resolution,
+            license=ext("LicenseShortName") or ext("UsageTerms")
+                    or "unknown — check file page",
+            credit=ext("Artist"),
+            page_url=ii.get("descriptionurl") or "",
+            download_url=ii.get("url") or "",
+        ))
+        if len(out) >= limit:
+            break
+    return out
+
 
 def _d2d_best_resource(item: dict) -> tuple[str | None, str | None]:
     """(download_url, 'WxH') of the best video rendition: Original wins,
