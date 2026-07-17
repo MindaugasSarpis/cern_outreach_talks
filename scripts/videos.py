@@ -122,6 +122,20 @@ def nvenc_available() -> bool:
     return probe.returncode == 0
 
 
+@functools.lru_cache(maxsize=1)
+def videotoolbox_available() -> bool:
+    """True iff hevc_videotoolbox actually *encodes* here (macOS only)."""
+    if not shutil.which("ffmpeg"):
+        return False
+    probe = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-loglevel", "error",
+         "-f", "lavfi", "-i", "testsrc2=size=256x144:rate=30:duration=1",
+         "-c:v", "hevc_videotoolbox", "-f", "null", "-"],
+        capture_output=True,
+    )
+    return probe.returncode == 0
+
+
 def select_encoder(entry_encoder: str | None) -> str:
     """Per-video override wins; else auto (nvenc if available, else cpu).
 
@@ -129,8 +143,23 @@ def select_encoder(entry_encoder: str | None) -> str:
     hardware HEVC encoder, which trades a little coding efficiency for ~90x the
     speed of libx265 (measured on an M2 Pro at 4K: 50 fps vs 0.55 fps). Reach
     for it when a CPU master would not finish in the time available.
+
+    A manifest is shared across machines, so an `encoder` a given box cannot
+    run degrades to the local best rather than failing the encode: the Mac that
+    needs videotoolbox and the Linux workstation that cannot run it both build
+    the same manifest.
     """
-    if entry_encoder in ("nvenc", "cpu", "videotoolbox"):
+    if entry_encoder == "videotoolbox":
+        if videotoolbox_available():
+            return "videotoolbox"
+        print("  ! videotoolbox requested but unavailable here — falling back",
+              file=sys.stderr)
+        entry_encoder = None
+    if entry_encoder == "nvenc" and not nvenc_available():
+        print("  ! nvenc requested but unavailable here — falling back to cpu",
+              file=sys.stderr)
+        entry_encoder = None
+    if entry_encoder in ("nvenc", "cpu"):
         return entry_encoder
     return "nvenc" if nvenc_available() else "cpu"
 
