@@ -46,10 +46,6 @@ layout: default
 
 ---
 
-<VideoPlayer src="nasa_exploring_cosmic_cliffs_4k.mp4" />
-
----
-
 <VideoPlayer src="expansion_funnel_h264_1080p.webm" muted />
 
 ---
