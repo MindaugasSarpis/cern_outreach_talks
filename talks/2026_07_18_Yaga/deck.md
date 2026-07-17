@@ -14,7 +14,7 @@ info: |
 layout: default
 ---
 
-<VideoPlayer src="mountain.mov" muted />
+<VideoPlayer src="mountain.mov" />
 
 ---
 
