@@ -61,6 +61,8 @@ const currentSrc = ref(localSrc.value)
 const status = ref('idle')
 const isActive = useIsSlideActive()
 const hasBeenActive = ref(false)
+// Dev-only look-ahead: source attached and buffering before the slide is active.
+const warmed = ref(false)
 
 const mimeType = computed(() => {
   const ext = props.src.split('.').pop()?.toLowerCase()
@@ -128,7 +130,7 @@ function hideControls() {
 // --- Fallback chain ---
 let switching = false
 function onError() {
-  if (switching || !hasBeenActive.value) return
+  if (switching || (!hasBeenActive.value && !warmed.value)) return
   const chain = fallbackChain.value
   const idx = chain.indexOf(currentSrc.value)
   if (idx === -1 || idx === chain.length - 1) {
@@ -150,8 +152,11 @@ function syncPlayback() {
   if (isActive.value) {
     if (!hasBeenActive.value) {
       hasBeenActive.value = true
-      status.value = 'loading'
-      nextTick(() => videoRef.value?.load())
+      // Already loading/buffered via the dev look-ahead warm — don't reset it.
+      if (!warmed.value) {
+        status.value = 'loading'
+        nextTick(() => videoRef.value?.load())
+      }
     }
     video.currentTime = 0
     video.muted = true
@@ -178,21 +183,32 @@ onMounted(() => {
   syncPlayback()
 })
 
-// Look-ahead preload: warm the browser cache for the upcoming slides' videos
-// via <link rel="preload" as="video">. Skipped in dev, where files are served
-// locally and there's nothing to warm.
+// Look-ahead preload for upcoming slides' videos, two strategies:
+//  - PROD: warm the browser cache via <link rel="preload" as="video"> against
+//    the release URL (the network round-trip is the bottleneck there).
+//  - DEV: files are served locally, so instead attach the <source> early and
+//    let the element itself buffer (preload="auto") — first play of a big HQ
+//    master otherwise stalls on the cold read when the slide activates.
 const PRELOAD_AHEAD = 3
 const { currentPage } = useNav()
 const { $page } = useSlideContext()
 
-const shouldPreload = computed(() => {
-  if (!import.meta.env.PROD) return false
+const isUpcoming = computed(() => {
   const here = $page?.value
   const now = currentPage?.value
   if (!here || !now) return false
   const distance = here - now
   return distance > 0 && distance <= PRELOAD_AHEAD
 })
+
+const shouldPreload = computed(() => import.meta.env.PROD && isUpcoming.value)
+
+watch(() => import.meta.env.DEV && isUpcoming.value, (warm) => {
+  if (!warm || warmed.value || hasBeenActive.value) return
+  warmed.value = true
+  status.value = 'loading'
+  nextTick(() => videoRef.value?.load())
+}, { immediate: true })
 
 let preloadLink = null
 function addPreload() {
@@ -233,7 +249,7 @@ onUnmounted(removePreload)
       muted
       playsinline
       webkit-playsinline
-      preload="none"
+      :preload="warmed || hasBeenActive ? 'auto' : 'none'"
       @loadeddata="onLoaded"
       @error="onError"
       @timeupdate="onTimeUpdate"
@@ -241,7 +257,7 @@ onUnmounted(removePreload)
       @pause="playing = false"
       :class="{ 'video-ready': status === 'ready' }"
     >
-      <source ref="sourceRef" :src="hasBeenActive ? currentSrc : ''" :type="mimeType" />
+      <source ref="sourceRef" :src="hasBeenActive || warmed ? currentSrc : ''" :type="mimeType" />
     </video>
     <div v-if="controls && status === 'ready'" class="custom-controls" :class="{ visible: controlsVisible }" @click.stop>
       <button class="ctrl-btn" @click="togglePlay">{{ playing ? '⏸' : '▶' }}</button>

@@ -48,6 +48,63 @@ VideoPlayer's fallback chain. The only deck clip with a true 4K raw — the \
 rest are 1080p/2880-native, so they stay inherited (no upscaling)."""
 
 [[videos]]
+name    = "mountain.mov"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Opening mountain aerial (replaces skylapse as slide 1). 3.1 GB raw."
+
+[[videos]]
+name    = "lt_zoom.mov"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = """\
+Lithuanian-labelled cosmic zoom, rendered in Resolve (H.264 Quality/Best, \
+4K60, 7.2 GB raw). If the HQ HEVC encode lands over the 2 GB release cap, \
+switch to hq_from_raw or raise hq_crf."""
+
+[[videos]]
+name    = "atoms.mov"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "CG zoom into atoms (replaces shared voyage_in_to_the_world_of_atoms)."
+
+[[videos]]
+name    = "nasa_exploring_cosmic_cliffs_4k.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Webb cosmic cliffs 4K flythrough (NASA)."
+
+[[videos]]
+name    = "perseverence_rover_landing_nasa.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Perseverance rover landing footage with audio (NASA)."
+
+[[videos]]
+name    = "saturn_v_launch_nasa.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Saturn V launch, NASA archival footage."
+
+[[videos]]
+name    = "blue_ghost_lunar_orbit.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "Firefly Blue Ghost lunar orbit footage."
+
+[[videos]]
+name    = "cern_footage_2022_013_001_1080p_lhc.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN LHC tunnel B-roll (2022-013-001, 1080p)."
+
+[[videos]]
+name    = "cern_footage_2024_006_001.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN B-roll (2024-006-001)."
+
+[[videos]]
 name        = "skylapse.mp4"
 profile     = "standard-tight"
 used_in     = ["deck"]
