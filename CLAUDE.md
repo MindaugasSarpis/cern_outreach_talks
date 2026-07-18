@@ -125,6 +125,9 @@ pnpm export             # PDF export (requires playwright-chromium; install loca
 
 pnpm videos:sync        # rclone manifest-listed raws from [defaults].source_remote
                         #   (--all mirrors the whole remote folder)
+                        #   compares by MD5 so a same-name re-upload is never
+                        #   mistaken for "up to date"; --quick reverts to
+                        #   rclone's faster size+modtime compare
 pnpm videos:encode      # ffmpeg raw -> public/videos/ (web tier, idempotent)
 pnpm videos:encode-hq   # ffmpeg raw -> videos/hq/ (visually-lossless venue masters)
 pnpm videos:publish     # upload encoded web files to the web GH Release
@@ -218,7 +221,24 @@ Profiles are quality *targets*; concrete ffmpeg args are built per selected enco
 **Encoder:** NVENC (GPU) is the default, auto-detected at runtime via a real
 `h264_nvenc` probe, falling back to **CPU** (libx264 web / libx265 masters) when
 NVENC is unavailable (CI, non-NVIDIA). Force per clip with `encoder = "nvenc" |
-"cpu"` on a `[[videos]]` entry, or talk-wide in `[defaults]`.
+"cpu" | "videotoolbox"` on a `[[videos]]` entry, or talk-wide in `[defaults]`.
+
+`videotoolbox` is Apple Silicon's hardware HEVC encoder for the **HQ tier**. It
+is **opt-in only, never auto-selected** — the CPU fallback stays the default so
+CI and non-Mac machines behave predictably. Reach for it when a CPU master
+can't finish in the time available: on an M2 Pro at 4K, `libx265 -preset slow
+-crf 16 -tune grain` measures **0.55 fps** (~2.8 h for a 3-minute clip, ~12 h
+for a 4K60 six-minute one), while `hevc_videotoolbox` measures **~50 fps** —
+the same master in under two minutes. It is bitrate-driven rather than
+CRF-driven, so `hq_crf` does not apply; it targets ~80 Mbps at 4K, scaled
+linearly for smaller masters.
+
+**HQ audio is made browser-safe automatically.** The HQ tier is served straight
+off disk to VideoPlayer, so its audio must survive Chrome's MP4/MOV demuxer.
+`_hq_audio_args` probes the raw and overrides the profile's `-c:a copy` with
+AAC 320k when the source carries something Chrome can't decode — notably the
+uncompressed **PCM** that editors emit by default for QuickTime masters, which
+copies through happily and then plays *silent* on the slide.
 
 `{LONG_EDGE}` in profiles is resolved at encode time. The **web** tier resolves
 it from `web_long_edge_px` (global default **1920** — the web copy is never

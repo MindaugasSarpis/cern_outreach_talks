@@ -14,7 +14,7 @@ info: |
 layout: default
 ---
 
-<VideoPlayer src="mountain.mov" muted />
+<VideoPlayer src="mountain.mov" />
 
 ---
 
@@ -43,10 +43,6 @@ layout: default
 ---
 
 <VideoPlayer src="webb_reel.mp4" />
-
----
-
-<VideoPlayer src="nasa_exploring_cosmic_cliffs_4k.mp4" />
 
 ---
 

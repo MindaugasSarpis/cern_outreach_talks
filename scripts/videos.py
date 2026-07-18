@@ -122,8 +122,43 @@ def nvenc_available() -> bool:
     return probe.returncode == 0
 
 
+@functools.lru_cache(maxsize=1)
+def videotoolbox_available() -> bool:
+    """True iff hevc_videotoolbox actually *encodes* here (macOS only)."""
+    if not shutil.which("ffmpeg"):
+        return False
+    probe = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-loglevel", "error",
+         "-f", "lavfi", "-i", "testsrc2=size=256x144:rate=30:duration=1",
+         "-c:v", "hevc_videotoolbox", "-f", "null", "-"],
+        capture_output=True,
+    )
+    return probe.returncode == 0
+
+
 def select_encoder(entry_encoder: str | None) -> str:
-    """Per-video override wins; else auto (nvenc if available, else cpu)."""
+    """Per-video override wins; else auto (nvenc if available, else cpu).
+
+    `videotoolbox` is opt-in only, never auto-selected: it is Apple Silicon's
+    hardware HEVC encoder, which trades a little coding efficiency for ~90x the
+    speed of libx265 (measured on an M2 Pro at 4K: 50 fps vs 0.55 fps). Reach
+    for it when a CPU master would not finish in the time available.
+
+    A manifest is shared across machines, so an `encoder` a given box cannot
+    run degrades to the local best rather than failing the encode: the Mac that
+    needs videotoolbox and the Linux workstation that cannot run it both build
+    the same manifest.
+    """
+    if entry_encoder == "videotoolbox":
+        if videotoolbox_available():
+            return "videotoolbox"
+        print("  ! videotoolbox requested but unavailable here — falling back",
+              file=sys.stderr)
+        entry_encoder = None
+    if entry_encoder == "nvenc" and not nvenc_available():
+        print("  ! nvenc requested but unavailable here — falling back to cpu",
+              file=sys.stderr)
+        entry_encoder = None
     if entry_encoder in ("nvenc", "cpu"):
         return entry_encoder
     return "nvenc" if nvenc_available() else "cpu"
@@ -164,10 +199,50 @@ def _hq_args(cq: int, crf: int, long_edge: int, encoder: str) -> list[str]:
     if encoder == "nvenc":
         v = ["-c:v", "hevc_nvenc", "-tag:v", "hvc1", "-preset", "p7", "-tune", "hq",
              "-rc", "vbr", "-cq", str(cq), "-b:v", "0", "-pix_fmt", "yuv420p"]
+    elif encoder == "videotoolbox":
+        # The media engine is bitrate-driven, not CRF-driven (so hq_crf does
+        # not apply), so pick a ceiling generous enough to stay visually
+        # lossless: ~80 Mbps at 4K, scaled linearly by long edge (2880 -> 60M,
+        # 1080p -> 40M). Deliberately well above what the material needs, and
+        # still a fraction of the 130-210 Mbps editor exports these come from.
+        mbps = max(12, round(80 * long_edge / 3840))
+        v = ["-c:v", "hevc_videotoolbox", "-tag:v", "hvc1",
+             "-b:v", f"{mbps}M", "-pix_fmt", "yuv420p"]
     else:
         v = ["-c:v", "libx265", "-tag:v", "hvc1", "-preset", "slow",
              "-crf", str(crf), "-tune", "grain", "-pix_fmt", "yuv420p"]
     return v + _scale(long_edge) + ["-c:a", "copy", "-movflags", "+faststart"]
+
+
+# Audio codecs Chrome's MP4/MOV demuxer can actually decode. Anything else in
+# an HQ master plays as silence in the deck.
+BROWSER_SAFE_AUDIO = frozenset({"aac", "mp3", "flac", "opus", "vorbis"})
+
+
+def _probe_audio_codec(path: Path) -> str | None:
+    """First audio stream's codec name, or None when the file is silent."""
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "a:0",
+         "-show_entries", "stream=codec_name", "-of", "csv=p=0", str(path)],
+        capture_output=True, text=True,
+    )
+    codec = out.stdout.strip().splitlines()
+    return codec[0].strip() if codec and codec[0].strip() else None
+
+
+def _hq_audio_args(raw: Path) -> list[str]:
+    """Override `-c:a copy` when the source audio would not play in a browser.
+
+    HQ masters are served straight off disk to VideoPlayer, so their audio has
+    to survive Chrome's demuxer. Editors routinely export venue masters with
+    uncompressed PCM (Resolve's default for a QuickTime master); `-c:a copy`
+    carries that through happily and the slide then plays silent — a failure
+    nobody notices until the room is quiet. Returns [] when copy is fine.
+    """
+    codec = _probe_audio_codec(raw)
+    if codec is None or codec in BROWSER_SAFE_AUDIO:
+        return []
+    return ["-c:a", "aac", "-b:a", "320k", "-ac", "2"]
 
 
 @dataclass
@@ -271,7 +346,17 @@ def cmd_sync(args: argparse.Namespace) -> int:
         print("Manifest lists no [[videos]]; nothing to sync (use --all to mirror the whole remote).")
         return 0
     RAW_DIR.mkdir(parents=True, exist_ok=True)
+    # --checksum: compare by MD5 rather than rclone's default size+modtime.
+    # Re-uploading a re-export under the same name is routine here, and the
+    # default heuristic only notices if size or modtime moved — a re-encode
+    # that happens to land on the same size, or an upload that preserves the
+    # original modtime, reads as "up to date" and the stale local cut stays.
+    # Drive already stores an MD5, so the compare costs one API field per file
+    # and the hash of anything we'd have transferred anyway. Cheap insurance
+    # against presenting last week's edit. --quick opts back into size+modtime.
     cmd = ["rclone", "sync", remote, str(RAW_DIR), "--progress", "--transfers", "4"]
+    if not args.quick:
+        cmd.append("--checksum")
     if not args.all:
         # Only manifest-listed raws: the remote folder holds every talk's
         # sources, so a full mirror drags tens of GB into each talk. Filters
@@ -649,7 +734,10 @@ def _rclone_from_raw(entries: list[VideoEntry], source_remote: str | None, dry_r
         print(f"  + {v.name}: rclone from {src} (hq_from_raw)")
         if dry_run:
             continue
-        rc = subprocess.call(["rclone", "copyto", src, str(dst), "--progress"])
+        # --checksum for the same reason as cmd_sync: a re-exported master can
+        # keep its size and modtime, and these entries ARE the venue master —
+        # a stale one plays on the wall.
+        rc = subprocess.call(["rclone", "copyto", src, str(dst), "--progress", "--checksum"])
         if rc != 0:
             return rc
     return 0
@@ -1066,10 +1154,17 @@ def _encode_one_hq(entry: VideoEntry, force: bool, default_long_edge: int) -> tu
     if not raw.exists():
         return entry, "missing", 0, 0
     raw_size = raw.stat().st_size
-    if hq.exists() and not force and hq.stat().st_mtime >= raw.stat().st_mtime:
-        return entry, "skipped", raw_size, hq.stat().st_size
 
     if entry.hq_from_raw:
+        # Freshness for a hard link is exact: same inode == same bytes. The
+        # mtime test used below would wrongly report "up to date" when a
+        # re-pulled raw carries the old modtime (see cmd_sync's --checksum
+        # note) — leaving last week's cut linked as the venue master.
+        # HQ_DIR and RAW_DIR are siblings under videos/, so os.link is the
+        # real path here; the copy2 fallback only fires cross-device, where it
+        # re-copies each run rather than risk serving a stale master.
+        if hq.exists() and not force and hq.samefile(raw):
+            return entry, "skipped", raw_size, hq.stat().st_size
         if hq.exists() or hq.is_symlink():
             hq.unlink()
         try:
@@ -1079,6 +1174,9 @@ def _encode_one_hq(entry: VideoEntry, force: bool, default_long_edge: int) -> tu
             shutil.copy2(raw, hq)
         return entry, "ok", raw_size, raw_size
 
+    if hq.exists() and not force and hq.stat().st_mtime >= raw.stat().st_mtime:
+        return entry, "skipped", raw_size, hq.stat().st_size
+
     encoder = select_encoder(entry.encoder)
     if entry.profile == "remux":
         ff_args = _profile_args("remux", default_long_edge, encoder)
@@ -1087,6 +1185,10 @@ def _encode_one_hq(entry: VideoEntry, force: bool, default_long_edge: int) -> tu
         ff_args = _profile_args("hq-visually-lossless", long_edge, encoder, cq_override=entry.hq_crf)
         if entry.profile == "silent-loop":
             ff_args = ff_args + ["-an"]
+    if entry.profile != "silent-loop":
+        # Appended last so it overrides the profile's `-c:a copy` (ffmpeg takes
+        # the final occurrence of an option).
+        ff_args = ff_args + _hq_audio_args(raw)
 
     tmp = hq.with_name(f"{hq.stem}.partial{hq.suffix}")
     cmd = [
@@ -1180,13 +1282,14 @@ def cmd_build(args: argparse.Namespace) -> int:
     return 0
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     p_sync = sub.add_parser("sync", help="rclone manifest-listed raw files from Drive")
     p_sync.add_argument("--dry-run", action="store_true")
     p_sync.add_argument("--all", action="store_true", help="mirror the whole remote folder, not just manifest-listed raws")
+    p_sync.add_argument("--quick", action="store_true", help="compare by size+modtime instead of MD5 (faster, but misses same-size re-exports)")
     p_sync.set_defaults(func=cmd_sync)
 
     p_enc = sub.add_parser("encode", help="ffmpeg raw -> web")
@@ -1244,7 +1347,14 @@ def main() -> int:
     p_build.add_argument("--dry-run", action="store_true", help="dry-run the sync step")
     p_build.set_defaults(func=cmd_build)
 
-    args = parser.parse_args()
+    # pnpm >=7 forwards the `--` delimiter verbatim, so the documented
+    # `pnpm videos:pull -- --include-shared` arrives as
+    # ['pull', '--', '--include-shared'] and argparse rejects the rest.
+    # The delimiter always lands right after the subcommand; drop it there.
+    args_list = list(sys.argv[1:] if argv is None else argv)
+    if args_list[1:2] == ["--"]:
+        del args_list[1]
+    args = parser.parse_args(args_list)
     return args.func(args)
 
 
