@@ -71,14 +71,9 @@ CG zoom into atoms (replaces shared voyage_in_to_the_world_of_atoms). Raw is \
 1080p HEVC 10.2 Mbps — already a better master than a re-encode would be, so \
 HQ hard-links it."""
 
-[[videos]]
-name        = "nasa_exploring_cosmic_cliffs_4k.mp4"
-profile     = "high-motion"
-used_in     = ["deck"]
-hq_from_raw = true
-notes       = """\
-Webb cosmic cliffs 4K flythrough (NASA). Raw is 4K60 H.264 12.5 Mbps — modest \
-bitrate, browser-friendly; HQ hard-links it rather than re-encoding."""
+# nasa_exploring_cosmic_cliffs_4k.mp4 was dropped from the deck before the
+# talk (entry retired 2026-07-18 post-mortem; the release asset remains —
+# re-add an entry if it comes back).
 
 [[videos]]
 name        = "perseverence_rover_landing_nasa.mp4"

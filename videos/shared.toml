@@ -9,19 +9,23 @@
 # Profiles, hq_from_raw, etc. follow the same schema as a talk's
 # videos/manifest.toml. See scripts/videos.py for details.
 #
-# release_tag / release_tag_hq: which GH Release(s) hold these assets.
-# We currently reuse the editAI release as the de-facto shared release
-# (it already holds web-encoded copies of all the external clips).
-# When a dedicated `videos-shared` release is later established, point
-# these tags at it and republish.
+# release_tag: which GH Release holds these assets. Since 2026-07-18 that
+# is the dedicated `videos-shared` release. The old host
+# (videos-2026-04-28-editai) keeps a full copy as a frozen archive —
+# listed in archive_release_tags so publish/pull --prune never deletes
+# shared-named assets from it.
 
 [defaults]
-release_tag    = "videos-2026-04-28-editai"
-release_tag_hq = "videos-hq-2026-04-28-editai"
+release_tag    = "videos-shared"
+archive_release_tags = ["videos-2026-04-28-editai"]
+# release_tag_hq intentionally unset: the HQ release
+# (videos-hq-2026-04-28-editai, 2880x1600 HEVC venue masters) was deleted
+# on 2026-07-18 — the 9:5 format is rare and 4K/HEVC HQ playback froze at
+# the Yaga venue. The web tier (1080p-class H.264) is canonical now;
+# regenerate masters from the gdrive raws if a venue ever needs them.
 source_remote  = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
-long_edge_px   = 2880   # current shared encodes were produced for editAI's
-                        # 2880 venue. Raise to 3840 once a dedicated shared
-                        # release is republished for 4K venues.
+long_edge_px   = 2880   # historical: current shared encodes were produced
+                        # for editAI's 2880 venue.
 
 # ---------------------------------------------------------------------------
 # CERN / LHC institutional footage
@@ -39,8 +43,11 @@ notes   = "CERN video 2019-050-008, HEVC 6 Mbps 1080p silent."
 
 [[videos]]
 name    = "voyage_in_to_the_world_of_atoms.mp4"
-profile = "remux"
-notes   = "CERN zoom-from-cosmos-to-quarks reel, 2:01 silent. Source already web-friendly."
+profile = "standard"
+notes   = """\
+CERN zoom-from-cosmos-to-quarks reel, 2:01 silent. Source is low-bitrate \
+HEVC — remux kept it HEVC, so it was re-encoded H.264 (2026-07-18 \
+compatibility policy)."""
 
 [[videos]]
 name    = "lhcb.mp4"
@@ -196,8 +203,10 @@ notes   = "Z-boson alternative-models chart render"
 
 [[videos]]
 name    = "cmb_sonification_drone.mp4"
-profile = "remux"
-notes   = "CMB sonification drone render, H.264 2.8 Mbps 1800x1040"
+profile = "standard"
+notes   = """\
+CMB sonification drone render, 1800x1040. Was remux at -12 LUFS; re-encoded \
+2026-07-18 so loudnorm brings it to the shared -16 LUFS target."""
 
 [[videos]]
 name    = "mokslo_sala.mov"
