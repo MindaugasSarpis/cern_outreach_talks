@@ -1,6 +1,9 @@
 # CLAUDE.md
 
-Guidance for Claude Code working in this repository.
+Guidance for Claude Code working in this repository. This file is the
+detailed operating reference; the human-oriented lifecycle walkthrough
+(new talk → media → preflight → venue → cleanup) is in
+[README.md](README.md) — keep the two consistent when workflows change.
 
 ## Project overview
 
@@ -86,11 +89,13 @@ by talks via VideoPlayer's fallback chain. They are NOT downloaded or
 re-encoded when working on an individual talk.
 
 - `/videos/shared.toml` lists shared clips (same schema as a talk
-  manifest) and declares the shared `release_tag` / `release_tag_hq`.
-- The shared release currently reuses `videos-2026-04-28-editai`
-  (editAI's own release also serves as the de-facto shared release).
-  When a dedicated `videos-shared` release is created, point the tags
-  there and republish; both are easy because schemas match.
+  manifest) and declares the shared `release_tag`.
+- The shared release is the dedicated **`videos-shared`** (since
+  2026-07-18). The old host `videos-2026-04-28-editai` keeps a full
+  copy as a frozen archive; it is listed in shared.toml's
+  `archive_release_tags`, which keeps its shared-named assets safe
+  from any `--prune`. There is no shared HQ release (the 2880×1600
+  masters were deleted 2026-07-18; the web tier is canonical).
 - A talk references shared clips simply by using the filename in its
   deck. The talk's `manifest.toml` does NOT list them.
 - `videos:check` (per-talk) treats deck refs satisfied by shared as OK
@@ -137,8 +142,26 @@ pnpm videos:pull-hq     # download HQ masters from the parallel release -> video
                         #   (both pulls: --include-shared also fetches the deck's
                         #    inherited shared clips, for offline/portable builds)
 pnpm videos:check       # profiles, per-tier missing/orphans, web size budget,
-                        # slide-ref consistency; info list of non-local inherited clips
+                        # slide-ref consistency; info list of non-local inherited clips.
+                        # A manifest entry with no local copy is only an INFO line when
+                        # the release has it (empty local dirs are the steady state
+                        # since the 2026-07-18 cleanup) — it's an error only when no
+                        # remote copy exists either.
 pnpm videos:build       # one-shot: (--sync) -> encode -> encode-hq -> check
+pnpm videos:clean       # delete local raw/hq (and --web) files ONLY when a size-matched
+                        # remote copy is verified (gdrive raws, release encodes).
+                        # Dry-run by default; -- --yes deletes; --include-shared opts
+                        # shared-clip local copies in. Spec: docs/superpowers/specs/
+                        # 2026-07-17-videos-clean-design.md
+pnpm videos:preflight   # VENUE LINT — run before every talk. Resolves what VideoPlayer
+                        # will actually serve per deck ref (local hq -> local web ->
+                        # talk release -> shared release), ffprobes it (https included)
+                        # and flags: non-browser-safe video codec (HEVC!), long edge
+                        # over the web cap, bitrate > 10 Mbps, non-AAC audio, loudness
+                        # off the -16 LUFS target. This is the check that would have
+                        # caught the Yaga freezes. -- --no-loudness for a fast pass.
+pnpm venue              # one-shot offline bundle: pull --include-shared -> preflight
+                        # -> build:portable -> <talk>-venue.zip (RUN_ME.txt inside)
 ```
 
 `publish` / `publish-hq` and `pull` / `pull-hq` are manifest-driven and
@@ -149,8 +172,9 @@ removes orphan local files. **When the talk's release tag matches the
 shared release tag** (i.e. the talk's release doubles as the shared
 host), `--prune` automatically protects shared-registry entries so
 they aren't deleted out from under other talks. Fresh-machine
-rehearsal flow is `pnpm install && pnpm videos:pull-hq` (skips the
-multi-hour HQ encode).
+rehearsal flow is `pnpm install && pnpm videos:pull -- --include-shared`
+(the venue plays the web tier since 2026-07-18; `videos:pull-hq` only
+for talks that explicitly opted into HQ masters).
 
 **Oversize files (`hq_from_raw = true`)**: GH Release assets cap at 2 GB
 per file. For masters whose raw is already a pixel-perfect venue target
@@ -167,6 +191,10 @@ pnpm videos:check-all     # run videos:check in every talk
 pnpm videos:shared:check  # sanity-check /videos/shared.toml
 pnpm videos:discover -- <kw>…   # search open archives (CDS/NASA/ESO/Hubble/Webb/NOIRLab/Commons)
                                 # for new clips; prints report + [[videos]] snippets
+pnpm new-talk 2026_09_15_Venue  # scaffold talks/<name>/ with the current defaults
+                                # (16:9, 1080p web-tier policy, videos-shared inheritance);
+                                # never clone an old talk dir — that's how stale 4K
+                                # defaults sneak back in. --title "..." --aspect 16/9
 ```
 
 ## VideoPlayer
@@ -175,7 +203,12 @@ pnpm videos:discover -- <kw>…   # search open archives (CDS/NASA/ESO/Hubble/We
 <VideoPlayer src="Clip.mp4" />                   <!-- HQ if present, else web (default) -->
 <VideoPlayer src="Clip.mp4" :hq="false" />       <!-- force web tier -->
 <VideoPlayer src="Loop.mp4" loop muted :controls="false" />
+<VideoPlayer src="Hot.mp4" :volume="0.7" />      <!-- live per-clip attenuation (0..1) -->
 ```
+
+`:volume` is the live-tweak escape hatch for a clip that still plays hot
+at the venue; encodes are loudness-normalized (see Encoding profiles), so
+reach for a re-encode first.
 
 `hq` defaults to `true`. Fallback chain (front-to-back):
 
@@ -200,6 +233,29 @@ HQ is only served from the local `public/videos-hq/` symlink.
 keep that attribute syntax.
 
 ## Encoding profiles (`scripts/videos.py`)
+
+**Default policy (since 2026-07-18): 1080p H.264 compatibility encodes;
+the venue plays the web tier.** At the Yaga talk, HQ-tier playback froze
+twice (`lt_zoom.mov` — a raw hard-link, 4K60 HEVC 148 Mbps — and the
+short CERN intro clip's 2880×1600 HEVC master), likely decode/RAM
+exhaustion. Unless explicitly told otherwise for a specific talk: keep
+`long_edge_px` at the global 1920 in new talk manifests, and skip the HQ
+tier entirely (no `encode-hq`/`publish-hq`, leave `videos/hq/` empty —
+VideoPlayer then falls through to the web tier automatically). Native-
+resolution HEVC masters are opt-in, only for venues verified to handle
+them.
+
+**Web audio is loudness-normalized.** Every web encode that keeps audio
+gets two-pass EBU R128 `loudnorm` to **-16 LUFS** integrated (TP -1.5,
+LRA 11), applied in linear mode (one constant gain per clip, no pumping).
+All clips therefore play at the same perceived level — set the venue
+volume once, on the first clip. Opt a clip out with `loudnorm = false`
+on its `[[videos]]` entry or talk-wide in `[defaults]`. `remux` cannot
+normalize (stream copy); give the clip a real profile if its level is
+off. `videos:preflight` measures the loudness actually served and flags
+anything more than ±2 LU off target. The shared registry was re-encoded
+to this target on 2026-07-18 (it had been carrying stale HEVC encodes
+and levels from -12 to -28 LUFS).
 
 **Two codecs by tier, on purpose.** The **web** tier (profiles below) is
 **H.264** — it's the fallback that plays in arbitrary *deployed* browsers,
@@ -288,6 +344,9 @@ Per-venue knobs (in `videos/manifest.toml` `[defaults]`):
   LED wall, 3840 for 4K) so the **HQ venue-master** tier encodes at native
   resolution. The **web** tier ignores this and caps at `web_long_edge_px`
   (default 1920) — the web copy is a browser fallback, not a venue master.
+  Since 2026-07-18 new talks leave this at the global 1920 — native
+  HQ masters are opt-in only (see the default policy under Encoding
+  profiles).
 
 Reference setups:
 - `2026_04_28_editAI` — 2.5 × 4.5 m LED wall, 2880×1600, **9:5**. `aspectRatio: 9/5`, `long_edge_px = 2880`.
@@ -326,6 +385,11 @@ Bump to `300%` / `scale(0.333)` for higher-DPI sites; `400%` / `scale(0.25)`
 shrinks UI dramatically (good only for sites where the UI is incidental).
 
 ## Portable/offline bundle
+
+**`pnpm venue` is the one-shot flow**: it pulls the web tier including
+inherited shared clips, runs the preflight lint, builds `dist-portable/`,
+and zips it into `<talk>-venue.zip` with a RUN_ME.txt inside. The manual
+steps below remain for piecemeal use.
 
 `pnpm build:portable` produces `dist-portable/` with a relative base,
 safe to zip and transport (e.g., upload to gdrive as a venue backup).
