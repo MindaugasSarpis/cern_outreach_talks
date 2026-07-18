@@ -35,6 +35,11 @@ const props = defineProps({
   // -D videos/hq/`. If the HQ file is missing the chain falls back to the
   // web copy (local public/videos/, then the web GH Release).
   hq:       { type: Boolean, default: true },
+  // Per-clip playback attenuation (0..1). Encodes are loudness-normalized to
+  // a common target (scripts/videos.py loudnorm), so this is the live-tweak
+  // escape hatch for a clip that still plays hot at the venue — not a
+  // substitute for re-encoding.
+  volume:   { type: Number, default: 1 },
 })
 
 // Fallback chain (deduped). hq=true adds hqLocal at the front; hq=false drops it.
@@ -159,6 +164,7 @@ function syncPlayback() {
       }
     }
     video.currentTime = 0
+    video.volume = Math.min(1, Math.max(0, props.volume))
     video.muted = true
     video.play().then(() => {
       if (!props.muted) video.muted = false

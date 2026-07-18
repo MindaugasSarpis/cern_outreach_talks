@@ -1,7 +1,7 @@
 {
   "name": "talk-2026-05-11-sceptics",
   "private": true,
-  "description": "Quantum Mechanics for Sceptics — general public, 2026-05-11",
+  "description": "Quantum Mechanics for Sceptics \u2014 general public, 2026-05-11",
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",
@@ -14,7 +14,10 @@
     "videos:check": "python3 ../../scripts/videos.py check",
     "videos:encode-hq": "python3 ../../scripts/videos.py encode-hq",
     "videos:publish-hq": "python3 ../../scripts/videos.py publish-hq",
-    "videos:pull-hq": "python3 ../../scripts/videos.py pull-hq"
+    "videos:pull-hq": "python3 ../../scripts/videos.py pull-hq",
+    "videos:clean": "python3 ../../scripts/videos.py clean",
+    "videos:preflight": "python3 ../../scripts/videos.py preflight",
+    "venue": "python3 ../../scripts/videos.py venue"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2"

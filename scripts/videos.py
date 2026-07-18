@@ -29,16 +29,22 @@ Subcommands:
     pull-hq        gh release download HQ files -> videos/hq/
                    (--include-shared: also deck-referenced shared HQ masters)
     shared-check   sanity-check the shared registry (run from repo root)
+    clean          delete local files whose remote copy is verified (dry-run default)
+    preflight      venue lint: probe served codec/resolution/bitrate/audio/loudness
+    venue          one-shot offline bundle: pull -> preflight -> build:portable -> zip
 """
 from __future__ import annotations
 
 import argparse
 import functools
+import json
+import os
 import re
 import shutil
 import subprocess
 import sys
 import tomllib
+import zipfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
@@ -245,6 +251,82 @@ def _hq_audio_args(raw: Path) -> list[str]:
     return ["-c:a", "aac", "-b:a", "320k", "-ac", "2"]
 
 
+# ---------------------------------------------------------------------------
+# Loudness normalization (web tier)
+# ---------------------------------------------------------------------------
+#
+# Every web encode lands at the same integrated loudness (EBU R128), so the
+# venue volume gets set once — on the first clip — instead of being chased
+# clip-by-clip through the talk. -16 LUFS integrated is the common streaming
+# target: loud enough for a room, with headroom for -1.5 dBTP peaks.
+# Two-pass LINEAR mode applies one constant gain per clip, preserving its
+# internal dynamics; single-pass "dynamic" loudnorm pumps audibly on music
+# and applause. Opt out per clip (or talk-wide in [defaults]) with
+# `loudnorm = false` — e.g. for a clip whose deliberately quiet ambience
+# should stay quiet.
+
+LOUDNORM_I, LOUDNORM_TP, LOUDNORM_LRA = -16.0, -1.5, 11.0
+# preflight flags clips whose integrated loudness strays more than this many
+# LU from LOUDNORM_I (2 LU is a clearly audible level step).
+LOUDNESS_TOLERANCE_LU = 2.0
+
+
+def _measure_loudness(src: str | Path) -> dict | None:
+    """First loudnorm pass: R128 stats of the first audio stream.
+
+    Audio-only decode (video is not touched), works on local paths and
+    https URLs alike. Returns the parsed measurement dict or None when the
+    source has no audio / is unreadable / measurement fails.
+    """
+    out = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-nostdin", "-i", str(src),
+         "-map", "0:a:0", "-af",
+         f"loudnorm=I={LOUDNORM_I}:TP={LOUDNORM_TP}:LRA={LOUDNORM_LRA}:print_format=json",
+         "-f", "null", "-"],
+        capture_output=True, text=True,
+    )
+    if out.returncode != 0:
+        return None
+    m = re.search(r'\{\s*"input_i".*?\}', out.stderr, re.S)
+    if not m:
+        return None
+    try:
+        return json.loads(m.group(0))
+    except ValueError:
+        return None
+
+
+def _loudnorm_args(raw: Path, entry: VideoEntry) -> list[str]:
+    """Two-pass loudnorm output args for a web encode ([] = leave audio alone).
+
+    The second pass runs linear with the measured stats. loudnorm internally
+    resamples to 192 kHz, so the output rate is pinned back to 48 kHz.
+    """
+    if entry.loudnorm is False:
+        return []
+    if _probe_audio_codec(raw) is None:
+        return []  # silent source
+    measured = _measure_loudness(raw)
+    if measured is None:
+        print(f"  ! {entry.name}: loudness measurement failed; encoding without loudnorm",
+              file=sys.stderr)
+        return []
+    try:
+        # A silent audio track measures -inf; interpolating that into the
+        # filter string breaks ffmpeg, and there is nothing to normalize.
+        if not (float(measured["input_i"]) > -70.0):
+            return []
+    except (KeyError, ValueError):
+        return []
+    af = (
+        f"loudnorm=I={LOUDNORM_I}:TP={LOUDNORM_TP}:LRA={LOUDNORM_LRA}"
+        f":measured_I={measured['input_i']}:measured_TP={measured['input_tp']}"
+        f":measured_LRA={measured['input_lra']}:measured_thresh={measured['input_thresh']}"
+        f":offset={measured['target_offset']}:linear=true"
+    )
+    return ["-af", af, "-ar", "48000"]
+
+
 @dataclass
 class VideoEntry:
     name: str
@@ -269,6 +351,11 @@ class VideoEntry:
     # Force the encoder for this clip: "nvenc" (GPU) or "cpu" (libx26x).
     # None = auto (nvenc if available at runtime, else cpu).
     encoder: str | None = None
+    # Loudness normalization for the web encode. None/True = normalize to the
+    # shared R128 target (LOUDNORM_I); False = keep the source's own level
+    # (deliberately quiet ambience, pre-mastered audio). remux never
+    # normalizes (stream copy can't filter).
+    loudnorm: bool | None = None
 
 
 def _videos_from_data(data: dict) -> list[VideoEntry]:
@@ -282,6 +369,7 @@ def _videos_from_data(data: dict) -> list[VideoEntry]:
             hq_crf=v.get("hq_crf"),
             hq_from_raw=v.get("hq_from_raw", False),
             encoder=v.get("encoder"),
+            loudnorm=v.get("loudnorm"),
         )
         for v in data.get("videos", [])
     ]
@@ -299,6 +387,10 @@ def load_manifest() -> tuple[dict, list[VideoEntry]]:
         for v in videos:
             if v.encoder is None:
                 v.encoder = default_encoder
+    if defaults.get("loudnorm") is False:
+        for v in videos:
+            if v.loudnorm is None:
+                v.loudnorm = False
     return defaults, videos
 
 
@@ -403,11 +495,17 @@ def _encode_one(entry: VideoEntry, force: bool, default_long_edge: int) -> tuple
     # per-video long_edge_px is a venue/HQ override — honor it only when it
     # would make the web copy SMALLER, never larger than the web cap.
     long_edge = min(entry.long_edge_px or default_long_edge, default_long_edge)
+    # Normalize loudness whenever the profile keeps audio (remux can't filter;
+    # silent-loop strips audio anyway).
+    has_audio = entry.profile in WEB_PROFILES and WEB_PROFILES[entry.profile]["audio"] is not None
+    loudnorm = _loudnorm_args(raw, entry) if has_audio else []
+
     tmp = web.with_name(f"{web.stem}.partial{web.suffix}")
     cmd = [
         "ffmpeg", "-y", "-hide_banner", "-nostdin", "-loglevel", "error",
         "-i", str(raw),
         *_profile_args(entry.profile, long_edge, encoder),
+        *loudnorm,
         str(tmp),
     ]
     try:
@@ -516,19 +614,30 @@ def cmd_encode(args: argparse.Namespace) -> int:
 # publish — upload encoded files to GitHub Release
 # ---------------------------------------------------------------------------
 
-def _remote_asset_sizes(tag: str) -> dict[str, int] | None:
-    """Return {asset_name: size_bytes} for a release, or None if not found."""
+def _remote_assets(tag: str) -> dict[str, dict] | None:
+    """{asset_name: {"size": bytes, "url": download_url}} for a release,
+    or None if the release doesn't exist / gh fails."""
     listing = subprocess.run(
         ["gh", "release", "view", tag, "--json", "assets"],
         capture_output=True, text=True,
     )
     if listing.returncode != 0:
         return None
-    import json
     try:
-        return {a["name"]: a.get("size", -1) for a in json.loads(listing.stdout).get("assets", [])}
+        return {
+            a["name"]: {"size": a.get("size", -1), "url": a.get("url", "")}
+            for a in json.loads(listing.stdout).get("assets", [])
+        }
     except (ValueError, KeyError):
         return {}
+
+
+def _remote_asset_sizes(tag: str) -> dict[str, int] | None:
+    """Return {asset_name: size_bytes} for a release, or None if not found."""
+    assets = _remote_assets(tag)
+    if assets is None:
+        return None
+    return {name: a["size"] for name, a in assets.items()}
 
 
 def _publish_tier(
@@ -754,7 +863,12 @@ def _shared_protect(tier_tag: str, *, hq: bool) -> set[str]:
         return set()
     key = "release_tag_hq" if hq else "release_tag"
     shared_tag = shared_defaults.get(key)
-    if not shared_tag or shared_tag != tier_tag:
+    # archive_release_tags (shared.toml [defaults]) lists releases kept as
+    # frozen archives of shared-registry encodes (e.g. the old editAI host).
+    # Their shared-named assets stay prune-proof even though the live shared
+    # tag has moved elsewhere.
+    archive_tags = set(shared_defaults.get("archive_release_tags", []))
+    if tier_tag != shared_tag and tier_tag not in archive_tags:
         return set()
     return {v.name for v in shared_videos}
 
@@ -953,12 +1067,23 @@ def cmd_check(_: argparse.Namespace) -> int:
             print(f"  BAD PROFILE:      {v.name} -> {v.profile!r}")
             problems += 1
 
-    # Manifest entries with no local copy in ANY tier: nothing to encode,
-    # publish, or bundle. A missing raw alone is normal on a fresh machine
-    # (encodes pull from the releases); resync raws before re-encoding.
-    for name in sorted(manifest_names - raw_files - web_files - hq_files):
-        print(f"  MISSING LOCAL:    {name}  (no raw/web/hq copy — videos:sync or videos:pull)")
-        problems += 1
+    # Manifest entries with no local copy in ANY tier. Since the post-Yaga
+    # cleanup (2026-07-18) empty local dirs are the steady state: a clip that
+    # lives on the talk's release is fetchable on demand and only worth an
+    # info line. It's an error only when the release doesn't have it either —
+    # then there is genuinely nothing to serve, bundle, or re-pull.
+    missing_local = sorted(manifest_names - raw_files - web_files - hq_files)
+    release_sizes: dict[str, int] | None = None
+    if missing_local and shutil.which("gh"):
+        release_sizes = _remote_asset_sizes(defaults["release_tag"])
+    for name in missing_local:
+        if release_sizes and name in release_sizes:
+            infos.append(
+                f"not local, on release ({human_size(release_sizes[name])}) — videos:pull on demand: {name}"
+            )
+        else:
+            print(f"  MISSING LOCAL:    {name}  (no local copy, not on the release — videos:sync + encode + publish)")
+            problems += 1
     for name in sorted((manifest_names - raw_files) & (web_files | hq_files)):
         infos.append(f"raw not synced (encoded copy present): {name}")
 
@@ -1111,6 +1236,428 @@ def cmd_shared_check(_: argparse.Namespace) -> int:
         return 0
     print(f"\n{problems} issue(s) found.")
     return 1
+
+
+# ---------------------------------------------------------------------------
+# clean — verified-safe deletion of local video tiers
+# ---------------------------------------------------------------------------
+#
+# Local raws/masters/web encodes are pure cache: raws live on the gdrive
+# remote, encodes on the GH releases. clean deletes a local file ONLY when a
+# size-matched remote copy is verified, and prints how to get each one back.
+# Design: docs/superpowers/specs/2026-07-17-videos-clean-design.md
+
+
+@dataclass(frozen=True)
+class LocalFile:
+    """What the planner needs to know about one on-disk file."""
+    size: int
+    inode: tuple[int, int]  # (st_dev, st_ino) — hard-link identity
+    nlink: int
+
+
+@dataclass
+class CleanCandidate:
+    tier: str      # raw | hq | web
+    name: str
+    file: LocalFile
+    delete: bool
+    reason: str    # recovery hint (delete) or skip reason
+
+
+def plan_clean(
+    tier_files: dict[str, dict[str, LocalFile]],
+    talk_by_name: dict[str, VideoEntry],
+    shared_by_name: dict[str, VideoEntry],
+    inventories: dict[str, dict[str, int] | None],
+    include_shared: bool,
+) -> list[CleanCandidate]:
+    """Pure deletability judgement — no filesystem or network access.
+
+    `inventories` keys: raw_remote, hq_release, web_release,
+    shared_raw_remote, shared_hq_release, shared_web_release. A None value
+    means "could not be listed"; verification failure is never treated as
+    absence, so every file depending on that inventory is kept.
+    """
+    def judge(inv_key: str, name: str, size: int, recover: str) -> tuple[bool, str]:
+        inv = inventories.get(inv_key)
+        if inv is None:
+            return False, f"skip: {inv_key} unavailable"
+        if name not in inv:
+            return False, f"skip: not on {inv_key}"
+        if inv[name] != size:
+            return False, f"skip: size differs on {inv_key} ({human_size(inv[name])} there)"
+        return True, recover
+
+    out: list[CleanCandidate] = []
+    for tier in sorted(tier_files):
+        for name, f in sorted(tier_files[tier].items()):
+            talk = talk_by_name.get(name)
+            shared = shared_by_name.get(name) if talk is None else None
+            if tier == "raw":
+                if talk:
+                    ok, why = judge("raw_remote", name, f.size, "recover: pnpm videos:sync")
+                elif shared:
+                    # Raws of shared clips aren't in this talk's manifest;
+                    # treat as unmanaged rather than guessing ownership.
+                    ok, why = False, "skip: shared clip raw — unmanaged here"
+                else:
+                    ok, why = False, "skip: unmanaged (not in any manifest)"
+            elif tier == "hq":
+                if talk and talk.hq_from_raw:
+                    # The HQ file is a hard link of the raw; the raw on the
+                    # source remote is the recovery path.
+                    ok, why = judge("raw_remote", name, f.size,
+                                    "recover: pnpm videos:pull-hq (rclone from source_remote)")
+                elif talk:
+                    ok, why = judge("hq_release", name, f.size, "recover: pnpm videos:pull-hq")
+                elif shared and not include_shared:
+                    ok, why = False, "skip: shared clip (opt in with --include-shared)"
+                elif shared and shared.hq_from_raw:
+                    ok, why = judge("shared_raw_remote", name, f.size,
+                                    "recover: pnpm videos:pull-hq -- --include-shared")
+                elif shared:
+                    ok, why = judge("shared_hq_release", name, f.size,
+                                    "recover: pnpm videos:pull-hq -- --include-shared")
+                else:
+                    ok, why = False, "skip: unmanaged (not in any manifest)"
+            else:  # web
+                if talk:
+                    ok, why = judge("web_release", name, f.size, "recover: pnpm videos:pull")
+                elif shared and not include_shared:
+                    ok, why = False, "skip: shared clip (opt in with --include-shared)"
+                elif shared:
+                    ok, why = judge("shared_web_release", name, f.size,
+                                    "recover: pnpm videos:pull -- --include-shared")
+                else:
+                    ok, why = False, "skip: unmanaged (not in any manifest)"
+            out.append(CleanCandidate(tier=tier, name=name, file=f, delete=ok, reason=why))
+    return out
+
+
+def reclaimed_bytes(cands: list[CleanCandidate]) -> int:
+    """Bytes actually freed by the planned deletions.
+
+    hq_from_raw files hard-link their raw: removing one of two links frees
+    nothing. An inode's size counts once, and only when every remaining
+    local link is planned for deletion.
+    """
+    planned: dict[tuple[int, int], int] = {}
+    size_of: dict[tuple[int, int], int] = {}
+    nlink_of: dict[tuple[int, int], int] = {}
+    for c in cands:
+        if not c.delete:
+            continue
+        planned[c.file.inode] = planned.get(c.file.inode, 0) + 1
+        size_of[c.file.inode] = c.file.size
+        nlink_of[c.file.inode] = c.file.nlink
+    return sum(size_of[i] for i, n in planned.items() if n >= nlink_of[i])
+
+
+def _local_files(d: Path) -> dict[str, LocalFile]:
+    out: dict[str, LocalFile] = {}
+    if not d.is_dir():
+        return out
+    for p in d.iterdir():
+        if not p.is_file() or p.name.startswith("."):
+            continue
+        st = p.stat()
+        out[p.name] = LocalFile(size=st.st_size, inode=(st.st_dev, st.st_ino), nlink=st.st_nlink)
+    return out
+
+
+def _rclone_inventory(remote: str | None) -> dict[str, int] | None:
+    """{name: size} listing of an rclone remote dir, or None when unlistable."""
+    if not remote or not shutil.which("rclone"):
+        return None
+    out = subprocess.run(
+        ["rclone", "lsf", "--format", "sp", remote.rstrip("/")],
+        capture_output=True, text=True,
+    )
+    if out.returncode != 0:
+        return None
+    inv: dict[str, int] = {}
+    for line in out.stdout.splitlines():
+        size, _, name = line.partition(";")
+        try:
+            inv[name.strip()] = int(size)
+        except ValueError:
+            continue
+    return inv
+
+
+def cmd_clean(args: argparse.Namespace) -> int:
+    defaults, videos = load_manifest()
+    shared_defaults, shared_videos = load_shared_manifest()
+    talk_by_name = {v.name: v for v in videos}
+    shared_by_name = {v.name: v for v in shared_videos}
+
+    tiers = {t for t, on in (("raw", args.raw), ("hq", args.hq), ("web", args.web)) if on}
+    if not tiers:
+        tiers = {"raw", "hq"}  # web is opt-in (spec: default raw + hq)
+
+    tier_dirs = {"raw": RAW_DIR, "hq": HQ_DIR, "web": WEB_DIR}
+    tier_files = {t: _local_files(tier_dirs[t]) for t in sorted(tiers)}
+    if not any(tier_files.values()):
+        print(f"Nothing local to clean in {', '.join(sorted(tiers))}.")
+        return 0
+
+    # One listing per remote/tag; every file is judged against the in-memory
+    # inventory. gh/rclone being unavailable makes tiers non-deletable, not
+    # invisible.
+    inventories: dict[str, dict[str, int] | None] = {}
+    if "raw" in tiers or "hq" in tiers:
+        inventories["raw_remote"] = _rclone_inventory(defaults.get("source_remote"))
+        shared_remote = shared_defaults.get("source_remote")
+        inventories["shared_raw_remote"] = (
+            inventories["raw_remote"]
+            if shared_remote == defaults.get("source_remote")
+            else _rclone_inventory(shared_remote)
+        )
+    has_gh = bool(shutil.which("gh"))
+    if "hq" in tiers:
+        inventories["hq_release"] = (
+            _remote_asset_sizes(defaults.get("release_tag_hq", _auto_release_tag("videos-hq")))
+            if has_gh else None
+        )
+        s_tag_hq = shared_defaults.get("release_tag_hq")
+        inventories["shared_hq_release"] = _remote_asset_sizes(s_tag_hq) if (s_tag_hq and has_gh) else None
+    if "web" in tiers:
+        inventories["web_release"] = _remote_asset_sizes(defaults["release_tag"]) if has_gh else None
+        s_tag = shared_defaults.get("release_tag")
+        inventories["shared_web_release"] = _remote_asset_sizes(s_tag) if (s_tag and has_gh) else None
+
+    plan = plan_clean(tier_files, talk_by_name, shared_by_name, inventories, args.include_shared)
+    deletable = [c for c in plan if c.delete]
+    for c in plan:
+        mark = "DELETE" if c.delete else "keep  "
+        print(f"  {mark}  [{c.tier:3s}] {c.name}  ({human_size(c.file.size)})  {c.reason}")
+    total = reclaimed_bytes(plan)
+    print()
+    print(f"{len(deletable)} deletable — {human_size(total)} reclaimable "
+          f"(hard links counted once); {len(plan) - len(deletable)} kept.")
+
+    if not args.yes:
+        if deletable:
+            print("Dry run — nothing deleted. Re-run with --yes to delete.")
+        return 0
+
+    failures = 0
+    freed_names = 0
+    for c in deletable:
+        path = tier_dirs[c.tier] / c.name
+        try:
+            st = path.stat()
+        except FileNotFoundError:
+            continue  # vanished since planning — already what we wanted
+        if st.st_size != c.file.size:
+            print(f"  ! {c.name} [{c.tier}]: changed since planning — kept", file=sys.stderr)
+            failures += 1
+            continue
+        try:
+            path.unlink()
+            freed_names += 1
+        except OSError as e:
+            print(f"  ! {c.name} [{c.tier}]: delete failed: {e}", file=sys.stderr)
+            failures += 1
+    print(f"Deleted {freed_names} file(s), ~{human_size(total)} freed.")
+    print("Recovery: pnpm videos:sync (raws); pnpm videos:pull / videos:pull-hq "
+          "[-- --include-shared] (encodes).")
+    return 1 if failures else 0
+
+
+# ---------------------------------------------------------------------------
+# preflight — venue playback lint for everything the deck references
+# ---------------------------------------------------------------------------
+#
+# The Yaga talk (2026-07-18) froze twice on clips that individually looked
+# fine: HQ-tier HEVC at venue-native resolution (a 148 Mbps raw hard-link,
+# a 2880x1600 master). preflight resolves what VideoPlayer will ACTUALLY
+# serve for each deck reference — local HQ, local web, talk release, shared
+# release, in that order — ffprobes it (https URLs included) and flags
+# anything that history says can freeze a venue machine or ambush the
+# audio level.
+
+BROWSER_SAFE_VIDEO = frozenset({"h264", "vp8", "vp9", "av1"})
+PREFLIGHT_MAX_MBPS = 10.0
+
+
+def _probe_media(src: str) -> dict | None:
+    out = subprocess.run(
+        ["ffprobe", "-v", "error",
+         "-show_entries", "stream=codec_type,codec_name,width,height:format=bit_rate,duration",
+         "-of", "json", src],
+        capture_output=True, text=True,
+    )
+    if out.returncode != 0:
+        return None
+    try:
+        return json.loads(out.stdout)
+    except ValueError:
+        return None
+
+
+def cmd_preflight(args: argparse.Namespace) -> int:
+    defaults, _ = load_manifest()
+    shared_defaults, _shared = load_shared_manifest()
+    refs = sorted(_slide_references())
+    if getattr(args, "only", None):
+        wanted = set(args.only)
+        refs = [r for r in refs if r in wanted]
+    if not refs:
+        print("No VideoPlayer references in the deck.")
+        return 0
+
+    has_gh = bool(shutil.which("gh"))
+    talk_assets = _remote_assets(defaults["release_tag"]) if has_gh else None
+    shared_tag = shared_defaults.get("release_tag")
+    if shared_tag == defaults["release_tag"]:
+        shared_assets = talk_assets
+    else:
+        shared_assets = _remote_assets(shared_tag) if (shared_tag and has_gh) else None
+
+    def served(name: str) -> tuple[str, str] | None:
+        """(tier_label, local path or https URL) VideoPlayer would win with."""
+        hq = HQ_DIR / name
+        if hq.is_file():
+            return "local-hq", str(hq)
+        web = WEB_DIR / name
+        if web.is_file():
+            return "local-web", str(web)
+        for label, assets in (("talk-release", talk_assets), ("shared-release", shared_assets)):
+            if assets and name in assets and assets[name]["url"]:
+                return label, assets[name]["url"]
+        return None
+
+    web_cap = int(defaults.get("web_long_edge_px", 1920))
+    max_mbps = args.max_mbps or float(defaults.get("preflight_max_mbps", PREFLIGHT_MAX_MBPS))
+    measure = not args.no_loudness
+
+    flagged = 0
+    for name in refs:
+        src = served(name)
+        if src is None:
+            print(f"  FLAG  {name}: NOT SERVED — no local copy, no release asset (deck shows an error box)")
+            flagged += 1
+            continue
+        tier, url = src
+        info = _probe_media(url)
+        if info is None:
+            print(f"  FLAG  {name} [{tier}]: ffprobe can't read it")
+            flagged += 1
+            continue
+        vstreams = [s for s in info.get("streams", []) if s.get("codec_type") == "video"]
+        astreams = [s for s in info.get("streams", []) if s.get("codec_type") == "audio"]
+        vcodec = vstreams[0].get("codec_name", "?") if vstreams else "?"
+        width = int(vstreams[0].get("width") or 0) if vstreams else 0
+        height = int(vstreams[0].get("height") or 0) if vstreams else 0
+        long_edge = max(width, height)
+        acodec = astreams[0].get("codec_name") if astreams else None
+        try:
+            mbps = int(info.get("format", {}).get("bit_rate", 0)) / 1e6
+        except (TypeError, ValueError):
+            mbps = 0.0
+
+        problems = []
+        if vcodec not in BROWSER_SAFE_VIDEO:
+            problems.append(f"video codec {vcodec} — not browser-safe (HEVC froze the Yaga venue)")
+        if long_edge > web_cap:
+            problems.append(f"long edge {long_edge}px > web cap {web_cap}px")
+        if mbps > max_mbps:
+            problems.append(f"{mbps:.1f} Mbps > {max_mbps:g} Mbps ceiling")
+        if acodec and acodec not in BROWSER_SAFE_AUDIO:
+            problems.append(f"audio codec {acodec} — Chrome plays it SILENT")
+        lufs_txt = "no audio" if not acodec else "-"
+        if acodec and measure:
+            measured = _measure_loudness(url)
+            if measured is not None:
+                try:
+                    lufs = float(measured["input_i"])
+                    lufs_txt = f"{lufs:.1f} LUFS"
+                    if abs(lufs - LOUDNORM_I) > LOUDNESS_TOLERANCE_LU:
+                        problems.append(
+                            f"loudness {lufs:.1f} LUFS off target {LOUDNORM_I:g} "
+                            f"(±{LOUDNESS_TOLERANCE_LU:g} LU) — re-encode to normalize"
+                        )
+                except (KeyError, ValueError):
+                    pass
+
+        desc = f"{vcodec} {width}x{height}, {mbps:.1f} Mbps, audio={acodec or 'none'}, {lufs_txt}"
+        if problems:
+            flagged += 1
+            print(f"  FLAG  {name} [{tier}]  {desc}")
+            for p in problems:
+                print(f"          - {p}")
+        else:
+            print(f"  ok    {name} [{tier}]  {desc}")
+
+    print()
+    if flagged:
+        print(f"{flagged} of {len(refs)} clip(s) flagged — fix or consciously accept before the venue.")
+        return 1
+    print(f"All {len(refs)} deck clip(s) look venue-safe.")
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# venue — one-command offline bundle: pull → preflight → build → zip
+# ---------------------------------------------------------------------------
+
+def cmd_venue(args: argparse.Namespace) -> int:
+    """Self-contained venue bundle for this deck.
+
+    Localizes the web tier (talk + inherited shared clips), preflights what
+    will actually play, runs `pnpm build:portable`, and zips dist-portable
+    with a RUN_ME note. HQ masters are NOT pulled — since 2026-07-18 the
+    venue plays the 1080p H.264 web tier; a populated videos/hq/ still gets
+    bundled via the public/videos-hq symlink for talks that opted in.
+    """
+    if not args.skip_pull:
+        print("=== venue: pull web tier (incl. inherited shared clips) ===")
+        rc = cmd_pull(argparse.Namespace(
+            only=None, force=False, dry_run=args.dry_run, prune=False, include_shared=True,
+        ))
+        if rc != 0:
+            return rc
+
+    print("\n=== venue: preflight (metadata only; run videos:preflight for loudness) ===")
+    pf = cmd_preflight(argparse.Namespace(only=None, no_loudness=True, max_mbps=None))
+    if pf != 0:
+        print("WARNING: preflight flagged clips above. Bundle continues — fix or accept consciously.")
+
+    if args.dry_run:
+        print("\n(dry run) would run: pnpm build:portable, then zip dist-portable/ "
+              f"-> {TALK.name}-venue.zip")
+        return 0
+
+    print("\n=== venue: pnpm build:portable ===")
+    rc = subprocess.call(["pnpm", "build:portable"], cwd=TALK)
+    if rc != 0:
+        return rc
+
+    dist = TALK / "dist-portable"
+    if not dist.is_dir():
+        print("error: dist-portable/ missing after build", file=sys.stderr)
+        return 2
+    (dist / "RUN_ME.txt").write_text(
+        "Offline venue bundle. Browsers refuse ES-module apps on file://,\n"
+        "so serve it over local HTTP:\n\n"
+        "    python3 -m http.server 8000\n"
+        "    then open http://localhost:8000\n\n"
+        f"Built by scripts/videos.py venue for {TALK.name}.\n",
+        encoding="utf-8",
+    )
+    bundle = TALK / f"{TALK.name}-venue.zip"
+    print(f"\n=== venue: zipping -> {bundle.name} ===")
+    # ZIP_STORED: the payload is already-compressed video; deflate would
+    # burn minutes for ~0% gain.
+    with zipfile.ZipFile(bundle, "w", zipfile.ZIP_STORED) as zf:
+        for path in sorted(dist.rglob("*")):
+            if path.is_file():
+                zf.write(path, Path(f"{TALK.name}-venue") / path.relative_to(dist))
+    print(f"Done: {bundle.name} ({human_size(bundle.stat().st_size)})")
+    print("Copy to the venue machine (or gdrive as backup), unzip, see RUN_ME.txt.")
+    return 0
 
 
 # ---------------------------------------------------------------------------
@@ -1337,6 +1884,25 @@ def main(argv: list[str] | None = None) -> int:
 
     p_shared = sub.add_parser("shared-check", help="sanity-check /videos/shared.toml (run from monorepo root)")
     p_shared.set_defaults(func=cmd_shared_check)
+
+    p_clean = sub.add_parser("clean", help="delete local video files that are verified recoverable (dry-run by default)")
+    p_clean.add_argument("--yes", action="store_true", help="actually delete (default is a dry run)")
+    p_clean.add_argument("--raw", action="store_true", help="restrict to the raw tier")
+    p_clean.add_argument("--hq", action="store_true", help="restrict to the HQ tier")
+    p_clean.add_argument("--web", action="store_true", help="include the web tier (opt-in)")
+    p_clean.add_argument("--include-shared", action="store_true", help="also clean local copies of shared-registry clips")
+    p_clean.set_defaults(func=cmd_clean)
+
+    p_pf = sub.add_parser("preflight", help="venue lint: probe what each deck ref will actually serve")
+    p_pf.add_argument("--only", nargs="+", metavar="NAME", help="limit to named clip(s)")
+    p_pf.add_argument("--no-loudness", action="store_true", help="skip the R128 loudness measurement (much faster)")
+    p_pf.add_argument("--max-mbps", type=float, default=None, help="bitrate ceiling to flag (default 10, or [defaults].preflight_max_mbps)")
+    p_pf.set_defaults(func=cmd_preflight)
+
+    p_venue = sub.add_parser("venue", help="one-shot offline bundle: pull --include-shared -> preflight -> build:portable -> zip")
+    p_venue.add_argument("--dry-run", action="store_true")
+    p_venue.add_argument("--skip-pull", action="store_true", help="assume local web tier is already complete")
+    p_venue.set_defaults(func=cmd_venue)
 
     p_build = sub.add_parser("build", help="one-shot: (sync) -> encode -> encode-hq -> check")
     p_build.add_argument("--sync", action="store_true", help="rclone raws from Drive first")

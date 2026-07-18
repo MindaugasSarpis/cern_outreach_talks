@@ -5,6 +5,7 @@
   "scripts": {
     "videos:check-all": "for d in talks/*; do echo \"[$d]\"; (cd \"$d\" && python3 ../../scripts/videos.py check) || true; done",
     "videos:shared:check": "python3 scripts/videos.py shared-check",
-    "videos:discover": "python3 scripts/discover_videos.py"
+    "videos:discover": "python3 scripts/discover_videos.py",
+    "new-talk": "python3 scripts/new_talk.py"
   }
 }
