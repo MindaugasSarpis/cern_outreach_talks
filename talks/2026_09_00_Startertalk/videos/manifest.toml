@@ -1,0 +1,31 @@
+# Talk-OWNED video assets for this talk. Clips inherited from the shared
+# registry (/videos/shared.toml) are NOT listed here; they stream at runtime
+# from the videos-shared GH Release via VideoPlayer's fallback chain.
+#
+# POLICY (since 2026-07-18): venues play the 1080p H.264 web tier.
+#   - long_edge_px stays at the global 1920 — do NOT bump it to the venue's
+#     native width unless explicitly decided for this talk.
+#   - No encode-hq/publish-hq by default; leave videos/hq/ empty.
+#   - Web encodes are loudness-normalized to -16 LUFS (EBU R128) so audio is
+#     even across clips; opt a clip out with `loudnorm = false`.
+#   - Run `pnpm videos:preflight` before the talk: it probes exactly what
+#     each slide will serve and flags codec/bitrate/resolution/loudness
+#     problems (this is the check that would have caught the Yaga freezes).
+#
+# Profiles (in scripts/videos.py):
+#   remux          - lossless stream copy + faststart (already web-friendly H.264).
+#   standard       - web H.264 CRF 23 (<=6 Mbps), AAC 128k.
+#   standard-tight - web H.264 CRF 26 (<=3.5 Mbps) for long clips.
+#   silent-loop    - web H.264 CRF 24 (<=5 Mbps), audio stripped. Loops.
+#   high-motion    - web H.264 CRF 22 (<=8 Mbps), AAC 192k. Sims/CGI/fast.
+
+[defaults]
+source_remote = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
+
+# release_tag auto-derives from the talk dirname.
+# long_edge_px / web_long_edge_px / max_size_mb inherited from /outreach.toml.
+
+# [[videos]]
+# name    = "example_clip.mp4"
+# profile = "standard"
+# notes   = "What this clip is and where it came from."

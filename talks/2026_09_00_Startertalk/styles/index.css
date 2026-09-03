@@ -1,0 +1,18 @@
+/* Talk-local global styles (Slidev auto-loads styles/index.css).
+   Lists inside cards follow the same scale as card paragraphs — without
+   this they inherit the card's 1.1em base and render larger than the
+   card heading. Mirrors the rule in the CERN-lessons theme. */
+.card ul,
+.card ol {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  padding-left: 1.25em;
+  margin-left: 0;
+}
+.card li {
+  margin: 0.12em 0;
+}
+.card h2 + ul,
+.card h2 + ol {
+  margin-top: 0.35rem;
+}
