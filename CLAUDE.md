@@ -20,6 +20,14 @@ Current talks:
   4K projector, 16:9.
 - `talks/2026_07_18_Yaga/` — Yaga crash course (Lithuanian), 2026-07-18.
   4K 16:9 venue. Cloned from editAI; deck under construction.
+- `talks/2026_09_10_WorldOfParticles/` — World of Particles open course,
+  opening lecture, 2026-09-10. Video-only reel with the Yaga structure;
+  16:9, 1080p H.264 web tier (post-Yaga policy). The eight Yaga-lineage
+  clips are re-encoded at 1920 into this talk's own release.
+- `talks/2026_09_00_Startertalk/` — "Pentaquarks at LHCb", a 30-minute
+  technical physics seminar. Date not fixed yet: `09_00` is a placeholder —
+  rename the dir and the `VITE_VIDEO_RELEASE` line in `.env` once known
+  (no talk-owned clips, so no release to rename).
 
 ## Environment setup (fresh machine)
 

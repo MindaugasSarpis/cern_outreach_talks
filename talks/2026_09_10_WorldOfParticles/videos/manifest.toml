@@ -1,0 +1,77 @@
+# Talk-OWNED video assets for World of Particles (2026-09-10). Clips inherited
+# from the shared registry (/videos/shared.toml) are NOT listed here; they
+# stream at runtime from the videos-shared GH Release via VideoPlayer's
+# fallback chain.
+#
+# The eight entries below are the Yaga-lineage clips that live only on the
+# Yaga talk release (videos-2026-07-18-yaga) — and there as 4K web copies.
+# They are re-encoded here at the post-Yaga policy (1920 H.264, -16 LUFS,
+# no HQ tier) from the same gdrive raws and published to this talk's own
+# release, so `videos:preflight` passes cleanly.
+#
+# POLICY (since 2026-07-18): venues play the 1080p H.264 web tier.
+#   - long_edge_px stays at the global 1920.
+#   - No encode-hq/publish-hq; leave videos/hq/ empty.
+#   - Web encodes are loudness-normalized to -16 LUFS (EBU R128).
+#   - Run `pnpm videos:preflight` before the talk.
+#
+# Profiles (in scripts/videos.py):
+#   remux          - lossless stream copy + faststart (already web-friendly H.264).
+#   standard       - web H.264 CRF 23 (<=6 Mbps), AAC 128k.
+#   standard-tight - web H.264 CRF 26 (<=3.5 Mbps) for long clips.
+#   silent-loop    - web H.264 CRF 24 (<=5 Mbps), audio stripped. Loops.
+#   high-motion    - web H.264 CRF 22 (<=8 Mbps), AAC 192k. Sims/CGI/fast.
+
+[defaults]
+source_remote = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
+
+# release_tag auto-derives from the talk dirname (videos-2026-09-10-worldofparticles).
+# long_edge_px / web_long_edge_px / max_size_mb inherited from /outreach.toml.
+
+[[videos]]
+name    = "mountain.mov"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Opening mountain aerial with edited audio (raw: 4K30 H.264 207 Mbps + 24-bit PCM, 3:07, 4.5 GB). Web tier 1920 H.264; the PCM becomes AAC in the encode."
+
+[[videos]]
+name    = "lt_zoom.mov"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Cosmic zoom rendered in Resolve, Lithuanian labels (raw: 4K60 HEVC 148 Mbps, 6:29, 6.9 GB). Capped at 1920 here; Yaga served the raw as an HQ hard-link, which froze the venue."
+
+[[videos]]
+name    = "atoms.mov"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "CG zoom into atoms (raw: 1080p HEVC 10.2 Mbps). Re-encoded to H.264 so Firefox/Windows decode it."
+
+[[videos]]
+name    = "perseverence_rover_landing_nasa.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Perseverance rover landing with audio (NASA; raw 4K60 H.264 9.7 Mbps). Spelling kept as on the raw."
+
+[[videos]]
+name    = "saturn_v_launch_nasa.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = "Saturn V launch, NASA archival (raw 1080p H.264 9.8 Mbps)."
+
+[[videos]]
+name    = "blue_ghost_lunar_orbit.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "Firefly Blue Ghost lunar orbit (raw 1080p H.264 5.7 Mbps)."
+
+[[videos]]
+name    = "cern_footage_2022_013_001_1080p_lhc.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN LHC tunnel B-roll (CERN-FOOTAGE-2022-013-001; raw 1080p H.264 4.1 Mbps)."
+
+[[videos]]
+name    = "cern_footage_2024_006_001.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = "CERN FCC map aerial (CERN-FOOTAGE-2024-006-001; raw 4K H.264 20.7 Mbps, 0:18)."
