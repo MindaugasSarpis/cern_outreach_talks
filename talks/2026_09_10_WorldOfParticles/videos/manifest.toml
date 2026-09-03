@@ -25,8 +25,12 @@
 [defaults]
 source_remote = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
 
+max_size_mb   = 300  # lt_zoom.mov: 6:29 of 1080p CG at the high-motion ceiling lands at
+                     # 257 MB. Accepted over the global 200 MB guard rather than dropping
+                     # to standard-tight (Yaga streamed a 372 MB 4K copy of the same clip).
+
 # release_tag auto-derives from the talk dirname (videos-2026-09-10-worldofparticles).
-# long_edge_px / web_long_edge_px / max_size_mb inherited from /outreach.toml.
+# long_edge_px / web_long_edge_px inherited from /outreach.toml.
 
 [[videos]]
 name    = "mountain.mov"
