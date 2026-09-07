@@ -49,7 +49,8 @@ The conda env bundles everything: `nodejs`, `pnpm`, `python>=3.11`,
 ├── outreach.toml                 # global defaults (long_edge_px, max_size_mb)
 ├── pnpm-workspace.yaml           # workspace: talks/*
 ├── theme/                        # shared Slidev theme (@slidev/theme-scienced fork)
-├── components/                   # shared Vue components (VideoPlayer, ParticleDiagram, …)
+├── components/                   # shared Vue components (VideoPlayer, ParticleHero, ParticleDiagram, …)
+│   └── particle-hero/            # three.js scene behind ParticleHero (ported from CERN lessons landing)
 ├── scripts/videos.py             # video pipeline (sync/encode/publish/check)
 ├── videos/
 │   ├── shared.toml               # shared registry: clips inherited by talks at runtime
@@ -250,6 +251,39 @@ HQ is only served from the local `public/videos-hq/` symlink.
 
 `videos:check` greps `VideoPlayer src="..."` against the manifest, so
 keep that attribute syntax.
+
+**Look-ahead buffering.** VideoPlayer attaches the `<source>` of the next
+three slides' clips early (`preload="auto"`) so they buffer while the
+current slide is up — in dev AND production. Production used to rely on
+`<link rel="preload" as="video">`, which Chrome rejects ("unsupported `as`
+value") and silently fetched nothing, so deployed decks started every
+clip cold (found on the deployed WoP deck, 2026-09-07). Consequence for
+authoring: put a non-video slide (cover) in front of a heavy opener so it
+gets a head start; the first slide itself can never be warmed.
+
+## ParticleHero (cover slide)
+
+```html
+<ParticleHero
+  kicker="Dr. Mindaugas Šarpis"
+  title="World of|Particles"                       <!-- '|' breaks lines -->
+  sub="Opening lecture · VU Faculty of Physics|10 September 2026"
+  corner-tr="Autumn 2026" corner-br="Lecture 1" />
+```
+
+The CERN-lessons landing hero (live three.js particle sphere, Space
+Grotesk uppercase title) ported to Slidev, with a "proton being probed"
+twist: beam pulses run down the fibers and collision sprays erupt from
+inside the sphere. Full-bleed like VideoPlayer (`position: absolute;
+inset: 0`) — the slide needs `layout: default` (slide 1 defaults to
+`cover`, which traps it) and no h1. The scene runs only while the slide is
+active and is disposed on unmount; without WebGL2 float render targets
+(or under reduced motion) it degrades to the landing's static gradient.
+Scene code lives in `components/particle-hero/` (upstream:
+`~/Work/teaching/CERN_lessons_on_data_analysis/landing/src/`; `sim.js`,
+`rig.js` and `collisions.js` are adapted, the rest is verbatim). Deps
+`three` and `@fontsource/space-grotesk` are root-level workspace deps.
+A click on the slide fires an extra beam pulse (live demo hook).
 
 ## Encoding profiles (`scripts/videos.py`)
 

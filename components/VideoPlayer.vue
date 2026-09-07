@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { useIsSlideActive, useNav, useSlideContext } from '@slidev/client'
 
 // Per-talk config injected via Vite env (see each talk's .env file):
@@ -66,7 +66,7 @@ const currentSrc = ref(localSrc.value)
 const status = ref('idle')
 const isActive = useIsSlideActive()
 const hasBeenActive = ref(false)
-// Dev-only look-ahead: source attached and buffering before the slide is active.
+// Look-ahead: source attached and buffering before the slide is active.
 const warmed = ref(false)
 
 const mimeType = computed(() => {
@@ -189,12 +189,14 @@ onMounted(() => {
   syncPlayback()
 })
 
-// Look-ahead preload for upcoming slides' videos, two strategies:
-//  - PROD: warm the browser cache via <link rel="preload" as="video"> against
-//    the release URL (the network round-trip is the bottleneck there).
-//  - DEV: files are served locally, so instead attach the <source> early and
-//    let the element itself buffer (preload="auto") — first play of a big HQ
-//    master otherwise stalls on the cold read when the slide activates.
+// Look-ahead preload for the next PRELOAD_AHEAD slides' videos: attach the
+// <source> early and let the element buffer (preload="auto"), in dev AND in
+// production. Production used to warm the browser cache with
+// <link rel="preload" as="video"> instead — Chrome rejects that `as` value
+// ("<link rel=preload> uses an unsupported `as` value") and fetches nothing,
+// so deployed decks started every clip cold; verified on the deployed
+// World of Particles deck on 2026-09-07. The element-driven warm is what dev
+// always did, and it is the strategy the venue bundle relies on too.
 const PRELOAD_AHEAD = 3
 const { currentPage } = useNav()
 const { $page } = useSlideContext()
@@ -207,39 +209,12 @@ const isUpcoming = computed(() => {
   return distance > 0 && distance <= PRELOAD_AHEAD
 })
 
-const shouldPreload = computed(() => import.meta.env.PROD && isUpcoming.value)
-
-watch(() => import.meta.env.DEV && isUpcoming.value, (warm) => {
+watch(isUpcoming, (warm) => {
   if (!warm || warmed.value || hasBeenActive.value) return
   warmed.value = true
   status.value = 'loading'
   nextTick(() => videoRef.value?.load())
 }, { immediate: true })
-
-let preloadLink = null
-function addPreload() {
-  if (preloadLink || typeof document === 'undefined') return
-  // Warm the most-reliable URL — the last entry in the fallback chain. If a
-  // shared release is configured the talk release may 404 for inherited clips,
-  // so preloading the talk URL is a wasted request.
-  const chain = fallbackChain.value
-  const url = chain[chain.length - 1]
-  if (!url) return
-  preloadLink = document.createElement('link')
-  preloadLink.rel = 'preload'
-  preloadLink.as = 'video'
-  preloadLink.href = url
-  preloadLink.type = mimeType.value
-  document.head.appendChild(preloadLink)
-}
-function removePreload() {
-  if (!preloadLink) return
-  preloadLink.remove()
-  preloadLink = null
-}
-
-watch(shouldPreload, (yes) => yes ? addPreload() : removePreload(), { immediate: true })
-onUnmounted(removePreload)
 
 </script>
 

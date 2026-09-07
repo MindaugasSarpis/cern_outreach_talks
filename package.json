@@ -7,5 +7,9 @@
     "videos:shared:check": "python3 scripts/videos.py shared-check",
     "videos:discover": "python3 scripts/discover_videos.py",
     "new-talk": "python3 scripts/new_talk.py"
+  },
+  "dependencies": {
+    "@fontsource/space-grotesk": "^5.2.10",
+    "three": "^0.185.1"
   }
 }

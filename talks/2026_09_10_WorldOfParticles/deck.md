@@ -11,9 +11,24 @@ info: |
   the Yaga crash-course reel (2026-07-18) with a venue-specific opener:
   a zoom-out from the VU Faculty of Physics building into the cosmic web.
   Venue plays the 1080p H.264 web tier (post-Yaga policy).
-# Slidev defaults slide 1 to the cover layout, which traps the full-bleed
-# VideoPlayer in its bottom content strip — force the plain layout.
+# Slidev defaults slide 1 to the cover layout, which traps a full-bleed
+# component in its bottom content strip — force the plain layout.
 layout: default
+---
+
+<!-- Cover — the CERN-lessons landing hero (live particle sphere) with the
+     "proton being probed" twist: beam pulses arrive along the fibers and
+     collision sprays erupt from inside the sphere. Full-bleed; no h1 here.
+     Doubles as the head start for the opener: VideoPlayer's look-ahead
+     starts buffering the next clips while this slide is up. -->
+<ParticleHero
+  kicker="Dr. Mindaugas Šarpis"
+  title="World of|Particles"
+  sub="Opening lecture of the open course · VU Faculty of Physics|10 September 2026"
+  corner-tr="Autumn 2026"
+  corner-br="Lecture 1"
+/>
+
 ---
 
 <!-- Act I — From here to the cosmos: zoom-out that starts on the VU Faculty
