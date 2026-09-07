@@ -8,20 +8,17 @@ title: World of Particles
 info: |
   World of Particles — opening lecture of the open course, 2026-09-10.
   A video-driven tour from the cosmos to the quantum and into CERN;
-  the same reel structure as the Yaga crash course (2026-07-18).
+  the Yaga crash-course reel (2026-07-18) with a venue-specific opener:
+  a zoom-out from the VU Faculty of Physics building into the cosmic web.
   Venue plays the 1080p H.264 web tier (post-Yaga policy).
 # Slidev defaults slide 1 to the cover layout, which traps the full-bleed
 # VideoPlayer in its bottom content strip — force the plain layout.
 layout: default
 ---
 
-<!-- Act I — From the cosmos: Earth at human scale -->
-<VideoPlayer src="mountain.mov" />
-
----
-
-<!-- cosmic zoom out (Lithuanian-labelled render from Yaga; swap if the audience is English-only) -->
-<VideoPlayer src="lt_zoom.mov" />
+<!-- Act I — From here to the cosmos: zoom-out that starts on the VU Faculty
+     of Physics building (Google Earth) and ends in the cosmic web, 4:42 -->
+<VideoPlayer src="vu_ff_zoom.mp4" />
 
 ---
 

@@ -3,11 +3,12 @@
 # stream at runtime from the videos-shared GH Release via VideoPlayer's
 # fallback chain.
 #
-# The eight entries below are the Yaga-lineage clips that live only on the
-# Yaga talk release (videos-2026-07-18-yaga) — and there as 4K web copies.
-# They are re-encoded here at the post-Yaga policy (1920 H.264, -16 LUFS,
-# no HQ tier) from the same gdrive raws and published to this talk's own
-# release, so `videos:preflight` passes cleanly.
+# vu_ff_zoom.mp4 is this talk's own opener. The six entries after it are the
+# Yaga-lineage clips that live only on the Yaga talk release
+# (videos-2026-07-18-yaga) — and there as 4K web copies. They are re-encoded
+# here at the post-Yaga policy (1920 H.264, -16 LUFS, no HQ tier) from the
+# same gdrive raws and published to this talk's own release, so
+# `videos:preflight` passes cleanly.
 #
 # POLICY (since 2026-07-18): venues play the 1080p H.264 web tier.
 #   - long_edge_px stays at the global 1920.
@@ -25,24 +26,28 @@
 [defaults]
 source_remote = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
 
-max_size_mb   = 300  # lt_zoom.mov: 6:29 of 1080p CG at the high-motion ceiling lands at
-                     # 257 MB. Accepted over the global 200 MB guard rather than dropping
-                     # to standard-tight (Yaga streamed a 372 MB 4K copy of the same clip).
+max_size_mb   = 300  # vu_ff_zoom.mp4: 4:42 of 1080p CG at the high-motion ceiling can land
+                     # near 280 MB. Accepted over the global 200 MB guard rather than dropping
+                     # the opener to standard-tight (Yaga streamed a 372 MB 4K zoom).
 
 # release_tag auto-derives from the talk dirname (videos-2026-09-10-worldofparticles).
 # long_edge_px / web_long_edge_px inherited from /outreach.toml.
 
 [[videos]]
-name    = "mountain.mov"
+name    = "vu_ff_zoom.mp4"
 profile = "high-motion"
 used_in = ["deck"]
-notes   = "Opening mountain aerial with edited audio (raw: 4K30 H.264 207 Mbps + 24-bit PCM, 3:07, 4.5 GB). Web tier 1920 H.264; the PCM becomes AAC in the encode."
+notes   = """\
+Opener: cosmic zoom-out that starts on the VU Faculty of Physics building \
+(Google Earth) and pulls out through Vilnius, Earth, the Milky Way and the \
+galaxies to the cosmic web, 4:42 with its own audio track. Replaces both \
+mountain.mov and lt_zoom.mov from the Yaga reel. Raw is a 4K60 H.264 \
+254 Mbps Resolve master (9.0 GB; uploaded to gdrive as FF_Zoom_Master.mp4, \
+renamed there to this name on 2026-09-07)."""
 
-[[videos]]
-name    = "lt_zoom.mov"
-profile = "high-motion"
-used_in = ["deck"]
-notes   = "Cosmic zoom rendered in Resolve, Lithuanian labels (raw: 4K60 HEVC 148 Mbps, 6:29, 6.9 GB). Capped at 1920 here; Yaga served the raw as an HQ hard-link, which froze the venue."
+# mountain.mov and lt_zoom.mov (the Yaga opener pair) were replaced by
+# vu_ff_zoom.mp4 on 2026-09-07. Their 1080p web copies remain on this talk's
+# release and their raws on gdrive — re-add an entry if either comes back.
 
 [[videos]]
 name    = "atoms.mov"
