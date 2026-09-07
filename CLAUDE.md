@@ -52,7 +52,8 @@ The conda env bundles everything: `nodejs`, `pnpm`, `python>=3.11`,
 ├── components/                   # shared Vue components (VideoPlayer, ParticleDiagram, …)
 ├── scripts/videos.py             # video pipeline (sync/encode/publish/check)
 ├── videos/
-│   └── shared.toml               # shared registry: clips inherited by talks at runtime
+│   ├── shared.toml               # shared registry: clips inherited by talks at runtime
+│   └── raw/                      # RAW BANK: originals for every talk (gitignored, rclone-synced)
 └── talks/<name>/
     ├── deck.md                   # Slidev entry — theme: ../../theme
     ├── .env                      # VITE_VIDEO_REPO / VITE_VIDEO_RELEASE / VITE_VIDEO_SHARED_RELEASE
@@ -65,9 +66,18 @@ The conda env bundles everything: `nodejs`, `pnpm`, `python>=3.11`,
     │   └── videos-hq/            # symlink to videos/hq/ (gitignored)
     └── videos/
         ├── manifest.toml         # talk-OWNED clips only (shared clips live in /videos/shared.toml)
-        ├── raw/                  # originals (gitignored, rclone-synced)
         └── hq/                   # visually-lossless venue masters (gitignored)
 ```
+
+**Raw bank (since 2026-09-07).** Originals live in ONE place per machine,
+`<repo>/videos/raw/`, not per talk — the same multi-GB masters recur from
+deck to deck and per-talk `videos/raw/` dirs held them two and three times
+over. `videos:sync` still fetches only the raws the current talk's manifest
+names (into the bank), `encode`/`encode-hq` read them from there, and
+`videos:clean` only ever offers to delete raws the current manifest names.
+`videos:check` flags a bank file as ORPHAN RAW only when no talk manifest
+and not the shared registry names it. `hq_from_raw` hard-links from the
+bank into the talk's `videos/hq/` (same volume).
 
 **Theme** is referenced as `theme: ../../theme` in each deck's
 frontmatter. Don't use a `theme` symlink — Vite's glob scanner doesn't
@@ -137,6 +147,7 @@ pnpm build:portable     # portable bundle in dist-portable/ (relative base, offl
 pnpm export             # PDF export (requires playwright-chromium; install locally if needed)
 
 pnpm videos:sync        # rclone manifest-listed raws from [defaults].source_remote
+                        #   into the repo raw bank <repo>/videos/raw/
                         #   (--all mirrors the whole remote folder)
                         #   compares by MD5 so a same-name re-upload is never
                         #   mistaken for "up to date"; --quick reverts to
@@ -156,7 +167,7 @@ pnpm videos:check       # profiles, per-tier missing/orphans, web size budget,
                         # since the 2026-07-18 cleanup) — it's an error only when no
                         # remote copy exists either.
 pnpm videos:build       # one-shot: (--sync) -> encode -> encode-hq -> check
-pnpm videos:clean       # delete local raw/hq (and --web) files ONLY when a size-matched
+pnpm videos:clean       # delete this talk's raw/hq (and --web) files ONLY when a size-matched
                         # remote copy is verified (gdrive raws, release encodes).
                         # Dry-run by default; -- --yes deletes; --include-shared opts
                         # shared-clip local copies in. Spec: docs/superpowers/specs/

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Video asset pipeline: sync, encode, publish, check, encode-hq, publish-hq.
 
-Reads videos/manifest.toml as the source of truth. Raws live in videos/raw/;
+Reads videos/manifest.toml as the source of truth. Raws live in the repo bank <repo>/videos/raw/;
 encoded web copies are written to public/videos/ and published to a
 long-lived GitHub Release (default tag: videos-<talk>). A separate
 visually-lossless HQ tier is encoded into videos/hq/ for venue playback
@@ -17,7 +17,8 @@ downloaded or re-encoded when working on a specific talk. The `check`
 command treats slide refs satisfied by the shared registry as OK.
 
 Subcommands:
-    sync           rclone manifest-listed raw files from the remote (--all: whole folder)
+    sync           rclone manifest-listed raw files from the remote into the repo raw bank
+                   <repo>/videos/raw/ (--all: whole folder)
     encode         ffmpeg raw -> public/videos/ (web tier, idempotent)
     publish        gh release upload web files, clobbering existing assets
     pull           gh release download web files -> public/videos/
@@ -53,7 +54,6 @@ from pathlib import Path
 # Monorepo root is located by walking up from TALK looking for outreach.toml.
 TALK = Path.cwd().resolve()
 MANIFEST = TALK / "videos" / "manifest.toml"
-RAW_DIR = TALK / "videos" / "raw"
 WEB_DIR = TALK / "public" / "videos"
 HQ_DIR = TALK / "videos" / "hq"
 HQ_LINK_DIR = TALK / "public" / "videos-hq"
@@ -65,6 +65,17 @@ def _find_monorepo_root(start: Path) -> Path | None:
         if (p / "outreach.toml").exists():
             return p
     return None
+
+
+# Raws live in ONE bank per machine, <repo>/videos/raw/, shared by every talk
+# (since 2026-09-07). Talks reuse the same multi-GB masters from deck to deck,
+# and per-talk raw dirs held the same files two and three times over. The
+# bank is gitignored like the old per-talk dirs. sync/encode/clean stay
+# manifest-scoped: a talk only ever fetches, encodes, or offers to delete the
+# raws its own manifest names, so other talks' files in the bank are never
+# touched. Outside a monorepo (no outreach.toml) fall back to the talk dir.
+_ROOT = _find_monorepo_root(TALK)
+RAW_DIR = (_ROOT / "videos" / "raw") if _ROOT else (TALK / "videos" / "raw")
 
 
 def _load_global_defaults() -> dict:
@@ -1048,12 +1059,30 @@ def _slide_references() -> dict[str, list[str]]:
     return refs
 
 
+def _all_talk_manifest_names() -> set[str]:
+    """Names listed by ANY talk manifest in the monorepo (the raw bank is shared)."""
+    names: set[str] = set()
+    if not _ROOT:
+        return names
+    for m in (_ROOT / "talks").glob("*/videos/manifest.toml"):
+        try:
+            with m.open("rb") as f:
+                data = tomllib.load(f)
+        except (OSError, tomllib.TOMLDecodeError):
+            continue
+        names.update(v["name"] for v in data.get("videos", []) if "name" in v)
+    return names
+
+
 def cmd_check(_: argparse.Namespace) -> int:
     defaults, videos = load_manifest()
     _, shared_videos = load_shared_manifest()
     manifest_names = {v.name for v in videos}
     shared_names = {v.name for v in shared_videos}
     raw_files = {p.name for p in RAW_DIR.glob("*") if p.is_file() and not p.name.startswith(".")}
+    # The raw bank is shared across talks: a file another talk's manifest
+    # names is not an orphan from this talk's point of view.
+    claimed_raws = _all_talk_manifest_names() | shared_names
     web_files = {p.name for p in WEB_DIR.glob("*") if p.is_file() and not p.name.startswith(".")}
     hq_files = {p.name for p in HQ_DIR.glob("*") if p.is_file() and not p.name.startswith(".")}
     refs = _slide_references()
@@ -1099,8 +1128,8 @@ def cmd_check(_: argparse.Namespace) -> int:
     # Shared-overlap files in any tier are valid (inherited copies pulled
     # for offline use, or talk overrides); they're only flagged if absent
     # from both manifests.
-    for name in sorted(raw_files - manifest_names - shared_names):
-        print(f"  ORPHAN RAW:       {name}")
+    for name in sorted(raw_files - claimed_raws):
+        print(f"  ORPHAN RAW:       {name}  (in the raw bank, named by no talk manifest or the shared registry)")
         problems += 1
 
     for name in sorted(web_files - manifest_names - shared_names):
@@ -1398,6 +1427,11 @@ def cmd_clean(args: argparse.Namespace) -> int:
 
     tier_dirs = {"raw": RAW_DIR, "hq": HQ_DIR, "web": WEB_DIR}
     tier_files = {t: _local_files(tier_dirs[t]) for t in sorted(tiers)}
+    if "raw" in tier_files:
+        # The raw bank is shared by every talk: never list, let alone delete,
+        # a raw this talk's manifest (or the shared registry) doesn't name.
+        mine = set(talk_by_name) | set(shared_by_name)
+        tier_files["raw"] = {n: f for n, f in tier_files["raw"].items() if n in mine}
     if not any(tier_files.values()):
         print(f"Nothing local to clean in {', '.join(sorted(tiers))}.")
         return 0
@@ -1707,9 +1741,10 @@ def _encode_one_hq(entry: VideoEntry, force: bool, default_long_edge: int) -> tu
         # mtime test used below would wrongly report "up to date" when a
         # re-pulled raw carries the old modtime (see cmd_sync's --checksum
         # note) — leaving last week's cut linked as the venue master.
-        # HQ_DIR and RAW_DIR are siblings under videos/, so os.link is the
-        # real path here; the copy2 fallback only fires cross-device, where it
-        # re-copies each run rather than risk serving a stale master.
+        # RAW_DIR is the repo-level bank and HQ_DIR the talk's videos/hq/ —
+        # same checkout, so normally the same volume and os.link is the real
+        # path; the copy2 fallback only fires cross-device, where it re-copies
+        # each run rather than risk serving a stale master.
         if hq.exists() and not force and hq.samefile(raw):
             return entry, "skipped", raw_size, hq.stat().st_size
         if hq.exists() or hq.is_symlink():

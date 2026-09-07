@@ -73,10 +73,11 @@ back in.
 with an absolute path: `![](/figures/my-photo.jpg)`.
 
 **Video** — add an entry to `videos/manifest.toml`, put the raw file on
-the gdrive source folder (or in `videos/raw/` directly), then:
+the gdrive source folder (or straight into the repo-level raw bank,
+`<repo>/videos/raw/`, which every talk shares), then:
 
 ```bash
-pnpm videos:sync       # fetch raws listed in the manifest from gdrive
+pnpm videos:sync       # fetch raws listed in the manifest from gdrive into <repo>/videos/raw/
 pnpm videos:encode     # ffmpeg -> public/videos/  (H.264, loudness-normalized)
 pnpm videos:publish    # upload to the talk's GitHub Release
 ```

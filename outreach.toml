@@ -18,3 +18,5 @@ web_long_edge_px = 1920   # WEB-tier width cap (H.264 browser fallback). Kept at
 max_size_mb      = 200    # warn if an encoded web file exceeds this
 # source_remote is intentionally not set globally — each talk points at its
 # own rclone path.
+# Raws fetched from it land in the shared bank <repo>/videos/raw/ (gitignored),
+# one copy per machine no matter how many talks list the same clip.
