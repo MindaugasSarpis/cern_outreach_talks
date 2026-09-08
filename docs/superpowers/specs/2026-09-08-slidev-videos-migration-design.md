@@ -314,3 +314,28 @@ slides.
   copies are superseded by library entries and pruned after the talk (§6).
 - **Venue notes** (README): `p` play/pause, `+`/`-` volume (sticky),
   `pnpm venue` for the offline bundle.
+
+## 11. World of Particles — live slides and a backup quiz (added 2026-09-08, user: "surprise me")
+
+- **ParticleHero modes** (`components/particle-hero/`): `proton` (the
+  landing scene), `galaxy` (spinning two-armed spiral disc, centre bulge),
+  `collider` (a still ring; two bunches at ±ωt cross at ring angle 0 and π
+  every π/ω s and an eruption fires at that interaction point). `collide()`
+  erupts on demand; `onEvent(count, manual)` reports every eruption.
+- **Interaction**: click shoves the field and fires a collision (proton: a
+  beam pulse that erupts on arrival); `c` fires one now. `counter` shows a
+  running tally; `sound` plays a synthesised crack + thump
+  (`particle-hero/sound.js`, Web Audio, gesture-unlocked) for the
+  presenter-triggered ones only.
+- **Overview hygiene**: outside the `slide`/`presenter` render contexts the
+  hero renders its static gradient card — no WebGL boot per overview tile.
+- **Deck**: act cards before Act I (galaxy), II (proton), III (collider);
+  finale "Ačiū" (proton, sound, counter) after the thanks clip; nine
+  `QuizCard` slides as backup material after the finale.
+- **QuizCard** (`components/QuizCard.vue`): one question, three tiles;
+  keys `1`–`3` point, `Enter`/click reveals (correct tile lights, others
+  dim, fact fades in, 2D-canvas burst), `r` resets. No Slidev key clashes.
+- **Verification**: headless-Chromium (SwiftShader WebGL2) screenshots of
+  the landing, the three act cards, the finale after `c` presses, and a
+  revealed quiz card; zero console errors; `check`/`preflight` unchanged
+  (no new clips).
