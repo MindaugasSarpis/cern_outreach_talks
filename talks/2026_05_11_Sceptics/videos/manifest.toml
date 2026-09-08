@@ -1,60 +1,17 @@
-# Talk-OWNED video assets for this talk. Clips inherited from the shared
-# registry (/videos/shared.toml) — like CERN_Overview_Short, Voyage_into_atoms,
-# LHCb_Aciu — are NOT listed here; they're served at runtime from the shared
-# release via VideoPlayer's fallback chain.
-#
-# Global defaults live in /outreach.toml; talk-level [defaults] overrides them;
-# per-video fields on a [[videos]] block win over both.
-#
-# Profiles (in scripts/videos.py):
-#   remux          - lossless stream copy + faststart. For clips already in a
-#                    web-friendly codec (H.264, or low-bitrate HEVC).
-#   standard       - web H.264 CRF 23 (<=6 Mbps), AAC 128k.
-#   standard-tight - web H.264 CRF 26 (<=3.5 Mbps) for long clips.
-#   silent-loop    - web H.264 CRF 24 (<=5 Mbps), audio stripped. Loops.
-#   high-motion    - web H.264 CRF 22 (<=8 Mbps), AAC 192k. Sims/CGI/fast.
-# (The HQ venue-master tier is HEVC CRF 16 regardless of profile.)
+# Talk-OWNED clips for the Sceptics talk. The CERN footage the deck uses is
+# slidev-videos library material (inherited by name; never listed here).
 
 [defaults]
-source_remote = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
-long_edge_px  = 3840   # venue is 4K 16:9 (3840x2160); override global 1920
+# release_tag comes from videos.toml (videos-2026-05-11-sceptics).
 
-# release_tag auto-derives from talk dirname.
-# max_size_mb inherited from /outreach.toml.
-
-# g-2 charts — talk-specific renders. The editAI versions are 1800x1000 (9:5);
-# Sceptics' venue is 16:9, so the masters should be regenerated at 16:9
-# (1920x1080 min, 3840x2160 ideal) before the talk goes live. Until then,
-# the existing files in public/videos/ letterbox top/bottom on the venue —
-# acceptable for rehearsal, fix before showtime.
 [[videos]]
 name    = "g2_data.mp4"
 profile = "remux"
 used_in = ["deck"]
-notes   = "Muon g-2 measured-vs-theory chart. REGENERATE at 16:9 from master."
+notes   = "Muon g-2 measured-vs-theory chart (1800x1000; letterboxes on 16:9)."
 
 [[videos]]
 name    = "g2_fit.mp4"
 profile = "remux"
 used_in = ["deck"]
-notes   = "Muon g-2 fit chart. REGENERATE at 16:9 from master."
-
-# Additional CERN institutional footage for the closing CERN section.
-# Could be promoted to /videos/shared.toml if other talks pick them up.
-[[videos]]
-name    = "cern_footage_2022_013_001_1080p_lhc.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "CERN footage 2022-013-001, LHC tunnel/operations, 1080p."
-
-[[videos]]
-name    = "cern_footage_2024_010_002.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "CERN footage 2024-010-002."
-
-[[videos]]
-name    = "cern_footage_2025_014_002.mp4"
-profile = "standard"
-used_in = ["deck"]
-notes   = "CERN footage 2025-014-002."
+notes   = "Muon g-2 fit chart (1800x1000; letterboxes on 16:9)."

@@ -1,0 +1,9 @@
+# slidev-videos project marker for this talk. Running `slidev-videos` (or
+# `pnpm videos:*`) from inside this directory selects the talk as the
+# project; ../../videos.toml supplies the shared [defaults].
+
+[project]
+raw_dir = "../../videos/raw"   # repo-level raw bank: one copy per machine, every talk
+
+[defaults]
+release_tag = "videos-2026-09-00-startertalk"
