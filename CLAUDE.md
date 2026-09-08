@@ -162,6 +162,33 @@ Verify visually with headless Chromium (`--use-gl=angle --use-angle=swiftshader
 --enable-unsafe-swiftshader` renders WebGL2 with float targets) — see the
 shot script pattern in the 2026-09-08 migration plan.
 
+## Hadron space (Startertalk)
+
+`talks/2026_09_00_Startertalk/` is told inside one persistent 3D scene:
+every hadron discovered at the LHC (Koppenburg's list, CC BY 4.0) plus a
+few pre-LHC landmarks, laid out as date (x) × mass (y) × quark-family
+lane (z), in the WoP landing's ambient particle field.
+
+- `components/hadron-space/space.js` — the three.js scene; `createSpace(canvas, container, { data, onArrive })`
+  → `setPose({ at, dist, yaw, pitch })`, `setStop(id)`, `setPaused`, `dispose`. Named
+  poses `wide` / `origin` / `future`; `at` may be a state id or `[x, y, z]`.
+  Flights are timed ease-in-out (1.4–2.8 s by distance); parked, the camera drifts.
+- `components/HadronSpace.vue` — mounted once from the deck's `global-bottom.vue`;
+  reads each slide's `space:` frontmatter and `clicks`; shows the stop HUD (record
+  left, paper figure right) after the camera lands; sets `html[data-space-stop]`
+  while a stop is active so deck CSS fades the slide's cards.
+- `components/HaloLayer.vue` — from `global-top.vue`; one 2D canvas that draws the
+  hazy particle border around every `.card` on the live slide and every `.space-panel`.
+- `components/SpacePanel.vue` — translucent panel for HUD text / figures.
+- Data: `scripts/hadrons.py` → `public/data/hadrons.json` (run `--check`; `--cached`
+  for offline). Stop figures: `scripts/fetch_figures.sh` → `public/figures/papers/`.
+- Slide frontmatter: `space: { at: Pc(4312), dist: 8, yaw: -22, pitch: 6, stops: [Pc(4312), Pc(4440)] }`
+  with `clicks: 2` (= stops.length). A slide without `space` keeps the previous pose.
+- Deck CSS (`styles/index.css`) makes slides transparent and cards translucent.
+  No WebGL2 float targets → static gradient; overview/PDF have no world.
+- Verify with headless Chromium (SwiftShader) screenshots; it renders slowly, so
+  wait ~9 s after a click before shooting a stop.
+
 ## Slidev gotchas
 
 - Use `routerMode: hash` in frontmatter when deploying to GH Pages so deep links (`/#/3`) survive a refresh.

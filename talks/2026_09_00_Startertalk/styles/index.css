@@ -16,3 +16,50 @@
 .card h2 + ol {
   margin-top: 0.35rem;
 }
+
+/* --- Hadron space: the 3D world lives under the slides (global-bottom.vue).
+   Slides are transparent so it shows through; cards keep their text but sit
+   on a translucent fill with no drawn edge — HaloLayer draws the hazy border. */
+.slidev-layout,
+.slidev-layout.cover,
+.slidev-layout.section,
+.slidev-layout.fact,
+.slidev-layout.statement,
+.slidev-layout.center-bkg {
+  background: transparent !important;
+}
+.card {
+  background: rgba(5, 5, 7, 0.55) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(8px);
+}
+.card::before { display: none; }
+
+/* Cards rise in as a slide arrives (staggered), the way the HUD does. */
+@keyframes card-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.slidev-page .card { animation: card-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.slidev-page .card:nth-child(2) { animation-delay: 0.08s; }
+.slidev-page .card:nth-child(3) { animation-delay: 0.16s; }
+.slidev-page .grid-2 > :nth-child(2) .card, .slidev-page .grid-3 > :nth-child(2) .card { animation-delay: 0.08s; }
+.slidev-page .grid-3 > :nth-child(3) .card { animation-delay: 0.16s; }
+
+/* While the space is on a stop (HadronSpace sets html[data-space-stop]) the
+   slide's own content steps back so the state, its record and its figure
+   have the screen; it returns when the stops are done. */
+.slidev-page .slidev-layout { transition: opacity 0.55s ease, filter 0.55s ease; }
+html[data-space-stop="1"] .slidev-page .slidev-layout { opacity: 0.05; filter: blur(3px); }
+
+/* Cover in the hero's type: kicker, uppercase title, dim sub — one family with the HUD. */
+.slidev-layout.cover { font-family: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; padding-left: 11% !important; }
+.slidev-layout.cover h1:first-of-type { font-size: 12.5px !important; font-weight: 500 !important; letter-spacing: 0.12em; text-transform: uppercase; color: #7dd3fc; margin: 0 0 20px !important; }
+.slidev-layout.cover h1:nth-of-type(2) { font-size: 66px !important; font-weight: 700 !important; line-height: 0.98 !important; letter-spacing: -0.02em; text-transform: uppercase; color: #f2f5f9; margin: 0 0 26px !important; max-width: 12ch; }
+.slidev-layout.cover h2 { font-size: 12px !important; font-weight: 400 !important; letter-spacing: 0.1em; text-transform: uppercase; color: #8b97a6; line-height: 1.9 !important; max-width: 62ch; margin: 0 !important; }
+.slidev-layout.cover .mt-md { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8b97a6; }
+.slidev-layout.cover .text-xs { font-size: 9.5px !important; letter-spacing: 0.06em; color: #8b97a6; }
+.slidev-layout.cover::before, .slidev-layout.cover hr { display: none !important; }
+
+/* The theme's cover layout ships its own photo backdrop and light glows; the
+   world is the backdrop here. */
+.slidev-layout.cover .cover-bg, .slidev-layout.cover .vol-light { display: none !important; }
+.slidev-page .slidev-layout.cover.cover-root, .slidev-layout.cover { background: transparent !important; background-image: none !important; }
