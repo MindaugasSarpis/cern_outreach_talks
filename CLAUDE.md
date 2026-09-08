@@ -124,29 +124,40 @@ prefix `PATH=~/micromamba/envs/outreach_talks/bin:$PATH` for GPU encodes.
   gets a head start; the first slide itself can never be warmed.
 - `videos:check` greps `VideoPlayer src="..."`, so keep that attribute syntax.
 
-## ParticleHero (cover slide)
+## ParticleHero (live hero slides) and QuizCard
 
 ```html
-<ParticleHero
-  kicker="Dr. Mindaugas Šarpis"
-  title="World of|Particles"                       <!-- '|' breaks lines -->
-  sub="Opening lecture · VU Faculty of Physics|10 September 2026"
-  corner-tr="Autumn 2026" corner-br="Lecture 1" />
+<ParticleHero mode="galaxy" kicker="Act I" title="From the|Cosmos" corner-tr="…" corner-br="I / III" />
+<ParticleHero mode="proton" sound counter kicker="World of Particles" title="Ačiū"
+  sub="Questions?|Press C — or click the proton — to collide" />
+<QuizCard n="1" total="9" q="How fast…?" :options="['A…','B…','C…']" :answer="1" fact="One line shown on reveal." />
 ```
 
-The CERN-lessons landing hero (live three.js particle sphere, Space
-Grotesk uppercase title) ported to Slidev, with a "proton being probed"
-twist: beam pulses run down the fibers and collision sprays erupt from
-inside the sphere. Full-bleed like VideoPlayer (`position: absolute;
-inset: 0`) — the slide needs `layout: default` (slide 1 defaults to
-`cover`, which traps it) and no h1. The scene runs only while the slide is
-active and is disposed on unmount; without WebGL2 float render targets
-(or under reduced motion) it degrades to the landing's static gradient.
-Scene code lives in `components/particle-hero/` (upstream:
-`~/Work/teaching/CERN_lessons_on_data_analysis/landing/src/`; `sim.js`,
-`rig.js` and `collisions.js` are adapted, the rest is verbatim). Deps
-`three` and `@fontsource/space-grotesk` are root-level workspace deps.
-A click on the slide fires an extra beam pulse (live demo hook).
+The CERN-lessons landing hero (live three.js particle scene, Space Grotesk
+uppercase title) as a full-bleed slide, in three `mode`s
+(`components/particle-hero/core.js`): `proton` (the probed sphere: beam
+pulses along the fibers, eruptions inside — the landing), `galaxy` (a
+spinning spiral disc), `collider` (a ring; two bunches cross at the top and
+bottom interaction points twice a lap and erupt there). While the slide is
+active: pointer stirs the field, a click shoves it and fires a collision,
+`c` fires one now. `counter` shows a running tally; `sound` plays a
+synthesised crack + thump (`particle-hero/sound.js`) for the presenter-
+triggered collisions only. `'|'` breaks lines. Full-bleed like VideoPlayer —
+no h1 on the slide. The scene runs only on the active slide and only in the
+live `slide`/`presenter` render contexts (the overview grid gets the static
+gradient card); without WebGL2 float render targets or under reduced
+motion the static card is what you get.
+
+`QuizCard` is the audience quiz in the same visual language: one question,
+three tiles. Keys while active: `1`–`3` point at a tile, `Enter` or a click
+reveals (correct tile lights, others dim, fact fades in, a 2D-canvas
+burst), `r` resets. None of these clash with Slidev's navigation keys.
+
+WoP uses them as act cards (galaxy / proton / collider), an interactive
+finale (proton, sound, counter) and nine backup quiz slides after it.
+Verify visually with headless Chromium (`--use-gl=angle --use-angle=swiftshader
+--enable-unsafe-swiftshader` renders WebGL2 with float targets) — see the
+shot script pattern in the 2026-09-08 migration plan.
 
 ## Slidev gotchas
 

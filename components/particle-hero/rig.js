@@ -21,13 +21,18 @@ const BREATHE_PERIOD = 31;  // s
 const LIFT = 3 * D2R;       // ± elevation drift
 const LIFT_PERIOD = 57;     // s
 
-export function createRig(camera) {
+// Per-variant base elevation: the disc and the ring are tilted structures
+// and read better from slightly above; the sphere keeps the landing's framing.
+const EL_BY_VARIANT = { sphere: EL0, galaxy: 10 * D2R, ring: 8 * D2R };
+
+export function createRig(camera, { variant = 'sphere' } = {}) {
   const pos = new Vector3(), look = new Vector3();
+  const el0 = EL_BY_VARIANT[variant] ?? EL0;
   return {
     update(elapsed) {
       const azi = AZI0 + SWAY * Math.sin((elapsed / SWAY_PERIOD) * Math.PI * 2);
       const r = R0 + BREATHE * Math.sin((elapsed / BREATHE_PERIOD) * Math.PI * 2 + 1.1);
-      const el = EL0 + LIFT * Math.sin((elapsed / LIFT_PERIOD) * Math.PI * 2 + 2.3);
+      const el = el0 + LIFT * Math.sin((elapsed / LIFT_PERIOD) * Math.PI * 2 + 2.3);
       pos.set(
         CORE_CENTER.x + r * Math.cos(el) * Math.sin(azi),
         CORE_CENTER.y + r * Math.sin(el),

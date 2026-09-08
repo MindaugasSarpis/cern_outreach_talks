@@ -18,6 +18,8 @@ info: |
   from the cosmos, to the quantum, inside CERN. Every clip except the
   opener is a slidev-videos library clip; the venue plays the 1080p
   H.264 web tier. Keys on a video slide: p play/pause, + / - volume.
+  Live slides (landing, act cards, finale): click or press c to fire a
+  collision. Backup quiz after the finale: 1-3 point, Enter reveals, r resets.
 # Slidev defaults slide 1 to the cover layout, which traps a full-bleed
 # component in its bottom content strip — force the plain layout.
 layout: default
@@ -39,7 +41,23 @@ Speaker: welcome, one sentence on what the course is, then dim the lights
 and advance. The reel runs without talk-over; pick it up between acts.
 Act I — from the cosmos (15 clips, ~17 min) · Act II — to the quantum
 (4 clips, ~3 min) · Act III — inside CERN (13 clips, ~11 min).
+Each act opens on a live card (galaxy / proton / collider ring): click it
+or press c to fire a collision while you introduce the act. The finale
+counts collisions and plays a sound for the ones you trigger. Nine quiz
+cards wait after the finale as backup material (g + slide number).
 -->
+
+---
+
+<!-- Act I card — live spiral galaxy (ParticleHero mode="galaxy"). Click / c
+     fires a burst at the centre. Static card in the overview grid. -->
+<ParticleHero
+  mode="galaxy"
+  kicker="Act I"
+  title="From the|Cosmos"
+  corner-tr="World of Particles"
+  corner-br="I / III"
+/>
 
 ---
 
@@ -120,6 +138,18 @@ Act I — from the cosmos (15 clips, ~17 min) · Act II — to the quantum
 
 ---
 
+<!-- Act II card — the probed proton (ParticleHero mode="proton"): beam
+     pulses arrive along the fibers and collisions erupt inside. -->
+<ParticleHero
+  mode="proton"
+  kicker="Act II"
+  title="To the|Quantum"
+  corner-tr="World of Particles"
+  corner-br="II / III"
+/>
+
+---
+
 <!-- Act II · the primordial soup: quark-gluon plasma formation (0:33) -->
 <VideoPlayer src="qgp_formation.mp4" />
 
@@ -137,6 +167,19 @@ Act I — from the cosmos (15 clips, ~17 min) · Act II — to the quantum
 
 <!-- Act II · particles made visible: cloud chamber, with audio (1:30 trim) -->
 <VideoPlayer src="cloud_chamber_audio.mp4" />
+
+---
+
+<!-- Act III card — collider ring (ParticleHero mode="collider"): two
+     bunches race in opposite directions and collide at the interaction
+     points twice a lap. -->
+<ParticleHero
+  mode="collider"
+  kicker="Act III"
+  title="Inside|CERN"
+  corner-tr="World of Particles"
+  corner-br="III / III"
+/>
 
 ---
 
@@ -202,3 +245,115 @@ Act I — from the cosmos (15 clips, ~17 min) · Act II — to the quantum
 
 <!-- Closer · LHCb fly-through ending on "Ačiū" — thanks, in Lithuanian (2:28) -->
 <VideoPlayer src="lhcb_aciu.mp4" />
+
+---
+
+<!-- Finale — interactive Q&A backdrop: the proton with a live collision
+     tally. Click or press c: a collision erupts and a synthesised thump
+     plays (only for the ones you trigger; the ambient ones stay silent). -->
+<ParticleHero
+  mode="proton"
+  sound
+  counter
+  kicker="World of Particles"
+  title="Ačiū"
+  sub="Questions?|Press C — or click the proton — to collide"
+  corner-tr="Autumn 2026"
+  corner-br="Lecture 1"
+/>
+
+<!--
+Speaker: Q&A. Every c / click is a collision with sound — hand the keyboard
+to a student. Backup quiz cards follow (next slide onward): the room votes
+by hand, 1/2/3 points at a tile, Enter reveals, r resets.
+-->
+
+---
+hideInToc: true
+---
+
+<QuizCard n="1" total="9"
+  q="How fast do the LHC's protons travel?"
+  :options="['99 % of the speed of light', '99.9999991 % of the speed of light', 'Half the speed of light']"
+  :answer="1"
+  fact="At 6.5 TeV a proton is short of light speed by about 3 m/s — roughly a slow walk." />
+
+---
+hideInToc: true
+---
+
+<QuizCard n="2" total="9"
+  q="The LHC ring is 27 km around. How many laps does a proton make each second?"
+  :options="['About 11', 'About 11 000', 'About 11 million']"
+  :answer="1"
+  fact="11 245 laps a second — the proton crosses the Franco-Swiss border about 22 000 times per second." />
+
+---
+hideInToc: true
+---
+
+<QuizCard n="3" total="9"
+  q="How cold are the LHC's superconducting magnets?"
+  :options="['−80 °C, like a deep freezer', '1.9 K — colder than outer space', 'Room temperature; they are just big']"
+  :answer="1"
+  fact="Superfluid helium keeps 27 km of magnets at 1.9 K (−271 °C). The cosmic microwave background is a balmy 2.7 K." />
+
+---
+hideInToc: true
+---
+
+<QuizCard n="4" total="9"
+  q="How many protons circulate in one LHC beam?"
+  :options="['About 3 million', 'About 300 trillion', 'About 3 × 10²⁰']"
+  :answer="1"
+  fact="2 808 bunches × 1.15 × 10¹¹ protons ≈ 3 × 10¹⁴. All of them together weigh less than a grain of sand." />
+
+---
+hideInToc: true
+---
+
+<QuizCard n="5" total="9"
+  q="What is inside a proton?"
+  :options="['Three quarks and nothing else', 'Three valence quarks, gluons, and a sea of quark–antiquark pairs', 'Electrons packed tightly']"
+  :answer="1"
+  fact="The three valence quarks carry only about 1 % of the proton's mass; the rest is the energy of the gluon field binding them." />
+
+---
+hideInToc: true
+---
+
+<QuizCard n="6" total="9"
+  q="How much of the universe is ordinary matter — atoms, stars, us?"
+  :options="['About 5 %', 'About 27 %', 'About 68 %']"
+  :answer="0"
+  fact="About 5 %. Dark matter is ~27 % and dark energy ~68 % — everything the reel showed is the small slice." />
+
+---
+hideInToc: true
+---
+
+<QuizCard n="7" total="9"
+  q="How hot is the quark–gluon plasma made in lead–lead collisions at the LHC?"
+  :options="['About 5 500 °C, like the Sun\'s surface', 'About 5.5 million degrees', 'About 5.5 trillion degrees']"
+  :answer="2"
+  fact="ALICE measured about 5.5 trillion kelvin in 2012 — several hundred thousand times hotter than the centre of the Sun." />
+
+---
+hideInToc: true
+---
+
+<QuizCard n="8" total="9"
+  q="When was the Higgs boson discovered?"
+  :options="['1995', '2012', '2022']"
+  :answer="1"
+  fact="4 July 2012, announced by ATLAS and CMS at CERN — 48 years after it was predicted." />
+
+---
+hideInToc: true
+---
+
+<QuizCard n="9" total="9"
+  q="When did Lithuania join CERN as an Associate Member State?"
+  :options="['1954, as a founding member', '2018', 'It has not joined yet']"
+  :answer="1"
+  fact="8 January 2018. Lithuanian students, teachers and researchers have been at CERN ever since — some of them in this room." />
