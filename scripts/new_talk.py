@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 NAME_RE = re.compile(r"^\d{4}_\d{2}_\d{2}_\w+$")
-ADDON_SPEC = "github:MindaugasSarpis/slidev-videos#v0.3.0"
+ADDON_SPEC = "github:MindaugasSarpis/slidev-videos#v0.3.1"
 REPO = "MindaugasSarpis/cern_outreach_talks"
 
 PNPM_SCRIPTS = {
