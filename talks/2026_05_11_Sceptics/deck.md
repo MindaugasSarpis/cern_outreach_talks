@@ -4,6 +4,12 @@ colorSchema: dark
 transition: fade
 routerMode: hash
 aspectRatio: 16/9
+addons:
+  - slidev-addon-videos
+videos:
+  repo: MindaugasSarpis/cern_outreach_talks
+  release: videos-2026-05-11-sceptics
+  fit: contain
 title: Kvantinė mechanika skeptikams
 info: |
   Populiarinamoji paskaita — sąžininga kvantinės mechanikos apžvalga,
@@ -82,7 +88,7 @@ Kur QM tyrinėjama iki galo.
 <!-- Cloud chamber: charged particles leave visible tracks because each ion
      they create is an irreversible interaction with the supersaturated vapor.
      Concrete example for "matavimas = bet kokia negrįžtama sąveika".
-     Inherited from /videos/shared.toml. -->
+     Inherited from the slidev-videos library. -->
 
 ---
 
@@ -182,7 +188,7 @@ Kur QM tyrinėjama iki galo.
 
 <!-- Standard Model overview reel — inventory of fundamental particles after
      the atomic-orbital exploration; sets up the transition to "where this
-     knowledge becomes useful". Inherited from /videos/shared.toml.
+     knowledge becomes useful". Inherited from the slidev-videos library.
      Native aspect 9:5 (encoded for editAI's 2880x1600 venue), so it will
      letterbox left/right on the Sceptics 16:9 venue. -->
 
