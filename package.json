@@ -1,11 +1,9 @@
 {
   "name": "outreach-talks",
   "private": true,
-  "description": "Monorepo of CERN outreach talks (Slidev decks + shared theme/pipeline)",
+  "description": "Monorepo of CERN outreach talks (Slidev decks + shared theme; videos via slidev-videos)",
   "scripts": {
-    "videos:check-all": "for d in talks/*; do echo \"[$d]\"; (cd \"$d\" && python3 ../../scripts/videos.py check) || true; done",
-    "videos:shared:check": "python3 scripts/videos.py shared-check",
-    "videos:discover": "python3 scripts/discover_videos.py",
+    "videos:check-all": "for d in talks/*; do echo \"[$d]\"; (cd \"$d\" && slidev-videos check) || true; done",
     "new-talk": "python3 scripts/new_talk.py"
   },
   "dependencies": {

@@ -4,6 +4,12 @@ colorSchema: dark
 transition: fade
 routerMode: hash
 aspectRatio: 16/9
+addons:
+  - slidev-addon-videos
+videos:
+  repo: MindaugasSarpis/cern_outreach_talks
+  release: videos-2026-07-18-yaga
+  fit: contain
 title: Yaga Seminar
 info: |
   Outreach talk — crash course on CERN and how research is done there.

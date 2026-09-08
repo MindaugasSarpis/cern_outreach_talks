@@ -4,6 +4,12 @@ colorSchema: dark
 transition: fade
 routerMode: hash
 aspectRatio: 9/5
+addons:
+  - slidev-addon-videos
+videos:
+  repo: MindaugasSarpis/cern_outreach_talks
+  release: videos-2026-04-28-editai
+  fit: contain
 canvasWidth: 2880
 title: editAI Seminar
 info: |

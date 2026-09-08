@@ -4,6 +4,12 @@ colorSchema: dark
 transition: fade
 routerMode: hash
 aspectRatio: 16/9
+addons:
+  - slidev-addon-videos
+videos:
+  repo: MindaugasSarpis/cern_outreach_talks
+  release: videos-2026-09-00-startertalk
+  fit: contain
 title: Pentaquarks at LHCb
 info: |
   Startertalk — 30-minute technical seminar on hidden-charm pentaquarks at LHCb.
