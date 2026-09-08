@@ -22,7 +22,7 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="drone_climbing_mountain_2.mp4" muted />
+<VideoPlayer src="drone_climbing_mountain.mp4" muted />
 
 ---
 
@@ -38,7 +38,7 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="cassini.mov" />
+<VideoPlayer src="cassini_grand_finale.mp4" />
 
 ---
 
@@ -74,7 +74,7 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="expansion_funnel_h264_1080p.webm" muted />
+<VideoPlayer src="expansion_funnel.webm" muted />
 
 ---
 
@@ -110,7 +110,7 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="sm.mov" />
+<VideoPlayer src="standard_model.mp4" />
 
 ---
 
@@ -142,7 +142,7 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="cern_video_2019_050_008_1080ph265.mp4" muted />
+<VideoPlayer src="cern_video_2019_050_008.mp4" muted />
 
 ---
 
@@ -188,4 +188,4 @@ background: /figures/background_intro.jpg
 
 ---
 
-<VideoPlayer src="lhcb_aciu.mov" />
+<VideoPlayer src="lhcb_aciu.mp4" />

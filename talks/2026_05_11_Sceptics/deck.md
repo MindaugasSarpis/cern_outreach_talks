@@ -178,7 +178,7 @@ Kur QM tyrinėjama iki galo.
 
 ---
 
-<VideoPlayer src="sm.mov" />
+<VideoPlayer src="standard_model.mp4" />
 
 <!-- Standard Model overview reel — inventory of fundamental particles after
      the atomic-orbital exploration; sets up the transition to "where this
@@ -666,7 +666,7 @@ layout: quote
 
 ---
 
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" muted
+<VideoPlayer src="cern_footage_2022_013_001.mp4" muted
 :controls="false" />
 
 ---
@@ -683,4 +683,4 @@ layout: quote
 
 ---
 
-<VideoPlayer src="lhcb_aciu.mov" />
+<VideoPlayer src="lhcb_aciu.mp4" />

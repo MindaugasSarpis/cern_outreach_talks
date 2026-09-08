@@ -292,7 +292,7 @@ theory prediction latches onto — part three is built on them. (~2 min)
 
 ---
 
-<VideoPlayer src="cern_video_2019_050_008_1080ph265.mp4" />
+<VideoPlayer src="cern_video_2019_050_008.mp4" />
 
 <!--
 Speaker: silent CERN B-roll (shared release) — a breather before the theory.

@@ -14,7 +14,7 @@ info: |
 layout: default
 ---
 
-<VideoPlayer src="mountain.mov" />
+<VideoPlayer src="mountain.mp4" />
 
 ---
 
@@ -34,11 +34,11 @@ layout: default
 
 ---
 
-<VideoPlayer src="perseverence_rover_landing_nasa.mp4" />
+<VideoPlayer src="perseverance_rover_landing_nasa.mp4" />
 
 ---
 
-<VideoPlayer src="cassini.mov" />
+<VideoPlayer src="cassini_grand_finale.mp4" />
 
 ---
 
@@ -46,7 +46,7 @@ layout: default
 
 ---
 
-<VideoPlayer src="expansion_funnel_h264_1080p.webm" muted />
+<VideoPlayer src="expansion_funnel.webm" muted />
 
 ---
 
@@ -58,7 +58,7 @@ layout: default
 
 ---
 
-<VideoPlayer src="atoms.mov"/>
+<VideoPlayer src="atoms.mp4"/>
 
 ---
 
@@ -70,11 +70,11 @@ layout: default
 
 ---
 
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" />
+<VideoPlayer src="cern_footage_2022_013_001.mp4" />
 
 ---
 
-<VideoPlayer src="cern_video_2019_050_008_1080ph265.mp4" />
+<VideoPlayer src="cern_video_2019_050_008.mp4" />
 
 ---
 
@@ -90,4 +90,4 @@ layout: default
   
 ---
 
-<VideoPlayer src="lhcb_aciu.mov" />
+<VideoPlayer src="lhcb_aciu.mp4" />
