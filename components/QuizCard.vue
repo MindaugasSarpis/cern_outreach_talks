@@ -121,7 +121,7 @@ onUnmounted(() => {
     <canvas ref="canvas" class="burst" aria-hidden="true"></canvas>
     <div class="grain" aria-hidden="true"></div>
     <div v-if="n" class="corner corner-tr" aria-hidden="true">{{ kicker }} · {{ n }}<span v-if="total"> / {{ total }}</span></div>
-    <div class="corner corner-br" aria-hidden="true">{{ revealed ? 'r — reset' : '1 · 2 · 3 point · enter reveals' }}</div>
+    <div class="corner corner-br" aria-hidden="true">{{ revealed ? 'r · reset' : '1 · 2 · 3 · enter' }}</div>
     <div class="body">
       <p class="kicker">{{ kicker }}</p>
       <h1 class="q">{{ q }}</h1>

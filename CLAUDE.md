@@ -127,9 +127,9 @@ prefix `PATH=~/micromamba/envs/outreach_talks/bin:$PATH` for GPU encodes.
 ## ParticleHero (live hero slides) and QuizCard
 
 ```html
-<ParticleHero mode="galaxy" kicker="Act I" title="From the|Cosmos" corner-tr="…" corner-br="I / III" />
+<ParticleHero mode="galaxy" kicker="Part I" title="From Saulėtekis|to the edge of|the Universe" corner-br="I / III" />
 <ParticleHero mode="proton" sound counter kicker="World of Particles" title="Ačiū"
-  sub="Questions?|Press C — or click the proton — to collide" />
+  sub="Questions?|c, or a click on the proton: one more collision" />
 <QuizCard n="1" total="9" q="How fast…?" :options="['A…','B…','C…']" :answer="1" fact="One line shown on reveal." />
 ```
 

@@ -17,10 +17,10 @@ import { warmAudio, playCollision } from './particle-hero/sound.js'
 //   collider — a ring with two counter-rotating bunches; an eruption fires at
 //              the interaction point every time they cross.
 //
-//   <ParticleHero mode="galaxy" kicker="Act I" title="From the|Cosmos" />
+//   <ParticleHero mode="galaxy" kicker="Part I" title="From Saulėtekis|to the edge of|the Universe" />
 //   <ParticleHero mode="proton" sound counter
 //     kicker="World of Particles" title="Ačiū"
-//     sub="Questions?|Press C — or click — to collide" />
+//     sub="Questions?|c, or a click on the proton: one more collision" />
 //
 // Interaction while the slide is active: pointer stirs the field, a click
 // shoves it and fires a collision (proton: a beam pulse that erupts on
@@ -160,7 +160,7 @@ const tally = computed(() => String(events.value).padStart(3, '0'))
       <div v-if="cornerTr" class="corner corner-tr" aria-hidden="true">{{ cornerTr }}</div>
       <div v-if="cornerBr" class="corner corner-br" aria-hidden="true">{{ cornerBr }}</div>
       <p v-if="kicker" class="kicker">{{ kicker }}</p>
-      <h1 class="title">
+      <h1 class="title" :class="{ tall: lines.length >= 3 }">
         <span v-for="(l, i) in lines" :key="i" class="line-wrap">
           <span class="line" :style="{ '--i': i }">{{ l }}</span>
         </span>
@@ -236,6 +236,8 @@ const tally = computed(() => String(events.value).padStart(3, '0'))
   animation-delay: calc(0.15s + var(--i) * 0.11s);
 }
 @keyframes line-in { to { transform: translateY(0); } }
+/* three-line titles step down so the widest line stays clear of the scene on the right */
+.title.tall { font-size: 60px; }
 .sub {
   color: var(--dim); font-size: 12px; letter-spacing: 0.1em;
   max-width: 62ch; margin: 28px 0 0; line-height: 1.9;
