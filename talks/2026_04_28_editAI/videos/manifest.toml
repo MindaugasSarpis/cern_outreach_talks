@@ -6,6 +6,7 @@
 
 [defaults]
 # release_tag comes from videos.toml (videos-2026-04-28-editai).
+max_size_mb = 250   # mokslo_sala: 7.5 Mbps 1080p high-motion lands at 240 MB — accepted
 
 [[videos]]
 name    = "cmb_data.mp4"
