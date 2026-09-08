@@ -115,7 +115,15 @@ clip's raw is copied under its library name (`rclone copyto`), and the entry's
    self-contained) to `src/slidev_videos/discover.py`, expose it as the
    `slidev-videos discover` subcommand, move `tests/test_discover_videos.py`
    + `tests/fixtures/` with it. Behaviour unchanged.
-5. README: add the outreach rename table (§3.1, §3.2) to the shared-library
+5. Player (addon), both ported from the sibling players and shipped in the
+   same tag: (a) outside the live `slide`/`presenter` render contexts —
+   Slidev's overview grid, the presenter's next-slide preview — render a
+   static placeholder instead of a `<video>` (course player behaviour; the
+   overview mounts every slide at once, and its copy of the current slide
+   re-downloaded the clip being watched); (b) production look-ahead attaches
+   the `<source>` early instead of `<link rel="preload" as="video">`, which
+   Chrome rejects (outreach fix of 2026-09-07). Smoke-tested.
+6. README: add the outreach rename table (§3.1, §3.2) to the shared-library
    section. Bump `pyproject.toml` and `package.json` to 0.3.0, commit, tag
    `v0.3.0`, push.
 
