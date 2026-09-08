@@ -274,3 +274,35 @@ touched.
 | `discover` | moves into the package | it is pipeline tooling, and the user wants only content here |
 | WoP release prune | deferred past 2026-09-10 | no destructive change to a talk's release two days before delivery |
 | `fit: contain` in headmatter | yes | preserves the current look; addon default is `cover` |
+
+## 10. World of Particles deck — finished as a video-only reel (added 2026-09-08)
+
+Scope added after design approval: the 2026-09-10 deck is completed on
+the new workflow, modelled on lecture 1 of the CERN data-analysis course
+("Orientation", reel of 2026-09-08): a landing slide and videos, no text
+slides.
+
+- **Landing:** the existing `ParticleHero` cover (slide 1). It also gives
+  the opener a buffering head start.
+- **Reel:** three acts in the course's order, every clip from the package
+  library except the talk's own opener. `fit: cover` (no letterbox bars;
+  the reel is the whole screen). Every video slide carries an HTML
+  comment naming the clip, as in the course.
+  - Act I, from the cosmos: vu_ff_zoom (own, 4:42) · saturn_v_launch_nasa ·
+    blue_ghost_lunar_orbit · nasa_mars_mariner_4_pan_audio ·
+    perseverance_rover_landing_nasa · cassini_grand_finale · stars_pan_audio ·
+    hubble · telescope · webb_reel · milky_way_sim_audio · sdss_universe_zoom ·
+    expansion_funnel (muted) · beyond_cmb (muted) · cmb_sonification_drone.
+  - Act II, to the quantum: qgp_formation · cern_footage_2015_006_001
+    (Standard Model table) · atoms · cloud_chamber_audio.
+  - Act III, inside CERN: cern_overview_short · cern_footage_2022_013_001 ·
+    atlas_footage_2022_004_002 · atlas_video_2021_001_001 · cms ·
+    cern_footage_2022_042_001 · lhcb · cern_footage_2024_006_012 ·
+    atlas_video_2023_013_001 · cern_footage_2022_013_006 ·
+    cern_footage_2025_048_001 · cern_footage_2024_006_001 · lhcb_aciu (closer).
+  - 32 clips, about 33 minutes of footage. Dropped from the current WoP
+    deck: cern_video_2019_050_008 (vacuum animation, weakest clip).
+- **Own release:** only `vu_ff_zoom.mp4`; the six re-encoded Yaga-lineage
+  copies are superseded by library entries and pruned after the talk (§6).
+- **Venue notes** (README): `p` play/pause, `+`/`-` volume (sticky),
+  `pnpm venue` for the offline bundle.
