@@ -189,3 +189,22 @@ downscaled to 1600 px wide).
 Rewriting the talk's text; translating; touching other decks; a shared
 package for the space (it lives in this repo's `components/` like
 ParticleHero, and can be promoted later).
+
+## 9. Overhaul pass (added 2026-09-09, owner: "full overhaul of visuals, content, wording, message and meaning, readability in all slides")
+
+Method (ultracode): (1) five independent critiques — physics accuracy with
+source checks, narrative and meaning, wording and voice, readability from
+rendered screenshots, structure and timing; (2) three competing redesign
+blueprints (rigour-first, story-first, visual-first) scored by a
+three-judge panel and merged by an editor into
+`docs/superpowers/plans/2026-09-09-startertalk-overhaul-blueprint.md`;
+(3) per-slide rewrites from the blueprint with adversarial fact-checks
+(three refuters per slide) before assembly; (4) new deterministic
+matplotlib figures where the blueprint calls for them; (5) build,
+screenshot every slide and stop, reviewer agents judge the renders,
+loop until no high-severity finding remains.
+
+Standing rules: one claim per slide; on-screen text short enough for the
+back of the hall; plain declarative titles; numbers only from the LHCb
+papers and PDG, cited in the notes; the hadron-space poses and the eight
+stops kept; no videos; no marketing tone.
