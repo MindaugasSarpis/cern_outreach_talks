@@ -8,25 +8,28 @@ detailed operating reference; the human-oriented lifecycle walkthrough
 ## Project overview
 
 Monorepo of CERN outreach talks delivered as **Slidev** decks. Shared
-theme, components, and video pipeline live at the repo root; each talk
-is a pnpm workspace under `talks/<name>/`.
+theme and content components live at the repo root; each talk is a pnpm
+workspace under `talks/<name>/`. The video pipeline, the `VideoPlayer`
+addon and the shared clip library are the external package
+**`slidev-videos`** (`~/slidev-videos` on this machine, editable-installed;
+https://github.com/MindaugasSarpis/slidev-videos).
 
 Current talks:
 
 - `talks/2026_04_28_editAI/` — EditAI Seminar crash course, 2026-04-28.
   Audience: later-grade students, teachers, school principals.
-  2880×1600 LED wall, 9:5. Its GH Release doubles as the shared release.
+  2880×1600 LED wall, 9:5. Owns the 14 chart renders + mokslo_sala on its release.
 - `talks/2026_05_11_Sceptics/` — Sceptics Society talk, 2026-05-11.
   4K projector, 16:9.
 - `talks/2026_07_18_Yaga/` — Yaga crash course (Lithuanian), 2026-07-18.
   4K 16:9 venue. Cloned from editAI; deck under construction.
 - `talks/2026_09_10_WorldOfParticles/` — World of Particles open course,
-  opening lecture, 2026-09-10. Video-only reel with the Yaga structure;
-  16:9, 1080p H.264 web tier (post-Yaga policy). The eight Yaga-lineage
-  clips are re-encoded at 1920 into this talk's own release.
+  opening lecture, 2026-09-10. Video-only reel: landing (ParticleHero) +
+  32 clips in three acts, all library clips except the opener
+  `vu_ff_zoom.mp4`; 16:9, 1080p H.264 web tier.
 - `talks/2026_09_00_Startertalk/` — "Pentaquarks at LHCb", a 30-minute
   technical physics seminar. Date not fixed yet: `09_00` is a placeholder —
-  rename the dir and the `VITE_VIDEO_RELEASE` line in `.env` once known
+  rename the dir, its `videos.toml` release_tag and the deck's `videos.release` once known
   (no talk-owned clips, so no release to rename).
 
 ## Environment setup (fresh machine)
@@ -34,51 +37,39 @@ Current talks:
 ```bash
 conda env create -f env.yaml
 conda activate outreach_talks
-pnpm install                      # installs all talks' deps into node_modules
-cd talks/2026_04_28_editAI
+pnpm install                      # all talks' deps incl. the slidev-addon-videos player
+                                  # (the slidev-videos CLI comes from env.yaml's pip entry)
+cd talks/2026_09_10_WorldOfParticles
 pnpm dev                          # opens http://localhost:3030
 ```
 
 The conda env bundles everything: `nodejs`, `pnpm`, `python>=3.11`,
-`ffmpeg`, `rclone`, `gh`.
+`ffmpeg`, `rclone`, `gh`, and the `slidev-videos` CLI (pip, git tag).
 
 ## Repo layout
 
 ```
 /
-├── outreach.toml                 # global defaults (long_edge_px, max_size_mb)
+├── videos.toml                   # slidev-videos [defaults] for every talk (repo, source remote, 1080p policy)
 ├── pnpm-workspace.yaml           # workspace: talks/*
 ├── theme/                        # shared Slidev theme (@slidev/theme-scienced fork)
-├── components/                   # shared Vue components (VideoPlayer, ParticleHero, ParticleDiagram, …)
+├── components/                   # shared Vue components (ParticleHero, ParticleDiagram, …)
 │   └── particle-hero/            # three.js scene behind ParticleHero (ported from CERN lessons landing)
-├── scripts/videos.py             # video pipeline (sync/encode/publish/check)
-├── videos/
-│   ├── shared.toml               # shared registry: clips inherited by talks at runtime
-│   └── raw/                      # RAW BANK: originals for every talk (gitignored, rclone-synced)
+├── scripts/new_talk.py           # scaffolder;  scripts/render_lib.py — animation rendering
+├── videos/raw/                   # RAW BANK: originals for every talk (gitignored)
 └── talks/<name>/
-    ├── deck.md                   # Slidev entry — theme: ../../theme
-    ├── .env                      # VITE_VIDEO_REPO / VITE_VIDEO_RELEASE / VITE_VIDEO_SHARED_RELEASE
-    ├── package.json              # slidev + per-talk scripts
+    ├── deck.md                   # Slidev entry — theme: ../../theme, addons: [slidev-addon-videos], videos: {repo, release, fit}
+    ├── videos.toml               # project marker: raw_dir=../../videos/raw, release_tag
+    ├── package.json              # slidev + slidev-addon-videos + videos:* scripts (slidev-videos <cmd>)
     ├── components/ -> ../../components   (symlink; required for auto-import)
-    ├── slides/                   # per-section markdown (optional)
-    ├── public/                   # static assets (figures, encoded videos)
-    │   ├── figures/              # images, gifs
-    │   ├── videos/               # encoded web copies (gitignored)
-    │   └── videos-hq/            # symlink to videos/hq/ (gitignored)
-    └── videos/
-        ├── manifest.toml         # talk-OWNED clips only (shared clips live in /videos/shared.toml)
-        └── hq/                   # visually-lossless venue masters (gitignored)
+    ├── public/figures/           # images, gifs
+    ├── public/videos/            # encoded web copies (gitignored)
+    └── videos/manifest.toml      # talk-OWNED clips only (library clips are inherited by name)
 ```
 
-**Raw bank (since 2026-09-07).** Originals live in ONE place per machine,
-`<repo>/videos/raw/`, not per talk — the same multi-GB masters recur from
-deck to deck and per-talk `videos/raw/` dirs held them two and three times
-over. `videos:sync` still fetches only the raws the current talk's manifest
-names (into the bank), `encode`/`encode-hq` read them from there, and
-`videos:clean` only ever offers to delete raws the current manifest names.
-`videos:check` flags a bank file as ORPHAN RAW only when no talk manifest
-and not the shared registry names it. `hq_from_raw` hard-links from the
-bank into the talk's `videos/hq/` (same volume).
+**Raw bank.** Originals live once per machine in `<repo>/videos/raw/`;
+every talk's `videos.toml` points `raw_dir` there. `videos:sync` fetches
+only the raws the current talk's manifest names.
 
 **Theme** is referenced as `theme: ../../theme` in each deck's
 frontmatter. Don't use a `theme` symlink — Vite's glob scanner doesn't
@@ -86,180 +77,52 @@ traverse symlinked theme dirs and silently drops custom layouts.
 **Components** must stay as a symlink: Slidev auto-imports from
 `<deck>/components/` and can't be redirected in frontmatter.
 
-## Config layering (video pipeline)
-
-`scripts/videos.py` resolves paths relative to cwd (the talk dir) and
-merges `[defaults]` from:
-
-1. `<repo>/outreach.toml` — global (long_edge_px=1920, max_size_mb=200)
-2. `talks/<name>/videos/manifest.toml` `[defaults]` — talk overrides
-3. Per-video `[[videos]]` fields — most specific
-
-Release tags default to `videos-<talk-dirname-lowercased>` (web tier) and
-`videos-hq-<talk-dirname-lowercased>` (HQ tier) unless overridden in talk
-`[defaults]` as `release_tag` / `release_tag_hq`.
-
-## Shared video registry (`/videos/shared.toml`)
-
-Widely-reused clips — CERN/LHC footage, generic B-roll, and the
-crash-course chart renders + editAI-lineage venue clips reused across
-decks — live in a shared GH Release and are **inherited at runtime**
-by talks via VideoPlayer's fallback chain. They are NOT downloaded or
-re-encoded when working on an individual talk.
-
-- `/videos/shared.toml` lists shared clips (same schema as a talk
-  manifest) and declares the shared `release_tag`.
-- The shared release is the dedicated **`videos-shared`** (since
-  2026-07-18). The old host `videos-2026-04-28-editai` keeps a full
-  copy as a frozen archive; it is listed in shared.toml's
-  `archive_release_tags`, which keeps its shared-named assets safe
-  from any `--prune`. There is no shared HQ release (the 2880×1600
-  masters were deleted 2026-07-18; the web tier is canonical).
-- A talk references shared clips simply by using the filename in its
-  deck. The talk's `manifest.toml` does NOT list them.
-- `videos:check` (per-talk) treats deck refs satisfied by shared as OK
-  and reports them under "inherited from shared".
-- `pnpm videos:shared:check` (run from repo root) sanity-checks the
-  shared registry: profile validity, release reachability, and
-  cross-talk usage.
-
-**To override a shared clip with a talk-specific encode** (e.g., a
-different aspect ratio): list the same filename in the talk's
-manifest, encode/publish to the talk's own release. Talk release wins
-the fallback chain (it's earlier than shared).
-
-**Inherited clips and offline builds**: at runtime inherited clips
-stream from the shared release, so deployed (online) decks need
-nothing local. Offline/portable/venue builds DO need local copies —
-fetch them with `pnpm videos:pull -- --include-shared` (web tier) and
-`pnpm videos:pull-hq -- --include-shared` (HQ masters) before
-`pnpm build:portable`. `videos:check` prints an info list of inherited
-clips that aren't local yet. Local copies of shared-registry names are
-never deleted by `--prune`.
-
 ## Commands
 
 Run from inside a talk directory:
 
 ```bash
-pnpm dev                # live dev server (http://localhost:3030)
-pnpm build              # static bundle in dist/ (absolute base, for GH Pages)
-pnpm build:portable     # portable bundle in dist-portable/ (relative base, offline-safe)
-pnpm export             # PDF export (requires playwright-chromium; install locally if needed)
-
-pnpm videos:sync        # rclone manifest-listed raws from [defaults].source_remote
-                        #   into the repo raw bank <repo>/videos/raw/
-                        #   (--all mirrors the whole remote folder)
-                        #   compares by MD5 so a same-name re-upload is never
-                        #   mistaken for "up to date"; --quick reverts to
-                        #   rclone's faster size+modtime compare
-pnpm videos:encode      # ffmpeg raw -> public/videos/ (web tier, idempotent)
-pnpm videos:encode-hq   # ffmpeg raw -> videos/hq/ (visually-lossless venue masters)
-pnpm videos:publish     # upload encoded web files to the web GH Release
-pnpm videos:publish-hq  # upload HQ files to the parallel HQ GH Release
-pnpm videos:pull        # download web files from the release -> public/videos/
-pnpm videos:pull-hq     # download HQ masters from the parallel release -> videos/hq/
-                        #   (both pulls: --include-shared also fetches the deck's
-                        #    inherited shared clips, for offline/portable builds)
-pnpm videos:check       # profiles, per-tier missing/orphans, web size budget,
-                        # slide-ref consistency; info list of non-local inherited clips.
-                        # A manifest entry with no local copy is only an INFO line when
-                        # the release has it (empty local dirs are the steady state
-                        # since the 2026-07-18 cleanup) — it's an error only when no
-                        # remote copy exists either.
-pnpm videos:build       # one-shot: (--sync) -> encode -> encode-hq -> check
-pnpm videos:clean       # delete this talk's raw/hq (and --web) files ONLY when a size-matched
-                        # remote copy is verified (gdrive raws, release encodes).
-                        # Dry-run by default; -- --yes deletes; --include-shared opts
-                        # shared-clip local copies in. Spec: docs/superpowers/specs/
-                        # 2026-07-17-videos-clean-design.md
-pnpm videos:preflight   # VENUE LINT — run before every talk. Resolves what VideoPlayer
-                        # will actually serve per deck ref (local hq -> local web ->
-                        # talk release -> shared release), ffprobes it (https included)
-                        # and flags: non-browser-safe video codec (HEVC!), long edge
-                        # over the web cap, bitrate > 10 Mbps, non-AAC audio, loudness
-                        # off the -16 LUFS target. This is the check that would have
-                        # caught the Yaga freezes. -- --no-loudness for a fast pass.
-pnpm venue              # one-shot offline bundle: pull --include-shared -> preflight
-                        # -> build:portable -> <talk>-venue.zip (RUN_ME.txt inside)
+pnpm dev / build / build:portable / export
+pnpm videos:sync        # rclone manifest-listed raws -> <repo>/videos/raw/
+pnpm videos:encode      # ffmpeg raw -> public/videos/ (1080p H.264, -16 LUFS)
+pnpm videos:publish     # -> talk release videos-<talk>   (-- --prune drops unlisted assets)
+pnpm videos:pull        # release -> public/videos/       (-- --include-shared for offline builds)
+pnpm videos:check       # manifest vs files vs slide refs; library refs reported as inherited
+pnpm videos:preflight   # VENUE LINT — probe what each ref will serve (codec/size/bitrate/audio/loudness)
+pnpm videos:clean       # delete local files whose remote copy is verified (dry-run; -- --yes)
+pnpm venue              # pull --include-shared -> preflight -> build:portable -> <talk>-venue.zip
 ```
 
-`publish` / `publish-hq` and `pull` / `pull-hq` are manifest-driven and
-idempotent: unchanged remote/local files (size match) are skipped. Both
-directions accept `--prune` to delete counterparts absent from the
-manifest — `publish --prune` removes orphan release assets, `pull --prune`
-removes orphan local files. **When the talk's release tag matches the
-shared release tag** (i.e. the talk's release doubles as the shared
-host), `--prune` automatically protects shared-registry entries so
-they aren't deleted out from under other talks. Fresh-machine
-rehearsal flow is `pnpm install && pnpm videos:pull -- --include-shared`
-(the venue plays the web tier since 2026-07-18; `videos:pull-hq` only
-for talks that explicitly opted into HQ masters).
+From the repo root: `pnpm videos:check-all`, `pnpm new-talk <YYYY_MM_DD_Name>`.
+`slidev-videos discover <keywords>` (any dir) searches open archives for clips.
+NVENC: the env ffmpeg has it, the bare `~/.local/bin/ffmpeg` does not —
+prefix `PATH=~/micromamba/envs/outreach_talks/bin:$PATH` for GPU encodes.
 
-**Oversize files (`hq_from_raw = true`)**: GH Release assets cap at 2 GB
-per file. For masters whose raw is already a pixel-perfect venue target
-and whose encoded HQ would exceed the cap (e.g., 2880×1600@60 HEVC
-sources), set `hq_from_raw = true` on the `[[videos]]` entry. The HQ
-tier then hard-links the raw (zero extra disk), `publish-hq` skips the
-file, and `pull-hq` rclones it from `[defaults].source_remote` instead
-of the release. Quality = raw bits, no re-encode.
+## Videos (slidev-videos)
 
-From repo root:
-
-```bash
-pnpm videos:check-all     # run videos:check in every talk
-pnpm videos:shared:check  # sanity-check /videos/shared.toml
-pnpm videos:discover -- <kw>…   # search open archives (CDS/NASA/ESO/Hubble/Webb/NOIRLab/Commons)
-                                # for new clips; prints report + [[videos]] snippets
-pnpm new-talk 2026_09_15_Venue  # scaffold talks/<name>/ with the current defaults
-                                # (16:9, 1080p web-tier policy, videos-shared inheritance);
-                                # never clone an old talk dir — that's how stale 4K
-                                # defaults sneak back in. --title "..." --aspect 16/9
-```
-
-## VideoPlayer
-
-```html
-<VideoPlayer src="Clip.mp4" />                   <!-- HQ if present, else web (default) -->
-<VideoPlayer src="Clip.mp4" :hq="false" />       <!-- force web tier -->
-<VideoPlayer src="Loop.mp4" loop muted :controls="false" />
-<VideoPlayer src="Hot.mp4" :volume="0.7" />      <!-- live per-clip attenuation (0..1) -->
-```
-
-`:volume` is the live-tweak escape hatch for a clip that still plays hot
-at the venue; encodes are loudness-normalized (see Encoding profiles), so
-reach for a re-encode first.
-
-`hq` defaults to `true`. Fallback chain (front-to-back):
-
-1. `public/videos-hq/<src>` (skipped when `hq=false`)
-2. `public/videos/<src>` (bundled web tier)
-3. talk release at `$VITE_VIDEO_REPO/$VITE_VIDEO_RELEASE/<src>`
-4. shared release at `$VITE_VIDEO_REPO/$VITE_VIDEO_SHARED_RELEASE/<src>`
-
-Identical talk and shared release tags are deduped, so a talk that
-doubles as the shared host (e.g., editAI today) probes only one URL.
-Local dev with `videos/hq/` populated gets venue masters; deployed
-builds (no HQ files) transparently fall back to the web tier and then
-to releases.
-
-HQ masters are uploaded to a parallel GH Release (`videos-hq-<talk>`) by
-`pnpm videos:publish-hq`. On a fresh machine, pull them with
-`gh release download videos-hq-<talk> -D videos/hq/` instead of re-running
-`encode-hq`. VideoPlayer does not fetch HQ from the release automatically —
-HQ is only served from the local `public/videos-hq/` symlink.
-
-`videos:check` greps `VideoPlayer src="..."` against the manifest, so
-keep that attribute syntax.
-
-**Look-ahead buffering.** VideoPlayer attaches the `<source>` of the next
-three slides' clips early (`preload="auto"`) so they buffer while the
-current slide is up — in dev AND production. Production used to rely on
-`<link rel="preload" as="video">`, which Chrome rejects ("unsupported `as`
-value") and silently fetched nothing, so deployed decks started every
-clip cold (found on the deployed WoP deck, 2026-09-07). Consequence for
-authoring: put a non-video slide (cover) in front of a heavy opener so it
-gets a head start; the first slide itself can never be warmed.
+- **Library clips** come from the package registry `src/slidev_videos/shared.toml`
+  (43 clips) on release `MindaugasSarpis/slidev-videos@videos-shared`. Decks
+  reference them by name; manifests never list them. Promote a clip there
+  (encode in the package repo, publish, bump the tag) when a second deck
+  needs it; keep venue clips and chart renders talk-owned.
+- **Player**: `<VideoPlayer src="name.mp4" [muted] [loop] [:controls="false"] [:autoplay="false"] [:volume="0.7"] />`.
+  Chain: own release -> shared release -> local `public/videos/` (dev mode
+  local-first). Config in headmatter `videos: {repo, release, fit}`;
+  old decks use `fit: contain`, WoP `fit: cover`. Keys: `p`, `+`, `-`.
+  Slidev's overview grid and next-slide preview render a placeholder, not a
+  `<video>`.
+- **Policy** (since 2026-07-18): web tier only, ≤1920 H.264 ≤10 Mbps,
+  AAC, -16 LUFS; `videos:preflight` enforces it. No HQ tier.
+- **Renames** (2026-09-08 migration): see the package README's rename table.
+- **Look-ahead buffering.** The player attaches the `<source>` of the next
+  three slides' clips early (`preload="auto"`) so they buffer while the
+  current slide is up — in dev AND production. Production used to rely on
+  `<link rel="preload" as="video">`, which Chrome rejects ("unsupported `as`
+  value") and silently fetched nothing, so deployed decks started every
+  clip cold (found on the deployed WoP deck, 2026-09-07). Consequence for
+  authoring: put a non-video slide (cover) in front of a heavy opener so it
+  gets a head start; the first slide itself can never be warmed.
+- `videos:check` greps `VideoPlayer src="..."`, so keep that attribute syntax.
 
 ## ParticleHero (cover slide)
 
@@ -284,83 +147,6 @@ Scene code lives in `components/particle-hero/` (upstream:
 `rig.js` and `collisions.js` are adapted, the rest is verbatim). Deps
 `three` and `@fontsource/space-grotesk` are root-level workspace deps.
 A click on the slide fires an extra beam pulse (live demo hook).
-
-## Encoding profiles (`scripts/videos.py`)
-
-**Default policy (since 2026-07-18): 1080p H.264 compatibility encodes;
-the venue plays the web tier.** At the Yaga talk, HQ-tier playback froze
-twice (`lt_zoom.mov` — a raw hard-link, 4K60 HEVC 148 Mbps — and the
-short CERN intro clip's 2880×1600 HEVC master), likely decode/RAM
-exhaustion. Unless explicitly told otherwise for a specific talk: keep
-`long_edge_px` at the global 1920 in new talk manifests, and skip the HQ
-tier entirely (no `encode-hq`/`publish-hq`, leave `videos/hq/` empty —
-VideoPlayer then falls through to the web tier automatically). Native-
-resolution HEVC masters are opt-in, only for venues verified to handle
-them.
-
-**Web audio is loudness-normalized.** Every web encode that keeps audio
-gets two-pass EBU R128 `loudnorm` to **-16 LUFS** integrated (TP -1.5,
-LRA 11), applied in linear mode (one constant gain per clip, no pumping).
-All clips therefore play at the same perceived level — set the venue
-volume once, on the first clip. Opt a clip out with `loudnorm = false`
-on its `[[videos]]` entry or talk-wide in `[defaults]`. `remux` cannot
-normalize (stream copy); give the clip a real profile if its level is
-off. `videos:preflight` measures the loudness actually served and flags
-anything more than ±2 LU off target. The shared registry was re-encoded
-to this target on 2026-07-18 (it had been carrying stale HEVC encodes
-and levels from -12 to -28 LUFS).
-
-**Two codecs by tier, on purpose.** The **web** tier (profiles below) is
-**H.264** — it's the fallback that plays in arbitrary *deployed* browsers,
-where HEVC doesn't hardware-decode (Firefox: never; Chrome: only where the OS
-ships a decoder). Each web profile carries a `-maxrate/-bufsize` ceiling so a
-high-motion clip streams instead of stalling. The **HQ** tier
-(`hq-visually-lossless`) stays **HEVC** — it's played locally at the venue on
-a machine that hardware-decodes HEVC, so the size win is free there.
-
-Profiles are quality *targets*; concrete ffmpeg args are built per selected encoder.
-
-- `remux` — `-c copy` + faststart. Use only when source is ALREADY web-friendly H.264 (or low-bitrate HEVC you accept won't play in Firefox). Ignores resolution cap and encoder.
-- `standard` — H.264 web, cq 23 (NVENC) / crf 23 (libx264), ≤6 Mbps, AAC 128k.
-- `standard-tight` — cq 27 / crf 26, ≤3.5 Mbps, for long clips that blow the size budget.
-- `silent-loop` — cq 25 / crf 24, ≤5 Mbps, audio stripped.
-- `high-motion` — cq 20 / crf 22, ≤8 Mbps, AAC 192k. Sims, fast action, CGI.
-- `hq-visually-lossless` — HEVC master, cq 18 (NVENC) / crf 16 (libx265), no bitrate ceiling. Used by `encode-hq`; per-video `hq_crf` overrides.
-
-**Encoder:** NVENC (GPU) is the default, auto-detected at runtime via a real
-`h264_nvenc` probe, falling back to **CPU** (libx264 web / libx265 masters) when
-NVENC is unavailable (CI, non-NVIDIA). Force per clip with `encoder = "nvenc" |
-"cpu" | "videotoolbox"` on a `[[videos]]` entry, or talk-wide in `[defaults]`.
-
-`videotoolbox` is Apple Silicon's hardware HEVC encoder for the **HQ tier**. It
-is **opt-in only, never auto-selected** — the CPU fallback stays the default so
-CI and non-Mac machines behave predictably. Reach for it when a CPU master
-can't finish in the time available: on an M2 Pro at 4K, `libx265 -preset slow
--crf 16 -tune grain` measures **0.55 fps** (~2.8 h for a 3-minute clip, ~12 h
-for a 4K60 six-minute one), while `hevc_videotoolbox` measures **~50 fps** —
-the same master in under two minutes. It is bitrate-driven rather than
-CRF-driven, so `hq_crf` does not apply; it targets ~80 Mbps at 4K, scaled
-linearly for smaller masters.
-
-**HQ audio is made browser-safe automatically.** The HQ tier is served straight
-off disk to VideoPlayer, so its audio must survive Chrome's MP4/MOV demuxer.
-`_hq_audio_args` probes the raw and overrides the profile's `-c:a copy` with
-AAC 320k when the source carries something Chrome can't decode — notably the
-uncompressed **PCM** that editors emit by default for QuickTime masters, which
-copies through happily and then plays *silent* on the slide.
-
-`{LONG_EDGE}` in profiles is resolved at encode time. The **web** tier resolves
-it from `web_long_edge_px` (global default **1920** — the web copy is never
-shown on the venue wall, so 1080p-class H.264 that decodes everywhere is
-plenty). The **HQ** tier resolves it from `long_edge_px` (the venue/native
-width). Override per-video with `long_edge_px = 3840` on a `[[videos]]` entry
-for a venue-screen master; the web copy of that clip is still capped at
-`web_long_edge_px`.
-
-**Generated animations:** render frames in parallel → NVENC via
-`scripts/render_lib.py` (reference: `talks/2026_05_11_Sceptics/scripts/orbital_animation.py`).
-Needs `numpy`/`scipy`/`matplotlib` from `env.yaml` — run `conda env update -f
-env.yaml` if a fresh clone is missing them.
 
 ## Slidev gotchas
 
@@ -392,21 +178,17 @@ lessons reference exactly.
 Per-venue knobs (in deck frontmatter):
 - `aspectRatio` — `9/5` for the editAI LED wall, `16/9` for projectors.
 
-Per-venue knobs (in `videos/manifest.toml` `[defaults]`):
-- `long_edge_px` — venue's pixel width (1920 for 1080p, 2880 for the
-  LED wall, 3840 for 4K) so the **HQ venue-master** tier encodes at native
-  resolution. The **web** tier ignores this and caps at `web_long_edge_px`
-  (default 1920) — the web copy is a browser fallback, not a venue master.
-  Since 2026-07-18 new talks leave this at the global 1920 — native
-  HQ masters are opt-in only (see the default policy under Encoding
-  profiles).
+Video resolution is not a per-venue knob any more: every clip is a
+1080p-class H.264 web encode (policy since 2026-07-18) and Slidev scales
+the slide, so `long_edge_px` stays at the root `videos.toml` default.
 
 Reference setups:
-- `2026_04_28_editAI` — 2.5 × 4.5 m LED wall, 2880×1600, **9:5**. `aspectRatio: 9/5`, `long_edge_px = 2880`.
-- `2026_05_11_Sceptics` — 4K projector, 3840×2160, **16:9**. `aspectRatio: 16/9`, `long_edge_px = 3840`.
+- `2026_04_28_editAI` — 2.5 × 4.5 m LED wall, 2880×1600, **9:5**. `aspectRatio: 9/5`.
+- `2026_05_11_Sceptics` — 4K projector, 3840×2160, **16:9**. `aspectRatio: 16/9`.
+- `2026_09_10_WorldOfParticles` — 16:9 projector; video-only reel, `fit: cover`.
 
-Videos keep native aspect via `object-fit: contain` in `VideoPlayer`;
-mismatched clips letterbox inside the slide — expected. The
+With `fit: contain` (the old decks) mismatched clips letterbox inside
+the slide — expected; `fit: cover` (WoP) fills the frame and crops. The
 `VideoPlayer` itself is `position: absolute; inset: 0` (full-bleed),
 so video slides should not also have an h1 — the video covers it. Add
 descriptive copy on the preceding/following slide instead.
@@ -437,42 +219,6 @@ properly), and the outer Slidev scale lands at native 4K crisp:
 Bump to `300%` / `scale(0.333)` for higher-DPI sites; `400%` / `scale(0.25)`
 shrinks UI dramatically (good only for sites where the UI is incidental).
 
-## Portable/offline bundle
-
-**`pnpm venue` is the one-shot flow**: it pulls the web tier including
-inherited shared clips, runs the preflight lint, builds `dist-portable/`,
-and zips it into `<talk>-venue.zip` with a RUN_ME.txt inside. The manual
-steps below remain for piecemeal use.
-
-`pnpm build:portable` produces `dist-portable/` with a relative base,
-safe to zip and transport (e.g., upload to gdrive as a venue backup).
-The bundle includes `public/videos/` and follows the `public/videos-hq`
-symlink into `videos/hq/`, so all three VideoPlayer fallback tiers
-resolve to local files — no internet required at the venue.
-
-Browsers block ES-module SPAs on `file://`; the recipient serves it
-with a trivial static server instead:
-
-```bash
-cd dist-portable && python3 -m http.server 8000
-open http://localhost:8000
-```
-
-Run `pnpm build:portable` **after** HQ encodes finish (otherwise HQ
-tier is incomplete). For `hq_from_raw` files, ensure the raw file is
-present locally (hard link into `videos/hq/` — already in place after
-`pnpm videos:encode-hq`).
-
-**Inherited shared clips are NOT in the bundle by default** — they
-resolve from the shared GH Release at runtime, which offline venues
-can't reach. Before a portable build, localize them:
-
-```bash
-pnpm videos:pull -- --include-shared      # web tier of inherited clips
-pnpm videos:pull-hq -- --include-shared   # HQ masters of inherited clips
-pnpm build:portable
-```
-
 ## Deployment
 
 `.github/workflows/deploy.yml` builds every `talks/<name>/` with base
@@ -482,5 +228,5 @@ root links to each talk. Enable under repo Settings → Pages → Source:
 
 ## Git remotes
 
-GitHub remote is named `github` (not `origin`). Push with
-`git push github <branch>`.
+This clone's GitHub remote is `origin`; some clones name it `github`.
+Check `git remote -v`.

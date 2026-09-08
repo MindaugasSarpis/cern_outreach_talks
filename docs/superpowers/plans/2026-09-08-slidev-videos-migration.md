@@ -1538,11 +1538,13 @@ for (const [n, expect] of [[2, 'videos-2026-09-10-worldofparticles/vu_ff_zoom.mp
   if (na) { console.log('FAIL "Video not available" on slide', n); process.exitCode = 1; }
 }
 // Overview grid: 32 video slides must render placeholders, not <video> elements.
+const vidsBefore = await page.evaluate(() => document.querySelectorAll('video').length);
 await page.keyboard.press('o');
 await page.waitForFunction(() => document.querySelectorAll('.video-placeholder').length >= 30, null, { timeout: 15000 }).catch(() => {});
 const ov = await page.evaluate(() => ({ ph: document.querySelectorAll('.video-placeholder').length, vids: document.querySelectorAll('video').length }));
-console.log(ov.ph >= 30 && ov.vids <= 1 ? 'OK  ' : 'FAIL', 'overview', ov);
-if (!(ov.ph >= 30 && ov.vids <= 1)) process.exitCode = 1;
+const ovOk = ov.ph >= 30 && ov.vids === vidsBefore;   // overview adds placeholders, not one more <video>
+console.log(ovOk ? 'OK  ' : 'FAIL', 'overview', { ...ov, vidsBefore });
+if (!ovOk) process.exitCode = 1;
 await browser.close(); srv.close();
 ```
 
@@ -1550,7 +1552,7 @@ Run:
 ```bash
 cd ~/outreach_talks/talks/2026_09_10_WorldOfParticles && pnpm build --out dist >/dev/null && NODE_PATH=~/slidev-videos/node_modules node /tmp/claude-1001/-home-mindaugas-wsl-outreach-talks/f25c0d74-691a-4596-827e-243030707bfa/scratchpad/wop-smoke.mjs "$PWD/dist"
 ```
-Expected: `OK slide 2` with the talk-release URL, `OK slide 3` with the shared-release URL, `OK overview` with ≥30 placeholders and ≤1 video; no "Video not available". (Playwright's chromium is already installed for the package repo's smoke test; `NODE_PATH` reuses it.)
+Expected: `OK slide 2` with the talk-release URL, `OK slide 3` with the shared-release URL, `OK overview` with ≥30 placeholders and no extra `<video>`; no "Video not available". (Playwright's chromium is already installed for the package repo's smoke test; `NODE_PATH` reuses it.)
 
 - [ ] **Step 5: Clean build outputs**
 

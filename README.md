@@ -1,157 +1,109 @@
 # CERN Outreach Talks
 
 Monorepo of [Slidev](https://sli.dev) decks for CERN outreach talks.
-Shared theme, components, and video pipeline at the root; each talk is
-a pnpm workspace under `talks/<name>/`.
-
-This README is the **human walkthrough** — the talk lifecycle from
-scaffold to post-talk cleanup. The detailed operating reference (config
-layering, encoding profiles, fallback chains, edge cases) lives in
-[CLAUDE.md](CLAUDE.md); it is written for the AI assistant but is the
-same source of truth people should consult when the details matter.
+Shared theme and content components at the root; each talk is a pnpm
+workspace under `talks/<name>/`. Videos are handled by the
+[slidev-videos](https://github.com/MindaugasSarpis/slidev-videos) package
+(CLI + `VideoPlayer` addon + the shared clip library); this repo holds
+only decks and per-talk config.
 
 ## Talks
 
-| Date       | Path                        | Deployed |
-| ---------- | --------------------------- | -------- |
-| 2026-04-28 | `talks/2026_04_28_editAI/`  | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_04_28_editAI/) |
-| 2026-05-11 | `talks/2026_05_11_Sceptics/`| [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_05_11_Sceptics/) |
-| 2026-07-18 | `talks/2026_07_18_Yaga/`    | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_07_18_Yaga/) |
+| Date       | Path                                   | Deployed |
+| ---------- | -------------------------------------- | -------- |
+| 2026-04-28 | `talks/2026_04_28_editAI/`             | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_04_28_editAI/) |
+| 2026-05-11 | `talks/2026_05_11_Sceptics/`           | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_05_11_Sceptics/) |
+| 2026-07-18 | `talks/2026_07_18_Yaga/`               | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_07_18_Yaga/) |
+| 2026-09-10 | `talks/2026_09_10_WorldOfParticles/`   | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_09_10_WorldOfParticles/) |
+| TBD        | `talks/2026_09_00_Startertalk/`        | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_09_00_Startertalk/) |
 
 Index of all talks: https://mindaugassarpis.github.io/cern_outreach_talks/
 
-## The policy (since 2026-07-18, post-Yaga)
-
-At the Yaga talk, playback froze twice on venue-native HEVC masters.
-The standing policy since then, unless explicitly decided otherwise for
-a specific talk:
-
-- **Venues play the web tier**: 1080p-class (≤1920 px long edge) H.264 —
-  it decodes everywhere and never chokes the venue machine. No 4K/HEVC
-  "HQ masters" by default.
-- **Audio is even across clips**: every web encode is loudness-normalized
-  to −16 LUFS (EBU R128), so the venue volume is set once, on the first
-  clip. Opt a clip out with `loudnorm = false` in the manifest;
-  `<VideoPlayer :volume="0.7" />` is the live escape hatch.
-- **`pnpm videos:preflight` before every talk** — it checks what each
-  slide will *actually* play and flags anything risky (see below).
-
 ## Setup from scratch
 
-Prerequisite: [conda](https://docs.conda.io) (or mamba/miniforge).
-
 ```bash
-git clone <this-repo>
-cd outreach_talks
-conda env create -f env.yaml     # nodejs, pnpm, python, ffmpeg, rclone, gh
+git clone <this-repo> && cd outreach_talks
+conda env create -f env.yaml     # nodejs, pnpm, python, ffmpeg, rclone, gh + the slidev-videos CLI
 conda activate outreach_talks
-pnpm install
-
-cd talks/2026_07_18_Yaga
-pnpm dev                         # http://localhost:3030
+pnpm install                     # every talk's deps, incl. the slidev-addon-videos player
+cd talks/2026_09_10_WorldOfParticles && pnpm dev     # http://localhost:3030
 ```
 
-No videos are stored in git. Local video dirs being empty is normal —
-clips stream from GitHub Releases at runtime, and everything can be
-re-fetched on demand (see "Getting files back" below).
+No videos live in git. Empty `public/videos/` and `videos/raw/` dirs are
+normal: clips stream from GitHub Releases, and everything is
+re-fetchable (`pnpm videos:pull`, `pnpm videos:sync`).
+
+## The policy (since 2026-07-18)
+
+- Venues play the **1080p H.264 web tier** (no 4K/HEVC masters — they froze at Yaga).
+- Audio is **loudness-normalized to −16 LUFS**; set the venue volume once.
+  On a video slide `p` toggles play/pause, `+`/`-` step the volume and
+  the level sticks for the rest of the deck.
+- `pnpm videos:preflight` before every talk.
 
 ## Starting a new talk
 
 ```bash
 pnpm new-talk 2026_09_15_SomeVenue --title "My talk"   # from the repo root
-pnpm install                                           # register the workspace
+pnpm install
 ```
 
-This scaffolds the whole talk directory with the current policy baked in
-(16:9, 1080p web tier, shared-clip inheritance). **Don't clone an old
-talk directory** — that's how outdated venue-specific settings sneak
-back in.
+Don't clone an old talk directory; the scaffold carries the current
+layout (`videos.toml`, addon headmatter, empty manifest).
 
-## Adding media to a slide
+## Videos
 
-**Image / GIF** — drop into `talks/<name>/public/figures/` and reference
-with an absolute path: `![](/figures/my-photo.jpg)`.
-
-**Video** — add an entry to `videos/manifest.toml`, put the raw file on
-the gdrive source folder (or straight into the repo-level raw bank,
-`<repo>/videos/raw/`, which every talk shares), then:
-
-```bash
-pnpm videos:sync       # fetch raws listed in the manifest from gdrive into <repo>/videos/raw/
-pnpm videos:encode     # ffmpeg -> public/videos/  (H.264, loudness-normalized)
-pnpm videos:publish    # upload to the talk's GitHub Release
-```
-
-Reference it in a slide:
+**Library clips** (CERN/LHC footage, space B-roll, science sims) are
+listed in the package's
+[`shared.toml`](https://github.com/MindaugasSarpis/slidev-videos/blob/main/src/slidev_videos/shared.toml)
+and served from its `videos-shared` release. Reference them by name and
+nothing else is needed:
 
 ```md
-<VideoPlayer src="my_clip.mp4" />
-<VideoPlayer src="loop.mp4" loop muted :controls="false" />
-<VideoPlayer src="hot_clip.mp4" :volume="0.7" />   <!-- rare: live attenuation -->
+<VideoPlayer src="cern_overview_short.mp4" />
+<VideoPlayer src="expansion_funnel.webm" muted />
 ```
 
-Many widely-reused clips (CERN footage, chart renders, B-roll) are
-**inherited from the shared registry** (`/videos/shared.toml`) and served
-from the `videos-shared` release — reference them by filename and they
-just work; don't add them to the talk manifest.
-
-## Before the talk — the checklist
+**Talk-owned clips** (venue footage, chart renders): add a `[[videos]]`
+entry to `talks/<name>/videos/manifest.toml`, put the raw on the gdrive
+`released/` folder or straight into the repo raw bank `videos/raw/`, then
 
 ```bash
-pnpm videos:check        # manifest / files / slide refs all consistent?
-pnpm videos:preflight    # THE important one — see below
-pnpm venue               # build the offline venue bundle
+pnpm videos:sync        # raws listed in the manifest -> <repo>/videos/raw/
+pnpm videos:encode      # ffmpeg -> public/videos/ (H.264 1080p, loudnorm)
+pnpm videos:publish     # -> the talk's GitHub Release (videos-<talk>)
+pnpm videos:check       # manifest / files / slide refs consistent?
 ```
 
-`videos:preflight` resolves what each slide will actually serve (local
-file, talk release, or shared release) and probes it, flagging:
+Finding new clips: `slidev-videos discover "cloud chamber" lhc` searches
+CDS, NASA, ESO/Hubble/Webb/NOIRLab and Wikimedia Commons and prints
+manifest snippets.
 
-- video codecs browsers can't decode well (HEVC — what froze Yaga),
-- resolution above the 1920 px web cap,
-- bitrate above 10 Mbps,
-- audio codecs Chrome plays as silence (PCM),
-- loudness more than ±2 LU off the −16 LUFS target.
-
-Fix flags by re-encoding (`pnpm videos:encode -- --force --only <name>`
-then `pnpm videos:publish`), or consciously accept them.
-
-`pnpm venue` produces `<talk>-venue.zip`: a fully offline bundle
-(pulls inherited shared clips first, then builds and zips). Copy it to
-the venue machine or gdrive; a RUN_ME.txt inside explains how to serve
-it (`python3 -m http.server 8000` — browsers refuse ES modules on
-`file://`).
-
-## After the talk — cleanup
+## Before the talk
 
 ```bash
-pnpm videos:clean            # dry run: shows what is safe to delete and why
-pnpm videos:clean -- --yes   # actually delete (add --web to include web copies)
+pnpm videos:check
+pnpm videos:preflight    # probes what each slide will actually serve: codec, size, bitrate, audio, loudness
+pnpm venue               # offline bundle <talk>-venue.zip (RUN_ME.txt inside)
 ```
 
-`clean` only deletes a local file when a size-matched copy is verified
-on gdrive (raws) or a GitHub Release (encodes) — it refuses anything it
-can't prove recoverable, and prints the recovery command for everything
-it removes.
-
-## Getting files back
+## After the talk
 
 ```bash
-pnpm videos:sync                          # raws, from gdrive
-pnpm videos:pull                          # web encodes, from the talk release
-pnpm videos:pull -- --include-shared      # + inherited shared clips (offline builds)
+pnpm videos:clean            # dry run: what is safe to delete locally and why
+pnpm videos:clean -- --yes
+pnpm videos:publish -- --prune   # drop release assets the manifest no longer lists
 ```
+
+World of Particles: run `pnpm videos:publish -- --prune` in its talk dir
+after 2026-09-10 to drop the six superseded Yaga-lineage copies.
 
 ## Deploying
 
-`git push` to GitHub — the Pages workflow builds every talk and deploys
-the index. (The remote is named `github` on some clones, `origin` on
-others; check `git remote -v`.)
+`git push origin main` — the Pages workflow builds every talk and the index.
 
 ## More detail
 
-- [CLAUDE.md](CLAUDE.md) — full reference: config layering, encoding
-  profiles and encoder selection, the VideoPlayer fallback chain, shared
-  registry rules, release/archive semantics, Slidev gotchas.
-- `docs/superpowers/specs/` — design docs for the bigger pieces (e.g.
-  `2026-07-17-videos-clean-design.md`).
-- `scripts/videos.py --help` and each subcommand's `--help`.
+- [CLAUDE.md](CLAUDE.md) — repo conventions, theme, authoring, gotchas.
+- slidev-videos README — CLI, profiles, player props, `videos.toml`.
+- `docs/superpowers/specs/2026-09-08-slidev-videos-migration-design.md` — why things are laid out this way.
