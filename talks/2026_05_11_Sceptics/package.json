@@ -20,6 +20,6 @@
     "@slidev/cli": "^52.14.2"
   },
   "devDependencies": {
-    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.3.1"
+    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.3.2"
   }
 }

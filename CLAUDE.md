@@ -105,6 +105,9 @@ prefix `PATH=~/micromamba/envs/outreach_talks/bin:$PATH` for GPU encodes.
   reference them by name; manifests never list them. Promote a clip there
   (encode in the package repo, publish, bump the tag) when a second deck
   needs it; keep venue clips and chart renders talk-owned.
+  Library clips are full length (since 2026-09-09); a deck that wants a
+  shorter cut lists the clip in its own manifest with `trim = ["m:ss", "m:ss"]`
+  and encodes/publishes to its own release, which wins the chain.
 - **Player**: `<VideoPlayer src="name.mp4" [muted] [loop] [:controls="false"] [:autoplay="false"] [:volume="0.7"] />`.
   Chain: own release -> shared release -> local `public/videos/` (dev mode
   local-first). Config in headmatter `videos: {repo, release, fit}`;

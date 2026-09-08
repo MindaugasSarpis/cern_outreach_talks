@@ -38,9 +38,10 @@ layout: default
 <!--
 Speaker: welcome, one sentence on what the course is, then dim the lights
 and advance. The reel runs without talk-over; pick it up between parts.
-Part I — Saulėtekis to the edge of the Universe (15 clips, ~17 min) ·
-Part II — down to the quarks (4 clips, ~3 min) · Part III — inside CERN
-(13 clips, ~11 min). Each part opens on a live card (galaxy / proton /
+Part I — Saulėtekis to the edge of the Universe (15 clips, ~22 min) ·
+Part II — down to the quarks (4 clips, ~4 min) · Part III — inside CERN
+(13 clips, ~14 min). Library clips play full length (2026-09-09); to
+shorten one, list it in videos/manifest.toml with a trim and publish. Each part opens on a live card (galaxy / proton /
 collider ring): click it or press c to fire a collision while you
 introduce the part. The finale
 counts collisions and plays a sound for the ones you trigger. Nine quiz
@@ -83,12 +84,12 @@ cards wait after the finale as backup material (g + slide number).
 
 ---
 
-<!-- Part I · Mars: Perseverance parachute descent and touchdown (1:30 trim) -->
+<!-- Part I · Mars: Perseverance — cruise-stage separation, parachute descent, touchdown (3:10) -->
 <VideoPlayer src="perseverance_rover_landing_nasa.mp4" />
 
 ---
 
-<!-- Part I · Saturn: Cassini Grand Finale ring dive, no voice-over (1:30 trim) -->
+<!-- Part I · Saturn: Cassini Grand Finale ring dives, no voice-over (3:41) -->
 <VideoPlayer src="cassini_grand_finale.mp4" />
 
 ---
@@ -108,7 +109,7 @@ cards wait after the finale as backup material (g + slide number).
 
 ---
 
-<!-- Part I · the deep universe: JWST image reel (1:30 trim) -->
+<!-- Part I · the deep universe: JWST image reel (2:58) -->
 <VideoPlayer src="webb_reel.mp4" />
 
 ---
@@ -165,7 +166,7 @@ cards wait after the finale as backup material (g + slide number).
 
 ---
 
-<!-- Part II · particles made visible: cloud chamber, with audio (1:30 trim) -->
+<!-- Part II · particles made visible: cloud chamber, with audio (2:29) -->
 <VideoPlayer src="cloud_chamber_audio.mp4" />
 
 ---
@@ -188,7 +189,7 @@ cards wait after the finale as backup material (g + slide number).
 
 ---
 
-<!-- Part III · the real LHC tunnel, travelling shot (CERN-FOOTAGE-2022-013-001, 1:30 trim) -->
+<!-- Part III · the real LHC tunnel, travelling shot (CERN-FOOTAGE-2022-013-001, 4:13) -->
 <VideoPlayer src="cern_footage_2022_013_001.mp4" />
 
 ---
@@ -228,7 +229,7 @@ cards wait after the finale as backup material (g + slide number).
 
 ---
 
-<!-- Part III · the data centre and the tape robot (CERN-FOOTAGE-2022-013-006, 1:30 trim) -->
+<!-- Part III · the data centre and the tape robot (CERN-FOOTAGE-2022-013-006, 2:04) -->
 <VideoPlayer src="cern_footage_2022_013_006.mp4" />
 
 ---
