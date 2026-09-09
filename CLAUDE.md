@@ -117,14 +117,17 @@ prefix `PATH=~/micromamba/envs/outreach_talks/bin:$PATH` for GPU encodes.
 - **Policy** (since 2026-07-18): web tier only, ≤1920 H.264 ≤10 Mbps,
   AAC, -16 LUFS; `videos:preflight` enforces it. No HQ tier.
 - **Renames** (2026-09-08 migration): see the package README's rename table.
-- **Look-ahead buffering.** The player attaches the `<source>` of the next
-  three slides' clips early (`preload="auto"`) so they buffer while the
-  current slide is up — in dev AND production. Production used to rely on
-  `<link rel="preload" as="video">`, which Chrome rejects ("unsupported `as`
-  value") and silently fetched nothing, so deployed decks started every
-  clip cold (found on the deployed WoP deck, 2026-09-07). Consequence for
-  authoring: put a non-video slide (cover) in front of a heavy opener so it
-  gets a head start; the first slide itself can never be warmed.
+- **Sliding attach window (v0.3.3).** A player carries its `<source>` only
+  while its slide is live, one of the next three (look-ahead: attached early
+  with `preload="auto"` so the clip buffers while the current slide is up, in
+  dev AND production) or the one just passed; everything else is detached and
+  `load()`ed empty. Chrome caps the media elements loaded per page (~10 on
+  desktop) and past the cap a `load()` silently never completes — with every
+  visited clip left attached, WoP froze from its 9th clip on, web and offline
+  alike (2026-09-09). Earlier, production relied on `<link rel="preload"
+  as="video">`, which Chrome rejects, so clips started cold (2026-09-07).
+  Authoring consequence: put a non-video slide (cover) in front of a heavy
+  opener so it gets a head start; the first slide itself can never be warmed.
 - `videos:check` greps `VideoPlayer src="..."`, so keep that attribute syntax.
 
 ## ParticleHero (live hero slides) and QuizCard
