@@ -1,4 +1,4 @@
-# Talk-OWNED clips for World of Particles (2026-09-10): only the opener.
+# Talk-OWNED clips for World of Particles (2026-09-10): the opener and the English closer.
 # The rest of the reel is slidev-videos library material (inherited by name).
 #
 # After the talk: `pnpm videos:publish -- --prune` drops the six superseded
@@ -16,3 +16,13 @@ Opener: cosmic zoom-out from the VU Faculty of Physics building (Google Earth) \
 through Vilnius, Earth, the Milky Way and the galaxies to the cosmic web, 4:42 \
 with its own audio track. Raw is a 4K60 H.264 254 Mbps Resolve master (9.0 GB) \
 on gdrive as vu_ff_zoom.mp4."""
+
+[[videos]]
+name    = "lhcb_thanks.mp4"
+profile = "standard-tight"
+used_in = ["deck"]
+notes   = """\
+Closer: LHCb fly-through ending on "Thanks", 2:28 with audio — the English \
+twin of the library's lhcb_aciu (this lecture is in English). Raw on gdrive as \
+lhcb_thanks.mp4 (1080p30 H.264 16 Mbps, 303 MB; also the CERN-lessons course \
+closer). Promote to the shared library if a second English deck needs it."""

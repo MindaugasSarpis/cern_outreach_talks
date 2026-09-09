@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",
-    "build:portable": "slidev build deck.md --base ./ --out dist-portable",
+    "build:portable": "VITE_VIDEOS_LOCAL_FIRST=1 slidev build deck.md --base ./ --out dist-portable",
     "export": "slidev export deck.md",
     "videos:sync": "slidev-videos sync",
     "videos:encode": "slidev-videos encode",
@@ -20,6 +20,6 @@
     "@slidev/cli": "^52.14.2"
   },
   "devDependencies": {
-    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.3.2"
+    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.3.3"
   }
 }

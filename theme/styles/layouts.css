@@ -90,7 +90,9 @@
 }
 
 .slidev-layout {
-  background: url('/figures/background_default.jpg') no-repeat center center;
+  /* Bundled with the theme so Vite emits a base-aware URL; an absolute /figures/… path 404s
+     on GitHub Pages, where every talk lives under /<repo>/<talk>/. */
+  background: url('../assets/background_default.jpg') no-repeat center center;
   background-size: cover;
 }
 
