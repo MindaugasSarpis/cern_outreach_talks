@@ -1,6 +1,6 @@
 import {
   Group, Mesh, MeshBasicMaterial, PlaneGeometry, TorusGeometry, SphereGeometry, BufferGeometry, BufferAttribute,
-  Line, LineSegments, LineBasicMaterial, LineDashedMaterial, TextureLoader, Vector3, DoubleSide, AdditiveBlending, Color,
+  Line, LineSegments, LineBasicMaterial, LineDashedMaterial, TextureLoader, Vector3, DoubleSide, AdditiveBlending, Color, CylinderGeometry, Quaternion,
 } from 'three';
 import { makeLabel, makeText } from './labels.js';
 
@@ -27,9 +27,9 @@ function shell(radius, color = '#7dd3fc', opacity = 0.12) {
   return new Mesh(new SphereGeometry(radius, 32, 20), new MeshBasicMaterial({ color, transparent: true, opacity, depthWrite: false, blending: AdditiveBlending, side: DoubleSide }));
 }
 function endLabel(text, pts, color) {
-  const l = makeLabel(text, { worldH: 0.34, color, letterSpacing: 0.04 });
+  const l = makeLabel(text, { worldH: 0.46, color, letterSpacing: 0.02, upper: false });
   const end = pts[pts.length - 1];
-  l.position.set(end.x + 0.45, end.y + 0.25, end.z);
+  l.position.set(end.x + 0.55, end.y + 0.3, end.z);
   return l;
 }
 
@@ -59,7 +59,8 @@ const build = {
     g.add(ring); g.position.copy(v(o.pos));
     const fadeNear = o.fadeNear || 0;
     const world = new Vector3();
-    return { group: g, labels: [], update(t, camPos) {
+    const anchors = o.id ? new Map([[o.id, new Vector3(0, 0, 0)]]) : undefined;   // a ring can stand for a state (Θ⁺)
+    return { group: g, labels: [], anchors, update(t, camPos) {
       ring.rotation.y = t * 0.2;
       if (fadeNear) { const d = camPos.distanceTo(g.getWorldPosition(world)); mat.opacity = 0.15 + 0.7 * Math.min(1, Math.max(0, (d - fadeNear) / fadeNear)); }
     } };
@@ -77,6 +78,16 @@ const build = {
       g.add(line);
       // a soft glow: a second pass with additive blending
       g.add(new Line(geo.clone(), new LineBasicMaterial({ color: col, transparent: true, opacity: 0.25 * (t.fade ?? 1), blending: AdditiveBlending, depthWrite: false })));
+      if (!t.dashed) {
+        // solid tracks as thin tubes: WebGL lines are one pixel wide whatever the screen
+        for (let k = 0; k + 1 < pts.length; k++) {
+          const a = pts[k], b = pts[k + 1], dir = b.clone().sub(a), len = dir.length();
+          const tube = new Mesh(new CylinderGeometry(0.03 * (t.width || 2), 0.03 * (t.width || 2), len, 8, 1, true), new MeshBasicMaterial({ color: col, transparent: true, opacity: t.fade ?? 0.9 }));
+          tube.position.copy(a).addScaledVector(dir, 0.5);
+          tube.quaternion.copy(new Quaternion().setFromUnitVectors(new Vector3(0, 1, 0), dir.normalize()));
+          g.add(tube);
+        }
+      }
       if (t.label) { const l = endLabel(t.label, pts, t.color || '#f2f5f9'); g.add(l); labels.push(l); }
       if (o.pulse && !t.dashed) {
         const dot = new Mesh(new SphereGeometry(0.09, 10, 8), new MeshBasicMaterial({ color: col, transparent: true, opacity: 0.9, blending: AdditiveBlending, depthWrite: false }));
@@ -100,12 +111,12 @@ const build = {
       const hollow = s.status !== 'observed';
       const color = row === 'Pcs' ? '#d95926' : '#3987e5';
       const m = hollow
-        ? new Mesh(new TorusGeometry(0.34, 0.05, 10, 40), new MeshBasicMaterial({ color, transparent: true, opacity: 0.9 }))
-        : new Mesh(new SphereGeometry(0.34, 20, 14), new MeshBasicMaterial({ color }));
+        ? new Mesh(new TorusGeometry(0.26, 0.04, 10, 40), new MeshBasicMaterial({ color, transparent: true, opacity: 0.9 }))
+        : new Mesh(new SphereGeometry(0.26, 20, 14), new MeshBasicMaterial({ color }));
       m.position.set(x, 0, z); g.add(m);
-      const halo = shell(0.6, color, 0.18); halo.position.set(x, 0, z); g.add(halo);
+      const halo = shell(0.4, color, 0.08); halo.position.set(x, 0, z); g.add(halo);
       anchors.set(id, new Vector3(x, 0, z));
-      if (o.labels) { const l = makeLabel(s.label || id, { worldH: 0.3, color: '#e6e9ee', letterSpacing: 0.04 }); l.position.set(x, 0.75 + (i % 2) * 0.32, z); g.add(l); labels.push(l); }
+      if (o.labels) { const l = makeLabel(s.label || id, { worldH: 0.3, color: '#e6e9ee', letterSpacing: 0.02, upper: false }); l.position.set(x, 0.75 + (i % 2) * 0.32, z); g.add(l); labels.push(l); }
     });
     g.position.copy(v(o.pos));
     return { group: g, labels, anchors };
@@ -116,7 +127,7 @@ const build = {
       const x = (p.mass - o.origin) * o.scale, z = (o.rows && o.rows[p.row]) ?? 0;
       const m = new Mesh(new PlaneGeometry(o.depth, o.height), new MeshBasicMaterial({ color: '#7dd3fc', transparent: true, opacity: 0.13, side: DoubleSide, depthWrite: false, blending: AdditiveBlending }));
       m.rotation.y = Math.PI / 2; m.position.set(x, 0, z); g.add(m);
-      const l = makeLabel(p.label, { worldH: 0.26, color: '#8b97a6', letterSpacing: 0.04 }); l.position.set(x, o.height / 2 + 0.25, z); g.add(l); labels.push(l);
+      const l = makeLabel(p.label, { worldH: 0.26, color: '#8b97a6', letterSpacing: 0.02, upper: false }); l.position.set(x, o.height / 2 + 0.25, z); g.add(l); labels.push(l);
     }
     g.position.copy(v(o.pos));
     return { group: g, labels };

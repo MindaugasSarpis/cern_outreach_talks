@@ -1,97 +1,883 @@
 {
-  "stations": [
+ "stations": [
+  {
+   "id": "paper",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "target": [
+     3.4,
+     2.6,
+     0
+    ],
+    "dist": 11,
+    "yaw": -12,
+    "pitch": 4
+   },
+   "objects": [
     {
-      "id": "paper", "pos": [0, 0, 0],
-      "look": { "target": [3.6, 3.0, 0], "dist": 12, "yaw": -12, "pitch": 4 },
-      "objects": [
-        { "type": "page", "src": "/figures/papers/zweig_th401_p1.png", "pos": [0, 3.0, 0], "width": 6.0, "height": 8.49, "yaw": 8 },
-        { "type": "text", "text": "“Baryons can now be constructed from quarks by using\nthe combinations (qqq), (qqqqq̄), etc., while mesons\nare made out of (qq̄), (qqq̄q̄), etc.”", "pos": [8.6, 4.4, 0.4], "height": 0.5, "color": "#f2f5f9", "weight": 500 },
-        { "type": "text", "text": "Gell-Mann, Phys. Lett. 8 (1964) 214", "pos": [8.6, 2.9, 0.4], "height": 0.36, "color": "#8b97a6" },
-        { "type": "cluster", "pos": [8.6, 0.6, 0.4], "radius": 1.5, "spin": 0.12, "quarks": [
-          { "flavour": "u", "pos": [0.55, 0.25, 0] }, { "flavour": "u", "pos": [-0.5, 0.35, 0.2] }, { "flavour": "d", "pos": [0, -0.55, -0.1] },
-          { "flavour": "c", "pos": [0.1, 0.05, 0.55] }, { "flavour": "cbar", "pos": [-0.3, -0.2, -0.55] } ] }
-      ]
+     "type": "page",
+     "src": "/figures/papers/zweig_th401_p1_top.png",
+     "pos": [
+      0,
+      2.6,
+      0
+     ],
+     "width": 7.2,
+     "height": 6.623735050597976,
+     "yaw": 8
     },
     {
-      "id": "theta", "pos": [16, 1, -5],
-      "look": { "dist": 8, "yaw": -40, "pitch": 6 },
-      "objects": [
-        { "type": "ring", "pos": [0, 0, 0], "radius": 0.9, "color": "#7dd3fc", "fadeNear": 6 },
-        { "type": "text", "text": "Θ⁺(1540) · 2003 · not confirmed", "pos": [-2.4, -1.4, 0], "height": 0.4, "color": "#8b97a6" }
-      ]
-    },
-    {
-      "id": "decay", "pos": [30, 0, 2],
-      "look": { "target": [2.4, 0, 0], "dist": 10, "yaw": -24, "pitch": 7 },
-      "objects": [
-        { "type": "tracks", "pos": [0, 0, 0], "pulse": true,
-          "nodes": [ { "pos": [0, 0, 0], "color": "#f2f5f9", "size": 0.16 }, { "pos": [2.6, -0.6, 0], "color": "#3987e5", "size": 0.26 } ],
-          "tracks": [
-            { "points": [[-4, 0, 0], [0, 0, 0]], "color": "#f2f5f9", "width": 2, "label": "Λb⁰" },
-            { "points": [[0, 0, 0], [4.2, 3.2, 0.5]], "color": "#f2f5f9", "width": 2, "label": "K⁻" },
-            { "points": [[0, 0, 0], [2.6, -0.6, 0]], "color": "#3987e5", "width": 3, "label": "Pc⁺" },
-            { "points": [[2.6, -0.6, 0], [5.6, 0.9, -0.4]], "color": "#3987e5", "width": 2, "label": "J/ψ" },
-            { "points": [[2.6, -0.6, 0], [5.3, -2.7, 0.3]], "color": "#3987e5", "width": 2, "label": "p" },
-            { "points": [[0, 0, 0], [2.4, -1.9, -1.6]], "color": "#d95926", "width": 1.5, "dashed": true, "fade": 0.5, "label": "Λ*" },
-            { "points": [[2.4, -1.9, -1.6], [5.0, -3.1, -1.9]], "color": "#d95926", "width": 1.5, "dashed": true, "fade": 0.5 },
-            { "points": [[2.4, -1.9, -1.6], [5.2, -1.0, -2.6]], "color": "#d95926", "width": 1.5, "dashed": true, "fade": 0.5 }
-          ] }
-      ]
-    },
-    {
-      "id": "states", "pos": [46, 0, -3],
-      "look": { "target": [0, 0, -1.5], "dist": 9, "yaw": -22, "pitch": 6 },
-      "objects": [
-        { "type": "planes", "pos": [0, 0, 0], "origin": 4400, "scale": 0.04, "height": 1.6, "depth": 2.4, "rows": { "Pc": 0, "Pcs": -3 },
-          "planes": [ { "mass": 4317.5, "label": "Σc⁺D̄⁰", "row": "Pc" }, { "mass": 4459.5, "label": "Σc⁺D̄*⁰", "row": "Pc" },
-                      { "mass": 4337.4, "label": "Ξc⁺D⁻", "row": "Pcs" }, { "mass": 4477.3, "label": "Ξc⁰D̄*⁰", "row": "Pcs" } ] },
-        { "type": "spheres", "pos": [0, 0, 0], "origin": 4400, "scale": 0.04, "rows": { "Pc": 0, "Pcs": -3 }, "labels": true,
-          "ids": ["Pc(4380)", "Pc(4450)", "Pc(4312)", "Pc(4440)", "Pc(4457)", "Pc(4337)", "Pcs(4459)", "Pcs(4338)"] },
-        { "type": "text", "text": "4300", "pos": [-4.3, -1.0, 0.6], "height": 0.3, "color": "#8b97a6" },
-        { "type": "text", "text": "4400 MeV", "pos": [-0.5, -1.0, 0.6], "height": 0.3, "color": "#8b97a6" },
-        { "type": "text", "text": "4500", "pos": [3.7, -1.0, 0.6], "height": 0.3, "color": "#8b97a6" },
-        { "type": "text", "text": "J/ψ p", "pos": [-6.2, 0.2, 0], "height": 0.4, "color": "#a9b6c4" },
-        { "type": "text", "text": "J/ψ Λ", "pos": [-6.2, 0.2, -3], "height": 0.4, "color": "#a9b6c4" }
-      ]
-    },
-    {
-      "id": "interiors", "pos": [64, 0, 0],
-      "look": { "dist": 16, "yaw": -30, "pitch": 10 },
-      "objects": [
-        { "type": "molecule", "pos": [-4.5, 0, 0], "separation": 6.0, "link": true, "label": "two hadrons",
-          "a": { "radius": 1.6, "quarks": [ { "flavour": "c", "pos": [0, 0.5, 0] }, { "flavour": "u", "pos": [-0.5, -0.35, 0.1] }, { "flavour": "d", "pos": [0.5, -0.35, -0.1] } ] },
-          "b": { "radius": 1.3, "quarks": [ { "flavour": "cbar", "pos": [-0.35, 0.05, 0] }, { "flavour": "u", "pos": [0.4, -0.1, 0.05] } ] } },
-        { "type": "cluster", "pos": [5.0, 0, 0], "radius": 1.9, "shell": true, "spin": 0.15, "label": "one hadron", "quarks": [
-          { "flavour": "c", "pos": [0.1, 0.55, 0.2] }, { "flavour": "cbar", "pos": [-0.55, 0.1, -0.2] }, { "flavour": "u", "pos": [0.55, -0.15, -0.25] },
-          { "flavour": "u", "pos": [-0.1, -0.55, 0.3] }, { "flavour": "d", "pos": [0.05, 0.0, -0.6] } ] },
-        { "type": "bar", "pos": [-7.0, -2.8, 0], "length": 3.0, "label": "1 fm" }
-      ]
-    },
-    {
-      "id": "neutrals", "pos": [82, 0, -2],
-      "look": { "target": [3.0, 0, 0], "dist": 11, "yaw": -18, "pitch": 6 },
-      "objects": [
-        { "type": "tracks", "pos": [0, 0, 0],
-          "nodes": [ { "pos": [0, 0, 0], "color": "#f2f5f9", "size": 0.16 }, { "pos": [2.6, 0.9, 0], "color": "#d95926", "size": 0.2 }, { "pos": [2.6, -0.9, 0], "color": "#3987e5", "size": 0.2 } ],
-          "tracks": [
-            { "points": [[-4, 0, 0], [0, 0, 0]], "color": "#f2f5f9", "width": 2, "label": "Λb⁰" },
-            { "points": [[0, 0, 0], [4.6, 2.6, 0]], "color": "#f2f5f9", "width": 2, "label": "K⁻" },
-            { "points": [[0, 0, 0], [2.6, 0.9, 0]], "color": "#d95926", "width": 3, "label": "Σc⁺" },
-            { "points": [[0, 0, 0], [2.6, -0.9, 0]], "color": "#3987e5", "width": 3, "label": "D̄*⁰" },
-            { "points": [[2.6, 0.9, 0], [5.6, 1.7, 0]], "color": "#d95926", "width": 2, "label": "Λc⁺" },
-            { "points": [[2.6, 0.9, 0], [4.8, 0.25, 0.9]], "color": "#d95926", "width": 1.5, "dashed": true, "fade": 0.35, "label": "π⁰ not seen" },
-            { "points": [[2.6, -0.9, 0], [5.6, -1.7, 0]], "color": "#3987e5", "width": 2, "label": "D̄⁰" },
-            { "points": [[2.6, -0.9, 0], [4.8, -0.3, -0.9]], "color": "#3987e5", "width": 1.5, "dashed": true, "fade": 0.35, "label": "π⁰ / γ not seen" }
-          ] },
-        { "type": "cluster", "pos": [10.5, 0.5, 0], "radius": 2.1, "shell": true, "spin": 0.1, "label": "six quarks", "quarks": [
-          { "flavour": "c", "pos": [0.2, 0.6, 0.2] }, { "flavour": "u", "pos": [-0.6, 0.3, -0.1] }, { "flavour": "d", "pos": [0.6, -0.1, -0.3] },
-          { "flavour": "c", "pos": [-0.2, -0.6, 0.3] }, { "flavour": "u", "pos": [0.1, 0.0, -0.7] }, { "flavour": "d", "pos": [-0.1, 0.05, 0.7] } ] }
-      ]
-    },
-    {
-      "id": "future", "pos": [98, 0, 0],
-      "look": { "dist": 10, "yaw": -30, "pitch": 6 },
-      "objects": [ { "type": "grid", "pos": [0, -1.5, 0], "from": -8, "to": 10, "step": 2, "fadeAlong": "x" } ]
+     "type": "cluster",
+     "pos": [
+      8.8,
+      -0.8,
+      0.4
+     ],
+     "radius": 1.5,
+     "spin": 0.12,
+     "quarks": [
+      {
+       "flavour": "u",
+       "pos": [
+        0.55,
+        0.25,
+        0
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        -0.5,
+        0.35,
+        0.2
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        0,
+        -0.55,
+        -0.1
+       ]
+      },
+      {
+       "flavour": "c",
+       "pos": [
+        0.1,
+        0.05,
+        0.55
+       ]
+      },
+      {
+       "flavour": "cbar",
+       "pos": [
+        -0.3,
+        -0.2,
+        -0.55
+       ]
+      }
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "id": "theta",
+   "pos": [
+    16,
+    1,
+    -5
+   ],
+   "look": {
+    "dist": 8,
+    "yaw": -40,
+    "pitch": 6
+   },
+   "objects": [
+    {
+     "type": "ring",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 0.9,
+     "color": "#7dd3fc",
+     "fadeNear": 5,
+     "id": "Theta(1540)"
+    },
+    {
+     "type": "text",
+     "text": "Θ⁺(1540) · 2003 · not confirmed",
+     "pos": [
+      0.6,
+      -1.4,
+      0
+     ],
+     "height": 0.36,
+     "color": "#8b97a6"
+    }
+   ]
+  },
+  {
+   "id": "decay",
+   "pos": [
+    30,
+    0,
+    2
+   ],
+   "look": {
+    "target": [
+     2.4,
+     0,
+     0
+    ],
+    "dist": 10,
+    "yaw": -24,
+    "pitch": 7
+   },
+   "objects": [
+    {
+     "type": "tracks",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "pulse": true,
+     "nodes": [
+      {
+       "pos": [
+        0,
+        0,
+        0
+       ],
+       "color": "#f2f5f9",
+       "size": 0.16
+      },
+      {
+       "pos": [
+        2.6,
+        -0.6,
+        0
+       ],
+       "color": "#3987e5",
+       "size": 0.26
+      }
+     ],
+     "tracks": [
+      {
+       "points": [
+        [
+         -4,
+         0,
+         0
+        ],
+        [
+         0,
+         0,
+         0
+        ]
+       ],
+       "color": "#f2f5f9",
+       "width": 2,
+       "label": "Λb⁰"
+      },
+      {
+       "points": [
+        [
+         0,
+         0,
+         0
+        ],
+        [
+         4.2,
+         3.2,
+         0.5
+        ]
+       ],
+       "color": "#f2f5f9",
+       "width": 2,
+       "label": "K⁻"
+      },
+      {
+       "points": [
+        [
+         0,
+         0,
+         0
+        ],
+        [
+         2.6,
+         -0.6,
+         0
+        ]
+       ],
+       "color": "#3987e5",
+       "width": 3,
+       "label": "Pc⁺"
+      },
+      {
+       "points": [
+        [
+         2.6,
+         -0.6,
+         0
+        ],
+        [
+         5.6,
+         0.9,
+         -0.4
+        ]
+       ],
+       "color": "#3987e5",
+       "width": 2,
+       "label": "J/ψ"
+      },
+      {
+       "points": [
+        [
+         2.6,
+         -0.6,
+         0
+        ],
+        [
+         5.3,
+         -2.7,
+         0.3
+        ]
+       ],
+       "color": "#3987e5",
+       "width": 2,
+       "label": "p"
+      },
+      {
+       "points": [
+        [
+         0,
+         0,
+         0
+        ],
+        [
+         2.4,
+         -1.9,
+         -1.6
+        ]
+       ],
+       "color": "#d95926",
+       "width": 1.5,
+       "dashed": true,
+       "fade": 0.5,
+       "label": "Λ*"
+      },
+      {
+       "points": [
+        [
+         2.4,
+         -1.9,
+         -1.6
+        ],
+        [
+         5.0,
+         -3.1,
+         -1.9
+        ]
+       ],
+       "color": "#d95926",
+       "width": 1.5,
+       "dashed": true,
+       "fade": 0.5
+      },
+      {
+       "points": [
+        [
+         2.4,
+         -1.9,
+         -1.6
+        ],
+        [
+         5.2,
+         -1.0,
+         -2.6
+        ]
+       ],
+       "color": "#d95926",
+       "width": 1.5,
+       "dashed": true,
+       "fade": 0.5
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "states",
+   "pos": [
+    56,
+    0,
+    -8
+   ],
+   "look": {
+    "target": [
+     0,
+     0,
+     -1.5
+    ],
+    "dist": 9,
+    "yaw": -22,
+    "pitch": 6
+   },
+   "objects": [
+    {
+     "type": "planes",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "origin": 4400,
+     "scale": 0.04,
+     "height": 1.6,
+     "depth": 2.4,
+     "rows": {
+      "Pc": 0,
+      "Pcs": -3
+     },
+     "planes": [
+      {
+       "mass": 4317.5,
+       "label": "Σc⁺D̄⁰",
+       "row": "Pc"
+      },
+      {
+       "mass": 4459.5,
+       "label": "Σc⁺D̄*⁰",
+       "row": "Pc"
+      },
+      {
+       "mass": 4337.4,
+       "label": "Ξc⁺D⁻",
+       "row": "Pcs"
+      },
+      {
+       "mass": 4477.3,
+       "label": "Ξc⁰D̄*⁰",
+       "row": "Pcs"
+      }
+     ]
+    },
+    {
+     "type": "spheres",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "origin": 4400,
+     "scale": 0.04,
+     "rows": {
+      "Pc": 0,
+      "Pcs": -3
+     },
+     "labels": true,
+     "ids": [
+      "Pc(4380)",
+      "Pc(4450)",
+      "Pc(4312)",
+      "Pc(4440)",
+      "Pc(4457)",
+      "Pc(4337)",
+      "Pcs(4459)",
+      "Pcs(4338)"
+     ]
+    },
+    {
+     "type": "text",
+     "text": "4300",
+     "pos": [
+      -4.3,
+      -1.7,
+      0.6
+     ],
+     "height": 0.26,
+     "color": "#8b97a6"
+    },
+    {
+     "type": "text",
+     "text": "4400 MeV",
+     "pos": [
+      -0.5,
+      -1.7,
+      0.6
+     ],
+     "height": 0.26,
+     "color": "#8b97a6"
+    },
+    {
+     "type": "text",
+     "text": "4500",
+     "pos": [
+      3.7,
+      -1.7,
+      0.6
+     ],
+     "height": 0.26,
+     "color": "#8b97a6"
+    },
+    {
+     "type": "text",
+     "text": "J/ψ p",
+     "pos": [
+      -6.6,
+      0.2,
+      0
+     ],
+     "height": 0.4,
+     "color": "#a9b6c4"
+    },
+    {
+     "type": "text",
+     "text": "J/ψ Λ",
+     "pos": [
+      -6.6,
+      0.2,
+      -3
+     ],
+     "height": 0.4,
+     "color": "#a9b6c4"
+    }
+   ]
+  },
+  {
+   "id": "interiors",
+   "pos": [
+    64,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 16,
+    "yaw": -30,
+    "pitch": 10
+   },
+   "objects": [
+    {
+     "type": "molecule",
+     "pos": [
+      -4.5,
+      0,
+      0
+     ],
+     "separation": 6.0,
+     "link": true,
+     "label": "two hadrons",
+     "a": {
+      "radius": 1.6,
+      "quarks": [
+       {
+        "flavour": "c",
+        "pos": [
+         0,
+         0.5,
+         0
+        ]
+       },
+       {
+        "flavour": "u",
+        "pos": [
+         -0.5,
+         -0.35,
+         0.1
+        ]
+       },
+       {
+        "flavour": "d",
+        "pos": [
+         0.5,
+         -0.35,
+         -0.1
+        ]
+       }
+      ]
+     },
+     "b": {
+      "radius": 1.3,
+      "quarks": [
+       {
+        "flavour": "cbar",
+        "pos": [
+         -0.35,
+         0.05,
+         0
+        ]
+       },
+       {
+        "flavour": "u",
+        "pos": [
+         0.4,
+         -0.1,
+         0.05
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "type": "cluster",
+     "pos": [
+      5.0,
+      0,
+      0
+     ],
+     "radius": 1.9,
+     "shell": true,
+     "spin": 0.15,
+     "label": "one hadron",
+     "quarks": [
+      {
+       "flavour": "c",
+       "pos": [
+        0.1,
+        0.55,
+        0.2
+       ]
+      },
+      {
+       "flavour": "cbar",
+       "pos": [
+        -0.55,
+        0.1,
+        -0.2
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        0.55,
+        -0.15,
+        -0.25
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        -0.1,
+        -0.55,
+        0.3
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        0.05,
+        0.0,
+        -0.6
+       ]
+      }
+     ]
+    },
+    {
+     "type": "bar",
+     "pos": [
+      -7.0,
+      -2.8,
+      0
+     ],
+     "length": 3.0,
+     "label": "1 fm"
+    }
+   ]
+  },
+  {
+   "id": "neutrals",
+   "pos": [
+    78,
+    0,
+    -2
+   ],
+   "look": {
+    "target": [
+     3.0,
+     0,
+     0
+    ],
+    "dist": 11,
+    "yaw": -18,
+    "pitch": 6
+   },
+   "objects": [
+    {
+     "type": "tracks",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "nodes": [
+      {
+       "pos": [
+        0,
+        0,
+        0
+       ],
+       "color": "#f2f5f9",
+       "size": 0.16
+      },
+      {
+       "pos": [
+        2.6,
+        0.9,
+        0
+       ],
+       "color": "#d95926",
+       "size": 0.2
+      },
+      {
+       "pos": [
+        2.6,
+        -0.9,
+        0
+       ],
+       "color": "#3987e5",
+       "size": 0.2
+      }
+     ],
+     "tracks": [
+      {
+       "points": [
+        [
+         -4,
+         0,
+         0
+        ],
+        [
+         0,
+         0,
+         0
+        ]
+       ],
+       "color": "#f2f5f9",
+       "width": 2,
+       "label": "Λb⁰"
+      },
+      {
+       "points": [
+        [
+         0,
+         0,
+         0
+        ],
+        [
+         4.6,
+         2.6,
+         0
+        ]
+       ],
+       "color": "#f2f5f9",
+       "width": 2,
+       "label": "K⁻"
+      },
+      {
+       "points": [
+        [
+         0,
+         0,
+         0
+        ],
+        [
+         2.6,
+         0.9,
+         0
+        ]
+       ],
+       "color": "#d95926",
+       "width": 3,
+       "label": "Σc⁺"
+      },
+      {
+       "points": [
+        [
+         0,
+         0,
+         0
+        ],
+        [
+         2.6,
+         -0.9,
+         0
+        ]
+       ],
+       "color": "#3987e5",
+       "width": 3,
+       "label": "D̄*⁰"
+      },
+      {
+       "points": [
+        [
+         2.6,
+         0.9,
+         0
+        ],
+        [
+         5.6,
+         1.7,
+         0
+        ]
+       ],
+       "color": "#d95926",
+       "width": 2,
+       "label": "Λc⁺"
+      },
+      {
+       "points": [
+        [
+         2.6,
+         0.9,
+         0
+        ],
+        [
+         4.8,
+         0.25,
+         0.9
+        ]
+       ],
+       "color": "#d95926",
+       "width": 1.5,
+       "dashed": true,
+       "fade": 0.35,
+       "label": "π⁰ not seen"
+      },
+      {
+       "points": [
+        [
+         2.6,
+         -0.9,
+         0
+        ],
+        [
+         5.6,
+         -1.7,
+         0
+        ]
+       ],
+       "color": "#3987e5",
+       "width": 2,
+       "label": "D̄⁰"
+      },
+      {
+       "points": [
+        [
+         2.6,
+         -0.9,
+         0
+        ],
+        [
+         4.8,
+         -0.3,
+         -0.9
+        ]
+       ],
+       "color": "#3987e5",
+       "width": 1.5,
+       "dashed": true,
+       "fade": 0.35,
+       "label": "π⁰ / γ not seen"
+      }
+     ]
+    },
+    {
+     "type": "cluster",
+     "pos": [
+      10.5,
+      0.5,
+      0
+     ],
+     "radius": 2.1,
+     "shell": true,
+     "spin": 0.1,
+     "label": "six quarks",
+     "quarks": [
+      {
+       "flavour": "c",
+       "pos": [
+        0.2,
+        0.6,
+        0.2
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        -0.6,
+        0.3,
+        -0.1
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        0.6,
+        -0.1,
+        -0.3
+       ]
+      },
+      {
+       "flavour": "c",
+       "pos": [
+        -0.2,
+        -0.6,
+        0.3
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        0.1,
+        0.0,
+        -0.7
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        -0.1,
+        0.05,
+        0.7
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "future",
+   "pos": [
+    104,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 10,
+    "yaw": -30,
+    "pitch": 6
+   },
+   "objects": [
+    {
+     "type": "grid",
+     "pos": [
+      0,
+      -1.5,
+      0
+     ],
+     "from": -8,
+     "to": 10,
+     "step": 2,
+     "fadeAlong": "x"
+    }
+   ]
+  }
+ ]
 }

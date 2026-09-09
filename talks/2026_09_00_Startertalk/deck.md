@@ -39,24 +39,22 @@ space:
 
 # 1964: five quarks are allowed
 
-<div class="quote-line">“Baryons can now be constructed from quarks by using the combinations (qqq), (qqqqq̄), etc., while mesons are made out of (qq̄), (qqq̄q̄), etc.”</div>
-
-<img src="/figures/quark_model_singlets.svg" class="stage mx-auto mt-sm" style="height: 180px" alt="Meson, baryon, tetraquark and pentaquark as quark clusters" />
-
-<div class="caption mt-sm">Five-quark baryons are in the first quark paper, in the same sentence as qqq. Zweig proposed the same constituents the same year. Neither paper says whether such states bind, or how narrow they are.</div>
-
-<div class="src">Gell-Mann, Phys. Lett. 8 (1964) 214 · Zweig, CERN-TH-401 and CERN-TH-412 (1964)</div>
+<div class="quote-hero">“Baryons can now be constructed from quarks by using the combinations (qqq), (qqqqq̄), etc., while mesons are made out of (qq̄), (qqq̄q̄), etc.”<span class="who">Gell-Mann, Phys. Lett. 8 (1964) 214 · behind: Zweig, CERN-TH-401, 17 January 1964</span></div>
 
 <!--
-Speaker: the sentence on screen is quoted verbatim from Gell-Mann, Phys. Lett.
-8 (1964) 214. Zweig's CERN-TH-401 (17 January 1964) and CERN-TH-412 (21 February 1964) propose the
-same constituents as "aces"; the five-quark combination on screen is
-Gell-Mann's sentence, so credit Zweig for the constituents only. Colour came later (Greenberg's parastatistics, PRL 13 (1964) 598; Han and Nambu, Phys. Rev. 139 (1965) B1006; and after). In 1964 the argument was baryon number: Gell-Mann gives the triplet B = 1/3, so a baryon is qqq plus any number of qq̄ pairs, which is why the figure says nothing about colour singlets. Every baryon found
-before 2015 fits qqq (the Λ(1405) and N(1440) puzzles aside). Point at the
-empty pentaquark lane running toward the camera: 1964 is the origin star of
-the world, and the lane stays empty for fifty years. (~1.25 min)
+Speaker: the page floating in the world is page 1 of Zweig's CERN report
+TH-401, dated 17 January 1964 (CERN Document Server record 352337): three
+"aces" with baryon number 1/3, hence fractional charge. Gell-Mann's letter
+(Phys. Lett. 8 (1964) 214, received 4 January 1964) has the sentence on
+screen: five-quark baryons are there from the first paper, in the same
+sentence as qqq. The rule in 1964 was baryon number: the triplet carries
+B = 1/3, so a baryon is qqq plus any number of qq̄ pairs. Colour came later
+(Greenberg, PRL 13 (1964) 598; Han and Nambu, Phys. Rev. 139 (1965) B1006).
+Zweig's CERN-TH-412 (21 February 1964) is the longer second version. Neither
+paper says whether a five-quark state binds, or how narrow it would be.
+Point at the five spheres drifting into one cluster below the quotation:
+that object is what the next fifty years failed to find. (~1.25 min)
 -->
-
 ---
 clicks: 1
 space:
@@ -70,9 +68,7 @@ space:
 
 ## Not confirmed
 
-Θ⁺(1540), uudds̄, seen by LEPS in 2003 and by about ten experiments after it. Absent in the high-statistics data of CLAS, Belle and BaBar. PDG 2008: dropped from the Listings.
-
-A peak of tens of events in one mass projection is not enough. A state has to survive a repeat with far more data, and its quantum numbers come only from the full amplitude, with its phase.
+Θ⁺(1540), uudds̄: seen by LEPS in 2003 and by about ten experiments after it, absent from the high-statistics data of CLAS, Belle and BaBar. PDG 2008 dropped it from the Listings.
 
 </div>
 
@@ -128,11 +124,7 @@ space: { at: decay, dist: 16, yaw: -50, pitch: 10 }
 
 <div class="card card-primary pad-tight col-50">
 
-Charmed hadrons are heavy, so a pair moves slowly and a weak force can bind it: a charmed baryon and an anticharmed meson by a few MeV, as a proton and a neutron in the deuteron.
-
-Such a state lies just below the pair's threshold, and the threshold is known to a fraction of an MeV.
-
-The LHC makes b hadrons whose decays put cc̄ and light quarks in one place, in large numbers.
+Charmed hadrons are heavy, so a pair moves slowly and a weak force can bind it, as a proton and a neutron bind in the deuteron. The threshold is known to a fraction of an MeV.
 
 </div>
 
@@ -155,14 +147,12 @@ Speaker: one sentence while the camera flies. The hollow ring behind is the Θ�
 -->
 
 ---
-space: { at: decay }
+space: { at: decay, dim: 0.2 }
 ---
 
 # Λ<sub>b</sub>⁰ → J/ψ p K⁻
 
-<img src="/figures/lambda_b_decay.svg" class="stage mx-auto" style="height: 300px" alt="Two decay paths of Lambda_b to the J/psi p K final state" />
-
-<div class="caption mt-sm">Two paths lead to the same three particles. The J/ψ p pair carries cc̄uud: five quarks. Λ* → K⁻p resonances feed the same final state and reflect into m(J/ψ p). The fit models both paths and their interference.</div>
+<div class="caption decay-caption">Two paths lead to the same three particles. The J/ψ p pair carries cc̄uud: five quarks. Λ* → K⁻p resonances feed the same final state and reflect into m(J/ψ p). The fit models both paths and their interference.</div>
 
 <div class="src">About 26 000 Λ<sub>b</sub>⁰ → J/ψ p K⁻ decays in Run 1 (3 fb⁻¹) · LHCb, PRL 115 (2015) 072001</div>
 
@@ -191,7 +181,7 @@ Speaker: Left, the pattern; right, the 2015 data. The three horizontal bands on 
 
 ---
 clicks: 2
-space: { at: states, asof: 2015, stops: [Pc(4380), Pc(4450)] }
+space: { at: states, dim: 0.7, asof: 2015, stops: [Pc(4380), Pc(4450)] }
 ---
 
 # 2015: two J/ψ p states
@@ -217,7 +207,7 @@ Speaker: the numbers stay in the HUD. Run 1 (3 fb⁻¹), 26 007 ± 166 Λb⁰ �
 
 ---
 clicks: 3
-space: { at: states, yaw: -22, stops: [Pc(4312), Pc(4440), Pc(4457)] }
+space: { at: states, yaw: -22, dim: 0.7, stops: [Pc(4312), Pc(4440), Pc(4457)] }
 ---
 
 # 2019: three narrow states
@@ -244,7 +234,7 @@ Speaker: Run 1 = 3 fb⁻¹ (2011–12), Run 2 = 6 fb⁻¹ (2015–18); about 246
 
 ---
 clicks: 1
-space: { at: states, dist: 10, yaw: -14, stops: [Pc(4337)] }
+space: { at: states, dist: 10, yaw: -14, dim: 0.75, stops: [Pc(4337)] }
 ---
 
 # Masses and thresholds
@@ -261,7 +251,7 @@ Speaker: the most important slide of part one. Offsets from charge-consistent pa
 
 ---
 clicks: 2
-space: { at: states, yaw: -26, pitch: 8, stops: [Pcs(4459), Pcs(4338)] }
+space: { at: states, yaw: -26, pitch: 8, dim: 0.7, stops: [Pcs(4459), Pcs(4338)] }
 ---
 
 # Strange partners
@@ -272,17 +262,16 @@ space: { at: states, yaw: -26, pitch: 8, stops: [Pcs(4459), Pcs(4338)] }
 ## P<sub>cs</sub>(4459)⁰, evidence (2020)
 
 - Ξ<sub>b</sub>⁻ → J/ψ Λ K⁻, Runs 1–2
-- 3.1σ; two overlapping peaks not excluded
-- About 19 MeV below Ξ<sub>c</sub>⁰D̄*⁰
+- 3.1σ
+- 19 MeV below Ξ<sub>c</sub>⁰D̄*⁰
 
 </div>
 <div class="card card-accent pad-tight col-45">
 
 ## P<sub>cs</sub>(4338)⁰, observation (2022)
 
-- B⁻ → J/ψ Λ p̄, a B-meson decay
-- \> 15σ, full amplitude analysis
-- J = 1/2; positive parity excluded at 90% CL
+- B⁻ → J/ψ Λ p̄
+- \> 15σ, amplitude analysis, J = 1/2
 - At the Ξ<sub>c</sub>⁺D⁻ threshold
 
 </div>
@@ -317,10 +306,10 @@ the drift reads. (~0.25 min)
 
 ---
 space:
-  at: [59.5, 0, 0]
-  dist: 9
-  yaw: -20
-  pitch: 6
+  at: [62.5, 2.0, 0]
+  dist: 10
+  yaw: -10
+  pitch: 8
 ---
 
 # Two hadrons: a molecule
@@ -364,10 +353,10 @@ threshold would have no place in this picture. (~1.75 min)
 
 ---
 space:
-  at: [69, 0, 0]
-  dist: 9
-  yaw: 15
-  pitch: 6
+  at: [72.5, 1.6, 0]
+  dist: 10
+  yaw: 20
+  pitch: 8
 ---
 
 # One hadron: compact or hadrocharmonium
@@ -518,9 +507,9 @@ space: { at: future, yaw: -10 }
 # Three amplitude analyses
 
 <ol class="prog stage">
-<li><span class="n">1</span><span class="m">J<sup>P</sup> of the three narrow states, and the coupling phases</span><span class="ch">Λ<sub>b</sub>⁰ → J/ψ p K⁻, Runs 1–3 · molecule: all negative parity · hadrocharmonium: P<sub>c</sub>(4312)⁺ 1/2⁺</span></li>
-<li><span class="n">2</span><span class="m">The missing family members</span><span class="ch">Λ<sub>b</sub>⁰ → J/ψ Ξ⁻ K⁺ (CMS 2024, LHCb 2025), Ω<sub>b</sub>⁻ → J/ψ Ξ⁰ K⁻, B⁻ → J/ψ Ξ⁻ Λ̄ · predicted P<sub>ψss</sub><sup>N</sup>(4379)</span></li>
-<li><span class="n">3</span><span class="m">Decays, and the same peak in other parents</span><span class="ch">Λ<sub>b</sub>⁰ → Σ<sub>c</sub>⁽*⁾⁺⁺ D⁽*⁾⁻ K⁻ (observed 2024), η<sub>c</sub> p; Λ<sub>b</sub>⁰ → J/ψ p π⁻, B<sub>s</sub>⁰ → J/ψ p p̄ · molecule or hadrocharmonium; pole or triangle</span></li>
+<li><span class="n">1</span><span class="m">J<sup>P</sup> of the three narrow states, and the coupling phases</span><span class="ch">Λ<sub>b</sub>⁰ → J/ψ p K⁻, Runs 1–3</span></li>
+<li><span class="n">2</span><span class="m">The missing family members</span><span class="ch">Λ<sub>b</sub>⁰ → J/ψ Ξ⁻ K⁺ · Ω<sub>b</sub>⁻ → J/ψ Ξ⁰ K⁻ · B⁻ → J/ψ Ξ⁻ Λ̄</span></li>
+<li><span class="n">3</span><span class="m">Decays, and the same peak in other parents</span><span class="ch">Λ<sub>b</sub>⁰ → Σ<sub>c</sub>⁽*⁾⁺⁺ D⁽*⁾⁻ K⁻ · η<sub>c</sub> p · Λ<sub>b</sub>⁰ → J/ψ p π⁻ · B<sub>s</sub>⁰ → J/ψ p p̄</span></li>
 </ol>
 
 <div class="closing">All three use data already recorded; none is published on Run 3.</div>
@@ -528,7 +517,7 @@ space: { at: future, yaw: -10 }
 <div class="src">LHCb, EPJC 85 (2025) 812 · LHCb, PRD 110 (2024) L031104 · names as in arXiv:2206.15233</div>
 
 <!--
-Speaker: item 1. In the molecular picture heavy-quark spin symmetry fixes the multiplet, not which of the two Σc D̄* states is the 1/2⁻: that hangs on the sign of one spin-spin term. The pionless contact-range fit of Liu et al. (PRL 122 (2019) 242001) weakly prefers Pc(4440)⁺ = 1/2⁻, Pc(4457)⁺ = 3/2⁻; with one-pion exchange the reversed ordering is as likely (Valderrama, PRD 100 (2019) 094028) and Du et al. (PRL 124 (2020) 072001) get the reverse; a 2026 contact-range study using heavy-quark spin and antiquark–diquark symmetry favours the Liu ordering, with stated uncertainties (arXiv:2605.13344). Hadrocharmonium (Eides, Petrov, Polyakov, Mod. Phys. Lett. A 35 (2020) 2050151) gives the same order, Pc(4440)⁺ = 1/2⁻ and Pc(4457)⁺ = 3/2⁻, as on slide 15, from the ratio of total widths, so the ordering does not separate molecule from hadrocharmonium; a reversed ordering would contradict the hadrocharmonium width argument. The parity of Pc(4312)⁺ is the same fit's cleanest hadrocharmonium test: 1/2⁻ for the Σc D̄ molecule, 1/2⁺ for a χc0 p seed. A 2026 two-channel Flatté refit of the published Runs 1–2
+Speaker: item 1: J^P of the three states; molecule: all negative parity; hadrocharmonium: Pc(4312)⁺ 1/2⁺. Item 2: the missing family members, predicted Pψss^N(4379). Item 3: decays and the same peak in other parents; molecule or hadrocharmonium, pole or triangle. In the molecular picture heavy-quark spin symmetry fixes the multiplet, not which of the two Σc D̄* states is the 1/2⁻: that hangs on the sign of one spin-spin term. The pionless contact-range fit of Liu et al. (PRL 122 (2019) 242001) weakly prefers Pc(4440)⁺ = 1/2⁻, Pc(4457)⁺ = 3/2⁻; with one-pion exchange the reversed ordering is as likely (Valderrama, PRD 100 (2019) 094028) and Du et al. (PRL 124 (2020) 072001) get the reverse; a 2026 contact-range study using heavy-quark spin and antiquark–diquark symmetry favours the Liu ordering, with stated uncertainties (arXiv:2605.13344). Hadrocharmonium (Eides, Petrov, Polyakov, Mod. Phys. Lett. A 35 (2020) 2050151) gives the same order, Pc(4440)⁺ = 1/2⁻ and Pc(4457)⁺ = 3/2⁻, as on slide 15, from the ratio of total widths, so the ordering does not separate molecule from hadrocharmonium; a reversed ordering would contradict the hadrocharmonium width argument. The parity of Pc(4312)⁺ is the same fit's cleanest hadrocharmonium test: 1/2⁻ for the Σc D̄ molecule, 1/2⁺ for a χc0 p seed. A 2026 two-channel Flatté refit of the published Runs 1–2
 spectrum reads as molecular with real couplings and is not robust once the
 relative coupling phases float (arXiv:2608.25106): only a full amplitude
 analysis of Λb⁰ → J/ψ p K⁻ gives the phases. This is the only place the J^P
@@ -628,12 +617,12 @@ class: backup
 
 # Backup: related LHCb results
 
-- 2016: model-independent confirmation; Λ* reflections alone cannot describe the data. PRL 117 (2016) 082002
-- 2016: Λ<sub>b</sub>⁰ → J/ψ p π⁻, 3.1σ evidence for exotic contributions, P<sub>c</sub>(4380)⁺, P<sub>c</sub>(4450)⁺ and Z<sub>c</sub>(4200)⁻ taken together. PRL 117 (2016) 082003
-- 2022: B<sub>s</sub>⁰ → J/ψ p p̄, 797 ± 31 decays; no P<sub>c</sub>(4312)⁺ signal; P<sub>c</sub>(4337)⁺ at 3.1–3.7σ. PRL 128 (2022) 062001
-- 2024: Λ<sub>b</sub>⁰ → Σ<sub>c</sub>⁽*⁾⁺⁺ D⁽*⁾⁻ K⁻ observed on 6 fb⁻¹, the Σ<sub>c</sub>⁽*⁾ D̄⁽*⁾ final state. PRD 110 (2024) L031104
-- 2024–25: Λ<sub>b</sub>⁰ → J/ψ Ξ⁻ K⁺ observed by CMS on 140 fb⁻¹; LHCb observes Ξ<sub>b</sub>⁰ → J/ψ Ξ⁻ π⁺ and measures Λ<sub>b</sub>⁰ → J/ψ Ξ⁻ K⁺ on 5.4 fb⁻¹, 84 ± 10 and 107 ± 12 decays; amplitude analysis pending. CMS, EPJC 84 (2024) 1062 · LHCb, EPJC 85 (2025) 812
-- Kinematic ceilings: m(J/ψ p) ≤ 4341 MeV in B⁰ → J/ψ p p̄ and ≤ 4429 MeV in B<sub>s</sub>⁰ → J/ψ p p̄; neither reaches P<sub>c</sub>(4440)⁺ or P<sub>c</sub>(4457)⁺
+- 2016: model-independent confirmation, Λ* alone cannot describe the data. PRL 117 (2016) 082002
+- 2016: Λ<sub>b</sub>⁰ → J/ψ p π⁻, 3.1σ for the exotic contributions together. PRL 117 (2016) 082003
+- 2022: B<sub>s</sub>⁰ → J/ψ p p̄, no P<sub>c</sub>(4312)⁺, P<sub>c</sub>(4337)⁺ at 3.1–3.7σ. PRL 128 (2022) 062001
+- 2024: Λ<sub>b</sub>⁰ → Σ<sub>c</sub>⁽*⁾⁺⁺ D⁽*⁾⁻ K⁻ observed. PRD 110 (2024) L031104
+- 2024–25: Λ<sub>b</sub>⁰ → J/ψ Ξ⁻ K⁺ (CMS), Ξ<sub>b</sub>⁰ → J/ψ Ξ⁻ π⁺ (LHCb) observed. CMS, EPJC 84 (2024) 1062 · LHCb, EPJC 85 (2025) 812
+- Ceilings: m(J/ψ p) ≤ 4341 MeV in B⁰ → J/ψ p p̄, ≤ 4429 MeV in B<sub>s</sub>⁰ → J/ψ p p̄
 
 <div class="src">Ceilings from PDG 2024 masses, m(B⁰) − m(p) and m(B<sub>s</sub>⁰) − m(p) · both decays first observed on 5.2 fb⁻¹: LHCb, PRL 122 (2019) 191804</div>
 

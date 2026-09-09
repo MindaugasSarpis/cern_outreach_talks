@@ -6,12 +6,12 @@ import { CanvasTexture, LinearFilter, Sprite, SpriteMaterial } from 'three';
 
 // One-line, uppercase, tracked label (axis ticks, station names, track ends).
 // worldH: sprite height in world units.
-export function makeLabel(text, { px = 44, color = '#8b97a6', weight = 600, worldH = 0.6, letterSpacing = 0.12 } = {}) {
+export function makeLabel(text, { px = 44, color = '#8b97a6', weight = 600, worldH = 0.6, letterSpacing = 0.12, upper = true } = {}) {
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d');
   const font = `${weight} ${px}px "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`;
   ctx.font = font;
-  const spaced = text.toUpperCase().split('').join(String.fromCharCode(8202)); // hair spaces ≈ tracking
+  const spaced = (upper ? text.toUpperCase() : text).split('').join(String.fromCharCode(8202)); // hair spaces ≈ tracking
   const w = Math.ceil(ctx.measureText(spaced).width * (1 + letterSpacing * 0.5)) + px;
   c.width = w; c.height = Math.ceil(px * 1.5);
   ctx.font = font; ctx.fillStyle = color; ctx.textBaseline = 'middle';

@@ -7,7 +7,6 @@ Run with a python that has matplotlib (e.g. the `outreach_talks` conda env):
 
 Writes to public/figures/:
 
-    quark_model_singlets.svg      meson / baryon / tetraquark / pentaquark (1964 slide)
     argand_schematic.svg          Breit-Wigner Argand circle + lineshape (2015 criterion)
     hadron_molecule.svg           the three pictures of a pentaquark at one 1 fm scale
     hadron_compact.svg
@@ -649,7 +648,6 @@ def print_threshold_table():
 
 if __name__ == "__main__":
     print_threshold_table()
-    fig_singlets()
     fig_argand()
     fig_pictures()
     fig_lineshapes()

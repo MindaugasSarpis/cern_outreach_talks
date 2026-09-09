@@ -161,3 +161,12 @@ html[data-space-stop="1"] .slidev-page .slidev-layout { opacity: 0; filter: none
 }
 .slidev-layout.statement .mt-md { font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: #8b97a6; }
 .slidev-layout.statement .src { position: static; margin-top: 28px; }
+
+/* The 1964 slide: the Zweig page and the quark cluster are in the world; the
+   slide carries Gell-Mann's sentence only, set large, right of centre so the
+   page stays in view. */
+.quote-hero { position: absolute; right: 6%; top: 24%; width: 46%; font-size: 26px; line-height: 1.35; font-weight: 500; color: #f2f5f9; }
+.quote-hero .who { display: block; margin-top: 14px; font-size: 15px; font-weight: 400; color: #8b97a6; letter-spacing: 0.04em; }
+
+/* The Λb decay slide: the tracks are drawn in the world; the caption sits low left. */
+.decay-caption { position: absolute; left: 44px; bottom: 60px; width: 52%; }

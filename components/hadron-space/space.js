@@ -21,8 +21,8 @@ const FOV = 50, MAX_DT = 1 / 30;
 const D2R = Math.PI / 180;
 const DEFAULT_POSE = { dist: 9, yaw: -20, pitch: 6 };
 // Named poses resolve to a station; `wide` looks at the paper station from far.
-const NAMED = { wide: { station: 'paper', dist: 30, yaw: -20, pitch: 12 }, origin: { station: 'paper' }, future: { station: 'future' } };
-const HUD_OFFSET = new Vector3(1.5, -0.35, 0);   // a lit state lands left of centre, above the HUD, clear of the figure
+const NAMED = { wide: { station: 'paper', offset: [-11, 1.5, 0], dist: 30, yaw: -20, pitch: 12 }, origin: { station: 'paper' }, future: { station: 'future' } };
+const HUD_OFFSET = new Vector3(0.6, -0.35, 0);   // a lit state lands just left of centre, in the gap between the record and the figure
 
 function pickTexSize(coarse) {
   const cores = navigator.hardwareConcurrency || 4;
@@ -131,11 +131,12 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
   const resolve = (p) => {
     let at = p.at;
     const out = { target: new Vector3(), station: null, dist: p.dist, yaw: p.yaw, pitch: p.pitch };
-    if (typeof at === 'string' && NAMED[at]) { const n = NAMED[at]; out.dist ??= n.dist; out.yaw ??= n.yaw; out.pitch ??= n.pitch; at = n.station; }
+    let offset = null;
+    if (typeof at === 'string' && NAMED[at]) { const n = NAMED[at]; out.dist ??= n.dist; out.yaw ??= n.yaw; out.pitch ??= n.pitch; offset = n.offset || null; at = n.station; }
     if (Array.isArray(at)) { out.target.set(at[0], at[1], at[2]); out.station = nearestStation(out.target); }
     else if (stations.has(at)) {
       const { def, pos } = stations.get(at); const look = def.look || {};
-      out.target.copy(pos); if (look.target) out.target.add(new Vector3(...look.target));
+      out.target.copy(pos); if (offset) out.target.add(new Vector3(...offset)); else if (look.target) out.target.add(new Vector3(...look.target));
       out.dist ??= look.dist; out.yaw ??= look.yaw; out.pitch ??= look.pitch; out.station = at;
     } else if (byId.has(at) && byId.get(at).pos) {
       out.target.copy(byId.get(at).pos).add(HUD_OFFSET);
