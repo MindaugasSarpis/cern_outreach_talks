@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="718.05pt" height="355.128969pt" viewBox="0 0 718.05 355.128969" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="720.62pt" height="357.776pt" viewBox="0 0 720.62 357.776" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -15,11 +15,11 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 355.128969 
-L 718.05 355.128969 
-L 718.05 0 
+   <path d="M 0 357.776 
+L 720.62 357.776 
+L 720.62 0 
 L 0 0 
-L 0 355.128969 
+L 0 357.776 
 z
 " style="fill: none"/>
   </g>
@@ -76,7 +76,7 @@ L 0 3.5
       </g>
      </g>
      <g id="text_1">
-      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="51.36" y="325.001" transform="rotate(-0 51.36 325.001)">4250</text>
+      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="51.36" y="325.73225" transform="rotate(-0 51.36 325.73225)">4250</text>
      </g>
     </g>
     <g id="xtick_2">
@@ -86,7 +86,7 @@ L 0 3.5
       </g>
      </g>
      <g id="text_2">
-      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="158.31" y="325.001" transform="rotate(-0 158.31 325.001)">4300</text>
+      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="158.31" y="325.73225" transform="rotate(-0 158.31 325.73225)">4300</text>
      </g>
     </g>
     <g id="xtick_3">
@@ -96,7 +96,7 @@ L 0 3.5
       </g>
      </g>
      <g id="text_3">
-      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="265.26" y="325.001" transform="rotate(-0 265.26 325.001)">4350</text>
+      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="265.26" y="325.73225" transform="rotate(-0 265.26 325.73225)">4350</text>
      </g>
     </g>
     <g id="xtick_4">
@@ -106,7 +106,7 @@ L 0 3.5
       </g>
      </g>
      <g id="text_4">
-      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="372.21" y="325.001" transform="rotate(-0 372.21 325.001)">4400</text>
+      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="372.21" y="325.73225" transform="rotate(-0 372.21 325.73225)">4400</text>
      </g>
     </g>
     <g id="xtick_5">
@@ -116,7 +116,7 @@ L 0 3.5
       </g>
      </g>
      <g id="text_5">
-      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="479.16" y="325.001" transform="rotate(-0 479.16 325.001)">4450</text>
+      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="479.16" y="325.73225" transform="rotate(-0 479.16 325.73225)">4450</text>
      </g>
     </g>
     <g id="xtick_6">
@@ -126,7 +126,7 @@ L 0 3.5
       </g>
      </g>
      <g id="text_6">
-      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="586.11" y="325.001" transform="rotate(-0 586.11 325.001)">4500</text>
+      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="586.11" y="325.73225" transform="rotate(-0 586.11 325.73225)">4500</text>
      </g>
     </g>
     <g id="xtick_7">
@@ -136,11 +136,11 @@ L 0 3.5
       </g>
      </g>
      <g id="text_7">
-      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="693.06" y="325.001" transform="rotate(-0 693.06 325.001)">4550</text>
+      <text style="font-size: 16px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="693.06" y="325.73225" transform="rotate(-0 693.06 325.73225)">4550</text>
      </g>
     </g>
     <g id="text_8">
-     <text style="font-size: 17px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="372.21" y="344.579437" transform="rotate(-0 372.21 344.579437)">mass (MeV)</text>
+     <text style="font-size: 17px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #e6e6e6" x="372.21" y="346.492016" transform="rotate(-0 372.21 346.492016)">mass (MeV)</text>
     </g>
    </g>
    <g id="matplotlib.axis_2">
@@ -148,7 +148,7 @@ L 0 3.5
      <g id="line2d_8"/>
      <g id="text_9">
       <!-- $J/\psi\,p$ -->
-      <g style="fill: #e6e6e6" transform="translate(8.15 108.12514)">
+      <g style="fill: #e6e6e6" transform="translate(8.15 108.407913)">
        <text>
         <tspan x="0" y="-0.15625" style="font-style: oblique; font-size: 19px; font-family: 'DejaVu Sans'; fill: #e6e6e6">J</tspan>
         <tspan x="12.004883" y="-0.15625" style="font-style: oblique; font-size: 19px; font-family: 'DejaVu Sans'; fill: #e6e6e6">ψ</tspan>
@@ -162,7 +162,7 @@ L 0 3.5
      <g id="line2d_9"/>
      <g id="text_10">
       <!-- $J/\psi\,\Lambda$ -->
-      <g style="fill: #e6e6e6" transform="translate(7.2 205.596395)">
+      <g style="fill: #e6e6e6" transform="translate(7.2 205.879169)">
        <text>
         <tspan x="0" y="-0.15625" style="font-style: oblique; font-size: 19px; font-family: 'DejaVu Sans'; fill: #e6e6e6">J</tspan>
         <tspan x="12.004883" y="-0.15625" style="font-style: oblique; font-size: 19px; font-family: 'DejaVu Sans'; fill: #e6e6e6">ψ</tspan>
@@ -227,67 +227,67 @@ L 693.06 306.576
 " style="fill: none; stroke: #a8a8a8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_11">
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(185.10277 22.427469)">ΣcD̄</text>
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(176.355192 37.191414)">4318.8</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(184.373239 27.031219)">ΣcD̄</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(173.154997 42.363836)">4318.8</text>
    </g>
    <g id="text_12">
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(320.516044 22.427469)">Σc*D̄</text>
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(314.320692 37.191414)">4383.3</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(318.713739 27.031219)">Σc*D̄</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(311.120497 42.363836)">4383.3</text>
    </g>
    <g id="text_13">
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(486.288544 22.427469)">ΣcD̄*</text>
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(480.093192 37.191414)">4460.8</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(484.486239 27.031219)">ΣcD̄*</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(476.892997 42.363836)">4460.8</text>
    </g>
    <g id="text_14">
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(621.701817 22.427469)">Σc*D̄*</text>
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(618.058692 37.191414)">4525.3</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(618.826739 27.031219)">Σc*D̄*</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(614.858497 42.363836)">4525.3</text>
    </g>
    <g id="text_15">
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #d95926" transform="translate(214.91097 280.030074)">ΞcD̄</text>
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #d95926" transform="translate(205.873392 294.794019)">4332.6</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #d95926" transform="translate(213.891439 284.633824)">ΞcD̄</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #d95926" transform="translate(202.673197 299.966441)">4332.6</text>
    </g>
    <g id="text_16">
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #d95926" transform="translate(516.096744 280.030074)">ΞcD̄*</text>
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #d95926" transform="translate(509.611392 294.794019)">4474.6</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #d95926" transform="translate(514.004439 284.633824)">ΞcD̄*</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #d95926" transform="translate(506.411197 299.966441)">4474.6</text>
    </g>
    <g id="text_17">
-    <text style="font-size: 13.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(300.223594 62.505331)">Pc(4380)⁺</text>
-    <text style="font-size: 13.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(269.752617 76.251073)">broad, Γ ≈ 205 MeV</text>
+    <text style="font-size: 13.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(295.639922 59.854902)">Pc(4380)⁺</text>
+    <text style="font-size: 13.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #a8a8a8" transform="translate(262.344492 75.492753)">broad, Γ ≈ 205 MeV</text>
    </g>
    <g id="text_18">
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(152.394256 61.290097)">Pc(4312)⁺</text>
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(154.214686 76.054042)">-6.9 MeV</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(147.471053 58.443339)">Pc(4312)⁺</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(151.63867 75.851269)">-6.9 MeV</text>
    </g>
    <g id="text_19">
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(427.041856 134.067877)">Pc(4440)⁺</text>
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(424.831739 148.831823)">-20.5 MeV</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(422.118653 136.351627)">Pc(4440)⁺</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(421.673458 153.759557)">-20.5 MeV</text>
    </g>
    <g id="text_20">
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(463.404856 61.290097)">Pc(4457)⁺</text>
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(465.225286 76.054042)">-3.5 MeV</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(458.481653 58.443339)">Pc(4457)⁺</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(462.64927 75.851269)">-3.5 MeV</text>
    </g>
    <g id="text_21">
     <!-- $\mathrm{P}_{\psi s}^{\Lambda}(4338)^0$ -->
-    <g style="fill: #e6e6e6" transform="translate(201.7398 232.743093)">
+    <g style="fill: #e6e6e6" transform="translate(201.7398 231.365593)">
      <text>
-      <tspan x="0" y="-0.459375" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">P</tspan>
-      <tspan x="21.281348" y="-0.459375" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">(</tspan>
-      <tspan x="26.93833" y="-0.459375" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">4</tspan>
-      <tspan x="36.163672" y="-0.459375" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">3</tspan>
-      <tspan x="45.389014" y="-0.459375" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">3</tspan>
-      <tspan x="54.614355" y="-0.459375" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">8</tspan>
-      <tspan x="63.839697" y="-0.459375" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">)</tspan>
-      <tspan x="8.887451" y="-6.201563" style="font-size: 10.15px; font-family: 'DejaVu Sans'; fill: #e6e6e6">Λ</tspan>
-      <tspan x="69.640234" y="-6.201563" style="font-size: 10.15px; font-family: 'DejaVu Sans'; fill: #e6e6e6">0</tspan>
-      <tspan x="8.887451" y="3.642187" style="font-style: oblique; font-size: 10.15px; font-family: 'DejaVu Sans'; fill: #e6e6e6">ψ</tspan>
-      <tspan x="15.583081" y="3.642187" style="font-style: oblique; font-size: 10.15px; font-family: 'DejaVu Sans'; fill: #e6e6e6">s</tspan>
+      <tspan x="0" y="-0.475563" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">P</tspan>
+      <tspan x="21.262891" y="-0.475563" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">(</tspan>
+      <tspan x="26.919873" y="-0.475563" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">4</tspan>
+      <tspan x="36.145215" y="-0.475563" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">3</tspan>
+      <tspan x="45.370557" y="-0.475563" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">3</tspan>
+      <tspan x="54.595898" y="-0.475563" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">8</tspan>
+      <tspan x="63.82124" y="-0.475563" style="font-size: 14.5px; font-family: 'DejaVu Sans'; fill: #e6e6e6">)</tspan>
+      <tspan x="8.882666" y="-6.464063" style="font-size: 10.15px; font-family: 'DejaVu Sans'; fill: #e6e6e6">Λ</tspan>
+      <tspan x="69.616992" y="-6.464063" style="font-size: 10.15px; font-family: 'DejaVu Sans'; fill: #e6e6e6">0</tspan>
+      <tspan x="8.882666" y="4.004938" style="font-style: oblique; font-size: 10.15px; font-family: 'DejaVu Sans'; fill: #e6e6e6">ψ</tspan>
+      <tspan x="15.578296" y="4.004938" style="font-style: oblique; font-size: 10.15px; font-family: 'DejaVu Sans'; fill: #e6e6e6">s</tspan>
      </text>
     </g>
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(208.941089 250.740085)">+5.6 MeV</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(204.434761 249.838366)">+5.6 MeV</text>
    </g>
    <g id="text_22">
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(463.205856 231.569499)">Pcs(4459)⁰</text>
-    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(464.403239 246.333445)">-15.8 MeV</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(458.8332 232.430437)">Pcs(4459)⁰</text>
+    <text style="font-size: 14.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #e6e6e6" transform="translate(461.244958 249.838366)">-15.8 MeV</text>
    </g>
    <g id="line2d_10">
     <path d="M 183.7641 101.19014 
