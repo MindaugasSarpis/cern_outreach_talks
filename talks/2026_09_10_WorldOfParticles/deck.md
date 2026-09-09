@@ -44,7 +44,7 @@ Part II — down to the quarks (4 clips, ~4 min) · Part III — inside CERN
 shorten one, list it in videos/manifest.toml with a trim and publish. Each part opens on a live card (galaxy / proton /
 collider ring): click it or press c to fire a collision while you
 introduce the part. The finale
-counts collisions and plays a sound for the ones you trigger. Nine quiz
+counts collisions and plays a sound for the ones you trigger. Twelve quiz
 cards wait after the finale as backup material (g + slide number).
 -->
 
@@ -119,11 +119,6 @@ cards wait after the finale as backup material (g + slide number).
 
 ---
 
-<!-- Part I · the SDSS map — a universe drawn from a dataset (0:30) -->
-<VideoPlayer src="sdss_universe_zoom.mp4" />
-
----
-
 <!-- Part I · the Big Bang: cosmic expansion funnel (0:30, silent) -->
 <VideoPlayer src="expansion_funnel.webm" muted />
 
@@ -156,11 +151,6 @@ cards wait after the finale as backup material (g + slide number).
 
 ---
 
-<!-- Part II · the Standard Model table builds up (CERN-FOOTAGE-2015-006-001, 0:34) -->
-<VideoPlayer src="cern_footage_2015_006_001.mp4" />
-
----
-
 <!-- Part II · zoom into atoms (CG) -->
 <VideoPlayer src="atoms.mp4" />
 
@@ -170,6 +160,13 @@ cards wait after the finale as backup material (g + slide number).
 <VideoPlayer src="cloud_chamber_audio.mp4" />
 
 ---
+
+
+<!-- Part II · the Standard Model table builds up (CERN-FOOTAGE-2015-006-001, 0:34) -->
+<VideoPlayer src="cern_footage_2015_006_001.mp4" />
+
+---
+
 
 <!-- Part III card — collider ring (ParticleHero mode="collider"): two
      bunches race in opposite directions and collide at the interaction
@@ -199,53 +196,21 @@ cards wait after the finale as backup material (g + slide number).
 
 ---
 
-<!-- Part III · ATLAS detector overview (ATLAS-VIDEO-2021-001-001, 0:49) -->
-<VideoPlayer src="atlas_video_2021_001_001.mp4" />
-
----
-
-<!-- Part III · CMS (0:30) -->
-<VideoPlayer src="cms.mp4" />
-
----
-
-<!-- Part III · LHCb 3D fly-in, a human for scale (CERN-FOOTAGE-2022-042-001, 0:56) -->
-<VideoPlayer src="cern_footage_2022_042_001.mp4" />
-
----
 
 <!-- Part III · LHCb reel, with audio (0:47) -->
 <VideoPlayer src="lhcb.mp4" />
 
 ---
 
-<!-- Part III · collision burst in the beam pipe (CERN-FOOTAGE-2024-006-012, 0:27) -->
-<VideoPlayer src="cern_footage_2024_006_012.mp4" />
-
----
-
-<!-- Part III · a collision as data: ATLAS event display (ATLAS-VIDEO-2023-013-001, 0:30) -->
-<VideoPlayer src="atlas_video_2023_013_001.mp4" />
-
----
-
-<!-- Part III · the data centre and the tape robot (CERN-FOOTAGE-2022-013-006, 2:04) -->
-<VideoPlayer src="cern_footage_2022_013_006.mp4" />
-
----
-
-<!-- Part III · the Worldwide LHC Computing Grid globe (CERN-FOOTAGE-2025-048-001, 0:23) -->
-<VideoPlayer src="cern_footage_2025_048_001.mp4" />
-
----
 
 <!-- Part III · the future: FCC map aerial (CERN-FOOTAGE-2024-006-001, 0:18) -->
 <VideoPlayer src="cern_footage_2024_006_001.mp4" />
 
 ---
 
-<!-- Closer · LHCb fly-through ending on "Ačiū" — thanks, in Lithuanian (2:28) -->
-<VideoPlayer src="lhcb_aciu.mp4" />
+<!-- Closer · LHCb fly-through ending on "Thanks" (2:28; talk-owned English
+     twin of the library's lhcb_aciu — this lecture is in English) -->
+<VideoPlayer src="lhcb_thanks.mp4" />
 
 ---
 
@@ -257,7 +222,7 @@ cards wait after the finale as backup material (g + slide number).
   sound
   counter
   kicker="World of Particles"
-  title="Ačiū"
+  title="Thanks for|your attention"
   sub="Questions?|c, or a click on the proton: one more collision"
   corner-tr="Autumn 2026"
   corner-br="Lecture 1"
@@ -273,7 +238,7 @@ by hand, 1/2/3 points at a tile, Enter reveals, r resets.
 hideInToc: true
 ---
 
-<QuizCard n="1" total="9"
+<QuizCard n="1" total="12"
   q="How fast do the LHC's protons travel?"
   :options="['99 % of the speed of light', '99.9999991 % of the speed of light', 'Half the speed of light']"
   :answer="1"
@@ -283,7 +248,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<QuizCard n="2" total="9"
+<QuizCard n="2" total="12"
   q="The LHC ring is 27 km around. How many laps does a proton make each second?"
   :options="['About 11', 'About 11 000', 'About 11 million']"
   :answer="1"
@@ -293,7 +258,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<QuizCard n="3" total="9"
+<QuizCard n="3" total="12"
   q="How cold are the LHC's superconducting magnets?"
   :options="['−80 °C, like a deep freezer', '1.9 K, colder than outer space', 'Room temperature']"
   :answer="1"
@@ -303,7 +268,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<QuizCard n="4" total="9"
+<QuizCard n="4" total="12"
   q="How many protons circulate in one LHC beam?"
   :options="['About 3 million', 'About 300 trillion', 'About 3 × 10²⁰']"
   :answer="1"
@@ -313,7 +278,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<QuizCard n="5" total="9"
+<QuizCard n="5" total="12"
   q="What is inside a proton?"
   :options="['Three quarks and nothing else', 'Three valence quarks, gluons, and a sea of quark–antiquark pairs', 'Electrons']"
   :answer="1"
@@ -323,7 +288,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<QuizCard n="6" total="9"
+<QuizCard n="6" total="12"
   q="How much of the universe is ordinary matter — atoms, stars, us?"
   :options="['About 5 %', 'About 27 %', 'About 68 %']"
   :answer="0"
@@ -333,7 +298,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<QuizCard n="7" total="9"
+<QuizCard n="7" total="12"
   q="How hot is the quark–gluon plasma made in lead–lead collisions at the LHC?"
   :options="['About 5 500 °C, like the Sun\'s surface', 'About 5.5 million degrees', 'About 5.5 trillion degrees']"
   :answer="2"
@@ -343,7 +308,7 @@ hideInToc: true
 hideInToc: true
 ---
 
-<QuizCard n="8" total="9"
+<QuizCard n="8" total="12"
   q="When was the Higgs boson discovered?"
   :options="['1995', '2012', '2022']"
   :answer="1"
@@ -353,8 +318,38 @@ hideInToc: true
 hideInToc: true
 ---
 
-<QuizCard n="9" total="9"
+<QuizCard n="9" total="12"
   q="When did Lithuania join CERN as an Associate Member State?"
   :options="['1954, as a founding member', '2018', 'It has not joined yet']"
   :answer="1"
   fact="8 January 2018. That is what opened CERN's student and teacher programmes to Lithuania." />
+
+---
+hideInToc: true
+---
+
+<QuizCard n="10" total="12"
+  q="How long does sunlight take to reach Earth?"
+  :options="['About 8 seconds', 'About 8 minutes', 'About 8 hours']"
+  :answer="1"
+  fact="150 million km at 300 000 km/s: 8 min 20 s. The galaxies in Webb's deep field sent their light billions of years ago." />
+
+---
+hideInToc: true
+---
+
+<QuizCard n="11" total="12"
+  q="The cosmic microwave background — the hiss you heard — is light from when?"
+  :options="['The first stars switching on', '380 000 years after the Big Bang', 'The Milky Way forming']"
+  :answer="1"
+  fact="The universe cooled enough for atoms to form and became transparent; that light has travelled 13.8 billion years and is now 2.7 K microwaves, everywhere you look." />
+
+---
+hideInToc: true
+---
+
+<QuizCard n="12" total="12"
+  q="In the cloud chamber, which particles left the short, fat trails?"
+  :options="['Electrons', 'Alpha particles', 'Cosmic muons']"
+  :answer="1"
+  fact="Heavy, doubly charged alphas ionise densely and stop within a few cm. The thin wobbly tracks are electrons; the long straight ones are cosmic muons — a few cross your hand every second." />
