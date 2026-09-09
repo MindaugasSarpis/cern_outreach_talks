@@ -12,7 +12,6 @@ info: |
 layout: cover
 space:
   at: wide
-  yaw: -22
 ---
 
 # LHCb Startertalk
@@ -34,11 +33,8 @@ states could be, what Run 3 will measure. The 2015 paper (LHCb, PRL 115 (2015)
 
 ---
 space:
-  at: quarks-1964
-  dist: 9
-  yaw: -60
-  pitch: 8
-  dim: 0.75          # the origin labels are largest here; keep the quote legible
+  at: paper
+  dim: 0.35          # the page and the cluster are the slide
 ---
 
 # 1964: five quarks are allowed
@@ -64,10 +60,7 @@ the world, and the lane stays empty for fifty years. (~1.25 min)
 ---
 clicks: 1
 space:
-  at: Theta(1540)
-  dist: 8
-  yaw: -40
-  pitch: 6
+  at: theta
   stops: [Theta(1540)]
 ---
 
@@ -99,10 +92,10 @@ the pentaquark lane runs on empty to 2015. (~1.25 min including the stop,
 
 ---
 space:
-  at: [8.5, 3.2, -8]
-  dist: 15
-  yaw: -68
-  pitch: 7
+  at: interiors
+  dist: 22
+  yaw: -40
+  pitch: 12
 ---
 
 # One hadron or two
@@ -128,7 +121,7 @@ toward the LHC era, with the pentaquark lane empty until 2015. (~1.0 min)
 -->
 
 ---
-space: { at: J/psi, dist: 12, yaw: -55, pitch: 9 }
+space: { at: decay, dist: 16, yaw: -50, pitch: 10 }
 ---
 
 # Why charm
@@ -152,7 +145,7 @@ Speaker: Heavy hadrons: a Σc D̄ pair has a large reduced mass (μ ≈ 1059 MeV
 ---
 layout: section
 hideInToc: true
-space: { at: [10.4, 5.2, -2.6], dist: 12, yaw: -30, pitch: 8 }
+space: { at: decay, dist: 13, yaw: -30, pitch: 8 }
 ---
 
 # What LHCb found, 2015–2022
@@ -162,7 +155,7 @@ Speaker: one sentence while the camera flies. The hollow ring behind is the Θ�
 -->
 
 ---
-space: { at: [15.4, 6.0, -1.4], dist: 10, yaw: -24, pitch: 7 }
+space: { at: decay }
 ---
 
 # Λ<sub>b</sub>⁰ → J/ψ p K⁻
@@ -178,7 +171,7 @@ Speaker: Why LHCb, in speech only: a forward spectrometer built for b hadrons (L
 -->
 
 ---
-space: { at: [15.4, 6.0, -1.4], dist: 10, yaw: -16, pitch: 7 }
+space: { at: decay, yaw: -8 }
 ---
 
 # What an amplitude analysis fits
@@ -198,7 +191,7 @@ Speaker: Left, the pattern; right, the 2015 data. The three horizontal bands on 
 
 ---
 clicks: 2
-space: { at: [15.9, 6.1, 0], dist: 8, yaw: -22, pitch: 6, asof: 2015, stops: [Pc(4380), Pc(4450)] }
+space: { at: states, asof: 2015, stops: [Pc(4380), Pc(4450)] }
 ---
 
 # 2015: two J/ψ p states
@@ -224,7 +217,7 @@ Speaker: the numbers stay in the HUD. Run 1 (3 fb⁻¹), 26 007 ± 166 Λb⁰ �
 
 ---
 clicks: 3
-space: { at: [19.6, 6.1, 0], dist: 8, yaw: -22, pitch: 6, stops: [Pc(4312), Pc(4440), Pc(4457)] }
+space: { at: states, yaw: -22, stops: [Pc(4312), Pc(4440), Pc(4457)] }
 ---
 
 # 2019: three narrow states
@@ -251,7 +244,7 @@ Speaker: Run 1 = 3 fb⁻¹ (2011–12), Run 2 = 6 fb⁻¹ (2015–18); about 246
 
 ---
 clicks: 1
-space: { at: [20.5, 6.1, 0], dist: 8, yaw: -18, pitch: 6, stops: [Pc(4337)] }
+space: { at: states, dist: 10, yaw: -14, stops: [Pc(4337)] }
 ---
 
 # Masses and thresholds
@@ -268,7 +261,7 @@ Speaker: the most important slide of part one. Offsets from charge-consistent pa
 
 ---
 clicks: 2
-space: { at: [22.3, 6.15, 0], dist: 8, yaw: -22, pitch: 6, stops: [Pcs(4459), Pcs(4338)] }
+space: { at: states, yaw: -26, pitch: 8, stops: [Pcs(4459), Pcs(4338)] }
 ---
 
 # Strange partners
@@ -307,10 +300,10 @@ Speaker: Pcs(4459)⁰ in Ξb⁻ → J/ψ Λ K⁻, Runs 1–2 (9 fb⁻¹), 1750 �
 layout: section
 hideInToc: true
 space:
-  at: [19.5, 6.2, -1.5]
-  dist: 14
-  yaw: -40
-  pitch: 12
+  at: interiors
+  dist: 16
+  yaw: -30
+  pitch: 10
 ---
 
 # What they could be
@@ -324,10 +317,10 @@ the drift reads. (~0.25 min)
 
 ---
 space:
-  at: [19.5, 6.2, -1.5]
-  dist: 13
-  yaw: -25
-  pitch: 10
+  at: [59.5, 0, 0]
+  dist: 9
+  yaw: -20
+  pitch: 6
 ---
 
 # Two hadrons: a molecule
@@ -371,10 +364,10 @@ threshold would have no place in this picture. (~1.75 min)
 
 ---
 space:
-  at: [19.5, 6.2, -1.5]
-  dist: 13
-  yaw: -10
-  pitch: 10
+  at: [69, 0, 0]
+  dist: 9
+  yaw: 15
+  pitch: 6
 ---
 
 # One hadron: compact or hadrocharmonium
@@ -411,9 +404,9 @@ too. This picture has a direct decay test, on slide 17. Positive parity for Pc(4
 
 ---
 space:
-  at: [19.5, 6.2, -1.5]
-  dist: 13
-  yaw: 5
+  at: interiors
+  dist: 14
+  yaw: 30
   pitch: 10
 ---
 
@@ -446,7 +439,7 @@ describe the data worse. No triangle candidate lands at 4312. Kinematic effects 
 -->
 
 ---
-space: { at: [19.5, 6.2, -1.5], dist: 13, yaw: 20, pitch: 10 }
+space: { at: interiors, dist: 15, yaw: 45, pitch: 12 }
 ---
 
 # What tells them apart

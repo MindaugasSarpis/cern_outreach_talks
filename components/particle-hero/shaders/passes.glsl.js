@@ -18,6 +18,7 @@ uniform float uDt, uTime;
 uniform vec3 uPointer, uPointerVel;
 uniform vec4 uImpulse;   // xyz = world pos; w = strength (hover)
 uniform vec4 uBurst;     // xyz = world pos; w = strength (collision event)
+uniform vec4 uGather;    // xyz = world pos; w = strength (hadron-space station attraction; 0 = off)
 varying vec2 vUv;
 ${NOISE}
 // Divergence-free 3D field: curl of a vector potential whose components are
@@ -51,6 +52,10 @@ void main() {
   vec3 toB = pos.xyz - uBurst.xyz;
   float db = length(toB) + 1e-4;
   v += (toB / db) * uBurst.w * exp(-db * db / 9.0) * uDt;
+  // station gather: a wide, gentle pull toward the active diorama (hadron space only)
+  vec3 toG = uGather.xyz - pos.xyz;
+  float dg = length(toG) + 1e-4;
+  v += (toG / dg) * uGather.w * exp(-dg * dg / 64.0) * uDt;
   // frame-rate-independent damping + speed clamp
   v *= exp(-1.6 * uDt);
   float sp = length(v);

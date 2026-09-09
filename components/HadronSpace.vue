@@ -12,7 +12,8 @@ import SpacePanel from './SpacePanel.vue'
 // frontmatter:
 //
 //   space:
-//     at: Pc(4312)        # hadron id | wide | origin | future | [x, y, z]
+//     at: states          # station id (paper | theta | decay | states | interiors | neutrals | future)
+//                         # | state id (Pc(4312) …) | wide | origin | [x, y, z]
 //     dist: 7  yaw: -25  pitch: 8
 //     stops: [Pc(4312), Pc(4440), Pc(4457)]   # click k flies to stops[k-1]
 //     asof: 2015          # optional: tell the story as of this year (see below)
@@ -136,9 +137,11 @@ async function boot() {
   if (reduced || !webgl2Ok()) { staticBg.value = true; return }
   try {
     const base = import.meta.env.BASE_URL || '/'
-    const r = await fetch(base.replace(/\/?$/, '/') + props.src)
-    data.value = await r.json()
-    space = createSpace(canvas.value, root.value, { data: data.value, onArrive: () => { arrived.value = true } })
+    const url = (p) => base.replace(/\/?$/, '/') + p
+    const [r1, r2] = await Promise.all([fetch(url(props.src)), fetch(url('data/space.json'))])
+    data.value = await r1.json()
+    const spaceDef = await r2.json()
+    space = createSpace(canvas.value, root.value, { data: data.value, space: spaceDef, onArrive: () => { arrived.value = true } })
   } catch {
     space = null
   }

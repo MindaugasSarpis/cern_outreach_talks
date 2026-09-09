@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Build public/data/hadrons.json for the hadron-space scene.
+"""Build public/data/hadrons.json: the records behind the hadron-space stops.
 
-Source: Patrick Koppenburg, "List of hadrons observed at the LHC",
+Output: the ten states the talk names (eight pentaquarks, Θ⁺(1540), the 1964
+landmark). Dates and masses of the LHC states are read from Patrick
+Koppenburg's "List of hadrons observed at the LHC",
 https://koppenburg.ch/particles.html (CC BY 4.0; cite LHCb-FIGURE-2021-001
-and updates). The page's table is parsed as is; two pentaquark evidence
-states the list omits and six pre-LHC landmarks are appended below with
-their references.
+and updates); the presenter's record fields come from OVERRIDES below. The
+scene itself no longer draws his chart (spec 2026-09-09-startertalk-dioramas).
 
     python3 scripts/hadrons.py            # fetch + write
     python3 scripts/hadrons.py --cached page.html
@@ -306,6 +307,10 @@ def build(html: str) -> dict:
         lh = label_html(s)
         if lh:
             s["label_html"] = lh
+    # The scene draws stations, not Koppenburg's chart: keep only the records the
+    # talk names (eight pentaquarks, Θ⁺(1540), the 1964 landmark).
+    KEEP = set(PENTAQUARKS) | {"Theta(1540)", "quarks-1964"}
+    states = [s for s in states if s["id"] in KEEP]
     return {
         "source": {
             "title": "List of hadrons observed at the LHC",
@@ -315,7 +320,6 @@ def build(html: str) -> dict:
             "licence": "CC BY 4.0",
             "lhc_states": sum(1 for s in states if s["origin"] == "lhc"),
         },
-        "lanes": LANES,
         "figures": FIGURES,
         "states": states,
     }
@@ -372,12 +376,7 @@ def check(data: dict) -> None:
     ids = {s["id"] for s in data["states"]}
     missing = [p for p in PENTAQUARKS if p not in ids]
     assert not missing, f"pentaquarks missing: {missing}"
-    lanes = {l["key"] for l in data["lanes"]}
-    bad = [s["id"] for s in data["states"] if s["lane"] not in lanes or not s.get("year_frac")]
-    assert not bad, f"bad lane/year: {bad}"
-    assert data["source"]["lhc_states"] >= 80, data["source"]["lhc_states"]
-    pq = [s for s in data["states"] if s["lane"] == "pentaquark" and s["origin"] == "lhc"]
-    assert len(pq) == 6, [s["id"] for s in pq]
+    assert len(data["states"]) == 10, [s["id"] for s in data["states"]]
     for f in data["figures"].values():
         assert (OUT.parent.parent / f["src"]).is_file(), f["src"]
         assert f.get("see"), f"figure without a 'see' line: {f['src']}"
