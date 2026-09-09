@@ -459,6 +459,122 @@ partners, widths and magnetic moments are on the backup comparison table
 -->
 
 ---
+space: { at: neutrals, dim: 0.35 }
+---
+
+# Where the neutrals go missing
+
+<div class="row stage">
+<div class="card card-primary pad-tight col-50">
+
+## Σ<sub>c</sub>⁺D̄*⁰ always decays with a neutral
+
+P<sub>c</sub>(4312)⁺ and P<sub>c</sub>(4457)⁺ sit 5 and 2 MeV below Σ<sub>c</sub>⁺D̄⁰ and Σ<sub>c</sub>⁺D̄*⁰. Σ<sub>c</sub>⁺ → Λ<sub>c</sub>⁺π⁰; D̄*⁰ → D̄⁰π⁰ or D̄⁰γ. Every decay of the pair leaves a π⁰ or a γ that LHCb does not reconstruct.
+
+</div>
+</div>
+
+<div class="caption mt-sm col-60">LHCb has observed the charged partner, Λ<sub>b</sub>⁰ → Σ<sub>c</sub>⁽*⁾⁺⁺D⁽*⁾⁻K⁻. The Λ<sub>b</sub>⁰ mass and flight direction overconstrain one missing π⁰ or γ; the LHCb Vilnius group is recovering it.</div>
+
+<div class="src">LHCb, PRL 122 (2019) 222001 · LHCb, PRD 110 (2024) L031104 · PDG 2024</div>
+
+<!--
+Speaker: the tracks in the world are Λb⁰ → Σc⁺ D̄*⁰ K⁻ with the two dashed
+tracks the detector does not see. Thresholds: LHCb quotes Pc(4312)⁺ and
+Pc(4457)⁺ "approximately 5 MeV and 2 MeV below the Σc⁺D̄⁰ and Σc⁺D̄*⁰
+thresholds" and Pc(4440)⁺ with about 20 MeV of binding (PRL 122 (2019)
+222001); the Σc⁺⁺D̄⁽*⁾⁻ thresholds lie about 5 MeV higher (PDG 2024: Σc⁺D̄⁰
+4317.5, Σc⁺⁺D⁻ 4323.6, Σc⁺D̄*⁰ 4459.5, Σc⁺⁺D*⁻ 4464.2 MeV). If asked: the
++6.8 and +4.1 MeV upward systematics on the masses exceed the gaps to the
+neutral thresholds, so "below" is not established at 1σ for Pc(4312)⁺ and
+Pc(4457)⁺. Decay chains (PDG 2024): Σc(2455) → Λc⁺ π is the only open strong
+decay, so Σc⁺ → Λc⁺ π⁰ always (p* = 94 MeV/c); D*(2007)⁰ → D⁰ π⁰ (64.7 ±
+0.9)% or D⁰ γ (35.3 ± 0.9)%, D⁺ π⁻ closed. Unreconstructed neutrals per
+charge channel of Λb⁰ → Σc D̄⁽*⁾ K⁻: Σc⁺⁺D⁻ none; Σc⁺⁺D*⁻ none in 67.7%
+(D̄⁰ π⁻), one otherwise; Σc⁺D̄⁰ one, always; Σc⁺D̄*⁰ two, always. Say "no
+unreconstructed neutral", not "fully charged": the D̄⁰ is neutral but
+reconstructed. What LHCb has observed: Λb⁰ → Σc⁽*⁾⁺⁺ D⁽*⁾⁻ K⁻, Run 2, 6 fb⁻¹,
+four modes, 480 ± 25 / 279 ± 26 / 243 ± 17 / 116 ± 15 decays, 32σ to 9σ;
+B(Σc⁺⁺D⁻K⁻)/B(Λc⁺D̄⁰K⁻) = 0.282 ± 0.016 ± 0.016 ± 0.005; the paper calls
+O(100) candidates per mode too few for an amplitude analysis and does not
+search for Pc states (PRD 110 (2024) L031104). The Σc⁺D̄⁽*⁾⁰ K⁻ channel is
+not reconstructed there, so the open-charm test at the thresholds the 2019
+paper quotes has so far been done in the isospin partner; that reading is
+mine. Recovering the neutral: one missing particle of known mass is three
+unknowns; the Λb⁰ flight direction from the primary and decay vertices gives
+two equations, the Λb⁰ mass a third, quadratic in |p(Λb⁰)|, so two
+solutions. LHCb has used exactly this for a missing neutrino: |Vub| from
+Λb⁰ → p μ ν, q² up to a two-fold ambiguity, resolutions about 1 and 4 GeV²
+(Nature Phys. 11 (2015) 743); Λb⁰ → Λc⁺ μ ν shape (PRD 96 (2017) 112005),
+Eq. 6. The intermediate mass, m(Σc⁺) on Λc⁺ π⁰ or m(D̄*⁰) on D̄⁰ π⁰/γ, is a
+fourth equation for the same three unknowns: one overconstraint, the case a
+decay-tree fit handles if the tree is not under-constrained (Hulsbergen, NIM
+A 552 (2005) 566). That fourth-constraint step is general kinematics, not a
+published LHCb analysis. Why the calorimeter route is hard: analyses cut on
+photon pT at 200 to 250 MeV/c and the resolved π⁰ mass resolution is about
+8 MeV/c² (IJMPA 30 (2015) 1530022; LHCb-PROC-2015-009), while these π⁰ and
+γ are soft. The LHCb Vilnius group is working on the recovery; in progress,
+no numbers. (~1.25 min)
+-->
+
+---
+space: { at: [88.5, 0.5, -2], dist: 8, yaw: 10, pitch: 6, dim: 0.35 }
+---
+
+# Six quarks
+
+<div class="row stage">
+<div class="card card-accent pad-tight col-50">
+
+## The deuteron is the hexaquark we know
+
+Bound by 2.22 MeV. Lattice QCD predicts heavier dibaryons, bound by tens of MeV: Ω<sub>c</sub>Ω<sub>cc</sub>, Ω<sub>b</sub>Ω<sub>bb</sub>, Ω<sub>ccb</sub>Ω<sub>cbb</sub>. The d*(2380) claim is disputed. At LHCb, the B → Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻ K spectra show no structure yet.
+
+</div>
+</div>
+
+<div class="src">PDG 2024 · Junnarkar, Mathur, PRL 123 (2019) 162003 · LHCb, PRD 114 (2026) 012012</div>
+
+<!--
+Speaker: the six-quark cluster in the world is a schematic, nothing more.
+The one we know: the deuteron, m_p + m_n − m_d = 2.224 566 MeV from the PDG
+2024 constants table; PDG has no dibaryon or hexaquark listing at all.
+Terms: dibaryon = two baryons, baryon number 2; baryonium = baryon and
+antibaryon, baryon number 0. Claimed: d*(2380), WASA-at-COSY, pn → d π⁰ π⁰,
+a Lorentzian energy dependence consistent with a resonance I(J^P) = 0(3⁺)
+(PRL 106 (2011) 242302, a title with a question mark); polarised np
+scattering adds a pole at (2380 ± 10 − i 40 ± 5) MeV in the ³D₃–³G₃ waves
+(PRL 112 (2014) 202301; PRC 90 (2014) 035204), so M ≈ 2380, Γ ≈ 70 MeV.
+Status: one experimental programme plus A2@MAMI photoproduction (same lead
+authors), not in the PDG, and contested: Molina, Ikeno and Oset reproduce the
+peak with sequential single-pion production and a triangle singularity
+(Chin. Phys. C 47 (2023) 041001), Bashkanov, Clement and Skorodko reply
+(arXiv:2106.00494); HAL QCD lattice at heavy pion masses finds a ΔΔ ⁷S₃
+quasi-bound state (PLB 811 (2020) 135935), qualitative support only.
+Predicted: heavier binds harder. Lattice QCD (Junnarkar and Mathur, PRL 123
+(2019) 162003): J^P = 1⁺ dibaryons ΩcΩcc at 6381(20) MeV, 26(9) MeV below
+the spin-1/2 threshold; ΩbΩbb at 16004(17) and ΩccbΩcbb at 19105(21) MeV,
+also bound, so stable against strong and electromagnetic decay. ΩcccΩccc
+(Lyu et al., PRL 127 (2021) 072003): bound by 5.7 MeV without Coulomb, near
+unitarity with it. Molecular models: ΞccΞcc loosely bound in one-boson
+exchange, 0.6 to 18 MeV depending on the cutoff (Meng, Li, Zhu, PRD 95
+(2017) 114019). What LHCb can touch, my speculation: a charmed dibaryon
+needs two charm baryons in one event, and σ(Ξcc⁺⁺)·B/σ(Λc⁺) is
+2.2 × 10⁻⁴ (Chin. Phys. C 44 (2020) 022001), so doubly charmed pairs are out
+of reach; ALICE's femtoscopy of p–Ω⁻ and p–Ξ⁻ pairs (Nature 588 (2020) 232)
+could in principle be tried on Λc–p or Λc–Λc pairs here, not done.
+Established, baryon number 0: B̄s⁰ → Λc⁺Λ̄c⁻ observed at 6.2σ and evidence for
+B̄⁰ → Λc⁺Λ̄c⁻ (PRL 136 (2026) 061802), two-body, so no spectrum; B⁰ →
+Λc⁺Λ̄c⁻K⁰S on 5.4 fb⁻¹ shows no significant structure in m(Λc⁺Λ̄c⁻) (PRD 114
+(2026) 012012). Belle's threshold enhancement in e⁺e⁻ → Λc⁺Λ̄c⁻ at 4634 MeV
+(PRL 101 (2008) 172001) is not seen by BESIII (PRL 131 (2023) 191901). The
+Cabibbo-favoured Λb⁰ → Λc⁺Λ̄c⁻Λ is closed (threshold 5688.6 MeV against
+5619.6), so charmed baryon–antibaryon pairs at LHCb come from B mesons.
+Close: sixty years after (qqqqq̄), the six-quark list is the deuteron plus
+predictions. (~1.0 min)
+-->
+
+---
 layout: section
 hideInToc: true
 space: { at: future }
@@ -649,11 +765,11 @@ class: backup
 
 <div class="refs">
 
-**LHCb.** PRL 115 (2015) 072001 [1507.03414] · PRL 117 (2016) 082002 [1604.05708] · PRL 117 (2016) 082003 [1606.06999] · PRL 122 (2019) 191804 [1902.05588] · PRL 122 (2019) 222001 [1904.03947] · Sci. Bull. 66 (2021) 1278 [2012.10380] · PRL 128 (2022) 062001 [2108.04720] · PRL 131 (2023) 031901 [2210.10346] · naming: 2206.15233 · Λ<sub>b</sub>⁰ → Σ<sub>c</sub> D̄ K: PRD 110 (2024) L031104 [2404.19510] · J/ψ Ξ⁻ K⁺: EPJC 85 (2025) 812 [2501.12779]; first seen by CMS, EPJC 84 (2024) 1062 [2401.16303] · review: Johnson, Polyakov, Skwarnicki, Wang, Ann. Rev. Nucl. Part. Sci. 74 (2024) 583 [2403.04051] · detector: JINST 3 (2008) S08005 · Upgrade I: JINST 19 (2024) P05065
+**LHCb.** PRL 115 (2015) 072001 [1507.03414] · PRL 117 (2016) 082002 [1604.05708] · PRL 117 (2016) 082003 [1606.06999] · PRL 122 (2019) 191804 [1902.05588] · PRL 122 (2019) 222001 [1904.03947] · Sci. Bull. 66 (2021) 1278 [2012.10380] · PRL 128 (2022) 062001 [2108.04720] · PRL 131 (2023) 031901 [2210.10346] · Nature Phys. 11 (2015) 743 [1504.01568] · PRD 96 (2017) 112005 [1709.01920] · PRL 136 (2026) 061802 [2511.20476] · PRD 114 (2026) 012012 [2604.15040] · naming: 2206.15233 · Λ<sub>b</sub>⁰ → Σ<sub>c</sub> D̄ K: PRD 110 (2024) L031104 [2404.19510] · J/ψ Ξ⁻ K⁺: EPJC 85 (2025) 812 [2501.12779]; first seen by CMS, EPJC 84 (2024) 1062 [2401.16303] · review: Johnson, Polyakov, Skwarnicki, Wang, Ann. Rev. Nucl. Part. Sci. 74 (2024) 583 [2403.04051] · detector: JINST 3 (2008) S08005 · Upgrade I: JINST 19 (2024) P05065
 
-**Theory.** Gell-Mann, Phys. Lett. 8 (1964) 214 · Zweig, CERN-TH-401, 412 (1964) · Guo et al., RMP 90 (2018) 015004 · Olsen, Skwarnicki, Zieminska, RMP 90 (2018) 015003 · Chen et al., Phys. Rept. 639 (2016) 1 · Liu et al., PRL 122 (2019) 242001 · Du et al., PRL 124 (2020) 072001 · Fernández-Ramírez et al. (JPAC), PRL 123 (2019) 092001 [1904.10021] · Voloshin, PRD 100 (2019) 034020 · Sakai, Jing, Guo, PRD 100 (2019) 074007 · Eides, Petrov, PRD 98 (2018) 114037 [1811.01691] · Eides, Petrov, Polyakov, Mod. Phys. Lett. A 35 (2020) 2050151 [1904.11616] · Dubynskiy, Voloshin, PLB 666 (2008) 344 · Valderrama, PRD 100 (2019) 094028 · Maiani, Polosa, Riquer, PLB 749 (2015) 289 · Lebed, PLB 749 (2015) 454 · Guo, Meißner, Wang, Yang, PRD 92 (2015) 071502 · H.-S. Li, T. Li, JHEP 11 (2025) 149 [2502.05495] · Roca, Song, Oset, 2509.19840 · Yıldırım, 2605.13344 · Atangana Likéné et al., 2608.25106 · Özdem, EPJC 81 (2021) 277; JHEP 02 (2026) 207 [2510.26893]; EPJC 86 (2026) 359 [2603.19151]
+**Theory.** Gell-Mann, Phys. Lett. 8 (1964) 214 · Zweig, CERN-TH-401, 412 (1964) · Guo et al., RMP 90 (2018) 015004 · Olsen, Skwarnicki, Zieminska, RMP 90 (2018) 015003 · Chen et al., Phys. Rept. 639 (2016) 1 · Liu et al., PRL 122 (2019) 242001 · Du et al., PRL 124 (2020) 072001 · Fernández-Ramírez et al. (JPAC), PRL 123 (2019) 092001 [1904.10021] · Voloshin, PRD 100 (2019) 034020 · Sakai, Jing, Guo, PRD 100 (2019) 074007 · Eides, Petrov, PRD 98 (2018) 114037 [1811.01691] · Eides, Petrov, Polyakov, Mod. Phys. Lett. A 35 (2020) 2050151 [1904.11616] · Dubynskiy, Voloshin, PLB 666 (2008) 344 · Valderrama, PRD 100 (2019) 094028 · Maiani, Polosa, Riquer, PLB 749 (2015) 289 · Lebed, PLB 749 (2015) 454 · Guo, Meißner, Wang, Yang, PRD 92 (2015) 071502 · Junnarkar, Mathur, PRL 123 (2019) 162003 · Lyu et al., PRL 127 (2021) 072003 · Meng, Li, Zhu, PRD 95 (2017) 114019 · Hulsbergen, NIM A 552 (2005) 566 · H.-S. Li, T. Li, JHEP 11 (2025) 149 [2502.05495] · Roca, Song, Oset, 2509.19840 · Yıldırım, 2605.13344 · Atangana Likéné et al., 2608.25106 · Özdem, EPJC 81 (2021) 277; JHEP 02 (2026) 207 [2510.26893]; EPJC 86 (2026) 359 [2603.19151]
 
-**Data.** LEPS, PRL 91 (2003) 012002 · PDG 2008, review “Pentaquarks” · PDG 2024 · P. Koppenburg, List of hadrons observed at the LHC, LHCb-FIGURE-2021-001 and updates (CC BY 4.0) · LHCb public luminosity plots · X(3872): Belle, PRL 91 (2003) 262001 · Z(4430)⁺: Belle, PRL 100 (2008) 142001 · Z<sub>c</sub>(3900)⁺: BESIII, PRL 110 (2013) 252001; Belle, PRL 110 (2013) 252002
+**Data.** WASA-at-COSY, PRL 106 (2011) 242302; PRL 112 (2014) 202301 · LEPS, PRL 91 (2003) 012002 · PDG 2008, review “Pentaquarks” · PDG 2024 · P. Koppenburg, List of hadrons observed at the LHC, LHCb-FIGURE-2021-001 and updates (CC BY 4.0) · LHCb public luminosity plots · X(3872): Belle, PRL 91 (2003) 262001 · Z(4430)⁺: Belle, PRL 100 (2008) 142001 · Z<sub>c</sub>(3900)⁺: BESIII, PRL 110 (2013) 252001; Belle, PRL 110 (2013) 252002
 
 </div>
 
