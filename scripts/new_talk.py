@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Scaffold a new talk under talks/<YYYY_MM_DD_Name>/.
+"""Scaffold a new talk under talks/<YYYY_MM_DD_Name>/ on the slidev-videos workflow.
 
-Bakes in the post-Yaga (2026-07-18) defaults so they can't be inherited
-wrongly from a cloned deck: 1080p H.264 web-tier encodes with loudness
-normalization, 16:9, no venue-native HQ masters unless explicitly opted in.
+Bakes in the standing policy (since 2026-07-18): 1080p H.264 web tier with
+loudness normalization, 16:9, library clips inherited by name, no HQ tier.
 
 Usage (from the repo root):
     pnpm new-talk 2026_09_15_SomeVenue [--title "Talk title"] [--aspect 16/9]
+    pnpm install        # afterwards, to register the workspace + addon
 """
 from __future__ import annotations
 
@@ -17,68 +17,69 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-
 NAME_RE = re.compile(r"^\d{4}_\d{2}_\d{2}_\w+$")
+ADDON_SPEC = "github:MindaugasSarpis/slidev-videos#v0.3.2"
+REPO = "MindaugasSarpis/cern_outreach_talks"
 
 PNPM_SCRIPTS = {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",
     "build:portable": "slidev build deck.md --base ./ --out dist-portable",
     "export": "slidev export deck.md",
-    "videos:sync": "python3 ../../scripts/videos.py sync",
-    "videos:encode": "python3 ../../scripts/videos.py encode",
-    "videos:publish": "python3 ../../scripts/videos.py publish",
-    "videos:pull": "python3 ../../scripts/videos.py pull",
-    "videos:check": "python3 ../../scripts/videos.py check",
-    "videos:encode-hq": "python3 ../../scripts/videos.py encode-hq",
-    "videos:publish-hq": "python3 ../../scripts/videos.py publish-hq",
-    "videos:pull-hq": "python3 ../../scripts/videos.py pull-hq",
-    "videos:clean": "python3 ../../scripts/videos.py clean",
-    "videos:preflight": "python3 ../../scripts/videos.py preflight",
-    "venue": "python3 ../../scripts/videos.py venue",
+    "videos:sync": "slidev-videos sync",
+    "videos:encode": "slidev-videos encode",
+    "videos:publish": "slidev-videos publish",
+    "videos:pull": "slidev-videos pull",
+    "videos:check": "slidev-videos check",
+    "videos:clean": "slidev-videos clean",
+    "videos:preflight": "slidev-videos preflight",
+    "venue": "slidev-videos venue",
 }
 
-MANIFEST_TEMPLATE = """\
-# Talk-OWNED video assets for this talk. Clips inherited from the shared
-# registry (/videos/shared.toml) are NOT listed here; they stream at runtime
-# from the videos-shared GH Release via VideoPlayer's fallback chain.
-#
-# POLICY (since 2026-07-18): venues play the 1080p H.264 web tier.
-#   - long_edge_px stays at the global 1920 — do NOT bump it to the venue's
-#     native width unless explicitly decided for this talk.
-#   - No encode-hq/publish-hq by default; leave videos/hq/ empty.
-#   - Web encodes are loudness-normalized to -16 LUFS (EBU R128) so audio is
-#     even across clips; opt a clip out with `loudnorm = false`.
-#   - Run `pnpm videos:preflight` before the talk: it probes exactly what
-#     each slide will serve and flags codec/bitrate/resolution/loudness
-#     problems (this is the check that would have caught the Yaga freezes).
-#
-# Profiles (in scripts/videos.py):
-#   remux          - lossless stream copy + faststart (already web-friendly H.264).
-#   standard       - web H.264 CRF 23 (<=6 Mbps), AAC 128k.
-#   standard-tight - web H.264 CRF 26 (<=3.5 Mbps) for long clips.
-#   silent-loop    - web H.264 CRF 24 (<=5 Mbps), audio stripped. Loops.
-#   high-motion    - web H.264 CRF 22 (<=8 Mbps), AAC 192k. Sims/CGI/fast.
+VIDEOS_TOML = """\
+# slidev-videos project marker for this talk. Running `slidev-videos` (or
+# `pnpm videos:*`) from inside this directory selects the talk as the
+# project; ../../videos.toml supplies the shared [defaults].
+
+[project]
+raw_dir = "../../videos/raw"   # repo-level raw bank: one copy per machine, every talk
 
 [defaults]
-source_remote = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
+release_tag = "videos-{slug}"
+"""
 
-# release_tag auto-derives from the talk dirname.
-# long_edge_px / web_long_edge_px / max_size_mb inherited from /outreach.toml.
+MANIFEST = """\
+# Talk-OWNED clips only. Clips from the slidev-videos library
+# (https://github.com/MindaugasSarpis/slidev-videos, src/slidev_videos/shared.toml)
+# are inherited by name — reference them in the deck, never list them here.
+#
+# POLICY (since 2026-07-18): venues play the 1080p H.264 web tier, loudness
+# -16 LUFS. No HQ tier. Run `pnpm videos:preflight` before the talk.
+# Profiles: remux | standard | standard-tight | silent-loop | high-motion
+
+[defaults]
+# release_tag comes from videos.toml (videos-{slug}).
 
 # [[videos]]
 # name    = "example_clip.mp4"
 # profile = "standard"
+# used_in = ["deck"]
 # notes   = "What this clip is and where it came from."
 """
 
-DECK_TEMPLATE = """\
+DECK = """\
 ---
 theme: ../../theme
 colorSchema: dark
 transition: fade
 routerMode: hash
 aspectRatio: {aspect}
+addons:
+  - slidev-addon-videos
+videos:
+  repo: {repo}
+  release: videos-{slug}
+  fit: contain
 title: {title}
 ---
 
@@ -92,6 +93,11 @@ hideInToc: true
 ---
 
 # Section
+
+---
+
+<!-- a library clip, inherited by name -->
+<VideoPlayer src="cern_overview_short.mp4" />
 """
 
 
@@ -116,10 +122,9 @@ def main(argv: list[str] | None = None) -> int:
     title = args.title or args.name[11:].replace("_", " ")
     slug = args.name.lower().replace("_", "-")
 
-    for d in ("slides", "public/figures", "public/videos", "videos/raw", "videos/hq"):
+    for d in ("public/figures", "public/videos", "videos"):
         (talk / d).mkdir(parents=True)
     (talk / "components").symlink_to("../../components", target_is_directory=True)
-    (talk / "public" / "videos-hq").symlink_to("../videos/hq", target_is_directory=True)
 
     (talk / "package.json").write_text(json.dumps({
         "name": f"talk-{slug}",
@@ -127,23 +132,19 @@ def main(argv: list[str] | None = None) -> int:
         "description": f"{title} ({args.name[:10]})",
         "scripts": PNPM_SCRIPTS,
         "dependencies": {"@slidev/cli": "^52.14.2"},
-    }, indent=2) + "\n")
-
-    (talk / ".env").write_text(
-        "VITE_VIDEO_REPO=MindaugasSarpis/cern_outreach_talks\n"
-        f"VITE_VIDEO_RELEASE=videos-{slug}\n"
-        "VITE_VIDEO_SHARED_RELEASE=videos-shared\n"
-    )
-    (talk / "videos" / "manifest.toml").write_text(MANIFEST_TEMPLATE)
-    (talk / "deck.md").write_text(DECK_TEMPLATE.format(title=title, aspect=args.aspect))
+        "devDependencies": {"slidev-addon-videos": ADDON_SPEC},
+    }, indent=2, ensure_ascii=False) + "\n")
+    (talk / "videos.toml").write_text(VIDEOS_TOML.format(slug=slug))
+    (talk / "videos" / "manifest.toml").write_text(MANIFEST.format(slug=slug))
+    (talk / "deck.md").write_text(DECK.format(title=title, aspect=args.aspect, slug=slug, repo=REPO))
 
     print(f"Scaffolded {talk.relative_to(ROOT)}/")
     print("Next steps:")
-    print("  pnpm install                # register the new workspace")
+    print("  pnpm install                # register the workspace + addon")
     print(f"  cd talks/{args.name} && pnpm dev")
-    print("  # add clips: [[videos]] in videos/manifest.toml, then")
-    print("  #   pnpm videos:sync && pnpm videos:encode && pnpm videos:publish")
-    print("  # before the talk: pnpm videos:preflight && pnpm venue")
+    print("  # own clips: [[videos]] in videos/manifest.toml, raw in ../../videos/raw/, then")
+    print("  #   pnpm videos:encode && pnpm videos:publish")
+    print("  # before the talk: pnpm videos:check && pnpm videos:preflight && pnpm venue")
     return 0
 
 

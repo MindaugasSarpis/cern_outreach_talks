@@ -10,6 +10,7 @@ import { addCore } from './core.js';
 import { addCollisions } from './collisions.js';
 import { createRig } from './rig.js';
 import { CORE_CENTER, CORE_RADIUS, BOUNDS, FORM_END } from './world.js';
+import { RING_RADIUS, RING_OMEGA, RING_IP_PHASE } from './core.js';
 
 // Cover-slide port of the lessons landing particle scene
 // (CERN_lessons_on_data_analysis/landing/src/sim.js). Differences:
@@ -21,7 +22,13 @@ import { CORE_CENTER, CORE_RADIUS, BOUNDS, FORM_END } from './world.js';
 //     one of the beam fibers; when it arrives, the shell ripples white and a
 //     collision spray erupts from INSIDE the sphere (collisions.js), kicking
 //     the ambient field outward;
-//   - dispose() tears everything down (slides mount/unmount).
+//   - dispose() tears everything down (slides mount/unmount);
+//   - VARIANTS (opts.variant): 'sphere' (the probed proton, with fibers and
+//     beam pulses), 'galaxy' (a spinning spiral disc, quiet), 'ring' (a
+//     collider whose two bunches cross at the interaction points twice a
+//     lap; an eruption fires at each crossing). collide() erupts on demand
+//     in any variant; opts.onEvent(count, manual) reports every eruption so
+//     the slide can count them and play a sound for the manual ones.
 // Everything else — GPGPU curl field, core assembly intro, fibers, fps guard,
 // pointer wake — is the landing's code.
 
@@ -38,7 +45,9 @@ function pickTexSize(coarse) {
   return 448;                                         // ~200.7k
 }
 
-export function createField(canvas, container) {
+export function createField(canvas, container, opts = {}) {
+  const variant = opts.variant || 'sphere';
+  const onEvent = typeof opts.onEvent === 'function' ? opts.onEvent : null;
   const coarse = matchMedia('(pointer: coarse)').matches;
   let renderer;
   try {
@@ -60,7 +69,7 @@ export function createField(canvas, container) {
 
   // --- camera ---
   const camera = new PerspectiveCamera(FOV, 1, 0.1, 120);
-  const rig = createRig(camera);
+  const rig = createRig(camera, { variant });
 
   // --- sim targets (ping-pong pos + vel) ---
   const rt = () => new WebGLRenderTarget(size, size, {
@@ -124,8 +133,8 @@ export function createField(canvas, container) {
   points.frustumCulled = false;
   const scene = new Scene();
   scene.add(points);
-  const fibers = addFibers(scene);
-  const core = addCore(scene, { coarse });
+  const fibers = variant === 'sphere' ? addFibers(scene) : null;
+  const core = addCore(scene, { coarse, variant });
   core.setPixelRatio(baseDpr);
   const collisions = addCollisions(scene, { coarse });
   collisions.setPixelRatio(baseDpr);
@@ -184,13 +193,44 @@ export function createField(canvas, container) {
   const getDelta = () => { const t = performance.now(); const d = (t - lastT) / 1000; lastT = t; return d; };
   let raf = 0, paused = false, elapsed = 0, disposed = false;
   let nextPulseAt = FIRST_PULSE_AT;
+  // ring: bunches at ±ωt meet when ωt ≡ 0 (mod π) — alternate interaction
+  // points at ring angle 0 and π. Crossings before FORM_END are skipped (the
+  // ring is still assembling).
+  let nextCrossing = Math.ceil(FORM_END * RING_OMEGA / Math.PI) * Math.PI / RING_OMEGA;
+  let crossingIdx = Math.round(nextCrossing * RING_OMEGA / Math.PI);
+  let eventCount = 0;
   // fps guard: after 4s warmup, avg over ~2s windows; degrade at <40fps, twice max
   let guardStage = 0, winFrames = 0, winTime = 0;
   const eruptAt = new Vector3();
+  const localPt = new Vector3();
 
-  const firePulse = () => {
+  // One eruption: flash the structure near `node`, spray from `at` (world),
+  // kick the ambient field, report it.
+  const erupt = (node, at, manual) => {
+    core.flashAt(node);
+    const ev = collisions.spawnAt(elapsed, at);
+    burst.set(ev.x, ev.y, ev.z, BURST_KICK);
+    eventCount++;
+    onEvent?.(eventCount, !!manual);
+  };
+  // Where an on-demand collision happens, per variant.
+  const collideNow = (manual) => {
+    if (variant === 'ring') {
+      localPt.set(Math.cos(RING_IP_PHASE) * RING_RADIUS, 0, Math.sin(RING_IP_PHASE) * RING_RADIUS);
+    } else if (variant === 'galaxy') {
+      localPt.set(0, 0, 0);
+    } else {
+      localPt.set(Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1)
+        .multiplyScalar(CORE_RADIUS * 0.25);
+    }
+    core.localToWorld(localPt, eruptAt);
+    erupt(core.nearestNode(localPt), eruptAt, manual);
+  };
+
+  const firePulse = (manual = false) => {
+    if (!fibers) { collideNow(manual); return; }
     const b = fibers.burst();
-    arrivals.push({ at: elapsed + b.arriveIn, node: anchorIdx.get(b.fiberIdx) ?? core.anchorNode(b.anchorDir) });
+    arrivals.push({ at: elapsed + b.arriveIn, node: anchorIdx.get(b.fiberIdx) ?? core.anchorNode(b.anchorDir), manual });
   };
 
   function frame() {
@@ -235,22 +275,31 @@ export function createField(canvas, container) {
     impulse.w *= 0.86; // hover impulse decay
 
     core.update(elapsed);
-    fibers.update(elapsed, velMat.uniforms.uPointer.value, getAnchor);
+    fibers?.update(elapsed, velMat.uniforms.uPointer.value, getAnchor);
     collisions.update(elapsed);
 
-    // beam pulse → arrival: shell ripple + eruption from inside the sphere
-    if (elapsed >= nextPulseAt) {
-      nextPulseAt = elapsed + PULSE_EVERY[0] + Math.random() * (PULSE_EVERY[1] - PULSE_EVERY[0]);
-      firePulse();
-    }
-    for (let i = arrivals.length - 1; i >= 0; i--) {
-      if (elapsed >= arrivals[i].at) {
-        core.flashAt(arrivals[i].node);
-        eruptAt.set(Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1)
-          .multiplyScalar(CORE_RADIUS * 0.25).add(CORE_CENTER);
-        const ev = collisions.spawnAt(elapsed, eruptAt);
-        burst.set(ev.x, ev.y, ev.z, BURST_KICK);
-        arrivals.splice(i, 1);
+    if (variant === 'sphere') {
+      // beam pulse → arrival: shell ripple + eruption from inside the sphere
+      if (elapsed >= nextPulseAt) {
+        nextPulseAt = elapsed + PULSE_EVERY[0] + Math.random() * (PULSE_EVERY[1] - PULSE_EVERY[0]);
+        firePulse();
+      }
+      for (let i = arrivals.length - 1; i >= 0; i--) {
+        if (elapsed >= arrivals[i].at) {
+          localPt.set(Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1)
+            .multiplyScalar(CORE_RADIUS * 0.25);
+          erupt(arrivals[i].node, core.localToWorld(localPt, eruptAt), arrivals[i].manual);
+          arrivals.splice(i, 1);
+        }
+      }
+    } else if (variant === 'ring') {
+      // bunch crossing → eruption at the interaction point the bunches meet at
+      if (elapsed >= nextCrossing) {
+        const angle = RING_IP_PHASE + (crossingIdx % 2 === 0 ? 0 : Math.PI);
+        localPt.set(Math.cos(angle) * RING_RADIUS, 0, Math.sin(angle) * RING_RADIUS);
+        erupt(core.nearestNode(localPt), core.localToWorld(localPt, eruptAt), false);
+        crossingIdx++;
+        nextCrossing = crossingIdx * Math.PI / RING_OMEGA;
       }
     }
     burst.w *= 0.9;
@@ -284,8 +333,12 @@ export function createField(canvas, container) {
     onImpulse(cx, cy) {
       const w = toWorld(cx, cy, new Vector3());
       impulse.set(w.x, w.y, w.z, 26);
-      firePulse();
+      firePulse(true);
     },
+    // keyboard: erupt right now (sphere: inside the proton; ring: at the
+    // interaction point; galaxy: at the centre)
+    collide() { collideNow(true); },
+    get events() { return eventCount; },
     setPaused(p) {
       if (disposed || p === paused) return;
       paused = p;

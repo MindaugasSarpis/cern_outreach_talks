@@ -8,9 +8,7 @@ dist-portable/
 dist/
 *-venue.zip
 **/public/videos/
-**/public/videos-hq
 **/videos/raw/
-**/videos/hq/
 
 # Safety net: videos only belong in the managed dirs above.
 # Keeps stray masters from landing at a talk root and bypassing LFS/releases.

@@ -1,0 +1,13 @@
+# Monorepo defaults for slidev-videos (https://github.com/MindaugasSarpis/slidev-videos).
+# Each talk has its own videos.toml; this file supplies the [defaults] they
+# inherit. Merge order (wins top-down): per-video > talk manifest [defaults]
+# > talk videos.toml [defaults] > this file > package built-ins.
+
+[defaults]
+repo             = "MindaugasSarpis/cern_outreach_talks"
+source_remote    = "gdrive:work/outreach/resources/videos/released"  # ALL lowercase
+web_long_edge_px = 1920   # 1080p-class H.264 web tier plays at venues (policy since 2026-07-18)
+long_edge_px     = 1920   # HQ tier is opt-in only; keep it at the web width
+max_size_mb      = 200    # warn if an encoded web file exceeds this
+# shared: defaults to MindaugasSarpis/slidev-videos@videos-shared — the
+# package's clip library. Decks reference library clips by name only.

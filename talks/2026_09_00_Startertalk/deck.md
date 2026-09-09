@@ -4,46 +4,55 @@ colorSchema: dark
 transition: fade
 routerMode: hash
 aspectRatio: 16/9
+addons:
+  - slidev-addon-videos
+videos:
+  repo: MindaugasSarpis/cern_outreach_talks
+  release: videos-2026-09-00-startertalk
+  fit: contain
 title: Pentaquarks at LHCb
 info: |
   Startertalk — 30-minute technical seminar on hidden-charm pentaquarks at LHCb.
   Audience: physics faculty and students. Date placeholder 2026_09_00.
   Figures: scripts/make_figures.py → public/figures/*.svg.
 layout: cover
-background: /figures/background_intro.jpg
+space:
+  at: wide
 ---
 
 # Mindaugas Šarpis
 
 # Pentaquarks at LHCb
 
-## Ten years of five-quark states — what we found, what they might be, and how we will find out
+## Ten years of five-quark states at LHCb
 
 <div class="mt-md opacity-70">LHCb collaboration · Vilnius University</div>
 
+<div class="text-xs opacity-50 mt-lg">Data: P. Koppenburg, <em>List of hadrons observed at the LHC</em>, LHCb-FIGURE-2021-001 and updates (CC BY 4.0)</div>
+
 <!--
-Speaker: 30 minutes. Three parts — the discovery decade (what we found), the
-pictures (what they might be), the programme (how we will find out). (~1 min)
+Speaker: 30 minutes. One scene throughout: date runs left to right, mass
+up, quark family in depth. Space also steps through the eight pentaquark
+stops on the 2015, 2019, threshold and strange-partner slides. Three parts — the
+discovery decade (what we found), the pictures (what they might be), the
+programme (how we will find out). (~1 min)
 -->
 
 ---
-
-<VideoPlayer src="lhcb.mp4" />
-
-<!--
-Speaker: LHCb reel (48 s, with audio, shared release). Let it run; say nothing
-until it ends — then: "that is the instrument; here is what it found."
--->
-
+space:
+  at: [8.5, 3.2, -8]
+  dist: 15
+  yaw: -68
+  pitch: 7
 ---
 
-# Hadrons: What QCD **Allows**
+# What QCD allows
 
 <div class="grid-2 mt-md">
 
 <div class="card card-primary pad-tight">
 
-## 🎨 **Colour singlets come in many sizes**
+## 🎨 **Any colour singlet is allowed**
 
 - q q̄ mesons and qqq baryons — everything in the textbook
 - qq q̄ q̄ tetraquarks and qqqq q̄ pentaquarks — written down in Gell-Mann's 1964 quark paper
@@ -53,11 +62,11 @@ until it ends — then: "that is the instrument; here is what it found."
 
 <div class="card card-warning pad-tight">
 
-## 🕰️ **Fifty years of three-quark baryons**
+## 🕰️ **Fifty years of qqq baryons**
 
 - Every baryon found between 1947 and 2015 fitted the qqq scheme
 - 2003: the light pentaquark Θ⁺(1540) — reported by a dozen experiments, gone once high-statistics data arrived
-- Lesson the field paid for: a bump is not a state
+- A bump is not a state
 
 </div>
 
@@ -65,7 +74,7 @@ until it ends — then: "that is the instrument; here is what it found."
 
 <div class="card card-info pad-compact mt-md">
 
-The heavy-quark sector changed the odds: a slow charm quark lets a weak residual force bind a meson–baryon pair, thresholds are sharp and well known, and the LHC produces beauty hadrons that decay into exactly such pairs by the billion.
+In the heavy-quark sector the odds are better: a slow charm quark lets a weak residual force bind a meson–baryon pair, thresholds are sharp and well known, and the LHC produces beauty hadrons that decay into exactly such pairs by the billion.
 
 </div>
 
@@ -77,13 +86,24 @@ held to a full amplitude analysis. (~2 min)
 ---
 layout: section
 hideInToc: true
+space:
+  at: [10.4, 5.2, -2.6]
+  dist: 12
+  yaw: -30
+  pitch: 8
 ---
 
 # The discovery **decade**
 
 ---
+space:
+  at: [15.4, 6.0, -1.4]
+  dist: 10
+  yaw: -24
+  pitch: 7
+---
 
-# The Golden Channel: Λb⁰ → J/ψ p K⁻
+# Λb⁰ → J/ψ p K⁻
 
 <img src="/figures/lambda_b_decay.svg" class="mx-auto" style="height: 262px" alt="Two decay topologies of the Lambda_b to J/psi p K final state" />
 
@@ -113,6 +133,14 @@ why "pentaquark" and "amplitude analysis" are inseparable words. (~2 min)
 -->
 
 ---
+clicks: 2
+space:
+  at: [15.9, 6.1, 0]
+  dist: 8
+  yaw: -22
+  pitch: 6
+  stops: [Pc(4380), Pc(4450)]
+---
 
 # 2015: Two Peaks in m(J/ψ p)
 
@@ -134,7 +162,7 @@ why "pentaquark" and "amplitude analysis" are inseparable words. (~2 min)
 
 ## 🧮 **The fit**
 
-Run 1, 3 fb⁻¹: about 26 000 Λb⁰ → J/ψ p K⁻ decays. A six-dimensional amplitude fit — all decay angles and masses at once — with 14 Λ* resonances; the data refused to be described until two J/ψ p states were added.
+Run 1, 3 fb⁻¹: about 26 000 Λb⁰ → J/ψ p K⁻ decays. A six-dimensional amplitude fit — all decay angles and masses at once — with 14 Λ* resonances; the data could not be described until two J/ψ p states were added.
 
 </div>
 
@@ -142,13 +170,13 @@ Run 1, 3 fb⁻¹: about 26 000 Λb⁰ → J/ψ p K⁻ decays. A six-dimensional 
 
 <div class="card card-accent pad-tight">
 
-## 🌀 **The Argand argument**
+## 🌀 **The Argand diagram**
 
-A resonance is more than a bump: its amplitude's **phase** must rotate through 180° across the peak, tracing a counter-clockwise circle in the Argand plane.
+A resonance has a **phase** that rotates through 180° across the peak and traces a counter-clockwise circle in the Argand plane.
 
-The fit let the Pc(4450)⁺ amplitude float freely — magnitude and phase — in six bins of m(J/ψ p), and the points drew the circle. That, not the bump, carried the claim.
+The fit let the Pc(4450)⁺ amplitude float freely — magnitude and phase — in six bins of m(J/ψ p), and the points traced the circle. This is what made the 2015 claim.
 
-For the broad Pc(4380)⁺ the loop was less clean — one reason it remains a candidate rather than a settled state.
+For the broad Pc(4380)⁺ the loop is less clean; it remains a candidate.
 
 </div>
 
@@ -162,8 +190,16 @@ fit — the Argand loop is the difference between "bump" and "state". (~2 min)
 -->
 
 ---
+clicks: 3
+space:
+  at: [19.6, 6.1, 0]
+  dist: 8
+  yaw: -22
+  pitch: 6
+  stops: [Pc(4312), Pc(4440), Pc(4457)]
+---
 
-# 2019: Run 1 + 2 — Nine Times the Yield
+# 2019: Run 1 + Run 2
 
 <div class="grid-3 mt-md">
 
@@ -183,7 +219,7 @@ fit — the Argand loop is the difference between "bump" and "state". (~2 min)
 
 - M = 4440.3 ± 1.3 MeV
 - Γ = 20.6 ± 4.9 MeV
-- the old Pc(4450)⁺ splits …
+- Pc(4450)⁺ splits into two
 
 </div>
 
@@ -193,7 +229,7 @@ fit — the Argand loop is the difference between "bump" and "state". (~2 min)
 
 - M = 4457.3 ± 0.6 MeV
 - Γ = 6.4 ± 2.0 MeV
-- … two peaks over one: **5.4σ**
+- two peaks over one: **5.4σ**
 
 </div>
 
@@ -205,13 +241,13 @@ fit — the Argand loop is the difference between "bump" and "state". (~2 min)
 
 ## 📊 **What changed**
 
-About 246 000 decays from 9 fb⁻¹ — nine times the 2015 sample. Three narrow states, widths of order 10 MeV, all just below open-charm thresholds: a pattern nobody had asked for.
+About 246 000 decays from 9 fb⁻¹ — nine times the 2015 sample. Three narrow states, widths of order 10 MeV, all just below open-charm thresholds.
 
 </div>
 
 <div class="card card-warning pad-compact">
 
-## ⚠️ **The caveat**
+## ⚠️ **What a 1D fit cannot say**
 
 One-dimensional fits to m(J/ψ p), with the Λ* reflections suppressed by cuts and weights — no amplitude analysis. So no J<sup>P</sup>, no phase motion, and the broad Pc(4380)⁺ neither confirmed nor excluded.
 
@@ -227,8 +263,16 @@ fit, and the quantum numbers are still open. (~2 min)
 -->
 
 ---
+clicks: 1
+space:
+  at: [20.5, 6.1, 0]
+  dist: 8
+  yaw: -18
+  pitch: 6
+  stops: [Pc(4337)]
+---
 
-# The Threshold **Coincidence**
+# Masses and thresholds
 
 <img src="/figures/pc_thresholds.svg" class="mx-auto" style="height: 335px" alt="Pentaquark masses and widths against meson-baryon thresholds" />
 
@@ -246,8 +290,16 @@ states, five thresholds, no coincidence that large in a 300 MeV window. (~2 min)
 -->
 
 ---
+clicks: 2
+space:
+  at: [22.3, 6.15, 0]
+  dist: 8
+  yaw: -22
+  pitch: 6
+  stops: [Pcs(4459), Pcs(4338)]
+---
 
-# Strange Partners: Add an s Quark
+# Strange partners
 
 <div class="grid-2 mt-md">
 
@@ -277,7 +329,7 @@ states, five thresholds, no coincidence that large in a 300 MeV window. (~2 min)
 
 <div class="card card-info pad-compact mt-md">
 
-## 🏷️ **New names for a new family**
+## 🏷️ **The 2022 naming convention**
 
 LHCb's 2022 convention: P for pentaquark, subscript ψ for the c c̄ pair (plus s per strange quark), superscript for the isospin of the light quarks. So Pc(4312)⁺ becomes P<sub>ψ</sub><sup>N</sup>(4312)⁺, and P<sub>ψs</sub><sup>Λ</sup>(4338)⁰ is an isoscalar strange pentaquark.
 
@@ -291,24 +343,26 @@ theory prediction latches onto — part three is built on them. (~2 min)
 -->
 
 ---
-
-<VideoPlayer src="cern_video_2019_050_008_1080ph265.mp4" />
-
-<!--
-Speaker: silent CERN B-roll (shared release) — a breather before the theory.
-Talk over it: "so we have five states; now the harder question — what are they?"
--->
-
----
 layout: section
 hideInToc: true
+space:
+  at: [19.5, 6.2, -1.5]
+  dist: 14
+  yaw: -40
+  pitch: 12
 ---
 
 # What are **they**?
 
 ---
+space:
+  at: [19.5, 6.2, -1.5]
+  dist: 13
+  yaw: -25
+  pitch: 10
+---
 
-# Picture 1: A Hadronic **Molecule**
+# 1 · Hadronic molecule
 
 <div class="grid-2 mt-md">
 
@@ -325,7 +379,7 @@ hideInToc: true
 
 <div class="card card-accent pad-tight">
 
-## 🧮 **Seven slots, three filled**
+## 🧮 **Seven predicted states, three seen**
 
 | channel | J<sup>P</sup> | state |
 |---|---|---|
@@ -342,7 +396,7 @@ Which of 4440 and 4457 is the 1/2⁻ depends on the sign of the pion-exchange po
 
 <div class="card card-warning pad-compact mt-md">
 
-**Weak spots:** the binding is not computable from first principles (cutoff dependence is real), and a state far from any threshold would have no place in the picture.
+**Open issues:** the binding is not computable from first principles (cutoff dependence is real), and a state far from any threshold would have no place in the picture.
 
 </div>
 
@@ -359,8 +413,14 @@ is wrong. Three found, one candidate, three missing. (~2 min)
 -->
 
 ---
+space:
+  at: [19.5, 6.2, -1.5]
+  dist: 13
+  yaw: -10
+  pitch: 10
+---
 
-# Pictures 2–4: Compact **Five-Quark** States
+# 2–4 · Compact five-quark states
 
 <div class="grid-3 mt-md">
 
@@ -396,7 +456,7 @@ A compact c c̄ core sitting in a light-quark cloud, held by the QCD analogue of
 
 - Decays back to its seed, J/ψ p or ηc p — **open-charm decays suppressed**
 - Γ(ηc p)/Γ(J/ψ p) of order one
-- The sharpest falsifiable prediction on the table
+- A yes/no prediction
 
 </div>
 
@@ -410,8 +470,14 @@ hadrocharmonium is the one with a yes/no decay test. (~2 min)
 -->
 
 ---
+space:
+  at: [19.5, 6.2, -1.5]
+  dist: 13
+  yaw: 5
+  pitch: 10
+---
 
-# Picture 5: No New State at All?
+# 5 · Kinematic effects, no new state
 
 <div class="grid-2 mt-md">
 
@@ -456,8 +522,14 @@ sit on top of poles; the test is channel-independence (part three). (~2 min)
 -->
 
 ---
+space:
+  at: [19.5, 6.2, -1.5]
+  dist: 13
+  yaw: 20
+  pitch: 10
+---
 
-# What Would **Tell Them Apart**
+# How to tell them apart
 
 <div class="card card-info pad-compact mt-sm">
 
@@ -491,13 +563,19 @@ Speaker: walk one row, not seven — open charm (row 3) is the cleanest yes/no.
 ---
 layout: section
 hideInToc: true
+space:
+  at: future
 ---
 
 # How we will **find out**
 
 ---
+space:
+  at: future
+  yaw: -20
+---
 
-# The Data Are In — The Analyses Are Not
+# Run 3: 26.7 fb⁻¹ on disk
 
 <div class="grid-2 mt-sm">
 
@@ -515,15 +593,15 @@ hideInToc: true
 
 ## 📦 **Run 3 is complete**
 
-26.7 fb⁻¹ with a fully software trigger — about three times the sample behind every pentaquark result so far. The LHC is in its long shutdown: the dataset is final and sits on disk.
+26.7 fb⁻¹ with a fully software trigger — about three times the sample behind every pentaquark result so far. The LHC is in its long shutdown; the dataset is final.
 
 </div>
 
 <div class="card card-warning pad-compact mt-sm">
 
-## 🧗 **The bottleneck is the fit**
+## 🧗 **The amplitude fit is the slow step**
 
-An amplitude analysis is a multidimensional fit of hand-built interfering resonances — person-years per channel. The 2019 update fell back on a 1D mass fit, and the narrow states' J<sup>P</sup> are still unpublished from the full sample.
+An amplitude analysis is a multidimensional fit of interfering resonances, built by hand; it takes person-years per channel. The 2019 update fell back on a 1D mass fit, and the narrow states' J<sup>P</sup> are still unpublished from the full sample.
 
 </div>
 
@@ -544,8 +622,12 @@ Speaker: the wall is not data, it is analysis capacity. Say it plainly. (~2 min)
 -->
 
 ---
+space:
+  at: future
+  yaw: -10
+---
 
-# Five Handles at LHCb
+# Five measurements at LHCb
 
 <div class="grid-3 mt-md">
 
@@ -553,7 +635,7 @@ Speaker: the wall is not data, it is analysis capacity. Say it plainly. (~2 min)
 
 ## 1️⃣ **J<sup>P</sup> from the full amplitude fit**
 
-Λb⁰ → J/ψ p K⁻ with Runs 1–3: pin the 1/2⁻ / 3/2⁻ ordering of Pc(4440)⁺ and Pc(4457)⁺ — the molecular picture's first hard test.
+Λb⁰ → J/ψ p K⁻ with Runs 1–3: pin the 1/2⁻ / 3/2⁻ ordering of Pc(4440)⁺ and Pc(4457)⁺ — the first hard test of the molecular picture.
 
 </div>
 
@@ -569,7 +651,7 @@ Speaker: the wall is not data, it is analysis capacity. Say it plainly. (~2 min)
 
 ## 3️⃣ **Open-charm decays**
 
-Pc⁺ → Λc⁺ D̄⁽*⁾⁰, e.g. in Λb⁰ → Λc⁺ D̄⁰ K⁻: sizable if molecular, absent if hadrocharmonium. Rare — but LHCb's trigger, vertexing and hadron ID are made for it.
+Pc⁺ → Λc⁺ D̄⁽*⁾⁰, e.g. in Λb⁰ → Λc⁺ D̄⁰ K⁻: sizable if molecular, absent if hadrocharmonium. Rare, but within reach of LHCb's trigger, vertexing and hadron identification.
 
 </div>
 
@@ -587,9 +669,9 @@ Reconstruct ηc → p p̄ and measure Γ(ηc p)/Γ(J/ψ p): order one says hadro
 
 <div class="card card-warning pad-compact">
 
-## 5️⃣ **Same peak, different door**
+## 5️⃣ **The same peak in other decays**
 
-Compare peak masses across Λb⁰ → J/ψ p K⁻, B⁰₍s₎ → J/ψ p p̄ and prompt pp → J/ψ p + X: a pole is universal, a cusp or triangle moves. Prompt production also starves molecules — a rate test on top.
+Compare peak masses across Λb⁰ → J/ψ p K⁻, B⁰₍s₎ → J/ψ p p̄ and prompt pp → J/ψ p + X: a pole is universal, a cusp or triangle moves. Prompt production also suppresses molecules, which adds a rate test.
 
 </div>
 
@@ -603,31 +685,35 @@ analyses of channels already on disk. (~3 min)
 -->
 
 ---
+space:
+  at: future
+  yaw: 0
+---
 
-# 2026 Snapshot: Theory Has an Ask
+# What theory asks for, 2026
 
 <div class="grid-2 mt-md">
 
 <div class="card card-primary pad-tight">
 
-## 🔬 **Molecules? It depends on a phase**
+## 🔬 **Molecule or not depends on a phase**
 
 arXiv:2608.25106 refits the published Run 1+2 J/ψ p spectrum with one global two-channel Flatté model for all three narrow states, extracting scattering lengths and effective ranges with bootstrap uncertainties.
 
 - Real couplings → the (a, r) values read as molecular
 - Let the relative coupling phases float → the conclusion is **not robust**
-- The ask of the experiment: publish or constrain those phases — only a full amplitude analysis can
+- What theory needs from us: the phases, which only a full amplitude analysis gives
 
 </div>
 
 <div class="card card-accent pad-tight">
 
-## 🎯 **The standing sharpest targets**
+## 🎯 **The sharpest targets**
 
 - **P<sub>ψss</sub><sup>N</sup>(4379)** in Ωb⁻ → J/ψ Ξ⁰ K⁻ — a named mass in a named channel (JHEP 11 (2025) 149)
 - **J<sup>P</sup> ordering of Pc(4440)⁺ / Pc(4457)⁺** — heavy-quark spin symmetry ties the two together; hadrocharmonium and virtual-state readings call it differently (arXiv:2605.13344)
 - **The doubly strange sector** in Λb⁰ → J/ψ Ξ⁻ K⁺ and Ξb → J/ψ Ξ⁻ π⁺ (arXiv:2509.19840)
-- Each is a Run 3 amplitude analysis waiting for hands
+- Each is a Run 3 amplitude analysis that nobody has started
 
 </div>
 
@@ -642,6 +728,10 @@ one mass, one ordering. That is the programme. (~2 min)
 
 ---
 layout: fact
+space:
+  at: future
+  pitch: 14
+  dist: 12
 ---
 
 # Nucleus or hadron?
@@ -653,16 +743,9 @@ Speaker: one sentence, then stop. (~1 min)
 -->
 
 ---
-
-<VideoPlayer src="cern_overview_short.mp4" />
-
-<!--
-Speaker: CERN overview (silent, shared release) as the outro backdrop.
-Thank the audience over it, then advance to the contact slide for questions.
--->
-
----
 layout: statement
+space:
+  at: wide
 ---
 
 # Thank you
@@ -672,3 +755,4 @@ layout: statement
 <div class="text-xs opacity-60 mt-lg">LHCb: arXiv:1507.03414 · 1904.03947 · 2012.10380 · 2210.10346</div>
 
 <div class="text-xs opacity-60 mt-xs">Reviews: Guo et al., RMP 90 (2018) 015004 · Olsen, Skwarnicki, Zieminska, RMP 90 (2018) 015003 · PDG, "Pentaquarks"</div>
+
