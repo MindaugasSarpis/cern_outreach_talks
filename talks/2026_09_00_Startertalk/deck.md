@@ -306,8 +306,8 @@ the drift reads. (~0.25 min)
 
 ---
 space:
-  at: [62.5, 2.0, 0]
-  dist: 10
+  at: [52.5, 2.5, 0]
+  dist: 12
   yaw: -10
   pitch: 8
 ---
@@ -353,7 +353,7 @@ threshold would have no place in this picture. (~1.75 min)
 
 ---
 space:
-  at: [72.5, 1.6, 0]
+  at: [66, 2.0, 0]
   dist: 10
   yaw: 20
   pitch: 8
