@@ -184,6 +184,81 @@ LANDMARKS = [
 ]
 
 
+# Presenter's record for each state the camera stops at. Koppenburg's table
+# carries a mass and a date; a seminar HUD needs the width, the significance,
+# the channel and the paper's own uncertainty split, so these are written out
+# per state from the LHCb papers. `status_year` / `note_year` are the year a
+# status or note first became true: a slide with `space.asof: 2015` renders
+# `status_before` instead, so the 2015 stop does not announce the 2019 split.
+OVERRIDES = {
+    "Pc(4380)": dict(
+        mass=4380, mass_err=8, mass_text="4380 ± 8 ± 29", width_text="205 ± 18 ± 86",
+        significance="9σ", channel="Λb⁰ → J/ψ p K⁻",
+        status="candidate", status_year=2019, status_before="observed",
+        note="neither confirmed nor excluded by the 2019 fit", note_year=2019,
+        ref="PRL 115 (2015) 072001"),
+    "Pc(4450)": dict(
+        mass=4449.8, mass_err=1.7, mass_text="4449.8 ± 1.7 ± 2.5", width_text="39 ± 5 ± 19",
+        significance="12σ", channel="Λb⁰ → J/ψ p K⁻",
+        status="superseded", status_year=2019, status_before="observed",
+        note="resolved into Pc(4440)⁺ and Pc(4457)⁺ in 2019", note_year=2019,
+        ref="PRL 115 (2015) 072001"),
+    "Pc(4312)": dict(
+        mass=4311.9, mass_err=0.7, mass_text="4311.9 ± 0.7", width_text="9.8 ± 2.7",
+        significance="7.3σ", channel="Λb⁰ → J/ψ p K⁻", note="",
+        ref="PRL 122 (2019) 222001"),
+    "Pc(4440)": dict(
+        mass=4440.3, mass_err=1.3, mass_text="4440.3 ± 1.3", width_text="20.6 ± 4.9",
+        significance="two peaks over one: 5.4σ", channel="Λb⁰ → J/ψ p K⁻",
+        note="Pc(4450)⁺ resolved", ref="PRL 122 (2019) 222001"),
+    "Pc(4457)": dict(
+        mass=4457.3, mass_err=0.6, mass_text="4457.3 ± 0.6", width_text="6.4 ± 2.0",
+        significance="two peaks over one: 5.4σ", channel="Λb⁰ → J/ψ p K⁻",
+        note="Pc(4450)⁺ resolved", ref="PRL 122 (2019) 222001"),
+    "Pc(4337)": dict(
+        mass=4337, mass_err=7, mass_text="4337 (+7 −4) (+2 −2)",
+        width_text="29 (+26 −12) (+14 −14)", significance="3.1–3.7σ",
+        channel="Bs⁰ → J/ψ p p̄", note="no Pc(4312)⁺ signal in this channel",
+        ref="PRL 128 (2022) 062001"),
+    "Pcs(4459)": dict(
+        mass_text="4458.8 ± 2.9 (+4.7 −1.1)", width_text="17.3 ± 6.5 (+8.0 −5.7)",
+        significance="3.1σ", channel="Ξb⁻ → J/ψ Λ K⁻",
+        note="two overlapping peaks not excluded"),
+    "Pcs(4338)": dict(
+        mass_err=0.7, mass_text="4338.2 ± 0.7 ± 0.4", width_text="7.0 ± 1.2 ± 1.3",
+        significance="> 15σ", channel="B⁻ → J/ψ Λ p̄",
+        note="J = 1/2; positive parity excluded at 90% CL",
+        ref="PRL 131 (2023) 031901"),
+    "Theta(1540)": dict(
+        status="not confirmed",
+        date_text="2003", mass_text="1540 ± 10", significance="4.6σ (LEPS)",
+        channel="γn → K⁺K⁻n",
+        note="absent in the high-statistics CLAS, Belle and BaBar data; PDG 2008",
+        ref="PRL 91 (2003) 012002"),   # the HUD prefixes the experiment
+}
+
+# Journal abbreviations, so the HUD reference line matches the slides' footers.
+_SHORT_REF = {
+    "Phys. Rev. Lett.": "PRL",
+    "Phys. Lett. B": "PLB",
+    "Phys. Rev. D": "PRD",
+    "Sci. Bull.": "Sci. Bull.",
+}
+
+
+def short_ref(ref: str) -> str:
+    for long, short in _SHORT_REF.items():
+        if long in ref:
+            return ref.replace(long, short)
+    return ref
+
+
+def label_html(state: dict) -> str:
+    """'Pc(4312)⁺' -> 'P<sub>c</sub>(4312)⁺' so the HUD name reads as printed."""
+    m = re.match(r"^P(cs|c)(\(.*)$", state.get("label", ""))
+    return f"P<sub>{m.group(1)}</sub>{m.group(2)}" if m else ""
+
+
 def build(html: str) -> dict:
     p = Table()
     p.feed(html)
@@ -225,6 +300,12 @@ def build(html: str) -> dict:
             experiment=l["experiment"], ref=l["ref"], arxiv=l["arxiv"], note=l["note"],
             lane=l["lane"], status=l["status"], origin="pre-lhc", marker=l.get("marker", "dot"),
         ))
+    for s in states:
+        s.update(OVERRIDES.get(s["id"], {}))
+        s["ref"] = short_ref(s["ref"])
+        lh = label_html(s)
+        if lh:
+            s["label_html"] = lh
     return {
         "source": {
             "title": "List of hadrons observed at the LHC",
@@ -246,16 +327,42 @@ def parse_date_iso(iso: str) -> tuple[str, float]:
 
 
 # Stop figures: the paper's own projection with the state, served from public/.
+# `see` is the presenter's pointer — the one feature in that plot that IS the
+# state; each was written against the cropped PNG, not the paper's caption.
 FIG = "figures/papers/"
 FIGURES = {
-    "Pc(4380)": dict(src=FIG + "LHCb-PAPER-2015-029_mjpsip-default.png", caption="LHCb, Phys. Rev. Lett. 115 (2015) 072001 — m(J/ψ p), fit projection"),
-    "Pc(4450)": dict(src=FIG + "LHCb-PAPER-2015-029_mjpsip-default.png", caption="LHCb, Phys. Rev. Lett. 115 (2015) 072001 — m(J/ψ p), fit projection"),
-    "Pc(4312)": dict(src=FIG + "LHCb-PAPER-2019-014_mjpsip-spectrum-all.png", caption="LHCb, Phys. Rev. Lett. 122 (2019) 222001 — m(J/ψ p), Run 1 + Run 2"),
-    "Pc(4440)": dict(src=FIG + "LHCb-PAPER-2019-014_mjpsip2x3.png", caption="LHCb, Phys. Rev. Lett. 122 (2019) 222001 — fits with three narrow states"),
-    "Pc(4457)": dict(src=FIG + "LHCb-PAPER-2019-014_mjpsip2x3.png", caption="LHCb, Phys. Rev. Lett. 122 (2019) 222001 — fits with three narrow states"),
-    "Pc(4337)": dict(src=FIG + "LHCb-PAPER-2021-018_Fig2e.png", caption="LHCb, Phys. Rev. Lett. 128 (2022) 062001 — m(J/ψ p) in Bs⁰ → J/ψ p p̄"),
-    "Pcs(4459)": dict(src=FIG + "LHCb-PAPER-2020-039_Fig3b.png", caption="LHCb, Sci. Bull. 66 (2021) 1278 — m(J/ψ Λ) in Ξb⁻ → J/ψ Λ K⁻"),
-    "Pcs(4338)": dict(src=FIG + "LHCb-PAPER-2022-031_Fig3a.png", caption="LHCb, Phys. Rev. Lett. 131 (2023) 031901 — m(J/ψ Λ) in B⁻ → J/ψ Λ p̄"),
+    "Pc(4380)": dict(
+        src=FIG + "LHCb-PAPER-2015-029_mjpsip-default_crop.png",
+        caption="LHCb, PRL 115 (2015) 072001 · m(J/ψ p), fit projection",
+        see="The broad magenta hump centred near 4.38 GeV is Pc(4380)⁺; the narrow blue spike beside it is Pc(4450)⁺."),
+    "Pc(4450)": dict(
+        src=FIG + "LHCb-PAPER-2015-029_DoubleArgand-final_crop.png",
+        caption="LHCb, PRL 115 (2015) 072001 · Argand diagram, Pc(4450)⁺, six bins of m(J/ψ p)",
+        see="The six fitted points run anticlockwise round the red circle: the phase of Pc(4450)⁺ turning through the peak."),
+    "Pc(4312)": dict(
+        src=FIG + "LHCb-PAPER-2019-014_mjpsip-spectrum-all_crop.png",
+        caption="LHCb, PRL 122 (2019) 222001 · m(J/ψ p), Runs 1–2",
+        see="The small narrow bump at 4.31 GeV, low on the rising edge under the big 4.45 peak, is Pc(4312)⁺."),
+    "Pc(4440)": dict(
+        src=FIG + "LHCb-PAPER-2019-014_pentaquarks_nominal_fit_and_thresholds_crop.png",
+        caption="LHCb, PRL 122 (2019) 222001 · fit with three narrow states and the Σc⁺D̄⁽*⁾⁰ thresholds",
+        see="The magenta curve along the bottom, and the left half of the red double peak above it, is Pc(4440)⁺."),
+    "Pc(4457)": dict(
+        src=FIG + "LHCb-PAPER-2019-014_mjpsip-spectrum-19_crop.png",
+        caption="LHCb, PRL 122 (2019) 222001 · m(J/ψ p) for m(Kp) > 1.9 GeV",
+        see="In the inset, the tall spike just past 4.45 GeV, on the shoulder of the 4.44 bump, is Pc(4457)⁺."),
+    "Pc(4337)": dict(
+        src=FIG + "LHCb-PAPER-2021-018_Fig2e_crop.png",
+        caption="LHCb, PRL 128 (2022) 062001 · m(J/ψ p) in Bs⁰ → J/ψ p p̄",
+        see="The hatched teal peak at 4.34 GeV, and the bump it puts in the red fit above it, is Pc(4337)⁺."),
+    "Pcs(4459)": dict(
+        src=FIG + "LHCb-PAPER-2020-039_Fig3b_crop.png",
+        caption="LHCb, Sci. Bull. 66 (2021) 1278 · m(J/ψ Λ) in Ξb⁻ → J/ψ Λ K⁻",
+        see="The narrow filled cyan block at 4.46 GeV, and the spike it makes in the red fit, is Pcs(4459)⁰."),
+    "Pcs(4338)": dict(
+        src=FIG + "LHCb-PAPER-2022-031_Fig3a_crop.png",
+        caption="LHCb, PRL 131 (2023) 031901 · m(J/ψ Λ) in B⁻ → J/ψ Λ p̄",
+        see="At the right edge, near 4.34 GeV, the magenta peak that the grey no-pentaquark fit misses is Pcs(4338)⁰."),
 }
 
 PENTAQUARKS = ["Pc(4380)", "Pc(4450)", "Pc(4312)", "Pc(4440)", "Pc(4457)", "Pcs(4459)", "Pc(4337)", "Pcs(4338)"]
@@ -273,6 +380,12 @@ def check(data: dict) -> None:
     assert len(pq) == 6, [s["id"] for s in pq]
     for f in data["figures"].values():
         assert (OUT.parent.parent / f["src"]).is_file(), f["src"]
+        assert f.get("see"), f"figure without a 'see' line: {f['src']}"
+    by_id = {s["id"]: s for s in data["states"]}
+    for p in PENTAQUARKS:
+        for key in ("mass_text", "width_text", "significance", "channel"):
+            assert by_id[p].get(key), f"{p}: missing {key}"
+        assert by_id[p].get("label_html"), f"{p}: missing label_html"
     print(f"ok: {data['source']['lhc_states']} LHC states, {len(data['states'])} total, "
           f"{len(PENTAQUARKS)} pentaquark ids present")
 

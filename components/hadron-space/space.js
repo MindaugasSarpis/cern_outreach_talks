@@ -337,6 +337,15 @@ export function createSpace(canvas, container, { data, onArrive }) {
       flightDur = Math.min(2.8, Math.max(1.4, 1.1 + d / 14));
       flightT0 = elapsed; arrived = false;
     },
+    // How far the world steps back behind a slide's text (0..1). The DOM
+    // scrim in HadronSpace.vue darkens the canvas; this fades what the scrim
+    // cannot tame: the label sprites (drawn without depth, large at close
+    // poses) and the drop lines, which otherwise burn through the copy.
+    setDim(d) {
+      const k = Math.min(1, Math.max(0, Number(d) || 0));
+      labels.traverse((o) => { if (o.isSprite) o.material.opacity = 0.9 * Math.max(0, 1 - k / 0.85); });
+      drops.material.opacity = 0.10 * (1 - 0.8 * k);
+    },
     setStop(id) {
       if (hiIndex >= 0) hHi[hiIndex] = 0;
       hiIndex = id ? states.findIndex((s) => s.id === id) : -1;

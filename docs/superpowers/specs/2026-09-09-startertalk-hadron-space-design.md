@@ -208,3 +208,13 @@ Standing rules: one claim per slide; on-screen text short enough for the
 back of the hall; plain declarative titles; numbers only from the LHCb
 papers and PDG, cited in the notes; the hadron-space poses and the eight
 stops kept; no videos; no marketing tone.
+
+As run (2026-09-09, across two sessions after a usage-limit stop): the five
+critiques and three proposals completed; only one of the three judges
+finished (Visual-first 51, Rigour-first 50.5, Story-first 50.5, with a graft
+list), so the synthesis used that single judge plus all five critiques. The
+26 slides were written in seven batches; the per-batch refuters were re-run
+afterwards as a separate read-only pass over the assembled deck. Two
+owner notes folded in during the pass: the world is dimmed behind text on
+content slides (`space.dim`), and every stop figure carries a `see` line
+naming the feature that is the state.

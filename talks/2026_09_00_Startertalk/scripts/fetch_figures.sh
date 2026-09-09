@@ -16,3 +16,9 @@ get LHCb-PAPER-2019-014 mjpsip2x3             # Pc(4440), Pc(4457): three-peak f
 get LHCb-PAPER-2021-018 Fig2e                 # Pc(4337): m(J/psi p) in Bs -> J/psi p pbar
 get LHCb-PAPER-2020-039 Fig3b                 # Pcs(4459): m(J/psi Lambda)
 get LHCb-PAPER-2022-031 Fig3a                 # Pcs(4338): m(J/psi Lambda)
+get LHCb-PAPER-2015-029 DoubleArgand-final    # Pc(4450): Argand diagram, panel (a)
+get LHCb-PAPER-2015-029 dlz                   # slide 8: the paper's Dalitz plot
+get LHCb-PAPER-2019-014 mjpsip-spectrum-19    # Pc(4457): m(J/psi p), m(Kp) > 1.9 GeV
+get LHCb-PAPER-2019-014 pentaquarks_nominal_fit_and_thresholds  # Pc(4440): fit + thresholds
+
+python3 "$(dirname "$0")/crop_figures.py"

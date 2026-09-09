@@ -187,8 +187,33 @@ lane (z), in the WoP landing's ambient particle field.
   for offline). Stop figures: `scripts/fetch_figures.sh` → `public/figures/papers/`.
 - Slide frontmatter: `space: { at: Pc(4312), dist: 8, yaw: -22, pitch: 6, stops: [Pc(4312), Pc(4440)] }`
   with `clicks: 2` (= stops.length). A slide without `space` keeps the previous pose.
-- Deck CSS (`styles/index.css`) makes slides transparent and cards translucent.
-  No WebGL2 float targets → static gradient; overview/PDF have no world.
+  Optional keys: `asof: 2015` renders each stop's record as of that year
+  (a state whose `status_year` is later shows `status_before`; a `note` whose
+  `note_year` is later is dropped), so the 2015 slide does not announce the
+  2019 split. `dim: 0..1` sets the scrim between the world and the slide;
+  without it the scrim is 0 while a stop is active, 0.15 on cover/section/
+  statement/fact/quote layouts and 0.6 on content slides (owner feedback
+  2026-09-09: text was unreadable over busy poses).
+- Records (`hadrons.py` `OVERRIDES`, per pentaquark stop): `mass_text`,
+  `width_text`, `significance`, `channel`, `date_text`, `label_html`,
+  `status_year`/`status_before`, `note_year`; the HUD prints them verbatim
+  (strings, not a formatter, so asymmetric and systematic errors survive).
+  Stop figures (`FIGURES`): `src` (cropped paper PNG from
+  `scripts/fetch_figures.sh` + `crop_figures.py`), `caption` (journal-style
+  source, shown as a case-preserving kicker) and `see` — one sentence naming
+  the feature in that plot that is the state; written against the cropped
+  image, rendered under it. Every static figure on a slide likewise carries a
+  `.caption` naming what to look at, in the words the body text uses.
+- Deck CSS (`styles/index.css`): Space Grotesk throughout, h1 42 px, card
+  and caption text 20 px, tables 19 px (15 px on `class: backup` slides; the
+  five-column comparison `table.cmp` and the `wide-table` backup wrap their cells),
+  one `.src` footer line per slide; `.row` + `.col-40…60` place a figure on
+  one side and ≤ 60ch of text on the other, `.stage` caps content height so
+  the lower third of the frame stays clear. Slides are transparent, cards
+  translucent. No WebGL2 float targets → static gradient; overview/PDF have
+  no world.
+- Overhaul record (2026-09-09): critiques, blueprint and decisions in
+  `docs/superpowers/plans/2026-09-09-startertalk-overhaul-blueprint.md`.
 - Verify with headless Chromium (SwiftShader) screenshots; it renders slowly, so
   wait ~9 s after a click before shooting a stop.
 

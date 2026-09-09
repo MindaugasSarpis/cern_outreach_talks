@@ -13,17 +13,20 @@ const root = ref(null)
 const canvas = ref(null)
 const nav = useNav()
 
-const DOTS = 190
+const MAX_DOTS = 190     // dot count scales with the element's perimeter
+const MIN_DOTS = 60
 const SPREAD = 11        // px at the 980-wide canvas scale
 const ACCENT = '125, 211, 252'
 const seeds = new WeakMap()
 let raf = 0
 
-function seedFor(el) {
+function seedFor(el, perimeter) {
   let s = seeds.get(el)
   if (s) return s
+  // Big panels would otherwise be sparse and small cards a solid band.
+  const n = Math.round(Math.min(MAX_DOTS, Math.max(MIN_DOTS, perimeter / 14)))
   const dots = []
-  for (let i = 0; i < DOTS; i++) {
+  for (let i = 0; i < n; i++) {
     dots.push({
       t: Math.random(),                          // position along the perimeter (0..1)
       off: (Math.random() * 2 - 1) * SPREAD,     // signed offset from the edge
@@ -72,11 +75,18 @@ function frame(now) {
   const k = dpr                            // screen px → canvas px
   ctx.globalCompositeOperation = 'lighter'
   const time = now / 1000
+  // Canvas-space boxes of every haloed element, so a dot that falls inside a
+  // neighbour is dropped: two abutting cards get no speckled band between them.
+  const boxes = []
   for (const el of els) {
     const er = el.getBoundingClientRect()
     if (er.width < 4 || er.height < 4) continue
-    const x = (er.left - rr.left) * k, y = (er.top - rr.top) * k, w = er.width * k, h = er.height * k
-    const seed = seedFor(el)
+    boxes.push({ el, x: (er.left - rr.left) * k, y: (er.top - rr.top) * k, w: er.width * k, h: er.height * k })
+  }
+  const pad = (SPREAD + 3) * scale * k
+  for (const box of boxes) {
+    const { el, x, y, w, h } = box
+    const seed = seedFor(el, 2 * (w + h) / (k * scale))   // perimeter in slide px
     const fade = Math.min((now - seed.born) / 600, 1)
     for (const d of seed.dots) {
       const t = (d.t + time * 0.004 * d.sp) % 1
@@ -84,6 +94,12 @@ function frame(now) {
       const off = (d.off + 2.5 * Math.sin(time * d.sp + d.ph)) * scale * k
       const px = pt.x + pt.nx * off + pt.ny * 0.6 * Math.cos(time * 0.7 + d.ph) * scale * k
       const py = pt.y + pt.ny * off - pt.nx * 0.6 * Math.cos(time * 0.7 + d.ph) * scale * k
+      let hidden = false
+      for (const o of boxes) {
+        if (o.el === el) continue
+        if (px > o.x - pad && px < o.x + o.w + pad && py > o.y - pad && py < o.y + o.h + pad) { hidden = true; break }
+      }
+      if (hidden) continue
       const tw = 0.6 + 0.4 * Math.sin(time * (1.1 + d.sp) + d.ph)
       const alpha = d.a * tw * fade * (1 - Math.min(Math.abs(off) / (SPREAD * 1.4 * scale * k), 1) * 0.55)
       ctx.beginPath()

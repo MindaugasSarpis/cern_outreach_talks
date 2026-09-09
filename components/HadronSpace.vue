@@ -15,6 +15,8 @@ import SpacePanel from './SpacePanel.vue'
 //     at: Pc(4312)        # hadron id | wide | origin | future | [x, y, z]
 //     dist: 7  yaw: -25  pitch: 8
 //     stops: [Pc(4312), Pc(4440), Pc(4457)]   # click k flies to stops[k-1]
+//     asof: 2015          # optional: tell the story as of this year (see below)
+//     dim: 0.6            # optional: how far the world is dimmed, 0..1
 //   clicks: 3                                  # = stops.length
 //
 // A slide without `space` keeps the previous pose. While a stop is active
@@ -22,6 +24,16 @@ import SpacePanel from './SpacePanel.vue'
 // data.figures) on the right, both as SpacePanels. Data: public/data/
 // hadrons.json (scripts/hadrons.py). Without WebGL2 float render targets,
 // or under reduced motion, only the static gradient is drawn.
+//
+// `asof` keeps a stop's record in the year the slide is telling: a record
+// whose `status_year` is later than `asof` shows `status_before` instead
+// (so the 2015 slide does not announce the 2019 split), and a `note` whose
+// `note_year` is later is dropped. Default 9999 = tell it as it stands now.
+//
+// `dim` is the opacity of the scrim between the world and the slide, so
+// body copy keeps its contrast over a busy pose. Without the key: 0 while a
+// stop is active (world + HUD own the screen), 0.15 on cover / section /
+// statement / fact / quote layouts, 0.6 on content slides.
 
 const props = defineProps({
   src: { type: String, default: 'data/hadrons.json' },
@@ -79,6 +91,34 @@ watch(stopId, (id) => {
 
 const stopState = computed(() => (stopId.value && space) ? space.state(stopId.value) : null)
 const stopFigure = computed(() => (stopId.value && data.value?.figures) ? data.value.figures[stopId.value] || null : null)
+
+// The year the current slide is telling the story in (frontmatter `asof`).
+const asof = computed(() => Number(frontmatterSpace.value?.asof) || 9999)
+// The record as it stood in that year: later status changes and later notes
+// are held back.
+const shown = computed(() => {
+  const s = stopState.value
+  if (!s) return null
+  const out = { ...s }
+  if (Number(s.status_year) > asof.value) out.status = s.status_before || 'observed'
+  if (Number(s.note_year) > asof.value) out.note = ''
+  return out
+})
+
+// The scrim's opacity: explicit frontmatter wins, then a stop (none), then
+// the slide's layout — display layouts stay open, content slides get a calm
+// dark ground behind the type.
+const LAYOUT_DIM = { cover: 0.15, section: 0.15, statement: 0.15, fact: 0.15, quote: 0.15 }
+const dim = computed(() => {
+  const fm = frontmatterSpace.value?.dim
+  if (fm != null && Number.isFinite(Number(fm))) return Math.min(1, Math.max(0, Number(fm)))
+  if (stopId.value) return 0
+  const layout = nav.currentSlideRoute.value?.meta?.slide?.frontmatter?.layout
+  return LAYOUT_DIM[layout] ?? 0.6
+})
+// The scene fades its labels and drop lines with the scrim (see setDim).
+watch(dim, (d) => space?.setDim(d))
+
 const fmtDate = (iso) => {
   if (!iso) return ''
   const d = new Date(iso + 'T00:00:00Z')
@@ -104,6 +144,7 @@ async function boot() {
   }
   if (!space) { staticBg.value = true; return }
   ready.value = true
+  space.setDim(dim.value)
   apply(true)
 }
 
@@ -122,22 +163,26 @@ onUnmounted(() => {
 <template>
   <div ref="root" class="hadron-space" :class="{ 'static-bg': staticBg, ready }">
     <canvas ref="canvas" class="field" aria-hidden="true"></canvas>
+    <div class="scrim" aria-hidden="true" :style="{ opacity: dim }"></div>
     <div class="grain" aria-hidden="true"></div>
     <Transition name="hud">
-      <div v-if="stopState && arrived" class="hud" :key="stopState.id">
+      <div v-if="shown && arrived" class="hud" :key="shown.id">
         <SpacePanel kicker="state" class="hud-card">
-          <div class="hud-name">{{ stopState.label || stopState.name }}</div>
+          <div class="hud-name" v-html="shown.label_html || shown.label || shown.name"></div>
           <dl class="hud-rows">
-            <dt>date</dt><dd>{{ fmtDate(stopState.date) }}</dd>
-            <dt>mass</dt><dd>{{ fmtMass(stopState) }}</dd>
-            <dt>quarks</dt><dd class="hud-tex">{{ stopState.quarks.replace(/\\bar\{(\w)\}/g, '$1̄').replace(/[${}]/g, '') }}</dd>
-            <dt>experiment</dt><dd>{{ stopState.experiment }}</dd>
-            <dt>status</dt><dd>{{ stopState.status }}<span v-if="stopState.note"> · {{ stopState.note }}</span></dd>
-            <dt>reference</dt><dd>{{ stopState.ref }}</dd>
+            <dt>date</dt><dd>{{ shown.date_text || fmtDate(shown.date) }}</dd>
+            <dt>mass</dt><dd>{{ shown.mass_text ? shown.mass_text + ' MeV' : fmtMass(shown) }}</dd>
+            <template v-if="shown.width_text"><dt>width</dt><dd>{{ shown.width_text }} MeV</dd></template>
+            <template v-if="shown.significance"><dt>significance</dt><dd>{{ shown.significance }}</dd></template>
+            <template v-if="shown.channel"><dt>channel</dt><dd v-html="shown.channel"></dd></template>
+            <dt>quarks</dt><dd class="hud-tex">{{ (shown.quarks || '').replace(/\\bar\{(\w)\}/g, '$1̄').replace(/[${}]/g, '') }}</dd>
+            <dt>status</dt><dd>{{ shown.status }}<span v-if="shown.note" class="hud-note">{{ shown.note }}</span></dd>
+            <dt>reference</dt><dd>{{ shown.experiment ? shown.experiment + ', ' + shown.ref : shown.ref }}</dd>
           </dl>
         </SpacePanel>
-        <SpacePanel v-if="stopFigure" class="hud-figure" :kicker="stopFigure.caption">
+        <SpacePanel v-if="stopFigure" class="hud-figure" :kicker="stopFigure.caption" plain>
           <img class="space-figure" :src="stopFigure.src" :alt="stopFigure.alt || stopFigure.caption" />
+          <p v-if="stopFigure.see" class="hud-see">{{ stopFigure.see }}</p>
         </SpacePanel>
       </div>
     </Transition>
@@ -158,19 +203,32 @@ onUnmounted(() => {
 .field { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease; }
 .ready .field { opacity: 1; }
 .static-bg .field { display: none; }
+/* Scrim between the world and the slide: keeps body copy legible over a busy
+   pose. Opacity comes from `dim` (frontmatter `space.dim`, else the layout). */
+.scrim {
+  position: absolute; inset: 0; pointer-events: none;
+  transition: opacity 0.6s ease;
+  background: linear-gradient(180deg, rgba(5, 5, 7, 0.96) 0%, rgba(5, 5, 7, 0.88) 62%, rgba(5, 5, 7, 0.45) 100%);
+}
 .grain {
   position: absolute; inset: 0; pointer-events: none; opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 /* stop HUD: record left, figure right; sizes in px against the 980-wide canvas */
-.hud { position: absolute; inset: 0; display: grid; grid-template-columns: 290px 1fr; gap: 24px; padding: 60px 44px 48px; align-items: start; pointer-events: none; }
+.hud { position: absolute; inset: 0; display: grid; grid-template-columns: 340px 1fr; gap: 24px; padding: 60px 44px 48px; align-items: start; pointer-events: none; }
 .hud-card { align-self: end; }
-.hud-name { font-size: 30px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin: 2px 0 12px; }
-.hud-rows { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0; font-size: 11px; line-height: 1.5; }
-.hud-rows dt { color: var(--dim); text-transform: uppercase; letter-spacing: 0.12em; font-size: 9.5px; padding-top: 2px; }
+.hud-name { font-size: 36px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin: 2px 0 12px; }
+.hud-rows { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 0; font-size: 15px; line-height: 1.4; }
+.hud-rows dt { color: var(--dim); text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; padding-top: 3px; }
 .hud-rows dd { margin: 0; color: var(--fg); }
-.hud-figure { justify-self: end; align-self: start; max-width: 460px; }
-.space-figure { display: block; max-width: 100%; max-height: 360px; border-radius: 6px; background: #fff; }
+.hud-note { display: block; color: var(--dim); }
+.hud-figure { justify-self: end; align-self: start; max-width: 560px; background: rgba(5, 5, 7, 0.78); }
+/* Figure height budget: the grid row is 551 − 60 − 48 = 443 px; kicker (20)
+   + image + `see` (two lines, 50) + panel padding (38) must fit, or the row
+   grows past the frame and clips both the `see` line and the record's last
+   row (seen 2026-09-09 at 420 px). */
+.space-figure { display: block; max-width: 100%; max-height: 320px; border-radius: 6px; background: #fff; opacity: 0.94; }
+.hud-see { margin: 10px 0 0; font-size: 14px; line-height: 1.4; color: var(--fg); max-width: 100%; }
 .hud-enter-active, .hud-leave-active { transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
 .hud-enter-from, .hud-leave-to { opacity: 0; transform: translateY(8px); }
 </style>
