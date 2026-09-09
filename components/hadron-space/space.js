@@ -21,7 +21,7 @@ const FOV = 50, MAX_DT = 1 / 30;
 const D2R = Math.PI / 180;
 const DEFAULT_POSE = { dist: 9, yaw: -20, pitch: 6 };
 // Named poses resolve to a station; `wide` looks at the paper station from far.
-const NAMED = { wide: { station: 'paper', offset: [-11, 1.5, 0], dist: 30, yaw: -20, pitch: 12 }, origin: { station: 'paper' }, future: { station: 'future' } };
+const NAMED = { wide: { station: 'paper', offset: [-15, 1.5, 0], dist: 30, yaw: -20, pitch: 12 }, origin: { station: 'paper' }, future: { station: 'future' } };
 const HUD_OFFSET = new Vector3(0.6, -0.35, 0);   // a lit state lands just left of centre, in the gap between the record and the figure
 
 function pickTexSize(coarse) {

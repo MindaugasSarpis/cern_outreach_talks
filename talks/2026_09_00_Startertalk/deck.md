@@ -518,7 +518,7 @@ no numbers. (~1.25 min)
 -->
 
 ---
-space: { at: [88.5, 0.5, -2], dist: 8, yaw: 10, pitch: 6, dim: 0.35 }
+space: { at: [84.5, 0.8, -2], dist: 9, yaw: 10, pitch: 6, dim: 0.35 }
 ---
 
 # Six quarks
@@ -682,6 +682,7 @@ Speaker: questions. The world is back at the wide pose, drifting. Backups follow
 ---
 hideInToc: true
 class: backup
+space: { at: future, dist: 14, yaw: -40, pitch: 10, dim: 0.85 }
 ---
 
 # Backup: thresholds
