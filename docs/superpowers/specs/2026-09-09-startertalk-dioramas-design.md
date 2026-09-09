@@ -96,3 +96,17 @@ legibility and for plot-to-text correspondence; (6) commit.
 ## 6. Out of scope
 
 Videos; changes to other talks; the theme; the WoP hero.
+
+## 7. As built (2026-09-10)
+
+Stations at x = 0 (paper), 16 (theta), 30 (decay), 58 (states, z = −14),
+64 (interiors: molecule at −6.5, compact ball at +7), 78 (neutrals; six-quark
+cluster at +10.5), 104 (future). The paper station shows the top half of
+Zweig's page 1 (title, author, abstract) so the type reads at slide distance;
+the quotation is on the slide (`.quote-hero`), not in the world. Solid tracks
+are thin tubes (WebGL lines are one pixel); dashed "not seen" tracks stay
+lines. The old 86-hadron layout, floor grid and axis labels are gone;
+`hadrons.json` holds ten records. Slide 7 (the Λb decay) has no figure: the
+tracks in the world are the picture, with `dim: 0.2`. Frame rule learned from
+the renders: an object appears right of centre when its x exceeds the pose
+target's x.

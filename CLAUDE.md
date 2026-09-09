@@ -167,55 +167,78 @@ shot script pattern in the 2026-09-08 migration plan.
 
 ## Hadron space (Startertalk)
 
-`talks/2026_09_00_Startertalk/` is told inside one persistent 3D scene:
-every hadron discovered at the LHC (Koppenburg's list, CC BY 4.0) plus a
-few pre-LHC landmarks, laid out as date (x) × mass (y) × quark-family
-lane (z), in the WoP landing's ambient particle field.
+`talks/2026_09_00_Startertalk/` is told inside one persistent 3D scene: a
+path of seven built scenes (stations) in the WoP landing's ambient particle
+field, which is pulled gently toward the active station. Stations:
+`paper` (page 1 of Zweig's CERN-TH-401 as a lit sheet, five quark spheres
+drifting together), `theta` (a hollow ring, Θ⁺(1540)), `decay` (Λb⁰ →
+J/ψ p K⁻ as tubes with a pulse), `states` (the eight pentaquarks as spheres
+on a local mass axis with threshold planes; the nine record-and-plot stops),
+`interiors` (a Σc D̄ molecule and a compact five-quark ball at one 1 fm
+scale), `neutrals` (Λb⁰ → Σc⁺ D̄*⁰ K⁻ with the π⁰/γ tracks dashed, and a
+six-quark cluster), `future` (an empty grid). Design:
+`docs/superpowers/specs/2026-09-09-startertalk-dioramas-design.md`; the
+earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
 
-- `components/hadron-space/space.js` — the three.js scene; `createSpace(canvas, container, { data, onArrive })`
-  → `setPose({ at, dist, yaw, pitch })`, `setStop(id)`, `setPaused`, `dispose`. Named
-  poses `wide` / `origin` / `future`; `at` may be a state id or `[x, y, z]`.
-  Flights are timed ease-in-out (1.4–2.8 s by distance); parked, the camera drifts.
-- `components/HadronSpace.vue` — mounted once from the deck's `global-bottom.vue`;
-  reads each slide's `space:` frontmatter and `clicks`; shows the stop HUD (record
-  left, paper figure right) after the camera lands; sets `html[data-space-stop]`
-  while a stop is active so deck CSS fades the slide's cards.
-- `components/HaloLayer.vue` — from `global-top.vue`; one 2D canvas that draws the
-  hazy particle border around every `.card` on the live slide and every `.space-panel`.
-- `components/SpacePanel.vue` — translucent panel for HUD text / figures.
-- Data: `scripts/hadrons.py` → `public/data/hadrons.json` (run `--check`; `--cached`
-  for offline). Stop figures: `scripts/fetch_figures.sh` → `public/figures/papers/`.
-- Slide frontmatter: `space: { at: Pc(4312), dist: 8, yaw: -22, pitch: 6, stops: [Pc(4312), Pc(4440)] }`
+- `public/data/space.json` — the stations: `id`, `pos`, `look`
+  (`dist/yaw/pitch`, optional `target` offset) and `objects[]` of types
+  `page | text | ring | tracks | spheres | planes | cluster | molecule |
+  grid | bar` (fields in `scripts/check_space.mjs`, which also checks that
+  every `space.at` and stop id in `deck.md` resolves; run it after editing
+  either file). A `ring` with an `id` stands for a state (Θ⁺).
+- `components/hadron-space/dioramas.js` — one builder per object type;
+  `buildStation()` → `{group, anchors, update, setDim, dispose}`.
+  `labels.js` — `makeLabel` (one line, tracked; `upper: false` for particle
+  names) and `makeText` (multi-line). `space.js` — field, camera spring,
+  `createSpace(canvas, container, { data, space, onArrive })` →
+  `setPose({at, dist, yaw, pitch})`, `setStop(id)`, `setDim(k)`, `setPaused`,
+  `dispose`. `at` resolves as `[x, y, z]` → station id → state id (sphere
+  anchor + HUD offset) → named pose (`wide` = the paper station from far,
+  `origin`, `future`). Flights 1.4–4.5 s by distance. The shared shader
+  `particle-hero/shaders/passes.glsl.js` gained `uGather` (a wide pull
+  toward a point; zero in the WoP hero).
+- Frame rule from the renders: an object appears to the RIGHT of the frame
+  centre when its x is larger than the pose target's x; the ambient field
+  wraps in a ±30 box around the camera, so stations can sit anywhere.
+- `components/HadronSpace.vue` — mounted once from the deck's
+  `global-bottom.vue`; fetches `hadrons.json` and `space.json`; reads each
+  slide's `space:` frontmatter and `clicks`; HUD (record left, paper plot
+  right with its `see` line) after the camera lands; sets
+  `html[data-space-stop]` while a stop is active; scrim between world and
+  slide with opacity `dim`.
+- Slide frontmatter: `space: { at: states, dist: 8, yaw: -22, pitch: 6, stops: [Pc(4312), Pc(4440)] }`
   with `clicks: 2` (= stops.length). A slide without `space` keeps the previous pose.
   Optional keys: `asof: 2015` renders each stop's record as of that year
   (a state whose `status_year` is later shows `status_before`; a `note` whose
-  `note_year` is later is dropped), so the 2015 slide does not announce the
-  2019 split. `dim: 0..1` sets the scrim between the world and the slide;
-  without it the scrim is 0 while a stop is active, 0.15 on cover/section/
-  statement/fact/quote layouts and 0.6 on content slides (owner feedback
-  2026-09-09: text was unreadable over busy poses).
-- Records (`hadrons.py` `OVERRIDES`, per pentaquark stop): `mass_text`,
-  `width_text`, `significance`, `channel`, `date_text`, `label_html`,
-  `status_year`/`status_before`, `note_year`; the HUD prints them verbatim
-  (strings, not a formatter, so asymmetric and systematic errors survive).
+  `note_year` is later is dropped). `dim: 0..1` sets the scrim; without it
+  0 while a stop is active, 0.15 on cover/section/statement/fact/quote
+  layouts, 0.6 on content slides; slides whose picture is the world itself
+  use 0.2–0.35.
+- Records (`scripts/hadrons.py` → `public/data/hadrons.json`, ten states:
+  eight pentaquarks, Θ⁺(1540), the 1964 landmark; `OVERRIDES` carries
+  `mass_text`, `width_text`, `significance`, `channel`, `date_text`,
+  `label_html`, `status_year`/`status_before`, `note_year`; dates and masses
+  of LHC states from Koppenburg's list, run `--check`, `--cached` offline).
   Stop figures (`FIGURES`): `src` (cropped paper PNG from
   `scripts/fetch_figures.sh` + `crop_figures.py`), `caption` (journal-style
-  source, shown as a case-preserving kicker) and `see` — one sentence naming
-  the feature in that plot that is the state; written against the cropped
-  image, rendered under it. Every static figure on a slide likewise carries a
-  `.caption` naming what to look at, in the words the body text uses.
+  source) and `see` (one sentence naming the feature in the plot that is the
+  state, written against the cropped image). Zweig's page:
+  `scripts/fetch_zweig.sh` (CDS record 352337; download in a browser, CDS
+  blocks scripts) → `public/figures/papers/zweig_th401_p1(_top).png`.
 - Deck CSS (`styles/index.css`): Space Grotesk throughout, h1 42 px, card
   and caption text 20 px, tables 19 px (15 px on `class: backup` slides; the
   five-column comparison `table.cmp` and the `wide-table` backup wrap their cells),
   one `.src` footer line per slide; `.row` + `.col-40…60` place a figure on
-  one side and ≤ 60ch of text on the other, `.stage` caps content height so
-  the lower third of the frame stays clear. Slides are transparent, cards
-  translucent. No WebGL2 float targets → static gradient; overview/PDF have
-  no world.
-- Overhaul record (2026-09-09): critiques, blueprint and decisions in
-  `docs/superpowers/plans/2026-09-09-startertalk-overhaul-blueprint.md`.
-- Verify with headless Chromium (SwiftShader) screenshots; it renders slowly, so
-  wait ~9 s after a click before shooting a stop.
+  one side and ≤ 60ch of text on the other, `.stage` caps content height;
+  `.quote-hero` (the 1964 slide), `.decay-caption` (slide 7). Slides are
+  transparent, cards translucent. No WebGL2 float targets → static gradient;
+  overview/PDF have no world.
+- Overhaul record (2026-09-09/10): critiques, blueprint, research brief and
+  decisions in `docs/superpowers/plans/2026-09-09-startertalk-*.md`.
+- Verify with headless Chromium (SwiftShader) screenshots
+  (`~/slidev-videos/.tmp/st-all.mjs <dist> <out> <n>` with `CLICKS` JSON);
+  it renders slowly, so the script waits ~9 s after a click before shooting
+  a stop.
 
 ## Slidev gotchas
 

@@ -1,3 +1,5 @@
+> **Superseded in part (2026-09-10).** Sections 2–3 (the date × mass × lane layout) are replaced by `2026-09-09-startertalk-dioramas-design.md`; the HUD, stops, scrim and slide mechanics below still apply.
+
 # Startertalk in one 3D hadron space — design
 
 **Date:** 2026-09-09 · **Status:** approved in discussion, awaiting spec review ·
