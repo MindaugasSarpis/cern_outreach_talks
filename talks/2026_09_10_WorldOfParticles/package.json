@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",
-    "build:portable": "slidev build deck.md --base ./ --out dist-portable",
+    "build:portable": "VITE_VIDEOS_LOCAL_FIRST=1 slidev build deck.md --base ./ --out dist-portable",
     "export": "slidev export deck.md",
     "videos:sync": "slidev-videos sync",
     "videos:encode": "slidev-videos encode",
