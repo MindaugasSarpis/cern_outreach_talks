@@ -8,6 +8,9 @@ dist-portable/
 dist/
 *-venue.zip
 **/public/videos/
+# public/videos-hq is a symlink made by slidev-videos pull-hq/venue; dangling in CI it kills the build
+**/public/videos-hq
+.playwright-mcp/
 **/videos/raw/
 
 # Safety net: videos only belong in the managed dirs above.
