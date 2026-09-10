@@ -538,6 +538,8 @@ E_B_PC4312 = 5.6                                 # Σc+ D̄0 threshold 4317.5 - 
 
 
 def fig_weinberg():
+    """weinberg_z.svg — the two curves, the deuteron at Z ≈ 0, the correction scale; the
+    formulas live in the slide caption so the plot carries few, large labels."""
     mu_d = M_P * M_N / (M_P + M_N)
     mu_pc = M["Sigma_c+"] * M["D0"] / (M["Sigma_c+"] + M["D0"])
     R_d = HBARC / np.sqrt(2 * mu_d * E_B_DEUTERON)
@@ -546,53 +548,50 @@ def fig_weinberg():
     print(f"weinberg: R_d = {R_d:.2f} fm, R_pc = {R_pc:.2f} fm, 1/m_pi = {range_pi:.2f} fm, "
           f"bands {range_pi / R_d:.2f} and {range_pi / R_pc:.2f}; deuteron a/R = {A_T / R_d:.2f}, r/R = {R_T / R_d:.2f}")
 
-    z = np.linspace(0, 0.86, 400)
+    z = np.linspace(0, 0.80, 400)
     a_R = 2 * (1 - z) / (2 - z)
     r_R = -z / (1 - z)
 
-    fig, ax = plt.subplots(figsize=(9.6, 5.4))
-    fig.subplots_adjust(left=0.1, right=0.98, top=0.97, bottom=0.14)
-    ax.set_xlim(-0.05, 0.98)
-    ax.set_ylim(-4.3, 2.1)
-    ax.set_xlabel("Z, the weight of an elementary component", fontsize=16)
-    ax.set_ylabel("in units of R", fontsize=16)
-    ax.tick_params(labelsize=14)
+    fig, ax = plt.subplots(figsize=(9, 5))
+    fig.subplots_adjust(left=0.11, right=0.985, top=0.975, bottom=0.15)
+    ax.set_xlim(-0.04, 0.84)
+    ax.set_ylim(-3.4, 2.0)
+    ax.set_xlabel("Z, the weight of an elementary component", fontsize=17)
+    ax.set_ylabel("a / R   and   r / R", fontsize=17)
+    ax.tick_params(labelsize=15)
     ax.axhline(0, color=FAINT, lw=1, ls=(0, (4, 3)), zorder=1)
-    ax.plot(z, a_R, color=BLUE, lw=2.6, zorder=3)
-    ax.plot(z, r_R, color=ORANGE, lw=2.6, zorder=3)
-    ax.text(0.5, 2 * 0.5 / 1.5 + 0.13, r"$a\,/\,R = 2(1-Z)/(2-Z)$", color=BLUE, fontsize=16, ha="center", va="bottom")
-    ax.text(0.24, -0.24 / 0.76 - 0.2, r"$r\,/\,R = -Z/(1-Z)$", color=ORANGE, fontsize=16, ha="left", va="top")
+    ax.plot(z, a_R, color=BLUE, lw=3, zorder=3)
+    ax.plot(z, r_R, color=ORANGE, lw=3, zorder=3)
+    ax.text(0.72, 2 * 0.28 / 1.28 + 0.14, "a / R", color=BLUE, fontsize=20, ha="center", va="bottom", weight="bold")
+    ax.text(0.62, -0.62 / 0.38 + 0.28, "r / R", color=ORANGE, fontsize=20, ha="right", va="bottom", weight="bold")
 
     # the two ends
-    ax.text(0.0, -4.15, "Z = 0: two hadrons", ha="left", va="bottom", fontsize=15, color=MUTED)
-    ax.text(0.95, -4.15, "Z → 1: one, elementary", ha="right", va="bottom", fontsize=15, color=MUTED)
+    ax.text(0.0, -3.28, "Z = 0: two hadrons", ha="left", va="bottom", fontsize=16, color=MUTED)
+    ax.text(0.83, -3.28, "Z → 1: one, elementary", ha="right", va="bottom", fontsize=16, color=MUTED)
 
     # the deuteron: a and r measured, drawn at Z = 0
-    ax.plot([0], [A_T / R_d], marker="o", ms=11, color=BLUE, mec=INK, mew=1.4, zorder=5)
-    ax.plot([0], [R_T / R_d], marker="s", ms=10, color=ORANGE, mec=INK, mew=1.4, zorder=5)
-    ax.annotate(f"deuteron: a = {A_T:.2f} fm, R = {R_d:.1f} fm", xy=(0.005, A_T / R_d), xytext=(0.09, 1.72),
-                fontsize=15, color=INK, va="center",
-                arrowprops=dict(arrowstyle="-", color=FAINT, lw=1))
-    ax.annotate(f"deuteron: r = {R_T:.2f} fm, positive", xy=(0.005, R_T / R_d), xytext=(0.09, 0.62),
-                fontsize=15, color=INK, va="center",
-                arrowprops=dict(arrowstyle="-", color=FAINT, lw=1))
+    ax.plot([0], [A_T / R_d], marker="o", ms=12, color=BLUE, mec=INK, mew=1.5, zorder=5)
+    ax.plot([0], [R_T / R_d], marker="s", ms=11, color=ORANGE, mec=INK, mew=1.5, zorder=5)
+    ax.annotate("", xy=(0.012, A_T / R_d), xytext=(0.075, 1.58), arrowprops=dict(arrowstyle="-", color=FAINT, lw=1))
+    ax.annotate("", xy=(0.012, R_T / R_d), xytext=(0.075, 1.45), arrowprops=dict(arrowstyle="-", color=FAINT, lw=1))
+    ax.text(0.085, 1.52, "deuteron: Z ≈ 0", fontsize=18, color=INK, va="center", weight="bold")
+    ax.text(0.085, 1.16, f"a = {A_T:.2f} fm,  r = {R_T:.2f} fm,  R = {R_d:.1f} fm", fontsize=15, color=MUTED, va="center")
+
     # what a half-elementary deuteron would need
-    ax.plot([0.5], [-1.0], marker="s", ms=9, mfc="none", mec=ORANGE, mew=1.6, zorder=5)
-    ax.annotate(f"Z = ½ would need r = −R = −{R_d:.1f} fm", xy=(0.5, -1.0), xytext=(0.08, -2.35),
+    ax.plot([0.5], [-1.0], marker="s", ms=10, mfc="none", mec=ORANGE, mew=1.8, zorder=5)
+    ax.annotate(f"Z = ½ would need r = −R = −{R_d:.1f} fm", xy=(0.5, -1.0), xytext=(0.33, -2.1),
                 fontsize=15, color=MUTED, va="center", arrowprops=dict(arrowstyle="-", color=FAINT, lw=1))
 
-    # the correction scale 1/(m_pi R): a bar for the deuteron and one for P_c(4312)+
-    x0 = 0.80
-    for i, (lbl, R) in enumerate([("deuteron", R_d), (r"$P_c(4312)^+$", R_pc)]):
+    # the correction scale 1/(m_pi R), in the empty lower left
+    ax.text(0.16, -0.95, "correction ± 1/(mπ R)", ha="center", va="center", fontsize=15, color=MUTED)
+    for xb, lbl, R in [(0.10, "deuteron", R_d), (0.22, r"$P_c(4312)^+$", R_pc)]:
         h = range_pi / R
-        xb = x0 + 0.1 * i
-        ax.plot([xb, xb], [-2.9 - h / 2, -2.9 + h / 2], color=INK, lw=2.2, solid_capstyle="butt", zorder=4)
-        ax.plot([xb - 0.012, xb + 0.012], [-2.9 - h / 2] * 2, color=INK, lw=1.4)
-        ax.plot([xb - 0.012, xb + 0.012], [-2.9 + h / 2] * 2, color=INK, lw=1.4)
-        ax.text(xb, -2.9 + h / 2 + 0.12, f"±{h:.1f}", ha="center", va="bottom", fontsize=13, color=MUTED)
-        ax.text(xb, -2.9 - h / 2 - 0.12, lbl, ha="center", va="top", fontsize=13, color=MUTED)
-    ax.text(x0 + 0.05, -1.55, "the correction:\nthe force range 1/mπ\nover R", ha="center", va="bottom",
-            fontsize=13, color=MUTED, linespacing=1.15)
+        yc = -2.05
+        ax.plot([xb, xb], [yc - h / 2, yc + h / 2], color=INK, lw=2.4, solid_capstyle="butt", zorder=4)
+        ax.plot([xb - 0.014, xb + 0.014], [yc - h / 2] * 2, color=INK, lw=1.5)
+        ax.plot([xb - 0.014, xb + 0.014], [yc + h / 2] * 2, color=INK, lw=1.5)
+        ax.text(xb, yc + h / 2 + 0.1, f"±{h:.1f}", ha="center", va="bottom", fontsize=14, color=MUTED)
+        ax.text(xb, yc - h / 2 - 0.1, lbl, ha="center", va="top", fontsize=14, color=MUTED)
 
     save(fig, "weinberg_z.svg")
 

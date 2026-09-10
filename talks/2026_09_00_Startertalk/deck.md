@@ -214,16 +214,16 @@ labels come on slides 18 and 19. Why charm, the third line: heavy hadrons: a Σc
 -->
 
 ---
-space: { at: [63.5, -0.8, 1], dist: 14, yaw: 14, pitch: 58, dim: 0.72 }   # the two models stay behind, dimmed; the figure is the slide
+space: { at: [63.5, -0.8, 1], dist: 14, yaw: 14, pitch: 58, dim: 0.86 }   # the two models stay behind, almost hidden; the figure is the slide
 ---
 
 # A number for one or two: Weinberg's Z
 
 <div class="row stage">
-<img src="/figures/weinberg_z.svg" class="col-50 plate" style="height: 262px" alt="Weinberg's relations, a/R and r/R against Z, with the deuteron at Z near zero and the force-range correction for the deuteron and for Pc(4312)+" />
-<div class="col-45">
-<div class="caption">Weinberg, 1965: just under an S-wave threshold, the scattering length a and the effective range r of the two hadrons measure Z, the weight of an elementary component. Two hadrons: a ≈ R, r small and positive. One: a → 0, r large and negative. The corrections are of the force range, 1/m<sub>π</sub> = 1.4 fm.</div>
-<div class="caption mt-sm">Deuteron: R = 4.3 fm, a = 5.4 fm, r = 1.8 fm, so Z ≈ 0. P<sub>c</sub>(4312)⁺: R = 1.8 fm; a and r come from the Σ<sub>c</sub>⁺D̄⁰ lineshape, and its width and possibly virtual pole need the extended forms.</div>
+<img src="/figures/weinberg_z.svg" class="col-60 plate" alt="Weinberg's relations, a/R and r/R against Z, with the deuteron at Z near zero and the force-range correction for the deuteron and for Pc(4312)+" />
+<div class="col-40">
+<div class="caption">Weinberg, 1965: the scattering length a and the effective range r of the two hadrons measure Z, the weight of an elementary component: a = 2(1−Z)/(2−Z) R, r = −Z/(1−Z) R, up to the force range 1/m<sub>π</sub> = 1.4 fm.</div>
+<div class="caption mt-sm">Two hadrons: a ≈ R, r small and positive. One: r large and negative. For P<sub>c</sub>(4312)⁺, a and r come from the Σ<sub>c</sub>⁺D̄⁰ lineshape; R = 1.8 fm, a width and a possibly virtual pole call for the extended forms.</div>
 </div>
 </div>
 
@@ -309,7 +309,7 @@ Speaker: The left panel is the schematic, the right panel the 2015 data. The thr
 
 ---
 clicks: 2
-space: { at: states, dim: 0.7, asof: 2015, stops: [Pc(4380), Pc(4450)] }
+space: { at: [58, 2, -30], dist: 16, yaw: -8, pitch: 12, dim: 0.7, asof: 2015, stops: [Pc(4380), Pc(4450)] }   # dust in front of the states; the stops fly to the orbs
 ---
 
 # 2015: two J/ψ p states
@@ -332,7 +332,7 @@ Speaker: the numbers stay in the HUD. Run 1 (3 fb⁻¹), 26 007 ± 166 Λb⁰ �
 
 ---
 clicks: 3
-space: { at: states, yaw: -22, dim: 0.8, stops: [Pc(4312), Pc(4440), Pc(4457)] }
+space: { at: [58, 2, -30], dist: 16, yaw: 4, pitch: 12, dim: 0.75, stops: [Pc(4312), Pc(4440), Pc(4457)] }
 ---
 
 # 2019: three narrow states
@@ -362,7 +362,7 @@ Speaker: Run 1 = 3 fb⁻¹ (2011–12), Run 2 = 6 fb⁻¹ (2015–18); about 246
 -->
 
 ---
-space: { at: states, dist: 17, yaw: -38, pitch: 16, dim: 0.78 }
+space: { at: [58, 2, -30], dist: 16, yaw: 14, pitch: 12, dim: 0.78 }
 ---
 
 # Getting the Λ* out of the way
@@ -400,7 +400,7 @@ and for several J^P assignments. (~1.5 min)
 
 ---
 clicks: 1
-space: { at: states, dist: 10, yaw: -14, dim: 0.75, stops: [Pc(4337)] }
+space: { at: [58, 2, -30], dist: 16, yaw: 22, pitch: 12, dim: 0.75, stops: [Pc(4337)] }
 ---
 
 # Masses and thresholds
@@ -417,7 +417,7 @@ Speaker: take this slide slowly; slides 18 and 20 reuse the 5.6 MeV offset. Offs
 
 ---
 clicks: 2
-space: { at: states, yaw: -26, pitch: 8, dim: 0.7, stops: [Pcs(4459), Pcs(4338)] }
+space: { at: [58, 2, -30], dist: 16, yaw: 30, pitch: 12, dim: 0.7, stops: [Pcs(4459), Pcs(4338)] }
 ---
 
 # Strange partners
