@@ -6,6 +6,7 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useNav } from '@slidev/client'
 import { createSpace } from './hadron-space/space.js'
 import SpacePanel from './SpacePanel.vue'
+import { subscriptHtml } from './hadron-space/particles.js'
 
 // The persistent 3D hadron space under a whole deck. Mount ONCE from the
 // deck's global-bottom.vue. Each slide steers the camera through its
@@ -177,15 +178,15 @@ onUnmounted(() => {
             <dt>mass</dt><dd>{{ shown.mass_text ? shown.mass_text + ' MeV' : fmtMass(shown) }}</dd>
             <template v-if="shown.width_text"><dt>width</dt><dd>{{ shown.width_text }} MeV</dd></template>
             <template v-if="shown.significance"><dt>significance</dt><dd>{{ shown.significance }}</dd></template>
-            <template v-if="shown.channel"><dt>channel</dt><dd v-html="shown.channel"></dd></template>
+            <template v-if="shown.channel"><dt>channel</dt><dd v-html="subscriptHtml(shown.channel)"></dd></template>
             <dt>quarks</dt><dd class="hud-tex">{{ (shown.quarks || '').replace(/\\bar\{(\w)\}/g, '$1̄').replace(/[${}]/g, '') }}</dd>
-            <dt>status</dt><dd>{{ shown.status }}<span v-if="shown.note" class="hud-note">{{ shown.note }}</span></dd>
+            <dt>status</dt><dd>{{ shown.status }}<span v-if="shown.note" class="hud-note" v-html="subscriptHtml(shown.note)"></span></dd>
             <dt>reference</dt><dd>{{ shown.experiment ? shown.experiment + ', ' + shown.ref : shown.ref }}</dd>
           </dl>
         </SpacePanel>
-        <SpacePanel v-if="stopFigure" class="hud-figure" :kicker="stopFigure.caption" plain>
+        <SpacePanel v-if="stopFigure" class="hud-figure" :kicker="subscriptHtml(stopFigure.caption)" plain>
           <img class="space-figure" :src="stopFigure.src" :alt="stopFigure.alt || stopFigure.caption" />
-          <p v-if="stopFigure.see" class="hud-see">{{ stopFigure.see }}</p>
+          <p v-if="stopFigure.see" class="hud-see" v-html="subscriptHtml(stopFigure.see)"></p>
         </SpacePanel>
       </div>
     </Transition>

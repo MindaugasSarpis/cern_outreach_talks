@@ -16,6 +16,7 @@ Writes to public/figures/:
     dalitz_schematic.svg          Lb -> J/psi p K- Dalitz plane with Lambda* and Pc bands
     lambda_b_decay.svg            the two decay paths
     pc_thresholds.svg             threshold ladder (PDG 2024, charge-consistent pairs)
+    weinberg_z.svg                Weinberg's a/R and r/R against Z, the deuteron, the P_c scale
     lhcb_lumi.svg                 recorded luminosity bar chart
 
 Deterministic: fixed svg.hashsalt, no embedded date, no random data.
@@ -462,10 +463,14 @@ def fig_dalitz():
 # pc_thresholds.svg — the threshold ladder
 # =========================================================================
 def fig_thresholds():
-    fig, ax = plt.subplots(figsize=(12, 5.6))
-    Y_PC, Y_PCS = 1.4, 0.0
-    ax.set_xlim(4250, 4550)
-    ax.set_ylim(-1.55, 2.75)
+    """pc_thresholds.svg — only what a state sits at: the four thresholds with a state under
+    them, names without values (the values and the Σc(2520) pairs are on the backup table);
+    one label per state, name above the marker and offset below; the evidence-only and the
+    broad state faint, with a one-word tag."""
+    fig, ax = plt.subplots(figsize=(12, 5.2))
+    Y_PC, Y_PCS = 1.7, 0.0
+    ax.set_xlim(4290, 4500)
+    ax.set_ylim(-0.95, 3.2)
     ax.set_yticks([Y_PC, Y_PCS])
     ax.set_yticklabels([r"$J/\psi\,p$", r"$J/\psi\,\Lambda$"], fontsize=21)
     ax.set_xlabel("mass (MeV)", fontsize=17)
@@ -473,60 +478,123 @@ def fig_thresholds():
     ax.tick_params(axis="y", length=0)
     ax.spines["left"].set_visible(False)
 
-    # threshold lines: Σc-family (J/ψ p row) labelled along the top and spanning the
-    # frame; Ξc-family (J/ψ Λ row) labelled along the bottom and kept below the J/ψ p row
-    for key, (label, x, fam) in THRESHOLDS.items():
-        col = MUTED if fam == "c" else ORANGE
-        if fam == "c":
-            ax.vlines(x, -1.55, 2.18, color=col, ls=(0, (4, 3)), lw=1.2, alpha=0.9, zorder=1)
-            ax.text(x, 2.72, f"{label}\n{x:.1f}", ha="center", va="top", fontsize=16,
-                    color=col, linespacing=1.15, zorder=3)
-        else:
-            ax.vlines(x, -0.92, 0.62, color=col, ls=(0, (4, 3)), lw=1.2, alpha=0.9, zorder=1)
-            ax.text(x, -1.02, f"{label}\n{x:.1f}", ha="center", va="top", fontsize=16,
-                    color=col, linespacing=1.15, zorder=3)
-    for key, (label, x, fam) in THRESHOLD_TICKS.items():
-        ax.vlines(x, -0.92, 0.62, color=ORANGE, ls=(0, (2, 3)), lw=1.0, alpha=0.4, zorder=1)
+    # the Σc thresholds belong to the J/ψ p row (named along the top), the Ξc thresholds to
+    # the J/ψ Λ row (named along the bottom); neither line crosses the other row
+    for key in ("Sc+D0", "Sc+D*0"):
+        label, x, _ = THRESHOLDS[key]
+        ax.vlines(x, Y_PC - 0.62, Y_PC + 1.0, color=MUTED, ls=(0, (4, 3)), lw=1.3, alpha=0.9, zorder=1)
+        ax.text(x, Y_PC + 1.06, label, ha="center", va="bottom", fontsize=18, color=MUTED, zorder=3)
+    for key in ("Xc+D-", "Xc0D*0"):
+        label, x, _ = THRESHOLDS[key]
+        ax.vlines(x, Y_PCS - 0.42, Y_PCS + 0.72, color=ORANGE, ls=(0, (4, 3)), lw=1.3, alpha=0.9, zorder=1)
+        ax.text(x, Y_PCS - 0.5, label, ha="center", va="top", fontsize=18, color=ORANGE, zorder=3)
 
-    def band(x, w, y, col, alpha, h=0.34):
+    def band(x, w, y, col, alpha, h=0.30):
         ax.add_patch(Rectangle((x - w / 2, y - h / 2), w, h, facecolor=col,
                                edgecolor="none", alpha=alpha, zorder=2))
 
-    # broad P_c(4380): faint wide band
+    # the broad 2015 state and the evidence-only state: faint, one tag, no numbers
     name, x, w = PC_BROAD
-    band(x, w, Y_PC, BLUE, 0.13, h=0.42)
-    ax.text(x, Y_PC + 0.32, f"{name}, broad, candidate", ha="center", va="bottom",
-            fontsize=15, color=MUTED, linespacing=1.15)
+    band(x, w, Y_PC, BLUE, 0.10, h=0.38)
+    ax.text(x, Y_PC + 0.30, f"{name} broad", ha="center", va="bottom", fontsize=15, color=FAINT)
+    name, x, w = PC_EVIDENCE
+    band(x, w, Y_PC, BLUE, 0.16)
+    ax.plot([x], [Y_PC], marker="o", ms=8, color=BLUE, mec="none", alpha=0.35, zorder=4)
+    ax.text(x, Y_PC - 0.30, f"{name} evidence", ha="center", va="top", fontsize=15, color=FAINT)
 
-    # narrow P_c: band = width, filled marker = mass, label with distance to threshold
+    # narrow P_c: band = width, marker = mass; the name and the offset to the threshold
+    # stacked on one side (P_c(4440)+ below, so it clears P_c(4457)+ above)
     for name, x, w, key in PC_NARROW:
         band(x, w, Y_PC, BLUE, 0.45)
         ax.plot([x], [Y_PC], marker="o", ms=9, color=BLUE, mec=INK, mew=1.2, zorder=4)
         d = x - THRESHOLDS[key][1]
-        txt = f"{name}\n{d:+.1f} MeV"
-        if "4440" in name:
-            ax.text(x, Y_PC - 0.32, txt, ha="center", va="top", fontsize=17,
-                    color=INK, linespacing=1.15)
-        else:
-            ax.text(x, Y_PC + 0.32, txt, ha="center", va="bottom", fontsize=17,
-                    color=INK, linespacing=1.15)
-
-    # P_c(4337)+: evidence only, hollow marker, no charm-baryon–antimeson threshold nearby
-    name, x, w = PC_EVIDENCE
-    band(x, w, Y_PC, BLUE, 0.20)
-    ax.plot([x], [Y_PC], marker="o", ms=9, mfc="none", mec=BLUE, mew=2, zorder=4)
-    ax.text(x, Y_PC - 0.32,
-            f"{name} · evidence · " + r"$B_s^0 \to J/\psi\,p\,\bar{p}$" + "\nabove ΣcD̄, not below",
-            ha="center", va="top", fontsize=14, color=MUTED, linespacing=1.15)
+        below = "4440" in name
+        ax.text(x, Y_PC + (-0.30 if below else 0.30), name, ha="center",
+                va="top" if below else "bottom", fontsize=18, color=INK)
+        ax.text(x, Y_PC + (-0.62 if below else 0.62), f"{d:+.1f} MeV", ha="center",
+                va="top" if below else "bottom", fontsize=15, color=MUTED)
 
     for name, x, w, key in PCS:
         band(x, w, Y_PCS, ORANGE, 0.45)
         ax.plot([x], [Y_PCS], marker="o", ms=9, color=ORANGE, mec=INK, mew=1.2, zorder=4)
         d = x - THRESHOLDS[key][1]
-        ax.text(x, Y_PCS - 0.30, f"{name}\n{d:+.1f} MeV", ha="center", va="top",
-                fontsize=17, color=INK, linespacing=1.15)
+        ax.text(x, Y_PCS + 0.30, name, ha="center", va="bottom", fontsize=18, color=INK)
+        ax.text(x, Y_PCS + 0.62, f"{d:+.1f} MeV", ha="center", va="bottom", fontsize=15, color=MUTED)
 
     save(fig, "pc_thresholds.svg")
+
+
+# =========================================================================
+# weinberg_z.svg — Weinberg's compositeness relations, the deuteron, the P_c scale
+# =========================================================================
+# Weinberg, Phys. Rev. 137 (1965) B672: for a shallow S-wave bound state with
+# R = 1/sqrt(2 mu E_B),  a = 2(1-Z)/(2-Z) R  and  r = -Z/(1-Z) R, each up to a
+# correction of the order of the range of the force, 1/m_pi. Z is the weight of
+# the elementary (bare) component in the physical state.
+M_P, M_N, M_PI = 938.272, 939.565, 139.570      # PDG 2024, MeV
+E_B_DEUTERON = 2.224575                          # m_p + m_n - m_d, PDG 2024 constants
+A_T, R_T = 5.42, 1.76                            # triplet np scattering length and effective range, fm
+E_B_PC4312 = 5.6                                 # Σc+ D̄0 threshold 4317.5 - 4311.9 (statistical mass)
+
+
+def fig_weinberg():
+    mu_d = M_P * M_N / (M_P + M_N)
+    mu_pc = M["Sigma_c+"] * M["D0"] / (M["Sigma_c+"] + M["D0"])
+    R_d = HBARC / np.sqrt(2 * mu_d * E_B_DEUTERON)
+    R_pc = HBARC / np.sqrt(2 * mu_pc * E_B_PC4312)
+    range_pi = HBARC / M_PI
+    print(f"weinberg: R_d = {R_d:.2f} fm, R_pc = {R_pc:.2f} fm, 1/m_pi = {range_pi:.2f} fm, "
+          f"bands {range_pi / R_d:.2f} and {range_pi / R_pc:.2f}; deuteron a/R = {A_T / R_d:.2f}, r/R = {R_T / R_d:.2f}")
+
+    z = np.linspace(0, 0.86, 400)
+    a_R = 2 * (1 - z) / (2 - z)
+    r_R = -z / (1 - z)
+
+    fig, ax = plt.subplots(figsize=(9.6, 5.4))
+    fig.subplots_adjust(left=0.1, right=0.98, top=0.97, bottom=0.14)
+    ax.set_xlim(-0.05, 0.98)
+    ax.set_ylim(-4.3, 2.1)
+    ax.set_xlabel("Z, the weight of an elementary component", fontsize=16)
+    ax.set_ylabel("in units of R", fontsize=16)
+    ax.tick_params(labelsize=14)
+    ax.axhline(0, color=FAINT, lw=1, ls=(0, (4, 3)), zorder=1)
+    ax.plot(z, a_R, color=BLUE, lw=2.6, zorder=3)
+    ax.plot(z, r_R, color=ORANGE, lw=2.6, zorder=3)
+    ax.text(0.5, 2 * 0.5 / 1.5 + 0.13, r"$a\,/\,R = 2(1-Z)/(2-Z)$", color=BLUE, fontsize=16, ha="center", va="bottom")
+    ax.text(0.24, -0.24 / 0.76 - 0.2, r"$r\,/\,R = -Z/(1-Z)$", color=ORANGE, fontsize=16, ha="left", va="top")
+
+    # the two ends
+    ax.text(0.0, -4.15, "Z = 0: two hadrons", ha="left", va="bottom", fontsize=15, color=MUTED)
+    ax.text(0.95, -4.15, "Z → 1: one, elementary", ha="right", va="bottom", fontsize=15, color=MUTED)
+
+    # the deuteron: a and r measured, drawn at Z = 0
+    ax.plot([0], [A_T / R_d], marker="o", ms=11, color=BLUE, mec=INK, mew=1.4, zorder=5)
+    ax.plot([0], [R_T / R_d], marker="s", ms=10, color=ORANGE, mec=INK, mew=1.4, zorder=5)
+    ax.annotate(f"deuteron: a = {A_T:.2f} fm, R = {R_d:.1f} fm", xy=(0.005, A_T / R_d), xytext=(0.09, 1.72),
+                fontsize=15, color=INK, va="center",
+                arrowprops=dict(arrowstyle="-", color=FAINT, lw=1))
+    ax.annotate(f"deuteron: r = {R_T:.2f} fm, positive", xy=(0.005, R_T / R_d), xytext=(0.09, 0.62),
+                fontsize=15, color=INK, va="center",
+                arrowprops=dict(arrowstyle="-", color=FAINT, lw=1))
+    # what a half-elementary deuteron would need
+    ax.plot([0.5], [-1.0], marker="s", ms=9, mfc="none", mec=ORANGE, mew=1.6, zorder=5)
+    ax.annotate(f"Z = ½ would need r = −R = −{R_d:.1f} fm", xy=(0.5, -1.0), xytext=(0.08, -2.35),
+                fontsize=15, color=MUTED, va="center", arrowprops=dict(arrowstyle="-", color=FAINT, lw=1))
+
+    # the correction scale 1/(m_pi R): a bar for the deuteron and one for P_c(4312)+
+    x0 = 0.80
+    for i, (lbl, R) in enumerate([("deuteron", R_d), (r"$P_c(4312)^+$", R_pc)]):
+        h = range_pi / R
+        xb = x0 + 0.1 * i
+        ax.plot([xb, xb], [-2.9 - h / 2, -2.9 + h / 2], color=INK, lw=2.2, solid_capstyle="butt", zorder=4)
+        ax.plot([xb - 0.012, xb + 0.012], [-2.9 - h / 2] * 2, color=INK, lw=1.4)
+        ax.plot([xb - 0.012, xb + 0.012], [-2.9 + h / 2] * 2, color=INK, lw=1.4)
+        ax.text(xb, -2.9 + h / 2 + 0.12, f"±{h:.1f}", ha="center", va="bottom", fontsize=13, color=MUTED)
+        ax.text(xb, -2.9 - h / 2 - 0.12, lbl, ha="center", va="top", fontsize=13, color=MUTED)
+    ax.text(x0 + 0.05, -1.55, "the correction:\nthe force range 1/mπ\nover R", ha="center", va="bottom",
+            fontsize=13, color=MUTED, linespacing=1.15)
+
+    save(fig, "weinberg_z.svg")
 
 
 # =========================================================================
@@ -653,5 +721,6 @@ if __name__ == "__main__":
     fig_lineshapes()
     fig_dalitz()
     fig_thresholds()
+    fig_weinberg()
     fig_lumi()
     fig_decay()

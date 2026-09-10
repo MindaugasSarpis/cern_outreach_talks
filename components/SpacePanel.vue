@@ -10,7 +10,7 @@ defineProps({
 
 <template>
   <div class="space-panel">
-    <p v-if="kicker" class="space-kicker" :class="{ plain }">{{ kicker }}</p>
+    <p v-if="kicker" class="space-kicker" :class="{ plain }" v-html="kicker"></p>
     <slot />
   </div>
 </template>

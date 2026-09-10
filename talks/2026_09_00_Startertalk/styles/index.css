@@ -71,8 +71,16 @@
 .ol { text-decoration: overline; text-decoration-thickness: 1px; }   /* p̄: Space Grotesk's combining macron swallows the following space */
 .under-fig { margin-top: 8px; }
 .closing { font-size: 22px; font-weight: 500; margin-top: 6px; }
-.refs { font-size: 12px; column-count: 3; column-gap: 24px; }
-.refs p { line-height: 1.3; margin: 0 0 10px; }  /* Slidev's base p is 1.5rem / 1rem margins, which the 11 px font never shrank */
+/* References backups: three columns of one-line entries, every entry a link */
+.refs { font-size: 12px; column-count: 3; column-gap: 26px; }
+.ref-group { margin: 0 0 10px; }
+.refs b { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8b97a6; margin: 0 0 4px; }
+.slidev-layout .refs ul { list-style: none; margin: 0; padding: 0; }
+.slidev-layout .refs ul:not(.prog) > li { font-size: 12px; line-height: 1.3; margin: 0 0 3px; padding: 0; }   /* outranks the 20 px bullet rule below */
+.refs a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(230, 233, 238, 0.28); }
+.refs a:hover { border-bottom-color: #7dd3fc; color: #f2f5f9; }
+.refs a.arx { color: #7dd3fc; border-bottom: 0; margin-left: 0.3em; font-variant-numeric: tabular-nums; }
+.refs .tag { color: #8b97a6; }
 
 /* --- Layout budget: the lower third of every content slide stays clear.
    `.stage` caps content at 340 px; figures carry explicit heights and sit on

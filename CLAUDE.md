@@ -203,7 +203,10 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   fresnel shader, dark translucent centre, bright edge — a volume of glow,
   not a flat disc.
   `labels.js` — `makeLabel` (one line, tracked; `upper: false` for particle
-  names) and `makeText` (multi-line). `space.js` — field, camera spring,
+  names) and `makeText` (multi-line); both draw the flavour of a particle name
+  as a subscript (Λb⁰, Σc⁺, Pc(4312)⁺) through `particles.js`, whose one regex
+  also feeds `subscriptHtml` for the HUD, so `hadrons.json` and `space.json`
+  stay plain text. `space.js` — field, camera spring,
   `createSpace(canvas, container, { data, space, onArrive })` →
   `setPose({at, dist, yaw, pitch})`, `setStop(id)`, `setDim(k)`, `setPaused`,
   `dispose`. `at` resolves as `[x, y, z]` → station id → state id (sphere
@@ -258,7 +261,9 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   `.quote-hero` (the 1964 slide; `.wide` for the 1992 quote), `.quote-line`
   (the 2006 quote), `.decay-caption` and `.world-caption` (slides whose
   picture is the world), `.plate` (a diagram on a card-like ground),
-  `.checklist` (the "not every bump" slide, 18 px). Slides are
+  `.checklist` (the "not every bump" slide, 18 px), `.refs` (the two
+  references backups: three columns of one-line entries, each a link: APS by
+  DOI, arXiv ids to arXiv, the rest an INSPIRE journal lookup). Slides are
   transparent, cards translucent. No WebGL2 float targets → static gradient;
   overview/PDF have no world.
 - Koppenburg's list is credited on the references backup and in the notes,
