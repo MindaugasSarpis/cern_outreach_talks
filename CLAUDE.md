@@ -171,7 +171,8 @@ shot script pattern in the 2026-09-08 migration plan.
 path of seven built scenes (stations) in the WoP landing's ambient particle
 field, which is pulled gently toward the active station. Stations:
 `paper` (page 1 of Zweig's CERN-TH-401 as a lit sheet, five quark spheres
-drifting together), `theta` (a hollow ring, Θ⁺(1540)), `decay` (Λb⁰ →
+drifting together), `theta` (a ghost cluster — five faint quarks that breathe
+apart and never hold — standing for Θ⁺(1540)), `decay` (Λb⁰ →
 J/ψ p K⁻ as tubes with a pulse), `states` (the eight pentaquarks as spheres
 on a local mass axis with threshold planes; the nine record-and-plot stops),
 `interiors` (a Σc D̄ molecule and a compact five-quark ball at one 1 fm
@@ -185,9 +186,17 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   `page | text | ring | tracks | spheres | planes | cluster | molecule |
   grid | bar` (fields in `scripts/check_space.mjs`, which also checks that
   every `space.at` and stop id in `deck.md` resolves; run it after editing
-  either file). A `ring` with an `id` stands for a state (Θ⁺).
+  either file). A `ring` or a `cluster` with an `id` stands for a state; a
+  `cluster` with `ghost: true` is a state that went away (Θ⁺). No hollow
+  markers anywhere: an unestablished state is the same orb at a third of
+  the light. `page.src` is written `/figures/…` and resolved against
+  `import.meta.env.BASE_URL` at load (an absolute path 404s under the
+  GitHub Pages base and left the sheet a blank white square, 2026-09-10).
 - `components/hadron-space/dioramas.js` — one builder per object type;
-  `buildStation()` → `{group, anchors, update, setDim, dispose}`.
+  `buildStation()` → `{group, anchors, update, setDim, dispose}`. Every
+  sphere (quark, state marker, decay vertex) is an `orb()`: a rim-lit
+  fresnel shader, dark translucent centre, bright edge — a volume of glow,
+  not a flat disc.
   `labels.js` — `makeLabel` (one line, tracked; `upper: false` for particle
   names) and `makeText` (multi-line). `space.js` — field, camera spring,
   `createSpace(canvas, container, { data, space, onArrive })` →
@@ -200,6 +209,16 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
 - Frame rule from the renders: an object appears to the RIGHT of the frame
   centre when its x is larger than the pose target's x; the ambient field
   wraps in a ±30 box around the camera, so stations can sit anywhere.
+- `components/HaloLayer.vue` (from `global-top.vue`) dusts every `.card`,
+  `.halo` and `.space-panel` with fine sub-pixel grains (count by perimeter,
+  grains inside a neighbouring box dropped) — the same grain as the field.
+- `components/ArgandDiagram.vue` — the theory slide's live Breit–Wigner:
+  lineshape, phase and Argand circle linked by one sweeping marker (9 s a
+  pass, only while the slide is live; static under reduced motion), six
+  hollow markers for the 2015 free amplitudes. `LineshapeGallery.vue` — six
+  computed lineshapes (Breit–Wigner, Flatté, cusp, triangle, interference at
+  three phases, the Λ(1520) reflection with real Λb⁰ → J/ψ p K⁻ kinematics)
+  with an Argand inset marking the phase at the peak.
 - `components/HadronSpace.vue` — mounted once from the deck's
   `global-bottom.vue`; fetches `hadrons.json` and `space.json`; reads each
   slide's `space:` frontmatter and `clicks`; HUD (record left, paper plot
@@ -230,9 +249,14 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   five-column comparison `table.cmp` and the `wide-table` backup wrap their cells),
   one `.src` footer line per slide; `.row` + `.col-40…60` place a figure on
   one side and ≤ 60ch of text on the other, `.stage` caps content height;
-  `.quote-hero` (the 1964 slide), `.decay-caption` (slide 7). Slides are
+  `.quote-hero` (the 1964 slide; `.wide` for the 1992 quote), `.quote-line`
+  (the 2006 quote), `.decay-caption` and `.world-caption` (slides whose
+  picture is the world), `.plate` (a diagram on a card-like ground),
+  `.checklist` (the "not every bump" slide, 18 px). Slides are
   transparent, cards translucent. No WebGL2 float targets → static gradient;
   overview/PDF have no world.
+- Koppenburg's list is credited on the references backup and in the notes,
+  not on the cover or the close (owner's call, 2026-09-10).
 - Overhaul record (2026-09-09/10): critiques, blueprint, research brief and
   decisions in `docs/superpowers/plans/2026-09-09-startertalk-*.md`.
 - Verify with headless Chromium (SwiftShader) screenshots

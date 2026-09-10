@@ -22,6 +22,7 @@ for (const st of space.stations) {
     for (const k of req) if (o[k] === undefined) problems.push(`${st.id}/${o.type}: missing ${k}`);
     if (o.type === 'spheres') for (const id of o.ids) if (!hadrons.states.find((s) => s.id === id)) problems.push(`${st.id}/spheres: unknown state ${id}`);
     if (o.type === 'page' && !o.src.startsWith('/figures/')) problems.push(`${st.id}/page: src must start with /figures/`);
+    if ((o.type === 'ring' || o.type === 'cluster') && o.id && !hadrons.states.find((s) => s.id === o.id)) problems.push(`${st.id}/${o.type}: unknown state ${o.id}`);
   }
 }
 const stateIds = new Set(hadrons.states.map((s) => s.id));

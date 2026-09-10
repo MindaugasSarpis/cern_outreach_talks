@@ -1,5 +1,5 @@
 import {
-  Group, Mesh, MeshBasicMaterial, PlaneGeometry, TorusGeometry, SphereGeometry, BufferGeometry, BufferAttribute,
+  Group, Mesh, MeshBasicMaterial, ShaderMaterial, PlaneGeometry, TorusGeometry, SphereGeometry, BufferGeometry, BufferAttribute,
   Line, LineSegments, LineBasicMaterial, LineDashedMaterial, TextureLoader, Vector3, DoubleSide, AdditiveBlending, Color, CylinderGeometry, Quaternion,
 } from 'three';
 import { makeLabel, makeText } from './labels.js';
@@ -13,12 +13,48 @@ import { makeLabel, makeText } from './labels.js';
 const QUARK = { c: '#3987e5', cbar: '#3987e5', u: '#e6e9ee', d: '#c9d1da', s: '#d95926' };
 const loader = new TextureLoader();
 const v = (a) => new Vector3(a[0], a[1], a[2]);
+// Public assets in space.json are written as `/figures/…`; the deck is served
+// under a base (`/<repo>/<talk>/` on GitHub Pages), so resolve against it —
+// an unresolved path left the Zweig page a blank white sheet.
+const BASE = (import.meta.env?.BASE_URL || '/').replace(/\/?$/, '/');
+const asset = (src) => (src.startsWith('/') ? BASE + src.slice(1) : src);
 
-function quarkBall(q, r = 0.42) {
-  const m = new Mesh(new SphereGeometry(r, 20, 14), new MeshBasicMaterial({ color: QUARK[q.flavour] || '#e6e9ee', transparent: true, opacity: 0.95 }));
+// Orbs, not discs. Every sphere in the world — quark, state marker, decay
+// vertex — is lit from its rim: a dark translucent centre the dust shows
+// through and a bright fresnel edge, so a ball reads as a volume of glow
+// rather than a flat coloured circle.
+const ORB_VERT = /* glsl */ `
+varying vec3 vN, vV;
+void main() {
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  vN = normalize(normalMatrix * normal);
+  vV = normalize(-mv.xyz);
+  gl_Position = projectionMatrix * mv;
+}`;
+const ORB_FRAG = /* glsl */ `
+uniform vec3 uColor; uniform float uOpacity, uCore;
+varying vec3 vN, vV;
+void main() {
+  float nv = max(dot(normalize(vN), normalize(vV)), 0.0);
+  float f = pow(1.0 - nv, 2.4);            // rim
+  float c = pow(nv, 3.0);                   // the face toward the viewer, lit from the front
+  vec3 col = mix(uColor * (0.7 + 0.45 * c), vec3(1.0), f * 0.6);
+  float a = uOpacity * clamp(uCore + (1.0 - uCore) * f, 0.0, 1.0);
+  gl_FragColor = vec4(col, a);
+}`;
+function orb(color, { opacity = 0.95, core = 0.82 } = {}) {
+  return new ShaderMaterial({
+    vertexShader: ORB_VERT, fragmentShader: ORB_FRAG, transparent: true, depthWrite: false,
+    uniforms: { uColor: { value: new Color(color) }, uOpacity: { value: opacity }, uCore: { value: core } },
+  });
+}
+const setOrb = (mat, k, v) => { if (mat.uniforms) mat.uniforms[k].value = v; else mat[k === 'uOpacity' ? 'opacity' : 'color'] = v; };
+
+function quarkBall(q, r = 0.42, { ghost = false } = {}) {
+  const m = new Mesh(new SphereGeometry(r, 24, 16), orb(QUARK[q.flavour] || '#e6e9ee', ghost ? { opacity: 0.55, core: 0.22 } : {}));
   m.position.copy(v(q.pos));
-  if (q.flavour === 'cbar') {                          // antiquark: a thin white rim
-    const rim = new Mesh(new SphereGeometry(r * 1.12, 20, 14), new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.35, side: DoubleSide }));
+  if (q.flavour === 'cbar' || q.flavour === 'sbar') {   // antiquark: a thin white rim
+    const rim = new Mesh(new SphereGeometry(r * 1.12, 24, 16), new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: ghost ? 0.15 : 0.3, side: DoubleSide, depthWrite: false }));
     m.add(rim);
   }
   return m;
@@ -36,8 +72,9 @@ function endLabel(text, pts, color) {
 const build = {
   page(o) {
     const g = new Group();
-    const mat = new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.96, side: DoubleSide });
-    loader.load(o.src, (tex) => { mat.map = tex; mat.needsUpdate = true; });
+    const mat = new MeshBasicMaterial({ color: '#2a2f36', transparent: true, opacity: 0.96, side: DoubleSide });
+    loader.load(asset(o.src), (tex) => { mat.map = tex; mat.color.set('#ffffff'); mat.needsUpdate = true; },
+      undefined, () => console.warn('hadron-space: page texture failed', o.src));
     const m = new Mesh(new PlaneGeometry(o.width, o.height), mat);
     m.rotation.y = (o.yaw || 0) * Math.PI / 180;
     g.add(m);
@@ -94,7 +131,7 @@ const build = {
         g.add(dot); pulses.push({ a: pts[0], b: pts[pts.length - 1], dot });
       }
     }
-    for (const n of o.nodes || []) { const m = new Mesh(new SphereGeometry(n.size, 16, 12), new MeshBasicMaterial({ color: n.color, transparent: true, opacity: 0.95 })); m.position.copy(v(n.pos)); g.add(m); }
+    for (const n of o.nodes || []) { const m = new Mesh(new SphereGeometry(n.size, 20, 14), orb(n.color, { core: 0.75 })); m.position.copy(v(n.pos)); g.add(m); }
     g.position.copy(v(o.pos));
     return { group: g, labels, update(t) {
       // one pulse runs down every solid track in 3 s, staggered by track index
@@ -102,19 +139,18 @@ const build = {
     } };
   },
   spheres(o, ctx) {
-    // state markers: filled when observed, hollow otherwise; placed by mass
+    // state markers placed by mass: an observed state is a full orb, an
+    // evidence / candidate / superseded one the same orb at a third of the light
     const g = new Group(); const labels = []; const anchors = new Map();
     o.ids.forEach((id, i) => {
       const s = ctx.states.get(id); if (!s) return;
       const row = id.startsWith('Pcs') ? 'Pcs' : 'Pc';
       const x = (s.mass - o.origin) * o.scale, z = o.rows[row];
-      const hollow = s.status !== 'observed';
+      const established = s.status === 'observed';
       const color = row === 'Pcs' ? '#d95926' : '#3987e5';
-      const m = hollow
-        ? new Mesh(new TorusGeometry(0.26, 0.04, 10, 40), new MeshBasicMaterial({ color, transparent: true, opacity: 0.9 }))
-        : new Mesh(new SphereGeometry(0.26, 20, 14), new MeshBasicMaterial({ color }));
+      const m = new Mesh(new SphereGeometry(0.26, 24, 16), orb(color, established ? { core: 0.7 } : { opacity: 0.45, core: 0.25 }));
       m.position.set(x, 0, z); g.add(m);
-      const halo = shell(0.4, color, 0.08); halo.position.set(x, 0, z); g.add(halo);
+      if (established) { const halo = shell(0.4, color, 0.08); halo.position.set(x, 0, z); g.add(halo); }
       anchors.set(id, new Vector3(x, 0, z));
       if (o.labels) { const l = makeLabel(s.label || id, { worldH: 0.3, color: '#e6e9ee', letterSpacing: 0.02, upper: false }); l.position.set(x, 0.75 + (i % 2) * 0.32, z); g.add(l); labels.push(l); }
     });
@@ -133,13 +169,28 @@ const build = {
     return { group: g, labels };
   },
   cluster(o) {
+    // `ghost: true` draws the cluster as a state that went away (the Θ⁺):
+    // faint orbs that breathe apart and back together and never quite hold.
     const g = new Group(); const labels = []; const balls = new Group();
-    for (const q of o.quarks) balls.add(quarkBall(q, 0.42 * (o.radius / 1.9)));
+    const home = [];
+    for (const q of o.quarks) { const b = quarkBall(q, 0.42 * (o.radius / 1.9), { ghost: !!o.ghost }); balls.add(b); home.push(b.position.clone()); }
     g.add(balls);
-    if (o.shell) g.add(shell(o.radius));
+    if (o.shell) g.add(shell(o.radius, '#7dd3fc', o.ghost ? 0.05 : 0.12));
     if (o.label) { const l = makeLabel(o.label, { worldH: 0.4, color: '#f2f5f9', letterSpacing: 0.08 }); l.position.set(0, o.radius + 0.7, 0); g.add(l); labels.push(l); }
     g.position.copy(v(o.pos));
-    return { group: g, labels, update(t) { balls.rotation.y = t * (o.spin || 0); balls.rotation.x = Math.sin(t * 0.3) * 0.15; } };
+    const anchors = o.id ? new Map([[o.id, new Vector3(0, 0, 0)]]) : undefined;   // a cluster can stand for a state (Θ⁺)
+    return { group: g, labels, anchors, update(t) {
+      balls.rotation.y = t * (o.spin || 0); balls.rotation.x = Math.sin(t * 0.3) * 0.15;
+      if (o.ghost) {
+        // a slow breath (5.5 s) pulls the quarks apart to twice their spacing and lets them fall back;
+        // the orbs are dimmest when farthest apart — a bound state that will not stay bound
+        const u = 0.5 - 0.5 * Math.cos(t * 1.15);
+        balls.children.forEach((b, i) => {
+          b.position.copy(home[i]).multiplyScalar(1 + 1.1 * u + 0.08 * Math.sin(t * 2.1 + i));
+          setOrb(b.material, 'uOpacity', 0.6 - 0.35 * u);
+        });
+      }
+    } };
   },
   molecule(o) {
     const g = new Group(); const labels = [];
