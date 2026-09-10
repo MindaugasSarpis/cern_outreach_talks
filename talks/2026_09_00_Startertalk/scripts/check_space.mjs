@@ -8,7 +8,7 @@ const problems = [];
 const REQUIRED = {
   page: ['src', 'pos', 'width', 'height'], text: ['text', 'pos', 'height'], ring: ['pos', 'radius'],
   tracks: ['pos', 'tracks'], spheres: ['pos', 'ids', 'origin', 'scale', 'rows'], planes: ['pos', 'planes', 'origin', 'scale', 'height', 'depth'],
-  cluster: ['pos', 'radius', 'quarks'], molecule: ['pos', 'separation', 'a', 'b'], grid: ['pos', 'from', 'to', 'step'], bar: ['pos', 'length', 'label'],
+  cluster: ['pos', 'radius', 'quarks'], pentaquark: ['pos', 'radius', 'quarks'], molecule: ['pos', 'separation', 'a', 'b'], grid: ['pos', 'from', 'to', 'step'], bar: ['pos', 'length', 'label'],
 };
 const ids = new Set();
 for (const st of space.stations) {

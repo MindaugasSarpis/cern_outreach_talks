@@ -168,9 +168,13 @@ shot script pattern in the 2026-09-08 migration plan.
 ## Hadron space (Startertalk)
 
 `talks/2026_09_00_Startertalk/` is told inside one persistent 3D scene: a
-path of seven built scenes (stations) in the WoP landing's ambient particle
-field, which is pulled gently toward the active station. Stations:
-`paper` (page 1 of Zweig's CERN-TH-401 as a lit sheet, five quark spheres
+path of eight built scenes (stations) in the WoP landing's ambient particle
+field, a uniform bright ground pulled only faintly toward the active station
+(a station may set `gather`, and `pulse: <s>` shoves the dust outward that
+often). Stations: `hero` (the cover and the close: a large living c c̄ u u d
+cluster, quarks on their own tilted orbits — `cluster` with `orbit`, `core`,
+`quarkScale` — the dust swirling into it, the camera swaying ±9°; `wide`
+resolves here), `paper` (page 1 of Zweig's CERN-TH-401 as a lit sheet, five quark spheres
 drifting together), `theta` (a ghost cluster — five faint quarks that breathe
 apart and never hold — standing for Θ⁺(1540)), `decay` (Λb⁰ →
 J/ψ p K⁻ as tubes with a pulse), `states` (the eight pentaquarks as spheres
@@ -202,8 +206,9 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   `createSpace(canvas, container, { data, space, onArrive })` →
   `setPose({at, dist, yaw, pitch})`, `setStop(id)`, `setDim(k)`, `setPaused`,
   `dispose`. `at` resolves as `[x, y, z]` → station id → state id (sphere
-  anchor + HUD offset) → named pose (`wide` = the paper station from far,
-  `origin`, `future`). Flights 1.4–4.5 s by distance. The shared shader
+  anchor + HUD offset) → named pose (`wide` = the hero station, `origin` =
+  the paper, `future`). A look or a pose may set `sway` (idle yaw amplitude
+  in degrees, default 2.5). Shells are fresnel bubbles (rim only). Flights 1.4–4.5 s by distance. The shared shader
   `particle-hero/shaders/passes.glsl.js` gained `uGather` (a wide pull
   toward a point; zero in the WoP hero).
 - Frame rule from the renders: an object appears to the RIGHT of the frame

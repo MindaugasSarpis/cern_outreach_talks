@@ -1,5 +1,5 @@
 import {
-  Group, Mesh, MeshBasicMaterial, ShaderMaterial, PlaneGeometry, TorusGeometry, SphereGeometry, BufferGeometry, BufferAttribute,
+  Group, Mesh, Points, MeshBasicMaterial, ShaderMaterial, PlaneGeometry, TorusGeometry, SphereGeometry, BufferGeometry, BufferAttribute,
   Line, LineSegments, LineBasicMaterial, LineDashedMaterial, TextureLoader, Vector3, DoubleSide, AdditiveBlending, Color, CylinderGeometry, Quaternion,
 } from 'three';
 import { makeLabel, makeText } from './labels.js';
@@ -60,7 +60,11 @@ function quarkBall(q, r = 0.42, { ghost = false } = {}) {
   return m;
 }
 function shell(radius, color = '#7dd3fc', opacity = 0.12) {
-  return new Mesh(new SphereGeometry(radius, 32, 20), new MeshBasicMaterial({ color, transparent: true, opacity, depthWrite: false, blending: AdditiveBlending, side: DoubleSide }));
+  // a bubble, not a disc: the fresnel orb with almost no body, additive, so
+  // only the rim glows and the inside stays open to the dust and the quarks
+  const m = orb(color, { opacity: Math.min(0.4, opacity * 2.2), core: 0.05 });
+  m.blending = AdditiveBlending; m.side = DoubleSide;
+  return new Mesh(new SphereGeometry(radius, 40, 24), m);
 }
 function endLabel(text, pts, color) {
   const l = makeLabel(text, { worldH: 0.46, color, letterSpacing: 0.02, upper: false });
@@ -173,14 +177,27 @@ const build = {
     // faint orbs that breathe apart and back together and never quite hold.
     const g = new Group(); const labels = []; const balls = new Group();
     const home = [];
-    for (const q of o.quarks) { const b = quarkBall(q, 0.42 * (o.radius / 1.9), { ghost: !!o.ghost }); balls.add(b); home.push(b.position.clone()); }
+    for (const q of o.quarks) { const b = quarkBall(q, 0.42 * (o.radius / 1.9) * (o.quarkScale || 1), { ghost: !!o.ghost }); balls.add(b); home.push(b.position.clone()); }
     g.add(balls);
     if (o.shell) g.add(shell(o.radius, '#7dd3fc', o.ghost ? 0.05 : 0.12));
+    if (o.core) g.add(shell(o.radius * 0.38, '#7dd3fc', 0.1));   // an inner glow, the binding
+    // `orbit: true`: each quark rides its own tilted ring through its home
+    // position, at its own pace — the cluster lives instead of turning as a block
+    const rings = o.orbit ? home.map((h, i) => {
+      const n = new Vector3(Math.sin(i * 2.1), 0.8 + 0.6 * Math.cos(i * 1.3), Math.sin(i * 0.7)).normalize();
+      const u = h.clone().sub(n.clone().multiplyScalar(h.dot(n))).normalize();
+      const w = new Vector3().crossVectors(n, u);
+      return { r: h.length(), u, w, speed: 0.22 + 0.11 * (i % 3), phase: i * 1.7 };
+    }) : null;
     if (o.label) { const l = makeLabel(o.label, { worldH: 0.4, color: '#f2f5f9', letterSpacing: 0.08 }); l.position.set(0, o.radius + 0.7, 0); g.add(l); labels.push(l); }
     g.position.copy(v(o.pos));
     const anchors = o.id ? new Map([[o.id, new Vector3(0, 0, 0)]]) : undefined;   // a cluster can stand for a state (Θ⁺)
     return { group: g, labels, anchors, update(t) {
       balls.rotation.y = t * (o.spin || 0); balls.rotation.x = Math.sin(t * 0.3) * 0.15;
+      if (rings) balls.children.forEach((b, i) => {
+        const k = rings[i], a = k.phase + t * k.speed;
+        b.position.copy(k.u).multiplyScalar(k.r * Math.cos(a)).addScaledVector(k.w, k.r * Math.sin(a));
+      });
       if (o.ghost) {
         // a slow breath (5.5 s) pulls the quarks apart to twice their spacing and lets them fall back;
         // the orbs are dimmest when farthest apart — a bound state that will not stay bound
@@ -228,6 +245,133 @@ const build = {
     g.position.copy(v(o.pos));
     return { group: g, labels: [l] };
   },
+};
+
+// A grain sprite for the particle pentaquark: soft additive discs, sized by
+// depth, each twinkling on its own seed.
+const GRAIN_VERT = /* glsl */ `
+attribute float aSize, aAlpha, aSeed; attribute vec3 aColor;
+uniform float uPixelRatio, uTime;
+varying vec3 vColor; varying float vAlpha;
+void main() {
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * mv;
+  float tw = 0.7 + 0.3 * sin(uTime * (1.2 + aSeed * 2.4) + aSeed * 40.0);
+  gl_PointSize = uPixelRatio * aSize * tw * (72.0 / max(-mv.z, 0.1));
+  vColor = aColor; vAlpha = aAlpha * tw;
+}`;
+const GRAIN_FRAG = /* glsl */ `
+varying vec3 vColor; varying float vAlpha;
+void main() {
+  float d = length(gl_PointCoord - 0.5);
+  float a = smoothstep(0.5, 0.04, d) * vAlpha;
+  gl_FragColor = vec4(vColor * a, a);
+}`;
+const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2; };
+const FLAVOUR = {
+  c: { grain: '#4f9cff', core: '#dff0ff' }, cbar: { grain: '#8e7dff', core: '#efe9ff' },
+  u: { grain: '#dfe6ee', core: '#ffffff' }, d: { grain: '#b9c4d0', core: '#ffffff' }, s: { grain: '#f0925c', core: '#fff1e6' },
+};
+
+build.pentaquark = function (o) {
+  // The hero: five quarks as fuzzy clouds of grains around a bright core,
+  // riding their own tilted orbits; colour strings of flowing grains join
+  // them in a ring (c → u → d → u → c̄ → c); a thin haze of grains marks the
+  // bound volume. No solid surface anywhere.
+  const g = new Group();
+  const Q = o.quarks, nQ = Q.length;
+  const R = o.radius || 3, rQ = o.quarkRadius || 0.7;
+  const NQ = 360, NS = 2600, NT = 170, NC = 1;   // grains per quark, boundary, per string, cores
+  const nStr = nQ;                                // ring of strings
+  const total = nQ * (NQ + NC) + NS + nStr * NT;
+  const pos = new Float32Array(total * 3), col = new Float32Array(total * 3);
+  const size = new Float32Array(total), alpha = new Float32Array(total), seed = new Float32Array(total);
+  let k = 0;
+  const put = (c, sz, al) => { col.set(c, k * 3); size[k] = sz; alpha[k] = al; seed[k] = Math.random(); return k++; };
+  const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b]; };
+  // quark clouds: gaussian offsets, each grain with its own slow spin about the core
+  const clouds = Q.map((q) => {
+    const f = FLAVOUR[q.flavour] || FLAVOUR.u, grain = rgb(f.grain), core = rgb(f.core);
+    const items = [];
+    for (let i = 0; i < NQ; i++) {
+      const off = new Vector3(gauss(), gauss(), gauss()).multiplyScalar(rQ * 0.55);
+      const far = off.length() / rQ;
+      items.push({ idx: put(grain, 1.0 + 1.0 * Math.random(), 0.3 + 0.55 * Math.exp(-far * 1.6)), off, w: 0.25 + 0.5 * Math.random(), ph: Math.random() * 6.28 });
+    }
+    const coreIdx = put(core, 15, 0.9);
+    return { items, coreIdx };
+  });
+  // the boundary: a tight band of grains at the bound radius R — dense enough
+  // to read as a surface from a distance, still grains up close — plus, below,
+  // a faint rim bubble that catches the edge
+  const haze = [];
+  for (let i = 0; i < NS; i++) {
+    const d = new Vector3(gauss(), gauss(), gauss()).normalize();
+    const r = R * (0.97 + 0.06 * Math.random());
+    haze.push({ idx: put(rgb('#7dd3fc'), 0.7 + 0.8 * Math.random(), 0.2 + 0.3 * Math.random()), d, r, ph: Math.random() * 6.28 });
+  }
+  g.add(shell(R, '#7dd3fc', 0.05));
+  // strings: grains flowing from quark a to quark b along a gently bowed path
+  const ring = [];
+  for (let s = 0; s < nStr; s++) {
+    const a = s, b = (s + 1) % nQ, items = [];
+    const n = new Vector3(gauss(), gauss(), gauss()).normalize();
+    for (let i = 0; i < NT; i++) items.push({ idx: put(rgb('#7dd3fc'), 0.8 + 0.8 * Math.random(), 0.25 + 0.4 * Math.random()), u: Math.random(), w: (Math.random() - 0.5) * 0.28, ph: Math.random() * 6.28 });
+    ring.push({ a, b, n, items });
+  }
+  const geo = new BufferGeometry();
+  geo.setAttribute('position', new BufferAttribute(pos, 3));
+  geo.setAttribute('aColor', new BufferAttribute(col, 3));
+  geo.setAttribute('aSize', new BufferAttribute(size, 1));
+  geo.setAttribute('aAlpha', new BufferAttribute(alpha, 1));
+  geo.setAttribute('aSeed', new BufferAttribute(seed, 1));
+  const mat = new ShaderMaterial({
+    vertexShader: GRAIN_VERT, fragmentShader: GRAIN_FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
+    uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) } },
+  });
+  const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts);
+  // quark centres on tilted orbits through their home positions
+  const home = Q.map((q) => v(q.pos));
+  const orbits = home.map((h, i) => {
+    const n = new Vector3(Math.sin(i * 2.1), 0.8 + 0.6 * Math.cos(i * 1.3), Math.sin(i * 0.7)).normalize();
+    const u = h.clone().sub(n.clone().multiplyScalar(h.dot(n))).normalize();
+    const w = new Vector3().crossVectors(n, u);
+    return { r: h.length(), u, w, speed: 0.18 + 0.1 * (i % 3), phase: i * 1.7 };
+  });
+  const centres = home.map((h) => h.clone());
+  const tmp = new Vector3(), tmp2 = new Vector3();
+  const labels = [];
+  if (o.label) { const l = makeLabel(o.label, { worldH: 0.5, color: '#8b97a6', letterSpacing: 0.1, upper: false }); l.position.set(0, R + 1.0, 0); g.add(l); labels.push(l); }   // above the cluster, clear of centred text on the close
+  g.position.copy(v(o.pos));
+  const set = (idx, p) => { pos[idx * 3] = p.x; pos[idx * 3 + 1] = p.y; pos[idx * 3 + 2] = p.z; };
+  return { group: g, labels, update(t) {
+    mat.uniforms.uTime.value = t;
+    centres.forEach((c, i) => { const k = orbits[i], a = k.phase + t * k.speed; c.copy(k.u).multiplyScalar(k.r * Math.cos(a)).addScaledVector(k.w, k.r * Math.sin(a)); });
+    clouds.forEach((cl, i) => {
+      const c = centres[i];
+      for (const it of cl.items) {
+        // the grain circles its core: rotate the offset about y at its own rate, breathe radially
+        const a = t * it.w + it.ph, ca = Math.cos(a), sa = Math.sin(a);
+        const br = 1 + 0.12 * Math.sin(t * 1.3 + it.ph);
+        tmp.set((it.off.x * ca - it.off.z * sa) * br, it.off.y * br, (it.off.x * sa + it.off.z * ca) * br).add(c);
+        set(it.idx, tmp);
+      }
+      set(cl.coreIdx, c);
+    });
+    for (const h of haze) { tmp.copy(h.d).multiplyScalar(h.r * (1 + 0.04 * Math.sin(t * 0.6 + h.ph))); tmp.applyAxisAngle(new Vector3(0, 1, 0), t * 0.05); set(h.idx, tmp); }
+    for (const s of ring) {
+      const A = centres[s.a], B = centres[s.b];
+      for (const it of s.items) {
+        const u = (it.u + t * 0.16) % 1;
+        tmp.lerpVectors(A, B, u);
+        // bow the string outward from the cluster centre and let the grain wander across it
+        tmp2.copy(tmp).normalize().multiplyScalar(0.35 * Math.sin(Math.PI * u));
+        tmp.add(tmp2).addScaledVector(s.n, it.w * Math.sin(Math.PI * u) * (1 + 0.5 * Math.sin(t * 2.2 + it.ph)));
+        set(it.idx, tmp);
+      }
+    }
+    geo.attributes.position.needsUpdate = true;
+  } };
 };
 
 export function buildStation(station, ctx) {

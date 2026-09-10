@@ -22,7 +22,10 @@ const FOV = 50, MAX_DT = 1 / 30;
 const D2R = Math.PI / 180;
 const DEFAULT_POSE = { dist: 9, yaw: -20, pitch: 6 };
 // Named poses resolve to a station; `wide` looks at the paper station from far.
-const NAMED = { wide: { station: 'paper', offset: [-15, 1.5, 0], dist: 30, yaw: -20, pitch: 12 }, origin: { station: 'paper' }, future: { station: 'future' } };
+// `wide` is the hero station (cover and close): a large living five-quark cluster.
+const NAMED = { wide: { station: 'hero' }, origin: { station: 'paper' }, future: { station: 'future' } };
+const GATHER_DEFAULT = 0.25;   // the field's pull toward the active station; a station may set `gather` (the hero swirls the dust)
+const PULSE_KICK = 26;         // a station with `pulse: <s>` shoves the dust outward from its centre that often
 const HUD_OFFSET = new Vector3(0.6, -0.35, 0);   // a lit state lands just left of centre, in the gap between the record and the figure
 
 function pickTexSize(coarse) {
@@ -133,14 +136,14 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
   // at → { target, dist, yaw, pitch, station }; `at` is [x,y,z], a station id, a state id or a named pose
   const resolve = (p) => {
     let at = p.at;
-    const out = { target: new Vector3(), station: null, dist: p.dist, yaw: p.yaw, pitch: p.pitch };
+    const out = { target: new Vector3(), station: null, dist: p.dist, yaw: p.yaw, pitch: p.pitch, sway: p.sway };
     let offset = null;
     if (typeof at === 'string' && NAMED[at]) { const n = NAMED[at]; out.dist ??= n.dist; out.yaw ??= n.yaw; out.pitch ??= n.pitch; offset = n.offset || null; at = n.station; }
     if (Array.isArray(at)) { out.target.set(at[0], at[1], at[2]); out.station = nearestStation(out.target); }
     else if (stations.has(at)) {
       const { def, pos } = stations.get(at); const look = def.look || {};
       out.target.copy(pos); if (offset) out.target.add(new Vector3(...offset)); else if (look.target) out.target.add(new Vector3(...look.target));
-      out.dist ??= look.dist; out.yaw ??= look.yaw; out.pitch ??= look.pitch; out.station = at;
+      out.dist ??= look.dist; out.yaw ??= look.yaw; out.pitch ??= look.pitch; out.sway ??= look.sway; out.station = at;
     } else if (byId.has(at) && byId.get(at).pos) {
       out.target.copy(byId.get(at).pos).add(HUD_OFFSET);
       out.station = nearestStation(out.target);
@@ -153,7 +156,8 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
   const applyPose = (p, elapsed) => {
     const r = resolve(p);
     const dist = r.dist * (1 + 0.02 * Math.sin(elapsed / 31 * Math.PI * 2));
-    const yaw = (r.yaw + 2.5 * Math.sin(elapsed / 46 * Math.PI * 2)) * D2R;
+    // idle sway about the pose's yaw: 2.5° by default; a look may ask for more (the hero slowly circles)
+    const yaw = (r.yaw + (r.sway ?? 2.5) * Math.sin(elapsed / 46 * Math.PI * 2)) * D2R;
     const pitch = (r.pitch + 1.2 * Math.sin(elapsed / 57 * Math.PI * 2 + 2)) * D2R;
     goalLook.copy(r.target);
     goalPos.set(r.target.x + dist * Math.sin(yaw) * Math.cos(pitch), r.target.y + dist * Math.sin(pitch), r.target.z + dist * Math.cos(yaw) * Math.cos(pitch));
@@ -176,6 +180,8 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
   const getDelta = () => { const t = performance.now(); const d = (t - lastT) / 1000; lastT = t; return d; };
   const period = FIELD_BOUNDS.clone().multiplyScalar(2);
   const gather = new Vector3();
+  const burst = velMat.uniforms.uBurst.value;
+  let nextPulse = 3;
 
   function frame() {
     raf = requestAnimationFrame(frame);
@@ -204,7 +210,13 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
       Math.round(curPos.z / period.z) * period.z,
     );
     const st = stations.get(activeStation);
-    if (st) { gather.copy(st.pos).sub(field.position); velMat.uniforms.uGather.value.set(gather.x, gather.y, gather.z, 0.25); }
+    if (st) {
+      gather.copy(st.pos).sub(field.position);
+      velMat.uniforms.uGather.value.set(gather.x, gather.y, gather.z, st.def.gather ?? GATHER_DEFAULT);
+      // a pulsing station shoves the dust outward from its centre every `pulse` seconds; the shove decays over ~a second
+      if (st.def.pulse && elapsed >= nextPulse) { burst.set(gather.x, gather.y, gather.z, PULSE_KICK); nextPulse = elapsed + st.def.pulse; }
+    }
+    if (burst.w > 0) burst.w = Math.max(0, burst.w - PULSE_KICK * 1.3 * dt);
     velMat.uniforms.uDt.value = dt; velMat.uniforms.uTime.value = elapsed; posMat.uniforms.uDt.value = dt;
     velMat.uniforms.uPos.value = posA.texture; velMat.uniforms.uVel.value = velA.texture; pass(velMat, velB);
     posMat.uniforms.uPos.value = posA.texture; posMat.uniforms.uVel.value = velB.texture; pass(posMat, posB);

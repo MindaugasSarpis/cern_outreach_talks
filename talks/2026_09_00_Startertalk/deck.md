@@ -817,8 +817,7 @@ Speaker: one sentence, then stop. Which of the predicted states exist, with whic
 
 ---
 layout: statement
-space:
-  at: wide
+space: { at: [-26, -4.4, 0], dist: 17, yaw: -22, pitch: 2, sway: 9 }   # the hero cluster above the centred text
 ---
 
 # Thank you

@@ -1,6 +1,82 @@
 {
   "stations": [
     {
+      "id": "hero",
+      "pos": [
+        -26,
+        0,
+        0
+      ],
+      "look": {
+        "target": [
+          -7.8,
+          0.4,
+          0
+        ],
+        "dist": 15,
+        "yaw": -22,
+        "pitch": 7,
+        "sway": 9
+      },
+      "gather": 3.6,
+      "pulse": 6,
+      "objects": [
+        {
+          "type": "pentaquark",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "radius": 3.1,
+          "quarkRadius": 0.72,
+          "label": "c c̄ u u d",
+          "quarks": [
+            {
+              "flavour": "c",
+              "pos": [
+                1.2,
+                0.9,
+                0.3
+              ]
+            },
+            {
+              "flavour": "u",
+              "pos": [
+                0.4,
+                -1.5,
+                -0.9
+              ]
+            },
+            {
+              "flavour": "d",
+              "pos": [
+                1.5,
+                -0.3,
+                -1.2
+              ]
+            },
+            {
+              "flavour": "u",
+              "pos": [
+                -0.9,
+                1.3,
+                -1.0
+              ]
+            },
+            {
+              "flavour": "cbar",
+              "pos": [
+                -1.3,
+                -0.6,
+                0.6
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "paper",
       "pos": [
         0,
