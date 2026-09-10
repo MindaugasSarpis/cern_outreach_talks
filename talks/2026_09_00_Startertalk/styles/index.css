@@ -68,7 +68,7 @@
 .two-col > div { max-width: 60ch; }
 .under-fig { margin-top: 8px; }
 .closing { font-size: 22px; font-weight: 500; margin-top: 6px; }
-.refs { font-size: 12px; line-height: 1.3; column-count: 3; column-gap: 24px; }
+.refs { font-size: 11px; line-height: 1.25; column-count: 3; column-gap: 22px; }
 
 /* --- Layout budget: the lower third of every content slide stays clear.
    `.stage` caps content at 340 px; figures carry explicit heights and sit on
