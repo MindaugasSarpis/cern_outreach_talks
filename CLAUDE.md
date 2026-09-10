@@ -190,7 +190,8 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   `page | text | ring | tracks | spheres | planes | cluster | molecule |
   grid | bar` (fields in `scripts/check_space.mjs`, which also checks that
   every `space.at` and stop id in `deck.md` resolves; run it after editing
-  either file). A `ring` or a `cluster` with an `id` stands for a state; a
+  either file). A track whose end is a vertex sets `labelAt` (`mid`, or
+  `[x, y, z]` relative to the object) so its label does not sit on the node. A `ring` or a `cluster` with an `id` stands for a state; a
   `cluster` with `ghost: true` is a state that went away (Θ⁺). No hollow
   markers anywhere: an unestablished state is the same orb at a third of
   the light. `page.src` is written `/figures/…` and resolved against

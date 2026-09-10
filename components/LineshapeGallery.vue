@@ -147,7 +147,7 @@ const PC = [4312, 4440, 4457]
         <text class="lab phi2" :x="pad.l + 4" :y="pad.t + 34">φ = 180° · dip</text>
         <text class="lab dim" :x="pad.l + 4" :y="pad.t + 46">alone</text>
       </svg>
-      <figcaption><b>Interference</b> <span>one pole, a coherent background</span><br /><em>the histogram shows |A + b·e^{iφ}|², not |A|²</em></figcaption>
+      <figcaption><b>Interference</b> <span>one pole, a coherent background</span><br /><em>the histogram shows <span style="white-space: nowrap">|A + b·e<sup>iφ</sup>|², not |A|²</span></em></figcaption>
     </figure>
 
     <figure class="panel">

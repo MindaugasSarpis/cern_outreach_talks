@@ -72,6 +72,14 @@ function endLabel(text, pts, color) {
   l.position.set(end.x + 0.55, end.y + 0.3, end.z);
   return l;
 }
+function placedLabel(text, at, pts, color) {
+  // a track that ends on a vertex: an end label would sit on the node, so the
+  // data gives the position ('mid' = above the middle of the track, or [x, y, z])
+  const l = makeLabel(text, { worldH: 0.46, color, letterSpacing: 0.02, upper: false });
+  if (Array.isArray(at)) l.position.set(at[0], at[1], at[2]);
+  else { const a = pts[0], b = pts[pts.length - 1]; l.position.set((a.x + b.x) / 2, (a.y + b.y) / 2 + 0.42, (a.z + b.z) / 2); }
+  return l;
+}
 
 const build = {
   page(o) {
@@ -129,7 +137,7 @@ const build = {
           g.add(tube);
         }
       }
-      if (t.label) { const l = endLabel(t.label, pts, t.color || '#f2f5f9'); g.add(l); labels.push(l); }
+      if (t.label) { const l = t.labelAt ? placedLabel(t.label, t.labelAt, pts, t.color || '#f2f5f9') : endLabel(t.label, pts, t.color || '#f2f5f9'); g.add(l); labels.push(l); }
       if (o.pulse && !t.dashed) {
         const dot = new Mesh(new SphereGeometry(0.09, 10, 8), new MeshBasicMaterial({ color: col, transparent: true, opacity: 0.9, blending: AdditiveBlending, depthWrite: false }));
         g.add(dot); pulses.push({ a: pts[0], b: pts[pts.length - 1], dot });

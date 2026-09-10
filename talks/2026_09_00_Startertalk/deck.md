@@ -27,12 +27,13 @@ Speaker: 30 minutes, one scene throughout: a path of stations in the dust
 (the 1964 page, the Θ⁺ ghost, the decay, the states, the two interiors, the
 missing neutrals, the empty grid). Three parts: what LHCb found (2015–2022), what the
 states could be, what Run 3 will measure. The 2015 paper (LHCb, PRL 115 (2015)
-072001, submitted July 2015) is eleven years old. The LHC hadrons behind the title are Koppenburg's list (LHCb-FIGURE-2021-001 and updates, CC BY 4.0). Eight points are added by hand from their own papers: two LHCb evidence states his list omits, Pc(4337)⁺ and Pcs(4459)⁰, and six non-LHC landmarks, the 1964 quark model, J/ψ, Θ⁺(1540), X(3872), Z(4430)⁺ and Zc(3900)⁺. (~0.5 min)
+072001, submitted July 2015) is eleven years old. Behind the title: the hero station, a living c c̄ u u d cluster with the dust swirling into it, the camera swaying; the same cluster closes the talk. Hadron dates and masses in the records are from Koppenburg's list (LHCb-FIGURE-2021-001 and updates, CC BY 4.0), credited on the references backup. (~0.5 min)
 -->
 
 ---
 space:
   at: paper
+  yaw: 2
   dim: 0.35          # the page and the cluster are the slide
 ---
 
@@ -56,14 +57,14 @@ no experiment established a five-quark state until 2015. (~1.25 min)
 -->
 
 ---
-space: { at: theta, dist: 14, yaw: -20, pitch: 32, dim: 0.35 }
+space: { at: [12.5, 6, -5], dist: 14, yaw: -20, pitch: 32, dim: 0.35 }   # the ghost in the empty lower right, clear of the quote
 ---
 
 # 1976–1992: the same story for twenty years
 
 <div class="quote-hero wide">“the results permit no definite conclusion — the same story for 20 years. […] The skepticism about baryons not made of three quarks, and lack of any experimental activity in this area, make it likely that another 20 years will pass before the issue is decided.”<span class="who">Particle Data Group, 1992 edition · the last listing of Z₀(1780), Z₀(1865) and Z₁(1900), positive-strangeness baryons claimed in the early 1970s</span></div>
 
-<div class="src">PDG 1976, RMP 48 (1976) S1 · PDG 1992, PRD 45 (1992) S1 · both quoted in PDG 2025, review 83 “Pentaquarks” (Karliner, Skwarnicki)</div>
+<div class="src">PDG 1976, RMP 48 (1976) S1 · PDG 1992, PRD 45 (1992) S1 · both quoted in PDG 2024 (2025 update), review “Pentaquarks” (Karliner, Skwarnicki)</div>
 
 <!--
 Speaker: the first wave. Kaon–nucleon partial-wave analyses in the early
@@ -94,12 +95,12 @@ Diakonov, Petrov and Polyakov: the chiral-soliton antidecuplet has an exotic uud
 
 ## Seen, then not
 
-LEPS reported it in 2003 at 4.6σ from tens of events; about ten experiments followed. The high-statistics runs of CLAS, Belle and BaBar saw nothing, and PDG 2008 dropped it.
+LEPS reported it in 2003 at 4.6σ from tens of events; about ten experiments followed. The high-statistics runs of CLAS, Belle and BaBar saw nothing, and PDG 2008 closed the case.
 
 </div>
 </div>
 
-<div class="quote-line mt-md">“The conclusion that pentaquarks in general, and that Θ⁺, in particular, do not exist, appears compelling.”<span class="who">Particle Data Group, 2006 edition</span></div>
+<div class="quote-line mt-md">“The conclusion that pentaquarks in general, and the Θ⁺, in particular, do not exist, appears compelling.”<span class="who">Particle Data Group, 2006 edition</span></div>
 
 <div class="src">Diakonov, Petrov, Polyakov, Z. Phys. A 359 (1997) 305 · LEPS, PRL 91 (2003) 012002 · Hicks, EPJ H 37 (2012) 1 · PDG 2006, J. Phys. G 33 (2006) 1</div>
 
@@ -108,8 +109,8 @@ Speaker: LEPS saw a peak near 1540 MeV in γn → K⁺K⁻n: M = 1540 ± 10 MeV,
 4.6σ, from tens of events (LEPS, PRL 91 (2003) 012002). Positive reports in
 2003–04 from LEPS, DIANA, CLAS, SAPHIR, HERMES, ZEUS and others, each with
 samples of tens of events; the CLAS high-statistics runs, Belle and BaBar found
-no signal, and the PDG 2008 review "Pentaquarks" (C.G. Wohl) refers to "the overwhelming evidence that the claimed pentaquarks do not exist"; the 2008 edition drops the Θ(1540) from the Listings. A bump in
-one projection can be a reflection, a kinematic effect or a fluctuation: the CLAS repeat of its own γd measurement, at about 30 times the luminosity, found no signal (PDG 2006 pentaquark update). The 2015 claim rested on a six-dimensional amplitude fit with phase motion shown for the narrow state, and in the 2019 sample, nine times the data, the narrow state was there again, resolved into two (slide 10).
+no signal, and the PDG 2008 review "Pentaquarks" (C.G. Wohl) refers to "the overwhelming evidence that the claimed pentaquarks do not exist"; the Θ(1540) is gone from the Listings soon after. A bump in
+one projection can be a reflection, a kinematic effect or a fluctuation: the CLAS repeat of its own γd measurement, at about 30 times the luminosity, found no signal (PDG 2006 pentaquark update). The 2015 claim rested on a six-dimensional amplitude fit with phase motion shown for the narrow state, and in the 2019 sample, nine times the data, the narrow state was there again, resolved into two (slide 12).
 Click: the stop on Θ⁺(1540); the record reads LEPS, 2003, 1540 ± 10 MeV, not confirmed. The
 ghost in the world is five faint quarks that breathe apart and never hold: a
 state that went away. Throughout the world an unestablished state is a dim
@@ -118,56 +119,7 @@ the record)
 -->
 
 ---
-space:
-  at: [63.5, -0.8, 1]
-  dist: 15
-  yaw: 0
-  pitch: 58          # from above: the states and neutrals stations stay out of the frame, only dust behind the models
-  dim: 0.22          # the two models in the world are the picture
----
-
-# One hadron or two
-
-<div class="two-col caption world-caption">
-<div><b>Two hadrons.</b> A charmed baryon and an anticharmed meson about two femtometres apart, bound by a few MeV through the residual strong force, as in a deuteron.</div>
-<div><b>One hadron.</b> Five quarks in one volume, bound directly by the colour force, as in a proton. QCD allows both; the talk is about telling them apart.</div>
-</div>
-
-<div class="src">Sizes schematic; the 1 fm bar in the world is to scale</div>
-
-<!--
-Speaker: this is the talk's question; say it in one sentence and come back
-to it at the close. The two models in the world (left: the Σc D̄ molecule with
-its exchange glow; right: the compact ball — seen from above, so only dust
-lies behind them) are the picture; nothing else is drawn on the slide. Deuteron: binding energy 2.22 MeV (m_p + m_n − m_d, PDG 2024 constants),
-size r ≈ ħc/√(2μE_B) ≈ 4.3 fm for μ = 469.5 MeV, several times the range of
-the force. Proton: rms charge radius 0.84 fm (PDG 2024), one volume, no
-substructure of hadrons inside. The two panels carry no quark letters and no
-channel labels on purpose: do not name Σc D̄ or diquarks here, the physics
-labels come on slides 14 and 15. The camera looks back along the date axis
-toward the LHC era, with the pentaquark lane empty until 2015. (~1.0 min)
--->
-
----
-space: { at: decay, dist: 16, yaw: -50, pitch: 10 }
----
-
-# Why charm
-
-<div class="card card-primary pad-tight col-50">
-
-Charmed hadrons are heavy, so a pair moves slowly and a weak residual force can bind it, as a proton and a neutron bind in the deuteron. The threshold is known to a fraction of an MeV.
-
-</div>
-
-<div class="src">Guo et al., RMP 90 (2018) 015004 · PDG 2024 masses</div>
-
-<!--
-Speaker: Heavy hadrons: a Σc D̄ pair has a large reduced mass (μ ≈ 1059 MeV for Σc⁺D̄⁰, against 470 MeV for the deuteron), so the kinetic energy of its relative motion, k²/2μ, is small and a weak residual force (light-meson exchange between the two hadrons) is enough to bind; this is the deuteron mechanism one level up (Törnqvist, Z. Phys. C 61 (1994) 525; Guo, Hanhart, Meißner et al., RMP 90 (2018) 015004, Sec. III). The relevant mass is the reduced mass of the two hadrons; the charm quark's motion inside either hadron does not enter. Thresholds are sharp because the hadron masses are known to a fraction of an MeV: D⁰ 1864.84 ± 0.05 MeV, Σc(2455)⁺ 2452.65 (+0.22 −0.16) MeV (PDG 2024). A state a few MeV below such a threshold is narrow because a decay to J/ψ p needs the c and the c̄ to recombine across two hadrons. Plant the deuteron here for the second time: binding energy 2.22 MeV (m_p + m_n − m_d, PDG 2024 constants), and "bound like a deuteron" is what part two calls a hadronic molecule. The LHC makes b hadrons whose decays put cc̄ and light quarks in one place: 26 000 Λb⁰ → J/ψ p K⁻ decays in Run 1 (3 fb⁻¹; LHCb, PRL 115 (2015) 072001); the decay is on slide 7. (~1.0 min)
--->
-
----
-space: { at: [46, 2, -22], dist: 16, yaw: -8, pitch: 12, dim: 0.76 }   # off the path, in the dust
+space: { at: [38, 2, -28], dist: 16, yaw: -8, pitch: 12, dim: 0.76 }   # off the path, in the dust; no station in frame
 ---
 
 # A resonance is a pole, not a bump
@@ -189,31 +141,7 @@ bookkeeper who drew complex numbers as points in a plane. (~2 min)
 -->
 
 ---
-space: { at: [46, 2, -22], dist: 16, yaw: 4, pitch: 12, dim: 0.76 }
----
-
-# What a peak can be
-
-<LineshapeGallery />
-
-<div class="src">Flatté, PLB 63 (1976) 224 · Guo, Hanhart, Meißner et al., RMP 90 (2018) 015004 · Guo, Meißner, Wang, Yang, PRD 92 (2015) 071502 · Λ(1520) reflection: PDG 2024 masses, isotropic decay, Λ<sub>b</sub>⁰ → J/ψ p K⁻ kinematics</div>
-
-<!--
-Speaker: six mechanisms on one axis, computed, not sketched. Top row: an
-isolated pole; a pole pinned under a threshold (Flatté), narrow, with a kink
-where the channel opens; a cusp with no pole at all, which peaks exactly at
-the threshold with the phase still at zero. Bottom row: a triangle
-singularity, a log branch point whose position is set by the loop masses and
-moves with the production process; the same Breit–Wigner on a coherent
-background at three phases, a peak, an asymmetric shoulder, a dip; and the
-Λ(1520) → pK⁻ reflection, sixteen MeV wide in m(pK), five hundred MeV wide in
-m(J/ψ p), straight across the P_c masses. Only the first two have a pole. The
-phase at the peak, marked on each inset, is what separates them, and a
-one-dimensional mass fit never measures it. (~2.5 min)
--->
-
----
-space: { at: [46, 2, -22], dist: 16, yaw: 16, pitch: 12, dim: 0.76 }
+space: { at: [38, 2, -28], dist: 16, yaw: 16, pitch: 12, dim: 0.76 }
 ---
 
 # Not every bump is a state
@@ -246,24 +174,55 @@ space: { at: [46, 2, -22], dist: 16, yaw: 16, pitch: 12, dim: 0.76 }
 Speaker: this is the checklist the rest of the talk is graded against; amber
 is how a bump appears, green what a state must do. Every 2015 and 2019 claim
 went through the right-hand column: the 2015 significances are Δ(−2 ln L)
-with the extended Λ* model; the 2019 ones are Δχ² on pseudoexperiments, 7.6σ
-before and 7.3σ after the look-elsewhere correction for P_c(4312)⁺, and the
-two-peak hypothesis over one at 5.4σ (6.2σ on the weighted sample). The
+with the extended Λ* model; the 2019 ones are Δχ² on pseudoexperiments, 7.3σ with
+the look-elsewhere correction for P_c(4312)⁺, and the two-peak hypothesis
+over one at 5.4σ. The
 model-independent 2016 check uses the Legendre moments of the Λ* → pK⁻
 angular distribution, limited by the highest Λ* spin, and rejects
 "reflections only" at more than 9σ. (~2 min)
 -->
 
 ---
+space:
+  at: [63.5, -0.8, 1]
+  dist: 14
+  yaw: 0
+  pitch: 58          # from above: the states and neutrals stations stay out of the frame, only dust behind the models
+  dim: 0.22          # the two models in the world are the picture
+---
+
+# One hadron or two
+
+<div class="three-col caption world-caption">
+<div><b>Two hadrons.</b> A charmed baryon and an anticharmed meson about two femtometres apart, bound by a few MeV through the residual strong force, as in a deuteron.</div>
+<div><b>One hadron.</b> Five quarks in one volume, bound directly by the colour force, as in a proton. QCD allows both; the talk is about telling them apart.</div>
+<div><b>Why charm.</b> Charmed hadrons are heavy, so a pair moves slowly and a weak residual force can bind it, as a proton and a neutron bind in the deuteron; the threshold is known to a fraction of an MeV.</div>
+</div>
+
+<div class="src">Sizes schematic; the 1 fm bar in the world is to scale · Guo et al., RMP 90 (2018) 015004 · PDG 2024 masses</div>
+
+<!--
+Speaker: this is the talk's question, asked once the Θ⁺ lesson and the checklist are on the table; say it in one sentence and come back
+to it at the close. The third line, why charm, hands over to the LHCb decay on the next slides. The two models in the world (left: the Σc D̄ molecule with
+its exchange glow; right: the compact ball — seen from above, so only dust
+lies behind them) are the picture; nothing else is drawn on the slide. Deuteron: binding energy 2.22 MeV (m_p + m_n − m_d, PDG 2024 constants),
+size r ≈ ħc/√(2μE_B) ≈ 4.3 fm for μ = 469.5 MeV, several times the range of
+the force. Proton: rms charge radius 0.84 fm (PDG 2024), one volume, no
+substructure of hadrons inside. The two panels carry no quark letters and no
+channel labels on purpose: do not name Σc D̄ or diquarks here, the physics
+labels come on slides 17 and 18. Why charm, the third line: heavy hadrons: a Σc D̄ pair has a large reduced mass (μ ≈ 1059 MeV for Σc⁺D̄⁰, against 470 MeV for the deuteron), so the kinetic energy of its relative motion, k²/2μ, is small and a weak residual force (light-meson exchange between the two hadrons) is enough to bind; this is the deuteron mechanism one level up (Törnqvist, Z. Phys. C 61 (1994) 525; Guo, Hanhart, Meißner et al., RMP 90 (2018) 015004, Sec. III). The relevant mass is the reduced mass of the two hadrons; the charm quark's motion inside either hadron does not enter. Thresholds are sharp because the hadron masses are known to a fraction of an MeV: D⁰ 1864.84 ± 0.05 MeV, Σc(2455)⁺ 2452.65 (+0.22 −0.16) MeV (PDG 2024). A state a few MeV below such a threshold is narrow because a decay to J/ψ p needs the c and the c̄ to recombine across two hadrons. Plant the deuteron here for the second time: binding energy 2.22 MeV (m_p + m_n − m_d, PDG 2024 constants), and "bound like a deuteron" is what part two calls a hadronic molecule. The LHC makes b hadrons whose decays put cc̄ and light quarks in one place: 26 000 Λb⁰ → J/ψ p K⁻ decays in Run 1 (3 fb⁻¹; LHCb, PRL 115 (2015) 072001); the decay is on slide 9. (~1.5 min)
+-->
+
+---
 layout: section
 hideInToc: true
-space: { at: decay, dist: 13, yaw: -30, pitch: 8 }
+space: { at: [32.4, 1.6, 2], dist: 13, yaw: -30, pitch: 8 }   # the decay below the section title
 ---
 
 # What LHCb found, 2015–2022
 
 <!--
-Speaker: one sentence while the camera flies. The hollow ring behind is the Θ⁺(1540) (LEPS, PRL 91 (2003) 012002; not confirmed, PDG 2008). In the tetraquark lane the X(3872) of 2003 (Belle, PRL 91 (2003) 262001) is the first hidden-charm exotic and is established; Z(4430)⁺ followed in 2007 (Belle, PRL 100 (2008) 142001) and Zc(3900)⁺ in 2013 (BESIII, PRL 110 (2013) 252001; Belle, PRL 110 (2013) 252002). The pentaquark lane stays empty until 2015. (~0.25 min)
+Speaker: one sentence while the camera flies to the decay station; the title sits above the Λb⁰ → J/ψ p K⁻ tubes. If the context is wanted: the X(3872) of 2003 (Belle, PRL 91 (2003) 262001) is the first hidden-charm exotic and is established; Z(4430)⁺ followed in 2007 (Belle, PRL 100 (2008) 142001) and Zc(3900)⁺ in 2013 (BESIII, PRL 110 (2013) 252001; Belle, PRL 110 (2013) 252002); no pentaquark until 2015. (~0.25 min)
 -->
 
 ---
@@ -296,7 +255,7 @@ space: { at: [30, 3.5, 2], dist: 24, yaw: -30, pitch: 18, dim: 0.8 }   # the dec
 <div class="src">Left: schematic, Λ* at PDG masses, P<sub>c</sub> bands at the 2019 LHCb masses, widths exaggerated · Right: LHCb, PRL 115 (2015) 072001, Fig. 5</div>
 
 <!--
-Speaker: The left panel is the schematic, the right panel the 2015 data. The three horizontal bands on the left are the 2019 states, drawn for orientation; the 2015 data show one band, near 19.5 GeV² in the paper's words. The 2015 fit was six-dimensional: m(K⁻p) and five decay angles (the Λb⁰, Λ* and J/ψ helicity angles and two azimuths, φ_K and φ_μ). Each Λ* is a vertical band with its own spin structure in the angles. A J/ψ p state is a horizontal band that crosses the heavier Λ* bands, and its interference with the Λ* amplitudes fixes its phase and its J^P. At the Λ(1520) mass m(J/ψ p) cannot go below 4501 MeV, so no Pc band reaches the Λ(1520) band. In the data the bright vertical band at m²(K⁻p) ≈ 2.3 GeV² is the Λ(1520) (mass 1519.42 MeV, PDG 2024 average); the horizontal band the paper places near 19.5 GeV² is the J/ψ p structure: the narrow Pc(4450)⁺ at 4.45² = 19.8 GeV², with the broad Pc(4380)⁺ (19.2 GeV²) under it. This is why a one-dimensional fit to m(J/ψ p) cannot give quantum numbers; that point returns once, on slide 10. The 2015 extended model had 14 Λ* states, with masses and widths fixed to PDG values, and 146 free helicity couplings. Λ* alone does not reproduce the m(J/ψ p) peak, and one added J/ψ p state is not enough; two are. Central values come from the reduced model, 12 Λ* states and 64 free parameters, with the two J/ψ p states; the extended model gives the significances, and its differences enter the systematics. Six mass bins and free magnitudes and phases per bin give the Argand test on the next slide. (~1.25 min)
+Speaker: The left panel is the schematic, the right panel the 2015 data. The three horizontal bands on the left are the 2019 states, drawn for orientation; the 2015 data show one band, near 19.5 GeV² in the paper's words. The 2015 fit was six-dimensional: m(K⁻p) and five decay angles (the Λb⁰, Λ* and J/ψ helicity angles and two azimuths, φ_K and φ_μ). Each Λ* is a vertical band with its own spin structure in the angles. A J/ψ p state is a horizontal band that crosses the heavier Λ* bands, and its interference with the Λ* amplitudes fixes its phase and its J^P. At the Λ(1520) mass m(J/ψ p) cannot go below 4501 MeV, so no Pc band reaches the Λ(1520) band. In the data the bright vertical band at m²(K⁻p) ≈ 2.3 GeV² is the Λ(1520) (mass 1519.42 MeV, PDG 2024 average); the horizontal band the paper places near 19.5 GeV² is the J/ψ p structure: the narrow Pc(4450)⁺ at 4.45² = 19.8 GeV², with the broad Pc(4380)⁺ (19.2 GeV²) under it. This is why a one-dimensional fit to m(J/ψ p) cannot give quantum numbers; that point returns once, on slide 12. The 2015 extended model had 14 Λ* states, with masses and widths fixed to PDG values, and 146 free helicity couplings. Λ* alone does not reproduce the m(J/ψ p) peak, and one added J/ψ p state is not enough; two are. Central values come from the reduced model, 12 Λ* states and 64 free parameters, with the two J/ψ p states; the extended model gives the significances, and its differences enter the systematics. Six mass bins and free magnitudes and phases per bin give the Argand test on the next slide. (~1.25 min)
 -->
 
 ---
@@ -307,34 +266,31 @@ space: { at: states, dim: 0.7, asof: 2015, stops: [Pc(4380), Pc(4450)] }
 # 2015: two J/ψ p states
 
 <div class="row stage">
-<div class="card card-primary pad-tight col-40">
+<div class="card card-primary pad-tight col-55">
 
 ## Six dimensions, 14 Λ* resonances
 
-The 26 000 Run 1 decays are described only with two J/ψ p states added, at 9σ and 12σ.
+The 26 000 Run 1 decays are described only with two J/ψ p states added, at 9σ and 12σ. The P<sub>c</sub>(4450)⁺ amplitude, left free in six bins of m(J/ψ p) across ±Γ, traces the Argand circle.
 
 </div>
-<img src="/figures/argand_schematic.svg" class="col-55" alt="Argand circle of a Breit–Wigner amplitude in six mass bins, with its lineshape" />
 </div>
-
-<div class="caption mt-sm">Schematic: a Breit–Wigner phase turns through 180° across the peak, so the amplitude runs round a circle. LHCb left the P<sub>c</sub>(4450)⁺ amplitude free in six bins across ±Γ; the fitted points follow the circle.</div>
 
 <div class="src">LHCb, PRL 115 (2015) 072001</div>
 
 <!--
-Speaker: the numbers stay in the HUD. Run 1 (3 fb⁻¹), 26 007 ± 166 Λb⁰ → J/ψ p K⁻ decays; a six-dimensional amplitude fit (m(Kp) and five angles) with 14 Λ* resonances; the data are not described until two J/ψ p states are added. Pc(4380)⁺: M = 4380 ± 8 ± 29 MeV, Γ = 205 ± 18 ± 86 MeV, 9σ. Pc(4450)⁺: M = 4449.8 ± 1.7 ± 2.5 MeV, Γ = 39 ± 5 ± 19 MeV, 12σ. Best fit J^P = (3/2⁻, 5/2⁺); (3/2⁺, 5/2⁻) and (5/2⁺, 3/2⁻) acceptable (LHCb, PRL 115 (2015) 072001, arXiv:1507.03414). The Argand test: the Pc(4450)⁺ amplitude was left free, magnitude and phase, in six bins of m(J/ψ p) across ±Γ, and the six points follow the Breit–Wigner circle anticlockwise. The broad state's loop shows a large phase change, but the amplitude values depend on the Λ* model and the paper calls that study not conclusive. Its later status is on the next slide. Two 2016 checks the Θ⁺ never had: a model-independent analysis shows that Λ* reflections alone cannot describe the data (PRL 117 (2016) 082002, arXiv:1604.05708), and the Cabibbo-suppressed Λb⁰ → J/ψ p π⁻ decay shows exotic contributions at 3.1σ, the two Pc states plus the Zc(4200)⁻ → J/ψ π⁻ taken together, which the data do not separate; the Pc pair alone reaches 3.3σ only if the Zc(4200)⁻ is assumed absent, and its rate is consistent with the J/ψ p K⁻ result after Cabibbo suppression (PRL 117 (2016) 082003, arXiv:1606.06999). Stops 15 s each: first the broad state (the paper's m(J/ψ p) projection), then the narrow one (the paper's own Argand diagram). The HUD reads as of 2015: do not say "split" yet; that is the next slide. (~2.25 min)
+Speaker: the numbers stay in the HUD. Run 1 (3 fb⁻¹), 26 007 ± 166 Λb⁰ → J/ψ p K⁻ decays; a six-dimensional amplitude fit (m(Kp) and five angles) with 14 Λ* resonances; the data are not described until two J/ψ p states are added. Pc(4380)⁺: M = 4380 ± 8 ± 29 MeV, Γ = 205 ± 18 ± 86 MeV, 9σ. Pc(4450)⁺: M = 4449.8 ± 1.7 ± 2.5 MeV, Γ = 39 ± 5 ± 19 MeV, 12σ. Best fit J^P = (3/2⁻, 5/2⁺); (3/2⁺, 5/2⁻) and (5/2⁺, 3/2⁻) acceptable (LHCb, PRL 115 (2015) 072001, arXiv:1507.03414). The Argand test: the Pc(4450)⁺ amplitude was left free, magnitude and phase, in six bins of m(J/ψ p) across ±Γ, and the six points follow the Breit–Wigner circle anticlockwise. The broad state's loop shows a large phase change, but the amplitude values depend on the Λ* model and the paper calls that study not conclusive. Its later status is on the next slide. Two 2016 checks the Θ⁺ never had: a model-independent analysis shows that Λ* reflections alone cannot describe the data (PRL 117 (2016) 082002, arXiv:1604.05708), and the Cabibbo-suppressed Λb⁰ → J/ψ p π⁻ decay shows exotic contributions at 3.1σ, the two Pc states plus the Zc(4200)⁻ → J/ψ π⁻ taken together, which the data do not separate; the Pc pair alone reaches 3.3σ only if the Zc(4200)⁻ is assumed absent, and its rate is consistent with the J/ψ p K⁻ result after Cabibbo suppression (PRL 117 (2016) 082003, arXiv:1606.06999). Stops 15 s each: first the broad state (the paper's m(J/ψ p) projection), then the narrow one (the paper's own Argand diagram, the circle of the pole slide traced by data). The HUD reads as of 2015: do not say "split" yet; that is the next slide. (~1.75 min)
 -->
 
 ---
 clicks: 3
-space: { at: states, yaw: -22, dim: 0.7, stops: [Pc(4312), Pc(4440), Pc(4457)] }
+space: { at: states, yaw: -22, dim: 0.8, stops: [Pc(4312), Pc(4440), Pc(4457)] }
 ---
 
 # 2019: three narrow states
 
 <div class="caption">Runs 1–2 (9 fb⁻¹) gave 246 000 decays, nine times the 2015 sample.</div>
 
-<div class="col-60 mt-sm">
+<div class="col-60 mt-sm plate">
 
 | state | M (MeV) | Γ (MeV) | |
 |---|---|---|---|
@@ -364,14 +320,14 @@ space: { at: states, dist: 17, yaw: -38, pitch: 16, dim: 0.78 }
 </div>
 
 <div class="two-col caption mt-sm">
-<div><b>The cut.</b> m(Kp) > 1.9 GeV removes over 80% of the Λ*, which peak at low pK⁻ mass, the Λ(1520) above all; the value maximises the expected significance for an isotropic P<sub>c</sub>⁺ decay.</div>
+<div><b>The cut.</b> m(Kp) > 1.9 GeV removes most of the Λ*, which peak at low pK⁻ mass, the Λ(1520) above all; the value maximises the expected significance for an isotropic P<sub>c</sub>⁺ decay.</div>
 <div><b>The weights.</b> θ<sub>Pc</sub>: the K⁻–J/ψ angle in the P<sub>c</sub>⁺ frame; the Λ* fill cos θ<sub>Pc</sub> > 0. Weight = 1 / (candidate density in cos θ<sub>Pc</sub>), taken where signal is a small fraction: the Λ* flatten, the signal is untouched.</div>
 </div>
 
 <div class="src">LHCb, PRL 122 (2019) 222001, Figs. 1 and 4 · fit: three relativistic Breit–Wigners × p·q, incoherent, convolved with the 2–3 MeV resolution, on a polynomial; validated on six-dimensional amplitude-model pseudo-data</div>
 
 <!--
-Speaker: the reweighting is worth a minute because it is often misread as a
+Speaker: the fraction of Λ* the cut removes: quote it only from the paper (verify before the venue). The reweighting is worth a minute because it is often misread as a
 fit to a signal model. It is not: the weights are one over the background
 density in the helicity angle, taken from the data in the narrow-peak mass
 region, where the signal is a small fraction of the candidates, so the Λ*
@@ -380,8 +336,8 @@ fit on each sample: binned χ² in 4.22–4.57 GeV; three relativistic
 Breit–Wigners added incoherently, each times the phase-space factor p·q,
 convolved with the 2–3 MeV resolution, on a polynomial background — sixth
 order in the nominal weighted fit, or lower order plus a broad fourth
-Breit–Wigner. Sensitivity: weighted (8.2σ for P_c(4312)⁺ with the
-look-elsewhere effect) > m(Kp) cut (7.3σ) > inclusive; all three samples
+Breit–Wigner. Sensitivity: weighted > m(Kp) cut (7.3σ for P_c(4312)⁺ with the
+look-elsewhere effect) > inclusive; all three samples
 enter the systematics because their backgrounds differ. Coherent sums of
 pairs of Breit–Wigners give no significant Δχ² but shift the masses: the
 +6.8 MeV on P_c(4312)⁺. The strategy was validated on ensembles of
@@ -396,14 +352,14 @@ space: { at: states, dist: 10, yaw: -14, dim: 0.75, stops: [Pc(4337)] }
 
 # Masses and thresholds
 
-<img src="/figures/pc_thresholds.svg" class="stage mx-auto" style="height: 285px" alt="Pentaquark masses and widths against charmed-baryon anticharmed-meson thresholds" />
+<img src="/figures/pc_thresholds.svg" class="stage mx-auto plate" style="height: 285px" alt="Pentaquark masses and widths against charmed-baryon anticharmed-meson thresholds" />
 
-<div class="caption mt-sm">Five narrow states lie within 20 MeV of a Σ<sub>c</sub>D̄⁽*⁾ or Ξ<sub>c</sub>D̄⁽*⁾ threshold (dashed lines). For P<sub>c</sub>(4312)⁺ and P<sub>c</sub>(4457)⁺ the threshold lies within the peak, so a bound state and a virtual state both fit. P<sub>c</sub>(4337)⁺ (evidence, B<sub>s</sub>⁰ → J/ψ p p̄) lies 13 and 20 MeV above the Σ<sub>c</sub>⁺⁺D⁻ and Σ<sub>c</sub>⁺D̄⁰ thresholds.</div>
+<div class="caption mt-sm">Five narrow states lie within 20 MeV of a Σ<sub>c</sub>D̄⁽*⁾ or Ξ<sub>c</sub>D̄⁽*⁾ threshold (dashed lines). For P<sub>c</sub>(4312)⁺ and P<sub>c</sub>(4457)⁺ the threshold lies within the peak, so a bound state and a virtual state both fit. P<sub>c</sub>(4337)⁺ (evidence, B<sub>s</sub>⁰ → J/ψ p <span class="ol">p</span>) lies 13 and 20 MeV above the Σ<sub>c</sub>⁺⁺D⁻ and Σ<sub>c</sub>⁺D̄⁰ thresholds.</div>
 
 <div class="src">Thresholds from PDG 2024 masses, charge-consistent pairs (inputs on the backup slide) · states: LHCb 2015–2022</div>
 
 <!--
-Speaker: take this slide slowly; slides 14 and 16 reuse the 5.6 MeV offset. Offsets from charge-consistent pairs, PDG 2024 masses (Σc(2455)⁺ 2452.65, Ξc⁺ 2467.71, Ξc⁰ 2470.44, D⁰ 1864.84, D⁻ 1869.66, D*⁰ 2006.85 MeV; inputs on the thresholds backup): Pc(4312)⁺ 5.6 MeV below Σc⁺D̄⁰ (4317.5); Pc(4440)⁺ 19.2 and Pc(4457)⁺ 2.2 MeV below Σc⁺D̄*⁰ (4459.5); Pcs(4338)⁰ 0.8 MeV above Ξc⁺D⁻ (4337.4); Pcs(4459)⁰ 18.5 MeV below Ξc⁰D̄*⁰ (4477.3). LHCb's own words: "approximately 5 and 2 MeV below" (PRL 122 (2019) 222001), "about 20 MeV of binding" (same), "about 19 MeV below Ξc⁰D̄*⁰" (Sci. Bull. 66 (2021) 1278), "at the Ξc⁺D⁻ threshold" (PRL 131 (2023) 031901). The Σc⁺⁺D⁻ and Σc⁺⁺D*⁻ pairs lie 6 and 5 MeV higher (4323.6, 4464.2). The deuteron is bound by 2.2 MeV (m_p + m_n − m_d, PDG 2024 constants). For Pc(4312)⁺ and Pc(4457)⁺ the threshold sits inside the width, so a bound state and a virtual state both fit. LHCb 2019 lists virtual states among the plausible explanations, and JPAC (Fernández-Ramírez et al., PRL 123 (2019) 092001, arXiv:1904.10021) fits the 2019 spectrum with S-matrix amplitudes and finds the pole about 2 MeV above the Σc⁺D̄⁰ threshold on an unphysical sheet, a virtual state; in their words the attraction is 'not strong enough, however, to form a bound state'. Fewer than 1% of their bootstrap fits (0.7%, scattering-length case) turn it into a bound state, and in the effective-range case the pole does not survive decoupling the channels; the effective-range case is preferred only at 1.8σ, and both favour a virtual state. The stop: Pc(4337)⁺, M = 4337 (+7 −4) (+2 −2) MeV, Γ = 29 (+26 −12) (+14 −14) MeV, 3.1–3.7σ depending on the J^P hypothesis, in 797 ± 31 Bs⁰ → J/ψ p p̄ decays (LHCb, PRL 128 (2022) 062001, arXiv:2108.04720); no Pc(4312)⁺ signal in that channel. If confirmed, it does not sit just below a Σc D̄⁽*⁾ threshold as the 2019 states do: Σc⁺⁺D⁻ (4323.6) and Σc⁺D̄⁰ (4317.5) lie 13 and 20 MeV below it, Σc⁺D̄*⁰ 122 MeV above; the nearest threshold above it is χc0 p at 4353.0, 16 MeV up, and with Γ = 29 MeV the Σc⁺⁺D⁻ threshold sits inside the peak. The LHCb paper says only that a compatible J^P = 1/2⁺ state is predicted in the D̄Λc–D̄Σc coupled-channel study of Shen, Rönchen, Meißner and Zou (Chin. Phys. C 42 (2018) 023106); Yan, Peng, Sánchez Sánchez and Pavón Valderrama (arXiv:2108.05306) list χc0 p, D̄Σc and D̄*Λc–D̄Σc coupled-channel readings, while compact-pentaquark papers argue the opposite. Say 'not below a Σc D̄ threshold', not 'no threshold nearby'. (~2 min)
+Speaker: take this slide slowly; slides 17 and 19 reuse the 5.6 MeV offset. Offsets from charge-consistent pairs, PDG 2024 masses (Σc(2455)⁺ 2452.65, Ξc⁺ 2467.71, Ξc⁰ 2470.44, D⁰ 1864.84, D⁻ 1869.66, D*⁰ 2006.85 MeV; inputs on the thresholds backup): Pc(4312)⁺ 5.6 MeV below Σc⁺D̄⁰ (4317.5); Pc(4440)⁺ 19.2 and Pc(4457)⁺ 2.2 MeV below Σc⁺D̄*⁰ (4459.5); Pcs(4338)⁰ 0.8 MeV above Ξc⁺D⁻ (4337.4); Pcs(4459)⁰ 18.5 MeV below Ξc⁰D̄*⁰ (4477.3). LHCb's own words: "approximately 5 and 2 MeV below" (PRL 122 (2019) 222001), "about 20 MeV of binding" (same), "about 19 MeV below Ξc⁰D̄*⁰" (Sci. Bull. 66 (2021) 1278), "at the Ξc⁺D⁻ threshold" (PRL 131 (2023) 031901). The Σc⁺⁺D⁻ and Σc⁺⁺D*⁻ pairs lie 6 and 5 MeV higher (4323.6, 4464.2). The deuteron is bound by 2.2 MeV (m_p + m_n − m_d, PDG 2024 constants). For Pc(4312)⁺ and Pc(4457)⁺ the threshold sits inside the width, so a bound state and a virtual state both fit. LHCb 2019 lists virtual states among the plausible explanations, and JPAC (Fernández-Ramírez et al., PRL 123 (2019) 092001, arXiv:1904.10021) fits the 2019 spectrum with S-matrix amplitudes and finds the pole about 2 MeV above the Σc⁺D̄⁰ threshold on an unphysical sheet, a virtual state; in their words the attraction is 'not strong enough, however, to form a bound state'. Fewer than 1% of their bootstrap fits (0.7%, scattering-length case) turn it into a bound state, and in the effective-range case the pole does not survive decoupling the channels; the effective-range case is preferred only at 1.8σ, and both favour a virtual state. The stop: Pc(4337)⁺, M = 4337 (+7 −4) (+2 −2) MeV, Γ = 29 (+26 −12) (+14 −14) MeV, 3.1–3.7σ depending on the J^P hypothesis, in 797 ± 31 Bs⁰ → J/ψ p p̄ decays (LHCb, PRL 128 (2022) 062001, arXiv:2108.04720); no Pc(4312)⁺ signal in that channel. If confirmed, it does not sit just below a Σc D̄⁽*⁾ threshold as the 2019 states do: Σc⁺⁺D⁻ (4323.6) and Σc⁺D̄⁰ (4317.5) lie 13 and 20 MeV below it, Σc⁺D̄*⁰ 122 MeV above; the nearest threshold above it is χc0 p at 4353.0, 16 MeV up, and with Γ = 29 MeV the Σc⁺⁺D⁻ threshold sits inside the peak. The LHCb paper says only that a compatible J^P = 1/2⁺ state is predicted in the D̄Λc–D̄Σc coupled-channel study of Shen, Rönchen, Meißner and Zou (Chin. Phys. C 42 (2018) 023106); Yan, Peng, Sánchez Sánchez and Pavón Valderrama (arXiv:2108.05306) list χc0 p, D̄Σc and D̄*Λc–D̄Σc coupled-channel readings, while compact-pentaquark papers argue the opposite. Say 'not below a Σc D̄ threshold', not 'no threshold nearby'. (~2 min)
 -->
 
 ---
@@ -425,7 +381,7 @@ It appears at 3.1σ in Ξ<sub>b</sub>⁻ → J/ψ Λ K⁻, Runs 1–2, about 19 
 
 ## P<sub>cs</sub>(4338)⁰, observation (2022)
 
-An amplitude analysis of B⁻ → J/ψ Λ p̄ finds the state at more than 15σ with J = 1/2; its mass lies at the Ξ<sub>c</sub>⁺D⁻ threshold.
+An amplitude analysis of B⁻ → J/ψ Λ <span class="ol">p</span> finds the state at more than 15σ with J = 1/2; its mass lies at the Ξ<sub>c</sub>⁺D⁻ threshold.
 
 </div>
 </div>
@@ -435,7 +391,7 @@ An amplitude analysis of B⁻ → J/ψ Λ p̄ finds the state at more than 15σ 
 <div class="src">LHCb, Sci. Bull. 66 (2021) 1278 · PRL 131 (2023) 031901 · LHCb now writes P<sub>ψs</sub><sup>Λ</sup>(4459)⁰ and P<sub>ψs</sub><sup>Λ</sup>(4338)⁰ (arXiv:2206.15233)</div>
 
 <!--
-Speaker: Pcs(4459)⁰ in Ξb⁻ → J/ψ Λ K⁻, Runs 1–2 (9 fb⁻¹), 1750 ± 50 signal decays, itself a six-dimensional amplitude analysis: M = 4458.8 ± 2.9 (+4.7 −1.1) MeV, Γ = 17.3 ± 6.5 (+8.0 −5.7) MeV, 3.1σ; a two-peak hypothesis (4454.9 and 4467.8 MeV) is neither confirmed nor refuted; about 19 MeV below Ξc⁰D̄*⁰ (LHCb, Sci. Bull. 66 (2021) 1278, arXiv:2012.10380). Pcs(4338)⁰ in B⁻ → J/ψ Λ p̄, Runs 1–2 (9 fb⁻¹), about 4400 signal candidates, full amplitude analysis: M = 4338.2 ± 0.7 ± 0.4 MeV, Γ = 7.0 ± 1.2 ± 1.3 MeV, significance above 15σ; J = 1/2 with 3/2 excluded, negative parity favoured and positive parity excluded at 90% CL; at the Ξc⁺D⁻ threshold, 0.8 MeV above 4337.4 (LHCb, PRL 131 (2023) 031901, arXiv:2210.10346). The peak sits 3 MeV below the m(J/ψΛ) endpoint, m(B⁻) − m(p) = 4341.1 MeV, which is why the stop figure shows it at the right edge; the 15σ comes from the six-dimensional amplitude fit with the nonresonant Λp̄ and J/ψp̄ terms, and the 1 MeV mass resolution resolves the 7 MeV width. The parent is a B meson rather than a b baryon; a different parent alone is not yet a test of universality. The test is one peak at the same mass in two parents; the only such case so far is the 3.1σ Λb⁰ → J/ψ p π⁻ result of 2016, and B⁻ → J/ψ Λ p̄ ends at m(J/ψ Λ) = 4341 MeV, so it cannot reach Pcs(4459)⁰. That test is programme item 3 on slide 22. Strange partners were predicted before they were seen, as Ξc D̄⁽*⁾ molecules by Xiao, Nieves, Oset (PLB 799 (2019) 135051: Ξc D̄ at 4277, Ξc D̄* at 4430 MeV) and Wang, Meng, Zhu (PRD 101 (2020) 034018: 4319, 4457, 4463 MeV), and as compact diquark states by Ali et al. (JHEP 10 (2019) 256); LHCb cites all three in PRL 131 (2023) 031901, and Sci. Bull. 66 (2021) 1278 also cites Santopinto and Giachino, PRD 96 (2017) 014014. If asked about SU(3): Σc sits in the flavour sextet with Ξc′ and Ωc, so the SU(3) siblings of the Σc D̄⁽*⁾ molecules would be at the Ξc′ D̄⁽*⁾ thresholds; the Ξc D̄⁽*⁾ states come from the antitriplet sector in the coupled-channel models, not from an SU(3) rotation. These are the first two strange states either way. Naming (arXiv:2206.15233): P for pentaquark, ψ for the cc̄ pair plus one s per strange quark, the superscript is the light-quark isospin (Λ: I = 0, N: 1/2, Σ: 1, Δ: 3/2). The old names stay on screen because they match the paper figures at the two stops. (~2 min)
+Speaker: Pcs(4459)⁰ in Ξb⁻ → J/ψ Λ K⁻, Runs 1–2 (9 fb⁻¹), about 1750 signal decays, a one-dimensional fit to m(J/ψΛ) with the Ξ* reflections modelled, so no J^P: M = 4458.8 ± 2.9 (+4.7 −1.1) MeV, Γ = 17.3 ± 6.5 (+8.0 −5.7) MeV, 3.1σ; a two-peak hypothesis (4454.9 and 4467.8 MeV) is neither confirmed nor refuted; about 19 MeV below Ξc⁰D̄*⁰ (LHCb, Sci. Bull. 66 (2021) 1278, arXiv:2012.10380). Pcs(4338)⁰ in B⁻ → J/ψ Λ p̄, Runs 1–2 (9 fb⁻¹), about 4400 signal candidates, full amplitude analysis: M = 4338.2 ± 0.7 ± 0.4 MeV, Γ = 7.0 ± 1.2 ± 1.3 MeV, significance above 15σ; J = 1/2 with 3/2 excluded, negative parity favoured and positive parity excluded at 90% CL; at the Ξc⁺D⁻ threshold, 0.8 MeV above 4337.4 (LHCb, PRL 131 (2023) 031901, arXiv:2210.10346). The peak sits 3 MeV below the m(J/ψΛ) endpoint, m(B⁻) − m(p) = 4341.1 MeV, which is why the stop figure shows it at the right edge; the 15σ comes from the six-dimensional amplitude fit with the nonresonant Λp̄ and J/ψp̄ terms, and the 1 MeV mass resolution resolves the 7 MeV width. The parent is a B meson rather than a b baryon; a different parent alone is not yet a test of universality. The test is one peak at the same mass in two parents; the only such case so far is the 3.1σ Λb⁰ → J/ψ p π⁻ result of 2016, and B⁻ → J/ψ Λ p̄ ends at m(J/ψ Λ) = 4341 MeV, so it cannot reach Pcs(4459)⁰. That test is programme item 3 on slide 24. Strange partners were predicted before they were seen, as Ξc D̄⁽*⁾ molecules by Xiao, Nieves, Oset (PLB 799 (2019) 135051: Ξc D̄ at 4277, Ξc D̄* at 4430 MeV) and Wang, Meng, Zhu (PRD 101 (2020) 034018: 4319, 4457, 4463 MeV), and as compact diquark states by Ali et al. (JHEP 10 (2019) 256); LHCb cites all three in PRL 131 (2023) 031901, and Sci. Bull. 66 (2021) 1278 also cites Santopinto and Giachino, PRD 96 (2017) 014014. If asked about SU(3): Σc sits in the flavour sextet with Ξc′ and Ωc, so the SU(3) siblings of the Σc D̄⁽*⁾ molecules would be at the Ξc′ D̄⁽*⁾ thresholds; the Ξc D̄⁽*⁾ states come from the antitriplet sector in the coupled-channel models, not from an SU(3) rotation. These are the first two strange states either way. Naming (arXiv:2206.15233): P for pentaquark, ψ for the cc̄ pair plus one s per strange quark, the superscript is the light-quark isospin (Λ: I = 0, N: 1/2, Σ: 1, Δ: 3/2). The old names stay on screen because they match the paper figures at the two stops. (~2 min)
 -->
 
 ---
@@ -452,8 +408,8 @@ space:
 
 <!--
 Speaker: there are two families of answers, two hadrons or one, and a third
-possibility that a peak is kinematic and there is no state at all. From here to slide 17 the camera
-orbits the cluster of eight states (yaw −25 → +20); say the line and move on so
+possibility that a peak is kinematic and there is no state at all. From here to slide 20 the camera
+orbits the two interiors, the molecule and the compact ball (yaw −30 → +45); say the line and move on so
 the drift is visible. (~0.25 min)
 -->
 
@@ -463,6 +419,7 @@ space:
   dist: 12
   yaw: -10
   pitch: 8
+  dim: 0.75
 ---
 
 # Two hadrons bound as a molecule
@@ -494,11 +451,11 @@ vertex), so Σc D̄ binds through vector exchange and coupled channels. Isospin
 1/2 is attractive, 3/2 repulsive, so the picture gives I = 1/2 without further input.
 Weakly bound, hence narrow: to decay to J/ψ p the c and c̄ must recombine
 across the two hadrons. Heavy-quark spin symmetry organises the seven S-wave
-Σc⁽*⁾ D̄⁽*⁾ states in the table (Liu et al., PRL 122 (2019) 242001, arXiv:1903.11560; Du et al., PRL 124 (2020) 072001, arXiv:1910.11846). Which of Pc(4440)⁺ and Pc(4457)⁺ is the 1/2⁻ depends on the sign of one spin-dependent term. Liu et al. give both orderings (scenario A: Pc(4440)⁺ = 1/2⁻, Pc(4457)⁺ = 3/2⁻; B reversed) and prefer A, calling the preference 'probably not particularly strong'; Du et al., with one-pion exchange, find Pc(4440)⁺ = 3/2⁻ and Pc(4457)⁺ = 1/2⁻. A measurement settles it (slide 20, not here). The "candidate near 4380" is the narrow Σc* D̄ hint in the Du et al.
+Σc⁽*⁾ D̄⁽*⁾ states in the table (Liu et al., PRL 122 (2019) 242001, arXiv:1903.11560; Du et al., PRL 124 (2020) 072001, arXiv:1910.11846). Which of Pc(4440)⁺ and Pc(4457)⁺ is the 1/2⁻ depends on the sign of one spin-dependent term. Liu et al. give both orderings (scenario A: Pc(4440)⁺ = 1/2⁻, Pc(4457)⁺ = 3/2⁻; B reversed) and prefer A, calling the preference 'probably not particularly strong'; Du et al., with one-pion exchange, find Pc(4440)⁺ = 3/2⁻ and Pc(4457)⁺ = 1/2⁻. A measurement settles it (slide 24, not here). The "candidate near 4380" is the narrow Σc* D̄ hint in the Du et al.
 fit of the 2019 spectrum, not the broad 2015 Pc(4380)⁺ (M = 4380 ± 8 ± 29 MeV,
 Γ = 205 ± 18 ± 86 MeV, PRL 115 (2015) 072001). Binding energies from the
 observed masses: Pc(4312)⁺ sits 5.6 MeV below Σc⁺ D̄⁰ (PDG 2024 masses);
-the deuteron's 2.2 MeV is the comparison planted on slide 4. Review: Guo et al.,
+the deuteron's 2.2 MeV is the comparison planted on slide 7. Review: Guo et al.,
 RMP 90 (2018) 015004. Open issues, in speech only: the binding energies depend
 on the regulator and are not first-principles numbers; a state far from every
 threshold would have no place in this picture. (~1.75 min)
@@ -510,6 +467,7 @@ space:
   dist: 10
   yaw: 20
   pitch: 8
+  dim: 0.8
 ---
 
 # One hadron: compact or hadrocharmonium
@@ -530,7 +488,7 @@ space:
 <!--
 Speaker: the compact picture. Diquark–diquark–antiquark, [cu][ud]c̄ (Maiani,
 Polosa, Riquer, PLB 749 (2015) 289, arXiv:1507.04980): two colour-antitriplet
-diquarks and an antiquark bound by colour–spin forces, an ordinary hadron with five constituents, the size of an ordinary hadron, under 1 fm (proton rms charge radius 0.84 fm, PDG 2024, slide 4). Lebed's diquark–triquark [cq][c̄qq]
+diquarks and an antiquark bound by colour–spin forces, an ordinary hadron with five constituents, the size of an ordinary hadron, under 1 fm (proton rms charge radius 0.84 fm, PDG 2024, slide 7). Lebed's diquark–triquark [cq][c̄qq]
 (PLB 749 (2015) 454, arXiv:1507.05867) is a different clustering with different
 spin couplings; one sentence, no more. Both give full SU(3) multiplets
 including isospin-3/2 partners, none of which has been observed; there is no
@@ -541,7 +499,7 @@ Pc(4440)⁺ and Pc(4457)⁺ as ψ(2S) p with 1/2⁻ and 3/2⁻; Pc(4312)⁺ as �
 J^P = 1/2⁺ and about 42 MeV of binding (Eides, Petrov, Polyakov, Mod. Phys. Lett. A 35 (2020) 2050151). Decays are
 dominated by hidden charm through the seed, so open charm is suppressed
 (Eides, Petrov, PRD 98 (2018) 114037), and ηc p needs a heavy-quark spin flip and is suppressed
-too. This picture has a direct decay test, on slide 17. Positive parity for Pc(4312)⁺ separates it from the S-wave molecule of slide 14. (~1.5 min)
+too. This picture has a direct decay test, on slide 20. Positive parity for Pc(4312)⁺ separates it from the S-wave molecule of slide 17. (~1.5 min)
 -->
 
 ---
@@ -555,7 +513,7 @@ space:
 # Cusp or pole
 
 <div class="row stage">
-<img src="/figures/lineshapes_cusp_vs_pole.svg" class="col-55" alt="A threshold cusp peaking at the threshold and a pole 5.6 MeV below it" />
+<img src="/figures/lineshapes_cusp_vs_pole.svg" class="col-55 plate" alt="A threshold cusp peaking at the threshold and a pole 5.6 MeV below it" />
 <div class="col-40">
 <div class="caption">A pure cusp peaks at the threshold. P<sub>c</sub>(4312)⁺ peaks 5.6 MeV below Σ<sub>c</sub>⁺D̄⁰, within its 10 MeV width and its +6.8 MeV mass systematic. JPAC's fit of the spectrum reads it as a pole, more likely virtual than bound.</div>
 <div class="caption mt-sm">Triangle candidate for P<sub>c</sub>(4457)⁺, Λ<sub>c</sub>(2595)⁺D̄⁰ at 4457.1 MeV: LHCb's 2019 fit prefers a Breit–Wigner.</div>
@@ -570,7 +528,7 @@ when a channel opens the amplitude has a square-root branch point; the peak
 sits at the threshold, its lineshape is fixed by the channel, and it needs
 strong coupling to be visible at all. Σc⁺ D̄⁰ opens at 4317.5 MeV (PDG 2024: 2452.65 + 1864.84); Pc(4312)⁺ has a Breit–Wigner mass of 4311.9 ± 0.7 (+6.8 −0.6) MeV and Γ = 9.8 ± 2.7 MeV (PRL 122 (2019) 222001), 5.6 MeV below the threshold, but the +6.8 MeV systematic (from fits with interfering resonances) puts the threshold inside the peak, so the position alone does not exclude a cusp. What argues against a purely kinematical cusp is JPAC's lineshape fit: it needs an attractive Σc⁺D̄⁰ interaction, and its preferred pole is a virtual state at about 4320 MeV on the fourth sheet, which shows up in the data as an enhancement at the threshold; cusp and pole are not exclusive, the question is whether an attraction sits behind the cusp.
 JPAC's S-matrix fit of the 2019 spectrum (Fernández-Ramírez et al., PRL 123
-(2019) 092001, arXiv:1904.10021) reads the peak as a pole and finds a virtual state more likely: it finds no support for a bound molecule, though a bound-state pole is not excluded (in the scattering-length fit 0.7% of bootstrap poles are bound). LHCb itself writes that virtual rather than bound states are among the plausible explanations. Say it as: a pole, more likely virtual than bound; never "a pole is required". The only conclusive phase motion is the 2015 Pc(4450)⁺ Argand loop (PRL 115 (2015) 072001, Fig. 9a); the same six-bin fit for Pc(4380)⁺ (Fig. 9b) shows a large phase change but the paper calls it not conclusive; the 2019 states come from a 1D fit and have no phase (slide 10). Triangle singularities:
+(2019) 092001, arXiv:1904.10021) reads the peak as a pole and finds a virtual state more likely: it finds no support for a bound molecule, though a bound-state pole is not excluded (in the scattering-length fit 0.7% of bootstrap poles are bound). LHCb itself writes that virtual rather than bound states are among the plausible explanations. Say it as: a pole, more likely virtual than bound; never "a pole is required". The only conclusive phase motion is the 2015 Pc(4450)⁺ Argand loop (PRL 115 (2015) 072001, Fig. 9a); the same six-bin fit for Pc(4380)⁺ (Fig. 9b) shows a large phase change but the paper calls it not conclusive; the 2019 states come from a 1D fit and have no phase (slide 12). Triangle singularities:
 three intermediate hadrons on shell at once produce a sharp peak whose
 position depends on the production process. The χc1 p threshold at 4448.9 MeV
 (PDG 2024: 3510.67 + 938.27) was the 2015 triangle candidate for Pc(4450)⁺
@@ -581,7 +539,7 @@ describe the data worse. No triangle candidate lands at 4312. Kinematic effects 
 -->
 
 ---
-space: { at: interiors, dist: 15, yaw: 45, pitch: 12 }
+space: { at: interiors, dist: 15, yaw: 45, pitch: 12, dim: 0.75 }
 ---
 
 # What tells them apart
@@ -612,13 +570,13 @@ partners, widths and magnetic moments are on the backup comparison table
 -->
 
 ---
-space: { at: neutrals, dim: 0.35 }
+space: { at: [76.2, 0.5, -2], dist: 13, yaw: -18, pitch: 6, dim: 0.45 }   # the decay in the right half, the text in the left
 ---
 
 # Where the neutrals go missing
 
 <div class="row stage">
-<div class="card card-primary pad-tight col-50">
+<div class="card card-primary pad-tight col-45">
 
 ## Σ<sub>c</sub>⁺D̄⁽*⁾⁰ always decays with a π⁰ or γ
 
@@ -627,7 +585,7 @@ space: { at: neutrals, dim: 0.35 }
 </div>
 </div>
 
-<div class="caption mt-sm col-60">LHCb has observed the isospin partner, Λ<sub>b</sub>⁰ → Σ<sub>c</sub>⁽*⁾⁺⁺D⁽*⁾⁻K⁻. The Λ<sub>b</sub>⁰ flight direction and mass fix one missing π⁰ or γ up to a two-fold ambiguity; the Σ<sub>c</sub>⁺ or D̄*⁰ mass resolves it. The LHCb Vilnius group is working on this recovery.</div>
+<div class="caption mt-sm col-45">LHCb has observed the isospin partner, <span style="white-space: nowrap">Λ<sub>b</sub>⁰ → Σ<sub>c</sub>⁽*⁾⁺⁺D⁽*⁾⁻K⁻</span>. The Λ<sub>b</sub>⁰ flight direction and mass fix one missing π⁰ or γ up to a two-fold ambiguity; the Σ<sub>c</sub>⁺ or D̄*⁰ mass resolves it. The LHCb Vilnius group is working on this recovery.</div>
 
 <div class="src">LHCb, PRL 122 (2019) 222001 · LHCb, PRD 110 (2024) L031104 · PDG 2024</div>
 
@@ -671,62 +629,6 @@ no numbers. (~1.25 min)
 -->
 
 ---
-space: { at: [84.5, 0.8, -2], dist: 9, yaw: 10, pitch: 6, dim: 0.35 }
----
-
-# Six quarks
-
-<div class="row stage">
-<div class="card card-accent pad-tight col-50">
-
-## The deuteron is the six-quark bound state we know
-
-Bound by 2.22 MeV. Lattice QCD predicts heavy dibaryons bound by tens of MeV: Ω<sub>c</sub>Ω<sub>cc</sub>, Ω<sub>b</sub>Ω<sub>bb</sub>, Ω<sub>ccb</sub>Ω<sub>cbb</sub>. The d*(2380) claim is disputed. At LHCb, the Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻ spectrum in B⁰ → Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻K⁰<sub>S</sub> shows no significant structure.
-
-</div>
-</div>
-
-<div class="src">PDG 2024 · Junnarkar, Mathur, PRL 123 (2019) 162003 · LHCb, PRD 114 (2026) 012012</div>
-
-<!--
-Speaker: the six-quark cluster in the world is a schematic.
-The one we know: the deuteron, m_p + m_n − m_d = 2.224 566 MeV from the PDG
-2024 constants table; PDG has no dibaryon or hexaquark listing.
-Terms: dibaryon = two baryons, baryon number 2; baryonium = baryon and
-antibaryon, baryon number 0. Claimed: d*(2380), WASA-at-COSY, pn → d π⁰ π⁰,
-a Lorentzian energy dependence consistent with a resonance I(J^P) = 0(3⁺)
-(PRL 106 (2011) 242302, a title with a question mark); polarised np
-scattering adds a pole at (2380 ± 10 − i 40 ± 5) MeV in the ³D₃–³G₃ waves
-(PRL 112 (2014) 202301; PRC 90 (2014) 035204), and the fusion cross sections give M ≈ 2380 MeV, Γ ≈ 70 MeV (the pole width is 2 × 40 = 80 MeV).
-Status: one experimental programme plus A2@MAMI photoproduction (same lead
-authors), not in the PDG, and contested: Molina, Ikeno and Oset reproduce the
-peak with sequential single-pion production and a triangle singularity
-(Chin. Phys. C 47 (2023) 041001), Bashkanov, Clement and Skorodko reply
-(arXiv:2106.00494); HAL QCD lattice at heavy pion masses finds a ΔΔ ⁷S₃
-quasi-bound state (PLB 811 (2020) 135935), qualitative support only.
-Predicted: binding grows with quark mass. Lattice QCD (Junnarkar and Mathur, PRL 123
-(2019) 162003): J^P = 1⁺ dibaryons ΩcΩcc at 6381(20) MeV, 26(9) MeV below
-the spin-1/2 threshold; ΩbΩbb at 16004(17) and ΩccbΩcbb at 19105(21) MeV,
-also bound, so stable against strong and electromagnetic decay. ΩcccΩccc
-(Lyu et al., PRL 127 (2021) 072003): bound by 5.7 MeV without Coulomb, near
-unitarity with it. Molecular models: ΞccΞcc loosely bound in one-boson
-exchange, 0.6 to 18 MeV depending on the cutoff (Meng, Li, Zhu, PRD 95
-(2017) 114019). What LHCb could measure, my speculation: a charmed dibaryon
-needs two charm baryons in one event, and σ(Ξcc⁺⁺)·B/σ(Λc⁺) is
-2.2 × 10⁻⁴ (Chin. Phys. C 44 (2020) 022001), so pairs of doubly charmed baryons are too rare to search for; ALICE's femtoscopy of p–Ω⁻ and p–Ξ⁻ pairs (Nature 588 (2020) 232)
-could in principle be tried on Λc–p or Λc–Λc pairs here, not done.
-Established, baryon number 0: B̄s⁰ → Λc⁺Λ̄c⁻ observed at 6.2σ and evidence for
-B̄⁰ → Λc⁺Λ̄c⁻ (PRL 136 (2026) 061802), two-body, so no spectrum; B⁰ →
-Λc⁺Λ̄c⁻K⁰S on 5.4 fb⁻¹ shows no significant structure in m(Λc⁺Λ̄c⁻), while its Λc⁺K⁰S system gives 3.9σ evidence for Ξc(2923)⁺ and Ξc(2939)⁺ (PRD 114
-(2026) 012012). Belle's threshold enhancement in e⁺e⁻ → Λc⁺Λ̄c⁻ at 4634 MeV
-(PRL 101 (2008) 172001) is not seen by BESIII (PRL 131 (2023) 191901). The
-Cabibbo-favoured Λb⁰ → Λc⁺Λ̄c⁻Λ is closed (threshold 5688.6 MeV against
-5619.6), so charmed baryon–antibaryon pairs at LHCb come from B mesons.
-Close: sixty years after (qqqqq̄), the six-quark list is the deuteron plus
-predictions. (~1.0 min)
--->
-
----
 layout: section
 hideInToc: true
 space: { at: future }
@@ -735,8 +637,8 @@ space: { at: future }
 # What Run 3 will measure
 
 <!--
-Speaker: say nothing beyond the title. The camera flies right, past the 2026
-column, onto the empty floor grid: this is where the next states go. (~0.25 min)
+Speaker: say nothing beyond the title. The camera flies right, past the last
+station, onto the empty floor grid: this is where the next states go. (~0.25 min)
 -->
 
 ---
@@ -777,7 +679,7 @@ space: { at: future, yaw: -10 }
 <ol class="prog stage">
 <li><span class="n">1</span><span class="m">J<sup>P</sup> of the three narrow states, and the coupling phases</span><span class="ch">Λ<sub>b</sub>⁰ → J/ψ p K⁻, Runs 1–3</span></li>
 <li><span class="n">2</span><span class="m">Predicted doubly strange states</span><span class="ch">Λ<sub>b</sub>⁰ → J/ψ Ξ⁻ K⁺ · Ω<sub>b</sub>⁻ → J/ψ Ξ⁰ K⁻ · B⁻ → J/ψ Ξ⁻ Λ̄</span></li>
-<li><span class="n">3</span><span class="m">Decays, and the same peak in other parents</span><span class="ch">Λ<sub>b</sub>⁰ → Σ<sub>c</sub>⁽*⁾⁺⁺ D⁽*⁾⁻ K⁻ · η<sub>c</sub> p · Λ<sub>b</sub>⁰ → J/ψ p π⁻ · B<sub>s</sub>⁰ → J/ψ p p̄</span></li>
+<li><span class="n">3</span><span class="m">Decays, and the same peak in other parents</span><span class="ch">Λ<sub>b</sub>⁰ → Σ<sub>c</sub>⁽*⁾⁺⁺ D⁽*⁾⁻ K⁻ · η<sub>c</sub> p · Λ<sub>b</sub>⁰ → J/ψ p π⁻ · B<sub>s</sub>⁰ → J/ψ p <span class="ol">p</span></span></li>
 </ol>
 
 <div class="closing">All three use data already recorded; none is published on Run 3.</div>
@@ -785,7 +687,7 @@ space: { at: future, yaw: -10 }
 <div class="src">LHCb, EPJC 85 (2025) 812 · LHCb, PRD 110 (2024) L031104 · names as in arXiv:2206.15233</div>
 
 <!--
-Speaker: Item 1. In the molecular picture heavy-quark spin symmetry fixes the multiplet, not which of the two Σc D̄* states is the 1/2⁻: that depends on the sign of one spin-spin term. The pionless contact-range fit of Liu et al. (PRL 122 (2019) 242001) weakly prefers Pc(4440)⁺ = 1/2⁻, Pc(4457)⁺ = 3/2⁻; with one-pion exchange the reversed ordering is as likely (Valderrama, PRD 100 (2019) 094028) and Du et al. (PRL 124 (2020) 072001) get the reverse; a 2026 contact-range study using heavy-quark spin and antiquark–diquark symmetry favours the Liu ordering, with stated uncertainties (arXiv:2605.13344). Hadrocharmonium (Eides, Petrov, Polyakov, Mod. Phys. Lett. A 35 (2020) 2050151) gives the same order, Pc(4440)⁺ = 1/2⁻ and Pc(4457)⁺ = 3/2⁻, as on slide 15, from the ratio of total widths, so the Liu ordering would not separate molecule from hadrocharmonium; the reversed ordering would contradict the hadrocharmonium width argument. The same fit gives the parity of Pc(4312)⁺, which separates the two pictures: 1/2⁻ for the Σc D̄ molecule, 1/2⁺ for a χc0 p seed. A 2026 two-channel Flatté refit of the published Runs 1–2
+Speaker: Item 1. In the molecular picture heavy-quark spin symmetry fixes the multiplet, not which of the two Σc D̄* states is the 1/2⁻: that depends on the sign of one spin-spin term. The pionless contact-range fit of Liu et al. (PRL 122 (2019) 242001) weakly prefers Pc(4440)⁺ = 1/2⁻, Pc(4457)⁺ = 3/2⁻; with one-pion exchange the reversed ordering is as likely (Valderrama, PRD 100 (2019) 094028) and Du et al. (PRL 124 (2020) 072001) get the reverse; a 2026 contact-range study using heavy-quark spin and antiquark–diquark symmetry favours the Liu ordering, with stated uncertainties (arXiv:2605.13344). Hadrocharmonium (Eides, Petrov, Polyakov, Mod. Phys. Lett. A 35 (2020) 2050151) gives the same order, Pc(4440)⁺ = 1/2⁻ and Pc(4457)⁺ = 3/2⁻, as on slide 18, from the ratio of total widths, so the Liu ordering would not separate molecule from hadrocharmonium; the reversed ordering would contradict the hadrocharmonium width argument. The same fit gives the parity of Pc(4312)⁺, which separates the two pictures: 1/2⁻ for the Σc D̄ molecule, 1/2⁺ for a χc0 p seed. A 2026 two-channel Flatté refit of the published Runs 1–2
 spectrum gives scattering parameters compatible with a molecular interpretation when the couplings are real, and that conclusion is less robust once the
 relative coupling phases float (arXiv:2608.25106): only a full amplitude
 analysis of Λb⁰ → J/ψ p K⁻ gives the phases. This is the only place the J^P
@@ -812,12 +714,12 @@ space:
 The J<sup>P</sup> and decays of the pentaquarks, and which family members exist, will settle whether five quarks bind as two hadrons, like the deuteron, or as one, like the proton.
 
 <!--
-Speaker: one sentence, then stop. Which of the predicted states exist, with which J^P and which decays, shows whether QCD binds five quarks the way it binds a deuteron (two hadrons, 2.2 MeV of binding, PDG 2024) or the way it binds a proton (one volume, charge radius 0.84 fm, PDG 2024). This closes the question posed on slide 4. The data are recorded. (~0.5 min)
+Speaker: one sentence, then stop. Which of the predicted states exist, with which J^P and which decays, shows whether QCD binds five quarks the way it binds a deuteron (two hadrons, 2.2 MeV of binding, PDG 2024) or the way it binds a proton (one volume, charge radius 0.84 fm, PDG 2024). This closes the question posed on slide 7. The data are recorded. (~0.5 min)
 -->
 
 ---
 layout: statement
-space: { at: [-26, -4.4, 0], dist: 17, yaw: -22, pitch: 2, sway: 9 }   # the hero cluster above the centred text
+space: { at: [-26.5, -3.4, 0], dist: 15.5, yaw: -22, pitch: 2, sway: 9 }   # the hero cluster above the centred text
 ---
 
 # Thank you
@@ -827,7 +729,7 @@ space: { at: [-26, -4.4, 0], dist: 17, yaw: -22, pitch: 2, sway: 9 }   # the her
 <!--
 Speaker: questions. Hadron dates and masses in the records are from
 P. Koppenburg's list (LHCb-FIGURE-2021-001 and updates, CC BY 4.0), credited on
-the references backup. The world is back at the wide pose, drifting. Backups follow in this order: thresholds with the PDG inputs, the full seven-row comparison, related LHCb results, references (all titled Backup). (~0.25 min)
+the references backup. The world is back at the wide pose, drifting. Backups follow in this order: thresholds with the PDG inputs, the full seven-row comparison, the six lineshapes, six quarks, related LHCb results, references (all titled Backup). (~0.25 min)
 -->
 
 ---
@@ -845,14 +747,14 @@ space: { at: future, dist: 14, yaw: -40, pitch: 10, dim: 0.85 }
 | Σ<sub>c</sub>⁺D̄*⁰ | 4459.5 | P<sub>c</sub>(4440)⁺, P<sub>c</sub>(4457)⁺ | −19.2, −2.2 |
 | Σ<sub>c</sub>(2520)⁺D̄*⁰ | 4524.3 | none | none |
 | Ξ<sub>c</sub>⁺D⁻ / Ξ<sub>c</sub>⁰D̄⁰ | 4337.4 / 4335.3 | P<sub>cs</sub>(4338)⁰ | +0.8 |
-| Ξ<sub>c</sub>⁰D̄*⁰ / Ξ<sub>c</sub>⁺D*⁻ | 4477.3 / 4478.0 | P<sub>cs</sub>(4459)⁰ | −18.5 |
+| Ξ<sub>c</sub>⁰D̄\*⁰ / Ξ<sub>c</sub>⁺D\*⁻ | 4477.3 / 4478.0 | P<sub>cs</sub>(4459)⁰ | −18.5 |
 | Λ<sub>c</sub>(2595)⁺D̄⁰ | 4457.1 | triangle candidate, P<sub>c</sub>(4457)⁺ | +0.2 |
 | χ<sub>c1</sub> p | 4448.9 | triangle candidate, 2015 P<sub>c</sub>(4450)⁺ | +0.9 |
 
 <div class="src">PDG 2024: Σ<sub>c</sub>(2455)⁺ 2452.65, Σ<sub>c</sub>(2455)⁺⁺ 2453.97, Σ<sub>c</sub>(2520)⁺ 2517.4, Ξ<sub>c</sub>⁺ 2467.71, Ξ<sub>c</sub>⁰ 2470.44, D⁰ 1864.84, D⁻ 1869.66, D*⁰ 2006.85, D*⁻ 2010.26, Λ<sub>c</sub>(2595)⁺ 2592.25, χ<sub>c1</sub> 3510.67, p 938.27 MeV · Σ<sub>c</sub>⁺⁺D⁻ 4323.6 and Σ<sub>c</sub>⁺⁺D*⁻ 4464.2 lie 6 and 5 MeV higher</div>
 
 <!--
-Speaker: backup for the question "which charge combination did you use". Every threshold is the sum of two PDG 2024 masses for a charge-consistent pair: Σc⁺D̄⁰ = 2452.65 + 1864.84 = 4317.5; Σc(2520)⁺D̄⁰ = 2517.4 + 1864.84 = 4382.2; Σc⁺D̄*⁰ = 2452.65 + 2006.85 = 4459.5; Σc(2520)⁺D̄*⁰ = 2517.4 + 2006.85 = 4524.3; Ξc⁺D⁻ = 2467.71 + 1869.66 = 4337.4 and Ξc⁰D̄⁰ = 2470.44 + 1864.84 = 4335.3; Ξc⁰D̄*⁰ = 2470.44 + 2006.85 = 4477.3 and Ξc⁺D*⁻ = 2467.71 + 2010.26 = 4478.0; Λc(2595)⁺D̄⁰ = 2592.25 + 1864.84 = 4457.1; χc1 p = 3510.67 + 938.27 = 4448.9. The other isospin partner of each non-strange pair, Σc⁺⁺D⁻ (4323.6) and Σc⁺⁺D*⁻ (4464.2), lies 6 and 5 MeV higher, so the offsets quoted in the talk are the smaller ones. Offsets are M(state) − threshold with the state masses from the LHCb papers: Pc(4312)⁺ 4311.9, Pc(4440)⁺ 4440.3, Pc(4457)⁺ 4457.3 (PRL 122 (2019) 222001); Pc(4450)⁺ 4449.8 (PRL 115 (2015) 072001); Pcs(4338)⁰ 4338.2 (PRL 131 (2023) 031901); Pcs(4459)⁰ 4458.8 (Sci. Bull. 66 (2021) 1278). The strange offsets are quoted against Ξc⁺D⁻ and Ξc⁰D̄*⁰, LHCb's own choices in those papers. Pc(4337)⁺ is not in the table: it sits above the Σc D̄ thresholds (Σc⁺⁺D⁻ 4323.6 and Σc⁺D̄⁰ 4317.5, 13 and 20 MeV below it), not below one, which is the point made on slide 11. The two triangle rows are thresholds used as kinematic candidates, the χc1 p one for the 2015 Pc(4450)⁺ (Guo, Meißner, Wang, Yang, PRD 92 (2015) 071502) and the Λc(2595)⁺D̄⁰ one for Pc(4457)⁺ (tested by LHCb in PRL 122 (2019) 222001). No offset is quoted for Pc(4380)⁺: its mass is 4380 ± 8 ± 29 MeV and its width 205 MeV, and the 2015 paper states that no threshold lies close to it (PRL 115 (2015) 072001); the Σc(2520)⁺D̄⁰ row stays because it is the Σc* D̄ channel of slide 14, where the narrow candidate near 4380 in the Du et al. fit is a different object from the broad 2015 state. (~0 min)
+Speaker: backup for the question "which charge combination did you use". Every threshold is the sum of two PDG 2024 masses for a charge-consistent pair: Σc⁺D̄⁰ = 2452.65 + 1864.84 = 4317.5; Σc(2520)⁺D̄⁰ = 2517.4 + 1864.84 = 4382.2; Σc⁺D̄*⁰ = 2452.65 + 2006.85 = 4459.5; Σc(2520)⁺D̄*⁰ = 2517.4 + 2006.85 = 4524.3; Ξc⁺D⁻ = 2467.71 + 1869.66 = 4337.4 and Ξc⁰D̄⁰ = 2470.44 + 1864.84 = 4335.3; Ξc⁰D̄*⁰ = 2470.44 + 2006.85 = 4477.3 and Ξc⁺D*⁻ = 2467.71 + 2010.26 = 4478.0; Λc(2595)⁺D̄⁰ = 2592.25 + 1864.84 = 4457.1; χc1 p = 3510.67 + 938.27 = 4448.9. The other isospin partner of each non-strange pair, Σc⁺⁺D⁻ (4323.6) and Σc⁺⁺D*⁻ (4464.2), lies 6 and 5 MeV higher, so the offsets quoted in the talk are the smaller ones. Offsets are M(state) − threshold with the state masses from the LHCb papers: Pc(4312)⁺ 4311.9, Pc(4440)⁺ 4440.3, Pc(4457)⁺ 4457.3 (PRL 122 (2019) 222001); Pc(4450)⁺ 4449.8 (PRL 115 (2015) 072001); Pcs(4338)⁰ 4338.2 (PRL 131 (2023) 031901); Pcs(4459)⁰ 4458.8 (Sci. Bull. 66 (2021) 1278). The strange offsets are quoted against Ξc⁺D⁻ and Ξc⁰D̄*⁰, LHCb's own choices in those papers. Pc(4337)⁺ is not in the table: it sits above the Σc D̄ thresholds (Σc⁺⁺D⁻ 4323.6 and Σc⁺D̄⁰ 4317.5, 13 and 20 MeV below it), not below one, which is the point made on slide 14. The two triangle rows are thresholds used as kinematic candidates, the χc1 p one for the 2015 Pc(4450)⁺ (Guo, Meißner, Wang, Yang, PRD 92 (2015) 071502) and the Λc(2595)⁺D̄⁰ one for Pc(4457)⁺ (tested by LHCb in PRL 122 (2019) 222001). No offset is quoted for Pc(4380)⁺: its mass is 4380 ± 8 ± 29 MeV and its width 205 MeV, and the 2015 paper states that no threshold lies close to it (PRL 115 (2015) 072001); the Σc(2520)⁺D̄⁰ row stays because it is the Σc* D̄ channel of slide 17, where the narrow candidate near 4380 in the Du et al. fit is a different object from the broad 2015 state. (~0 min)
 -->
 
 ---
@@ -864,7 +766,7 @@ class: backup wide-table
 
 | observable | Molecule | Compact | Hadrocharmonium | Cusp or triangle |
 |---|---|---|---|---|
-| J<sup>P</sup> | 1/2⁻, 3/2⁻ (S-wave; 5/2⁻ for Σ<sub>c</sub>*D̄*) | many, positive parity too | 1/2⁺ (χ<sub>c0</sub> p); 1/2⁻, 3/2⁻ (ψ(2S) p) | set by the channel (Λ<sub>c</sub>(2595)⁺D̄⁰ triangle: 1/2⁺) |
+| J<sup>P</sup> | 1/2⁻, 3/2⁻ (S-wave; 5/2⁻ for Σ<sub>c</sub>\*D̄\*) | many, positive parity too | 1/2⁺ (χ<sub>c0</sub> p); 1/2⁻, 3/2⁻ (ψ(2S) p) | set by the channel (Λ<sub>c</sub>(2595)⁺D̄⁰ triangle: 1/2⁺) |
 | Widths | narrow, about 10 MeV | broad unless tuned | narrow | set by kinematics |
 | Open charm Λ<sub>c</sub> D̄⁽*⁾ | dominant | allowed | suppressed; hidden charm dominates | not fixed |
 | Γ(η<sub>c</sub> p) / Γ(J/ψ p) | ≈ 3 (Σ<sub>c</sub>D̄, 1/2⁻); ≈ 0.1 (Σ<sub>c</sub>D̄*, 1/2⁻); 0 (3/2⁻) | model-dependent | suppressed | not fixed |
@@ -875,22 +777,107 @@ class: backup wide-table
 <div class="src">Chen et al., Phys. Rept. 639 (2016) 1 · Sakai, Jing, Guo, PRD 100 (2019) 074007 · full list on the References slide</div>
 
 <!--
-Speaker: the seven-row version of slide 17. Rows 1 to 6 are amplitude-analysis observables in data already recorded; magnetic moments need polarisation observables and are further off. Row by row: J^P, S-wave Σc D̄⁽*⁾ molecules give only 1/2⁻ and 3/2⁻; the Σc* D̄* member of the multiplet adds a 5/2⁻ state, not seen (Liu et al., PRL 122 (2019) 242001; Du et al., PRL 124 (2020) 072001); compact diquark states fill SU(3) multiplets with positive-parity members (Maiani, Polosa, Riquer, PLB 749 (2015) 289); hadrocharmonium puts Pc(4312)⁺ on a χc0 seed with 1/2⁺ and Pc(4440)⁺, Pc(4457)⁺ on a ψ(2S) seed with 1/2⁻, 3/2⁻ (Eides, Petrov, Polyakov, Mod. Phys. Lett. A 35 (2020) 2050151). Widths: a molecule bound by a few MeV is large, so decays to hidden charm, which need the c and c̄ to recombine across two hadrons, are suppressed and the observed widths of order 10 MeV fit (Eides, Petrov, PRD 98 (2018) 114037); compact widths come out large unless a barrier is tuned in, because nothing keeps the c and c̄ apart (PDG 2024, Pentaquarks review, Karliner and Skwarnicki); cusp and triangle widths follow from the kinematics (Guo et al., RMP 90 (2018) 015004). Open charm: molecules decay predominantly to Λc D̄⁽*⁾; in hadrocharmonium open charm is suppressed, less strongly than hidden charm is suppressed in a molecule (Eides, Petrov, PRD 98 (2018) 114037). ηc p over J/ψ p: heavy-quark spin symmetry gives about 3 for the Σc D̄ 1/2⁻ molecule, 3/25 for the Σc D̄* 1/2⁻ state and zero in S-wave for the Σc D̄* 3/2⁻ state (Voloshin, PRD 100 (2019) 034020, eqs. 8 and 11; Sakai, Jing, Guo, PRD 100 (2019) 074007, whose coupled-channel numbers give 2.9 to 4.0 for Pc(4312)⁺); hadrocharmonium on a ψ(2S) or χc0 seed needs a heavy-quark spin flip, so ηc p is suppressed. Isospin-3/2 partners exist only in the compact multiplets; the I = 3/2 Σc D̄ channel is repulsive in the molecular picture. Peak position: a pole sits at the same mass in every production channel and so does a cusp, at its threshold; only a triangle singularity moves with the process (Guo, Meißner, Wang, Yang, PRD 92 (2015) 071502). A cusp or triangle carries the S-wave J^P of its rescattering channel; for Pc(4457)⁺ the Λc(2595)⁺D̄⁰ triangle gives 1/2⁺ (LHCb, PRL 122 (2019) 222001). Magnetic moments: molecular and compact assignments differ in sign and size; Özdem's compact-current sum rules give negative moments for the 1/2⁻ Pc states, the molecular currents positive ones (arXiv:2603.19151; EPJC 81 (2021) 277); no hadrocharmonium calculation exists. (~0 min)
+Speaker: the seven-row version of slide 20. Rows 1 to 6 are amplitude-analysis observables in data already recorded; magnetic moments need polarisation observables and are further off. Row by row: J^P, S-wave Σc D̄⁽*⁾ molecules give only 1/2⁻ and 3/2⁻; the Σc* D̄* member of the multiplet adds a 5/2⁻ state, not seen (Liu et al., PRL 122 (2019) 242001; Du et al., PRL 124 (2020) 072001); compact diquark states fill SU(3) multiplets with positive-parity members (Maiani, Polosa, Riquer, PLB 749 (2015) 289); hadrocharmonium puts Pc(4312)⁺ on a χc0 seed with 1/2⁺ and Pc(4440)⁺, Pc(4457)⁺ on a ψ(2S) seed with 1/2⁻, 3/2⁻ (Eides, Petrov, Polyakov, Mod. Phys. Lett. A 35 (2020) 2050151). Widths: a molecule bound by a few MeV is large, so decays to hidden charm, which need the c and c̄ to recombine across two hadrons, are suppressed and the observed widths of order 10 MeV fit (Eides, Petrov, PRD 98 (2018) 114037); compact widths come out large unless a barrier is tuned in, because nothing keeps the c and c̄ apart (PDG 2024, Pentaquarks review, Karliner and Skwarnicki); cusp and triangle widths follow from the kinematics (Guo et al., RMP 90 (2018) 015004). Open charm: molecules decay predominantly to Λc D̄⁽*⁾; in hadrocharmonium open charm is suppressed, less strongly than hidden charm is suppressed in a molecule (Eides, Petrov, PRD 98 (2018) 114037). ηc p over J/ψ p: heavy-quark spin symmetry gives about 3 for the Σc D̄ 1/2⁻ molecule, 3/25 for the Σc D̄* 1/2⁻ state and zero in S-wave for the Σc D̄* 3/2⁻ state (Voloshin, PRD 100 (2019) 034020, eqs. 8 and 11; Sakai, Jing, Guo, PRD 100 (2019) 074007, whose coupled-channel numbers give 2.9 to 4.0 for Pc(4312)⁺); hadrocharmonium on a ψ(2S) or χc0 seed needs a heavy-quark spin flip, so ηc p is suppressed. Isospin-3/2 partners exist only in the compact multiplets; the I = 3/2 Σc D̄ channel is repulsive in the molecular picture. Peak position: a pole sits at the same mass in every production channel and so does a cusp, at its threshold; only a triangle singularity moves with the process (Guo, Meißner, Wang, Yang, PRD 92 (2015) 071502). A cusp or triangle carries the S-wave J^P of its rescattering channel; for Pc(4457)⁺ the Λc(2595)⁺D̄⁰ triangle gives 1/2⁺ (LHCb, PRL 122 (2019) 222001). Magnetic moments: molecular and compact assignments differ in sign and size; Özdem's compact-current sum rules give negative moments for the 1/2⁻ Pc states, the molecular currents positive ones (arXiv:2603.19151; EPJC 81 (2021) 277); no hadrocharmonium calculation exists. (~0 min)
 -->
 
 ---
 hideInToc: true
 class: backup
+space: { at: future, dist: 14, yaw: -40, pitch: 10, dim: 0.85 }
+---
+
+# Backup: what a peak can be
+
+<LineshapeGallery />
+
+<div class="src">Flatté, PLB 63 (1976) 224 · Guo, Hanhart, Meißner et al., RMP 90 (2018) 015004 · Guo, Meißner, Wang, Yang, PRD 92 (2015) 071502 · Λ(1520) reflection: PDG 2024 masses, isotropic decay, Λ<sub>b</sub>⁰ → J/ψ p K⁻ kinematics</div>
+
+<!--
+Speaker: backup for the question "could it be a cusp / a triangle / a reflection". Six mechanisms on one axis, computed, not sketched. Top row: an
+isolated pole; a pole pinned under a threshold (Flatté), narrow, with a kink
+where the channel opens; a cusp with no pole at all, which peaks exactly at
+the threshold with the phase still at zero. Bottom row: a triangle
+singularity, a log branch point whose position is set by the loop masses and
+moves with the production process; the same Breit–Wigner on a coherent
+background at three phases, a peak, an asymmetric shoulder, a dip; and the
+Λ(1520) → pK⁻ reflection, sixteen MeV wide in m(pK), five hundred MeV wide in
+m(J/ψ p), straight across the P_c masses. Only the first two have a pole. The
+phase at the peak, marked on each inset, is what separates them, and a
+one-dimensional mass fit never measures it. (~0 min)
+-->
+
+---
+hideInToc: true
+class: backup
+space: { at: [84.5, 0.8, -2], dist: 9, yaw: 10, pitch: 6, dim: 0.35 }
+---
+
+# Backup: six quarks
+
+<div class="row stage">
+<div class="card card-accent pad-tight col-50">
+
+## The deuteron is the six-quark bound state we know
+
+Bound by 2.22 MeV. Lattice QCD predicts heavy dibaryons bound by tens of MeV: Ω<sub>c</sub>Ω<sub>cc</sub>, Ω<sub>b</sub>Ω<sub>bb</sub>, Ω<sub>ccb</sub>Ω<sub>cbb</sub>. The d*(2380) claim is disputed. At LHCb, the Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻ spectrum in B⁰ → Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻K⁰<sub>S</sub> shows no significant structure.
+
+</div>
+</div>
+
+<div class="src">PDG 2024 · Junnarkar, Mathur, PRL 123 (2019) 162003 · LHCb, PRD 114 (2026) 012012</div>
+
+<!--
+Speaker: backup, for the question "and six quarks?". The six-quark cluster in the world is a schematic.
+The one we know: the deuteron, m_p + m_n − m_d = 2.224 566 MeV from the PDG
+2024 constants table; PDG has no dibaryon or hexaquark listing.
+Terms: dibaryon = two baryons, baryon number 2; baryonium = baryon and
+antibaryon, baryon number 0. Claimed: d*(2380), WASA-at-COSY, pn → d π⁰ π⁰,
+a Lorentzian energy dependence consistent with a resonance I(J^P) = 0(3⁺)
+(PRL 106 (2011) 242302, a title with a question mark); polarised np
+scattering adds a pole at (2380 ± 10 − i 40 ± 5) MeV in the ³D₃–³G₃ waves
+(PRL 112 (2014) 202301; PRC 90 (2014) 035204), and the fusion cross sections give M ≈ 2380 MeV, Γ ≈ 70 MeV (the pole width is 2 × 40 = 80 MeV).
+Status: one experimental programme plus A2@MAMI photoproduction (same lead
+authors), not in the PDG, and contested: Molina, Ikeno and Oset reproduce the
+peak with sequential single-pion production and a triangle singularity
+(Chin. Phys. C 47 (2023) 041001), Bashkanov, Clement and Skorodko reply
+(arXiv:2106.00494); HAL QCD lattice at heavy pion masses finds a ΔΔ ⁷S₃
+quasi-bound state (PLB 811 (2020) 135935), qualitative support only.
+Predicted: binding grows with quark mass. Lattice QCD (Junnarkar and Mathur, PRL 123
+(2019) 162003): J^P = 1⁺ dibaryons ΩcΩcc at 6381(20) MeV, 26(9) MeV below
+the spin-1/2 threshold; ΩbΩbb at 16004(17) and ΩccbΩcbb at 19105(21) MeV,
+also bound, so stable against strong and electromagnetic decay. ΩcccΩccc
+(Lyu et al., PRL 127 (2021) 072003): bound by 5.7 MeV without Coulomb, near
+unitarity with it. Molecular models: ΞccΞcc loosely bound in one-boson
+exchange, 0.6 to 18 MeV depending on the cutoff (Meng, Li, Zhu, PRD 95
+(2017) 114019). What LHCb could measure, my speculation: a charmed dibaryon
+needs two charm baryons in one event, and σ(Ξcc⁺⁺)·B/σ(Λc⁺) is
+2.2 × 10⁻⁴ (Chin. Phys. C 44 (2020) 022001), so pairs of doubly charmed baryons are too rare to search for; ALICE's femtoscopy of p–Ω⁻ and p–Ξ⁻ pairs (Nature 588 (2020) 232)
+could in principle be tried on Λc–p or Λc–Λc pairs here, not done.
+Established, baryon number 0: B̄s⁰ → Λc⁺Λ̄c⁻ observed at 6.2σ and evidence for
+B̄⁰ → Λc⁺Λ̄c⁻ (PRL 136 (2026) 061802), two-body, so no spectrum; B⁰ →
+Λc⁺Λ̄c⁻K⁰S on 5.4 fb⁻¹ shows no significant structure in m(Λc⁺Λ̄c⁻), while its Λc⁺K⁰S system gives 3.9σ evidence for Ξc(2923)⁺ and Ξc(2939)⁺ (PRD 114
+(2026) 012012). Belle's threshold enhancement in e⁺e⁻ → Λc⁺Λ̄c⁻ at 4634 MeV
+(PRL 101 (2008) 172001) is not seen by BESIII (PRL 131 (2023) 191901). The
+Cabibbo-favoured Λb⁰ → Λc⁺Λ̄c⁻Λ is closed (threshold 5688.6 MeV against
+5619.6), so charmed baryon–antibaryon pairs at LHCb come from B mesons.
+Close: sixty years after (qqqqq̄), the six-quark list is the deuteron plus
+predictions. (~0 min)
+-->
+
+---
+hideInToc: true
+class: backup
+space: { at: future, dist: 14, yaw: -40, pitch: 10, dim: 0.85 }   # back to the grid after the six-quark station
 ---
 
 # Backup: related LHCb results
 
 - 2016: a model-independent analysis confirms that Λ* reflections alone cannot describe the data. PRL 117 (2016) 082002
 - 2016: Λ<sub>b</sub>⁰ → J/ψ p π⁻ gives 3.1σ evidence for the exotic contributions taken together. PRL 117 (2016) 082003
-- 2022: B<sub>s</sub>⁰ → J/ψ p p̄ contains P<sub>c</sub>(4337)⁺ at 3.1–3.7σ and no P<sub>c</sub>(4312)⁺. PRL 128 (2022) 062001
+- 2022: B<sub>s</sub>⁰ → J/ψ p <span class="ol">p</span> contains P<sub>c</sub>(4337)⁺ at 3.1–3.7σ and no P<sub>c</sub>(4312)⁺. PRL 128 (2022) 062001
 - 2024: Λ<sub>b</sub>⁰ → Σ<sub>c</sub>⁽*⁾⁺⁺ D⁽*⁾⁻ K⁻ is observed. PRD 110 (2024) L031104
 - 2024–25: Λ<sub>b</sub>⁰ → J/ψ Ξ⁻ K⁺ (CMS) and Ξ<sub>b</sub>⁰ → J/ψ Ξ⁻ π⁺ (LHCb) are observed. CMS, EPJC 84 (2024) 1062 · LHCb, EPJC 85 (2025) 812
-- Ceilings: m(J/ψ p) cannot exceed 4341 MeV in B⁰ → J/ψ p p̄ or 4429 MeV in B<sub>s</sub>⁰ → J/ψ p p̄.
+- Ceilings: m(J/ψ p) cannot exceed 4341 MeV in B⁰ → J/ψ p <span class="ol">p</span> or 4429 MeV in B<sub>s</sub>⁰ → J/ψ p <span class="ol">p</span>.
 
 <div class="src">Ceilings from PDG 2024 masses, m(B⁰) − m(p) and m(B<sub>s</sub>⁰) − m(p) · both decays first observed on 5.2 fb⁻¹: LHCb, PRL 122 (2019) 191804</div>
 
@@ -903,7 +890,7 @@ channel: Λb⁰ → J/ψ p π⁻, Cabibbo-suppressed, 3.1σ evidence for exotic
 contributions taken together (LHCb, PRL 117 (2016) 082003, arXiv:1606.06999).
 2022: Bs⁰ → J/ψ p p̄ on Runs 1–2 (9 fb⁻¹), 797 ± 31 signal decays; the
 Pc(4337)⁺ significance is 3.1–3.7σ depending on the J^P hypothesis; the fit
-finds no Pc(4312)⁺ contribution, p-value 0.5 as quoted in the slide-22 note
+finds no Pc(4312)⁺ contribution, p-value 0.5 as quoted in the slide-24 note
 (LHCb, PRL 128 (2022) 062001, arXiv:2108.04720). 2024: Λb⁰ → Σc⁽*⁾⁺⁺ D⁽*⁾⁻ K⁻ observed, the open-charm final state that a Σc D̄⁽*⁾ molecule would feed (LHCb, PRD 110 (2024) L031104, arXiv:2404.19510). 2024: CMS observes Λb⁰ → J/ψ Ξ⁻ K⁺ on 140 fb⁻¹ (EPJC 84 (2024) 1062, arXiv:2401.16303). 2025: LHCb observes Ξb⁰ → J/ψ Ξ⁻ π⁺ and measures Λb⁰ → J/ψ Ξ⁻ K⁺ on 5.4 fb⁻¹, 84 ± 10 and 107 ± 12 decays; no amplitude analysis yet (EPJC 85 (2025) 812, arXiv:2501.12779). Ceilings from PDG 2024: m(B⁰) − m(p) = 5279.72 − 938.272 = 4341.4 MeV; m(Bs⁰) − m(p) = 5366.93 − 938.272 = 4428.7 MeV; so neither B → J/ψ p p̄
 channel can reach Pc(4440)⁺ (4440.3 MeV) or Pc(4457)⁺ (4457.3 MeV, both PRL 122 (2019) 222001). Both B⁰ → J/ψ p p̄ and Bs⁰ → J/ψ p p̄ were first observed by LHCb on 5.2 fb⁻¹ (PRL 122 (2019) 191804, arXiv:1902.05588). (~0 min)
 -->
@@ -921,7 +908,7 @@ class: backup
 
 **Theory.** Gell-Mann, Phys. Lett. 8 (1964) 214 · Zweig, CERN-TH-401, 412 (1964) · Guo et al., RMP 90 (2018) 015004 · Olsen, Skwarnicki, Zieminska, RMP 90 (2018) 015003 · Chen et al., Phys. Rept. 639 (2016) 1 · Liu et al., PRL 122 (2019) 242001 · Du et al., PRL 124 (2020) 072001 · Fernández-Ramírez et al. (JPAC), PRL 123 (2019) 092001 [1904.10021] · Voloshin, PRD 100 (2019) 034020 · Sakai, Jing, Guo, PRD 100 (2019) 074007 · Eides, Petrov, PRD 98 (2018) 114037 [1811.01691] · Eides, Petrov, Polyakov, Mod. Phys. Lett. A 35 (2020) 2050151 [1904.11616] · Dubynskiy, Voloshin, PLB 666 (2008) 344 · Valderrama, PRD 100 (2019) 094028 · Maiani, Polosa, Riquer, PLB 749 (2015) 289 · Lebed, PLB 749 (2015) 454 · Guo, Meißner, Wang, Yang, PRD 92 (2015) 071502 · Junnarkar, Mathur, PRL 123 (2019) 162003 · Lyu et al., PRL 127 (2021) 072003 · Meng, Li, Zhu, PRD 95 (2017) 114019 · Hulsbergen, NIM A 552 (2005) 566 · H.-S. Li, T. Li, JHEP 11 (2025) 149 [2502.05495] · Roca, Song, Oset, 2509.19840 · Yıldırım, 2605.13344 · Atangana Likéné et al., 2608.25106 · Özdem, EPJC 81 (2021) 277; JHEP 02 (2026) 207 [2510.26893]; EPJC 86 (2026) 359 [2603.19151]
 
-**History and method.** Breit, Wigner, Phys. Rev. 49 (1936) 519 · Flatté, PLB 63 (1976) 224 · Diakonov, Petrov, Polyakov, Z. Phys. A 359 (1997) 305 · Hicks, EPJ H 37 (2012) 1 · Gross, Vitells, EPJC 70 (2010) 525 · PDG 1976, RMP 48 (1976) S1 · PDG 1992, PRD 45 (1992) S1 · PDG 2006, J. Phys. G 33 (2006) 1 · PDG 2025, review 83 “Pentaquarks” (Karliner, Skwarnicki)
+**History and method.** Breit, Wigner, Phys. Rev. 49 (1936) 519 · Flatté, PLB 63 (1976) 224 · Diakonov, Petrov, Polyakov, Z. Phys. A 359 (1997) 305 · Hicks, EPJ H 37 (2012) 1 · Gross, Vitells, EPJC 70 (2010) 525 · PDG 1976, RMP 48 (1976) S1 · PDG 1992, PRD 45 (1992) S1 · PDG 2006, J. Phys. G 33 (2006) 1 · PDG 2024 (2025 update), review “Pentaquarks” (Karliner, Skwarnicki)
 
 **Data.** WASA-at-COSY, PRL 106 (2011) 242302; PRL 112 (2014) 202301 · LEPS, PRL 91 (2003) 012002 · PDG 2008, review “Pentaquarks” · PDG 2024 · P. Koppenburg, List of hadrons observed at the LHC, LHCb-FIGURE-2021-001 and updates (CC BY 4.0) · LHCb public luminosity plots · X(3872): Belle, PRL 91 (2003) 262001 · Z(4430)⁺: Belle, PRL 100 (2008) 142001 · Z<sub>c</sub>(3900)⁺: BESIII, PRL 110 (2013) 252001; Belle, PRL 110 (2013) 252002
 
@@ -934,3 +921,5 @@ journal reference exists (PRL / PLB / PRD / EPJC / Sci. Bull. / RMP / JHEP / Phy
 reference was verified (naming 2206.15233, LHCb-PUB-2022-013; 2509.19840, 2605.13344, 2608.25106). Hadron list under
 CC BY 4.0 (P. Koppenburg, LHCb-FIGURE-2021-001 and updates). (~0 min)
 -->
+
+
