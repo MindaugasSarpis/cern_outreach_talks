@@ -148,6 +148,13 @@ html[data-space-stop="1"] .slidev-page .slidev-layout { opacity: 0; filter: none
 .slidev-layout.cover .mt-md { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8b97a6; }
 .slidev-layout.cover .text-xs { font-size: 9.5px !important; letter-spacing: 0.06em; color: #8b97a6; }
 .slidev-layout.cover .src { position: static; white-space: nowrap; font-size: 11px; margin-top: 28px; }
+/* The cover's title lands with the pentaquark: HadronSpace clears
+   html[data-space-assembled] while the hero station assembles and sets it
+   when the last quark lands (always set without WebGL); the title, byline and
+   subtitle fade in over 1.4 s when it appears. */
+.slidev-layout.cover h1, .slidev-layout.cover h2, .slidev-layout.cover .mt-md { transition: opacity 1.4s ease 0.1s, transform 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s; }
+html:not([data-space-assembled]) .slidev-layout.cover h1, html:not([data-space-assembled]) .slidev-layout.cover h2, html:not([data-space-assembled]) .slidev-layout.cover .mt-md { opacity: 0; transform: translateY(8px); }
+@media print { .slidev-layout.cover h1, .slidev-layout.cover h2, .slidev-layout.cover .mt-md { opacity: 1 !important; transform: none !important; } }
 .slidev-layout.cover::before, .slidev-layout.cover hr { display: none !important; }
 
 /* Radial darkening behind the cover text so the 2011–2016 drop lines of the

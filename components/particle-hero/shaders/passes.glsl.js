@@ -82,6 +82,7 @@ void main() {
 export const RENDER_VERT = /* glsl */ `
 uniform sampler2D uPos, uVel;
 uniform float uSize, uPixelRatio, uGain;   // uGain: overall brightness (1.0 in the hero; the hadron space raises it)
+uniform float uFocus;                      // camera-to-target distance for a fake depth of field (0 = off, the WoP hero)
 varying float vAlpha;
 varying vec3 vColor;
 void main() {
@@ -91,18 +92,23 @@ void main() {
   float seed = pos.w;
   vec4 mv = modelViewMatrix * vec4(pos.xyz, 1.0);
   gl_Position = projectionMatrix * mv;
-  gl_PointSize = uSize * uPixelRatio * mix(0.5, 1.6, fract(seed * 7.31)) * (12.0 / max(-mv.z, 0.1));
+  float depth = length(mv.xyz);
+  // out of focus: grains far from the focus distance draw bigger and fainter
+  float defocus = uFocus > 0.0 ? clamp(abs(depth - uFocus) / (uFocus + 4.0), 0.0, 1.0) : 0.0;
+  gl_PointSize = uSize * uPixelRatio * mix(0.5, 1.6, fract(seed * 7.31)) * (12.0 / max(-mv.z, 0.1)) * (1.0 + 1.1 * defocus);
   float sp = clamp(length(vel) * 0.9, 0.0, 1.0);
   vColor = mix(vec3(0.30, 0.55, 0.72), vec3(0.98, 0.99, 1.0), sp);  // dim cyan -> white by speed
-  float fog = exp(-0.04 * max(length(mv.xyz) - 6.0, 0.0));
-  vAlpha = mix(0.25, 0.9, sp) * mix(0.4, 1.0, fract(seed * 3.17)) * fog * uGain;
+  float fog = exp(-0.04 * max(depth - 6.0, 0.0));
+  vAlpha = mix(0.25, 0.9, sp) * mix(0.4, 1.0, fract(seed * 3.17)) * fog * uGain * (1.0 - 0.6 * defocus);
 }`;
 
 export const RENDER_FRAG = /* glsl */ `
+uniform float uLinearOut;   // 1: the frame is sRGB-encoded downstream (the hadron space), so emit linear light
 varying float vAlpha;
 varying vec3 vColor;
 void main() {
   float d = length(gl_PointCoord - 0.5);
   float a = smoothstep(0.5, 0.05, d) * vAlpha;
-  gl_FragColor = vec4(vColor * a, a);
+  vec3 c = vColor * a;
+  gl_FragColor = uLinearOut > 0.5 ? vec4(pow(c, vec3(2.2)), 1.0) : vec4(c, a);
 }`;

@@ -1,6 +1,6 @@
 import {
-  Group, Mesh, Points, MeshBasicMaterial, ShaderMaterial, PlaneGeometry, TorusGeometry, SphereGeometry, BufferGeometry, BufferAttribute,
-  Line, LineSegments, LineBasicMaterial, LineDashedMaterial, TextureLoader, Vector3, DoubleSide, AdditiveBlending, Color, CylinderGeometry, Quaternion,
+  Group, Mesh, Points, MeshBasicMaterial, MeshStandardMaterial, MeshPhysicalMaterial, ShaderMaterial, PlaneGeometry, TorusGeometry, SphereGeometry, BufferGeometry, BufferAttribute,
+  Line, LineSegments, LineBasicMaterial, LineDashedMaterial, TextureLoader, Vector3, DoubleSide, AdditiveBlending, Color, CylinderGeometry, Quaternion, SRGBColorSpace,
 } from 'three';
 import { makeLabel, makeText } from './labels.js';
 
@@ -35,12 +35,14 @@ const ORB_FRAG = /* glsl */ `
 uniform vec3 uColor; uniform float uOpacity, uCore;
 varying vec3 vN, vV;
 void main() {
-  float nv = max(dot(normalize(vN), normalize(vV)), 0.0);
+  vec3 N = normalize(vN) * (gl_FrontFacing ? 1.0 : -1.0);   // back faces of a double-sided shell get the same rim, not a full disc
+  float nv = max(dot(N, normalize(vV)), 0.0);
   float f = pow(1.0 - nv, 2.4);            // rim
   float c = pow(nv, 3.0);                   // the face toward the viewer, lit from the front
   vec3 col = mix(uColor * (0.7 + 0.45 * c), vec3(1.0), f * 0.6);
   float a = uOpacity * clamp(uCore + (1.0 - uCore) * f, 0.0, 1.0);
-  gl_FragColor = vec4(col, a);
+  // the frame is tone-mapped and sRGB-encoded at the end of the chain, so emit linear light
+  gl_FragColor = vec4(pow(col, vec3(2.2)), pow(a, 2.2));
 }`;
 function orb(color, { opacity = 0.95, core = 0.82 } = {}) {
   return new ShaderMaterial({
@@ -50,19 +52,34 @@ function orb(color, { opacity = 0.95, core = 0.82 } = {}) {
 }
 const setOrb = (mat, k, v) => { if (mat.uniforms) mat.uniforms[k].value = v; else mat[k === 'uOpacity' ? 'opacity' : 'color'] = v; };
 
+// Marbles: the lit, glossy version of a ball — a clearcoat over the flavour
+// colour, environment reflections, a faint emissive core that bloom lifts.
+// Quark balls, state markers and decay vertices are marbles; a ghost stays an orb.
+function marble(color, { glow = 0.2, opacity = 1 } = {}) {
+  const c = new Color(color);
+  return new MeshPhysicalMaterial({
+    color: c, roughness: 0.2, metalness: 0.0, clearcoat: 1.0, clearcoatRoughness: 0.12,
+    emissive: c, emissiveIntensity: glow, envMapIntensity: 0.7,
+    transparent: opacity < 1, opacity, depthWrite: opacity >= 1,
+  });
+}
+
 function quarkBall(q, r = 0.42, { ghost = false } = {}) {
-  const m = new Mesh(new SphereGeometry(r, 24, 16), orb(QUARK[q.flavour] || '#e6e9ee', ghost ? { opacity: 0.55, core: 0.22 } : {}));
+  const color = QUARK[q.flavour] || '#e6e9ee';
+  const charm = q.flavour === 'c' || q.flavour === 'cbar';
+  const m = new Mesh(new SphereGeometry(r, 32, 24), ghost ? orb(color, { opacity: 0.55, core: 0.22 }) : marble(color, { glow: charm ? 0.35 : 0.16 }));
   m.position.copy(v(q.pos));
+  if (!ghost) m.add(shell(r * 1.22, color, 0.14));   // a thin rim of glow around the marble
   if (q.flavour === 'cbar' || q.flavour === 'sbar') {   // antiquark: a thin white rim
     const rim = new Mesh(new SphereGeometry(r * 1.12, 24, 16), new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: ghost ? 0.15 : 0.3, side: DoubleSide, depthWrite: false }));
     m.add(rim);
   }
   return m;
 }
-function shell(radius, color = '#7dd3fc', opacity = 0.12) {
+function shell(radius, color = '#7dd3fc', opacity = 0.16) {
   // a bubble, not a disc: the fresnel orb with almost no body, additive, so
   // only the rim glows and the inside stays open to the dust and the quarks
-  const m = orb(color, { opacity: Math.min(0.4, opacity * 2.2), core: 0.05 });
+  const m = orb(color, { opacity: Math.min(0.7, opacity * 2.2), core: 0.05 });
   m.blending = AdditiveBlending; m.side = DoubleSide;
   return new Mesh(new SphereGeometry(radius, 40, 24), m);
 }
@@ -84,14 +101,15 @@ function placedLabel(text, at, pts, color) {
 const build = {
   page(o) {
     const g = new Group();
-    const mat = new MeshBasicMaterial({ color: '#2a2f36', transparent: true, opacity: 0.96, side: DoubleSide });
-    loader.load(asset(o.src), (tex) => { mat.map = tex; mat.color.set('#ffffff'); mat.needsUpdate = true; },
+    // lit paper: the key light falls across the sheet
+    const mat = new MeshStandardMaterial({ color: '#2a2f36', roughness: 0.9, metalness: 0, transparent: true, opacity: 0.98, side: DoubleSide });
+    loader.load(asset(o.src), (tex) => { tex.colorSpace = SRGBColorSpace; mat.map = tex; mat.color.set('#ffffff'); mat.needsUpdate = true; },
       undefined, () => console.warn('hadron-space: page texture failed', o.src));
     const m = new Mesh(new PlaneGeometry(o.width, o.height), mat);
     m.rotation.y = (o.yaw || 0) * Math.PI / 180;
     g.add(m);
     // a faint lit halo behind the sheet so it reads as a lit object in the dark
-    const halo = new Mesh(new PlaneGeometry(o.width * 1.25, o.height * 1.18), new MeshBasicMaterial({ color: '#7dd3fc', transparent: true, opacity: 0.08, blending: AdditiveBlending, depthWrite: false, side: DoubleSide }));
+    const halo = new Mesh(new PlaneGeometry(o.width * 1.25, o.height * 1.18), new MeshBasicMaterial({ color: '#7dd3fc', transparent: true, opacity: 0.04, blending: AdditiveBlending, depthWrite: false, side: DoubleSide }));
     halo.position.z = -0.05; halo.rotation.y = m.rotation.y; g.add(halo);
     g.position.copy(v(o.pos));
     return { group: g, labels: [] };
@@ -126,12 +144,13 @@ const build = {
       const line = new Line(geo, mat); if (t.dashed) line.computeLineDistances();
       g.add(line);
       // a soft glow: a second pass with additive blending
-      g.add(new Line(geo.clone(), new LineBasicMaterial({ color: col, transparent: true, opacity: 0.25 * (t.fade ?? 1), blending: AdditiveBlending, depthWrite: false })));
+      g.add(new Line(geo.clone(), new LineBasicMaterial({ color: col, transparent: true, opacity: 0.12 * (t.fade ?? 1), blending: AdditiveBlending, depthWrite: false })));
       if (!t.dashed) {
-        // solid tracks as thin tubes: WebGL lines are one pixel wide whatever the screen
+        // solid tracks as lit tubes with an emissive core: WebGL lines are one pixel wide whatever the screen
+        const tubeMat = new MeshStandardMaterial({ color: col, emissive: col, emissiveIntensity: 0.15, roughness: 0.5, metalness: 0.1, transparent: (t.fade ?? 1) < 1, opacity: t.fade ?? 1 });
         for (let k = 0; k + 1 < pts.length; k++) {
           const a = pts[k], b = pts[k + 1], dir = b.clone().sub(a), len = dir.length();
-          const tube = new Mesh(new CylinderGeometry(0.03 * (t.width || 2), 0.03 * (t.width || 2), len, 8, 1, true), new MeshBasicMaterial({ color: col, transparent: true, opacity: t.fade ?? 0.9 }));
+          const tube = new Mesh(new CylinderGeometry(0.036 * (t.width || 2), 0.036 * (t.width || 2), len, 12, 1, true), tubeMat);
           tube.position.copy(a).addScaledVector(dir, 0.5);
           tube.quaternion.copy(new Quaternion().setFromUnitVectors(new Vector3(0, 1, 0), dir.normalize()));
           g.add(tube);
@@ -143,7 +162,7 @@ const build = {
         g.add(dot); pulses.push({ a: pts[0], b: pts[pts.length - 1], dot });
       }
     }
-    for (const n of o.nodes || []) { const m = new Mesh(new SphereGeometry(n.size, 20, 14), orb(n.color, { core: 0.75 })); m.position.copy(v(n.pos)); g.add(m); }
+    for (const n of o.nodes || []) { const m = new Mesh(new SphereGeometry(n.size, 28, 20), marble(n.color, { glow: 0.45 })); m.position.copy(v(n.pos)); g.add(m); }
     g.position.copy(v(o.pos));
     return { group: g, labels, update(t) {
       // one pulse runs down every solid track in 3 s, staggered by track index
@@ -160,9 +179,9 @@ const build = {
       const x = (s.mass - o.origin) * o.scale, z = o.rows[row];
       const established = s.status === 'observed';
       const color = row === 'Pcs' ? '#d95926' : '#3987e5';
-      const m = new Mesh(new SphereGeometry(0.26, 24, 16), orb(color, established ? { core: 0.7 } : { opacity: 0.45, core: 0.25 }));
+      const m = new Mesh(new SphereGeometry(0.26, 32, 24), established ? marble(color, { glow: 0.45 }) : marble(color, { glow: 0.08, opacity: 0.5 }));
       m.position.set(x, 0, z); g.add(m);
-      if (established) { const halo = shell(0.4, color, 0.08); halo.position.set(x, 0, z); g.add(halo); }
+      if (established) { const halo = shell(0.4, color, 0.12); halo.position.set(x, 0, z); g.add(halo); }
       anchors.set(id, new Vector3(x, 0, z));
       if (o.labels) { const l = makeLabel(s.label || id, { worldH: 0.3, color: '#e6e9ee', letterSpacing: 0.02, upper: false }); l.position.set(x, 0.75 + (i % 2) * 0.32, z); g.add(l); labels.push(l); }
     });
@@ -173,7 +192,7 @@ const build = {
     const g = new Group(); const labels = [];
     for (const p of o.planes) {
       const x = (p.mass - o.origin) * o.scale, z = (o.rows && o.rows[p.row]) ?? 0;
-      const m = new Mesh(new PlaneGeometry(o.depth, o.height), new MeshBasicMaterial({ color: '#7dd3fc', transparent: true, opacity: 0.13, side: DoubleSide, depthWrite: false, blending: AdditiveBlending }));
+      const m = new Mesh(new PlaneGeometry(o.depth, o.height), new MeshBasicMaterial({ color: '#7dd3fc', transparent: true, opacity: 0.07, side: DoubleSide, depthWrite: false, blending: AdditiveBlending }));
       m.rotation.y = Math.PI / 2; m.position.set(x, 0, z); g.add(m);
       const l = makeLabel(p.label, { worldH: 0.26, color: '#8b97a6', letterSpacing: 0.02, upper: false }); l.position.set(x, o.height / 2 + 0.25, z); g.add(l); labels.push(l);
     }
@@ -187,8 +206,8 @@ const build = {
     const home = [];
     for (const q of o.quarks) { const b = quarkBall(q, 0.42 * (o.radius / 1.9) * (o.quarkScale || 1), { ghost: !!o.ghost }); balls.add(b); home.push(b.position.clone()); }
     g.add(balls);
-    if (o.shell) g.add(shell(o.radius, '#7dd3fc', o.ghost ? 0.05 : 0.12));
-    if (o.core) g.add(shell(o.radius * 0.38, '#7dd3fc', 0.1));   // an inner glow, the binding
+    if (o.shell) g.add(shell(o.radius, '#7dd3fc', o.ghost ? 0.07 : 0.16));
+    if (o.core) g.add(shell(o.radius * 0.38, '#7dd3fc', 0.14));   // an inner glow, the binding
     // `orbit: true`: each quark rides its own tilted ring through its home
     // position, at its own pace — the cluster lives instead of turning as a block
     const rings = o.orbit ? home.map((h, i) => {
@@ -241,7 +260,7 @@ const build = {
     const geo = new BufferGeometry();
     geo.setAttribute('position', new BufferAttribute(new Float32Array(pts), 3));
     geo.setAttribute('color', new BufferAttribute(new Float32Array(cols), 3));
-    const m = new LineSegments(geo, new LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.35, blending: AdditiveBlending, depthWrite: false }));
+    const m = new LineSegments(geo, new LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.2, blending: AdditiveBlending, depthWrite: false }));
     m.position.copy(v(o.pos));
     return { group: m, labels: [] };
   },
@@ -258,22 +277,23 @@ const build = {
 // A grain sprite for the particle pentaquark: soft additive discs, sized by
 // depth, each twinkling on its own seed.
 const GRAIN_VERT = /* glsl */ `
-attribute float aSize, aAlpha, aSeed; attribute vec3 aColor;
-uniform float uPixelRatio, uTime;
+attribute float aSize, aAlpha, aSeed, aKind; attribute vec3 aColor;
+uniform float uPixelRatio, uTime, uReveal, uTrail;   // aKind 0: quark grain, 1: string/haze (fades in with the assembly), 2: trail (only while assembling)
 varying vec3 vColor; varying float vAlpha;
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 0.7 + 0.3 * sin(uTime * (1.2 + aSeed * 2.4) + aSeed * 40.0);
   gl_PointSize = uPixelRatio * aSize * tw * (72.0 / max(-mv.z, 0.1));
-  vColor = aColor; vAlpha = aAlpha * tw;
+  float k = aKind < 0.5 ? 1.0 : (aKind < 1.5 ? uReveal : uTrail);
+  vColor = aColor; vAlpha = aAlpha * tw * k;
 }`;
 const GRAIN_FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;
 void main() {
   float d = length(gl_PointCoord - 0.5);
   float a = smoothstep(0.5, 0.04, d) * vAlpha;
-  gl_FragColor = vec4(vColor * a, a);
+  gl_FragColor = vec4(pow(vColor * a, vec3(2.2)), 1.0);   // linear light; additive with alpha 1
 }`;
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2; };
 const FLAVOUR = {
@@ -289,13 +309,13 @@ build.pentaquark = function (o) {
   const g = new Group();
   const Q = o.quarks, nQ = Q.length;
   const R = o.radius || 3, rQ = o.quarkRadius || 0.7;
-  const NQ = 360, NS = 2600, NT = 170, NC = 1;   // grains per quark, boundary, per string, cores
+  const NQ = 360, NS = 2600, NT = 170, NC = 1, NTR = 44;   // grains per quark, boundary, per string, cores, trail per quark
   const nStr = nQ;                                // ring of strings
-  const total = nQ * (NQ + NC) + NS + nStr * NT;
+  const total = nQ * (NQ + NC + NTR) + NS + nStr * NT;
   const pos = new Float32Array(total * 3), col = new Float32Array(total * 3);
-  const size = new Float32Array(total), alpha = new Float32Array(total), seed = new Float32Array(total);
+  const size = new Float32Array(total), alpha = new Float32Array(total), seed = new Float32Array(total), kind = new Float32Array(total);
   let k = 0;
-  const put = (c, sz, al) => { col.set(c, k * 3); size[k] = sz; alpha[k] = al; seed[k] = Math.random(); return k++; };
+  const put = (c, sz, al, kd = 0) => { col.set(c, k * 3); size[k] = sz; alpha[k] = al; seed[k] = Math.random(); kind[k] = kd; return k++; };
   const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b]; };
   // quark clouds: gaussian offsets, each grain with its own slow spin about the core
   const clouds = Q.map((q) => {
@@ -309,6 +329,13 @@ build.pentaquark = function (o) {
     const coreIdx = put(core, 15, 0.9);
     return { items, coreIdx };
   });
+  // trails: a short tail of grains behind each quark while it flies in
+  const trails = Q.map((q) => {
+    const f = FLAVOUR[q.flavour] || FLAVOUR.u, grain = rgb(f.grain);
+    const idx = [];
+    for (let i = 0; i < NTR; i++) idx.push(put(grain, 1.9 - 1.3 * i / NTR, 0.5 * (1 - i / NTR), 2));
+    return { idx, buf: [] };
+  });
   // the boundary: a tight band of grains at the bound radius R — dense enough
   // to read as a surface from a distance, still grains up close — plus, below,
   // a faint rim bubble that catches the edge
@@ -316,15 +343,15 @@ build.pentaquark = function (o) {
   for (let i = 0; i < NS; i++) {
     const d = new Vector3(gauss(), gauss(), gauss()).normalize();
     const r = R * (0.97 + 0.06 * Math.random());
-    haze.push({ idx: put(rgb('#7dd3fc'), 0.7 + 0.8 * Math.random(), 0.2 + 0.3 * Math.random()), d, r, ph: Math.random() * 6.28 });
+    haze.push({ idx: put(rgb('#7dd3fc'), 0.7 + 0.8 * Math.random(), 0.2 + 0.3 * Math.random(), 1), d, r, ph: Math.random() * 6.28 });
   }
-  g.add(shell(R, '#7dd3fc', 0.05));
+  g.add(shell(R, '#7dd3fc', 0.12));
   // strings: grains flowing from quark a to quark b along a gently bowed path
   const ring = [];
   for (let s = 0; s < nStr; s++) {
     const a = s, b = (s + 1) % nQ, items = [];
     const n = new Vector3(gauss(), gauss(), gauss()).normalize();
-    for (let i = 0; i < NT; i++) items.push({ idx: put(rgb('#7dd3fc'), 0.8 + 0.8 * Math.random(), 0.25 + 0.4 * Math.random()), u: Math.random(), w: (Math.random() - 0.5) * 0.28, ph: Math.random() * 6.28 });
+    for (let i = 0; i < NT; i++) items.push({ idx: put(rgb('#7dd3fc'), 0.8 + 0.8 * Math.random(), 0.25 + 0.4 * Math.random(), 1), u: Math.random(), w: (Math.random() - 0.5) * 0.28, ph: Math.random() * 6.28 });
     ring.push({ a, b, n, items });
   }
   const geo = new BufferGeometry();
@@ -333,9 +360,10 @@ build.pentaquark = function (o) {
   geo.setAttribute('aSize', new BufferAttribute(size, 1));
   geo.setAttribute('aAlpha', new BufferAttribute(alpha, 1));
   geo.setAttribute('aSeed', new BufferAttribute(seed, 1));
+  geo.setAttribute('aKind', new BufferAttribute(kind, 1));
   const mat = new ShaderMaterial({
     vertexShader: GRAIN_VERT, fragmentShader: GRAIN_FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
-    uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) } },
+    uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) }, uReveal: { value: 1 }, uTrail: { value: 0 } },
   });
   const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts);
   // quark centres on tilted orbits through their home positions
@@ -352,9 +380,41 @@ build.pentaquark = function (o) {
   if (o.label) { const l = makeLabel(o.label, { worldH: 0.5, color: '#8b97a6', letterSpacing: 0.1, upper: false }); l.position.set(0, R + 1.0, 0); g.add(l); labels.push(l); }   // above the cluster, clear of centred text on the close
   g.position.copy(v(o.pos));
   const set = (idx, p) => { pos[idx * 3] = p.x; pos[idx * 3 + 1] = p.y; pos[idx * 3 + 2] = p.z; };
-  return { group: g, labels, update(t) {
+  // The assembly: the quarks start scattered in the dust and fly in on curved
+  // paths over ASM_DUR seconds (smootherstep), trails behind them; the strings
+  // and the boundary fade in over the second half; onDone fires as the last
+  // quark lands. `assemble(now, onDone)` restarts it at any time.
+  const ASM_DUR = 3.0;
+  const asm = { t0: -1, starts: null, ctrls: null, onDone: null, trailFade: -1 };
+  const smoother = (x) => x * x * x * (x * (x * 6 - 15) + 10);
+  const ss = (a, b, x) => { const q = Math.min(1, Math.max(0, (x - a) / (b - a))); return q * q * (3 - 2 * q); };
+  const api = {
+    assemble(now, onDone) {
+      asm.t0 = now; asm.onDone = onDone || null; asm.trailFade = -1;
+      asm.starts = home.map(() => new Vector3(gauss(), gauss(), gauss()).normalize().multiplyScalar(10 + 6 * Math.random()));
+      asm.ctrls = asm.starts.map((st, i) => st.clone().add(home[i]).multiplyScalar(0.5).add(new Vector3(gauss(), gauss(), gauss()).normalize().multiplyScalar(3 + 3 * Math.random())));
+      for (const tr of trails) tr.buf.length = 0;
+      mat.uniforms.uReveal.value = 0; mat.uniforms.uTrail.value = 1;
+    },
+    get assembling() { return asm.t0 >= 0; },
+  };
+  return { group: g, labels, api, pixelRatio: mat.uniforms.uPixelRatio, update(t) {
     mat.uniforms.uTime.value = t;
     centres.forEach((c, i) => { const k = orbits[i], a = k.phase + t * k.speed; c.copy(k.u).multiplyScalar(k.r * Math.cos(a)).addScaledVector(k.w, k.r * Math.sin(a)); });
+    if (asm.t0 >= 0) {
+      const u = Math.min((t - asm.t0) / ASM_DUR, 1), e = smoother(u), w0 = (1 - e) * (1 - e), w1 = 2 * (1 - e) * e, w2 = e * e;
+      centres.forEach((c, i) => { const S = asm.starts[i], C = asm.ctrls[i]; c.set(S.x * w0 + C.x * w1 + c.x * w2, S.y * w0 + C.y * w1 + c.y * w2, S.z * w0 + C.z * w1 + c.z * w2); });
+      mat.uniforms.uReveal.value = ss(0.35, 1, u);
+      if (u >= 1) { asm.t0 = -1; asm.trailFade = t; const cb = asm.onDone; asm.onDone = null; cb?.(); }
+    } else if (asm.trailFade >= 0) {
+      const f = 1 - (t - asm.trailFade) / 0.9;
+      mat.uniforms.uTrail.value = Math.max(0, f);
+      if (f <= 0) asm.trailFade = -1;
+    }
+    if (mat.uniforms.uTrail.value > 0) trails.forEach((tr, i) => {
+      tr.buf.unshift(centres[i].clone()); if (tr.buf.length > NTR) tr.buf.length = NTR;
+      tr.idx.forEach((idx, j) => set(idx, tr.buf[Math.min(j, tr.buf.length - 1)]));
+    });
     clouds.forEach((cl, i) => {
       const c = centres[i];
       for (const it of cl.items) {
@@ -385,17 +445,20 @@ build.pentaquark = function (o) {
 export function buildStation(station, ctx) {
   const group = new Group(); group.position.copy(v(station.pos));
   const anchors = new Map([[station.id, v(station.pos)]]);
-  const labels = []; const updaters = [];
+  const labels = []; const updaters = []; const apis = []; const prs = [];
   for (const o of station.objects || []) {
     const b = build[o.type]; if (!b) { console.warn('hadron-space: unknown object type', o.type); continue; }
     const r = b(o, ctx);
     group.add(r.group); labels.push(...(r.labels || []));
     if (r.update) updaters.push(r.update);
+    if (r.api) apis.push(r.api);
+    if (r.pixelRatio) prs.push(r.pixelRatio);
     if (r.anchors) for (const [id, p] of r.anchors) anchors.set(id, p.clone().add(v(o.pos)).add(v(station.pos)));
   }
   return {
-    group, anchors,
+    group, anchors, apis,
     update(t, camPos) { for (const u of updaters) u(t, camPos); },
+    setPixelRatio(d) { for (const u of prs) u.value = d; },
     setDim(k) { const op = 0.9 * Math.max(0, 1 - k / 0.85); for (const l of labels) l.material.opacity = op; },
     dispose() { group.traverse((o) => { o.geometry?.dispose?.(); o.material?.map?.dispose?.(); o.material?.dispose?.(); }); },
   };

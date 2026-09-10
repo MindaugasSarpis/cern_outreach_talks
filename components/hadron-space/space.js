@@ -2,8 +2,16 @@ import {
   WebGLRenderer, Scene, PerspectiveCamera, OrthographicCamera, Mesh, Points, Group,
   PlaneGeometry, SphereGeometry, BufferGeometry, BufferAttribute, ShaderMaterial, MeshBasicMaterial, DataTexture,
   WebGLRenderTarget, RGBAFormat, FloatType, HalfFloatType, NearestFilter,
-  AdditiveBlending, Vector3, Vector4,
+  AdditiveBlending, Vector2, Vector3, Vector4,
+  HemisphereLight, DirectionalLight, PointLight, PMREMGenerator, ACESFilmicToneMapping,
 } from 'three';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+import { SMAAPass } from 'three/examples/jsm/postprocessing/SMAAPass.js';
+import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { SIM_VERT, COPY_FRAG, VEL_FRAG, POS_FRAG, RENDER_VERT, RENDER_FRAG } from '../particle-hero/shaders/passes.glsl.js';
 import { buildStation } from './dioramas.js';
 
@@ -18,7 +26,7 @@ import { buildStation } from './dioramas.js';
 // uniform, bright ground behind the scenes, not a cloud clumped around them.
 
 const FIELD_BOUNDS = new Vector3(30, 30, 30);   // ambient field wrap box (half extents; a cube so the camera never sits at a face)
-const FOV = 50, MAX_DT = 1 / 30;
+const FOV = 50, MAX_DT = 1 / 12;   // frame-time clamp: real time down to 12 fps (flights and the assembly keep their pace on a slow GPU)
 const D2R = Math.PI / 180;
 const DEFAULT_POSE = { dist: 9, yaw: -20, pitch: 6 };
 // Named poses resolve to a station; `wide` looks at the paper station from far.
@@ -27,6 +35,39 @@ const NAMED = { wide: { station: 'hero' }, origin: { station: 'paper' }, future:
 const GATHER_DEFAULT = 0.25;   // the field's pull toward the active station; a station may set `gather` (the hero swirls the dust)
 const PULSE_KICK = 26;         // a station with `pulse: <s>` shoves the dust outward from its centre that often
 const HUD_OFFSET = new Vector3(0.6, -0.35, 0);   // a lit state lands just left of centre, in the gap between the record and the figure
+const MAX_BUFFER_W = 2560;     // drawing-buffer width cap: about half resolution at 4K, so bloom and SMAA hold 60 fps on a laptop GPU
+
+// The page gradient, drawn by the renderer itself now that the canvas is
+// opaque (post-processing wants a solid ground): the two radial glows the
+// container's CSS carries for the static fallback, in view fractions.
+const BG_VERT = /* glsl */ `varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.9999, 1.0); }`;
+const BG_FRAG = /* glsl */ `
+varying vec2 vUv;
+void main() {
+  vec3 bg = vec3(0.0196, 0.0196, 0.0275);
+  vec3 glow = vec3(0.49, 0.83, 0.99);
+  float g1 = 1.0 - smoothstep(0.0, 0.62, length((vUv - vec2(0.78, 1.08)) / vec2(0.69, 0.78)));
+  float g2 = 1.0 - smoothstep(0.0, 0.60, length((vUv - vec2(-0.12, -0.08)) / vec2(0.56, 0.67)));
+  gl_FragColor = vec4(bg + glow * (0.07 * g1 + 0.05 * g2), 1.0);
+}`;
+// The finish: a vignette, a touch of chromatic aberration toward the edges,
+// film grain — applied after bloom, before anti-aliasing and tone mapping.
+const FinishShader = {
+  uniforms: { tDiffuse: { value: null }, uTime: { value: 0 }, uVignette: { value: 0.3 }, uGrain: { value: 0.035 }, uCA: { value: 0.0004 } },
+  vertexShader: /* glsl */ `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+  fragmentShader: /* glsl */ `
+uniform sampler2D tDiffuse; uniform float uTime, uVignette, uGrain, uCA;
+varying vec2 vUv;
+float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+void main() {
+  vec2 d = vUv - 0.5; float r2 = dot(d, d);
+  vec2 off = d * r2 * uCA * 40.0;
+  vec3 c = vec3(texture2D(tDiffuse, vUv + off).r, texture2D(tDiffuse, vUv).g, texture2D(tDiffuse, vUv - off).b);
+  c *= 1.0 - uVignette * smoothstep(0.15, 0.75, r2 * 2.0);
+  c += (hash(floor(gl_FragCoord.xy / 1.5) + fract(uTime * 0.37) * 100.0) - 0.5) * uGrain * (0.35 + 0.65 * (1.0 - smoothstep(0.0, 0.5, c.g)));
+  gl_FragColor = vec4(c, 1.0);
+}`,
+};
 
 function pickTexSize(coarse) {
   const cores = navigator.hardwareConcurrency || 4;
@@ -38,11 +79,11 @@ function pickTexSize(coarse) {
   return 352;
 }
 
-export function createSpace(canvas, container, { data, space, onArrive }) {
+export function createSpace(canvas, container, { data, space, onArrive, onEvent }) {
   const coarse = matchMedia('(pointer: coarse)').matches;
   let renderer;
   try {
-    renderer = new WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'high-performance' });
+    renderer = new WebGLRenderer({ canvas, alpha: false, antialias: false, powerPreference: 'high-performance' });
   } catch { return null; }
   if (!renderer.capabilities.isWebGL2) { renderer.dispose(); return null; }
   const type = renderer.extensions.has('EXT_color_buffer_float') ? FloatType
@@ -50,10 +91,23 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
   if (!type) { renderer.dispose(); return null; }
   const baseDpr = Math.min(devicePixelRatio || 1, coarse ? 1.5 : 2);
   renderer.setPixelRatio(baseDpr);
-  renderer.setClearColor(0x000000, 0);
+  renderer.setClearColor(0x050507, 1);
+  renderer.toneMapping = ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
 
   const scene = new Scene();
   const camera = new PerspectiveCamera(FOV, 1, 0.1, 400);
+
+  // ground: the page gradient, first thing drawn
+  const bgQuad = new Mesh(new PlaneGeometry(2, 2), new ShaderMaterial({ vertexShader: BG_VERT, fragmentShader: BG_FRAG, depthTest: false, depthWrite: false }));
+  bgQuad.renderOrder = -1000; bgQuad.frustumCulled = false; scene.add(bgQuad);
+  // light: a cool sky over a dark ground, a key from upper left, and a fill
+  // that rides the camera's look target so what a slide looks at is lit
+  scene.add(new HemisphereLight(0x7dd3fc, 0x0a0c14, 0.9));
+  const key = new DirectionalLight(0xffffff, 1.6); key.position.set(-6, 9, 7); scene.add(key);
+  const fill = new PointLight(0x9fd8ff, 45, 0, 2); scene.add(fill);
+  const pmrem = new PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture; pmrem.dispose();
+  scene.environmentIntensity = 0.45;
 
   // --- records and stations -------------------------------------------------
   const byId = new Map(data.states.map((s) => [s.id, { ...s }]));
@@ -104,7 +158,7 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
   const fieldMat = new ShaderMaterial({
     vertexShader: RENDER_VERT, fragmentShader: RENDER_FRAG,
     transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
-    uniforms: { uPos: { value: null }, uVel: { value: null }, uSize: { value: 1.9 }, uPixelRatio: { value: baseDpr }, uGain: { value: 1.6 } },
+    uniforms: { uPos: { value: null }, uVel: { value: null }, uSize: { value: 1.9 }, uPixelRatio: { value: baseDpr }, uGain: { value: 2.0 }, uFocus: { value: 0 }, uLinearOut: { value: 1 } },
   });
   const field = new Points(fieldGeo, fieldMat); field.frustumCulled = false;
   scene.add(field);
@@ -164,13 +218,34 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
     activeStation = r.station;
   };
 
-  let viewW = 1, viewH = 1;
+  // --- post-processing: bloom, the finish, anti-aliasing, tone mapping ----------
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new Vector2(1, 1), 0.55, 0.55, 0.8); composer.addPass(bloom);
+  composer.addPass(new SMAAPass());
+  composer.addPass(new OutputPass());                         // tone mapping + sRGB
+  const finish = new ShaderPass(FinishShader); composer.addPass(finish);   // vignette and grain in display space, last
+  canvas.__space = { scene, composer, bloom, finish, field, renderer, get guardStage() { return guardStage; }, get elapsed() { return elapsed; }, get dpr() { return renderer.getPixelRatio(); } };   // a handle for the headless probes
+
+  // the hero station assembles its pentaquark on arrival (the cover and the close)
+  const heroApi = stations.get('hero')?.built.apis.find((a) => a.assemble) || null;
+  let assembledOnce = false;
+
+  let viewW = 1, viewH = 1, guardScale = 1;
+  const dprFor = (w) => Math.min(baseDpr, MAX_BUFFER_W / Math.max(w, 1));
+  const applyDpr = () => {
+    const d = dprFor(viewW) * guardScale;
+    renderer.setPixelRatio(d); composer.setPixelRatio(d); fieldMat.uniforms.uPixelRatio.value = d;
+    for (const s of stations.values()) s.built.setPixelRatio(d);
+  };
   function resize() {
     const r = container.getBoundingClientRect();
     const w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
     if (w === viewW && h === viewH) return;
     viewW = w; viewH = h;
     renderer.setSize(w, h, false);
+    applyDpr();
+    composer.setSize(w, h);
     camera.aspect = w / h; camera.updateProjectionMatrix();
   }
   resize();
@@ -182,6 +257,17 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
   const gather = new Vector3();
   const burst = velMat.uniforms.uBurst.value;
   let nextPulse = 3;
+
+  function startAssembly() {
+    if (!heroApi) return;
+    onEvent?.('assembling');
+    heroApi.assemble(elapsed, () => {
+      // the last quark lands: the dust takes the station's pulse from the cluster
+      const st = stations.get('hero');
+      if (st) { gather.copy(st.pos).sub(field.position); burst.set(gather.x, gather.y, gather.z, PULSE_KICK * 1.6); nextPulse = elapsed + (st.def.pulse || 6); }
+      onEvent?.('assembled');
+    });
+  }
 
   function frame() {
     raf = requestAnimationFrame(frame);
@@ -195,12 +281,16 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
       const u = Math.min((elapsed - flightT0) / flightDur, 1);
       const e = smoother(u);
       curPos.lerpVectors(fromPos, goalPos, e); curLook.lerpVectors(fromLook, goalLook, e);
-      if (u >= 1) { flightT0 = -1; arrived = true; onArrive?.(currentTarget); }
+      if (u >= 1) { flightT0 = -1; arrived = true; onArrive?.(currentTarget); if (activeStation === 'hero') startAssembly(); }
     } else {
       const k = 1 - Math.exp(-3.0 * dt);   // parked: follow the idle drift
       curPos.lerp(goalPos, k); curLook.lerp(goalLook, k);
     }
     camera.position.copy(curPos); camera.lookAt(curLook); camera.updateMatrixWorld();
+    fill.position.copy(curLook).add(new Vector3(0, 2.5, 0));
+    fieldMat.uniforms.uFocus.value = curPos.distanceTo(curLook);
+    finish.uniforms.uTime.value = elapsed;
+    if (!assembledOnce && elapsed > 0.6) { assembledOnce = true; if (activeStation === 'hero') startAssembly(); else onEvent?.('assembled'); }
 
     // ambient field: tile the wrap box so dust surrounds the camera anywhere,
     // and pull it gently toward the active station (in the field's own frame)
@@ -225,27 +315,31 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
 
     for (const s of stations.values()) s.built.update(elapsed, curPos);
     if (hiMesh) { const k = 1 + 0.12 * Math.sin(elapsed * 3); hiMesh.scale.set(k, k, k); }
-    renderer.render(scene, camera);
-
-    // frame-rate guard: step the pixel ratio down, then halve the field, if slow
+    // frame-rate guard: step the pixel ratio down, then halve the field, if slow —
+    // before this frame's render, so the resized canvas is drawn at once (a resize
+    // clears it, and a frame of page background showed through, 2026-09-11)
     if (elapsed > 4 && guardStage < 2) {
       winFrames++; winTime += dt;
       if (winTime >= 2) {
         if (winFrames / winTime < 40) {
-          const d = baseDpr * (guardStage === 0 ? 0.7 : 0.5);
-          renderer.setPixelRatio(d); fieldMat.uniforms.uPixelRatio.value = d;
+          guardScale = guardStage === 0 ? 0.7 : 0.5;
+          applyDpr();
           if (guardStage === 1) fieldGeo.setDrawRange(0, Math.floor(count / 2));
           guardStage++;
         }
         winFrames = 0; winTime = 0;
       }
     }
+    composer.render(dt);
+
   }
   frame();
 
   return {
     get currentTarget() { return currentTarget; },
     get arrived() { return arrived; },
+    get activeStation() { return activeStation; },
+    assemble() { startAssembly(); },
     state(id) { return byId.get(id) || null; },
     // pose: { at: <station id | state id | wide | origin | future | [x,y,z]>, dist?, yaw?, pitch? }
     setPose(p, { immediate = false } = {}) {
@@ -263,7 +357,7 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
       if (hiMesh) { hi.remove(hiMesh); hiMesh.geometry.dispose(); hiMesh.material.dispose(); hiMesh = null; }
       const s = id ? byId.get(id) : null;
       if (s && s.pos) {
-        hiMesh = new Mesh(new SphereGeometry(0.55, 24, 16), new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.35, blending: AdditiveBlending, depthWrite: false }));
+        hiMesh = new Mesh(new SphereGeometry(0.55, 24, 16), new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.18, blending: AdditiveBlending, depthWrite: false }));
         hiMesh.position.copy(s.pos); hi.add(hiMesh);
       }
     },
@@ -285,6 +379,8 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
       scene.traverse((o) => { o.geometry?.dispose?.(); o.material?.map?.dispose?.(); o.material?.dispose?.(); });
       quad.geometry.dispose();
       for (const m of [copyMat, velMat, posMat]) m.dispose();
+      scene.environment?.dispose?.();
+      composer.dispose?.();
       renderer.dispose(); renderer.forceContextLoss?.();
     },
   };

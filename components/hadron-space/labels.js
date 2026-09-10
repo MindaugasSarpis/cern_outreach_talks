@@ -1,4 +1,4 @@
-import { CanvasTexture, LinearFilter, Sprite, SpriteMaterial } from 'three';
+import { CanvasTexture, LinearFilter, Sprite, SpriteMaterial, SRGBColorSpace } from 'three';
 import { subscriptSegments } from './particles.js';
 
 // Text sprites for the hadron space. Both draw to a canvas once and hang the
@@ -19,7 +19,7 @@ export function makeLabel(text, { px = 44, color = '#8b97a6', weight = 600, worl
   c.width = w; c.height = Math.ceil(px * 1.5);
   ctx.fillStyle = color; ctx.textBaseline = 'middle';
   drawSegments(ctx, segs, px / 2, c.height / 2, px, weight);
-  const tex = new CanvasTexture(c);
+  const tex = new CanvasTexture(c); tex.colorSpace = SRGBColorSpace;
   tex.minFilter = LinearFilter; tex.generateMipmaps = false;
   const mat = new SpriteMaterial({ map: tex, transparent: true, depthWrite: false, depthTest: false, opacity: 0.9 });
   const s = new Sprite(mat);
@@ -38,7 +38,7 @@ export function makeText(text, { height = 0.5, color = '#f2f5f9', weight = 500, 
   c.width = w; c.height = Math.ceil(px * lineHeight * lines.length + px * 0.5);
   ctx.fillStyle = color; ctx.textBaseline = 'top';
   segLines.forEach((segs, i) => drawSegments(ctx, segs, px / 2, px * 0.25 + i * px * lineHeight, px, weight, 'top'));
-  const tex = new CanvasTexture(c); tex.minFilter = LinearFilter; tex.generateMipmaps = false;
+  const tex = new CanvasTexture(c); tex.colorSpace = SRGBColorSpace; tex.minFilter = LinearFilter; tex.generateMipmaps = false;
   const mat = new SpriteMaterial({ map: tex, transparent: true, depthWrite: false, depthTest: false, opacity: 0.95 });
   const s = new Sprite(mat);
   const worldH = height * lines.length * lineHeight;

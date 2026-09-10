@@ -135,30 +135,50 @@ const fmtMass = (s) => {
 async function boot() {
   if (space || staticBg.value || !canvas.value) return
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (reduced || !webgl2Ok()) { staticBg.value = true; return }
+  if (reduced || !webgl2Ok()) { staticBg.value = true; assembled(true); return }
   try {
     const base = import.meta.env.BASE_URL || '/'
     const url = (p) => base.replace(/\/?$/, '/') + p
     const [r1, r2] = await Promise.all([fetch(url(props.src)), fetch(url('data/space.json'))])
     data.value = await r1.json()
     const spaceDef = await r2.json()
-    space = createSpace(canvas.value, root.value, { data: data.value, space: spaceDef, onArrive: () => { arrived.value = true } })
+    space = createSpace(canvas.value, root.value, {
+      data: data.value, space: spaceDef,
+      onArrive: () => { arrived.value = true },
+      // the hero's pentaquark assembles on arrival; the cover's title waits for it (deck CSS keys on html[data-space-assembled])
+      onEvent: (e) => { if (e === 'assembling') assembled(false); else if (e === 'assembled') assembled(true) },
+    })
   } catch {
     space = null
   }
-  if (!space) { staticBg.value = true; return }
+  if (!space) { staticBg.value = true; assembled(true); return }
   ready.value = true
   space.setDim(dim.value)
   apply(true)
 }
 
+// html[data-space-assembled]: set while no assembly runs (and always without WebGL), so the cover's title shows
+function assembled(on) {
+  if (on) document.documentElement.dataset.spaceAssembled = '1'
+  else delete document.documentElement.dataset.spaceAssembled
+}
+// `c` replays the assembly while the hero pose is current (the cover and the close)
+const onKey = (e) => {
+  if (e.key !== 'c' || e.metaKey || e.ctrlKey || e.altKey) return
+  const t = e.target
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return
+  if (space && space.activeStation === 'hero') space.assemble()
+}
 const onVisibility = () => space?.setPaused(document.hidden)
 onMounted(() => {
   document.addEventListener('visibilitychange', onVisibility)
+  window.addEventListener('keydown', onKey)
   boot()
 })
 onUnmounted(() => {
   document.removeEventListener('visibilitychange', onVisibility)
+  window.removeEventListener('keydown', onKey)
+  assembled(true)
   space?.dispose()
   space = null
 })

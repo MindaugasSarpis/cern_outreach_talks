@@ -215,6 +215,20 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   in degrees, default 2.5). Shells are fresnel bubbles (rim only). Flights 1.4–4.5 s by distance. The shared shader
   `particle-hero/shaders/passes.glsl.js` gained `uGather` (a wide pull
   toward a point; zero in the WoP hero).
+  Rendering (spec `2026-09-11-startertalk-render-upgrade-design.md`): the
+  canvas is opaque and draws the page gradient itself; EffectComposer with
+  RenderPass → UnrealBloomPass → a finish pass (vignette, edge chromatic
+  aberration, grain) → SMAA → OutputPass (ACES); a hemisphere light, a key
+  directional and a fill point light that rides the look target; a
+  RoomEnvironment PMREM at low intensity; the drawing buffer is capped at
+  2560 px wide. Quark balls, state markers and decay vertices are `marble()`
+  (MeshPhysicalMaterial, clearcoat, emissive core) with a thin fresnel rim;
+  ghosts stay orbs; tubes and the page are lit. The dust takes `uFocus` (the
+  camera-to-target distance): grains away from it draw bigger and fainter.
+  The hero's pentaquark assembles on arrival (quarks fly in from the dust
+  over 3 s with trails, strings and boundary fade in, then the pulse);
+  `c` replays it; HadronSpace toggles `html[data-space-assembled]` and the
+  deck CSS fades the cover's title in with it.
 - Frame rule from the renders: an object appears to the RIGHT of the frame
   centre when its x is larger than the pose target's x; the ambient field
   wraps in a ±30 box around the camera, so stations can sit anywhere.
