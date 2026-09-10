@@ -127,7 +127,7 @@ export function createField(canvas, container, opts = {}) {
   const renderMat = new ShaderMaterial({
     vertexShader: RENDER_VERT, fragmentShader: RENDER_FRAG,
     transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
-    uniforms: { uPos: { value: null }, uVel: { value: null }, uSize: { value: 2.4 }, uPixelRatio: { value: baseDpr } },
+    uniforms: { uPos: { value: null }, uVel: { value: null }, uSize: { value: 2.4 }, uPixelRatio: { value: baseDpr }, uGain: { value: 1.0 } },
   });
   const points = new Points(geo, renderMat);
   points.frustumCulled = false;

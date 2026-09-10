@@ -14,7 +14,8 @@ import { buildStation } from './dioramas.js';
 // state records from public/data/hadrons.json. Slides steer the camera with
 // setPose({at: <station id | state id | [x,y,z]>, dist, yaw, pitch}) and light
 // a state with setStop(id). The field is pulled gently toward the active
-// station (uGather) so volume gathers around the scene in view.
+// station (uGather) only faintly — the owner wants the dust to read as a
+// uniform, bright ground behind the scenes, not a cloud clumped around them.
 
 const FIELD_BOUNDS = new Vector3(30, 30, 30);   // ambient field wrap box (half extents; a cube so the camera never sits at a face)
 const FOV = 50, MAX_DT = 1 / 30;
@@ -27,9 +28,11 @@ const HUD_OFFSET = new Vector3(0.6, -0.35, 0);   // a lit state lands just left 
 function pickTexSize(coarse) {
   const cores = navigator.hardwareConcurrency || 4;
   const area = (screen.width || 1280) * (screen.height || 800);
-  // sparser than the hero: this field fills a 60-unit box the camera flies through
-  if (coarse || area < 1e6 || cores <= 4) return 144;
-  return 224;
+  // this field fills a 60-unit box the camera flies through; dense enough to
+  // read as a continuous ground of grains from every pose
+  if (coarse || area < 1e6 || cores <= 4) return 192;
+  if (cores <= 8) return 288;
+  return 352;
 }
 
 export function createSpace(canvas, container, { data, space, onArrive }) {
@@ -98,7 +101,7 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
   const fieldMat = new ShaderMaterial({
     vertexShader: RENDER_VERT, fragmentShader: RENDER_FRAG,
     transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
-    uniforms: { uPos: { value: null }, uVel: { value: null }, uSize: { value: 1.7 }, uPixelRatio: { value: baseDpr } },
+    uniforms: { uPos: { value: null }, uVel: { value: null }, uSize: { value: 1.9 }, uPixelRatio: { value: baseDpr }, uGain: { value: 1.6 } },
   });
   const field = new Points(fieldGeo, fieldMat); field.frustumCulled = false;
   scene.add(field);
@@ -201,7 +204,7 @@ export function createSpace(canvas, container, { data, space, onArrive }) {
       Math.round(curPos.z / period.z) * period.z,
     );
     const st = stations.get(activeStation);
-    if (st) { gather.copy(st.pos).sub(field.position); velMat.uniforms.uGather.value.set(gather.x, gather.y, gather.z, 0.9); }
+    if (st) { gather.copy(st.pos).sub(field.position); velMat.uniforms.uGather.value.set(gather.x, gather.y, gather.z, 0.25); }
     velMat.uniforms.uDt.value = dt; velMat.uniforms.uTime.value = elapsed; posMat.uniforms.uDt.value = dt;
     velMat.uniforms.uPos.value = posA.texture; velMat.uniforms.uVel.value = velA.texture; pass(velMat, velB);
     posMat.uniforms.uPos.value = posA.texture; posMat.uniforms.uVel.value = velB.texture; pass(posMat, posB);

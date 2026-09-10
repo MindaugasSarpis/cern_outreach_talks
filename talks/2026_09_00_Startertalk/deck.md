@@ -119,10 +119,10 @@ the record)
 
 ---
 space:
-  at: [64.5, -1.6, 0]
-  dist: 16
-  yaw: -16
-  pitch: 9
+  at: [63.5, -0.8, 1]
+  dist: 15
+  yaw: 0
+  pitch: 58          # from above: the states and neutrals stations stay out of the frame, only dust behind the models
   dim: 0.22          # the two models in the world are the picture
 ---
 
@@ -138,8 +138,8 @@ space:
 <!--
 Speaker: this is the talk's question; say it in one sentence and come back
 to it at the close. The two models in the world (left: the Σc D̄ molecule with
-its exchange glow; right: the compact ball) are the picture; nothing else is
-drawn on the slide. Deuteron: binding energy 2.22 MeV (m_p + m_n − m_d, PDG 2024 constants),
+its exchange glow; right: the compact ball — seen from above, so only dust
+lies behind them) are the picture; nothing else is drawn on the slide. Deuteron: binding energy 2.22 MeV (m_p + m_n − m_d, PDG 2024 constants),
 size r ≈ ħc/√(2μE_B) ≈ 4.3 fm for μ = 469.5 MeV, several times the range of
 the force. Proton: rms charge radius 0.84 fm (PDG 2024), one volume, no
 substructure of hadrons inside. The two panels carry no quark letters and no

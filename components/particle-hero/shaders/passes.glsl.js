@@ -81,7 +81,7 @@ void main() {
 // particles — the main volumetric cue once the camera moves in 3D.
 export const RENDER_VERT = /* glsl */ `
 uniform sampler2D uPos, uVel;
-uniform float uSize, uPixelRatio;
+uniform float uSize, uPixelRatio, uGain;   // uGain: overall brightness (1.0 in the hero; the hadron space raises it)
 varying float vAlpha;
 varying vec3 vColor;
 void main() {
@@ -95,7 +95,7 @@ void main() {
   float sp = clamp(length(vel) * 0.9, 0.0, 1.0);
   vColor = mix(vec3(0.30, 0.55, 0.72), vec3(0.98, 0.99, 1.0), sp);  // dim cyan -> white by speed
   float fog = exp(-0.04 * max(length(mv.xyz) - 6.0, 0.0));
-  vAlpha = mix(0.25, 0.9, sp) * mix(0.4, 1.0, fract(seed * 3.17)) * fog;
+  vAlpha = mix(0.25, 0.9, sp) * mix(0.4, 1.0, fract(seed * 3.17)) * fog * uGain;
 }`;
 
 export const RENDER_FRAG = /* glsl */ `
