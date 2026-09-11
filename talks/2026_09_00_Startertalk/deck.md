@@ -27,7 +27,7 @@ Speaker: 30 minutes, one scene throughout: a path of stations in the dust
 (the 1964 page, the Θ⁺ ghost, the decay, the states, the two interiors, the
 missing neutrals, the empty grid). Three parts: what LHCb found (2015–2022), what the
 states could be, what Run 3 will measure. The 2015 paper (LHCb, PRL 115 (2015)
-072001, submitted July 2015) is eleven years old. Behind the title: the hero station, a living c c̄ u u d cluster with the dust swirling into it, the camera swaying; the same cluster closes the talk. Hadron dates and masses in the records are from Koppenburg's list (LHCb-FIGURE-2021-001 and updates, CC BY 4.0), credited on the references backup. (~0.5 min)
+072001, submitted July 2015) is eleven years old. Behind the title: the hero station. The five quarks fly in from the dust and assemble into the c c̄ u u d cluster, the title fades in as the last one lands, and `c` replays it; the same cluster closes the talk. Hadron dates and masses in the records are from Koppenburg's list (LHCb-FIGURE-2021-001 and updates, CC BY 4.0), credited on the references backup. (~0.5 min)
 -->
 
 ---
@@ -196,7 +196,7 @@ space:
 <div class="three-col caption world-caption">
 <div><b>Two hadrons.</b> A charmed baryon and an anticharmed meson about two femtometres apart, bound by a few MeV through the residual strong force, as in a deuteron.</div>
 <div><b>One hadron.</b> Five quarks in one volume, bound directly by the colour force, as in a proton. QCD allows both; the talk is about telling them apart.</div>
-<div><b>Why charm.</b> Charmed hadrons are heavy, so a pair moves slowly and a weak residual force can bind it, as a proton and a neutron bind in the deuteron; the threshold is known to a fraction of an MeV.</div>
+<div><b>Why charm.</b> Charmed hadrons are heavy, so a pair moves slowly and a weak residual force can bind it, as a proton and a neutron bind in the deuteron. The thresholds, sums of measured masses, are known to a fraction of an MeV.</div>
 </div>
 
 <div class="src">Sizes schematic; the 1 fm bar in the world is to scale · Guo et al., RMP 90 (2018) 015004 · PDG 2024 masses</div>
@@ -210,7 +210,7 @@ size r ≈ ħc/√(2μE_B) ≈ 4.3 fm for μ = 469.5 MeV, several times the rang
 the force. Proton: rms charge radius 0.84 fm (PDG 2024), one volume, no
 substructure of hadrons inside. The two panels carry no quark letters and no
 channel labels on purpose: do not name Σc D̄ or diquarks here, the physics
-labels come on slides 18 and 19. Why charm, the third line: heavy hadrons: a Σc D̄ pair has a large reduced mass (μ ≈ 1059 MeV for Σc⁺D̄⁰, against 470 MeV for the deuteron), so the kinetic energy of its relative motion, k²/2μ, is small and a weak residual force (light-meson exchange between the two hadrons) is enough to bind; this is the deuteron mechanism one level up (Törnqvist, Z. Phys. C 61 (1994) 525; Guo, Hanhart, Meißner et al., RMP 90 (2018) 015004, Sec. III). The relevant mass is the reduced mass of the two hadrons; the charm quark's motion inside either hadron does not enter. Thresholds are sharp because the hadron masses are known to a fraction of an MeV: D⁰ 1864.84 ± 0.05 MeV, Σc(2455)⁺ 2452.65 (+0.22 −0.16) MeV (PDG 2024). A state a few MeV below such a threshold is narrow because a decay to J/ψ p needs the c and the c̄ to recombine across two hadrons. Plant the deuteron here for the second time: binding energy 2.22 MeV (m_p + m_n − m_d, PDG 2024 constants), and "bound like a deuteron" is what part two calls a hadronic molecule. The LHC makes b hadrons whose decays put cc̄ and light quarks in one place: 26 000 Λb⁰ → J/ψ p K⁻ decays in Run 1 (3 fb⁻¹; LHCb, PRL 115 (2015) 072001); the decay is on slide 10. (~1.5 min)
+labels come on slides 18 and 19. Why charm, the third line. Heavy hadrons: a Σc D̄ pair has a large reduced mass (μ ≈ 1059 MeV for Σc⁺D̄⁰, against 470 MeV for the deuteron), so the kinetic energy of its relative motion, k²/2μ, is small and a weak residual force (light-meson exchange between the two hadrons) is enough to bind; this is the deuteron mechanism one level up (Törnqvist, Z. Phys. C 61 (1994) 525; Guo, Hanhart, Meißner et al., RMP 90 (2018) 015004, Sec. III). The relevant mass is the reduced mass of the two hadrons; the charm quark's motion inside either hadron does not enter. Thresholds are sharp because the hadron masses are known to a fraction of an MeV: D⁰ 1864.84 ± 0.05 MeV, Σc(2455)⁺ 2452.65 (+0.22 −0.16) MeV (PDG 2024). A state a few MeV below such a threshold is narrow because a decay to J/ψ p needs the c and the c̄ to recombine across two hadrons. Say "bound like a deuteron" here: that is what part two calls a hadronic molecule. The LHC makes b hadrons whose decays put cc̄ and light quarks in one place: 26 000 Λb⁰ → J/ψ p K⁻ decays in Run 1 (3 fb⁻¹; LHCb, PRL 115 (2015) 072001); the decay is on slide 10. (~1.5 min)
 -->
 
 ---
@@ -222,8 +222,8 @@ space: { at: [63.5, -0.8, 1], dist: 14, yaw: 14, pitch: 58, dim: 0.86 }   # the 
 <div class="row stage">
 <img src="/figures/weinberg_z.svg" class="col-60 plate" alt="Weinberg's relations, a/R and r/R against Z, with the deuteron at Z near zero and the force-range correction for the deuteron and for Pc(4312)+" />
 <div class="col-40">
-<div class="caption">Weinberg, 1965: the scattering length a and the effective range r of the two hadrons measure Z, the weight of an elementary component: a = 2(1−Z)/(2−Z) R, r = −Z/(1−Z) R, up to the force range 1/m<sub>π</sub> = 1.4 fm.</div>
-<div class="caption mt-sm">Two hadrons: a ≈ R, r small and positive. One: r large and negative. For P<sub>c</sub>(4312)⁺, a and r come from the Σ<sub>c</sub>⁺D̄⁰ lineshape; R = 1.8 fm, a width and a possibly virtual pole call for the extended forms.</div>
+<div class="caption">Weinberg, 1965: for a shallow bound state, the scattering length a and the effective range r of the two hadrons measure Z, the weight of an elementary component, through a = 2(1−Z)/(2−Z) R and r = −Z/(1−Z) R, up to the force range 1/m<sub>π</sub> = 1.4 fm.</div>
+<div class="caption mt-sm">A two-hadron state has a ≈ R and a small positive r; an elementary one has a large negative r. For P<sub>c</sub>(4312)⁺ both numbers come from the Σ<sub>c</sub>⁺D̄⁰ lineshape, and with R = 1.8 fm, a width and a possibly virtual pole they need the extended forms.</div>
 </div>
 </div>
 
@@ -319,7 +319,7 @@ space: { at: [58, 2, -30], dist: 16, yaw: -8, pitch: 12, dim: 0.7, asof: 2015, s
 
 ## Six dimensions, 14 Λ* resonances
 
-The 26 000 Run 1 decays are described only with two J/ψ p states added, at 9σ and 12σ. The P<sub>c</sub>(4450)⁺ amplitude, left free in six bins of m(J/ψ p) across ±Γ, traces the Argand circle.
+The 26 000 Run 1 decays are described only once two J/ψ p states are added, at 9σ and 12σ. The P<sub>c</sub>(4450)⁺ amplitude, left free in six bins of m(J/ψ p) across ±Γ, traces the Argand circle.
 
 </div>
 </div>
@@ -348,12 +348,12 @@ space: { at: [58, 2, -30], dist: 16, yaw: 4, pitch: 12, dim: 0.75, stops: [Pc(43
 | P<sub>c</sub>(4440)⁺ | 4440.3 ± 1.3 | 20.6 ± 4.9 |
 | P<sub>c</sub>(4457)⁺ | 4457.3 ± 0.6 | 6.4 ± 2.0 |
 
-<div class="caption mt-sm">P<sub>c</sub>(4312)⁺ is new, 7.3σ; the 2015 P<sub>c</sub>(4450)⁺ resolves into two peaks, preferred over one at 5.4σ.</div>
+<div class="caption mt-sm">P<sub>c</sub>(4312)⁺ is new, at 7.3σ; the 2015 P<sub>c</sub>(4450)⁺ resolves into two peaks, preferred over one at 5.4σ.</div>
 </div>
 <img src="/figures/papers/LHCb-PAPER-2019-014_pentaquarks_nominal_fit_and_thresholds_crop.png" class="paper col-50" style="height: 255px" alt="LHCb 2019: the weighted m(J/psi p) spectrum with the three narrow peaks and the Sigma_c+ Dbar(*)0 thresholds" />
 </div>
 
-<div class="caption mt-sm">Weighted candidates, the Λ* flattened: how, next. The fit is one-dimensional in m(J/ψ p), so it gives no J<sup>P</sup> and no phase.</div>
+<div class="caption mt-sm">The spectrum is the weighted sample, with the Λ* flattened; the next slide shows how. The fit is one-dimensional in m(J/ψ p), so it gives no J<sup>P</sup> and no phase.</div>
 
 <div class="src">LHCb, PRL 122 (2019) 222001 · statistical uncertainties only; systematic uncertainties are larger, up to +6.8 MeV on a mass and −10.1 MeV on a width</div>
 
@@ -368,13 +368,13 @@ space: { at: [58, 2, -30], dist: 16, yaw: 14, pitch: 12, dim: 0.78 }
 # Getting the Λ* out of the way
 
 <div class="row stage">
-<img src="/figures/papers/LHCb-PAPER-2019-014_mkp-spectrum.png" class="paper" style="height: 205px" alt="m(Kp) spectrum of Lambda_b to J/psi p K candidates, dominated by the Lambda(1520)" />
-<img src="/figures/papers/LHCb-PAPER-2019-014_weight.png" class="paper" style="height: 205px" alt="The cos theta_Pc weight function, the inverse of the candidate density" />
+<img src="/figures/papers/LHCb-PAPER-2019-014_mkp-spectrum.png" class="paper" style="height: 192px" alt="m(Kp) spectrum of Lambda_b to J/psi p K candidates, dominated by the Lambda(1520)" />
+<img src="/figures/papers/LHCb-PAPER-2019-014_weight.png" class="paper" style="height: 192px" alt="The cos theta_Pc weight function, the inverse of the candidate density" />
 </div>
 
 <div class="two-col caption mt-sm">
 <div><b>The cut.</b> m(Kp) > 1.9 GeV removes most of the Λ*, which peak at low pK⁻ mass, the Λ(1520) above all; the value maximises the expected significance for an isotropic P<sub>c</sub>⁺ decay.</div>
-<div><b>The weights.</b> θ<sub>Pc</sub>: the K⁻–J/ψ angle in the P<sub>c</sub>⁺ frame; the Λ* fill cos θ<sub>Pc</sub> > 0. Weight = 1 / (candidate density in cos θ<sub>Pc</sub>), taken where signal is a small fraction: the Λ* flatten, the signal is untouched.</div>
+<div><b>The weights.</b> θ<sub>Pc</sub> is the angle between the K⁻ and the J/ψ in the P<sub>c</sub>⁺ frame; the Λ* fill cos θ<sub>Pc</sub> > 0. Weighting each candidate by the inverse of the candidate density in cos θ<sub>Pc</sub>, taken where signal is scarce, flattens the Λ* and leaves the signal untouched.</div>
 </div>
 
 <div class="src">LHCb, PRL 122 (2019) 222001, Figs. 1 and 4 · fit: three relativistic Breit–Wigners × p·q, incoherent, convolved with the 2–3 MeV resolution, on a polynomial; validated on six-dimensional amplitude-model pseudo-data</div>
@@ -476,7 +476,7 @@ space:
 <div class="row stage">
 <div class="col-40">
 <img src="/figures/hadron_molecule.svg" style="height: 220px" alt="A Sigma_c D-bar molecule: two hadrons about 1.8 fm apart" />
-<div class="caption under-fig">Σ<sub>c</sub> D̄⁽*⁾ bound by light-meson exchange, as nucleons are. Binding of 2 to 20 MeV puts each mass below its threshold; recombining c and c̄ across two hadrons keeps the states narrow.</div>
+<div class="caption under-fig">A Σ<sub>c</sub> D̄⁽*⁾ pair is bound by light-meson exchange, as nucleons are. Binding of 2 to 20 MeV puts each mass below its threshold; recombining c and c̄ across two hadrons keeps the states narrow.</div>
 </div>
 <div class="col-55">
 
@@ -524,11 +524,11 @@ space:
 <div class="row stage">
 <div class="col-45">
 <img src="/figures/hadron_compact.svg" style="height: 188px" alt="A compact five-quark state" />
-<div class="caption under-fig"><b>Compact.</b> [cu][ud]c̄ held by colour–spin forces, the size of an ordinary hadron. It fills SU(3) multiplets with isospin-3/2 partners, needs no threshold nearby, and allows positive parity.</div>
+<div class="caption under-fig"><b>Compact.</b> [cu][ud]c̄ is held together by colour–spin forces at the size of an ordinary hadron. It fills SU(3) multiplets with isospin-3/2 partners, needs no threshold nearby, and allows positive parity.</div>
 </div>
 <div class="col-45">
 <img src="/figures/hadron_hadrocharmonium.svg" style="height: 188px" alt="Hadrocharmonium: a c c-bar core in a light-quark cloud" />
-<div class="caption under-fig"><b>Hadrocharmonium.</b> A compact cc̄ core (χ<sub>c0</sub> or ψ(2S)) inside a light-quark cloud, bound by the QCD van der Waals force. The core itself decays to J/ψ and the cloud becomes the proton; the cc̄ never splits, so open charm and η<sub>c</sub> p are suppressed. P<sub>c</sub>(4312)⁺ would be 1/2⁺.</div>
+<div class="caption under-fig"><b>Hadrocharmonium.</b> A compact cc̄ core (χ<sub>c0</sub> or ψ(2S)) sits inside a light-quark cloud, held by the QCD van der Waals force. The core itself decays to J/ψ and the cloud becomes the proton; the cc̄ never splits, so open charm and η<sub>c</sub> p are suppressed. P<sub>c</sub>(4312)⁺ would be 1/2⁺.</div>
 </div>
 </div>
 
@@ -565,7 +565,7 @@ space:
 <img src="/figures/lineshapes_cusp_vs_pole.svg" class="col-55 plate" alt="A threshold cusp peaking at the threshold and a pole 5.6 MeV below it" />
 <div class="col-40">
 <div class="caption">A pure cusp is no particle: the rate rises where the Σ<sub>c</sub>⁺D̄⁰ channel opens, with no pole behind it, so it peaks exactly at the threshold. P<sub>c</sub>(4312)⁺ peaks 5.6 MeV below, within its 10 MeV width and its +6.8 MeV mass systematic. JPAC's fit reads the spectrum as a pole, more likely virtual than bound: an attraction, short of binding.</div>
-<div class="caption mt-sm">Triangle candidate for P<sub>c</sub>(4457)⁺, Λ<sub>c</sub>(2595)⁺D̄⁰ at 4457.1 MeV: LHCb's 2019 fit prefers a Breit–Wigner.</div>
+<div class="caption mt-sm">The triangle candidate for P<sub>c</sub>(4457)⁺, Λ<sub>c</sub>(2595)⁺D̄⁰ at 4457.1 MeV, describes LHCb's 2019 data worse than a Breit–Wigner.</div>
 </div>
 </div>
 
@@ -611,7 +611,7 @@ space: { at: [70, 2, -34], dist: 16, yaw: 10, pitch: 12, dim: 0.8 }   # off the 
 <div class="src">Voloshin, PRD 100 (2019) 034020 · Sakai, Jing, Guo, PRD 100 (2019) 074007</div>
 
 <!--
-Speaker: walk one row only, the ηc p row; the Weinberg row is the number of slide 8, a and r at the Σc D̄ threshold: Z ≈ 0 for a molecule, ≈ 1 for a compact state or a hadrocharmonium with respect to that channel, and a pure cusp has no pole to test. Heavy-quark spin symmetry for the Σc D̄ molecule, Pc(4312)⁺ with J^P = 1/2⁻, gives Γ(ηc p) ≈ 3 Γ(J/ψ p) (Voloshin, PRD 100 (2019) 034020, eq. 8; Sakai, Jing, Guo, PRD 100 (2019) 074007). For the Σc D̄* state with 1/2⁻, whichever of Pc(4440)⁺ and Pc(4457)⁺ it is, the same symmetry gives Γ(ηc p)/Γ(J/ψ p) = 3/25 (Voloshin, eq. 11), and for the 3/2⁻ state ηc p is forbidden in S-wave. Phase space and binding move these by a few tens of percent. Hadrocharmonium built on a
+Speaker: walk one row only, the ηc p row. The Weinberg row is the number of slide 8, a and r at the Σc D̄ threshold: Z ≈ 0 for a molecule, ≈ 1 for a compact state or a hadrocharmonium with respect to that channel; a pure cusp has no pole to test. Heavy-quark spin symmetry for the Σc D̄ molecule, Pc(4312)⁺ with J^P = 1/2⁻, gives Γ(ηc p) ≈ 3 Γ(J/ψ p) (Voloshin, PRD 100 (2019) 034020, eq. 8; Sakai, Jing, Guo, PRD 100 (2019) 074007). For the Σc D̄* state with 1/2⁻, whichever of Pc(4440)⁺ and Pc(4457)⁺ it is, the same symmetry gives Γ(ηc p)/Γ(J/ψ p) = 3/25 (Voloshin, eq. 11), and for the 3/2⁻ state ηc p is forbidden in S-wave. Phase space and binding move these by a few tens of percent. Hadrocharmonium built on a
 ψ(2S) or χc0 seed suppresses ηc p because the decay needs a heavy-quark spin
 flip, and a χc0 p seed gives Pc(4312)⁺ positive parity, 1/2⁺ (Eides, Petrov, Polyakov, Mod. Phys. Lett. A 35 (2020) 2050151). Open charm: a molecule decays predominantly to
 Λc D̄⁽*⁾; in hadrocharmonium open charm is suppressed, though less strongly
@@ -632,7 +632,7 @@ space: { at: [76.2, 0.5, -2], dist: 13, yaw: -18, pitch: 6, dim: 0.45 }   # the 
 
 ## Σ<sub>c</sub>⁺D̄⁽*⁾⁰ always decays with a π⁰ or γ
 
-Σ<sub>c</sub>⁺ → Λ<sub>c</sub>⁺π⁰; D̄*⁰ → D̄⁰π⁰ or D̄⁰γ. The pair whose thresholds P<sub>c</sub>(4312)⁺ and P<sub>c</sub>(4457)⁺ sit under leaves a soft π⁰ or γ in every decay.
+Σ<sub>c</sub>⁺ → Λ<sub>c</sub>⁺π⁰; D̄*⁰ → D̄⁰π⁰ or D̄⁰γ. The pair that P<sub>c</sub>(4312)⁺ and P<sub>c</sub>(4457)⁺ sit just below leaves a soft π⁰ or γ in every decay.
 
 </div>
 </div>
@@ -705,7 +705,7 @@ space: { at: future, yaw: -20 }
 
 ## 26.7 fb⁻¹, 2024–26
 
-Run 3 recorded it entirely with a software trigger, three times the 9 fb⁻¹ behind every pentaquark result since 2019. The LHC is in Long Shutdown 3. What remains is analysis, and the amplitude fit is the slow step.
+Run 3 recorded all of it with a software trigger: three times the 9 fb⁻¹ behind every pentaquark result since 2019. The LHC is in Long Shutdown 3. What remains is analysis, and the amplitude fit is the slow step.
 
 </div>
 </div>
@@ -781,7 +781,7 @@ space: { at: [-26.5, -3.4, 0], dist: 15.5, yaw: -22, pitch: 2, sway: 9 }   # the
 <!--
 Speaker: questions. Hadron dates and masses in the records are from
 P. Koppenburg's list (LHCb-FIGURE-2021-001 and updates, CC BY 4.0), credited on
-the references backups. The world is back at the wide pose, drifting. Backups follow in this order: thresholds with the PDG inputs, the full seven-row comparison, the six lineshapes, six quarks, related LHCb results, references on two slides with every entry a link (all titled Backup). (~0.25 min)
+the references backups. The world is back at the hero pose, and the cluster assembles again as the camera lands. Backups follow in this order: thresholds with the PDG inputs, the full seven-row comparison, the six lineshapes, six quarks, related LHCb results, references on two slides with every entry a link (all titled Backup). (~0.25 min)
 -->
 
 ---
@@ -873,7 +873,7 @@ space: { at: [84.5, 0.8, -2], dist: 9, yaw: 10, pitch: 6, dim: 0.35 }
 
 ## The deuteron is the six-quark bound state we know
 
-Bound by 2.22 MeV. Lattice QCD predicts heavy dibaryons bound by tens of MeV: Ω<sub>c</sub>Ω<sub>cc</sub>, Ω<sub>b</sub>Ω<sub>bb</sub>, Ω<sub>ccb</sub>Ω<sub>cbb</sub>. The d*(2380) claim is disputed. At LHCb, the Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻ spectrum in B⁰ → Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻K⁰<sub>S</sub> shows no significant structure.
+It is bound by 2.22 MeV. Lattice QCD predicts heavy dibaryons bound by tens of MeV: Ω<sub>c</sub>Ω<sub>cc</sub>, Ω<sub>b</sub>Ω<sub>bb</sub>, Ω<sub>ccb</sub>Ω<sub>cbb</sub>. The d*(2380) claim is disputed. At LHCb, the Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻ spectrum in B⁰ → Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻K⁰<sub>S</sub> shows no significant structure.
 
 </div>
 </div>
