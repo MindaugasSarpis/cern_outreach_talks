@@ -31,15 +31,27 @@ states could be, what Run 3 will measure. The 2015 paper (LHCb, PRL 115 (2015)
 -->
 
 ---
-space:
-  at: paper
-  yaw: 2
-  dim: 0.35          # the page and the cluster are the slide
+space: { at: [3.4, 3.2, 0], dist: 11, yaw: 2, pitch: 4, dim: 0.35 }   # the paper station, the page at the left and the cluster low right, clear of the scans
 ---
 
 # 1964: five quarks are allowed
 
-<div class="quote-hero">“Baryons can now be constructed from quarks by using the combinations (qqq), (qqqqq̄), etc., while mesons are made out of (qq̄), (qqq̄q̄), etc.”<span class="who">Gell-Mann, Phys. Lett. 8 (1964) 214 · behind: Zweig, CERN-TH-401, 17 January 1964</span></div>
+<div class="papers">
+<figure class="paper-row">
+<img class="portrait" src="/figures/GellMannPhoto.png" alt="Murray Gell-Mann" />
+<div class="scan-col">
+<img class="scan" src="/figures/Gell-Mann.png" alt="Gell-Mann, Physics Letters 8 (1964) 214: baryons from (qqq), (qqqqq̄), mesons from (qq̄), (qqq̄q̄)" />
+<figcaption>Gell-Mann, Phys. Lett. 8 (1964) 214, received 4 January: (qqqqq̄) in the first quark paper</figcaption>
+</div>
+</figure>
+<figure class="paper-row">
+<img class="portrait" src="/figures/ZweigPhoto.png" alt="George Zweig" />
+<div class="scan-col">
+<img class="scan" src="/figures/Zweig.png" alt="Zweig, CERN-TH-401 (1964), footnote 6: baryons from three aces, and from four aces and an anti-ace" />
+<figcaption>Zweig, CERN-TH-401, 17 January, footnote 6: ĀAAAA, four aces and an anti-ace</figcaption>
+</div>
+</figure>
+</div>
 
 <!--
 Speaker: the page floating in the world is page 1 of Zweig's CERN report
@@ -47,12 +59,15 @@ TH-401, dated 17 January 1964 (CERN Document Server record 352337): three
 "aces" with baryon number 1/3, hence fractional charge. Gell-Mann's letter
 (Phys. Lett. 8 (1964) 214, received 4 January 1964) has the sentence on
 screen: five-quark baryons appear in the first quark paper, in the same
-sentence as qqq. The rule in 1964 was baryon number: the triplet carries
+sentence as qqq. Zweig's footnote 6, the second scan, says the same in his
+language: baryons "not only from the product of three aces, AAA, but also
+from ĀAAAA, ĀĀAAAAA, etc.", mesons from "ĀA, ĀĀAA etc.", and the light ones
+"deuces and treys". The rule in 1964 was baryon number: the triplet carries
 B = 1/3, so a baryon is qqq plus any number of qq̄ pairs. Colour came later
 (Greenberg, PRL 13 (1964) 598; Han and Nambu, Phys. Rev. 139 (1965) B1006).
 Zweig's CERN-TH-412 (21 February 1964) is the longer second version. Neither
 paper says whether a five-quark state binds, or how narrow it would be.
-Point at the five spheres drifting into one cluster below the quotation:
+Point at the five spheres drifting into one cluster below the scans:
 no experiment established a five-quark state until 2015. (~1.25 min)
 -->
 
