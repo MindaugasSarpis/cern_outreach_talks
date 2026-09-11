@@ -8,7 +8,7 @@ import { createSpace } from './hadron-space/space.js'
 import SpacePanel from './SpacePanel.vue'
 import { subscriptHtml } from './hadron-space/particles.js'
 import { warmAudio } from './particle-hero/sound.js'
-import { playAssembly, playLanding } from './hadron-space/sound.js'
+import { startHum, stopHum, humProbe } from './hadron-space/sound.js'
 
 // The persistent 3D hadron space under a whole deck. Mount ONCE from the
 // deck's global-bottom.vue. Each slide steers the camera through its
@@ -41,7 +41,7 @@ import { playAssembly, playLanding } from './hadron-space/sound.js'
 
 const props = defineProps({
   src: { type: String, default: 'data/hadrons.json' },
-  // the opening sound: a low swell while the quarks fly in, a thump as the last lands
+  // a continuous low hum while the cover or the close (the hero station) is on screen
   sound: { type: Boolean, default: true },
 })
 
@@ -85,6 +85,19 @@ function apply(immediate = false) {
     space.setStop(null)
     space.setPose(sp, { immediate })
   }
+  updateHum()
+}
+
+// The hum: on while the pose is at the hero station (the cover and the close), after the
+// first key press or pointer down (autoplay policy), with the tab visible, and never in the
+// presenter window, so an audience window and a presenter window do not hum twice.
+let audioUnlocked = false
+function updateHum() {
+  if (!props.sound) return
+  const on = audioUnlocked && !!space && !document.hidden && !nav.isPresenter?.value && space.activeStation === 'hero'
+  if (on) startHum()
+  else stopHum()
+  if (root.value) root.value.dataset.hum = on ? 'on' : 'off'
 }
 
 watch([frontmatterSpace, clicks], () => apply(false))
@@ -151,8 +164,8 @@ async function boot() {
       onArrive: () => { arrived.value = true },
       // the hero's pentaquark assembles on arrival; the cover's title waits for it (deck CSS keys on html[data-space-assembled])
       onEvent: (e) => {
-        if (e === 'assembling') { assembled(false); if (props.sound) playAssembly(3.0) }
-        else if (e === 'assembled') { assembled(true); if (props.sound) playLanding() }
+        if (e === 'assembling') assembled(false)
+        else if (e === 'assembled') assembled(true)
       },
     })
   } catch {
@@ -176,15 +189,20 @@ const onKey = (e) => {
   if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return
   if (space && space.activeStation === 'hero') space.assemble()
 }
-// the first key press or pointer down unlocks audio (autoplay policy); the
-// assembly on first load is silent, every later one sounds
-const onGesture = () => { if (props.sound) warmAudio() }
-const onVisibility = () => space?.setPaused(document.hidden)
+// the first key press or pointer down unlocks audio (autoplay policy); the hum starts then
+const onGesture = () => {
+  if (!props.sound || audioUnlocked) return
+  audioUnlocked = true
+  warmAudio()
+  updateHum()
+}
+const onVisibility = () => { space?.setPaused(document.hidden); updateHum() }
 onMounted(() => {
   document.addEventListener('visibilitychange', onVisibility)
   window.addEventListener('keydown', onKey)
   window.addEventListener('keydown', onGesture, { once: true })
   window.addEventListener('pointerdown', onGesture, { once: true })
+  if (root.value) root.value.__hum = humProbe   // for the headless probes
   boot()
 })
 onUnmounted(() => {
@@ -192,6 +210,7 @@ onUnmounted(() => {
   window.removeEventListener('keydown', onKey)
   window.removeEventListener('keydown', onGesture)
   window.removeEventListener('pointerdown', onGesture)
+  stopHum()
   assembled(true)
   space?.dispose()
   space = null

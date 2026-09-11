@@ -174,8 +174,7 @@ field, a uniform bright ground pulled only faintly toward the active station
 often). Stations: `hero` (the cover and the close: a large living c c̄ u u d
 cluster, quarks on their own tilted orbits — `cluster` with `orbit`, `core`,
 `quarkScale` — the dust swirling into it, the camera swaying ±9°; `wide`
-resolves here), `paper` (page 1 of Zweig's CERN-TH-401 as a lit sheet, five quark spheres
-drifting together), `theta` (a ghost cluster — five faint quarks that breathe
+resolves here), `paper` (the 1964 slide: Gell-Mann and Zweig beside their printed passages, portraits and scans as lit sheets with caption text, five quark spheres drifting together), `theta` (a ghost cluster — five faint quarks that breathe
 apart and never hold — standing for Θ⁺(1540)), `decay` (Λb⁰ →
 J/ψ p K⁻ as tubes with a pulse), `states` (the eight pentaquarks as spheres
 on a local mass axis with threshold planes; the nine record-and-plot stops),
@@ -196,7 +195,10 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   markers anywhere: an unestablished state is the same orb at a third of
   the light. `page.src` is written `/figures/…` and resolved against
   `import.meta.env.BASE_URL` at load (an absolute path 404s under the
-  GitHub Pages base and left the sheet a blank white square, 2026-09-10).
+  GitHub Pages base and left the sheet a blank white square, 2026-09-10). A `page` may set `paper` (a ground colour:
+  the image is composed onto a sheet of that colour with a margin, for transparent
+  scans) and `tone` (the albedo tint, default `#5c6066`); `halo: false` drops the faint
+  halo behind a sheet.
 - `components/hadron-space/dioramas.js` — one builder per object type;
   `buildStation()` → `{group, anchors, update, setDim, dispose}`. Every
   sphere (quark, state marker, decay vertex) is an `orb()`: a rim-lit
@@ -232,11 +234,12 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   second half; then the pulse), so a whole cluster is never seen before its
   fly-in; `c` replays it. HadronSpace toggles `html[data-space-assembled]`
   and the deck CSS fades the cover's title in with it. Sound
-  (`hadron-space/sound.js`, Web Audio, no assets): a low swell during the
-  fly-in and a deep thump as the last quark lands; the browser keeps audio
-  suspended until the first key press or pointer down, so the assembly on
-  first load is silent and every later one sounds (`sound` prop, default
-  on).
+  (`hadron-space/sound.js`, Web Audio, no assets): the lessons landing's hum made
+  continuous, a 55 Hz drone that swells in while the pose is at the hero station
+  (the cover and the close) and fades when the camera leaves; it starts at the
+  first key press or pointer down (autoplay policy), never in `/presenter` (two
+  open windows would hum twice); `sound` prop, default on; `root.__hum()` reports
+  its level for the headless probes.
 - Frame rule from the renders: an object appears to the RIGHT of the frame
   centre when its x is larger than the pose target's x; the ambient field
   wraps in a ±30 box around the camera, so stations can sit anywhere.

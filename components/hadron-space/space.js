@@ -114,7 +114,7 @@ export function createSpace(canvas, container, { data, space, onArrive, onEvent 
   const stations = new Map();
   const anchors = new Map();
   for (const st of space.stations) {
-    const built = buildStation(st, { states: byId });
+    const built = buildStation(st, { states: byId, anisotropy: renderer.capabilities.getMaxAnisotropy() });
     scene.add(built.group);
     stations.set(st.id, { def: st, pos: new Vector3(...st.pos), built });
     for (const [id, p] of built.anchors) anchors.set(id, p);
@@ -225,7 +225,7 @@ export function createSpace(canvas, container, { data, space, onArrive, onEvent 
   composer.addPass(new SMAAPass());
   composer.addPass(new OutputPass());                         // tone mapping + sRGB
   const finish = new ShaderPass(FinishShader); composer.addPass(finish);   // vignette and grain in display space, last
-  canvas.__space = { scene, composer, bloom, finish, field, renderer, get guardStage() { return guardStage; }, get elapsed() { return elapsed; }, get dpr() { return renderer.getPixelRatio(); } };   // a handle for the headless probes
+  canvas.__space = { scene, composer, bloom, finish, field, renderer, get guardStage() { return guardStage; }, holdQuality() { guardStage = 2; }, get elapsed() { return elapsed; }, get dpr() { return renderer.getPixelRatio(); } };   // a handle for the headless probes
 
   // the hero station assembles its pentaquark on arrival (the cover and the close)
   const heroApi = stations.get('hero')?.built.apis.find((a) => a.assemble) || null;
@@ -346,10 +346,10 @@ export function createSpace(canvas, container, { data, space, onArrive, onEvent 
       pose = { at: 'wide', ...(p || {}) };
       currentTarget = Array.isArray(pose.at) ? pose.at.join(',') : String(pose.at);
       container.dataset.spaceAt = currentTarget;
+      const wasStation = activeStation;
+      applyPose(pose, elapsed);   // resolve now, so activeStation is current when setPose returns (the hum follows it)
       if (immediate || firstFrame) { firstFrame = true; flightT0 = -1; arrived = true; return; }
       fromPos.copy(curPos); fromLook.copy(curLook);
-      const wasStation = activeStation;
-      applyPose(pose, elapsed);
       // a flight toward the hero: scatter its quarks now, so they fly in on arrival
       if (activeStation === 'hero' && wasStation !== 'hero') heroApi?.arm();
       const d = fromPos.distanceTo(goalPos) + 0.5 * fromLook.distanceTo(goalLook);

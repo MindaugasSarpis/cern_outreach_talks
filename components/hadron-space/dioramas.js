@@ -1,6 +1,6 @@
 import {
   Group, Mesh, Points, MeshBasicMaterial, MeshStandardMaterial, MeshPhysicalMaterial, ShaderMaterial, PlaneGeometry, TorusGeometry, SphereGeometry, BufferGeometry, BufferAttribute,
-  Line, LineSegments, LineBasicMaterial, LineDashedMaterial, TextureLoader, Vector3, DoubleSide, AdditiveBlending, Color, CylinderGeometry, Quaternion, SRGBColorSpace,
+  Line, LineSegments, LineBasicMaterial, LineDashedMaterial, TextureLoader, CanvasTexture, LinearFilter, Vector3, DoubleSide, AdditiveBlending, Color, CylinderGeometry, Quaternion, SRGBColorSpace,
 } from 'three';
 import { makeLabel, makeText } from './labels.js';
 
@@ -101,20 +101,36 @@ function placedLabel(text, at, pts, color) {
 }
 
 const build = {
-  page(o) {
+  page(o, ctx) {
     const g = new Group();
     // lit paper: the key and fill lights fall across the sheet. Its albedo is
     // kept low (a white page under these lights overexposed, and bloom then
     // fogged the whole slide, 2026-09-11): the sheet reads as paper in a dim room.
     const mat = new MeshStandardMaterial({ color: '#1a1d22', roughness: 0.92, metalness: 0, transparent: true, opacity: 0.98, side: DoubleSide });
-    loader.load(asset(o.src), (tex) => { tex.colorSpace = SRGBColorSpace; mat.map = tex; mat.color.set('#5c6066'); mat.needsUpdate = true; },
+    loader.load(asset(o.src), (tex) => {
+      // `paper: '#f4f1ea'`: the image is composed onto a sheet of that colour, of the plane's own
+      // aspect, with a margin, so a transparent scan does not print dark ink on dark space
+      if (o.paper) {
+        const img = tex.image, W = Math.round(img.width * 1.08), H = Math.round(W * o.height / o.width);
+        const c = document.createElement('canvas'); c.width = W; c.height = H;
+        const g2 = c.getContext('2d'); g2.fillStyle = o.paper; g2.fillRect(0, 0, W, H);
+        const pad = img.width * 0.04, k = Math.min((W - 2 * pad) / img.width, (H - 2 * pad) / img.height);
+        g2.drawImage(img, (W - img.width * k) / 2, (H - img.height * k) / 2, img.width * k, img.height * k);
+        tex.dispose(); tex = new CanvasTexture(c);
+        tex.minFilter = LinearFilter; tex.generateMipmaps = false;   // a scan is seen near 1:1: mipmaps only blur its text
+      }
+      tex.colorSpace = SRGBColorSpace; tex.anisotropy = ctx?.anisotropy || 1;
+      mat.map = tex; mat.color.set(o.tone || '#5c6066'); mat.needsUpdate = true;   // `tone`: the albedo tint
+    },
       undefined, () => console.warn('hadron-space: page texture failed', o.src));
     const m = new Mesh(new PlaneGeometry(o.width, o.height), mat);
     m.rotation.y = (o.yaw || 0) * Math.PI / 180;
     g.add(m);
-    // a faint lit halo behind the sheet so it reads as a lit object in the dark
-    const halo = new Mesh(new PlaneGeometry(o.width * 1.25, o.height * 1.18), new MeshBasicMaterial({ color: '#7dd3fc', transparent: true, opacity: 0.04, blending: AdditiveBlending, depthWrite: false, side: DoubleSide }));
-    halo.position.z = -0.05; halo.rotation.y = m.rotation.y; g.add(halo);
+    // a faint lit halo behind the sheet so it reads as a lit object in the dark (`halo: false` drops it)
+    if (o.halo !== false) {
+      const halo = new Mesh(new PlaneGeometry(o.width * 1.25, o.height * 1.18), new MeshBasicMaterial({ color: '#7dd3fc', transparent: true, opacity: 0.04, blending: AdditiveBlending, depthWrite: false, side: DoubleSide }));
+      halo.position.z = -0.05; halo.rotation.y = m.rotation.y; g.add(halo);
+    }
     g.position.copy(v(o.pos));
     return { group: g, labels: [] };
   },

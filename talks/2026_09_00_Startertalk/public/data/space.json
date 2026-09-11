@@ -79,39 +79,105 @@
     {
       "id": "paper",
       "pos": [
-        0,
+        -5,
         0,
         0
       ],
       "look": {
         "target": [
-          3.4,
-          2.6,
+          5.55,
+          2.0,
           0
         ],
         "dist": 11,
-        "yaw": -12,
-        "pitch": 4
+        "yaw": 0,
+        "pitch": 2
       },
       "objects": [
         {
           "type": "page",
-          "src": "/figures/papers/zweig_th401_p1_top.png",
+          "src": "/figures/GellMannPhoto.png",
           "pos": [
             0,
-            2.6,
+            3.99,
             0
           ],
-          "width": 7.2,
-          "height": 6.623735050597976,
-          "yaw": 8
+          "width": 1.6,
+          "height": 2.42,
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "page",
+          "src": "/figures/Gell-Mann.png",
+          "pos": [
+            4.9,
+            3.4625,
+            0
+          ],
+          "width": 7.6,
+          "height": 3.475,
+          "paper": "#f4f1ea",
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "text",
+          "text": "Gell-Mann, Phys. Lett. 8 (1964) 214, received 4 January:\nfive-quark baryons in the first quark paper",
+          "pos": [
+            1.1,
+            1.575,
+            0
+          ],
+          "height": 0.26,
+          "color": "#aeb8c4",
+          "weight": 500
+        },
+        {
+          "type": "page",
+          "src": "/figures/ZweigPhoto.png",
+          "pos": [
+            0,
+            -0.585,
+            0
+          ],
+          "width": 1.6,
+          "height": 2.27,
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "page",
+          "src": "/figures/Zweig.png",
+          "pos": [
+            4.9,
+            -0.4825,
+            0
+          ],
+          "width": 7.6,
+          "height": 2.065,
+          "paper": "#f4f1ea",
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "text",
+          "text": "Zweig, CERN-TH-412, footnote 6\n(footnote 5 in TH-401, 17 January):\nbaryons also from four aces and an anti-ace",
+          "pos": [
+            1.1,
+            -1.665,
+            0
+          ],
+          "height": 0.26,
+          "color": "#aeb8c4",
+          "weight": 500
         },
         {
           "type": "cluster",
           "pos": [
-            8.8,
-            -0.8,
-            0.4
+            10.4,
+            -1.0,
+            0.6
           ],
           "radius": 1.5,
           "spin": 0.12,

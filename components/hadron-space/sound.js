@@ -1,103 +1,101 @@
-// The opening sound of the hadron space, synthesised with Web Audio (no
-// assets), in the manner of particle-hero/sound.js:
+// The sound of the hadron space, synthesised with Web Audio (no assets): the
+// lessons landing's hum (landing/src/sound.js) made continuous.
 //
-//   playAssembly(seconds): a low swell while the five quarks fly in — two
-//   sines a fifth apart (E1, B1) and a soft triangle an octave up, through a
-//   low-pass that opens from 110 to 700 Hz, plus a breath of band-passed
-//   noise; the gain rises over the flight and lets go after it.
-//   playLanding(): the last quark lands — a deep thump (70 → 28 Hz) under a
-//   short, dark crack. Peaks near -14 dBFS: low, as asked.
+//   A low drone on a 55 Hz fundamental: two sawtooths 5 cents apart, the second at
+//   0.4 of the first, so their slow beating (one swell every ~6 s) moves the drone
+//   without emptying it (at 7 cents and equal level the fundamental cancelled every
+//   4.5 s and the hum pulsed; at 0.6 the level still swung 7.5 dB), and a sine an octave up for laptop speakers, which
+//   reproduce little below ~150 Hz, all through a resonant low-pass whose cutoff
+//   breathes on a slow LFO. It swells in over 2.5 s, holds for as long as it is
+//   wanted and fades over 1.8 s. Output peaks near -14 dBFS.
 //
-// Autoplay policy: a browser keeps an AudioContext suspended until the page
-// has seen a click, tap or key press, so the assembly on first load is
-// silent; warmAudio() runs on the first key press or pointer down (see
-// HadronSpace.vue), after which every assembly — a flight back to the cover,
-// the close, or `c` — sounds. Every failure path returns quietly.
-
+// HadronSpace.vue runs it while the cover or the close (the hero station) is on
+// screen, in the audience window only: not on /presenter, so two open windows do
+// not hum twice. Autoplay policy: nothing starts before the page has seen a key
+// press or pointer down; from then on the hum follows the pose. Every failure
+// path returns quietly.
 import { warmAudio } from '../particle-hero/sound.js';
 
-let noise = null;
-function getNoise(ac, seconds) {
-  if (noise && noise.duration >= seconds) return noise;
-  const n = Math.ceil(ac.sampleRate * seconds);
-  const buf = ac.createBuffer(1, n, ac.sampleRate);
-  const d = buf.getChannelData(0);
-  for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
-  noise = buf;
-  return noise;
+const F0 = 55, DETUNE = 5, SAW_B = 0.4, PEAK = 0.1;
+const ATTACK = 2.5, RELEASE = 1.8;
+const CUT_LO = 90, CUT_HI = 320, LFO_HZ = 0.25, LFO_DEPTH = 40, Q = 1.8;
+
+let hum = null;
+
+// from wherever the automation is now, glide to a value
+function glide(param, t, value, secs) {
+  const cur = param.value;
+  param.cancelScheduledValues(t);
+  param.setValueAtTime(cur, t);
+  param.linearRampToValueAtTime(value, t + secs);
 }
-const ready = () => { const ac = warmAudio(); return ac && ac.state === 'running' ? ac : null; };
-const cleanup = (nodes) => { try { for (const n of nodes) n.disconnect(); } catch { /* noop */ } };
 
-export function playAssembly(seconds = 3.0) {
-  const ac = ready();
-  if (!ac) return { played: false, reason: 'audio-not-running' };
+export function startHum() {
+  const ac = warmAudio();
+  if (!ac) return { playing: false, reason: 'no-webaudio' };
   try {
-    const t0 = ac.currentTime, tEnd = t0 + seconds, tOff = tEnd + 0.9;
-    const master = ac.createGain(); master.gain.value = 0.9; master.connect(ac.destination);
-
-    // the swell: a low-pass opening over the flight
-    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 3.5;
-    lp.frequency.setValueAtTime(110, t0); lp.frequency.exponentialRampToValueAtTime(700, tEnd);
-    const g = ac.createGain();
-    g.gain.setValueAtTime(0.0001, t0);
-    g.gain.exponentialRampToValueAtTime(0.2, t0 + seconds * 0.8);
-    g.gain.setValueAtTime(0.2, tEnd);
-    g.gain.exponentialRampToValueAtTime(0.0005, tOff);
-    lp.connect(g).connect(master);
-    const voices = [];
-    for (const [type, f, level] of [['sine', 41.2, 1.0], ['sine', 61.74, 0.6], ['triangle', 82.4, 0.25]]) {
-      const o = ac.createOscillator(); o.type = type; o.frequency.value = f;
-      const og = ac.createGain(); og.gain.value = level;
-      o.connect(og).connect(lp); o.start(t0); o.stop(tOff + 0.05); voices.push(o, og);
+    const t = ac.currentTime;
+    if (hum) {
+      // already humming, or fading out: cancel the fade and swell back
+      if (hum.stopTimer) {
+        clearTimeout(hum.stopTimer); hum.stopTimer = 0;
+        glide(hum.master.gain, t, PEAK, ATTACK * 0.5);
+        glide(hum.filter.frequency, t, CUT_HI, ATTACK * 0.5);
+      }
+      return { playing: true, state: ac.state };
     }
-    // a breath of air under it
-    const src = ac.createBufferSource(); src.buffer = getNoise(ac, seconds + 1.2);
-    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 0.8;
-    bp.frequency.setValueAtTime(220, t0); bp.frequency.exponentialRampToValueAtTime(1200, tEnd);
-    const ng = ac.createGain();
-    ng.gain.setValueAtTime(0.0001, t0);
-    ng.gain.exponentialRampToValueAtTime(0.05, tEnd);
-    ng.gain.exponentialRampToValueAtTime(0.0005, tOff);
-    src.connect(bp).connect(ng).connect(master); src.start(t0); src.stop(tOff + 0.05);
-
-    voices[0].onended = () => cleanup([...voices, lp, g, src, bp, ng, master]);
-    return { played: true };
+    const sawA = ac.createOscillator(); sawA.type = 'sawtooth'; sawA.frequency.value = F0;
+    const sawB = ac.createOscillator(); sawB.type = 'sawtooth'; sawB.frequency.value = F0; sawB.detune.value = DETUNE;
+    const sawBGain = ac.createGain(); sawBGain.gain.value = SAW_B;
+    const octave = ac.createOscillator(); octave.type = 'sine'; octave.frequency.value = F0 * 2;
+    const octaveGain = ac.createGain(); octaveGain.gain.value = 0.35;
+    const filter = ac.createBiquadFilter(); filter.type = 'lowpass'; filter.Q.value = Q;
+    filter.frequency.setValueAtTime(CUT_LO, t);
+    filter.frequency.exponentialRampToValueAtTime(CUT_HI, t + ATTACK + 1);
+    const lfo = ac.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = LFO_HZ;
+    const lfoGain = ac.createGain(); lfoGain.gain.value = LFO_DEPTH;
+    lfo.connect(lfoGain).connect(filter.frequency);
+    const master = ac.createGain();
+    master.gain.setValueAtTime(0.0001, t);
+    master.gain.linearRampToValueAtTime(PEAK, t + ATTACK);
+    const analyser = ac.createAnalyser(); analyser.fftSize = 8192;   // for humProbe()
+    sawA.connect(filter); sawB.connect(sawBGain).connect(filter);
+    octave.connect(octaveGain).connect(filter);
+    filter.connect(master).connect(analyser).connect(ac.destination);
+    const oscs = [sawA, sawB, octave, lfo];
+    for (const o of oscs) o.start(t);
+    hum = { ac, oscs, nodes: [...oscs, sawBGain, octaveGain, lfoGain, filter, master, analyser], master, filter, analyser, stopTimer: 0 };
+    return { playing: true, state: ac.state };
   } catch (e) {
-    return { played: false, reason: String((e && e.message) || e) };
+    return { playing: false, reason: String((e && e.message) || e) };
   }
 }
 
-export function playLanding() {
-  const ac = ready();
-  if (!ac) return { played: false, reason: 'audio-not-running' };
+export function stopHum() {
+  if (!hum || hum.stopTimer) return;
+  const h = hum;
   try {
-    const t0 = ac.currentTime, len = 0.9;
-    const master = ac.createGain(); master.gain.value = 0.9; master.connect(ac.destination);
+    const t = h.ac.currentTime;
+    glide(h.master.gain, t, 0.0001, RELEASE);
+    glide(h.filter.frequency, t, CUT_LO, RELEASE);
+  } catch { /* noop */ }
+  h.stopTimer = setTimeout(() => {
+    try { for (const o of h.oscs) o.stop(); for (const n of h.nodes) n.disconnect(); } catch { /* noop */ }
+    if (hum === h) hum = null;
+  }, (RELEASE + 0.3) * 1000);
+}
 
-    // the thump
-    const osc = ac.createOscillator(); osc.type = 'sine';
-    osc.frequency.setValueAtTime(70, t0); osc.frequency.exponentialRampToValueAtTime(28, t0 + 0.35);
-    const og = ac.createGain();
-    og.gain.setValueAtTime(0.0001, t0);
-    og.gain.exponentialRampToValueAtTime(0.32, t0 + 0.015);
-    og.gain.exponentialRampToValueAtTime(0.003, t0 + len * 0.85);
-    og.gain.linearRampToValueAtTime(0, t0 + len);
-    osc.connect(og).connect(master); osc.start(t0); osc.stop(t0 + len + 0.03);
-
-    // a short, dark crack over it
-    const src = ac.createBufferSource(); src.buffer = getNoise(ac, 1.0);
-    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.2;
-    bp.frequency.setValueAtTime(1800, t0); bp.frequency.exponentialRampToValueAtTime(160, t0 + 0.3);
-    const ng = ac.createGain();
-    ng.gain.setValueAtTime(0.16, t0);
-    ng.gain.exponentialRampToValueAtTime(0.002, t0 + 0.3);
-    ng.gain.linearRampToValueAtTime(0, t0 + 0.4);
-    src.connect(bp).connect(ng).connect(master); src.start(t0); src.stop(t0 + 0.45);
-
-    osc.onended = () => cleanup([osc, og, src, bp, ng, master]);
-    return { played: true };
+// For the headless probes: the output level and the strongest frequency now.
+export function humProbe() {
+  if (!hum) return { playing: false };
+  try {
+    const a = hum.analyser;
+    const buf = new Float32Array(a.fftSize); a.getFloatTimeDomainData(buf);
+    let s = 0; for (const x of buf) s += x * x;
+    const spec = new Float32Array(a.frequencyBinCount); a.getFloatFrequencyData(spec);
+    let bi = 1; for (let i = 2; i < spec.length; i++) if (spec[i] > spec[bi]) bi = i;
+    return { playing: true, fading: !!hum.stopTimer, state: hum.ac.state, rmsDb: +(20 * Math.log10(Math.sqrt(s / buf.length) + 1e-9)).toFixed(1), peakHz: Math.round(bi * hum.ac.sampleRate / a.fftSize) };
   } catch (e) {
-    return { played: false, reason: String((e && e.message) || e) };
+    return { playing: true, error: String(e) };
   }
 }
