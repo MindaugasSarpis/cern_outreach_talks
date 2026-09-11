@@ -17,6 +17,7 @@ Writes to public/figures/:
     lambda_b_decay.svg            the two decay paths
     pc_thresholds.svg             threshold ladder (PDG 2024, charge-consistent pairs)
     weinberg_z.svg                Weinberg's a/R and r/R against Z, the deuteron, the P_c scale
+    dalitz_intro.svg              what a Dalitz plot is: phase space, a band, interference
     lhcb_lumi.svg                 recorded luminosity bar chart
 
 Deterministic: fixed svg.hashsalt, no embedded date, no random data.
@@ -608,6 +609,88 @@ def fig_weinberg():
 
 
 # =========================================================================
+# dalitz_intro.svg — what a Dalitz plot is (Λb⁰ → J/ψ p K⁻, PDG 2024 masses)
+# =========================================================================
+def fig_dalitz_intro():
+    """Three Dalitz planes of Λb⁰ → J/ψ p K⁻ at PDG 2024 masses: 1) phase space alone,
+    uniform inside the kinematic boundary; 2) one K⁻p resonance of spin 1 in a spinless toy,
+    a band whose density along it is cos²θ with a node at cos θ = 0; 3) a K⁻p and a J/ψ p
+    resonance with opposite phases, the crossing emptied. Each panel carries its formula.
+    Points by accept–reject from uniform phase space (fixed seed); boundary and phase space
+    exact, toy widths exaggerated. Text is saved as paths, so the mathtext renders as laid out."""
+    mK, mp, mJ, mL = M["K"] / 1e3, M["p"] / 1e3, M["J/psi"] / 1e3, M["Lambda_b"] / 1e3
+
+    def limits(s):   # m²(J/ψ p) range at m²(K⁻p) = s, from energies in the K⁻p rest frame
+        m = np.sqrt(s)
+        Ep = (s - mK ** 2 + mp ** 2) / (2 * m)
+        EJ = (mL ** 2 - s - mJ ** 2) / (2 * m)
+        pp = np.sqrt(np.clip(Ep ** 2 - mp ** 2, 0, None))
+        pJ = np.sqrt(np.clip(EJ ** 2 - mJ ** 2, 0, None))
+        return (Ep + EJ) ** 2 - (pp + pJ) ** 2, (Ep + EJ) ** 2 - (pp - pJ) ** 2
+
+    xlo, xhi = (mK + mp) ** 2, (mL - mJ) ** 2
+    ylo, yhi = (mJ + mp) ** 2, (mL - mK) ** 2
+    print(f"dalitz: m(K-p) {1e3*(mK+mp):.2f}-{1e3*(mL-mJ):.2f} MeV, m2 {xlo:.3f}-{xhi:.3f}; "
+          f"m(J/psi p) {1e3*(mJ+mp):.2f}-{1e3*(mL-mK):.2f} MeV, m2 {ylo:.2f}-{yhi:.2f} GeV2; "
+          f"sum rule {mL**2 + mJ**2 + mp**2 + mK**2:.2f} GeV2")
+
+    rng = np.random.default_rng(1953)
+    n = 500000
+    x = rng.uniform(xlo, xhi, n); y = rng.uniform(ylo, yhi, n)
+    lo, hi = limits(x)
+    ok = (y > lo) & (y < hi)
+    x, y, lo, hi = x[ok], y[ok], lo[ok], hi[ok]
+    cos = (hi + lo - 2 * y) / (hi - lo)          # +1 at the lower edge, -1 at the upper
+
+    def bw(s, m, g):                              # |bw| = 1 and phase 90° at the peak
+        return m * g / (m * m - s - 1j * m * g)
+
+    mR, gR = np.sqrt(3.6), 0.12
+    m1, g1, m2, g2 = np.sqrt(3.2), 0.12, 4.45, 0.06
+    weights = [
+        np.ones_like(x),
+        np.abs(bw(x, mR, gR)) ** 2 * cos ** 2 + 0.05,
+        np.abs(bw(x, m1, g1) + np.exp(1j * np.pi) * bw(y, m2, g2)) ** 2 + 0.05,
+    ]
+    heads = [   # short titles, the formula under each on one or two lines, so neighbouring panels never collide
+        ("1 · phase space", "flat in the two squared masses:\n" r"$d\Gamma \propto |M|^2\; dm^2(K^-p)\; dm^2(J/\psi\,p)$"),
+        ("2 · one resonance (toy)", r"a band $2m_R\Gamma_R$ wide in $m^2(K^-p)$;" "\n" r"spin 1: density $\propto \cos^2\theta$ along it"),
+        ("3 · two resonances (toy)", r"$|A_1+A_2|^2 = |A_1|^2 + |A_2|^2$" "\n" r"$\qquad + \, 2|A_1||A_2|\cos\Delta\phi$"),
+    ]
+    box = dict(boxstyle="round,pad=0.2", fc="#0b0d12", ec="none", alpha=0.9)
+
+    fig, axes = plt.subplots(1, 3, figsize=(10.5, 4.7), sharey=True)
+    fig.subplots_adjust(left=0.085, right=0.995, top=0.74, bottom=0.15, wspace=0.07)
+    bx = np.linspace(xlo, xhi, 800); blo, bhi = limits(bx)
+    for ax, w, (title, sub) in zip(axes, weights, heads):
+        idx = np.flatnonzero(rng.uniform(0, w.max(), w.size) < w)
+        if idx.size > 7000:
+            idx = rng.choice(idx, 7000, replace=False)
+        ax.scatter(x[idx], y[idx], s=1.4, color="#cfe3ff", alpha=0.62, linewidths=0, rasterized=True)
+        ax.plot(np.r_[bx, bx[::-1]], np.r_[blo, bhi[::-1]], color=MUTED, lw=1.3)
+        ax.set_xlim(1.7, 6.9); ax.set_ylim(15.6, 27.2)
+        ax.set_title(title, fontsize=14, color=INK, loc="left", pad=40)
+        ax.text(0, 1.025, sub, transform=ax.transAxes, fontsize=11.5, color=MUTED, ha="left", va="bottom", linespacing=1.3)
+        ax.set_xlabel(r"$m^2(K^-p)$ (GeV$^2$)", fontsize=14)
+        ax.tick_params(labelsize=12.5)
+    axes[0].set_ylabel(r"$m^2(J/\psi\,p)$ (GeV$^2$)", fontsize=14)
+
+    i_up = np.searchsorted(bx, 5.4)
+    axes[0].annotate("kinematic boundary", xy=(bx[i_up], bhi[i_up]), xytext=(4.05, 26.2), fontsize=12, color=MUTED,
+                     bbox=box, arrowprops=dict(arrowstyle="-", color=FAINT, lw=1))
+    rlo, rhi = (v[0] for v in limits(np.array([3.6])))
+    for yy, label in ((rhi - 0.2, "cos θ = −1"), ((rlo + rhi) / 2, "node, cos θ = 0"), (rlo + 0.25, "cos θ = +1")):
+        axes[1].text(4.05, yy, label, fontsize=12, color=MUTED, va="center", bbox=box)
+    axes[2].annotate("Δφ = π: the crossing empties", xy=(3.2, 19.8), xytext=(3.55, 26.2), fontsize=12, color=MUTED,
+                     bbox=box, arrowprops=dict(arrowstyle="-", color=FAINT, lw=1))
+
+    saved = plt.rcParams["savefig.dpi"], plt.rcParams["svg.fonttype"]
+    plt.rcParams["savefig.dpi"], plt.rcParams["svg.fonttype"] = 220, "path"   # rasterised scatter; exact mathtext
+    save(fig, "dalitz_intro.svg")
+    plt.rcParams["savefig.dpi"], plt.rcParams["svg.fonttype"] = saved
+
+
+# =========================================================================
 # lhcb_lumi.svg — recorded luminosity
 # =========================================================================
 def fig_lumi():
@@ -732,5 +815,6 @@ if __name__ == "__main__":
     fig_dalitz()
     fig_thresholds()
     fig_weinberg()
+    fig_dalitz_intro()
     fig_lumi()
     fig_decay()

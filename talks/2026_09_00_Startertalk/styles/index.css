@@ -68,6 +68,7 @@
 .two-col > div { max-width: 60ch; }
 .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; max-width: none; font-size: 18px; }
 .three-col > div { max-width: none; }
+.dalitz-cols { font-size: 16.5px; line-height: 1.32; gap: 22px; }   /* the Dalitz introduction: three dense captions under three panels */
 .ol { position: relative; }
 .ol::after { content: ''; position: absolute; left: 0.07em; right: 0.07em; top: 0.33em; border-top: 0.07em solid currentColor; }
 .ol.cap::after { left: 0.05em; right: 0.05em; top: 0.13em; }
