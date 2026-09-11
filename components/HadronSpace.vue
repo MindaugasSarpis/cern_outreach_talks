@@ -7,6 +7,8 @@ import { useNav } from '@slidev/client'
 import { createSpace } from './hadron-space/space.js'
 import SpacePanel from './SpacePanel.vue'
 import { subscriptHtml } from './hadron-space/particles.js'
+import { warmAudio } from './particle-hero/sound.js'
+import { playAssembly, playLanding } from './hadron-space/sound.js'
 
 // The persistent 3D hadron space under a whole deck. Mount ONCE from the
 // deck's global-bottom.vue. Each slide steers the camera through its
@@ -39,6 +41,8 @@ import { subscriptHtml } from './hadron-space/particles.js'
 
 const props = defineProps({
   src: { type: String, default: 'data/hadrons.json' },
+  // the opening sound: a low swell while the quarks fly in, a thump as the last lands
+  sound: { type: Boolean, default: true },
 })
 
 const root = ref(null)
@@ -146,7 +150,10 @@ async function boot() {
       data: data.value, space: spaceDef,
       onArrive: () => { arrived.value = true },
       // the hero's pentaquark assembles on arrival; the cover's title waits for it (deck CSS keys on html[data-space-assembled])
-      onEvent: (e) => { if (e === 'assembling') assembled(false); else if (e === 'assembled') assembled(true) },
+      onEvent: (e) => {
+        if (e === 'assembling') { assembled(false); if (props.sound) playAssembly(3.0) }
+        else if (e === 'assembled') { assembled(true); if (props.sound) playLanding() }
+      },
     })
   } catch {
     space = null
@@ -169,15 +176,22 @@ const onKey = (e) => {
   if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return
   if (space && space.activeStation === 'hero') space.assemble()
 }
+// the first key press or pointer down unlocks audio (autoplay policy); the
+// assembly on first load is silent, every later one sounds
+const onGesture = () => { if (props.sound) warmAudio() }
 const onVisibility = () => space?.setPaused(document.hidden)
 onMounted(() => {
   document.addEventListener('visibilitychange', onVisibility)
   window.addEventListener('keydown', onKey)
+  window.addEventListener('keydown', onGesture, { once: true })
+  window.addEventListener('pointerdown', onGesture, { once: true })
   boot()
 })
 onUnmounted(() => {
   document.removeEventListener('visibilitychange', onVisibility)
   window.removeEventListener('keydown', onKey)
+  window.removeEventListener('keydown', onGesture)
+  window.removeEventListener('pointerdown', onGesture)
   assembled(true)
   space?.dispose()
   space = null

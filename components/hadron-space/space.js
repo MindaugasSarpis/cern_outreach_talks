@@ -348,7 +348,10 @@ export function createSpace(canvas, container, { data, space, onArrive, onEvent 
       container.dataset.spaceAt = currentTarget;
       if (immediate || firstFrame) { firstFrame = true; flightT0 = -1; arrived = true; return; }
       fromPos.copy(curPos); fromLook.copy(curLook);
+      const wasStation = activeStation;
       applyPose(pose, elapsed);
+      // a flight toward the hero: scatter its quarks now, so they fly in on arrival
+      if (activeStation === 'hero' && wasStation !== 'hero') heroApi?.arm();
       const d = fromPos.distanceTo(goalPos) + 0.5 * fromLook.distanceTo(goalLook);
       flightDur = Math.min(4.5, Math.max(1.4, 1.1 + d / 12));
       flightT0 = elapsed; arrived = false;

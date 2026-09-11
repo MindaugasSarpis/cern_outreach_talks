@@ -225,10 +225,18 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   (MeshPhysicalMaterial, clearcoat, emissive core) with a thin fresnel rim;
   ghosts stay orbs; tubes and the page are lit. The dust takes `uFocus` (the
   camera-to-target distance): grains away from it draw bigger and fainter.
-  The hero's pentaquark assembles on arrival (quarks fly in from the dust
-  over 3 s with trails, strings and boundary fade in, then the pulse);
-  `c` replays it; HadronSpace toggles `html[data-space-assembled]` and the
-  deck CSS fades the cover's title in with it.
+  The hero's pentaquark is born scattered (`arm()`: quarks 7–11 units out
+  in the dust, strings, boundary and label hidden), is armed again when a
+  flight toward the station starts, and assembles on arrival (the quarks fly
+  in over 3 s with trails; strings, boundary and label fade in over the
+  second half; then the pulse), so a whole cluster is never seen before its
+  fly-in; `c` replays it. HadronSpace toggles `html[data-space-assembled]`
+  and the deck CSS fades the cover's title in with it. Sound
+  (`hadron-space/sound.js`, Web Audio, no assets): a low swell during the
+  fly-in and a deep thump as the last quark lands; the browser keeps audio
+  suspended until the first key press or pointer down, so the assembly on
+  first load is silent and every later one sounds (`sound` prop, default
+  on).
 - Frame rule from the renders: an object appears to the RIGHT of the frame
   centre when its x is larger than the pose target's x; the ambient field
   wraps in a ±30 box around the camera, so stations can sit anywhere.

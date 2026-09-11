@@ -349,7 +349,8 @@ build.pentaquark = function (o) {
     const r = R * (0.97 + 0.06 * Math.random());
     haze.push({ idx: put(rgb('#7dd3fc'), 0.7 + 0.8 * Math.random(), 0.2 + 0.3 * Math.random(), 1), d, r, ph: Math.random() * 6.28 });
   }
-  g.add(shell(R, '#7dd3fc', 0.12));
+  const boundary = shell(R, '#7dd3fc', 0.12); g.add(boundary);
+  const boundaryBase = boundary.material.uniforms.uOpacity.value;
   // strings: grains flowing from quark a to quark b along a gently bowed path
   const ring = [];
   for (let s = 0; s < nStr; s++) {
@@ -380,28 +381,38 @@ build.pentaquark = function (o) {
   });
   const centres = home.map((h) => h.clone());
   const tmp = new Vector3(), tmp2 = new Vector3();
-  const labels = [];
-  if (o.label) { const l = makeLabel(o.label, { worldH: 0.5, color: '#8b97a6', letterSpacing: 0.1, upper: false }); l.position.set(0, R + 1.0, 0); g.add(l); labels.push(l); }   // above the cluster, clear of centred text on the close
+  const labels = []; let labelSprite = null;
+  if (o.label) { const l = makeLabel(o.label, { worldH: 0.5, color: '#8b97a6', letterSpacing: 0.1, upper: false }); l.position.set(0, R + 1.0, 0); g.add(l); labels.push(l); labelSprite = l; }   // above the cluster, clear of centred text on the close
   g.position.copy(v(o.pos));
   const set = (idx, p) => { pos[idx * 3] = p.x; pos[idx * 3 + 1] = p.y; pos[idx * 3 + 2] = p.z; };
-  // The assembly: the quarks start scattered in the dust and fly in on curved
-  // paths over ASM_DUR seconds (smootherstep), trails behind them; the strings
-  // and the boundary fade in over the second half; onDone fires as the last
-  // quark lands. `assemble(now, onDone)` restarts it at any time.
+  // The assembly. `arm()` scatters the quarks 7–11 units out in the dust and
+  // hides the strings, the boundary and the label — the cluster is born armed,
+  // and is armed again when a flight toward the station starts, so a whole
+  // pentaquark is never seen before its fly-in. `assemble(now, onDone)` flies
+  // the quarks in on curved paths over ASM_DUR seconds (smootherstep), trails
+  // behind them; strings, boundary and label fade in over the second half;
+  // onDone fires as the last quark lands.
   const ASM_DUR = 3.0;
-  const asm = { t0: -1, starts: null, ctrls: null, onDone: null, trailFade: -1 };
+  const asm = { t0: -1, armed: false, starts: null, ctrls: null, onDone: null, trailFade: -1 };
   const smoother = (x) => x * x * x * (x * (x * 6 - 15) + 10);
   const ss = (a, b, x) => { const q = Math.min(1, Math.max(0, (x - a) / (b - a))); return q * q * (3 - 2 * q); };
   const api = {
-    assemble(now, onDone) {
-      asm.t0 = now; asm.onDone = onDone || null; asm.trailFade = -1;
-      asm.starts = home.map(() => new Vector3(gauss(), gauss(), gauss()).normalize().multiplyScalar(10 + 6 * Math.random()));
+    arm() {
+      if (asm.armed && asm.t0 < 0) return;   // already waiting, scattered
+      asm.armed = true; asm.t0 = -1; asm.onDone = null; asm.trailFade = -1;
+      asm.starts = home.map(() => new Vector3(gauss(), gauss(), gauss()).normalize().multiplyScalar(7 + 4 * Math.random()));   // in view from the hero pose: the quarks hover in the dust, then converge
       asm.ctrls = asm.starts.map((st, i) => st.clone().add(home[i]).multiplyScalar(0.5).add(new Vector3(gauss(), gauss(), gauss()).normalize().multiplyScalar(3 + 3 * Math.random())));
       for (const tr of trails) tr.buf.length = 0;
-      mat.uniforms.uReveal.value = 0; mat.uniforms.uTrail.value = 1;
+      mat.uniforms.uReveal.value = 0; mat.uniforms.uTrail.value = 0;
+    },
+    assemble(now, onDone) {
+      if (!asm.armed || asm.t0 >= 0) { asm.armed = false; api.arm(); }
+      asm.t0 = now; asm.onDone = onDone || null; asm.trailFade = -1;
+      mat.uniforms.uTrail.value = 1;
     },
     get assembling() { return asm.t0 >= 0; },
   };
+  api.arm();
   return { group: g, labels, api, pixelRatio: mat.uniforms.uPixelRatio, update(t) {
     mat.uniforms.uTime.value = t;
     centres.forEach((c, i) => { const k = orbits[i], a = k.phase + t * k.speed; c.copy(k.u).multiplyScalar(k.r * Math.cos(a)).addScaledVector(k.w, k.r * Math.sin(a)); });
@@ -409,12 +420,20 @@ build.pentaquark = function (o) {
       const u = Math.min((t - asm.t0) / ASM_DUR, 1), e = smoother(u), w0 = (1 - e) * (1 - e), w1 = 2 * (1 - e) * e, w2 = e * e;
       centres.forEach((c, i) => { const S = asm.starts[i], C = asm.ctrls[i]; c.set(S.x * w0 + C.x * w1 + c.x * w2, S.y * w0 + C.y * w1 + c.y * w2, S.z * w0 + C.z * w1 + c.z * w2); });
       mat.uniforms.uReveal.value = ss(0.35, 1, u);
-      if (u >= 1) { asm.t0 = -1; asm.trailFade = t; const cb = asm.onDone; asm.onDone = null; cb?.(); }
+      if (u >= 1) { asm.t0 = -1; asm.armed = false; asm.trailFade = t; const cb = asm.onDone; asm.onDone = null; cb?.(); }
+    } else if (asm.armed) {
+      // waiting, scattered: each quark hovers about its start in the dust
+      centres.forEach((c, i) => c.copy(asm.starts[i]).add(tmp.set(Math.sin(t * 0.7 + i), Math.cos(t * 0.5 + 2 * i), Math.sin(t * 0.6 + 3 * i)).multiplyScalar(0.25)));
+      mat.uniforms.uReveal.value = 0;
     } else if (asm.trailFade >= 0) {
       const f = 1 - (t - asm.trailFade) / 0.9;
       mat.uniforms.uTrail.value = Math.max(0, f);
       if (f <= 0) asm.trailFade = -1;
     }
+    // the boundary and the label appear with the strings
+    const reveal = mat.uniforms.uReveal.value;
+    boundary.material.uniforms.uOpacity.value = boundaryBase * reveal;
+    if (labelSprite) labelSprite.material.opacity = (labelSprite.userData.dimOp ?? 0.9) * reveal;
     if (mat.uniforms.uTrail.value > 0) trails.forEach((tr, i) => {
       tr.buf.unshift(centres[i].clone()); if (tr.buf.length > NTR) tr.buf.length = NTR;
       tr.idx.forEach((idx, j) => set(idx, tr.buf[Math.min(j, tr.buf.length - 1)]));
@@ -463,7 +482,7 @@ export function buildStation(station, ctx) {
     group, anchors, apis,
     update(t, camPos) { for (const u of updaters) u(t, camPos); },
     setPixelRatio(d) { for (const u of prs) u.value = d; },
-    setDim(k) { const op = 0.9 * Math.max(0, 1 - k / 0.85); for (const l of labels) l.material.opacity = op; },
+    setDim(k) { const op = 0.9 * Math.max(0, 1 - k / 0.85); for (const l of labels) { l.material.opacity = op; l.userData.dimOp = op; } },
     dispose() { group.traverse((o) => { o.geometry?.dispose?.(); o.material?.map?.dispose?.(); o.material?.dispose?.(); }); },
   };
 }
