@@ -57,9 +57,11 @@ const setOrb = (mat, k, v) => { if (mat.uniforms) mat.uniforms[k].value = v; els
 // Quark balls, state markers and decay vertices are marbles; a ghost stays an orb.
 function marble(color, { glow = 0.2, opacity = 1 } = {}) {
   const c = new Color(color);
+  // diffuse kept well under the flavour colour: a near-white marble under the key,
+  // fill and sky overexposed and bloomed into a blob (the 1964 cluster, 2026-09-11)
   return new MeshPhysicalMaterial({
-    color: c, roughness: 0.2, metalness: 0.0, clearcoat: 1.0, clearcoatRoughness: 0.12,
-    emissive: c, emissiveIntensity: glow, envMapIntensity: 0.7,
+    color: c.clone().multiplyScalar(0.38), roughness: 0.2, metalness: 0.0, clearcoat: 1.0, clearcoatRoughness: 0.12,
+    emissive: c, emissiveIntensity: glow * 0.7, envMapIntensity: 0.5,
     transparent: opacity < 1, opacity, depthWrite: opacity >= 1,
   });
 }
@@ -101,9 +103,11 @@ function placedLabel(text, at, pts, color) {
 const build = {
   page(o) {
     const g = new Group();
-    // lit paper: the key light falls across the sheet
-    const mat = new MeshStandardMaterial({ color: '#2a2f36', roughness: 0.9, metalness: 0, transparent: true, opacity: 0.98, side: DoubleSide });
-    loader.load(asset(o.src), (tex) => { tex.colorSpace = SRGBColorSpace; mat.map = tex; mat.color.set('#ffffff'); mat.needsUpdate = true; },
+    // lit paper: the key and fill lights fall across the sheet. Its albedo is
+    // kept low (a white page under these lights overexposed, and bloom then
+    // fogged the whole slide, 2026-09-11): the sheet reads as paper in a dim room.
+    const mat = new MeshStandardMaterial({ color: '#1a1d22', roughness: 0.92, metalness: 0, transparent: true, opacity: 0.98, side: DoubleSide });
+    loader.load(asset(o.src), (tex) => { tex.colorSpace = SRGBColorSpace; mat.map = tex; mat.color.set('#5c6066'); mat.needsUpdate = true; },
       undefined, () => console.warn('hadron-space: page texture failed', o.src));
     const m = new Mesh(new PlaneGeometry(o.width, o.height), mat);
     m.rotation.y = (o.yaw || 0) * Math.PI / 180;

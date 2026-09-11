@@ -104,7 +104,7 @@ export function createSpace(canvas, container, { data, space, onArrive, onEvent 
   // that rides the camera's look target so what a slide looks at is lit
   scene.add(new HemisphereLight(0x7dd3fc, 0x0a0c14, 0.9));
   const key = new DirectionalLight(0xffffff, 1.6); key.position.set(-6, 9, 7); scene.add(key);
-  const fill = new PointLight(0x9fd8ff, 45, 0, 2); scene.add(fill);
+  const fill = new PointLight(0x9fd8ff, 40, 0, 2); scene.add(fill);
   const pmrem = new PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture; pmrem.dispose();
   scene.environmentIntensity = 0.45;
@@ -287,7 +287,7 @@ export function createSpace(canvas, container, { data, space, onArrive, onEvent 
       curPos.lerp(goalPos, k); curLook.lerp(goalLook, k);
     }
     camera.position.copy(curPos); camera.lookAt(curLook); camera.updateMatrixWorld();
-    fill.position.copy(curLook).add(new Vector3(0, 2.5, 0));
+    fill.position.copy(curLook).add(new Vector3(0, 3.5, 2.5));   // above and a little toward the camera, off the objects' faces
     fieldMat.uniforms.uFocus.value = curPos.distanceTo(curLook);
     finish.uniforms.uTime.value = elapsed;
     if (!assembledOnce && elapsed > 0.6) { assembledOnce = true; if (activeStation === 'hero') startAssembly(); else onEvent?.('assembled'); }
