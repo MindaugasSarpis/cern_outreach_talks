@@ -469,7 +469,8 @@ def fig_thresholds():
     broad state faint, with a one-word tag."""
     fig, ax = plt.subplots(figsize=(12, 5.2))
     Y_PC, Y_PCS = 1.7, 0.0
-    ax.set_xlim(4290, 4500)
+    GAP = 3.0   # MeV between a threshold line and a label set beside it
+    ax.set_xlim(4282, 4500)
     ax.set_ylim(-0.95, 3.2)
     ax.set_yticks([Y_PC, Y_PCS])
     ax.set_yticklabels([r"$J/\psi\,p$", r"$J/\psi\,\Lambda$"], fontsize=21)
@@ -500,7 +501,7 @@ def fig_thresholds():
     name, x, w = PC_EVIDENCE
     band(x, w, Y_PC, BLUE, 0.16)
     ax.plot([x], [Y_PC], marker="o", ms=8, color=BLUE, mec="none", alpha=0.35, zorder=4)
-    ax.text(x, Y_PC - 0.30, f"{name} evidence", ha="center", va="top", fontsize=15, color=FAINT)
+    ax.text(THRESHOLDS["Sc+D0"][1] + GAP, Y_PC - 0.30, f"{name} evidence", ha="left", va="top", fontsize=15, color=FAINT)   # right of the Σc⁺D̄⁰ line
 
     # narrow P_c: band = width, marker = mass; the name and the offset to the threshold
     # stacked on one side (P_c(4440)+ below, so it clears P_c(4457)+ above)
@@ -509,17 +510,27 @@ def fig_thresholds():
         ax.plot([x], [Y_PC], marker="o", ms=9, color=BLUE, mec=INK, mew=1.2, zorder=4)
         d = x - THRESHOLDS[key][1]
         below = "4440" in name
-        ax.text(x, Y_PC + (-0.30 if below else 0.30), name, ha="center",
+        t = THRESHOLDS[key][1]
+        # a label that would straddle its threshold line sits just left of it instead
+        lx, ha = (t - GAP, "right") if (not below and 0 < t - x < 18) else (x, "center")
+        ax.text(lx, Y_PC + (-0.30 if below else 0.30), name, ha=ha,
                 va="top" if below else "bottom", fontsize=18, color=INK)
-        ax.text(x, Y_PC + (-0.62 if below else 0.62), f"{d:+.1f} MeV", ha="center",
+        ax.text(lx, Y_PC + (-0.62 if below else 0.62), f"{d:+.1f} MeV", ha=ha,
                 va="top" if below else "bottom", fontsize=15, color=MUTED)
 
     for name, x, w, key in PCS:
         band(x, w, Y_PCS, ORANGE, 0.45)
         ax.plot([x], [Y_PCS], marker="o", ms=9, color=ORANGE, mec=INK, mew=1.2, zorder=4)
         d = x - THRESHOLDS[key][1]
-        ax.text(x, Y_PCS + 0.30, name, ha="center", va="bottom", fontsize=18, color=INK)
-        ax.text(x, Y_PCS + 0.62, f"{d:+.1f} MeV", ha="center", va="bottom", fontsize=15, color=MUTED)
+        t = THRESHOLDS[key][1]
+        lx, ha = (t + GAP, "left") if 0 <= x - t < 18 else (x, "center")   # just right of a line it would straddle
+        ax.text(lx, Y_PCS + 0.30, name, ha=ha, va="bottom", fontsize=18, color=INK)
+        ax.text(lx, Y_PCS + 0.62, f"{d:+.1f} MeV", ha=ha, va="bottom", fontsize=15, color=MUTED)
+
+    # every label sits on a dark box, so a dashed threshold never runs through text
+    for t in ax.texts:
+        t.set_bbox(dict(boxstyle="round,pad=0.12", fc="#08090c", ec="none", alpha=0.92))
+        t.set_zorder(6)
 
     save(fig, "pc_thresholds.svg")
 

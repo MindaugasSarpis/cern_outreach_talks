@@ -162,7 +162,7 @@ const PC = [4312, 4440, 4457]
         <text v-for="m in [4200, 4600]" :key="m" class="lab" :x="rx(m)" :y="H - 8" text-anchor="middle">{{ (m / 1000).toFixed(1) }}</text>
         <text class="lab" :x="W - 12" :y="H - 8" text-anchor="end">m(J/ψ p) GeV</text>
       </svg>
-      <figcaption><b>Λ* reflection</b> <span>Λ(1520) → pK⁻, projected</span><br /><em>16 MeV wide in m(pK), 500 MeV wide in m(J/ψ p)</em></figcaption>
+      <figcaption><b>Λ* reflection</b> <span>Λ(1520) → pK⁻, projected</span><br /><em>16 MeV wide in m(pK), 500 MeV wide in <span style="white-space: nowrap">m(J/ψ p)</span></em></figcaption>
     </figure>
   </div>
 </template>

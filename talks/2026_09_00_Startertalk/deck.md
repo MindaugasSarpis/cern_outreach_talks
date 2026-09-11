@@ -47,8 +47,8 @@ space: { at: [3.4, 3.2, 0], dist: 11, yaw: 2, pitch: 4, dim: 0.35 }   # the pape
 <figure class="paper-row">
 <img class="portrait" src="/figures/ZweigPhoto.png" alt="George Zweig" />
 <div class="scan-col">
-<img class="scan" src="/figures/Zweig.png" alt="Zweig, CERN-TH-401 (1964), footnote 6: baryons from three aces, and from four aces and an anti-ace" />
-<figcaption>Zweig, CERN-TH-401, 17 January, footnote 6: ĀAAAA, four aces and an anti-ace</figcaption>
+<img class="scan" src="/figures/Zweig.png" alt="Zweig, CERN-TH-412 (1964), footnote 6: baryons from three aces, and from four aces and an anti-ace" />
+<figcaption>Zweig, CERN-TH-412, footnote 6 (footnote 5 in TH-401, 17 January): ĀAAAA, four aces and an anti-ace</figcaption>
 </div>
 </figure>
 </div>
@@ -59,8 +59,9 @@ TH-401, dated 17 January 1964 (CERN Document Server record 352337): three
 "aces" with baryon number 1/3, hence fractional charge. Gell-Mann's letter
 (Phys. Lett. 8 (1964) 214, received 4 January 1964) has the sentence on
 screen: five-quark baryons appear in the first quark paper, in the same
-sentence as qqq. Zweig's footnote 6, the second scan, says the same in his
-language: baryons "not only from the product of three aces, AAA, but also
+sentence as qqq. Zweig's footnote, the second scan (footnote 6 of CERN-TH-412;
+already footnote 5 of TH-401, 17 January: both typescripts checked on INSPIRE),
+says the same in his language: baryons "not only from the product of three aces, AAA, but also
 from ĀAAAA, ĀĀAAAAA, etc.", mesons from "ĀA, ĀĀAA etc.", and the light ones
 "deuces and treys". The rule in 1964 was baryon number: the triplet carries
 B = 1/3, so a baryon is qqq plus any number of qq̄ pairs. Colour came later
@@ -199,7 +200,7 @@ angular distribution, limited by the highest Λ* spin, and rejects
 
 ---
 space:
-  at: [63.5, -0.8, 1]
+  at: [64.6, -0.8, 1]
   dist: 14
   yaw: 0
   pitch: 58          # from above: the states and neutrals stations stay out of the frame, only dust behind the models
@@ -280,7 +281,7 @@ two" becomes. (~1.25 min)
 ---
 layout: section
 hideInToc: true
-space: { at: [32.4, 1.6, 2], dist: 13, yaw: -30, pitch: 8 }   # the decay below the section title
+space: { at: [32.4, 1.6, 2], dist: 13, yaw: 10, pitch: 8 }   # the decay below the section title, seen from the right so the states and interiors stations stay out of frame
 ---
 
 # What LHCb found, 2015–2022
@@ -330,14 +331,17 @@ space: { at: [58, 2, -30], dist: 16, yaw: -8, pitch: 12, dim: 0.7, asof: 2015, s
 # 2015: two J/ψ p states
 
 <div class="row stage">
-<div class="card card-primary pad-tight col-55">
+<div class="card card-primary pad-tight col-45">
 
 ## Six dimensions, 14 Λ* resonances
 
 The 26 000 Run 1 decays are described only once two J/ψ p states are added, at 9σ and 12σ. The P<sub>c</sub>(4450)⁺ amplitude, left free in six bins of m(J/ψ p) across ±Γ, traces the Argand circle.
 
 </div>
+<img src="/figures/papers/LHCb-PAPER-2015-029_DoubleArgand-final_crop.png" class="paper col-50" style="height: 262px" alt="LHCb 2015: the Argand diagram of the Pc(4450)+ amplitude in six mass bins" />
 </div>
+
+<div class="caption mt-sm">The paper's Argand diagram for P<sub>c</sub>(4450)⁺: the six free amplitudes run anticlockwise round the Breit–Wigner circle.</div>
 
 <div class="src">LHCb, PRL 115 (2015) 072001</div>
 
@@ -454,7 +458,11 @@ An amplitude analysis of B⁻ → J/ψ Λ <span class="ol">p</span> finds the st
 </div>
 </div>
 
-<div class="caption mt-sm">Both pictures, molecular and compact, predicted strange partners; these are the first two.</div>
+<div class="row mt-sm">
+<img src="/figures/papers/LHCb-PAPER-2020-039_Fig3b_crop.png" class="paper" style="height: 132px" alt="LHCb: m(J/psi Lambda) in Xi_b- to J/psi Lambda K- with the Pcs(4459)0 fit" />
+<img src="/figures/papers/LHCb-PAPER-2022-031_Fig3a_crop.png" class="paper" style="height: 132px" alt="LHCb: m(J/psi Lambda) in B- to J/psi Lambda pbar with the Pcs(4338)0 fit" />
+<div class="caption" style="align-self: center">Both pictures, molecular and compact, predicted strange partners; these are the first two.</div>
+</div>
 
 <div class="src">LHCb, Sci. Bull. 66 (2021) 1278 · PRL 131 (2023) 031901 · LHCb now writes P<sub>ψs</sub><sup>Λ</sup>(4459)⁰ and P<sub>ψs</sub><sup>Λ</sup>(4338)⁰ (arXiv:2206.15233)</div>
 
@@ -465,7 +473,7 @@ Speaker: Pcs(4459)⁰ in Ξb⁻ → J/ψ Λ K⁻, Runs 1–2 (9 fb⁻¹), about 
 ---
 layout: section
 hideInToc: true
-space: { at: [58, 2.3, -14], dist: 15, yaw: -8, pitch: 22 }   # the states below the section title, a higher and more frontal look than the result slides; the models were introduced on the question slide and get their own slides next
+space: { at: [50, 12, -30], dist: 14, yaw: 0, pitch: 10 }   # open dust above the path, no station in frame: the models were introduced on the question slide and get their own slides next
 ---
 
 # What they could be
@@ -473,7 +481,7 @@ space: { at: [58, 2.3, -14], dist: 15, yaw: -8, pitch: 22 }   # the states below
 <!--
 Speaker: there are two families of answers, two hadrons or one, and a third
 possibility that a peak is kinematic and there is no state at all. The camera
-swings round the states while the line is said; the two models, introduced on
+rises into open dust while the line is said; the two models, introduced on
 the question slide, get their own slides next. (~0.25 min)
 -->
 
@@ -637,7 +645,7 @@ partners, widths and magnetic moments are on the backup comparison table
 -->
 
 ---
-space: { at: [76.2, 0.5, -2], dist: 13, yaw: -18, pitch: 6, dim: 0.45 }   # the decay in the right half, the text in the left
+space: { at: [79.2, 0.5, -2], dist: 10, yaw: -18, pitch: 6, dim: 0.45 }   # the decay in the right half, the text in the left
 ---
 
 # Where the neutrals go missing
@@ -745,7 +753,7 @@ space: { at: future, yaw: -10 }
 
 <ol class="prog stage">
 <li><span class="n">1</span><span class="m">J<sup>P</sup> of the three narrow states, the coupling phases, and Weinberg's Z from the Σ<sub>c</sub>D̄ lineshape</span><span class="ch">Λ<sub>b</sub>⁰ → J/ψ p K⁻, Runs 1–3</span></li>
-<li><span class="n">2</span><span class="m">Predicted doubly strange states</span><span class="ch">Λ<sub>b</sub>⁰ → J/ψ Ξ⁻ K⁺ · Ω<sub>b</sub>⁻ → J/ψ Ξ⁰ K⁻ · B⁻ → J/ψ Ξ⁻ Λ̄</span></li>
+<li><span class="n">2</span><span class="m">Predicted doubly strange states</span><span class="ch">Λ<sub>b</sub>⁰ → J/ψ Ξ⁻ K⁺ · Ω<sub>b</sub>⁻ → J/ψ Ξ⁰ K⁻ · B⁻ → J/ψ Ξ⁻ <span class="ol cap">Λ</span></span></li>
 <li><span class="n">3</span><span class="m">Decays, and the same peak in other parents</span><span class="ch">Λ<sub>b</sub>⁰ → Σ<sub>c</sub>⁽*⁾⁺⁺ D⁽*⁾⁻ K⁻ · η<sub>c</sub> p · Λ<sub>b</sub>⁰ → J/ψ p π⁻ · B<sub>s</sub>⁰ → J/ψ p <span class="ol">p</span></span></li>
 </ol>
 
@@ -841,7 +849,7 @@ space: { at: future, dist: 14, yaw: -40, pitch: 10, dim: 0.85 }   # explicit, so
 | Weinberg Z (a, r at the Σ<sub>c</sub>D̄ threshold) | ≈ 0: a ≈ R, r small and positive | ≈ 1: r large and negative | ≈ 1 with respect to Σ<sub>c</sub>D̄ | no pole to test |
 | Isospin-3/2 partners | none expected | predicted | none | none |
 | Peak position across channels | same | same | same | cusp at threshold; triangle moves |
-| Magnetic moments | differ from compact in sign and size | differ from molecule | not computed | none |
+| Magnetic moments | sign and size unlike compact | differ from molecule | not computed | none |
 
 <div class="src">Chen et al., Phys. Rept. 639 (2016) 1 · Sakai, Jing, Guo, PRD 100 (2019) 074007 · full list on the References slide</div>
 
@@ -878,7 +886,7 @@ one-dimensional mass fit never measures it. (~0 min)
 ---
 hideInToc: true
 class: backup
-space: { at: [84.5, 0.8, -2], dist: 9, yaw: 10, pitch: 6, dim: 0.35 }
+space: { at: [89, 0.8, 4], dist: 9, yaw: -5, pitch: 6, dim: 0.35 }
 ---
 
 # Backup: six quarks
@@ -888,7 +896,7 @@ space: { at: [84.5, 0.8, -2], dist: 9, yaw: 10, pitch: 6, dim: 0.35 }
 
 ## The deuteron is the six-quark bound state we know
 
-It is bound by 2.22 MeV. Lattice QCD predicts heavy dibaryons bound by tens of MeV: Ω<sub>c</sub>Ω<sub>cc</sub>, Ω<sub>b</sub>Ω<sub>bb</sub>, Ω<sub>ccb</sub>Ω<sub>cbb</sub>. The d*(2380) claim is disputed. At LHCb, the Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻ spectrum in B⁰ → Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻K⁰<sub>S</sub> shows no significant structure.
+It is bound by 2.22 MeV. Lattice QCD predicts heavy dibaryons bound by tens of MeV: Ω<sub>c</sub>Ω<sub>cc</sub>, Ω<sub>b</sub>Ω<sub>bb</sub>, Ω<sub>ccb</sub>Ω<sub>cbb</sub>. The d*(2380) claim is disputed. At LHCb, the Λ<sub>c</sub>⁺<span class="ol cap">Λ</span><sub>c</sub>⁻ spectrum in B⁰ → Λ<sub>c</sub>⁺<span class="ol cap">Λ</span><sub>c</sub>⁻K⁰<sub>S</sub> shows no significant structure.
 
 </div>
 </div>
@@ -987,8 +995,8 @@ space: { at: future, dist: 14, yaw: -40, pitch: 10, dim: 0.85 }   # explicit, so
 <li><span class="tag">Λ<sub>b</sub>⁰ → Σ<sub>c</sub>D̄K</span> <a href="https://doi.org/10.1103/PhysRevD.110.L031104" target="_blank" rel="noopener">PRD 110 (2024) L031104</a> <a class="arx" href="https://arxiv.org/abs/2404.19510" target="_blank" rel="noopener">2404.19510</a></li>
 <li><span class="tag">J/ψ Ξ⁻ K⁺</span> <a href="https://inspirehep.net/literature?q=j%20Eur.Phys.J.C%2C85%2C812" target="_blank" rel="noopener">EPJC 85 (2025) 812</a> <a class="arx" href="https://arxiv.org/abs/2501.12779" target="_blank" rel="noopener">2501.12779</a></li>
 <li><span class="tag">J/ψ Ξ⁻ K⁺ first</span> <a href="https://inspirehep.net/literature?q=j%20Eur.Phys.J.C%2C84%2C1062" target="_blank" rel="noopener">CMS, EPJC 84 (2024) 1062</a> <a class="arx" href="https://arxiv.org/abs/2401.16303" target="_blank" rel="noopener">2401.16303</a></li>
-<li><span class="tag">Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻</span> <a href="https://doi.org/10.1103/PhysRevLett.136.061802" target="_blank" rel="noopener">PRL 136 (2026) 061802</a> <a class="arx" href="https://arxiv.org/abs/2511.20476" target="_blank" rel="noopener">2511.20476</a></li>
-<li><span class="tag">Λ<sub>c</sub>⁺Λ̄<sub>c</sub>⁻K⁰<sub>S</sub></span> <a href="https://doi.org/10.1103/PhysRevD.114.012012" target="_blank" rel="noopener">PRD 114 (2026) 012012</a> <a class="arx" href="https://arxiv.org/abs/2604.15040" target="_blank" rel="noopener">2604.15040</a></li>
+<li><span class="tag">Λ<sub>c</sub>⁺<span class="ol cap">Λ</span><sub>c</sub>⁻</span> <a href="https://doi.org/10.1103/cxn3-8t4g" target="_blank" rel="noopener">PRL 136 (2026) 061802</a> <a class="arx" href="https://arxiv.org/abs/2511.20476" target="_blank" rel="noopener">2511.20476</a></li>
+<li><span class="tag">Λ<sub>c</sub>⁺<span class="ol cap">Λ</span><sub>c</sub>⁻K⁰<sub>S</sub></span> <a href="https://doi.org/10.1103/jrkb-q3w6" target="_blank" rel="noopener">PRD 114 (2026) 012012</a> <a class="arx" href="https://arxiv.org/abs/2604.15040" target="_blank" rel="noopener">2604.15040</a></li>
 <li><span class="tag">|V<sub>ub</sub>|</span> <a href="https://inspirehep.net/literature?q=j%20Nature%20Phys.%2C11%2C743" target="_blank" rel="noopener">Nature Phys. 11 (2015) 743</a> <a class="arx" href="https://arxiv.org/abs/1504.01568" target="_blank" rel="noopener">1504.01568</a></li>
 <li><span class="tag">Λ<sub>c</sub>⁺ μ ν</span> <a href="https://doi.org/10.1103/PhysRevD.96.112005" target="_blank" rel="noopener">PRD 96 (2017) 112005</a> <a class="arx" href="https://arxiv.org/abs/1709.01920" target="_blank" rel="noopener">1709.01920</a></li>
 <li><span class="tag">naming</span> <a href="https://arxiv.org/abs/2206.15233" target="_blank" rel="noopener">LHCb-PUB-2022-013</a></li>

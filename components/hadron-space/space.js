@@ -13,7 +13,7 @@ import { SMAAPass } from 'three/examples/jsm/postprocessing/SMAAPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { SIM_VERT, COPY_FRAG, VEL_FRAG, POS_FRAG, RENDER_VERT, RENDER_FRAG } from '../particle-hero/shaders/passes.glsl.js';
-import { buildStation } from './dioramas.js';
+import { buildStation, glowShell } from './dioramas.js';
 
 // The hadron space: a path of built scenes (stations) inside the WoP landing's
 // ambient particle field, one instance under the whole Startertalk deck
@@ -360,7 +360,7 @@ export function createSpace(canvas, container, { data, space, onArrive, onEvent 
       if (hiMesh) { hi.remove(hiMesh); hiMesh.geometry.dispose(); hiMesh.material.dispose(); hiMesh = null; }
       const s = id ? byId.get(id) : null;
       if (s && s.pos) {
-        hiMesh = new Mesh(new SphereGeometry(0.55, 24, 16), new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.18, blending: AdditiveBlending, depthWrite: false }));
+        hiMesh = glowShell(0.6, '#dff1ff', 0.32);
         hiMesh.position.copy(s.pos); hi.add(hiMesh);
       }
     },

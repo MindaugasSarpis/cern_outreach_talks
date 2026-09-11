@@ -10,12 +10,13 @@ function pair(groups) {
   return [g[0], g[1]];
 }
 
-// "Λb⁰ → J/ψ p K⁻" → "Λ<sub>b</sub>⁰ → J/ψ p K⁻"
+// "Λb⁰ → J/ψ p K⁻" → "Λ<sub>b</sub>⁰ → J/ψ p K⁻"; "p̄" → a drawn bar (deck CSS .ol),
+// since Space Grotesk sets the combining macron beside the p, where it read as "p⁻"
 export function subscriptHtml(text) {
   return String(text ?? '').replace(RE, (...m) => {
     const [base, sub] = pair(m.slice(1, -2));
     return `${base}<sub>${sub}</sub>`;
-  });
+  }).replace(/p\u0304/g, '<span class="ol">p</span>');
 }
 
 // "Λb⁰" → [{t: 'Λ', sub: false}, {t: 'b', sub: true}, {t: '⁰', sub: false}]

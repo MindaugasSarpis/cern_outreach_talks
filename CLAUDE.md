@@ -208,7 +208,7 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   also feeds `subscriptHtml` for the HUD, so `hadrons.json` and `space.json`
   stay plain text. `space.js` — field, camera spring,
   `createSpace(canvas, container, { data, space, onArrive })` →
-  `setPose({at, dist, yaw, pitch})`, `setStop(id)`, `setDim(k)`, `setPaused`,
+  `setPose({at, dist, yaw, pitch})`, `setStop(id)` (a rim-glow shell round the state), `setDim(k)`, `setPaused`,
   `dispose`. `at` resolves as `[x, y, z]` → station id → state id (sphere
   anchor + HUD offset) → named pose (`wide` = the hero station, `origin` =
   the paper, `future`). A look or a pose may set `sway` (idle yaw amplitude
@@ -285,7 +285,9 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   picture is the world), `.plate` (a diagram on a card-like ground),
   `.checklist` (the "not every bump" slide, 18 px), `.refs` (the two
   references backups: three columns of one-line entries, each a link: APS by
-  DOI, arXiv ids to arXiv, the rest an INSPIRE journal lookup). Slides are
+  DOI, arXiv ids to arXiv, the rest an INSPIRE journal lookup), `.ol` and
+  `.ol.cap` (a drawn bar for p̄ and Λ̄: Space Grotesk sets the combining macron
+  beside a p; the HUD formatter emits `.ol` for p̄). Slides are
   transparent, cards translucent. No WebGL2 float targets → static gradient;
   overview/PDF have no world.
 - Koppenburg's list is credited on the references backup and in the notes,

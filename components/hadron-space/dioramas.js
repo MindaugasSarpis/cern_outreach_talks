@@ -72,10 +72,7 @@ function quarkBall(q, r = 0.42, { ghost = false } = {}) {
   const m = new Mesh(new SphereGeometry(r, 32, 24), ghost ? orb(color, { opacity: 0.55, core: 0.22 }) : marble(color, { glow: charm ? 0.35 : 0.16 }));
   m.position.copy(v(q.pos));
   if (!ghost) m.add(shell(r * 1.22, color, 0.14));   // a thin rim of glow around the marble
-  if (q.flavour === 'cbar' || q.flavour === 'sbar') {   // antiquark: a thin white rim
-    const rim = new Mesh(new SphereGeometry(r * 1.12, 24, 16), new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: ghost ? 0.15 : 0.3, side: DoubleSide, depthWrite: false }));
-    m.add(rim);
-  }
+  if (q.flavour === 'cbar' || q.flavour === 'sbar') m.add(shell(r * 1.14, '#ffffff', ghost ? 0.08 : 0.16));   // antiquark: a thin white rim (a plain translucent sphere read as a flat disc under the sRGB output)
   return m;
 }
 function shell(radius, color = '#7dd3fc', opacity = 0.16) {
@@ -85,6 +82,9 @@ function shell(radius, color = '#7dd3fc', opacity = 0.16) {
   m.blending = AdditiveBlending; m.side = DoubleSide;
   return new Mesh(new SphereGeometry(radius, 40, 24), m);
 }
+// The stop highlight (space.js setStop): a rim of light round the lit state.
+// A flat additive sphere read as a grey disc once the frame was tone-mapped.
+export function glowShell(radius, color = '#ffffff', opacity = 0.3) { return shell(radius, color, opacity); }
 function endLabel(text, pts, color) {
   const l = makeLabel(text, { worldH: 0.46, color, letterSpacing: 0.02, upper: false });
   const end = pts[pts.length - 1];

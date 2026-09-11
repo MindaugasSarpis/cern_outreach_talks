@@ -68,7 +68,13 @@
 .two-col > div { max-width: 60ch; }
 .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; max-width: none; font-size: 18px; }
 .three-col > div { max-width: none; }
-.ol { text-decoration: overline; text-decoration-thickness: 1px; }   /* p̄: Space Grotesk's combining macron swallows the following space */
+.ol { position: relative; }
+.ol::after { content: ''; position: absolute; left: 0.07em; right: 0.07em; top: 0.33em; border-top: 0.07em solid currentColor; }
+.ol.cap::after { left: 0.05em; right: 0.05em; top: 0.13em; }
+/* .ol: p̄ and Λ̄ as <span class="ol">p</span> and <span class="ol cap">Λ</span>, a drawn bar just
+   above the glyph. Space Grotesk sets the combining macron beside a p, not over it, and
+   text-decoration: overline sits at the ascender line, where over a lowercase p it floated into
+   the line above (2026-09-11). Measured: ascent 0.98 em, p top 0.51 em, Λ top 0.72 em. */
 .under-fig { margin-top: 8px; }
 .closing { font-size: 22px; font-weight: 500; margin-top: 6px; }
 /* References backups: three columns of one-line entries, every entry a link */
