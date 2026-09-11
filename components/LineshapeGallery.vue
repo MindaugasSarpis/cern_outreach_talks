@@ -1,12 +1,20 @@
 <script setup>
 // Six ways a peak can appear in an invariant-mass spectrum, drawn from the
 // formulas rather than sketched: an isolated Breit–Wigner pole; a pole pinned
-// under a threshold (Flatté); a threshold cusp with no pole; a triangle
+// under a threshold (Flatté); a threshold cusp with no pole nearby; a triangle
 // singularity; the same Breit–Wigner interfering with a coherent background at
-// three phases; and a Λ* reflection — a narrow Λ(1520) → pK⁻ projected onto
+// three phases; and a Λ* reflection, a narrow Λ(1520) → pK⁻ projected onto
 // m(J/ψ p) with the real Λb⁰ → J/ψ p K⁻ kinematics. Each panel carries a small
 // Argand inset where the phase is the point: the marker sits where |A|² peaks.
-// Static; computed once at setup.
+//
+// Props: `only` picks panels by key (bw flatte cusp tri interf refl); `detail`
+// lays the chosen panels out two to a row, large, with a full explanation under
+// each (the three "What a peak can be" slides). Static; computed once at setup.
+const props = defineProps({
+  only: { type: Array, default: null },
+  detail: { type: Boolean, default: false },
+})
+const show = (key) => !props.only || props.only.includes(key)
 
 const N = 240
 const range = (a, b, n = N) => Array.from({ length: n + 1 }, (_, i) => a + (b - a) * i / n)
@@ -27,9 +35,11 @@ const flatte = (E, E0 = -0.15, g1 = 0.1, g2 = 0.6) => {
   const k = kOf(E)
   return C.inv([E0 - E + g2 * k[1], -(g1 + g2 * k[0])])
 }
-// 3 · Cusp  A = 1 / (1/a − i k(E)) — a scattering length, no pole nearby
-const cusp = (E, a = 2.0) => { const k = kOf(E); return C.inv([1 / a + k[1], -k[0]]) }
-// 4 · Triangle  |A|² ∝ |ln(1 + w / (E_T − E − iε))|² — logarithmic branch points, no pole
+// 3 · Cusp  A = 1 / (1/a − i k(E)): a weak scattering length. Its pole at k = −i/a,
+// E = −1/a² = −6.25, lies far outside the plot, so the peak at threshold is
+// kinematic. (a = 2 had put a virtual-state pole at E = −0.25, inside it, 2026-09-11.)
+const cusp = (E, a = 0.4) => { const k = kOf(E); return C.inv([1 / a + k[1], -k[0]]) }
+// 4 · Triangle  |A|² ∝ |ln(1 + w / (E_T − E − iε))|²: logarithmic branch points, no pole
 const tri = (E, w = 0.35, eps = 0.06) => {
   const z = C.add([1, 0], C.mul([w, 0], C.inv([-E, -eps])))
   return [Math.log(Math.hypot(z[0], z[1])), Math.atan2(z[1], z[0])]
@@ -70,22 +80,34 @@ function reflection() {
 }
 
 const P = [
-  { key: 'bw', title: 'Breit–Wigner', sub: 'an isolated pole', ...panel(range(-4, 4), bw), x0: 0, xlab: 'm − m₀ (Γ)', note: 'symmetric; phase 90° at the peak; full circle' },
-  { key: 'flatte', title: 'Flatté', sub: 'a pole under a threshold', ...panel(range(-1.5, 1.5), (E) => flatte(E)), x0: 0, thr: 0, xlab: 'E − E_thr', note: 'pinned just below threshold; a kink where the channel opens' },
-  { key: 'cusp', title: 'Threshold cusp', sub: 'no pole at all', ...panel(range(-2, 2), (E) => cusp(E)), x0: 0, thr: 0, xlab: 'E − E_thr', note: 'peaks exactly at threshold; phase 0° at the peak' },
-  { key: 'tri', title: 'Triangle singularity', sub: 'three particles on shell', ...panel(range(-2, 2), (E) => tri(E)), x0: 0, xlab: 'E − E_T', noArgand: true, note: 'a log branch point, no pole; moves with the production process' },
+  { key: 'bw', title: 'Breit–Wigner', sub: 'an isolated pole', ...panel(range(-4, 4), bw), x0: 0, xlab: 'm − m₀ (Γ)',
+    note: 'symmetric; phase 90° at the peak; full circle',
+    detail: "A = (Γ/2)/(m₀ − m − iΓ/2) has one pole, at m₀ − iΓ/2. |A|² is a symmetric peak, Γ wide at half height, and the phase climbs through 90° at the top, so the amplitude runs round a circle in the Argand plane (the inset)." },
+  { key: 'flatte', title: 'Flatté', sub: 'a pole under a threshold', ...panel(range(-1.5, 1.5), (E) => flatte(E)), x0: 0, thr: 0, xlab: 'E − E_thr',
+    note: 'pinned just below threshold; a kink where the channel opens',
+    detail: "The resonance couples to a channel that opens nearby, so its width carries that channel's momentum k(E), which turns imaginary below the threshold. Here the pole sits just below it: the peak is pinned there, narrow and asymmetric, with a kink where the channel opens." },
+  { key: 'cusp', title: 'Threshold cusp', sub: 'no pole nearby', ...panel(range(-2, 2), (E) => cusp(E)), x0: 0, thr: 0, thrLow: true, xlab: 'E − E_thr',
+    note: 'peaks exactly at threshold; phase 0° at the peak',
+    detail: "Where a two-hadron channel opens, the amplitude has a square-root branch point: k(E) is real above and imaginary below. With a weak interaction and no pole nearby, A = 1/(1/a − ik) still peaks exactly at the threshold, sharply below and slowly above, with the phase at 0°: kinematics, not a particle." },
+  { key: 'tri', title: 'Triangle singularity', sub: 'three particles on shell', ...panel(range(-2, 2), (E) => tri(E)), x0: 0, xlab: 'E − E_T', noArgand: true,
+    note: 'a log branch point, no pole; moves with the production process',
+    detail: "The parent makes two particles, one decays, and its daughter rescatters with the other. When all three internal lines can be on shell at once, as in a classical process (Coleman–Norton), the loop has a logarithmic singularity: a narrow peak with no pole, placed by the loop masses and moved by the production process." },
 ]
-// 5 · interference: the same BW plus a coherent background b·e^{iφ}
+// 5 · interference: the same BW plus a coherent background b·e^{iφ}. The resonance is at 90°
+// on its peak, so φ = 90° adds (a taller peak), φ = 270° subtracts (a dip), and φ = 0° gives
+// an asymmetric peak with a dip beside it (180° its mirror image). The labels had 0° as the peak and 180° as
+// the dip until 2026-09-11.
 const xsI = range(-4, 4)
 const bwI = xsI.map(bw)
-const interf = [0, Math.PI / 2, Math.PI].map((phi) => {
+const interf = [Math.PI / 2, 0, 3 * Math.PI / 2].map((phi) => {
   const b = [0.55 * Math.cos(phi), 0.55 * Math.sin(phi)]
-  const I = bwI.map((a) => C.abs2(C.add(a, b)))
-  return I
+  return bwI.map((a) => C.abs2(C.add(a, b)))
 })
 const iMax = Math.max(...interf.flat())
 const interfN = interf.map((I) => I.map((v) => v / iMax))
+const INTERF_DETAIL = "The same Breit–Wigner on a smooth background: the spectrum is |A + b·e<sup>iφ</sup>|², and the resonance sits at 90° on its peak. In phase (φ = 90°) it makes a taller peak, against it (270°) a dip, and at 0° an asymmetric peak with a dip beside it. The top of the bump is then not the mass, and its width is not Γ."
 const refl = reflection()
+const REFL_DETAIL = "A Λ(1520) → pK⁻ is a band 16 MeV wide in m(pK⁻). Projected onto m(J/ψ p), the same events spread over almost 600 MeV, right across the pentaquark masses, shaped by the decay angles. Interfering Λ* bands can make bumps with no J/ψ p state behind them, which is why LHCb fits all six dimensions."
 
 // --- drawing ---------------------------------------------------------------
 const W = 300, H = 118, pad = { l: 12, r: 86, t: 10, b: 20 }
@@ -107,62 +129,65 @@ const argandPt = (A, i) => {
   return { x: ix(A[i][0] * s), y: iy(A[i][1] * s) }
 }
 const rx = (m) => pad.l + (m - refl.lo) / (refl.hi - refl.lo) * (W - pad.l - 12)
-const reflPoly = refl.h.map((v, b) => `${rx(refl.lo + (refl.hi - refl.lo) * (b + 0.5) / refl.nb).toFixed(1)},${sy(v).toFixed(1)}`).join(' ')
+const REFL_TOP = 0.62   // the curve's height; the state labels sit above it
+const reflPoly = refl.h.map((v, b) => `${rx(refl.lo + (refl.hi - refl.lo) * (b + 0.5) / refl.nb).toFixed(1)},${sy(v * REFL_TOP).toFixed(1)}`).join(' ')
 const PC = [4312, 4440, 4457]
 </script>
 
 <template>
-  <div class="gallery">
-    <figure v-for="p in P" :key="p.key" class="panel">
-      <svg :viewBox="`0 0 ${W} ${H}`">
-        <line class="axis" :x1="pad.l" :y1="pad.t + ph" :x2="pad.l + pw" :y2="pad.t + ph" />
-        <line v-if="p.thr != null" class="thr" :x1="sx(p.xs, p.thr)" :y1="pad.t" :x2="sx(p.xs, p.thr)" :y2="pad.t + ph" />
-        <text v-if="p.thr != null" class="lab" :x="sx(p.xs, p.thr) + 4" :y="pad.t + 9">threshold</text>
-        <polyline class="curve" :points="poly(p.xs, p.I)" />
-        <line class="peak" :x1="sx(p.xs, p.xs[p.iPeak])" :y1="sy(p.I[p.iPeak])" :x2="sx(p.xs, p.xs[p.iPeak])" :y2="pad.t + ph" />
-        <circle class="dot" :cx="sx(p.xs, p.xs[p.iPeak])" :cy="sy(p.I[p.iPeak])" r="3" />
-        <text class="lab" :x="pad.l + pw" :y="H - 8" text-anchor="end">{{ p.xlab }}</text>
-        <text class="lab" :x="pad.l" :y="H - 8">|A|²</text>
-        <!-- Argand inset: where on the circle the peak sits -->
-        <g v-if="!p.noArgand">
-          <circle class="unit" :cx="ix(0.5)" :cy="iy(0.5)" :r="ins.r" />
-          <line class="axis" :x1="ix(-0.1)" :y1="iy(0)" :x2="ix(1.1)" :y2="iy(0)" />
-          <line class="axis" :x1="ix(0)" :y1="iy(-0.05)" :x2="ix(0)" :y2="iy(1.08)" />
-          <polyline class="walk" :points="argand(p.A)" />
-          <circle class="dot" :cx="argandPt(p.A, p.iPeak).x" :cy="argandPt(p.A, p.iPeak).y" r="3" />
-          <text class="lab tiny" :x="ins.cx" :y="ins.cy + ins.r + 13" text-anchor="middle">δ at peak {{ Math.round(p.phase[p.iPeak] * 180 / Math.PI) }}°</text>
-        </g>
-      </svg>
-      <figcaption><b>{{ p.title }}</b> <span>{{ p.sub }}</span><br /><em>{{ p.note }}</em></figcaption>
-    </figure>
+  <div :class="['gallery', { large: detail }]">
+    <template v-for="p in P" :key="p.key">
+      <figure v-if="show(p.key)" class="panel">
+        <svg :viewBox="`0 0 ${W} ${H}`">
+          <line class="axis" :x1="pad.l" :y1="pad.t + ph" :x2="pad.l + pw" :y2="pad.t + ph" />
+          <line v-if="p.thr != null" class="thr" :x1="sx(p.xs, p.thr)" :y1="pad.t" :x2="sx(p.xs, p.thr)" :y2="pad.t + ph" />
+          <text v-if="p.thr != null" class="lab" :x="sx(p.xs, p.thr) + 4" :y="p.thrLow ? pad.t + ph - 5 : pad.t + 9">threshold</text>
+          <polyline class="curve" :points="poly(p.xs, p.I)" />
+          <line class="peak" :x1="sx(p.xs, p.xs[p.iPeak])" :y1="sy(p.I[p.iPeak])" :x2="sx(p.xs, p.xs[p.iPeak])" :y2="pad.t + ph" />
+          <circle class="dot" :cx="sx(p.xs, p.xs[p.iPeak])" :cy="sy(p.I[p.iPeak])" r="3" />
+          <text class="lab" :x="pad.l + pw" :y="H - 8" text-anchor="end">{{ p.xlab }}</text>
+          <text class="lab" :x="pad.l" :y="H - 8">|A|²</text>
+          <!-- Argand inset: where on the circle the peak sits -->
+          <g v-if="!p.noArgand">
+            <circle class="unit" :cx="ix(0.5)" :cy="iy(0.5)" :r="ins.r" />
+            <line class="axis" :x1="ix(-0.1)" :y1="iy(0)" :x2="ix(1.1)" :y2="iy(0)" />
+            <line class="axis" :x1="ix(0)" :y1="iy(-0.05)" :x2="ix(0)" :y2="iy(1.08)" />
+            <polyline class="walk" :points="argand(p.A)" />
+            <circle class="dot" :cx="argandPt(p.A, p.iPeak).x" :cy="argandPt(p.A, p.iPeak).y" r="3" />
+            <text class="lab tiny" :x="ins.cx" :y="ins.cy + ins.r + 13" text-anchor="middle">δ at peak {{ Math.round(p.phase[p.iPeak] * 180 / Math.PI) }}°</text>
+          </g>
+        </svg>
+        <figcaption><b>{{ p.title }}</b> <span>{{ p.sub }}</span><template v-if="!detail"><br /><em>{{ p.note }}</em></template><div v-else class="detail" v-html="p.detail"></div></figcaption>
+      </figure>
+    </template>
 
-    <figure class="panel">
+    <figure v-if="show('interf')" class="panel">
       <svg :viewBox="`0 0 ${W} ${H}`">
         <line class="axis" :x1="pad.l" :y1="pad.t + ph" :x2="W - 12" :y2="pad.t + ph" />
         <polyline class="curve dim" :points="xsI.map((x, i) => `${(pad.l + (x + 4) / 8 * (W - pad.l - 12)).toFixed(1)},${sy(bwI.map(C.abs2)[i] / iMax).toFixed(1)}`).join(' ')" />
         <polyline v-for="(I, k) in interfN" :key="k" :class="['curve', 'phi' + k]" :points="xsI.map((x, i) => `${(pad.l + (x + 4) / 8 * (W - pad.l - 12)).toFixed(1)},${sy(I[i]).toFixed(1)}`).join(' ')" />
         <text class="lab" :x="W - 12" :y="H - 8" text-anchor="end">m − m₀ (Γ)</text>
-        <text class="lab phi0" :x="pad.l + 4" :y="pad.t + 10">φ = 0 · peak</text>
-        <text class="lab phi1" :x="pad.l + 4" :y="pad.t + 22">φ = 90° · asymmetric</text>
-        <text class="lab phi2" :x="pad.l + 4" :y="pad.t + 34">φ = 180° · dip</text>
+        <text class="lab phi0" :x="pad.l + 4" :y="pad.t + 10">φ = 90° · peak</text>
+        <text class="lab phi1" :x="pad.l + 4" :y="pad.t + 22">φ = 0° · asymmetric</text>
+        <text class="lab phi2" :x="pad.l + 4" :y="pad.t + 34">φ = 270° · dip</text>
         <text class="lab dim" :x="pad.l + 4" :y="pad.t + 46">alone</text>
       </svg>
-      <figcaption><b>Interference</b> <span>one pole, a coherent background</span><br /><em>the histogram shows <span style="white-space: nowrap">|A + b·e<sup>iφ</sup>|², not |A|²</span></em></figcaption>
+      <figcaption><b>Interference</b> <span>one pole, a coherent background</span><template v-if="!detail"><br /><em>the histogram shows <span style="white-space: nowrap">|A + b·e<sup>iφ</sup>|², not |A|²</span></em></template><div v-else class="detail" v-html="INTERF_DETAIL"></div></figcaption>
     </figure>
 
-    <figure class="panel">
+    <figure v-if="show('refl')" class="panel">
       <svg :viewBox="`0 0 ${W} ${H}`">
         <line class="axis" :x1="pad.l" :y1="pad.t + ph" :x2="W - 12" :y2="pad.t + ph" />
         <polyline class="curve refl" :points="reflPoly" />
         <g v-for="m in PC" :key="m">
-          <line class="pc" :x1="rx(m)" :y1="pad.t + ph" :x2="rx(m)" :y2="pad.t + ph - 22" />
+          <line class="pc" :x1="rx(m)" :y1="pad.t + ph" :x2="rx(m)" :y2="pad.t + 14" />
         </g>
-        <text class="lab pcl" :x="rx(4312) - 3" :y="pad.t + ph - 26" text-anchor="end">4312</text>
-        <text class="lab pcl" :x="rx(4457) + 3" :y="pad.t + ph - 26">4440 · 4457</text>
+        <text class="lab pcl" :x="rx(4312) - 3" :y="pad.t + 12" text-anchor="end">4312</text>
+        <text class="lab pcl" :x="rx(4457) + 3" :y="pad.t + 12">4440 · 4457</text>
         <text v-for="m in [4200, 4600]" :key="m" class="lab" :x="rx(m)" :y="H - 8" text-anchor="middle">{{ (m / 1000).toFixed(1) }}</text>
         <text class="lab" :x="W - 12" :y="H - 8" text-anchor="end">m(J/ψ p) GeV</text>
       </svg>
-      <figcaption><b>Λ* reflection</b> <span>Λ(1520) → pK⁻, projected</span><br /><em>16 MeV wide in m(pK), 500 MeV wide in <span style="white-space: nowrap">m(J/ψ p)</span></em></figcaption>
+      <figcaption><b>Λ* reflection</b> <span>Λ(1520) → pK⁻, projected</span><template v-if="!detail"><br /><em>16 MeV wide in m(pK), almost 600 MeV wide in <span style="white-space: nowrap">m(J/ψ p)</span></em></template><div v-else class="detail" v-html="REFL_DETAIL"></div></figcaption>
     </figure>
   </div>
 </template>
@@ -175,6 +200,13 @@ figcaption { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 12.
 figcaption b { color: #f2f5f9; font-weight: 600; font-size: 15px; }
 figcaption span { color: #7dd3fc; }
 figcaption em { font-style: normal; color: #a9b6c4; }
+/* detail: two large panels to a row, each with its full explanation (the "What a peak can be" slides) */
+.gallery.large { grid-template-columns: repeat(2, 1fr); gap: 12px 24px; margin-top: 2px; }
+.gallery.large .panel { padding: 8px 12px 10px; }
+.gallery.large figcaption { font-size: 15px; line-height: 1.38; margin-top: 6px; }
+.gallery.large figcaption b { font-size: 19px; }
+.gallery.large figcaption span { font-size: 16px; }
+.detail { margin-top: 5px; color: #dbe3ec; }
 .axis { stroke: rgba(139, 151, 166, 0.5); stroke-width: 1; }
 .thr { stroke: rgba(245, 196, 107, 0.7); stroke-width: 1; stroke-dasharray: 3 3; }
 .curve { fill: none; stroke: #dbe3ec; stroke-width: 1.7; }

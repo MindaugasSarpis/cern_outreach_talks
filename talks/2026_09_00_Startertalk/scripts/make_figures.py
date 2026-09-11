@@ -237,17 +237,20 @@ def fig_argand():
 # =========================================================================
 # hadron_*.svg — the three pictures of a pentaquark at one 1 fm scale
 # =========================================================================
-def _panel(ax):
-    ax.set_xlim(-3, 3)
-    ax.set_ylim(-3, 3)
+def _panel(ax, lim=3.0, bar_dy=0.0):
+    """A square panel of half-width `lim` fm. lim = 3 leaves room around the drawing (the
+    question slide's pair); lim = 2 lets the drawing fill the panel (slides 22 and 23)."""
+    ax.set_xlim(-lim, lim)
+    ax.set_ylim(-lim, lim)
     ax.set_aspect("equal")
     ax.axis("off")
     # 1 fm scale bar top-left: the top band is empty in every panel, the
     # bottom band carries the captions (they collided with a bottom-left bar).
-    ax.plot([-2.75, -1.75], [2.35, 2.35], color=INK, lw=2, solid_capstyle="butt")
-    ax.plot([-2.75, -2.75], [2.27, 2.43], color=INK, lw=2)
-    ax.plot([-1.75, -1.75], [2.27, 2.43], color=INK, lw=2)
-    ax.text(-2.25, 2.48, "1 fm", ha="center", va="bottom", fontsize=17, color=INK)
+    x0, y0 = -lim + 0.25, lim - 0.65 + bar_dy
+    ax.plot([x0, x0 + 1], [y0, y0], color=INK, lw=2, solid_capstyle="butt")
+    ax.plot([x0, x0], [y0 - 0.08, y0 + 0.08], color=INK, lw=2)
+    ax.plot([x0 + 1, x0 + 1], [y0 - 0.08, y0 + 0.08], color=INK, lw=2)
+    ax.text(x0 + 0.5, y0 + 0.13, "1 fm", ha="center", va="bottom", fontsize=17, color=INK)
 
 
 def _quark(ax, x, y, letter, r=0.18, anti=False, charm=False, letters=True, fs=14):
@@ -264,8 +267,8 @@ def _footer(fig):
              ha="center", va="bottom", fontsize=14, color=FAINT)
 
 
-def draw_molecule(ax, letters=True, labels=True, title=None):
-    _panel(ax)
+def draw_molecule(ax, letters=True, labels=True, title=None, lim=3.0):
+    _panel(ax, lim, bar_dy=0.2 if lim < 2.5 else 0.0)   # at lim 2 the bar sat on the exchange label
     cs, cd = (-0.9, 0.0), (0.9, 0.0)
     # Σc⁺ (c u d)
     ax.add_patch(Circle(cs, 0.45, facecolor="none", edgecolor=MUTED, ls=(0, (3, 2)), lw=1.3,
@@ -293,8 +296,8 @@ def draw_molecule(ax, letters=True, labels=True, title=None):
                  fontsize=19, color=INK, pad=4)
 
 
-def draw_compact(ax, letters=True, labels=True, title=None):
-    _panel(ax)
+def draw_compact(ax, letters=True, labels=True, title=None, lim=3.0):
+    _panel(ax, lim)
     R, r, rq = 0.5, 0.30, 0.17
     ax.add_patch(Circle((0, 0), R, facecolor="none", edgecolor=INK, lw=1.4, zorder=3))
     # c̄ at the top; [cu] lower left, [ud] lower right
@@ -319,8 +322,8 @@ def draw_compact(ax, letters=True, labels=True, title=None):
                  fontsize=19, color=INK, pad=4)
 
 
-def draw_hadrocharmonium(ax, title=None):
-    _panel(ax)
+def draw_hadrocharmonium(ax, title=None, lim=3.0):
+    _panel(ax, lim)
     ax.add_patch(Circle((0, 0), 0.9, facecolor=BLUE, edgecolor=BLUE, alpha=0.10, lw=0, zorder=2))
     ax.add_patch(Circle((0, 0), 0.9, facecolor="none", edgecolor=BLUE, alpha=0.5, lw=1.0,
                         ls=(0, (3, 2)), zorder=2))
@@ -334,10 +337,11 @@ def draw_hadrocharmonium(ax, title=None):
     ax.add_patch(Circle((0, 0), 0.22, facecolor=BLUE, edgecolor="none", zorder=4))
     ax.text(0, -0.01, "cc̄", ha="center", va="center", fontsize=14, color=INK,
             fontweight="bold", zorder=5)
-    ax.annotate("χc0 or ψ(2S)", xy=(0.16, -0.16), xytext=(1.05, -0.95), fontsize=16,
-                color=INK, ha="left", va="center",
+    ax.annotate(r"$\mathregular{\chi_{c0}}$ or ψ(2S)" if lim >= 2.5 else "$\\mathregular{\\chi_{c0}}$ or\nψ(2S)", xy=(0.16, -0.16),
+                xytext=(1.05, -0.95) if lim >= 2.5 else (0.98, -0.66), fontsize=16,
+                color=INK, ha="left", va="center", linespacing=1.1,
                 arrowprops=dict(arrowstyle="-", color=MUTED, lw=1.0, shrinkA=2, shrinkB=2))
-    ax.text(0, 1.02, "light-quark cloud (uud)", ha="center", va="bottom", fontsize=16,
+    ax.text(0.45, 1.02, "light-quark cloud", ha="center", va="bottom", fontsize=16,   # clear of the 1 fm bar
             color=BLUE)
     ax.text(0, -1.45, "QCD van der Waals force", ha="center", va="top", fontsize=16,
             color=MUTED)
@@ -346,12 +350,24 @@ def draw_hadrocharmonium(ax, title=None):
 
 
 def fig_pictures():
+    # Text as paths: as <text>, the browser dropped the mathtext χ of χc0 and set the radical
+    # of r ≈ ħc/√(2μE_B) apart from its bar (2026-09-12). In DejaVu Sans only, the mathtext
+    # font: text-to-path has no font fallback, and Arial (found first here) has no ρ ω σ π ψ.
+    saved = plt.rcParams["svg.fonttype"], plt.rcParams["font.sans-serif"]
+    plt.rcParams["svg.fonttype"], plt.rcParams["font.sans-serif"] = "path", ["DejaVu Sans"]
+    try:
+        _pictures()
+    finally:
+        plt.rcParams["svg.fonttype"], plt.rcParams["font.sans-serif"] = saved
+
+
+def _pictures():
     for name, draw in (("hadron_molecule.svg", draw_molecule),
                        ("hadron_compact.svg", draw_compact),
                        ("hadron_hadrocharmonium.svg", draw_hadrocharmonium)):
         fig, ax = plt.subplots(figsize=(4.2, 4.2))
         fig.subplots_adjust(left=0.02, right=0.98, top=0.92, bottom=0.07)
-        draw(ax)
+        draw(ax, lim=2.0)   # the drawing fills its panel on the slides
         _footer(fig)
         save(fig, name)
 

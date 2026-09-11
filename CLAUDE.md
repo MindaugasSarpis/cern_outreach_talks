@@ -168,7 +168,7 @@ shot script pattern in the 2026-09-08 migration plan.
 ## Hadron space (Startertalk)
 
 `talks/2026_09_00_Startertalk/` is told inside one persistent 3D scene: a
-path of eight built scenes (stations) in the WoP landing's ambient particle
+path of seven built scenes (stations) in the WoP landing's ambient particle
 field, a uniform bright ground pulled only faintly toward the active station
 (a station may set `gather`, and `pulse: <s>` shoves the dust outward that
 often). Stations: `hero` (the cover and the close: a large living c c̄ u u d
@@ -176,13 +176,15 @@ cluster, quarks on their own tilted orbits — `cluster` with `orbit`, `core`,
 `quarkScale` — the dust swirling into it, the camera swaying ±9°; `wide`
 resolves here), `paper` (the 1964 slide: Gell-Mann and Zweig beside their printed passages, portraits and scans as lit sheets with caption text, five quark spheres drifting together), `theta` (a ghost cluster — five faint quarks that breathe
 apart and never hold — standing for Θ⁺(1540)), `decay` (Λb⁰ →
-J/ψ p K⁻ as tubes with a pulse), `states` (the eight pentaquarks as spheres
-on a local mass axis with threshold planes; the nine record-and-plot stops),
-`interiors` (a Σc D̄ molecule and a compact five-quark ball at one 1 fm
+J/ψ p K⁻ as tubes with a pulse), `interiors` (a Σc D̄ molecule and a compact five-quark ball at one 1 fm
 scale), `neutrals` (Λb⁰ → Σc⁺ D̄*⁰ K⁻ with the π⁰/γ tracks dashed, and a
 six-quark cluster), `future` (an empty grid). Design:
 `docs/superpowers/specs/2026-09-09-startertalk-dioramas-design.md`; the
-earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
+earlier spec (`…-hadron-space-design.md`) still governs the scrim. The stops it describes (a click flies to a state's orb and a HUD
+shows its record and paper plot) were retired from the deck on 2026-09-11, with the `states`
+station they flew to: small orbs and a fading slide confused more than they explained, and
+the HUD repeated the slides' own figures. The data slides now show their plots and tables
+directly; the HUD code stays for reuse.
 
 - `public/data/space.json` — the stations: `id`, `pos`, `look`
   (`dist/yaw/pitch`, optional `target` offset) and `objects[]` of types
@@ -250,7 +252,7 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   lineshape, phase and Argand circle linked by one sweeping marker (9 s a
   pass, only while the slide is live; static under reduced motion), six
   hollow markers for the 2015 free amplitudes. `LineshapeGallery.vue` — six
-  computed lineshapes (Breit–Wigner, Flatté, cusp, triangle, interference at
+  computed lineshapes (props: `only` picks panels, `detail` lays two out large with a full explanation, the three “What a peak can be” slides; the interference labels and the cusp's pole distance were corrected 2026-09-11) (Breit–Wigner, Flatté, cusp, triangle, interference at
   three phases, the Λ(1520) reflection with real Λb⁰ → J/ψ p K⁻ kinematics)
   with an Argand inset marking the phase at the peak.
 - `components/HadronSpace.vue` — mounted once from the deck's
@@ -259,8 +261,8 @@ earlier spec (`…-hadron-space-design.md`) still governs HUD, stops, scrim.
   right with its `see` line) after the camera lands; sets
   `html[data-space-stop]` while a stop is active; scrim between world and
   slide with opacity `dim`.
-- Slide frontmatter: `space: { at: states, dist: 8, yaw: -22, pitch: 6, stops: [Pc(4312), Pc(4440)] }`
-  with `clicks: 2` (= stops.length). A slide without `space` keeps the previous pose.
+- Slide frontmatter: `space: { at: decay, dist: 13, yaw: -30, pitch: 8, dim: 0.2 }`.
+  `stops: [...]` with `clicks: n` still works but the deck no longer uses it. A slide without `space` keeps the previous pose.
   Optional keys: `asof: 2015` renders each stop's record as of that year
   (a state whose `status_year` is later shows `status_before`; a `note` whose
   `note_year` is later is dropped). `dim: 0..1` sets the scrim; without it
