@@ -115,7 +115,30 @@ state that went away. (~1.25 min)
 -->
 
 ---
-space: { at: [38, 2, -28], dist: 16, yaw: -40, pitch: 12, dim: 0.82 }   # open dust off the path: the computed lineshapes are the slide
+space: { at: [38, 2, -28], dist: 16, yaw: -40, pitch: 12, dim: 0.76 }   # off the path, in the dust; no station in frame
+---
+
+# A resonance is a pole, not a bump
+
+<div class="plate halo">
+<ArgandDiagram />
+</div>
+
+<div class="caption mt-sm" style="max-width: none">A pole at m₀ − iΓ/2 makes |A|² a symmetric bump and forces the phase δ through 90° at the peak: in the Argand plane the amplitude walks a circle. The histogram never shows δ. The interference with the Λ* amplitudes across the decay angles does, and that is what the amplitude fit reads. In 2015 LHCb replaced the P<sub>c</sub>(4450)⁺ Breit–Wigner by six free complex numbers, one per mass bin; they traced the circle.</div>
+
+<div class="src">Breit, Wigner, Phys. Rev. 49 (1936) 519 · PDG 2024, review “Resonances” · LHCb, PRL 115 (2015) 072001, Fig. 9</div>
+
+<!--
+Speaker: let the marker sweep once while talking (nine seconds a pass). The
+three views move together: the peak, the phase through 90°, the top of the
+circle. Then the six hollow markers: that is what the 2015 fit floated, and
+the reason a phase, not a bump, made the claim. Argand, 1806, was a
+bookkeeper who drew complex numbers as points in a plane. The next three
+slides set this beside everything else a peak can be. (~2 min)
+-->
+
+---
+space: { at: [38, 2, -28], dist: 16, yaw: -32, pitch: 12, dim: 0.82 }   # open dust off the path: the computed lineshapes are the slide
 ---
 
 # What a peak can be: a pole
@@ -126,8 +149,9 @@ space: { at: [38, 2, -28], dist: 16, yaw: -40, pitch: 12, dim: 0.82 }   # open d
 
 <!--
 Speaker: three slides, six ways a peak appears in an invariant-mass
-spectrum, every curve computed from its formula; the inset in each panel is
-the amplitude in the Argand plane, with the marker where |A|² peaks. Only
+spectrum, every curve computed from its formula; the inset in each panel is the
+amplitude in the Argand plane of the last slide, with the marker where |A|²
+peaks. Only
 these first two have a pole at the peak. Breit–Wigner: the textbook
 resonance, one pole at m₀ − iΓ/2 on the unphysical sheet, |A|² symmetric with
 full width Γ at half maximum, the phase through 90° at the peak and the
@@ -140,7 +164,7 @@ opens; the phase at the peak stays close to 90°. (~1.5 min)
 -->
 
 ---
-space: { at: [38, 2, -28], dist: 16, yaw: -32, pitch: 12, dim: 0.82 }
+space: { at: [38, 2, -28], dist: 16, yaw: -24, pitch: 12, dim: 0.82 }
 ---
 
 # What a peak can be: no pole nearby
@@ -171,7 +195,7 @@ Pc(4457)⁺, and LHCb's 2019 fit prefers a Breit–Wigner. (~1.5 min)
 -->
 
 ---
-space: { at: [38, 2, -28], dist: 16, yaw: -24, pitch: 12, dim: 0.82 }
+space: { at: [38, 2, -28], dist: 16, yaw: -16, pitch: 12, dim: 0.82 }
 ---
 
 # What a peak can be: a pole elsewhere
@@ -194,30 +218,8 @@ in m(J/ψ p) the same events spread over almost 600 MeV, right across the
 pentaquark masses, and a decay that is not isotropic puts structure into that
 spread. With fourteen Λ* interfering, bumps in m(J/ψ p) can appear with no
 J/ψ p state at all; the 2016 model-independent analysis showed that the Λ*
-alone cannot make the observed peak (PRL 117 (2016) 082002). The next slide
-is how a pole shows itself: its phase. (~1.5 min)
--->
-
----
-space: { at: [38, 2, -28], dist: 16, yaw: -8, pitch: 12, dim: 0.76 }   # off the path, in the dust; no station in frame
----
-
-# A resonance is a pole, not a bump
-
-<div class="plate halo">
-<ArgandDiagram />
-</div>
-
-<div class="caption mt-sm" style="max-width: none">A pole at m₀ − iΓ/2 makes |A|² a symmetric bump and forces the phase δ through 90° at the peak: in the Argand plane the amplitude walks a circle. The histogram never shows δ. The interference with the Λ* amplitudes across the decay angles does, and that is what the amplitude fit reads. In 2015 LHCb replaced the P<sub>c</sub>(4450)⁺ Breit–Wigner by six free complex numbers, one per mass bin; they traced the circle.</div>
-
-<div class="src">Breit, Wigner, Phys. Rev. 49 (1936) 519 · PDG 2024, review “Resonances” · LHCb, PRL 115 (2015) 072001, Fig. 9</div>
-
-<!--
-Speaker: let the marker sweep once while talking (nine seconds a pass). The
-three views move together: the peak, the phase through 90°, the top of the
-circle. Then the six hollow markers: that is what the 2015 fit floated, and
-the reason a phase, not a bump, made the claim. Argand, 1806, was a
-bookkeeper who drew complex numbers as points in a plane. (~2 min)
+alone cannot make the observed peak (PRL 117 (2016) 082002). The next slide turns all six into the checklist the rest of the talk is
+graded against. (~1.5 min)
 -->
 
 ---
