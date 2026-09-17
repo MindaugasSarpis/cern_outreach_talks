@@ -79,39 +79,105 @@
     {
       "id": "paper",
       "pos": [
-        0,
+        -5,
         0,
         0
       ],
       "look": {
         "target": [
-          3.4,
-          2.6,
+          5.55,
+          2.0,
           0
         ],
         "dist": 11,
-        "yaw": -12,
-        "pitch": 4
+        "yaw": 0,
+        "pitch": 2
       },
       "objects": [
         {
           "type": "page",
-          "src": "/figures/papers/zweig_th401_p1_top.png",
+          "src": "/figures/GellMannPhoto.png",
           "pos": [
             0,
-            2.6,
+            3.99,
             0
           ],
-          "width": 7.2,
-          "height": 6.623735050597976,
-          "yaw": 8
+          "width": 1.6,
+          "height": 2.42,
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "page",
+          "src": "/figures/Gell-Mann.png",
+          "pos": [
+            4.9,
+            3.4625,
+            0
+          ],
+          "width": 7.6,
+          "height": 3.475,
+          "paper": "#f4f1ea",
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "text",
+          "text": "Gell-Mann, Phys. Lett. 8 (1964) 214, received 4 January:\nfive-quark baryons in the first quark paper",
+          "pos": [
+            1.1,
+            1.575,
+            0
+          ],
+          "height": 0.26,
+          "color": "#aeb8c4",
+          "weight": 500
+        },
+        {
+          "type": "page",
+          "src": "/figures/ZweigPhoto.png",
+          "pos": [
+            0,
+            -0.585,
+            0
+          ],
+          "width": 1.6,
+          "height": 2.27,
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "page",
+          "src": "/figures/Zweig.png",
+          "pos": [
+            4.9,
+            -0.4825,
+            0
+          ],
+          "width": 7.6,
+          "height": 2.065,
+          "paper": "#f4f1ea",
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "text",
+          "text": "Zweig, CERN-TH-412, footnote 6\n(footnote 5 in TH-401, 17 January):\nbaryons also from four aces and an anti-ace",
+          "pos": [
+            1.1,
+            -1.665,
+            0
+          ],
+          "height": 0.26,
+          "color": "#aeb8c4",
+          "weight": 500
         },
         {
           "type": "cluster",
           "pos": [
-            8.8,
-            -0.8,
-            0.4
+            10.4,
+            -1.0,
+            0.6
           ],
           "radius": 1.5,
           "spin": 0.12,
@@ -302,6 +368,7 @@
               ],
               "color": "#f2f5f9",
               "width": 2,
+              "labelAt": [-2.0, 0.45, 0],
               "label": "Λb⁰"
             },
             {
@@ -336,6 +403,7 @@
               ],
               "color": "#3987e5",
               "width": 3,
+              "labelAt": [1.5, 0.15, 0],
               "label": "Pc⁺"
             },
             {
@@ -428,144 +496,6 @@
               "fade": 0.5
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "states",
-      "pos": [
-        58,
-        0,
-        -14
-      ],
-      "look": {
-        "target": [
-          0,
-          0,
-          -1.5
-        ],
-        "dist": 9,
-        "yaw": -22,
-        "pitch": 6
-      },
-      "objects": [
-        {
-          "type": "planes",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "origin": 4400,
-          "scale": 0.04,
-          "height": 1.6,
-          "depth": 2.4,
-          "rows": {
-            "Pc": 0,
-            "Pcs": -3
-          },
-          "planes": [
-            {
-              "mass": 4317.5,
-              "label": "Σc⁺D̄⁰",
-              "row": "Pc"
-            },
-            {
-              "mass": 4459.5,
-              "label": "Σc⁺D̄*⁰",
-              "row": "Pc"
-            },
-            {
-              "mass": 4337.4,
-              "label": "Ξc⁺D⁻",
-              "row": "Pcs"
-            },
-            {
-              "mass": 4477.3,
-              "label": "Ξc⁰D̄*⁰",
-              "row": "Pcs"
-            }
-          ]
-        },
-        {
-          "type": "spheres",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "origin": 4400,
-          "scale": 0.04,
-          "rows": {
-            "Pc": 0,
-            "Pcs": -3
-          },
-          "labels": true,
-          "ids": [
-            "Pc(4380)",
-            "Pc(4450)",
-            "Pc(4312)",
-            "Pc(4440)",
-            "Pc(4457)",
-            "Pc(4337)",
-            "Pcs(4459)",
-            "Pcs(4338)"
-          ]
-        },
-        {
-          "type": "text",
-          "text": "4300",
-          "pos": [
-            -4.3,
-            -1.7,
-            0.6
-          ],
-          "height": 0.26,
-          "color": "#8b97a6"
-        },
-        {
-          "type": "text",
-          "text": "4400 MeV",
-          "pos": [
-            -0.5,
-            -1.7,
-            0.6
-          ],
-          "height": 0.26,
-          "color": "#8b97a6"
-        },
-        {
-          "type": "text",
-          "text": "4500",
-          "pos": [
-            3.7,
-            -1.7,
-            0.6
-          ],
-          "height": 0.26,
-          "color": "#8b97a6"
-        },
-        {
-          "type": "text",
-          "text": "J/ψ p",
-          "pos": [
-            -6.6,
-            0.2,
-            0
-          ],
-          "height": 0.4,
-          "color": "#a9b6c4"
-        },
-        {
-          "type": "text",
-          "text": "J/ψ Λ",
-          "pos": [
-            -6.6,
-            0.2,
-            -3
-          ],
-          "height": 0.4,
-          "color": "#a9b6c4"
         }
       ]
     },
@@ -712,7 +642,7 @@
     {
       "id": "neutrals",
       "pos": [
-        78,
+        81,
         0,
         -2
       ],
@@ -779,6 +709,7 @@
               ],
               "color": "#f2f5f9",
               "width": 2,
+              "labelAt": [-1.0, 0.5, 0],
               "label": "Λb⁰"
             },
             {
@@ -813,6 +744,7 @@
               ],
               "color": "#d95926",
               "width": 3,
+              "labelAt": [1.9, 0.12, 0],
               "label": "Σc⁺"
             },
             {
@@ -830,6 +762,7 @@
               ],
               "color": "#3987e5",
               "width": 3,
+              "labelAt": [1.9, -1.15, 0],
               "label": "D̄*⁰"
             },
             {
@@ -911,7 +844,7 @@
           "pos": [
             10.5,
             0.5,
-            0
+            6
           ],
           "radius": 2.1,
           "shell": true,
@@ -973,7 +906,7 @@
     {
       "id": "future",
       "pos": [
-        104,
+        120,
         0,
         0
       ],

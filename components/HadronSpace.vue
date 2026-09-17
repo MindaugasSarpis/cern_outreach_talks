@@ -6,6 +6,9 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useNav } from '@slidev/client'
 import { createSpace } from './hadron-space/space.js'
 import SpacePanel from './SpacePanel.vue'
+import { subscriptHtml } from './hadron-space/particles.js'
+import { warmAudio } from './particle-hero/sound.js'
+import { startHum, stopHum, humProbe } from './hadron-space/sound.js'
 
 // The persistent 3D hadron space under a whole deck. Mount ONCE from the
 // deck's global-bottom.vue. Each slide steers the camera through its
@@ -38,6 +41,8 @@ import SpacePanel from './SpacePanel.vue'
 
 const props = defineProps({
   src: { type: String, default: 'data/hadrons.json' },
+  // a continuous low hum while the cover or the close (the hero station) is on screen
+  sound: { type: Boolean, default: true },
 })
 
 const root = ref(null)
@@ -80,6 +85,19 @@ function apply(immediate = false) {
     space.setStop(null)
     space.setPose(sp, { immediate })
   }
+  updateHum()
+}
+
+// The hum: on while the pose is at the hero station (the cover and the close), after the
+// first key press or pointer down (autoplay policy), with the tab visible, and never in the
+// presenter window, so an audience window and a presenter window do not hum twice.
+let audioUnlocked = false
+function updateHum() {
+  if (!props.sound) return
+  const on = audioUnlocked && !!space && !document.hidden && !nav.isPresenter?.value && space.activeStation === 'hero'
+  if (on) startHum()
+  else stopHum()
+  if (root.value) root.value.dataset.hum = on ? 'on' : 'off'
 }
 
 watch([frontmatterSpace, clicks], () => apply(false))
@@ -134,30 +152,66 @@ const fmtMass = (s) => {
 async function boot() {
   if (space || staticBg.value || !canvas.value) return
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (reduced || !webgl2Ok()) { staticBg.value = true; return }
+  if (reduced || !webgl2Ok()) { staticBg.value = true; assembled(true); return }
   try {
     const base = import.meta.env.BASE_URL || '/'
     const url = (p) => base.replace(/\/?$/, '/') + p
     const [r1, r2] = await Promise.all([fetch(url(props.src)), fetch(url('data/space.json'))])
     data.value = await r1.json()
     const spaceDef = await r2.json()
-    space = createSpace(canvas.value, root.value, { data: data.value, space: spaceDef, onArrive: () => { arrived.value = true } })
+    space = createSpace(canvas.value, root.value, {
+      data: data.value, space: spaceDef,
+      onArrive: () => { arrived.value = true },
+      // the hero's pentaquark assembles on arrival; the cover's title waits for it (deck CSS keys on html[data-space-assembled])
+      onEvent: (e) => {
+        if (e === 'assembling') assembled(false)
+        else if (e === 'assembled') assembled(true)
+      },
+    })
   } catch {
     space = null
   }
-  if (!space) { staticBg.value = true; return }
+  if (!space) { staticBg.value = true; assembled(true); return }
   ready.value = true
   space.setDim(dim.value)
   apply(true)
 }
 
-const onVisibility = () => space?.setPaused(document.hidden)
+// html[data-space-assembled]: set while no assembly runs (and always without WebGL), so the cover's title shows
+function assembled(on) {
+  if (on) document.documentElement.dataset.spaceAssembled = '1'
+  else delete document.documentElement.dataset.spaceAssembled
+}
+// `c` replays the assembly while the hero pose is current (the cover and the close)
+const onKey = (e) => {
+  if (e.key !== 'c' || e.metaKey || e.ctrlKey || e.altKey) return
+  const t = e.target
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return
+  if (space && space.activeStation === 'hero') space.assemble()
+}
+// the first key press or pointer down unlocks audio (autoplay policy); the hum starts then
+const onGesture = () => {
+  if (!props.sound || audioUnlocked) return
+  audioUnlocked = true
+  warmAudio()
+  updateHum()
+}
+const onVisibility = () => { space?.setPaused(document.hidden); updateHum() }
 onMounted(() => {
   document.addEventListener('visibilitychange', onVisibility)
+  window.addEventListener('keydown', onKey)
+  window.addEventListener('keydown', onGesture, { once: true })
+  window.addEventListener('pointerdown', onGesture, { once: true })
+  if (root.value) root.value.__hum = humProbe   // for the headless probes
   boot()
 })
 onUnmounted(() => {
   document.removeEventListener('visibilitychange', onVisibility)
+  window.removeEventListener('keydown', onKey)
+  window.removeEventListener('keydown', onGesture)
+  window.removeEventListener('pointerdown', onGesture)
+  stopHum()
+  assembled(true)
   space?.dispose()
   space = null
 })
@@ -177,15 +231,15 @@ onUnmounted(() => {
             <dt>mass</dt><dd>{{ shown.mass_text ? shown.mass_text + ' MeV' : fmtMass(shown) }}</dd>
             <template v-if="shown.width_text"><dt>width</dt><dd>{{ shown.width_text }} MeV</dd></template>
             <template v-if="shown.significance"><dt>significance</dt><dd>{{ shown.significance }}</dd></template>
-            <template v-if="shown.channel"><dt>channel</dt><dd v-html="shown.channel"></dd></template>
+            <template v-if="shown.channel"><dt>channel</dt><dd v-html="subscriptHtml(shown.channel)"></dd></template>
             <dt>quarks</dt><dd class="hud-tex">{{ (shown.quarks || '').replace(/\\bar\{(\w)\}/g, '$1̄').replace(/[${}]/g, '') }}</dd>
-            <dt>status</dt><dd>{{ shown.status }}<span v-if="shown.note" class="hud-note">{{ shown.note }}</span></dd>
+            <dt>status</dt><dd>{{ shown.status }}<span v-if="shown.note" class="hud-note" v-html="subscriptHtml(shown.note)"></span></dd>
             <dt>reference</dt><dd>{{ shown.experiment ? shown.experiment + ', ' + shown.ref : shown.ref }}</dd>
           </dl>
         </SpacePanel>
-        <SpacePanel v-if="stopFigure" class="hud-figure" :kicker="stopFigure.caption" plain>
+        <SpacePanel v-if="stopFigure" class="hud-figure" :kicker="subscriptHtml(stopFigure.caption)" plain>
           <img class="space-figure" :src="stopFigure.src" :alt="stopFigure.alt || stopFigure.caption" />
-          <p v-if="stopFigure.see" class="hud-see">{{ stopFigure.see }}</p>
+          <p v-if="stopFigure.see" class="hud-see" v-html="subscriptHtml(stopFigure.see)"></p>
         </SpacePanel>
       </div>
     </Transition>
