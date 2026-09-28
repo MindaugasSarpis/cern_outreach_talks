@@ -24,9 +24,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 NAME_RE = re.compile(r"^\d{4}_\d{2}_\d{2}_\w+$")
-# One ref for both addons: they are released together from one repo. A commit
-# of the feat/stage-addon-dust branch until v0.4.0 is tagged; then the tag.
-ADDONS_REF = "718a5207cd1b17a5754e3d6058de4c07fce9b487"
+# One ref for both addons: they are released together from one repo.
+ADDONS_REF = "v0.4.0"
 ADDONS_REPO = "github:MindaugasSarpis/slidev-videos"
 REPO = "MindaugasSarpis/cern_outreach_talks"
 PALETTES = {"classic": "#7dd3fc", "blue": "#5b93ff", "ember": "#ffb168"}   # name -> accent (the dust of a clip in flight)
@@ -233,7 +232,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--stage", nargs="?", const="classic", default=None, choices=sorted(PALETTES),
                         metavar="PALETTE", help="tell the talk inside the 3D stage; palette: " + " | ".join(sorted(PALETTES)))
     parser.add_argument("--addons-ref", default=ADDONS_REF, dest="addons_ref",
-                        help=f"slidev-videos tag, branch or commit for the addons (default {ADDONS_REF[:12]})")
+                        help=f"slidev-videos tag, branch or commit for the addons (default {ADDONS_REF})")
     args_list = list(sys.argv[1:] if argv is None else argv)
     if args_list[:1] == ["--"]:  # pnpm forwards the -- delimiter verbatim
         del args_list[0]

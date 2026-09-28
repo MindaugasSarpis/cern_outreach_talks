@@ -348,10 +348,11 @@ the package.
   HTTPS input (exit 139). `videos:frames` works round it by downloading;
   `videos:preflight` of release-only clips needs the env's ffmpeg
   (`PATH=~/micromamba/envs/outreach_talks/bin:$PATH`).
-- The addons are pinned to a commit of slidev-videos' `feat/stage-addon-dust`
-  until `v0.4.0` is tagged; then move `package.json` and
-  `scripts/new_talk.py` (`ADDONS_REF`) to the tag, and env.yaml's pip entry
-  with them (the `frames` subcommand is new in 0.4.0).
+- Both addons and the CLI are pinned to slidev-videos `v0.4.0`: the talk's
+  `package.json`, `scripts/new_talk.py` (`ADDONS_REF`) and env.yaml's pip
+  entry move together on a release. The `frames` subcommand is new in 0.4.0;
+  an env made before it needs `pip install -U` of that entry. The older talks
+  stay on `#v0.3.3`: they use `cut`, which 0.4.0 does not change.
 
 ## Slidev gotchas
 
