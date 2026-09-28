@@ -1,0 +1,350 @@
+{
+  "version": 1,
+  "clips": {
+    "atlas_footage_2022_004_002.mp4": {
+      "file": "atlas_footage_2022_004_002.mp4.jpg",
+      "tile": [
+        320,
+        214
+      ],
+      "cols": 8,
+      "count": 8,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1280
+      ],
+      "duration": 29.12
+    },
+    "atoms.mp4": {
+      "file": "atoms.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 32,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 126.2
+    },
+    "beyond_cmb.mp4": {
+      "file": "beyond_cmb.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 17,
+      "interval": 4.0,
+      "size": [
+        1280,
+        720
+      ],
+      "duration": 66.533
+    },
+    "blue_ghost_lunar_orbit.mp4": {
+      "file": "blue_ghost_lunar_orbit.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 24,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 96.0
+    },
+    "cassini_grand_finale.mp4": {
+      "file": "cassini_grand_finale.mp4.jpg",
+      "tile": [
+        320,
+        136
+      ],
+      "cols": 8,
+      "count": 56,
+      "interval": 4.0,
+      "size": [
+        1920,
+        810
+      ],
+      "duration": 221.2
+    },
+    "cern_footage_2015_006_001.mp4": {
+      "file": "cern_footage_2015_006_001.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 9,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 34.0
+    },
+    "cern_footage_2022_013_001.mp4": {
+      "file": "cern_footage_2022_013_001.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 64,
+      "interval": 3.969,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 254.0
+    },
+    "cern_footage_2024_006_001.mp4": {
+      "file": "cern_footage_2024_006_001.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 5,
+      "count": 5,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 18.04
+    },
+    "cern_overview_short.mp4": {
+      "file": "cern_overview_short.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 3,
+      "count": 3,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 11.24
+    },
+    "cloud_chamber_audio.mp4": {
+      "file": "cloud_chamber_audio.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 38,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 149.1
+    },
+    "cmb_sonification_drone.mp4": {
+      "file": "cmb_sonification_drone.mp4.jpg",
+      "tile": [
+        320,
+        186
+      ],
+      "cols": 6,
+      "count": 6,
+      "interval": 4.0,
+      "size": [
+        1800,
+        1040
+      ],
+      "duration": 22.012
+    },
+    "expansion_funnel.webm": {
+      "file": "expansion_funnel.webm.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 8,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 30.0
+    },
+    "hubble.mp4": {
+      "file": "hubble.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 9,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 33.033
+    },
+    "lhcb.mp4": {
+      "file": "lhcb.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 12,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 48.0
+    },
+    "lhcb_aciu.mp4": {
+      "file": "lhcb_aciu.mp4.jpg",
+      "tile": [
+        320,
+        178
+      ],
+      "cols": 8,
+      "count": 38,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1066
+      ],
+      "duration": 148.7
+    },
+    "milky_way_sim_audio.mp4": {
+      "file": "milky_way_sim_audio.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 16,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 61.461
+    },
+    "nasa_mars_mariner_4_pan_audio.mp4": {
+      "file": "nasa_mars_mariner_4_pan_audio.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 5,
+      "count": 5,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 20.02
+    },
+    "perseverance_rover_landing_nasa.mp4": {
+      "file": "perseverance_rover_landing_nasa.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 48,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 190.3
+    },
+    "qgp_formation.mp4": {
+      "file": "qgp_formation.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 9,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 33.8
+    },
+    "saturn_v_launch_nasa.mp4": {
+      "file": "saturn_v_launch_nasa.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 44,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 175.3
+    },
+    "stars_pan_audio.mp4": {
+      "file": "stars_pan_audio.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 6,
+      "count": 6,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 20.073
+    },
+    "telescope.mp4": {
+      "file": "telescope.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 10,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 40.007
+    },
+    "webb_reel.mp4": {
+      "file": "webb_reel.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 45,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 178.133
+    }
+  }
+}
