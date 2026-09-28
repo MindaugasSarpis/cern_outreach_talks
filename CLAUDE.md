@@ -31,6 +31,11 @@ Current talks:
   technical physics seminar. Date not fixed yet: `09_00` is a placeholder —
   rename the dir, its `videos.toml` release_tag and the deck's `videos.release` once known
   (no talk-owned clips, so no release to rename).
+- `talks/2026_10_00_Innoday/` — Innoday, "World of Particles": the WoP reel's
+  library clips told inside the 3D stage. Built on the packaged engine
+  (`slidev-addon-stage`, blue palette, `hadron` plugin), not on
+  `components/HadronSpace.vue`; every clip uses `transition: dust`. Date
+  placeholder `10_00`, as for Startertalk. See "The stage (Innoday)" below.
 
 ## Environment setup (fresh machine)
 
@@ -303,6 +308,51 @@ directly; the HUD code stays for reuse.
   (`~/slidev-videos/.tmp/st-all.mjs <dist> <out> <n>` with `CLICKS` JSON);
   it renders slowly, so the script waits ~9 s after a click before shooting
   a stop.
+
+## The stage (Innoday, and talks after it)
+
+Startertalk's world is packaged as **`slidev-addon-stage`**
+(`~/slidev-videos/packages/stage`, README there is the reference): the same
+engine with its colours, object types, poses and numbers made the deck's to
+set. Startertalk itself still runs on `components/HadronSpace.vue` and
+`components/hadron-space/`; it has not been moved onto the package (that
+wants a before/after screenshot comparison of all its slides). New talks use
+the package.
+
+- **Headmatter only.** `addons: [slidev-addon-videos, slidev-addon-stage]`
+  and a `stage:` block (`space`, `palette`, `plugins`, `sound`, `options`).
+  The addon mounts the world and the halo layer itself: no `global-top.vue` /
+  `global-bottom.vue` in the talk. The addon's components are `Stage`,
+  `StagePanel`, `StageHalo`, `StageHero`, so they do not clash with the
+  symlinked `components/` (`HadronSpace`, `SpacePanel`, `HaloLayer`,
+  `ParticleHero`).
+- **Palette.** `blue` for Innoday: ultramarine dust, `#5b93ff` accent, a
+  nebula behind the dust. `videos.dust` is set to the same accent so the
+  clips' grains match the world's. CSS reads `--stage-*`.
+- **Slides** steer the camera exactly as in Startertalk (`space: { at, dist,
+  yaw, pitch, dim }`). The addon's CSS kit supplies the type: cover as kicker
+  / title / subtitle / byline (`# Innoday`, `# Title`, `## …`, `.mt-md`),
+  section as a kicker and a large line low on the left (`# Part I` and a
+  paragraph), cards, `.src`, `.world-caption`. A talk's own
+  `styles/index.css` overrides it.
+- **Clips** arrive and leave as particles (`videos.transition: dust`). The
+  grains take their colours from `public/video-frames/` — `pnpm
+  videos:frames`, committed with the deck (23 strips, 3.3 MB for Innoday);
+  without a strip a clip fades. Give a video slide a `space:` pose too: the
+  world rests under a covering clip, and when the clip breaks into dust the
+  camera is already flying to that pose.
+- **Check and look.** `pnpm stage:check`; `pnpm build --base / && pnpm
+  stage:shots` photographs every slide into `shots/` (needs
+  `playwright-chromium` in the workspace).
+- **ffmpeg here.** `~/.local/bin/ffmpeg` and `ffprobe` (static build) crash on
+  HTTPS input (exit 139). `videos:frames` works round it by downloading;
+  `videos:preflight` of release-only clips needs the env's ffmpeg
+  (`PATH=~/micromamba/envs/outreach_talks/bin:$PATH`).
+- Both addons and the CLI are pinned to slidev-videos `v0.4.0`: the talk's
+  `package.json`, `scripts/new_talk.py` (`ADDONS_REF`) and env.yaml's pip
+  entry move together on a release. The `frames` subcommand is new in 0.4.0;
+  an env made before it needs `pip install -U` of that entry. The older talks
+  stay on `#v0.3.3`: they use `cut`, which 0.4.0 does not change.
 
 ## Slidev gotchas
 

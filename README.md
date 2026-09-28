@@ -16,6 +16,7 @@ only decks and per-talk config.
 | 2026-07-18 | `talks/2026_07_18_Yaga/`               | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_07_18_Yaga/) |
 | 2026-09-10 | `talks/2026_09_10_WorldOfParticles/`   | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_09_10_WorldOfParticles/) |
 | TBD        | `talks/2026_09_00_Startertalk/`        | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_09_00_Startertalk/) |
+| TBD        | `talks/2026_10_00_Innoday/`            | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/) |
 
 Index of all talks: https://mindaugassarpis.github.io/cern_outreach_talks/
 
@@ -50,6 +51,20 @@ pnpm install
 
 Don't clone an old talk directory; the scaffold carries the current
 layout (`videos.toml`, addon headmatter, empty manifest).
+
+A talk told inside the 3D stage (one world under every slide, clips that
+arrive and leave as particles):
+
+```bash
+pnpm new-talk 2026_10_15_SomeKeynote --title "My talk" --stage blue   # classic | blue | ember
+pnpm install
+cd talks/2026_10_15_SomeKeynote
+pnpm stage:check       # after editing public/data/space.json or a slide's `space:`
+pnpm videos:frames     # after adding clips; commit public/video-frames/
+```
+
+`talks/2026_10_00_Innoday/` is the worked example. The engine is
+[`slidev-addon-stage`](https://github.com/MindaugasSarpis/slidev-videos/tree/main/packages/stage).
 
 ## Videos
 
