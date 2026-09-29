@@ -25,8 +25,8 @@ info: |
   dust and break back into it (slidev-addon-videos, transition: dust).
   Date placeholder 2026_10_00. Clips are the World of Particles reel's library
   clips, inherited by name; swap them freely, then `pnpm videos:frames`.
-  Keys on a video slide: p play/pause, + / - volume. On the cover and the
-  close: c builds the pentaquark again.
+  Keys on a video slide: p play/pause, + / - volume. On the cover, the part
+  openers and the close: c builds what stands there again.
 layout: cover
 space:
   at: wide
@@ -41,18 +41,22 @@ space:
 <div class="mt-md">Mindaugas Šarpis · LHCb · Vilnius University</div>
 
 <!--
-Speaker: one scene throughout. Behind the title the five quarks fly in from
-the dust and assemble into the c c̄ u u d cluster; the title fades in as the
-last one lands, and `c` replays it. The same cluster closes the talk. Three
-parts, each opening on a station in the world: the Solar System, the proton,
-the collider ring. Between them the clips: each condenses out of the dust and
-breaks back into it, and the camera has moved on by the time it clears.
-While this slide is up the player buffers the first three clips.
+Speaker: one scene throughout, and everything in it made of grains of light.
+Behind the title the five quarks fly in from the dust and assemble into the
+c c̄ u u d cluster; the title fades in as the last one lands, and `c` replays
+it. The same cluster closes the talk. Three parts, each opening on a form
+that gathers as the camera arrives: a spiral galaxy, a proton, the collider
+ring with its two bunches meeting. Between them the clips: each gathers on a
+plane standing off in the world and flies to the screen, and leaving it
+breaks up past the camera and leaves its colours in the dust for a few
+seconds; the camera has moved on by the time it clears. `c` on any part
+opener builds its form again. While this slide is up the player buffers the
+first three clips.
 -->
 
 ---
 layout: section
-space: { at: [11, -2.4, 0], dist: 14, yaw: -24, pitch: 30, dim: 0.08 }   # the Solar System in the upper right, the title low and left
+space: { at: [11.5, -2.6, 0], dist: 17, yaw: -20, pitch: 40, dim: 0.08 }   # the galaxy in the upper right, the title low and left
 ---
 
 # Part I
@@ -60,13 +64,13 @@ space: { at: [11, -2.4, 0], dist: 14, yaw: -24, pitch: 30, dim: 0.08 }   # the S
 From Saulėtekis to the edge of the Universe
 
 <!--
-Speaker: the first station. Earth, the Moon beside it, Mars, Saturn with its
-ring: the order of the clips that follow, outward. Then the stars, the
-galaxies and the oldest light.
+Speaker: the first form: a spiral galaxy gathers out of the dust as the
+camera arrives, and turns. The clips that follow go outward from home: the
+Moon, Mars, Saturn, then the stars, the galaxies and the oldest light.
 -->
 
 ---
-space: { at: cosmos, dist: 17, yaw: -8, pitch: 22, dim: 0.62 }
+space: { at: cosmos, dist: 22, yaw: 12, pitch: 52, dim: 0.62 }   # above the galaxy, behind the cards
 ---
 
 # Leaving home
@@ -97,56 +101,56 @@ talk's own material.
 -->
 
 ---
-space: { at: earth, dist: 5, yaw: 20, pitch: 10 }
+space: { at: [17, 5, -12], dist: 18, yaw: -38, pitch: 16 }
 ---
 
 <!-- Part I · leaving Earth: Saturn V launch, NASA archival, with sound (2:55) -->
 <VideoPlayer src="saturn_v_launch_nasa.mp4" />
 
 ---
-space: { at: moon, dist: 3.2, yaw: -30, pitch: 8 }
+space: { at: [18, 5.5, -13], dist: 18, yaw: -34, pitch: 15 }
 ---
 
 <!-- Part I · the Moon: Firefly Blue Ghost in lunar orbit -->
 <VideoPlayer src="blue_ghost_lunar_orbit.mp4" />
 
 ---
-space: { at: mars, dist: 5, yaw: -50, pitch: 12 }
+space: { at: [19, 6, -14], dist: 18, yaw: -30, pitch: 14 }
 ---
 
 <!-- Part I · 1965: Mariner 4 — the first data from another planet (0:20) -->
 <VideoPlayer src="nasa_mars_mariner_4_pan_audio.mp4" />
 
 ---
-space: { at: mars, dist: 3.4, yaw: -20, pitch: 6 }
+space: { at: [20, 6, -15], dist: 18, yaw: -26, pitch: 14 }
 ---
 
 <!-- Part I · Mars: Perseverance — cruise-stage separation, parachute descent, touchdown (3:10) -->
 <VideoPlayer src="perseverance_rover_landing_nasa.mp4" />
 
 ---
-space: { at: saturn, dist: 4.2, yaw: 25, pitch: 14 }
+space: { at: [21, 6.5, -16], dist: 18, yaw: -22, pitch: 14 }
 ---
 
 <!-- Part I · Saturn: Cassini Grand Finale ring dives, no voice-over (3:41) -->
 <VideoPlayer src="cassini_grand_finale.mp4" />
 
 ---
-space: { at: [20, 6, -16], dist: 18, yaw: -30, pitch: 14 }
+space: { at: [22, 7, -17], dist: 18, yaw: -18, pitch: 14 }
 ---
 
 <!-- Part I · the stars: starfield pan with ambient audio (0:20) -->
 <VideoPlayer src="stars_pan_audio.mp4" />
 
 ---
-space: { at: [23, 7, -18], dist: 18, yaw: -22, pitch: 14 }
+space: { at: [24, 7.5, -18], dist: 18, yaw: -14, pitch: 14 }
 ---
 
 <!-- Part I · Hubble in orbit (0:33) -->
 <VideoPlayer src="hubble.mp4" />
 
 ---
-space: { at: [26, 8, -20], dist: 18, yaw: -14, pitch: 14 }
+space: { at: [26, 8, -20], dist: 18, yaw: -10, pitch: 14 }
 ---
 
 <!-- Part I · a telescope under the night sky (0:40) -->
@@ -189,7 +193,7 @@ space: { at: [41, 7, -18], dist: 18, yaw: 26, pitch: 8 }
 
 ---
 layout: section
-space: { at: [47.4, -1.5, -2], dist: 10, yaw: -26, pitch: 8, sway: 5, dim: 0.08 }   # the proton in the upper right
+space: { at: [47.2, -1.6, -2], dist: 10, yaw: -26, pitch: 8, sway: 5, dim: 0.08 }   # the proton in the upper right
 ---
 
 # Part II
@@ -197,8 +201,9 @@ space: { at: [47.4, -1.5, -2], dist: 10, yaw: -26, pitch: 8, sway: 5, dim: 0.08 
 Down to the quarks
 
 <!--
-Speaker: the second station: a proton, two up quarks and a down, each on its
-own orbit inside the bound volume. The scale bar is the proton's diameter.
+Speaker: the second form: a proton gathers, three quarks as clouds of grains,
+each on its own orbit inside the bound volume, strings of grains flowing
+between them.
 -->
 
 ---
@@ -260,7 +265,7 @@ space: { at: [64, 5, -14], dist: 16, yaw: 18, pitch: 12 }
 
 ---
 layout: section
-space: { at: [88.5, -3.2, 0], dist: 17, yaw: -30, pitch: 22, dim: 0.08 }   # the ring across the frame, the collision upper right
+space: { at: [84.5, -3.4, 0], dist: 19, yaw: -30, pitch: 24, dim: 0.08 }   # the ring in the upper right; its two bunches meet at the near and the far side
 ---
 
 # Part III
@@ -268,8 +273,10 @@ space: { at: [88.5, -3.2, 0], dist: 17, yaw: -30, pitch: 22, dim: 0.08 }   # the
 Inside CERN
 
 <!--
-Speaker: the third station: the ring, 27 km round, two proton beams meeting
-at one point, and what flies out. A pulse runs down each track.
+Speaker: the third form: the ring gathers, grains streaming both ways round
+it. Two bunches run against each other and meet twice a lap; each meeting
+throws a spray of tracks that bend and fade. One lap is eight seconds here;
+in the LHC it is 89 microseconds, 27 km round.
 -->
 
 ---

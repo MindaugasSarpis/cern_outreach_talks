@@ -335,10 +335,23 @@ the package.
   section as a kicker and a large line low on the left (`# Part I` and a
   paragraph), cards, `.src`, `.world-caption`. A talk's own
   `styles/index.css` overrides it.
+- **Everything in the world is made of grains.** Innoday's stations are the
+  particle pentaquark (cover and close), a `galaxy`, a three-node
+  `constellation` (the proton) and a `collider`: points of light, no solid
+  shapes, no labels, no scale bars. A first version opened Part I on a Solar
+  System of lit spheres, rings and labels; it read as a classroom diagram
+  standing in the scene and was removed (2026-09-29). Each form is born
+  scattered and gathers when the camera arrives at its station; `c` builds it
+  again. Grains streak while the camera flies; flights and arriving clips
+  have a quiet sound (`stage.sound: { hum, flight, clip, level }`).
 - **Clips** arrive and leave as particles (`videos.transition: dust`). The
   grains take their colours from `public/video-frames/` — `pnpm
   videos:frames`, committed with the deck (23 strips, 3.3 MB for Innoday);
-  without a strip a clip fades. Give a video slide a `space:` pose too: the
+  without a strip a clip fades. A clip gathers on a plane standing off in
+  the world and flies to the frame; leaving, it breaks up past the camera and
+  leaves its colours in the dust for a few seconds. A clip that opens on
+  black arrives as its first lit frame and plays from there
+  (`videos.dustFrom: start` keeps the opening). Give a video slide a `space:` pose too: the
   world rests under a covering clip, and when the clip breaks into dust the
   camera is already flying to that pose.
 - **Check and look.** `pnpm stage:check`; `pnpm build --base / && pnpm
