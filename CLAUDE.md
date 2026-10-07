@@ -36,7 +36,7 @@ Current talks:
   (`slidev-addon-stage`, blue palette, `hadron` plugin), not on
   `components/HadronSpace.vue`; every clip uses `transition: dust`. Date
   placeholder `10_00`, as for Startertalk. See "The stage (Innoday)" below.
-- `talks/2026_10_00_OpenData/` — "Opening LHCb's data", a 6-minute award talk
+- `talks/2026_10_00_OpenData/` — "Opening LHCb's data", a 6½-minute award talk
   (LHCb Vilnius nominated for an open data award). On the packaged stage, pinned
   like the Innoday branch to slidev-videos `640eaa5` (feat/effects-v2) for the
   grain forms, plus two talk-owned builders. Date placeholder `10_00`. See
@@ -381,6 +381,19 @@ station holds the talk's own forms; `thesis` is a gold five-node
     (fires on slide enter; the last step per name is kept for forms built later)
     and count with `<Count :from :to :ms />`. Arrival at `store` (and `c`) regrows
     the balls from nothing; `onDone` is always called.
+- **Kick-off clip** (slide 2, after the cover so it buffers): `lhcb.mp4`, the
+  LHCb detector in 3D with music, as this talk's own 39 s cut of the library
+  clip (`trim = ["0:08", "0:47.1"]` in `videos/manifest.toml`, raw gdrive
+  `released/lhcb.mp4`, on release `videos-2026-10-00-opendata`, which wins the
+  chain by name). Why the cut: the library copy opens on 8 s of dark tunnel
+  (mean brightness < 0.07, the player's `DARK`) and ends on black, so the
+  default `dustFrom: lit` finds no lit tile in its first 12 s and gathers the
+  grains into a black frame (invisible), and a clip left after its end breaks
+  up as black. The cut starts at the shafts above the cavern (white CG on
+  black, drawn by the grains with `videos.dustFrom: start`) and ends at 47.1 s,
+  as the music fades and before the picture does. After re-encoding:
+  `pnpm videos:frames` (commit `public/video-frames/`), `videos:publish`,
+  `videos:preflight`.
 - **Figures to confirm before the talk**: "55 PB open" is the speaker's figure;
   the group's LMT applications use ~55 PB for LHCb's *total* data set, and public
   sources give ~800 TB (Run 1 files) and >4 PB (Run 1 + Run 2 via the Ntupling

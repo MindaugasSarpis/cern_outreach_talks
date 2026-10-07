@@ -13,19 +13,23 @@ videos:
   fit: cover
   transition: dust
   dust: '#ffc05a'
+  dustFrom: start           # the kick-off opens on white CG over black: the grains draw it, the clip plays from its first frame
 stage:
   space: data/space.json
   palette: blue
   sound: true
 title: Opening LHCb's data
 info: |
-  LHCb Vilnius, nominated for an open data award: a 6-minute talk told inside
+  LHCb Vilnius, nominated for an open data award: a 6½-minute talk told inside
   one world of grains (slidev-addon-stage, blue palette, pinned to the
   slidev-videos feat/effects-v2 commit 640eaa5). One grain of light is one
   terabyte: the open data grow as a gold ball, LHC Run 3 as a blue one, and
   streams carry the open grains to the people who use them. The talk's own
   forms are setup/grains.js (`volume`, `streams`); `<Grains>` on a slide sets
   their step, `<Count>` counts with them. On any station `c` builds it again.
+  Kick-off: lhcb.mp4, the LHCb detector in 3D with music, this talk's 39 s
+  cut of the library clip (videos/manifest.toml), arrives and leaves as dust;
+  its colours come from public/video-frames/.
   Date placeholder 2026_10_00.
 layout: cover
 space:
@@ -43,12 +47,31 @@ space:
 <!--
 Speaker (~0.5 min). Spoken: "I'm Mindaugas Šarpis. I lead LHCb Vilnius,
 Vilnius University's group in the LHCb experiment at CERN. We were nominated
-for our work on open data; this is that work, in six minutes."
+for our work on open data; this is that work, in a few minutes. It starts at
+the detector." Then → for the LHCb clip (the cover gives it a head start to
+buffer).
 The world: behind the title, the LHC. Two bunches of protons run round
 against each other and meet twice a lap; each meeting throws out a spray of
 tracks. Everything after this is made of the same grains of light: data.
 Before starting, press a key or click once, so the low hum can play
 (browsers start sound only after a gesture).
+-->
+
+---
+space: { at: wide }
+---
+
+<!-- Kick-off: the LHCb detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release videos-2026-10-00-opendata. It condenses out of the dust over the ring and breaks back into it as the camera flies to the collision point. -->
+<VideoPlayer src="lhcb.mp4" />
+
+<!--
+Speaker (~0.7 min, the clip runs 39 s): let it play; it opens the talk.
+From the shafts above the cavern down to LHCb, the detector built up in 3D,
+and a person standing in it for scale. At most one line over the music,
+near the end: "This is LHCb: the detector our data come from." Press → when
+the music has faded (or earlier): the frame on screen breaks into grains
+while the camera flies to where the bunches meet. `p` pauses, `+` / `-` set the volume for the rest of
+the talk.
 -->
 
 ---
@@ -342,8 +365,9 @@ collaboration, and doing research and teaching with it here in Vilnius.
 Thank you, and thank you to everyone on this list."
 The camera flies back to where the data are born. The names are the group
 as listed on lhcb-vilnius.web.cern.ch.
-Total about 6 minutes (0.5+0.6+0.4+0.6+0.5+0.7+0.6+0.6+0.8+0.4 = 5.7, plus
-breaths). For a hard 5-minute slot: "Anyone can take it" to one sentence
-(−0.4), the collisions slide to its first two spoken sentences (−0.2), "Used
-in Vilnius" to the course card only (−0.3).
+Total about 6½ minutes (0.5+0.7 clip+0.6+0.4+0.6+0.5+0.7+0.6+0.6+0.8+0.4 =
+6.4, plus breaths). For a hard 5-minute slot: leave the clip after ~20 s
+(−0.3), "Anyone can take it" to one sentence (−0.4), the collisions slide
+to its first two spoken sentences (−0.2), "Used in Vilnius" to the course
+card only (−0.3).
 -->
