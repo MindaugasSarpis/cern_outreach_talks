@@ -16,7 +16,7 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check . --types volume,streams",
+    "stage:check": "slidev-stage-check . --types lineup,streams",
     "stage:shots": "slidev-stage-shots dist shots"
   },
   "dependencies": {

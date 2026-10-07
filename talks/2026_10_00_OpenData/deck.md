@@ -18,14 +18,16 @@ stage:
   space: data/space.json
   palette: blue
   sound: true
+  options: { reach: 20 }      # the 600 PB pose stands far back: still at the store station
 title: Opening LHCb's data
 info: |
   LHCb Vilnius, nominated for an open data award: a 6½-minute talk told inside
   one world of grains (slidev-addon-stage, blue palette, pinned to the
-  slidev-videos feat/effects-v2 commit 640eaa5). One grain of light is one
-  terabyte: the open data grow as a gold ball, LHC Run 3 as a blue one, and
-  streams carry the open grains to the people who use them. The talk's own
-  forms are setup/grains.js (`volume`, `streams`); `<Grains>` on a slide sets
+  slidev-videos feat/effects-v2 commit 640eaa5). One sphere is one terabyte:
+  piles of the same sphere stand side by side (1 TB, 800 TB, 55 PB gold;
+  LHC Run 3's 600 PB blue) and keep their size as the camera pulls back, and
+  streams of grains carry the open data to the people who use them. The
+  talk's own forms are setup/grains.js (`lineup`, `streams`); `<Grains>` sets
   their step, `<Count>` counts with them. On any station `c` builds it again.
   Kick-off: lhcb.mp4, the LHCb detector in 3D with music, this talk's 39 s
   cut of the library clip (videos/manifest.toml), arrives and leaves as dust;
@@ -52,7 +54,7 @@ the detector." Then → for the LHCb clip (the cover gives it a head start to
 buffer).
 The world: behind the title, the LHC. Two bunches of protons run round
 against each other and meet twice a lap; each meeting throws out a spray of
-tracks. Everything after this is made of the same grains of light: data.
+tracks. Everything after this is made of light: data.
 Before starting, press a key or click once, so the low hum can play
 (browsers start sound only after a gesture).
 -->
@@ -102,12 +104,12 @@ the design rate to tape is 10 GB/s (LHCb Sprucing paper, arXiv:2506.20309).
 -->
 
 ---
-space: { at: [19.1, 0, 0], dist: 4, yaw: -16, pitch: 6, dim: 0.2 }
+space: { at: [7.92, 0, 0], dist: 0.75, yaw: -6, pitch: 4, dim: 0.2 }
 ---
 
-<Grains :set="{ open: 0, run3: -1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 0, 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
 
-<div class="legend"><span class="dot gold"></span>one grain = one terabyte</div>
+<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
 <div class="readout">
 
@@ -115,7 +117,7 @@ space: { at: [19.1, 0, 0], dist: 4, yaw: -16, pitch: 6, dim: 0.2 }
 
 <div class="big gold"><Count name="open" :from="1" :to="1" /><span class="unit">TB</span></div>
 
-One grain of light is one terabyte: the disk of a laptop, or about 330 hours of HD video.
+One sphere is one terabyte: the disk of a laptop, or about 330 hours of HD video.
 
 </div>
 
@@ -123,18 +125,19 @@ One grain of light is one terabyte: the disk of a laptop, or about 330 hours of 
 
 <!--
 Speaker (~0.4 min): the scale for the rest of the talk. One terabyte, one
-grain; point at it. LHCb's detector reads out four of these every second.
-From here on every grain is a terabyte, and the number on the left counts
-them.
+sphere; point at it. LHCb's detector reads out four of these every second.
+From here on every sphere is a terabyte, every pile is built of the same
+spheres, and nothing shrinks: when the camera pulls back, what came before
+stays beside the new pile at its true size.
 -->
 
 ---
-space: { at: [18.3, 0, 0], dist: 7, yaw: -18, pitch: 6, dim: 0.2 }
+space: { at: [7.16, 0, 0], dist: 8.7, yaw: -4, pitch: 4, dim: 0.2 }
 ---
 
-<Grains :set="{ open: 1, run3: -1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 1, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
 
-<div class="legend"><span class="dot gold"></span>one grain = one terabyte</div>
+<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
 <div class="readout">
 
@@ -149,7 +152,7 @@ LHCb's whole 2011–2012 proton-collision data set, ready for analysis, on the C
 <div class="src">LHCb, “LHCb releases entire Run 1 dataset”, opendata.cern.ch, 20 Dec 2023 · VU Faculty of Physics news · VU news, 30 Jul 2026</div>
 
 <!--
-Speaker (~0.6 min): eight hundred grains come in. The release completed on
+Speaker (~0.6 min): eight hundred spheres pile up beside the first one. The release completed on
 20 December 2023: the whole Run 1 proton–proton sample, about 800 TB. A
 first 200 TB (three streams) came out in December 2022; LHCb's earliest open
 files were small masterclass samples from 2014. Every one of more than a
@@ -161,12 +164,12 @@ the collaboration's Analysis Preservation and Open Data work package.
 -->
 
 ---
-space: { at: [15.8, 0, 0], dist: 14, yaw: -20, pitch: 8, dim: 0.2 }
+space: { at: [5.46, 0, 0], dist: 25.9, yaw: -4, pitch: 4, dim: 0.2 }
 ---
 
-<Grains :set="{ open: 2, run3: -1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 2, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
 
-<div class="legend"><span class="dot gold"></span>one grain = one terabyte</div>
+<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
 <div class="readout">
 
@@ -181,7 +184,8 @@ space: { at: [15.8, 0, 0], dist: 14, yaw: -20, pitch: 8, dim: 0.2 }
 <div class="src">Policy: LHCb, “LHCb Open Data Ntupling Service”, arXiv:2504.00610 (2025)</div>
 
 <!--
-Speaker (~0.5 min): fifty-five thousand grains.
+Speaker (~0.5 min): fifty-five thousand spheres; the first terabyte is now a
+dot on the left.
 [CHECK before the talk: "55 PB open" is the figure as given by the speaker.
 The group's own LMT applications (2024, 2025) use ~55 PB for LHCb's TOTAL
 data set; public figures for open LHCb data are ~800 TB (Run 1 files) and
@@ -197,12 +201,12 @@ of Run 1 was due by the end of 2022 and was complete in December 2023.
 -->
 
 ---
-space: { at: [13, 0, 0], dist: 46, yaw: -8, pitch: 8, dim: 0.15 }
+space: { at: [2.3, 0, 0], dist: 57.5, yaw: -4, pitch: 4, dim: 0.15 }
 ---
 
-<Grains :set="{ open: 2, run3: 0, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 3, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
 
-<div class="legend"><span class="dot gold"></span>one grain = one terabyte</div>
+<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
 <div class="readout">
 
@@ -217,8 +221,9 @@ space: { at: [13, 0, 0], dist: 46, yaw: -8, pitch: 8, dim: 0.15 }
 <div class="src">CERN, “Storage”, home.cern/science/computing/storage</div>
 
 <!--
-Speaker (~0.7 min): and now Run 3. Six hundred thousand grains: the blue
-ball is eleven times the gold in volume. CERN's own comparison: more than
+Speaker (~0.7 min): and now Run 3. Six hundred thousand spheres: the blue
+ball is eleven times the gold in volume, and the first terabyte is a speck
+under its label. CERN's own comparison: more than
 600 PB is over 20 000 years of HD video recorded around the clock. In
 December 2025 CERN passed one exabyte of stored LHC data, and the second
 half of it was collected in Run 3 alone. Run 3 ended in June 2026. LHCb's
@@ -230,7 +235,7 @@ five years after the run, all of it after ten.
 space: { at: [10, -3.2, -1], dist: 30, yaw: 26, pitch: 10, dim: 0.3 }
 ---
 
-<Grains :set="{ open: 2, run3: 0, world: 8, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 3, 'scale:labels': 0, world: 8, vilnius: 0, dominykas: 0 }" />
 
 # Anyone can take it
 
@@ -254,7 +259,7 @@ About 20 requests by July 2026: theorists, people testing analysis methods, scho
 <div class="src">LHCb outreach, 3 Mar 2026 · arXiv:2504.00610 · DPHEP Global Report 2026, arXiv:2607.06775 · arXiv:2609.09275</div>
 
 <!--
-Speaker (~0.6 min): open means the grains leave. Each stream is someone
+Speaker (~0.6 min): open means the data leave. Each stream is someone
 taking data out. The service is the LHCb Ntupling Service (LHCb with the
 CERN Open Data team; paper arXiv:2504.00610, Adam Morris among the authors,
 as on the Ntuple Wizard paper of 2023): it runs the selection for you and
@@ -270,7 +275,7 @@ data, checked on 2017 collision open data.
 space: { at: [15.5, -3.4, 4], dist: 27, yaw: 12, pitch: 4, dim: 0.3 }
 ---
 
-<Grains :set="{ open: 2, run3: 0, world: 0, vilnius: 3, dominykas: 0 }" />
+<Grains :set="{ scale: 3, 'scale:labels': 0, world: 0, vilnius: 3, dominykas: 0 }" />
 
 # Used in Vilnius
 
@@ -315,7 +320,7 @@ students [CHECK: that it ran on the open masterclass files].
 space: { at: thesis, dim: 0.3 }
 ---
 
-<Grains :set="{ open: 2, run3: 0, world: 0, vilnius: 0, dominykas: 1 }" />
+<Grains :set="{ scale: 3, 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 1 }" />
 
 <div class="readout thesis">
 
