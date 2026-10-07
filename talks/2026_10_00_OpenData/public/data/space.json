@@ -276,13 +276,13 @@
       "look": {
         "target": [
           -2.2,
-          -0.2,
+          -0.6,
           1.6
         ],
         "dist": 10,
         "yaw": 38,
-        "pitch": 6,
-        "sway": 5
+        "pitch": 24,
+        "sway": 4
       },
       "gather": 1.2,
       "pulse": 7,

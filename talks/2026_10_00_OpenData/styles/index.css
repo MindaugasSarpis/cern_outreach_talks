@@ -18,10 +18,10 @@ html[data-stage] .readout .big {
 }
 html[data-stage] .readout .big.gold { color: var(--od-gold-hi); }
 html[data-stage] .readout .big.blue { color: #dfe8ff; }
-html[data-stage] .readout .big.blue + p, html[data-stage] .readout .big.blue ~ p { opacity: 0.94; }
 html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--od-gold); }
 html[data-stage] .readout .big.blue .unit { color: var(--od-blue); }
 html[data-stage] .readout:has(.big.blue) .kicker { color: var(--od-blue); }
+html[data-stage] .readout:has(.big.blue) { max-width: 50%; }
 
 /* the thesis slide: a name instead of a number */
 html[data-stage] .readout.thesis { max-width: 46%; bottom: 80px; }

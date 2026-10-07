@@ -52,7 +52,7 @@ Before starting, press a key or click once, so the low hum can play
 -->
 
 ---
-space: { at: [-29.6, 0, 7], dist: 10, yaw: -30, pitch: 10, dim: 0.25 }
+space: { at: [-29.6, -1.4, 7], dist: 10, yaw: -30, pitch: 10, dim: 0.25 }
 ---
 
 <div class="world-caption narrow">
@@ -90,7 +90,7 @@ space: { at: [19.1, 0, 0], dist: 4, yaw: -16, pitch: 6, dim: 0.2 }
 
 <p class="kicker">The scale</p>
 
-<div class="big gold"><Count :from="1" :to="1" :ms="1" /><span class="unit">TB</span></div>
+<div class="big gold"><Count name="open" :from="1" :to="1" /><span class="unit">TB</span></div>
 
 One grain of light is one terabyte: the disk of a laptop, or about 330 hours of HD video.
 
@@ -117,7 +117,7 @@ space: { at: [18.3, 0, 0], dist: 7, yaw: -18, pitch: 6, dim: 0.2 }
 
 <p class="kicker">December 2023 · all of Run 1</p>
 
-<div class="big gold"><Count :from="1" :to="800" :ms="4200" /><span class="unit">TB</span></div>
+<div class="big gold"><Count name="open" :from="1" :to="800" /><span class="unit">TB</span></div>
 
 LHCb's whole 2011–2012 proton-collision data set, ready for analysis, on the CERN Open Data portal for anyone to download. Mindaugas Šarpis prepared the data and built the release; since August 2026 he coordinates LHCb's open data.
 
@@ -149,7 +149,7 @@ space: { at: [15.8, 0, 0], dist: 14, yaw: -20, pitch: 8, dim: 0.2 }
 
 <p class="kicker">Open</p>
 
-<div class="big gold"><Count :from="800" :to="55000" :ms="4600" /><span class="unit">TB</span></div>
+<div class="big gold"><Count name="open" :from="800" :to="55000" /><span class="unit">TB</span></div>
 
 55 petabytes. LHCb has committed to a schedule: about half of each run's data five years after the run ends, and all of it after ten.
 
@@ -185,7 +185,7 @@ space: { at: [13, 0, 0], dist: 46, yaw: -8, pitch: 8, dim: 0.15 }
 
 <p class="kicker">LHC Run 3 · 2022–2026</p>
 
-<div class="big blue"><Count :from="0" :to="600000" :ms="5200" /><span class="unit">TB</span></div>
+<div class="big blue"><Count name="run3" :from="0" :to="600000" /><span class="unit">TB</span></div>
 
 600 petabytes: what CERN got ready to store and analyse from all the LHC experiments together in Run 3. Over 20 000 years of HD video, running day and night.
 
@@ -296,17 +296,17 @@ space: { at: thesis, dim: 0.3 }
 
 <div class="readout thesis">
 
-<p class="kicker">The first thesis on LHCb open data</p>
+<p class="kicker">The first thesis analysing LHCb open data</p>
 
 # Dominykas Stonkus
 
-<p class="sub">BSc thesis, Vilnius University · <em>Rediscovering pentaquarks with LHCb open data</em></p>
+<p class="sub">BSc thesis project, Vilnius University · <em>Rediscovering pentaquarks with LHCb open data</em></p>
 
 In 2015 LHCb discovered pentaquarks, particles of five quarks. The collisions they were found in are now public, and Dominykas looks for the same particles in the open data.
 
 </div>
 
-<div class="src">LHCb, PRL 115 (2015) 072001 · LHCb Vilnius, CERN Baltic Conference, Kaunas, 2025</div>
+<div class="src">LHCb, PRL 115 (2015) 072001 · LHCb Vilnius, CERN Baltic Conference, Kaunas, 2025 · “First”: no earlier thesis analysing LHCb open data on INSPIRE, Oct 2026</div>
 
 <!--
 Speaker (~0.8 min): the stream that matters most today. One stream of gold
@@ -314,11 +314,14 @@ from the open ball, and at its end five quarks gather into one particle: a
 pentaquark. Dominykas Stonkus joined LHCb Vilnius in 2025 as a bachelor's
 student; his project is to find again, in open data, what LHCb found in
 2015 (the discovery used Λb⁰ → J/ψ p K⁻ in Run 1).
-Spoken qualifier: "As far as we know, the first: no earlier thesis on LHCb
-open data is listed on INSPIRE."
+Spoken qualifier: "As far as we know, the first thesis that analyses LHCb
+open data: none earlier is listed on INSPIRE." (Earlier theses about the
+release itself, mine in Bonn 2023 and Ana Trisovic's in 2018, prepared the
+data; they did not analyse it.)
 [CHECK with Dominykas: the official thesis title and defence date; the
 decay and the data (Run 1 files, or Run 2 through the Ntupling Service);
-his result or a plot.] `c` builds the pentaquark again.
+his result or a plot; that the Z → μμ analysis on the previous slide was not
+a thesis.] `c` builds the pentaquark again.
 -->
 
 ---

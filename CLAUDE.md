@@ -387,8 +387,13 @@ station holds the talk's own forms; `thesis` is a gold five-node
   Service, 2026) for LHCb open data. "600 PB" is CERN's Run 3 figure for all
   LHC experiments (home.cern/science/computing/storage). Change a number in the
   `volume` steps in `public/data/space.json` and the slide's `<Count :to>`.
-- `vite.config.ts` excludes `slidev-addon-stage` from pre-bundling, else
-  `slidev dev` has two builder registries and never sees `volume`/`streams`.
+- `vite.config.ts` excludes `slidev-addon-stage` and `three` from
+  pre-bundling, else `slidev dev` has two builder registries (the world never
+  sees `volume`/`streams`) and two copies of three.
+- Streams on the store station: `world` (8 anonymous users, "Anyone can take
+  it"), `vilnius` (3: the Z → μμ analysis, the course, the masterclass) and
+  `dominykas` (1, ends at the `thesis` pentaquark, alone on the climax slide);
+  the Dominykas slide is the last content slide, the close follows.
 - Under SwiftShader the 600 000-grain ball needs ~80 s of wall time to form
   (dt clamp); `stage:shots --wait 30000` catches most slides mid-build.
 

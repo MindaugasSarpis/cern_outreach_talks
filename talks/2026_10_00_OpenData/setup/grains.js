@@ -55,7 +55,7 @@ const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;
 void main() {
   float d = length(gl_PointCoord - 0.5);
-  float a = smoothstep(0.5, 0.04, d) * vAlpha;
+  float a = (1.0 - smoothstep(0.04, 0.5, d)) * vAlpha;
   gl_FragColor = vec4(pow(vColor * a, vec3(2.2)), 1.0);
 }`
 
@@ -114,11 +114,13 @@ void main() {
   // brighter, warmer towards the middle; fainter as the ball holds more
   float inner = exp(-2.5 * r / max(R, 1e-3));
   vec3 color = mix(uColor, uCore, 0.55 * inner + 0.25 * hash(aSeed * 7.0));
-  float dense = 1.0 / (1.0 + uFade * log(1.0 + max(uTo, uFrom) / 800.0));
+  float n = mix(uFrom, uTo, ease((uTime - uT0) / (uTo > uFrom ? uGrow + 1.6 : 1.1)));
+  float dense = 1.0 / (1.0 + uFade * log(1.0 + n / 800.0));
   // a ball of a handful of grains: each is drawn large, so one terabyte can be pointed at
-  float lone = exp(-hi / 10.0);
+  float lone = exp(-n / 10.0);
   float alpha = uAlpha * dense * mix(0.25, 1.0, f) * show * (1.0 + 0.8 * lone);
   float size = uSize * (0.75 + 0.8 * hash(aSeed * 31.0)) * (1.0 + 2.0 * (1.0 - f)) * (1.0 + uLone * lone);
+  if (alpha <= 0.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vAlpha = 0.0; return; }
   place(p, size, alpha, color, aSeed);
 }`
 
@@ -147,36 +149,59 @@ function buildVolume(o, ctx) {
   const g = new Group(); g.add(pts)
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
 
-  let now = 0
-  let step = -1
+  const u = mat.uniforms
+  let now = 0, step = -1
+  let busyUntil = -1, pending = null   // a change under way, and the count asked for meanwhile
+  let armed = false, armedAt = 0       // the engine armed us: a flight is bringing the camera here
+  let doneAt = -1, doneCbs = []        // onDone of every assembly asked for, called together when the last one ends
   const countOf = (k) => (k < 0 ? 0 : steps[Math.min(k, steps.length - 1)])
-  // how many grains are in place now, a change under way included
-  const inPlace = () => {
-    const u = mat.uniforms, el = now - u.uT0.value
-    if (u.uTo.value <= u.uFrom.value) return el > 1.1 ? u.uTo.value : u.uFrom.value
-    return u.uFrom.value + (u.uTo.value - u.uFrom.value) * Math.min(1, Math.max(0, el / (u.uGrow.value + 1.6)))
+  const GROW = () => u.uGrow.value + 1.6, SHRINK = 1.1
+  // a change from a settled count (uFrom === uTo) to `to`
+  const start = (to, from = u.uTo.value) => {
+    u.uFrom.value = from; u.uTo.value = to; u.uT0.value = now
+    busyUntil = to === from ? -1 : now + (to > from ? GROW() : SHRINK)
   }
   const go = (k, { instant = false } = {}) => {
-    const u = mat.uniforms, to = countOf(k)
-    u.uFrom.value = instant ? to : Math.round(inPlace()); u.uTo.value = to; u.uT0.value = now
     step = k
+    const to = countOf(k)
+    if (instant) { u.uFrom.value = u.uTo.value = to; busyUntil = -1; pending = null; return }
+    if (armed) return                                 // the arrival grows it (assemble)
+    if (busyUntil >= 0) { pending = to; return }      // let the change under way finish first
+    if (to !== u.uTo.value) start(to)
   }
   const off = listen(o.name, (k) => go(k))
-  if (state.has(o.name)) go(state.get(o.name), { instant: true })
+  mat.addEventListener('dispose', off)               // the engine disposes materials, never calls a builder's dispose
+  // opened mid-talk: the step is known, the ball builds itself when the engine assembles the opening station (0.6 s), else at 1 s
+  if (state.has(o.name)) { step = state.get(o.name); armed = true; armedAt = -5 }
 
   // `c` (and an arrival from elsewhere) grows the ball again from nothing
   const api = o.assemble === false ? undefined : {
-    arm() { /* the ball keeps what it holds while the camera travels */ },
+    // a flight toward the station: what stands scatters, and stays out until the arrival
+    arm() {
+      armed = true; armedAt = now; pending = null
+      if (busyUntil < 0 && u.uTo.value > 0) start(0)
+      else { u.uFrom.value = u.uTo.value = 0; busyUntil = -1 }
+    },
     assemble(t, onDone) {
-      if (step < 0) { onDone?.(); return }
-      const u = mat.uniforms
-      u.uFrom.value = 0; u.uTo.value = countOf(step); u.uT0.value = t
-      setTimeout(() => onDone?.(), (u.uGrow.value + 1.6) * 1000)
+      now = t; armed = false; pending = null
+      start(countOf(step), 0)
+      if (onDone) doneCbs.push(onDone)
+      doneAt = t + GROW()                             // engine clock; never sooner than a full growth, so an empty ball does not end the station's assembly
     },
   }
   return {
-    group: g, labels: [], api, pixelRatio: mat.uniforms.uPixelRatio,
-    update(t) { now = t; mat.uniforms.uTime.value = t },
+    group: g, labels: [], api, pixelRatio: u.uPixelRatio,
+    update(t) {
+      now = t; u.uTime.value = t
+      if (busyUntil >= 0 && t >= busyUntil) {
+        busyUntil = -1
+        u.uFrom.value = u.uTo.value                   // settled: lone, dense and the drift reach follow the count shown
+        if (pending != null) { const p = pending; pending = null; if (p !== u.uTo.value) start(p) }
+      }
+      if (armed && t - armedAt > 6) { armed = false; start(countOf(step), 0) }   // the flight was turned away: show it anyway
+      if (doneCbs.length && t >= doneAt) { const cbs = doneCbs; doneCbs = []; for (const cb of cbs) cb() }
+      geo.setDrawRange(0, Math.max(u.uFrom.value, u.uTo.value))   // grains past the count are never drawn (gl_VertexID counts from 0)
+    },
     dispose: off,
   }
 }
@@ -194,6 +219,7 @@ attribute vec3 aEnd, aCtl, aOff;
 uniform vec3 uFrom;
 uniform float uShowT[${MAXS}];
 uniform float uHideT[${MAXS}];
+uniform float uBackT[${MAXS}];
 uniform float uSpeed, uSize, uAlpha, uNodeR;
 uniform vec3 uColor, uWhite;
 ${PLACE}
@@ -203,16 +229,16 @@ void main() {
   float since = t0 < 0.0 ? -1.0 : uTime - t0;
   // a stream that is stopped fades out over 1.2 s, its grains still running
   float h = uHideT[i];
-  float on = (since < 0.0 ? 0.0 : 1.0) * (h < 0.0 ? 1.0 : 1.0 - smoothstep(0.0, 1.2, uTime - h));
+  float on = (since < 0.0 ? 0.0 : 1.0) * (h < 0.0 ? smoothstep(0.0, 1.2, uTime - uBackT[i]) : 1.0 - smoothstep(0.0, 1.2, uTime - h));
   vec3 p; float alpha; float size;
   if (aKind < 0.5) {
     // along a quadratic arc; a grain leaves only once its stream has started
     float s = fract(aSeed * 7.31 + uSpeed * uTime);
-    float lead = since * uSpeed * 1.25;          // how far the first grains have got
+    float lead = since * uSpeed;                 // only grains that have left since the stream started
     float started = step(s, lead) + step(1.0, lead);
     vec3 a = mix(uFrom, aCtl, s), b = mix(aCtl, aEnd, s);
     p = mix(a, b, s) + aOff * (0.4 + sin(s * 3.14159));
-    float ends = smoothstep(0.0, 0.06, s) * smoothstep(1.0, 0.9, s);
+    float ends = smoothstep(0.0, 0.06, s) * (1.0 - smoothstep(0.9, 1.0, s));
     alpha = uAlpha * ends * on * min(started, 1.0);
     size = uSize * (0.7 + 0.7 * hash(aSeed * 13.0));
   } else {
@@ -227,6 +253,7 @@ void main() {
     size = uSize * (0.9 + 0.9 * hash(aSeed * 29.0));
   }
   vec3 color = mix(uColor, uWhite, 0.35 * hash(aSeed * 41.0) + (aKind > 0.5 ? 0.25 : 0.0));
+  if (alpha <= 0.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vAlpha = 0.0; return; }
   place(p, size, alpha, color, aSeed);
 }`
 
@@ -258,9 +285,9 @@ function buildStreams(o, ctx) {
   const geo = new BufferGeometry()
   geo.setAttribute('position', new BufferAttribute(pos, 3))
   for (const [k, a, s] of [['aSeed', seed, 1], ['aIdx', idx, 1], ['aKind', kind, 1], ['aEnd', end, 3], ['aCtl', ctl, 3], ['aOff', off, 3]]) geo.setAttribute(k, new BufferAttribute(a, s))
-  const showT = new Array(MAXS).fill(-1), hideT = new Array(MAXS).fill(-1)
+  const showT = new Array(MAXS).fill(-1), hideT = new Array(MAXS).fill(-1), backT = new Array(MAXS).fill(-100)
   const mat = material(STREAMS_VERT, {
-    uFrom: { value: new Vector3(from[0], from[1], from[2]) }, uShowT: { value: showT }, uHideT: { value: hideT },
+    uFrom: { value: new Vector3(from[0], from[1], from[2]) }, uShowT: { value: showT }, uHideT: { value: hideT }, uBackT: { value: backT },
     uSpeed: { value: o.speed ?? 0.11 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.55 },
     uNodeR: { value: o.nodeRadius ?? 0.45 },
     uColor: { value: new Color(...rgb(o.color || ctx.palette.accent)) }, uWhite: { value: new Color(1, 0.97, 0.9) },
@@ -276,11 +303,20 @@ function buildStreams(o, ctx) {
     let fresh = 0
     for (let i = 0; i < MAXS; i++) {
       const running = showT[i] >= 0 && hideT[i] < 0
-      if (i < k && !running) { showT[i] = instant ? now - 60 : now + 0.25 * fresh++; hideT[i] = -1 }
-      else if (i >= k && running) { if (instant) showT[i] = -1; else hideT[i] = now }
+      const fading = showT[i] >= 0 && hideT[i] >= 0 && now - hideT[i] < 1.2
+      if (i < k && !running) {
+        // still on its way out: take it back, fading in from the brightness it has now
+        // (1 - S(x) = S(1.2 - x) for this smoothstep, so the fade-in starts where the fade-out was)
+        if (fading && !instant) { backT[i] = 2 * now - hideT[i] - 1.2; hideT[i] = -1 }
+        else { showT[i] = instant ? now - 60 : now + 0.25 * fresh++; hideT[i] = -1; backT[i] = -100 }
+      } else if (i >= k && running) {
+        if (instant || showT[i] > now) showT[i] = -1      // not started yet: nothing to fade
+        else hideT[i] = now
+      }
     }
   }
   const off2 = listen(o.name, (k) => go(k))
+  mat.addEventListener('dispose', off2)
   if (state.has(o.name)) go(state.get(o.name), { instant: true })
   return {
     group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio,

@@ -20,7 +20,8 @@
     "stage:shots": "slidev-stage-shots dist shots"
   },
   "dependencies": {
-    "@slidev/cli": "^52.14.2"
+    "@slidev/cli": "^52.14.2",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#640eaa57fbe882a7f995379c25fa86b85c8a4e2d",
