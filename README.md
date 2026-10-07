@@ -17,6 +17,7 @@ only decks and per-talk config.
 | 2026-09-10 | `talks/2026_09_10_WorldOfParticles/`   | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_09_10_WorldOfParticles/) |
 | TBD        | `talks/2026_09_00_Startertalk/`        | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_09_00_Startertalk/) |
 | TBD        | `talks/2026_10_00_Innoday/`            | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/) |
+| TBD        | `talks/2026_10_00_OpenData/`           | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_OpenData/) |
 
 Index of all talks: https://mindaugassarpis.github.io/cern_outreach_talks/
 

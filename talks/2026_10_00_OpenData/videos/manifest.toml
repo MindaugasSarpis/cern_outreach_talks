@@ -1,0 +1,16 @@
+# Talk-OWNED clips only. Clips from the slidev-videos library
+# (https://github.com/MindaugasSarpis/slidev-videos, src/slidev_videos/shared.toml)
+# are inherited by name — reference them in the deck, never list them here.
+#
+# POLICY (since 2026-07-18): venues play the 1080p H.264 web tier, loudness
+# -16 LUFS. No HQ tier. Run `pnpm videos:preflight` before the talk.
+# Profiles: remux | standard | standard-tight | silent-loop | high-motion
+
+[defaults]
+# release_tag comes from videos.toml (videos-2026-10-00-opendata).
+
+# [[videos]]
+# name    = "example_clip.mp4"
+# profile = "standard"
+# used_in = ["deck"]
+# notes   = "What this clip is and where it came from."

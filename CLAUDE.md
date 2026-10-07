@@ -36,6 +36,11 @@ Current talks:
   (`slidev-addon-stage`, blue palette, `hadron` plugin), not on
   `components/HadronSpace.vue`; every clip uses `transition: dust`. Date
   placeholder `10_00`, as for Startertalk. See "The stage (Innoday)" below.
+- `talks/2026_10_00_OpenData/` — "Opening LHCb's data", a 6-minute award talk
+  (LHCb Vilnius nominated for an open data award). On the packaged stage, pinned
+  like the Innoday branch to slidev-videos `640eaa5` (feat/effects-v2) for the
+  grain forms, plus two talk-owned builders. Date placeholder `10_00`. See
+  "Open data talk" below.
 
 ## Environment setup (fresh machine)
 
@@ -353,6 +358,39 @@ the package.
   entry move together on a release. The `frames` subcommand is new in 0.4.0;
   an env made before it needs `pip install -U` of that entry. The older talks
   stay on `#v0.3.3`: they use `cut`, which 0.4.0 does not change.
+
+## Open data talk (2026_10_00_OpenData)
+
+One world of grains; one grain of light is one terabyte. The hero is the
+engine's `collider` (cover, the collisions slide, the close); the `store`
+station holds the talk's own forms; `thesis` is a gold five-node
+`constellation` (the pentaquark of Dominykas Stonkus's BSc project).
+
+- **Talk-owned builders** (`setup/grains.js`, registered from `setup/main.ts`;
+  `stage:check` runs with `--types volume,streams`):
+  - `volume` `{ name, pos, steps: [n…], scale, color, core, size, alpha, fade, reach, lone }`:
+    a ball whose first n grains always fill radius `scale·∛n` evenly (grain j at
+    `scale·∛(j+u)`, rank from `gl_VertexID`), so a step adds the grains it needs
+    and they fly in, inner first; few grains are drawn large (`lone`). Steps here:
+    `open` 1 → 800 → 55 000, `run3` 600 000 (0.1 · ∛600 000 ≈ 8.4 units).
+  - `streams` `{ name, pos, from, to: [{ pos, lift, node }], grains, node, nodeRadius, speed }`:
+    grains along quadratic arcs, an end cluster that gathers when its stream
+    starts (`node: false` where a form of its own stands, e.g. the pentaquark);
+    a stopped stream fades out over 1.2 s.
+  - Slides drive them with `<Grains :set="{ open: 2, run3: 0, world: 8, vilnius: 0 }" />`
+    (fires on slide enter; the last step per name is kept for forms built later)
+    and count with `<Count :from :to :ms />`. Arrival at `store` (and `c`) regrows
+    the balls from nothing; `onDone` is always called.
+- **Figures to confirm before the talk**: "55 PB open" is the speaker's figure;
+  the group's LMT applications use ~55 PB for LHCb's *total* data set, and public
+  sources give ~800 TB (Run 1 files) and >4 PB (Run 1 + Run 2 via the Ntupling
+  Service, 2026) for LHCb open data. "600 PB" is CERN's Run 3 figure for all
+  LHC experiments (home.cern/science/computing/storage). Change a number in the
+  `volume` steps in `public/data/space.json` and the slide's `<Count :to>`.
+- `vite.config.ts` excludes `slidev-addon-stage` from pre-bundling, else
+  `slidev dev` has two builder registries and never sees `volume`/`streams`.
+- Under SwiftShader the 600 000-grain ball needs ~80 s of wall time to form
+  (dt clamp); `stage:shots --wait 30000` catches most slides mid-build.
 
 ## Slidev gotchas
 

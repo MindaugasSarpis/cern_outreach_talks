@@ -1,0 +1,69 @@
+/* Opening LHCb's data — the talk's own type over the stage kit
+   (slidev-addon-stage styles/index.css). Gold is open data, blue is Run 3. */
+
+html[data-stage] { --od-gold: #ffc05a; --od-gold-hi: #ffe3a8; --od-blue: #8fb2ff; }
+
+/* the readout: a kicker, a counted number, one or two sentences, low on the left */
+html[data-stage] .readout {
+  position: absolute; left: 56px; bottom: 74px; max-width: 44%;
+  font-size: 20px; line-height: 1.38; color: var(--stage-fg);
+  animation: stage-rise 0.8s var(--stage-ease) 0.2s both;
+}
+html[data-stage] .readout p { margin: 0 0 10px; opacity: 0.94; }
+html[data-stage] .readout .kicker { margin-bottom: 6px; color: var(--od-gold); }
+html[data-stage] .readout .big {
+  font-size: 104px; font-weight: 700; letter-spacing: -0.035em; line-height: 0.92;
+  font-variant-numeric: tabular-nums; margin: 0 0 18px; white-space: nowrap;
+  text-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
+}
+html[data-stage] .readout .big.gold { color: var(--od-gold-hi); }
+html[data-stage] .readout .big.blue { color: #dfe8ff; }
+html[data-stage] .readout .big.blue + p, html[data-stage] .readout .big.blue ~ p { opacity: 0.94; }
+html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--od-gold); }
+html[data-stage] .readout .big.blue .unit { color: var(--od-blue); }
+html[data-stage] .readout:has(.big.blue) .kicker { color: var(--od-blue); }
+
+/* the thesis slide: a name instead of a number */
+html[data-stage] .readout.thesis { max-width: 46%; bottom: 80px; }
+html[data-stage] .readout.thesis h1 {
+  font-size: 54px !important; font-weight: 700 !important; letter-spacing: -0.02em; line-height: 1.02 !important;
+  margin: 0 0 10px !important; color: var(--stage-fg) !important; animation: none !important;
+}
+html[data-stage] .readout.thesis .sub { font-size: 17px; letter-spacing: 0.02em; color: var(--od-gold-hi); margin-bottom: 16px; }
+html[data-stage] .readout.thesis .sub em { font-style: normal; color: var(--stage-fg); }
+
+/* the scale, top right, while the grains are being counted */
+html[data-stage] .legend {
+  position: absolute; right: 44px; top: 34px; font-size: 12.5px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--stage-dim);
+  display: flex; align-items: center; gap: 10px;
+}
+html[data-stage] .legend .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+html[data-stage] .legend .dot.gold { background: var(--od-gold-hi); box-shadow: 0 0 10px 3px rgba(255, 192, 90, 0.75); }
+
+/* a world-caption that keeps to the left half, so the collision shows */
+html[data-stage] .world-caption.narrow { right: auto; max-width: 46%; font-size: 20px; line-height: 1.38; }
+html[data-stage] .world-caption.narrow h1 { margin: 0 0 12px !important; }
+html[data-stage] .world-caption.narrow p { margin: 0 0 8px; }
+html[data-stage] .world-caption.narrow .kicker { margin-bottom: 8px; color: var(--stage-accent); }
+
+/* content slides: cards a little tighter than the kit, so three fit */
+html[data-stage] .three-col .card h2 { font-size: 20px; }
+html[data-stage] .three-col .card p { font-size: 17.5px; line-height: 1.36; }
+
+/* the close: the group's names, small, under the thanks */
+html[data-stage] .slidev-layout.statement .team {
+  max-width: 62ch; margin: 22px auto 0; font-size: 13px; line-height: 1.7; letter-spacing: 0.04em;
+  color: var(--stage-dim); animation: stage-rise 0.9s var(--stage-ease) 0.7s both;
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  html[data-stage] .readout, html[data-stage] .slidev-layout.statement .team { animation: none !important; }
+}
+
+/* cards in a low row, so the streams above them stay in view */
+html[data-stage] .three-col.low { position: absolute; left: 44px; right: 44px; bottom: 64px; gap: 18px; align-items: stretch; }
+html[data-stage] .three-col.low .card { padding: 12px 16px 10px; }
+html[data-stage] .three-col.low .card h2 { font-size: 17px; margin-bottom: 6px; }
+html[data-stage] .three-col.low .card p { font-size: 15.5px; line-height: 1.34; margin: 0; }
+html[data-stage] .three-col.low.two { grid-template-columns: 1fr 1fr; right: 30%; }
