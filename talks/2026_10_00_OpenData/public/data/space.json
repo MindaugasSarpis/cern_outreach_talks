@@ -1,0 +1,353 @@
+{
+  "hero": "hero",
+  "poses": {
+    "close": {
+      "station": "hero",
+      "offset": [
+        3.8,
+        -9.4,
+        0
+      ],
+      "dist": 32,
+      "yaw": 10,
+      "pitch": 30,
+      "sway": 4
+    }
+  },
+  "stations": [
+    {
+      "id": "hero",
+      "pos": [
+        -30,
+        0,
+        0
+      ],
+      "look": {
+        "target": [
+          -9.6,
+          4.2,
+          0
+        ],
+        "dist": 28,
+        "yaw": -20,
+        "pitch": 24,
+        "sway": 4
+      },
+      "gather": 0.3,
+      "objects": [
+        {
+          "type": "collider",
+          "pos": [
+            3,
+            0,
+            0
+          ],
+          "radius": 7,
+          "lap": 6,
+          "tracks": 24,
+          "grains": 30000,
+          "yaw": 90
+        }
+      ]
+    },
+    {
+      "id": "store",
+      "pos": [
+        20,
+        0,
+        0
+      ],
+      "look": {
+        "target": [
+          -1.6,
+          0,
+          0
+        ],
+        "dist": 9,
+        "yaw": -18,
+        "pitch": 8,
+        "sway": 3
+      },
+      "gather": 0.2,
+      "objects": [
+        {
+          "type": "volume",
+          "name": "open",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "steps": [
+            1,
+            800,
+            55000
+          ],
+          "scale": 0.1,
+          "color": "#ffc05a",
+          "core": "#fff6e2",
+          "size": 1.25,
+          "alpha": 0.95,
+          "reach": 3
+        },
+        {
+          "type": "volume",
+          "name": "run3",
+          "pos": [
+            14,
+            0,
+            0
+          ],
+          "steps": [
+            600000
+          ],
+          "scale": 0.1,
+          "color": "#6f9dff",
+          "core": "#e3ecff",
+          "size": 1.0,
+          "alpha": 0.5,
+          "fade": 0.08,
+          "reach": 7
+        },
+        {
+          "type": "streams",
+          "name": "world",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "color": "#ffc36b",
+          "to": [
+            {
+              "pos": [
+                -14,
+                6,
+                -3
+              ]
+            },
+            {
+              "pos": [
+                -16,
+                -2,
+                2
+              ]
+            },
+            {
+              "pos": [
+                -11,
+                -6,
+                -6
+              ]
+            },
+            {
+              "pos": [
+                -18,
+                3,
+                -8
+              ]
+            },
+            {
+              "pos": [
+                -12,
+                8,
+                4
+              ]
+            },
+            {
+              "pos": [
+                -9,
+                -4,
+                -11
+              ]
+            },
+            {
+              "pos": [
+                -15,
+                -7,
+                -2
+              ]
+            },
+            {
+              "pos": [
+                -7,
+                7,
+                -9
+              ]
+            }
+          ],
+          "grains": 1800,
+          "node": 700,
+          "nodeRadius": 0.5,
+          "speed": 0.12,
+          "alpha": 0.6
+        },
+        {
+          "type": "streams",
+          "name": "vilnius",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "color": "#ffe3a8",
+          "to": [
+            {
+              "pos": [
+                -3,
+                -3.2,
+                11
+              ],
+              "lift": 0.2
+            },
+            {
+              "pos": [
+                -12.5,
+                -2.5,
+                9
+              ],
+              "lift": 0.22
+            },
+            {
+              "pos": [
+                -5.5,
+                7,
+                9
+              ],
+              "lift": 0.15
+            }
+          ],
+          "grains": 2600,
+          "node": 1400,
+          "nodeRadius": 0.7,
+          "speed": 0.14,
+          "alpha": 0.7
+        },
+        {
+          "type": "streams",
+          "name": "dominykas",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "color": "#ffe3a8",
+          "to": [
+            {
+              "pos": [
+                -8,
+                3,
+                12
+              ],
+              "node": false,
+              "lift": 0.18
+            }
+          ],
+          "grains": 3400,
+          "node": 0,
+          "nodeRadius": 0.7,
+          "speed": 0.14,
+          "alpha": 0.75
+        }
+      ]
+    },
+    {
+      "id": "thesis",
+      "pos": [
+        12,
+        3,
+        12
+      ],
+      "look": {
+        "target": [
+          -2.2,
+          -0.6,
+          1.6
+        ],
+        "dist": 10,
+        "yaw": 38,
+        "pitch": 24,
+        "sway": 4
+      },
+      "gather": 1.2,
+      "pulse": 7,
+      "objects": [
+        {
+          "type": "constellation",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "radius": 2.4,
+          "nodeRadius": 0.62,
+          "haze": "#ffb54a",
+          "coreSize": 11,
+          "coreAlpha": 0.7,
+          "nodes": [
+            {
+              "pos": [
+                0.95,
+                0.7,
+                0.25
+              ],
+              "color": "#ffc05a",
+              "core": "#fff3d6"
+            },
+            {
+              "pos": [
+                0.35,
+                -1.2,
+                -0.7
+              ],
+              "color": "#ffd88a",
+              "core": "#ffffff"
+            },
+            {
+              "pos": [
+                1.15,
+                -0.25,
+                -0.95
+              ],
+              "color": "#ffb54a",
+              "core": "#fff0d0"
+            },
+            {
+              "pos": [
+                -0.7,
+                1.0,
+                -0.8
+              ],
+              "color": "#ffe3a8",
+              "core": "#ffffff"
+            },
+            {
+              "pos": [
+                -1.0,
+                -0.45,
+                0.5
+              ],
+              "color": "#ff9f3a",
+              "core": "#ffe8c8"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+# Talk-OWNED clips only. Clips from the slidev-videos library
+# (https://github.com/MindaugasSarpis/slidev-videos, src/slidev_videos/shared.toml)
+# are inherited by name — reference them in the deck, never list them here.
+#
+# POLICY (since 2026-07-18): venues play the 1080p H.264 web tier, loudness
+# -16 LUFS. No HQ tier. Run `pnpm videos:preflight` before the talk.
+# Profiles: remux | standard | standard-tight | silent-loop | high-motion
+
+[defaults]
+# release_tag comes from videos.toml (videos-2026-10-00-opendata).
+
+# [[videos]]
+# name    = "example_clip.mp4"
+# profile = "standard"
+# used_in = ["deck"]
+# notes   = "What this clip is and where it came from."
+
+[[videos]]
+name    = "lhcb.mp4"
+profile = "standard"
+used_in = ["deck"]
+trim    = ["0:08", "0:47.1"]
+notes   = """\
+Kick-off: the library's LHCb reel (the detector in 3D, with music), cut for \
+the dust transition. The library copy opens on 8 s of a dark tunnel and ends \
+on black; the player builds a clip's arriving grains from its first frame and \
+its leaving grains from the last one on screen, and a black frame gives \
+nothing to see. This cut starts at the shafts above the cavern (white CG on \
+black, drawn by the grains with videos.dustFrom: start) and ends on the \
+detector as the music fades, before the black tail. Same name as the library clip, so this \
+talk's release wins the chain. Raw: gdrive released/lhcb.mp4 (117 MB)."""
