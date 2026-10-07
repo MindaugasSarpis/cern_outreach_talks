@@ -31,10 +31,15 @@ Current talks:
   technical physics seminar. Date not fixed yet: `09_00` is a placeholder —
   rename the dir, its `videos.toml` release_tag and the deck's `videos.release` once known
   (no talk-owned clips, so no release to rename).
-- `talks/2026_10_00_Innoday/` — Innoday, "World of Particles": the WoP reel's
-  library clips told inside the 3D stage. Built on the packaged engine
-  (`slidev-addon-stage`, blue palette, `hadron` plugin), not on
-  `components/HadronSpace.vue`; every clip uses `transition: dust`. Date
+- `talks/2026_10_00_Innoday/` — Innoday (Lithuanian): "Nuo Vilniaus iki
+  visatos pakraščių ir atgal prie novatoriškų mokslo pasiekimų pritaikymo
+  privačiame sektoriuje", for a business and innovation audience. Opens on
+  the NFTMC zoom-out (`vu_ff_zoom.mp4`, copied to this talk's release), then
+  CERN, LHCb, what CERN gave the world, and knowledge transfer into the
+  private sector (2025–26 news, a top ten, what Lithuanian firms can do).
+  Slides carry a picture, a number or a short headline; what is said is in
+  the notes. Built on the packaged engine (`slidev-addon-stage`, blue
+  palette, `hadron` plugin); every clip uses `transition: dust`. Date
   placeholder `10_00`, as for Startertalk. See "The stage (Innoday)" below.
 
 ## Environment setup (fresh machine)
@@ -336,9 +341,12 @@ the package.
   paragraph), cards, `.src`, `.world-caption`. A talk's own
   `styles/index.css` overrides it.
 - **Everything in the world is made of grains.** Innoday's stations are the
-  particle pentaquark (cover and close), a `galaxy`, a three-node
-  `constellation` (the proton) and a `collider`: points of light, no solid
-  shapes, no labels, no scale bars. A first version opened Part I on a Solar
+  particle pentaquark (`hero`: cover, the pentaquark slide of Part II, close),
+  a `collider` (Part I, CERN), a `galaxy` (`cosmos`: the edge of the Universe
+  and LHCb's antimatter question), `web` (two rings of `constellation` nodes
+  whose strings cross like links: what CERN gave the world) and `kt` (a gold
+  three-node seed with a ten-node loop round it: knowledge transfer); all
+  points of light, no solid shapes, no labels, no scale bars. A first version opened Part I on a Solar
   System of lit spheres, rings and labels; it read as a classroom diagram
   standing in the scene and was removed (2026-09-29). Each form is born
   scattered and gathers when the camera arrives at its station; `c` builds it
@@ -346,7 +354,7 @@ the package.
   have a quiet sound (`stage.sound: { hum, flight, clip, level }`).
 - **Clips** arrive and leave as particles (`videos.transition: dust`). The
   grains take their colours from `public/video-frames/` — `pnpm
-  videos:frames`, committed with the deck (23 strips, 3.3 MB for Innoday);
+  videos:frames`, committed with the deck (5 strips, 1.3 MB for Innoday);
   without a strip a clip fades. A clip gathers on a plane standing off in
   the world and flies to the frame; leaving, it breaks up past the camera and
   leaves its colours in the dust for a few seconds. A clip that opens on
@@ -357,6 +365,15 @@ the package.
 - **Check and look.** `pnpm stage:check`; `pnpm build --base / && pnpm
   stage:shots` photographs every slide into `shots/` (needs
   `playwright-chromium` in the workspace).
+- **Innoday's own pieces.** `setup/Count.vue` (registered from `setup/main.ts`)
+  counts a slide's big number as it arrives, Lithuanian style (thin space,
+  decimal comma, `plain` for years). `styles/index.css` adds `.readout`,
+  `.stats` (`.three`, `.gold`), `.feature` (photo, year, headline, one gold
+  `.today` line), `.tiles`, `.news`, `.rank`. Photos live in
+  `public/figures/` with their credit on the slide (`.credit`); CERN-terms
+  photos are fine for this non-commercial site, the MARS wrist image is
+  © MARS Bioimaging (hosted by CERN KT). Facts were checked on 7 Oct 2026;
+  every slide's source is in its `.src` footer and its notes.
 - **ffmpeg here.** `~/.local/bin/ffmpeg` and `ffprobe` (static build) crash on
   HTTPS input (exit 139). `videos:frames` works round it by downloading;
   `videos:preflight` of release-only clips needs the env's ffmpeg

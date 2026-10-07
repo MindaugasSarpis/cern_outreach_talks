@@ -1,0 +1,202 @@
+/* Innoday — the talk's own type over the stage kit (slidev-addon-stage
+   styles/index.css). Blue is the world's (the palette's accent); gold marks
+   what left CERN for the rest of the world: inventions, licences, companies.
+   Sizes are px against Slidev's 980-wide canvas. */
+
+html[data-stage] {
+  --in-gold: #ffc96b;
+  --in-gold-hi: #ffe6b3;
+  --in-blue-hi: #dfe8ff;
+  --in-line: rgba(var(--stage-fg-rgb, 230, 236, 245), 0.16);
+}
+
+/* --- readout: a kicker, one big number, one or two sentences, low on the left */
+html[data-stage] .readout {
+  position: absolute; left: 56px; bottom: 70px; max-width: 46%;
+  font-size: 20px; line-height: 1.38; color: var(--stage-fg);
+  animation: stage-rise 0.8s var(--stage-ease) 0.2s both;
+}
+html[data-stage] .readout.right { left: auto; right: 56px; }
+html[data-stage] .readout.wide { max-width: 58%; }
+html[data-stage] .readout p { margin: 0 0 10px; opacity: 0.94; }
+html[data-stage] .readout .kicker { margin-bottom: 8px; }
+html[data-stage] .readout .big {
+  font-size: 104px; font-weight: 700; letter-spacing: -0.035em; line-height: 0.92;
+  font-variant-numeric: tabular-nums; margin: 0 0 18px; white-space: nowrap;
+  color: var(--in-blue-hi); text-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
+}
+html[data-stage] .readout .big.gold { color: var(--in-gold-hi); }
+html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.01em; margin-left: 0.25em; color: var(--stage-accent); }
+html[data-stage] .readout .big.gold .unit { color: var(--in-gold); }
+html[data-stage] .readout h1 { font-size: 46px !important; line-height: 1.04 !important; margin: 0 0 14px !important; animation: none !important; }
+
+/* gold kickers on the slides about what CERN gave away */
+html[data-stage] .kicker.gold, html[data-stage] .gold-k .kicker { color: var(--in-gold) !important; }
+
+/* --- stats: a row of big numbers with a line under each, low across the slide */
+html[data-stage] .stats {
+  position: absolute; left: 56px; right: 56px; bottom: 74px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+}
+html[data-stage] .stats.three { grid-template-columns: repeat(3, 1fr); }
+html[data-stage] .stats.top { top: 150px; bottom: auto; }
+html[data-stage] .stat {
+  background: var(--stage-card); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  border-radius: 12px; padding: 14px 18px 14px;
+  animation: stage-card-in 0.7s var(--stage-ease) both;
+}
+html[data-stage] .stat:nth-child(2) { animation-delay: 0.1s; }
+html[data-stage] .stat:nth-child(3) { animation-delay: 0.2s; }
+html[data-stage] .stat:nth-child(4) { animation-delay: 0.3s; }
+html[data-stage] .stat .n {
+  font-size: 44px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums; color: var(--in-blue-hi); white-space: nowrap; margin: 0 0 10px;
+}
+html[data-stage] .stat .n small { font-size: 0.45em; font-weight: 500; letter-spacing: 0; margin-left: 0.2em; color: var(--stage-accent); }
+html[data-stage] .stat .l { font-size: 16px; line-height: 1.32; color: var(--stage-fg); opacity: 0.9; margin: 0; }
+html[data-stage] .stats.gold .stat .n { color: var(--in-gold-hi); }
+html[data-stage] .stats.gold .stat .n small { color: var(--in-gold); }
+
+/* a content slide's title, when cards or stats stand low */
+html[data-stage] .head { position: absolute; left: 56px; top: 52px; max-width: 88%; }
+html[data-stage] .head h1 { margin: 0 0 8px !important; }
+html[data-stage] .head p { font-size: 20px; line-height: 1.38; margin: 0; opacity: 0.9; max-width: 60ch; }
+
+/* --- feature: an invention. A picture on the left, its year, name and story on the right */
+html[data-stage] .feature {
+  position: absolute; left: 56px; right: 56px; top: 64px; bottom: 64px;
+  display: grid; grid-template-columns: 1.08fr 1fr; gap: 40px; align-items: center;
+}
+html[data-stage] .feature.flip { grid-template-columns: 1fr 1.08fr; }
+html[data-stage] .feature.flip .figure { order: 2; }
+html[data-stage] .figure { margin: 0; display: flex; flex-direction: column; gap: 8px; animation: stage-card-in 0.8s var(--stage-ease) 0.1s both; }
+html[data-stage] .figure img {
+  width: 100%; max-height: 390px; object-fit: cover; border-radius: 10px; display: block;
+  box-shadow: 0 0 0 1px var(--in-line), 0 18px 60px rgba(0, 0, 0, 0.55), 0 0 80px rgba(var(--stage-accent-rgb, 91, 147, 255), 0.12);
+}
+html[data-stage] .figure img.contain { object-fit: contain; background: rgba(10, 14, 28, 0.6); }
+html[data-stage] .figure.tall img { max-height: 420px; }
+html[data-stage] .figure .credit { font-size: 11px; letter-spacing: 0.03em; color: var(--stage-dim); opacity: 0.85; line-height: 1.3; }
+html[data-stage] .feature .text { animation: stage-rise 0.85s var(--stage-ease) 0.25s both; }
+html[data-stage] .feature .year {
+  font-size: 92px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9; margin: 0 0 6px;
+  background: linear-gradient(180deg, var(--in-gold-hi), var(--in-gold) 70%, rgba(255, 201, 107, 0.55));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+html[data-stage] .feature .year.blue { background: linear-gradient(180deg, #ffffff, var(--in-blue-hi) 45%, var(--stage-accent)); -webkit-background-clip: text; background-clip: text; }
+html[data-stage] .feature h1 { font-size: 38px !important; line-height: 1.08 !important; margin: 0 0 14px !important; animation: none !important; }
+html[data-stage] .feature p { font-size: 19px; line-height: 1.42; margin: 0 0 10px; opacity: 0.94; }
+html[data-stage] .feature .today {
+  margin-top: 14px; padding: 10px 14px; border-radius: 10px; font-size: 17px; line-height: 1.38;
+  background: rgba(255, 201, 107, 0.09); box-shadow: inset 2px 0 0 var(--in-gold);
+}
+html[data-stage] .feature .today b { color: var(--in-gold-hi); font-weight: 600; }
+
+/* --- a quotation with its source standing beside it */
+html[data-stage] .handnote {
+  font-size: 34px; font-weight: 500; line-height: 1.2; letter-spacing: -0.01em; color: var(--stage-fg); margin: 0 0 12px;
+}
+html[data-stage] .handnote .lt { display: block; margin-top: 10px; font-size: 22px; font-weight: 400; color: var(--in-gold-hi); }
+
+/* --- tiles: many small things at once, four across */
+html[data-stage] .tiles {
+  position: absolute; left: 56px; right: 56px; top: 128px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+}
+html[data-stage] .tiles .card { max-width: none; padding: 12px 15px 12px; animation-delay: 0.1s; }
+html[data-stage] .tiles .card:nth-child(n+5) { animation-delay: 0.3s; }
+html[data-stage] .tiles .card h2 { font-size: 17.5px; margin: 0 0 4px; color: var(--in-gold-hi); }
+html[data-stage] .tiles .card p { font-size: 15px; line-height: 1.34; margin: 0; }
+html[data-stage] .tiles .card .k { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stage-accent); margin: 0 0 6px; }
+
+/* --- news: dated cards, two by two */
+html[data-stage] .news {
+  position: absolute; left: 56px; right: 56px; top: 150px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+html[data-stage] .news.three { grid-template-columns: repeat(3, 1fr); }
+html[data-stage] .news .card { max-width: none; padding: 14px 18px 14px; }
+html[data-stage] .news .card .date { font-size: 11.5px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--in-gold); margin: 0 0 6px; }
+html[data-stage] .news .card h2 { font-size: 20px; margin: 0 0 6px; }
+html[data-stage] .news .card p { font-size: 16px; line-height: 1.36; margin: 0; }
+
+/* --- the ranking: ten lines, two columns, a big rank number on each */
+html[data-stage] .rank {
+  position: absolute; left: 56px; right: 56px; top: 116px;
+  display: grid; grid-template-columns: 1fr 1fr; grid-auto-flow: column; grid-template-rows: repeat(5, auto); gap: 8px 26px;
+  counter-reset: rank;
+}
+html[data-stage] .rank > div {
+  display: grid; grid-template-columns: 52px 1fr; align-items: baseline; gap: 4px 12px;
+  padding: 7px 14px; border-radius: 10px; background: var(--stage-card);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  animation: stage-card-in 0.6s var(--stage-ease) both;
+}
+html[data-stage] .rank .r { grid-row: span 2; font-size: 34px; font-weight: 700; letter-spacing: -0.03em; color: var(--in-gold); line-height: 1; font-variant-numeric: tabular-nums; }
+html[data-stage] .rank .t { font-size: 18px; font-weight: 600; line-height: 1.2; }
+html[data-stage] .rank .d { font-size: 14.5px; line-height: 1.3; opacity: 0.86; }
+
+/* --- the close and the hook: a large sentence on the world */
+html[data-stage] .slidev-layout.statement h1 { max-width: 20ch; margin-left: auto !important; margin-right: auto !important; }
+html[data-stage] .slidev-layout.statement .mt-md.plain { text-transform: none; letter-spacing: 0.01em; font-size: 20px; color: var(--stage-fg); opacity: 0.88; }
+html[data-stage] .slidev-layout.statement .contacts {
+  margin: 26px auto 0; font-size: 14px; line-height: 1.8; letter-spacing: 0.06em; color: var(--stage-dim);
+  animation: stage-rise 0.9s var(--stage-ease) 0.8s both;
+}
+
+/* a world-caption that keeps to the left half, so what stands in the world shows */
+html[data-stage] .world-caption.narrow { right: auto; max-width: 48%; font-size: 20px; line-height: 1.4; }
+html[data-stage] .world-caption.narrow h1 { margin: 0 0 12px !important; }
+html[data-stage] .world-caption.narrow p { margin: 0 0 8px; }
+html[data-stage] .world-caption .kicker { margin-bottom: 8px; }
+
+/* cards in a low row, so what stands in the world above them stays in view */
+html[data-stage] .three-col.low { position: absolute; left: 56px; right: 56px; bottom: 70px; gap: 16px; align-items: stretch; }
+html[data-stage] .three-col.low .card, html[data-stage] .two-col.low .card { max-width: none; padding: 13px 17px 12px; }
+html[data-stage] .three-col.low .card h2 { font-size: 18px; margin-bottom: 6px; }
+html[data-stage] .three-col.low .card p { font-size: 16px; line-height: 1.36; margin: 0; }
+html[data-stage] .two-col.low { position: absolute; left: 56px; right: 56px; bottom: 70px; gap: 18px; }
+
+/* the one footer line keeps clear of a low row */
+html[data-stage] .src { bottom: 24px; left: 56px; }
+
+@media (prefers-reduced-motion: reduce), print {
+  html[data-stage] .readout, html[data-stage] .stat, html[data-stage] .figure,
+  html[data-stage] .feature .text, html[data-stage] .rank > div,
+  html[data-stage] .slidev-layout.statement .contacts { animation: none !important; }
+}
+
+/* --- the cover: the talk's long title in two parts, the second as a line under it */
+html[data-stage] .slidev-layout.cover h1:nth-of-type(2) { font-size: 56px !important; max-width: 15ch; line-height: 1 !important; margin-bottom: 22px !important; }
+html[data-stage] .slidev-layout.cover h2 {
+  font-size: 17px !important; font-weight: 500 !important; letter-spacing: 0.07em !important; line-height: 1.5 !important;
+  color: var(--stage-fg) !important; opacity: 0.9; max-width: 40ch;
+}
+html[data-stage] .slidev-layout.cover .mt-md { margin-top: 26px; }
+
+/* caption text over the world: full colour, not the theme's muted grey */
+html[data-stage] .world-caption p:not(.kicker), html[data-stage] .readout p:not(.kicker) { color: var(--stage-fg) !important; opacity: 0.95; }
+
+/* --- little text on the slides (the speaker talks): bigger type, bigger pictures */
+html[data-stage] .feature { grid-template-columns: 1.32fr 1fr; gap: 44px; }
+html[data-stage] .figure img { max-height: 410px; }
+html[data-stage] .feature .year { font-size: 112px; margin-bottom: 10px; }
+html[data-stage] .feature h1 { font-size: 44px !important; line-height: 1.05 !important; }
+html[data-stage] .feature .today { font-size: 20px; margin-top: 18px; padding: 12px 16px; }
+html[data-stage] .readout p:not(.kicker) { font-size: 22px; line-height: 1.35; }
+html[data-stage] .world-caption.narrow h1 { font-size: 52px !important; line-height: 1.05 !important; }
+html[data-stage] .world-caption.narrow p:not(.kicker) { font-size: 22px; }
+html[data-stage] .stat .l { font-size: 18px; }
+html[data-stage] .stats.three .stat .n { font-size: 52px; }
+html[data-stage] .stats.three.gold .stat .n { font-size: 34px; margin-bottom: 12px; }
+html[data-stage] .tiles { top: 150px; gap: 16px; }
+html[data-stage] .tiles .card { padding: 16px 18px; }
+html[data-stage] .tiles .card .k { font-size: 12px; }
+html[data-stage] .tiles .card h2 { font-size: 23px; margin: 0; }
+html[data-stage] .news .card { padding: 18px 20px; }
+html[data-stage] .news .card .date { font-size: 12.5px; }
+html[data-stage] .news .card h2 { font-size: 24px; line-height: 1.2; margin: 0; }
+html[data-stage] .rank > div { padding: 10px 16px; grid-template-columns: 52px 1fr; align-items: center; }
+html[data-stage] .rank .r { grid-row: auto; }
+html[data-stage] .rank .t { font-size: 23px; }

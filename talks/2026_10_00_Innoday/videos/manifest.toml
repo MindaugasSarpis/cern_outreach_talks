@@ -8,9 +8,16 @@
 
 [defaults]
 # release_tag comes from videos.toml (videos-2026-10-00-innoday).
+max_size_mb = 300   # vu_ff_zoom: 4:42 of 1080p CG at the high-motion ceiling lands near 260 MB
 
-# [[videos]]
-# name    = "example_clip.mp4"
-# profile = "standard"
-# used_in = ["deck"]
-# notes   = "What this clip is and where it came from."
+[[videos]]
+name    = "vu_ff_zoom.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = """\
+Opener: cosmic zoom-out from the VU Faculty of Physics building in the NFTMC \
+(Saulėtekis, Google Earth) through Vilnius, Earth, the Milky Way and the \
+galaxies to the cosmic web, 4:42 with its own audio track. The same web encode \
+as the World of Particles opener (release videos-2026-09-10-worldofparticles, \
+2026-09-07), copied to this talk's release. Raw is a 4K60 H.264 254 Mbps \
+Resolve master (9.0 GB) on gdrive as vu_ff_zoom.mp4."""

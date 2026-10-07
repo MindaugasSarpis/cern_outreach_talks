@@ -63,7 +63,7 @@ pnpm stage:check       # after editing public/data/space.json or a slide's `spac
 pnpm videos:frames     # after adding clips; commit public/video-frames/
 ```
 
-`talks/2026_10_00_Innoday/` is the worked example. The engine is
+`talks/2026_10_00_Innoday/` (Innoday, in Lithuanian) is the worked example. The engine is
 [`slidev-addon-stage`](https://github.com/MindaugasSarpis/slidev-videos/tree/main/packages/stage).
 
 ## Videos
