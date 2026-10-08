@@ -45,10 +45,15 @@
 
 ## Status
 
-- 2026-10-08: third version (this one) on slidev-videos `feat/broadcast`
-  efacca2, `look: broadcast` with `lift: 0.035` and a darker field;
-  `slidev-stage-safe --broadcast` clean (smallest type 31 px at 1080p).
-  Deployed versions: a3001a1 (rejected), 71fb6f1 (rejected), then this one.
+- 2026-10-08: third version on slidev-videos `feat/broadcast` efacca2,
+  `look: broadcast` overridden to a near-black ground (lift 0, nebula 0,
+  bloom 0.32, dust dimmer and sparser). A flow critique and a visual review
+  of the contact sheets were applied. `slidev-stage-safe --broadcast` clean
+  (smallest type 31 px at 1080p). Deployed versions: a3001a1 (rejected),
+  71fb6f1 (rejected), then this one.
+- Next: the speaker's [PATIKSLINTI] answers; Delfi's answers (Brief); a
+  test encode at 2.5 Mbit/s of a dark slide to check banding; per-slide MP4s
+  with `slidev-stage-record` for Delfi once the toolkit release lands.
 
 ## Decisions
 
@@ -63,10 +68,15 @@
 - 2026-10-08 — Pinned to `feat/broadcast` (not yet released) for the
   broadcast look, `safe` and `record`. Move to the release tag once it
   exists (`pnpm talk pin` when the tooling lands).
-- 2026-10-08 — `lift` 0.035 instead of the look's 0.07: the owner found the
-  second version washed out. The toolkit measured more banding at lower
-  lift (4.5 % of gradient blocks at 0.07, 8 % at 0); check a test encode at
-  2.5 Mbit/s before the filming.
+- 2026-10-08 — `lift` 0 and `nebula` 0 instead of the look's 0.07 and 0.3:
+  the owner found the second version washed out, and a visual review
+  measured the ground at about RGB(28,42,72). The toolkit measured more
+  banding at lower lift (4.5 % of gradient blocks at 0.07, 8 % at 0), but
+  with no nebula there are few gradients left; check a test encode at
+  2.5 Mbit/s before the filming. Undo: drop the `options` overrides.
+- 2026-10-08 — City names on the map are HTML labels at positions projected
+  from the `whole` pose (target europe + [1, 0, −3], dist 36, yaw 0, pitch
+  60, sway 0). If that pose changes, recompute them.
 
 - 2026-10-08 — Real photographs where the story names something real: the
   LHCb cavern (Rosa Menkman, CC BY 2.0), Gell-Mann (Joi Ito, CC BY 2.5),
