@@ -311,6 +311,7 @@ html[data-stage] .payoff p:not(.kicker) { font-size: 24px; line-height: 1.38; ma
 /* <PrintStill>: only in print/export, over the slide it stands for */
 html[data-stage] .print-still { display: none; }
 html.print .print-still { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 60; }
+@media print { .print-still { display: block !important; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 60; } }
 
 /* --- the LHC part a strand starts from, named for the length of the flight
    (a deliberate exception to "no labels in the world", for clarity): small,
@@ -330,4 +331,11 @@ html[data-stage] .slidev-layout .world-caption.after-flight,
 html[data-stage] .slidev-layout .world-caption.after-flight * { animation: after-flight 0.6s ease 4.6s both !important; }
 html[data-stage] .slidev-layout .after-flight ~ .src { animation: after-flight 0.6s ease 4.6s both !important; }
 @keyframes after-flight { from { opacity: 0; } to { opacity: 1; } }
-@media print { html[data-stage] .after-flight, html[data-stage] .after-flight ~ .src { animation: none; } }
+html[data-stage] .slidev-layout .world-caption.after-flight.short,
+html[data-stage] .slidev-layout .world-caption.after-flight.short * { animation-delay: 3.4s !important; }
+@media print, (prefers-reduced-motion: reduce) {
+  html[data-stage] .slidev-layout .world-caption.after-flight, html[data-stage] .slidev-layout .world-caption.after-flight *,
+  html[data-stage] .slidev-layout .after-flight ~ .src { animation: none !important; opacity: 1 !important; }
+}
+html.print .slidev-layout .world-caption.after-flight, html.print .slidev-layout .world-caption.after-flight *,
+html.print .slidev-layout .after-flight ~ .src { animation: none !important; opacity: 1 !important; }

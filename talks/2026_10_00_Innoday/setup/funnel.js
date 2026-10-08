@@ -34,8 +34,9 @@ void main() {
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 1.0 - aTw * (0.5 - 0.5 * sin(uTime * (0.7 + aSeed * 1.9) + aSeed * 40.0));
-  gl_PointSize = uPixelRatio * uSize * aSize * tw * (72.0 / max(-mv.z, 0.1));
-  vColor = aColor; vAlpha = uAlpha * tw;
+  // capped at 48 px (the CMB cap's resting grains are ~30 px), fading out within a unit of the camera
+  gl_PointSize = min(uPixelRatio * uSize * aSize * tw * (72.0 / max(-mv.z, 0.1)), 48.0 * uPixelRatio);
+  vColor = aColor; vAlpha = uAlpha * tw * smoothstep(0.25, 1.0, -mv.z);
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;
