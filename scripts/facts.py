@@ -442,9 +442,14 @@ def cmd_check(args) -> int:
 def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     verbs = {"search", "show", "add", "check"}
-    first = next((a for a in argv if not a.startswith("-")), None)
-    if first is not None and first not in verbs:
-        argv.insert(argv.index(first), "search")       # `facts.py touchscreen` searches
+    lead = []                                          # options given before the verb go after it
+    while argv and argv[0].startswith("-") and argv[0] not in ("-h", "--help"):
+        lead.append(argv.pop(0))
+        if lead[-1] in ("--facts", "--limit") and argv:
+            lead.append(argv.pop(0))
+    if argv and argv[0] not in verbs and argv[0] not in ("-h", "--help"):
+        argv.insert(0, "search")                       # `facts.py touchscreen` searches
+    argv = argv[:1] + lead + argv[1:]
     ap = argparse.ArgumentParser(prog="facts.py", description=__doc__.split("\n\n")[0])
     common = argparse.ArgumentParser(add_help=False)
     common.add_argument("--json", action="store_true", help="one JSON object on stdout")
