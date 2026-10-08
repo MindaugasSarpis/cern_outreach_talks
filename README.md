@@ -21,15 +21,82 @@ only decks and per-talk config.
 
 Index of all talks: https://mindaugassarpis.github.io/cern_outreach_talks/
 
-## Setup from scratch
+## New machine
+
+The two repos sit side by side in one directory, `$OUTREACH_ROOT`; the rest
+is made from them.
 
 ```bash
-git clone <this-repo> && cd outreach_talks
-conda env create -f env.yaml     # nodejs, pnpm, python, ffmpeg, rclone, gh + the slidev-videos CLI
-conda activate outreach_talks
-pnpm install                     # every talk's deps, incl. the slidev-addon-videos player
-cd talks/2026_09_10_WorldOfParticles && pnpm dev     # http://localhost:3030
+mkdir talks && cd talks            # on a cluster: a directory on the shared filesystem
+git clone https://github.com/MindaugasSarpis/cern_outreach_talks outreach_talks
+git clone https://github.com/MindaugasSarpis/slidev-videos
+outreach_talks/scripts/bootstrap.sh --dry-run   # every action it would take
+outreach_talks/scripts/bootstrap.sh             # on a cluster: OUTREACH_PREFIX=/scratch/$USER/micromamba first
 ```
+
+`scripts/bootstrap.sh` can run again at any time; what is there already stays. It
+
+- makes the micromamba env from `env.yaml` under `$OUTREACH_PREFIX` (default
+  `~/micromamba`, package cache included, so scratch space works where the
+  home directory is small) and installs the slidev-videos CLI from the
+  checkout beside this repo (`pip install -e`);
+- runs `pnpm install` in both repos and fetches the headless Chromium the
+  stage tools drive. When the home directory is on another filesystem than
+  the repos, the browsers and the pnpm store go to `$OUTREACH_ROOT/.cache/`;
+- picks the render backend (Slurm if `sbatch` is there, HTCondor if
+  `condor_submit` is, else this machine) and the WebGL backend: a native
+  NVIDIA driver, WSL's GPU through Mesa's d3d12 driver (`--mesa-d3d12` fetches
+  it, about 250 MB), else llvmpipe;
+- writes all of it to `~/.config/outreach_talks/env`;
+- prints the optional Claude Code permission rules. It never writes
+  `~/.claude/settings.json` or a hook: add the rules by hand if you want them.
+
+Then Claude: run `claude` once and `/login`. Every session starts with
+Remote Control under its own name, so the phone app lists it, and runs in its
+own window of the tmux session `talks`:
+
+```bash
+cd outreach_talks
+pnpm talk session scheduler     # coordinates the others: outreach_talks, with --add-dir ../slidev-videos
+pnpm talk session tools         # the toolkit, in ../slidev-videos
+pnpm talk session opendata      # one per active talk, in its worktree (made if missing)
+tmux attach -t talks
+pnpm talk sessions              # the windows, each with its line in $OUTREACH_STATE/status.md
+```
+
+`session` on a window that is open already prints the attach command. A
+parked talk's session writes its Status and its status line and commits;
+then its window is closed (`/exit` in Claude, or `tmux kill-window -t
+talks:<slug>`). `pnpm talk session <talk>` opens it again later.
+
+On a cluster, compute nodes may have no internet. The sessions run on a
+login or dev node, and renders (shots, recordings, encodes, frame strips) go
+to the compute nodes through `pnpm talk render -- <command>`: srun with a GPU
+where the cluster has GPUs, or `condor_run` on HTCondor (it writes the submit
+file and waits for the job; the job runs in the current directory, so the
+repos must be on a filesystem the execute nodes see). `pnpm talk shots`,
+`record` and `safe` go through the same slot themselves. On one machine
+renders run one at a time under a lock instead.
+
+The settings (`pnpm talk config` shows each with where it came from; the
+environment wins over `~/.config/outreach_talks/env`, the file over the
+defaults, and every line of the file also reaches the tools talk runs):
+
+| Setting | Default |
+| ------- | ------- |
+| `OUTREACH_ROOT` | the directory holding outreach_talks |
+| `SLIDEV_VIDEOS_DIR` | `$OUTREACH_ROOT/slidev-videos` |
+| `OUTREACH_STATE` | `~/.local/state/outreach_talks`: logs, `status.md` |
+| `OUTREACH_ENV_BIN` | the env's `bin` (bootstrap writes it), else `$CONDA_PREFIX/bin`, else `~/micromamba/envs/outreach_talks/bin` |
+| `RENDER_BACKEND` | `slurm`, `condor` or `local`, detected |
+| `RENDER_LOCK` | `/tmp/slidev-stage-shots.lock` where it exists (the stage tools' own lock, so talk and the tools keep one queue), else `$OUTREACH_STATE/render.lock` |
+| `RENDER_GPUS`, `RENDER_SRUN_ARGS` | ask for a GPU (`auto`: when the cluster has GPUs); more srun options (`-p`, `--time`, `--account`) |
+| `TALK_TMP` | where builds go: the temp directory, on a cluster `$OUTREACH_ROOT/.cache/talk-builds` |
+| `SLIDEV_STAGE_GL`, `SLIDEV_STAGE_MESA_D3D12`, `SLIDEV_STAGE_CHROMIUM_ARGS`, `SLIDEV_STAGE_CHROMIUM_ENV` | the stage launcher's; passed to shots, record, safe and render as they are. A backend set in `SLIDEV_STAGE_GL` is forced (a run that cannot reach it fails); `auto` falls through to the next |
+
+Without bootstrap: `conda env create -f env.yaml`, `conda activate
+outreach_talks`, `pip install -e ../slidev-videos`, `pnpm install`, then
+`cd talks/2026_09_10_WorldOfParticles && pnpm dev` (http://localhost:3030).
 
 No videos live in git. Empty `public/videos/` and `videos/raw/` dirs are
 normal: clips stream from GitHub Releases, and everything is
@@ -58,19 +125,33 @@ worktree; NAME is any part of a talk's directory name (`opendata`).
 | Filmed for TV | `pnpm talk new … --broadcast` · `pnpm talk safe NAME` · `pnpm talk record NAME` | talk-broadcast |
 | Before the venue | `pnpm talk ready NAME`, then `pnpm venue` in the talk | talk-verify |
 | Deploy, when the owner asks | `pnpm talk deploy NAME` (`--dry-run` checks only) | talk-deploy |
-| Move to a toolkit release | `pnpm talk bump-toolkit vX.Y.Z --active` | |
-| Is this machine set up? | `pnpm talk doctor` | |
+| A render: an encode, a capture, a probe | `pnpm talk render -- COMMAND` | talk-videos, talk-verify |
+| One talk onto a toolkit release | `pnpm talk pin vX.Y.Z`, in the talk's worktree | |
+| Everything onto a toolkit release | `pnpm talk bump-toolkit vX.Y.Z --active` (when the owner asks) | |
+| Start or find a session | `pnpm talk session NAME` (`tools`, `scheduler`) · `pnpm talk sessions` | scheduler |
+| Is this machine set up? | `pnpm talk doctor` · `pnpm talk config` | |
 
-- `talk VERB …` does the same from any directory once linked:
-  `ln -s ~/outreach_talks/scripts/talk ~/.local/bin/talk`. It also skips the
-  Windows pnpm that a bare shell here finds first.
+- `talk VERB …` does the same from any directory once linked (from the repo
+  root: `ln -s "$PWD/scripts/talk" ~/.local/bin/talk`). It also puts the env's
+  `bin` first, ahead of a Windows pnpm shim a bare WSL shell may find.
 - Every verb takes `--json`: one JSON object on stdout, the rest on stderr;
   exit 0 ok, 1 problems found, 2 usage error. Through pnpm, add `-s`
   (`pnpm -s talk status --json`) or pnpm's own banner lands on stdout.
-- Builds for checks and shots go to `/tmp/talk-<slug>/site`, never a talk's
-  `dist/`; shots land in `talks/<name>/shots/` (not committed). Point
+- What builds, checks, lint and the tools print goes to
+  `$OUTREACH_STATE/logs/<slug>-<verb>-<sha>.log`; the terminal gets one line
+  per step, the first problem lines (the last lines too when a step fails)
+  and the log's path, which `--json` carries as `log`.
+- Builds for checks and shots go to `$TALK_TMP/talk-<slug>/site`, never a
+  talk's `dist/`; shots land in `talks/<name>/shots/` (not committed). Point
   `SLIDEV_STAGE_BIN` at a slidev-videos `packages/stage/bin` to use newer
   shots, record or safe tools than the talk's pin.
+- Two ways to move toolkit pins. `pnpm talk pin [NAME] vX.Y.Z` moves one
+  talk's two addon pins (`slidev-addon-videos`, `slidev-addon-stage`) and runs
+  `pnpm install`, in the talk's own worktree, and changes nothing else.
+  `pnpm talk bump-toolkit vX.Y.Z --active` (or `--talk NAME …`) is the
+  release-wide move: the pins of several talks, env.yaml's CLI pin and the
+  scaffolder's `ADDONS_REF`. Both take release tags; a bare commit only with
+  `--allow-sha` (pin spells a short one out from the slidev-videos checkout).
 
 ## The policy (since 2026-07-18)
 
@@ -156,10 +237,13 @@ after 2026-09-10 to drop the six superseded Yaga-lineage copies.
 
 Only when the owner asks: `pnpm talk deploy <name>`, from the talk's
 worktree. It refuses uncommitted changes and a branch that is not on top of
-`origin/main` (and prints the rebase), runs `pnpm talk ready`, pushes the
-commit that ready passed to `main` (it stops if anything was committed or
-edited in the worktree while ready ran), watches the Pages run and checks
-the talk's URL before it says "deployed".
+`origin/main` (and prints the rebase), runs `pnpm talk ready` unless ready
+already passed this very commit (the stamp ready leaves in
+`.git/talk-status/<slug>.ready.json`, with no more steps skipped than deploy
+skips; `--rerun-ready` runs it anyway), pushes the commit that ready passed
+to `main` (it stops if anything was committed or edited in the worktree while
+ready ran), watches the Pages run and checks the talk's URL before it says
+"deployed".
 
 The Pages workflow builds each talk on its own: a talk whose files did not
 change comes from the cache, and a talk that fails to build keeps its last
