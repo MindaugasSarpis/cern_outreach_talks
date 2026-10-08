@@ -1,5 +1,23 @@
 # CLAUDE.md
 
+## House rules
+
+- Chat with the owner in English, never in Russian. Lithuanian goes only in
+  slide text and speaker notes.
+- One worktree per talk, made with `pnpm talk new <YYYY_MM_DD_Name>` or
+  `pnpm talk open <name>`. The main checkout stays on `main`: never switch
+  its branch or build a talk in it.
+- Never merge `pnpm-lock.yaml` by hand: take main's (`git checkout
+  origin/main -- pnpm-lock.yaml`), run `pnpm install`, commit the result.
+- The shell is zsh: quote globs (`'talks/*'`). Never `pkill -f` a pattern
+  that is also in your own command line; use `kill $!` or `fuser -k PORT/tcp`.
+- Search the facts bank (`pnpm talk facts search <words>`) before
+  researching a figure.
+- Review with `pnpm talk review <name>`. Deploy with `pnpm talk deploy
+  <name>`, and only when the owner asked for a deploy. Say "deployed" only
+  after the Pages run is green and the talk's URL returns 200.
+- Every step has a command: `pnpm talk --help`, and README's "Day to day".
+
 Guidance for Claude Code working in this repository. This file is the
 detailed operating reference; the human-oriented lifecycle walkthrough
 (new talk → media → preflight → venue → cleanup) is in
@@ -314,10 +332,10 @@ directly; the HUD code stays for reuse.
   not on the cover or the close (owner's call, 2026-09-10).
 - Overhaul record (2026-09-09/10): critiques, blueprint, research brief and
   decisions in `docs/superpowers/plans/2026-09-09-startertalk-*.md`.
-- Verify with headless Chromium (SwiftShader) screenshots
-  (`~/slidev-videos/.tmp/st-all.mjs <dist> <out> <n>` with `CLICKS` JSON);
-  it renders slowly, so the script waits ~9 s after a click before shooting
-  a stop.
+- Verify with headless Chromium (SwiftShader) screenshots: `pnpm talk shots
+  startertalk` builds into /tmp and shoots into the talk's `shots/`
+  (`--slides 3-5`, `--clicks '{"9":3}'`); it renders slowly, so it waits
+  ~9 s after a click (`--click-wait`) before shooting a stop.
 
 ## The stage (Innoday, and talks after it)
 

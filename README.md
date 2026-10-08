@@ -35,6 +35,43 @@ No videos live in git. Empty `public/videos/` and `videos/raw/` dirs are
 normal: clips stream from GitHub Releases, and everything is
 re-fetchable (`pnpm videos:pull`, `pnpm videos:sync`).
 
+## Day to day
+
+One command per step, the same for the owner and for agents (the skills in
+`.claude/skills/` call these). Run them from the repo root or a talk's
+worktree; NAME is any part of a talk's directory name (`opendata`).
+
+| Step | Command | Skill |
+| ---- | ------- | ----- |
+| Start a talk: worktree, scaffold, install | `pnpm talk new 2026_11_05_Name --stage blue --lang lt --duration 20` | talk-new |
+| Pick a talk up again | `pnpm talk open NAME` (prints its worktree) | talk-new |
+| Every worktree, its talks, the last deploy | `pnpm talk status` · `pnpm talk list` | |
+| Find a figure before researching it | `pnpm talk facts search WORDS` · `facts add` · `facts show ID` | talk-research |
+| Edit with live reload | `pnpm talk dev NAME` | |
+| Clips: find, encode, publish, frames | `slidev-videos discover WORDS`, then `pnpm videos:*` in the talk | talk-videos |
+| Language, slop, timing, sources | `pnpm talk lint NAME` | lt-copy, talk-quality |
+| What each slide shows, poses and timing | `pnpm talk map NAME` | talk-quality |
+| Videos, stage and build in one go | `pnpm talk check NAME` | talk-verify |
+| Look at the slides | `pnpm talk shots NAME --slides 3-5` | talk-verify |
+| A review round | `pnpm talk review NAME` | talk-quality |
+| Check every figure's source | `pnpm talk facts check` | talk-verify |
+| Filmed for TV | `pnpm talk new … --broadcast` · `pnpm talk safe NAME` · `pnpm talk record NAME` | talk-broadcast |
+| Before the venue | `pnpm talk ready NAME`, then `pnpm venue` in the talk | talk-verify |
+| Deploy, when the owner asks | `pnpm talk deploy NAME` (`--dry-run` checks only) | talk-deploy |
+| Move to a toolkit release | `pnpm talk bump-toolkit vX.Y.Z --active` | |
+| Is this machine set up? | `pnpm talk doctor` | |
+
+- `talk VERB …` does the same from any directory once linked:
+  `ln -s ~/outreach_talks/scripts/talk ~/.local/bin/talk`. It also skips the
+  Windows pnpm that a bare shell here finds first.
+- Every verb takes `--json`: one JSON object on stdout, the rest on stderr;
+  exit 0 ok, 1 problems found, 2 usage error. Through pnpm, add `-s`
+  (`pnpm -s talk status --json`) or pnpm's own banner lands on stdout.
+- Builds for checks and shots go to `/tmp/talk-<slug>/site`, never a talk's
+  `dist/`; shots land in `talks/<name>/shots/` (not committed). Point
+  `SLIDEV_STAGE_BIN` at a slidev-videos `packages/stage/bin` to use newer
+  shots, record or safe tools than the talk's pin.
+
 ## The policy (since 2026-07-18)
 
 - Venues play the **1080p H.264 web tier** (no 4K/HEVC masters — they froze at Yaga).
@@ -46,9 +83,12 @@ re-fetchable (`pnpm videos:pull`, `pnpm videos:sync`).
 ## Starting a new talk
 
 ```bash
-pnpm new-talk 2026_09_15_SomeVenue --title "My talk"   # from the repo root
-pnpm install
+pnpm talk new 2026_09_15_SomeVenue --title "My talk"   # worktree .claude/worktrees/somevenue, branch talk/somevenue
+cd .claude/worktrees/somevenue                         # the talk's own checkout; installed already
 ```
+
+The talk gets `talks/<name>/CLAUDE.md`: the Brief (with the questions to
+ask the owner), Status, Arc, Figures, Talk-owned code, Decisions, Verify.
 
 Don't clone an old talk directory; the scaffold carries the current
 layout (`videos.toml`, addon headmatter, empty manifest).
@@ -57,11 +97,9 @@ A talk told inside the 3D stage (one world under every slide, clips that
 arrive and leave as particles):
 
 ```bash
-pnpm new-talk 2026_10_15_SomeKeynote --title "My talk" --stage blue   # classic | blue | ember
-pnpm install
-cd talks/2026_10_15_SomeKeynote
-pnpm stage:check       # after editing public/data/space.json or a slide's `space:`
-pnpm videos:frames     # after adding clips; commit public/video-frames/
+pnpm talk new 2026_10_15_SomeKeynote --title "My talk" --stage blue   # classic | blue | ember; --broadcast for TV
+pnpm talk check somekeynote   # after editing public/data/space.json or a slide's `space:`
+pnpm videos:frames            # in the talk, after adding clips; commit public/video-frames/
 ```
 
 `talks/2026_10_00_Innoday/` (Innoday, in Lithuanian) is the worked example. The engine is
@@ -116,7 +154,17 @@ after 2026-09-10 to drop the six superseded Yaga-lineage copies.
 
 ## Deploying
 
-`git push origin main` — the Pages workflow builds every talk and the index.
+Only when the owner asks: `pnpm talk deploy <name>`, from the talk's
+worktree. It refuses uncommitted changes and a branch that is not on top of
+`origin/main` (and prints the rebase), runs `pnpm talk ready`, pushes the
+branch to `main`, watches the Pages run and checks the talk's URL before it
+says "deployed".
+
+The Pages workflow builds each talk on its own: a talk whose files did not
+change comes from the cache, and a talk that fails to build keeps its last
+good build on the site and turns the run red without holding the others
+back. The index lists each talk by its `package.json` description. Pull
+requests build the talks they change, as a check, without deploying.
 
 ## More detail
 
