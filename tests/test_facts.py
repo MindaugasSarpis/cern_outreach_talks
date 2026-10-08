@@ -6,17 +6,20 @@ import io
 import json
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
+from unittest import mock
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "scripts"))
 import facts as fx      # noqa: E402
 
 FIX = HERE / "fixtures" / "facts.jsonl"
+LANE_FACTS = HERE.parent / ".claude" / "skills" / "talk-research" / "lane_facts.py"   # the talk-research skill's
 
 
 def good(**kw):
@@ -225,6 +228,29 @@ class Cli(unittest.TestCase):
         rc, out, _ = run("check", "--facts", str(self.bank), "--json")
         self.assertTrue(any("facts.py add --from-json talks/t1/research/run.json --loose" in w
                             for w in json.loads(out)["warnings"]))
+
+    @unittest.skipUnless(LANE_FACTS.is_file(), "the talk-research skill's lane_facts.py is not on this checkout")
+    def test_lane_route_matches_the_skill(self):
+        # `lane_facts.py <lanes> | facts.py add --from-json -` and `--from-lane <lanes>` file the same lines
+        lanes = [self.lane("lhc"), self.lane("lhcb")]
+        lanes[1].write_text(lanes[1].read_text(encoding="utf-8").replace("lhc-", "lhcb-"), encoding="utf-8")
+        files = [str(p) for p in sorted(lanes[0].parent.glob("*.json"))]            # images.json too
+        piped = subprocess.run([sys.executable, "-I", str(LANE_FACTS), *files], capture_output=True, text=True)
+        self.assertEqual(piped.returncode, 0, piped.stderr)
+        other = self.dir / "research" / "other.jsonl"
+        shutil.copy(self.bank, other)
+        with mock.patch("sys.stdin", io.StringIO(piped.stdout)):
+            self.assertEqual(run("add", "--facts", str(other), "--from-json", "-")[0], 0)
+        self.assertEqual(run("add", "--facts", str(self.bank), "--from-lane", *files)[0], 0)
+        self.assertEqual(self.bank.read_text(encoding="utf-8"), other.read_text(encoding="utf-8"))
+        piped = subprocess.run([sys.executable, "-I", str(LANE_FACTS), *files, "--id", "lhcb-run3-energy"],
+                               capture_output=True, text=True)
+        with mock.patch("sys.stdin", io.StringIO(piped.stdout)):
+            self.assertEqual(run("add", "--facts", str(other), "--from-json", "-", "--replace", "--json")[0], 0)
+        rc, out, _ = run("add", "--facts", str(self.bank), "--from-lane", *files, "--only", "lhcb-run3-energy",
+                         "--replace", "--json")
+        self.assertEqual((rc, json.loads(out)["added"]), (0, ["lhcb-run3-energy"]))
+        self.assertEqual(self.bank.read_text(encoding="utf-8"), other.read_text(encoding="utf-8"))
 
     def test_check(self):
         rc, out, _ = run("check", "--facts", str(self.bank), "--json")
