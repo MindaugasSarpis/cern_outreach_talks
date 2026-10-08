@@ -20,7 +20,7 @@ def sample(path, step):
             for i in range(n):
                 t = i / n; pts.append((round(ax + (bx - ax) * t, 3), round(az + (bz - az) * t, 3)))
     return pts
-c = sample(coast, 0.11); b = sample(borders, 0.3)
+c = sample(coast, 0.07); b = sample(borders, 0.3)
 json.dump({'proj': {'lon0': LON0, 'lat0': LAT0, 'k': round(K, 6), 'note': 'x = (lon - lon0) * k, z = -(lat - lat0); one unit = one degree of latitude'},
            'coast': [v for p in c for v in p], 'borders': [v for p in b for v in p]}, open(out, 'w'), separators=(',', ':'))
 print(len(c), len(b))
