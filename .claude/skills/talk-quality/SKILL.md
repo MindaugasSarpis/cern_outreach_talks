@@ -58,8 +58,11 @@ Workflow({ name: 'talk-blueprint', args: {
 ```
 
 (or `<repo>/.claude/workflows/talk-blueprint.js` by path). It writes
-`talks/<t>/notes/blueprint.md` and returns the research gaps, which go to
-`talk-research` (saved workflow `talk-research-gaps`).
+`talks/<t>/notes/blueprint.md` and returns `research_gaps`, public claims
+with proposed ids. Cite those ids in the deck draft and run `talk-research`
+(saved workflow `talk-research-gaps`): its plan agent finds them in the deck,
+or pass them as `lanes[].claims`. Never pass them as `briefGaps`, which
+searches the owner's own mail, Drive and calendar.
 
 ## AFK protocol
 

@@ -1,13 +1,13 @@
 export const meta = {
   name: 'talk-research-gaps',
-  description: 'Research and verify only the facts a talk deck still lacks: the facts bank first, disjoint slide-scoped lanes written as they land, one image lane, personal sources only for named gaps; returns unverified[]',
-  whenToUse: 'After the deck draft cites fact ids in its notes. args: { talk: "talks/<dir>", repo: "<worktree root>", today: "YYYY-MM-DD", slug?, lang?: "en"|"lt", lanes?: [{ key, slides, topic, claims: [string | { id, text }] }], gaps?: [string], images?: [string], maxAgents?: 30, staleMonths?: 6, personalBudget?: 15 }',
+  description: 'Research and verify only the facts a talk deck still lacks: the facts bank first, disjoint slide-scoped lanes written as they land, one image lane, mail and Drive only for named Brief questions; returns unverified[]',
+  whenToUse: 'After the deck draft cites fact ids. args: { talk: "talks/<dir>", repo: "<worktree root>", today: "YYYY-MM-DD", slug?, lang?: "en"|"lt", lanes?: [{ key, slides, topic, claims: [string | { id, text }] }] (public claims, e.g. a blueprint\'s research_gaps), briefGaps?: [string] (only Brief questions the owner\'s own mail, Drive and calendar answer; never public claims), images?: [string], maxAgents?: 30, staleMonths?: 6, personalBudget?: 15 }',
   phases: [
     { title: 'Plan', detail: 'read the Brief, the deck and the facts bank; list the gaps as slide-scoped lanes' },
     { title: 'Research', detail: 'one researcher per lane, primary sources; the lane file is written as it lands' },
     { title: 'Verify', detail: 'one skeptic per lane tries to refute every claim' },
     { title: 'Images', detail: 'one lane for photos with licence and credit' },
-    { title: 'Personal', detail: 'mail, Drive and calendar, only for the named gaps, within a call budget' },
+    { title: 'Personal', detail: 'mail, Drive and calendar, only for the named Brief questions (briefGaps), within a call budget' },
   ],
 }
 
@@ -17,7 +17,7 @@ export const meta = {
 // facts bank is read before the web; lanes are disjoint and slide-scoped and
 // each is written to talks/<t>/research/<lane>.json as soon as it lands; only
 // claims the deck states are verified; one image lane; mail and Drive only for
-// named gaps; no engine-scout lane (docs/STAGE_QUICKSTART.md covers it).
+// named Brief questions; no engine-scout lane (docs/STAGE_QUICKSTART.md covers it).
 // Named talk-research-gaps, not talk-research: saved workflows are listed with
 // the skills by meta.name, and the talk-research skill would shadow it.
 
@@ -37,7 +37,10 @@ const LANG = A.lang === 'lt' ? 'lt' : 'en'
 const MAX = A.maxAgents || 30
 const STALE = A.staleMonths || 6
 const BUDGET = A.personalBudget || 15
-const GAPS = Array.isArray(A.gaps) ? A.gaps.filter(Boolean) : []
+if (A.gaps) {
+  throw new Error('talk-research-gaps: args.gaps is now args.briefGaps, and it is only for Brief questions the owner\'s own mail, Drive and calendar answer; public claims (a blueprint\'s research_gaps too) go in args.lanes[].claims or are found in the deck by the plan agent')
+}
+const GAPS = Array.isArray(A.briefGaps) ? A.briefGaps.filter(Boolean) : []
 const BRIEF = `$HOME/.local/share/outreach_talks/briefs/${SLUG}.md`
 const OUT = `${DIR}/research`
 
@@ -224,7 +227,7 @@ Write the result as JSON to ${OUT}/images.json (mkdir -p ${OUT}), then return it
 const personal = GAPS.length
   ? agent(`${CONTEXT}
 
-You fill named gaps in the Brief from the owner's own records. GAPS: ${JSON.stringify(GAPS)}.
+You answer named Brief questions from the owner's own records. QUESTIONS: ${JSON.stringify(GAPS)}. Search only for these; never search mail or Drive for a public fact.
 Load the tools with ToolSearch ("select:mcp__claude_ai_Gmail__search_threads,mcp__claude_ai_Gmail__get_thread,mcp__claude_ai_Google_Drive__search_files,mcp__claude_ai_Google_Drive__read_file_content,mcp__claude_ai_Google_Calendar__search_events"). Budget: at most ${BUDGET} tool calls in total across Gmail, Drive and Calendar; stop at the budget. Read only: never send, label, move or delete anything. Search narrowly (event and organiser words in English and Lithuanian; add -from:linkedin.com in Gmail).
 First read ${BRIEF} if it exists: do not search again for what it already answers.
 Append what you find to ${BRIEF} (mkdir -p its directory) under a heading "## talk-research-gaps ${TODAY}", each answer with its source (mail subject and date, file title). Nothing goes into the repo. Return the answers, the gaps still open and the number of calls used.`, { label: 'personal', phase: 'Personal', schema: PERSONAL })
@@ -256,7 +259,7 @@ lanes.forEach((lane, i) => {
 })
 for (const lane of dropped) unverified.push({ lane: lane.key, slides: lane.slides, reason: `not researched: over the ${MAX}-agent cap`, claims: lane.claims.map((c) => c.id || c.text) })
 if (IMAGE_SUBJECTS.length && !imageResult) unverified.push({ lane: 'images', reason: 'the image agent failed', subjects: IMAGE_SUBJECTS })
-if (GAPS.length && !personalResult) unverified.push({ lane: 'personal', reason: 'the personal-records agent failed', gaps: GAPS })
+if (GAPS.length && !personalResult) unverified.push({ lane: 'personal', reason: 'the personal-records agent failed', briefGaps: GAPS })
 
 log(`${summary.reduce((n, s) => n + (s.confirmed || 0) + (s.corrected || 0), 0)} facts confirmed or corrected; ${unverified.length} items unverified`)
 

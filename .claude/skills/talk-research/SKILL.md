@@ -39,20 +39,23 @@ the deck does not cite are not re-checked.
 
 ```js
 Workflow({ name: 'talk-research-gaps', args: {
-  talk: 'talks/2026_11_05_Venue', repo: '<worktree root>', slug: '<slug>',
-  today: '2026-11-01', lang: 'lt',
+  talk: 'talks/2026_11_05_Venue', repo: '<worktree root>', today: '2026-11-01', lang: 'lt',
   // optional: lanes you already know, else the workflow plans them from the deck
   lanes: [{ key: 'lhc', slides: '3-5', topic: 'the LHC in 2026', claims: ['…'] }],
-  gaps: ['the award name and date'],      // personal sources only for these
+  // optional: Brief questions only the owner's own mail, Drive and calendar answer
+  briefGaps: ['the award name and date'],
   images: ['the LHCb cavern', 'the first web server'],
 } })
 ```
 
 It splits the gaps into disjoint slide-scoped lanes of about a dozen claims,
 writes each lane to `talks/<t>/research/<lane>.json` as it lands, verifies
-each lane adversarially, runs one image lane, uses mail and Drive only for the
-named `gaps` within 15 calls, caps itself at about 30 agents, and returns
-`unverified[]`.
+each lane adversarially, runs one image lane, searches mail, Drive and
+calendar only for `briefGaps` within 15 calls, caps itself at about 30
+agents, and returns `unverified[]`. Public claims, including a blueprint's
+`research_gaps`, go in `lanes[].claims` or are left for the plan agent to
+find in the deck; never in `briefGaps`, which searches the owner's mail,
+Drive and calendar for them.
 
 ## 3. File the results
 
