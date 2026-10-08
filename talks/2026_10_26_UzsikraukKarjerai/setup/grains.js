@@ -754,7 +754,8 @@ function buildQuintet(o, ctx) {
 //   { type: histogram, name, pos, src: 'data/….json' ({ counts: [...] }, or another `key`) or counts: [...],
 //     width?: 24, height?: 10, max?: (tallest bin), unit?: 1 (entries per grain),
 //     steps?: [0, 1] (the share of entries shown at each step), fill?: 20 (s for the whole set),
-//     fall?: 1.1 (s a grain takes to drop), size?: 1, alpha?: 0.35, color?, axis?: true }
+//     fall?: 1.1 (s a grain takes to drop), size?: 1, alpha?: 0.35, color?, axis?: true,
+//     curve?: 1 (>1: the first entries drop faster, the last slower), marks?: [[lo, hi], …] }
 // A measured distribution building up entry by entry: each grain is one
 // entry (one candidate) dropping into its bin in a random order, so the
 // shape grows the way the data came in. A step's share is reached at a
@@ -763,8 +764,8 @@ function buildQuintet(o, ctx) {
 // current share, unless a fill started under 5 s ago.
 const HIST_VERT = /* glsl */ `
 attribute vec3 aEnd;
-attribute float aRank, aSeed;
-uniform float uFrom, uTo, uT0, uDur, uFall, uTop, uSize, uAlpha;
+attribute float aRank, aSeed, aMark;
+uniform float uFrom, uTo, uT0, uDur, uFall, uTop, uSize, uAlpha, uCurve, uMarkT;
 uniform vec3 uColor, uHot;
 ${PLACE}
 void main() {
@@ -772,7 +773,7 @@ void main() {
   float land;                                  // when this grain lands
   if (aRank < min(uFrom, uTo)) land = -1e6;    // already in
   else if (span <= 0.0 || aRank >= uTo) { hide(); return; }
-  else land = uT0 + (aRank - uFrom) / span * uDur;
+  else land = uT0 + pow((aRank - uFrom) / span, uCurve) * uDur;   // fast at first, slower as the shape fills in
   float k = (uTime - land) / uFall + 1.0;      // 0 at release, 1 on landing
   if (k < 0.0) { hide(); return; }
   vec3 p = aEnd;
@@ -781,8 +782,11 @@ void main() {
     p.y = mix(uTop + 2.0 * hash(aSeed * 3.0), aEnd.y, k * k);
     p.x += 0.15 * (1.0 - k) * (hash(aSeed * 5.0) - 0.5);
   } else glow = exp(-(k - 1.0) * uFall * 3.0);  // a short warm glow as it lands
-  vec3 color = mix(uColor, uHot, 0.8 * glow);
-  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow);
+  // once filled, the marked bins (the peaks) brighten and the rest step back
+  float m = clamp((uTime - uMarkT) / 1.6, 0.0, 1.0);
+  m = m * m * (3.0 - 2.0 * m);
+  vec3 color = mix(uColor, uHot, 0.8 * glow + 0.55 * m * aMark);
+  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow) * (1.0 + m * (0.9 * aMark - 0.35 * (1.0 - aMark)));
   float size = uSize * (0.85 + 0.3 * hash(aSeed * 11.0)) * (1.0 + 0.5 * glow);
   place(p, size, alpha, color, aSeed);
 }`
@@ -800,16 +804,23 @@ function buildHistogram(o, ctx) {
   const mat = material(HIST_VERT, {
     uFrom: { value: 0 }, uTo: { value: 0 }, uT0: { value: 0 }, uDur: { value: 1 }, uFall: { value: o.fall ?? 1.1 },
     uTop: { value: H * 1.25 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.35 },
+    uCurve: { value: o.curve ?? 1 }, uMarkT: { value: 1e9 },
     uColor: { value: new Color(...rgb(o.color || '#ffc05a')) }, uHot: { value: new Color(...rgb(o.hot || '#fff4dc')) },
   })
   const u = mat.uniforms
-  const build = (counts) => {
+  const build = (counts, d = {}) => {
     const nb = counts.length, bw = W / nb
+    // marks: [[lo, hi], …] in the data's units (needs d.lo and d.bin): the bins to light once filled
+    const marked = new Uint8Array(nb)
+    for (const [a, b] of o.marks || []) for (let i = 0; i < nb; i++) {
+      const c = (d.lo ?? 0) + (i + 0.5) * (d.bin ?? 1)
+      if (c >= a && c <= b) marked[i] = 1
+    }
     const per = counts.map((c) => Math.round(c / unitN))
     const N = per.reduce((a, b) => a + b, 0)
     const max = (o.max ?? Math.max(...counts)) / unitN
     const ranks = new Float32Array(N); for (let i = 0; i < N; i++) ranks[i] = Math.random()
-    const end = new Float32Array(N * 3), rank = new Float32Array(N), seed = new Float32Array(N)
+    const end = new Float32Array(N * 3), rank = new Float32Array(N), seed = new Float32Array(N), mark = new Float32Array(N)
     let n = 0
     for (let b = 0; b < nb; b++) {
       // lower in the column, earlier in: the column grows from the bottom
@@ -817,7 +828,7 @@ function buildHistogram(o, ctx) {
       for (let j = 0; j < per[b]; j++, n++) {
         const x = -W / 2 + (b + 0.15 + 0.7 * Math.random()) * bw
         const y = (j + 0.5) / max * H
-        end.set([x, y, (Math.random() - 0.5) * bw], n * 3); rank[n] = rs[j]; seed[n] = Math.random()
+        end.set([x, y, (Math.random() - 0.5) * bw], n * 3); rank[n] = rs[j]; seed[n] = Math.random(); mark[n] = marked[b]
       }
     }
     const geo = new BufferGeometry()
@@ -825,6 +836,7 @@ function buildHistogram(o, ctx) {
     geo.setAttribute('aEnd', new BufferAttribute(end, 3))
     geo.setAttribute('aRank', new BufferAttribute(rank, 1))
     geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
+    geo.setAttribute('aMark', new BufferAttribute(mark, 1))
     const pts = new Points(geo, mat); pts.frustumCulled = false
     g.add(pts)
     if (o.axis !== false) {
@@ -839,22 +851,23 @@ function buildHistogram(o, ctx) {
     }
   }
   if (o.counts) build(o.counts)
-  else fetch(ctx.asset('/' + String(o.src).replace(/^\//, ''))).then((r) => r.json()).then((d) => build(d[o.key || 'counts']))
+  else fetch(ctx.asset('/' + String(o.src).replace(/^\//, ''))).then((r) => r.json()).then((d) => build(d[o.key || 'counts'], d))
     .catch(() => console.warn('stage: histogram data failed', o.src))
   let now = 0, played = -100, share = 0
   const shown = () => {
     const x = Math.min(Math.max((now - u.uT0.value) / Math.max(u.uDur.value, 0.01), 0), 1)
-    return u.uFrom.value + (u.uTo.value - u.uFrom.value) * x
+    return u.uFrom.value + (u.uTo.value - u.uFrom.value) * Math.pow(x, 1 / u.uCurve.value)
   }
   const fill = (from, to, delay = 0.6) => {
     u.uFrom.value = from; u.uTo.value = to; u.uT0.value = now + delay
     u.uDur.value = Math.max((to - from) * (o.fill ?? 20), 0.01); played = now
+    u.uMarkT.value = to >= 1 && o.marks ? u.uT0.value + u.uDur.value + u.uFall.value + 0.6 : 1e9
   }
   const go = (k, { instant = false } = {}) => {
     const to = steps[Math.max(0, Math.min(steps.length - 1, k))]
     share = to
     const cur = shown()
-    if (instant || to <= cur) { u.uFrom.value = to; u.uTo.value = to; u.uT0.value = now - 100; u.uDur.value = 0.01; return }
+    if (instant || to <= cur) { u.uFrom.value = to; u.uTo.value = to; u.uT0.value = now - 100; u.uDur.value = 0.01; u.uMarkT.value = to >= 1 && o.marks ? now - 100 : 1e9; return }
     fill(cur, to)
   }
   const off = listen(o.name, (k) => go(k))

@@ -30,7 +30,7 @@ info: |
   grain by grain: slide 7 from LHCb's published 2019 J/ψ p bins (HEPData);
   slides 2–4 and 10 are illustrations, said so in the notes.
 layout: default
-space: { at: quarks, dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.05 }
+space: { at: [596.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.05 }
 ---
 
 <Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: -1, th1: 0, th2: 0, jp: 0, mine: 0 }" />
@@ -82,8 +82,7 @@ space: { at: trial, dim: 0.05 }
 <Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: -1, th1: 1, th2: 0, jp: 0, mine: 0 }" />
 
 <div class="say top">
-<p class="kick">2003 m.</p>
-<p class="big">Taip.</p>
+<p class="big">2003 m. – taip.</p>
 </div>
 
 <!--
@@ -102,8 +101,7 @@ space: { at: trial, dim: 0.05 }
 <Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: -1, th1: 0, th2: 1, jp: 0, mine: 0 }" />
 
 <div class="say top">
-<p class="kick blue">2008 m.</p>
-<p class="big">Ne.</p>
+<p class="big">2008 m. – <span class="blue">ne.</span></p>
 </div>
 
 <!--
@@ -155,14 +153,17 @@ space: { at: lhcb, dim: 0.05 }
 
 <Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: -1, th1: 0, th2: 0, jp: 1, mine: 0 }" />
 
-<div class="say top">
-<p class="kick">2015 m.</p>
-<p class="big">Taip.</p>
+<div class="say top swap-out">
+<p class="big">2015 m. – taip.</p>
+</div>
+
+<div class="say top swap-in">
+<p class="big">2019 m. – <em>trys.</em></p>
 </div>
 
 <!--
 Message: in 2015 LHCb saw a peak, checked everything, and it held; by 2019 it was three.
-Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate until the narrow peaks stand out.
+Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate, fast at first, until the narrow peaks stand out (about 20 s); then the three peaks light up and the line on screen changes from „2015 m. – taip.“ to „2019 m. – trys.“. Time the last sentence of the script to that change.
 Data: LHCb, PRL 122, 222001 (2019), HEPData ins1728691 Table 2 (m(Kp) > 1,9 GeV). These bins hold the 2015 sample and the later data together; the 2015 paper's own bins are not on HEPData.
 
 2015 metais LHCb grafike vėl iškilo smailė. Šįkart duomenų buvo dešimtys tūkstančių, o ne šimtai. Prieš paskelbdama, LHCb komanda tikrino viską, ką sugalvojo: ar smailė neatsiranda dėl detektoriaus, dėl kitų dalelių, dėl to, kaip atrinkti duomenys. Ir abejojo pati savimi, nes 2003-iųjų istoriją visi prisiminė. Smailė liko. 2019 metais, su dar daugiau duomenų, ji išsiskyrė į tris pentakvarkus – tai, ką matai dabar.

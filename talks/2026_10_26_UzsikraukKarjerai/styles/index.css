@@ -175,3 +175,9 @@ html[data-stage] .plans img { width: 100% !important; max-width: none !important
 
 /* --- a short list of lines (what you can do this year) */
 html[data-stage] .say.list .line { font-size: 28px; margin: 10px 0 0; }
+
+/* --- one line that gives way to the next as a slide's fill completes (slide 7: 2015 → 2019) */
+html[data-stage] .say.swap-out { animation: stage-rise 0.9s var(--stage-ease) 0.5s both, kk-out 0.6s ease 21.6s forwards; }
+html[data-stage] .say.swap-in { opacity: 0; animation: kk-in 0.8s ease 22.4s forwards; }
+@keyframes kk-out { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .say.swap-out { display: none; } html[data-stage] .say.swap-in { opacity: 1; animation: none; } }

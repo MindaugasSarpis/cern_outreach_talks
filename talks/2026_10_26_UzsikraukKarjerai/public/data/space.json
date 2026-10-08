@@ -100,8 +100,8 @@
      "alpha": 0.6,
      "hay": 2500,
      "hayRadius": 10,
-     "hayAlpha": 0.85,
-     "hayColor": "#8f7d55",
+     "hayAlpha": 1.0,
+     "hayColor": "#c2a66a",
      "colors": [
       "#5b7bff",
       "#6f8cff",
@@ -223,12 +223,12 @@
       }
      ],
      "grains": 900,
-     "node": 3200,
+     "node": 2000,
      "nodeRadius": 1.3,
      "color": "#ffe08a",
      "speed": 0.16,
-     "alpha": 0.95,
-     "size": 2.4,
+     "alpha": 0.55,
+     "size": 1.8,
      "delay": 6
     }
    ]
@@ -389,11 +389,11 @@
      "key": "large",
      "width": 18,
      "height": 8,
-     "size": 1.7,
-     "alpha": 0.63,
+     "size": 1.9549999999999998,
+     "alpha": 0.85,
      "fill": 12,
      "fall": 0.9,
-     "color": "#9fb4ff",
+     "color": "#c8d4ff",
      "axis": false
     }
    ]
@@ -430,10 +430,25 @@
      "height": 8.5,
      "size": 1.7,
      "alpha": 0.62,
-     "fill": 24,
+     "fill": 20,
      "fall": 1.0,
      "color": "#ffcf70",
-     "hot": "#ffffff"
+     "hot": "#ffffff",
+     "curve": 1.8,
+     "marks": [
+      [
+       4306,
+       4318
+      ],
+      [
+       4434,
+       4446
+      ],
+      [
+       4451,
+       4463
+      ]
+     ]
     }
    ]
   },
@@ -468,11 +483,11 @@
      "width": 20,
      "height": 8,
      "max": 80,
-     "size": 1.9,
-     "alpha": 0.75,
+     "size": 2.1849999999999996,
+     "alpha": 0.85,
      "fill": 14,
      "fall": 0.9,
-     "color": "#9fb4ff"
+     "color": "#c8d4ff"
     }
    ]
   }
