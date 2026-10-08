@@ -26,7 +26,11 @@ Slidev counts it (hidden slides are not counted).
                           .src, .credit and .k
   NO-SRC         warning  a content slide without a .src line (15 words or more,
                           or a number on it)
-  CHECK          warning  '[CHECK' left in the deck; an error with --release
+  CHECK          warning  an open mark left in the deck below the headmatter
+                          (OPEN_MARKS): [CHECK…], [PATIKSLINTI…] (a question
+                          for the owner), [ASR…] (a quote from an automatic
+                          transcript, not re-listened yet), [TODO…]; an error
+                          with --release
   TIME-OVER      error    the timed notes ('(~N min)', '(N min)', '(m:ss)', dot
                           or comma decimals) plus clip lengths (manifest trim,
                           else public/video-frames/index.json) exceed the
@@ -85,7 +89,8 @@ EMOJI = re.compile("[\U0001F000-\U0001FAFF☀-➿⬅-⭕⌚⌛⏩-⏺️]")
 LT_LETTERS = re.compile(r"[ąčęėįšųūžĄČĘĖĮŠŲŪŽ]")
 LT_ENGLISH = re.compile(r"\b(Part|Thank you|Thanks|Questions?|Q&A)\b(?![\w-])")
 SLIDE_REF = re.compile(r"\b(?:slides?|skaidr\w*)\s+(\d{1,3})\b", re.I)
-CHECK = re.compile(r"\[CHECK")
+OPEN_MARKS = ("CHECK", "PATIKSLINTI", "ASR", "TODO")     # [CHECK], [ASR: re-listen], …: still to settle
+OPEN_MARK = re.compile(r"\[(?:%s)\b" % "|".join(OPEN_MARKS))
 LHCB = re.compile(r"LHCb")
 
 LT_WORDS = {   # Lithuanian words with a meaning the talk does not want
@@ -323,8 +328,8 @@ class Lint:
                          "deck.md", s.content_line, s.number)
 
     def check_marks(self, s: td.Slide, n_visible: int):
-        for m in CHECK.finditer(s.content):
-            block = re.match(r"\[CHECK[^\]]{0,300}\]?", s.content[m.start():]).group(0)
+        for m in OPEN_MARK.finditer(s.content):
+            block = re.match(r"\[[^\]]{0,300}\]?", s.content[m.start():]).group(0)
             self.at(s, m.start(), "CHECK", "error" if self.release else "warning",
                     f"open check: {squash(block)[:110]!r}")
         for m in SLIDE_REF.finditer(s.content):
@@ -505,7 +510,8 @@ def squash(s: str) -> str:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="talk_lint.py", description="Lint a talk deck (see the module docstring for codes).")
     ap.add_argument("talk", help="talk directory, or a talk name under talks/")
-    ap.add_argument("--release", action="store_true", help="venue gate: open [CHECK]s are errors")
+    ap.add_argument("--release", action="store_true",
+                    help="venue gate: open marks (" + ", ".join(f"[{m}]" for m in OPEN_MARKS) + ") are errors")
     ap.add_argument("--json", action="store_true", help="one JSON object on stdout, the report on stderr")
     ap.add_argument("--facts", type=Path, default=factsbank.BANK, help=f"facts bank (default {factsbank.BANK})")
     try:

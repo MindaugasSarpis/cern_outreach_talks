@@ -5,6 +5,8 @@ addons:
   - slidev-addon-stage
 lang: lt
 duration: 5min
+info: |
+  Užrašuose – tekstas ir kiekvienas [PATIKSLINTI] klausimas.
 title: Bandomasis pranešimas
 layout: cover
 ---
@@ -46,6 +48,7 @@ Detektorius sveria 5600 tonų, protonai skrieja 6.8 TeV energija, o "citata" či
 <!--
 Kalbėtojui (~3 min). Сейчас rusiškai — klaida.
 [CHECK: patikrinti masę]
+[PATIKSLINTI: ar tikrai 5600 tonų?]
 -->
 
 ---
@@ -66,4 +69,5 @@ layout: statement
 
 <!--
 Kalbėtojui (~2,5 min). Klausimai.
+„Blogas rezultatas irgi yra rezultatas“ [ASR: re-listen]
 -->

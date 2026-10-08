@@ -82,8 +82,20 @@ class LithuanianFixture(unittest.TestCase):
         self.assertEqual(byline.severity, "error")
 
     def test_check_warning_then_error(self):
-        self.assertEqual([f.severity for f in codes(self.l, "CHECK")], ["warning"])
-        self.assertEqual([f.severity for f in codes(lint(LT, release=True), "CHECK")], ["error"])
+        # [CHECK …] and [PATIKSLINTI …] on slide 3, [ASR …] on slide 5; the headmatter's
+        # info, which names [PATIKSLINTI], is not a mark
+        found = codes(self.l, "CHECK")
+        self.assertEqual([(f.slide, f.line) for f in found], [(3, 50), (3, 51), (5, 72)])
+        self.assertEqual({f.severity for f in found}, {"warning"})
+        self.assertIn("[PATIKSLINTI: ar tikrai 5600 tonų?]", found[1].message)
+        self.assertIn("[ASR: re-listen]", found[2].message)
+        self.assertEqual([f.severity for f in codes(lint(LT, release=True), "CHECK")], ["error"] * 3)
+
+    def test_open_marks_pattern(self):
+        hit = lambda s: bool(talk_lint.OPEN_MARK.search(s))
+        self.assertTrue(all(map(hit, ("[CHECK]", "[CHECK: masė]", "[PATIKSLINTI, neprivaloma: …]",
+                                      "09:53 [ASR]", "[TODO poza]"))))
+        self.assertFalse(any(map(hit, ("[CHECKED]", "[ASRS]", "[check]", "CHECK:", "[Patikslinta]"))))
 
     def test_timing_over(self):
         t = self.l.timing

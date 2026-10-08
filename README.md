@@ -113,7 +113,8 @@ python3 -m unittest discover -s tests            # the tools' own tests
 ## Before the talk
 
 From the repo root, `python3 scripts/talk_lint.py talks/<name> --release`
-(open `[CHECK]`s fail, as does overtime); then in the talk directory:
+(open marks fail: `[CHECK…]`, `[PATIKSLINTI…]`, `[ASR…]`, `[TODO…]` in the
+slides or notes; so does overtime); then in the talk directory:
 
 ```bash
 pnpm videos:check

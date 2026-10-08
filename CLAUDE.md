@@ -126,7 +126,7 @@ directory or a unique part of its name; `--json` on all of them):
 
 ```bash
 python3 scripts/facts.py search touchscreen   # rank research/facts.jsonl; show <id>; add …; check
-python3 scripts/talk_lint.py talks/<name>     # exit 1 on errors; --release makes open [CHECK]s errors
+python3 scripts/talk_lint.py talks/<name>     # exit 1 on errors; --release makes open marks errors
 python3 scripts/talk_map.py talks/<name>      # slide number, title, layout, clicks, pose, clip, minutes
 python3 scripts/photo_fetch.py cds:<ID>       # or commons:File:<name>; --dry-run, --record, --check
 ```
@@ -139,6 +139,10 @@ The lint's timing gate sums `(~N min)`, `(N min)` and `(m:ss)` in the notes
 wrap it in a class the talk's CSS sets to `text-transform: none`. Cite
 facts in a deck with `<!-- facts: id1, id2 -->` above the speaker notes;
 the lint checks they exist and are confirmed or corrected.
+Open marks are `[CHECK…]`, `[PATIKSLINTI…]` (a question for the owner),
+`[ASR…]` (a quote from an automatic transcript, not re-listened yet) and
+`[TODO…]`, anywhere below the headmatter: warnings, errors with `--release`.
+Settle each and delete the mark; the headmatter `info` may name them.
 `slidev-videos discover <keywords>` (any dir) searches open archives for clips.
 NVENC: the env ffmpeg has it, the bare `~/.local/bin/ffmpeg` does not —
 prefix `PATH=~/micromamba/envs/outreach_talks/bin:$PATH` for GPU encodes.
