@@ -15,7 +15,9 @@ videos:
   dust: '#5b93ff'
 stage:
   space: data/space.json
-  palette: blue
+  # the engine takes the ground as linear light, so blue's #03050d shows as navy
+  # (15, 26, 51); this one shows as near-black with a trace of blue
+  palette: { base: blue, bg: '#000103' }
   plugins: [hadron]
   sound: true
   # deeper than the blue palette's own look: a black ground (fewer, dimmer dust
