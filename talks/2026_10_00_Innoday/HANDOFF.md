@@ -144,3 +144,17 @@ edits were folded in. Changed:
   stays on the release, do not `--prune`); `shots/` is ignored.
 Left as SwiftShader timing (confirm on a GPU): the pentaquark slide (09)
 showed two orbs, not five, at the 14 s shot.
+
+## Owner's fixes (2026-10-08, via the Scheduler)
+
+- Slides 23, 24, 27 (and 9) carry one big number at photo-slide weight:
+  new `.payoff` (kicker, a 176 px gold number, a short claim, one line).
+  23 → "700+ sutarčių su partneriais nuo 2011 m."; 24 → "+14 % apyvartos
+  augimo per penkerius metus"; 27 → "613 mln. CHF — tiek CERN per metus perka"
+  (the three ways for a firm stay in the notes); 9 → "76 iš 86 naujų LHC
+  hadronų atrado LHCb", so it reads while the pentaquark is still gathering.
+  `.payoff` centres with flex: the kit's rise animation ends on
+  `transform: none`, which undid a translateY centring (164 px overflow).
+- Slide 8 (and 2, 6) were black only because the clips were not local;
+  shot from a `VITE_VIDEOS_LOCAL_FIRST=1` build after `videos:pull
+  --include-shared` they show their picture. The cover title shows (4 s fallback).

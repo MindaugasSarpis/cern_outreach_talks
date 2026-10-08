@@ -286,3 +286,24 @@ html[data-stage]:not([data-space-assembled]) .slidev-layout.cover .mt-md { anima
 @keyframes in-cover-late { to { opacity: 1; transform: none; } }
 html[data-stage] .hero.deep .kicker { font-weight: 700; }
 html[data-stage] .hero.page .credit { right: auto; left: 18px; text-align: left; }
+
+/* --- payoff: one big number carries the slide (the business slides, the
+   pentaquark's count), a short claim under it, one line of detail. Centred on
+   the left at photo-slide weight, the world dimmed behind it. */
+html[data-stage] .payoff {
+  /* centred by flex: the kit's rise animation ends on transform: none */
+  position: absolute; left: 64px; top: 0; bottom: 24px; max-width: 66%;
+  display: flex; flex-direction: column; justify-content: center;
+  color: var(--stage-fg); animation: stage-rise 0.8s var(--stage-ease) 0.2s both;
+}
+html[data-stage] .payoff .kicker { margin-bottom: 10px; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7); }
+html[data-stage] .payoff .big {
+  font-size: 176px; font-weight: 700; letter-spacing: -0.045em; line-height: 0.86; margin: 0 0 16px;
+  white-space: nowrap; font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, #fff6e2, var(--in-gold) 75%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 18px rgba(0, 0, 0, 0.6));
+}
+html[data-stage] .payoff .big.blue { background: linear-gradient(180deg, #ffffff, var(--in-blue-hi) 50%, var(--stage-accent)); -webkit-background-clip: text; background-clip: text; }
+html[data-stage] .payoff .big .unit { font-size: 0.34em; letter-spacing: -0.01em; margin-left: 0.18em; }
+html[data-stage] .payoff h1 { font-size: 44px !important; line-height: 1.08 !important; margin: 0 0 14px !important; max-width: 20ch; text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7); animation: none !important; }
+html[data-stage] .payoff p:not(.kicker) { font-size: 24px; line-height: 1.38; margin: 0; max-width: 34ch; opacity: 0.95; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7); }

@@ -173,14 +173,11 @@ Faktai: LHCb sveria 5 600 t, 21 × 10 × 13 m, 100 m po žeme; artimiausias 
 space: { at: [-29.5, 0.2, 0], dist: 11, yaw: -10, pitch: 6, dim: 0.15 }
 ---
 
-<div class="world-caption narrow">
-
-<p class="kicker"><span class="nc">LHCb</span> · 2015</p>
-
-# Pentakvarkas
-
-76 iš 86 naujų LHC hadronų atrado LHCb
-
+<div class="payoff">
+<p class="kicker"><span class="nc">LHCb</span> · 2015 m. pentakvarkas</p>
+<div class="big blue">76<span class="unit">iš 86</span></div>
+<h1>naujų LHC hadronų atrado <span class="nc">LHCb</span></h1>
+<p>Vienas jų — pentakvarkas, dalelė iš penkių kvarkų.</p>
 </div>
 
 <div class="src">LHCb, PRL 115 (2015) 072001 · P. Koppenburg, New particles discovered at the LHC (2026 09 21)</div>
@@ -495,17 +492,11 @@ Sakyti: „Daugumoje šių pavyzdžių fizikų sprendimą į produktą pavertė 
 space: { at: kt, dist: 17, yaw: 4, pitch: 34, dim: 0.4 }
 ---
 
-<div class="head">
-
-# CERN technologijų perdavimas įmonėms
-
-</div>
-
-<div class="stats gold">
-<div class="stat"><div class="n">700+</div><p class="l">sutarčių su partneriais nuo 2011 m.</p></div>
-<div class="stat"><div class="n">89</div><p class="l">sutartys vien 2025 m.</p></div>
-<div class="stat"><div class="n">~100</div><p class="l">su CERN susijusių startuolių</p></div>
-<div class="stat"><div class="n">2<small>%</small></div><p class="l">licencinis mokestis, akcijų CERN neima</p></div>
+<div class="payoff">
+<p class="kicker gold">CERN technologijų perdavimas įmonėms</p>
+<div class="big">700+</div>
+<h1>sutarčių su partneriais nuo 2011 m.</h1>
+<p>Startuoliams 2 % licencinis mokestis, akcijų CERN neima.</p>
 </div>
 
 <div class="src">CERN Knowledge Transfer Report 2025 · Technopolis ir CSIL, CERN socioekonominė studija (2026) · WIPO Global Innovation Index 2026</div>
@@ -522,14 +513,11 @@ Atsargiai: „27 su CERN susiję startuoliai pritraukė 3,2 mlrd. CHF“ — 2,
 space: { at: [118.5, -1.6, 0], dist: 13, yaw: -30, pitch: 14, dim: 0.45 }
 ---
 
-<div class="readout gold-k">
-
-<p class="kicker">CERN tiekėjai · 2026 m. tyrimas</p>
-
-<div class="big gold">+<Count :from="0" :to="14" :ms="1800" /><span class="unit">%</span></div>
-
-tiek labiau išaugo apyvarta nei panašių įmonių
-
+<div class="payoff">
+<p class="kicker gold">CERN tiekėjai · 2026 m. tyrimas</p>
+<div class="big">+<Count :from="0" :to="14" :ms="1800" /><span class="unit">%</span></div>
+<h1>apyvartos augimo per penkerius metus</h1>
+<p>palyginti su panašiomis įmonėmis, kurios CERN užsakymo negavo</p>
 </div>
 
 <div class="src">Technopolis ir CSIL, CERN socioekonominė studija (2026) · M. Florio, J. Catalano, CERN Courier, 2026 09 17</div>
@@ -593,19 +581,14 @@ Faktai: susitarimas pasirašytas 2017 06 27 Vilniuje, įsigaliojo 2018 01 08. Li
 space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45 }
 ---
 
-<div class="head">
-
-# Galimybės Lietuvos įmonėms
-
+<div class="payoff">
+<p class="kicker gold">Lietuvos įmonėms</p>
+<div class="big">613<span class="unit">mln. CHF</span></div>
+<h1>tiek CERN per metus perka prekių ir paslaugų</h1>
+<p>Registracija CERN tiekėjų portale; ryšiai su CERN — per Inovacijų agentūrą.</p>
 </div>
 
-<div class="stats three gold">
-<div class="stat"><div class="n">Tiekti</div><p class="l">CERN per metus perka už ~600 mln. CHF</p></div>
-<div class="stat"><div class="n">FCC</div><p class="l">Ekspla, Ostaralab ir Sargasas jau pasirašė memorandumus</p></div>
-<div class="stat"><div class="n">Licencija</div><p class="l">naudoti CERN technologiją arba kurti ją kartu</p></div>
-</div>
-
-<div class="src">business-with-cern.web.cern.ch: Member States statuses 2026–2027, Who to contact · inovacijuagentura.lt (2026 01) · CERN pirkimai 2024: 613 mln. CHF</div>
+<div class="src">CERN pirkimai 2024 · business-with-cern.web.cern.ch · inovacijuagentura.lt</div>
 
 <!--
 Kalbėtojui. Kvietimas veikti.
