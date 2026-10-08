@@ -186,7 +186,6 @@ of them.
 space: { at: [12.5, 1.4, 5.0], dist: 13.8, yaw: 73, pitch: 7.5, dim: 0.15 }
 ---
 
-<img class="print-still" src="/stills/05.jpg" alt="" />
 
 <Grains :set="{ scale: [0, 1], 'scale:labels': 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
@@ -196,7 +195,7 @@ space: { at: [12.5, 1.4, 5.0], dist: 13.8, yaw: 73, pitch: 7.5, dim: 0.15 }
 
 <div class="big"><Count name="open" :from="0" :to="800" :delay="2400" /><span class="unit">TB</span></div>
 
-<p class="line">Visi 2011–2012 m. LHCb protonų susidūrimų duomenys. Paskelbimą parengė Mindaugas Šarpis.</p>
+<p class="line">Visi 2011–2012 m. LHCb protonų susidūrimų duomenys. Duomenis paskelbti parengė Mindaugas Šarpis.</p>
 
 </div>
 
@@ -207,8 +206,8 @@ Message: in 2023 all of LHCb's first run became public, and I prepared it.
 
 Sakyti: „Pirmą kartą didelę dalį duomenų, 200 terabaitų, LHCb
 paskelbė 2022 m. gruodį. 2023 m. gruodį viešai paskelbti visi 2011–2012 m. protonų
-susidūrimų duomenys, apie 800 terabaitų. Šį rinkinį ir jo paskelbimą parengiau
-aš, tuo metu rašydamas disertaciją Bone. Darbas truko beveik dvejus metus:
+susidūrimų duomenys, apie 800 terabaitų. Šį rinkinį paskelbti parengiau
+aš, tuo metu rašydamas disertaciją Bonoje. Darbas truko beveik dvejus metus:
 teko nukopijuoti ir patikrinti kiekvieną iš daugiau nei šimto tūkstančių
 failų. Nuo šių metų rugpjūčio koordinuoju visos kolaboracijos analizių
 išsaugojimo ir atvirųjų duomenų darbus.“
@@ -244,7 +243,7 @@ space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, flight: 5, dim
 Message: since 2026 more than four petabytes are open.
 
 Sakyti: „Šiais metais atverta ir dalis 2015–2018 m. duomenų. Kartu su ankstesniais
-tai daugiau nei keturi petabaitai.“
+tai daugiau nei keturi tūkstančiai terabaitų, arba keturi petabaitai.“
 
 Šaltiniai: LHCb outreach, 2026-03-03 („over 4 PB of data to explore“); CERN Open
 Data portalas, 2026-02-22.
@@ -355,7 +354,7 @@ space: { at: [16, 6, -2], dist: 32, yaw: 0, pitch: 1.8, dim: 0.15 }
 <!--
 Message: people outside LHCb already use the open data.
 
-Sakyti: „Keturių petabaitų niekas nesisiunčia. Nurodai, kokio skilimo nori, ir
+Sakyti: „Visų keturių petabaitų siųstis nereikia. Nurodai, kokio skilimo nori, ir
 LHCb duomenų atrankos paslauga parenka tau reikalingus susidūrimus. Iki
 liepos tokių užklausų buvo apie dvidešimt, daugiausia teoretikų. Rugsėjį du
 Browno universiteto fizikai paskelbė tyrimą, atliktą su LHCb atviraisiais
@@ -474,7 +473,6 @@ space: { at: thesis, dim: 1 }
 <img src="/figures/thesis/jpsip-mass.png" alt="Dominyko Stonkaus bakalauro darbas: J/ψ p invariantinė masė, atėmus foną; pakilimas ties 4,4–4,5 GeV" />
 <PeakRise :x="0.44" :y="0.29" :delay="1.4" :rise="0.2" :size="0.09" />
 </div>
-<p class="credit">D. Stonkus, bakalauro darbas, VU, 2026, 17 pav.</p>
 </div>
 </div>
 
@@ -489,7 +487,7 @@ its peak and gather into a pentaquark above it.
 Sakyti: „Mūsų studentas Dominykas Stonkus šiais metais
 apgynė bakalauro darbą „Pentakvarkų atradimas iš naujo naudojant LHCb
 atviruosius duomenis“. Jis paėmė atviruosius 2012 m. LHCb duomenis, atrinko apie
-16 400 Λb⁰ skilimų į J/ψ, protoną ir kaoną. J/ψ ir protono invariantinės masės
+16 400 Λb⁰ skilimų į J/ψ, protoną ir kaoną. J/ψ ir protono poros masės
 skirstinyje jis rado pakilimą ties 4,4–4,5 GeV – ten pat, kur LHCb 2015 m.
 atrado pentakvarkus. Tai kokybinis atkartojimas: įrodyti, kad tai naujos
 dalelės, reikėtų išsamios amplitudžių analizės.“
@@ -522,8 +520,9 @@ space: { at: [53, 2.8, 160], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 <!--
 Message: this is the work we were nominated for, and the people who did it.
 
-Sakyti: „Už šį darbą mus ir nominavo: už LHCb duomenų paskelbimo parengimą, šio
-darbo koordinavimą kolaboracijoje, tyrimus ir mokymą su jais čia, Vilniuje.
+Sakyti: „Mus nominavo už tai, kad parengėme LHCb duomenis paskelbti, koordinuojame
+šį darbą kolaboracijoje ir patys naudojame šiuos duomenis tyrimams ir mokymui
+Vilniuje.
 Duomenis gali atsisiųsti bet kas, svetainėje opendata.cern.ch. Ačiū jums ir ačiū visai mūsų grupei.“
 
 The camera flies back to the collisions where the data begin, and the group
