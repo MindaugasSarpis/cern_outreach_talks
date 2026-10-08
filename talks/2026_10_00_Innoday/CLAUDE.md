@@ -33,9 +33,9 @@ brings the next round, and Lithuanian firms can solve it.
   that forced an invention to the invention's photo standing at its end
   (StagePhoto place mode): control room → touchscreen; information → the web
   (1989 proposal, 1993 public domain); detectors → PET, colour X-ray, Timepix
-  round the Moon; beams → hadron therapy; data → the grid; magnets → the
-  superconducting line. The part is named during the flight.
-- **III · Atgal.** How technology leaves CERN (700+), what suppliers gain
+  round the Moon; beams → hadron therapy; the timing system → White Rabbit (Frankfurt
+  exchange); magnets → the superconducting line (tested with Airbus). The part is named during the flight.
+- **III · Privačiam sektoriui.** How technology leaves CERN (700+), what suppliers gain
   (+14 %), the next machine (FCC), Lithuania (associate, full-membership bid),
   the bookend clip (the zoom-out reversed, back to Saulėtekis), what a firm can
   do (613 mln. CHF a year; register, write to the liaison officer), „Ačiū“.
@@ -75,10 +75,12 @@ the part word during a Part II flight, gone before the photo lands).
 
 ## Status
 
-2026-10-08. Deployed: 1d836da (Pages run 37836227756), place mode and the
-bookend. In progress on `wip/innoday-funnel`: the funnel → CMB opening (Higgs
-and 76/86 cut), the final text round (talk-review: facts, copy, unslop), print
-stills, then a full talk-review before the next deploy.
+2026-10-09. Deployed: 1d836da (place mode, bookend). Ready on
+`wip/innoday-funnel` for the next deploy (owner's go needed): the funnel → CMB
+opening, Higgs and 76/86 cut, the text round, the final talk-review (six
+lenses, 36 findings) and its delta review (five lenses, 30 findings) applied,
+print stills on 16 slides (checked with a real `slidev export`), White Rabbit
+in place of the grid. Lint 0 errors; stage:check clean.
 
 ## Decisions
 
@@ -94,15 +96,35 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   reveals, no rhetorical openers; kickers only where they add information.
 - Part II is "Sprendimai" (solutions), each slide names its problem.
 - Match cuts: only ring → tunnel; ring → CERN aerial and loop → FCC were weak.
+- Part II's photo places are built when their slides mount (all of them 3 s
+  after load) and stay in the world. Until the toolkit can hide them, Part I's
+  poses keep them out of frame: section I and the 4 TB/s/tunnel slides look
+  down along the ring at pitch 40 from just above it, so the photos (y 2.5,
+  4–6 outside the ring) stay above the top edge.
+- Data → White Rabbit (2012, Frankfurt exchange), the thing that left CERN;
+  the grid figures are in the notes. The photo's credit („© CERN (KT
+  ataskaita, 2024)“) is taken from the KT report page; the photographer is
+  not named there.
+- Part II kickers name the problem in the words slide 12 speaks („Problema:
+  valdyti mašiną“ …); part words name ring parts only.
+- Print and PDF: `<PrintStill>` on the world-only and clip slides, the stills
+  are settled last frames of `slidev-stage-record` runs in sequence (a shot
+  taken after a jump catches flights mid-way); export with `--wait-until load`.
 - Place mode over screen mode for Part II (owner via the Scheduler, 8 Oct):
   the inventions visibly hang off the machine.
 - The opener stays whole (slot ≥ 25 min).
 
 ## Figures and open items (for the speaker)
 
-- The 27 June (last beam) and 29 June (LS3 start) 2026 dates: confirm.
 - The MARS wrist image is © MARS Bioimaging (CERN KT hosts it); ask MARS
   before any non-educational use.
-- Part II's photo places are visible from Part I's poses until Tools adds a
-  place visibility control (asked 8 Oct).
+- Part II's photo places: a visibility control is asked of Tools (8 Oct);
+  the Part I poses avoid them meanwhile (see Decisions).
+- The hum drops on the open-space prologue poses (takeover, CMB, question):
+  `humAt: all` asked of Tools (9 Oct).
+- `ktbest-alumni` in research/facts.jsonl still says "into industry"; the
+  deck does not cite it (reported to the Scheduler).
+- On the venue laptop, read the stage's frame-rate guard at the close
+  (`document.querySelector('.stage canvas').__space.guardStage`); above 0
+  means a slide was too heavy.
 - The date is still `10_00`.

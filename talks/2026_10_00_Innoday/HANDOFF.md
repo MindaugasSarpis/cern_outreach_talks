@@ -223,3 +223,21 @@ lock and reinstalling (1d836da).
 Next: the expansion funnel → CMB opening (Planck map reprojected in
 ~/talks/.cache/innoday/funnel/cmb), cut the Higgs and 76/86 slides, the final
 text round, print stills, the ultracode review, deploy.
+
+## Funnel round, final reviews (2026-10-08/09, wip/innoday-funnel)
+
+- Opening: zoom-out → takeover → the history of the Universe as a funnel of
+  grains (`setup/funnel.js`, station `funnel` at [30, 40, −110]) seen from
+  outside („13,8 mlrd. metų nuo Didžiojo sprogimo“ after the flight) → down
+  the funnel to the CMB cap in Planck 2018 SMICA colours
+  (`public/figures/cmb_planck.png`, reprojected from the IRSA preview; „380 000
+  metų po Didžiojo sprogimo“ after landing) → „Iš ko visa tai sudaryta?“.
+  Higgs and 76/86 cut (owner's choice).
+- Text round: talk-review (facts, copy, unslop) on 82ad284, 21 findings
+  verified; final talk-review (six lenses) on 2ba63fe, 36 kept; delta review
+  (five lenses) on 213abe9, 30 kept; all applied but per-slide facts ids
+  for the funnel and CMB (no bank entry; the sources are in the notes).
+- Before → after lists were sent to the Scheduler for its text audit.
+- Render: point sprites capped and faded near the camera (funnel, takeover);
+  takeover grains hidden outside the prologue; strands not drawn while off;
+  places at 360 columns.

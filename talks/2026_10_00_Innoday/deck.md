@@ -152,7 +152,7 @@ Pastaba: „žvaigždės, dujos, planetos ir mes“ — tyčia ne „galaktikos�
 
 ---
 layout: section
-space: { at: [16, 0, 0], dist: 24, yaw: -30, pitch: 55, dim: 0.15 }   # the ring from above, filling the right of the frame
+space: { at: [14, 0, 7], dist: 6, yaw: 90, pitch: 40, dim: 0.15 }   # down on the ring between two strands, along it: Part II's photos stay above the frame
 ---
 
 <PrintStill src="stills/07.jpg" />
@@ -204,7 +204,7 @@ Faktai: LHCb sveria 5 600 t, 21 × 10 × 13 m, 100 m po žeme; artimiausias 
 -->
 
 ---
-space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 22, dim: 0.3 }   # match cut: down on the ring, looking along it; its curve becomes the tunnel's
+space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 40, dim: 0.3 }   # match cut: down on the ring, looking along it; its curve becomes the tunnel's
 ---
 
 <PrintStill src="stills/10.jpg" />
@@ -234,7 +234,7 @@ Jei klausia apie atviruosius duomenis: visus 2011–2012 m. LHCb duomenis (800�
 -->
 
 ---
-space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 22, dim: 0 }   # the same pose under the photo
+space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 40, dim: 0 }   # the same pose under the photo
 ---
 
 <Strands :on="false" />
