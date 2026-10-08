@@ -48,7 +48,7 @@ I. VADOVĖLIO GALE ATSAKYMO NĖRA
 Message: in my work there is no answer at the back of the book; today you will try it yourself.
 Picture: a five-quark particle gathers out of the dust beside the title.
 
-Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Aš esu dalelių fizikas Vilniaus universitete, ir mano darbe tokio vadovėlio nėra. Dirbu su klausimais, į kuriuos dar niekas neatsakė. Šiandien pats pabandysi tokį darbą.
+Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Esu dalelių fizikas Vilniaus universitete ir mano darbe tokio vadovėlio nėra. Dirbu su klausimais, į kuriuos dar niekas neatsakė. Šiandien tokį darbą pabandysi ir tu.
 
 (~0.5 min)
 -->
@@ -69,7 +69,7 @@ Message: you decide: is this bump a particle or chance?
 Picture: a histogram fills dot by dot (140 dots); one bin near the middle rises well above its neighbours.
 Note: the plot is an illustration, not measured data: a random sample from a smooth spectrum with no particle in it, in which chance made the bump (public/data/theta-toy.json). Say „toks grafikas“, never „tikras“.
 
-Štai toks grafikas, kokius matome kasdien. Kiekvienas taškelis – vienas susidūrimas, kurį užregistravo detektorius, o grafike jie sudėti pagal masę. Jeigu kažkurioje vietoje susidaro kauburys, gal ten yra dalelė, kurios dar niekas nematė. O gal tai tik atsitiktinumas, kaip kad metant kauliuką kelis kartus iš eilės iškrenta šešetas. Kaip manai, ar čia dalelė?
+Štai toks grafikas, kokių matome kasdien. Kiekvienas taškelis – vienas susidūrimas, kurį užregistravo detektorius, o grafike jie sudėti pagal masę. Jeigu kurioje nors vietoje susidaro kauburys, gal ten yra dalelė, kurios dar niekas nematė. O gal tai tik atsitiktinumas, kaip kad metant kauliuką kelis kartus iš eilės iškrenta šešetas. Kaip manai, ar čia dalelė?
 [pauzė 3 s]
 
 (~0.6 min)
@@ -90,7 +90,7 @@ space: { at: trial, dim: 0.05 }
 Message: in 2003 physicists said yes and announced a pentaquark; others soon saw a bump too.
 Picture: the same small histogram.
 
-2003 metais fizikai Japonijoje nusprendė, kad taip. Jie paskelbė, kad rado pentakvarką – dalelę iš penkių kvarkų. Tokių dalelių galimybę dar 1964 metais numatė kvarkų idėja, bet niekas jų nebuvo matęs. Netrukus panašų kauburį pamatė ir kitos grupės.
+2003 metais fizikai Japonijoje savo grafike pamatė panašų kauburį ir nusprendė, kad tai dalelė. Jie paskelbė, kad rado pentakvarką – dalelę iš penkių kvarkų. Kvarkų idėja, atsiradusi 1964 metais, tokias daleles leido, bet niekas jų nebuvo matęs. Netrukus panašų kauburį pamatė ir kitos grupės.
 
 (~0.4 min)
 -->
@@ -103,14 +103,14 @@ space: { at: trial, dim: 0.05 }
 
 <div class="say top">
 <p class="kick blue">2008 m.</p>
-<p class="big">Su daugiau duomenų kauburys išnyko</p>
+<p class="big">Surinkus daugiau duomenų kauburys išnyko</p>
 </div>
 
 <!--
 Message: with far more data the bump went away; by 2008 the claim was withdrawn.
 Picture: the small histogram clears; 3 500 dots fall into the same bins and make a smooth, falling shape with no bump. Illustration, as on slide 2.
 
-Tada kitos komandos pakartojo matavimą su daug daugiau duomenų. Kauburys išnyko. 2008 metais pagrindinis dalelių fizikos žinynas parašė, kad to pentakvarko nėra. Kauburys buvo atsitiktinumas, kurį per anksti palaikė dalele.
+Tada kitos komandos pakartojo matavimą, surinkę daug daugiau duomenų. Kauburys išnyko. 2008 metų pagrindiniame dalelių fizikos žinyne parašyta, kad to pentakvarko nėra. Kauburys buvo atsitiktinumas, kurį fizikai per anksti palaikė dalele.
 
 (~0.5 min)
 -->
@@ -121,13 +121,13 @@ space: { at: lhcb, dim: 0 }
 
 <VideoPlayer src="cern_footage_2022_013_001.mp4" muted />
 
-<div class="photo-credit">Video: CERN</div>
+<div class="photo-credit">Vaizdo įrašas: CERN</div>
 
 <!--
-Message: years later my experiment took up the search, at the LHC.
+Message: my experiment is at CERN, where the LHC collides protons, about a billion collisions a second.
 Picture: real footage, a travelling shot along the LHC tunnel. Advance whenever you finish; the clip is long.
 
-Po kelerių metų pentakvarkų ieškoti ėmėsi mano eksperimentas. Prie Ženevos, šimto metrų gylyje, yra dvidešimt septynių kilometrų žiedas – Didysis hadronų greitintuvas. Jame protonai susiduria beveik šviesos greičiu, ir per sekundę įvyksta milijonai susidūrimų.
+Mano eksperimentas yra CERN, prie Ženevos. Ten, šimto metrų gylyje, yra dvidešimt septynių kilometrų žiedas – Didysis hadronų greitintuvas. Jame protonai susiduria beveik šviesos greičiu ir per sekundę įvyksta apie milijardas susidūrimų.
 
 (~0.4 min)
 -->
@@ -136,15 +136,15 @@ Po kelerių metų pentakvarkų ieškoti ėmėsi mano eksperimentas. Prie Ženevo
 space: { at: lhcb, dim: 0 }
 ---
 
-<StagePhoto src="/figures/photos/lhcb-cavern.jpg" alt="LHCb detektoriaus urvas CERN, 2019">
-<div class="photo-credit">LHCb, CERN · Foto: Rosa Menkman, CC BY 2.0</div>
+<StagePhoto src="/figures/photos/lhcb-cavern.jpg" alt="LHCb detektoriaus požeminė salė, CERN, 2019 m.">
+<div class="photo-credit">LHCb, CERN · Rosa Menkman nuotr., CC BY 2.0</div>
 </StagePhoto>
 
 <!--
 Message: LHCb is one of the collision points, and I am one of the people who work on it.
 Picture: the real photograph of the LHCb cavern condenses out of grains.
 
-Viename iš susidūrimo taškų stovi LHCb – penkių tūkstančių šešių šimtų tonų detektorius. Jame dirba daugiau nei tūkstantis aštuoni šimtai žmonių iš dvidešimt septynių šalių, ir aš esu vienas iš jų.
+Viename iš susidūrimo taškų stovi LHCb – penkių tūkstančių šešių šimtų tonų detektorius. Šiame eksperimente dirba daugiau nei tūkstantis aštuoni šimtai žmonių iš dvidešimt septynių šalių. Aš esu vienas iš jų.
 
 (~0.3 min)
 -->
@@ -166,11 +166,11 @@ space: { at: lhcb, dim: 0.05 }
 </div>
 
 <!--
-Message: in 2015 LHCb saw a peak, checked everything, and it held; by 2019 it was three.
-Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate, fast at first, until the narrow peaks stand out (about 20 s); then the three peaks light up and the line on screen changes from „LHCb duomenyse iškilo smailė“ (2015 m.) to „Trys pentakvarkai“ (2019 m.). Time the last sentence of the script to that change.
+Message: in 2015 LHCb, studying a heavier particle's decay, found a peak it had not looked for, checked everything, and it held; by 2019 the peak was two states and a third had appeared.
+Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate, fast at first, until the narrow peaks stand out (about 20 s); then the three peaks light up and the line on screen changes from „LHCb duomenyse iškilo smailė“ (2015 m.) to „Trys pentakvarkai“ (2019 m.). Time the last sentence („Tai trys pentakvarkai, kuriuos matai dabar.“) to that change.
 Data: LHCb, PRL 122, 222001 (2019), HEPData ins1728691 Table 2 (m(Kp) > 1,9 GeV). These bins hold the 2015 sample and the later data together; the 2015 paper's own bins are not on HEPData.
 
-2015 metais LHCb grafike vėl iškilo smailė. Šįkart duomenų buvo dešimtys tūkstančių, o ne šimtai. Prieš paskelbdama, LHCb komanda tikrino viską, ką sugalvojo: ar smailė neatsiranda dėl detektoriaus, dėl kitų dalelių, dėl to, kaip atrinkti duomenys. Ir abejojo pati savimi, nes 2003-iųjų istoriją dar gerai prisiminė. Smailė liko. 2019 metais, su dar daugiau duomenų, ji išsiskyrė į tris pentakvarkus – tai, ką matai dabar.
+2015 metais LHCb tyrė, kaip skyla viena sunkesnė dalelė, ir grafike netikėtai iškilo smailė. Prieš paskelbdama rezultatą, LHCb komanda tikrino viską, ką sugalvojo: ar smailė neatsiranda dėl detektoriaus, dėl kitų dalelių, dėl to, kaip atrinkti duomenys. Komanda buvo atsargi, nes 2003-iųjų istoriją dar gerai prisiminė. Smailė liko. 2019 metais, surinkus dar daugiau duomenų, ta smailė išsiskyrė į dvi, o atsirado ir trečia. Tai trys pentakvarkai, kuriuos matai dabar.
 
 (~0.7 min)
 -->
@@ -182,14 +182,14 @@ space: { at: lhcb, dist: 21, dim: 0.05 }
 <Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: -1, th1: 0, th2: 0, jp: 1, mine: 0 }" />
 
 <div class="say top">
-<p class="big">Šimtus kartų daugiau duomenų</p>
+<p class="big">Šimtus kartų daugiau duomenų nei 2003 m.</p>
 </div>
 
 <!--
 Message: the difference was far more data and checking by people outside the analysis.
 Picture: the full LHCb histogram, the camera drawing back.
 
-2015 metais duomenų buvo šimtus kartų daugiau nei 2003-iaisiais. Be to, prieš paskelbiant rezultatą LHCb jį tikrino kolaboracijos nariai, kurie toje analizėje nedalyvavo, ir jų darbas buvo ieškoti klaidų. Tokio tikrinimo vadovėlyje nėra, jį išmoksti dirbdamas.
+2015 metais duomenų buvo šimtus kartų daugiau nei 2003-iaisiais. Be to, rezultatą dar tikrino kiti LHCb mokslininkai, kurie toje analizėje nedalyvavo. Jų darbas buvo ieškoti klaidų.
 
 (~0.4 min)
 -->
@@ -210,7 +210,7 @@ III. NERADAU
 Message: my task was to check whether these three appear in another decay: a needle in a haystack, and after two years my method worked.
 Picture: a wide field of straw-coloured grains, the haystack; a thread of light runs in and a white-gold cluster gathers.
 
-2019 metais pradėjau doktorantūrą Heidelberge. Mano užduotis buvo patikrinti, ar šie trys pentakvarkai atsiranda ir tada, kai sunkesnė dalelė subyra kitaip. Tai kaip ieškoti adatos šieno kupetoje, kai net nežinai, kaip adata atrodo. Didžiąją laiko dalį rašiau programas, kurios atsijoja duomenis, ir daug kalbėjausi su kolegomis. Kad apskritai galėčiau ieškoti, turėjau sugalvoti naują būdą aptikti dalelę, kurią detektorius dažnai praleidžia. Po dvejų metų pamačiau, kad jis veikia.
+2019 metais pradėjau doktorantūrą Heidelberge. Mano užduotis buvo patikrinti, ar šie trys pentakvarkai atsiranda ir tada, kai sunkesnė dalelė skyla kitaip. Tai kaip ieškoti adatos šieno kupetoje. Didžiąją laiko dalį rašiau programas, kurios atsijoja duomenis, ir daug kalbėjausi su kolegomis. Kad apskritai galėčiau ieškoti, turėjau sugalvoti naują būdą aptikti dalelę, kurią detektorius dažnai praleidžia. Po dvejų metų pamačiau, kad jis veikia.
 
 (~0.6 min)
 -->
@@ -249,11 +249,12 @@ space: { at: whole, sway: 0, dim: 0.55 }
 </div>
 
 <!--
-IV. KO TAI IŠMOKO
-Message: the work trains skills other jobs need; about three in four people who leave CERN work in industry.
+IV. KO TAI IŠMOKĖ
+Message: the work trains skills other jobs need; about three in four CERN alumni now work outside research and education, most often in IT.
+Source (not on screen): CERN socio-economic impact study 2026 (Technopolis/CSIL), §5.4, Fig. 18, CERN Alumni Network data, Oct 2025: 26 % in education or research, the largest other sector computer hardware, software and services (23 %).
 Picture: the map of Europe gathers, dimmed, behind the line.
 
-Per tuos metus išmokau programuoti, nes be programų tokių duomenų neperžiūrėsi, ir statistikos, nes reikia atskirti tikrą smailę nuo atsitiktinumo. Dirbau komandoje su žmonėmis iš daugelio šalių ir kalbėjausi su jais angliškai. Tokių įgūdžių reikia ir kituose darbuose. CERN skaičiavimu, maždaug trys iš keturių žmonių, išėjusių iš CERN, dirba pramonėje.
+Per tuos metus išmokau programuoti, nes be programų tokių duomenų neperžiūrėsi. Išmokau ir statistikos, nes reikia atskirti tikrą smailę nuo atsitiktinumo. Dirbau komandoje su žmonėmis iš daugelio šalių ir kalbėjausi su jais angliškai. Tokių įgūdžių reikia ir kituose darbuose. CERN duomenimis, maždaug trys iš keturių žmonių, kurie dirbo ar mokėsi CERN, dabar dirba ne moksle ir ne švietime, dažniausiai IT įmonėse.
 
 (~0.6 min)
 -->
@@ -274,7 +275,7 @@ space: { at: whole, sway: 0, dim: 0.05 }
 Message: my own road was not planned either.
 Picture: the trail draws across Europe: Vilnius → CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius.
 
-Iki dvylikos metų norėjau būti egiptologu. Studijavau Glazge ir ten dirbau vadybininku, kad turėčiau iš ko gyventi. Grįžęs į Lietuvą dirbau su lazeriais, doktorantūrą pradėjau Vokietijoje, o dabar Vilniaus universitete kartu su kolegomis kuriame LHCb grupę.
+Iki dvylikos metų norėjau būti egiptologu. Vienuoliktoje klasėje pirmą kartą nuvažiavau į CERN. Studijavau Glazge ir ten dirbau vadybininku, kad turėčiau iš ko gyventi. Grįžęs į Lietuvą dirbau su lazeriais. Doktorantūrą pradėjau Heidelberge, o pandemijos metais visa mūsų grupė persikėlė į Boną. Dabar Vilniaus universitete kartu su kolegomis kuriame LHCb grupę.
 
 (~0.4 min)
 -->
@@ -286,19 +287,19 @@ space: { at: quarks, dist: 22, yaw: 20, pitch: 6, sway: 0.5, dim: 0.6 }
 <Grains :set="{ pq: 3, needle: 0, dance: 1, phantom: 0, route: 7, th1: 0, th2: 0, jp: 1, mine: 1 }" />
 
 <div class="say top wide list">
-<p class="kick">Ką gali padaryti jau šiais metais</p>
+<p class="kick">Ką gali padaryti jau šiais mokslo metais</p>
 <p class="line">LHCb meistriškumo klasė Vilniaus universitete · vasaris–kovas</p>
-<p class="line">„Beamline for Schools“ konkursas CERN · nuo 16 metų</p>
+<p class="line">CERN konkursas „Beamline for Schools“ · nuo 16 metų</p>
 <p class="line">opendata.cern.ch</p>
 </div>
 
 <!--
-V. TAVO ĖJIMAS
+V. KĄ GALI PADARYTI TU
 Message: three real things a student can do this year.
 Picture: the five-quark particle far off, dimmed behind the three lines.
 Check before the talk: the 2027 masterclass date at VU (2026: 26 February) and the 2027 Beamline for Schools call (past rules: 16 or older, teams of at least five with an adult coach).
 
-Štai ką gali padaryti jau šiais metais. Kasmet vasarį–kovą Vilniaus universitete vyksta LHCb meistriškumo klasė: vieną dieną mokiniai analizuoja tikrus CERN duomenis ir rezultatus aptaria su kitų šalių grupėmis. CERN kasmet rengia konkursą „Beamline for Schools“: ne mažiau kaip penkių mokinių nuo šešiolikos metų komanda su mokytoju pasiūlo eksperimentą, o laimėtojai jį atlieka prie tikro greitintuvo. Ir LHCb duomenis gali atsisiųsti kiekvienas, nemokamai, adresu opendata.cern.ch.
+Štai ką gali padaryti jau šiais mokslo metais. Vilniaus universitete vasarį ar kovą vyksta LHCb meistriškumo klasė. Mokiniai ten vieną dieną analizuoja tikrus CERN duomenis ir rezultatus aptaria su kitų šalių grupėmis. CERN kasmet rengia konkursą „Beamline for Schools“. Ne mažiau kaip penkių mokinių nuo šešiolikos metų komanda su suaugusiu vadovu, pavyzdžiui, mokytoju, pasiūlo eksperimentą, o laimėtojai jį atlieka prie tikro greitintuvo. Ir LHCb duomenis nemokamai gali atsisiųsti kiekvienas iš opendata.cern.ch.
 
 (~0.8 min)
 -->
