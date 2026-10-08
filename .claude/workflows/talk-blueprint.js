@@ -1,7 +1,7 @@
 export const meta = {
   name: 'talk-blueprint',
   description: 'Design a talk from its Brief, or overhaul a deck: five critiques, three blueprints from different angles, three judges, and one editor who writes the blueprint (slide table with minutes, style rules, world plan, drop order, decisions, research gaps)',
-  whenToUse: 'At the start of a talk that matters, or for an overhaul. args: { talk: "talks/<dir>", repo: "<worktree root>", today: "YYYY-MM-DD", duration: minutes, lang?: "en"|"lt", audience?: string, delivery?: "venue"|"broadcast", sheets?: [contact sheet paths], angles?: [{ key, brief }], judges?: [string], out?: "talks/<dir>/notes/blueprint.md", done?: ["critique-<lens>", "blueprint-<angle>", "judge-<n>" an earlier run finished] (skipped on a re-run), effort?: { stage or label: "low"|"medium"|"high"|"xhigh"|"max" }, models?: { stage or label: model id } (none pinned) }',
+  whenToUse: 'At the start of a talk that matters, or for an overhaul. args: { talk: "talks/<dir>", repo: "<worktree root>", today: "YYYY-MM-DD", duration: minutes, head?: "<git rev-parse HEAD>" (keys this run\'s result files; else today), lang?: "en"|"lt", audience?: string, delivery?: "venue"|"broadcast", sheets?: [contact sheet paths], angles?: [{ key, brief }], judges?: [string], out?: "talks/<dir>/notes/blueprint.md", done?: ["critique-<lens>", "blueprint-<angle>", "judge-<n>" an earlier run finished] (skipped on a re-run), effort?: { stage or label: "low"|"medium"|"high"|"xhigh"|"max" }, models?: { stage or label: model id } (none pinned) }',
   phases: [
     { title: 'Critique', detail: 'five lenses on the Brief, the outline or the current deck' },
     { title: 'Blueprints', detail: 'three independent proposals from different angles' },
@@ -37,11 +37,15 @@ const OUT = A.out ? `${REPO}/${String(A.out).replace(REPO + '/', '')}` : `${DIR}
 const NAME = TALK.split('/').pop()
 const SLUG = (/^\d{4}_\d{2}_\d{2}_./.test(NAME) ? NAME.slice(11) : NAME).toLowerCase().replace(/_/g, '-')
 // Every critique, proposal and judge also writes its result to RUN/<id>.json
-// (critique-<lens>, blueprint-<angle>, judge-<n>). After a stop, `ls ${RUN}`
-// names what a re-run can pass as args.done; the skipped stages' results are
-// read from their files by the stages after them. A run that can still be
-// resumed by its run id needs none of this.
-const RUN = `/tmp/talk-blueprint-${SLUG}`
+// (critique-<lens>, blueprint-<angle>, judge-<n>). RUN is keyed on the run:
+// the HEAD it started from (args.head), else the day (args.today), so a later
+// run never finds an earlier run's files under its own ids. After a stop,
+// `ls ${RUN}` names what a re-run with the same head can pass as args.done;
+// the skipped stages' results are read from their files by the stages after
+// them. Once the blueprint is filed, `next` has the main loop remove RUN. A
+// run that can still be resumed by its run id needs none of this.
+const KEY = String(A.head ? String(A.head).slice(0, 12) : TODAY).replace(/[^\w.-]+/g, '-')
+const RUN = `/tmp/talk-blueprint-${SLUG}/${KEY}`
 const resultFile = (id) => `${RUN}/${id}.json`
 const DONE = new Set((Array.isArray(A.done) ? A.done : []).map((d) => String(d).replace(':', '-')))
 
@@ -301,5 +305,8 @@ return {
   judges: final ? judges.map((j) => ({ best: j.best, risks: j.risks })) : judges,
   research_gaps: final ? final.research_gaps : proposals.flatMap((p) => p.research_gaps || []),
   unverified: lost,
-  next: `Hand off first (docs/talk-quality.md §8): Status and Decisions (the blueprint's decisions among them) in ${TALK}/CLAUDE.md, a commit of the talk's files by path with the blueprint, and this session's line via python3 -I .claude/skills/talk-quality/status_line.py <slug>. Then review the blueprint with the owner (or log it under Decisions when AFK), write the outline and draft into deck.md citing the research_gaps ids, then run the talk-research-gaps workflow (skill talk-research): its plan agent finds the uncited and missing ids in the deck, or pass research_gaps as lanes[].claims. Never pass them as briefGaps, which only searches the owner's own mail, Drive and calendar.`,
+  run_dir: RUN,
+  next: final
+    ? `Hand off first (docs/talk-quality.md §8): Status and Decisions (the blueprint's decisions among them) in ${TALK}/CLAUDE.md, a commit of the talk's files by path with the blueprint, a push of the talk's branch (never main), and this session's line via python3 -I .claude/skills/talk-quality/status_line.py <slug>, all from the worktree root. Then rm -r ${RUN}: this run's result files, which no later run should read. Then review the blueprint with the owner (or log it under Decisions when AFK), write the outline and draft into deck.md citing the research_gaps ids, then run the talk-research-gaps workflow (skill talk-research): its plan agent finds the uncited and missing ids in the deck, or pass research_gaps as lanes[].claims. Never pass them as briefGaps, which only searches the owner's own mail, Drive and calendar.`
+    : `No blueprint was written. Resume this run by its run id if you have it; otherwise run talk-blueprint again with ${A.head ? `head ${A.head}` : `no head and today ${TODAY}`}, so that it reads ${RUN}, and args.done set to the ids \`ls ${RUN}\` lists. Keep ${RUN} until a blueprint is filed.`,
 }

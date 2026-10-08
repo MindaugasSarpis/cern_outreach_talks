@@ -51,6 +51,7 @@ that matters, or for an overhaul:
 ```js
 Workflow({ name: 'talk-blueprint', args: {
   talk: 'talks/<t>', repo: '<worktree root>', today: '<YYYY-MM-DD>',
+  head: '<HEAD sha>',             // git rev-parse HEAD; keys this run's result files
   duration: 12, lang: 'lt', audience: 'grade 9-12 students, watching a stream',
   delivery: 'broadcast',          // venue | broadcast
   sheets: ['<contact sheets of the current deck, if any>'],
@@ -70,10 +71,14 @@ stage (`medium` for critiques and judges, `high` for the three blueprints
 and the editor; `effort: { judge: 'high' }` overrides one); no model is
 pinned (`models: { <stage>: '<model id>' }` is the owner's choice). Each
 critique, blueprint and judge writes its result to
-`/tmp/talk-blueprint-<slug>/<id>.json`. If a run stops, resume it by its
-run id when you have it; otherwise run it again with `done` set to the ids
-`ls` finds there (`critique-<lens>`, `blueprint-<angle>`, `judge-<n>`): the
-stages after them read those files.
+`/tmp/talk-blueprint-<slug>/<key>/<id>.json`, where `<key>` is the first 12
+characters of `head` (the day, `today`, when no head is given); the result
+gives the directory as `run_dir`. If a run stops, resume it by its run id
+when you have it; otherwise run it again with the same `head` and with
+`done` set to the ids `ls` finds in that directory (`critique-<lens>`,
+`blueprint-<angle>`, `judge-<n>`): the stages after them read those files.
+Once the blueprint is filed, remove the directory (`rm -r <run_dir>`), as
+the result's `next` says, so that no later run reads its files.
 
 Workflows report back when they finish. While one runs, never sleep, read
 its journal or open agent transcripts; work on something else or end the
