@@ -249,6 +249,7 @@ Jei klausia apie atviruosius duomenis: visus 2011–2012 m. LHCb duomenis (800�
 
 ---
 layout: section
+transition: through|fade   # prototype: into the first photograph through the world
 space: { at: [84.2, -2.2, 0], dist: 13, yaw: -22, pitch: 16, dim: 0.08 }
 ---
 
@@ -264,7 +265,8 @@ Sakyti: „Šešios problemos: kaip valdyti mašiną, kaip tvarkyti informaciją
 -->
 
 ---
-space: { at: web, dist: 15, yaw: 46, pitch: 18, dim: 0 }
+transition: through|fade
+space: { at: web, dist: 17, yaw: 46, pitch: 18, dim: 0 }   # 13–16: yaw falls, dist shrinks: one way round
 ---
 
 <div class="hero low deep" style="--focus: 50% 30%">
@@ -288,7 +290,8 @@ Istorija: pasiūlymas ranka parašytas 1972 m. kovo 11 d. Stumpe atsisakė pasi
 -->
 
 ---
-space: { at: web, dist: 15, yaw: 14, pitch: 16, dim: 0 }
+transition: through|fade
+space: { at: web, dist: 16, yaw: 30, pitch: 16, dim: 0 }
 ---
 
 <div class="hero page" style="--focus: 50% 0%">
@@ -311,7 +314,8 @@ Pasiūlymo įžanga: daugelis diskusijų apie CERN ateitį ir LHC erą baigiasi 
 -->
 
 ---
-space: { at: web, dist: 15, yaw: 30, pitch: 14, dim: 0 }
+transition: through|fade
+space: { at: web, dist: 15.5, yaw: 14, pitch: 14, dim: 0 }
 ---
 
 <div class="hero right" style="--focus: 35% 55%">

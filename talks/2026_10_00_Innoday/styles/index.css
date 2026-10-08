@@ -307,3 +307,31 @@ html[data-stage] .payoff .big.blue { background: linear-gradient(180deg, #ffffff
 html[data-stage] .payoff .big .unit { font-size: 0.34em; letter-spacing: -0.01em; margin-left: 0.18em; }
 html[data-stage] .payoff h1 { font-size: 44px !important; line-height: 1.08 !important; margin: 0 0 14px !important; max-width: 20ch; text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7); animation: none !important; }
 html[data-stage] .payoff p:not(.kicker) { font-size: 24px; line-height: 1.38; margin: 0; max-width: 34ch; opacity: 0.95; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7); }
+
+/* --- `transition: through|fade` (prototype, 2026-10-08): travelling through the
+   world into and out of a photograph. Slidev runs a slide's transition when
+   leaving it, for both slides. A photograph that arrives grows out of the dust
+   ahead (a soft round edge widening) until it fills the frame, with the camera
+   flying behind it; one that leaves swells past the camera and dissolves. Any
+   other slide just fades. The mask and the scale exist only while the
+   transition runs, so the photo ends exactly as before: full and sharp. The
+   root carries the opacity transition, which is what Vue times the swap by. */
+html[data-stage] .through-enter-active,
+html[data-stage] .through-leave-active { transition: opacity 1.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+html[data-stage] .through-leave-active { transition-duration: 1.2s; transition-timing-function: cubic-bezier(0.5, 0, 0.8, 0.4); }
+html[data-stage] .through-enter-from,
+html[data-stage] .through-leave-to { opacity: 0; }
+html[data-stage] .through-enter-active .hero {
+  animation: through-in 1.6s cubic-bezier(0.16, 0.8, 0.24, 1) both;
+  -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+          mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+}
+@keyframes through-in {
+  from { transform: scale(0.2); -webkit-mask-size: 70% 70%; mask-size: 70% 70%; }
+  to   { transform: none;       -webkit-mask-size: 420% 420%; mask-size: 420% 420%; }
+}
+html[data-stage] .through-leave-active .hero { animation: through-out 1.2s cubic-bezier(0.5, 0, 0.8, 0.4) both; }
+@keyframes through-out { to { transform: scale(1.9); filter: blur(5px); } }
+html[data-stage] .through-enter-active .hero .hero-text { animation-delay: 1s; }
