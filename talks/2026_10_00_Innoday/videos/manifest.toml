@@ -8,7 +8,7 @@
 
 [defaults]
 # release_tag comes from videos.toml (videos-2026-10-00-innoday).
-max_size_mb = 300   # vu_ff_zoom: 4:42 of 1080p CG at the high-motion ceiling lands near 260 MB
+max_size_mb = 320   # vu_ff_zoom 253 MB; vu_ff_zoom_galaxy (4:26, re-encoded from the web copy at ~9.2 Mbit/s) 305 MB
 
 [[videos]]
 name    = "vu_ff_zoom.mp4"
