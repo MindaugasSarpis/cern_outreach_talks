@@ -171,7 +171,7 @@ onUnmounted(() => { run++; cancelAnimationFrame(raf); gl?.getExtension('WEBGL_lo
 
 <template>
   <div ref="root" class="web-takeover">
-    <img v-if="still" class="takeover-still" :src="url" alt="Kosminis tinklas — paskutinis įžanginio vaizdo klipo kadras" />
+    <img v-if="still" class="takeover-still" :src="url" alt="Paskutinis įžanginio vaizdo klipo kadras" />
     <Teleport to="body">
       <canvas v-if="live" ref="overlay" class="takeover-copy" aria-hidden="true"
         :style="{ left: box.left + 'px', top: box.top + 'px', width: box.width + 'px', height: box.height + 'px' }"></canvas>

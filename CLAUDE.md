@@ -33,14 +33,16 @@ Current talks:
   (no talk-owned clips, so no release to rename).
 - `talks/2026_10_00_Innoday/` — Innoday (Lithuanian): "Nuo Vilniaus iki
   visatos pakraščių ir atgal prie novatoriškų mokslo pasiekimų pritaikymo
-  privačiame sektoriuje", for a business and innovation audience. Opens on
-  the NFTMC zoom-out (`vu_ff_zoom.mp4`, copied to this talk's release), then
-  CERN, LHCb, what CERN gave the world, and knowledge transfer into the
-  private sector (2025–26 news, a top ten, what Lithuanian firms can do).
-  Slides carry a picture, a number or a short headline; what is said is in
-  the notes. Built on the packaged engine (`slidev-addon-stage`, blue
-  palette, `hadron` plugin); every clip uses `transition: dust`. Date
-  placeholder `10_00`, as for Startertalk. See "The stage (Innoday)" below.
+  privačiame sektoriuje". One spine (owner's feedback 8 Oct: the first flow
+  was not coherent): to see what the universe is made of, physicists built a
+  machine that pushed every technology past its limit; each limit broken
+  became something in daily use, and Lithuanian firms can be in the next
+  round. Prologue (NFTMC zoom-out → its last frame becomes the world),
+  I the machine, II the inventions (each slide names the problem it solved),
+  III back to the private sector. Photographs are full bleed (`.hero`);
+  slides carry a few words, the notes carry what is said; no slogan cards.
+  Pinned to slidev-videos feat/broadcast efacca2. Date placeholder `10_00`.
+  See "The stage (Innoday)" below.
 - `talks/2026_10_00_OpenData/` — "Opening LHCb's data", a 6½-minute award talk
   (LHCb Vilnius nominated for an open data award). On the packaged stage, pinned
   like the Innoday branch to slidev-videos `640eaa5` (feat/effects-v2) for the

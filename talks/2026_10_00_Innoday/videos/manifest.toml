@@ -24,6 +24,18 @@ as the World of Particles opener (release videos-2026-09-10-worldofparticles, \
 2026-09-07), copied to this talk's release. Raw is a 4K60 H.264 254 Mbps \
 Resolve master (9.0 GB) on gdrive as vu_ff_zoom.mp4."""
 
+[[videos]]
+name    = "vu_ff_zoom_galaxy.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = """\
+The opener until the owner's orbit clip exists: vu_ff_zoom.mp4 cut at 4:26, \
+before its last 16 s fade to black, so it ends on our galaxy seen from the \
+side and the takeover slide can start from that real frame \
+(public/figures/opener_last.jpg, pnpm takeover:frame). Made from the 1080p web \
+encode (not the raw): ffmpeg -t 266, h264_nvenc VBR ~7 Mbit/s, 3 s audio \
+fade-out at the end."""
+
 # The owner's new opener, in preparation: an orbit from VU out to the cosmic web.
 # It must END on the cosmic web, held (no fade to black): the next slide opens on
 # that same last frame and turns it into the world's grains (<WebTakeover>).
