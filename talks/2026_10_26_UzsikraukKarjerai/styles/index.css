@@ -181,3 +181,10 @@ html[data-stage] .say.swap-out { animation: stage-rise 0.9s var(--stage-ease) 0.
 html[data-stage] .say.swap-in { opacity: 0; animation: kk-in 0.8s ease 22.4s forwards; }
 @keyframes kk-out { to { opacity: 0; } }
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .say.swap-out { display: none; } html[data-stage] .say.swap-in { opacity: 1; animation: none; } }
+
+/* --- a one-line caption on a photograph, lower right, on a soft dark pill */
+html[data-stage] .photo-caption {
+  position: absolute; right: var(--kk-x); bottom: 64px; z-index: 6; max-width: 46%; text-align: right;
+  font-size: 26px; font-weight: 600; line-height: 1.2; color: #f4f6ff;
+  background: rgba(0, 0, 0, 0.55); padding: 8px 16px; border-radius: 8px;
+}
