@@ -144,7 +144,7 @@ space: { at: whole, sway: 0, dim: 0.05 }
 <Grains :set="{ bang: 3, pq: 0, needle: 0, dance: 0, phantom: 0, route: 3 }" />
 
 <div class="city late" style="left: 716px; top: 168px">Vilnius</div>
-<div class="city late" style="left: 406px; top: 374px">CERN</div>
+<div class="city late" style="left: 414px; top: 374px">CERN</div>
 <div class="city late" style="left: 270px; top: 146px">Glazgas</div>
 
 <!--
@@ -166,7 +166,7 @@ space: { at: whole, sway: 0, dim: 0.05 }
 <Grains :set="{ bang: 3, pq: 0, needle: 0, dance: 0, phantom: 0, route: 6 }" />
 
 <div class="city" style="left: 716px; top: 168px">Vilnius</div>
-<div class="city" style="left: 406px; top: 374px">CERN</div>
+<div class="city" style="left: 414px; top: 374px">CERN</div>
 <div class="city" style="left: 270px; top: 146px">Glazgas</div>
 <div class="city" style="left: 474px; top: 318px">Heidelbergas</div>
 <div class="city r" style="left: 405px; top: 254px">Bona</div>
@@ -389,7 +389,7 @@ space: { at: whole, sway: 0, dim: 0.05 }
 <Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 7 }" />
 
 <div class="city home" style="left: 716px; top: 168px">Vilnius</div>
-<div class="city" style="left: 406px; top: 374px">CERN</div>
+<div class="city" style="left: 414px; top: 374px">CERN</div>
 <div class="city" style="left: 270px; top: 146px">Glazgas</div>
 <div class="city" style="left: 474px; top: 318px">Heidelbergas</div>
 <div class="city r" style="left: 405px; top: 254px">Bona</div>

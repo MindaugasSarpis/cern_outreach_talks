@@ -56,6 +56,38 @@
   test encode at 2.5 Mbit/s of a dark slide to check banding; per-slide MP4s
   with `slidev-stage-record` for Delfi once the toolkit release lands.
 
+### Handoff (2026-10-08, workstation session ended; the owner moved to the HPC cluster)
+
+- **Owner's rework state.** Third version deployed (main 047fe53). The
+  owner's last verdict, on the second version, was "the story telling and
+  the flow is not coherent; visuals good but a bit washed out, needs to be
+  more striking but not synthetic not sloppy, photorealistic". This third
+  version answers that (one chronological thread, real photos/footage/plots,
+  near-black ground) but the owner has not reviewed it yet.
+- **Branch ahead of main, not deployed** (this commit): denser coastline
+  grains (Natural Earth points every 0.07°, size 4, alpha 0.8), a dull straw
+  haystack (`hayColor` #8f7d55) so the white-gold "method works" cluster on
+  slide 12 stands out (`dance`: #ffe08a, larger, delay 6 s), CERN label 8 px
+  right. Unverified: headless shots on the slow software clock caught slides
+  6 and 12 mid-assembly. Verify the end states with the recorder on its exact
+  clock (`slidev-stage-record dist out --slides 6-6 --fps 10 --size 1280x720
+  --hold 14 --gl auto`, then the same for 12 with `--hold 22`; take the last
+  frame), then deploy if they read.
+- **Next step.** The owner reviews the deployed deck (story and look); then
+  the speaker's [PATIKSLINTI] items (re-listen to the transcript quotes,
+  confirm the after-school courses, the Glasgow job and the laser work, why
+  he left particle physics, the "known particles" plot, the 2022 slide) and
+  Delfi's answers (feed type, squeeze size, 25p/50p, who advances slides,
+  logo/super/clock positions, files in advance).
+- **Pin.** slidev-videos `feat/broadcast` efacca2 (both addons), not yet a
+  release. Move to the release tag once the toolkit integration lands
+  (`pnpm talk pin` when the talk CLI is on main), re-run `slidev-stage-safe
+  --broadcast` and reshoot.
+- **Filming.** Delfi studio, Vilnius, 26 Oct 2026 16:00–18:00, no audience;
+  streamed to classrooms 27 Oct 2026 12:00. Laptop at 1920×1080, 50 Hz,
+  silent; a clicker. Record per-slide MP4s and plates as a backup before
+  the day.
+
 ## Decisions
 
 - 2026-10-08 — Story as one chronological thread with the opening question
