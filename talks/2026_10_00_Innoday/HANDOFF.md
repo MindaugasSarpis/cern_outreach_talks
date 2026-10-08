@@ -1,6 +1,6 @@
 # Innoday — handoff (2026-10-08)
 
-**Pin.** slidev-videos `12aa015` (dust-fullframe, the dark-clip fix, `advance-on-end`; both addons in `package.json`).
+**Pin.** slidev-videos `5c72c33` (dust-fullframe, the dark-clip fix, `advance-on-end`, `StagePhoto`; both addons in `package.json`).
 Shots: feat/shots-v2 `35340a9`, run from its worktree
 (`node ~/slidev-videos/.claude/worktrees/feat-shots-v2/packages/stage/bin/shots.mjs <dist> <out> --sheet`).
 
@@ -184,3 +184,6 @@ for a per-talk build job and the workflow has one `build` job; the run and
 the URL say otherwise.
 Next: „Ačiū“ alone (no subtitles), transitions round 2 with the strands
 (wip/innoday-through), the „…ir atgal“ bookend.
+- **No subtitles** (owner): „Ačiū“ stands alone; „Klausimai“ and the three
+  URLs moved into its notes, to be said aloud. The three part titles lost
+  their subtitle lines as well (said instead).

@@ -24,7 +24,7 @@
     "@slidev/cli": "^52.14.2"
   },
   "devDependencies": {
-    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#12aa015b31bd750aa5bbbfe088bec0fec8239255",
-    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#12aa015b31bd750aa5bbbfe088bec0fec8239255&path:/packages/stage"
+    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#5c72c334aa4901e3063e4983ece2bcff785a2063",
+    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#5c72c334aa4901e3063e4983ece2bcff785a2063&path:/packages/stage"
   }
 }
