@@ -63,6 +63,7 @@ html[data-stage] .say .line { font-size: 40px; font-weight: 600; line-height: 1.
 html[data-stage] .num {
   font-size: 130px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9;
   font-variant-numeric: tabular-nums; white-space: nowrap; margin: 0 0 6px;
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 0, 0, 0.7);
 }
 html[data-stage] .num.small { font-size: 84px; margin: 0; }
 html[data-stage] .num.small + .line { font-size: 30px; margin: 4px 0 14px; }
@@ -129,14 +130,15 @@ html[data-stage] .scrim-left {
   position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.38) 32%, rgba(0, 0, 0, 0) 58%);
 }
-html[data-stage] .photo.right img { position: absolute; width: 140%; height: 140%; left: -5%; top: -20%; }   /* the galaxy's core to 65 % of the width, off the text */
+html[data-stage] .photo.right img { position: absolute; width: 140%; height: 140%; left: -5%; top: -20%; max-width: none !important; max-height: none !important; }   /* the galaxy's core to 65 % of the width, off the text */
 
 /* --- city names on the map (positions projected from the `whole` pose, which has no sway) */
 html[data-stage] .city {
   position: absolute; font-size: 22px; font-weight: 600; letter-spacing: 0.01em; color: #eef1ff;
   text-shadow: var(--kk-shadow); white-space: nowrap; animation: stage-rise 0.8s var(--stage-ease) 1.6s both;
 }
-html[data-stage] .city.r { transform: translateX(-100%); text-align: right; }
+html[data-stage] .city.r { translate: -100% 0; text-align: right; }   /* `translate`, not `transform`: the rise-in animation holds transform: none */
+html[data-stage] .city.late { animation-delay: 5s; }   /* after the flight in and the map gathering */
 html[data-stage] .city.home { color: var(--kk-gold-hi); }
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .city { animation: none !important; } }
 

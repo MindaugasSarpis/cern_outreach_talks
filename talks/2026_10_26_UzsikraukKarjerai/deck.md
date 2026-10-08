@@ -143,9 +143,9 @@ space: { at: whole, sway: 0, dim: 0.05 }
 
 <Grains :set="{ bang: 3, pq: 0, needle: 0, dance: 0, phantom: 0, route: 3 }" />
 
-<div class="city" style="left: 716px; top: 168px">Vilnius</div>
-<div class="city" style="left: 406px; top: 374px">CERN</div>
-<div class="city" style="left: 270px; top: 146px">Glazgas</div>
+<div class="city late" style="left: 716px; top: 168px">Vilnius</div>
+<div class="city late" style="left: 406px; top: 374px">CERN</div>
+<div class="city late" style="left: 270px; top: 146px">Glazgas</div>
 
 <!--
 II. KELIAS
@@ -168,7 +168,7 @@ space: { at: whole, sway: 0, dim: 0.05 }
 <div class="city" style="left: 716px; top: 168px">Vilnius</div>
 <div class="city" style="left: 406px; top: 374px">CERN</div>
 <div class="city" style="left: 270px; top: 146px">Glazgas</div>
-<div class="city" style="left: 462px; top: 318px">Heidelbergas</div>
+<div class="city" style="left: 474px; top: 318px">Heidelbergas</div>
 <div class="city r" style="left: 405px; top: 254px">Bona</div>
 
 <!--
@@ -229,7 +229,7 @@ Sources: LEPS, PRL 91, 012002 (2003); PDG 2008 review: "overwhelming evidence th
 -->
 
 ---
-space: { at: [604.2, -1.6, 0], dist: 12, yaw: 18, pitch: 8, sway: 1, dim: 0.55 }
+space: { at: [604.2, -1.6, 0], dist: 13.5, yaw: 18, pitch: 8, sway: 1, dim: 0.55 }
 ---
 
 <Grains :set="{ bang: 3, pq: 3, needle: 0, dance: 0, phantom: 0, route: 6 }" />
@@ -255,7 +255,7 @@ Sources: LHCb, PRL 115, 072001 (2015), figure: m(J/ψ p) with the narrow Pc(4450
 -->
 
 ---
-space: { at: [604.2, -1.6, 0], dist: 12, yaw: 18, pitch: 8, sway: 1, dim: 0.55 }
+space: { at: [604.2, -1.6, 0], dist: 13.5, yaw: 18, pitch: 8, sway: 1, dim: 0.55 }
 ---
 
 <Grains :set="{ bang: 3, pq: 3, needle: 0, dance: 0, phantom: 0, route: 6 }" />
@@ -391,7 +391,7 @@ space: { at: whole, sway: 0, dim: 0.05 }
 <div class="city home" style="left: 716px; top: 168px">Vilnius</div>
 <div class="city" style="left: 406px; top: 374px">CERN</div>
 <div class="city" style="left: 270px; top: 146px">Glazgas</div>
-<div class="city" style="left: 462px; top: 318px">Heidelbergas</div>
+<div class="city" style="left: 474px; top: 318px">Heidelbergas</div>
 <div class="city r" style="left: 405px; top: 254px">Bona</div>
 
 <!--
