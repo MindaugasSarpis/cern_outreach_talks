@@ -41,6 +41,14 @@ Current talks:
   I the machine, II the inventions (each slide names the problem it solved),
   III back to the private sector. Photographs are full bleed (`.hero`);
   slides carry a few words, the notes carry what is said; no slogan cards.
+  Coherence pass (8 Oct, owner: "weird, not coherent and sloppy"): 33 → 28
+  visible slides. Part I answers the prologue's question (Higgs, LHCb, the
+  pentaquark) and ends on the limits that made it possible (LHC extremes,
+  LHCb's 4 TB/s); Part II follows its "Problema:" kickers grouped pocket →
+  hospital → industry today, ending on Airbus so Part III opens on "a firm
+  made a product of it". Cut to notes: the 1954 counter, the antimatter
+  question card, LHCb Vilnius, the VELO chip, the top ten. Decisions log in
+  `talks/2026_10_00_Innoday/HANDOFF.md`.
   Pinned to slidev-videos feat/broadcast efacca2. Date placeholder `10_00`.
   See "The stage (Innoday)" below.
 - `talks/2026_10_00_OpenData/` — "Opening LHCb's data", a 6½-minute award talk
