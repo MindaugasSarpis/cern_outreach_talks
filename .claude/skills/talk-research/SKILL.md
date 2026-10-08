@@ -7,7 +7,7 @@ description: Use when a talk in ~/outreach_talks needs facts, numbers, sources, 
 
 Research follows the deck draft, never the other way round: the deck is
 written first with fact ids in its notes (`docs/talk-quality.md` §2, step 4),
-then only what it still lacks is researched. Innoday spent 28 minutes
+then only what it still lacks is researched. Innoday spent 28.5 minutes
 researching before a slide existed, and the TV talk then researched the same
 topics again.
 

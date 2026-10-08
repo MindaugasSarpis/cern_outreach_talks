@@ -155,8 +155,8 @@ Two things the pipeline does not do:
   again; a claim whose wording goes beyond the stored fact is.
 - It does not read screenshots in the main context. Visual review runs in a
   subagent that gets the contact sheets, the shots metrics and the owner's
-  quotes above, and returns text. The Startertalk session read 270 PNGs and
-  ran out of context.
+  quotes above, and returns text. The final Startertalk session read 270
+  PNGs; its context grew to 943k tokens and was compacted.
 
 ## 3. Slide rules
 
@@ -205,7 +205,7 @@ From the Startertalk blueprint's style rules, generalised.
    data-dense. Send the owner a contact sheet with one question: "does each
    element carry meaning on the dense slide?" Roll it out only after a yes.
    The Koppenburg date-by-mass space drew "Looks impressive" on sparse slides
-   and was dropped a day later on dense ones. Under the AFK protocol, build
+   and was replaced the next day, once the full deck had been built on it. Under the AFK protocol, build
    the two prototype slides, record the question under Decisions and wait for
    the answer before rolling out.
 3. Everything in the world is made of grains. Solid shapes with labels read

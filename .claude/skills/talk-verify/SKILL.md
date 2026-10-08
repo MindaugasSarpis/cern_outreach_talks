@@ -7,7 +7,8 @@ description: Use before telling the owner a talk in ~/outreach_talks is done or 
 
 The owner should not be the visual QA. In the Startertalk an agent called the
 deck "in good shape" and within 40 minutes the owner found four busy or
-meaningless slides; the main context had read 270 PNGs and ran out.
+meaningless slides; the main context read 270 PNGs, grew to 943k tokens and
+was compacted.
 
 ## 1. Deterministic checks first
 
