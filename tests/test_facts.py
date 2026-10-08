@@ -205,11 +205,23 @@ class CommittedBank(unittest.TestCase):
         self.assertEqual(ids, sorted(ids))
 
     def test_touchscreen_entry(self):
-        entries, _ = fx.load_bank(fx.BANK)
-        top = [e for _, e in fx.search(entries, ["touchscreen"])[:5]]
-        stumpe = [e for e in top if "Stumpe" in e["claim_en"] and "1972" in e["claim_en"]]
+        # `facts.py touchscreen` (ten results by default) returns Stumpe's 1972 note with its source
+        rc, out, _ = run("touchscreen", "--json")
+        stumpe = [e for e in json.loads(out)["results"] if "Stumpe" in e["claim_en"] and "1972" in e["claim_en"]]
+        self.assertEqual(rc, 0)
         self.assertTrue(stumpe)
         self.assertTrue(stumpe[0]["source_url"].startswith("https://"))
+        entries, _ = fx.load_bank(fx.BANK)
+        self.assertEqual(fx.search(entries, ["stumpe", "1972"])[0][1]["id"], "gave-touch-stumpe-1972")
+
+    def test_touchscreen_page_read_together(self):
+        # two runs once read the CERN Courier touch-screen article and one of them
+        # wrote that it does not say the screen was sold by 1977; it does
+        entries, _ = fx.load_bank(fx.BANK)
+        group = fx.same_page(entries)["cerncourier.com/a/the-first-capacitative-touch-screens-at-cern"]
+        self.assertIn("touchscreen-hannover-1977", [e["id"] for e in group])
+        self.assertEqual(len({e["verified_by"] for e in group}), 1)
+        self.assertFalse([e["id"] for e in group if "not supported" in e["claim_en"]])
 
     def test_no_private_data(self):
         text = fx.BANK.read_text(encoding="utf-8")

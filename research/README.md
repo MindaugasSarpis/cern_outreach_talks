@@ -120,3 +120,8 @@ source:
   including the refuted "55 PB open".
 - `docs/superpowers/plans/2026-09-09-startertalk-dioramas-research.md`: 14
   facts that passed its per-claim verifier.
+
+The import kept one page per fact. Where a verifier's note relied on a
+second page, a claim can hold only in part on its `source_url`
+(ktbest-touchscreen did, and was re-sourced on 2026-10-08), so read the page
+before a fact from these runs goes on a slide.
