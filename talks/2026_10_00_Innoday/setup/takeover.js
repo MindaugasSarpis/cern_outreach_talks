@@ -9,7 +9,7 @@ import { Points, BufferGeometry, BufferAttribute, ShaderMaterial, AdditiveBlendi
 // ---- sampling: the frame → grains (screen uv, colour) -------------------------
 // Grains fall where the frame is bright (probability ~ luminance^gamma), so the
 // filaments and knots carry the picture and the voids stay empty.
-export function sampleFrame(img, { n = 140000, w = 960, h = 540, gamma = 1.7, floor = 0.035, seed = 1 } = {}) {
+export function sampleFrame(img, { n = 140000, w = 960, h = 540, gamma = 1.7, floor = 0.035, sat = 1.35, seed = 1 } = {}) {
   const c = document.createElement('canvas')
   c.width = w; c.height = h
   const g = c.getContext('2d', { willReadFrequently: true })
@@ -33,7 +33,10 @@ export function sampleFrame(img, { n = 140000, w = 960, h = 540, gamma = 1.7, fl
     const x = lo % w, y = (lo / w) | 0
     uv[k * 2] = (x + rnd()) / w
     uv[k * 2 + 1] = (y + rnd()) / h
-    const r = px[lo * 4] / 255, gg = px[lo * 4 + 1] / 255, b = px[lo * 4 + 2] / 255
+    // the tone mapper greys what adds up, so the grain starts a little more saturated than its pixel
+    const r0 = px[lo * 4] / 255, g0 = px[lo * 4 + 1] / 255, b0 = px[lo * 4 + 2] / 255
+    const l0 = 0.2126 * r0 + 0.7152 * g0 + 0.0722 * b0
+    const r = clamp01(l0 + (r0 - l0) * sat), gg = clamp01(l0 + (g0 - l0) * sat), b = clamp01(l0 + (b0 - l0) * sat)
     // the grain carries the pixel's hue; the density of grains carries its brightness
     const m = Math.max(r, gg, b, 1e-3), k2 = 0.55
     col[k * 3] = r * (1 - k2) + (r / m) * k2
