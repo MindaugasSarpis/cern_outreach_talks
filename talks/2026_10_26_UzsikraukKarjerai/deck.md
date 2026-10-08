@@ -20,25 +20,27 @@ stage:
   sound: false
   options: { lift: 0, nebula: 0, bloom: 0.32, exposure: 1.0, vignette: 0.45, dustGain: 1.0, density: 0.45, dustSize: 2.2, reach: 22 }
 title: Vadovėlio gale atsakymo nėra
+duration: 12min
+sources: notes
 info: |
   „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement): a Lithuanian
   talk for grades 9–12, filmed in the Delfi studio on 26 Oct 2026 and
-  streamed to classrooms on 27 Oct 2026, 12:00. About 10 minutes, 19 slides,
-  one chronological thread: the open question (why matter survived) and
-  where it is asked; how the speaker got there; the task his PhD gave him
-  (pentaquarks, from the 1964 idea to the 2015 discovery and the three of
-  2019); his search and its answer, „Neradau.“; what came after; the open
-  question again and a task for the week. Real footage (LHC tunnel, LHCb,
-  the CERN data centre), real LHCb plots and his own 2022 slide, inside one
-  world of grains (slidev-addon-stage on slidev-videos feat/broadcast,
-  `look: broadcast` with a darker ground). Laptop at 1920×1080, 50 Hz,
-  silent. Speaker notes carry the full script, timings, sources and every
-  [PATIKSLINTI] item.
+  streamed to classrooms on 27 Oct 2026, 12:00. About 9 minutes, 16 slides,
+  one thread: how the speaker came to one question with no answer in the
+  book (do pentaquarks appear in another decay?), the question's history
+  (the 1964 idea, the 2003 claim that others checked and did not confirm,
+  LHCb's discovery in 2015 and the three states of 2019), his four and a
+  half years of searching and its answer, „Neradau.“, why that check still
+  counts, how his own plans turned out, and one task for the week. Real
+  footage (LHC tunnel), real photographs (LHCb cavern, Gell-Mann, Zweig),
+  real LHCb plots and his own 2022 slide, inside one world of grains
+  (slidev-addon-stage on slidev-videos feat/broadcast). Laptop at 1920×1080,
+  50 Hz, silent. Speaker notes carry the full script, timings and sources.
 layout: default
-space: { at: [-10, 0, 0], dist: 21, yaw: -12, pitch: 8, sway: 1, dim: 0.05 }
+space: { at: quarks, dist: 14, yaw: -14, pitch: 8, sway: 1, dim: 0.05 }
 ---
 
-<Grains :set="{ bang: 1, pq: 0, needle: 0, dance: 0, phantom: 0, route: -1 }" />
+<Grains :set="{ pq: 0, needle: 0, dance: 0, phantom: 0, route: -1 }" />
 
 <div class="scrim-left"></div>
 
@@ -49,91 +51,12 @@ space: { at: [-10, 0, 0], dist: 21, yaw: -12, pitch: 8, sway: 1, dim: 0.05 }
 </div>
 
 <!--
-I. KLAUSIMAS
-Message: in my work there is no answer at the back of the book; here is one such question.
-Picture: a cloud forms, gold grains (matter) and blue (antimatter).
+I. KELIAS
+Message: in my work there is no answer at the back of the book; I will tell you about one such question, and first how I came to it.
+Picture: five faint clusters of grains drift apart beside the title; nothing holds yet. They return on slide 4 as the 1964 idea.
 
-Kai mokykloje sprendi uždavinį ir nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Aš esu dalelių fizikas ir mano darbe tokio vadovėlio nėra. Dirbu su klausimais, į kuriuos atsakymo dar niekas nežino.
-Štai vienas iš jų. Auksinės dalelės – tai medžiaga, iš kurios sudaryta viskas aplink mus. Mėlynos – antimedžiaga: tokios pat dalelės, tik su priešingu krūviu. Visatos pradžioje atsirado ir vienų, ir kitų. O kai medžiagos dalelė susitinka su antimedžiagos dalele…
-→ spausk
+Kai mokykloje sprendi uždavinį ir nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Aš esu dalelių fizikas, ir mano darbe tokio vadovėlio nėra. Dirbu su klausimais, į kuriuos atsakymo dar niekas nežino. Papasakosiu apie vieną tokį klausimą, prie kurio dirbau ketverius su puse metų. Bet pirmiausia – kaip iki jo atėjau.
 
-Source: CERN, „Antimatter“, home.cern/science/physics/antimatter.
-(~0.6 min)
--->
-
----
-space: { at: [-5, 0, 0], dist: 19, yaw: -12, pitch: 8, sway: 1, dim: 0.05 }
----
-
-<Grains :set="{ bang: 2, pq: 0, needle: 0, dance: 0, phantom: 0, route: -1 }" />
-
-<!--
-Message: if there had been equal amounts, everything would have vanished.
-Picture: the pairs meet and go out as light, from the edge inward; a handful of gold grains is left. The world full-frame.
-
-…abi išnyksta, lieka tik šviesa. Jeigu jų būtų buvę po lygiai, būtų išnykę viskas ir mūsų nebūtų.
-[pauzė 3 s]
-(~0.3 min)
--->
-
----
-space: { at: [-8, 0, 0], dist: 17, yaw: -12, pitch: 8, sway: 1, dim: 0.1 }
----
-
-<Grains :set="{ bang: 2, pq: 0, needle: 0, dance: 0, phantom: 0, route: -1 }" />
-
-<div class="scrim-left"></div>
-
-<div class="say wide">
-<p class="num small blue">1&#8239;000&#8239;000&#8239;000</p>
-<p class="line">antimedžiagos dalelių</p>
-<p class="num small gold">1&#8239;000&#8239;000&#8239;001</p>
-<p class="line">medžiagos dalelių</p>
-</div>
-
-<!--
-Message: one particle in a billion was left over, everything is made of it, and nobody knows why.
-Picture: only the remainder, a handful of gold grains in the dark.
-
-Bet medžiagos buvo truputį daugiau. Kiekvienam milijardui antimedžiagos dalelių buvo maždaug milijardas ir viena medžiagos dalelė. Poros išnyko, o iš to mažo likučio susidarė viskas, ką matome – žvaigždės, planetos, mes. Kodėl medžiagos buvo daugiau, kol kas niekas nežino.
-
-Source: CERN: "approximately one extra particle per billion antiparticles … This forms everything that we see today"; the mechanism is unknown.
-(~0.4 min)
--->
-
----
-space: { at: origin, dist: 12, dim: 0 }
----
-
-<VideoPlayer src="cern_footage_2022_013_001.mp4" muted />
-
-<div class="photo-credit">Video: CERN</div>
-
-<!--
-Message: one way to look for the answer is collisions in the LHC at CERN.
-Picture: real footage, a travelling shot along the LHC tunnel (CERN-FOOTAGE-2022-013-001). Advance whenever you finish; the clip is long.
-
-Vienas iš būdų ieškoti atsakymo – dalelių susidūrimai. Susidūrimuose vėl atsiranda medžiagos ir antimedžiagos, todėl jas galima palyginti. Prie Ženevos, CERN'e, šimto metrų gylyje yra Didysis hadronų greitintuvas – dvidešimt septynių kilometrų žiedas. Kai jis veikia, protonai lekia vieni priešais kitus beveik šviesos greičiu ir susiduria.
-
-Sources: home.cern LHC page (27 km, 100 m underground, close to the speed of light); home.cern/science/experiments/lhcb (LHCb compares matter and antimatter in the particles collisions make). The LHC is off since 29 Jun 2026 (Long Shutdown 3), hence „kai jis veikia“.
-(~0.5 min)
--->
-
----
-space: { at: origin, dist: 12, dim: 0 }
----
-
-<div class="photo"><img src="/figures/photos/lhcb-cavern.jpg" alt="LHCb detektoriaus urvas CERN, 2019" /></div>
-
-<div class="photo-credit">LHCb, CERN · Foto: Rosa Menkman, CC BY 2.0</div>
-
-<!--
-Message: LHCb was built for this question, and I work on it; I did not get here straight away.
-Picture: a real photograph of the LHCb cavern (2019), full frame, slowly drawing closer.
-
-Vienoje iš vietų, kur protonai susiduria, stovi LHCb – 5 600 tonų detektorius. Jis pastatytas tam, kad ištirtų, kuo medžiaga skiriasi nuo antimedžiagos. LHCb eksperimente dirba daugiau nei 1 800 žmonių iš 27 šalių, ir aš esu vienas iš jų. Bet čia atsidūriau ne iš karto.
-
-Sources: home.cern/science/experiments/lhcb (5 600 t; matter and antimatter); LHCb Starterkit, 1 Dec 2025 (1 844 members, 108 institutes, 27 countries). Photo: Rosa Menkman, flickr.com/photos/r00s/48815389756, CC BY 2.0 (cropped to 16:9).
 (~0.4 min)
 -->
 
@@ -141,29 +64,27 @@ Sources: home.cern/science/experiments/lhcb (5 600 t; matter and antimatter); LH
 space: { at: whole, sway: 0, dim: 0.05 }
 ---
 
-<Grains :set="{ bang: 3, pq: 0, needle: 0, dance: 0, phantom: 0, route: 3 }" />
+<Grains :set="{ pq: 0, needle: 0, dance: 0, phantom: 0, route: 3 }" />
 
 <div class="city late" style="left: 716px; top: 168px">Vilnius</div>
 <div class="city late" style="left: 414px; top: 374px">CERN</div>
 <div class="city late" style="left: 270px; top: 146px">Glazgas</div>
 
 <!--
-II. KELIAS
-Message: my path went through other interests, and my first real research was on the very question I opened with.
+Message: at sixteen I knew only that physics interested me; school, a first visit to CERN and Glasgow came first.
 Picture: Europe gathers out of the dust; a trail of light runs Vilnius → CERN → Vilnius → Glasgow.
 
-Iki dvylikos norėjau būti egiptologu, o nuo dvylikos – fiziku. Po pamokų lankiau ne tik fizikos, bet ir verslo bei psichologijos užsiėmimus. Vienuoliktoje klasėje pirmą kartą nuvažiavau į CERN'ą. [PATIKSLINTI: kaip – iki šešių žodžių] Studijuoti išvykau į Glazgą. Kad turėčiau iš ko gyventi, dirbau vadybininku – su fizika tai neturėjo nieko bendro. O baigiamajam bakalauro darbui pirmą kartą gavau tikrus LHCb duomenis. Tyrinėjau tą patį klausimą, nuo kurio šiandien pradėjau, – kuo skiriasi medžiaga ir antimedžiaga.
+Iki dvylikos metų norėjau būti egiptologu, o nuo dvylikos – fiziku. Po pamokų lankiau ne tik fizikos, bet ir verslo bei psichologijos užsiėmimus. Vienuoliktoje klasėje pirmą kartą nuvažiavau į CERN – Europos dalelių fizikos laboratoriją prie Ženevos. Studijuoti išvykau į Glazgą. Kad turėčiau iš ko gyventi, dirbau vadybininku, ir su fizika tas darbas neturėjo nieko bendro. Baigiamajam bakalauro darbui pirmą kartą gavau tikrus duomenis iš CERN eksperimento.
 
-Sources: LRT „Širdyje lietuvis“ (2024), 03:11 (Egyptologist until 12, then physics) [ASR: re-listen]; Mokslo sriuba podcast #62 (2019), 00:39 (first visit to CERN in 11th grade) and 32:39 (BSc thesis on CP violation in B decays) [ASR: re-listen]; Substack „A New Beginning“ (2024): "had to support myself so ended up working as a manager"; INSPIRE: Glasgow 2011–15; the after-school courses: the speaker's own account.
-[PATIKSLINTI: užsiėmimų pavadinimai; ar minėti darbą Glazge taip.]
-(~0.7 min)
+Sources: LRT „Širdyje lietuvis“ (2024), 03:11 (Egyptologist until 12, then physics); Mokslo sriuba podcast #62 (2019), 00:39 (first visit to CERN in 11th grade) and 32:39 (BSc thesis on LHCb data); Substack „A New Beginning“ (2024): "had to support myself so ended up working as a manager"; INSPIRE: Glasgow 2011–15; the after-school courses: the speaker's own account. Open items for the speaker are in the talk's CLAUDE.md.
+(~0.6 min)
 -->
 
 ---
 space: { at: whole, sway: 0, dim: 0.05 }
 ---
 
-<Grains :set="{ bang: 3, pq: 0, needle: 0, dance: 0, phantom: 0, route: 6 }" />
+<Grains :set="{ pq: 0, needle: 0, dance: 0, phantom: 0, route: 6 }" />
 
 <div class="city" style="left: 716px; top: 168px">Vilnius</div>
 <div class="city" style="left: 414px; top: 374px">CERN</div>
@@ -172,21 +93,20 @@ space: { at: whole, sway: 0, dim: 0.05 }
 <div class="city r" style="left: 405px; top: 254px">Bona</div>
 
 <!--
-Message: I left particle physics, came back for a PhD, and the PhD gave me a second open question: pentaquarks.
+Message: I left particle physics, came back for a PhD, and the PhD gave me my question: pentaquarks.
 Picture: the trail runs on: back to Vilnius, then Heidelberg, then Bonn.
 
-Po studijų grįžau į Vilnių ir iš dalelių fizikos išėjau – dirbau su lazeriais. [PATIKSLINTI: kodėl – viena frazė] Į dalelių fiziką grįžau per doktorantūrą – tai keleri metai, per kuriuos darai vieną didelį tyrimą. Rinkausi Heidelbergą, nes norėjau dirbti didelėje komandoje, kuri ieško naujų dalelių. Po pusmečio prasidėjo pandemija ir tais pačiais metais visa mūsų grupė persikėlė į Boną. Doktorantūroje gavau kitą klausimą be atsakymo – apie pentakvarkus. Kad būtų aišku, kas tai, reikia grįžti į 1964-uosius.
+Po studijų grįžau į Vilnių ir iš dalelių fizikos išėjau – dirbau su lazeriais. Į dalelių fiziką grįžau per doktorantūrą. Doktorantūra – tai keleri metai, per kuriuos atlieki vieną didelį tyrimą. Rinkausi Heidelbergą, nes norėjau dirbti didelėje komandoje, kuri ieško naujų dalelių. Po pusmečio prasidėjo pandemija, ir tais pačiais metais visa mūsų grupė persikėlė į Boną. Doktorantūroje gavau užduotį apie daleles, kurios vadinamos pentakvarkais. Kad būtų aišku, kas tai, reikia grįžti į 1964-uosius.
 
-Sources: INSPIRE: VU 2017–19, Heidelberg 2019–20, Bonn 2020–23; the thesis acknowledgements (Bonn, 2023): the pandemic six months in, the group's move to Bonn; LRT „Širdyje lietuvis“ (2024), 04:36–05:03: chose LHCb in Heidelberg over a laser PhD because he wanted the collaboration [ASR: re-listen]; the laser work: the speaker's own account.
-[PATIKSLINTI: ar „dirbau su lazeriais“ tinka; kodėl išėjai.]
-(~0.5 min)
+Sources: INSPIRE: VU 2017–19, Heidelberg 2019–20, Bonn 2020–23; the thesis acknowledgements (Bonn, 2023): the pandemic six months in, the group's move to Bonn; LRT „Širdyje lietuvis“ (2024), 04:36–05:03: chose LHCb in Heidelberg over a laser PhD because he wanted the collaboration; the laser work: the speaker's own account.
+(~0.6 min)
 -->
 
 ---
 space: { at: [602.5, 0.2, 0], dist: 20, yaw: -18, pitch: 8, sway: 1, dim: 0.15 }
 ---
 
-<Grains :set="{ bang: 3, pq: 0, needle: 0, dance: 0, phantom: 0, route: 6 }" />
+<Grains :set="{ pq: 0, needle: 0, dance: 0, phantom: 0, route: 6 }" />
 
 <div class="say">
 <p class="big huge">1964</p>
@@ -198,13 +118,13 @@ space: { at: [602.5, 0.2, 0], dist: 20, yaw: -18, pitch: 8, sway: 1, dim: 0.15 }
 </div>
 
 <!--
-III. UŽDUOTIS
+II. KLAUSIMAS
 Message: in 1964 the quark idea allowed particles of five quarks, and nobody knew whether they exist.
-Picture: portraits of the two physicists; behind them five faint clusters drift apart, nothing holds yet.
+Picture: portraits of the two physicists; behind them the five faint clusters of the cover drift apart.
 
-1964 metais du fizikai, Murray Gell-Mannas ir George'as Zweigas, sugalvojo, kad protonai ir neutronai sudaryti iš dar mažesnių dalelių – kvarkų. Protonas – tai trys kvarkai. Pagal tą pačią idėją galėjo būti ir dalelių iš penkių kvarkų – pentakvarkų. Ar jų iš tikrųjų yra, niekas nežinojo.
+1964 metais du fizikai, Murray Gell-Mannas ir George'as Zweigas, pasiūlė, kad protonai ir neutronai sudaryti iš dar mažesnių dalelių – kvarkų. Protoną sudaro trys kvarkai. Pagal tą pačią idėją galėjo egzistuoti ir dalelės iš penkių kvarkų – pentakvarkai. Ar jų iš tikrųjų yra, niekas nežinojo.
 
-Sources: Gell-Mann, Phys. Lett. 8 (1964) 214; Zweig, CERN-TH-401 (1964); the same model allows pentaquarks (LHCb, arXiv:1507.03414). Photos: Joi Ito (commons.wikimedia.org/wiki/File:MurrayGellMannJI1.jpg, CC BY 2.5); Peacearth (commons.wikimedia.org/wiki/File:George_Zweig.jpg, CC BY-SA 4.0); both cropped.
+Sources: Gell-Mann, Phys. Lett. 8 (1964) 214; Zweig, CERN-TH-401 (1964); the same model allows pentaquarks (LHCb, PRL 115, 072001 (2015), introduction). Photos: Joi Ito (commons.wikimedia.org/wiki/File:MurrayGellMannJI1.jpg, CC BY 2.5); Peacearth (commons.wikimedia.org/wiki/File:George_Zweig.jpg, CC BY-SA 4.0); both cropped.
 (~0.4 min)
 -->
 
@@ -212,19 +132,77 @@ Sources: Gell-Mann, Phys. Lett. 8 (1964) 214; Zweig, CERN-TH-401 (1964); the sam
 space: { at: quarks, dist: 11, dim: 0.1 }
 ---
 
-<Grains :set="{ bang: 3, pq: 1, needle: 0, dance: 0, phantom: 0, route: 6 }" />
+<Grains :set="{ pq: 1, needle: 0, dance: 0, phantom: 0, route: 6 }" />
 
 <div class="say">
-<p class="big">2003 – rasta<br><span class="blue">2008 – nėra</span></p>
+<p class="kick">2003 m.</p>
+<p class="big">Paskelbė, kad rado.</p>
 </div>
 
 <!--
-Message: one was claimed in 2003 and shown not to exist by 2008.
-Picture: the clusters half-gather, dim, and do not hold.
+Message: in 2003 a group announced it had found a pentaquark, and others soon reported the same.
+Picture: the five clusters half-gather, dim.
 
-Jų ieškojo kelis dešimtmečius. 2003 metais viena tyrėjų grupė paskelbė, kad rado pentakvarką. Kiti bandė tai pakartoti ir nerado. 2008 metais pagrindinis dalelių fizikos žinynas paskelbė, kad tokio pentakvarko nėra.
+Pentakvarkų ieškota dešimtmečius. 2003 metais Japonijoje viena eksperimento grupė paskelbė, kad rado pentakvarką. Netrukus panašiai pranešė ir kelios kitos grupės.
 
-Sources: LEPS, PRL 91, 012002 (2003); PDG 2008 review: "overwhelming evidence that the claimed pentaquarks do not exist".
+Sources: LEPS (SPring-8), PRL 91, 012002 (2003); the further positive reports are listed in the PDG 2004 review of the Θ⁺(1540).
+(~0.3 min)
+-->
+
+---
+space: { at: quarks, dist: 11, dim: 0.1 }
+---
+
+<Grains :set="{ pq: 2, needle: 0, dance: 0, phantom: 0, route: 6 }" />
+
+<div class="say">
+<p class="kick blue">2008 m.</p>
+<p class="big">Paaiškėjo, kad jo nėra.</p>
+</div>
+
+<!--
+Message: others checked with more data and found nothing; by 2008 the claim was withdrawn.
+Picture: the clusters fall apart and fade.
+
+Tada kitos grupės bandė tą patį pamatyti su daug didesniu duomenų kiekiu ir nepamatė. 2008 metais dalelių fizikos žinynas, kuriuo naudojasi visi šios srities fizikai, paskelbė, kad to pentakvarko nėra.
+
+Sources: PDG 2008 review: "overwhelming evidence that the claimed pentaquarks do not exist".
+(~0.3 min)
+-->
+
+---
+space: { at: [604.2, -1.6, 0], dist: 13.5, yaw: 18, pitch: 8, sway: 1, dim: 0 }
+---
+
+<VideoPlayer src="cern_footage_2022_013_001.mp4" muted />
+
+<div class="photo-credit">Video: CERN</div>
+
+<!--
+Message: pentaquarks were found after all, at CERN, where the LHC collides protons.
+Picture: real footage, a travelling shot along the LHC tunnel (CERN-FOOTAGE-2022-013-001). Advance whenever you finish; the clip is long.
+
+Pentakvarkus vis dėlto rado CERN'e. Prie Ženevos, šimto metrų gylyje, yra Didysis hadronų greitintuvas – dvidešimt septynių kilometrų žiedas. Kai jis veikia, protonai lekia vieni priešais kitus beveik šviesos greičiu ir susiduria. Iš susidūrimo energijos atsiranda naujų dalelių.
+
+Sources: home.cern LHC page (27 km, 100 m underground, close to the speed of light). The LHC is off since 29 Jun 2026 (Long Shutdown 3), hence „kai jis veikia“.
+(~0.4 min)
+-->
+
+---
+space: { at: [604.2, -1.6, 0], dist: 13.5, yaw: 18, pitch: 8, sway: 1, dim: 0 }
+---
+
+<div class="photo"><img src="/figures/photos/lhcb-cavern.jpg" alt="LHCb detektoriaus urvas CERN, 2019" /></div>
+
+<div class="photo-credit">LHCb, CERN · Foto: Rosa Menkman, CC BY 2.0</div>
+
+<!--
+Message: one of the collision points is LHCb, and I am one of the people who work on it.
+Picture: a real photograph of the LHCb cavern (2019), full frame, slowly drawing closer.
+
+Vienoje iš vietų, kur protonai susiduria, stovi LHCb – 5 600 tonų detektorius. Jis pastatytas tirti, kuo medžiaga skiriasi nuo antimedžiagos, bet juo galima tirti ir kitas retas daleles. LHCb eksperimente dirba daugiau nei 1 800 žmonių iš 27 šalių, ir aš esu vienas iš jų.
+
+Sources: home.cern/science/experiments/lhcb (5 600 t; matter and antimatter); LHCb Starterkit, 1 Dec 2025 (1 844 members, 108 institutes, 27 countries). Photo: Rosa Menkman, flickr.com/photos/r00s/48815389756, CC BY 2.0 (cropped to 16:9).
 (~0.4 min)
 -->
 
@@ -232,10 +210,10 @@ Sources: LEPS, PRL 91, 012002 (2003); PDG 2008 review: "overwhelming evidence th
 space: { at: [604.2, -1.6, 0], dist: 13.5, yaw: 18, pitch: 8, sway: 1, dim: 0.55 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 0, dance: 0, phantom: 0, route: 6 }" />
+<Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: 6 }" />
 
 <div class="say">
-<p class="kick">1964 → 2015</p>
+<p class="kick">Nuo idėjos iki atradimo</p>
 <p class="num gold">51</p>
 <p class="line">metai</p>
 </div>
@@ -245,10 +223,10 @@ space: { at: [604.2, -1.6, 0], dist: 13.5, yaw: 18, pitch: 8, sway: 1, dim: 0.55
 <div class="credit">LHCb, PRL 115, 072001 (2015), CC BY 4.0</div>
 
 <!--
-Message: LHCb found them in 2015, 51 years after the idea.
+Message: LHCb found pentaquarks in 2015, 51 years after the idea.
 Picture: on the left the five clusters gather, hold and burn bright; on the right the real LHCb plot.
 
-2015 metais LHCb pagaliau aptiko pentakvarkus – tik kitokius nei tas, apie kurį skelbta 2003-iaisiais. Šiame grafike – tikri LHCb duomenys. Jeigu dalelė egzistuoja, matuojant daug kartų ta pati masė vis pasikartoja ir grafike iškyla smailė. Ši smailė – pentakvarkas. Nuo idėjos iki atradimo praėjo penkiasdešimt vieneri metai.
+2015 metais LHCb pagaliau aptiko pentakvarkus, tik kitokius nei tas, apie kurį skelbta 2003-iaisiais. Šiame grafike – tikri LHCb duomenys. Kai dalelė egzistuoja, matuojant vėl ir vėl kartojasi ta pati masė, ir grafike iškyla smailė. Ši smailė – pentakvarkas. Nuo idėjos iki atradimo praėjo penkiasdešimt vieneri metai.
 
 Sources: LHCb, PRL 115, 072001 (2015), figure: m(J/ψ p) with the narrow Pc(4450)⁺ over the broad Pc(4380)⁺; CERN press release, 14 Jul 2015 (1 Feb 1964 → 14 Jul 2015 = 51 years).
 (~0.4 min)
@@ -258,7 +236,7 @@ Sources: LHCb, PRL 115, 072001 (2015), figure: m(J/ψ p) with the narrow Pc(4450
 space: { at: [604.2, -1.6, 0], dist: 13.5, yaw: 18, pitch: 8, sway: 1, dim: 0.55 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 0, dance: 0, phantom: 0, route: 6 }" />
+<Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: 6 }" />
 
 <div class="say">
 <p class="big huge">2019</p>
@@ -269,10 +247,10 @@ space: { at: [604.2, -1.6, 0], dist: 13.5, yaw: 18, pitch: 8, sway: 1, dim: 0.55
 <div class="credit">LHCb, PRL 122, 222001 (2019), CC BY 4.0</div>
 
 <!--
-Message: in 2019 there were three, and my task was to check whether they appear in another decay.
+Message: in 2019 there were three, the year I started my PhD, and my task was to check whether they appear in another decay.
 Picture: the same clusters; on the right the 2019 plot with three narrow peaks.
 
-2019 metais, surinkus daugiau duomenų, paaiškėjo, kad ta smailė iš tikrųjų yra dvi, ir atsirado dar viena. Iš viso trys pentakvarkai. Kaip penki kvarkai laikosi krūvoje, iki šiol tiksliai nežinoma. Pentakvarkai atsiranda, kai subyra sunkesnė dalelė. Mano užduotis buvo patikrinti, ar šie trys atsiranda ir tada, kai ji subyra kitaip.
+2019 metais, surinkus daugiau duomenų, paaiškėjo, kad ta smailė iš tikrųjų yra dvi, ir atsirado dar viena. Iš viso trys pentakvarkai. Kaip penki kvarkai laikosi kartu, iki šiol tiksliai nežinoma. Tais pačiais metais pradėjau doktorantūrą. Pentakvarkai atsiranda, kai subyra sunkesnė dalelė. Mano užduotis buvo patikrinti, ar šie trys atsiranda ir tada, kai ta dalelė subyra kitaip.
 
 Sources: LHCb, PRL 122, 222001 (2019): Pc(4312)⁺, and the 2015 Pc(4450)⁺ resolved into Pc(4440)⁺ and Pc(4457)⁺; CERN, 2022: their exact nature "largely unknown"; the speaker's thesis (Bonn, 2023) searched Λb⁰ → Λc⁺ D̄*⁰ K⁻ for these three.
 (~0.5 min)
@@ -282,19 +260,17 @@ Sources: LHCb, PRL 122, 222001 (2019): Pc(4312)⁺, and the 2015 Pc(4450)⁺ res
 space: { at: search, dim: 0.06 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 0, dance: 1, phantom: 0, route: 6 }" />
+<Grains :set="{ pq: 3, needle: 0, dance: 1, phantom: 0, route: 6 }" />
 
 <!--
-IV. PAIEŠKA
+III. PAIEŠKA
 Message: it is a search for a needle in a haystack; I had to invent a new way to find the particle, and after two years it worked.
-Picture: a wide, faint cloud of grains, the haystack; about 20 s in, a thread of light runs in and a small warm cluster gathers.
+Picture: a wide, faint cloud of straw-coloured grains, the haystack; about 20 s in, a thread of light runs in and a small white-gold cluster gathers.
 
-Tai kaip ieškoti adatos šieno kupetoje, didelėje kaip visa Lietuva. Ir net nežinai, kaip ta adata atrodo. Didžiąją laiko dalį rašai programas, kurios atsijoja duomenis, ir kompiuteriu modeliuoji, ką turėtum pamatyti, jei adata ten yra. Ir daug kalbiesi su kolegomis, nes naujos dalelės vienas nerasi.
-Kad apskritai galėčiau ieškoti, turėjau sugalvoti naują būdą aptikti dalelę, kurios detektorius dažnai nepagauna. Maždaug po dvejų metų pirmą kartą pažiūrėjau į savo duomenų grafiką ir pamačiau kitas, jau žinomas daleles. Labai apsidžiaugiau, nes tai reiškė, kad mano būdas veikia.
+Tai kaip ieškoti adatos šieno kupetoje, didelėje kaip visa Lietuva. Ir net nežinai, kaip ta adata atrodo. Didžiąją laiko dalį rašai programas, kurios atsijoja duomenis, ir kompiuteriu modeliuoji, ką turėtum pamatyti, jei adata ten yra. Daug kalbiesi su kolegomis, nes naujos dalelės vienas nerasi.
+Kad apskritai galėčiau ieškoti, turėjau sugalvoti naują būdą aptikti dalelę, kurią detektorius dažnai praleidžia. Maždaug po dvejų metų pirmą kartą pažiūrėjau į savo duomenų grafiką ir pamačiau jame jau žinomas daleles. Labai apsidžiaugiau, nes tai reiškė, kad mano būdas veikia.
 
-Sources: LRT „Širdyje lietuvis“ (2024), 07:36 (the haystack), 06:15 („naujos dalelės vienas tikrai nerasi“), 11:12 (after about two years, other real short-lived particles, the happy dance) [ASR: re-listen].
-Method: the thesis (Extended Cone Closure).
-[PATIKSLINTI: ar taip atrodė darbo dienos; ar tos dalelės buvo „jau žinomos“; ar „sugalvoti“ pačiam ar su komanda.]
+Sources: LRT „Širdyje lietuvis“ (2024), 07:36 (the haystack), 06:15 („naujos dalelės vienas tikrai nerasi“), 11:12 (after about two years, other real short-lived particles, the happy dance). Method: the thesis (Extended Cone Closure).
 (~0.8 min)
 -->
 
@@ -302,7 +278,7 @@ Method: the thesis (Extended Cone Closure).
 space: { at: search, dist: 11, yaw: 6, sway: 1, dim: 0.08 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 1, phantom: 0, route: 6 }" />
+<Grains :set="{ pq: 3, needle: 1, dance: 1, phantom: 0, route: 6 }" />
 
 <div class="say late">
 <p class="big huge">Neradau.</p>
@@ -310,7 +286,7 @@ space: { at: search, dist: 11, yaw: 6, sway: 1, dim: 0.08 }
 
 <!--
 Message: after four and a half years the answer was: not found.
-Picture: five faint clusters appear in the haystack, drift toward each other and apart, never holding. The world full-frame, then the face on the word.
+Picture: five faint clusters appear in the haystack, drift toward each other and apart, never holding. The world full-frame, then the word.
 
 Po ketverių su puse metų mano atsakymas buvo toks: neradau.
 [tyla 3 s]
@@ -324,46 +300,23 @@ Source: the thesis (Bonn, 2023): no signal; upper limits at 95 % CL: Pc(4312)⁺
 space: { at: [902, 0, 0.5], dist: 10, yaw: -24, pitch: 8, sway: 1, dim: 0.06 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 6 }" />
+<Grains :set="{ pq: 3, needle: 1, dance: 0, phantom: 5, route: 6 }" />
 
 <!--
-Message: the work still counted: others know where it was searched, and the method became my next project.
+Message: a search that finds nothing is a check like the one in 2008, and the method I built carried on into my next project.
 Picture: from the five faint clusters, arcs of gold run to one point beside them, where a cluster gathers and holds.
 
-Bet darbas nenuėjo veltui. Dabar kiti žino, kur ieškota, ir gali ieškoti kitur. O mano sugalvotas būdas liko – jį naudoju savo dabartiniame projekte.
+Prisimink 2003-iuosius. Vieni paskelbė, kad rado, o kiti patikrino ir nerado. Mano darbas buvo toks pat patikrinimas. Dabar kiti žino, kur jau ieškota ir kaip retai tie pentakvarkai galėtų ten atsirasti, todėl gali ieškoti kitur. O mano sugalvotas būdas liko. Jį naudoju savo dabartiniame projekte.
 
-Sources: the thesis (Extended Cone Closure); CORDIS 101244743 (PHANTOM, 2025–27, uses that method).
-(~0.3 min)
--->
-
----
-space: { at: search, dist: 30, dim: 0 }
----
-
-<VideoPlayer src="cern_footage_2022_013_006.mp4" muted />
-
-<div class="photo-credit">Video: CERN</div>
-
-<div class="say on-clip">
-<p class="kick">2023 m. gruodžio 20 d.</p>
-<p class="big">opendata.cern.ch</p>
-</div>
-
-<!--
-Message: at the same time I opened LHCb's data to everyone.
-Picture: real footage of the CERN data centre (CERN-FOOTAGE-2022-013-006).
-
-Kol ieškojau pentakvarkų, beveik dvejus metus ruošiau visus LHCb pirmųjų darbo metų duomenis – beveik milijoną gigabaitų –, kad juos galėtų atsisiųsti bet kas. 2023 metų gruodžio 20 dieną juos paskelbėme. Kitą dieną gyniau daktaro disertaciją. Tie duomenys prieinami ir tau – adresas ekrane.
-
-Sources: M. Šarpis, „LHCb Run I Data is Released“ (Substack, 15 Jan 2024): close to two years, just under 1 PB; opendata.cern.ch: entire Run 1 public, 20 Dec 2023; thesis defence 21 Dec 2023.
-(~0.5 min)
+Sources: the thesis (upper limits; Extended Cone Closure); CORDIS 101244743 (PHANTOM, 2025–27, uses that method).
+(~0.4 min)
 -->
 
 ---
 space: { at: whole, sway: 0, dim: 0.78 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 6 }" />
+<Grains :set="{ pq: 3, needle: 1, dance: 0, phantom: 5, route: 6 }" />
 
 <div class="plans">
 <p class="kick">Mano planai · 2022 m. balandis</p>
@@ -371,14 +324,13 @@ space: { at: whole, sway: 0, dim: 0.78 }
 </div>
 
 <!--
-V. PO TO
-Message: halfway through the search I wrote down my plans.
-Picture: my own slide from April 2022, over the map.
+IV. PO TO
+Message: halfway through the search I wrote down my plans, and living in Lithuania was the one that surprised me.
+Picture: my own slide from April 2022, over the dimmed map.
 
-Dar 2022 metų pavasarį, įpusėjęs paiešką, susirašiau ateities planus. Apsiginti disertaciją. Likti LHCb, jeigu pavyks. Dirbti nuotoliu, matyt, JAV universitetui. Ir paskutinis punktas – „Gyventi Lietuvoje“ – su nustebusiu veiduku gale.
+2022 metų pavasarį, įpusėjęs paiešką, susirašiau ateities planus. Apsiginti disertaciją. Likti LHCb, jeigu pavyks. Dirbti nuotoliu, matyt, JAV universitetui. Ir paskutinis punktas – „Gyventi Lietuvoje“ – su nustebusiu veiduku gale. Disertaciją apgyniau 2023 metų gruodį.
 
-Source: M. Šarpis, LPPM 2022 participants' introductions (11 Apr 2022), MSarpisIntro.pdf p. 16 (public on Indico).
-[PATIKSLINTI: ar tinka rodyti šią skaidrę.]
+Sources: M. Šarpis, LPPM 2022 participants' introductions (11 Apr 2022), MSarpisIntro.pdf p. 16 (public on Indico); thesis defence 21 Dec 2023.
 (~0.4 min)
 -->
 
@@ -386,7 +338,7 @@ Source: M. Šarpis, LPPM 2022 participants' introductions (11 Apr 2022), MSarpis
 space: { at: whole, sway: 0, dim: 0.05 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 7 }" />
+<Grains :set="{ pq: 3, needle: 1, dance: 0, phantom: 5, route: 7 }" />
 
 <div class="city home" style="left: 716px; top: 168px">Vilnius</div>
 <div class="city" style="left: 414px; top: 374px">CERN</div>
@@ -395,47 +347,22 @@ space: { at: whole, sway: 0, dim: 0.05 }
 <div class="city r" style="left: 405px; top: 254px">Bona</div>
 
 <!--
-Message: a year and a half later I was building an LHCb group in Vilnius, which my plans had not foreseen.
+Message: a year and a half later I was back in Vilnius, helping to build an LHCb group, which no plan of mine had foreseen.
 Picture: the trail arcs home from Bonn to Vilnius.
 
-Po pusantrų metų jau dirbau Vilniaus universitete ir kūrėme ten LHCb grupę. Grupės kūrimo mano planuose nebuvo. Nuo 2024 metų Vilniaus universitetas – oficialus LHCb dalyvis, o dauguma mūsų grupės narių – studentai.
+Po pusantrų metų jau dirbau Vilniaus universitete, ir kartu su kolegomis kūrėme ten LHCb grupę. Grupės kūrimo mano planuose nebuvo. Nuo 2024 metų Vilniaus universitetas – oficialus LHCb narys, o dauguma mūsų grupės narių – studentai.
 
 Sources: ff.vu.lt: VU admitted to LHCb on 2 Sep 2024; VU, 20 Aug 2026: most of the group are students; the move home: the speaker's own account.
 (~0.3 min)
 -->
 
 ---
-space: { at: origin, dist: 14, dim: 0 }
+space: { at: whole, sway: 0, dim: 0.6 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 7 }" />
-
-<div class="photo"><img src="/figures/photos/ngc1300.jpg" alt="Galaktika NGC 1300, Hubble teleskopo nuotrauka" /></div>
-
-<div class="photo-credit">NGC 1300 · NASA, ESA ir The Hubble Heritage Team (STScI/AURA)</div>
-
-<!--
-VI. TAU
-Message: the question I opened with is still open, and someone who does not yet know what they will be may answer it.
-Picture: a real Hubble photograph of the galaxy NGC 1300, full frame, slowly drawing closer.
-
-O klausimas, nuo kurio pradėjau, vis dar atviras. Štai viena iš galaktikų, susidariusių iš to likučio, – Hubble teleskopo nuotrauka. Pernai LHCb pirmą kartą pamatė, kad dalelės, giminingos protonams, elgiasi šiek tiek kitaip nei tokios pat dalelės iš antimedžiagos. Bet šio skirtumo per maža, kad paaiškintų, kodėl liko medžiaga. Gal atsakymą ras žmogus, kuris šiandien sėdi klasėje ir dar nežino, kuo bus.
-
-Sources: CERN, 24 Mar 2025: first observation of CP violation in baryons (Λb); the CP violation known in the Standard Model is too small to account for the matter–antimatter imbalance (CERN, „The matter-antimatter asymmetry problem“). Photo: NASA, ESA and The Hubble Heritage Team (STScI/AURA), esahubble.org/images/opo0501a, CC BY 4.0 (cropped to 16:9).
-(~0.6 min)
--->
-
----
-space: { at: origin, dist: 14, dim: 0 }
----
-
-<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 7 }" />
-
-<div class="photo dim right"><img src="/figures/photos/ngc1300.jpg" alt="Galaktika NGC 1300, Hubble teleskopo nuotrauka" /></div>
+<Grains :set="{ pq: 3, needle: 1, dance: 0, phantom: 5, route: 7 }" />
 
 <div class="scrim-left"></div>
-
-<div class="photo-credit">NGC 1300 · NASA, ESA ir The Hubble Heritage Team (STScI/AURA)</div>
 
 <div class="say wide">
 <p class="kick">Šią savaitę paklausk</p>
@@ -443,13 +370,14 @@ space: { at: origin, dist: 14, dim: 0 }
 </div>
 
 <!--
-Message: you do not need to know yet; try things, ask people, and here is a task for this week.
-Picture: the same galaxy, darker behind the question. Hold 2 s after the last word; no logos, no summary.
+Message: you do not need to know yet; try things, and here is a task for this week.
+Picture: the same map with the whole route, dimmed behind the question. Hold 2 s after the last word; no logos, no summary.
 
-Tau nebūtina jau dabar žinoti, kuo būsi. Šešiolikos metų aš žinojau tik tiek, kad man įdomi fizika, bet nežinojau, kur ji mane nuves. Svarbiau bandyti įvairius dalykus – kaip aš mokykloje bandžiau verslą ir psichologiją. Turiu tau užduotį šiai savaitei. Kai sutiksi žmogų, kurio darbas tau atrodo įdomus, paklausk jo: „Ko jūs savo darbe dar nežinote?“
+Tau nebūtina jau dabar žinoti, kuo būsi. Šešiolikos metų žinojau tik tiek, kad man įdomi fizika, bet nežinojau, kur ji mane nuves. Svarbiau bandyti įvairius dalykus, kaip aš mokykloje bandžiau verslą ir psichologiją. Turiu tau užduotį šiai savaitei. Kai sutiksi žmogų, kurio darbas tau atrodo įdomus, paklausk jo: „Ko jūs savo darbe dar nežinote?“
 [pauzė]
 Ir pažiūrėk, kas iš to išeis.
-(~0.6 min)
 
-Total about 9½ minutes of speech plus pauses and clips: about 10 minutes.
+(~0.5 min)
+
+Total about 7 minutes of speech, plus pauses and the tunnel clip: about 8–9 minutes.
 -->

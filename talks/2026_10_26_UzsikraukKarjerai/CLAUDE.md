@@ -19,42 +19,55 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (19 slides, one thread)
+## Story (16 slides, one thread)
+
+The thread a viewer can retell: he did not know what he would be; his PhD
+gave him a question nobody could answer (pentaquarks, which had been
+claimed in 2003 and withdrawn by 2008, then found by LHCb in 2015); he
+searched for four and a half years and did not find them; that check still
+counts, and his own plans turned out differently too; so ask people what
+they do not know yet.
 
 | # | Message | Picture |
 |---|---|---|
-| 1 | In my work there is no answer at the back of the book; here is one such question | the matter/antimatter cloud forms, title |
-| 2 | Equal amounts would have wiped everything out | the pairs go out as light |
-| 3 | One in a billion was left; everything is made of it; nobody knows why | the remainder, 1 000 000 000 vs 1 000 000 001 |
-| 4 | One way to look for the answer: collisions at the LHC | real LHC tunnel footage |
-| 5 | LHCb was built for this question, I work on it; the road was not straight | real photo of the LHCb cavern |
-| 6 | I knew only that physics interested me; my first research was on this very question | Europe of grains, route Vilnius → CERN → Vilnius → Glasgow |
-| 7 | I left particle physics, came back for a PhD; the PhD gave me pentaquarks | route → Vilnius → Heidelberg → Bonn |
-| 8 | 1964: the quark idea allowed five-quark particles; nobody knew if they exist | portraits of Gell-Mann and Zweig, quintet scattered, „1964“ |
-| 9 | Claimed in 2003, shown not to exist by 2008 | quintet half-held |
-| 10 | Found by LHCb in 2015, 51 years after the idea | quintet held + LHCb 2015 plot |
-| 11 | Three in 2019; my task: do they appear in another decay? | LHCb 2019 plot |
-| 12 | A needle in a haystack; after two years the method worked | haystack, a cluster gathers |
-| 13 | After four and a half years: not found | the ghost, „Neradau.“ |
-| 14 | It still counted; the method became my next project | arcs from the ghost to a holding cluster |
-| 15 | At the same time I opened LHCb's data to everyone | real CERN data-centre footage, opendata.cern.ch |
-| 16 | My 2022 plans did not include what happened | his own 2022 slide |
-| 17 | A year and a half later I was building an LHCb group in Vilnius | route home to Vilnius |
-| 18 | The opening question is still open; someone in a classroom may answer it | Hubble photo of NGC 1300 |
-| 19 | You don't need to know yet; try, ask; a task for this week | the galaxy photo dimmed, „Ko jūs savo darbe dar nežinote?“ |
+| 1 | No answer at the back of the book in my work; one such question, and first how I came to it | title; five faint clusters drift apart (the hero, `quarks`) |
+| 2 | At 16 I knew only that physics interested me: school, CERN in 11th grade, Glasgow | Europe of grains, route Vilnius → CERN → Vilnius → Glasgow |
+| 3 | I left particle physics, came back for a PhD; the PhD gave me pentaquarks | route → Vilnius → Heidelberg → Bonn |
+| 4 | 1964: the quark idea allowed five-quark particles; nobody knew if they exist | Gell-Mann and Zweig, quintet scattered, „1964“ |
+| 5 | 2003: a group announced it had found one | quintet half-held, „Paskelbė, kad rado.“ |
+| 6 | Others checked and found nothing; by 2008 it was withdrawn | quintet falls apart, „Paaiškėjo, kad jo nėra.“ |
+| 7 | They were found after all, at CERN, where the LHC collides protons | real LHC tunnel footage |
+| 8 | LHCb is one collision point; I am one of its 1 800 people | real photo of the LHCb cavern |
+| 9 | LHCb found them in 2015, 51 years after the idea | quintet held + LHCb 2015 plot |
+| 10 | Three in 2019, the year I began; my task: do they appear in another decay? | LHCb 2019 plot |
+| 11 | A needle in a haystack; after two years my method worked | haystack, a white-gold cluster gathers |
+| 12 | After four and a half years: not found | the ghost, „Neradau.“ |
+| 13 | That is a check like 2008's; the method went on into my next project | arcs from the ghost to a holding cluster |
+| 14 | Halfway through I wrote down my plans | his own 2022 slide over the dimmed map |
+| 15 | A year and a half later I was building an LHCb group in Vilnius | route home to Vilnius |
+| 16 | You don't need to know yet; a task for this week | the map dimmed, „Ko jūs savo darbe dar nežinote?“ |
 
 ## Status
 
-- 2026-10-08: third version on slidev-videos `feat/broadcast` efacca2,
-  `look: broadcast` overridden to a near-black ground (lift 0, nebula 0,
-  bloom 0.32, dust dimmer and sparser). A flow critique and a visual review
-  of the contact sheets were applied. `slidev-stage-safe --broadcast` clean
-  (smallest type 31 px at 1080p). Deployed 2026-10-08 as main 047fe53
-  (Pages run 37779392470 green, URL 200). Earlier deploys: a3001a1 and
-  71fb6f1, both rejected by the owner.
-- Next: the speaker's [PATIKSLINTI] answers; Delfi's answers (Brief); a
-  test encode at 2.5 Mbit/s of a dark slide to check banding; per-slide MP4s
-  with `slidev-stage-record` for Delfi once the toolkit release lands.
+- 2026-10-08 (evening): **fourth version, on the branch, not deployed.**
+  The owner's order (relayed by the Scheduler): coherence first, plain
+  prose, visuals free within the TV rules, then deploy for review. The
+  matter/antimatter frame and the open-data slide were cut so the talk has
+  one question, his own (see Decisions). 16 slides; spoken script about
+  760 words (7–8 min) plus the tunnel clip; `duration: 12min` in the
+  headmatter (the brief allows 10–15). Checks run: `talk_lint.py --release`
+  (from origin/feat/facts-lint) 0 errors, 3 false-positive LT-DECIMAL on
+  pose coordinates; `pnpm talk check` ok (videos:check, stage:check, build).
+  **Not yet seen:** no shots of this version. The render slot has no
+  Chromium on the cluster (Tools is fixing it); the cover at `quarks`, the
+  2008 scatter (quintet step 2, first use) and the close over the map are
+  unverified.
+- Next: once Chromium works, `pnpm talk review` (contact sheets to a
+  subagent), fix what reads badly, then `pnpm talk ready` and, when the
+  Scheduler calls the order and the owner has asked, `pnpm talk deploy`.
+  Then the speaker's answers (Figures below) and Delfi's (Brief).
+- Earlier: third version deployed as main 047fe53 (Pages run 37779392470);
+  a3001a1 and 71fb6f1 before it, all rejected by the owner.
 
 ### Handoff (2026-10-08, workstation session ended; the owner moved to the HPC cluster)
 
@@ -90,6 +103,29 @@
 
 ## Decisions
 
+- 2026-10-08 — One question, the speaker's own: pentaquarks. Cut the
+  matter/antimatter opening (old slides 1–3, the `origin` station with its
+  `pairs`), the open-data slide (old 15) and the NGC 1300 close (old 18–19).
+  Why: the owner found the third version "not coherent"; it opened and
+  closed on one question and spent its middle on another, and open data was
+  a side branch. The route moves to the start, so the PhD hands him the
+  question and its history runs straight into his task. Matter vs
+  antimatter survives as one clause on the LHCb slide. Alternatives: keep
+  matter/antimatter as the frame (the third version), or open on the
+  pentaquark history and put the route after 2019 (a detour between the
+  2019 plot and his task). Undo: restore 0469677's deck.md and space.json.
+- 2026-10-08 — The 2003 and 2008 beats are two slides with a sentence each
+  („Paskelbė, kad rado.“, „Paaiškėjo, kad jo nėra.“) instead of one
+  telegraphic card („2003 – rasta / 2008 – nėra“); the quintet's
+  retraction step (2) is used for the first time. Slide 13 now ties his
+  „Neradau.“ to that check. Undo: merge slides 5–6 back.
+- 2026-10-08 — The hero station is `quarks`: the cover shows the five
+  scattered clusters that slide 4 names. The close sits on the map with
+  the whole route drawn, dim 0.6. Undo: `hero` in space.json.
+- 2026-10-08 — Open items moved out of the notes into Figures below
+  (`[PATIKSLINTI]` and `[ASR]` marks fail `lint --release`).
+- 2026-10-08 — Credit lines 16 → 18 px (the lint floor).
+
 - 2026-10-08 — Story as one chronological thread with the opening question
   as a frame (rather than question-first with a separate biography): the
   second version jumped from matter/antimatter to pentaquarks with no link.
@@ -120,12 +156,19 @@
 
 ## Figures and open items (for the speaker)
 
-- Re-listen to the transcript quotes (LRT „Širdyje lietuvis“ 2024 at 03:11,
-  06:15, 07:36, 11:12; Mokslo sriuba podcast #62 at 00:39, 32:39, 44:34).
-- Confirm: the after-school courses; the job in Glasgow and the laser work as
-  worded; whether the plot after two years was from the same analysis and
-  whether "metodas veikia" is his wording; "sukurti" alone or with the team;
-  showing the 2022 slide.
+- Length: the script is about 7–8 minutes spoken; the brief allows 10–15.
+  If the speaker wants more, slide 11 (what a working day is like) is where
+  the organisers' ask is; it needs his own account, not invented detail.
+- Re-listen to the transcript quotes, all from automatic transcripts: LRT
+  „Širdyje lietuvis“ 2024 at 03:11, 04:36–05:03, 06:15, 07:36, 11:12;
+  Mokslo sriuba podcast #62 at 00:39, 32:39.
+- Confirm: the after-school courses (names; slides 2 and 16); the Glasgow
+  job as worded; "dirbau su lazeriais" and why he left particle physics
+  (one phrase, slide 3); whether the plot after two years showed known
+  particles from the same analysis and whether "mano būdas veikia" is his
+  wording; "sugalvoti" alone or with the team (slide 11); "kartu su
+  kolegomis kūrėme" (slide 15); showing the 2022 slide (slide 14); the
+  CDS licence of CERN-FOOTAGE-2022-013-001 for a commercial broadcaster.
 - Ask Delfi: feed type and squeeze-back size; files in advance and format;
   25p or 50p; who advances slides; confidence monitor; logo/super/clock
   positions; flash check.

@@ -13,7 +13,7 @@
      and partner logos bottom-right;
    - nothing small carries meaning: the source line is a record, not for
      reading on air.
-   Gold is matter and the speaker's path; blue is antimatter and the world. */
+   Gold is the speaker's path and what holds; blue is the world and what does not. */
 
 html[data-stage] {
   --kk-gold: #ffc05a; --kk-gold-hi: #ffe3a8; --kk-blue: #8fb2ff; --kk-blue-hi: #dfe8ff;
@@ -111,7 +111,7 @@ html[data-stage] .photo.dim::after { content: ''; position: absolute; inset: 0; 
 @keyframes kk-push { from { transform: scale(1); } to { transform: scale(1.06); } }
 @keyframes kk-in { from { opacity: 0; } to { opacity: 1; } }
 html[data-stage] .photo-credit {
-  position: absolute; left: var(--kk-x); top: 58px; z-index: 6; font-size: 16px; letter-spacing: 0.02em;
+  position: absolute; left: var(--kk-x); top: 58px; z-index: 6; font-size: 18px; letter-spacing: 0.02em;
   color: #f1f3f8; background: rgba(0, 0, 0, 0.72); padding: 3px 10px; border-radius: 4px;
 }
 
@@ -120,7 +120,7 @@ html[data-stage] .portraits { position: absolute; right: 98px; top: 56px; displa
 html[data-stage] .portraits figure { margin: 0; }
 html[data-stage] .portraits img { width: 222px; height: 278px; object-fit: cover; border-radius: 8px; display: block; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55); filter: grayscale(1) contrast(1.05); max-width: none !important; }
 html[data-stage] .portraits figcaption { font-size: 18px; text-align: center; margin-top: 8px; color: var(--stage-fg); text-shadow: var(--kk-shadow); }
-html[data-stage] .portraits figcaption small { display: block; font-size: 16px; opacity: 0.7; white-space: nowrap; margin-top: 2px; }
+html[data-stage] .portraits figcaption small { display: block; font-size: 18px; opacity: 0.7; white-space: nowrap; margin-top: 2px; }
 @media (prefers-reduced-motion: reduce), print {
   html[data-stage] .photo, html[data-stage] .photo img, html[data-stage] .portraits { animation: none !important; }
 }
@@ -130,7 +130,6 @@ html[data-stage] .scrim-left {
   position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.38) 32%, rgba(0, 0, 0, 0) 58%);
 }
-html[data-stage] .photo.right img { position: absolute; width: 140%; height: 140%; left: -5%; top: -20%; max-width: none !important; max-height: none !important; }   /* the galaxy's core to 65 % of the width, off the text */
 
 /* --- city names on the map (positions projected from the `whole` pose, which has no sway) */
 html[data-stage] .city {

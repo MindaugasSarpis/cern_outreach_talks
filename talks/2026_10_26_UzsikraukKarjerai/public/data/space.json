@@ -1,5 +1,5 @@
 {
- "hero": "origin",
+ "hero": "quarks",
  "poses": {
   "whole": {
    "station": "europe",
@@ -15,44 +15,6 @@
   }
  },
  "stations": [
-  {
-   "id": "origin",
-   "pos": [
-    0,
-    0,
-    0
-   ],
-   "look": {
-    "dist": 22,
-    "yaw": -12,
-    "pitch": 8,
-    "sway": 2,
-    "target": [
-     -4.5,
-     0,
-     0
-    ]
-   },
-   "gather": 0.12,
-   "objects": [
-    {
-     "type": "pairs",
-     "name": "bang",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "pairs": 5000,
-     "radius": 7,
-     "survivors": 200,
-     "size": 3.0,
-     "alpha": 0.8,
-     "gather": 2.4,
-     "spread": 6.5
-    }
-   ]
-  },
   {
    "id": "quarks",
    "pos": [

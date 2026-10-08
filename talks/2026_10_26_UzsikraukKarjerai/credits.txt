@@ -2,14 +2,12 @@
 
 Video (CERN footage, via the slidev-videos shared library)
 - CERN-FOOTAGE-2022-013-001, LHC tunnel travelling shot. © CERN. CERN audiovisual media, cds.cern.ch.
-- CERN-FOOTAGE-2022-013-006, CERN data centre. © CERN. CERN audiovisual media, cds.cern.ch.
-  [Check before broadcast: the licence on each CDS record (CERN footage is usually CC BY 4.0; some records say non-commercial).]
+  [Check before broadcast: the licence on the CDS record (CERN footage is usually CC BY 4.0; some records say non-commercial).]
 
 Photographs
 - LHCb cavern, 2019: Rosa Menkman, flickr.com/photos/r00s/48815389756, CC BY 2.0. Cropped to 16:9.
 - Murray Gell-Mann, 2007: Joi Ito, commons.wikimedia.org/wiki/File:MurrayGellMannJI1.jpg, CC BY 2.5. Cropped.
 - George Zweig, 2015: Peacearth, commons.wikimedia.org/wiki/File:George_Zweig.jpg, CC BY-SA 4.0. Cropped (the crop is CC BY-SA 4.0).
-- NGC 1300: NASA, ESA, and The Hubble Heritage Team (STScI/AURA), esahubble.org/images/opo0501a, CC BY 4.0. Cropped to 16:9.
 
 Figures
 - LHCb collaboration, Phys. Rev. Lett. 115, 072001 (2015), m(J/ψ p) figure, CC BY 4.0.

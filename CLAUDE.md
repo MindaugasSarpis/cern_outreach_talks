@@ -484,26 +484,26 @@ far-back scale poses stay nearest the store.
 
 ## Užsikrauk karjerai (2026_10_26_UzsikraukKarjerai)
 
-Third version, 19 slides, about 10 minutes, one chronological thread (the
-owner rejected a 31-slide committee-written first version and a second whose
-flow jumped between questions and whose world looked washed out). The
-talk's own `CLAUDE.md` holds the brief, story table, status and decisions.
-Pinned to slidev-videos `feat/broadcast` (efacca2) for `look: broadcast`,
-`slidev-stage-safe` and `slidev-stage-record`. Real photographs and footage
-carry the real things (LHC tunnel, LHCb cavern, Gell-Mann and Zweig, the
-LHCb plots, NGC 1300), credited on screen and in `credits.txt`. Earlier
-outline, kept for the world's mechanics:
-I. the question nobody can answer yet (why matter survived: one in a
-billion), then where it is asked (the LHC, LHCb); II. what working on such a
-question looks like: one particle followed from idea (1964) to false find
-(2003), retraction (2008) and discovery (2015), then the speaker's own
-search for three of them, which ended in „Neradau.“, why that still counts,
-and the open data; III. what it has to do with the viewer: his crooked
-route across Europe, his own 2022 plans slide, back to the open question
-(galaxy), and one task for the week. Slide text is only numbers, years, a
-URL, his word „Neradau.“ and the closing question: no slogan cards. The
-full spoken script, timings, public sources and [PATIKSLINTI] items are in
-the notes.
+Fourth version (2026-10-08), 16 slides, about 8–9 minutes, one question
+(the owner rejected a 31-slide committee-written first version, a second
+whose flow jumped between questions and whose world looked washed out, and
+called the third "not coherent"). The talk's own `CLAUDE.md` holds the
+brief, story table, status and decisions. Pinned to slidev-videos
+`feat/broadcast` (efacca2) for `look: broadcast`, `slidev-stage-safe` and
+`slidev-stage-record`. Real photographs and footage carry the real things
+(LHC tunnel, LHCb cavern, Gell-Mann and Zweig, the LHCb plots), credited on
+screen and in `credits.txt`. The thread: his crooked route across Europe to
+a PhD, which gave him pentaquarks; their history (the 1964 idea, the 2003
+claim that others checked and withdrew by 2008, LHCb's 2015 discovery and
+the three of 2019); his own search for those three in another decay, which
+ended in „Neradau.“, and why that check still counts; his 2022 plans slide
+and the move home to build an LHCb group; one task for the week. The
+matter/antimatter frame and the open-data slide were cut (their `pairs`
+builder stays in `setup/grains.js`, unused). Slide text is only years, a
+number, two short sentences („Paskelbė, kad rado.“, „Paaiškėjo, kad jo
+nėra.“), „Neradau.“ and the closing question. The full spoken script,
+timings and public sources are in the notes; open items for the speaker
+are in the talk's `CLAUDE.md`, not in the notes.
 
 - **Television rules** (research 2026-10-07; from the event's past
   recordings and broadcast standards): Delfi/LJA showed slides squeezed to about two-thirds
@@ -516,13 +516,14 @@ the notes.
   aberration: 0, dustSize: 3, density: 0.6, streak: 0.4, nebula: 0.3, bloom:
   0.45, flight: [2.5, 5] }`); the grains' twinkle is slow and shallow. Laptop
   output 1920×1080 at 50 Hz. No full-frame flashes (ITU-R BT.1702).
-- **Stations** (one axis, 300 apart, so only one is ever in frame): `origin`
-  (hero; `pairs`), `quarks` (`quintet`), `search` (`ghost` with a haystack,
+- **Stations** (one axis, 300 apart, so only one is ever in frame): `quarks`
+  (hero; `quintet`), `search` (`ghost` with a haystack,
   `streams` `dance` and `phantom`), `europe` (`map`, `path` `route`: Vilnius →
   CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius; pose
   `whole`, no sway, with HTML city labels projected from it).
   `stage.options.reach: 22`. The clips and photos cover the world on their
-  slides; the collider ring and the grain galaxy are gone.
+  slides; the collider ring, the grain galaxy and the `origin` station with
+  its matter/antimatter `pairs` are gone.
 - **Talk-owned builders** (`setup/grains.js`, `stage:check --types
   path,streams,pairs,ghost,map,quintet`), all driven by `<Grains :set>`:
   - `pairs` — matter (gold) and antimatter (blue): 1 the hot cloud forms, 2 the
