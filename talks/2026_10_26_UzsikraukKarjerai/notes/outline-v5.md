@@ -235,3 +235,26 @@ route becomes one beat on slide 13).
   (`public/data/search-toy.json`).
 - Every slide has a line on screen before its grains arrive (owner's rule),
   so slides 8 and 9 got „Kuo skyrėsi?“ and „2019–2023 m. · Mano paieška“.
+
+## Changes after the owner's review of the deployed version (2026-10-08, night)
+
+The owner found the visuals nice and asked for three content changes:
+
+1. A proper introduction to LHCb before 2015: slide 6 (the cavern) now says
+   what LHCb studies (particles with heavy quarks, above all the beauty
+   quark) and why (how matter differs from antimatter; the same data let it
+   look for new particles made of quarks); a new slide 7 shows a real LHCb
+   Run 3 event display and explains, in plain words, how one collision
+   becomes one dot on the plot the viewer judged on slide 2 (tracks, the
+   magnet bending them, the computed mass, the software selection).
+2. The search, the haystack and „Neradau.“ removed.
+3. „Ko išmokau“ removed.
+
+The thread is now: the bump (2–4) → the LHC and LHCb, how a dot is made
+(5–7) → 2015 (8) → what made the difference (9) → the speaker's route (10)
+→ three things to do this school year (11) → the closing question (12),
+which still follows from the title: in real work nobody has the answer at
+the back of the book, so ask someone what they do not know yet.
+
+12 slides; about 600 spoken words (about 6 min) plus the pauses, the fills
+and the tunnel clip: about 7 min. Not padded.

@@ -49,7 +49,7 @@ I. VADOVĖLIO GALE ATSAKYMO NĖRA
 Message: in my work there is no answer at the back of the book; today you will try it yourself.
 Picture: a five-quark particle gathers out of the dust beside the title.
 
-Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Esu dalelių fizikas Vilniaus universitete ir mano darbe tokio vadovėlio nėra. Dirbu su klausimais, į kuriuos dar niekas neatsakė. Šiandien tokį darbą pabandysi ir tu.
+Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Esu dalelių fizikas Vilniaus universitete ir mano darbe tokio vadovėlio nėra. Dirbu su klausimais, į kuriuos dar niekas neatsakė. Šalia pavadinimo – dalelė iš penkių kvarkų. Apie tokias daleles ir bus šis pasakojimas, o tokį darbą šiandien pabandysi ir tu.
 
 (~0.5 min)
 -->
@@ -70,7 +70,7 @@ Message: you decide: is this bump a particle or chance?
 Picture: a histogram fills dot by dot (140 dots); one bin near the middle rises well above its neighbours.
 Note: the plot is an illustration, not measured data: a random sample from a smooth spectrum with no particle in it, in which chance made the bump (public/data/theta-toy.json). Say „toks grafikas“, never „tikras“.
 
-Štai toks grafikas, kokių matome kasdien. Kiekvienas taškelis – vienas susidūrimas, kurį užregistravo detektorius, o grafike jie sudėti pagal masę. Jeigu kurioje nors vietoje susidaro kauburys, gal ten yra dalelė, kurios dar niekas nematė. O gal tai tik atsitiktinumas, kaip kad metant kauliuką kelis kartus iš eilės iškrenta šešetas. Kaip manai, ar čia dalelė?
+Štai toks grafikas, kokių matome kasdien. Kiekvienas taškelis – vienas susidūrimas, kurį užregistravo detektorius. Iš susidūrime atsiradusių dalelių apskaičiuojame masę, ir taškelis krenta į tą masę atitinkantį stulpelį. Kuo stulpelis aukštesnis, tuo dažniau tokia masė pasitaikė. Jeigu kurioje nors vietoje susidaro kauburys, gal ten yra dalelė, kurios dar niekas nematė. O gal tai tik atsitiktinumas, kaip kad metant kauliuką kelis kartus iš eilės iškrenta šešetas. Kaip manai, ar čia dalelė?
 [pauzė 3 s]
 
 (~0.6 min)
@@ -83,7 +83,7 @@ space: { at: trial, dim: 0.05 }
 <Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0 }" />
 
 <div class="say top">
-<p class="kick">2003 m.</p>
+<p class="kick year">2003 m.</p>
 <p class="big">Paskelbta, kad tai dalelė</p>
 </div>
 
@@ -91,7 +91,7 @@ space: { at: trial, dim: 0.05 }
 Message: in 2003 physicists said yes and announced a pentaquark; others soon saw a bump too.
 Picture: the same small histogram.
 
-2003 metais fizikai Japonijoje savo grafike pamatė panašų kauburį ir nusprendė, kad tai dalelė. Jie paskelbė, kad rado pentakvarką – dalelę iš penkių kvarkų. Kvarkų idėja, atsiradusi 1964 metais, tokias daleles leido, bet niekas jų nebuvo matęs. Netrukus panašų kauburį pamatė ir kitos grupės.
+2003 metais fizikai Japonijoje savo grafike pamatė panašų kauburį ir nusprendė, kad tai dalelė. Jie paskelbė, kad rado pentakvarką – dalelę iš penkių kvarkų. Kvarkai – smulkesnės dalelės, iš kurių sudaryti protonai ir neutronai. Protone jų yra trys. Pagal 1964 metais iškeltą kvarkų idėją galėjo būti ir dalelių iš penkių kvarkų, bet niekas jų nebuvo matęs. Netrukus panašų kauburį pamatė ir kitos grupės.
 
 (~0.4 min)
 -->
@@ -103,12 +103,12 @@ space: { at: trial, dim: 0.05 }
 <Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0 }" />
 
 <div class="say top">
-<p class="kick blue">2008 m.</p>
+<p class="kick blue year">2008 m.</p>
 <p class="big">Surinkus daugiau duomenų kauburys išnyko</p>
 </div>
 
 <!--
-Message: with far more data the bump went away; by 2008 the claim was withdrawn.
+Message: with far more data the bump went away; by 2008 the PDG review concluded the particle does not exist.
 Picture: the small histogram clears; 3 500 dots fall into the same bins and make a smooth, falling shape with no bump. Illustration, as on slide 2.
 
 Tada kitos komandos pakartojo matavimą, surinkę daug daugiau duomenų. Kauburys išnyko. 2008 metų pagrindiniame dalelių fizikos žinyne parašyta, kad to pentakvarko nėra. Kauburys buvo atsitiktinumas, kurį fizikai per anksti palaikė dalele.
@@ -128,7 +128,7 @@ space: { at: lhcb, dim: 0 }
 Message: my experiment is at CERN, where the LHC collides protons, about a billion collisions a second.
 Picture: real footage, a travelling shot along the LHC tunnel. Advance whenever you finish; the clip is long.
 
-Mano eksperimentas yra CERN, prie Ženevos. Ten, šimto metrų gylyje, yra dvidešimt septynių kilometrų žiedas – Didysis hadronų greitintuvas. Jame protonai susiduria beveik šviesos greičiu ir per sekundę įvyksta apie milijardas susidūrimų.
+Pentakvarkų istorija tuo nesibaigė. Ji tęsėsi eksperimente, kuriame dabar dirbu ir aš. Jis yra CERN, prie Ženevos. Ten, šimto metrų gylyje, yra dvidešimt septynių kilometrų žiedas – Didysis hadronų greitintuvas. Jame protonai susiduria beveik šviesos greičiu ir per sekundę įvyksta apie milijardas susidūrimų.
 
 (~0.4 min)
 -->
@@ -175,22 +175,24 @@ space: { at: lhcb, dim: 0.05 }
 
 <Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1 }" />
 
-<div class="say top swap-out">
-<p class="kick">2015 m.</p>
+<div class="say top" v-click-hide="1">
+<p class="kick year">2015 m.</p>
 <p class="big">LHCb duomenyse iškilo smailė</p>
 </div>
 
-<div class="say top swap-in">
-<p class="kick">2019 m.</p>
+<div class="say top" v-click="1">
+<p class="kick year">2019 m.</p>
 <p class="big">Trys pentakvarkai</p>
 </div>
 
 <!--
 Message: in 2015 LHCb, studying a heavier particle's decay, found a peak it had not looked for, checked everything, and it held; by 2019 the peak was two states and a third had appeared.
-Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate, fast at first, until the narrow peaks stand out (about 20 s); then the three peaks light up and the line on screen changes from „LHCb duomenyse iškilo smailė“ (2015 m.) to „Trys pentakvarkai“ (2019 m.). Time the last sentence („Tai trys pentakvarkai, kuriuos matai dabar.“) to that change.
+Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate, fast at first, until the narrow peaks stand out (about 20 s); then ticks light over the three peaks. → spausk at „2019 metais…“: the line on screen changes from „LHCb duomenyse iškilo smailė“ (2015 m.) to „Trys pentakvarkai“ (2019 m.).
 Data: LHCb, PRL 122, 222001 (2019), HEPData ins1728691 Table 2 (m(Kp) > 1,9 GeV). These bins hold the 2015 sample and the later data together; the 2015 paper's own bins are not on HEPData.
 
-2015 metais LHCb tyrė, kaip skyla viena sunkesnė dalelė, ir grafike netikėtai iškilo smailė. Prieš paskelbdama rezultatą, LHCb komanda tikrino viską, ką sugalvojo: ar smailė neatsiranda dėl detektoriaus, dėl kitų dalelių, dėl to, kaip atrinkti duomenys. Komanda buvo atsargi, nes 2003-iųjų istoriją dar gerai prisiminė. Smailė liko. 2019 metais, surinkus dar daugiau duomenų, ta smailė išsiskyrė į dvi, o atsirado ir trečia. Tai trys pentakvarkai, kuriuos matai dabar.
+2015 metais LHCb tyrė, kaip skyla viena sunki dalelė, ir grafike netikėtai iškilo smailė – aukštas, siauras kauburys. Prieš skelbdama rezultatą, LHCb komanda tikrino viską, ką tik galėjo: ar smailės nesukuria detektorius, kitos dalelės ar tai, kaip atrinkti duomenys. Smailė liko.
+→ spausk
+2019 metais, surinkus dar daugiau duomenų, paaiškėjo, kad ta smailė iš tikrųjų yra dvi, ir atsirado trečia. Tai trys pentakvarkai, kuriuos matai dabar.
 
 (~0.7 min)
 -->
@@ -237,7 +239,7 @@ Mano paties kelias į LHCb nebuvo suplanuotas. Iki dvylikos metų norėjau būti
 -->
 
 ---
-space: { at: quarks, dist: 22, yaw: 20, pitch: 6, sway: 0.5, dim: 0.6 }
+space: { at: [690, 6, 30], dist: 20, yaw: 40, pitch: 6, sway: 0.5, dim: 0.6 }
 ---
 
 <Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 1 }" />
@@ -252,10 +254,10 @@ space: { at: quarks, dist: 22, yaw: 20, pitch: 6, sway: 0.5, dim: 0.6 }
 <!--
 IV. KĄ GALI PADARYTI TU
 Message: three real things a student can do this year.
-Picture: the five-quark particle far off, dimmed behind the three lines.
+Picture: plain dust, dimmed behind the three lines (the camera turned away from the form, which returns on the close).
 Check before the talk: the 2027 masterclass date at VU (2026: 26 February) and the 2027 Beamline for Schools call (past rules: 16 or older, teams of at least five with an adult coach).
 
-Štai ką gali padaryti jau šiais mokslo metais. Vilniaus universitete vasarį ar kovą vyksta LHCb meistriškumo klasė. Mokiniai ten vieną dieną analizuoja tikrus CERN duomenis ir rezultatus aptaria su kitų šalių grupėmis. CERN kasmet rengia konkursą „Beamline for Schools“. Ne mažiau kaip penkių mokinių nuo šešiolikos metų komanda su suaugusiu vadovu, pavyzdžiui, mokytoju, pasiūlo eksperimentą, o laimėtojai jį atlieka prie tikro greitintuvo. Ir LHCb duomenis nemokamai gali atsisiųsti kiekvienas iš opendata.cern.ch.
+Štai ką gali padaryti jau šiais mokslo metais. Vilniaus universitete vasarį ar kovą vyksta LHCb meistriškumo klasė. Mokiniai ten vieną dieną analizuoja tikrus CERN duomenis ir rezultatus aptaria su kitų šalių grupėmis. CERN kasmet rengia konkursą „Beamline for Schools“. Bent penkių mokinių nuo šešiolikos metų komanda su suaugusiu vadovu, pavyzdžiui, mokytoju, pasiūlo eksperimentą. Laimėtojai jį atlieka prie tikro greitintuvo. Ir LHCb duomenis nemokamai gali atsisiųsti kiekvienas iš opendata.cern.ch.
 
 (~0.8 min)
 -->
@@ -281,5 +283,5 @@ Ir viena užduotis šiai savaitei. Kai sutiksi žmogų, kurio darbas tau atrodo 
 
 (~0.4 min)
 
-Total ≈ 8 min of speech plus pauses and the tunnel clip: about 9–10 minutes.
+Total ≈ 7 min (the per-slide sum; pauses, fills and the tunnel clip included) against an 8–10 min slot; room for the speaker's own account on slides 7 and 10.
 -->

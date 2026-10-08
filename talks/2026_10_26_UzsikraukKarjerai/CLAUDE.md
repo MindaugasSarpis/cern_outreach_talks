@@ -24,27 +24,25 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (fifth version, 14 slides, about 10 min)
+## Story (fifth version after the owner's review, 12 slides, about 7 min)
 
-Approved outline: `notes/outline-v5.md` (owner, 2026-10-08), minus the 2022
-plans slide (owner). The viewer sits in the physicist's seat.
+Approved outline: `notes/outline-v5.md` with its two change sections
+(owner, 2026-10-08). The viewer sits in the physicist's seat.
 
 | # | Screen | Picture |
 |---|---|---|
 | 1 | title, name | the five-quark form gathers (hero, `quarks`) |
 | 2 | „Ar čia dalelė?“ | `th1` fills: 140 dots, a chance bump at 1,54 GeV (illustration) |
-| 3 | „2003 m. – taip.“ | same |
-| 4 | „2008 m. – ne.“ | `th2` fills: 3 500 dots, smooth (illustration) |
+| 3 | 2003 m. · „Paskelbta, kad tai dalelė“ | same |
+| 4 | 2008 m. · „Surinkus daugiau duomenų kauburys išnyko“ | `th2` fills: 3 500 dots, smooth (illustration) |
 | 5 | (clip) | LHC tunnel footage |
-| 6 | (photo) | LHCb cavern, StagePhoto |
-| 7 | „2015 m. – taip.“ → „2019 m. – trys.“ | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; the three peaks light |
-| 8 | „Kuo skyrėsi?“ | the full LHCb histogram, camera back |
-| 9 | „2019–2023 m. · Mano paieška“ | haystack, the method-works cluster |
-| 10 | „Neradau.“ | `mine` fills, no peak (illustration) |
-| 11 | „Ko išmokau“ + skills line | the map, dimmed |
-| 12 | city labels | the route across Europe |
-| 13 | three things to do this year | the form far off, dimmed |
-| 14 | „„Ko jūs savo darbe dar nežinote?““ alone | the form, held |
+| 6 | (photo) | LHCb cavern, StagePhoto: what LHCb studies and why |
+| 7 | „Vienas susidūrimas LHCb detektoriuje“ | LHCb Run 3 event display, StagePhoto: how a collision becomes a dot |
+| 8 | 2015 m. · „LHCb duomenyse iškilo smailė“ → 2019 m. · „Trys pentakvarkai“ | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks |
+| 9 | „Šimtus kartų daugiau duomenų nei 2003 m.“ | the full LHCb histogram, camera back |
+| 10 | city labels | the route across Europe |
+| 11 | three things to do this school year | the form far off, dimmed |
+| 12 | „„Ko jūs savo darbe dar nežinote?““ alone | the form, held |
 
 ## Status
 
@@ -145,6 +143,13 @@ plans slide (owner). The viewer sits in the physicist's seat.
   the day.
 
 ## Decisions
+
+- 2026-10-08 — Owner, after reviewing the deployed version: an LHCb
+  introduction before 2015 (slides 6–7, real photos), the search and
+  „Neradau.“ removed, „Ko išmokau“ removed. The event display is © CERN /
+  LHCb (educational, non-commercial): used because the event is private
+  and online; listed under Figures for the owner to confirm. Undo: restore
+  01bed17's deck.md and space.json.
 
 - 2026-10-08 — Final text round, facts corrected: LHCb found the Pc peak
   while studying a Λb⁰ decay (not a pentaquark search); in 2019 the 2015
@@ -247,6 +252,10 @@ plans slide (owner). The viewer sits in the physicist's seat.
   commercial. The grain galaxy station is gone (the Hubble photo replaces it).
 
 ## Figures and open items (for the speaker)
+
+- Licences to confirm for this event: the LHC tunnel clip
+  (CERN-FOOTAGE-2022-013-001) and the LHCb event display (slide 7), both
+  CERN material for educational, non-commercial use.
 
 - Length: the script is about 7–8 minutes spoken; the brief allows 10–15.
   If the speaker wants more, slide 11 (what a working day is like) is where
