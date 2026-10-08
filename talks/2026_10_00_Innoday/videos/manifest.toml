@@ -10,19 +10,9 @@
 # release_tag comes from videos.toml (videos-2026-10-00-innoday).
 max_size_mb = 320   # vu_ff_zoom 253 MB; vu_ff_zoom_galaxy (4:26, re-encoded from the web copy at ~9.2 Mbit/s) 305 MB
 
-[[videos]]
-name    = "vu_ff_zoom.mp4"
-profile = "high-motion"
-used_in = ["deck"]
-notes   = """\
-Opener: cosmic zoom-out from the VU Faculty of Physics building in the NFTMC \
-(Saulėtekis, Google Earth) through Vilnius, Earth and the Milky Way out to \
-a spiral galaxy, which fades to black at the end (it does not end on the cosmic \
-web: the takeover slide shows a stand-in frame until the orbit clip replaces \
-it), 4:42 with its own audio track. The same web encode \
-as the World of Particles opener (release videos-2026-09-10-worldofparticles, \
-2026-09-07), copied to this talk's release. Raw is a 4K60 H.264 254 Mbps \
-Resolve master (9.0 GB) on gdrive as vu_ff_zoom.mp4."""
+# vu_ff_zoom.mp4 (the whole 4:42 zoom-out, 253 MB) is the source of the cut
+# below. The deck no longer plays it, so it is not listed; its asset stays on
+# the release (do not publish with --prune until the orbit clip replaces both).
 
 [[videos]]
 name    = "vu_ff_zoom_galaxy.mp4"
