@@ -173,6 +173,10 @@ vec3 metal(vec3 nW, vec3 vW, vec3 F0) {
 
 const LINEUP_VERT = /* glsl */ `
 attribute float aSeed, aK, aBall;    // rank in its pile (0 the centre … 1 the rim), which pile
+attribute vec3 aFrom, aFromDir;       // a merging pile: where this sphere stands in its copy, and its outward direction there
+uniform float uMerge[${MAXB}];
+uniform vec3 uFromColor[${MAXB}];
+uniform float uMergeAt;
 uniform float uTime, uGrow, uReach, uRad, uViewH, uMaxPt, uShell;
 uniform float uShowT[${MAXB}];
 uniform float uHideT[${MAXB}];
@@ -187,9 +191,10 @@ void off_() { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor
 void main() {
   int b = int(aBall + 0.5);
   float st = uShowT[b], ht = uHideT[b];
-  // the inner spheres set out first; each takes 1.6 s to arrive
-  float start = st + uGrow * (0.78 * pow(max(aK, 1e-6), 0.8) + 0.22 * aSeed);
-  float f = ease((uTime - start) / 1.6);
+  bool merging = uMerge[b] > 0.5 && ht < 0.0;
+  // the inner spheres set out first; each takes 1.6 s to arrive (a merging pile: all at once)
+  float start = merging ? st : st + uGrow * (0.78 * pow(max(aK, 1e-6), 0.8) + 0.22 * aSeed);
+  float f = merging ? ease((uTime - st - uMergeAt - 0.5 * aSeed) / 2.2) : ease((uTime - start) / 1.6);
   bool on = st >= 0.0 && uTime >= start;
   if (ht >= 0.0) { float g = 1.0 - ease((uTime - ht) / 1.1); f = min(f, g); on = on && g > 0.0; }
   if (!on) { off_(); return; }
@@ -210,7 +215,17 @@ void main() {
   vec3 far = dir * (r + reach) + side * reach * 0.6 * (hash(aSeed * 17.0) - 0.5) + vec3(0.0, reach * 0.5 * (hash(aSeed * 53.0) - 0.5), 0.0);
   float a = (1.0 - f) * 2.2;
   far = vec3(cos(a) * far.x - sin(a) * far.z, far.y, sin(a) * far.x + cos(a) * far.z);
-  vec4 mv = modelViewMatrix * vec4(c + mix(far, off, f), 1.0);
+  vec3 placed = c + mix(far, off, f);
+  vec3 outw = dir;
+  if (merging) {
+    // first the copies of the smaller pile gather side by side (1.3 s) and hold, so they
+    // can be counted; then every sphere flies from its copy into the larger pile
+    float a1 = ease((uTime - st - 0.25 * aSeed) / 1.3);
+    vec3 scat = (vec3(hash(aSeed * 3.0), hash(aSeed * 5.0), hash(aSeed * 9.0)) - 0.5) * 7.0;
+    placed = mix(aFrom + scat * (1.0 - a1), position, f);
+    outw = normalize(mix(aFromDir, dir, f) + 1e-4);
+  }
+  vec4 mv = modelViewMatrix * vec4(placed, 1.0);
   gl_Position = projectionMatrix * mv;
   // a sphere of radius uRad at this depth, in pixels of the target being drawn; a
   // standing sphere under 8 px is drawn a little larger, so the thin skin stays closed
@@ -223,8 +238,9 @@ void main() {
   // in shadow, and a thin bright rim where its surface turns away from the eye
   float lit = 0.5 + 0.62 * max(dot(dir, normalize(uLight)), 0.0) + 0.25 * pow(1.0 - clamp(facingS, 0.0, 1.0 - 1e-6), 3.0);
   vShade = mix(1.0, lit, f);
-  vOut = dir; vF = f;
-  vColor = uColor[b] * (0.9 + 0.2 * hash(aSeed * 7.0));
+  if (merging) { lit = 0.5 + 0.62 * max(dot(outw, normalize(uLight)), 0.0) + 0.2; vShade = mix(lit, mix(1.0, lit, f), f); }
+  vOut = outw; vF = merging ? max(f, 0.999 * step(1.3, uTime - st)) : f;
+  vColor = (merging ? mix(uFromColor[b], uColor[b], f) : uColor[b]) * (0.9 + 0.2 * hash(aSeed * 7.0));
 }`
 // A heap of small polished balls, seen as one body, is satin, not a mirror:
 // every ball facing the light carries its own small highlight, so the lit side
@@ -376,8 +392,32 @@ function buildLineup(o, ctx) {
     }
     end[b] = q
   }
+  // a pile that `merges` starts as copies of a smaller pile, `copies` of ball `from`,
+  // laid out at `copiesAt` (centres); sphere j of the large pile is sphere floor(j / N)
+  // of copy j mod N, so the copies are whole piles of the smaller kind
+  const fromPos = new Float32Array(total * 3), fromDir = new Float32Array(total * 3)
+  {
+    let q0 = 0
+    for (const b of piles) {
+      const m = balls[b].merge, n = balls[b].n
+      if (m && Array.isArray(m.copiesAt) && m.copiesAt.length) {
+        const N = m.copiesAt.length
+        for (let j = 0; j < n; j++) {
+          const k = j % N, i = Math.floor(j / N), cc = m.copiesAt[k]
+          tv.set(lat[i * 3], lat[i * 3 + 1], lat[i * 3 + 2]).multiplyScalar(s).applyMatrix4(TILT)
+          const q = q0 + j
+          fromPos[q * 3] = cc[0] + tv.x; fromPos[q * 3 + 1] = cc[1] + tv.y; fromPos[q * 3 + 2] = cc[2] + tv.z
+          const l = tv.length() || 1
+          fromDir[q * 3] = tv.x / l; fromDir[q * 3 + 1] = tv.y / l; fromDir[q * 3 + 2] = tv.z / l
+        }
+      }
+      q0 += n
+    }
+  }
   const geo = new BufferGeometry()
   geo.setAttribute('position', new BufferAttribute(pos, 3))
+  geo.setAttribute('aFrom', new BufferAttribute(fromPos, 3))
+  geo.setAttribute('aFromDir', new BufferAttribute(fromDir, 3))
   geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
   geo.setAttribute('aK', new BufferAttribute(rank, 1))
   geo.setAttribute('aBall', new BufferAttribute(which, 1))
@@ -393,6 +433,9 @@ function buildLineup(o, ctx) {
       uR: { value: pad(R, () => 0) },
       uCenter: { value: pad(C.map((c) => new Vector3(c[0], c[1], c[2])), () => new Vector3()) },
       uColor: { value: pad(balls.map((x) => new Color(x.color || ctx.palette.accent)), () => new Color()) },
+      uMerge: { value: pad(balls.map((x) => (x.merge ? 1 : 0)), () => 0) },
+      uFromColor: { value: pad(balls.map((x) => new Color(x.merge ? balls[x.merge.from].color : (x.color || '#ffffff'))), () => new Color()) },
+      uMergeAt: { value: o.mergeAt ?? 2.4 },
       uLight: { value: new Vector3(-6, 9, 7).normalize() },   // the engine's key light
     },
   })
@@ -703,7 +746,7 @@ float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
 float ease(float x) { x = clamp(x, 0.0, 1.0); return x * x * x * (x * (x * 6.0 - 15.0) + 10.0); }
 void main() {
   float f = 0.0;
-  if (uShowT >= 0.0) f = ease((uTime - (uShowT + 0.9 * aR + 0.7 * aSeed)) / 1.9);
+  if (uShowT >= 0.0) f = ease((uTime - (uShowT + 0.35 * aR + 0.25 * aSeed)) / 1.1);
   if (uHideT >= 0.0) f = min(f, 1.0 - ease((uTime - uHideT - 0.3 * aSeed) / 1.1));
   if (f <= 0.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vA = 0.0; vCol = vec3(0.0); return; }
   vec3 dir = normalize(vec3(hash(aSeed * 3.1), hash(aSeed * 5.7), hash(aSeed * 9.3)) - 0.5 + 1e-4);
@@ -796,7 +839,8 @@ function buildPortraits(o, ctx) {
   }
   const off = listen(o.name, go)
   mat.addEventListener('dispose', off)
-  const api = {
+  // onEnter: they gather the moment their slide opens, during the flight, rather than on arrival
+  const api = o.onEnter ? undefined : {
     arm() { armed = true; armedAt = now; if (showT.value >= 0 && hideT.value < 0) hideT.value = now },
     assemble(t, onDone) {
       now = t; armed = false
@@ -810,7 +854,7 @@ function buildPortraits(o, ctx) {
       now = t; uni.uTime.value = t
       if (armed && t - armedAt > 6) { armed = false; go(step) }
       if (hideT.value >= 0 && t - hideT.value > 1.6) { showT.value = -1; hideT.value = -1 }
-      const on = showT.value >= 0 && hideT.value < 0 && t - showT.value > 2.2
+      const on = showT.value >= 0 && hideT.value < 0 && t - showT.value > 1.2
       for (const l of labels) {
         l.userData.vis += ((on ? 1 : 0) - l.userData.vis) * 0.06
         l.material.opacity = 0.9 * l.userData.vis

@@ -220,13 +220,13 @@ space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, dim: 0.15 }
 
 <Grains :set="{ scale: [0, 1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
-<div class="readout late">
+<div class="readout last">
 
 <p class="kicker">Atvira nuo 2026 m.</p>
 
-<div class="big"><Count name="open" :from="800" :to="4000" :delay="2400" /><span class="unit">TB</span></div>
+<div class="big"><Count name="open" :from="800" :to="4000" :delay="5200" :ms="900" /><span class="unit">TB</span></div>
 
-<p class="line">Dabar atverti ir 2015–2018 m. duomenys: iš viso daugiau nei 4 PB.</p>
+<p class="line">Atverti ir 2015–2018 m. duomenys – penkis kartus daugiau.</p>
 
 </div>
 
@@ -284,13 +284,13 @@ space: { at: [2, 9, -18], dist: 60.1, yaw: -1.9, pitch: 2.9, sway: 4, dim: 0.15 
 
 <Grains :set="{ scale: [0, 1, 2, 3, 4], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
-<div class="readout steel late">
+<div class="readout steel last">
 
 <p class="kicker">Visi LHC eksperimentai, 2025 m. gruodis</p>
 
-<div class="big"><Count name="lhc" :from="0" :to="1000000" :delay="2400" /><span class="unit">TB</span></div>
+<div class="big"><Count name="lhc" :from="0" :to="1000000" :delay="5200" :ms="900" /><span class="unit">TB</span></div>
 
-<p class="line">Vienas eksabaitas, dešimt kartų daugiau nei LHCb.</p>
+<p class="line">Vienas eksabaitas – maždaug dešimt tokių kaip LHCb.</p>
 
 </div>
 
@@ -443,7 +443,7 @@ space: { at: thesis, dim: 1 }
 <div class="thesis-slide">
 <div class="thesis-who">
 
-<img class="face" src="/figures/people/dominykas-stonkus.jpg" alt="Dominykas Stonkus" />
+<img class="portrait" src="/figures/people/dominykas-stonkus.jpg" alt="Dominykas Stonkus" />
 
 <p class="kicker">Bakalauro darbas · VU, 2026</p>
 
@@ -455,7 +455,7 @@ space: { at: thesis, dim: 1 }
 <div class="thesis-plot">
 <div class="plot-box">
 <img src="/figures/thesis/jpsip-mass.png" alt="Dominyko Stonkaus bakalauro darbas: J/ψ p invariantinė masė, atėmus foną; pakilimas ties 4,4–4,5 GeV" />
-<PeakRise :x="0.44" :y="0.265" :delay="1.4" :rise="0.15" :size="0.065" />
+<PeakRise :x="0.44" :y="0.265" :delay="1.4" :rise="0.16" :size="0.1" />
 </div>
 <p class="credit">D. Stonkus, bakalauro darbas, VU, 2026, 17 pav.</p>
 </div>
@@ -495,16 +495,12 @@ repository.vu.lt/VU:ELABAETD308118793 (open access); LHCb, PRL 115 (2015) 072001
 -->
 
 ---
-space: { at: [-42.6, 2.6, 0], dist: 25.5, yaw: 38, pitch: 5, dim: 0.35 }
+space: { at: [-36, 2.8, 0], dist: 26, yaw: 0, pitch: 3, dim: 0.2 }
 ---
 
 <Grains :set="{ team: 1, collision: 0, world: 0, vilnius: 0, dominykas: 0 }" />
 
-<div class="readout close">
-
-# Ačiū
-
-</div>
+<div class="thanks">Ačiū</div>
 
 <!--
 Message: this is the work we were nominated for, and the people who did it.

@@ -56,10 +56,14 @@ html[data-stage] .readout.close .line { color: var(--od-gold-hi); }
 html[data-stage] .readout.late { animation-delay: 2.6s; }
 html[data-stage] .legend.late { opacity: 0; animation: stage-rise 0.8s var(--stage-ease) 3.4s both; }
 html[data-stage] .readout.later { animation-delay: 4s; }
+html[data-stage] .readout.last { animation-delay: 5.2s; }   /* after copies of the smaller pile merge into the larger */
 html[data-stage] .legend.later { opacity: 0; animation: stage-rise 0.8s var(--stage-ease) 4.2s both; }
 /* the event: its title in the place of a number, the text kept to the left of the tracks */
 html[data-stage] .readout.event { max-width: 40%; }
 html[data-stage] .readout.event h1 { font-size: 72px !important; font-weight: 700 !important; letter-spacing: -0.02em; line-height: 1 !important; margin: 0 0 14px !important; color: var(--od-gold-hi) !important; animation: none !important; }
+
+/* „Ačiū“ alone, in the middle of the ring of the group's portraits */
+html[data-stage] .thanks { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 96px; font-weight: 700; letter-spacing: -0.03em; color: #fff; text-shadow: 0 4px 40px rgba(0, 0, 0, 0.7); animation: stage-rise 0.9s var(--stage-ease) 0.4s both; }
 
 /* ---- the key, top right, on every slide that shows the piles */
 html[data-stage] .legend {
@@ -154,12 +158,12 @@ html[data-stage] .finds-plot img {
 
 /* ---- the thesis: the student and his own plot, light on dark, a pentaquark rising out of its peak.
    Opaque, as the finds slide */
-html[data-stage] .thesis-slide { position: absolute; inset: 0; background: rgb(var(--stage-bg-rgb, 0, 2, 6)); display: grid; grid-template-columns: 0.55fr 1.45fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
+html[data-stage] .thesis-slide { position: absolute; inset: 0; background: rgb(var(--stage-bg-rgb, 0, 2, 6)); display: grid; grid-template-columns: 0.62fr 1.38fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
 html[data-stage] .thesis-who { animation: stage-rise 0.85s var(--stage-ease) 0.15s both; }
-html[data-stage] .thesis-who .face { width: 132px; height: 132px; border-radius: 50%; object-fit: cover; display: block; margin: 0 0 22px; box-shadow: 0 0 0 2px rgba(255, 210, 140, 0.55), 0 0 30px rgba(255, 180, 90, 0.25); }
+html[data-stage] .thesis-who .portrait { width: 100%; max-width: 190px; aspect-ratio: 4 / 5; border-radius: 6px; object-fit: cover; object-position: 50% 30%; display: block; margin: 0 0 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); }
 html[data-stage] .thesis-who .kicker { color: var(--od-gold); margin: 0 0 6px; }
 html[data-stage] .thesis-who .name { font-size: 22px; font-weight: 600; color: var(--stage-fg); margin: 0 0 18px; }
-html[data-stage] .thesis-who .line { font-size: 28px; font-weight: 500; line-height: 1.25; color: #fff; margin: 0; text-wrap: balance; }
+html[data-stage] .thesis-who .line { font-size: 24px; font-weight: 500; line-height: 1.25; color: #fff; margin: 0; text-wrap: balance; }
 html[data-stage] .thesis-plot { position: relative; padding-top: 90px; animation: stage-card-in 1s var(--stage-ease) 0.3s both; }
 html[data-stage] .thesis-plot img { width: 100%; display: block; filter: invert(1) hue-rotate(180deg) brightness(1.05) contrast(1.05); mix-blend-mode: screen; }
 /* the pentaquark gathers above the peak: the overlay reaches 30 % above the plot */
