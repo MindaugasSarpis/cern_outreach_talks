@@ -714,9 +714,11 @@ void main() {
   gl_Position = projectionMatrix * mv;
   float px = uGrain * projectionMatrix[1][1] * 0.5 * uViewH / max(-mv.z, 1e-3);
   gl_PointSize = clamp(px * 1.7, 1.0, 24.0);
-  vCol = aCol;
+  // the people are made of the data: a grain arrives as a gold grain of data and takes
+  // the photo's colour as it settles
+  vCol = mix(vec3(1.0, 0.62, 0.22) * 0.5, aCol, smoothstep(0.55, 1.0, f));
   // a grain smaller than a pixel is drawn a pixel wide, so it gives up its share of light
-  vA = mix(0.15, 1.0, f) * min(1.0, px * px * 2.9);
+  vA = mix(0.15, 1.0, f) * min(1.0, px * px * 2.9) * (1.0 - smoothstep(0.82, 1.0, aR));
 }`
 const PORTRAIT_FRAG = /* glsl */ `
 uniform float uGain;
@@ -735,7 +737,7 @@ function buildPortraits(o, ctx) {
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
   const showT = { value: -1 }, hideT = { value: -1 }, viewH = { value: 1080 }, pr = { value: Math.min(devicePixelRatio || 1, 2) }
   const uni = { uTime: { value: 0 }, uShowT: showT, uHideT: hideT, uViewH: viewH, uGrain: { value: size / res },
-    uPixelRatio: pr, uGain: { value: o.gain ?? 1 } }
+    uPixelRatio: pr, uGain: { value: o.gain ?? 0.8 } }
   const mat = new ShaderMaterial({ vertexShader: PORTRAIT_VERT, fragmentShader: PORTRAIT_FRAG, uniforms: uni,
     transparent: true, depthWrite: false, depthTest: true })
   const vp = new Vector4()
@@ -818,9 +820,119 @@ function buildPortraits(o, ctx) {
   }
 }
 
+// ---- collision ----------------------------------------------------------------------
+//   { type: collision, name, pos, scale?: 0.15 (world units per metre), pv?: [x, y, z] (mm),
+//     tracks: [[type, q, p (MeV), x, y, z (mm), tx, ty, muon, backward], …] (an LHCb track state),
+//     kick?: 1200 (MeV, the dipole's pT kick), magnetZ?: 5.3, stopZ?: 9.5, muonZ?: 19 (m),
+//     cloud?: 26000, sphere?: 0.1, grains?: 700 per track }
+// One real LHCb event drawn as grains: each track leaves the vertex as a
+// straight line, takes the dipole's kick in x at the magnet and runs on to the
+// end of the tracker; muons run on to the muon stations. LHCb's z (the beam)
+// is the world's x, its y is up, its x is the world's z.
+// Step 1: the tracks grow out of the vertex and the grains flow along them.
+// Step 2: the event shrinks into one grain among many; the many pack into a
+// sphere of radius `sphere` at the vertex (the terabyte the next slide names).
+// Step 0: gone.
+const COLL_VERT = /* glsl */ `
+attribute float aSeed, aS, aKind;   // aS: 0..1 along its track; aKind 0 track, 1 muon, 2 cloud
+attribute vec3 aHome;                 // cloud: its place in the sphere
+uniform float uTime, uT1, uT2, uPixelRatio, uSphere;
+varying vec3 vColor; varying float vAlpha;
+float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
+float ease(float x) { x = clamp(x, 0.0, 1.0); return x * x * x * (x * (x * 6.0 - 15.0) + 10.0); }
+void main() {
+  vec3 p; float a = 0.0; float size;
+  float shrink = uT2 < 0.0 ? 0.0 : ease((uTime - uT2) / 2.2);       // the event goes to a point
+  float pack = uT2 < 0.0 ? 0.0 : ease((uTime - uT2 - 0.9) / 2.4);    // the many gather into the sphere
+  if (aKind < 1.5) {
+    float grow = uT1 < 0.0 ? 0.0 : ease((uTime - uT1 - 0.25 * aSeed) / 1.4);
+    // a grain shows once the track has grown past it, and drifts outward along it
+    float on = step(aS, grow);
+    p = position * mix(1.0, 0.0008, shrink);
+    a = on * (aKind > 0.5 ? 0.9 : 0.22) * (1.0 - smoothstep(0.75, 1.0, shrink));
+    size = aKind > 0.5 ? 1.5 : 0.85;
+    vColor = aKind > 0.5 ? vec3(1.0, 0.8, 0.42) : mix(vec3(0.62, 0.74, 1.0), vec3(1.0), 0.3 * hash(aSeed * 7.0));
+  } else {
+    // the other collisions: points of light around the shrinking event, then a ball
+    float appear = uT2 < 0.0 ? 0.0 : smoothstep(0.0, 1.0, (uTime - uT2 - 0.3 - 0.6 * aSeed) / 0.9);
+    vec3 dir = normalize(vec3(hash(aSeed * 3.1), hash(aSeed * 5.7), hash(aSeed * 9.3)) - 0.5 + 1e-4);
+    vec3 far = dir * (0.18 + 0.9 * pow(hash(aSeed * 13.0), 0.6));
+    p = mix(far, aHome, pack);
+    a = appear * 0.32 * (1.0 - 0.75 * smoothstep(0.55, 1.0, pack)) * (1.0 - smoothstep(0.0, 1.0, uT2 < 0.0 ? 0.0 : (uTime - uT2 - 3.3) / 0.9));
+    size = mix(0.8, 0.45, pack);
+    vColor = mix(vec3(1.0, 0.72, 0.32), vec3(1.0, 0.9, 0.7), 0.5 * hash(aSeed * 17.0));
+  }
+  if (a <= 0.002) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vAlpha = 0.0; vColor = vec3(0.0); return; }
+  vec4 mv = modelViewMatrix * vec4(p, 1.0);
+  gl_Position = projectionMatrix * mv;
+  gl_PointSize = max(1.0, uPixelRatio * size * (2.6 / max(-mv.z, 0.05)) * 4.0);
+  vAlpha = a;
+}`
+
+function buildCollision(o) {
+  const S = o.scale ?? 0.15, kick = o.kick ?? 1200, zMag = o.magnetZ ?? 5.3, zStop = o.stopZ ?? 9.5, zMu = o.muonZ ?? 19
+  const per = Math.round(o.grains ?? 700), nCloud = Math.round(o.cloud ?? 26000), R = o.sphere ?? 0.1
+  const T = o.stretch ?? 1   // transverse scale: LHCb's tracks run within a few degrees of the beam
+  const pv = (o.pv || [0, 0, 0]).map((v) => v / 1000)
+  // each track's reach by its type (m): the VELO, the TT before the magnet, the T stations after it
+  const SPAN = { Velo: [null, 0.75], Upstream: [null, 2.7], Long: [null, zStop], Downstream: [2.3, zStop], Ttrack: [7.6, zStop] }
+  const pos = [], seed = [], sArr = [], kind = [], home = []
+  for (const t of o.tracks || []) {
+    // t: [type, q, p (MeV, 0 if unmeasured), x, y, z (mm), tx, ty, muon (0/1), backward (0/1)]
+    const [type, q, p, x0, y0, z0, tx0, ty0, mu, back] = t
+    const span = SPAN[type]; if (!span) continue
+    const zs = z0 / 1000, xs = x0 / 1000, ys = y0 / 1000
+    // the slope the state gives, and the dipole's kick in x where p is measured
+    const dtx = p > 0 && q ? (q * kick) / p : 0
+    const before = zs < zMag ? tx0 : tx0 - dtx, after = zs < zMag ? tx0 + dtx : tx0
+    // a straight line through the state, bent once at the magnet's centre
+    const xAt = (z) => (zs <= zMag
+      ? (z <= zMag ? xs + before * (z - zs) : xs + before * (zMag - zs) + after * (z - zMag))
+      : (z >= zMag ? xs + after * (z - zs) : xs + after * (zMag - zs) + before * (z - zMag)))
+    let z1 = span[0] ?? pv[2], z2 = mu ? zMu : span[1]
+    if (back) { z1 = pv[2] - 0.35; z2 = pv[2] }   // a VELO track going back from the vertex
+    const n = Math.max(40, Math.round(per * (z2 - z1) / (zMu - pv[2]) * (mu ? 1.6 : 2.2)))
+    for (let k = 0; k < n; k++) {
+      const u = (k + Math.random()) / n, z = back ? z2 - u * (z2 - z1) : z1 + u * (z2 - z1)
+      const x = xAt(z), y = ys + ty0 * (z - zs)
+      const j = 0.003 * (1 + 2 * u)
+      pos.push((z - pv[2]) * S, (y - pv[1]) * S * T + (Math.random() - 0.5) * j, (x - pv[0]) * S * T + (Math.random() - 0.5) * j)
+      // aS: where on the way out from the vertex the grain is, so tracks grow outward together
+      seed.push(Math.random()); sArr.push(Math.min(1, Math.abs(z - pv[2]) / (zMu - pv[2]) * 1.8)); kind.push(mu ? 1 : 0); home.push(0, 0, 0)
+    }
+  }
+  for (let k = 0; k < nCloud; k++) {
+    const z = 2 * Math.random() - 1, ph = Math.random() * Math.PI * 2, q = Math.sqrt(1 - z * z), r = R * Math.cbrt(Math.random())
+    pos.push(0, 0, 0); home.push(r * q * Math.cos(ph), r * z, r * q * Math.sin(ph))
+    seed.push(Math.random()); sArr.push(0); kind.push(2)
+  }
+  const geo = new BufferGeometry()
+  geo.setAttribute('position', new BufferAttribute(new Float32Array(pos), 3))
+  geo.setAttribute('aHome', new BufferAttribute(new Float32Array(home), 3))
+  geo.setAttribute('aSeed', new BufferAttribute(new Float32Array(seed), 1))
+  geo.setAttribute('aS', new BufferAttribute(new Float32Array(sArr), 1))
+  geo.setAttribute('aKind', new BufferAttribute(new Float32Array(kind), 1))
+  const mat = material(COLL_VERT, { uT1: { value: -1 }, uT2: { value: -1 }, uSphere: { value: R } })
+  const pts = new Points(geo, mat); pts.frustumCulled = false
+  const g = new Group(); g.add(pts)
+  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  let now = 0
+  const go = (k) => {
+    const u = mat.uniforms
+    if (k === 1) { u.uT1.value = now; u.uT2.value = -1 }
+    else if (k === 2) { if (u.uT1.value < 0) u.uT1.value = now - 5; u.uT2.value = now }
+    else { u.uT1.value = -1; u.uT2.value = -1 }
+  }
+  const off = listen(o.name, go)
+  mat.addEventListener('dispose', off)
+  if (state.has(o.name)) queueMicrotask(() => go(state.get(o.name)))
+  return { group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio, update(t) { now = t; mat.uniforms.uTime.value = t } }
+}
+
 export function installGrains(registerBuilder) {
   registerBuilder('lineup', buildLineup, { fields: ['pos', 'name', 'balls'] })
   registerBuilder('streams', buildStreams, { fields: ['pos', 'name', 'from', 'to'] })
   registerBuilder('floor', buildFloor, { fields: ['pos'] })
   registerBuilder('portraits', buildPortraits, { fields: ['pos', 'name', 'people'] })
+  registerBuilder('collision', buildCollision, { fields: ['pos', 'name', 'tracks'] })
 }
