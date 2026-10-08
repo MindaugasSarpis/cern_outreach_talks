@@ -140,7 +140,7 @@ research brief was the only workflow of five that finished without losses.
 | 2 | Blueprint | saved workflow `talk-blueprint` for a talk that matters, else by hand | angle, arc, takeaway, a slide table whose minutes sum to the duration or less, style rules, a drop order, a Decisions log |
 | 3 | Outline | `pnpm talk map` | every slide exists in `deck.md` with its title, one-sentence message (in the notes) and pose |
 | 4 | Deck draft | `pnpm talk facts search <words>` | slide text and notes are written; notes cite `<!-- facts: id1, id2 -->` for numbers the bank already has, and name new ids for the rest |
-| 5 | Research the gaps | skill `talk-research`, saved workflow `talk-research` | every cited id exists in `research/facts.jsonl` with verdict `confirmed` or `corrected`; the workflow's `unverified[]` is reported to the owner |
+| 5 | Research the gaps | skill `talk-research`, saved workflow `talk-research-gaps` | every cited id exists in `research/facts.jsonl` with verdict `confirmed` or `corrected`; the workflow's `unverified[]` is reported to the owner |
 | 6 | Lint | `pnpm talk lint <t>` | exit 0 |
 | 7 | Shots and contact-sheet review | `pnpm talk review <t>`, skill `talk-verify` | no overflow or page errors; a reviewer that saw the sheets and the metrics (not the main loop) reports no high finding |
 | 8 | Diff-only fact check | saved workflow `talk-review` (facts lens) | only claims new or changed since the last verified run were checked (`git diff` of `deck.md`) |

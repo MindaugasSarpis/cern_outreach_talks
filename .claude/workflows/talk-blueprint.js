@@ -17,7 +17,7 @@ export const meta = {
 // every stage tolerates a lost agent (that run lost two of three judges to a
 // usage limit, and the editor worked from one) and says what was lost; the
 // editor writes the blueprint to disk itself; research gaps come back as a
-// list for the talk-research workflow instead of being guessed.
+// list for the talk-research-gaps workflow instead of being guessed.
 
 const A = args || {}
 if (!A.talk || !A.repo || !A.today || !A.duration) {
@@ -256,5 +256,5 @@ return {
   judges: final ? judges.map((j) => ({ best: j.best, risks: j.risks })) : judges,
   research_gaps: final ? final.research_gaps : proposals.flatMap((p) => p.research_gaps || []),
   unverified: lost,
-  next: 'Review the blueprint with the owner (or log it under Decisions when AFK), write the outline into deck.md, then run talk-research on research_gaps.',
+  next: 'Review the blueprint with the owner (or log it under Decisions when AFK), write the outline into deck.md, then run the talk-research-gaps workflow on research_gaps (skill talk-research).',
 }

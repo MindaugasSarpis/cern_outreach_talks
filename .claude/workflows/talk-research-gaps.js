@@ -1,5 +1,5 @@
 export const meta = {
-  name: 'talk-research',
+  name: 'talk-research-gaps',
   description: 'Research and verify only the facts a talk deck still lacks: the facts bank first, disjoint slide-scoped lanes written as they land, one image lane, personal sources only for named gaps; returns unverified[]',
   whenToUse: 'After the deck draft cites fact ids in its notes. args: { talk: "talks/<dir>", repo: "<worktree root>", today: "YYYY-MM-DD", slug?, lang?: "en"|"lt", lanes?: [{ key, slides, topic, claims: [string | { id, text }] }], gaps?: [string], images?: [string], maxAgents?: 30, staleMonths?: 6, personalBudget?: 15 }',
   phases: [
@@ -18,10 +18,12 @@ export const meta = {
 // each is written to talks/<t>/research/<lane>.json as soon as it lands; only
 // claims the deck states are verified; one image lane; mail and Drive only for
 // named gaps; no engine-scout lane (docs/STAGE_QUICKSTART.md covers it).
+// Named talk-research-gaps, not talk-research: saved workflows are listed with
+// the skills by meta.name, and the talk-research skill would shadow it.
 
 const A = args || {}
 if (!A.talk || !A.repo || !A.today) {
-  throw new Error('talk-research: args.talk ("talks/<dir>"), args.repo (the worktree root) and args.today ("YYYY-MM-DD") are required')
+  throw new Error('talk-research-gaps: args.talk ("talks/<dir>"), args.repo (the worktree root) and args.today ("YYYY-MM-DD") are required')
 }
 const REPO = String(A.repo).replace(/\/+$/, '')
 const TALK = String(A.talk).replace(/\/+$/, '').replace(REPO + '/', '')
@@ -170,7 +172,7 @@ You plan the research for this talk. Do not research anything yourself.
 4. Group the gaps into lanes: disjoint (no claim in two lanes), each scoped to a slide range and one topic, at most 12 claims each, ordered most error-prone first. Keep the id the deck cites; propose slug-like ids for uncited claims.
 5. List photo subjects the deck needs and has no image for.
 Return the plan; covered lists the ids that need no work.`, { label: 'plan', phase: 'Plan', schema: PLAN })
-  if (!plan) throw new Error('talk-research: the planning agent returned nothing; rerun, or pass args.lanes')
+  if (!plan) throw new Error('talk-research-gaps: the planning agent returned nothing; rerun, or pass args.lanes')
 }
 
 const IMAGE_SUBJECTS = [...new Set([...(A.images || []), ...(plan.images || [])])]
@@ -199,7 +201,7 @@ const verify = (r, lane) => {
 ${SOURCES}${LT}
 
 You are an adversarial fact-checker for the lane "${lane.key}" (slides ${lane.slides}). A researcher produced the facts below. For EACH fact open its source_url and, for any number, date, "first", ranking or recent news, at least one more independent source, and try to REFUTE it. Check the figure, the unit, the date it refers to, the name, and whether it is still true on ${TODAY}.
-Verdict: confirmed (correct as worded), corrected (rewrite claim_en/claim_lt to what the sources support, and give the quote that supports the correction), refuted (wrong; say why in notes), unverified (no reliable public source confirms it; the default when in doubt). Set verified_on "${TODAY}" and verified_by "talk-research verify:${lane.key} ${TODAY}". Replace a non-public source_url (Drive, Gmail, docs.google.com) with a public one or mark the fact unverified.
+Verdict: confirmed (correct as worded), corrected (rewrite claim_en/claim_lt to what the sources support, and give the quote that supports the correction), refuted (wrong; say why in notes), unverified (no reliable public source confirms it; the default when in doubt). Set verified_on "${TODAY}" and verified_by "talk-research-gaps verify:${lane.key} ${TODAY}". Replace a non-public source_url (Drive, Gmail, docs.google.com) with a public one or mark the fact unverified.
 Overwrite ${laneFile(lane.key)} with the verified lane, "status": "verified", then return it.
 
 FACTS:
@@ -222,7 +224,7 @@ const personal = GAPS.length
 You fill named gaps in the Brief from the owner's own records. GAPS: ${JSON.stringify(GAPS)}.
 Load the tools with ToolSearch ("select:mcp__claude_ai_Gmail__search_threads,mcp__claude_ai_Gmail__get_thread,mcp__claude_ai_Google_Drive__search_files,mcp__claude_ai_Google_Drive__read_file_content,mcp__claude_ai_Google_Calendar__search_events"). Budget: at most ${BUDGET} tool calls in total across Gmail, Drive and Calendar; stop at the budget. Read only: never send, label, move or delete anything. Search narrowly (event and organiser words in English and Lithuanian; add -from:linkedin.com in Gmail).
 First read ${BRIEF} if it exists: do not search again for what it already answers.
-Append what you find to ${BRIEF} (mkdir -p its directory) under a heading "## talk-research ${TODAY}", each answer with its source (mail subject and date, file title). Nothing goes into the repo. Return the answers, the gaps still open and the number of calls used.`, { label: 'personal', phase: 'Personal', schema: PERSONAL })
+Append what you find to ${BRIEF} (mkdir -p its directory) under a heading "## talk-research-gaps ${TODAY}", each answer with its source (mail subject and date, file title). Nothing goes into the repo. Return the answers, the gaps still open and the number of calls used.`, { label: 'personal', phase: 'Personal', schema: PERSONAL })
   : Promise.resolve(null)
 
 const [laneResults, imageResult, personalResult] = await Promise.all([

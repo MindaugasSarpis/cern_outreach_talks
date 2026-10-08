@@ -18,7 +18,7 @@ for the engine, [docs/STAGE_QUICKSTART.md](../../../docs/STAGE_QUICKSTART.md).
 | Blueprint | saved workflow `talk-blueprint` (below), or by hand for a short talk |
 | Outline | slides with title, message and pose; `pnpm talk map <t>` |
 | Deck draft | text and notes now, `<!-- facts: id -->` in the notes; `pnpm talk facts search` |
-| Research the gaps | skill `talk-research` |
+| Research the gaps | skill `talk-research` (saved workflow `talk-research-gaps`) |
 | Lint | `pnpm talk lint <t>` |
 | Shots and sheet review | skill `talk-verify` (`pnpm talk review <t>`) |
 | Diff-only fact check | saved workflow `talk-review`, facts lens |
@@ -58,7 +58,7 @@ Workflow({ name: 'talk-blueprint', args: {
 
 (or `<repo>/.claude/workflows/talk-blueprint.js` by path). It writes
 `talks/<t>/notes/blueprint.md` and returns the research gaps, which go to
-`talk-research`.
+`talk-research` (saved workflow `talk-research-gaps`).
 
 ## AFK protocol
 

@@ -1,6 +1,6 @@
 ---
 name: talk-research
-description: Use when a talk in ~/outreach_talks needs facts, numbers, sources, quotes or photos researched or checked. Searches the repo's facts bank first, researches only the gaps the deck draft leaves (inline for a few claims, the saved talk-research workflow for more), and files verified claims back into research/facts.jsonl.
+description: Use when a talk in ~/outreach_talks needs facts, numbers, sources, quotes or photos researched or checked. Searches the repo's facts bank first, researches only the gaps the deck draft leaves (inline for a few claims, the saved talk-research-gaps workflow for more), and files verified claims back into research/facts.jsonl.
 ---
 
 # Research a talk
@@ -33,11 +33,11 @@ the deck does not cite are not re-checked.
 - Up to about five gaps: research them inline (WebSearch, WebFetch, primary
   sources: home.cern, the experiment's pages, arXiv, journals, PDG, official
   Lithuanian sites).
-- More: run the saved workflow. Find it as `talk-research` in the Workflow
-  list, or by path `<repo>/.claude/workflows/talk-research.js`:
+- More: run the saved workflow `talk-research-gaps` (listed with the skills),
+  or by path `<repo>/.claude/workflows/talk-research-gaps.js`:
 
 ```js
-Workflow({ name: 'talk-research', args: {
+Workflow({ name: 'talk-research-gaps', args: {
   talk: 'talks/2026_11_05_Venue', repo: '<worktree root>', slug: '<slug>',
   today: '2026-11-01', lang: 'lt',
   // optional: lanes you already know, else the workflow plans them from the deck
