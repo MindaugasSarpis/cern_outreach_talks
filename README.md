@@ -254,5 +254,7 @@ requests build the talks they change, as a check, without deploying.
 ## More detail
 
 - [CLAUDE.md](CLAUDE.md) — repo conventions, theme, authoring, gotchas.
+- [docs/authoring.md](docs/authoring.md) — the player, ParticleHero and QuizCard, the stage, aspect ratio, embedded sites.
+- `talks/<name>/CLAUDE.md` — each talk's notes; `components/hadron-space/CLAUDE.md` — Startertalk's world.
 - slidev-videos README — CLI, profiles, player props, `videos.toml`.
 - `docs/superpowers/specs/2026-09-08-slidev-videos-migration-design.md` — why things are laid out this way.
