@@ -11,6 +11,7 @@ import json
 import re
 import subprocess
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -254,7 +255,61 @@ def test_deploy_needs_the_talks_own_worktree(repo, od_worktree, env):
     code, obj, _ = talk(repo, "deploy", "innoday", "--dry-run", "--skip-ready", env=env)
     assert code == 2 and "no worktree of its own" in obj["error"]
     code, obj, _ = talk(od_worktree, "deploy", "innoday", "--dry-run", "--skip-ready", cwd=od_worktree, env=env)
-    assert code == 2 and "does not change" in obj["error"]
+    assert code == 2 and "is 2026_10_00_OpenData's, not 2026_10_00_Innoday's" in obj["error"]
+
+
+def other_worktree(repo, env, name, branch, edits: dict[str, str]):
+    """A linked worktree `name` on `branch` from origin/main, with `edits` (path: text) committed."""
+    wt = repo / ".claude" / "worktrees" / name
+    sh(["git", "worktree", "add", "-q", wt, "-b", branch, "origin/main", "--no-track"], repo, env)
+    for path, text in edits.items():
+        (wt / path).parent.mkdir(parents=True, exist_ok=True)
+        (wt / path).write_text(text)
+    if edits:
+        sh(["git", "add", *edits], wt, env)
+        sh(["git", "commit", "-q", "-m", f"{name}: edits"], wt, env)
+    return wt
+
+
+ALL_TALKS = ["2026_04_28_editAI", "2026_10_00_Innoday", "2026_10_00_OpenData"]
+
+
+def test_a_branch_changing_several_talks_is_none_of_theirs(repo, env, tmp_path):
+    # tooling that gives every talk its notes file (on top of origin/main, so deploy would pass
+    # the rebase check), and a branch that changes two talks' decks
+    tools = other_worktree(repo, env, "tools-branch", "chore/tools", {f"talks/{t}/CLAUDE.md": "# notes\n" for t in ALL_TALKS})
+    both = other_worktree(repo, env, "both", "feat/both", {f"talks/{t}/deck.md": "# changed\n" for t in ALL_TALKS[1:]})
+    code, obj, _ = talk(repo, "status", "--no-fetch", env=env)
+    rows = {Path(r["path"]).name: r for r in obj["worktrees"]}
+    assert rows["tools-branch"]["talks"] == [] and rows["tools-branch"]["notes"] == ALL_TALKS
+    assert rows["both"]["talks"] == ALL_TALKS[1:]
+    code, obj, _ = talk(repo, "deploy", "opendata", "--dry-run", "--skip-ready", env=env)
+    assert code == 2 and "no worktree of its own" in obj["error"]
+    code, obj, _ = talk(tools, "deploy", "editai", "--dry-run", "--skip-ready", cwd=tools, env=env)
+    assert code == 2 and "is not 2026_04_28_editAI's own: it changes no talk (only the notes of 3)" in obj["error"]
+    code, obj, _ = talk(both, "deploy", "innoday", "--dry-run", "--skip-ready", cwd=both, env=env)
+    assert code == 2 and "it changes 2026_10_00_Innoday, 2026_10_00_OpenData" in obj["error"]
+    code, obj, _ = talk(repo, "open", "opendata", "--no-install", env=env)
+    assert code == 0 and obj["created"] is True and obj["worktree"] == str(repo / ".claude" / "worktrees" / "opendata")
+    code, obj, _ = talk(repo, "list", env=env)
+    assert {t["slug"]: [Path(w).name for w in t["worktrees"]] for t in obj["talks"]} == \
+        {"editai": [], "innoday": [], "opendata": ["opendata"]}
+    # a worktree not named after the talk is its own when it changes that talk alone, or is on talk/<slug>
+    # (or, with nothing else changed, the notes of that talk alone)
+    other_worktree(repo, env, "inno-work", "feat/inno", {"talks/2026_10_00_Innoday/deck.md": "# mine\n"})
+    other_worktree(repo, env, "inno-notes", "docs/inno", {"talks/2026_10_00_Innoday/CLAUDE.md": "# notes\n"})
+    other_worktree(repo, env, "edit-work", "talk/editai", {})
+    code, obj, _ = talk(repo, "list", env=env)
+    assert {t["slug"]: sorted(Path(w).name for w in t["worktrees"]) for t in obj["talks"]} == \
+        {"editai": ["edit-work"], "innoday": ["inno-notes", "inno-work"], "opendata": ["opendata"]}
+
+
+def test_session_never_opens_a_tooling_worktree(repo, tmux):
+    env, calls, _ = tmux
+    other_worktree(repo, env, "tools-branch", "chore/tools", {f"talks/{t}/CLAUDE.md": "# notes\n" for t in ALL_TALKS})
+    code, obj, err = talk(repo, "session", "editai", "--no-install", "--dry-run", env=env)
+    assert code == 0, err
+    assert obj["dir"] == str(repo / ".claude" / "worktrees" / "editai") and obj["would_create"] is True
 
 
 def test_deploy_with_nothing_new(od_worktree, env):
@@ -562,6 +617,20 @@ def test_pin_moves_both_addon_pins_of_one_talk(repo, od_worktree, env):
     assert code == 2 and "bare commit" in obj["error"]
     code, obj, _ = talk(repo, "pin", "opendata", "v0.6.0", env=env)
     assert code == 2 and "never the main checkout" in obj["error"]
+
+
+def test_pin_runs_only_in_the_talks_own_worktree(repo, od_worktree, env):
+    inno = repo / "talks" / "2026_10_00_Innoday" / "package.json"
+    before = inno.read_bytes()
+    other = other_worktree(repo, env, "other", "feat/other", {"README.md": "no talk here\n"})
+    code, obj, _ = talk(other, "pin", "opendata", "v0.6.0", "--dry-run", cwd=other, env=env)
+    assert code == 2 and "(other, feat/other) is not 2026_10_00_OpenData's own: it changes no talk" in obj["error"]
+    assert "pnpm talk open opendata" in obj["error"] and obj["candidates"] == [str(od_worktree)]
+    code, obj, _ = talk(od_worktree, "pin", "innoday", "v0.6.0", "--dry-run", cwd=od_worktree, env=env)
+    assert code == 2 and "is 2026_10_00_OpenData's, not 2026_10_00_Innoday's" in obj["error"]
+    assert "pnpm talk open innoday" in obj["error"]
+    assert inno.read_bytes() == before
+    assert (od_worktree / "talks" / "2026_10_00_Innoday" / "package.json").read_bytes() == before
 
 
 # ---------------------------------------------------------------- session and sessions, with a fake tmux

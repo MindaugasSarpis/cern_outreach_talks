@@ -106,7 +106,11 @@ re-fetchable (`pnpm videos:pull`, `pnpm videos:sync`).
 
 One command per step, the same for the owner and for agents (the skills in
 `.claude/skills/` call these). Run them from the repo root or a talk's
-worktree; NAME is any part of a talk's directory name (`opendata`).
+worktree; NAME is any part of a talk's directory name (`opendata`). A talk's
+own worktree, the one `open`, `session`, `deploy` and `pin` use, is named
+after the talk, is on its `talk/<slug>` branch, or changes that talk and no
+other; a branch that changes several talks, or the notes (`CLAUDE.md`) of
+several and nothing else, is none of theirs.
 
 | Step | Command | Skill |
 | ---- | ------- | ----- |

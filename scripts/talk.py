@@ -28,7 +28,8 @@
                   to main, watch the Pages run, check the URL; --dry-run checks only
   render -- CMD   run CMD in the render slot: srun on Slurm, condor_run on HTCondor,
                   else under the machine's render lock
-  pin [NAME] REF  both addon pins of one talk to a toolkit tag, then pnpm install
+  pin [NAME] REF  both addon pins of one talk to a toolkit tag, then pnpm install,
+                  in the talk's own worktree
   session NAME|tools|scheduler
                   a Claude session in its own window of the tmux session "talks"
   sessions        the windows of "talks" and each one's line in the status file
@@ -43,6 +44,10 @@ banner on stdout). Exit 0 ok, 1 problems found, 2 usage error. NAME is any case-
 of a talk directory's name ("opendata", "karjer"); without it, the talk is
 the one the current directory is in, or the only one the worktree changes.
 Talks resolve from the git worktree the command runs in, else the main checkout.
+A talk's own worktree (what open, session, deploy and pin use) is named after the talk,
+is on its talk/<slug> branch, or changes that talk and no other. The talks' CLAUDE.md
+files count only where nothing else in talks/ changed: a branch that edits every talk's
+notes is none of theirs.
 What builds, checks and tools print goes to $OUTREACH_STATE/logs/<slug>-<verb>-<sha>.log;
 the terminal gets a summary and the log's path.
 
@@ -481,25 +486,41 @@ def porcelain_paths(text: str) -> list[str]:
     return paths
 
 
+NOTES_RE = re.compile(r"^talks/[^/]+/CLAUDE\.md$")
+
+
 @functools.lru_cache(maxsize=None)
-def talks_touched(wt: Path, base: str = "origin/main") -> list[str]:
-    """Talk directories a worktree changes: its commits since the merge base, plus its working tree."""
+def talks_touched(wt: Path, base: str = "origin/main", notes: bool = False) -> list[str]:
+    """Talk directories a worktree changes: its commits since the merge base, plus its working tree.
+    A talk's notes file (talks/<t>/CLAUDE.md) counts only with notes=True: a branch that edits
+    every talk's notes (docs, tooling) does not change the talks."""
     paths = (git_out(["diff", "--name-only", f"{base}...HEAD", "--", "talks/"], wt) or "").splitlines()
     paths += porcelain_paths(git_out(["status", "--porcelain", "--", "talks/"], wt) or "")
-    names = {p.split("/")[1] for p in paths if p.startswith("talks/") and p.count("/") >= 1}
+    names = {p.split("/")[1] for p in paths
+             if p.startswith("talks/") and p.count("/") >= 1 and (notes or not NOTES_RE.match(p))}
     return sorted(n for n in names if new_talk.NAME_RE.match(n))
 
 
-def owners(repo: Repo, talk: str) -> list[Worktree]:
-    """Linked worktrees that are the talk's: named after it, or changing it."""
+def own_talks(wt: Path) -> list[str]:
+    """The talks a worktree changes, for telling whose it is: talks_touched, or, where it has
+    changed nothing but notes so far, the talks whose notes it changed."""
+    return talks_touched(wt) or talks_touched(wt, notes=True)
+
+
+def owns(path: Path, branch: str | None, talk: str) -> bool:
+    """The worktree is the talk's own: named after it, on its talk/<slug> branch, or changing
+    that talk and no other (own_talks). A branch that changes several talks (tooling, a toolkit
+    move, every talk's notes) is none of theirs, so open, session, deploy and pin never pick it."""
     slug = wt_slug(talk)
-    res = []
-    for w in worktrees(repo):
-        if w.main or w.prunable or not w.path.is_dir():
-            continue
-        if w.path.name == slug or talk in talks_touched(w.path):
-            res.append(w)
-    res.sort(key=lambda w: w.path.name != slug)   # the one named after the talk first
+    return path.name == slug or branch == f"talk/{slug}" or own_talks(path) == [talk]
+
+
+def owners(repo: Repo, talk: str) -> list[Worktree]:
+    """Linked worktrees that are the talk's own (owns)."""
+    slug = wt_slug(talk)
+    res = [w for w in worktrees(repo)
+           if not (w.main or w.prunable or not w.path.is_dir()) and owns(w.path, w.branch, talk)]
+    res.sort(key=lambda w: (w.path.name != slug, w.branch != f"talk/{slug}"))   # the one named after the talk first
     return res
 
 
@@ -511,7 +532,7 @@ def default_talk(repo: Repo, cwd: Path) -> str | None:
     except ValueError:
         pass
     if repo.in_worktree:
-        touched = talks_touched(repo.here)
+        touched = own_talks(repo.here)
         if len(touched) == 1:
             return touched[0]
         named = [t for t in talks_in(repo.here) if wt_slug(t) == repo.here.name]
@@ -1199,7 +1220,9 @@ def cmd_status(repo: Repo, a, extra) -> tuple[int, dict]:
             behind, ahead = (int(x) for x in counts.split())
             row.update(ahead=ahead, behind=behind)
         dirty = porcelain_paths(git_out(["status", "--porcelain"], w.path) or "")
-        row.update(dirty=len(dirty), dirty_files=dirty[:12], talks=talks_touched(w.path))
+        talks = talks_touched(w.path)
+        row.update(dirty=len(dirty), dirty_files=dirty[:12], talks=talks,
+                   notes=[t for t in talks_touched(w.path, notes=True) if t not in talks])   # their CLAUDE.md only
         if w.main and w.branch != "main":
             problems.append(f"the main checkout is on {w.branch or 'a detached HEAD'}; it stays on main "
                             f"(work in a worktree: pnpm talk open <name>)")
@@ -1216,7 +1239,9 @@ def cmd_status(repo: Repo, a, extra) -> tuple[int, dict]:
             OUT.show(f"{name:<22} missing (git worktree prune)")
             continue
         ab = f"ahead {r.get('ahead', '?')}, behind {r.get('behind', '?')}"
-        OUT.show(f"{name:<22} {r['branch'] or '(detached)':<28} {ab:<22} dirty {r['dirty']:<4} {' '.join(r['talks'])}")
+        notes = f"notes of {len(r['notes'])} talk{'s' * (len(r['notes']) != 1)}" if r["notes"] else ""
+        OUT.show(f"{name:<22} {r['branch'] or '(detached)':<28} {ab:<22} dirty {r['dirty']:<4} "
+                 + " ".join(r["talks"] + ([notes] if notes else [])))
     for d in readies:
         OUT.show(f"ready   {d.get('talk')}: {'passed' if d.get('ok') else 'FAILED'} {(d.get('sha') or '')[:12]} "
                  f"{d.get('finished_at', '')}" + (f" (skipped {', '.join(d['skip'])})" if d.get("skip") else ""))
@@ -1422,15 +1447,28 @@ def cmd_stage(repo: Repo, a, extra) -> tuple[int, dict]:
     return code, data
 
 
+def not_own(repo: Repo, talk: str) -> str | None:
+    """Why this worktree is not the talk's own (owns), or None when it is."""
+    branch = git_out(["branch", "--show-current"], repo.here) or None
+    if owns(repo.here, branch, talk):
+        return None
+    this = f"this worktree ({repo.here.name}, {branch or 'detached'})"
+    theirs = [t for t in talks_in(repo.here) if owns(repo.here, branch, t)]
+    if theirs:
+        return f"{this} is {' and '.join(theirs)}'s, not {talk}'s"
+    touched, notes = talks_touched(repo.here), talks_touched(repo.here, notes=True)
+    return (f"{this} is not {talk}'s own: it changes " + (", ".join(touched) if touched else "no talk")
+            + (f" (only the notes of {len(notes)})" if notes and not touched else ""))
+
+
 def deploy_worktree(repo: Repo, talk: str) -> Path:
-    """The talk's own worktree: this one if it is named after the talk or changes it."""
+    """The talk's own worktree (owns): this one, or the only one there is."""
     found = owners(repo, talk)
     if repo.in_worktree:
-        if repo.here.name == wt_slug(talk) or talk in talks_touched(repo.here):
+        why = not_own(repo, talk)
+        if not why:
             return repo.here
-        branch = git_out(["branch", "--show-current"], repo.here)
-        raise UsageError(f"this worktree ({branch}) does not change {talk}; deploy from the talk's own worktree",
-                         candidates=[str(w.path) for w in found])
+        raise UsageError(f"{why}; deploy from the talk's own worktree", candidates=[str(w.path) for w in found])
     if len(found) == 1:
         return found[0].path
     if not found:
@@ -1829,6 +1867,10 @@ def cmd_pin(repo: Repo, a, extra) -> tuple[int, dict]:
     if not repo.in_worktree:
         raise UsageError("pin changes a talk's worktree, never the main checkout: `pnpm talk open <name>`, then pin there")
     talk, d = resolve_talk(repo, name, invocation_dir())
+    why = not_own(repo, talk)
+    if why:
+        raise UsageError(f"{why}; pin runs in the talk's own worktree: `pnpm talk open {wt_slug(talk)}`, then pin there",
+                         candidates=[str(w.path) for w in owners(repo, talk)])
     data = {"talk": talk, "ref": ref, "dry_run": a.dry_run}
     if SHA_RE.match(ref):
         # pnpm wants the commit pnpm-lock.yaml records; the slidev-videos checkout spells it out
