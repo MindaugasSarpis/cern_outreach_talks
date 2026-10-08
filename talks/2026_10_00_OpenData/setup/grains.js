@@ -74,7 +74,7 @@ function material(vertexShader, uniforms) {
 }
 
 // ---- lineup -------------------------------------------------------------------------
-//   { type: lineup, name, pos, balls: [{ n, color, label? }, …], unit?: 0.1, anchor?: 0,
+//   { type: lineup, name, pos, balls: [{ n, color, label?, above?, at?: [x,y,z] }, …], unit?: 0.1, anchor?: 0,
 //     gaps?: [between ball 0 and 1, 1 and 2, …], grow?: 3.2, reach?: 3, glow?: 0.35, labelH?: 0.024 }
 // Piles of one and the same sphere, side by side along x. One sphere is one
 // terabyte, and every pile is built of those same spheres, so the single
@@ -333,6 +333,8 @@ function buildLineup(o, ctx) {
   const gaps = o.gaps || [], A = Math.min(Math.max(0, o.anchor ?? 0), NB - 1), cx = new Array(NB).fill(0)
   for (let b = A + 1; b < NB; b++) cx[b] = cx[b - 1] + R[b - 1] + (gaps[b - 1] ?? 2) + R[b]
   for (let b = A - 1; b >= 0; b--) cx[b] = cx[b + 1] - R[b + 1] - (gaps[b] ?? 2) - R[b]
+  // each pile's centre: side by side along x, unless a ball says where it stands (`at`)
+  const C = balls.map((x, b) => (Array.isArray(x.at) ? x.at.slice(0, 3) : [cx[b], 0, 0]))
 
   const g = new Group()
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
@@ -344,9 +346,9 @@ function buildLineup(o, ctx) {
     const m = new Mesh(new SphereGeometry(rad, 96, 64), new ShaderMaterial({
       vertexShader: UNIT_VERT, fragmentShader: UNIT_FRAG, uniforms: { uColor: { value: new Color(x.color || ctx.palette.accent) } },
     }))
-    m.position.set(cx[b], 0, 0); m.scale.setScalar(0); m.visible = false
+    m.position.set(C[b][0], C[b][1], C[b][2]); m.scale.setScalar(0); m.visible = false
     const gu = { uRad: { value: rad }, uViewH: { value: 1080 }, uShow: { value: 0 }, uColor: { value: new Color(x.color || ctx.palette.accent) } }
-    const gg = new BufferGeometry(); gg.setAttribute('position', new BufferAttribute(new Float32Array([cx[b], 0, 0]), 3))
+    const gg = new BufferGeometry(); gg.setAttribute('position', new BufferAttribute(new Float32Array(C[b]), 3))
     const glint = new Points(gg, new ShaderMaterial({ vertexShader: GLINT_VERT, fragmentShader: GLINT_FRAG, uniforms: gu, transparent: true, depthWrite: false, blending: AdditiveBlending }))
     glint.frustumCulled = false
     const gvp = new Vector4()
@@ -367,9 +369,9 @@ function buildLineup(o, ctx) {
     const n = balls[b].n, jit = unit * Math.min(0.24, 0.12 + 0.05 * Math.max(0, Math.log10(n / 800)))
     for (let j = 0; j < n; j++, q++) {
       tv.set(lat[j * 3], lat[j * 3 + 1], lat[j * 3 + 2]).multiplyScalar(s).applyMatrix4(TILT)
-      pos[q * 3] = cx[b] + tv.x + gauss() * jit
-      pos[q * 3 + 1] = tv.y + gauss() * jit
-      pos[q * 3 + 2] = tv.z + gauss() * jit
+      pos[q * 3] = C[b][0] + tv.x + gauss() * jit
+      pos[q * 3 + 1] = C[b][1] + tv.y + gauss() * jit
+      pos[q * 3 + 2] = C[b][2] + tv.z + gauss() * jit
       seed[q] = Math.random(); rank[q] = j / n; which[q] = b
     }
     end[b] = q
@@ -389,7 +391,7 @@ function buildLineup(o, ctx) {
       uViewH: { value: 1080 }, uMaxPt: { value: 256 }, uShell: { value: 10 * unit },
       uShowT: { value: showT }, uHideT: { value: hideT },
       uR: { value: pad(R, () => 0) },
-      uCenter: { value: pad(cx.map((x) => new Vector3(x, 0, 0)), () => new Vector3()) },
+      uCenter: { value: pad(C.map((c) => new Vector3(c[0], c[1], c[2])), () => new Vector3()) },
       uColor: { value: pad(balls.map((x) => new Color(x.color || ctx.palette.accent)), () => new Color()) },
       uLight: { value: new Vector3(-6, 9, 7).normalize() },   // the engine's key light
     },
@@ -414,7 +416,7 @@ function buildLineup(o, ctx) {
       // under its pile; the single sphere's above it, clear of the next pile's label when both are small
       const above = x.above ?? x.n === 1
       l.center.set(0.5, above ? -0.6 : 1.6)
-      l.position.set(cx[b], above ? R[b] : -R[b], 0)
+      l.position.set(C[b][0], C[b][1] + (above ? R[b] : -R[b]), C[b][2])
       l.userData.vis = 0; l.userData.ball = b
       g.add(l); labels.push(l)
     })
@@ -634,7 +636,191 @@ function buildStreams(o, ctx) {
   }
 }
 
+// ---- floor --------------------------------------------------------------------------
+//   { type: floor, pos, radius?: 52, spacing?: 0.9, color?, alpha?: 0.32, size?: 1.1 }
+// A ground of fine grains on y = 0, on a jittered grid, fading out toward its
+// rim: the piles stand on it, and its rows running off to a horizon show the
+// depth the camera moves through. Drawn behind the piles (depth tested).
+const FLOOR_VERT = /* glsl */ `
+attribute float aSeed;
+uniform float uTime, uPixelRatio, uAlpha, uSize, uRadius;
+varying float vA;
+void main() {
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * mv;
+  float r = length(position.xz) / uRadius;
+  float tw = 0.8 + 0.2 * sin(uTime * (0.6 + aSeed * 1.3) + aSeed * 40.0);
+  vA = uAlpha * tw * (1.0 - smoothstep(0.55, 1.0, r)) * smoothstep(0.4, 3.0, -mv.z);
+  gl_PointSize = max(1.0, uPixelRatio * uSize * (36.0 / max(-mv.z, 0.5)));
+}`
+const FLOOR_FRAG = /* glsl */ `
+uniform vec3 uColor;
+varying float vA;
+void main() {
+  float d = length(gl_PointCoord - 0.5);
+  float a = (1.0 - smoothstep(0.1, 0.5, d)) * vA;
+  if (a < 0.004) discard;
+  gl_FragColor = vec4(uColor * a, 1.0);
+}`
+
+function buildFloor(o) {
+  const R = o.radius ?? 52, sp = o.spacing ?? 0.9
+  const pts = []
+  for (let x = -R; x <= R; x += sp) for (let z = -R; z <= R; z += sp) {
+    if (x * x + z * z > R * R) continue
+    pts.push(x + (Math.random() - 0.5) * sp * 0.5, 0, z + (Math.random() - 0.5) * sp * 0.5)
+  }
+  const n = pts.length / 3
+  const geo = new BufferGeometry()
+  geo.setAttribute('position', new BufferAttribute(new Float32Array(pts), 3))
+  geo.setAttribute('aSeed', new BufferAttribute(Float32Array.from({ length: n }, () => Math.random()), 1))
+  const c = new Color(o.color || '#8fa6d6').convertSRGBToLinear()
+  const mat = new ShaderMaterial({
+    vertexShader: FLOOR_VERT, fragmentShader: FLOOR_FRAG, transparent: true, depthWrite: false, depthTest: true, blending: AdditiveBlending,
+    uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) }, uAlpha: { value: o.alpha ?? 0.32 },
+      uSize: { value: o.size ?? 1.1 }, uRadius: { value: R }, uColor: { value: c } },
+  })
+  const p = new Points(geo, mat); p.frustumCulled = false
+  const g = new Group(); g.add(p)
+  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  return { group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio, update(t) { mat.uniforms.uTime.value = t } }
+}
+
+// ---- portraits ----------------------------------------------------------------------
+//   { type: portraits, name, pos, size?: 2.4, res?: 120, gain?: 1, labelH?: 0.026,
+//     people: [{ src: '/figures/people/x.jpg', name, at: [x, y, z] }, …] }
+// Each photograph is a round disc of grains, one grain per pixel of a res × res
+// sampling, in the photo's own colours, with a little relief by brightness.
+// Step 1 gathers them (the middle of each face first, the edge last) out of
+// a wide swirl; step 0 sends them apart. The name sits under each, at a fixed
+// size on screen. The engine's arrival (and `c`) gathers them again.
+const PORTRAIT_VERT = /* glsl */ `
+attribute float aSeed, aR;
+attribute vec3 aCol;
+uniform float uTime, uShowT, uHideT, uViewH, uGrain, uPixelRatio;
+varying vec3 vCol; varying float vA;
+float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
+float ease(float x) { x = clamp(x, 0.0, 1.0); return x * x * x * (x * (x * 6.0 - 15.0) + 10.0); }
+void main() {
+  float f = 0.0;
+  if (uShowT >= 0.0) f = ease((uTime - (uShowT + 0.9 * aR + 0.7 * aSeed)) / 1.9);
+  if (uHideT >= 0.0) f = min(f, 1.0 - ease((uTime - uHideT - 0.3 * aSeed) / 1.1));
+  if (f <= 0.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vA = 0.0; vCol = vec3(0.0); return; }
+  vec3 dir = normalize(vec3(hash(aSeed * 3.1), hash(aSeed * 5.7), hash(aSeed * 9.3)) - 0.5 + 1e-4);
+  float a = (1.0 - f) * 2.6;
+  vec3 far = dir * (4.0 + 7.0 * hash(aSeed * 17.0));
+  far = vec3(cos(a) * far.x - sin(a) * far.z, far.y, sin(a) * far.x + cos(a) * far.z);
+  vec4 mv = modelViewMatrix * vec4(position + far * (1.0 - f), 1.0);
+  gl_Position = projectionMatrix * mv;
+  float px = uGrain * projectionMatrix[1][1] * 0.5 * uViewH / max(-mv.z, 1e-3);
+  gl_PointSize = clamp(px * 1.7, 1.0, 24.0);
+  vCol = aCol;
+  // a grain smaller than a pixel is drawn a pixel wide, so it gives up its share of light
+  vA = mix(0.15, 1.0, f) * min(1.0, px * px * 2.9);
+}`
+const PORTRAIT_FRAG = /* glsl */ `
+uniform float uGain;
+varying vec3 vCol; varying float vA;
+void main() {
+  float d = length(gl_PointCoord - 0.5);
+  float a = (1.0 - smoothstep(0.2, 0.5, d)) * vA;
+  if (a < 0.01) discard;
+  gl_FragColor = vec4(vCol * uGain, a);
+}`
+
+function buildPortraits(o, ctx) {
+  const size = o.size ?? 2.4, res = Math.round(o.res ?? 120)
+  const people = o.people || []
+  const g = new Group()
+  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  const showT = { value: -1 }, hideT = { value: -1 }, viewH = { value: 1080 }, pr = { value: Math.min(devicePixelRatio || 1, 2) }
+  const uni = { uTime: { value: 0 }, uShowT: showT, uHideT: hideT, uViewH: viewH, uGrain: { value: size / res },
+    uPixelRatio: pr, uGain: { value: o.gain ?? 1 } }
+  const mat = new ShaderMaterial({ vertexShader: PORTRAIT_VERT, fragmentShader: PORTRAIT_FRAG, uniforms: uni,
+    transparent: true, depthWrite: false, depthTest: true })
+  const vp = new Vector4()
+  const base = (import.meta.env?.BASE_URL || '/').replace(/\/$/, '')
+  const toLin = (v) => Math.pow(v / 255, 2.2)
+  const labels = []
+  people.forEach((person) => {
+    const at = person.at || [0, 0, 0]
+    const img = new Image()
+    img.onload = () => {
+      const c = document.createElement('canvas'); c.width = res; c.height = res
+      const cx = c.getContext('2d', { willReadFrequently: true })
+      cx.drawImage(img, 0, 0, res, res)
+      const px = cx.getImageData(0, 0, res, res).data
+      const pos = [], col = [], seed = [], rr = []
+      for (let y = 0; y < res; y++) for (let x = 0; x < res; x++) {
+        const u = (x + 0.5) / res - 0.5, v = (y + 0.5) / res - 0.5, r = Math.hypot(u, v) * 2
+        if (r > 1) continue
+        const i = (y * res + x) * 4
+        const R = px[i], G = px[i + 1], B = px[i + 2]
+        const l = (0.2126 * R + 0.7152 * G + 0.0722 * B) / 255
+        pos.push(at[0] + u * size, at[1] - v * size, at[2] + (l - 0.5) * 0.06 * size + (Math.random() - 0.5) * 0.01 * size)
+        col.push(toLin(R), toLin(G), toLin(B))
+        seed.push(Math.random()); rr.push(r)
+      }
+      const geo = new BufferGeometry()
+      geo.setAttribute('position', new BufferAttribute(new Float32Array(pos), 3))
+      geo.setAttribute('aCol', new BufferAttribute(new Float32Array(col), 3))
+      geo.setAttribute('aSeed', new BufferAttribute(new Float32Array(seed), 1))
+      geo.setAttribute('aR', new BufferAttribute(new Float32Array(rr), 1))
+      const p = new Points(geo, mat); p.frustumCulled = false
+      p.onBeforeRender = (renderer) => { renderer.getCurrentViewport(vp); viewH.value = vp.w || 1080 }
+      g.add(p)
+    }
+    img.src = String(person.src || '').startsWith('/') ? base + person.src : person.src
+    if (person.name) {
+      const make = () => {
+        const l = smooth(ctx.helpers.makeLabel(person.name, { px: 64, weight: 500, color: '#dfe6f1', worldH: o.labelH ?? 0.026, letterSpacing: 0.04, upper: false }))
+        l.material.sizeAttenuation = false; l.material.opacity = 0
+        l.center.set(0.5, 1.25)
+        l.position.set(at[0], at[1] - size / 2, at[2])
+        l.userData.vis = 0
+        g.add(l); labels.push(l)
+      }
+      if (document.fonts?.load) document.fonts.load('500 64px "Space Grotesk"').catch(() => {}).finally(make)
+      else make()
+    }
+  })
+
+  let now = 0, step = state.has(o.name) ? state.get(o.name) : 0, armed = false, armedAt = 0
+  const go = (k) => {
+    step = k
+    if (armed) return
+    if (k) { if (showT.value < 0 || hideT.value >= 0) { showT.value = now; hideT.value = -1 } }
+    else if (showT.value >= 0 && hideT.value < 0) hideT.value = now
+  }
+  const off = listen(o.name, go)
+  mat.addEventListener('dispose', off)
+  const api = {
+    arm() { armed = true; armedAt = now; if (showT.value >= 0 && hideT.value < 0) hideT.value = now },
+    assemble(t, onDone) {
+      now = t; armed = false
+      if (step) { showT.value = t; hideT.value = -1 } else if (showT.value >= 0 && hideT.value < 0) hideT.value = t
+      onDone?.()
+    },
+  }
+  return {
+    group: g, labels: [], api, pixelRatio: pr,
+    update(t) {
+      now = t; uni.uTime.value = t
+      if (armed && t - armedAt > 6) { armed = false; go(step) }
+      if (hideT.value >= 0 && t - hideT.value > 1.6) { showT.value = -1; hideT.value = -1 }
+      const on = showT.value >= 0 && hideT.value < 0 && t - showT.value > 2.2
+      for (const l of labels) {
+        l.userData.vis += ((on ? 1 : 0) - l.userData.vis) * 0.06
+        l.material.opacity = 0.9 * l.userData.vis
+        l.visible = l.userData.vis > 0.01
+      }
+    },
+  }
+}
+
 export function installGrains(registerBuilder) {
   registerBuilder('lineup', buildLineup, { fields: ['pos', 'name', 'balls'] })
   registerBuilder('streams', buildStreams, { fields: ['pos', 'name', 'from', 'to'] })
+  registerBuilder('floor', buildFloor, { fields: ['pos'] })
+  registerBuilder('portraits', buildPortraits, { fields: ['pos', 'name', 'people'] })
 }

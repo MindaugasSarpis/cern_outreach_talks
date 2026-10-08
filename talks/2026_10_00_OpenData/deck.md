@@ -20,7 +20,7 @@ stage:
   space: data/space.json
   palette: { base: blue, bg: '#000206' }   # a true black ground: the blue palette's navy read as haze
   sound: true
-  options: { reach: 20, nebula: 0.12, dustGain: 1.0, exposure: 1.1, vignette: 0.7, grain: 0.012, aberration: 0, bloom: 0.42 }   # reach: the 1 EB pose stands far back; the rest: deep, crisp, not hazy
+  options: { reach: 30, nebula: 0.12, dustGain: 1.0, exposure: 1.1, vignette: 0.7, grain: 0.012, aberration: 0, bloom: 0.42 }   # reach: the 1 EB pose stands far back (27 from the store); the rest: deep, crisp, not hazy
 title: Opening LHCb's data
 info: |
   LHCb Vilnius, nominated for an open data award. A 6½-minute talk told inside
@@ -44,6 +44,8 @@ space:
   at: wide
   dim: 0.25
 ---
+
+<Grains :set="{ team: 0 }" />
 
 # Nominated for an open data award
 
@@ -95,6 +97,8 @@ space: { at: wide, dim: 0.2 }
 class: photo-slide
 ---
 
+<Grains :set="{ team: 0 }" />
+
 <div class="photo"><img src="/figures/lhcb_detector_2024.jpg" alt="The upgraded LHCb detector in its cavern near Geneva, 2024, three people on a platform under the LHCb banner" /><span class="credit">© CERN · M. Brice</span></div>
 
 <div class="photo-text">
@@ -137,6 +141,8 @@ space: { at: [-59.6, -1.4, 7], dist: 10, yaw: -30, pitch: 10, dim: 0.25 }
 class: photo-slide
 ---
 
+<Grains :set="{ team: 0 }" />
+
 <div class="photo event"><img src="/figures/lhcb_event_run3.jpg" alt="A proton–proton collision at 13.6 TeV in the upgraded LHCb detector, 2022: tracks fanning out through the detector" /><span class="credit">© CERN / LHCb</span></div>
 
 <div class="photo-text event-text">
@@ -171,10 +177,10 @@ paper, arXiv:2506.20309; LHCb Starterkit, Run 3 data flow.
 -->
 
 ---
-space: { at: [10.37, 0, 0], dist: 0.75, yaw: -6, pitch: 4, dim: 0.2 }
+space: { at: [22.98, 0.12, 6.0], dist: 0.86, yaw: -2, pitch: 10, dim: 0.2 }
 ---
 
-<Grains :set="{ scale: [0], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [0], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
@@ -205,10 +211,10 @@ the 4 TB a second as on the previous slide.
 -->
 
 ---
-space: { at: [7.36, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
+space: { at: [3.1, 6, -10.6], dist: 29.8, yaw: 46.8, pitch: -10, sway: 4, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [0, 3], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [0, 3], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="legend"><span class="dot blue"></span>one sphere = one terabyte</div>
 
@@ -229,7 +235,7 @@ Message: LHCb has kept more than a hundred thousand of these spheres.
 
 Say: this is what LHCb has collected since 2010: more than 100 petabytes, a
 hundred thousand spheres. Since the upgrade it adds tens of petabytes every
-year. The single terabyte from the last slide is the dot on the left.
+year. The single terabyte from the last slide is the small sphere in front.
 
 Sources: B. Couturier, ISGC 2025 (16–21 March 2025): "Since it began operations
 in 2010, the experiment has collected more than 100 PB of data … now records
@@ -239,10 +245,10 @@ tens of PB of data per year".
 -->
 
 ---
-space: { at: [9.6, 0, 0], dist: 73.5, yaw: -4, pitch: 4, dim: 0.15 }
+space: { at: [2, 9, -18], dist: 60.1, yaw: -1.9, pitch: 2.9, sway: 4, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [3, 4], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [0, 3, 4], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="legend"><span class="dot steel"></span>one sphere = one terabyte</div>
 
@@ -273,10 +279,10 @@ LHC" (17 December 2025).
 -->
 
 ---
-space: { at: [9.6, 0, 0], dist: 8.7, yaw: -4, pitch: 4, dim: 1 }
+space: { at: [14.5, 1.6, 2.5], dist: 12.7, yaw: 45, pitch: 2.7, dim: 1 }
 ---
 
-<Grains :set="{ scale: [0, 3], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [0, 3], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="finds">
 <div class="finds-text">
@@ -319,10 +325,10 @@ LHCb; last entry 21 September 2026); LHCb, PRL 115 (2015) 072001; LHCb, PRL 122
 -->
 
 ---
-space: { at: [9.6, 0, 0], dist: 8.7, yaw: -4, pitch: 4, dim: 0.2 }
+space: { at: [14.5, 1.6, 2.5], dist: 12.7, yaw: 45, pitch: 2.7, dim: 0.2 }
 ---
 
-<Grains :set="{ scale: [0, 1, 3, 4], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [0, 1, 3, 4], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
@@ -357,10 +363,10 @@ Sources: opendata.cern.ch, "LHCb releases entire Run 1 dataset" (20 December
 -->
 
 ---
-space: { at: [4.5, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
+space: { at: [16, 6, -2], dist: 32, yaw: 0, pitch: 1.8, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [1, 2], 'scale:labels': 1, world: 8, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [1, 2], 'scale:labels': 1, world: 8, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
@@ -395,10 +401,10 @@ Global Report 2026; arXiv:2609.09275; LHCb, arXiv:2504.00610 (open data policy).
 -->
 
 ---
-space: { at: [9.5, 0, 4], dist: 27, yaw: 12, pitch: 4, dim: 0.3 }
+space: { at: [9.5, 2.5, 4], dist: 27, yaw: 12, pitch: 2.1, dim: 0.3 }
 ---
 
-<Grains :set="{ scale: [1, 2], 'scale:labels': 0, world: 0, vilnius: 3, dominykas: 0 }" />
+<Grains :set="{ scale: [1, 2], 'scale:labels': 0, world: 0, vilnius: 3, dominykas: 0, team: 0 }" />
 
 # Used in Vilnius
 
@@ -435,7 +441,7 @@ Sources: Open Readings 2024 abstract book, p. 75 (O7); CERN Open Data record
 space: { at: thesis, dim: 0.3 }
 ---
 
-<Grains :set="{ scale: [1, 2], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 1 }" />
+<Grains :set="{ scale: [1, 2], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 1, team: 0 }" />
 
 <div class="readout thesis">
 
@@ -470,15 +476,20 @@ Kaunas, 2025.
 -->
 
 ---
-layout: statement
-space: { at: close, dim: 0.3 }
+space: { at: [-45.5, 2.3, 0], dist: 24.1, yaw: 23.4, pitch: 5.5, dim: 0.2 }
 ---
+
+<Grains :set="{ team: 1, world: 0, vilnius: 0, dominykas: 0 }" />
+
+<div class="readout close">
+
+<p class="kicker"><span class="nt">LHCb</span> Vilnius · Vilnius University</p>
 
 # Thank you
 
-<div class="mt-md"><span class="nt">LHCb</span> Vilnius · Vilnius University · opendata.cern.ch</div>
+<p class="line">opendata.cern.ch</p>
 
-<p class="team"><span>Mindaugas Šarpis</span> · <span>Ramūnas Aleksiejūnas</span> · <span>Oleg Kravcov</span> · <span>Adam Morris</span> · <span>Augustas Vaitkevičius</span> · <span>Rūta Racz</span> · <span>Šarūnas Jacevičius</span> · <span>Margarita Biveinytė</span> · <span>Sophia Pennuttis</span> · <span>Mikas Paulius Iršėnas</span> · <span>Neilas Beniušis</span> · <span>Karolina German</span> · <span>Eliza Holvoet</span> · <span>Meda Paulavičiūtė</span> · <span>Dominykas Stonkus</span></p>
+</div>
 
 <!--
 Message: this is the work we were nominated for, and the people who did it.
@@ -488,8 +499,12 @@ release, coordinating it for the whole collaboration, and doing research and
 teaching with it here in Vilnius. Thank you, and thank you to everyone on this
 list."
 
-The camera flies back to the collisions where the data begin. The names are
-the group as listed on lhcb-vilnius.web.cern.ch.
+The camera flies back to the collisions where the data begin, and the group
+gathers beside them: fifteen photographs made of grains, each with the name
+under it.
+
+Photos: the group's People page, lhcb-vilnius.web.cern.ch/people.html
+(© LHCb Vilnius), cropped square, metadata removed.
 
 Timing: about 6 minutes with the 39 s clip. For a hard 5 minutes, end the clip
 after about 20 s, keep the finds slide to the 76 and the two lines, and say
