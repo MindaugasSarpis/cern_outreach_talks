@@ -1,77 +1,86 @@
-/* Opening LHCb's data — the talk's own type over the stage kit
-   (slidev-addon-stage styles/index.css). Gold is open data, blue is Run 3. */
+/* Opening LHCb's data: the talk's own type over the stage kit
+   (slidev-addon-stage styles/index.css).
+   One colour per kind of data, on the slides and in the world:
+   gold = open data, blue = LHCb's own data, steel = all of the LHC's. */
 
-html[data-stage] { --od-gold: #ffc05a; --od-gold-hi: #ffe3a8; --od-blue: #8fb2ff; }
+html[data-stage] {
+  --od-gold: #ffc05a; --od-gold-hi: #ffe3a8;
+  --od-blue: #8fb2ff; --od-blue-hi: #cfe0ff;
+  --od-steel: #dfe6f1; --od-steel-lo: #aab6c8;
+  --od-shadow: 0 2px 18px rgba(0, 0, 0, 0.72);
+  --stage-type-min: 18px;   /* the kit's kickers, cover subtitle and bylines (11–14 px) up to the house floor */
+}
 
-/* the readout: a kicker, a counted number, one or two sentences, low on the left */
+/* the cover's subtitle on two even lines, clear of the collider below it */
+html[data-stage] .slidev-layout.cover h2 { max-width: 40ch; text-wrap: balance; }
+
+/* the cover's byline breaks before the university, clear of the collider */
+html[data-stage] .slidev-layout.cover .mt-md { max-width: 34ch; }
+
+/* LHCb keeps its lower-case b where the kit sets type in capitals */
+html[data-stage] .nt { text-transform: none !important; }
+
+/* ---- the readout: a kicker, a counted number and one sentence, low on the left */
 html[data-stage] .readout {
-  position: absolute; left: 56px; bottom: 74px; max-width: 44%;
-  font-size: 20px; line-height: 1.38; color: var(--stage-fg);
+  position: absolute; left: 56px; bottom: 74px; max-width: 46%;
+  color: var(--stage-fg);
   animation: stage-rise 0.8s var(--stage-ease) 0.2s both;
 }
-html[data-stage] .readout p { margin: 0 0 10px; opacity: 0.94; }
+html[data-stage] .readout p { margin: 0 0 10px; }
 html[data-stage] .readout .kicker { margin-bottom: 6px; color: var(--od-gold); }
 html[data-stage] .readout .big {
   font-size: 104px; font-weight: 700; letter-spacing: -0.035em; line-height: 0.92;
   font-variant-numeric: tabular-nums; margin: 0 0 18px; white-space: nowrap;
-  text-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
+  color: var(--od-gold-hi); text-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
 }
-html[data-stage] .readout .big.gold { color: var(--od-gold-hi); }
-html[data-stage] .readout .big.blue { color: #dfe8ff; }
 html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--od-gold); }
-html[data-stage] .readout .big.blue .unit { color: var(--od-blue); }
-html[data-stage] .readout:has(.big.blue) .kicker { color: var(--od-blue); }
-html[data-stage] .readout:has(.big.blue) { max-width: 50%; }
+html[data-stage] .readout .line { font-size: 26px; font-weight: 500; line-height: 1.3; color: #fff; opacity: 1; text-shadow: var(--od-shadow); }
 
-/* the thesis slide: a name instead of a number */
-html[data-stage] .readout.thesis { max-width: 46%; bottom: 80px; }
-html[data-stage] .readout.thesis h1 {
+html[data-stage] .readout.blue { max-width: 50%; }
+html[data-stage] .readout.blue .kicker, html[data-stage] .readout.blue .unit { color: var(--od-blue); }
+html[data-stage] .readout.blue .big { color: #dfe8ff; }
+html[data-stage] .readout.steel { max-width: 50%; }
+html[data-stage] .readout.steel .kicker, html[data-stage] .readout.steel .unit { color: var(--od-steel-lo); }
+html[data-stage] .readout.steel .big { color: var(--od-steel); }
+
+/* the thesis slide: a name in place of the number */
+html[data-stage] .readout.thesis { bottom: 80px; }
+html[data-stage] .readout.thesis h1, html[data-stage] .readout.close h1 {
   font-size: 54px !important; font-weight: 700 !important; letter-spacing: -0.02em; line-height: 1.02 !important;
-  margin: 0 0 10px !important; color: var(--stage-fg) !important; animation: none !important;
+  margin: 0 0 12px !important; color: var(--stage-fg) !important; animation: none !important;
 }
-html[data-stage] .readout.thesis .sub { font-size: 17px; letter-spacing: 0.02em; color: var(--od-gold-hi); margin-bottom: 16px; }
-html[data-stage] .readout.thesis .sub em { font-style: normal; color: var(--stage-fg); }
+html[data-stage] .readout.thesis .line { color: #fff; opacity: 0.92; }
 
-/* the scale, top right, while the grains are being counted */
+/* the close: the thanks low on the left, the group's portraits to the right */
+html[data-stage] .readout.close h1 { font-size: 72px !important; }
+html[data-stage] .readout.close .line { color: var(--od-gold-hi); }
+
+/* motion between ideas: where the world moves first, the text rises after it */
+html[data-stage] .readout.late { animation-delay: 2.6s; }
+html[data-stage] .legend.late { opacity: 0; animation: stage-rise 0.8s var(--stage-ease) 3.4s both; }
+html[data-stage] .readout.later { animation-delay: 4s; }
+html[data-stage] .readout.last { animation-delay: 5.2s; }   /* after copies of the smaller pile merge into the larger */
+html[data-stage] .legend.later { opacity: 0; animation: stage-rise 0.8s var(--stage-ease) 4.2s both; }
+/* the event: its title in the place of a number, the text kept to the left of the tracks */
+html[data-stage] .readout.event { max-width: 40%; }
+html[data-stage] .readout.event h1 { font-size: 72px !important; font-weight: 700 !important; letter-spacing: -0.02em; line-height: 1 !important; margin: 0 0 14px !important; color: var(--od-gold-hi) !important; animation: none !important; }
+
+/* „Ačiū“ alone, in the middle of the ring of the group's portraits */
+html[data-stage] .thanks { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 96px; font-weight: 700; letter-spacing: -0.03em; color: #fff; text-shadow: 0 4px 40px rgba(0, 0, 0, 0.7); animation: stage-rise 0.9s var(--stage-ease) 0.4s both; }
+
+/* ---- the key, top right, on every slide that shows the piles */
 html[data-stage] .legend {
-  position: absolute; right: 44px; top: 34px; font-size: 12.5px; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--stage-dim);
-  display: flex; align-items: center; gap: 10px;
+  position: absolute; right: 44px; top: 34px; font-size: 18px; font-weight: 500;
+  letter-spacing: 0.06em; color: var(--stage-dim);
+  display: flex; align-items: center; gap: 12px;
 }
-html[data-stage] .legend .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+html[data-stage] .legend .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
 html[data-stage] .legend .dot.gold { background: var(--od-gold-hi); box-shadow: 0 0 10px 3px rgba(255, 192, 90, 0.75); }
+html[data-stage] .legend .dot.blue { background: var(--od-blue-hi); box-shadow: 0 0 10px 3px rgba(77, 132, 255, 0.7); }
+html[data-stage] .legend .dot.steel { background: #ffffff; box-shadow: 0 0 10px 3px rgba(195, 205, 221, 0.6); }
 
-/* a world-caption that keeps to the left half, so the collision shows */
-html[data-stage] .world-caption.narrow { right: auto; max-width: 46%; font-size: 20px; line-height: 1.38; }
-html[data-stage] .world-caption.narrow h1 { margin: 0 0 12px !important; }
-html[data-stage] .world-caption.narrow p { margin: 0 0 8px; }
-html[data-stage] .world-caption.narrow .kicker { margin-bottom: 8px; color: var(--stage-accent); }
-
-/* content slides: cards a little tighter than the kit, so three fit */
-html[data-stage] .three-col .card h2 { font-size: 20px; }
-html[data-stage] .three-col .card p { font-size: 17.5px; line-height: 1.36; }
-
-/* the close: the group's names, small, under the thanks */
-html[data-stage] .slidev-layout.statement .team {
-  max-width: 62ch; margin: 22px auto 0; font-size: 13px; line-height: 1.7; letter-spacing: 0.04em;
-  color: var(--stage-dim); animation: stage-rise 0.9s var(--stage-ease) 0.7s both;
-}
-
-@media (prefers-reduced-motion: reduce), print {
-  html[data-stage] .readout, html[data-stage] .slidev-layout.statement .team { animation: none !important; }
-}
-
-/* cards in a low row, so the streams above them stay in view */
-html[data-stage] .three-col.low { position: absolute; left: 44px; right: 44px; bottom: 64px; gap: 18px; align-items: stretch; }
-html[data-stage] .three-col.low .card { padding: 12px 16px 10px; }
-html[data-stage] .three-col.low .card h2 { font-size: 17px; margin-bottom: 6px; }
-html[data-stage] .three-col.low .card p { font-size: 15.5px; line-height: 1.34; margin: 0; }
-html[data-stage] .three-col.low.two { grid-template-columns: 1fr 1fr; right: 30%; }
-
-/* main points only: one short line under a number, or two or three points */
-html[data-stage] .readout > p:not(.kicker):not(.sub) { font-size: 26px; font-weight: 500; line-height: 1.3; }
-html[data-stage] .world-caption.narrow > p:not(.kicker) { font-size: 26px; font-weight: 500; line-height: 1.3; color: var(--stage-fg); opacity: 1; }
-html[data-stage] .points { position: absolute; left: 56px; bottom: 76px; max-width: 64%; list-style: none; margin: 0; padding: 0; }
+/* ---- a list of two or three points, low on the left */
+html[data-stage] .points { position: absolute; left: 56px; bottom: 76px; max-width: 52%; list-style: none; margin: 0; padding: 0; }
 html[data-stage] .points li {
   position: relative; padding-left: 28px; margin: 0 0 14px; font-size: 27px; font-weight: 500; line-height: 1.25;
   color: var(--stage-fg); text-shadow: 0 0 22px rgba(0, 0, 0, 0.7), 0 0 6px rgba(0, 0, 0, 0.6);
@@ -83,17 +92,8 @@ html[data-stage] .points li::before {
   content: ''; position: absolute; left: 0; top: 0.62em; width: 10px; height: 10px; border-radius: 50%;
   transform: translateY(-50%); background: var(--od-gold-hi); box-shadow: 0 0 10px 3px rgba(255, 192, 90, 0.6);
 }
-@media (prefers-reduced-motion: reduce), print { html[data-stage] .points li { animation: none !important; } }
 
-/* --- colours of the three kinds of data: open (gold), LHCb's (blue), all LHC (steel) */
-html[data-stage] { --od-blue-hi: #cfe0ff; --od-steel: #dfe6f1; }
-html[data-stage] .readout .big.steel { color: var(--od-steel); }
-html[data-stage] .readout .big.steel .unit { color: #aab6c8; }
-html[data-stage] .readout:has(.big.steel) .kicker { color: #aab6c8; }
-html[data-stage] .legend .dot.blue { background: var(--od-blue-hi); box-shadow: 0 0 10px 3px rgba(77, 132, 255, 0.7); }
-html[data-stage] .legend .dot.steel { background: #ffffff; box-shadow: 0 0 10px 3px rgba(195, 205, 221, 0.6); }
-
-/* --- a photograph, full bleed: the real place, pushed in slowly, the text on a shadow */
+/* ---- a photograph, full bleed: the real place, pushed in slowly, the text on a shadow */
 html[data-stage] .photo { position: absolute; inset: 0; overflow: hidden; z-index: 0; background: #000; }
 html[data-stage] .photo img {
   width: 100%; height: 100%; object-fit: cover; display: block;
@@ -107,42 +107,24 @@ html[data-stage] .photo::after {
     linear-gradient(0deg, rgba(2, 4, 10, 0.8) 0%, rgba(2, 4, 10, 0) 45%);
 }
 @keyframes od-push { from { transform: scale(1.1); } to { transform: scale(1.0); } }
+/* the credit the licence asks for: small, in the corner, out of the way */
+html[data-stage] .photo .credit { position: absolute; right: 14px; bottom: 10px; z-index: 2; font-size: 10px; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.5); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); }
+
 html[data-stage] .photo-text { position: absolute; left: 56px; bottom: 70px; z-index: 1; max-width: 52%; animation: stage-rise 0.9s var(--stage-ease) 0.25s both; }
 html[data-stage] .photo-text .kicker { color: var(--od-gold); margin-bottom: 8px; }
 html[data-stage] .photo-text h1 {
   font-size: 128px !important; font-weight: 700 !important; letter-spacing: -0.04em; line-height: 0.9 !important;
   margin: 0 0 26px !important; color: #fff !important; text-shadow: 0 4px 40px rgba(0, 0, 0, 0.6); animation: none !important;
 }
-html[data-stage] .stats { display: flex; gap: 40px; margin: 0 0 18px; }
-html[data-stage] .stats > div { display: flex; flex-direction: column; gap: 4px; }
+html[data-stage] .slidev-layout .photo-text .line {
+  font-size: 24px; font-weight: 500; line-height: 1.28; color: #fff !important; opacity: 1 !important;
+  margin: 0 0 22px; text-shadow: var(--od-shadow);
+}
+html[data-stage] .stats { display: flex; gap: 40px; margin: 0; }
+html[data-stage] .stats > div { display: flex; flex-direction: column; gap: 6px; }
 html[data-stage] .stats b { font-size: 46px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6); }
-html[data-stage] .stats span { font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.88); }
-html[data-stage] .photo-text .note { font-size: 20px; font-weight: 500; color: var(--od-gold-hi); margin: 0; text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7); }
+html[data-stage] .stats span { font-size: 18px; font-weight: 500; color: rgba(255, 255, 255, 0.88); }
 
-/* --- what it finds: a number on the left, the real spectrum on the right, light on dark */
-html[data-stage] .finds { position: absolute; inset: 0; background: rgb(var(--stage-bg-rgb, 0, 2, 6)); display: grid; grid-template-columns: 0.9fr 1.1fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
-html[data-stage] .finds-text { animation: stage-rise 0.85s var(--stage-ease) 0.2s both; }
-html[data-stage] .finds .kicker { color: var(--od-blue-hi); margin-bottom: 4px; }
-html[data-stage] .finds .big {
-  font-size: 168px; font-weight: 700; letter-spacing: -0.05em; line-height: 0.88; margin: 0 0 8px;
-  background: linear-gradient(180deg, #ffffff, var(--od-blue-hi) 55%, #6f9dff); -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-html[data-stage] .finds .line { font-size: 26px; font-weight: 500; line-height: 1.25; margin: 0 0 26px; color: var(--stage-fg); }
-html[data-stage] .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-html[data-stage] .chips li { font-size: 21px; font-weight: 500; color: var(--stage-fg); }
-html[data-stage] .chips li b { color: var(--od-gold-hi); margin-right: 10px; font-variant-numeric: tabular-nums; }
-html[data-stage] .finds-plot { animation: stage-card-in 1s var(--stage-ease) 0.35s both; }
-html[data-stage] .finds-plot img {
-  width: 100%; max-height: 440px; object-fit: contain; display: block;
-  filter: drop-shadow(0 0 12px rgba(150, 190, 255, 0.35));
-}
-
-@media (prefers-reduced-motion: reduce), print {
-  html[data-stage] .photo img, html[data-stage] .photo-text, html[data-stage] .finds-text, html[data-stage] .finds-plot { animation: none !important; }
-}
-
-/* the photo's credit (the licence asks for it): small, in the corner, out of the way */
-html[data-stage] .photo .credit { position: absolute; right: 14px; bottom: 10px; z-index: 2; font-size: 10px; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.5); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); }
 /* the event display: the detector on the right half, so the text has the dark left */
 html[data-stage] .photo.event img {
   position: absolute; top: 0; right: -6%; width: 100%; height: 100%;
@@ -152,20 +134,65 @@ html[data-stage] .photo.event img {
 html[data-stage] .photo.event::after {
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.45) 34%, rgba(0, 0, 0, 0) 55%);
 }
-html[data-stage] .slidev-layout .photo-text p.line { font-size: 24px; font-weight: 500; line-height: 1.25; color: #fff !important; opacity: 1 !important; margin: 0; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7); }
-html[data-stage] .slidev-layout .event-text { max-width: 36%; }
+html[data-stage] .slidev-layout .event-text { max-width: 38%; }
 html[data-stage] .slidev-layout .event-text h1 { white-space: nowrap; font-size: 46px !important; line-height: 1.02 !important; margin-bottom: 16px !important; letter-spacing: -0.03em; }
 
-/* LHCb keeps its lower-case b where the type is set in capitals */
-html[data-stage] .nt { text-transform: none !important; }
-/* what LHCb is for, one line under its name */
-html[data-stage] .photo-text .purpose { opacity: 1 !important; font-size: 24px; font-weight: 500; color: #fff; margin: -10px 0 22px; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75); }
-/* the chips: the year in its own column, the text wrapping under itself */
-html[data-stage] .chips li { margin: 0 !important; padding: 0 !important; line-height: 1.3; display: grid; grid-template-columns: 2.9em 1fr; column-gap: 12px; align-items: baseline; }
-html[data-stage] .chips li b { margin: 0; }
+/* ---- what LHCb found: a number on the left, the real spectrum on the right.
+   Opaque: the scrim is a gradient, and even dim 1 left the blue pile glowing through the plot */
+html[data-stage] .finds { position: absolute; inset: 0; background: rgb(var(--stage-bg-rgb, 0, 2, 6)); display: grid; grid-template-columns: 0.9fr 1.1fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
+html[data-stage] .finds-text { animation: stage-rise 0.85s var(--stage-ease) 0.2s both; }
+html[data-stage] .finds .kicker { color: var(--od-blue-hi); margin-bottom: 4px; }
+html[data-stage] .finds .big {
+  font-size: 168px; font-weight: 700; letter-spacing: -0.05em; line-height: 0.88; margin: 0 0 8px;
+  background: linear-gradient(180deg, #ffffff, var(--od-blue-hi) 55%, #6f9dff); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+html[data-stage] .finds .line { font-size: 26px; font-weight: 500; line-height: 1.25; margin: 0 0 26px; color: var(--stage-fg); }
+html[data-stage] .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+html[data-stage] .chips li {
+  margin: 0 !important; padding: 0 !important; font-size: 21px; font-weight: 500; line-height: 1.3; color: var(--stage-fg);
+  display: grid; grid-template-columns: 2.9em 1fr; column-gap: 12px; align-items: baseline;
+}
+html[data-stage] .chips li b { margin: 0; color: var(--od-gold-hi); font-variant-numeric: tabular-nums; }
+html[data-stage] .finds-plot { animation: stage-card-in 1s var(--stage-ease) 0.35s both; }
+html[data-stage] .finds-plot img {
+  width: 100%; max-height: 440px; object-fit: contain; display: block;
+  filter: drop-shadow(0 0 12px rgba(150, 190, 255, 0.35));
+}
+
+/* ---- the thesis: the student and his own plot, light on dark, a pentaquark rising out of its peak.
+   Opaque, as the finds slide */
+html[data-stage] .thesis-slide { position: absolute; inset: 0; background: rgb(var(--stage-bg-rgb, 0, 2, 6)); display: grid; grid-template-columns: 0.62fr 1.38fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
+html[data-stage] .thesis-who { animation: stage-rise 0.85s var(--stage-ease) 0.15s both; }
+html[data-stage] .thesis-who .portrait { width: 100%; max-width: 165px; aspect-ratio: 4 / 5; border-radius: 6px; object-fit: cover; object-position: 50% 30%; display: block; margin: 0 0 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); }
+html[data-stage] .thesis-who .kicker { color: var(--od-gold); margin: 0 0 6px; white-space: nowrap; }
+html[data-stage] .thesis-who .name { font-size: 22px; font-weight: 600; color: var(--stage-fg); margin: 0 0 18px; }
+html[data-stage] .thesis-who .line { font-size: 22px; font-weight: 500; line-height: 1.25; color: #fff; margin: 0; text-wrap: balance; }
+html[data-stage] .thesis-plot { position: relative; padding-top: 90px; animation: stage-card-in 1s var(--stage-ease) 0.3s both; }
+html[data-stage] .thesis-plot img { width: 100%; display: block; filter: invert(1) hue-rotate(180deg) brightness(1.05) contrast(1.05); mix-blend-mode: screen; }
+/* the pentaquark gathers above the peak: the overlay reaches 30 % above the plot */
+html[data-stage] .thesis-plot .plot-box { position: relative; }
+html[data-stage] .thesis-plot .plot-box .peak-rise { top: -30% !important; height: 130% !important; }
+html[data-stage] .thesis-plot .credit { position: absolute; right: 4px; bottom: -26px; margin: 0; font-size: 10px; color: rgba(255, 255, 255, 0.5); }
+
+/* ---- the close: the group's names under the thanks, big enough to read from the hall */
+html[data-stage] .slidev-layout.statement .team {
+  max-width: 64ch; margin: 24px auto 0; font-size: 18px; line-height: 1.6; letter-spacing: 0.02em;
+  color: var(--stage-dim); animation: stage-rise 0.9s var(--stage-ease) 0.7s both;
+}
+html[data-stage] .slidev-layout.statement .team span { white-space: nowrap; }
+
 /* no one-word orphans on a big screen */
-html[data-stage] .readout p, html[data-stage] .photo-text h1, html[data-stage] .photo-text .line, html[data-stage] .readout.thesis .sub, html[data-stage] .finds .line { text-wrap: balance; }
-/* the team at the close, big enough to read from the hall */
-html[data-stage] .slidev-layout.statement .team { font-size: 15px; max-width: 72ch; }
-/* the cover title breaks evenly, not with one word left over */
-html[data-stage] .slidev-layout.cover h1, html[data-stage] .chips li { text-wrap: balance; }
+html[data-stage] .slidev-layout.cover h1, html[data-stage] .readout .line, html[data-stage] .photo-text .line,
+html[data-stage] .finds .line, html[data-stage] .chips li, html[data-stage] .points li { text-wrap: balance; }
+
+@media (prefers-reduced-motion: reduce), print {
+  html[data-stage] .readout, html[data-stage] .points li, html[data-stage] .photo img, html[data-stage] .photo-text,
+  html[data-stage] .finds-text, html[data-stage] .finds-plot, html[data-stage] .slidev-layout.statement .team { animation: none !important; }
+}
+
+/* ---- print and PDF: the world is not drawn there, so a world slide shows a still of
+   itself (public/stills/, from the final shots) under its text */
+html[data-stage] .print-still { display: none; }
+@media print {
+  html[data-stage] .print-still { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 50; }   /* the shot already carries the slide's text */
+}

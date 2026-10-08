@@ -4,6 +4,9 @@ colorSchema: dark
 transition: fade
 routerMode: hash
 aspectRatio: 16/9
+lang: lt
+duration: 6.5min
+sources: notes
 addons:
   - slidev-addon-videos
   - slidev-addon-stage
@@ -18,407 +21,520 @@ stage:
   space: data/space.json
   palette: { base: blue, bg: '#000206' }   # a true black ground: the blue palette's navy read as haze
   sound: true
-  options: { reach: 20, nebula: 0.12, dustGain: 1.0, exposure: 1.1, vignette: 0.7, grain: 0.012, aberration: 0, bloom: 0.42 }   # reach: the 1 EB pose stands far back; the rest: deep, crisp, not hazy
-title: Opening LHCb's data
+  options: { reach: 30, nebula: 0.12, dustGain: 1.0, exposure: 1.1, vignette: 0.7, grain: .012, aberration: 0, bloom: 0.42 }   # reach: the 1 EB pose stands far back (27 from the store); the rest: deep, crisp, not hazy
+title: Atveriame LHCb duomenis
 info: |
-  LHCb Vilnius, nominated for an open data award: a 6½-minute talk told inside
-  one world of grains (slidev-addon-stage, blue palette, pinned to the
-  slidev-videos feat/effects-v2 commit 640eaa5). The story: what LHCb is,
-  how much data it takes, what it finds, the LHC's exabyte, then what is
-  open and who uses it. One sphere is one terabyte: piles of the same metal
-  sphere stand side by side (1 TB; open data in gold, 800 TB and 4 PB;
-  LHCb's 100 PB in blue; the LHC's 1 EB in steel) and keep their size as the
-  camera pulls back; streams of grains carry the open data to its users. The
-  talk's own forms are setup/grains.js (`lineup`, `streams`); `<Grains>` sets
-  their step, `<Count>` counts with them. On any station `c` builds it again.
-  Kick-off: lhcb.mp4, the LHCb detector in 3D with music, this talk's 39 s
-  cut of the library clip (videos/manifest.toml), arrives and leaves as dust;
-  its colours come from public/video-frames/.
+  In Lithuanian. LHCb Vilnius, nominated for an open data award: a 6½-minute
+  talk told inside one world of grains (slidev-addon-stage, blue palette,
+  toolkit pin slidev-videos 12aa015).
+  The line: the LHCb detector (3D clip); one real collision from LHCb open data
+  (a 2012 Z → μμ event, its tracks drawn as grains); that collision shrinks into
+  one grain among tens of millions, which pack into a sphere of one terabyte;
+  the spheres grow into the open data (800 TB, 4 PB, gold), LHCb's 100 PB (blue)
+  and the LHC's exabyte (steel), the piles standing on a floor of grains at
+  different depths; what LHCb found; who uses the open data; Vilnius; a Vilnius
+  bachelor's student; „Ačiū“ over the group, each member a portrait of grains.
+  The talk's own forms are in setup/grains.js (`collision`, `lineup`, `streams`,
+  `floor`, `portraits`); `<Grains>` sets their steps (`later` after a delay) and
+  `<Count>` counts with them. On any station `c` builds the form again.
+  Kick-off: lhcb.mp4, the LHCb detector in 3D with music, this talk's 39 s cut
+  of the library clip (videos/manifest.toml). It arrives as dust and moves on
+  by itself when it ends.
   Date placeholder 2026_10_00.
 layout: cover
 space:
   at: wide
+  dim: 0.25
 ---
 
-# Open data award · nominee
+<img class="print-still" src="/stills/01.jpg" alt="" />
 
-# Opening <span class="nt">LHCb</span>'s data
+<Grains :set="{ team: 0 }" />
 
-## From a detector at CERN to a bachelor's thesis in Vilnius
+# Atvirųjų duomenų apdovanojimo nominantai
 
-<div class="mt-md">Mindaugas Šarpis · <span class="nt">LHCb</span> Vilnius · Vilnius University</div>
+# Atveriame <span class="nt">LHCb</span> duomenis
+
+<div class="mt-md">Mindaugas Šarpis · <span class="nt">LHCb</span> Vilnius · Vilniaus universitetas</div>
 
 <!--
-Speaker (~0.4 min). Spoken: "I'm Mindaugas Šarpis. I lead LHCb Vilnius,
-Vilnius University's group in the LHCb experiment at CERN. We were nominated
-for our work on open data; this is that work, in a few minutes. It starts at
-the detector." Then → for the LHCb clip (the cover gives it a head start to
-buffer).
-The world: behind the title, the LHC. Two bunches of protons run round
-against each other and meet twice a lap; each meeting throws out a spray of
-tracks. Everything after this is made of light: data.
-Before starting, press a key or click once, so the low hum can play
-(browsers start sound only after a gesture).
+Message: this talk is about the work we were nominated for, opening LHCb's data.
+
+Sakyti: „Esu Mindaugas Šarpis, vadovauju LHCb Vilnius grupei – Vilniaus
+universiteto komandai CERN LHCb eksperimente. Mus nominavo už darbą su
+atviraisiais duomenimis.
+Pradėkime nuo detektoriaus.“
+
+Then press → for the clip; the cover gives it time to buffer. Before starting,
+press a key or click once so the low hum can play (browsers start sound only
+after a gesture).
+
+(~0.3 min)
 -->
 
 ---
 space: { at: wide }
 ---
 
-<!-- Kick-off: the LHCb detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release videos-2026-10-00-opendata. It condenses out of the dust over the ring and breaks back into it as the camera flies to the collision point. -->
-<VideoPlayer src="lhcb.mp4" />
+<!-- Kick-off: the LHCb detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release videos-2026-10-00-opendata. It condenses out of the dust and moves on by itself when it ends. -->
+<VideoPlayer src="lhcb.mp4" advance-on-end />
 
 <!--
-Speaker (~0.7 min, the clip runs 39 s): let it play; it opens the talk.
-From the shafts above the cavern down to LHCb, the detector built up in 3D,
-and a person standing in it for scale. At most one line over the music,
-near the end: "This is LHCb: the detector our data come from." Press → when
-the music has faded (or earlier): the frame on screen breaks into grains
-while the camera flies to where the bunches meet. `p` pauses, `+` / `-` set the volume for the rest of
-the talk.
+Message: this is LHCb.
+
+Let the clip play (39 s; its time is counted from the manifest). It ends by
+itself as the music fades (`advance-on-end`); → moves on earlier. Near the end,
+over the music, at most this:
+
+Sakyti: „Tai LHCb. Detektorius sveria 5 600 tonų ir stovi šimto metrų gylyje
+prie Ženevos. Vilniaus universitetas – LHCb kolaboracijos narys nuo 2024 m.“
+
+`p` pauses; `+` and `-` set the volume for the rest of the talk.
 -->
 
 ---
-space: { at: wide, dim: 0.2 }
-class: photo-slide
+space: { at: [24.4, -0.6, 5.9], dist: 5.2, yaw: 8, pitch: 30, sway: 10, dim: 0.15 }
 ---
 
-<div class="photo"><img src="/figures/lhcb_detector_2024.jpg" alt="The upgraded LHCb detector in its cavern near Geneva, 2024, three people on a platform under the LHCb banner" /><span class="credit">© CERN · M. Brice</span></div>
+<img class="print-still" src="/stills/03.jpg" alt="" />
 
-<div class="photo-text">
+<Grains :set="{ collision: 1, scale: [], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
-<p class="kicker">At CERN, 100 m underground</p>
+<div class="readout event">
 
-# LHCb
+<p class="kicker">Vienas susidūrimas · 2012 m.</p>
 
-<p class="purpose">Studies how matter and antimatter differ</p>
+# Z → μμ
 
-<div class="stats">
-<div><b>5 600 t</b><span>detector</span></div>
-<div><b>1 900</b><span>members</span></div>
-<div><b>29</b><span>countries</span></div>
-</div>
-
-<p class="note">Vilnius University: a member since 2024</p>
+<p class="line">Čia Z bozonas suskilo į du miuonus. Šį susidūrimą gali atsisiųsti kiekvienas.</p>
 
 </div>
+
+<!-- facts: lhcb-run3-readout-4tbs -->
 
 <!--
-Speaker (~0.5 min). Say: LHCb is one of the four big experiments at CERN's
-Large Hadron Collider. Its job: find out why the Universe is made of matter
-at all, by measuring how matter and antimatter differ. A 5 600-tonne
-detector, 21 m long and 10 m high, in a cavern 100 m underground in France,
-just across the border from Geneva. About 1 900 people from 29 countries
-build it, run it and analyse its data; on 2 September 2024 the LHCb
-Collaboration Board voted unanimously to take in Vilnius University.
-Sources: home.cern, "LHCb"; CERN-RRB-2026-027 (V. Vagnoni, Apr 2026: 1 889
-members, 110 institutes, 29 countries); VU Faculty of Physics news, Sep 2024.
+Message: one real collision, from data anyone can download.
+
+Sakyti: „Štai vienas tikras susidūrimas iš 2012 m. LHCb duomenų. Dvi auksinės
+linijos – du miuonai. Į juos skilo Z bozonas, beveik šimtą kartų sunkesnis už
+protoną. Kitos linijos – kitos tame susidūrime susidariusios dalelės. Šį susidūrimą šiandien
+gali atsisiųsti bet kas, o mūsų studentai Vilniuje tyrė būtent tokius
+Z bozonus.“
+
+The event: CERN Open Data record 24506 (LHCb 2012 Beam4000GeV MagDown EW
+Stream Stripping21), file 00041836_00076811_1.ew.dst, entry 3795: run 133488,
+event 49420610, recorded 1 December 2012, selected by StrippingZ02MuMuLine.
+Two well-measured long tracks (χ²/ndof 0.73 and 0.92) with a mass of 92,5 GeV;
+one primary vertex, 42 tracks. Drawn: 76 of its 95 reconstructed tracks (ghost
+probability ≤ 0,4), each from its own track state, bent once at the magnet by
+the measured momentum; the muons run on to the muon stations. Drawn with the
+transverse directions stretched 3× (as event displays are): LHCb's tracks run
+within a few degrees of the beam. Read from the
+public DST with uproot and LHCb's packing scales (cross-checked: the mass from
+the decoded tracks equals the stored candidate mass).
+Background, if asked: LHCb sees up to 40 million bunch crossings a second; since
+2022 it reads out about 4 TB a second and software chooses what to keep.
+
+Šaltiniai: opendata.cern.ch/record/24506; R. Aaij et al. (LHCb), EPJ Web Conf.
+251 (2021) 04009.
+
+(~0.5 min)
 -->
 
 ---
-space: { at: [-59.6, -1.4, 7], dist: 10, yaw: -30, pitch: 10, dim: 0.25 }
-class: photo-slide
+space: { at: [23.02, 0.1, 6.0], dist: 0.76, yaw: -13.7, pitch: 19.1, dim: 0.2 }
 ---
 
-<div class="photo event"><img src="/figures/lhcb_event_run3.jpg" alt="A proton–proton collision at 13.6 TeV in the upgraded LHCb detector, 2022: tracks fanning out through the detector" /><span class="credit">© CERN / LHCb</span></div>
+<img class="print-still" src="/stills/04.jpg" alt="" />
 
-<div class="photo-text event-text">
+<Grains :set="{ collision: 2, scale: [], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" :later="{ scale: [[0], 3.0], collision: [0, 4.8] }" />
 
-<p class="kicker">Where the data come from</p>
+<div class="readout later">
 
-# 4 TB every second
+<p class="kicker">Mastelis</p>
 
-<p class="line">From 40 million bunch crossings a second, sorted in software</p>
+<div class="big"><Count name="unit" :from="1" :to="1" /><span class="unit">TB</span></div>
+
+<p class="line">Viena sfera – vienas terabaitas, keliasdešimt milijonų tokių susidūrimų.</p>
 
 </div>
 
+<!-- facts: lhcb-event-sizes-2024 -->
+
 <!--
-Speaker (~0.4 min): a real collision from Run 3, in the upgraded detector
-(13.6 TeV protons, 2022): every line a particle LHCb measured. This happens
-up to 40 million times a second.
-Spoken: "Since 2022 there is no electronic pre-filter: the whole detector is
-read out, and graphics cards, the chips in gaming computers, choose what to
-keep. About one byte in four hundred goes to tape."
-Background, not for the slide: the first software stage runs at the average
-non-empty crossing rate, 30 MHz; raw data about 4 TB/s (Aaij et al. 2021);
-the design rate to tape is 10 GB/s (LHCb Sprucing paper, arXiv:2506.20309).
-Sources: R. Aaij et al. (LHCb), “Evolution of the energy efficiency of LHCb’s real-time processing”, EPJ Web Conf. 251 (2021) 04009 · LHCb Starterkit, Run 3 data flow
+Message: a sphere of one terabyte is made of tens of millions of collisions.
+
+Motion first, then the point: the event shrinks into one grain among many, the
+grains pack into a ball, the metal sphere takes their place (3 s), and the
+text rises at 4 s.
+
+Sakyti: „Vienas toks įrašytas susidūrimas užima kelias dešimtis kilobaitų.
+Keliasdešimt milijonų tokių susidūrimų sudaro vieną terabaitą, maždaug
+nešiojamojo kompiuterio diską. Toliau kiekviena sfera – vienas terabaitas. Sferos lieka tokio pat dydžio,
+tolsta kamera.“
+
+Background: LHCb's average stored event in 2024 was 33,8 kB (Full stream, after
+Sprucing) and about 10 kB (Turbo), so a terabyte holds about 30 to 100 million
+of them.
+
+Šaltiniai: LHCb Sprucing paper, arXiv:2506.20309 (2024 event sizes).
+
+(~0.4 min)
 -->
 
 ---
-space: { at: [10.37, 0, 0], dist: 0.75, yaw: -6, pitch: 4, dim: 0.2 }
+space: { at: [12.5, 1.4, 5.0], dist: 13.8, yaw: 73, pitch: 7.5, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [0], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
 
-<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
+<Grains :set="{ scale: [0, 1], 'scale:labels': 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
-<div class="readout">
+<div class="readout late">
 
-<p class="kicker">The scale</p>
+<p class="kicker">Atverti 2023 m. gruodį</p>
 
-<div class="big gold"><Count name="unit" :from="1" :to="1" /><span class="unit">TB</span></div>
+<div class="big"><Count name="open" :from="0" :to="800" :delay="2400" /><span class="unit">TB</span></div>
 
-One sphere: a laptop's disk · LHCb reads out four a second
+<p class="line">Visi 2011–2012 m. LHCb protonų susidūrimų duomenys. Duomenis paskelbti parengė Mindaugas Šarpis.</p>
 
 </div>
 
+<!-- facts: lhcb-open-data-first-release-2022, lhcb-run1-volume-sources-differ, lhcb-run1-release-sarpis, sarpis-phd-bonn-2023, lhcb-open-data-coordinator-2026 -->
+
 <!--
-Speaker (~0.3 min). Say: one sphere is one terabyte, the disk of a laptop,
-about 330 hours of HD video. LHCb reads out four of these every second.
-From here on every sphere is a terabyte, and every pile is built of the same
-spheres: nothing shrinks, the camera only steps back.
-Sources: HD streaming up to 3 GB an hour (Netflix help centre); decimal units.
+Message: in 2023 all of LHCb's first run became public, and I prepared it.
+
+Sakyti: „Pirmą kartą didelę dalį duomenų, 200 terabaitų, LHCb
+paskelbė 2022 m. gruodį. 2023 m. gruodį viešai paskelbti visi 2011–2012 m. protonų
+susidūrimų duomenys, apie 800 terabaitų. Šį rinkinį paskelbti parengiau
+aš, tuo metu rašydamas disertaciją Bonoje. Darbas truko beveik dvejus metus:
+teko nukopijuoti ir patikrinti kiekvieną iš daugiau nei šimto tūkstančių
+failų. Nuo šių metų rugpjūčio koordinuoju visos kolaboracijos analizių
+išsaugojimo ir atvirųjų duomenų darbus.“
+
+Šaltiniai: opendata.cern.ch, „LHCb releases entire Run 1 dataset“ (2023-12-20);
+VU Fizikos fakulteto naujienos; M. Šarpis, PhD thesis, University of Bonn
+(2023); VU naujienos (2026-07-30).
+
+(~0.5 min)
 -->
 
 ---
-space: { at: [7.36, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
+space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, flight: 5, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [0, 3], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
+<img class="print-still" src="/stills/06.jpg" alt="" />
 
-<div class="legend"><span class="dot blue"></span>one sphere = one terabyte</div>
+<Grains :set="{ scale: [0, 1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
-<div class="readout">
+<div class="readout last">
 
-<p class="kicker"><span class="nt">LHCb</span>, since 2010</p>
+<p class="kicker">Atverti 2026 m.</p>
 
-<div class="big blue"><Count name="lhcb" :from="0" :to="100000" /><span class="unit">TB</span></div>
+<div class="big"><Count name="open" :from="800" :to="4000" :delay="5200" :ms="900" /><span class="unit">TB</span></div>
 
-More than 100 PB · now tens of PB a year
+<p class="line">Dalis 2015–2018 m. duomenų. Iš viso penkis kartus daugiau nei 2023 m.</p>
 
 </div>
 
+<!-- facts: lhcb-ntupling-service-4pb -->
+
 <!--
-Speaker (~0.4 min). Say: this is what LHCb has collected since 2010: more
-than 100 petabytes, a hundred thousand spheres. Now it records tens of
-petabytes a year; about 60 PB more were expected by the end of Run 3 in 2026. The first terabyte is the dot on the left.
-Sources: B. Couturier, ISGC 2025 (16–21 Mar 2025): "Since it began
-operations in 2010, the experiment has collected more than 100 PB of data
-… now records tens of PB of data per year".
+Message: since 2026 more than four petabytes are open.
+
+Sakyti: „Šiais metais atverta ir dalis 2015–2018 m. duomenų. Kartu su ankstesniais
+tai daugiau nei keturi tūkstančiai terabaitų, arba keturi petabaitai.“
+
+Šaltiniai: LHCb outreach, 2026-03-03 („over 4 PB of data to explore“); CERN Open
+Data portalas, 2026-02-22.
+
+(~0.3 min)
 -->
 
 ---
-space: { at: [7.36, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 1 }
+space: { at: [3.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [0, 3], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
+<img class="print-still" src="/stills/07.jpg" alt="" />
+
+<Grains :set="{ scale: [0, 1, 2, 3], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
+
+<div class="readout blue late">
+
+<p class="kicker"><span class="nt">LHCb</span> nuo 2010 m.</p>
+
+<div class="big"><Count name="lhcb" :from="0" :to="100000" :delay="2400" /><span class="unit">TB</span></div>
+
+<p class="line">Iš viso daugiau nei 100 PB. Auksinė dalis priekyje jau atvira.</p>
+
+</div>
+
+<!-- facts: lhcb-data-100pb, lhcb-open-data-policy -->
+
+<!--
+Message: open data is the gold part in front of LHCb's whole 100 PB.
+
+Sakyti: „Tai visi LHCb nuo 2010 m. surinkti duomenys, daugiau nei šimtas
+petabaitų, arba šimtas tūkstančių sferų. Jei kiekvieną terabaitą laikytume
+viename nešiojamajame kompiuteryje, tokių kompiuterių krūva būtų dviejų
+kilometrų aukščio. Kasmet prisideda dar keliasdešimt
+petabaitų. Auksinė
+dalis priekyje jau atvira. Pusę kiekvieno etapo duomenų LHCb atveria praėjus
+penkeriems metams nuo jo pabaigos, o visus – po dešimties.“
+
+Šaltiniai: B. Couturier, ISGC 2025 („Since it began operations in 2010, the
+experiment has collected more than 100 PB of data … now records tens of PB of
+data per year“); LHCb, arXiv:2504.00610 (atvirųjų duomenų politika).
+
+(~0.5 min)
+-->
+
+---
+space: { at: [-2, 9, -18], dist: 60.1, yaw: -1.9, pitch: 2.9, sway: 4, flight: 5, dim: 0.15 }
+---
+
+<img class="print-still" src="/stills/08.jpg" alt="" />
+
+<Grains :set="{ scale: [0, 1, 2, 3, 4], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
+
+<div class="readout steel last">
+
+<p class="kicker">Visi LHC eksperimentai, 2025 m. gruodis</p>
+
+<div class="big"><Count name="lhc" :from="0" :to="1000000" :delay="5200" :ms="900" /><span class="unit">TB</span></div>
+
+<p class="line">Vienas eksabaitas – maždaug dešimt kartų daugiau nei LHCb.</p>
+
+</div>
+
+<!-- facts: cern-exabyte, cern-second-500pb-run3 -->
+
+<!--
+Message: the whole LHC has stored ten times as much again.
+
+Sakyti: „O visų LHC eksperimentų duomenų 2025 m. gruodį jau buvo sukaupta
+eksabaitas – milijonas terabaitų, maždaug dešimt kartų daugiau nei LHCb. Tokia
+nešiojamųjų kompiuterių krūva būtų dvidešimties kilometrų aukščio, daugiau nei
+dukart aukštesnė už Everestą. Didžioji šių duomenų dalis įrašyta į maždaug
+60 tūkstančių magnetinių juostų.“
+
+Scale, worked out: a laptop about 2 cm thick holding 1 TB; 10⁶ × 2 cm = 20 km
+(Everest 8,85 km); LHCb's 100 PB = 10⁵ laptops = 2 km. Why the piles on screen
+look only about twice as wide: volume grows as width cubed, so ten times the
+spheres is 10^(1/3) ≈ 2,15 times the width. (If a terabyte were a 1 cm marble,
+close-packed, the exabyte would be a heap only 1,1 m across, which is why the
+talk uses the stack of laptops.)
+
+Šaltiniai: home.cern, „CERN hits one exabyte of stored experimental data from
+the LHC“ (2025-12-17).
+
+(~0.4 min)
+-->
+
+---
+space: { at: [16, 6, -2], dist: 32, yaw: 0, pitch: 1.8, dim: 0.15 }
+---
+
+<img class="print-still" src="/stills/09.jpg" alt="" />
+
+<Grains :set="{ scale: [1, 2], 'scale:labels': 0, collision: 0, world: 8, vilnius: 0, dominykas: 0, team: 0 }" />
+
+<div class="readout late">
+
+<p class="kicker">Naudotojai</p>
+
+<div class="big"><Count name="asks" :from="0" :to="20" :delay="2400" /></div>
+
+<p class="line">užklausų LHCb duomenų atrankos paslaugai per 2026 m. pirmąjį pusmetį, daugiausia teoretikų.</p>
+
+</div>
+
+<!-- facts: lhcb-ntupling-requests-2026, lhcb-opendata-brown-2026, ntuple-wizard-paper-2023 -->
+
+<!--
+Message: people outside LHCb already use the open data.
+
+Sakyti: „Visų keturių petabaitų siųstis nereikia. Nurodai, kokio skilimo nori, ir
+LHCb duomenų atrankos paslauga parenka tau reikalingus susidūrimus. Iki
+liepos tokių užklausų buvo apie dvidešimt, daugiausia teoretikų. Rugsėjį du
+Browno universiteto fizikai paskelbė tyrimą, atliktą su LHCb atviraisiais
+duomenimis. Vienas šios paslaugos kūrėjų, Adamas Morrisas, dabar dirba
+LHCb Vilnius grupėje.“
+
+Šaltiniai: DPHEP Global Report 2026; arXiv:2609.09275; arXiv:2302.14235.
+
+(~0.5 min)
+-->
+
+---
+space: { at: [12.5, 2.5, 4], dist: 27, yaw: 12, pitch: 2.1, dim: 0.3 }
+---
+
+<img class="print-still" src="/stills/10.jpg" alt="" />
+
+<Grains :set="{ scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 3, dominykas: 0, team: 0 }" />
+
+# Naudojame Vilniuje
+
+<ul class="points">
+<li>Z → μμ: viena pirmųjų LHCb atvirųjų duomenų analizių (2024)</li>
+<li>VU kursas: kiekvienas studentas dirba su atviraisiais duomenimis</li>
+<li>Pirmoji <span class="nt">LHCb</span> meistriškumo klasė Lietuvoje (2025)</li>
+</ul>
+
+<!--
+Message: in Vilnius we use the open data for research and for teaching.
+
+Sakyti: „Atviruosius duomenis naudojame ir patys. 2024 m. studentai Vilniuje tyrė
+Z bozonų skilimą į du miuonus – tai buvo viena pirmųjų LHCb atvirųjų
+duomenų analizių. Kurse „Geriausios tyrimų ir duomenų analizės praktikos iš
+CERN“ kiekvienas studentas dirba su tuo pačiu LHCb atvirųjų duomenų failu,
+kuriame apie 92 tūkstančiai skilimo kandidatų. O 2025 m. studentai surengė pirmąją LHCb
+meistriškumo klasę Lietuvoje – joje dalyvavo apie šimtas moksleivių ir studentų iš
+Lietuvos ir Ukrainos.“
+
+Background: the Z → μμ analysis (N. E. Eimutis, M. Ambrozas, M. Šarpis), Open
+Readings, Vilnius, 2024-04-23…26. The course file: the D⁰ → K⁻π⁺ masterclass
+sample, CERN Open Data record 401 (53 948 events, 91 583 candidates). The
+masterclass: about 65 participants from Lithuania and 35 from Ukraine.
+
+Šaltiniai: Open Readings 2024 tezių knyga, p. 75 (O7); CERN Open Data įrašas
+401; VU kurso užduočių sąsiuvinis; LHCb Vilnius ataskaita, 2026 m. sausis.
+
+(~0.5 min)
+-->
+
+---
+space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, dim: 1 }
+---
+
+<Grains :set="{ scale: [0, 1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="finds">
 <div class="finds-text">
 
-<p class="kicker">What it finds</p>
+<p class="kicker">Ką <span class="nt">LHCb</span> rado savo duomenyse</p>
 
 <div class="big">76</div>
 
-<p class="line">of the 86 new hadrons found at the LHC</p>
+<p class="line">iš 86 naujų hadronų, atrastų LHC eksperimentuose</p>
 
 <ul class="chips">
-<li><b>2015</b> pentaquarks</li>
-<li><b>2025</b> matter and antimatter differ in baryons</li>
+<li><b>2015</b> Pentakvarkai, penkių kvarkų dalelės</li>
+<li><b>2025</b> Materija ir antimaterija barionuose elgiasi skirtingai</li>
 </ul>
 
 </div>
-<div class="finds-plot"><img src="/figures/pentaquarks_2019.png" alt="LHCb 2019: three narrow pentaquark peaks, Pc(4312), Pc(4440), Pc(4457), with the fit" /></div>
+<div class="finds-plot"><img src="/figures/pentaquarks_2019.png" alt="LHCb 2019 m.: trys siauros pentakvarkų smailės, Pc(4312), Pc(4440), Pc(4457), su pritaikyta kreive" /></div>
 </div>
 
+<!-- facts: lhcb-hadron-count, lhcb-pentaquark-2015, lhcb-pentaquark-2019, lhcb-cpv-baryons-2025 -->
+
 <!--
-Speaker (~0.6 min). Say: and in this data LHCb finds new things. Of the 86
-new hadrons (particles made of quarks) discovered at the LHC, 76 were found
-by LHCb; the Higgs boson, a fundamental particle, is counted apart. In 2015 it found
-pentaquarks, particles of five quarks, predicted since 1964; on the right is
-the 2019 fit, nine times the data: three narrow peaks, Pc(4312), Pc(4440)
-and Pc(4457). In
-2025 LHCb saw for the first time that matter and antimatter behave
-differently in baryons, the family of the proton and neutron (Nature, July
-2025). In 2026 the upgraded detector found two new doubly charmed baryons.
-Sources: P. Koppenburg's list of new hadrons at the LHC (86, of which 76 by
-LHCb; last entry 21 Sep 2026); LHCb, PRL 115 (2015) 072001; LHCb, PRL 122
-(2019) 222001 (the plot); LHCb, Nature (2025), CP violation in Λb⁰ → p K⁻ π⁺ π⁻.
+Message: LHCb finds new particles in this data, so the data is worth opening.
+
+Sakyti: „Šiuose duomenyse LHCb randa naujų dalelių. LHC eksperimentai atrado
+86 naujus hadronus – iš kvarkų sudarytas daleles. 76 iš jų rado LHCb. 2015 m. LHCb atrado
+pentakvarkus, penkių kvarkų daleles, numatytas dar 1964 m. Dešinėje – 2019 m.
+matavimas su devynis kartus didesniu duomenų kiekiu, kuriame matyti
+trys siauros smailės. O 2025 m. LHCb pirmą kartą
+pamatė, kad materija ir antimaterija barionuose – protono ir neutrono šeimoje –
+elgiasi skirtingai.“
+
+The slide is opaque, as the next one: two plots in a row, LHCb's and then a student's.
+
+Šaltiniai: P. Koppenburg, naujų LHC hadronų sąrašas (86, iš jų 76 LHCb; paskutinis
+įrašas 2026-09-21); LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001
+(grafikas); LHCb, Nature 643 (2025) 1223.
+
+(~0.6 min)
 -->
 
 ---
-space: { at: [5.59, 0, 0], dist: 73.5, yaw: -4, pitch: 4, dim: 0.15 }
+space: { at: thesis, dim: 1 }
 ---
 
-<Grains :set="{ scale: [0, 3, 4], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
-<div class="legend"><span class="dot steel"></span>one sphere = one terabyte</div>
+<div class="thesis-slide">
+<div class="thesis-who">
 
-<div class="readout">
+<img class="portrait" src="/figures/people/dominykas-stonkus.jpg" alt="Dominykas Stonkus" />
 
-<p class="kicker">All LHC experiments · 2025</p>
+<p class="kicker">Bakalauro darbas, VU, 2026</p>
 
-<div class="big steel"><Count name="lhc" :from="0" :to="1000000" /><span class="unit">TB</span></div>
+<p class="name">Dominykas Stonkus</p>
 
-One exabyte · one of the largest datasets in science
+<p class="line">Atviruosiuose 2012&nbsp;m. <span class="nt">LHCb</span> duomenyse jis rado pakilimą ten pat, kur LHCb 2015&nbsp;m. atrado pentakvarkus.</p>
 
 </div>
-
-<!--
-Speaker (~0.5 min). Say: and all four LHC experiments together, ten of
-LHCb's piles: in December 2025 CERN passed one exabyte of stored LHC data, a million
-terabytes, most of it on about 60 000 magnetic tapes. More than half of it
-was taken in the last three years. CERN expects this to be only a tenth of
-what it will store in the next ten years.
-Spoken: "only a few archives in science are this big; the world's weather-
-forecast archive (ECMWF) is one of them." The slide's "one of the largest" is
-the defensible wording.
-Sources: home.cern, "CERN hits one exabyte of stored experimental data from
-the LHC" (17 Dec 2025); heise.de (Dec 2025).
--->
-
----
-space: { at: [9.6, 0, 0], dist: 8.7, yaw: -4, pitch: 4, dim: 0.2 }
----
-
-<Grains :set="{ scale: [0, 1, 3, 4], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
-
-<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
-
-<div class="readout">
-
-<p class="kicker">Open · December 2023</p>
-
-<div class="big gold"><Count name="open" :from="0" :to="800" /><span class="unit">TB</span></div>
-
-All of Run 1, public · release prepared by Mindaugas Šarpis
-
+<div class="thesis-plot">
+<div class="plot-box">
+<img src="/figures/thesis/jpsip-mass.png" alt="Dominyko Stonkaus bakalauro darbas: J/ψ p invariantinė masė, atėmus foną; pakilimas ties 4,4–4,5 GeV" />
+<PeakRise :x="0.44" :y="0.29" :delay="1.4" :rise="0.2" :size="0.09" />
+</div>
+</div>
 </div>
 
+<!-- facts: lhcb-pentaquark-2015 -->
+
 <!--
-Speaker (~0.5 min). Say: and now we open it. In December 2023 the whole Run 1
-proton–proton data set, about 800 TB, went public on the CERN Open Data
-portal. I prepared the data set and built the release, in Bonn, inside LHCb's
-Data Processing and Analysis project; it took close to two years; every one
-of more than a hundred thousand files copied and checked. Since 1 August 2026
-I coordinate the collaboration's Analysis Preservation and Open Data work.
-Sources: opendata.cern.ch, "LHCb releases entire Run 1 dataset" (20 Dec
-2023); VU Faculty of Physics news; M. Šarpis, "LHCb Run I Data is Released"
-(Jan 2024); VU news (30 Jul 2026).
+Message: a student here has found the pentaquark region again in public data.
+
+Motion: the slide opens on his plot; 1,4 s later grains of gold rise out of
+its peak and gather into a pentaquark above it.
+
+Sakyti: „Mūsų studentas Dominykas Stonkus šiais metais
+apgynė bakalauro darbą „Pentakvarkų atradimas iš naujo naudojant LHCb
+atviruosius duomenis“. Jis paėmė atviruosius 2012 m. LHCb duomenis, atrinko apie
+16 400 Λb⁰ skilimų į J/ψ, protoną ir kaoną. J/ψ ir protono poros masės
+skirstinyje jis rado pakilimą ties 4,4–4,5 GeV – ten pat, kur LHCb 2015 m.
+atrado pentakvarkus. Tai kokybinis atkartojimas: įrodyti, kad tai naujos
+dalelės, reikėtų išsamios amplitudžių analizės.“
+
+The figure: thesis Fig. 17 (right), the sideband-subtracted m(J/ψ p), 15 MeV
+bins, 4000–5200 MeV, shown inverted (light on dark). The Λb⁰ fit (Fig. 14,
+Gaussian): μ = 5624,01 ± 0,15 MeV, σ = 15,56 MeV, N_sig = 16 407 ± 162,
+χ²/ndf = 1,09. Data: LHCb 2012 open data, both magnet polarities. Supervisor:
+M. Šarpis; approved for defence 2026-05-18.
+Do not say „pirmasis atvirųjų duomenų bakalauro darbas“, nor that he observed
+pentaquarks: the thesis itself calls it a qualitative reproduction.
+
+Šaltiniai: D. Stonkus, „Pentakvarkų atradimas iš naujo naudojant LHCb
+atviruosius duomenis“, bakalauro darbas, VU, 2026,
+repository.vu.lt/VU:ELABAETD308118793 (open access); LHCb, PRL 115 (2015) 072001.
+
+(~0.6 min)
 -->
 
 ---
-space: { at: [7.36, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
+space: { at: [53, 2.8, 160], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 ---
 
-<Grains :set="{ scale: [1, 2, 3], 'scale:labels': 1, world: 8, vilnius: 0, dominykas: 0 }" />
+<img class="print-still" src="/stills/13.jpg" alt="" />
 
-<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
+<Grains :set="{ team: 1, collision: 0, world: 0, vilnius: 0, dominykas: 0 }" />
 
-<div class="readout">
-
-<p class="kicker">Open · 2026 · Run 1 + Run 2</p>
-
-<div class="big gold"><Count name="open" :from="800" :to="4000" /><span class="unit">TB</span></div>
-
-Anyone can ask for a&nbsp;decay and get the&nbsp;data
-
-</div>
+<div class="thanks">Ačiū</div>
 
 <!--
-Speaker (~0.6 min). Say: since 2026 Run 2 is open too: with Run 1 over four
-petabytes. Nobody downloads it whole: name the particle decay you want and
-LHCb's online service picks those collisions out for you. About 20 requests
-by July 2026: theorists, people testing analysis methods, school projects;
-in September 2026 two Brown University physicists posted a study built on
-LHCb open data. Adam Morris, now in LHCb Vilnius, is one of the service's
-authors (on the paper: CERN). LHCb opens its data on a schedule: about half
-of each run five years after it ends, all of it after ten; the blue pile is
-on its way.
-Sources: LHCb outreach, 3 Mar 2026 ("over 4 PB of data to explore"); CERN
-Open Data portal, 22 Feb 2026; policy: LHCb, arXiv:2504.00610 (2025).
--->
+Message: this is the work we were nominated for, and the people who did it.
 
----
-space: { at: [15.5, -3.4, 4], dist: 27, yaw: 12, pitch: 4, dim: 0.3 }
----
+Sakyti: „Mus nominavo už tai, kad parengėme LHCb duomenis paskelbti, koordinuojame
+šį darbą kolaboracijoje ir patys naudojame šiuos duomenis tyrimams ir mokymui
+Vilniuje.
+Duomenis gali atsisiųsti bet kas, svetainėje opendata.cern.ch. Ačiū jums ir ačiū visai mūsų grupei.“
 
-<Grains :set="{ scale: [1, 2], 'scale:labels': 0, world: 0, vilnius: 3, dominykas: 0 }" />
+The camera flies back to the collisions where the data begin, and the group
+gathers beside them: fifteen portraits made of the same gold grains of data,
+each with the name under it.
 
-# Used in Vilnius
+Photos: LHCb Vilnius group members, used with permission (as on
+lhcb-vilnius.web.cern.ch/people.html); cropped square, metadata removed.
 
-<ul class="points">
-<li>Z → μμ: among the first open-data analyses</li>
-<li>A university course built on open data</li>
-<li>First LHCb masterclass in Lithuania, 2025</li>
-</ul>
+Timing: about 6 minutes with the 39 s clip. For a hard 5 minutes, end the clip
+after about 20 s, keep the finds slide to the 76 and its two lines, and say
+only the course point on „Naudojame Vilniuje“.
 
-<!--
-Speaker (~0.6 min). Say: Z bosons seen through their decay into two muons,
-one of the first analyses of the released data, done in Vilnius; every
-seminar of the VU course "Best Research and Data Analysis Practices from
-CERN" works on one LHCb open-data file (91 583 candidate decays); the first
-LHCb masterclass in Lithuania, organised by students, about 100
-participants from Lithuania and Ukraine. Three streams from the same gold,
-here in Vilnius. The
-Z → μμ analysis (N. E. Eimutis, M. Ambrozas, M. Šarpis) was presented at Open
-Readings, Vilnius, 23–26 Apr 2024, "as one of the initial analyses of LHCb
-data posted on the Open Data portal". The course (Faculty of Physics, every autumn)
-gives every student the same open LHCb file: the D⁰ → K⁻π⁺ masterclass
-sample, record 401 (53 948 events, 91 583 candidates). The 2025 masterclass:
-about 65 participants from Lithuania and 35 from Ukraine, in English, run by
-students.
-Sources: Open Readings 2024 abstract book, p. 75 (O7) · M. Šarpis, “LHCb Run I Data is Released”, Jan 2024 · CERN Open Data record 401 · VU course workbook · LHCb Vilnius report, Jan 2026
--->
-
----
-space: { at: thesis, dim: 0.3 }
----
-
-<Grains :set="{ scale: [1, 2], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 1 }" />
-
-<div class="readout thesis">
-
-<p class="kicker">Bachelor's thesis · Vilnius University</p>
-
-# Dominykas Stonkus
-
-<p class="sub">Finding the 2015 pentaquarks again, in LHCb open data</p>
-
-</div>
-
-<!--
-Speaker (~0.6 min). Say: the stream that matters most today. The
-collisions the 2015 pentaquarks were found in are now public, and Dominykas
-looks for the same particles in them. One stream of gold from the open ball,
-and at its end five quarks gather into one particle: a pentaquark. Dominykas Stonkus joined LHCb Vilnius in 2025 as a bachelor's
-student; his project is to find again, in open data, what LHCb found in
-2015 (the discovery used Λb⁰ → J/ψ p K⁻ in Run 1).
-"First": keep it spoken only, as "as far as we know", and only once it is
-checked: DESY (A. Geiser) has offered bachelor's and master's projects on LHCb
-open data since 2023, and the Z → μμ analysis on the previous slide came
-first (Open Readings, Apr 2024); "first" holds only if that was not a thesis. (Earlier theses about the
-release itself, mine in Bonn 2023 and Ana Trisovic's in 2018, prepared the
-data; they did not analyse it.)
-Worth adding when known: the thesis's official title and defence date, the
-data it uses (Run 1 files or Run 2 through the Ntupling Service), a result
-or a plot. `c` builds the pentaquark again.
-Sources: LHCb, PRL 115 (2015) 072001 · LHCb Vilnius, CERN Baltic Conference, Kaunas, 2025
--->
-
----
-layout: statement
-space: { at: close }
----
-
-# Thank you
-
-<div class="mt-md"><span class="nt">LHCb</span> Vilnius · Vilnius University · opendata.cern.ch</div>
-
-<p class="team">Mindaugas Šarpis · Ramūnas Aleksiejūnas · Oleg Kravcov · Adam Morris · Augustas Vaitkevičius · Rūta Racz · Šarūnas Jacevičius · Margarita Biveinytė · Sophia Pennuttis · Mikas Paulius Iršėnas · Neilas Beniušis · Karolina German · Eliza Holvoet · Meda Paulavičiūtė · Dominykas Stonkus</p>
-
-<!--
-Speaker (~0.4 min). Spoken: "That is the work we were nominated for:
-preparing LHCb's data for release, coordinating it for the whole
-collaboration, and doing research and teaching with it here in Vilnius.
-Thank you, and thank you to everyone on this list."
-The camera flies back to where the data are born. The names are the group
-as listed on lhcb-vilnius.web.cern.ch.
-Total about 6½ minutes (0.4 cover + 0.7 clip + 0.5 + 0.4 + 0.3 + 0.4 + 0.6 +
-0.5 + 0.5 + 0.6 + 0.6 + 0.6 + 0.4 close). For a hard 5 minutes: leave the
-clip after ~20 s (−0.3), the 1 TB slide to one sentence (−0.15), the finds
-slide to the 76 and the two chips (−0.25), the 800 TB slide to its first
-sentence (−0.25), the 4 PB slide without the list of users (−0.2), and "Used
-in Vilnius" to the course point only (−0.3): about 5 minutes.
+(~0.3 min)
 -->

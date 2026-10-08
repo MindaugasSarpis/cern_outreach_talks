@@ -1,6 +1,14 @@
 import {
   Group, Points, Mesh, SphereGeometry, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4, Matrix4, Euler,
+  LinearMipmapLinearFilter,
 } from 'three'
+
+// a label sprite from the engine, mipmapped: drawn far smaller than its canvas, it aliased into dither
+function smooth(l) {
+  const t = l.material.map
+  if (t) { t.generateMipmaps = true; t.minFilter = LinearMipmapLinearFilter; t.anisotropy = 4; t.needsUpdate = true }
+  return l
+}
 
 // This talk's own forms, on the engine's stage (slidev-addon-stage):
 //
@@ -55,7 +63,7 @@ varying vec3 vColor; varying float vAlpha;
 void main() {
   float d = length(gl_PointCoord - 0.5);
   float a = (1.0 - smoothstep(0.04, 0.5, d)) * vAlpha;
-  gl_FragColor = vec4(pow(vColor * a, vec3(2.2)), 1.0);
+  gl_FragColor = vec4(pow(max(vColor * a, vec3(1e-6)), vec3(2.2)), 1.0);
 }`
 
 function material(vertexShader, uniforms) {
@@ -66,7 +74,7 @@ function material(vertexShader, uniforms) {
 }
 
 // ---- lineup -------------------------------------------------------------------------
-//   { type: lineup, name, pos, balls: [{ n, color, label? }, …], unit?: 0.1, anchor?: 0,
+//   { type: lineup, name, pos, balls: [{ n, color, label?, above?, at?: [x,y,z] }, …], unit?: 0.1, anchor?: 0,
 //     gaps?: [between ball 0 and 1, 1 and 2, …], grow?: 3.2, reach?: 3, glow?: 0.35, labelH?: 0.024 }
 // Piles of one and the same sphere, side by side along x. One sphere is one
 // terabyte, and every pile is built of those same spheres, so the single
@@ -136,31 +144,39 @@ vec3 studio(vec3 d) {
 // horizon. For the single sphere, the one seen large.
 vec3 studioHard(vec3 d) {
   vec3 room = mix(vec3(0.004, 0.004, 0.005), vec3(0.05, 0.052, 0.06), smoothstep(-0.05, 0.85, d.y));
-  room += vec3(0.07, 0.068, 0.065) * exp(-abs(d.y - 0.05) * 7.0);
+  room += vec3(0.035, 0.034, 0.033) * exp(-abs(d.y - 0.05) * 4.0);
   vec3 kd = normalize(vec3(-6.0, 9.0, 7.0));
   vec3 kx = normalize(cross(vec3(0.0, 1.0, 0.0), kd));
   vec3 ky = cross(kd, kx);
   float kz = dot(d, kd);
   vec2 kp = vec2(dot(d, kx), dot(d, ky)) / max(kz, 0.05);
-  float key = step(0.0, kz) * (1.0 - smoothstep(0.25, 0.28, abs(kp.x))) * (1.0 - smoothstep(0.34, 0.37, abs(kp.y)));
+  float key = step(0.0, kz) * (1.0 - smoothstep(0.05, 0.42, length(kp * vec2(1.0, 0.8))));
   vec2 h = normalize(d.xz + 1e-5);
   float rim = smoothstep(0.9965, 0.9985, dot(h, normalize(vec2(7.0, -6.0)))) * smoothstep(-0.35, -0.15, d.y) * (1.0 - smoothstep(0.55, 0.75, d.y));
-  return room + vec3(1.0, 0.97, 0.92) * key * 4.0 + vec3(0.85, 0.9, 1.0) * rim * 2.2;
+  return room + vec3(1.0, 0.97, 0.92) * key * 2.6 + vec3(0.85, 0.9, 1.0) * rim * 1.6;
 }
 vec3 metalHard(vec3 nW, vec3 vW, vec3 F0) {
-  float ndv = max(dot(nW, vW), 0.0);
+  // a unit dot can pass 1 by rounding, and pow() of a negative base is NaN; a base of exactly 0
+  // can be NaN too where pow is exp2(y * log2(x)) (seen as black specks under SwiftShader)
+  float ndv = clamp(dot(nW, vW), 0.0, 1.0 - 1e-6);
   vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
   return studioHard(reflect(-vW, nW)) * F + F0 * 0.02;
 }
 // nW, vW: world-space normal and direction toward the eye; F0: the metal's colour
 vec3 metal(vec3 nW, vec3 vW, vec3 F0) {
-  float ndv = max(dot(nW, vW), 0.0);
+  // a unit dot can pass 1 by rounding, and pow() of a negative base is NaN; a base of exactly 0
+  // can be NaN too where pow is exp2(y * log2(x)) (seen as black specks under SwiftShader)
+  float ndv = clamp(dot(nW, vW), 0.0, 1.0 - 1e-6);
   vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
   return studio(reflect(-vW, nW)) * F + F0 * 0.035;
 }`
 
 const LINEUP_VERT = /* glsl */ `
 attribute float aSeed, aK, aBall;    // rank in its pile (0 the centre … 1 the rim), which pile
+attribute vec3 aFrom, aFromDir;       // a merging pile: where this sphere stands in its copy, and its outward direction there
+uniform float uMerge[${MAXB}];
+uniform vec3 uFromColor[${MAXB}];
+uniform float uMergeAt;
 uniform float uTime, uGrow, uReach, uRad, uViewH, uMaxPt, uShell;
 uniform float uShowT[${MAXB}];
 uniform float uHideT[${MAXB}];
@@ -175,9 +191,10 @@ void off_() { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor
 void main() {
   int b = int(aBall + 0.5);
   float st = uShowT[b], ht = uHideT[b];
-  // the inner spheres set out first; each takes 1.6 s to arrive
-  float start = st + uGrow * (0.78 * pow(aK, 0.8) + 0.22 * aSeed);
-  float f = ease((uTime - start) / 1.6);
+  bool merging = uMerge[b] > 0.5 && ht < 0.0;
+  // the inner spheres set out first; each takes 1.6 s to arrive (a merging pile: all at once)
+  float start = merging ? st : st + uGrow * (0.78 * pow(max(aK, 1e-6), 0.8) + 0.22 * aSeed);
+  float f = merging ? ease((uTime - st - uMergeAt - 0.5 * aSeed) / 2.2) : ease((uTime - start) / 1.6);
   bool on = st >= 0.0 && uTime >= start;
   if (ht >= 0.0) { float g = 1.0 - ease((uTime - ht) / 1.1); f = min(f, g); on = on && g > 0.0; }
   if (!on) { off_(); return; }
@@ -198,7 +215,17 @@ void main() {
   vec3 far = dir * (r + reach) + side * reach * 0.6 * (hash(aSeed * 17.0) - 0.5) + vec3(0.0, reach * 0.5 * (hash(aSeed * 53.0) - 0.5), 0.0);
   float a = (1.0 - f) * 2.2;
   far = vec3(cos(a) * far.x - sin(a) * far.z, far.y, sin(a) * far.x + cos(a) * far.z);
-  vec4 mv = modelViewMatrix * vec4(c + mix(far, off, f), 1.0);
+  vec3 placed = c + mix(far, off, f);
+  vec3 outw = dir;
+  if (merging) {
+    // first the copies of the smaller pile gather side by side (1.3 s) and hold, so they
+    // can be counted; then every sphere flies from its copy into the larger pile
+    float a1 = ease((uTime - st - 0.25 * aSeed) / 1.3);
+    vec3 scat = (vec3(hash(aSeed * 3.0), hash(aSeed * 5.0), hash(aSeed * 9.0)) - 0.5) * 7.0;
+    placed = mix(aFrom + scat * (1.0 - a1), position, f);
+    outw = normalize(mix(aFromDir, dir, f) + 1e-4);
+  }
+  vec4 mv = modelViewMatrix * vec4(placed, 1.0);
   gl_Position = projectionMatrix * mv;
   // a sphere of radius uRad at this depth, in pixels of the target being drawn; a
   // standing sphere under 8 px is drawn a little larger, so the thin skin stays closed
@@ -209,10 +236,11 @@ void main() {
   vCv = mv.xyz;
   // the pile read as one ball: its side toward the key light brighter, its far side
   // in shadow, and a thin bright rim where its surface turns away from the eye
-  float lit = 0.5 + 0.62 * max(dot(dir, normalize(uLight)), 0.0) + 0.25 * pow(1.0 - max(facingS, 0.0), 3.0);
+  float lit = 0.5 + 0.62 * max(dot(dir, normalize(uLight)), 0.0) + 0.25 * pow(1.0 - clamp(facingS, 0.0, 1.0 - 1e-6), 3.0);
   vShade = mix(1.0, lit, f);
-  vOut = dir; vF = f;
-  vColor = uColor[b] * (0.9 + 0.2 * hash(aSeed * 7.0));
+  if (merging) { lit = 0.5 + 0.62 * max(dot(outw, normalize(uLight)), 0.0) + 0.2; vShade = mix(lit, mix(1.0, lit, f), f); }
+  vOut = outw; vF = merging ? max(f, 0.999 * step(1.3, uTime - st)) : f;
+  vColor = (merging ? mix(uFromColor[b], uColor[b], f) : uColor[b]) * (0.9 + 0.2 * hash(aSeed * 7.0));
 }`
 // A heap of small polished balls, seen as one body, is satin, not a mirror:
 // every ball facing the light carries its own small highlight, so the lit side
@@ -220,12 +248,12 @@ void main() {
 const HEAP = /* glsl */ `
 vec3 studioRough(vec3 d) {
   vec3 sky = mix(vec3(0.006, 0.006, 0.008), vec3(0.06, 0.064, 0.075), smoothstep(-0.3, 0.9, d.y));
-  float key = pow(max(dot(d, normalize(vec3(-6.0, 9.0, 7.0))), 0.0), 6.0);
-  float rim = pow(max(dot(d, normalize(vec3(7.0, 3.0, -6.0))), 0.0), 10.0);
+  float key = pow(max(dot(d, normalize(vec3(-6.0, 9.0, 7.0))), 1e-6), 6.0);
+  float rim = pow(max(dot(d, normalize(vec3(7.0, 3.0, -6.0))), 1e-6), 10.0);
   return sky + vec3(1.0, 0.96, 0.9) * key * 1.1 + vec3(0.55, 0.72, 1.0) * rim * 0.35;
 }
 vec3 heap(vec3 N, vec3 V, vec3 F0) {
-  float ndv = max(dot(N, V), 0.0);
+  float ndv = clamp(dot(N, V), 0.0, 1.0 - 1e-6);
   vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0) * 0.4;
   return mix(studioRough(N), studioRough(reflect(-V, N)), 0.55) * F;
 }`
@@ -240,7 +268,10 @@ void main() {
   float r2 = dot(q, q);
   // a standing sphere a few pixels across is drawn whole, as its square: cut
   // round, a sprite of 2 px keeps one pixel or none, and the pile shows pinholes
-  bool tiny = vPx < 3.0 && vF >= 1.0;
+  // vF is a varying: a settled sphere's 1.0 can arrive as 0.99999, so "settled" is a
+  // threshold (an exact 1.0 test left settled spheres cut round and half-mirror: the specks)
+  float fly = vF > 0.995 ? 0.0 : 1.0 - vF;
+  bool tiny = vPx < 3.0 && fly == 0.0;
   if (r2 > 1.0 && !tiny) discard;
   r2 = min(r2, 1.0);
   // the sphere's frame is built round the ray to it, not the view axis, so a
@@ -262,11 +293,13 @@ void main() {
   // contact shadow: the side of a sphere that faces into its pile is in the
   // dark between its neighbours, and so is its edge where they touch
   float ao = mix(0.28, 1.0, smoothstep(-0.45, 0.75, dot(nW, vOut))) * mix(0.5, 1.0, smoothstep(0.0, 0.55, nz));
-  vec3 col = own * mix(1.0, ao, vF) * vShade;
+  vec3 col = own * mix(ao, 1.0, fly) * vShade;
   float pileL = dot(pile, vec3(0.3, 0.55, 0.15));
   vec3 near = col * (0.55 + 0.9 * min(pileL, 1.4));
   col = mix(pile * vShade, mix(near, col, smoothstep(14.0, 40.0, vPx)), smoothstep(3.0, 11.0, vPx));
-  gl_FragColor = vec4(mix(col, own, 1.0 - vF), 1.0);   // flyers: just themselves
+  // flyers: just themselves, once they are big enough to show their own reflection; a
+  // smaller one shows the pile, else its mirror catches the dark floor as a black speck
+  gl_FragColor = vec4(mix(col, own, fly * smoothstep(3.0, 11.0, vPx)), 1.0);
 }`
 
 // A glint for a single sphere seen from far: a soft point a few pixels wide,
@@ -279,16 +312,16 @@ void main() {
   gl_Position = projectionMatrix * mv;
   float px = 2.0 * uRad * projectionMatrix[1][1] * 0.5 * uViewH / max(-mv.z, 1e-3);   // the sphere's diameter on screen
   vA = uShow * (1.0 - smoothstep(2.0, 5.0, px));
-  gl_PointSize = (uViewH / 1080.0) * 9.0;
+  gl_PointSize = (uViewH / 1080.0) * 14.0;
 }`
 const GLINT_FRAG = /* glsl */ `
 uniform vec3 uColor;
 varying float vA;
 void main() {
   float d = length(gl_PointCoord - 0.5) * 2.0;
-  float a = exp(-d * d * 4.0) * vA;
+  float a = (exp(-d * d * 9.0) + 0.3 * exp(-d * d * 2.5)) * vA;
   if (a < 0.003) discard;
-  gl_FragColor = vec4(uColor * a * 1.6, 1.0);
+  gl_FragColor = vec4(uColor * a * 2.2, 1.0);
 }`
 
 // The single sphere: a real sphere mesh in the same metal (no halo).
@@ -316,6 +349,8 @@ function buildLineup(o, ctx) {
   const gaps = o.gaps || [], A = Math.min(Math.max(0, o.anchor ?? 0), NB - 1), cx = new Array(NB).fill(0)
   for (let b = A + 1; b < NB; b++) cx[b] = cx[b - 1] + R[b - 1] + (gaps[b - 1] ?? 2) + R[b]
   for (let b = A - 1; b >= 0; b--) cx[b] = cx[b + 1] - R[b + 1] - (gaps[b] ?? 2) - R[b]
+  // each pile's centre: side by side along x, unless a ball says where it stands (`at`)
+  const C = balls.map((x, b) => (Array.isArray(x.at) ? x.at.slice(0, 3) : [cx[b], 0, 0]))
 
   const g = new Group()
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
@@ -327,9 +362,9 @@ function buildLineup(o, ctx) {
     const m = new Mesh(new SphereGeometry(rad, 96, 64), new ShaderMaterial({
       vertexShader: UNIT_VERT, fragmentShader: UNIT_FRAG, uniforms: { uColor: { value: new Color(x.color || ctx.palette.accent) } },
     }))
-    m.position.set(cx[b], 0, 0); m.scale.setScalar(0); m.visible = false
+    m.position.set(C[b][0], C[b][1], C[b][2]); m.scale.setScalar(0); m.visible = false
     const gu = { uRad: { value: rad }, uViewH: { value: 1080 }, uShow: { value: 0 }, uColor: { value: new Color(x.color || ctx.palette.accent) } }
-    const gg = new BufferGeometry(); gg.setAttribute('position', new BufferAttribute(new Float32Array([cx[b], 0, 0]), 3))
+    const gg = new BufferGeometry(); gg.setAttribute('position', new BufferAttribute(new Float32Array(C[b]), 3))
     const glint = new Points(gg, new ShaderMaterial({ vertexShader: GLINT_VERT, fragmentShader: GLINT_FRAG, uniforms: gu, transparent: true, depthWrite: false, blending: AdditiveBlending }))
     glint.frustumCulled = false
     const gvp = new Vector4()
@@ -350,15 +385,39 @@ function buildLineup(o, ctx) {
     const n = balls[b].n, jit = unit * Math.min(0.24, 0.12 + 0.05 * Math.max(0, Math.log10(n / 800)))
     for (let j = 0; j < n; j++, q++) {
       tv.set(lat[j * 3], lat[j * 3 + 1], lat[j * 3 + 2]).multiplyScalar(s).applyMatrix4(TILT)
-      pos[q * 3] = cx[b] + tv.x + gauss() * jit
-      pos[q * 3 + 1] = tv.y + gauss() * jit
-      pos[q * 3 + 2] = tv.z + gauss() * jit
+      pos[q * 3] = C[b][0] + tv.x + gauss() * jit
+      pos[q * 3 + 1] = C[b][1] + tv.y + gauss() * jit
+      pos[q * 3 + 2] = C[b][2] + tv.z + gauss() * jit
       seed[q] = Math.random(); rank[q] = j / n; which[q] = b
     }
     end[b] = q
   }
+  // a pile that `merges` starts as copies of a smaller pile, `copies` of ball `from`,
+  // laid out at `copiesAt` (centres); sphere j of the large pile is sphere floor(j / N)
+  // of copy j mod N, so the copies are whole piles of the smaller kind
+  const fromPos = new Float32Array(total * 3), fromDir = new Float32Array(total * 3)
+  {
+    let q0 = 0
+    for (const b of piles) {
+      const m = balls[b].merge, n = balls[b].n
+      if (m && Array.isArray(m.copiesAt) && m.copiesAt.length) {
+        const N = m.copiesAt.length
+        for (let j = 0; j < n; j++) {
+          const k = j % N, i = Math.floor(j / N), cc = m.copiesAt[k]
+          tv.set(lat[i * 3], lat[i * 3 + 1], lat[i * 3 + 2]).multiplyScalar(s).applyMatrix4(TILT)
+          const q = q0 + j
+          fromPos[q * 3] = cc[0] + tv.x; fromPos[q * 3 + 1] = cc[1] + tv.y; fromPos[q * 3 + 2] = cc[2] + tv.z
+          const l = tv.length() || 1
+          fromDir[q * 3] = tv.x / l; fromDir[q * 3 + 1] = tv.y / l; fromDir[q * 3 + 2] = tv.z / l
+        }
+      }
+      q0 += n
+    }
+  }
   const geo = new BufferGeometry()
   geo.setAttribute('position', new BufferAttribute(pos, 3))
+  geo.setAttribute('aFrom', new BufferAttribute(fromPos, 3))
+  geo.setAttribute('aFromDir', new BufferAttribute(fromDir, 3))
   geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
   geo.setAttribute('aK', new BufferAttribute(rank, 1))
   geo.setAttribute('aBall', new BufferAttribute(which, 1))
@@ -372,8 +431,11 @@ function buildLineup(o, ctx) {
       uViewH: { value: 1080 }, uMaxPt: { value: 256 }, uShell: { value: 10 * unit },
       uShowT: { value: showT }, uHideT: { value: hideT },
       uR: { value: pad(R, () => 0) },
-      uCenter: { value: pad(cx.map((x) => new Vector3(x, 0, 0)), () => new Vector3()) },
+      uCenter: { value: pad(C.map((c) => new Vector3(c[0], c[1], c[2])), () => new Vector3()) },
       uColor: { value: pad(balls.map((x) => new Color(x.color || ctx.palette.accent)), () => new Color()) },
+      uMerge: { value: pad(balls.map((x) => (x.merge ? 1 : 0)), () => 0) },
+      uFromColor: { value: pad(balls.map((x) => new Color(x.merge ? balls[x.merge.from].color : (x.color || '#ffffff'))), () => new Color()) },
+      uMergeAt: { value: o.mergeAt ?? 2.4 },
       uLight: { value: new Vector3(-6, 9, 7).normalize() },   // the engine's key light
     },
   })
@@ -392,17 +454,17 @@ function buildLineup(o, ctx) {
   const makeLabels = () => {
     balls.forEach((x, b) => {
       if (!x.label) return
-      const l = makeLabel(x.label, { px: 30, weight: 500, color: '#d4dcea', worldH: o.labelH ?? 0.036, letterSpacing: 0.14 })
+      const l = smooth(makeLabel(x.label, { px: 64, weight: 500, color: '#d4dcea', worldH: o.labelH ?? 0.036, letterSpacing: 0.14 }))
       l.material.sizeAttenuation = false; l.material.opacity = 0
       // under its pile; the single sphere's above it, clear of the next pile's label when both are small
-      const above = x.n === 1
+      const above = x.above ?? x.n === 1
       l.center.set(0.5, above ? -0.6 : 1.6)
-      l.position.set(cx[b], above ? R[b] : -R[b], 0)
+      l.position.set(C[b][0], C[b][1] + (above ? R[b] : -R[b]), C[b][2])
       l.userData.vis = 0; l.userData.ball = b
       g.add(l); labels.push(l)
     })
   }
-  if (document.fonts?.load) document.fonts.load('500 30px "Space Grotesk"').catch(() => {}).finally(makeLabels)
+  if (document.fonts?.load) document.fonts.load('500 64px "Space Grotesk"').catch(() => {}).finally(makeLabels)
   else makeLabels()
 
   let now = 0, step = -1
@@ -469,7 +531,7 @@ function buildLineup(o, ctx) {
 }
 
 // ---- streams ------------------------------------------------------------------------
-//   { type: streams, name, pos, from: [x,y,z], to: [{ pos, lift?, node?: false }, …],
+//   { type: streams, name, pos, from: [x,y,z], to: [{ pos, lift?, node?: false, label? }, …],
 //     grains?: 2200 per stream, node?: 900 grains per end cluster, nodeRadius?: 0.45,
 //     speed?: 0.11 (laps a second), color?, spread?: 0.08 }
 // Step k shows the first k streams; a stream that starts gathers its end
@@ -558,6 +620,26 @@ function buildStreams(o, ctx) {
   const g = new Group(); g.add(pts)
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
 
+  // a label under each end that names it (a fixed size on screen, as the piles' labels)
+  const labels = []
+  const makeLabels = () => {
+    to.forEach((d, i) => {
+      if (!d.label) return
+      const l = smooth(ctx.helpers.makeLabel(d.label, { px: 64, weight: 500, color: '#ffe3a8', worldH: o.labelH ?? 0.042, letterSpacing: 0.06, upper: false }))
+      l.material.sizeAttenuation = false; l.material.opacity = 0
+      const e = d.pos || [0, 0, 0]
+      // beside its own cloud, to the right, so a column of labels reads against a column of clouds
+      l.center.set(0, 0.5)
+      l.position.set(e[0] + (o.nodeRadius ?? 0.45) * 1.6, e[1], e[2])
+      l.userData.vis = 0; l.userData.i = i
+      g.add(l); labels.push(l)
+    })
+  }
+  if (to.some((d) => d.label)) {
+    if (document.fonts?.load) document.fonts.load('500 64px "Space Grotesk"').catch(() => {}).finally(makeLabels)
+    else makeLabels()
+  }
+
   let now = 0
   // step k: the first k streams run; those starting now leave a quarter second
   // apart, those stopping fade out (and start afresh if asked for again)
@@ -583,12 +665,326 @@ function buildStreams(o, ctx) {
   if (state.has(o.name)) go(state.get(o.name), { instant: true })
   return {
     group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio,
-    update(t) { now = t; mat.uniforms.uTime.value = t },
+    update(t) {
+      now = t; mat.uniforms.uTime.value = t
+      for (const l of labels) {
+        const i = l.userData.i
+        const want = showT[i] !== -1 && hideT[i] < 0 && t - showT[i] > 1.5 ? 1 : 0
+        l.userData.vis += (want - l.userData.vis) * 0.08
+        l.material.opacity = 0.9 * l.userData.vis
+        l.visible = l.userData.vis > 0.01
+      }
+    },
     dispose: off2,
   }
+}
+
+// ---- floor --------------------------------------------------------------------------
+//   { type: floor, pos, radius?: 52, spacing?: 0.9, color?, alpha?: 0.32, size?: 1.1 }
+// A ground of fine grains on y = 0, on a jittered grid, fading out toward its
+// rim: the piles stand on it, and its rows running off to a horizon show the
+// depth the camera moves through. Drawn behind the piles (depth tested).
+const FLOOR_VERT = /* glsl */ `
+attribute float aSeed;
+uniform float uTime, uPixelRatio, uAlpha, uSize, uRadius;
+varying float vA;
+void main() {
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * mv;
+  float r = length(position.xz) / uRadius;
+  float tw = 0.8 + 0.2 * sin(uTime * (0.6 + aSeed * 1.3) + aSeed * 40.0);
+  // seen at a grazing angle the floor would close into a bright seam across the frame,
+  // and far off into a horizon line: both fade
+  vec3 wp = (modelMatrix * vec4(position, 1.0)).xyz;
+  float graze = abs(cameraPosition.y - wp.y) / max(length(cameraPosition - wp), 1e-3);
+  vA = uAlpha * tw * (1.0 - smoothstep(0.55, 1.0, r)) * smoothstep(0.4, 3.0, -mv.z)
+     * smoothstep(0.05, 0.16, graze) * (1.0 - smoothstep(55.0, 95.0, -mv.z));
+  gl_PointSize = max(1.0, uPixelRatio * uSize * (36.0 / max(-mv.z, 0.5)));
+}`
+const FLOOR_FRAG = /* glsl */ `
+uniform vec3 uColor;
+varying float vA;
+void main() {
+  float d = length(gl_PointCoord - 0.5);
+  float a = (1.0 - smoothstep(0.1, 0.5, d)) * vA;
+  if (a < 0.004) discard;
+  gl_FragColor = vec4(uColor * a, 1.0);
+}`
+
+function buildFloor(o) {
+  const R = o.radius ?? 52, sp = o.spacing ?? 0.9
+  const pts = []
+  for (let x = -R; x <= R; x += sp) for (let z = -R; z <= R; z += sp) {
+    if (x * x + z * z > R * R) continue
+    pts.push(x + (Math.random() - 0.5) * sp * 0.5, 0, z + (Math.random() - 0.5) * sp * 0.5)
+  }
+  const n = pts.length / 3
+  const geo = new BufferGeometry()
+  geo.setAttribute('position', new BufferAttribute(new Float32Array(pts), 3))
+  geo.setAttribute('aSeed', new BufferAttribute(Float32Array.from({ length: n }, () => Math.random()), 1))
+  const c = new Color(o.color || '#8fa6d6').convertSRGBToLinear()
+  const mat = new ShaderMaterial({
+    vertexShader: FLOOR_VERT, fragmentShader: FLOOR_FRAG, transparent: true, depthWrite: false, depthTest: true, blending: AdditiveBlending,
+    uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) }, uAlpha: { value: o.alpha ?? 0.32 },
+      uSize: { value: o.size ?? 1.1 }, uRadius: { value: R }, uColor: { value: c } },
+  })
+  const p = new Points(geo, mat); p.frustumCulled = false
+  const g = new Group(); g.add(p)
+  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  return { group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio, update(t) { mat.uniforms.uTime.value = t } }
+}
+
+// ---- portraits ----------------------------------------------------------------------
+//   { type: portraits, name, pos, size?: 2.4, res?: 120, gain?: 1, labelH?: 0.026,
+//     people: [{ src: '/figures/people/x.jpg', name, at: [x, y, z] }, …] }
+// Each photograph is a round disc of grains, one grain per pixel of a res × res
+// sampling, in the photo's own colours, with a little relief by brightness.
+// Step 1 gathers them (the middle of each face first, the edge last) out of
+// a wide swirl; step 0 sends them apart. The name sits under each, at a fixed
+// size on screen. The engine's arrival (and `c`) gathers them again.
+const PORTRAIT_VERT = /* glsl */ `
+attribute float aSeed, aR;
+attribute vec3 aCol;
+uniform float uTime, uShowT, uHideT, uViewH, uGrain, uPixelRatio;
+varying vec3 vCol; varying float vA;
+float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
+float ease(float x) { x = clamp(x, 0.0, 1.0); return x * x * x * (x * (x * 6.0 - 15.0) + 10.0); }
+void main() {
+  float f = 0.0;
+  if (uShowT >= 0.0) f = ease((uTime - (uShowT + 0.35 * aR + 0.25 * aSeed)) / 1.1);
+  if (uHideT >= 0.0) f = min(f, 1.0 - ease((uTime - uHideT - 0.3 * aSeed) / 1.1));
+  if (f <= 0.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vA = 0.0; vCol = vec3(0.0); return; }
+  vec3 dir = normalize(vec3(hash(aSeed * 3.1), hash(aSeed * 5.7), hash(aSeed * 9.3)) - 0.5 + 1e-4);
+  float a = (1.0 - f) * 2.6;
+  vec3 far = dir * (4.0 + 7.0 * hash(aSeed * 17.0));
+  far = vec3(cos(a) * far.x - sin(a) * far.z, far.y, sin(a) * far.x + cos(a) * far.z);
+  vec4 mv = modelViewMatrix * vec4(position + far * (1.0 - f), 1.0);
+  gl_Position = projectionMatrix * mv;
+  float px = uGrain * projectionMatrix[1][1] * 0.5 * uViewH / max(-mv.z, 1e-3);
+  gl_PointSize = clamp(px * 2.3, 1.0, 24.0);   // grains overlap, so a face reads as a photograph, not a dot screen
+  // the people are made of the data: a grain arrives as a gold grain of data and takes
+  // the photo's colour as it settles
+  vCol = mix(vec3(1.0, 0.62, 0.22) * 0.5, aCol, smoothstep(0.55, 1.0, f));
+  // a grain smaller than a pixel is drawn a pixel wide, so it gives up its share of light
+  vA = mix(0.15, 1.0, f) * min(1.0, px * px * 2.9) * (1.0 - smoothstep(0.82, 1.0, aR));
+}`
+const PORTRAIT_FRAG = /* glsl */ `
+uniform float uGain;
+varying vec3 vCol; varying float vA;
+void main() {
+  float d = length(gl_PointCoord - 0.5);
+  float a = (1.0 - smoothstep(0.2, 0.5, d)) * vA;
+  if (a < 0.01) discard;
+  gl_FragColor = vec4(vCol * uGain, a);
+}`
+
+function buildPortraits(o, ctx) {
+  const size = o.size ?? 2.4, res = Math.round(o.res ?? 120)
+  const people = o.people || []
+  const g = new Group()
+  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  const showT = { value: -1 }, hideT = { value: -1 }, viewH = { value: 1080 }, pr = { value: Math.min(devicePixelRatio || 1, 2) }
+  const uni = { uTime: { value: 0 }, uShowT: showT, uHideT: hideT, uViewH: viewH, uGrain: { value: size / res },
+    uPixelRatio: pr, uGain: { value: o.gain ?? 0.8 } }
+  const mat = new ShaderMaterial({ vertexShader: PORTRAIT_VERT, fragmentShader: PORTRAIT_FRAG, uniforms: uni,
+    transparent: true, depthWrite: false, depthTest: true })
+  const vp = new Vector4()
+  const base = (import.meta.env?.BASE_URL || '/').replace(/\/$/, '')
+  const toLin = (v) => Math.pow(v / 255, 2.2)
+  const labels = []
+  people.forEach((person) => {
+    const at = person.at || [0, 0, 0]
+    const img = new Image()
+    img.onload = () => {
+      const c = document.createElement('canvas'); c.width = res; c.height = res
+      const cx = c.getContext('2d', { willReadFrequently: true })
+      cx.drawImage(img, 0, 0, res, res)
+      const px = cx.getImageData(0, 0, res, res).data
+      const pos = [], col = [], seed = [], rr = []
+      for (let y = 0; y < res; y++) for (let x = 0; x < res; x++) {
+        const u = (x + 0.5) / res - 0.5, v = (y + 0.5) / res - 0.5, r = Math.hypot(u, v) * 2
+        if (r > 1) continue
+        const i = (y * res + x) * 4
+        const R = px[i], G = px[i + 1], B = px[i + 2]
+        const l = (0.2126 * R + 0.7152 * G + 0.0722 * B) / 255
+        pos.push(at[0] + u * size, at[1] - v * size, at[2] + (l - 0.5) * 0.06 * size + (Math.random() - 0.5) * 0.01 * size)
+        col.push(toLin(R), toLin(G), toLin(B))
+        seed.push(Math.random()); rr.push(r)
+      }
+      const geo = new BufferGeometry()
+      geo.setAttribute('position', new BufferAttribute(new Float32Array(pos), 3))
+      geo.setAttribute('aCol', new BufferAttribute(new Float32Array(col), 3))
+      geo.setAttribute('aSeed', new BufferAttribute(new Float32Array(seed), 1))
+      geo.setAttribute('aR', new BufferAttribute(new Float32Array(rr), 1))
+      const p = new Points(geo, mat); p.frustumCulled = false
+      p.onBeforeRender = (renderer) => { renderer.getCurrentViewport(vp); viewH.value = vp.w || 1080 }
+      g.add(p)
+    }
+    img.src = String(person.src || '').startsWith('/') ? base + person.src : person.src
+    if (person.name && o.labels !== false) {   // labels: false keeps the names off the screen (they are in the notes)
+      const make = () => {
+        const l = smooth(ctx.helpers.makeLabel(person.name, { px: 64, weight: 500, color: '#dfe6f1', worldH: o.labelH ?? 0.026, letterSpacing: 0.04, upper: false }))
+        l.material.sizeAttenuation = false; l.material.opacity = 0
+        l.center.set(0.5, 1.25)
+        l.position.set(at[0], at[1] - size / 2, at[2])
+        l.userData.vis = 0
+        g.add(l); labels.push(l)
+      }
+      if (document.fonts?.load) document.fonts.load('500 64px "Space Grotesk"').catch(() => {}).finally(make)
+      else make()
+    }
+  })
+
+  let now = 0, step = state.has(o.name) ? state.get(o.name) : 0, armed = false, armedAt = 0
+  const go = (k) => {
+    step = k
+    if (armed) return
+    if (k) { if (showT.value < 0 || hideT.value >= 0) { showT.value = now; hideT.value = -1 } }
+    else if (showT.value >= 0 && hideT.value < 0) hideT.value = now
+  }
+  const off = listen(o.name, go)
+  mat.addEventListener('dispose', off)
+  // onEnter: they gather the moment their slide opens, during the flight, rather than on
+  // arrival. The hook stays, answering at once: the engine announces a station as
+  // assembled only through its builders' hooks, and the cover's title waits on that
+  const api = o.onEnter ? { arm() {}, assemble(t, onDone) { onDone?.() } } : {
+    arm() { armed = true; armedAt = now; if (showT.value >= 0 && hideT.value < 0) hideT.value = now },
+    assemble(t, onDone) {
+      now = t; armed = false
+      if (step) { showT.value = t; hideT.value = -1 } else if (showT.value >= 0 && hideT.value < 0) hideT.value = t
+      onDone?.()
+    },
+  }
+  return {
+    group: g, labels: [], api, pixelRatio: pr,
+    update(t) {
+      now = t; uni.uTime.value = t
+      if (armed && t - armedAt > 6) { armed = false; go(step) }
+      if (hideT.value >= 0 && t - hideT.value > 1.6) { showT.value = -1; hideT.value = -1 }
+      const on = showT.value >= 0 && hideT.value < 0 && t - showT.value > 1.2
+      for (const l of labels) {
+        l.userData.vis += ((on ? 1 : 0) - l.userData.vis) * 0.06
+        l.material.opacity = 0.9 * l.userData.vis
+        l.visible = l.userData.vis > 0.01
+      }
+    },
+  }
+}
+
+// ---- collision ----------------------------------------------------------------------
+//   { type: collision, name, pos, scale?: 0.15 (world units per metre), pv?: [x, y, z] (mm),
+//     tracks: [[type, q, p (MeV), x, y, z (mm), tx, ty, muon, backward], …] (an LHCb track state),
+//     kick?: 1200 (MeV, the dipole's pT kick), magnetZ?: 5.3, stopZ?: 9.5, muonZ?: 19 (m),
+//     cloud?: 26000, sphere?: 0.1, grains?: 700 per track }
+// One real LHCb event drawn as grains: each track leaves the vertex as a
+// straight line, takes the dipole's kick in x at the magnet and runs on to the
+// end of the tracker; muons run on to the muon stations. LHCb's z (the beam)
+// is the world's x, its y is up, its x is the world's z.
+// Step 1: the tracks grow out of the vertex and the grains flow along them.
+// Step 2: the event shrinks into one grain among many; the many pack into a
+// sphere of radius `sphere` at the vertex (the terabyte the next slide names).
+// Step 0: gone.
+const COLL_VERT = /* glsl */ `
+attribute float aSeed, aS, aKind;   // aS: 0..1 along its track; aKind 0 track, 1 muon, 2 cloud
+attribute vec3 aHome;                 // cloud: its place in the sphere
+uniform float uTime, uT1, uT2, uPixelRatio, uSphere;
+varying vec3 vColor; varying float vAlpha;
+float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
+float ease(float x) { x = clamp(x, 0.0, 1.0); return x * x * x * (x * (x * 6.0 - 15.0) + 10.0); }
+void main() {
+  vec3 p; float a = 0.0; float size;
+  float shrink = uT2 < 0.0 ? 0.0 : ease((uTime - uT2) / 2.2);       // the event goes to a point
+  float pack = uT2 < 0.0 ? 0.0 : ease((uTime - uT2 - 0.9) / 2.4);    // the many gather into the sphere
+  if (aKind < 1.5) {
+    float grow = uT1 < 0.0 ? 0.0 : ease((uTime - uT1 - 0.25 * aSeed) / 1.4);
+    // a grain shows once the track has grown past it, and drifts outward along it
+    float on = step(aS, grow);
+    p = position * mix(1.0, 0.0008, shrink);
+    // it fades as it shrinks: the camera flies in through it, and its grains must not flare
+    a = on * (aKind > 0.5 ? 1.0 : 0.55) * (1.0 - smoothstep(0.2, 0.65, shrink));
+    size = aKind > 0.5 ? 1.7 : 1.0;
+    vColor = aKind > 0.5 ? vec3(1.0, 0.8, 0.42) : mix(vec3(0.62, 0.74, 1.0), vec3(1.0), 0.3 * hash(aSeed * 7.0));
+  } else {
+    // the other collisions: points of light around the shrinking event, then a ball
+    float appear = uT2 < 0.0 ? 0.0 : smoothstep(0.0, 1.0, (uTime - uT2 - 0.3 - 0.6 * aSeed) / 0.9);
+    vec3 dir = normalize(vec3(hash(aSeed * 3.1), hash(aSeed * 5.7), hash(aSeed * 9.3)) - 0.5 + 1e-4);
+    vec3 far = dir * (0.18 + 0.9 * pow(hash(aSeed * 13.0), 0.6));
+    p = mix(far, aHome, pack);
+    a = appear * 0.55 * (1.0 - 0.45 * smoothstep(0.6, 1.0, pack)) * (1.0 - smoothstep(0.0, 1.0, uT2 < 0.0 ? 0.0 : (uTime - uT2 - 3.8) / 0.9));
+    size = mix(0.8, 0.45, pack);
+    vColor = mix(vec3(1.0, 0.72, 0.32), vec3(1.0, 0.9, 0.7), 0.5 * hash(aSeed * 17.0));
+  }
+  if (a <= 0.002) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vAlpha = 0.0; vColor = vec3(0.0); return; }
+  vec4 mv = modelViewMatrix * vec4(p, 1.0);
+  gl_Position = projectionMatrix * mv;
+  gl_PointSize = max(1.0, uPixelRatio * size * (2.6 / max(-mv.z, 0.05)) * 4.0);
+  vAlpha = a;
+}`
+
+function buildCollision(o) {
+  const S = o.scale ?? 0.15, kick = o.kick ?? 1200, zMag = o.magnetZ ?? 5.3, zStop = o.stopZ ?? 9.5, zMu = o.muonZ ?? 19
+  const per = Math.round(o.grains ?? 700), nCloud = Math.round(o.cloud ?? 26000), R = o.sphere ?? 0.1
+  const T = o.stretch ?? 1   // transverse scale: LHCb's tracks run within a few degrees of the beam
+  const pv = (o.pv || [0, 0, 0]).map((v) => v / 1000)
+  // each track's reach by its type (m): the VELO, the TT before the magnet, the T stations after it
+  const SPAN = { Velo: [null, 0.75], Upstream: [null, 2.7], Long: [null, zStop], Downstream: [2.3, zStop], Ttrack: [7.6, zStop] }
+  const pos = [], seed = [], sArr = [], kind = [], home = []
+  for (const t of o.tracks || []) {
+    // t: [type, q, p (MeV, 0 if unmeasured), x, y, z (mm), tx, ty, muon (0/1), backward (0/1)]
+    const [type, q, p, x0, y0, z0, tx0, ty0, mu, back] = t
+    const span = SPAN[type]; if (!span) continue
+    const zs = z0 / 1000, xs = x0 / 1000, ys = y0 / 1000
+    // the slope the state gives, and the dipole's kick in x where p is measured
+    const dtx = p > 0 && q ? (q * kick) / p : 0
+    const before = zs < zMag ? tx0 : tx0 - dtx, after = zs < zMag ? tx0 + dtx : tx0
+    // a straight line through the state, bent once at the magnet's centre
+    const xAt = (z) => (zs <= zMag
+      ? (z <= zMag ? xs + before * (z - zs) : xs + before * (zMag - zs) + after * (z - zMag))
+      : (z >= zMag ? xs + after * (z - zs) : xs + after * (zMag - zs) + before * (z - zMag)))
+    let z1 = span[0] ?? pv[2], z2 = mu ? zMu : span[1]
+    if (back) { z1 = pv[2] - 0.35; z2 = pv[2] }   // a VELO track going back from the vertex
+    const n = Math.max(40, Math.round(per * (z2 - z1) / (zMu - pv[2]) * (mu ? 1.6 : 2.2)))
+    for (let k = 0; k < n; k++) {
+      const u = (k + Math.random()) / n, z = back ? z2 - u * (z2 - z1) : z1 + u * (z2 - z1)
+      const x = xAt(z), y = ys + ty0 * (z - zs)
+      const j = 0.003 * (1 + 2 * u)
+      pos.push((z - pv[2]) * S, (y - pv[1]) * S * T + (Math.random() - 0.5) * j, (x - pv[0]) * S * T + (Math.random() - 0.5) * j)
+      // aS: where on the way out from the vertex the grain is, so tracks grow outward together
+      seed.push(Math.random()); sArr.push(Math.min(1, Math.abs(z - pv[2]) / (zMu - pv[2]) * 1.8)); kind.push(mu ? 1 : 0); home.push(0, 0, 0)
+    }
+  }
+  for (let k = 0; k < nCloud; k++) {
+    const z = 2 * Math.random() - 1, ph = Math.random() * Math.PI * 2, q = Math.sqrt(1 - z * z), r = R * Math.cbrt(Math.random())
+    pos.push(0, 0, 0); home.push(r * q * Math.cos(ph), r * z, r * q * Math.sin(ph))
+    seed.push(Math.random()); sArr.push(0); kind.push(2)
+  }
+  const geo = new BufferGeometry()
+  geo.setAttribute('position', new BufferAttribute(new Float32Array(pos), 3))
+  geo.setAttribute('aHome', new BufferAttribute(new Float32Array(home), 3))
+  geo.setAttribute('aSeed', new BufferAttribute(new Float32Array(seed), 1))
+  geo.setAttribute('aS', new BufferAttribute(new Float32Array(sArr), 1))
+  geo.setAttribute('aKind', new BufferAttribute(new Float32Array(kind), 1))
+  const mat = material(COLL_VERT, { uT1: { value: -1 }, uT2: { value: -1 }, uSphere: { value: R } })
+  const pts = new Points(geo, mat); pts.frustumCulled = false
+  const g = new Group(); g.add(pts)
+  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  let now = 0
+  const go = (k) => {
+    const u = mat.uniforms
+    if (k === 1) { u.uT1.value = now; u.uT2.value = -1 }
+    else if (k === 2) { if (u.uT1.value < 0) u.uT1.value = now - 5; u.uT2.value = now }
+    else { u.uT1.value = -1; u.uT2.value = -1 }
+  }
+  const off = listen(o.name, go)
+  mat.addEventListener('dispose', off)
+  if (state.has(o.name)) queueMicrotask(() => go(state.get(o.name)))
+  return { group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio, update(t) { now = t; mat.uniforms.uTime.value = t } }
 }
 
 export function installGrains(registerBuilder) {
   registerBuilder('lineup', buildLineup, { fields: ['pos', 'name', 'balls'] })
   registerBuilder('streams', buildStreams, { fields: ['pos', 'name', 'from', 'to'] })
+  registerBuilder('floor', buildFloor, { fields: ['pos'] })
+  registerBuilder('portraits', buildPortraits, { fields: ['pos', 'name', 'people'] })
+  registerBuilder('collision', buildCollision, { fields: ['pos', 'name', 'tracks'] })
 }

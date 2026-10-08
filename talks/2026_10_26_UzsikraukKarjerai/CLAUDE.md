@@ -48,6 +48,18 @@ plans slide (owner). The viewer sits in the physicist's seat.
 
 ## Status
 
+- 2026-10-08 (late night): **complete, pending the owner's review.** Fifth
+  version deployed as main 336e0ea (Pages run 37830786185 green; the talk
+  URL returns 200). After it, a final text round on the branch, not yet
+  deployed: my plain-text pass, a native-Lithuanian editor (26 findings),
+  an independent verifier (accepted, corrected or rejected each, found 5
+  more, checked facts on the web) and the Scheduler's audit of 336e0ea (25
+  findings); merged, lint --release 0 errors, check/build ok. Redeploy
+  after OpenData's turn (tell the Scheduler first).
+- Timing: about 600 spoken words, so about 6 min of speech; with the fills,
+  pauses and the tunnel clip about 7½–8 min against ~10. Not padded; the
+  speaker can add his own account on slides 9 and 12.
+
 - 2026-10-08 (night): **fifth version built on the branch, not deployed.**
   Pinned to slidev-videos v0.5.0. A `histogram` builder (setup/grains.js)
   fills a distribution grain by grain, one grain per entry, easing (fast
@@ -133,6 +145,18 @@ plans slide (owner). The viewer sits in the physicist's seat.
   the day.
 
 ## Decisions
+
+- 2026-10-08 — Final text round, facts corrected: LHCb found the Pc peak
+  while studying a Λb⁰ decay (not a pentaquark search); in 2019 the 2015
+  peak split in two and a third appeared (not "split into three"); about a
+  billion collisions a second (not "millions"); about three in four CERN
+  alumni now work outside research and education, most often in IT (CERN
+  socio-economic study 2026, §5.4; the "three-quarters move into industry"
+  line had no source). The masterclass is "šiais mokslo metais", „vasarį ar
+  kovą“, not „kasmet“ (only 2026 confirmed). Rejected from the audit: „milijonai
+  susidūrimų“ (understates), „išryškėjo trys“ (loses the split), a new
+  sentence on slide 9 (adds content). Full list:
+  /home/misarpis/talks/.cache/uzk-review/text-changes-raw.diff.
 
 - 2026-10-08 — Slide 7 fills LHCb's 2019 bins (the 2015 paper's are not on
   HEPData); the line changes from „2015 m. – taip.“ to „2019 m. – trys.“ as
