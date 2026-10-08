@@ -197,22 +197,38 @@ def detect_backend(environ: Mapping[str, str]) -> str:
 # On the owner's cluster every render goes to photon (2026-10-08): it has the
 # free cores, gluon is oversubscribed by jobs outside Slurm. 16 cores: a record
 # measured 1.03 s/frame at 4, 0.86 at 8, 0.80-0.88 at 16 and 1.14-1.16 at 32.
-PHOTON = "photon_primary"
-PHOTON_SRUN_ARGS = f"-p {PHOTON} --cpus-per-task=16"
+PHOTON, GLUON = "photon_primary", "gluon_primary"
+SLOT_CPUS = "--cpus-per-task=16"
+PHOTON_SRUN_ARGS = f"-p {PHOTON} {SLOT_CPUS}"
+GLUON_SRUN_ARGS = f"-p {GLUON} {SLOT_CPUS}"
+# node states (sinfo %t) in which a partition takes no new job: drained or
+# draining, down, failing, in maintenance, powered off; `*` = not responding
+DEAD_STATES = re.compile(r"drain|drng|drained|down|fail|maint|unk|no_respond|powered_down|power_down|inval|\*|~")
+
+
+def partition_state(part: str, environ: Mapping[str, str]) -> str | None:
+    """sinfo's node state(s) for a partition ("idle", "mix", "drng" …), None if it does not exist."""
+    try:
+        r = subprocess.run(["sinfo", "-h", "-p", part, "-o", "%t"], capture_output=True, text=True,
+                           timeout=20, env={**environ})
+    except (OSError, subprocess.SubprocessError):
+        return None
+    states = " ".join(r.stdout.split()) if r.returncode == 0 else ""
+    return states or None
 
 
 def default_srun_args(environ: Mapping[str, str]) -> tuple[str, str]:
-    """photon_primary with 16 cores where the cluster has that partition; else nothing."""
-    path = environ.get("PATH", "")
-    if not shutil.which("sinfo", path=path):
+    """photon_primary while it takes jobs, else gluon_primary; 16 cores either way. Clusters
+    without those partitions get nothing (srun's own default)."""
+    if not shutil.which("sinfo", path=environ.get("PATH", "")):
         return "", "default"
-    try:
-        r = subprocess.run(["sinfo", "-h", "-p", PHOTON, "-o", "%P"], capture_output=True, text=True,
-                           timeout=20, env={**environ})
-    except (OSError, subprocess.SubprocessError):
-        return "", "default"
-    if r.returncode == 0 and r.stdout.strip():
-        return PHOTON_SRUN_ARGS, f"default: {PHOTON} exists here (all renders go to photon)"
+    photon = partition_state(PHOTON, environ)
+    if photon and not DEAD_STATES.search(photon):
+        return PHOTON_SRUN_ARGS, f"default: {PHOTON} is {photon}"
+    gluon = partition_state(GLUON, environ)
+    if gluon and not DEAD_STATES.search(gluon):
+        why = f"{PHOTON} is {photon}" if photon else f"no {PHOTON}"
+        return GLUON_SRUN_ARGS, f"default: {GLUON} ({why})"
     return "", "default"
 
 
@@ -914,6 +930,8 @@ def render_run(cmd: list, cwd: Path, env: dict, gpu: bool | None = None) -> tupl
     env = {**env, **plan["env"]}
     if plan.get("note"):
         OUT.say(f"render: {plan['note']}")
+    elif plan["backend"] == "slurm":
+        OUT.say(f"render slot: {cfg()['RENDER_SRUN_ARGS'] or 'srun defaults'} ({cfg().sources['RENDER_SRUN_ARGS']})")
     if plan["lock"]:
         with RenderLock(Path(plan["lock"])):
             return run(plan["argv"], cwd=cwd, env=env, log=True), plan

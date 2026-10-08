@@ -450,12 +450,22 @@ def test_srun_always_asks_for_one_task_unless_told(args, want):
     assert talk_cli.srun_args(args) == want
 
 
-@pytest.mark.parametrize("partitions, want", [("photon_primary\n", talk_cli.PHOTON_SRUN_ARGS), ("", "")])
-def test_slurm_renders_default_to_photon_where_it_exists(repo, env, tmp_path, partitions, want):
+@pytest.mark.parametrize("photon, gluon, want", [
+    ("idle", "idle", talk_cli.PHOTON_SRUN_ARGS),
+    ("mix", "idle", talk_cli.PHOTON_SRUN_ARGS),
+    ("alloc", "idle", talk_cli.PHOTON_SRUN_ARGS),          # busy, but takes jobs: they queue for it
+    ("drng", "idle", talk_cli.GLUON_SRUN_ARGS),             # draining, as photon was on 2026-10-08
+    ("drain", "mix", talk_cli.GLUON_SRUN_ARGS),
+    ("down*", "idle", talk_cli.GLUON_SRUN_ARGS),
+    ("", "idle", talk_cli.GLUON_SRUN_ARGS),                 # no photon partition
+    ("drng", "down", ""),                                   # neither: srun's own default
+    ("", "", ""),                                           # another cluster
+])
+def test_slurm_renders_default_to_photon_else_gluon(repo, env, tmp_path, photon, gluon, want):
     b = tmp_path / "bin"
     fake_bin(b, "sbatch", "exit 0\n")
-    # sinfo -h -p photon_primary -o %P lists the partition if it exists; the gres query says no GPUs
-    fake_bin(b, "sinfo", f'case "$*" in *photon_primary*) printf \'{partitions}\' ;; *) printf \'(null)\\n\' ;; esac\n')
+    # sinfo -h -p <part> -o %t prints the node state; the gres query says no GPUs
+    fake_bin(b, "sinfo", f'case "$*" in *photon_primary*) printf \'{photon}\' ;; *gluon_primary*) printf \'{gluon}\' ;; *) printf \'(null)\\n\' ;; esac\n')
     e = path_with(b, env)
     del e["RENDER_BACKEND"]
     e.pop("RENDER_SRUN_ARGS", None)
