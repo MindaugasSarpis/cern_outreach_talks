@@ -307,3 +307,7 @@ html[data-stage] .payoff .big.blue { background: linear-gradient(180deg, #ffffff
 html[data-stage] .payoff .big .unit { font-size: 0.34em; letter-spacing: -0.01em; margin-left: 0.18em; }
 html[data-stage] .payoff h1 { font-size: 44px !important; line-height: 1.08 !important; margin: 0 0 14px !important; max-width: 20ch; text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7); animation: none !important; }
 html[data-stage] .payoff p:not(.kicker) { font-size: 24px; line-height: 1.38; margin: 0; max-width: 34ch; opacity: 0.95; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7); }
+
+/* <PrintStill>: only in print/export, over the slide it stands for */
+html[data-stage] .print-still { display: none; }
+html.print .print-still { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 60; }

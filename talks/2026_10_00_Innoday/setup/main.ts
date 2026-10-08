@@ -2,6 +2,7 @@ import { registerBuilder } from 'slidev-addon-stage'
 import { installStrands } from './strands.js'
 import Count from './Count.vue'
 import Strands from './Strands.vue'
+import PrintStill from './PrintStill.vue'
 import WebTakeover from './WebTakeover.vue'
 
 // <Count> counts a slide's big number up as the slide arrives; <WebTakeover>
@@ -13,5 +14,6 @@ export default ({ app }) => {
   installStrands(registerBuilder)
   app.component('Count', Count)
   app.component('Strands', Strands)
+  app.component('PrintStill', PrintStill)
   app.component('WebTakeover', WebTakeover)
 }

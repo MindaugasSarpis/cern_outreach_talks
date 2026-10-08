@@ -187,3 +187,19 @@ Next: „Ačiū“ alone (no subtitles), transitions round 2 with the strands
 - **No subtitles** (owner): „Ačiū“ stands alone; „Klausimai“ and the three
   URLs moved into its notes, to be said aloud. The three part titles lost
   their subtitle lines as well (said instead).
+
+**Slot** (owner, 2026-10-08): about 25 min or more. The deck runs ≈ 23 min: no cuts, the opener stays whole.
+
+## Where to cut if the slot is ever shorter (kept for reference)
+
+Now: speech ~17,5 min + clips (opener 4:26, bookend 0:30; the CERN aerial
+0:11 and the LHCb animation 0:56 are talked over) ≈ 23 min.
+- **20 min (−3):** trim the opener in `videos/manifest.toml` (`trim =
+  ["0:00", "1:50"]` keeps Saulėtekis → Earth; the takeover then needs a new
+  `opener_last.jpg` from the cut's last frame, `pnpm takeover:frame`) −2,5;
+  Artemis to one sentence over the photo −0,3; the 1,8 CHF line stays out.
+- **15 min (−8):** as for 20, and: the opener to ~1:00 (−3,4 in all); drop
+  the Higgs slide (−0,6) and the bookend clip (−0,5, say „ir atgal“ over the
+  firms slide instead); one photo per problem in Part II — drop the 1993 web
+  slide (−0,7) and Artemis (−0,4); KT and +14 % to one sentence each (−0,8).
+  The spine (machine → limits → inventions → firms) stays whole.

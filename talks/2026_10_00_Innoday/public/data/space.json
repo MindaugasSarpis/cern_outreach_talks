@@ -127,8 +127,8 @@
             0
           ],
           "radius": 7,
-          "reach": 15,
-          "rise": 3,
+          "reach": 11,
+          "rise": 2.5,
           "strands": [
             {
               "angle": -60,

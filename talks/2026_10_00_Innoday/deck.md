@@ -105,7 +105,7 @@ Pastaba: „žvaigždės, dujos, planetos ir mes“ — tyčia ne „galaktikos�
 
 ---
 layout: section
-space: { at: [12.5, -3.4, 0], dist: 19, yaw: -30, pitch: 24, dim: 0.4 }
+space: { at: [14, 0, 0], dist: 23, yaw: 0, pitch: 85, dim: 0.3 }   # match cut: the grain ring from above, framed like the ring drawn on the aerial clip that follows
 ---
 
 # I dalis
@@ -120,7 +120,7 @@ Kalbėtojui. Sakyti: „CERN ir Didysis hadronų greitintuvas.“ Pasaulyje — 
 -->
 
 ---
-space: { at: [20, 5, -12], dist: 18, yaw: -30, pitch: 14 }
+space: { at: [14, 0, 0], dist: 23, yaw: 0, pitch: 85 }   # the same pose: the clip arrives over the ring it shows
 ---
 
 <Strands :on="false" />
@@ -141,7 +141,7 @@ space: { at: collider, dist: 20, yaw: 40, pitch: 30, dim: 0 }
 
 <Strands :on="false" />
 
-<StagePhoto src="/figures/hero_higgs.jpg" alt="CMS detektoriaus įvykis: Higso bozono kandidatas, skylantis į du elektronus ir du miuonus" focus="30% 50%" class="right">
+<StagePhoto src="/figures/hero_higgs.jpg" arrive="camera" alt="CMS detektoriaus įvykis: Higso bozono kandidatas, skylantis į du elektronus ir du miuonus" focus="30% 50%" class="right">
 <div class="hero-text">
 <p class="kicker">Ką mašina rado</p>
 <div class="year blue">2012</div>
@@ -196,7 +196,33 @@ Skaičius: Koppenburgo sąraše „86 hadrons have been discovered at the LHC, o
 -->
 
 ---
-space: { at: collider, dist: 11, yaw: -48, pitch: 9, dim: 0 }
+space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 7, dim: 0.3 }   # match cut: down on the ring, looking along it; its curve becomes the tunnel's
+---
+
+<Strands :on="false" />
+
+<div class="readout">
+
+<p class="kicker"><span class="nc">LHCb</span> · nuo 2022 m.</p>
+
+<div class="big"><Count :from="0" :to="4" :ms="1600" /><span class="unit">TB/s</span></div>
+
+Tiek duomenų kas sekundę pagamina detektorius. Pirmąją atranką atlieka vaizdo plokštės, kokios yra žaidimų kompiuteriuose.
+
+</div>
+
+<div class="src">LHCb, The LHCb Upgrade I, arXiv:2305.10515 · CERN EP Newsletter: LHCb adopts GPUs for the Run 3 trigger (2020)</div>
+
+<!--
+Kalbėtojui. Po pentakvarko: kaip LHCb jį randa. Kamera nusileidžia ant grūdelių žiedo ir žiūri išilgai jo — kitoje skaidrėje žiedo lankas tampa tunelio lanku.
+Sakyti: „Kad tokias daleles rastume, reikia išspręsti mūsų eksperimento problemą — duomenis. LHCb detektorius kas sekundę pagamina apie 4 terabaitus. Tiek užrašyti neįmanoma, todėl reikia iš karto nuspręsti, ką pasilikti. Nuo 2022 m. tai daro vaizdo plokštės, iš esmės tokios pat kaip žaidimų kompiuteriuose. LHCb — pirmasis eksperimentas, kurio visa pirmoji atrankos pakopa veikia vaizdo plokštėse. Į diską patenka maždaug vienas baitas iš keturių šimtų.“
+Faktai: GPU — NVIDIA RTX A5000 (profesionali žaidimų lusto versija); vietų ~500, bazinei HLT1 reikia ~200; antroji pakopa — >3 000 serverių; į diską ~10 GB/s.
+Jei klausia apie atviruosius duomenis: visus 2011–2012 m. LHCb duomenis (800 TB) viešam naudojimui parengė kalbėtojas; nuo 2023 m. gruodžio juos gali parsisiųsti bet kas, nuo 2026 m. kovo per internetinę paslaugą — ir antrojo etapo duomenis (kartu >4 PB).
+(~0,7 min)
+-->
+
+---
+space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 7, dim: 0 }   # the same pose under the photo
 ---
 
 <Strands :on="false" />
@@ -222,37 +248,11 @@ space: { at: collider, dist: 11, yaw: -48, pitch: 9, dim: 0 }
 
 <!--
 Kalbėtojui. Čia kalba pasisuka: nuo to, ką mašina rado, prie to, ko ji pareikalavo. Šie skaičiai — II dalies problemos.
-Sakyti: „Kad šie atradimai būtų įmanomi, greitintuvas turėjo būti toks. Jo žiedas yra 27 km ilgio ir 100 m po žeme. 1 232 superlaidūs magnetai atšaldomi iki 1,9 kelvino, šalčiau nei erdvė tarp galaktikų. Protonai skrieja tik 2,85 m/s lėčiau už šviesą ir per sekundę apsuka žiedą 11 245 kartus, o kiekvieną sekundę įvyksta apie pusantro milijardo susidūrimų, kuriuos reikia pamatyti ir užrašyti. Nė vieno iš šių dalykų nebuvo galima nusipirkti. Su tokiomis problemomis susidūrė ir ankstesnės CERN mašinos.“
+Sakyti: „Kad šie atradimai būtų įmanomi, greitintuvas turėjo būti toks. Jo žiedas yra 27 km ilgio ir 100 m po žeme. 1 232 superlaidūs magnetai atšaldomi iki 1,9 kelvino, šalčiau nei erdvė tarp galaktikų. Protonai skrieja tik 2,85 m/s lėčiau už šviesą ir per sekundę apsuka žiedą 11 245 kartus, o kiekvieną sekundę įvyksta apie pusantro milijardo susidūrimų, kuriuos reikia pamatyti ir užrašyti. Nė vieno iš šių dalykų nebuvo galima nusipirkti. Su tokiomis problemomis susidūrė ir ankstesnės CERN mašinos. Pažiūrėkime, kas per penkiasdešimt metų atsirado jas sprendžiant.“
 Svarbu: nuo 2026 06 29 LHC neveikia — prasidėjo trečioji ilgoji techninė pertrauka (LS3), todėl skaičiai — darbo metu (3-iasis darbo etapas: 6,8 TeV, 99,99999905 % šviesos greičio). Dažnai cituojamas „99,9999991 %“ atitinka projektinę 7 TeV energiją. Kosminis fonas — 2,7 K.
 Faktai: 9 593 magnetai; vakuumas vamzdyje ~10⁻¹³ bar; pluošte sukaupta energija iki 490 MJ.
 Šaltinis: home.cern/science/accelerators/large-hadron-collider.
 (~0,9 min)
--->
-
----
-space: { at: collider, dist: 26, yaw: 24, pitch: 58, dim: 0.3 }
----
-
-<Strands :on="false" />
-
-<div class="readout">
-
-<p class="kicker"><span class="nc">LHCb</span> · nuo 2022 m.</p>
-
-<div class="big"><Count :from="0" :to="4" :ms="1600" /><span class="unit">TB/s</span></div>
-
-Tiek duomenų kas sekundę pagamina detektorius. Pirmąją atranką atlieka vaizdo plokštės, kokios yra žaidimų kompiuteriuose.
-
-</div>
-
-<div class="src">LHCb, The LHCb Upgrade I, arXiv:2305.10515 · CERN EP Newsletter: LHCb adopts GPUs for the Run 3 trigger (2020)</div>
-
-<!--
-Kalbėtojui. Viena iš tų problemų — mūsų eksperimento šiandien.
-Sakyti: „Mūsų eksperimento problema šiandien — duomenys. LHCb detektorius kas sekundę pagamina apie 4 terabaitus. Tiek užrašyti neįmanoma, todėl reikia iš karto nuspręsti, ką pasilikti. Nuo 2022 m. tai daro vaizdo plokštės, iš esmės tokios pat kaip žaidimų kompiuteriuose. LHCb — pirmasis eksperimentas, kurio visa pirmoji atrankos pakopa veikia vaizdo plokštėse. Į diską patenka maždaug vienas baitas iš keturių šimtų. Dabar pažiūrėkime, kas per penkiasdešimt metų atsirado sprendžiant ankstesnių CERN mašinų problemas.“
-Faktai: GPU — NVIDIA RTX A5000 (profesionali žaidimų lusto versija); vietų ~500, bazinei HLT1 reikia ~200; antroji pakopa — >3 000 serverių; į diską ~10 GB/s.
-Jei klausia apie atviruosius duomenis: visus 2011–2012 m. LHCb duomenis (800 TB) viešam naudojimui parengė kalbėtojas; nuo 2023 m. gruodžio juos gali parsisiųsti bet kas, nuo 2026 m. kovo per internetinę paslaugą — ir antrojo etapo duomenis (kartu >4 PB).
-(~0,7 min)
 -->
 
 ---
@@ -274,12 +274,12 @@ Sakyti: „Šešios problemos: kaip valdyti mašiną, kaip tvarkyti informaciją
 -->
 
 ---
-space: { at: [21.5, 3, -12.99], dist: 6, yaw: 150, pitch: 12, dim: 0 }   # the end of strand -60°
+space: { at: [19.5, 2.5, -9.53], dist: 6, yaw: 150, pitch: 12, dim: 0 }   # the end of strand -60°
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
+<StagePhoto src="/figures/hero_stumpe.jpg" arrive="camera" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
 <div class="hero-text">
 <p class="kicker gold">Problema: valdymas</p>
 <div class="year">1973</div>
@@ -299,12 +299,12 @@ Istorija: pasiūlymas ranka parašytas 1972 m. kovo 11 d. Stumpe atsisakė pasi
 -->
 
 ---
-space: { at: [29.0, 3, 0.0], dist: 6, yaw: 90, pitch: 12, dim: 0 }   # the end of strand 0°
+space: { at: [25.0, 2.5, 0.0], dist: 6, yaw: 90, pitch: 12, dim: 0 }   # the end of strand 0°
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_proposal.jpg" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" class="page">
+<StagePhoto src="/figures/hero_proposal.jpg" arrive="camera" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" class="page">
 <div class="hero-text">
 <p class="kicker gold">Problema: informacija</p>
 <div class="year">1989</div>
@@ -323,12 +323,12 @@ Pasiūlymo įžanga: daugelis diskusijų apie CERN ateitį ir LHC erą baigiasi 
 -->
 
 ---
-space: { at: [29.0, 3, 0.0], dist: 6.5, yaw: 102, pitch: 12, dim: 0 }   # the end of strand 0°
+space: { at: [25.0, 2.5, 0.0], dist: 6.5, yaw: 102, pitch: 12, dim: 0 }   # the end of strand 0°
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
+<StagePhoto src="/figures/hero_next.jpg" arrive="camera" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: informacija</p>
 <div class="year">1993</div>
@@ -348,12 +348,12 @@ Faktai: pirmasis viešas paskelbimas — 1991 08 06 alt.hypertext grupėje; pirm
 -->
 
 ---
-space: { at: [21.5, 3, 12.99], dist: 6, yaw: 30, pitch: 12, dim: 0 }   # the end of strand 60°
+space: { at: [19.5, 2.5, 9.53], dist: 6, yaw: 30, pitch: 12, dim: 0 }   # the end of strand 60°
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
+<StagePhoto src="/figures/hero_pet.jpg" arrive="camera" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">1977</div>
@@ -373,12 +373,12 @@ Faktai: pirmasis CERN PET vaizdas — pelės; Townsendas dirbo Ženevos kantono 
 -->
 
 ---
-space: { at: [21.5, 3, 12.99], dist: 6.5, yaw: 40, pitch: 12, dim: 0 }   # the end of strand 60°
+space: { at: [19.5, 2.5, 9.53], dist: 6.5, yaw: 40, pitch: 12, dim: 0 }   # the end of strand 60°
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
+<StagePhoto src="/figures/hero_mars.jpg" arrive="camera" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -399,12 +399,12 @@ Vaizdas: MARS Bioimaging Ltd (CERN KT CDS įrašas KTTGROUP-PHO-TECH-2020-001); 
 -->
 
 ---
-space: { at: [21.5, 3, 12.99], dist: 6.5, yaw: 20, pitch: 12, dim: 0 }   # the end of strand 60°
+space: { at: [19.5, 2.5, 9.53], dist: 6.5, yaw: 20, pitch: 12, dim: 0 }   # the end of strand 60°
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
+<StagePhoto src="/figures/hero_artemis.jpg" arrive="camera" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -422,12 +422,12 @@ Artemis II — pirmoji pilotuojama kelionė link Mėnulio nuo 1972 m. (startas 
 -->
 
 ---
-space: { at: [6.5, 3, 12.99], dist: 6, yaw: -30, pitch: 12, dim: 0 }   # the end of strand 120°
+space: { at: [8.5, 2.5, 9.53], dist: 6, yaw: -30, pitch: 12, dim: 0 }   # the end of strand 120°
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
+<StagePhoto src="/figures/hero_hadron.jpg" arrive="camera" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pluošto nukreipimas</p>
 <div class="year">9 000+</div>
@@ -446,12 +446,12 @@ Faktai: PIMMS (CERN, TERA, MedAustron, Onkologie-2000). CNAO Pavijoje (pirmasis 
 -->
 
 ---
-space: { at: [-1.0, 3, 0.0], dist: 6, yaw: -90, pitch: 12, dim: 0 }   # the end of strand 180°
+space: { at: [3.0, 2.5, 0.0], dist: 6, yaw: -90, pitch: 12, dim: 0 }   # the end of strand 180°
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_datacentre.jpg" alt="CERN duomenų centro serverių spintos" focus="50% 50%">
+<StagePhoto src="/figures/hero_datacentre.jpg" arrive="camera" alt="CERN duomenų centro serverių spintos" focus="50% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: duomenys</p>
 <div class="year">1 EB</div>
@@ -470,12 +470,12 @@ Jei laikas leidžia: duomenų problema davė ir atvirojo mokslo įrankius — Ze
 -->
 
 ---
-space: { at: [6.5, 3, -12.99], dist: 6, yaw: -150, pitch: 12, dim: 0 }   # the end of strand 240°
+space: { at: [8.5, 2.5, -9.53], dist: 6, yaw: -150, pitch: 12, dim: 0 }   # the end of strand 240°
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right">
+<StagePhoto src="/figures/hero_cold.jpg" arrive="camera" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: šaltis</p>
 <div class="year">−271 °C</div>
@@ -529,7 +529,7 @@ Atsargiai: „27 su CERN susiję startuoliai pritraukė 3,2 mlrd. CHF“ — 2,
 -->
 
 ---
-space: { at: [118.5, -1.6, 0], dist: 13, yaw: -30, pitch: 14, dim: 0.45 }
+space: { at: [122, 0, 0], dist: 14, yaw: 0, pitch: 85, dim: 0.45 }   # match cut: the loop of nodes from above, framed like the FCC ring on the map that follows
 ---
 
 <div class="payoff">
@@ -551,7 +551,7 @@ Faktai: nematerialusis turtas +63 %, materialusis +27 %; 54 % tiekėjų patek
 -->
 
 ---
-space: { at: kt, dist: 22, yaw: 200, pitch: 40, dim: 0 }
+space: { at: [122, 0, 0], dist: 14, yaw: 0, pitch: 85, dim: 0 }   # the same pose under the map
 ---
 
 <StagePhoto src="/figures/hero_fcc.jpg" alt="Siūlomo 91 km FCC žiedo aplink Ženevą žemėlapis šalia LHC žiedo" focus="55% 50%">
@@ -576,7 +576,7 @@ Faktai: FCC galimybių studija (2025 03 31): 90,7 km, vidutinis gylis ~200 m, 
 space: { at: kt, dist: 18, yaw: 120, pitch: 12, dim: 0 }
 ---
 
-<StagePhoto src="/figures/hero_lt.jpg" alt="Prezidentas Gitanas Nausėda spaudžia ranką CERN generaliniam direktoriui Markui Thomsonui, už jų CERN, Lietuvos ir ES vėliavos" focus="50% 30%" class="low deep">
+<StagePhoto src="/figures/hero_lt.jpg" arrive="camera" alt="Prezidentas Gitanas Nausėda spaudžia ranką CERN generaliniam direktoriui Markui Thomsonui, už jų CERN, Lietuvos ir ES vėliavos" focus="50% 30%" class="low deep">
 <div class="hero-text">
 <p class="kicker gold">Lietuva ir CERN</p>
 <div class="year blue">2018</div>
@@ -636,9 +636,9 @@ space: { at: close }
 
 <!--
 Kalbėtojui. Kamera grįžta ten, kur prasidėjo; ilgiausias skrydis (~4,5 s). Pentakvarkas išsibarsto ir vėl susirenka; „c“ — dar kartą.
-Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų, o trys Lietuvos įmonės jau pasirašė su CERN memorandumus dėl jo. Ačiū, laukiu klausimų.“
+Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų, o trys Lietuvos įmonės jau pasirašė su CERN memorandumus dėl jo. Vienas konkretus žingsnis jūsų įmonei: šią savaitę užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros pareigūnei, atsakingai už pramonės ryšius su CERN. Ačiū, laukiu klausimų.“
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
-Trukmė: kalba ~17,5 min; klipai — įžanginis 4:26, CERN iš oro 0:11, LHCb animacija 0:56 (kalbama per ją); iš viso apie 22 min. Jei skirta 15 min: įžanginį klipą trumpinti iki ~1,5 min (−3), praleisti Higso ir Artemis skaidres (−1), FCC ir +14 % sutrumpinti iki vieno sakinio (−1). Paslėpta skaidrė po šios (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
+Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė: kalba ~17,5 min; klipai — įžanginis 4:26, grįžimas („…ir atgal“) 0:30, CERN iš oro 0:11 ir LHCb animacija 0:56 (kalbama per juos); iš viso apie 23 min. Jei skirta 15 min: įžanginį klipą trumpinti iki ~1,5 min (−3), praleisti Higso ir Artemis skaidres (−1), FCC ir +14 % sutrumpinti iki vieno sakinio (−1). Paslėpta skaidrė po šios (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
 (~0,4 min)
 -->
 
