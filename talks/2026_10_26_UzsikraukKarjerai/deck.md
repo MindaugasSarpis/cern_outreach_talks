@@ -164,7 +164,7 @@ space: { at: quarks, dist: 11, dim: 0.1 }
 Message: others checked with more data and found nothing; by 2008 the claim was withdrawn.
 Picture: the clusters fall apart and fade.
 
-Tada kitos grupės bandė tą patį pamatyti su daug didesniu duomenų kiekiu ir nepamatė. 2008 metais dalelių fizikos žinynas, kuriuo naudojasi visi šios srities fizikai, paskelbė, kad to pentakvarko nėra.
+Tada kitos grupės bandė tą patį pamatyti su daug didesniu duomenų kiekiu ir nepamatė. 2008 metais pagrindinis dalelių fizikos žinynas paskelbė, kad to pentakvarko nėra.
 
 Sources: PDG 2008 review: "overwhelming evidence that the claimed pentaquarks do not exist".
 (~0.3 min)
@@ -288,7 +288,7 @@ space: { at: search, dist: 11, yaw: 6, sway: 1, dim: 0.08 }
 Message: after four and a half years the answer was: not found.
 Picture: five faint clusters appear in the haystack, drift toward each other and apart, never holding. The world full-frame, then the word.
 
-Po ketverių su puse metų mano atsakymas buvo toks: neradau.
+Ieškojau ketverius su puse metų ir neradau.
 [tyla 3 s]
 Tame skilime šių pentakvarkų nematyti. Jeigu jie ten ir atsiranda, tai labai retai.
 
@@ -303,10 +303,10 @@ space: { at: [902, 0, 0.5], dist: 10, yaw: -24, pitch: 8, sway: 1, dim: 0.06 }
 <Grains :set="{ pq: 3, needle: 1, dance: 0, phantom: 5, route: 6 }" />
 
 <!--
-Message: a search that finds nothing is a check like the one in 2008, and the method I built carried on into my next project.
+Message: a search that finds nothing tells others where not to look, as the 2008 checks did, and the method I built carried on into my next project.
 Picture: from the five faint clusters, arcs of gold run to one point beside them, where a cluster gathers and holds.
 
-Prisimink 2003-iuosius. Vieni paskelbė, kad rado, o kiti patikrino ir nerado. Mano darbas buvo toks pat patikrinimas. Dabar kiti žino, kur jau ieškota ir kaip retai tie pentakvarkai galėtų ten atsirasti, todėl gali ieškoti kitur. O mano sugalvotas būdas liko. Jį naudoju savo dabartiniame projekte.
+Dabar kiti žino, kur jau ieškota ir kaip retai tie pentakvarkai galėtų ten atsirasti, todėl gali ieškoti kitur. Taip buvo ir 2008 metais: kai kitos grupės nerado 2003-iųjų pentakvarko, paaiškėjo, kad jo nėra. O mano sugalvotą būdą naudoju savo dabartiniame projekte.
 
 Sources: the thesis (upper limits; Extended Cone Closure); CORDIS 101244743 (PHANTOM, 2025–27, uses that method).
 (~0.4 min)
@@ -373,7 +373,7 @@ space: { at: whole, sway: 0, dim: 0.6 }
 Message: you do not need to know yet; try things, and here is a task for this week.
 Picture: the same map with the whole route, dimmed behind the question. Hold 2 s after the last word; no logos, no summary.
 
-Tau nebūtina jau dabar žinoti, kuo būsi. Šešiolikos metų žinojau tik tiek, kad man įdomi fizika, bet nežinojau, kur ji mane nuves. Svarbiau bandyti įvairius dalykus, kaip aš mokykloje bandžiau verslą ir psichologiją. Turiu tau užduotį šiai savaitei. Kai sutiksi žmogų, kurio darbas tau atrodo įdomus, paklausk jo: „Ko jūs savo darbe dar nežinote?“
+Tau nebūtina jau dabar žinoti, kuo būsi. Šešiolikos metų žinojau tik tiek, kad man įdomi fizika, bet nežinojau, kur ji mane nuves. Mokykloje bandžiau ir verslą, ir psichologiją, o Glazge dirbau vadybininku. Turiu tau užduotį šiai savaitei. Kai sutiksi žmogų, kurio darbas tau atrodo įdomus, paklausk jo: „Ko jūs savo darbe dar nežinote?“
 [pauzė]
 Ir pažiūrėk, kas iš to išeis.
 

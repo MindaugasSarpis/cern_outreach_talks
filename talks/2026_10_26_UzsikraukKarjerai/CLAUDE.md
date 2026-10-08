@@ -125,6 +125,19 @@ they do not know yet.
 - 2026-10-08 — Open items moved out of the notes into Figures below
   (`[PATIKSLINTI]` and `[ASR]` marks fail `lint --release`).
 - 2026-10-08 — Credit lines 16 → 18 px (the lint floor).
+- 2026-10-08 — Unslop pass (unslop 1.8.4 check mode on `talk_copy.py`'s
+  packet, structure and rhythm only, with `docs/unslop-lt.md` from
+  origin/feat/unslop). Fixed in the spoken script: the colon reveal on
+  slide 12 („atsakymas buvo toks: neradau.“ → „Ieškojau ketverius su puse
+  metų ir neradau.“); the realization coda on slide 13 („Mano darbas buvo
+  toks pat patikrinimas.“, replaced by the concrete 2008 parallel); the
+  maxim on slide 16 („Svarbiau bandyti įvairius dalykus“, replaced by what
+  he tried: business, psychology, the manager's job in Glasgow); two
+  unsupported "all"s (slide 6 „visi šios srities fizikai“, slide 13 „visi
+  sužinojo“). Kept on purpose: the three short screen sentences („Paskelbė,
+  kad rado.“, „Paaiškėjo, kad jo nėra.“, „Neradau.“) are the deck's one
+  rhyme, not a slogan cadence; „Ir pažiūrėk, kas iš to išeis.“ is a plain
+  spoken instruction. No facts were added; no gaps found beyond Figures.
 
 - 2026-10-08 — Story as one chronological thread with the opening question
   as a frame (rather than question-first with a separate biography): the
