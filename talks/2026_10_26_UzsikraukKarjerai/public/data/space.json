@@ -43,10 +43,10 @@
       0,
       0
      ],
-     "pairs": 9000,
+     "pairs": 5000,
      "radius": 7,
-     "survivors": 220,
-     "size": 2.4,
+     "survivors": 200,
+     "size": 3.0,
      "alpha": 0.8,
      "gather": 2.4,
      "spread": 6.5
@@ -134,12 +134,19 @@
       0
      ],
      "radius": 1.8,
-     "size": 2.0,
+     "size": 2.6,
      "alpha": 0.6,
-     "hay": 4000,
+     "hay": 2500,
      "hayRadius": 10,
-     "hayAlpha": 0.55,
-     "hayColor": "#c9b57e"
+     "hayAlpha": 0.9,
+     "hayColor": "#c9b57e",
+     "colors": [
+      "#5b7bff",
+      "#6f8cff",
+      "#4f6fe8",
+      "#7f97ff",
+      "#5f80ff"
+     ]
     },
     {
      "type": "streams",
@@ -254,12 +261,12 @@
       }
      ],
      "grains": 900,
-     "node": 2200,
-     "nodeRadius": 1.1,
+     "node": 3000,
+     "nodeRadius": 1.6,
      "color": "#ffc05a",
      "speed": 0.16,
      "alpha": 0.7,
-     "size": 1.6,
+     "size": 1.8,
      "delay": 12
     }
    ]
@@ -293,9 +300,9 @@
       0
      ],
      "scale": 1.6,
-     "alpha": 0.55,
-     "size": 3.0,
-     "borderAlpha": 0.08,
+     "alpha": 0.7,
+     "size": 5.0,
+     "borderAlpha": 0.06,
      "color": "#cdd6ff",
      "border": "#7f74e0"
     },
@@ -350,14 +357,14 @@
       ]
      ],
      "colors": [
-      "#fff1d6",
-      "#ffffff",
-      "#fff1d6",
-      "#dfe8ff",
-      "#7fd6ff",
-      "#dfe8ff",
       "#ffc05a",
-      "#ffe3a8"
+      "#ffc05a",
+      "#ffc05a",
+      "#8fb2ff",
+      "#7fd6ff",
+      "#8fb2ff",
+      "#ffc05a",
+      "#ffc05a"
      ],
      "arc": 2.0,
      "grains": 24000,
@@ -365,7 +372,7 @@
      "nodeRadius": 0.6,
      "width": 0.13,
      "size": 1.5,
-     "alpha": 0.8,
+     "alpha": 0.7,
      "color": "#ffc05a",
      "draw": 2.6
     }

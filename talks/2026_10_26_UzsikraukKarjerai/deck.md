@@ -15,7 +15,7 @@ videos:
   dust: '#ffc05a'
 stage:
   space: data/space.json
-  palette: { base: blue, bg: '#020307', accent: '#ffc05a', dust: '#5b4fd6', dustBright: '#ebe6ff', nebula: '#3a2a9e', nebulaAlt: '#0f6e86', sky: '#9a8cff', fill: '#c9b8ff', highlight: '#fff0d0', dim: '#a39dc0' }
+  palette: { base: blue, bg: '#020307', accent: '#3a4fa0', dust: '#5b4fd6', dustBright: '#ebe6ff', nebula: '#3a2a9e', nebulaAlt: '#0f6e86', sky: '#9a8cff', fill: '#c9b8ff', highlight: '#fff0d0', dim: '#a39dc0' }
   look: broadcast
   sound: false
   options: { lift: 0, nebula: 0, bloom: 0.32, exposure: 1.0, vignette: 0.45, dustGain: 1.0, density: 0.45, dustSize: 2.2, reach: 22 }
@@ -35,7 +35,7 @@ info: |
   silent. Speaker notes carry the full script, timings, sources and every
   [PATIKSLINTI] item.
 layout: default
-space: { at: [-7, 0, 0], dist: 20, yaw: -12, pitch: 8, sway: 1, dim: 0.05 }
+space: { at: [-10, 0, 0], dist: 21, yaw: -12, pitch: 8, sway: 1, dim: 0.05 }
 ---
 
 <Grains :set="{ bang: 1, pq: 0, needle: 0, dance: 0, phantom: 0, route: -1 }" />
@@ -45,7 +45,7 @@ space: { at: [-7, 0, 0], dist: 20, yaw: -12, pitch: 8, sway: 1, dim: 0.05 }
 <div class="say title">
 <p class="kick">Užsikrauk karjerai</p>
 <p class="big huge">Vadovėlio gale<br>atsakymo nėra</p>
-<p class="byline">Mindaugas Šarpis · dalelių fizikas · Vilniaus universitetas</p>
+<p class="byline">Mindaugas Šarpis<br>dalelių fizikas · Vilniaus universitetas</p>
 </div>
 
 <!--
@@ -107,6 +107,8 @@ space: { at: origin, dist: 12, dim: 0 }
 
 <VideoPlayer src="cern_footage_2022_013_001.mp4" muted />
 
+<div class="photo-credit">Video: CERN</div>
+
 <!--
 Message: one way to look for the answer is collisions in the LHC at CERN.
 Picture: real footage, a travelling shot along the LHC tunnel (CERN-FOOTAGE-2022-013-001). Advance whenever you finish; the clip is long.
@@ -167,7 +169,7 @@ space: { at: whole, sway: 0, dim: 0.05 }
 <div class="city" style="left: 406px; top: 374px">CERN</div>
 <div class="city" style="left: 270px; top: 146px">Glazgas</div>
 <div class="city" style="left: 462px; top: 318px">Heidelbergas</div>
-<div class="city r" style="left: 413px; top: 268px">Bona</div>
+<div class="city r" style="left: 405px; top: 254px">Bona</div>
 
 <!--
 Message: I left particle physics, came back for a PhD, and the PhD gave me a second open question: pentaquarks.
@@ -227,14 +229,15 @@ Sources: LEPS, PRL 91, 012002 (2003); PDG 2008 review: "overwhelming evidence th
 -->
 
 ---
-space: { at: [601.6, 0.2, 0], dist: 11, yaw: 18, pitch: 8, sway: 1, dim: 0.42 }
+space: { at: [604.2, -1.6, 0], dist: 12, yaw: 18, pitch: 8, sway: 1, dim: 0.55 }
 ---
 
 <Grains :set="{ bang: 3, pq: 3, needle: 0, dance: 0, phantom: 0, route: 6 }" />
 
 <div class="say">
 <p class="kick">1964 → 2015</p>
-<p class="num gold">51 <span class="unit">metai</span></p>
+<p class="num gold">51</p>
+<p class="line">metai</p>
 </div>
 
 <img class="plot" src="/figures/lhcb/LHCb-PAPER-2015-029_mjpsip-default_crop.png" alt="LHCb 2015: J/ψ p masės skirstinys su siaura pentakvarko smaile" />
@@ -252,7 +255,7 @@ Sources: LHCb, PRL 115, 072001 (2015), figure: m(J/ψ p) with the narrow Pc(4450
 -->
 
 ---
-space: { at: [601.6, 0.2, 0], dist: 11, yaw: 18, pitch: 8, sway: 1, dim: 0.42 }
+space: { at: [604.2, -1.6, 0], dist: 12, yaw: 18, pitch: 8, sway: 1, dim: 0.55 }
 ---
 
 <Grains :set="{ bang: 3, pq: 3, needle: 0, dance: 0, phantom: 0, route: 6 }" />
@@ -318,7 +321,7 @@ Source: the thesis (Bonn, 2023): no signal; upper limits at 95 % CL: Pc(4312)⁺
 -->
 
 ---
-space: { at: search, dist: 18, yaw: -24, sway: 1, dim: 0.06 }
+space: { at: [902, 0, 0.5], dist: 10, yaw: -24, pitch: 8, sway: 1, dim: 0.06 }
 ---
 
 <Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 6 }" />
@@ -338,6 +341,8 @@ space: { at: search, dist: 30, dim: 0 }
 ---
 
 <VideoPlayer src="cern_footage_2022_013_006.mp4" muted />
+
+<div class="photo-credit">Video: CERN</div>
 
 <div class="say on-clip">
 <p class="kick">2023 m. gruodžio 20 d.</p>
@@ -387,7 +392,7 @@ space: { at: whole, sway: 0, dim: 0.05 }
 <div class="city" style="left: 406px; top: 374px">CERN</div>
 <div class="city" style="left: 270px; top: 146px">Glazgas</div>
 <div class="city" style="left: 462px; top: 318px">Heidelbergas</div>
-<div class="city r" style="left: 413px; top: 268px">Bona</div>
+<div class="city r" style="left: 405px; top: 254px">Bona</div>
 
 <!--
 Message: a year and a half later I was building an LHCb group in Vilnius, which my plans had not foreseen.
