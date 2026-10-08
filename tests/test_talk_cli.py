@@ -466,18 +466,28 @@ def test_render_local_holds_the_lock(repo, env, tmp_path):
 
 
 def test_two_renders_at_one_commit_keep_their_own_logs(repo, env, tmp_path):
-    logs = tmp_path / "state" / "logs"
+    """A takes the slot and holds it until B is queued behind it; then both finish."""
+    logs, go = tmp_path / "state" / "logs", tmp_path / "go"
     cmd = [sys.executable, repo / "scripts" / "talk.py", "--json", "render", "--", "sh", "-c"]
-    a = subprocess.Popen([*cmd, "echo A start; sleep 1.5; echo A end"], cwd=repo, env=env,
-                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    for _ in range(100):                    # A is in the slot (its log says so) before B queues
-        if any("A start" in p.read_text() for p in logs.glob("*.log")):
-            break
-        time.sleep(0.1)
-    code, b, err = talk(repo, "render", "--", "sh", "-c", "echo B start; echo B end", env=env)
-    out, a_err = a.communicate(timeout=30)
-    a = json.loads(out)
-    assert a["exit"] == 0 and code == 0 and "waiting for" in err
+
+    def start(script):
+        return subprocess.Popen([*cmd, script], cwd=repo, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    a = start(f"echo A start; while [ ! -e {go} ]; do sleep 0.1; done; echo A end")
+    try:
+        for _ in range(300):                # A is in the slot: its log says so
+            if any("A start" in p.read_text() for p in logs.glob("*.log")):
+                break
+            time.sleep(0.1)
+        b = start("echo B start; echo B end")
+        queued = False
+        for line in b.stderr:               # B waits for A's lock (or B ended: the loop stops at EOF)
+            if "waiting for" in line:
+                queued = True
+                break
+    finally:
+        go.touch()
+    a, b = json.loads(a.communicate(timeout=60)[0]), json.loads(b.communicate(timeout=60)[0])
+    assert queued and a["exit"] == 0 and b["exit"] == 0
     assert a["log"] != b["log"] and sorted(str(p) for p in logs.glob("outreach-render-*.log")) == sorted([a["log"], b["log"]])
     a_text, b_text = open(a["log"]).read(), open(b["log"]).read()
     assert "A start" in a_text and "A end" in a_text and "B start" not in a_text
