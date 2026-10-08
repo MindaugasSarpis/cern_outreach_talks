@@ -148,13 +148,13 @@ vec3 studioHard(vec3 d) {
   return room + vec3(1.0, 0.97, 0.92) * key * 4.0 + vec3(0.85, 0.9, 1.0) * rim * 2.2;
 }
 vec3 metalHard(vec3 nW, vec3 vW, vec3 F0) {
-  float ndv = max(dot(nW, vW), 0.0);
+  float ndv = clamp(dot(nW, vW), 0.0, 1.0);   // a unit dot can pass 1 by rounding; pow() of a negative base is NaN
   vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
   return studioHard(reflect(-vW, nW)) * F + F0 * 0.02;
 }
 // nW, vW: world-space normal and direction toward the eye; F0: the metal's colour
 vec3 metal(vec3 nW, vec3 vW, vec3 F0) {
-  float ndv = max(dot(nW, vW), 0.0);
+  float ndv = clamp(dot(nW, vW), 0.0, 1.0);   // a unit dot can pass 1 by rounding; pow() of a negative base is NaN
   vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
   return studio(reflect(-vW, nW)) * F + F0 * 0.035;
 }`
@@ -209,7 +209,7 @@ void main() {
   vCv = mv.xyz;
   // the pile read as one ball: its side toward the key light brighter, its far side
   // in shadow, and a thin bright rim where its surface turns away from the eye
-  float lit = 0.5 + 0.62 * max(dot(dir, normalize(uLight)), 0.0) + 0.25 * pow(1.0 - max(facingS, 0.0), 3.0);
+  float lit = 0.5 + 0.62 * max(dot(dir, normalize(uLight)), 0.0) + 0.25 * pow(1.0 - clamp(facingS, 0.0, 1.0), 3.0);
   vShade = mix(1.0, lit, f);
   vOut = dir; vF = f;
   vColor = uColor[b] * (0.9 + 0.2 * hash(aSeed * 7.0));
@@ -225,7 +225,7 @@ vec3 studioRough(vec3 d) {
   return sky + vec3(1.0, 0.96, 0.9) * key * 1.1 + vec3(0.55, 0.72, 1.0) * rim * 0.35;
 }
 vec3 heap(vec3 N, vec3 V, vec3 F0) {
-  float ndv = max(dot(N, V), 0.0);
+  float ndv = clamp(dot(N, V), 0.0, 1.0);
   vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0) * 0.4;
   return mix(studioRough(N), studioRough(reflect(-V, N)), 0.55) * F;
 }`

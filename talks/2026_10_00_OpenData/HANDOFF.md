@@ -1,48 +1,88 @@
-# Open data talk: handoff (2026-10-08)
+# Open data talk: handoff
 
-The full design notes are in the repo `CLAUDE.md`, under "Open data talk".
+The design notes are in the repo `CLAUDE.md`, under "Open data talk".
+Toolkit pin: slidev-videos `efacca2` (feat/broadcast), for both addons.
 
-**Toolkit pin:** slidev-videos `efacca2` (feat/broadcast), for both addons.
+## Status (2026-10-08, coherence and prose rework)
 
-## Done
+Done:
 
-- The owner's story order:
-  1. What LHCb is (cavern photo).
-  2. 4 TB/s (event display).
-  3. 1 TB → LHCb's 100 PB.
-  4. What it finds (76 of 86, the 2019 fit).
-  5. The LHC's exabyte.
-  6. 800 TB open → 4 PB open.
-  7. Uses in Vilnius → Dominykas → thanks.
-- Look: black ground (`palette.bg #000206`), metal spheres, real CERN photos with their credits on the slide.
-- Code-review fixes in `setup/grains.js`:
-  - streams deep-link sentinel;
-  - skin-only culling of standing piles;
-  - ray-aligned impostors;
-  - satin `HEAP` pile shading;
-  - turned lattice;
-  - sRGB stream colour.
-- Other fixes:
-  - `Grains.vue` print guard.
-  - The finds slide is opaque.
-  - "≠" spelled out in words.
-  - Notes: timings now sum to 6.5 min, with a 5-minute cut list. The [CHECK] notes became plain notes (the notes ship in the public build).
-- Verified by the v7 render (shots-v2, 1600×900, all 13 slides). Slide 04's 96 px overflow is the event display bleeding off the edge on purpose.
+- One line of argument, one sentence per slide (each slide's notes open with
+  its `Message:`):
+  1. Cover.
+  2. Clip: this is LHCb.
+  3. What LHCb is, and Vilnius in it (photo).
+  4. Every collision becomes data, 4 TB a second (event display).
+  5. One sphere is one terabyte.
+  6. LHCb has kept 100 000 spheres.
+  7. The whole LHC has stored ten times as much again (1 EB).
+  8. What LHCb found in that data (76 of 86; the 2019 pentaquark peaks).
+  9. 800 TB open since 2023, prepared by the speaker.
+  10. Over 4 PB open since 2026, used outside LHCb.
+  11. Used in Vilnius.
+  12. Dominykas looks in the open data for the pentaquarks from slide 8.
+  13. Thanks.
+- Slide text is plain sentences: no `·` captions, no slogans. Notes are a
+  spoken script under "Say:", with "Sources:" and `(~N min)`.
+- Facts cited per slide as `<!-- facts: … -->`, all in the bank (feat/facts-lint)
+  as confirmed.
+- `duration: 6.5min`, `sources: notes` in the headmatter.
+- Checks: the house lint (`talk_lint.py --release`, from feat/facts-lint) gives
+  0 errors and 0 warnings, timed 6.2 of 6.5 min; `stage:check` ok; `pnpm build` ok.
+- Not yet rendered. Shots wait for the render queue (Užsikrauk karjerai first)
+  and Tools' Chromium fix.
+
+Next: `pnpm talk ready opendata` when the render slot and the CLI are
+available, then the visual review of the contact sheets, then the unslop pass.
+Deploy only on the owner's word.
+
+## Decisions
+
+- 2026-10-08. The exabyte now follows LHCb's 100 PB, and "What it finds"
+  comes after it. Before, the order was 100 PB → finds → 1 EB → 800 TB.
+  - Why: the camera now pulls back in one move (1 TB → 100 PB → 1 EB). The
+    finds slide then answers why opening the data matters, and its pentaquark
+    plot comes back on the Dominykas slide.
+  - The opaque finds slide sits at the 800 TB pose, so the fly-in happens
+    behind it and the camera is still when the 800 TB text appears.
+  - Undo: swap slides 7 and 8 and give the finds slide back pose
+    `[7.36, 0, 0]`, dist 37.5.
+- 2026-10-08. Every owner-approved slide stays: the LHCb photo, the event
+  display, the finds and the exabyte. The owner set this story earlier today.
+  The Scheduler's shorter line (sphere → LHCb → open → users → Dominykas) is
+  the spine; these slides set it up.
+- 2026-10-08. On-screen text:
+  - "~2 000 members" (LHCb, June 2026: "on the verge of exceeding 2000")
+    replaces 1 900 members and 29 countries, which were not in the facts
+    bank. "Vilnius joins 2024" is the third stat.
+  - Cover kicker: "Nominated for an open data award". Subtitle: "How data from
+    a detector at CERN reached a bachelor's thesis in Vilnius".
+- 2026-10-08. CSS rewritten as one ordered file.
+  - Colour classes on the readout: `.readout.blue`, `.readout.steel`
+    (gold is the default).
+  - Every sentence under a number is `.line`.
+  - Type floor of 18 px: the legend 12.5 → 18, the stat labels 13 → 18 (no
+    longer uppercase), the team 15 → 18.
+  - Unused `.three-col` and `.world-caption.narrow` rules removed.
+- 2026-10-08. Specks on the 1 EB pile: clamped the `pow()` bases in
+  `metal`, `metalHard`, `heap` and the vertex `lit` term to [0, 1]. A unit dot
+  product can pass 1 by rounding, and `pow` of a negative base is NaN in GLSL.
+  Not yet confirmed on a render.
 
 ## Open
 
-- **Specks on the 1 EB pile.** A few dark specks show on the steel pile (slide 8).
-  - Cause: NaN in LINEUP_FRAG's tiny-sprite path (`if (tiny) …`, `pile * vShade`). A debug build that painted `isnan(pile) || isnan(vShade)` red showed about 1% of the disc red, scattered at random.
-  - Next step: find the NaN source. Candidates are the `pow(1.0 - x, n)` bases in `heap()`, `metal()` and the vertex `lit` term; clamp each base to [0, 1].
-  - Then rebuild and re-shoot slide 8:
-    `PATH=~/micromamba/envs/outreach_talks/bin:$PATH pnpm build --base / && node <shots-v2>/bin/shots.mjs dist shots/v8 --slides 8 --size 1600x900`
-- **Perspective stretch.** The piles at the right edge stretch about 14% (the 50° lens).
-  - A narrower `options.fov` can't fix it: the engine sizes grains as 72/z px whatever the fov, so at 32° every grain form went 1.6× thinner and the thesis pentaquark vanished.
-  - Fixing it needs a toolkit change that scales point sizes by the fov.
+- Confirm on a render that the specks on the steel pile are gone (slide 7 now).
+- Perspective stretch: the piles at the right edge stretch about 14 % (the
+  50° lens). Fixing it needs a toolkit change that scales point sizes by the
+  field of view.
 
 ## Owner questions
 
-- Was N. E. Eimutis's Z → μμ work (Open Readings, Apr 2024) a thesis? If it wasn't, "first open-data thesis" can be said aloud for Dominykas, as "as far as we know".
-- The slide says "One of the largest datasets in science". CERN claims only the largest HEP archive; ECMWF is also exabyte-scale.
-- The opening 3D clip is a flat-shaded CAD render, which sits oddly beside the photo realism of the rest. Keep it, or replace it?
-- Which award is it, and on what date? Dominykas's official thesis title, defence date, data and result.
+- Which award is it, and on what date? (The facts bank has VU's open science
+  award: group nominations allowed, winners honoured in International Open
+  Access Week, late October.)
+- Was N. E. Eimutis's Z → μμ work (Open Readings, April 2024) a thesis? Until
+  that is known, the notes say not to call Dominykas's thesis the first.
+- Dominykas's official thesis title, defence date, data and any result.
+- The opening 3D clip is a flat-shaded CAD render beside photographs. Keep it
+  or replace it?
