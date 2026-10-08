@@ -30,7 +30,7 @@ info: |
   grain by grain: slide 7 from LHCb's published 2019 J/ψ p bins (HEPData);
   slides 2–4 and 10 are illustrations, said so in the notes.
 layout: default
-space: { at: [596.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.05 }
+space: { at: [594, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.05 }
 ---
 
 <Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: -1, th1: 0, th2: 0, jp: 0, mine: 0 }" />

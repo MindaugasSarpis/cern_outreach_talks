@@ -785,10 +785,21 @@ void main() {
   // once filled, the marked bins (the peaks) brighten and the rest step back
   float m = clamp((uTime - uMarkT) / 1.6, 0.0, 1.0);
   m = m * m * (3.0 - 2.0 * m);
-  vec3 color = mix(uColor, uHot, 0.8 * glow + 0.55 * m * aMark);
-  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow) * (1.0 + m * (0.9 * aMark - 0.35 * (1.0 - aMark)));
+  vec3 color = mix(uColor, uHot, clamp(0.8 * glow + 0.85 * m * aMark, 0.0, 1.0));
+  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow) * (1.0 + m * (1.8 * aMark - 0.55 * (1.0 - aMark)));
   float size = uSize * (0.85 + 0.3 * hash(aSeed * 11.0)) * (1.0 + 0.5 * glow);
   place(p, size, alpha, color, aSeed);
+}`
+// a short upright tick of grains over a marked peak, shown once the fill is complete
+const TICK_VERT = /* glsl */ `
+attribute float aSeed;
+uniform float uSize, uAlpha, uMarkT;
+uniform vec3 uColor;
+${PLACE}
+void main() {
+  float m = clamp((uTime - uMarkT - aSeed * 0.5) / 1.2, 0.0, 1.0);
+  if (m <= 0.0) { hide(); return; }
+  place(position + vec3(0.0, 0.6 * (1.0 - m), 0.0), uSize * (0.8 + 0.4 * hash(aSeed * 7.0)), uAlpha * m * m, uColor, aSeed);
 }`
 const AXIS_VERT = /* glsl */ `
 attribute float aSeed;
@@ -839,6 +850,23 @@ function buildHistogram(o, ctx) {
     geo.setAttribute('aMark', new BufferAttribute(mark, 1))
     const pts = new Points(geo, mat); pts.frustumCulled = false
     g.add(pts)
+    if (o.marks && d.lo != null) {
+      // one tick per mark, over its tallest bin
+      const T = 160, tp = [], ts = []
+      for (const [a, b] of o.marks) {
+        let best = -1
+        for (let i = 0; i < nb; i++) { const c = d.lo + (i + 0.5) * d.bin; if (c >= a && c <= b && (best < 0 || counts[i] > counts[best])) best = i }
+        if (best < 0) continue
+        const x = -W / 2 + (best + 0.5) * bw, y0 = counts[best] / unitN / max * H + 0.6
+        for (let i = 0; i < T; i++) { tp.push(x + (Math.random() - 0.5) * 0.06, y0 + 1.9 * i / (T - 1), 0); ts.push(Math.random()) }
+      }
+      const tg = new BufferGeometry()
+      tg.setAttribute('position', new BufferAttribute(new Float32Array(tp), 3)); tg.setAttribute('aSeed', new BufferAttribute(new Float32Array(ts), 1))
+      const tm = material(TICK_VERT, { uSize: { value: (o.size ?? 1) * 1.6 }, uAlpha: { value: 1.0 }, uColor: { value: new Color(...rgb(o.hot || '#fff4dc')) } })
+      tm.uniforms.uTime = u.uTime; tm.uniforms.uPixelRatio = u.uPixelRatio; tm.uniforms.uMarkT = u.uMarkT
+      const tk = new Points(tg, tm); tk.frustumCulled = false
+      g.add(tk)
+    }
     if (o.axis !== false) {
       const A = 900, ap = new Float32Array(A * 3), as = new Float32Array(A)
       for (let i = 0; i < A; i++) { ap.set([-W / 2 - 0.3 + (W + 0.6) * i / (A - 1), -0.12, 0], i * 3); as[i] = Math.random() }

@@ -530,26 +530,16 @@ the far-back scale poses.
 
 ## Užsikrauk karjerai (2026_10_26_UzsikraukKarjerai)
 
-Fourth version (2026-10-08), 16 slides, about 8–9 minutes, one question
-(the owner rejected a 31-slide committee-written first version, a second
-whose flow jumped between questions and whose world looked washed out, and
-called the third "not coherent"). The talk's own `CLAUDE.md` holds the
-brief, story table, status and decisions. Pinned to slidev-videos
-`feat/broadcast` (efacca2) for `look: broadcast`, `slidev-stage-safe` and
-`slidev-stage-record`. Real photographs and footage carry the real things
-(LHC tunnel, LHCb cavern, Gell-Mann and Zweig, the LHCb plots), credited on
-screen and in `credits.txt`. The thread: his crooked route across Europe to
-a PhD, which gave him pentaquarks; their history (the 1964 idea, the 2003
-claim that others checked and withdrew by 2008, LHCb's 2015 discovery and
-the three of 2019); his own search for those three in another decay, which
-ended in „Neradau.“, and why that check still counts; his 2022 plans slide
-and the move home to build an LHCb group; one task for the week. The
-matter/antimatter frame and the open-data slide were cut (their `pairs`
-builder stays in `setup/grains.js`, unused). Slide text is only years, a
-number, two short sentences („Paskelbė, kad rado.“, „Paaiškėjo, kad jo
-nėra.“), „Neradau.“ and the closing question. The full spoken script,
-timings and public sources are in the notes; open items for the speaker
-are in the talk's `CLAUDE.md`, not in the notes.
+Fifth version (2026-10-08), 14 slides, about 10 minutes, online (not TV;
+the TV rules below are history). The viewer judges a bump: a histogram
+fills grain by grain (2003 yes, 2008 no as illustrations; LHCb's real 2019
+J/ψ p bins from HEPData on slide 7, the three peaks lighting up), then the
+speaker's search fills with no peak („Neradau.“), what the work trains, the
+route across Europe, three things to do this year, the closing question.
+Outline: `notes/outline-v5.md`; the talk's own `CLAUDE.md` holds status and
+decisions. Pinned to slidev-videos v0.5.0. Talk-owned builder `histogram`
+(`setup/grains.js`): one grain per entry, random order, easing fill,
+`marks` bins light once full.
 
 - **Television rules** (research 2026-10-07; from the event's past
   recordings and broadcast standards): Delfi/LJA showed slides squeezed to about two-thirds

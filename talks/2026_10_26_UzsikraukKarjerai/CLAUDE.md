@@ -24,35 +24,43 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (16 slides, one thread)
+## Story (fifth version, 14 slides, about 10 min)
 
-The thread a viewer can retell: he did not know what he would be; his PhD
-gave him a question nobody could answer (pentaquarks, which had been
-claimed in 2003 and withdrawn by 2008, then found by LHCb in 2015); he
-searched for four and a half years and did not find them; that check still
-counts, and his own plans turned out differently too; so ask people what
-they do not know yet.
+Approved outline: `notes/outline-v5.md` (owner, 2026-10-08), minus the 2022
+plans slide (owner). The viewer sits in the physicist's seat.
 
-| # | Message | Picture |
+| # | Screen | Picture |
 |---|---|---|
-| 1 | No answer at the back of the book in my work; one such question, and first how I came to it | title; five faint clusters drift apart (the hero, `quarks`) |
-| 2 | At 16 I knew only that physics interested me: school, CERN in 11th grade, Glasgow | Europe of grains, route Vilnius → CERN → Vilnius → Glasgow |
-| 3 | I left particle physics, came back for a PhD; the PhD gave me pentaquarks | route → Vilnius → Heidelberg → Bonn |
-| 4 | 1964: the quark idea allowed five-quark particles; nobody knew if they exist | Gell-Mann and Zweig, quintet scattered, „1964“ |
-| 5 | 2003: a group announced it had found one | quintet half-held, „Paskelbė, kad rado.“ |
-| 6 | Others checked and found nothing; by 2008 it was withdrawn | quintet falls apart, „Paaiškėjo, kad jo nėra.“ |
-| 7 | They were found after all, at CERN, where the LHC collides protons | real LHC tunnel footage |
-| 8 | LHCb is one collision point; I am one of its 1 800 people | real photo of the LHCb cavern |
-| 9 | LHCb found them in 2015, 51 years after the idea | quintet held + LHCb 2015 plot |
-| 10 | Three in 2019, the year I began; my task: do they appear in another decay? | LHCb 2019 plot |
-| 11 | A needle in a haystack; after two years my method worked | haystack, a white-gold cluster gathers |
-| 12 | After four and a half years: not found | the ghost, „Neradau.“ |
-| 13 | That is a check like 2008's; the method went on into my next project | arcs from the ghost to a holding cluster |
-| 14 | Halfway through I wrote down my plans | his own 2022 slide over the dimmed map |
-| 15 | A year and a half later I was building an LHCb group in Vilnius | route home to Vilnius |
-| 16 | You don't need to know yet; a task for this week | the map dimmed, „Ko jūs savo darbe dar nežinote?“ |
+| 1 | title, name | the five-quark form gathers (hero, `quarks`) |
+| 2 | „Ar čia dalelė?“ | `th1` fills: 140 dots, a chance bump at 1,54 GeV (illustration) |
+| 3 | „2003 m. – taip.“ | same |
+| 4 | „2008 m. – ne.“ | `th2` fills: 3 500 dots, smooth (illustration) |
+| 5 | (clip) | LHC tunnel footage |
+| 6 | (photo) | LHCb cavern, StagePhoto |
+| 7 | „2015 m. – taip.“ → „2019 m. – trys.“ | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; the three peaks light |
+| 8 | „Kuo skyrėsi?“ | the full LHCb histogram, camera back |
+| 9 | „2019–2023 m. · Mano paieška“ | haystack, the method-works cluster |
+| 10 | „Neradau.“ | `mine` fills, no peak (illustration) |
+| 11 | „Ko išmokau“ + skills line | the map, dimmed |
+| 12 | city labels | the route across Europe |
+| 13 | three things to do this year | the form far off, dimmed |
+| 14 | „„Ko jūs savo darbe dar nežinote?““ alone | the form, held |
 
 ## Status
+
+- 2026-10-08 (night): **fifth version built on the branch, not deployed.**
+  Pinned to slidev-videos v0.5.0. A `histogram` builder (setup/grains.js)
+  fills a distribution grain by grain, one grain per entry, easing (fast
+  first), and lights `marks` bins once full. Data: `public/data/jpsip-2019.json`
+  (HEPData ins1728691 Table 2), `theta-toy.json` and `search-toy.json`
+  (illustrations, seeds inside). Broadcast look and TV type floors removed.
+  Lint --release 0 errors; check/build ok. Recorded and reviewed: slide 7
+  (sheet sent to the Scheduler), slides 2–4 and 10, stills of all 14.
+  Next: verify the fixes on 1, 7, 9, 10, then `talk ready`, the owner's go,
+  `talk deploy` (tell the Scheduler first).
+- Renders: `PLAYWRIGHT_BROWSERS_PATH=/var/tmp/misarpis/ms-playwright
+  RENDER_SRUN_ARGS="-p gluon_primary --ntasks=1 --cpus-per-task=16"` while
+  photon drains (else `-p photon_primary -c 16 -n 1`); output under /home.
 
 - 2026-10-08 (late): **stopped before deploy; fifth storyline proposed.**
   The owner does not see enough meaning in the fourth version (a
@@ -125,6 +133,18 @@ they do not know yet.
   the day.
 
 ## Decisions
+
+- 2026-10-08 — Slide 7 fills LHCb's 2019 bins (the 2015 paper's are not on
+  HEPData); the line changes from „2015 m. – taip.“ to „2019 m. – trys.“ as
+  the peaks light (Scheduler's review), so screen, data and words agree.
+  Undo: label it 2015 only and drop `marks`.
+- 2026-10-08 — Slides 2–4 and 10 are illustrations, declared in the notes
+  and spoken as „toks grafikas“: HEPData has no Θ⁺ data, and the thesis
+  plot is not public. Replace `search-toy.json` with the real histogram if
+  the speaker gives one.
+- 2026-10-08 — Dropped: the 2022 plans slide (owner), the 1964 portraits,
+  the separate 2019 slide, the empty-histogram slide (merged into
+  „Neradau.“).
 
 - 2026-10-08 — Not TV (owner): broadcast rules dropped from the brief;
   TV-only deck settings (`look: broadcast` overrides, safe-box CSS) stay
