@@ -56,7 +56,7 @@
       0,
       0
      ],
-     "size": 3.4,
+     "size": 4.0,
      "res": 120,
      "labelH": 0.03,
      "people": [
@@ -65,7 +65,7 @@
        "src": "/figures/people/mindaugas-sarpis.jpg",
        "at": [
         24.0,
-        9.4,
+        10.06,
         -1.82
        ]
       },
@@ -73,8 +73,8 @@
        "name": "Ramūnas Aleksiejūnas",
        "src": "/figures/people/ramunas-aleksiejunas.jpg",
        "at": [
-        17.7,
-        8.83,
+        17.2,
+        9.43,
         0.62
        ]
       },
@@ -82,8 +82,8 @@
        "name": "Oleg Kravcov",
        "src": "/figures/people/oleg-kravcov.jpg",
        "at": [
-        12.48,
-        7.22,
+        11.56,
+        7.66,
         2.2
        ]
       },
@@ -91,8 +91,8 @@
        "name": "Adam Morris",
        "src": "/figures/people/adam-morris.jpg",
        "at": [
-        9.26,
-        4.84,
+        8.08,
+        5.04,
         0.74
        ]
       },
@@ -100,8 +100,8 @@
        "name": "Augustas Vaitkevičius",
        "src": "/figures/people/augustas-vaitkevicius.jpg",
        "at": [
-        8.58,
-        2.11,
+        7.35,
+        2.04,
         -1.74
        ]
       },
@@ -109,8 +109,8 @@
        "name": "Rūta Racz",
        "src": "/figures/people/ruta-racz.jpg",
        "at": [
-        10.58,
-        -0.5,
+        9.51,
+        -0.83,
         -1.82
        ]
       },
@@ -118,8 +118,8 @@
        "name": "Šarūnas Jacevičius",
        "src": "/figures/people/sarunas-jacevicius.jpg",
        "at": [
-        14.89,
-        -2.54,
+        14.16,
+        -3.07,
         0.62
        ]
       },
@@ -127,8 +127,8 @@
        "name": "Margarita Biveinytė",
        "src": "/figures/people/margarita-biveinyte.jpg",
        "at": [
-        20.78,
-        -3.66,
+        20.52,
+        -4.31,
         2.2
        ]
       },
@@ -136,8 +136,8 @@
        "name": "Sophia Pennuttis",
        "src": "/figures/people/sophia-pennuttis.jpg",
        "at": [
-        27.22,
-        -3.66,
+        27.48,
+        -4.31,
         0.74
        ]
       },
@@ -145,8 +145,8 @@
        "name": "Mikas Paulius Iršėnas",
        "src": "/figures/people/mikas-paulius-irsenas.jpg",
        "at": [
-        33.11,
-        -2.54,
+        33.84,
+        -3.07,
         -1.74
        ]
       },
@@ -154,8 +154,8 @@
        "name": "Neilas Beniušis",
        "src": "/figures/people/neilas-beniusis.jpg",
        "at": [
-        37.42,
-        -0.5,
+        38.49,
+        -0.83,
         -1.82
        ]
       },
@@ -163,8 +163,8 @@
        "name": "Karolina German",
        "src": "/figures/people/karolina-german.jpg",
        "at": [
-        39.42,
-        2.11,
+        40.65,
+        2.04,
         0.62
        ]
       },
@@ -172,8 +172,8 @@
        "name": "Eliza Holvoet",
        "src": "/figures/people/eliza-holvoet.jpg",
        "at": [
-        38.74,
-        4.84,
+        39.92,
+        5.04,
         2.2
        ]
       },
@@ -181,8 +181,8 @@
        "name": "Meda Paulavičiūtė",
        "src": "/figures/people/meda-paulaviciute.jpg",
        "at": [
-        35.52,
-        7.22,
+        36.44,
+        7.66,
         0.74
        ]
       },
@@ -190,13 +190,14 @@
        "name": "Dominykas Stonkus",
        "src": "/figures/people/dominykas-stonkus.jpg",
        "at": [
-        30.3,
-        8.83,
+        30.8,
+        9.43,
         -1.74
        ]
       }
      ],
-     "onEnter": true
+     "onEnter": true,
+     "labels": false
     }
    ]
   },

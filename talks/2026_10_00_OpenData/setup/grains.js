@@ -816,7 +816,7 @@ function buildPortraits(o, ctx) {
       g.add(p)
     }
     img.src = String(person.src || '').startsWith('/') ? base + person.src : person.src
-    if (person.name) {
+    if (person.name && o.labels !== false) {   // labels: false keeps the names off the screen (they are in the notes)
       const make = () => {
         const l = smooth(ctx.helpers.makeLabel(person.name, { px: 64, weight: 500, color: '#dfe6f1', worldH: o.labelH ?? 0.026, letterSpacing: 0.04, upper: false }))
         l.material.sizeAttenuation = false; l.material.opacity = 0
