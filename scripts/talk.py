@@ -12,7 +12,7 @@
   status          every worktree: branch, talks it changes, ahead/behind origin/main,
                   dirty files; the last deploys and the last Pages run
   dev NAME        pnpm dev in the talk (more args after --)
-  build NAME      build into /tmp/talk-<slug>/site (base /; --pages: the Pages base)
+  build NAME      build into $TALK_TMP/talk-<slug>/site (base /; --pages: the Pages base)
   check NAME      videos:check, stage:check with the talk's own types, build
   shots NAME      slidev-stage-shots of that build into talks/<t>/shots/
   review NAME     check, then shots --changed --sheet
@@ -271,8 +271,8 @@ def which(name: str, env: dict | None = None) -> str | None:
 
 
 ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
-ERR_RE = re.compile(r"\b(errors?|failed|failure|fatal|exception|traceback|cannot|not found)\b|ERR_|ERR!|✖|✗", re.I)
-NO_ERR_RE = re.compile(r"\b(0|no) (errors?|problems?|failed|failures?)\b", re.I)
+ERR_RE = re.compile(r"(?i:\b(errors?|failed|failure|fatal|exception|traceback|cannot|not found)\b)|\w+Error\b|ERR_|ERR!|✖|✗")
+NO_ERR_RE = re.compile(r"\b(0|no) (errors?|problems?|failed|failures?)\b|^\s*[\w ]*errors?:\s*$", re.I)  # "page errors:" heads a list
 WARN_RE = re.compile(r"\bwarn(ing)?s?\b|\(!\)|⚠", re.I)
 
 
@@ -2072,7 +2072,7 @@ def build_parser() -> argparse.ArgumentParser:
     sp = verb("status", "every worktree and the last Pages run", talk=False)
     sp.add_argument("--no-fetch", action="store_true")
     verb("dev", "pnpm dev in the talk (more args after --)")
-    sp = verb("build", "build into /tmp/talk-<slug>/site")
+    sp = verb("build", "build into $TALK_TMP/talk-<slug>/site")
     sp.add_argument("--pages", action="store_true", help="the Pages base /<repo>/<talk>/ instead of /")
     sp = verb("check", "videos:check, stage:check, build")
     sp.add_argument("--pages", action="store_true")
