@@ -17,7 +17,8 @@
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
     "stage:check": "slidev-stage-check .",
-    "stage:shots": "slidev-stage-shots dist shots"
+    "stage:shots": "slidev-stage-shots dist shots",
+    "takeover:frame": "bash scripts/last_frame.sh"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2"

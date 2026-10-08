@@ -52,19 +52,31 @@ Kol ši skaidrė rodoma, grotuvas iš anksto įkelia pirmąjį klipą.
 -->
 
 ---
-space: { at: [44, 6, -16], dist: 18, yaw: -30, pitch: 14 }
+space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0 }   # the takeover's pose: the next slide stands exactly here
 ---
 
-<VideoPlayer src="vu_ff_zoom.mp4" />
+<VideoPlayer src="vu_ff_zoom.mp4" transition="fade" />
 
 <!--
 Kalbėtojui (4:42, su savo garso takeliu). Nutolinimas nuo VU Fizikos fakulteto / NFTMC pastato Saulėtekyje: Vilnius, Lietuva, Žemė, Paukščių Takas, galaktikos, kosminis tinklas.
 Galima tylėti ir leisti žiūrėti arba trumpai komentuoti etapus. Jei laiko mažai — „p“ sustabdo, rodyklė pirmyn eina toliau.
-Kai klipas subyra į dulkes, kamera jau skrenda prie galaktikos.
+Pirmyn spausti tik klipui pasibaigus: kita skaidrė prasideda nuo to paties paskutinio kadro (kosminio tinklo) ir paverčia jį pasaulio grūdeliais.
 -->
 
 ---
-space: { at: [47, -1.5, -2], dist: 26, yaw: 30, pitch: 58, dim: 0.2 }
+space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0, dim: 0 }
+---
+
+<WebTakeover />
+
+<!--
+Kalbėtojui (~0,3 min). Skaidrė prasideda nuo to paties paskutinio klipo kadro — kosminio tinklo, todėl perėjimo nesimato. Po pusės sekundės paveikslas subyra į šviesos grūdelius: pirmiausia tuštumos, paskui gijos. Kiekvienas grūdelis stovi savo pikselio regėjimo linijoje, todėl kol kamera nejuda, grūdeliai sudaro tą patį vaizdą. Kitoje skaidrėje kamera pajuda ir paaiškėja, kad vaizdas turi gylį: tai mūsų 3D erdvė iki pat pabaigos.
+Sakyti (kol byra): „Taip atrodo Visata didžiausiu mastu: galaktikų gijos ir tuštumos tarp jų — kosminis tinklas.“
+Techniškai: kadras — public/figures/opener_last.jpg (kol nėra naujo klipo — sintetinis pakaitalas); naują kadrą iš klipo išsitraukti: pnpm takeover:frame public/videos/<klipas>.mp4.
+-->
+
+---
+space: { at: [30, 40, -82], dist: 30, yaw: 55, pitch: 22, sway: 6, dim: 0.15 }   # round the web the frame became
 ---
 
 <div class="world-caption narrow">
@@ -76,7 +88,7 @@ space: { at: [47, -1.5, -2], dist: 26, yaw: 30, pitch: 58, dim: 0.2 }
 </div>
 
 <!--
-Kalbėtojui (~0,4 min). Pasaulyje susirenka spiralinė galaktika.
+Kalbėtojui (~0,4 min). Kamera apskrieja kosminį tinklą, kuriuo ką tik virto paskutinis kadras: plokščias vaizdas pasirodo esąs erdvė.
 Sakyti: „Ką tik pasiekėme kosminio tinklo mastą. Dabar — atgal, į patį mažiausią. Žvaigždės, planetos ir mes patys sudaryti iš tų pačių kelių rūšių dalelių. Joms tirti Europa prieš 72 metus įkūrė didžiausią pasaulyje dalelių fizikos laboratoriją — CERN.“
 Pastaba: „žvaigždės, planetos ir mes“ — tyčia ne „galaktikos“: didžioji galaktikų masės dalis yra tamsioji materija, kurios sudėties nežinome.
 -->
