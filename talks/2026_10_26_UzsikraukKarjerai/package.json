@@ -1,0 +1,29 @@
+{
+  "name": "talk-2026-10-26-uzsikraukkarjerai",
+  "private": true,
+  "description": "Užsikrauk karjerai — Delfi × Junior Achievement, Lithuanian, filmed 2026-10-26",
+  "scripts": {
+    "dev": "slidev deck.md",
+    "build": "slidev build deck.md",
+    "build:portable": "slidev build deck.md --base ./ --out dist-portable",
+    "export": "slidev export deck.md",
+    "videos:sync": "slidev-videos sync",
+    "videos:encode": "slidev-videos encode",
+    "videos:publish": "slidev-videos publish",
+    "videos:pull": "slidev-videos pull",
+    "videos:check": "slidev-videos check",
+    "videos:clean": "slidev-videos clean",
+    "videos:preflight": "slidev-videos preflight",
+    "venue": "slidev-videos venue",
+    "videos:frames": "slidev-videos frames",
+    "stage:check": "slidev-stage-check . --types path,streams,pairs,ghost,map,quintet",
+    "stage:shots": "slidev-stage-shots dist shots"
+  },
+  "dependencies": {
+    "@slidev/cli": "^52.14.2"
+  },
+  "devDependencies": {
+    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#640eaa57fbe882a7f995379c25fa86b85c8a4e2d",
+    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#640eaa57fbe882a7f995379c25fa86b85c8a4e2d&path:/packages/stage"
+  }
+}

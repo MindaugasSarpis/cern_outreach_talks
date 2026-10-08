@@ -46,6 +46,12 @@ Current talks:
   like the Innoday branch to slidev-videos `640eaa5` (feat/effects-v2) for the
   grain forms, plus two talk-owned builders. Date placeholder `10_00`. See
   "Open data talk" below.
+- `talks/2026_10_26_UzsikraukKarjerai/` — „Vadovėlio gale atsakymo nėra“, an
+  ~10-minute Lithuanian talk for grades 9–12 at „Užsikrauk karjerai“ (Delfi ×
+  Lietuvos Junior Achievement), filmed in the Delfi studio on 26 Oct 2026
+  with no audience, streamed to classrooms on 27 Oct 2026 12:00. Built for
+  television on the packaged stage (same `640eaa5` pin), its own violet-gold
+  palette and six talk-owned builders. See "Užsikrauk karjerai" below.
 
 ## Environment setup (fresh machine)
 
@@ -420,10 +426,10 @@ far-back scale poses stay nearest the store.
 - **Talk-owned builders** (`setup/grains.js`, registered from `setup/main.ts`;
   `stage:check` runs with `--types lineup,streams`):
   - `lineup` `{ name, pos, balls: [{ n, color, label }], unit, anchor, gaps, grow, reach, glow, labelH }`:
-    piles of one and the same sphere side by side along x (1, 800, 55 000
-    gold; 600 000 blue), each pile the first n points of a face-centred cubic
+    piles of one and the same sphere side by side along x (1, 800, 4 000
+    gold; 600 000 blue, the HL-LHC), each pile the first n points of a face-centred cubic
     lattice taken shell by shell, so the first n always make a ball. Piles keep
-    their size: the slides pull the camera back (dist 0.75 → 8.7 → 25.9 → 57.5)
+    their size: the slides pull the camera back (dist 0.75 → 8.7 → 18.1 → 50.1)
     and what came before is seen shrinking into the new scale (the owner's ask,
     2026-10-07: a single ball per step "looked the same after zooming out").
     A ball of one is the engine's marble; piles are sphere impostors (a point
@@ -441,14 +447,99 @@ far-back scale poses stay nearest the store.
     (fires on slide enter; the last step per name is kept for forms built
     later) and count with `<Count name :from :to />`. Arrival at `store` (and
     `c`) regathers the piles; `onDone` is always called, on the engine clock.
-- The deck sets `stage.options.reach: 20`: the 600 PB pose targets x = 2.3,
-  17.7 from the store station, and must still count as *at* it.
+- The deck sets `stage.options.reach: 20`: the 600 PB pose targets x = 5.48,
+  14.5 from the store station, and must still count as *at* it.
+- **Figures** (owner, 2026-10-08): "55 PB open" was dropped (the group's LMT
+  applications use ~55 PB for LHCb's *total* data); the open pile is the
+  public "over 4 PB" of Run 1 + Run 2 through the Ntupling Service (LHCb
+  outreach, 3 Mar 2026). The 600 PB pile is labelled HL-LHC on the owner's
+  word, its source still to be added (the public "600 PB" is CERN's Run 3
+  figure for all experiments). A number lives in the `lineup` balls in
+  `public/data/space.json`, the slide's `<Count :to>`, and the pose maths.
+- **Kick-off clip** (slide 2, after the cover so it buffers): `lhcb.mp4`, the
+  LHCb detector in 3D with music, as this talk's own 39 s cut of the library
+  clip (`trim = ["0:08", "0:47.1"]` in `videos/manifest.toml`, raw gdrive
+  `released/lhcb.mp4`, on release `videos-2026-10-00-opendata`, which wins the
+  chain by name). The library copy opens on 8 s of dark tunnel (mean
+  brightness under the player's `DARK`, 0.07) and ends on black, so the
+  default `dustFrom: lit` gathers the grains into a black frame and a clip
+  left after its end breaks up as black. The cut opens on the shafts above
+  the cavern (white CG on black, drawn by the grains with `videos.dustFrom:
+  start`) and ends at 47.1 s, as the music fades and before the picture does.
+  After re-encoding: `pnpm videos:frames` (commit `public/video-frames/`),
+  `videos:publish`, `videos:preflight`.
+- Slides carry main points only (owner, 2026-10-08: "people will not read it,
+  I will just say it"); what they leave out is in the notes under "Say:".
+  No `.src` footers on the slides either ("don't need the sources"): each
+  slide's sources are a "Sources:" line in its notes.
+- `vite.config.ts` excludes `slidev-addon-stage` and `three` from
+  pre-bundling, else `slidev dev` has two builder registries (the world never
+  sees `lineup`/`streams`) and two copies of three.
 - Streams on the store station: `world` (8 anonymous users, "Anyone can take
   it"), `vilnius` (3: the Z → μμ analysis, the course, the masterclass) and
   `dominykas` (1, ends at the `thesis` pentaquark, alone on the climax slide);
   the Dominykas slide is the last content slide, the close follows.
 - Under SwiftShader the 600 000-sphere pile renders at ~7 fps (1280×720), so
   flights and gathers run slow (dt clamp); shoot with `--wait 34000`.
+
+## Užsikrauk karjerai (2026_10_26_UzsikraukKarjerai)
+
+One thread in three parts, 17 slides, about 10 minutes (reworked
+2026-10-08 after the owner rejected a 31-slide, committee-written first
+version: "too many slides, AI-sounding statements, storytelling off"):
+I. the question nobody can answer yet (why matter survived: one in a
+billion), then where it is asked (the LHC, LHCb); II. what working on such a
+question looks like: one particle followed from idea (1964) to false find
+(2003), retraction (2008) and discovery (2015), then the speaker's own
+search for three of them, which ended in „Neradau.“, why that still counts,
+and the open data; III. what it has to do with the viewer: his crooked
+route across Europe, his own 2022 plans slide, back to the open question
+(galaxy), and one task for the week. Slide text is only numbers, years, a
+URL, his word „Neradau.“ and the closing question: no slogan cards. The
+full spoken script, timings, public sources and [PATIKSLINTI] items are in
+the notes.
+
+- **Television rules** (research 2026-10-07; from the event's past
+  recordings and broadcast standards): Delfi/LJA showed slides squeezed to about two-thirds
+  of the frame in past editions and stream at ~2.5 Mbps, watched on classroom
+  projectors. So `styles/index.css` sets readable text ≥ 49 px on the 980
+  canvas (96 px at 1080p), big lines 58–80 px, numbers 130 px, all inside
+  x 98–882 / y 55–408 and out of the logo/name-super corners; the headmatter
+  turns off film grain, aberration, halos and sound and sets fewer, bigger
+  dust grains, a low nebula and slower flights (`options: { grain: 0,
+  aberration: 0, dustSize: 3, density: 0.6, streak: 0.4, nebula: 0.3, bloom:
+  0.45, flight: [2.5, 5] }`); the grains' twinkle is slow and shallow. Laptop
+  output 1920×1080 at 50 Hz. No full-frame flashes (ITU-R BT.1702).
+- **Stations** (one axis, 300 apart, so only one is ever in frame): `origin`
+  (hero; `pairs`), `collider`, `quarks` (`quintet`), `search` (`ghost` with a
+  haystack, `streams` `phantom`), `europe` (`map`, `path` `route`: Vilnius →
+  CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius; pose
+  `whole`), `cosmos` (`galaxy`; pose `close`). `stage.options.reach: 22`.
+- **Talk-owned builders** (`setup/grains.js`, `stage:check --types
+  path,streams,pairs,ghost,map,quintet`), all driven by `<Grains :set>`:
+  - `pairs` — matter (gold) and antimatter (blue): 1 the hot cloud forms, 2 the
+    pairs meet and go out as light (outer first; brightness only falls), 3 the
+    remainder gathers into a knot. Forward one step plays it, anything else
+    shows the step settled; an arrival from elsewhere (or `c`) replays up to
+    the current step unless a step started under 5 s ago.
+  - `quintet` — five clusters joined by flowing strings; per-step `{ hold,
+    light }`: idea (scattered), claim (half-held, dim), retraction (scattered),
+    discovery (held, bright).
+  - `ghost` — faint clusters that come together and drift apart, never
+    holding; `hay` adds a wide faint cloud round it; with a `name`, step 0
+    hides the clusters and step 1 lets them appear (the single „Neradau.“).
+  - `path` — a Catmull-Rom trail through ≤ 16 waypoints, drawn on to waypoint
+    k, each leg arcing off the ground (`arc`); a waypoint at the same place as
+    an earlier one relights that cluster instead of stacking a new one.
+  - `map` — Europe's coastline and land borders as grains on the ground plane,
+    from Natural Earth 1:50m (`scripts/make_europe.py` → `public/data/
+    europe.json`; one unit = one degree of latitude, x scaled by cos 52°).
+  - `streams` — OpenData's, with a per-stream `from` (many places to one).
+- `setup/Count.vue` prints Lithuanian numbers: a narrow space from five digits
+  up, none in years (`:group="false"`), decimal comma.
+- `public/figures/planai-2022.jpg` is the speaker's own LPPM 2022 slide (p. 16
+  of the public MSarpisIntro.pdf on Indico).
+- Shots: `stage:shots --wait 30000` under SwiftShader.
 
 ## Slidev gotchas
 

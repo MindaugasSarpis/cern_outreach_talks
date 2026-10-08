@@ -18,6 +18,7 @@ only decks and per-talk config.
 | TBD        | `talks/2026_09_00_Startertalk/`        | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_09_00_Startertalk/) |
 | TBD        | `talks/2026_10_00_Innoday/`            | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/) |
 | TBD        | `talks/2026_10_00_OpenData/`           | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_OpenData/) |
+| 2026-10-26 | `talks/2026_10_26_UzsikraukKarjerai/`  | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/) |
 
 Index of all talks: https://mindaugassarpis.github.io/cern_outreach_talks/
 

@@ -1,0 +1,121 @@
+/* Užsikrauk karjerai — the talk's own type over the stage kit
+   (slidev-addon-stage styles/index.css), written for television.
+
+   The slides reach students through a 1080p stream at about 2.5 Mbps, on
+   classroom projectors, and in past editions the producers shrank them to
+   about two-thirds of the frame beside the speaker. So:
+   - readable text is at least 49 px here (96 px at 1080p: Slidev's canvas is
+     980 px wide, one canvas px is 1.96 broadcast px), big lines 58 px, numbers
+     130 px; at most two lines of about 28 characters;
+   - text keeps to x 98–882, y 55–408 of the 980 × 551 canvas (the central
+     80 % across, and clear of the bottom band), and stays out of the three
+     corners the channel uses: logo top-right, name super bottom-left, clock
+     and partner logos bottom-right;
+   - nothing small carries meaning: the source line is a record, not for
+     reading on air.
+   Gold is matter and the speaker's path; blue is antimatter and the world. */
+
+html[data-stage] {
+  --kk-gold: #ffc05a; --kk-gold-hi: #ffe3a8; --kk-blue: #8fb2ff; --kk-blue-hi: #dfe8ff;
+  --kk-x: 98px;          /* left and right edge of the text area */
+  --kk-floor: 143px;     /* distance of the text area's lower edge from the bottom */
+  --kk-top: 55px;
+  --kk-shadow: 0 0 26px rgba(0, 0, 0, 0.75), 0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+/* the kit's footer, centred and out of the corners */
+html[data-stage] .src {
+  left: 50%; right: auto; transform: translateX(-50%); bottom: 16px; max-width: 520px; text-align: center;
+  font-size: 12px; opacity: 0.55; white-space: normal;
+}
+
+/* --- cover: the title large, the line under it readable */
+html[data-stage] .slidev-layout.cover { padding-left: var(--kk-x) !important; padding-top: 0 !important; justify-content: flex-start; padding-top: 118px !important; }
+html[data-stage] .slidev-layout.cover h1:first-of-type { font-size: 20px !important; letter-spacing: 0.14em !important; }
+html[data-stage] .slidev-layout.cover h1:nth-of-type(2) { font-size: 78px !important; line-height: 0.98 !important; max-width: 11ch; }
+html[data-stage] .slidev-layout.cover h2 {
+  font-size: 30px !important; font-weight: 500 !important; letter-spacing: 0 !important; text-transform: none !important;
+  color: var(--stage-fg) !important; opacity: 0.92; line-height: 1.2 !important; max-width: 24ch;
+}
+html[data-stage] .slidev-layout.cover .mt-md { font-size: 18px; letter-spacing: 0.1em; margin-top: 22px; }
+
+/* --- a line spoken into the world: a kicker, one big sentence, maybe one more line.
+   Anchored to the floor of the text area, left (or right) of the frame. */
+html[data-stage] .say {
+  position: absolute; left: var(--kk-x); bottom: var(--kk-floor); max-width: 62%;
+  color: var(--stage-fg); text-shadow: var(--kk-shadow);
+  animation: stage-rise 0.9s var(--stage-ease) 0.5s both;
+}
+html[data-stage] .say.right { left: auto; right: var(--kk-x); text-align: right; }
+html[data-stage] .say.top { bottom: auto; top: 96px; }
+html[data-stage] .say.wide { max-width: calc(100% - 2 * var(--kk-x)); }
+html[data-stage] .say .kick {
+  font-size: 20px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--kk-gold); margin: 0 0 12px;
+}
+html[data-stage] .say .kick.blue { color: var(--kk-blue); }
+html[data-stage] .say .big { font-size: 58px; font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; margin: 0; }
+html[data-stage] .say .big.huge { font-size: 76px; }
+html[data-stage] .say .big em { font-style: normal; color: var(--kk-gold-hi); }
+html[data-stage] .say .big .blue { color: var(--kk-blue-hi); }
+html[data-stage] .say .line { font-size: 40px; font-weight: 600; line-height: 1.12; margin: 14px 0 0; opacity: 0.94; }
+
+/* --- a counted number (and its unit), then one line */
+html[data-stage] .num {
+  font-size: 130px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9;
+  font-variant-numeric: tabular-nums; white-space: nowrap; margin: 0 0 6px;
+}
+html[data-stage] .num.small { font-size: 84px; margin: 0; }
+html[data-stage] .num.small + .line { font-size: 30px; margin: 4px 0 14px; }
+html[data-stage] .num.gold { color: var(--kk-gold-hi); }
+html[data-stage] .num.blue { color: var(--kk-blue-hi); }
+html[data-stage] .num .unit { font-size: 0.42em; font-weight: 600; letter-spacing: -0.01em; margin-left: 0.18em; color: var(--kk-gold); }
+html[data-stage] .num.blue .unit { color: var(--kk-blue); }
+
+/* --- a chapter of the path: when and where (kicker), what (big), one more line */
+html[data-stage] .chapter {
+  position: absolute; left: var(--kk-x); bottom: var(--kk-floor); max-width: 58%;
+  color: var(--stage-fg); text-shadow: var(--kk-shadow);
+  animation: stage-rise 0.8s var(--stage-ease) 0.45s both;
+}
+html[data-stage] .chapter.right { left: auto; right: var(--kk-x); text-align: right; }
+html[data-stage] .chapter .when { font-size: 22px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--kk-gold); margin: 0 0 10px; }
+html[data-stage] .chapter .what { font-size: 58px; font-weight: 700; line-height: 1.02; letter-spacing: -0.02em; margin: 0; }
+html[data-stage] .chapter .line { font-size: 40px; font-weight: 600; line-height: 1.12; margin: 12px 0 0; opacity: 0.94; }
+
+/* --- the close */
+html[data-stage] .slidev-layout.statement { padding: var(--kk-top) var(--kk-x) var(--kk-floor) !important; justify-content: center; }
+html[data-stage] .slidev-layout.statement h1 {
+  font-size: 64px !important; line-height: 1.04 !important; max-width: 17ch; margin-left: auto !important; margin-right: auto !important;
+  text-shadow: var(--kk-shadow);
+}
+html[data-stage] .slidev-layout.statement .mt-md { font-size: 24px; letter-spacing: 0.08em; margin-top: 22px; color: var(--stage-fg); opacity: 0.85; }
+
+/* --- the title card (after the cold open) */
+html[data-stage] .say.title { bottom: auto; top: 112px; max-width: 70%; }
+html[data-stage] .say.title .big.huge { font-size: 80px; text-transform: uppercase; line-height: 0.98; }
+html[data-stage] .say .byline { font-size: 22px; font-weight: 500; letter-spacing: 0.06em; margin: 22px 0 0; opacity: 0.88; }
+
+/* --- a line over a clip: on a dark band, so it holds against any frame */
+html[data-stage] .say.on-clip {
+  z-index: 5; padding: 14px 22px 16px; border-radius: 10px;
+  background: rgba(var(--stage-bg-rgb, 3, 5, 13), 0.62); text-shadow: none;
+}
+
+/* --- the road not taken, set back */
+html[data-stage] .say .line.faded { opacity: 0.42; text-decoration: line-through; text-decoration-thickness: 3px; margin: 0 0 10px; }
+
+/* --- text that waits for a long flight to land */
+html[data-stage] .say.late { animation-delay: 3.2s; }
+
+/* --- the speaker's own 2022 slide */
+html[data-stage] .plans {
+  position: absolute; left: 17%; top: 40px; width: 66%;
+  text-align: center; animation: stage-rise 0.9s var(--stage-ease) 0.4s both;
+}
+html[data-stage] .plans .kick { font-size: 20px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--kk-gold); margin: 0 0 12px; text-shadow: var(--kk-shadow); }
+html[data-stage] .plans img { width: 100%; border-radius: 10px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55); }
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .plans { animation: none !important; } }
+
+@media (prefers-reduced-motion: reduce), print {
+  html[data-stage] .say, html[data-stage] .chapter { animation: none !important; }
+}
