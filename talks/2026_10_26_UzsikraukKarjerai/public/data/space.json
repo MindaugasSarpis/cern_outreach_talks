@@ -59,44 +59,9 @@
      "radius": 7,
      "survivors": 320,
      "size": 1.6,
-     "alpha": 0.6,
+     "alpha": 0.78,
      "gather": 2.4,
      "spread": 6.5
-    }
-   ]
-  },
-  {
-   "id": "collider",
-   "pos": [
-    300,
-    0,
-    0
-   ],
-   "look": {
-    "target": [
-     3.5,
-     0,
-     0
-    ],
-    "dist": 21,
-    "yaw": -26,
-    "pitch": 26,
-    "sway": 3
-   },
-   "gather": 0.15,
-   "objects": [
-    {
-     "type": "collider",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "radius": 7,
-     "lap": 9,
-     "tracks": 16,
-     "grains": 22000,
-     "yaw": 90
     }
    ]
   },
@@ -129,8 +94,8 @@
       0
      ],
      "radius": 2.4,
-     "size": 1.5,
-     "alpha": 0.62,
+     "size": 1.6,
+     "alpha": 0.78,
      "steps": [
       {
        "hold": 0,
@@ -182,10 +147,10 @@
      ],
      "radius": 1.8,
      "size": 1.5,
-     "alpha": 0.55,
+     "alpha": 0.6,
      "hay": 14000,
      "hayRadius": 10,
-     "hayAlpha": 0.62,
+     "hayAlpha": 0.7,
      "hayColor": "#c9b57e"
     },
     {
@@ -276,6 +241,38 @@
      "alpha": 0.75,
      "size": 1.4,
      "stagger": 0.3
+    },
+    {
+     "type": "streams",
+     "name": "dance",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      {
+       "from": [
+        -9,
+        4,
+        -3
+       ],
+       "pos": [
+        3.6,
+        2.2,
+        1.5
+       ],
+       "lift": 0.1
+      }
+     ],
+     "grains": 900,
+     "node": 1100,
+     "nodeRadius": 0.55,
+     "color": "#fff1d6",
+     "speed": 0.16,
+     "alpha": 0.8,
+     "size": 1.4,
+     "delay": 20
     }
    ]
   },
@@ -308,10 +305,10 @@
       0
      ],
      "scale": 1.6,
-     "alpha": 0.95,
-     "size": 1.7,
+     "alpha": 1.0,
+     "size": 1.8,
      "borderAlpha": 0.22,
-     "color": "#c4ccff",
+     "color": "#cdd6ff",
      "border": "#7f74e0"
     },
     {
@@ -379,8 +376,8 @@
      "node": 900,
      "nodeRadius": 0.6,
      "width": 0.13,
-     "size": 1.4,
-     "alpha": 0.72,
+     "size": 1.5,
+     "alpha": 0.86,
      "color": "#ffc05a",
      "draw": 2.6
     }

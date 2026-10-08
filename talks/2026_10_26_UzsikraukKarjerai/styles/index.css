@@ -18,7 +18,7 @@
 html[data-stage] {
   --kk-gold: #ffc05a; --kk-gold-hi: #ffe3a8; --kk-blue: #8fb2ff; --kk-blue-hi: #dfe8ff;
   --kk-x: 98px;          /* left and right edge of the text area */
-  --kk-floor: 143px;     /* distance of the text area's lower edge from the bottom */
+  --kk-floor: 168px;     /* distance of the text area's lower edge from the bottom (glyph boxes run ~20 px past it) */
   --kk-top: 55px;
   --kk-shadow: 0 0 26px rgba(0, 0, 0, 0.75), 0 0 6px rgba(0, 0, 0, 0.6);
 }
@@ -90,7 +90,20 @@ html[data-stage] .slidev-layout.statement h1 {
 }
 html[data-stage] .slidev-layout.statement .mt-md { font-size: 24px; letter-spacing: 0.08em; margin-top: 22px; color: var(--stage-fg); opacity: 0.85; }
 
-/* --- the title card (after the cold open) */
+/* --- a real plot beside the world: inverted to light lines on the dark ground and
+   added to it (screen), so no white sheet flashes up on air; right half, in the safe box */
+html[data-stage] img.plot {
+  position: absolute; right: 98px; top: 110px; width: 36%; height: auto;
+  filter: invert(1) hue-rotate(180deg) brightness(1.1) contrast(1.15);
+  mix-blend-mode: screen; opacity: 0.95;
+  animation: stage-rise 0.9s var(--stage-ease) 0.6s both;
+}
+html[data-stage] .credit {
+  position: absolute; right: 98px; top: 86px; width: 36%; text-align: left;
+  font-size: 16px; letter-spacing: 0.02em; color: var(--stage-fg); opacity: 0.75;
+}
+
+/* --- the title card */
 html[data-stage] .say.title { bottom: auto; top: 112px; max-width: 70%; }
 html[data-stage] .say.title .big.huge { font-size: 80px; text-transform: uppercase; line-height: 0.98; }
 html[data-stage] .say .byline { font-size: 22px; font-weight: 500; letter-spacing: 0.06em; margin: 22px 0 0; opacity: 0.88; }
@@ -109,7 +122,7 @@ html[data-stage] .say.late { animation-delay: 3.2s; }
 
 /* --- the speaker's own 2022 slide */
 html[data-stage] .plans {
-  position: absolute; left: 17%; top: 40px; width: 66%;
+  position: absolute; left: 22%; top: 60px; width: 56%;
   text-align: center; animation: stage-rise 0.9s var(--stage-ease) 0.4s both;
 }
 html[data-stage] .plans .kick { font-size: 20px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--kk-gold); margin: 0 0 12px; text-shadow: var(--kk-shadow); }
