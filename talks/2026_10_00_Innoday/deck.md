@@ -110,10 +110,8 @@ space: { at: [12.5, -3.4, 0], dist: 19, yaw: -30, pitch: 24, dim: 0.4 }
 
 # I dalis · Mašina
 
-CERN ir Didysis hadronų greitintuvas
-
 <!--
-Kalbėtojui. Pasaulyje — greitintuvo žiedas: du protonų paketai skrieja priešingomis kryptimis ir susitinka du kartus per ratą; iš kiekvieno susitikimo taško sklinda dalelių pėdsakai.
+Kalbėtojui. Sakyti: „CERN ir Didysis hadronų greitintuvas.“ Pasaulyje — greitintuvo žiedas: du protonų paketai skrieja priešingomis kryptimis ir susitinka du kartus per ratą; iš kiekvieno susitikimo taško sklinda dalelių pėdsakai.
 (~0,2 min)
 -->
 
@@ -254,8 +252,6 @@ space: { at: [84.2, -2.2, 0], dist: 13, yaw: -22, pitch: 16, dim: 0.08 }
 ---
 
 # II dalis · Sprendimai
-
-Kas atsirado sprendžiant CERN problemas
 
 <!--
 Kalbėtojui. Pasaulyje — tinklas: mazgai, sujungti tekančių grūdelių gijomis. Kiekviena šios dalies skaidrė prasideda problema (ji parašyta viršuje) ir baigiasi tuo, kas iš jos išėjo į pasaulį. Tvarka: kas yra jūsų kišenėje, kas yra ligoninėse, kas vyksta pramonėje šiandien.
@@ -484,10 +480,8 @@ space: { at: [120, -2.4, 0], dist: 14, yaw: -22, pitch: 22, dim: 0.4 }
 
 # III dalis · Atgal
 
-Mokslo pasiekimai privačiame sektoriuje
-
 <!--
-Kalbėtojui. Pasaulyje — auksinė „sėkla“ ir aplink ją besisukantis mazgų ratas: žinios, išeinančios iš CERN.
+Kalbėtojui. Dalies pavadinimas ištisai: „Atgal — prie mokslo pasiekimų privačiame sektoriuje.“ Pasaulyje — auksinė „sėkla“ ir aplink ją besisukantis mazgų ratas: žinios, išeinančios iš CERN.
 Sakyti: „Daugumoje šių pavyzdžių fizikų sprendimą į produktą pavertė įmonė: Siemens — skenerį, MARS — spalvotą rentgeną, ADVACAM — lustų modulius, Airbus — liniją lėktuvui. Pažiūrėkime, kaip tai vyksta ir kodėl tai gali būti Lietuvos įmonė.“
 (~0,3 min)
 -->
@@ -609,13 +603,10 @@ space: { at: close }
 
 # Ačiū
 
-<div class="mt-md">Klausimai</div>
-
-<p class="contacts">lhcb-vilnius.web.cern.ch · kt.cern · business-with-cern.web.cern.ch</p>
-
 <!--
 Kalbėtojui. Kamera grįžta ten, kur prasidėjo; ilgiausias skrydis (~4,5 s). Pentakvarkas išsibarsto ir vėl susirenka; „c“ — dar kartą.
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų, o trys Lietuvos įmonės jau pasirašė su CERN memorandumus dėl jo. Ačiū, laukiu klausimų.“
+Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
 Trukmė: kalba ~17,5 min; klipai — įžanginis 4:26, CERN iš oro 0:11, LHCb animacija 0:56 (kalbama per ją); iš viso apie 22 min. Jei skirta 15 min: įžanginį klipą trumpinti iki ~1,5 min (−3), praleisti Higso ir Artemis skaidres (−1), FCC ir +14 % sutrumpinti iki vieno sakinio (−1). Paslėpta skaidrė po šios (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
 (~0,4 min)
 -->
