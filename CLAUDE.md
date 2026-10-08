@@ -493,9 +493,15 @@ far-back scale poses stay nearest the store.
 
 ## Užsikrauk karjerai (2026_10_26_UzsikraukKarjerai)
 
-One thread in three parts, 17 slides, about 10 minutes (reworked
-2026-10-08 after the owner rejected a 31-slide, committee-written first
-version: "too many slides, AI-sounding statements, storytelling off"):
+Third version, 19 slides, about 10 minutes, one chronological thread (the
+owner rejected a 31-slide committee-written first version and a second whose
+flow jumped between questions and whose world looked washed out). The
+talk's own `CLAUDE.md` holds the brief, story table, status and decisions.
+Pinned to slidev-videos `feat/broadcast` (efacca2) for `look: broadcast`,
+`slidev-stage-safe` and `slidev-stage-record`. Real photographs and footage
+carry the real things (LHC tunnel, LHCb cavern, Gell-Mann and Zweig, the
+LHCb plots, NGC 1300), credited on screen and in `credits.txt`. Earlier
+outline, kept for the world's mechanics:
 I. the question nobody can answer yet (why matter survived: one in a
 billion), then where it is asked (the LHC, LHCb); II. what working on such a
 question looks like: one particle followed from idea (1964) to false find
@@ -520,10 +526,12 @@ the notes.
   0.45, flight: [2.5, 5] }`); the grains' twinkle is slow and shallow. Laptop
   output 1920×1080 at 50 Hz. No full-frame flashes (ITU-R BT.1702).
 - **Stations** (one axis, 300 apart, so only one is ever in frame): `origin`
-  (hero; `pairs`), `collider`, `quarks` (`quintet`), `search` (`ghost` with a
-  haystack, `streams` `phantom`), `europe` (`map`, `path` `route`: Vilnius →
+  (hero; `pairs`), `quarks` (`quintet`), `search` (`ghost` with a haystack,
+  `streams` `dance` and `phantom`), `europe` (`map`, `path` `route`: Vilnius →
   CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius; pose
-  `whole`), `cosmos` (`galaxy`; pose `close`). `stage.options.reach: 22`.
+  `whole`, no sway, with HTML city labels projected from it).
+  `stage.options.reach: 22`. The clips and photos cover the world on their
+  slides; the collider ring and the grain galaxy are gone.
 - **Talk-owned builders** (`setup/grains.js`, `stage:check --types
   path,streams,pairs,ghost,map,quintet`), all driven by `<Grains :set>`:
   - `pairs` — matter (gold) and antimatter (blue): 1 the hot cloud forms, 2 the

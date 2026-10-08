@@ -18,7 +18,7 @@
 html[data-stage] {
   --kk-gold: #ffc05a; --kk-gold-hi: #ffe3a8; --kk-blue: #8fb2ff; --kk-blue-hi: #dfe8ff;
   --kk-x: 98px;          /* left and right edge of the text area */
-  --kk-floor: 143px;     /* distance of the text area's lower edge from the bottom */
+  --kk-floor: 168px;     /* distance of the text area's lower edge from the bottom (glyph boxes run ~20 px past it) */
   --kk-top: 55px;
   --kk-shadow: 0 0 26px rgba(0, 0, 0, 0.75), 0 0 6px rgba(0, 0, 0, 0.6);
 }
@@ -63,6 +63,7 @@ html[data-stage] .say .line { font-size: 40px; font-weight: 600; line-height: 1.
 html[data-stage] .num {
   font-size: 130px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9;
   font-variant-numeric: tabular-nums; white-space: nowrap; margin: 0 0 6px;
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 0, 0, 0.7);
 }
 html[data-stage] .num.small { font-size: 84px; margin: 0; }
 html[data-stage] .num.small + .line { font-size: 30px; margin: 4px 0 14px; }
@@ -90,7 +91,58 @@ html[data-stage] .slidev-layout.statement h1 {
 }
 html[data-stage] .slidev-layout.statement .mt-md { font-size: 24px; letter-spacing: 0.08em; margin-top: 22px; color: var(--stage-fg); opacity: 0.85; }
 
-/* --- the title card (after the cold open) */
+/* --- a real plot beside the world: inverted to light lines on the dark ground and
+   added to it (screen), so no white sheet flashes up on air; right half, in the safe box */
+html[data-stage] img.plot {
+  position: absolute; right: 98px; top: 84px; width: 45%; height: auto; max-width: none !important; max-height: none !important;
+  filter: invert(1) hue-rotate(180deg) brightness(1.1) contrast(1.15);
+  mix-blend-mode: screen; opacity: 0.95;
+  animation: stage-rise 0.9s var(--stage-ease) 0.6s both;
+}
+html[data-stage] .credit {
+  position: absolute; right: 98px; top: 58px; width: 45%; text-align: left; white-space: nowrap;
+  font-size: 16px; letter-spacing: 0.02em; color: var(--stage-fg); opacity: 0.75;
+}
+
+/* --- a real photograph, full frame, drawing slowly closer (a 24 s push of 6 %: slow enough for a stream encoder) */
+html[data-stage] .photo { position: absolute; inset: 0; overflow: hidden; animation: kk-in 0.8s ease both; }
+html[data-stage] .photo img { width: 100%; height: 100%; object-fit: cover; display: block; animation: kk-push 24s linear both; }
+html[data-stage] .photo.dim::after { content: ''; position: absolute; inset: 0; background: rgba(4, 4, 10, 0.5); }
+@keyframes kk-push { from { transform: scale(1); } to { transform: scale(1.06); } }
+@keyframes kk-in { from { opacity: 0; } to { opacity: 1; } }
+html[data-stage] .photo-credit {
+  position: absolute; left: var(--kk-x); top: 58px; z-index: 6; font-size: 16px; letter-spacing: 0.02em;
+  color: #f1f3f8; background: rgba(0, 0, 0, 0.72); padding: 3px 10px; border-radius: 4px;
+}
+
+/* --- two portraits beside the world, named */
+html[data-stage] .portraits { position: absolute; right: 98px; top: 56px; display: flex; gap: 18px; animation: stage-rise 0.9s var(--stage-ease) 0.5s both; }
+html[data-stage] .portraits figure { margin: 0; }
+html[data-stage] .portraits img { width: 222px; height: 278px; object-fit: cover; border-radius: 8px; display: block; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55); filter: grayscale(1) contrast(1.05); max-width: none !important; }
+html[data-stage] .portraits figcaption { font-size: 18px; text-align: center; margin-top: 8px; color: var(--stage-fg); text-shadow: var(--kk-shadow); }
+html[data-stage] .portraits figcaption small { display: block; font-size: 16px; opacity: 0.7; white-space: nowrap; margin-top: 2px; }
+@media (prefers-reduced-motion: reduce), print {
+  html[data-stage] .photo, html[data-stage] .photo img, html[data-stage] .portraits { animation: none !important; }
+}
+
+/* --- a dark band behind text on the left, so the world or a photo can stay bright on the right */
+html[data-stage] .scrim-left {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.38) 32%, rgba(0, 0, 0, 0) 58%);
+}
+html[data-stage] .photo.right img { position: absolute; width: 140%; height: 140%; left: -5%; top: -20%; max-width: none !important; max-height: none !important; }   /* the galaxy's core to 65 % of the width, off the text */
+
+/* --- city names on the map (positions projected from the `whole` pose, which has no sway) */
+html[data-stage] .city {
+  position: absolute; font-size: 22px; font-weight: 600; letter-spacing: 0.01em; color: #eef1ff;
+  text-shadow: var(--kk-shadow); white-space: nowrap; animation: stage-rise 0.8s var(--stage-ease) 1.6s both;
+}
+html[data-stage] .city.r { translate: -100% 0; text-align: right; }   /* `translate`, not `transform`: the rise-in animation holds transform: none */
+html[data-stage] .city.late { animation-delay: 5s; }   /* after the flight in and the map gathering */
+html[data-stage] .city.home { color: var(--kk-gold-hi); }
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .city { animation: none !important; } }
+
+/* --- the title card */
 html[data-stage] .say.title { bottom: auto; top: 112px; max-width: 70%; }
 html[data-stage] .say.title .big.huge { font-size: 80px; text-transform: uppercase; line-height: 0.98; }
 html[data-stage] .say .byline { font-size: 22px; font-weight: 500; letter-spacing: 0.06em; margin: 22px 0 0; opacity: 0.88; }
@@ -109,11 +161,11 @@ html[data-stage] .say.late { animation-delay: 3.2s; }
 
 /* --- the speaker's own 2022 slide */
 html[data-stage] .plans {
-  position: absolute; left: 17%; top: 40px; width: 66%;
+  position: absolute; left: 21%; top: 58px; width: 58%;
   text-align: center; animation: stage-rise 0.9s var(--stage-ease) 0.4s both;
 }
 html[data-stage] .plans .kick { font-size: 20px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--kk-gold); margin: 0 0 12px; text-shadow: var(--kk-shadow); }
-html[data-stage] .plans img { width: 100%; border-radius: 10px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55); }
+html[data-stage] .plans img { width: 100% !important; max-width: none !important; max-height: none !important; height: auto; border-radius: 10px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55); }
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .plans { animation: none !important; } }
 
 @media (prefers-reduced-motion: reduce), print {
