@@ -143,7 +143,7 @@ class: photo-slide
 
 # 4 TB every second
 
-<p class="line">The detector is read out 40 million times a second, and software decides what to keep.</p>
+<p class="line">The detector is read out 40 million times a second, and software selects what to keep.</p>
 
 </div>
 
@@ -178,11 +178,11 @@ space: { at: [10.37, 0, 0], dist: 0.75, yaw: -6, pitch: 4, dim: 0.2 }
 
 <div class="readout">
 
-<p class="kicker">The unit</p>
+<p class="kicker">One sphere</p>
 
 <div class="big"><Count name="unit" :from="1" :to="1" /><span class="unit">TB</span></div>
 
-<p class="line">One sphere is one terabyte, about as much as a laptop's disk holds.</p>
+<p class="line">About as much as a laptop's disk holds.</p>
 
 </div>
 
@@ -194,7 +194,7 @@ Message: from here on, one sphere is one terabyte.
 Say: to see how much data that is, take one terabyte, about what a laptop's
 disk holds, and make it one sphere. LHCb reads out four of these every second.
 From now on every sphere is a terabyte, and every pile is built from the same
-spheres. Nothing shrinks; the camera only steps back.
+spheres. The spheres keep their size, and the camera steps back.
 
 Sources: decimal units (1 TB = 10¹² bytes); a common laptop disk is 1 TB;
 the 4 TB a second as on the previous slide.
@@ -262,8 +262,7 @@ Message: the whole LHC has stored ten times as much again.
 Say: and this is all four LHC experiments together. In December 2025 CERN
 passed one exabyte of stored LHC data, a million terabytes, most of it on about
 60 000 magnetic tapes. The first half took about twelve years to collect; the
-second half came in three. Only a few scientific archives anywhere are this
-large.
+second half came in three.
 
 Sources: home.cern, "CERN hits one exabyte of stored experimental data from the
 LHC" (17 December 2025).
@@ -300,7 +299,7 @@ space: { at: [9.6, 0, 0], dist: 8.7, yaw: -4, pitch: 4, dim: 1 }
 <!--
 Message: in this data LHCb finds new particles, so the data is worth opening.
 
-Say: in this data LHCb finds new things. Of the 86 new hadrons, particles made
+Say: LHCb finds new particles in this data. Of the 86 new hadrons, particles made
 of quarks, discovered at the LHC so far, 76 were found by LHCb. In 2015 it found
 pentaquarks, particles made of five quarks, which had been predicted since 1964.
 On the right is the 2019 measurement with nine times more data, where the
@@ -335,13 +334,13 @@ space: { at: [9.6, 0, 0], dist: 8.7, yaw: -4, pitch: 4, dim: 0.2 }
 
 </div>
 
-<!-- facts: lhcb-run1-volume-sources-differ, lhcb-run1-release-sarpis, sarpis-phd-bonn-2023, lhcb-open-data-coordinator-2026 -->
+<!-- facts: lhcb-open-data-first-release-2022, lhcb-run1-volume-sources-differ, lhcb-run1-release-sarpis, sarpis-phd-bonn-2023, lhcb-open-data-coordinator-2026 -->
 
 <!--
 Message: in 2023 we made all of LHCb's first run public.
 
-Say: until a few years ago only LHCb's members could use this data. In December
-2023 all of Run 1, the proton collisions of 2011 and 2012, about 800 terabytes,
+Say: LHCb's first large release, in December 2022, was 200 terabytes. In
+December 2023 all of Run 1, the proton collisions of 2011 and 2012, about 800 terabytes,
 went public on the CERN Open Data portal. I prepared that data set and built
 the release, as part of my PhD in Bonn. It took close to two years, and every
 one of more than a hundred thousand files was copied and checked. Since
@@ -369,7 +368,7 @@ space: { at: [7.36, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
 
 <div class="big"><Count name="open" :from="800" :to="4000" /><span class="unit">TB</span></div>
 
-<p class="line">Anyone can name a decay and receive the collisions that contain it.</p>
+<p class="line">Anyone can name a decay and get a file of the collisions that contain it.</p>
 
 </div>
 
@@ -415,8 +414,7 @@ through their decay into two muons, one of the first analyses of the released
 data. In the course "Best Research and Data Analysis Practices from CERN" every
 student works on the same LHCb open-data file, about 92 000 candidate decays.
 And in 2025 students organised Lithuania's first LHCb masterclass, with about
-100 participants from Lithuania and Ukraine. Three streams from the gold pile,
-all ending in Vilnius.
+100 participants from Lithuania and Ukraine. The three streams from the gold pile end in Vilnius.
 
 Background: the Z → μμ analysis (N. E. Eimutis, M. Ambrozas, M. Šarpis) was
 presented at Open Readings, Vilnius, 23–26 April 2024. The course file is the
@@ -451,7 +449,7 @@ space: { at: thesis, dim: 0.3 }
 <!--
 Message: a student here now repeats one of LHCb's discoveries with public data.
 
-Say: and this is the stream I am proudest of. The collisions in which LHCb found
+Say: the last stream goes to one student. The collisions in which LHCb found
 the pentaquarks in 2015 are now public. Dominykas Stonkus joined LHCb Vilnius in
 2025 as a bachelor's student, and his project is to find the same particles
 again, in the open data. One stream of gold leaves the open pile, and at its

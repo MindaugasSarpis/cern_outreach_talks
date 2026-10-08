@@ -69,6 +69,29 @@ Deploy only on the owner's word.
   product can pass 1 by rounding, and `pow` of a negative base is NaN in GLSL.
   Not yet confirmed on a render.
 
+- 2026-10-08. Unslop pass (unslop 1.8.4, check mode, on `talk_copy.py`'s copy
+  packet; house voice wins). Fixed:
+  - Slide 5 said "one sphere is one terabyte" three times (legend, kicker,
+    line). The kicker is now "One sphere" and the line names only the
+    laptop comparison.
+  - Slide 4: "software decides" became "software selects".
+  - Notes, slide 5: "Nothing shrinks; the camera only steps back" (a
+    negative parallelism) became a positive statement.
+  - Notes, slide 7: cut "Only a few scientific archives anywhere are this
+    large". It is a vague claim with no source in the bank (gap: the
+    ECMWF comparison, unsourced).
+  - Notes, slide 8: "finds new things" became "finds new particles".
+  - Notes, slide 9: the vague "until a few years ago only LHCb's members could
+    use this data" became the 2022 first release of 200 TB
+    (`lhcb-open-data-first-release-2022`).
+  - Notes, slide 12: "the stream I am proudest of" was a feeling the speaker
+    never stated. It became "the last stream goes to one student".
+  - Slide 10's line: "get a file of the collisions that contain it" (the
+    service returns a file, an ntuple).
+  - Left as they are: the counted numbers in place of slide titles (the
+    deck's chosen style; the kickers carry the storyline) and the deliberate
+    callback "Remember this plot; it comes back at the end".
+
 ## Open
 
 - Confirm on a render that the specks on the steel pile are gone (slide 7 now).
