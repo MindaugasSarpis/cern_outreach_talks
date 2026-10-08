@@ -93,7 +93,7 @@ prie Ženevos. Vilniaus universitetas – jo kolaboracijos narys nuo 2024 m.“
 -->
 
 ---
-space: { at: [23.7, -0.35, 5.9], dist: 4.3, yaw: 8, pitch: 34, dim: 0.15 }
+space: { at: [24.4, -0.6, 5.9], dist: 5.2, yaw: 8, pitch: 30, sway: 10, dim: 0.15 }
 ---
 
 <Grains :set="{ collision: 1, scale: [], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
@@ -140,20 +140,18 @@ Background, if asked: LHCb sees up to 40 million bunch crossings a second; since
 -->
 
 ---
-space: { at: [22.98, 0.12, 6.0], dist: 0.86, yaw: -2, pitch: 10, dim: 0.2 }
+space: { at: [22.98, 0.12, 6.0], dist: 0.62, yaw: -2, pitch: 10, dim: 0.2 }
 ---
 
-<Grains :set="{ collision: 2, scale: [], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" :later="{ scale: [[0], 3.6], collision: [0, 4.6] }" />
+<Grains :set="{ collision: 2, scale: [], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" :later="{ scale: [[0], 3.0], collision: [0, 4.8] }" />
 
-<div class="legend late"><span class="dot gold"></span>viena sfera = vienas terabaitas</div>
-
-<div class="readout late">
+<div class="readout later">
 
 <p class="kicker">Viena sfera</p>
 
 <div class="big"><Count name="unit" :from="1" :to="1" /><span class="unit">TB</span></div>
 
-<p class="line">Vienas terabaitas – dešimtys milijonų tokių susidūrimų.</p>
+<p class="line">Viena sfera yra vienas terabaitas – dešimtys milijonų tokių susidūrimų.</p>
 
 </div>
 
@@ -163,8 +161,8 @@ space: { at: [22.98, 0.12, 6.0], dist: 0.86, yaw: -2, pitch: 10, dim: 0.2 }
 Message: a sphere of one terabyte is made of tens of millions of collisions.
 
 Motion first, then the point: the event shrinks into one grain among many, the
-grains pack into a ball, the metal sphere takes their place (3,6 s), and only
-then does the text rise.
+grains pack into a ball, the metal sphere takes their place (3 s), and the
+text rises at 4 s.
 
 Sakyti: „Vienas toks įrašytas susidūrimas užima kelias dešimtis kilobaitų.
 Dešimtys milijonų jų – vienas terabaitas, maždaug nešiojamojo kompiuterio
@@ -185,8 +183,6 @@ space: { at: [12.5, 1.4, 5.0], dist: 13.7, yaw: 73, pitch: -1.7, dim: 0.15 }
 ---
 
 <Grains :set="{ scale: [0, 1], 'scale:labels': 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
-
-<div class="legend"><span class="dot gold"></span>viena sfera = vienas terabaitas</div>
 
 <div class="readout late">
 
@@ -222,9 +218,7 @@ VU Fizikos fakulteto naujienos; M. Šarpis, PhD thesis, University of Bonn
 space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [0, 1, 2], 'scale:labels': 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
-
-<div class="legend"><span class="dot gold"></span>viena sfera = vienas terabaitas</div>
+<Grains :set="{ scale: [0, 1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="readout late">
 
@@ -254,9 +248,7 @@ Data portalas, 2026-02-22.
 space: { at: [2, 6, -8], dist: 38.9, yaw: 44, pitch: -1.5, sway: 4, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [0, 1, 2, 3], 'scale:labels': 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
-
-<div class="legend"><span class="dot blue"></span>viena sfera = vienas terabaitas</div>
+<Grains :set="{ scale: [0, 1, 2, 3], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="readout blue late">
 
@@ -274,7 +266,8 @@ space: { at: [2, 6, -8], dist: 38.9, yaw: 44, pitch: -1.5, sway: 4, dim: 0.15 }
 Message: open data is the gold part in front of LHCb's whole 100 PB.
 
 Sakyti: „O tai – viskas, ką LHCb surinko nuo 2010 m.: daugiau nei šimtas
-petabaitų, šimtas tūkstančių sferų, ir kasmet prisideda dar dešimtys. Auksinė
+petabaitų, šimtas tūkstančių sferų – nešiojamųjų kompiuterių krūva būtų dviejų
+kilometrų aukščio. Kasmet prisideda dar dešimtys petabaitų. Auksinė
 dalis priekyje jau atvira. Pusę kiekvieno etapo duomenų LHCb atveria praėjus
 penkeriems metams nuo jo pabaigos, o visus – po dešimties.“
 
@@ -289,9 +282,7 @@ data per year“); LHCb, arXiv:2504.00610 (atvirųjų duomenų politika).
 space: { at: [2, 9, -18], dist: 60.1, yaw: -1.9, pitch: 2.9, sway: 4, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [0, 1, 2, 3, 4], 'scale:labels': 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
-
-<div class="legend"><span class="dot steel"></span>viena sfera = vienas terabaitas</div>
+<Grains :set="{ scale: [0, 1, 2, 3, 4], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="readout steel late">
 
@@ -299,7 +290,7 @@ space: { at: [2, 9, -18], dist: 60.1, yaw: -1.9, pitch: 2.9, sway: 4, dim: 0.15 
 
 <div class="big"><Count name="lhc" :from="0" :to="1000000" :delay="2400" /><span class="unit">TB</span></div>
 
-<p class="line">Vienas eksabaitas, maždaug dešimt kartų daugiau nei LHCb.</p>
+<p class="line">Vienas eksabaitas, dešimt kartų daugiau nei LHCb.</p>
 
 </div>
 
@@ -309,9 +300,18 @@ space: { at: [2, 9, -18], dist: 60.1, yaw: -1.9, pitch: 2.9, sway: 4, dim: 0.15 
 Message: the whole LHC has stored ten times as much again.
 
 Sakyti: „O visi keturi LHC eksperimentai kartu 2025 m. gruodį perkopė vieną
-eksabaitą – milijoną terabaitų. Didžioji dalis saugoma maždaug
-60 tūkstančių magnetinių juostų. Pirmąją pusę kaupė dvylika metų, antrąją –
-trejus.“
+eksabaitą – milijoną terabaitų, dešimt kartų daugiau nei LHCb. Jei kiekvieną
+terabaitą laikytume viename nešiojamajame kompiuteryje ir sudėtume juos į krūvą,
+ji būtų dvidešimties kilometrų aukščio, daugiau nei dukart aukštesnė už
+Everestą. Didžioji dalis šių duomenų saugoma maždaug 60 tūkstančių magnetinių
+juostų.“
+
+Scale, worked out: a laptop about 2 cm thick holding 1 TB; 10⁶ × 2 cm = 20 km
+(Everest 8,85 km); LHCb's 100 PB = 10⁵ laptops = 2 km. Why the piles on screen
+look only about twice as wide: volume grows as width cubed, so ten times the
+spheres is 10^(1/3) ≈ 2,15 times the width. (If a terabyte were a 1 cm marble,
+close-packed, the exabyte would be a heap only 1,1 m across, which is why the
+talk uses the stack of laptops.)
 
 Šaltiniai: home.cern, „CERN hits one exabyte of stored experimental data from
 the LHC“ (2025-12-17).
@@ -320,58 +320,10 @@ the LHC“ (2025-12-17).
 -->
 
 ---
-space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, dim: 1 }
----
-
-<Grains :set="{ scale: [0, 1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
-
-<div class="finds">
-<div class="finds-text">
-
-<p class="kicker">Ką <span class="nt">LHCb</span> rado savo duomenyse</p>
-
-<div class="big">76</div>
-
-<p class="line">iš 86 naujų hadronų, atrastų LHC</p>
-
-<ul class="chips">
-<li><b>2015</b> Pentakvarkai, penkių kvarkų dalelės</li>
-<li><b>2025</b> Materija ir antimaterija barionuose elgiasi skirtingai</li>
-</ul>
-
-</div>
-<div class="finds-plot"><img src="/figures/pentaquarks_2019.png" alt="LHCb 2019 m.: trys siauros pentakvarkų smailės, Pc(4312), Pc(4440), Pc(4457), su prieklaida" /></div>
-</div>
-
-<!-- facts: lhcb-hadron-count, lhcb-pentaquark-2015, lhcb-pentaquark-2019, lhcb-cpv-baryons-2025 -->
-
-<!--
-Message: LHCb finds new particles in this data, so the data is worth opening.
-
-Sakyti: „Šiuose duomenyse LHCb randa naujų dalelių. Iš 86 naujų hadronų – iš
-kvarkų sudarytų dalelių, – atrastų LHC, 76 rado LHCb. 2015 m. jis atrado
-pentakvarkus, penkių kvarkų daleles, numatytas dar 1964 m. Dešinėje – 2019 m.
-matavimas su devynis kartus didesniu duomenų kiekiu: signalas išsiskiria į
-tris siauras smailes. Prie šio grafiko dar grįšime. O 2025 m. LHCb pirmą kartą
-pamatė, kad materija ir antimaterija barionuose – protono ir neutrono šeimoje –
-elgiasi skirtingai.“
-
-The slide is opaque; behind it the camera returns to the open piles.
-
-Šaltiniai: P. Koppenburg, naujų LHC hadronų sąrašas (86, iš jų 76 LHCb; paskutinis
-įrašas 2026-09-21); LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001
-(grafikas); LHCb, Nature 643 (2025) 1223.
-
-(~0.6 min)
--->
-
----
 space: { at: [16, 6, -2], dist: 32, yaw: 0, pitch: 1.8, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [1, 2], 'scale:labels': 1, collision: 0, world: 8, vilnius: 0, dominykas: 0, team: 0 }" />
-
-<div class="legend"><span class="dot gold"></span>viena sfera = vienas terabaitas</div>
+<Grains :set="{ scale: [1, 2], 'scale:labels': 0, collision: 0, world: 8, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="readout late">
 
@@ -437,6 +389,52 @@ masterclass: about 65 participants from Lithuania and 35 from Ukraine.
 -->
 
 ---
+space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, dim: 1 }
+---
+
+<Grains :set="{ scale: [0, 1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
+
+<div class="finds">
+<div class="finds-text">
+
+<p class="kicker">Ką <span class="nt">LHCb</span> rado savo duomenyse</p>
+
+<div class="big">76</div>
+
+<p class="line">iš 86 naujų hadronų, atrastų LHC</p>
+
+<ul class="chips">
+<li><b>2015</b> Pentakvarkai, penkių kvarkų dalelės</li>
+<li><b>2025</b> Materija ir antimaterija barionuose elgiasi skirtingai</li>
+</ul>
+
+</div>
+<div class="finds-plot"><img src="/figures/pentaquarks_2019.png" alt="LHCb 2019 m.: trys siauros pentakvarkų smailės, Pc(4312), Pc(4440), Pc(4457), su prieklaida" /></div>
+</div>
+
+<!-- facts: lhcb-hadron-count, lhcb-pentaquark-2015, lhcb-pentaquark-2019, lhcb-cpv-baryons-2025 -->
+
+<!--
+Message: LHCb finds new particles in this data, so the data is worth opening.
+
+Sakyti: „Šiuose duomenyse LHCb randa naujų dalelių. Iš 86 naujų hadronų – iš
+kvarkų sudarytų dalelių, – atrastų LHC, 76 rado LHCb. 2015 m. jis atrado
+pentakvarkus, penkių kvarkų daleles, numatytas dar 1964 m. Dešinėje – 2019 m.
+matavimas su devynis kartus didesniu duomenų kiekiu: signalas išsiskiria į
+tris siauras smailes. O 2025 m. LHCb pirmą kartą
+pamatė, kad materija ir antimaterija barionuose – protono ir neutrono šeimoje –
+elgiasi skirtingai.“
+
+The slide is opaque, as the next one: two plots in a row, LHCb's and then a student's.
+
+Šaltiniai: P. Koppenburg, naujų LHC hadronų sąrašas (86, iš jų 76 LHCb; paskutinis
+įrašas 2026-09-21); LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001
+(grafikas); LHCb, Nature 643 (2025) 1223.
+
+(~0.6 min)
+-->
+
+---
 space: { at: thesis, dim: 1 }
 ---
 
@@ -455,9 +453,11 @@ space: { at: thesis, dim: 1 }
 
 </div>
 <div class="thesis-plot">
+<div class="plot-box">
 <img src="/figures/thesis/jpsip-mass.png" alt="Dominyko Stonkaus bakalauro darbas: J/ψ p invariantinė masė, atėmus foną; pakilimas ties 4,4–4,5 GeV" />
-<PeakRise :x="0.418" :y="0.15" :delay="1.4" />
-<p class="plot-credit">D. Stonkus, bakalauro darbas, VU, 2026, 17 pav.</p>
+<PeakRise :x="0.44" :y="0.265" :delay="1.4" :rise="0.15" :size="0.065" />
+</div>
+<p class="credit">D. Stonkus, bakalauro darbas, VU, 2026, 17 pav.</p>
 </div>
 </div>
 
@@ -469,7 +469,8 @@ Message: a student here has found the pentaquark region again in public data.
 Motion: the slide opens on his plot; 1,4 s later grains of gold rise out of
 its peak and gather into a pentaquark above it.
 
-Sakyti: „O paskutinis srautas – vienam studentui. Dominykas Stonkus šiais metais
+Sakyti: „O dabar tą pačią sritį viešuose duomenyse atkartojo mūsų studentas.
+Dominykas Stonkus šiais metais
 apsigynė bakalauro darbą „Pentakvarkų atradimas iš naujo naudojant LHCb
 atviruosius duomenis“. Jis paėmė viešus 2012 m. LHCb duomenis, atrinko apie
 16 400 Λb⁰ skilimų į J/ψ, protoną ir kaoną, ir J/ψ bei protono masės
@@ -494,7 +495,7 @@ repository.vu.lt/VU:ELABAETD308118793 (open access); LHCb, PRL 115 (2015) 072001
 -->
 
 ---
-space: { at: [-45.5, 2.3, 0], dist: 24.1, yaw: 23.4, pitch: 5.5, dim: 0.2 }
+space: { at: [-42.6, 2.6, 0], dist: 25.5, yaw: 38, pitch: 5, dim: 0.35 }
 ---
 
 <Grains :set="{ team: 1, collision: 0, world: 0, vilnius: 0, dominykas: 0 }" />
@@ -510,8 +511,9 @@ Message: this is the work we were nominated for, and the people who did it.
 
 Sakyti: „Tai ir yra darbas, už kurį mus nominavo: LHCb duomenų parengimas
 viešinti, jų koordinavimas visai kolaboracijai, tyrimai ir mokymas su jais čia,
-Vilniuje. Duomenis rasite opendata.cern.ch. Ačiū jums ir ačiū visai mūsų
-grupei.“
+Vilniuje. Bakalauro studentas Vilniuje viešuose duomenyse rado tikrą
+rezultatą – vadinasi, gali kiekvienas. Duomenis rasite opendata.cern.ch. Ačiū
+jums ir ačiū visai mūsų grupei.“
 
 The camera flies back to the collisions where the data begin, and the group
 gathers beside them: fifteen portraits made of the same gold grains of data,

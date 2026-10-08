@@ -849,8 +849,9 @@ void main() {
     // a grain shows once the track has grown past it, and drifts outward along it
     float on = step(aS, grow);
     p = position * mix(1.0, 0.0008, shrink);
-    a = on * (aKind > 0.5 ? 0.9 : 0.22) * (1.0 - smoothstep(0.75, 1.0, shrink));
-    size = aKind > 0.5 ? 1.5 : 0.85;
+    // it fades as it shrinks: the camera flies in through it, and its grains must not flare
+    a = on * (aKind > 0.5 ? 1.0 : 0.55) * (1.0 - smoothstep(0.2, 0.65, shrink));
+    size = aKind > 0.5 ? 1.7 : 1.0;
     vColor = aKind > 0.5 ? vec3(1.0, 0.8, 0.42) : mix(vec3(0.62, 0.74, 1.0), vec3(1.0), 0.3 * hash(aSeed * 7.0));
   } else {
     // the other collisions: points of light around the shrinking event, then a ball
@@ -858,7 +859,7 @@ void main() {
     vec3 dir = normalize(vec3(hash(aSeed * 3.1), hash(aSeed * 5.7), hash(aSeed * 9.3)) - 0.5 + 1e-4);
     vec3 far = dir * (0.18 + 0.9 * pow(hash(aSeed * 13.0), 0.6));
     p = mix(far, aHome, pack);
-    a = appear * 0.32 * (1.0 - 0.75 * smoothstep(0.55, 1.0, pack)) * (1.0 - smoothstep(0.0, 1.0, uT2 < 0.0 ? 0.0 : (uTime - uT2 - 3.3) / 0.9));
+    a = appear * 0.55 * (1.0 - 0.45 * smoothstep(0.6, 1.0, pack)) * (1.0 - smoothstep(0.0, 1.0, uT2 < 0.0 ? 0.0 : (uTime - uT2 - 3.8) / 0.9));
     size = mix(0.8, 0.45, pack);
     vColor = mix(vec3(1.0, 0.72, 0.32), vec3(1.0, 0.9, 0.7), 0.5 * hash(aSeed * 17.0));
   }

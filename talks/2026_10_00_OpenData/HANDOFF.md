@@ -1,5 +1,12 @@
 # Open data talk: handoff
 
+**Language: Lithuanian** (owner, 2026-10-08). Title „Atveriame LHCb duomenis“.
+Slides, labels and the spoken script (`Sakyti:`) are in Lithuanian; stage
+directions and these notes are in English. `lang: lt` in the headmatter; the
+lint runs in Lithuanian mode. Copy rules: lt-copy (origin/feat/talk-skills),
+docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalinti“ or
+„adresuoti“.
+
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
 Toolkit pin: slidev-videos `12aa015`, for both addons.
 
@@ -113,6 +120,26 @@ Deploy only on the owner's word.
   `advance-on-end`). The kick-off clip uses `advance-on-end`: the cut ends on a
   lit frame as the music fades, and the next slide is the LHCb photo the
   spoken line introduces. Undo: drop the attribute and press → by hand.
+
+- 2026-10-08. The signature line (owner): „nuo vieno susidūrimo iki
+  petabaitų“. After the clip, one real Z → μμ event from LHCb open data (CERN
+  Open Data record 24506, file 00041836_00076811_1.ew.dst, entry 3795, run
+  133488, event 49420610; 76 of 95 tracks, 3× transverse stretch). On the next
+  slide it shrinks into one grain among many that pack into the 1 TB sphere.
+  Then 800 TB and 4 PB open (gold) appear inside LHCb's 100 PB (blue) and the
+  LHC's exabyte (steel). Then the finds, the users, Vilnius, Dominykas, and the
+  group as portraits of grains under „Ačiū“.
+  - The cavern photo and the Run 3 event-display photo were dropped; the owner
+    can ask for them back.
+  - The text rises after the motion (`.late` 2.6 s; `.later` 4 s on the
+    collapse). The corner key is gone; the 1 TB line names the unit.
+  - Dominykas: his own thesis plot (Fig. 17, sideband-subtracted m(J/ψ p),
+    VU 2026, open access), inverted to light on dark, with `PeakRise` lifting a
+    pentaquark out of its 4.4–4.5 GeV peak. Notes keep the thesis's framing:
+    a qualitative reproduction.
+  - Portraits: the members' own photos, used with permission (owner). Credit:
+    „Photos: LHCb Vilnius group members, used with permission“. Margarita
+    Biveinytė's photo still awaits the owner's confirmation.
 
 ## Open
 
