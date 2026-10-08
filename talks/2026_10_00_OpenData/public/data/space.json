@@ -83,28 +83,34 @@
           "gaps": [
             3.0,
             2.2,
-            3.0
+            3.0,
+            4.0
           ],
           "balls": [
             {
               "n": 1,
-              "color": "#ffc05a",
+              "color": "#ffcf73",
               "label": "1 TB"
             },
             {
               "n": 800,
-              "color": "#ffc05a",
+              "color": "#ffcf73",
               "label": "800 TB"
             },
             {
               "n": 4000,
-              "color": "#ffc05a",
+              "color": "#ffcf73",
               "label": "4 PB"
             },
             {
-              "n": 600000,
-              "color": "#6f9dff",
-              "label": "600 PB"
+              "n": 100000,
+              "color": "#4d84ff",
+              "label": "100 PB"
+            },
+            {
+              "n": 1000000,
+              "color": "#c3cddd",
+              "label": "1 EB"
             }
           ]
         },

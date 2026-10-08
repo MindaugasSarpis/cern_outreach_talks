@@ -18,15 +18,17 @@ stage:
   space: data/space.json
   palette: blue
   sound: true
-  options: { reach: 20 }      # the 600 PB pose stands far back: still at the store station
+  options: { reach: 20, nebula: 0.28, dustGain: 1.3, exposure: 0.98, vignette: 0.5, grain: 0.022 }   # reach: the 1 EB pose stands far back; the rest: deeper, less hazy
 title: Opening LHCb's data
 info: |
   LHCb Vilnius, nominated for an open data award: a 6½-minute talk told inside
   one world of grains (slidev-addon-stage, blue palette, pinned to the
-  slidev-videos feat/effects-v2 commit 640eaa5). One sphere is one terabyte:
-  piles of the same sphere stand side by side (1 TB, 800 TB, 4 PB gold;
-  the HL-LHC's 600 PB blue) and keep their size as the camera pulls back, and
-  streams of grains carry the open data to the people who use them. The
+  slidev-videos feat/effects-v2 commit 640eaa5). The story: what LHCb is,
+  how much data it takes, what it finds, the LHC's exabyte, then what is
+  open and who uses it. One sphere is one terabyte: piles of the same metal
+  sphere stand side by side (1 TB; open data in gold, 800 TB and 4 PB;
+  LHCb's 100 PB in blue; the LHC's 1 EB in steel) and keep their size as the
+  camera pulls back; streams of grains carry the open data to its users. The
   talk's own forms are setup/grains.js (`lineup`, `streams`); `<Grains>` sets
   their step, `<Count>` counts with them. On any station `c` builds it again.
   Kick-off: lhcb.mp4, the LHCb detector in 3D with music, this talk's 39 s
@@ -77,6 +79,39 @@ the talk.
 -->
 
 ---
+space: { at: wide, dim: 0.2 }
+class: photo-slide
+---
+
+<div class="photo"><img src="/figures/lhcb_cavern.jpg" alt="The LHCb cavern, 100 m under the French–Swiss border" /></div>
+
+<div class="photo-text">
+
+<p class="kicker">At CERN, 100 m underground</p>
+
+# LHCb
+
+<div class="stats">
+<div><b>5 600 t</b><span>detector</span></div>
+<div><b>1 800</b><span>members</span></div>
+<div><b>24</b><span>countries</span></div>
+</div>
+
+<p class="note">Vilnius University: a member since 2024</p>
+
+</div>
+
+<!--
+Speaker (~0.5 min). Say: LHCb is one of the four big experiments at CERN's
+Large Hadron Collider: a 5 600-tonne detector, 21 m long and 10 m high, in a
+cavern 100 m under the French–Swiss border. About 1 800 people from 24
+countries build it, run it and analyse its data; on 2 September 2024 the
+LHCb Collaboration Board voted unanimously to take in Vilnius University.
+Sources: home.cern, "LHCb"; CERN-RRB-2025-027 (V. Vagnoni, Apr 2025: 1784
+members, 102 institutes, 24 countries); VU Faculty of Physics news, Sep 2024.
+-->
+
+---
 space: { at: [-59.6, -1.4, 7], dist: 10, yaw: -30, pitch: 10, dim: 0.25 }
 ---
 
@@ -106,7 +141,7 @@ Sources: R. Aaij et al. (LHCb), “Evolution of the energy efficiency of LHCb’
 space: { at: [10.37, 0, 0], dist: 0.75, yaw: -6, pitch: 4, dim: 0.2 }
 ---
 
-<Grains :set="{ scale: 0, 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [0], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
 
 <div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
@@ -114,64 +149,156 @@ space: { at: [10.37, 0, 0], dist: 0.75, yaw: -6, pitch: 4, dim: 0.2 }
 
 <p class="kicker">The scale</p>
 
-<div class="big gold"><Count name="open" :from="1" :to="1" /><span class="unit">TB</span></div>
+<div class="big gold"><Count name="unit" :from="1" :to="1" /><span class="unit">TB</span></div>
 
 One sphere: a laptop's disk
 
 </div>
 
 <!--
-Speaker (~0.4 min). Say: one sphere is one terabyte, the disk of a laptop,
-about 330 hours of HD video. The scale for the rest of the talk. One terabyte, one
-sphere; point at it. LHCb's detector reads out four of these every second.
-From here on every sphere is a terabyte, every pile is built of the same
-spheres, and nothing shrinks: when the camera pulls back, what came before
-stays beside the new pile at its true size.
-Sources: HD streaming: up to 3 GB an hour (Netflix help centre) · decimal units, 1 TB = 1000 GB
+Speaker (~0.3 min). Say: one sphere is one terabyte, the disk of a laptop,
+about 330 hours of HD video. LHCb reads out four of these every second.
+From here on every sphere is a terabyte, and every pile is built of the same
+spheres: nothing shrinks, the camera only steps back.
+Sources: HD streaming up to 3 GB an hour (Netflix help centre); decimal units.
+-->
+
+---
+space: { at: [7.36, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
+---
+
+<Grains :set="{ scale: [0, 3], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
+
+<div class="legend"><span class="dot blue"></span>one sphere = one terabyte</div>
+
+<div class="readout">
+
+<p class="kicker">LHCb, since 2010</p>
+
+<div class="big blue"><Count name="lhcb" :from="0" :to="100000" /><span class="unit">TB</span></div>
+
+More than 100 PB · tens of PB a year since 2022
+
+</div>
+
+<!--
+Speaker (~0.5 min). Say: this is what LHCb has collected since 2010: more
+than 100 petabytes, a hundred thousand spheres. Since the upgrade in 2022 it
+records tens of petabytes every year. The first terabyte is the dot on the
+left.
+Sources: B. Couturier, ISGC 2025 (16–21 Mar 2025): "Since it began
+operations in 2010, the experiment has collected more than 100 PB of data
+… now records tens of PB of data per year".
+-->
+
+---
+space: { at: [7.36, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.82 }
+---
+
+<Grains :set="{ scale: [0, 3], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
+
+<div class="finds">
+<div class="finds-text">
+
+<p class="kicker">What it finds</p>
+
+<div class="big">76</div>
+
+<p class="line">of the 86 new particles found at the LHC</p>
+
+<ul class="chips">
+<li><b>2015</b> pentaquarks</li>
+<li><b>2025</b> matter and antimatter differ in baryons</li>
+</ul>
+
+</div>
+<div class="finds-plot"><img src="/figures/pentaquarks_2019.png" alt="LHCb 2019: the J/ψ p mass spectrum with three narrow pentaquark peaks" /></div>
+</div>
+
+<!--
+Speaker (~0.7 min). Say: and in this data LHCb finds new things. Of the 86
+new hadrons discovered at the LHC, 76 were found by LHCb. In 2015 it found
+pentaquarks, particles of five quarks, predicted since 1964; on the right is
+the 2019 spectrum, nine times the data, where the narrow peaks are them. In
+2025 LHCb saw for the first time that matter and antimatter behave
+differently in baryons, the family of the proton and neutron (Nature, July
+2025). In 2026 the upgraded detector found two new doubly charmed baryons.
+Sources: P. Koppenburg's list of new hadrons at the LHC (86, of which 76 by
+LHCb; last entry 21 Sep 2026); LHCb, PRL 115 (2015) 072001; LHCb, PRL 122
+(2019) 222001 (the plot); LHCb, Nature (2025), CP violation in Λb⁰ → p K⁻ π⁺ π⁻.
+-->
+
+---
+space: { at: [5.59, 0, 0], dist: 73.5, yaw: -4, pitch: 4, dim: 0.15 }
+---
+
+<Grains :set="{ scale: [0, 3, 4], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
+
+<div class="legend"><span class="dot steel"></span>one sphere = one terabyte</div>
+
+<div class="readout">
+
+<p class="kicker">CERN, December 2025</p>
+
+<div class="big steel"><Count name="lhc" :from="0" :to="1000000" /><span class="unit">TB</span></div>
+
+One exabyte · one of the largest datasets in science
+
+</div>
+
+<!--
+Speaker (~0.5 min). Say: and all four LHC experiments together: in
+December 2025 CERN passed one exabyte of stored LHC data, a million
+terabytes, most of it on about 60 000 magnetic tapes. More than half of it
+was taken in the last three years. CERN expects this to be only a tenth of
+what it will store in the next ten years.
+Wording: CERN calls it "the largest scientific data archive" in high-energy
+physics; "one of the largest datasets in science" is the safe phrasing.
+Sources: home.cern, "CERN hits one exabyte of stored experimental data from
+the LHC" (17 Dec 2025); heise.de (Dec 2025).
 -->
 
 ---
 space: { at: [9.6, 0, 0], dist: 8.7, yaw: -4, pitch: 4, dim: 0.2 }
 ---
 
-<Grains :set="{ scale: 1, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [0, 1, 3, 4], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
 
 <div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
 <div class="readout">
 
-<p class="kicker">December 2023 · all of Run 1</p>
+<p class="kicker">Open · December 2023</p>
 
-<div class="big gold"><Count name="open" :from="1" :to="800" /><span class="unit">TB</span></div>
+<div class="big gold"><Count name="open" :from="0" :to="800" /><span class="unit">TB</span></div>
 
 All of Run 1, public · prepared and released by Mindaugas Šarpis
 
 </div>
 
 <!--
-Speaker (~0.6 min): eight hundred spheres pile up beside the first one. The release completed on
-20 December 2023: the whole Run 1 proton–proton sample, about 800 TB. A
-first 200 TB (three streams) came out in December 2022; LHCb's earliest open
-files were small masterclass samples from 2014. Every one of more than a
-hundred thousand files was copied to dedicated storage and checked; it took
-close to two years (M. Šarpis, "LHCb Run I Data is Released", Jan 2024). I
-did this work in Bonn as part of LHCb's Data Processing and Analysis (DPA)
-project, and brought it with me to Vilnius. Since 1 August 2026 I coordinate
-the collaboration's Analysis Preservation and Open Data work package.
-Sources: LHCb, “LHCb releases entire Run 1 dataset”, opendata.cern.ch, 20 Dec 2023 · VU Faculty of Physics news · VU news, 30 Jul 2026
+Speaker (~0.6 min). Say: and now we open it. In December 2023 the whole Run 1
+proton–proton data set, about 800 TB, went public on the CERN Open Data
+portal. I prepared the data set and built the release, in Bonn, inside LHCb's
+Data Processing and Analysis project; it took close to two years; every one
+of more than a hundred thousand files copied and checked. Since 1 August 2026
+I coordinate the collaboration's Analysis Preservation and Open Data work.
+Sources: opendata.cern.ch, "LHCb releases entire Run 1 dataset" (20 Dec
+2023); VU Faculty of Physics news; M. Šarpis, "LHCb Run I Data is Released"
+(Jan 2024); VU news (30 Jul 2026).
 -->
 
 ---
-space: { at: [8.67, 0, 0], dist: 18.1, yaw: -4, pitch: 4, dim: 0.2 }
+space: { at: [7.36, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: 2, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 4, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
 
 <div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
 <div class="readout">
 
-<p class="kicker">2026 · Run 1 + Run 2, open</p>
+<p class="kicker">Open · 2026 · Run 1 + Run 2</p>
 
 <div class="big gold"><Count name="open" :from="800" :to="4000" /><span class="unit">TB</span></div>
 
@@ -180,50 +307,18 @@ Over 4 PB · half after 5 years, all after 10
 </div>
 
 <!--
-Speaker (~0.5 min). Say: since 2026 Run 2 is open as well: with Run 1,
-over 4 petabytes, four thousand spheres. You do not download it whole: you
-ask for a decay and get those collisions (next slides). The pile of 800 is
-now a bead beside it, the first terabyte a dot.
-Source: LHCb outreach, 3 Mar 2026, "over 4 PB of data to explore" (the CERN
-Open Data portal announced it on 22 Feb 2026). The whole portal holds "more
-than 5 PB" across all experiments.
-The policy: LHCb agreed in 2013 to publish about 50% of a run's data five
-years after it ends and all of it after ten (since 2020 within CERN's Open
-Data Policy for the LHC experiments). The dates have slipped a little: all
-of Run 1 was due by the end of 2022 and was complete in December 2023.
-Sources: LHCb outreach, “LHCb releases service to access Run II data”, 3 Mar 2026 · policy: LHCb, arXiv:2504.00610 (2025)
--->
-
----
-space: { at: [5.48, 0, 0], dist: 50.1, yaw: -4, pitch: 4, dim: 0.15 }
----
-
-<Grains :set="{ scale: 3, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
-
-<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
-
-<div class="readout">
-
-<p class="kicker">HL-LHC · the next decade</p>
-
-<div class="big blue"><Count name="run3" :from="0" :to="600000" /><span class="unit">TB</span></div>
-
-150 times today's open data
-
-</div>
-
-<!--
-Speaker (~0.6 min). Say: and this is what is coming: the High-Luminosity
-LHC, 600 petabytes, six hundred thousand spheres, 150 times everything that
-is open today. Under CERN's open data policy its analysis-ready part is to
-be opened too, and that work is what we do in Vilnius. The first terabyte is a speck under its label.
+Speaker (~0.5 min). Say: since 2026 Run 2 is open too: with Run 1 over four
+petabytes. LHCb opens its data on a schedule: about half of each run five
+years after it ends, all of it after ten; the blue pile is on its way.
+Sources: LHCb outreach, 3 Mar 2026 ("over 4 PB of data to explore"); CERN
+Open Data portal, 22 Feb 2026; policy: LHCb, arXiv:2504.00610 (2025).
 -->
 
 ---
 space: { at: [10, -3.2, -1], dist: 30, yaw: 26, pitch: 10, dim: 0.3 }
 ---
 
-<Grains :set="{ scale: 3, 'scale:labels': 0, world: 8, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 4, 'scale:labels': 0, world: 8, vilnius: 0, dominykas: 0 }" />
 
 # Anyone can take it
 
@@ -256,7 +351,7 @@ Sources: LHCb outreach, 3 Mar 2026 · arXiv:2504.00610 · DPHEP Global Report 20
 space: { at: [15.5, -3.4, 4], dist: 27, yaw: 12, pitch: 4, dim: 0.3 }
 ---
 
-<Grains :set="{ scale: 3, 'scale:labels': 0, world: 0, vilnius: 3, dominykas: 0 }" />
+<Grains :set="{ scale: 4, 'scale:labels': 0, world: 0, vilnius: 3, dominykas: 0 }" />
 
 # Used in Vilnius
 
@@ -288,7 +383,7 @@ Sources: M. Šarpis, “LHCb Run I Data is Released”, Jan 2024 · CERN Open Da
 space: { at: thesis, dim: 0.3 }
 ---
 
-<Grains :set="{ scale: 3, 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 1 }" />
+<Grains :set="{ scale: 4, 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 1 }" />
 
 <div class="readout thesis">
 

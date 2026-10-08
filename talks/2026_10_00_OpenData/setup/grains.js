@@ -1,5 +1,5 @@
 import {
-  Group, Points, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4,
+  Group, Points, Mesh, SphereGeometry, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4,
 } from 'three'
 
 // This talk's own forms, on the engine's stage (slidev-addon-stage):
@@ -80,7 +80,7 @@ function material(vertexShader, uniforms) {
 // impostors, each a point sprite shaded as a ball that writes its own depth,
 // so 600 000 of them cost about what the dust does.
 //
-// Step k shows balls 0..k. A ball that appears gathers out of the dust, inner
+// Step k shows balls 0..k, a step [i, j, …] exactly those. A ball that appears gathers out of the dust, inner
 // spheres first; going back, the piles past the step fly apart. The steps of
 // `${name}:labels` (0 or 1) show a line of type under each pile, at a fixed
 // size on screen so it can still name the single sphere from far away.
@@ -117,6 +117,27 @@ function fccShells(n) {
 }
 
 const MAXB = 8
+// Metal under a studio light, for the spheres: what a polished sphere shows is
+// the room it reflects, so the room is drawn here (a dark floor, a deep blue
+// sky, a large soft key light from the upper left front, a thin cool rim
+// light from behind right) and each sphere reflects it with its colour as the
+// reflectance (Schlick's Fresnel lifts the edges toward white). Shared by the
+// impostor piles and the single sphere's mesh, so both are the same metal.
+const METAL = /* glsl */ `
+vec3 studio(vec3 d) {
+  vec3 sky = mix(vec3(0.012, 0.016, 0.03), vec3(0.07, 0.10, 0.2), smoothstep(-0.25, 0.9, d.y));
+  float key = smoothstep(0.84, 0.975, dot(d, normalize(vec3(-6.0, 9.0, 7.0))));
+  float fill = smoothstep(0.55, 0.95, dot(d, normalize(vec3(5.0, 1.0, 8.0))));
+  float rim = smoothstep(0.93, 0.995, dot(d, normalize(vec3(7.0, 3.0, -6.0))));
+  return sky + vec3(1.0, 0.96, 0.9) * key * 3.2 + vec3(0.9, 0.92, 1.0) * fill * 0.22 + vec3(0.55, 0.72, 1.0) * rim * 1.6;
+}
+// nW, vW: world-space normal and direction toward the eye; F0: the metal's colour
+vec3 metal(vec3 nW, vec3 vW, vec3 F0) {
+  float ndv = max(dot(nW, vW), 0.0);
+  vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
+  return studio(reflect(-vW, nW)) * F + F0 * 0.035;
+}`
+
 const LINEUP_VERT = /* glsl */ `
 attribute float aSeed, aK, aBall;    // rank in its pile (0 the centre … 1 the rim), which pile
 uniform float uTime, uGrow, uReach, uRad, uViewH, uMaxPt;
@@ -126,7 +147,7 @@ uniform float uR[${MAXB}];
 uniform vec3 uCenter[${MAXB}];
 uniform vec3 uColor[${MAXB}];
 uniform vec3 uLight;
-varying vec3 vColor; varying vec3 vLv; varying vec3 vCv; varying float vShade; varying float vPx;
+varying vec3 vColor; varying vec3 vLv; varying vec3 vCv; varying float vShade; varying float vPx; varying vec3 vOut; varying float vF;
 float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
 float ease(float x) { x = clamp(x, 0.0, 1.0); return x * x * x * (x * (x * 6.0 - 15.0) + 10.0); }
 void main() {
@@ -137,7 +158,7 @@ void main() {
   float f = ease((uTime - start) / 1.6);
   bool on = st >= 0.0 && uTime >= start;
   if (ht >= 0.0) { float g = 1.0 - ease((uTime - ht) / 1.1); f = min(f, g); on = on && g > 0.0; }
-  if (!on) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vLv = vec3(0.0, 0.0, 1.0); vCv = vec3(0.0); vShade = 0.0; vPx = 1.0; return; }
+  if (!on) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vLv = vec3(0.0, 0.0, 1.0); vCv = vec3(0.0); vShade = 0.0; vPx = 1.0; vOut = vec3(0.0, 1.0, 0.0); vF = 0.0; return; }
   vec3 c = uCenter[b];
   vec3 off = position - c;
   float r = length(off);
@@ -159,14 +180,16 @@ void main() {
   // in shadow, and a thin bright rim where its surface turns away from the eye
   vec3 wp = (modelMatrix * vec4(c + off, 1.0)).xyz;
   float facing = max(dot(dir, normalize(cameraPosition - wp)), 0.0);
-  float lit = 0.42 + 0.78 * max(dot(dir, normalize(uLight)), 0.0) + 0.35 * pow(1.0 - facing, 3.0);
+  float lit = 0.5 + 0.62 * max(dot(dir, normalize(uLight)), 0.0) + 0.25 * pow(1.0 - facing, 3.0);
   vShade = mix(1.0, lit, f);
-  vColor = uColor[b] * (0.85 + 0.3 * hash(aSeed * 7.0));
+  vOut = dir; vF = f;
+  vColor = uColor[b] * (0.9 + 0.2 * hash(aSeed * 7.0));
 }`
 const LINEUP_FRAG = /* glsl */ `
 uniform mat4 projectionMatrix;
 uniform float uRad;
-varying vec3 vColor; varying vec3 vLv; varying vec3 vCv; varying float vShade; varying float vPx;
+varying vec3 vColor; varying vec3 vLv; varying vec3 vCv; varying float vShade; varying float vPx; varying vec3 vOut; varying float vF;
+${METAL}
 void main() {
   vec2 q = gl_PointCoord * 2.0 - 1.0; q.y = -q.y;
   float r2 = dot(q, q);
@@ -175,18 +198,42 @@ void main() {
   // the sphere's own surface depth, so neighbours and flyers cut each other right
   vec4 clip = projectionMatrix * vec4(vCv + n * uRad, 1.0);
   gl_FragDepth = clip.z / clip.w * 0.5 + 0.5;
-  float diff = max(dot(n, vLv), 0.0);
-  float spec = pow(max(dot(n, normalize(vLv + vec3(0.0, 0.0, 1.0))), 0.0), 36.0);
-  float rim = pow(1.0 - n.z, 3.0);
-  // a sphere a few pixels across keeps its colour and loses its highlight, which would only shimmer
-  float detail = smoothstep(3.0, 10.0, vPx);
-  diff = mix(0.55, diff, detail);
-  vec3 col = vColor * (0.16 + 0.95 * diff) * vShade + vec3(1.0, 0.94, 0.82) * spec * 0.7 * detail + vColor * (0.3 * rim * detail + 0.18);
+  mat3 toWorld = transpose(mat3(viewMatrix));
+  vec3 nW = normalize(toWorld * n);
+  vec3 vW = normalize(toWorld * normalize(-vCv));
+  vec3 col = metal(nW, vW, vColor);
+  // contact shadow: the side of a sphere that faces into its pile is in the
+  // dark between its neighbours, and so is its edge where they touch
+  float ao = mix(0.28, 1.0, smoothstep(-0.45, 0.75, dot(nW, vOut))) * mix(0.5, 1.0, smoothstep(0.0, 0.55, n.z));
+  col *= mix(1.0, ao, vF) * vShade;
+  // the pile as one polished ball made of balls: its own reflection of the
+  // studio (a highlight, a rim) lights the small spheres it is made of, and a
+  // sphere a few pixels across shows that, not a highlight that would only shimmer
+  vec3 pile = metal(normalize(vOut), vW, vColor);
+  float pileL = dot(pile, vec3(0.3, 0.55, 0.15));
+  vec3 small = pile * 0.82 + vColor * 0.05;
+  vec3 near = col * (0.5 + 0.75 * min(pileL, 1.6));
+  col = mix(small, mix(near, col, smoothstep(14.0, 40.0, vPx)), smoothstep(3.0, 11.0, vPx));
+  col = mix(col, metal(nW, vW, vColor), 1.0 - vF);   // flyers: just themselves
   gl_FragColor = vec4(col, 1.0);
 }`
 
+// The single sphere: a real sphere mesh in the same metal (no halo).
+const UNIT_VERT = /* glsl */ `
+varying vec3 vNW; varying vec3 vPW;
+void main() {
+  vec4 wp = modelMatrix * vec4(position, 1.0);
+  vPW = wp.xyz; vNW = normalize(mat3(modelMatrix) * normal);
+  gl_Position = projectionMatrix * viewMatrix * wp;
+}`
+const UNIT_FRAG = /* glsl */ `
+uniform vec3 uColor;
+varying vec3 vNW; varying vec3 vPW;
+${METAL}
+void main() { gl_FragColor = vec4(metal(normalize(vNW), normalize(cameraPosition - vPW), uColor), 1.0); }`
+
 function buildLineup(o, ctx) {
-  const { ball, makeLabel } = ctx.helpers
+  const { makeLabel } = ctx.helpers
   const unit = o.unit ?? 0.1, s = Math.SQRT2 * unit, rad = 0.9 * unit
   const balls = (o.balls || []).slice(0, MAXB).map((x) => ({ ...x, n: Math.max(1, Math.round(x.n || 1)) }))
   const NB = balls.length
@@ -204,7 +251,9 @@ function buildLineup(o, ctx) {
   const marbles = []
   balls.forEach((x, b) => {
     if (x.n !== 1) return
-    const m = ball(x.color || ctx.palette.accent, rad, { glow: o.glow ?? 0.35 })
+    const m = new Mesh(new SphereGeometry(rad, 96, 64), new ShaderMaterial({
+      vertexShader: UNIT_VERT, fragmentShader: UNIT_FRAG, uniforms: { uColor: { value: new Color(x.color || ctx.palette.accent) } },
+    }))
     m.position.set(cx[b], 0, 0); m.scale.setScalar(0); m.visible = false
     g.add(m); marbles.push({ b, m })
   })
@@ -281,12 +330,14 @@ function buildLineup(o, ctx) {
   const shown = (b) => showT[b] >= 0 && hideT[b] < 0
   const show = (b, t) => { showT[b] = t; hideT[b] = -1 }
   const hide = (b, t) => { if (shown(b)) hideT[b] = t }
+  // a step: k shows piles 0..k, [i, j, …] shows exactly those
+  const wants = (b) => (Array.isArray(step) ? step.includes(b) : b <= step)
   const go = (k, { instant = false } = {}) => {
     step = k
     if (armed) return                                 // the arrival builds it (assemble)
     for (let b = 0; b < NB; b++) {
-      if (b <= k && !shown(b)) show(b, instant ? now - 60 : now)
-      else if (b > k && shown(b)) { if (instant) showT[b] = -1; else hide(b, now) }
+      if (wants(b) && !shown(b)) show(b, instant ? now - 60 : now)
+      else if (!wants(b) && shown(b)) { if (instant) showT[b] = -1; else hide(b, now) }
     }
   }
   const off = listen(o.name, (k) => go(k))
@@ -301,7 +352,7 @@ function buildLineup(o, ctx) {
     // the arrival (and `c`): every pile up to the step gathers again
     assemble(t, onDone) {
       now = t; armed = false
-      for (let b = 0; b < NB; b++) { if (b <= step) show(b, t); else hide(b, t) }
+      for (let b = 0; b < NB; b++) { if (wants(b)) show(b, t); else hide(b, t) }
       if (onDone) doneCbs.push(onDone)
       doneAt = t + GROW()                             // engine clock; never sooner than a full growth
     },
@@ -310,7 +361,7 @@ function buildLineup(o, ctx) {
     group: g, labels: [], api,
     update(t) {
       now = t; mat.uniforms.uTime.value = t
-      if (armed && t - armedAt > 6) { armed = false; for (let b = 0; b <= step && b < NB; b++) show(b, t) }   // the flight was turned away
+      if (armed && t - armedAt > 6) { armed = false; for (let b = 0; b < NB; b++) if (wants(b)) show(b, t) }   // the flight was turned away
       if (doneCbs.length && t >= doneAt) { const cbs = doneCbs; doneCbs = []; for (const cb of cbs) cb() }
       let count = 0
       for (let b = 0; b < NB; b++) {
