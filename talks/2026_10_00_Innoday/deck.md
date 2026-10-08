@@ -948,5 +948,5 @@ space: { at: close }
 
 <!--
 Kalbėtojui. Kamera grįžta ten, kur prasidėjo; ilgiausias skrydis (~4,5 s). Pentakvarkas išsibarsto ir vėl susirenka; „c“ — dar kartą.
-Trukmė: be klipų ~24 min; nutolinimas 4:42, LHC tunelis ~0:40, kiti klipai ~1:10, „Ačiū“ klipas 2:28 — iš viso apie 33 min. Jei skirta 20 min: praleisti „Ačiū“ klipą (−2,5), LHC tunelį (−0,7), nutolinimą sustabdyti ties Žeme (−3), Higso ir duomenų skaidres (−1,2), dešimtuką (−0,8), vieną naujienų skaidrę (−1,2).
+Trukmė: be klipų ~24,5 min (su kosminio tinklo perėjimu, ~0,3 min); įžanginis klipas — dabar 4:42, naujasis orbitinis klipas — jo trukmė; LHC tunelis ~0:40, kiti klipai ~1:10, „Ačiū“ klipas 2:28 — iš viso apie 30 min plius įžanginio klipo trukmė. Jei skirta 20 min: praleisti „Ačiū“ klipą (−2,5), LHC tunelį (−0,7), Higso ir duomenų skaidres (−1,2), dešimtuką (−0,8), vieną naujienų skaidrę (−1,2); įžanginis klipas turėtų būti ne ilgesnis nei ~1,5 min.
 -->
