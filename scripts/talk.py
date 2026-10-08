@@ -1365,6 +1365,7 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
         raise UsageError(f"--skip takes lint, check, shots, preflight, venue, safe (not {', '.join(sorted(unknown))})")
     LOG.begin(repo.here, wt_slug(talk), "ready")
     head0 = git_out(["rev-parse", "HEAD"], repo.here)
+    dirty0 = porcelain_paths(git_out(["status", "--porcelain"], repo.here) or "")
     info = talk_info(repo.here, talk)
     env = tool_env()
     steps = []
@@ -1417,11 +1418,13 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
     ok = all(s["ok"] for s in steps)
     OUT.say(f"\n{talk}: " + ("ready" if ok else "NOT ready"))
     data = {"talk": talk, "ready": ok, "steps": steps}
-    # The stamp: the commit these checks passed, so deploy does not run them again.
-    # Only a clean tree whose HEAD did not move is stamped: then the files checked are that commit.
+    # The stamp: the commit these checks passed, so deploy does not run them again. Only a
+    # tree that was clean when ready started and when it finished, with HEAD where it was, is
+    # stamped: edits made before the run and dropped during it (a restore, a checkout) were
+    # checked, not the commit.
     head = git_out(["rev-parse", "HEAD"], repo.here)
     dirty = porcelain_paths(git_out(["status", "--porcelain"], repo.here) or "")
-    if head and head == head0 and not dirty:
+    if head and head == head0 and not dirty0 and not dirty:
         path = ready_stamp(repo, talk)
         path.parent.mkdir(exist_ok=True)
         path.write_text(json.dumps({
@@ -1430,7 +1433,10 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
             "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")}, indent=2) + "\n")
         data["stamp"] = str(path)
     else:
-        data["not_stamped"] = "HEAD moved while ready ran" if head != head0 else "uncommitted changes"
+        data["not_stamped"] = ("uncommitted changes when ready started" if dirty0
+                               else "HEAD moved while ready ran" if head != head0
+                               else "uncommitted changes when ready finished")
+        OUT.say(f"not stamped ({data['not_stamped']}): deploy runs ready again")
     return (0 if ok else 1), data
 
 

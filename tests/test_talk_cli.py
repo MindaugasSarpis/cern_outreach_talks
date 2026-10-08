@@ -592,6 +592,30 @@ def test_deploy_runs_ready_once_without_a_stamp(od_worktree, counted):
     assert obj["ready"]["ready"] is True and "reused" not in obj["ready"]
 
 
+RESTORING_LINT = """import json, os, subprocess, sys
+open(os.environ["LINT_COUNT"], "a").write("x")
+subprocess.run(["git", "checkout", "--", "deck.md"], cwd=sys.argv[1], check=True)      # the edit is gone
+print(json.dumps({"ok": True, "errors": 0, "warnings": 0, "counts": {}, "findings": []}))
+"""
+
+
+def test_ready_does_not_stamp_edits_dropped_while_it_ran(od_worktree, counted):
+    env, runs = counted
+    (od_worktree / "scripts" / "talk_lint.py").write_text(RESTORING_LINT)
+    sh(["git", "commit", "-q", "-am", "a lint that restores deck.md"], od_worktree, env)
+    deck = od_worktree / "talks" / "2026_10_00_OpenData" / "deck.md"
+    deck.write_text(deck.read_text() + "uncommitted, checked, then dropped\n")
+    code, obj, err = talk(od_worktree, "ready", "opendata", *SKIPS, cwd=od_worktree, env=env)
+    assert code == 0 and obj["ready"] is True and runs() == 1, err
+    assert "stamp" not in obj and obj["not_stamped"] == "uncommitted changes when ready started"
+    assert "not stamped" in err and not list((od_worktree.parent.parent.parent / ".git" / "talk-status").glob("*"))
+    assert sh(["git", "status", "--porcelain"], od_worktree, env).stdout == ""      # clean now, at the same HEAD
+    code, obj, err = talk(od_worktree, "deploy", "opendata", "--dry-run", *READY_SKIPS, cwd=od_worktree, env=env)
+    assert code == 0 and runs() == 2 and "reused" not in obj["ready"], err        # so deploy runs ready itself
+    code, obj, _ = talk(od_worktree, "ready", "opendata", *SKIPS, cwd=od_worktree, env=env)
+    assert code == 0 and obj["stamp"]                                               # clean at both ends: stamped
+
+
 def test_deploy_does_not_trust_a_weaker_or_older_stamp(od_worktree, counted):
     env, runs = counted
     talk(od_worktree, "ready", "opendata", *SKIPS, "--skip", "preflight", cwd=od_worktree, env=env)
