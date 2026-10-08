@@ -7,10 +7,11 @@
 # ~/micromamba; point it at scratch space on a cluster), installs the
 # slidev-videos CLI from the checkout beside this repo (pip install -e), runs
 # pnpm install in both repos, puts the Playwright browsers and the pnpm store
-# on the repos' filesystem when the home directory is elsewhere, picks the
-# render backend (Slurm, HTCondor or this machine) and the WebGL backend
-# (native NVIDIA, WSL's GPU through Mesa d3d12, or llvmpipe), and writes all of
-# it to ~/.config/outreach_talks/env, which `pnpm talk` and the skills read.
+# on the repos' filesystem when the home directory is elsewhere (the store in
+# pnpm's global config too, for a plain pnpm), picks the render backend (Slurm,
+# HTCondor or this machine) and the WebGL backend (native NVIDIA, WSL's GPU
+# through Mesa d3d12, or llvmpipe), and writes all of it to
+# ~/.config/outreach_talks/env, which `pnpm talk` and the skills read.
 # Run it again at any time: what is there already is left as it is.
 #
 #   scripts/bootstrap.sh [--dry-run] [--prefix DIR] [--config FILE] [--redetect]
@@ -49,7 +50,7 @@ while [ $# -gt 0 ]; do
     --no-install) NO_INSTALL=1 ;;
     --no-browsers) NO_BROWSERS=1 ;;
     --mesa-d3d12) MESA_SETUP=1; REDETECT=1 ;;
-    -h|--help) sed -n '2,32p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    -h|--help) sed -n '2,33p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
     *) echo "bootstrap: unknown option $1 (--help)" >&2; exit 2 ;;
   esac
   shift
@@ -228,6 +229,20 @@ else
     note "pnpm store: $CUR is on another filesystem, but node_modules was installed from it; moving"
     note "the store reinstalls everything: set npm_config_store_dir in $CONFIG by hand to do it"
   else setting npm_config_store_dir "$OUTREACH_ROOT/.cache/pnpm-store" "the home directory is on another filesystem"
+  fi
+fi
+# plain pnpm (the owner's shell, `pnpm install` in a session window) does not read the settings
+# file: the store goes into pnpm's own global config too, or it installs from another store
+if [ -n "${VALS[npm_config_store_dir]:-}" ]; then
+  WANT=${VALS[npm_config_store_dir]}
+  if [ -x "$ENV_BIN/pnpm" ]; then
+    G=$(cd "$HOME" && env -u npm_config_store_dir "$ENV_BIN/pnpm" config get store-dir --location=global </dev/null 2>/dev/null || true)
+    case $G in
+      "$WANT") note "pnpm's global store-dir: $WANT" ;;
+      ''|undefined) try "pnpm global store-dir" env -u npm_config_store_dir "$ENV_BIN/pnpm" config set store-dir "$WANT" --location=global ;;
+      *) note "pnpm's global store-dir is $G, not $WANT: a plain pnpm uses $G; make the two agree by hand" ;;
+    esac
+  else note "no pnpm in $ENV_BIN yet: run bootstrap again once the env is made, to give plain pnpm the store"
   fi
 fi
 

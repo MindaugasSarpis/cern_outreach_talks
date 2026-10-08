@@ -685,7 +685,7 @@ FAKE_TMUX = """import json, os, sys
 a = sys.argv[1:]
 with open(os.environ["TMUX_LOG"], "a") as f:
     f.write(json.dumps({"argv": a, "INIT_CWD": os.environ.get("INIT_CWD"),
-                        "npm": sorted(k for k in os.environ if k.startswith("npm_"))}) + "\\n")
+                        "npm": {k: v for k, v in os.environ.items() if k.startswith(("npm_", "PNPM_SCRIPT"))}}) + "\\n")
 if a[0] == "list-windows":
     w = os.environ.get("TMUX_WINDOWS")
     if not w or not os.path.exists(w):
@@ -701,8 +701,17 @@ def tmux(env, tmp_path):
     fake_bin(b, "tmux", f'exec {sys.executable} {tmp_path / "fake_tmux.py"} "$@"\n')
     (tmp_path / "fake_tmux.py").write_text(FAKE_TMUX)
     log = tmp_path / "tmux.log"
+    # what `pnpm -s talk session` runs with: pnpm's script variables, one npm setting of the
+    # owner's own, and the settings file bootstrap wrote with the store it chose
+    pnpm_vars = {"INIT_CWD": "/somewhere", "PNPM_SCRIPT_SRC_DIR": "/somewhere", "npm_lifecycle_event": "talk",
+                 "npm_package_name": "outreach-talks", "npm_execpath": "/env/pnpm.cjs", "npm_command": "run-script",
+                 "npm_config_user_agent": "pnpm/10.33.2", "npm_config_reporter": "silent",
+                 "npm_config_frozen_lockfile": "", "npm_config_cache": "/big/npm-cache"}
     e = {**path_with(b, env), "TMUX_LOG": str(log), "TMUX_WINDOWS": str(tmp_path / "windows"),
-         "SLIDEV_VIDEOS_DIR": str(tmp_path / "slidev-videos"), "INIT_CWD": "/somewhere", "npm_config_x": "1"}
+         "SLIDEV_VIDEOS_DIR": str(tmp_path / "slidev-videos"), **pnpm_vars}
+    (tmp_path / "config").mkdir(exist_ok=True)
+    (tmp_path / "config" / "env").write_text("npm_config_store_dir='/big/disk/pnpm-store'\n"
+                                             "PLAYWRIGHT_BROWSERS_PATH='/big/disk/pw'\n")
     (tmp_path / "slidev-videos").mkdir()
 
     def calls():
@@ -712,7 +721,8 @@ def tmux(env, tmp_path):
 
 def test_session_for_a_talk_starts_the_tmux_session(repo, tmux):
     env, calls, _ = tmux
-    env = {**env, "INIT_CWD": str(repo)}
+    # pnpm's PATH for a script: the package's node_modules/.bin and its node-gyp-bin first
+    env = {**env, "INIT_CWD": str(repo), "PATH": f"/env/lib/node_modules/pnpm/dist/node-gyp-bin:{repo}/node_modules/.bin:{env['PATH']}"}
     code, obj, err = talk(repo, "session", "opendata", "--no-install", env=env)
     assert code == 0, err
     wt = repo / ".claude" / "worktrees" / "opendata"
@@ -721,9 +731,13 @@ def test_session_for_a_talk_starts_the_tmux_session(repo, tmux):
     new = calls()[-1]
     a = new["argv"]
     assert a[:7] == ["new-session", "-d", "-s", "talks", "-n", "opendata", "-c"] and a[7] == str(wt)
-    assert a[8] == "-e" and a[9].startswith("PATH=")
-    assert a[10] == "claude --name 'Talk: OpenData' --remote-control 'Talk: OpenData'"
-    assert new["INIT_CWD"] is None and new["npm"] == []      # pnpm's script variables stay out of tmux
+    assert a[8] == "-e" and a[9].startswith("PATH=") and "node-gyp-bin" not in a[9] and "node_modules" not in a[9]
+    assert a[-1] == "claude --name 'Talk: OpenData' --remote-control 'Talk: OpenData'"
+    # pnpm's script variables stay out of tmux; the owner's npm setting and the settings file's stay,
+    # and the file's go to the window itself too, for a tmux server started from another shell
+    assert new["INIT_CWD"] is None
+    assert new["npm"] == {"npm_config_cache": "/big/npm-cache", "npm_config_store_dir": "/big/disk/pnpm-store"}
+    assert a[10:-1] == ["-e", "PLAYWRIGHT_BROWSERS_PATH=/big/disk/pw", "-e", "npm_config_store_dir=/big/disk/pnpm-store"]
     assert obj["attach"] == "tmux attach -t talks:opendata" and wt.is_dir()
 
 
@@ -851,3 +865,34 @@ def test_bootstrap_writes_once_and_keeps_the_owners_values(boot, tmp_path):
     assert "SLIDEV_STAGE_GL='gpu-nvidia'" in conf.read_text()
     c = talk_cli.resolve_config({"HOME": str(tmp_path / "home"), "PATH": ""}, tmp_path / "root" / "outreach_talks")
     assert c["OUTREACH_ROOT"] == str(tmp_path / "root") and c.file["SLIDEV_STAGE_GL"] == "gpu-nvidia"
+
+
+FAKE_PNPM = """echo "$* store=${npm_config_store_dir:-unset}" >> "$PNPM_LOG"
+case "$1 $2" in
+  "config get") cat "$PNPM_GLOBAL" 2>/dev/null || echo undefined ;;
+  "config set") echo "$4" > "$PNPM_GLOBAL" ;;
+esac
+"""
+
+
+def test_bootstrap_gives_plain_pnpm_the_store(boot, tmp_path):
+    run, conf = boot
+    envbin = tmp_path / "envbin"
+    fake_bin(envbin, "pnpm", FAKE_PNPM)
+    log, glob = tmp_path / "pnpm.log", tmp_path / "pnpm-global"
+    extra = {"OUTREACH_ENV_BIN": str(envbin), "npm_config_store_dir": "/big/disk/pnpm-store",
+             "PNPM_LOG": str(log), "PNPM_GLOBAL": str(glob)}
+    r, written = run(extra=extra)
+    assert written["npm_config_store_dir"] == "/big/disk/pnpm-store"
+    assert "would run: env -u npm_config_store_dir" in r.stdout and "set store-dir /big/disk/pnpm-store --location=global" in r.stdout
+    assert not glob.exists()                                                # a dry run sets nothing
+    r, _ = run(dry=False, extra=extra)
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert glob.read_text() == "/big/disk/pnpm-store\n"
+    assert "config set store-dir /big/disk/pnpm-store --location=global store=unset" in log.read_text().splitlines()
+    r, _ = run(dry=False, extra=extra)
+    assert "pnpm's global store-dir: /big/disk/pnpm-store" in r.stdout
+    assert sum("config set" in l for l in log.read_text().splitlines()) == 1     # once
+    glob.write_text("/elsewhere\n")
+    r, _ = run(dry=False, extra=extra)
+    assert "is /elsewhere, not /big/disk/pnpm-store" in r.stdout and glob.read_text() == "/elsewhere\n"

@@ -1957,13 +1957,26 @@ TMUX_SESSION = "talks"
 STATUS_FIELDS = ("name", "branch", "pin", "doing", "blocked", "next")
 
 
+# What pnpm (10) adds to the environment of a script it runs: the script's own variables, and
+# the settings it hands nested pnpm calls (`pnpm -s talk` adds reporter=silent, which would
+# silence every pnpm in the windows). Settings from the environment or the env file stay,
+# npm_config_store_dir among them.
+PNPM_SCRIPT_VARS = re.compile(r"INIT_CWD|PNPM_SCRIPT_\w+|npm_command|npm_execpath|npm_node_execpath"
+                              r"|npm_lifecycle_\w+|npm_package_\w+|pnpm_config_verify_deps_before_run"
+                              r"|npm_config_(?:user_agent|node_gyp|globalconfig|npm_globalconfig|reporter"
+                              r"|frozen_lockfile|verify_deps_before_run)")
+
+
 def session_env() -> dict:
-    """tool_env without what pnpm adds for a script run: a tmux server started from here keeps
-    its environment for every window, and INIT_CWD there would point talk at the wrong place."""
+    """tool_env without pnpm's script variables (PNPM_SCRIPT_VARS) and the render slot's: a tmux
+    server started from here keeps its environment for every window, and INIT_CWD there would
+    point talk at the wrong place. The env file's keys always stay."""
+    keep = set(cfg().file)
     env = {k: v for k, v in tool_env().items()
-           if not (k.startswith("npm_") or k.startswith("PNPM_SCRIPT") or k in ("INIT_CWD", "TALK_RENDER_SLOT",
-                                                                                "SLIDEV_STAGE_SHOTS_LOCKED"))}
-    env["PATH"] = os.pathsep.join(p for p in env.get("PATH", "").split(os.pathsep) if "node_modules/.bin" not in p)
+           if k in keep or not (PNPM_SCRIPT_VARS.fullmatch(k) or k in ("TALK_RENDER_SLOT", "SLIDEV_STAGE_SHOTS_LOCKED"))}
+    # pnpm puts the package's node_modules/.bin dirs and its own node-gyp-bin first for a script
+    env["PATH"] = os.pathsep.join(p for p in env.get("PATH", "").split(os.pathsep)
+                                  if "node_modules/.bin" not in p and not p.rstrip("/").endswith("/node-gyp-bin"))
     return env
 
 
@@ -2033,7 +2046,10 @@ def cmd_session(repo: Repo, a, extra) -> tuple[int, dict]:
         OUT.say(f"{target} is open already")
         OUT.show(attach)
         return 0, data
-    common = ["-n", win, "-c", str(cwd), "-e", f"PATH={env['PATH']}", shlex.join(cmd)]
+    # the window's own variables: PATH with the env first, and the settings file's, which a tmux
+    # server started earlier from another shell would not have
+    setenv = [f"PATH={env['PATH']}"] + [f"{k}={env[k]}" for k in sorted(cfg().file) if k in env and k != "PATH"]
+    common = ["-n", win, "-c", str(cwd), *[x for kv in setenv for x in ("-e", kv)], shlex.join(cmd)]
     if windows is None:
         argv = [tmux, "new-session", "-d", "-s", TMUX_SESSION, *common]
     else:
@@ -2042,7 +2058,7 @@ def cmd_session(repo: Repo, a, extra) -> tuple[int, dict]:
     if a.dry_run:
         OUT.say("dry run: would run " + shlex.join(argv))
         return 0, data
-    r = run(argv, env=env, capture=True, timeout=20)
+    r = run(argv, env=env, capture=True, timeout=20, quiet=True)      # the argv is long: --json has it
     if r.returncode:
         data["error"] = f"tmux failed: {(r.stderr or r.stdout).strip()[:300]}"
         OUT.say(f"error: {data['error']}")

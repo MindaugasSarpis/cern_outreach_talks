@@ -42,7 +42,9 @@ outreach_talks/scripts/bootstrap.sh             # on a cluster: OUTREACH_PREFIX=
   checkout beside this repo (`pip install -e`);
 - runs `pnpm install` in both repos and fetches the headless Chromium the
   stage tools drive. When the home directory is on another filesystem than
-  the repos, the browsers and the pnpm store go to `$OUTREACH_ROOT/.cache/`;
+  the repos, the browsers and the pnpm store go to `$OUTREACH_ROOT/.cache/`,
+  and the store also into pnpm's own global config (`pnpm config set
+  store-dir … --location=global`), so a plain `pnpm install` uses it too;
 - picks the render backend (Slurm if `sbatch` is there, HTCondor if
   `condor_submit` is, else this machine) and the WebGL backend: a native
   NVIDIA driver, WSL's GPU through Mesa's d3d12 driver (`--mesa-d3d12` fetches
