@@ -86,7 +86,7 @@ Techniškai: kadras — public/figures/opener_last.jpg, išsitrauktas komanda pn
 -->
 
 ---
-space: { at: [30, 40, -123], dist: 30, yaw: 38, pitch: 10, dim: 0, flight: 3.5 }   # the funnel from outside, three-quarters from the mouth: the classic figure in grains
+space: { at: [30, 40, -123], dist: 24, yaw: 38, pitch: 10, dim: 0, flight: 3.5 }   # the funnel from outside, three-quarters from the mouth: the classic figure in grains
 ---
 
 <!--
@@ -100,9 +100,9 @@ Faktai: Visatos amžius 13,787 ± 0,020 mlrd. m. (Planck 2018, A&A 641, A6); spa
 space: { at: [30, 40, -134.4], dist: 2.6, yaw: 0, pitch: 0, dim: 0.1, flight: 5 }   # back in time down the funnel, past the galaxies, the first stars and the dark ages, to the CMB
 ---
 
-<div class="world-caption narrow">
+<div class="world-caption narrow after-flight">
 
-<p class="line">380 000 metų po Didžiojo sprogimo</p>
+# 380 000 metų po Didžiojo sprogimo
 
 </div>
 

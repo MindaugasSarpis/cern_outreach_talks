@@ -73,7 +73,7 @@ function buildFunnel(o, ctx) {
   // the Big Bang: a dense knot of white light, and inflation flaring from it
   for (let i = 0; i < 1100; i++) {
     const s = Math.pow(hash(i * 1.7), 2.2) * cmbAt * 0.85, r = R(s) * Math.sqrt(hash(i * 3.1)), t = hash(i * 5.3) * Math.PI * 2
-    add(s, r * Math.cos(t), r * Math.sin(t), s < 0.2 ? [0.9, 0.9, 0.85] : [0.55, 0.5, 0.42], s < 0.2 ? 1.1 : 0.8, 0.4)
+    add(s, r * Math.cos(t), r * Math.sin(t), s < 0.2 ? [0.6, 0.6, 0.56] : [0.4, 0.36, 0.3], s < 0.2 ? 0.9 : 0.7, 0.4)
   }
   // the CMB: a cap across the funnel, bulging towards the mouth; colours come from the Planck map
   const capN = 120, capFirst = pts.length
