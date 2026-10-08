@@ -849,7 +849,7 @@ def cmd_check(repo: Repo, a, extra) -> tuple[int, dict]:
 
 def report_steps(steps: list) -> None:
     for s in steps:
-        state = "skipped" if s.get("skipped") else ("ok" if s["ok"] else "FAILED")
+        state = "FAILED" if not s["ok"] else ("skipped" if s.get("skipped") else "ok")
         OUT.show(f"{s['name']:<14} {state}" + (f"  ({s['seconds']} s)" if s.get("seconds") is not None else "")
                  + (f"  {s['error']}" if s.get("error") else "") + (f"  {s['skipped']}" if s.get("skipped") else ""))
 
@@ -912,6 +912,8 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
         built = any(s["name"] == "build" and s["ok"] for s in check["steps"])
     if "shots" in skip:
         steps.append(step("shots", None, d, skip="--skip shots"))
+    elif "check" not in skip and not built:
+        steps.append({"name": "shots", "ok": False, "skipped": "no build"})
     else:
         OUT.say("-- shots (every slide)")
         try:
