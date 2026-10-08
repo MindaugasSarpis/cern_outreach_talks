@@ -38,7 +38,7 @@ info: |
   private sector: how technology leaves CERN, what it does for suppliers, the
   next machine, Lithuania, what a firm can do. Photographs are full bleed
   (`.hero`); slides carry a few words, the notes carry what is said. Toolkit:
-  slidev-videos feat/dust-fullframe dca4e8f. Keys on a video slide: p play/pause,
+  slidev-videos 12aa015. Keys on a video slide: p play/pause,
   + / - volume; `c` builds what stands where the camera is again.
 layout: cover
 space:
@@ -63,11 +63,11 @@ Sakyti: „Laba diena. Esu Mindaugas Šarpis, vadovauju Vilniaus universiteto gr
 space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0 }   # the takeover's pose: the next slide stands exactly here
 ---
 
-<VideoPlayer src="vu_ff_zoom_galaxy.mp4" transition="fade" />
+<VideoPlayer src="vu_ff_zoom_galaxy.mp4" transition="fade" advance-on-end />
 
 <!--
 Kalbėtojui. Nutolinimas nuo VU Fizikos fakulteto ir NFTMC pastato Saulėtekyje: Vilnius, Lietuva, Žemė, mūsų galaktika. Klipas baigiasi mūsų galaktika iš šono (paskutinės 16 s, kuriose vaizdas užgęsta, nukirptos). Galima tylėti arba trumpai įvardyti etapus. Jei laiko mažai, klipą trumpinti manifeste (trim).
-Pirmyn spausti tik klipui pasibaigus: kita skaidrė prasideda nuo to paties paskutinio kadro ir paverčia jį pasaulio grūdeliais.
+Spausti nereikia: klipui pasibaigus, skaidrės pačios pereina į kitą, kuri prasideda nuo to paties paskutinio kadro ir paverčia jį pasaulio grūdeliais. Paspaudus klipo metu, pereinama anksčiau (tada klipo pabaiga nieko nebedaro). Savaime pereinama tik auditorijos lange, ne /presenter.
 (klipas 4:26, su savo garso takeliu)
 -->
 

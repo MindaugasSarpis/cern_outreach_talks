@@ -1,6 +1,6 @@
 # Innoday — handoff (2026-10-08)
 
-**Pin.** slidev-videos feat/dust-fullframe `dca4e8f` (both addons in `package.json`; was feat/broadcast `efacca2`).
+**Pin.** slidev-videos `12aa015` (dust-fullframe, the dark-clip fix, `advance-on-end`; both addons in `package.json`).
 Shots: feat/shots-v2 `35340a9`, run from its worktree
 (`node ~/slidev-videos/.claude/worktrees/feat-shots-v2/packages/stage/bin/shots.mjs <dist> <out> --sheet`).
 
@@ -164,3 +164,9 @@ showed two orbs, not five, at the 14 s shot.
   slide 6 condenses cleanly; slide 8 shows ~1 s of black between the grains
   and the clip, whose opening is dark (reported to Tools via the Scheduler).
   The opener keeps `transition="fade"`.
+- **Pin 12aa015**: slide 8's black gap is gone (grains condense into the
+  detector by ~1.4 s; recorded on photon). The opener has `advance-on-end`:
+  the deck goes to the takeover by itself when the clip ends (audience
+  window only; a click during the clip moves on early). Renders on photon
+  need `-n 1` (`RENDER_SRUN_ARGS="-p photon_primary -c 16 -n 1"`): without
+  it srun started two recorders that wrote the same MP4s.
