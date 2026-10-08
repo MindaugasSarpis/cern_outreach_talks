@@ -48,6 +48,7 @@ not a slide separator
 
 <!--
 Speaker (~2 min). See slide 3 for the plot.
+[CHECK, optional: a figure newer than 2024]
 -->
 
 ---

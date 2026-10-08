@@ -70,4 +70,5 @@ layout: statement
 <!--
 Kalbėtojui (~2,5 min). Klausimai.
 „Blogas rezultatas irgi yra rezultatas“ [ASR: re-listen]
+[PATIKSLINTI, neprivaloma: ar paminėti, kas pakvietė]
 -->

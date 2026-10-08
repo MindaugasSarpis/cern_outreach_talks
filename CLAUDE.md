@@ -146,7 +146,10 @@ wants a `.src` line; a deck that keeps its sources in the notes says
 Open marks are `[CHECK…]`, `[PATIKSLINTI…]` (a question for the owner),
 `[ASR…]` (a quote from an automatic transcript, not re-listened yet) and
 `[TODO…]`, anywhere below the headmatter: warnings, errors with `--release`.
-Settle each and delete the mark; the headmatter `info` may name them.
+A question the talk can go without says so right after the mark,
+`[CHECK, optional: …]` or `[PATIKSLINTI, neprivaloma: …]`, and stays a
+warning with `--release` (`CHECK-OPTIONAL`). Settle each and delete the
+mark; the headmatter `info` may name them.
 `slidev-videos discover <keywords>` (any dir) searches open archives for clips.
 NVENC: the env ffmpeg has it, the bare `~/.local/bin/ffmpeg` does not —
 prefix `PATH=~/micromamba/envs/outreach_talks/bin:$PATH` for GPU encodes.

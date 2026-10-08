@@ -93,6 +93,20 @@ class LithuanianFixture(unittest.TestCase):
         self.assertIn("[ASR: re-listen]", found[2].message)
         self.assertEqual([f.severity for f in codes(lint(LT, release=True), "CHECK")], ["error"] * 3)
 
+    def test_optional_mark_stays_a_warning(self):
+        # [PATIKSLINTI, neprivaloma: …] on slide 5 is a question the talk can go without
+        for release in (False, True):
+            found = codes(lint(LT, release=release), "CHECK-OPTIONAL")
+            self.assertEqual([(f.slide, f.line, f.severity) for f in found], [(5, 73, "warning")])
+            self.assertIn("[PATIKSLINTI, neprivaloma: ar paminėti, kas pakvietė]", found[0].message)
+
+    def test_optional_pattern(self):
+        opt = lambda s: bool(talk_lint.OPTIONAL_MARK.search(s))
+        self.assertTrue(all(map(opt, ("[CHECK, optional: x]", "[PATIKSLINTI, neprivaloma: …]",
+                                      "[PATIKSLINTI (neprivaloma) kas?]", "[CHECK optional]", "[TODO, Optional: poza]"))))
+        self.assertFalse(any(map(opt, ("[CHECK: is it optional?]", "[CHECK the optional part]",
+                                       "[PATIKSLINTI: privaloma]", "[PATIKSLINTI]", "optional [CHECK]"))))
+
     def test_open_marks_pattern(self):
         hit = lambda s: bool(talk_lint.OPEN_MARK.search(s))
         self.assertTrue(all(map(hit, ("[CHECK]", "[CHECK: masė]", "[PATIKSLINTI, neprivaloma: …]",
@@ -150,6 +164,14 @@ class CleanFixture(unittest.TestCase):
     def test_exit_zero(self):
         with redirect_stdout(io.StringIO()):
             self.assertEqual(talk_lint.main([str(EN), "--facts", str(BANK)]), 0)
+
+    def test_release_with_an_optional_check(self):
+        # the deck's only mark is [CHECK, optional: …]: --release still passes
+        l = lint(EN, release=True)
+        self.assertEqual([f.code for f in l.findings if f.severity == "error"], [])
+        self.assertEqual([f.slide for f in codes(l, "CHECK-OPTIONAL")], [2])
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(talk_lint.main([str(EN), "--release", "--facts", str(BANK)]), 0)
 
     def test_usage_errors(self):
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):

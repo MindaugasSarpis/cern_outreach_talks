@@ -34,6 +34,9 @@ Slidev counts it (hidden slides are not counted).
                           for the owner), [ASR…] (a quote from an automatic
                           transcript, not re-listened yet), [TODO…]; an error
                           with --release
+  CHECK-OPTIONAL warning  an open mark the deck calls optional, right after
+                          the mark: [CHECK, optional: …], [PATIKSLINTI,
+                          neprivaloma: …]; a warning with --release too
   TIME-OVER      error    the timed notes ('(~N min)', '(N min)', '(m:ss)', dot
                           or comma decimals) plus clip lengths (manifest trim,
                           else public/video-frames/index.json) exceed the
@@ -94,6 +97,8 @@ LT_ENGLISH = re.compile(r"\b(Part|Thank you|Thanks|Questions?|Q&A)\b(?![\w-])")
 SLIDE_REF = re.compile(r"\b(?:slides?|skaidr\w*)\s+(\d{1,3})\b", re.I)
 OPEN_MARKS = ("CHECK", "PATIKSLINTI", "ASR", "TODO")     # [CHECK], [ASR: re-listen], …: still to settle
 OPEN_MARK = re.compile(r"\[(?:%s)\b" % "|".join(OPEN_MARKS))
+# [CHECK, optional: …], [PATIKSLINTI, neprivaloma: …]: a question the talk can go without
+OPTIONAL_MARK = re.compile(r"\[(?:%s)\b[\s,;:(–—-]{0,3}(?i:optional|neprivalom\w*)\b" % "|".join(OPEN_MARKS))
 SOURCES = ("slides", "notes")                            # headmatter `sources:` where a slide's sources are
 NOTES_SRC = re.compile(r"(?im)^[ \t]*(?:[-*•][ \t]*)?(?:sources?|šaltin(?:is|iai)|references?)"
                        r"(?:[ \t]*\([^)\n]*\))?[ \t]*:")
@@ -356,8 +361,11 @@ class Lint:
     def check_marks(self, s: td.Slide, n_visible: int):
         for m in OPEN_MARK.finditer(s.content):
             block = re.match(r"\[[^\]]{0,300}\]?", s.content[m.start():]).group(0)
-            self.at(s, m.start(), "CHECK", "error" if self.release else "warning",
-                    f"open check: {squash(block)[:110]!r}")
+            if OPTIONAL_MARK.match(s.content, m.start()):
+                self.at(s, m.start(), "CHECK-OPTIONAL", "warning", f"optional question: {squash(block)[:110]!r}")
+            else:
+                self.at(s, m.start(), "CHECK", "error" if self.release else "warning",
+                        f"open check: {squash(block)[:110]!r}")
         for m in SLIDE_REF.finditer(s.content):
             if int(m.group(1)) > n_visible:
                 self.at(s, m.start(), "SLIDE-REF", "warning",
@@ -537,7 +545,8 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="talk_lint.py", description="Lint a talk deck (see the module docstring for codes).")
     ap.add_argument("talk", help="talk directory, or a talk name under talks/")
     ap.add_argument("--release", action="store_true",
-                    help="venue gate: open marks (" + ", ".join(f"[{m}]" for m in OPEN_MARKS) + ") are errors")
+                    help="venue gate: open marks (" + ", ".join(f"[{m}]" for m in OPEN_MARKS) + ") are errors, "
+                    "except optional ones ([CHECK, optional: …], [PATIKSLINTI, neprivaloma: …])")
     ap.add_argument("--json", action="store_true", help="one JSON object on stdout, the report on stderr")
     ap.add_argument("--facts", type=Path, default=factsbank.BANK, help=f"facts bank (default {factsbank.BANK})")
     try:
