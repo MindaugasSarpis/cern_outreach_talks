@@ -136,9 +136,9 @@ Toolkit pin: slidev-videos `12aa015`, for both addons.
 
 ## Open
 
-- After the tooling merge (chore/tooling-merge fddfcff parses the headmatter as
-  YAML) reaches main: write `grain: .012` back as `grain: 0.012`. The `.012`
-  only kept talk.py's old broadcast regex from misreading this venue talk.
+- On the branch (b6b0ecc), not yet deployed: `grain` is 0.012 again (the
+  tooling merge fixed the broadcast detector), and slide 5 has its print still.
+  Redeploy when the Scheduler calls it.
 
 - Specks: gone on shots v12 (confirmed on a full-resolution crop of slide 7).
 - Opened directly at slide 7 (a deep link or a reload), the piles never
