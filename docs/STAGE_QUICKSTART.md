@@ -5,7 +5,9 @@ README is the reference for everything else; read the copy that matches the
 talk's pin, `talks/<t>/node_modules/slidev-addon-stage/README.md`. Items marked
 **from v0.6** are being built on the slidev-videos branches `feat/shots-v2`,
 `feat/broadcast` and `fix/stage-addon`; until a talk is bumped to v0.6 they are
-not in its `node_modules`.
+not in its `node_modules`. After the release a talk moves with
+`pnpm talk bump-toolkit v0.6.0 --talk <name> --dry-run`, then without
+`--dry-run`.
 
 ## Start
 
@@ -151,7 +153,7 @@ broadcast floor; a TV talk overrides them (below).
 ```bash
 pnpm talk check <t>      # videos:check + stage:check + a build into /tmp/talk-<slug>/site
 pnpm talk review <t>     # check + build + shots --changed --sheet
-pnpm talk shots <t>      # shots only; flags pass through to slidev-stage-shots
+pnpm talk shots <t>      # shots only (slidev-stage-shots; see pnpm talk shots --help)
 pnpm talk map <t>        # number, title, layout, clicks, space.at, clip, minutes
 pnpm talk lint <t>       # language, slop, type floor, sources, timing, fact ids
 ```

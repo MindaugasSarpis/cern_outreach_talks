@@ -30,6 +30,9 @@ that catches it before the owner has to.
 - "weinberg slice (8) is too busy, figure is nice, but examine it and make it readable"
 - "slides 19 and 20 are nice, but can be improved, show diagrams much larger (or even make photo realistic 3d as well)"
 
+OpenData, 8 October, on slide text: "people will not read it, I will just say
+it". Slides carry the main points; the rest is in the notes.
+
 Check: `pnpm talk lint` (more than 60 words on screen, talk CSS under 18 px).
 In the shots report, `wordsOnScreen` and each text box's `fontPx`, `lumMean`
 and `lumVar` (from v0.6): high variance behind body text means world detail
