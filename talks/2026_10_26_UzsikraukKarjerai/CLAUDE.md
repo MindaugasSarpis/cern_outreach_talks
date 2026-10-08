@@ -49,8 +49,9 @@
   `look: broadcast` overridden to a near-black ground (lift 0, nebula 0,
   bloom 0.32, dust dimmer and sparser). A flow critique and a visual review
   of the contact sheets were applied. `slidev-stage-safe --broadcast` clean
-  (smallest type 31 px at 1080p). Deployed versions: a3001a1 (rejected),
-  71fb6f1 (rejected), then this one.
+  (smallest type 31 px at 1080p). Deployed 2026-10-08 as main 047fe53
+  (Pages run 37779392470 green, URL 200). Earlier deploys: a3001a1 and
+  71fb6f1, both rejected by the owner.
 - Next: the speaker's [PATIKSLINTI] answers; Delfi's answers (Brief); a
   test encode at 2.5 Mbit/s of a dark slide to check banding; per-slide MP4s
   with `slidev-stage-record` for Delfi once the toolkit release lands.
