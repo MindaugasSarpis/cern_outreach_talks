@@ -320,10 +320,9 @@ class Lint:
 
     def check_marks(self, s: td.Slide, n_visible: int):
         for m in CHECK.finditer(s.content):
-            end = s.content.find("\n", m.start())
-            line_txt = s.content[m.start():end if end >= 0 else len(s.content)]
+            block = re.match(r"\[CHECK[^\]]{0,300}\]?", s.content[m.start():]).group(0)
             self.at(s, m.start(), "CHECK", "error" if self.release else "warning",
-                    f"open check: {squash(line_txt)[:90]!r}")
+                    f"open check: {squash(block)[:110]!r}")
         for m in SLIDE_REF.finditer(s.content):
             if int(m.group(1)) > n_visible:
                 self.at(s, m.start(), "SLIDE-REF", "warning",
