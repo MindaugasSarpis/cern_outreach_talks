@@ -46,8 +46,8 @@ Current talks:
   like the Innoday branch to slidev-videos `640eaa5` (feat/effects-v2) for the
   grain forms, plus two talk-owned builders. Date placeholder `10_00`. See
   "Open data talk" below.
-- `talks/2026_10_26_UzsikraukKarjerai/` — „Vadovėlio gale atsakymo nėra“, a
-  13-minute Lithuanian talk for grades 9–12 at „Užsikrauk karjerai“ (Delfi ×
+- `talks/2026_10_26_UzsikraukKarjerai/` — „Vadovėlio gale atsakymo nėra“, an
+  ~10-minute Lithuanian talk for grades 9–12 at „Užsikrauk karjerai“ (Delfi ×
   Lietuvos Junior Achievement), filmed in the Delfi studio on 26 Oct 2026
   with no audience, streamed to classrooms on 27 Oct 2026 12:00. Built for
   television on the packaged stage (same `640eaa5` pin), its own violet-gold
@@ -471,13 +471,20 @@ far-back scale poses stay nearest the store.
 
 ## Užsikrauk karjerai (2026_10_26_UzsikraukKarjerai)
 
-A science talk for teenagers, not a biography (the owner's steer,
-2026-10-08: "it doesn't have to be my life story"): the spine is questions
-with no answer and what working on them is like; the speaker's own moments
-(CERN in 11th grade, the detours, the search that ended in „Neradau.“, his
-2022 plans slide) come in as evidence. 31 slides, each a click; the full
-spoken Lithuanian script, timings, sources and every [PATIKSLINTI] item to
-confirm with the speaker are in the speaker notes.
+One thread in three parts, 17 slides, about 10 minutes (reworked
+2026-10-08 after the owner rejected a 31-slide, committee-written first
+version: "too many slides, AI-sounding statements, storytelling off"):
+I. the question nobody can answer yet (why matter survived: one in a
+billion), then where it is asked (the LHC, LHCb); II. what working on such a
+question looks like: one particle followed from idea (1964) to false find
+(2003), retraction (2008) and discovery (2015), then the speaker's own
+search for three of them, which ended in „Neradau.“, why that still counts,
+and the open data; III. what it has to do with the viewer: his crooked
+route across Europe, his own 2022 plans slide, back to the open question
+(galaxy), and one task for the week. Slide text is only numbers, years, a
+URL, his word „Neradau.“ and the closing question: no slogan cards. The
+full spoken script, timings, public sources and [PATIKSLINTI] items are in
+the notes.
 
 - **Television rules** (research 2026-10-07; from the event's past
   recordings and broadcast standards): Delfi/LJA showed slides squeezed to about two-thirds
@@ -492,9 +499,9 @@ confirm with the speaker are in the speaker notes.
   output 1920×1080 at 50 Hz. No full-frame flashes (ITU-R BT.1702).
 - **Stations** (one axis, 300 apart, so only one is ever in frame): `origin`
   (hero; `pairs`), `collider`, `quarks` (`quintet`), `search` (`ghost` with a
-  haystack, `streams` `dance` and `phantom`), `europe` (`map`, `path` `route`,
-  `streams` `home`; named poses `vilnius`, `glasgow`, `germany`, `whole`),
-  `cosmos` (`galaxy`; pose `close`).
+  haystack, `streams` `phantom`), `europe` (`map`, `path` `route`: Vilnius →
+  CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius; pose
+  `whole`), `cosmos` (`galaxy`; pose `close`). `stage.options.reach: 22`.
 - **Talk-owned builders** (`setup/grains.js`, `stage:check --types
   path,streams,pairs,ghost,map,quintet`), all driven by `<Grains :set>`:
   - `pairs` — matter (gold) and antimatter (blue): 1 the hot cloud forms, 2 the

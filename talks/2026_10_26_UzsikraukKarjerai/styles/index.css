@@ -64,6 +64,8 @@ html[data-stage] .num {
   font-size: 130px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9;
   font-variant-numeric: tabular-nums; white-space: nowrap; margin: 0 0 6px;
 }
+html[data-stage] .num.small { font-size: 84px; margin: 0; }
+html[data-stage] .num.small + .line { font-size: 30px; margin: 4px 0 14px; }
 html[data-stage] .num.gold { color: var(--kk-gold-hi); }
 html[data-stage] .num.blue { color: var(--kk-blue-hi); }
 html[data-stage] .num .unit { font-size: 0.42em; font-weight: 600; letter-spacing: -0.01em; margin-left: 0.18em; color: var(--kk-gold); }
