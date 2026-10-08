@@ -497,7 +497,7 @@ def main(argv=None) -> int:
                       + (["added to photos.toml"] if added else [] if not args.record else ["already in photos.toml"])
                       + notes + ([] if args.record else ["", toml_entry(entry).rstrip()]))
     emit({"ok": True, "ref": f"{kind}:{ident}", "path": str(path), "entry": entry, "recorded": added,
-          "notes": notes, "meta": got.get("meta")}, human)
+          "notes": notes, "meta": got.get("meta"), "record_json": got.get("recjson", False)}, human)
     return 0
 
 
