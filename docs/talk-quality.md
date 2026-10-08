@@ -37,7 +37,7 @@ Check: `pnpm talk lint` (more than 60 words on screen, talk CSS under 18 px).
 In the shots report, `wordsOnScreen` and each text box's `fontPx`, `lumMean`
 and `lumVar` (from v0.6): high variance behind body text means world detail
 behind the words, so raise `dim` or move the pose. Judge every slide on the
-contact sheet at projector size, not on a single full-size PNG. A figure that
+contact sheet, at about the size the room will see it. A figure that
 needs explaining is drawn larger or split; nothing is shrunk to fit.
 
 ### Slop or marketing wording (6 times, World of Particles included)
@@ -53,7 +53,7 @@ Check: `pnpm talk lint` first (antithesis "X, not Y", banned words such as
 cosmos, journey and unlock, anthropomorphic verbs, emoji, colon glosses). An
 editorial pass by an agent runs only on slides that are lint-clean and changed
 since the last pass. One "all clean" agent pass was followed by 38 colon
-glosses found the next day, so the lint is the gate, not the agent.
+glosses found the next day, so the lint runs first and decides.
 
 ### Meaning: every visual carries something (4 times)
 

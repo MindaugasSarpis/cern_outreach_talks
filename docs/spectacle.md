@@ -25,8 +25,8 @@ one sparse and one dense slide before it spreads.
    slides where the world was the argument ("Looks impressive", "The first
    slide is super nice"); the strongest complaints to world objects that
    meant nothing ("the space doesn't bear any meaning").
-2. One big move per part of the talk, not one per slide. Between them the
-   camera rests and the text reads.
+2. One big move per part of the talk. Between the moves the camera rests
+   and the text reads.
 3. Contrast is the cheapest effect: a held dark frame, a hush, a lone grain.
    They cost nothing to render.
 4. The cover holds something back and the close shows the whole route.
