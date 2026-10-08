@@ -407,10 +407,10 @@ far-back scale poses stay nearest the store.
 - **Talk-owned builders** (`setup/grains.js`, registered from `setup/main.ts`;
   `stage:check` runs with `--types lineup,streams`):
   - `lineup` `{ name, pos, balls: [{ n, color, label }], unit, anchor, gaps, grow, reach, glow, labelH }`:
-    piles of one and the same sphere side by side along x (1, 800, 55 000
-    gold; 600 000 blue), each pile the first n points of a face-centred cubic
+    piles of one and the same sphere side by side along x (1, 800, 4 000
+    gold; 600 000 blue, the HL-LHC), each pile the first n points of a face-centred cubic
     lattice taken shell by shell, so the first n always make a ball. Piles keep
-    their size: the slides pull the camera back (dist 0.75 → 8.7 → 25.9 → 57.5)
+    their size: the slides pull the camera back (dist 0.75 → 8.7 → 18.1 → 50.1)
     and what came before is seen shrinking into the new scale (the owner's ask,
     2026-10-07: a single ball per step "looked the same after zooming out").
     A ball of one is the engine's marble; piles are sphere impostors (a point
@@ -428,8 +428,32 @@ far-back scale poses stay nearest the store.
     (fires on slide enter; the last step per name is kept for forms built
     later) and count with `<Count name :from :to />`. Arrival at `store` (and
     `c`) regathers the piles; `onDone` is always called, on the engine clock.
-- The deck sets `stage.options.reach: 20`: the 600 PB pose targets x = 2.3,
-  17.7 from the store station, and must still count as *at* it.
+- The deck sets `stage.options.reach: 20`: the 600 PB pose targets x = 5.48,
+  14.5 from the store station, and must still count as *at* it.
+- **Figures** (owner, 2026-10-08): "55 PB open" was dropped (the group's LMT
+  applications use ~55 PB for LHCb's *total* data); the open pile is the
+  public "over 4 PB" of Run 1 + Run 2 through the Ntupling Service (LHCb
+  outreach, 3 Mar 2026). The 600 PB pile is labelled HL-LHC on the owner's
+  word, its source still to be added (the public "600 PB" is CERN's Run 3
+  figure for all experiments). A number lives in the `lineup` balls in
+  `public/data/space.json`, the slide's `<Count :to>`, and the pose maths.
+- **Kick-off clip** (slide 2, after the cover so it buffers): `lhcb.mp4`, the
+  LHCb detector in 3D with music, as this talk's own 39 s cut of the library
+  clip (`trim = ["0:08", "0:47.1"]` in `videos/manifest.toml`, raw gdrive
+  `released/lhcb.mp4`, on release `videos-2026-10-00-opendata`, which wins the
+  chain by name). The library copy opens on 8 s of dark tunnel (mean
+  brightness under the player's `DARK`, 0.07) and ends on black, so the
+  default `dustFrom: lit` gathers the grains into a black frame and a clip
+  left after its end breaks up as black. The cut opens on the shafts above
+  the cavern (white CG on black, drawn by the grains with `videos.dustFrom:
+  start`) and ends at 47.1 s, as the music fades and before the picture does.
+  After re-encoding: `pnpm videos:frames` (commit `public/video-frames/`),
+  `videos:publish`, `videos:preflight`.
+- Slides carry main points only (owner, 2026-10-08: "people will not read it,
+  I will just say it"); what they leave out is in the notes under "Say:".
+- `vite.config.ts` excludes `slidev-addon-stage` and `three` from
+  pre-bundling, else `slidev dev` has two builder registries (the world never
+  sees `lineup`/`streams`) and two copies of three.
 - Streams on the store station: `world` (8 anonymous users, "Anyone can take
   it"), `vilnius` (3: the Z → μμ analysis, the course, the masterclass) and
   `dominykas` (1, ends at the `thesis` pentaquark, alone on the climax slide);

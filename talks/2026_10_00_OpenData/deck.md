@@ -24,8 +24,8 @@ info: |
   LHCb Vilnius, nominated for an open data award: a 6½-minute talk told inside
   one world of grains (slidev-addon-stage, blue palette, pinned to the
   slidev-videos feat/effects-v2 commit 640eaa5). One sphere is one terabyte:
-  piles of the same sphere stand side by side (1 TB, 800 TB, 55 PB gold;
-  LHC Run 3's 600 PB blue) and keep their size as the camera pulls back, and
+  piles of the same sphere stand side by side (1 TB, 800 TB, 4 PB gold;
+  the HL-LHC's 600 PB blue) and keep their size as the camera pulls back, and
   streams of grains carry the open data to the people who use them. The
   talk's own forms are setup/grains.js (`lineup`, `streams`); `<Grains>` sets
   their step, `<Count>` counts with them. On any station `c` builds it again.
@@ -104,7 +104,7 @@ the design rate to tape is 10 GB/s (LHCb Sprucing paper, arXiv:2506.20309).
 -->
 
 ---
-space: { at: [7.92, 0, 0], dist: 0.75, yaw: -6, pitch: 4, dim: 0.2 }
+space: { at: [10.37, 0, 0], dist: 0.75, yaw: -6, pitch: 4, dim: 0.2 }
 ---
 
 <Grains :set="{ scale: 0, 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
@@ -133,7 +133,7 @@ stays beside the new pile at its true size.
 -->
 
 ---
-space: { at: [7.16, 0, 0], dist: 8.7, yaw: -4, pitch: 4, dim: 0.2 }
+space: { at: [9.6, 0, 0], dist: 8.7, yaw: -4, pitch: 4, dim: 0.2 }
 ---
 
 <Grains :set="{ scale: 1, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
@@ -165,7 +165,7 @@ the collaboration's Analysis Preservation and Open Data work package.
 -->
 
 ---
-space: { at: [5.46, 0, 0], dist: 25.9, yaw: -4, pitch: 4, dim: 0.2 }
+space: { at: [8.67, 0, 0], dist: 18.1, yaw: -4, pitch: 4, dim: 0.2 }
 ---
 
 <Grains :set="{ scale: 2, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
@@ -174,27 +174,24 @@ space: { at: [5.46, 0, 0], dist: 25.9, yaw: -4, pitch: 4, dim: 0.2 }
 
 <div class="readout">
 
-<p class="kicker">Open</p>
+<p class="kicker">2026 · Run 1 + Run 2, open</p>
 
-<div class="big gold"><Count name="open" :from="800" :to="55000" /><span class="unit">TB</span></div>
+<div class="big gold"><Count name="open" :from="800" :to="4000" /><span class="unit">TB</span></div>
 
-Half after 5 years · all after 10
+Over 4 PB · half after 5 years, all after 10
 
 </div>
 
-<div class="src">Policy: LHCb, “LHCb Open Data Ntupling Service”, arXiv:2504.00610 (2025)</div>
+<div class="src">LHCb outreach, “LHCb releases service to access Run II data”, 3 Mar 2026 · policy: LHCb, arXiv:2504.00610 (2025)</div>
 
 <!--
-Speaker (~0.5 min): fifty-five thousand spheres; the first terabyte is now a
-dot on the left.
-[CHECK before the talk: "55 PB open" is the figure as given by the speaker.
-The group's own LMT applications (2024, 2025) use ~55 PB for LHCb's TOTAL
-data set; public figures for open LHCb data are ~800 TB (Run 1 files) and
-"over 4 PB" of Run 1 + Run 2 through the Ntupling Service (Feb/Mar 2026);
-the whole CERN Open Data portal holds "more than 5 PB". To change the
-number: the `open` volume's last step in public/data/space.json, this
-slide's <Count :to>, and the "eleven times" (600 000 ÷ the open figure) in
-the notes of the Run 3 slide.]
+Speaker (~0.5 min). Say: since 2026 Run 2 is open as well: with Run 1,
+over 4 petabytes, four thousand spheres. You do not download it whole: you
+ask for a decay and get those collisions (next slides). The pile of 800 is
+now a bead beside it, the first terabyte a dot.
+Source: LHCb outreach, 3 Mar 2026, "over 4 PB of data to explore" (the CERN
+Open Data portal announced it on 22 Feb 2026). The whole portal holds "more
+than 5 PB" across all experiments.
 The policy: LHCb agreed in 2013 to publish about 50% of a run's data five
 years after it ends and all of it after ten (since 2020 within CERN's Open
 Data Policy for the LHC experiments). The dates have slipped a little: all
@@ -202,7 +199,7 @@ of Run 1 was due by the end of 2022 and was complete in December 2023.
 -->
 
 ---
-space: { at: [2.3, 0, 0], dist: 57.5, yaw: -4, pitch: 4, dim: 0.15 }
+space: { at: [5.48, 0, 0], dist: 50.1, yaw: -4, pitch: 4, dim: 0.15 }
 ---
 
 <Grains :set="{ scale: 3, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
@@ -211,25 +208,24 @@ space: { at: [2.3, 0, 0], dist: 57.5, yaw: -4, pitch: 4, dim: 0.15 }
 
 <div class="readout">
 
-<p class="kicker">LHC Run 3 · 2022–2026</p>
+<p class="kicker">HL-LHC · the next decade</p>
 
 <div class="big blue"><Count name="run3" :from="0" :to="600000" /><span class="unit">TB</span></div>
 
-All LHC experiments · 20 000 years of HD video
+150 times today's open data
 
 </div>
 
-<div class="src">CERN, “Storage”, home.cern/science/computing/storage</div>
-
 <!--
-Speaker (~0.7 min): and now Run 3. Six hundred thousand spheres: the blue
-ball is eleven times the gold in volume, and the first terabyte is a speck
-under its label. CERN's own comparison: more than
-600 PB is over 20 000 years of HD video recorded around the clock. In
-December 2025 CERN passed one exabyte of stored LHC data, and the second
-half of it was collected in Run 3 alone. Run 3 ended in June 2026. LHCb's
-part of it, in analysis-ready form, opens on LHCb's schedule: about half
-five years after the run, all of it after ten.
+Speaker (~0.6 min). Say: and this is what is coming: the High-Luminosity
+LHC, 600 petabytes, six hundred thousand spheres, 150 times everything that
+is open today. Under CERN's open data policy its analysis-ready part is to
+be opened too, and that work is what we do in Vilnius. The first terabyte is a speck under its label.
+[CHECK: source for 600 PB in the HL-LHC era, and whether it is LHCb's or
+all LHC experiments'. The only public "600 PB" found is CERN's figure for
+what all LHC experiments prepared to store in Run 3 (home.cern, "Storage");
+public HL-LHC storage estimates are about ten times today's per year. Add
+the source as a .src line here once known.]
 -->
 
 ---
