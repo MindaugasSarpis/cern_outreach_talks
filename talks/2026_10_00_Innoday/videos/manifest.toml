@@ -16,8 +16,10 @@ profile = "high-motion"
 used_in = ["deck"]
 notes   = """\
 Opener: cosmic zoom-out from the VU Faculty of Physics building in the NFTMC \
-(Saulėtekis, Google Earth) through Vilnius, Earth, the Milky Way and the \
-galaxies to the cosmic web, 4:42 with its own audio track. The same web encode \
+(Saulėtekis, Google Earth) through Vilnius, Earth and the Milky Way out to \
+a spiral galaxy, which fades to black at the end (it does not end on the cosmic \
+web: the takeover slide shows a stand-in frame until the orbit clip replaces \
+it), 4:42 with its own audio track. The same web encode \
 as the World of Particles opener (release videos-2026-09-10-worldofparticles, \
 2026-09-07), copied to this talk's release. Raw is a 4K60 H.264 254 Mbps \
 Resolve master (9.0 GB) on gdrive as vu_ff_zoom.mp4."""
