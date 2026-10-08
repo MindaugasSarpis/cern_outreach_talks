@@ -56,143 +56,143 @@
       0,
       0
      ],
-     "size": 4.0,
-     "res": 120,
+     "size": 3.6,
+     "res": 150,
      "labelH": 0.03,
      "people": [
       {
        "name": "Mindaugas Šarpis",
        "src": "/figures/people/mindaugas-sarpis.jpg",
        "at": [
-        24.0,
-        10.06,
-        -1.82
+        33.0,
+        10.0,
+        -1.49
        ]
       },
       {
        "name": "Ramūnas Aleksiejūnas",
        "src": "/figures/people/ramunas-aleksiejunas.jpg",
        "at": [
-        17.2,
-        9.43,
-        0.62
+        25.76,
+        9.38,
+        0.51
        ]
       },
       {
        "name": "Oleg Kravcov",
        "src": "/figures/people/oleg-kravcov.jpg",
        "at": [
-        11.56,
-        7.66,
-        2.2
+        19.77,
+        7.62,
+        1.8
        ]
       },
       {
        "name": "Adam Morris",
        "src": "/figures/people/adam-morris.jpg",
        "at": [
-        8.08,
-        5.04,
-        0.74
+        16.07,
+        5.02,
+        0.6
        ]
       },
       {
        "name": "Augustas Vaitkevičius",
        "src": "/figures/people/augustas-vaitkevicius.jpg",
        "at": [
-        7.35,
-        2.04,
-        -1.74
+        15.3,
+        2.05,
+        -1.43
        ]
       },
       {
        "name": "Rūta Racz",
        "src": "/figures/people/ruta-racz.jpg",
        "at": [
-        9.51,
-        -0.83,
-        -1.82
+        17.58,
+        -0.8,
+        -1.49
        ]
       },
       {
        "name": "Šarūnas Jacevičius",
        "src": "/figures/people/sarunas-jacevicius.jpg",
        "at": [
-        14.16,
-        -3.07,
-        0.62
+        22.54,
+        -3.02,
+        0.51
        ]
       },
       {
        "name": "Margarita Biveinytė",
        "src": "/figures/people/margarita-biveinyte.jpg",
        "at": [
-        20.52,
-        -4.31,
-        2.2
+        29.3,
+        -4.24,
+        1.8
        ]
       },
       {
        "name": "Sophia Pennuttis",
        "src": "/figures/people/sophia-pennuttis.jpg",
        "at": [
-        27.48,
-        -4.31,
-        0.74
+        36.7,
+        -4.24,
+        0.6
        ]
       },
       {
        "name": "Mikas Paulius Iršėnas",
        "src": "/figures/people/mikas-paulius-irsenas.jpg",
        "at": [
-        33.84,
-        -3.07,
-        -1.74
+        43.46,
+        -3.02,
+        -1.43
        ]
       },
       {
        "name": "Neilas Beniušis",
        "src": "/figures/people/neilas-beniusis.jpg",
        "at": [
-        38.49,
-        -0.83,
-        -1.82
+        48.42,
+        -0.8,
+        -1.49
        ]
       },
       {
        "name": "Karolina German",
        "src": "/figures/people/karolina-german.jpg",
        "at": [
-        40.65,
-        2.04,
-        0.62
+        50.7,
+        2.05,
+        0.51
        ]
       },
       {
        "name": "Eliza Holvoet",
        "src": "/figures/people/eliza-holvoet.jpg",
        "at": [
-        39.92,
-        5.04,
-        2.2
+        49.93,
+        5.02,
+        1.8
        ]
       },
       {
        "name": "Meda Paulavičiūtė",
        "src": "/figures/people/meda-paulaviciute.jpg",
        "at": [
-        36.44,
-        7.66,
-        0.74
+        46.23,
+        7.62,
+        0.6
        ]
       },
       {
        "name": "Dominykas Stonkus",
        "src": "/figures/people/dominykas-stonkus.jpg",
        "at": [
-        30.8,
-        9.43,
-        -1.74
+        40.24,
+        9.38,
+        -1.43
        ]
       }
      ],
@@ -498,7 +498,7 @@
         10.5
        ],
        "lift": 0.22,
-       "label": "Universiteto kursas"
+       "label": "VU kursas"
       },
       {
        "pos": [

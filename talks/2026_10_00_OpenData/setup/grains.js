@@ -761,7 +761,7 @@ void main() {
   vec4 mv = modelViewMatrix * vec4(position + far * (1.0 - f), 1.0);
   gl_Position = projectionMatrix * mv;
   float px = uGrain * projectionMatrix[1][1] * 0.5 * uViewH / max(-mv.z, 1e-3);
-  gl_PointSize = clamp(px * 1.7, 1.0, 24.0);
+  gl_PointSize = clamp(px * 2.3, 1.0, 24.0);   // grains overlap, so a face reads as a photograph, not a dot screen
   // the people are made of the data: a grain arrives as a gold grain of data and takes
   // the photo's colour as it settles
   vCol = mix(vec3(1.0, 0.62, 0.22) * 0.5, aCol, smoothstep(0.55, 1.0, f));

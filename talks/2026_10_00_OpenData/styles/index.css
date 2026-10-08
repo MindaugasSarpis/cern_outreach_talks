@@ -14,6 +14,9 @@ html[data-stage] {
 /* the cover's subtitle on two even lines, clear of the collider below it */
 html[data-stage] .slidev-layout.cover h2 { max-width: 40ch; text-wrap: balance; }
 
+/* the cover's byline breaks before the university, clear of the collider */
+html[data-stage] .slidev-layout.cover .mt-md { max-width: 34ch; }
+
 /* LHCb keeps its lower-case b where the kit sets type in capitals */
 html[data-stage] .nt { text-transform: none !important; }
 
@@ -160,10 +163,10 @@ html[data-stage] .finds-plot img {
    Opaque, as the finds slide */
 html[data-stage] .thesis-slide { position: absolute; inset: 0; background: rgb(var(--stage-bg-rgb, 0, 2, 6)); display: grid; grid-template-columns: 0.62fr 1.38fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
 html[data-stage] .thesis-who { animation: stage-rise 0.85s var(--stage-ease) 0.15s both; }
-html[data-stage] .thesis-who .portrait { width: 100%; max-width: 190px; aspect-ratio: 4 / 5; border-radius: 6px; object-fit: cover; object-position: 50% 30%; display: block; margin: 0 0 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); }
+html[data-stage] .thesis-who .portrait { width: 100%; max-width: 165px; aspect-ratio: 4 / 5; border-radius: 6px; object-fit: cover; object-position: 50% 30%; display: block; margin: 0 0 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); }
 html[data-stage] .thesis-who .kicker { color: var(--od-gold); margin: 0 0 6px; }
 html[data-stage] .thesis-who .name { font-size: 22px; font-weight: 600; color: var(--stage-fg); margin: 0 0 18px; }
-html[data-stage] .thesis-who .line { font-size: 24px; font-weight: 500; line-height: 1.25; color: #fff; margin: 0; text-wrap: balance; }
+html[data-stage] .thesis-who .line { font-size: 22px; font-weight: 500; line-height: 1.25; color: #fff; margin: 0; text-wrap: balance; }
 html[data-stage] .thesis-plot { position: relative; padding-top: 90px; animation: stage-card-in 1s var(--stage-ease) 0.3s both; }
 html[data-stage] .thesis-plot img { width: 100%; display: block; filter: invert(1) hue-rotate(180deg) brightness(1.05) contrast(1.05); mix-blend-mode: screen; }
 /* the pentaquark gathers above the peak: the overlay reaches 30 % above the plot */

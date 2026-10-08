@@ -24,7 +24,7 @@
     "three": "^0.185.1"
   },
   "devDependencies": {
-    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.5.0",
-    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#v0.5.0&path:/packages/stage"
+    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.5.1",
+    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#v0.5.1&path:/packages/stage"
   }
 }

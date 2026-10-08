@@ -53,8 +53,6 @@ space:
 
 # Atveriame <span class="nt">LHCb</span> duomenis
 
-## Kaip <span class="nt">LHCb</span> duomenys pasiekė bakalauro darbą Vilniuje
-
 <div class="mt-md">Mindaugas Šarpis · <span class="nt">LHCb</span> Vilnius · Vilniaus universitetas</div>
 
 <!--
@@ -62,7 +60,7 @@ Message: this talk is about the work we were nominated for, opening LHCb's data.
 
 Sakyti: „Esu Mindaugas Šarpis, vadovauju LHCb Vilnius grupei – Vilniaus
 universiteto komandai CERN LHCb eksperimente. Mus nominavo už darbą su
-atviraisiais duomenimis. Per kelias minutes parodysiu, ką tai reiškia.
+atviraisiais duomenimis.
 Pradėkime nuo detektoriaus.“
 
 Then press → for the clip; the cover gives it time to buffer. Before starting,
@@ -104,7 +102,7 @@ space: { at: [24.4, -0.6, 5.9], dist: 5.2, yaw: 8, pitch: 30, sway: 10, dim: 0.1
 
 # Z → μμ
 
-<p class="line">Z bozonas skyla į du miuonus. Šį susidūrimą gali atsisiųsti kiekvienas.</p>
+<p class="line">Čia Z bozonas suskilo į du miuonus. Šį susidūrimą gali atsisiųsti kiekvienas.</p>
 
 </div>
 
@@ -115,7 +113,7 @@ Message: one real collision, from data anyone can download.
 
 Sakyti: „Štai vienas tikras susidūrimas iš 2012 m. LHCb duomenų. Dvi auksinės
 linijos – du miuonai. Į juos skilo Z bozonas, beveik šimtą kartų sunkesnis už
-protoną. Kitos linijos – kitos tame susidūrime gimusios dalelės. Šį susidūrimą šiandien
+protoną. Kitos linijos – kitos tame susidūrime susidariusios dalelės. Šį susidūrimą šiandien
 gali atsisiųsti bet kas, o mūsų studentai Vilniuje tyrė būtent tokius
 Z bozonus.“
 
@@ -147,11 +145,11 @@ space: { at: [23.02, 0.1, 6.0], dist: 0.76, yaw: -13.7, pitch: 19.1, dim: 0.2 }
 
 <div class="readout later">
 
-<p class="kicker">Viena sfera</p>
+<p class="kicker">Mastelis</p>
 
 <div class="big"><Count name="unit" :from="1" :to="1" /><span class="unit">TB</span></div>
 
-<p class="line">Viena sfera yra vienas terabaitas – dešimtys milijonų tokių susidūrimų.</p>
+<p class="line">Viena sfera – vienas terabaitas, keliasdešimt milijonų tokių susidūrimų.</p>
 
 </div>
 
@@ -165,8 +163,8 @@ grains pack into a ball, the metal sphere takes their place (3 s), and the
 text rises at 4 s.
 
 Sakyti: „Vienas toks įrašytas susidūrimas užima kelias dešimtis kilobaitų.
-Dešimtys milijonų jų – vienas terabaitas, maždaug nešiojamojo kompiuterio
-diskas. Toliau viena sfera reiškia vieną terabaitą. Sferos lieka tokio pat dydžio,
+Keliasdešimt milijonų tokių susidūrimų sudaro vieną terabaitą, maždaug
+nešiojamojo kompiuterio diską. Toliau kiekviena sfera – vienas terabaitas. Sferos lieka tokio pat dydžio,
 tolsta kamera.“
 
 Background: LHCb's average stored event in 2024 was 33,8 kB (Full stream, after
@@ -202,9 +200,9 @@ Message: in 2023 all of LHCb's first run became public, and I prepared it.
 Sakyti: „Pirmą kartą didelę dalį duomenų, 200 terabaitų, LHCb
 paskelbė 2022 m. gruodį. 2023 m. gruodį viešai paskelbti visi 2011–2012 m. protonų
 susidūrimų duomenys, apie 800 terabaitų. Šį rinkinį ir jo paskelbimą parengiau
-aš, tuo metu rašydamas disertaciją Bone. Tai užtruko beveik dvejus metus:
-kiekvienas iš daugiau nei šimto tūkstančių failų buvo nukopijuotas ir
-patikrintas. Nuo šių metų rugpjūčio koordinuoju visos kolaboracijos analizių
+aš, tuo metu rašydamas disertaciją Bone. Darbas truko beveik dvejus metus:
+teko nukopijuoti ir patikrinti kiekvieną iš daugiau nei šimto tūkstančių
+failų. Nuo šių metų rugpjūčio koordinuoju visos kolaboracijos analizių
 išsaugojimo ir atvirųjų duomenų darbus.“
 
 Šaltiniai: opendata.cern.ch, „LHCb releases entire Run 1 dataset“ (2023-12-20);
@@ -226,7 +224,7 @@ space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, flight: 5, dim
 
 <div class="big"><Count name="open" :from="800" :to="4000" :delay="5200" :ms="900" /><span class="unit">TB</span></div>
 
-<p class="line">Atverti ir 2015–2018 m. duomenys. Iš viso – penkis kartus daugiau.</p>
+<p class="line">Atverti ir 2015–2018 m. duomenys, iš viso penkis kartus daugiau nei 2023 m.</p>
 
 </div>
 
@@ -265,9 +263,10 @@ space: { at: [3.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0.15
 <!--
 Message: open data is the gold part in front of LHCb's whole 100 PB.
 
-Sakyti: „O tai – viskas, ką LHCb surinko nuo 2010 m.: daugiau nei šimtas
-petabaitų, šimtas tūkstančių sferų – nešiojamųjų kompiuterių krūva būtų dviejų
-kilometrų aukščio. Kasmet prisideda dar dešimtys petabaitų. Auksinė
+Sakyti: „Tai visi LHCb nuo 2010 m. surinkti duomenys, daugiau nei šimtas
+petabaitų, arba šimtas tūkstančių sferų. Tiek nešiojamųjų kompiuterių, sudėtų į
+krūvą, būtų dviejų kilometrų aukščio. Kasmet prisideda dar keliasdešimt
+petabaitų. Auksinė
 dalis priekyje jau atvira. Pusę kiekvieno etapo duomenų LHCb atveria praėjus
 penkeriems metams nuo jo pabaigos, o visus – po dešimties.“
 
@@ -327,7 +326,7 @@ space: { at: [16, 6, -2], dist: 32, yaw: 0, pitch: 1.8, dim: 0.15 }
 
 <div class="readout late">
 
-<p class="kicker">Kas juos naudoja</p>
+<p class="kicker">Naudotojai</p>
 
 <div class="big"><Count name="asks" :from="0" :to="20" :delay="2400" /></div>
 
@@ -353,7 +352,7 @@ LHCb Vilnius grupėje.“
 -->
 
 ---
-space: { at: [9.5, 2.5, 4], dist: 27, yaw: 12, pitch: 2.1, dim: 0.3 }
+space: { at: [12.5, 2.5, 4], dist: 27, yaw: 12, pitch: 2.1, dim: 0.3 }
 ---
 
 <Grains :set="{ scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 3, dominykas: 0, team: 0 }" />
@@ -420,7 +419,7 @@ Message: LHCb finds new particles in this data, so the data is worth opening.
 Sakyti: „Šiuose duomenyse LHCb randa naujų dalelių. LHC eksperimentai atrado
 86 naujus hadronus – iš kvarkų sudarytas daleles. 76 iš jų rado LHCb. 2015 m. LHCb atrado
 pentakvarkus, penkių kvarkų daleles, numatytas dar 1964 m. Dešinėje – 2019 m.
-matavimas su devynis kartus didesniu duomenų kiekiu: signalas skyla į
+matavimas su devynis kartus didesniu duomenų kiekiu, kuriame signalas skyla į
 tris siauras smailes. O 2025 m. LHCb pirmą kartą
 pamatė, kad materija ir antimaterija barionuose – protono ir neutrono šeimoje –
 elgiasi skirtingai.“
@@ -445,17 +444,17 @@ space: { at: thesis, dim: 1 }
 
 <img class="portrait" src="/figures/people/dominykas-stonkus.jpg" alt="Dominykas Stonkus" />
 
-<p class="kicker">Bakalauro darbas · VU, 2026</p>
+<p class="kicker">Bakalauro darbas, VU, 2026</p>
 
 <p class="name">Dominykas Stonkus</p>
 
-<p class="line">Atviruosiuose 2012 m. <span class="nt">LHCb</span> duomenyse jis iš naujo rado pentakvarkų signalo sritį.</p>
+<p class="line">Atviruosiuose 2012&nbsp;m. <span class="nt">LHCb</span> duomenyse jis iš naujo rado pentakvarkų signalo sritį.</p>
 
 </div>
 <div class="thesis-plot">
 <div class="plot-box">
 <img src="/figures/thesis/jpsip-mass.png" alt="Dominyko Stonkaus bakalauro darbas: J/ψ p invariantinė masė, atėmus foną; pakilimas ties 4,4–4,5 GeV" />
-<PeakRise :x="0.44" :y="0.265" :delay="1.4" :rise="0.16" :size="0.1" />
+<PeakRise :x="0.44" :y="0.29" :delay="1.4" :rise="0.2" :size="0.09" />
 </div>
 <p class="credit">D. Stonkus, bakalauro darbas, VU, 2026, 17 pav.</p>
 </div>
@@ -476,8 +475,7 @@ atviruosius duomenis“. Jis paėmė atviruosius 2012 m. LHCb duomenis, atrinko 
 16 400 Λb⁰ skilimų į J/ψ, protoną ir kaoną, ir J/ψ ir protono invariantinės masės
 skirstinyje rado pakilimą ties 4,4–4,5 GeV – ten pat, kur LHCb 2015 m.
 atrado pentakvarkus. Tai kokybinis atkartojimas: įrodyti, kad tai naujos
-dalelės, reikėtų išsamios amplitudžių analizės. Bet tai padaryta su duomenimis,
-kuriuos gali atsisiųsti kiekvienas.“
+dalelės, reikėtų išsamios amplitudžių analizės.“
 
 The figure: thesis Fig. 17 (right), the sideband-subtracted m(J/ψ p), 15 MeV
 bins, 4000–5200 MeV, shown inverted (light on dark). The Λb⁰ fit (Fig. 14,
@@ -495,7 +493,7 @@ repository.vu.lt/VU:ELABAETD308118793 (open access); LHCb, PRL 115 (2015) 072001
 -->
 
 ---
-space: { at: [44, 2.8, 160], dist: 26, yaw: 0, pitch: 3, dim: 0.2 }
+space: { at: [53, 2.8, 160], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 ---
 
 <Grains :set="{ team: 1, collision: 0, world: 0, vilnius: 0, dominykas: 0 }" />
@@ -508,9 +506,8 @@ Message: this is the work we were nominated for, and the people who did it.
 Sakyti: „Tai ir yra darbas, už kurį mus nominavo: LHCb duomenų parengimas
 skelbti, šio darbo koordinavimas visoje kolaboracijoje, tyrimai ir mokymas su jais čia,
 Vilniuje. Bakalauro studentas Vilniuje atviruosiuose duomenyse atkartojo tikrą
-fizikos rezultatą. Vadinasi, tai gali kiekvienas. Duomenis rasite svetainėje
-opendata.cern.ch. Ačiū
-jums ir ačiū visai mūsų grupei.“
+fizikos rezultatą. Tuos pačius duomenis gali atsisiųsti bet kas, svetainėje
+opendata.cern.ch. Ačiū jums ir ačiū visai mūsų grupei.“
 
 The camera flies back to the collisions where the data begin, and the group
 gathers beside them: fifteen portraits made of the same gold grains of data,
