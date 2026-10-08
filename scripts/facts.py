@@ -340,9 +340,24 @@ def _from_json(src: str) -> list:
         return [json.loads(line) for line in text.splitlines() if line.strip()]
 
 
+def as_entry(e: dict) -> dict:
+    """An entry as add files it: every key of FIELDS (used_in [] and the rest
+    null when missing), a value written as a plain number stored as one; keys
+    the bank does not know are kept, for validate() to name."""
+    out = {k: e.get(k, [] if k == "used_in" else None) for k in FIELDS} | {k: v for k, v in e.items() if k not in FIELDS}
+    if isinstance(out["value"], str):
+        out["value"] = _value(out["value"])            # "89" -> 89, as --value; research runs write strings
+    return out
+
+
 def is_lane(obj) -> bool:
     """A talk-research-gaps lane file: {lane, slides, topic, status, facts: [...], notes, open_questions}."""
     return isinstance(obj, dict) and isinstance(obj.get("facts"), list) and "claim_en" not in obj
+
+
+def lane_fact(fact: dict) -> dict:
+    """A lane file's fact as the bank takes it: the keys the bank knows, empty strings null."""
+    return {k: (None if fact[k] == "" else fact[k]) for k in FIELDS if k in fact}
 
 
 def lane_facts(paths: list[Path], only: list[str] | None = None) -> tuple[list[dict], list[dict], list[str]]:
@@ -370,7 +385,7 @@ def lane_facts(paths: list[Path], only: list[str] | None = None) -> tuple[list[d
             extra = sorted(k for k in fact if k not in FIELDS)
             if extra:
                 notes.append(f"{f.name} {fact.get('id')}: dropped keys {', '.join(extra)}")
-            out.append({k: (None if fact[k] == "" else fact[k]) for k in FIELDS if k in fact})
+            out.append(lane_fact(fact))
     if only:
         found = {e.get("id") for e in out}
         problems += [{"id": i, "errors": ["not in these lane files"]} for i in only if i not in found]
@@ -452,9 +467,7 @@ def cmd_add(args) -> int:
             e, dropped = loosen(e, {k: v for k, v in defaults.items() if v})
             if dropped:
                 notes.append(f"{e.get('id')}: dropped keys {', '.join(dropped)}")
-        e = {k: e.get(k, [] if k == "used_in" else None) for k in FIELDS} | {k: v for k, v in e.items() if k not in FIELDS}
-        if isinstance(e["value"], str):
-            e["value"] = _value(e["value"])            # "89" -> 89, as --value; research runs write strings
+        e = as_entry(e)
         if not e.get("id"):
             e["id"] = slugify(e.get("claim_en") or "", taken)
         errs = validate(e)
@@ -487,13 +500,31 @@ def scratch_hint(f: Path, rel: str, bank: dict) -> str:
     except (OSError, ValueError):
         data = None
     if is_lane(data):
-        ids = [x.get("id") for x in data["facts"] if isinstance(x, dict)]
-        todo = [i for i in ids if i not in bank]
-        filed = (f"{len(todo)} of its {len(ids)} facts are not in the bank; file them "
-                 f"(facts.py add --from-lane {rel} --dry-run, then without --dry-run; an id the bank has "
-                 f"needs --only <id> --replace)" if todo else "its fact ids are all in the bank")
-        return (f"{rel}: a research lane file; {filed}, copy the speaker's caveats from its notes "
-                f"under Figures in the talk's CLAUDE.md, then delete it")
+        # each fact as add would file it, against the bank's fact with its id: a lane that re-checked
+        # a fact the deck cites keeps that id, so an id in the bank is not yet a filed fact
+        facts = [as_entry(lane_fact(x)) for x in data["facts"] if isinstance(x, dict)]
+        known = lambda e: isinstance(e["id"], str) and e["id"] in bank
+        new = [e for e in facts if not known(e)]
+        changed = [e["id"] for e in facts if known(e)
+                   and {k: e[k] for k in FIELDS} != {k: bank[e["id"]].get(k) for k in FIELDS}]
+        caveats = "copy the speaker's caveats from its notes under Figures in the talk's CLAUDE.md, then delete it"
+        if not new and not changed:
+            return f"{rel}: a research lane file; its facts are all filed (each as the bank has it); {caveats}"
+        todo = []
+        if new:
+            todo.append(f"{len(new)} of its {len(facts)} facts {'is' if len(new) == 1 else 'are'} not in the bank; file them "
+                        f"(facts.py add --from-lane {rel} --dry-run, then without --dry-run)")
+        if changed:
+            ids = ", ".join(changed[:6]) + (", …" if len(changed) > 6 else "")
+            fid = changed[0] if len(changed) == 1 else "<id>"
+            what = (f"differs from the bank's fact with the same id ({ids}), a re-check not filed yet: compare"
+                    if len(changed) == 1 else
+                    f"differ from the bank's facts with the same ids ({ids}), re-checks not filed yet: compare each")
+            todo.append(f"{len(changed)} of its {len(facts)} facts {what} (facts.py show {fid}); a re-check of the "
+                        f"same claim that came back confirmed or corrected replaces the stored one "
+                        f"(facts.py add --from-lane {rel} --only {fid} --replace), a different claim gets a new id "
+                        f"in the lane file")
+        return f"{rel}: a research lane file; " + "; ".join(todo) + f"; once they are filed, {caveats}"
     return f"{rel}: a second facts file; import it (facts.py add --from-json {rel} --loose) and delete it"
 
 

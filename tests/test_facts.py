@@ -207,7 +207,43 @@ class Cli(unittest.TestCase):
         self.assertEqual((e["lhc-run3-energy"]["value"], e["lhc-run3-energy"]["verified_on"]), (13.6, None))
         rc, out, _ = run("check", "--facts", str(self.bank), "--json")
         hint = next(w for w in json.loads(out)["warnings"] if w.startswith("talks/t1/research/lhc.json"))
-        self.assertIn("its fact ids are all in the bank", hint)
+        self.assertIn("its facts are all filed", hint)        # "" and "26659" as the bank stores them
+        self.assertIn("then delete it", hint)
+
+    def test_lane_recheck_is_not_filed_yet(self):
+        # the lane re-checked a fact the deck cites under the same id, and the bank still has the old one
+        with self.bank.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(good(value=27, unit="km", verified_on="2020-01-01")) + "\n")
+        d = self.dir / "talks" / "t1" / "research"
+        d.mkdir(parents=True)
+        (d / "lhc.json").write_text(json.dumps({
+            "lane": "lhc", "slides": "3", "topic": "the LHC", "status": "verified", "notes": [], "open_questions": [],
+            "facts": [good(claim_en="The LHC ring is 26.7 km round.", value="26.7", unit="km", verdict="corrected",
+                           verified_on="2026-10-08", claim_lt="")]}), encoding="utf-8")
+        self.assertEqual(run("add", "--facts", str(self.bank), "--from-lane", str(d / "lhc.json"))[0], 1)   # id exists
+        rc, out, _ = run("check", "--facts", str(self.bank), "--json")
+        hint = next(w for w in json.loads(out)["warnings"] if w.startswith("talks/t1/research/lhc.json"))
+        self.assertNotIn("all filed", hint)
+        self.assertNotIn("all in the bank", hint)
+        self.assertIn("1 of its 1 facts differs from the bank's fact with the same id", hint)
+        self.assertIn("facts.py show lhc-circumference", hint)
+        cmd = re.search(r"facts\.py (add --from-lane \S+ --only lhc-circumference --replace)", hint).group(1).split()
+        cmd[2] = str(self.dir / cmd[2])
+        self.assertEqual(run(*cmd, "--facts", str(self.bank))[0], 0)
+        e = {x["id"]: x for x in map(json.loads, self.bank.read_text(encoding="utf-8").splitlines())}["lhc-circumference"]
+        self.assertEqual((e["value"], e["verdict"], e["verified_on"]), (26.7, "corrected", "2026-10-08"))
+        rc, out, _ = run("check", "--facts", str(self.bank), "--json")
+        hint = next(w for w in json.loads(out)["warnings"] if w.startswith("talks/t1/research/lhc.json"))
+        self.assertIn("its facts are all filed", hint)
+        # a new fact and two re-checks: both steps, and the generic id for several
+        bank = {i: good(id=i) for i in ("a-one", "a-two")}
+        (d / "lhc.json").write_text(json.dumps({"lane": "lhc", "facts": [
+            good(id="a-one", verdict="corrected"), good(id="a-two", value=1), good(id="a-new")]}), encoding="utf-8")
+        hint = fx.scratch_hint(d / "lhc.json", "x.json", bank)
+        self.assertIn("1 of its 3 facts is not in the bank", hint)
+        self.assertIn("2 of its 3 facts differ from the bank's facts with the same ids (a-one, a-two)", hint)
+        self.assertIn("--only <id> --replace", hint)
+        self.assertIn("once they are filed", hint)
 
     def test_lane_only_and_replace(self):
         lane = self.lane()

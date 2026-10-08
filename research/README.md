@@ -100,7 +100,11 @@ This files the same lines as the talk-research skill's
 `lane_facts.py talks/<t>/research/*.json | facts.py add --from-json -`.
 Then copy the speaker's caveats from the lane `notes` under Figures in the
 talk's `CLAUDE.md` and delete the lane files; they are scratch, never
-committed.
+committed. `check` compares each lane fact, as `add` would store it, with
+the bank's fact of the same id: a lane that re-checked a fact the deck
+cites keeps its id, so an id the bank has may be a re-check not filed yet.
+It says a lane file can go only when every fact in it is stored as the
+lane has it.
 
 When usable facts from one page were checked by different runs, `check`
 warns: two readings of one page can disagree. Read those facts together
