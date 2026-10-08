@@ -27,10 +27,14 @@ jobs:
         with:
           version: 9
 
+      # No pnpm store cache: slidev-addon-videos and slidev-addon-stage come from
+      # the same slidev-videos git tarball (the stage by its /packages/stage
+      # path) with one integrity hash, and a restored store then fails the
+      # install with ERR_PNPM_UNEXPECTED_PKG_CONTENT_IN_STORE (Pages run
+      # 37832082933). A cold install costs a minute; a poisoned cache, every deploy.
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
 
       - run: pnpm install
 
