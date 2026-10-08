@@ -1,7 +1,7 @@
 # Open data talk: handoff
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos `efacca2` (feat/broadcast), for both addons.
+Toolkit pin: slidev-videos `dca4e8f` (feat/dust-fullframe), for both addons.
 
 ## Status (2026-10-08, coherence and prose rework)
 
@@ -92,9 +92,32 @@ Deploy only on the owner's word.
     deck's chosen style; the kickers carry the storyline) and the deliberate
     callback "Remember this plot; it comes back at the end".
 
+- 2026-10-08. Screenshot review rounds (shots v9 to v12, a subagent on contact sheets):
+  - The specks on the 1 EB pile came from `vF`, a varying: a settled sphere's
+    1.0 could arrive as 0.99999. The shader then cut that sphere round
+    (holes) and mixed in its dark mirror. Found with a debug build that
+    painted NaN red (none) and unsettled spheres green (scattered over both
+    piles 30 s after arrival). Settled is now `vF > 0.995`.
+    - Two earlier guesses changed nothing visible: tiny flyers taking the
+      pile's shading, and 1e-6 floors on pow() bases. Both are kept as harmless.
+  - Streams take `label`, drawn beside each end cloud. The Vilnius ends are
+    stacked in the list's order, right of a list capped at 52 %.
+  - The type floor is now applied to the kit (`--stage-type-min: 18px`).
+    Labels are drawn at 64 px and mipmapped.
+  - The single sphere's softbox has soft edges.
+  - Poses: the cover is dimmed to 0.25; the 1 EB target is x 9.6, without the
+    1 TB; the 4 PB target is x 4.5, showing only gold; the close is dimmed to 0.3.
+- 2026-10-08. Toolkit pin `dca4e8f` (feat/dust-fullframe): clips arrive as
+  dust over the whole frame. Checked on the kick-off at 0.8, 2 and 4.5 s.
+
 ## Open
 
-- Confirm on a render that the specks on the steel pile are gone (slide 7 now).
+- Specks: gone on shots v12 (confirmed on a full-resolution crop of slide 7).
+- Opened directly at slide 7 (a deep link or a reload), the piles never
+  appear; navigating there from earlier slides works. Cause not found yet:
+  `onSlideEnter` does fire on first load (Slidev uses watchEffect).
+- The 100 PB pile reads flat and matte from far (a review finding). It needs
+  shader work: a rim, edge fade, specular at small sizes.
 - Perspective stretch: the piles at the right edge stretch about 14 % (the
   50° lens). Fixing it needs a toolkit change that scales point sizes by the
   field of view.

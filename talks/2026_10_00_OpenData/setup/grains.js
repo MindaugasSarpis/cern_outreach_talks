@@ -252,7 +252,10 @@ void main() {
   float r2 = dot(q, q);
   // a standing sphere a few pixels across is drawn whole, as its square: cut
   // round, a sprite of 2 px keeps one pixel or none, and the pile shows pinholes
-  bool tiny = vPx < 3.0 && vF >= 1.0;
+  // vF is a varying: a settled sphere's 1.0 can arrive as 0.99999, so "settled" is a
+  // threshold (an exact 1.0 test left settled spheres cut round and half-mirror: the specks)
+  float fly = vF > 0.995 ? 0.0 : 1.0 - vF;
+  bool tiny = vPx < 3.0 && fly == 0.0;
   if (r2 > 1.0 && !tiny) discard;
   r2 = min(r2, 1.0);
   // the sphere's frame is built round the ray to it, not the view axis, so a
@@ -274,13 +277,13 @@ void main() {
   // contact shadow: the side of a sphere that faces into its pile is in the
   // dark between its neighbours, and so is its edge where they touch
   float ao = mix(0.28, 1.0, smoothstep(-0.45, 0.75, dot(nW, vOut))) * mix(0.5, 1.0, smoothstep(0.0, 0.55, nz));
-  vec3 col = own * mix(1.0, ao, vF) * vShade;
+  vec3 col = own * mix(ao, 1.0, fly) * vShade;
   float pileL = dot(pile, vec3(0.3, 0.55, 0.15));
   vec3 near = col * (0.55 + 0.9 * min(pileL, 1.4));
   col = mix(pile * vShade, mix(near, col, smoothstep(14.0, 40.0, vPx)), smoothstep(3.0, 11.0, vPx));
   // flyers: just themselves, once they are big enough to show their own reflection; a
   // smaller one shows the pile, else its mirror catches the dark floor as a black speck
-  gl_FragColor = vec4(mix(col, own, (1.0 - vF) * smoothstep(3.0, 11.0, vPx)), 1.0);
+  gl_FragColor = vec4(mix(col, own, fly * smoothstep(3.0, 11.0, vPx)), 1.0);
 }`
 
 // A glint for a single sphere seen from far: a soft point a few pixels wide,
@@ -580,8 +583,9 @@ function buildStreams(o, ctx) {
       const l = smooth(ctx.helpers.makeLabel(d.label, { px: 64, weight: 500, color: '#ffe3a8', worldH: o.labelH ?? 0.042, letterSpacing: 0.06, upper: false }))
       l.material.sizeAttenuation = false; l.material.opacity = 0
       const e = d.pos || [0, 0, 0]
-      l.center.set(0.5, 1.5)
-      l.position.set(e[0], e[1] - (o.nodeRadius ?? 0.45), e[2])
+      // beside its own cloud, to the right, so a column of labels reads against a column of clouds
+      l.center.set(0, 0.5)
+      l.position.set(e[0] + (o.nodeRadius ?? 0.45) * 1.6, e[1], e[2])
       l.userData.vis = 0; l.userData.i = i
       g.add(l); labels.push(l)
     })

@@ -356,7 +356,7 @@ Sources: opendata.cern.ch, "LHCb releases entire Run 1 dataset" (20 December
 -->
 
 ---
-space: { at: [5.5, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
+space: { at: [4.5, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
 ---
 
 <Grains :set="{ scale: [1, 2], 'scale:labels': 1, world: 8, vilnius: 0, dominykas: 0 }" />

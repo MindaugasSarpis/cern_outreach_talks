@@ -11,6 +11,9 @@ html[data-stage] {
   --stage-type-min: 18px;   /* the kit's kickers, cover subtitle and bylines (11–14 px) up to the house floor */
 }
 
+/* the cover's subtitle on two even lines, clear of the collider below it */
+html[data-stage] .slidev-layout.cover h2 { max-width: 40ch; text-wrap: balance; }
+
 /* LHCb keeps its lower-case b where the kit sets type in capitals */
 html[data-stage] .nt { text-transform: none !important; }
 
