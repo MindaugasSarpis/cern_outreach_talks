@@ -1,2 +1,3 @@
 html[data-stage] .nc { text-transform: none; }
 html[data-stage] .src { font-size: 12px; }
+html[data-stage] .slidev-layout.cover h2 { text-transform: none !important; }

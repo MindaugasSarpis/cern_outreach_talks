@@ -130,6 +130,8 @@ class Lint:
         self.deck = td.parse_deck(talk / "deck.md")
         self.findings: list[Finding] = []
         self.css = self._load_css()
+        self.upper = self._contexts("uppercase")
+        self.keep = self._contexts("none")
         self.lang = self._lang()
         self.timing: dict = {}
 
@@ -236,10 +238,9 @@ class Lint:
         return out
 
     def check_upper(self, s: td.Slide, screen: str):
-        upper = self._contexts("uppercase")
+        upper, keep = self.upper, self.keep
         if not upper:
             return
-        keep = self._contexts("none")
         layout = s.layout
         els = td.elements(s.body)
 
@@ -251,10 +252,13 @@ class Lint:
             return (not c.adjacent and (c.layout is None or c.layout == layout) and (c.tag is None or c.tag == tag)
                     and c.classes <= classes and inside(a, b, c.ancestors))
 
+        def kept(tag, classes, a, b):       # the talk's CSS sets this element back to text-transform: none
+            return any(matches(c, tag, classes, a, b) for c in keep)
+
         regions = []           # (start, end, what)
         for el in els:
             c = next((c for c in upper if matches(c, el.tag, el.classes, el.start, el.end)), None)
-            if c:
+            if c and not kept(el.tag, el.classes, el.start, el.end):
                 regions.append((el.inner_start, el.inner_end, describe(c.layout, c.tag or el.tag, c.classes)))
         first_h1_end = None
         for m in re.finditer(r"(?m)^(#{1,6})[ \t]+(.+)$", screen):
@@ -262,7 +266,7 @@ class Lint:
             if tag == "h1" and first_h1_end is None:
                 first_h1_end = m.end()
             c = next((c for c in upper if not c.classes and matches(c, tag, frozenset(), m.start(), m.end())), None)
-            if c:
+            if c and not kept(tag, frozenset(), m.start(), m.end()):
                 regions.append((m.start(2), m.end(2), describe(c.layout, tag, c.classes)))
         if first_h1_end is not None and any(c.adjacent and (c.layout is None or c.layout == layout) for c in upper):
             p = re.search(r"\S[\s\S]*?(?=\n[ \t]*\n|\Z)", screen[first_h1_end:])

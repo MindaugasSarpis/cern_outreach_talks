@@ -12,7 +12,7 @@ layout: cover
 
 # Inside the detector
 
-## A short tour — with no surprises
+## A short tour of LHCb — with no surprises
 
 <div class="mt-md">A. Speaker · <span class="nc">LHCb</span> Vilnius</div>
 
