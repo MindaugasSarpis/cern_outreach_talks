@@ -56,8 +56,15 @@ named `gaps` within 15 calls, caps itself at about 30 agents, and returns
 
 ## 3. File the results
 
+A lane file is `{lane, slides, topic, status, facts: [...], notes,
+open_questions}`; the bank takes only the facts, so a lane file given to
+`facts add --from-json` directly is refused. `lane_facts.py` (next to this
+skill) prints the facts of the lane files as one list, turns empty strings
+into null and skips `images.json`. From the worktree root:
+
 ```bash
-pnpm talk facts add --from-json talks/<t>/research/<lane>.json   # see pnpm talk facts add --help
+python3 -I .claude/skills/talk-research/lane_facts.py talks/<t>/research/*.json \
+  | pnpm -s talk facts add --from-json - --dry-run       # then again without --dry-run
 pnpm talk facts check
 ```
 
