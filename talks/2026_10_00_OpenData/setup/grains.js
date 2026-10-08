@@ -150,10 +150,10 @@ vec3 studioHard(vec3 d) {
   vec3 ky = cross(kd, kx);
   float kz = dot(d, kd);
   vec2 kp = vec2(dot(d, kx), dot(d, ky)) / max(kz, 0.05);
-  float key = step(0.0, kz) * (1.0 - smoothstep(0.14, 0.32, abs(kp.x))) * (1.0 - smoothstep(0.2, 0.42, abs(kp.y)));
+  float key = step(0.0, kz) * (1.0 - smoothstep(0.05, 0.42, length(kp * vec2(1.0, 0.8))));
   vec2 h = normalize(d.xz + 1e-5);
   float rim = smoothstep(0.9965, 0.9985, dot(h, normalize(vec2(7.0, -6.0)))) * smoothstep(-0.35, -0.15, d.y) * (1.0 - smoothstep(0.55, 0.75, d.y));
-  return room + vec3(1.0, 0.97, 0.92) * key * 4.0 + vec3(0.85, 0.9, 1.0) * rim * 2.2;
+  return room + vec3(1.0, 0.97, 0.92) * key * 2.6 + vec3(0.85, 0.9, 1.0) * rim * 1.6;
 }
 vec3 metalHard(vec3 nW, vec3 vW, vec3 F0) {
   // a unit dot can pass 1 by rounding, and pow() of a negative base is NaN; a base of exactly 0
@@ -693,7 +693,12 @@ void main() {
   gl_Position = projectionMatrix * mv;
   float r = length(position.xz) / uRadius;
   float tw = 0.8 + 0.2 * sin(uTime * (0.6 + aSeed * 1.3) + aSeed * 40.0);
-  vA = uAlpha * tw * (1.0 - smoothstep(0.55, 1.0, r)) * smoothstep(0.4, 3.0, -mv.z);
+  // seen at a grazing angle the floor would close into a bright seam across the frame,
+  // and far off into a horizon line: both fade
+  vec3 wp = (modelMatrix * vec4(position, 1.0)).xyz;
+  float graze = abs(cameraPosition.y - wp.y) / max(length(cameraPosition - wp), 1e-3);
+  vA = uAlpha * tw * (1.0 - smoothstep(0.55, 1.0, r)) * smoothstep(0.4, 3.0, -mv.z)
+     * smoothstep(0.05, 0.16, graze) * (1.0 - smoothstep(55.0, 95.0, -mv.z));
   gl_PointSize = max(1.0, uPixelRatio * uSize * (36.0 / max(-mv.z, 0.5)));
 }`
 const FLOOR_FRAG = /* glsl */ `
@@ -839,8 +844,10 @@ function buildPortraits(o, ctx) {
   }
   const off = listen(o.name, go)
   mat.addEventListener('dispose', off)
-  // onEnter: they gather the moment their slide opens, during the flight, rather than on arrival
-  const api = o.onEnter ? undefined : {
+  // onEnter: they gather the moment their slide opens, during the flight, rather than on
+  // arrival. The hook stays, answering at once: the engine announces a station as
+  // assembled only through its builders' hooks, and the cover's title waits on that
+  const api = o.onEnter ? { arm() {}, assemble(t, onDone) { onDone?.() } } : {
     arm() { armed = true; armedAt = now; if (showT.value >= 0 && hideT.value < 0) hideT.value = now },
     assemble(t, onDone) {
       now = t; armed = false
