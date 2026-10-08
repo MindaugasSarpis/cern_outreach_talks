@@ -22,7 +22,7 @@ stage:
   sound: true
   # deeper than the blue palette's own look: a black ground (fewer, dimmer dust
   # grains, little nebula, a firmer vignette), no film grain, no fringes
-  options: { nebula: 0.12, grain: 0.012, aberration: 0, bloom: 0.55, density: 0.6, dustGain: 1.45, vignette: 0.42, flight: [1.2, 2.4] }   # short flights: Part II's text is up by ~3.5 s
+  options: { nebula: 0.12, grain: 0.012, aberration: 0, bloom: 0.55, density: 0.6, dustGain: 1.45, vignette: 0.42 }
 title: Nuo Vilniaus iki visatos pakraščių ir atgal prie novatoriškų mokslo pasiekimų pritaikymo privačiame sektoriuje
 info: |
   Innoday 2026, in Lithuanian. One story: to see what the world is made of,
@@ -105,7 +105,7 @@ Pastaba: „žvaigždės, dujos, planetos ir mes“ — tyčia ne „galaktikos�
 
 ---
 layout: section
-space: { at: [14, 0, 0], dist: 23, yaw: 0, pitch: 85, dim: 0.3 }   # match cut: the grain ring from above, framed like the ring drawn on the aerial clip that follows
+space: { at: [12.5, -3.4, 0], dist: 19, yaw: -30, pitch: 24, dim: 0.4 }
 ---
 
 # I dalis
@@ -120,7 +120,7 @@ Kalbėtojui. Sakyti: „CERN ir Didysis hadronų greitintuvas.“ Pasaulyje — 
 -->
 
 ---
-space: { at: [14, 0, 0], dist: 23, yaw: 0, pitch: 85 }   # the same pose: the clip arrives over the ring it shows
+space: { at: [20, 5, -12], dist: 18, yaw: -30, pitch: 14 }
 ---
 
 <Strands :on="false" />
@@ -274,12 +274,14 @@ Sakyti: „Šešios problemos: kaip valdyti mašiną, kaip tvarkyti informaciją
 -->
 
 ---
-space: { at: [19.5, 2.5, -9.53], dist: 6, yaw: 150, pitch: 12, dim: 0 }   # the end of strand -60°
+space: { at: [19.5, 2.5, -9.53], dist: 9, yaw: -30, pitch: 30, dim: 0, flight: 1.6 }   # strand -60°: from its ring part, looking out along it to the product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_stumpe.jpg" arrive="camera" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
+<div class="part-word">Valdymo pultai</div>
+
+<StagePhoto src="/figures/hero_stumpe.jpg" arrive="camera" :dust-ms="[800, 600]" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
 <div class="hero-text">
 <p class="kicker gold">Problema: valdymas</p>
 <div class="year">1973</div>
@@ -299,12 +301,14 @@ Istorija: pasiūlymas ranka parašytas 1972 m. kovo 11 d. Stumpe atsisakė pasi
 -->
 
 ---
-space: { at: [25.0, 2.5, 0.0], dist: 6, yaw: 90, pitch: 12, dim: 0 }   # the end of strand 0°
+space: { at: [25.0, 2.5, 0.0], dist: 9, yaw: -90, pitch: 30, dim: 0, flight: 1.6 }   # strand 0°: from its ring part, looking out along it to the product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_proposal.jpg" arrive="camera" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" class="page">
+<div class="part-word">Informacija</div>
+
+<StagePhoto src="/figures/hero_proposal.jpg" arrive="camera" :dust-ms="[800, 600]" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" class="page">
 <div class="hero-text">
 <p class="kicker gold">Problema: informacija</p>
 <div class="year">1989</div>
@@ -323,12 +327,12 @@ Pasiūlymo įžanga: daugelis diskusijų apie CERN ateitį ir LHC erą baigiasi 
 -->
 
 ---
-space: { at: [25.0, 2.5, 0.0], dist: 6.5, yaw: 102, pitch: 12, dim: 0 }   # the end of strand 0°
+space: { at: [25.0, 2.5, 0.0], dist: 9, yaw: -82, pitch: 30, dim: 0, flight: 1.6 }   # strand 0°: from its ring part, looking out along it to the product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_next.jpg" arrive="camera" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
+<StagePhoto src="/figures/hero_next.jpg" arrive="camera" :dust-ms="[800, 600]" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: informacija</p>
 <div class="year">1993</div>
@@ -348,12 +352,14 @@ Faktai: pirmasis viešas paskelbimas — 1991 08 06 alt.hypertext grupėje; pirm
 -->
 
 ---
-space: { at: [19.5, 2.5, 9.53], dist: 6, yaw: 30, pitch: 12, dim: 0 }   # the end of strand 60°
+space: { at: [19.5, 2.5, 9.53], dist: 9, yaw: -150, pitch: 30, dim: 0, flight: 1.6 }   # strand 60°: from its ring part, looking out along it to the product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_pet.jpg" arrive="camera" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
+<div class="part-word">Detektoriai</div>
+
+<StagePhoto src="/figures/hero_pet.jpg" arrive="camera" :dust-ms="[800, 600]" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">1977</div>
@@ -373,12 +379,12 @@ Faktai: pirmasis CERN PET vaizdas — pelės; Townsendas dirbo Ženevos kantono 
 -->
 
 ---
-space: { at: [19.5, 2.5, 9.53], dist: 6.5, yaw: 40, pitch: 12, dim: 0 }   # the end of strand 60°
+space: { at: [19.5, 2.5, 9.53], dist: 9, yaw: -142, pitch: 30, dim: 0, flight: 1.6 }   # strand 60°: from its ring part, looking out along it to the product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_mars.jpg" arrive="camera" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
+<StagePhoto src="/figures/hero_mars.jpg" arrive="camera" :dust-ms="[800, 600]" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -399,12 +405,12 @@ Vaizdas: MARS Bioimaging Ltd (CERN KT CDS įrašas KTTGROUP-PHO-TECH-2020-001); 
 -->
 
 ---
-space: { at: [19.5, 2.5, 9.53], dist: 6.5, yaw: 20, pitch: 12, dim: 0 }   # the end of strand 60°
+space: { at: [19.5, 2.5, 9.53], dist: 9, yaw: -142, pitch: 30, dim: 0, flight: 1.6 }   # strand 60°: from its ring part, looking out along it to the product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_artemis.jpg" arrive="camera" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
+<StagePhoto src="/figures/hero_artemis.jpg" arrive="camera" :dust-ms="[800, 600]" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -422,12 +428,14 @@ Artemis II — pirmoji pilotuojama kelionė link Mėnulio nuo 1972 m. (startas 
 -->
 
 ---
-space: { at: [8.5, 2.5, 9.53], dist: 6, yaw: -30, pitch: 12, dim: 0 }   # the end of strand 120°
+space: { at: [8.5, 2.5, 9.53], dist: 9, yaw: 150, pitch: 30, dim: 0, flight: 1.6 }   # strand 120°: from its ring part, looking out along it to the product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_hadron.jpg" arrive="camera" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
+<div class="part-word">Pluoštas</div>
+
+<StagePhoto src="/figures/hero_hadron.jpg" arrive="camera" :dust-ms="[800, 600]" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pluošto nukreipimas</p>
 <div class="year">9 000+</div>
@@ -446,12 +454,14 @@ Faktai: PIMMS (CERN, TERA, MedAustron, Onkologie-2000). CNAO Pavijoje (pirmasis 
 -->
 
 ---
-space: { at: [3.0, 2.5, 0.0], dist: 6, yaw: -90, pitch: 12, dim: 0 }   # the end of strand 180°
+space: { at: [3.0, 2.5, 0.0], dist: 9, yaw: 90, pitch: 30, dim: 0, flight: 1.6 }   # strand 180°: from its ring part, looking out along it to the product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_datacentre.jpg" arrive="camera" alt="CERN duomenų centro serverių spintos" focus="50% 50%">
+<div class="part-word">Duomenys</div>
+
+<StagePhoto src="/figures/hero_datacentre.jpg" arrive="camera" :dust-ms="[800, 600]" alt="CERN duomenų centro serverių spintos" focus="50% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: duomenys</p>
 <div class="year">1 EB</div>
@@ -470,12 +480,14 @@ Jei laikas leidžia: duomenų problema davė ir atvirojo mokslo įrankius — Ze
 -->
 
 ---
-space: { at: [8.5, 2.5, -9.53], dist: 6, yaw: -150, pitch: 12, dim: 0 }   # the end of strand 240°
+space: { at: [8.5, 2.5, -9.53], dist: 9, yaw: 30, pitch: 30, dim: 0, flight: 1.6 }   # strand 240°: from its ring part, looking out along it to the product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_cold.jpg" arrive="camera" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right">
+<div class="part-word">Magnetai</div>
+
+<StagePhoto src="/figures/hero_cold.jpg" arrive="camera" :dust-ms="[800, 600]" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: šaltis</p>
 <div class="year">−271 °C</div>
@@ -529,7 +541,7 @@ Atsargiai: „27 su CERN susiję startuoliai pritraukė 3,2 mlrd. CHF“ — 2,
 -->
 
 ---
-space: { at: [122, 0, 0], dist: 14, yaw: 0, pitch: 85, dim: 0.45 }   # match cut: the loop of nodes from above, framed like the FCC ring on the map that follows
+space: { at: [118.5, -1.6, 0], dist: 13, yaw: -30, pitch: 14, dim: 0.45 }
 ---
 
 <div class="payoff">
@@ -551,7 +563,7 @@ Faktai: nematerialusis turtas +63 %, materialusis +27 %; 54 % tiekėjų patek
 -->
 
 ---
-space: { at: [122, 0, 0], dist: 14, yaw: 0, pitch: 85, dim: 0 }   # the same pose under the map
+space: { at: kt, dist: 22, yaw: 200, pitch: 40, dim: 0 }
 ---
 
 <StagePhoto src="/figures/hero_fcc.jpg" alt="Siūlomo 91 km FCC žiedo aplink Ženevą žemėlapis šalia LHC žiedo" focus="55% 50%">
