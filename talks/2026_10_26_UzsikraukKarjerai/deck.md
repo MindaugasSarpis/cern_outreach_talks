@@ -48,7 +48,7 @@ I. VADOVĖLIO GALE ATSAKYMO NĖRA
 Message: in my work there is no answer at the back of the book; today you will try it yourself.
 Picture: a five-quark particle gathers out of the dust beside the title.
 
-Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Aš esu dalelių fizikas Vilniaus universitete, ir mano darbe tokio vadovėlio nėra. Visi klausimai, su kuriais dirbu, yra tokie, į kuriuos dar niekas neatsakė. Šiandien pabandysi pats, kaip tai atrodo.
+Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Aš esu dalelių fizikas Vilniaus universitete, ir mano darbe tokio vadovėlio nėra. Dirbu su klausimais, į kuriuos dar niekas neatsakė. Šiandien pats pabandysi tokį darbą.
 
 (~0.5 min)
 -->
@@ -82,7 +82,8 @@ space: { at: trial, dim: 0.05 }
 <Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: -1, th1: 1, th2: 0, jp: 0, mine: 0 }" />
 
 <div class="say top">
-<p class="big">2003 m. – taip.</p>
+<p class="kick">2003 m.</p>
+<p class="big">Paskelbta, kad tai dalelė</p>
 </div>
 
 <!--
@@ -101,7 +102,8 @@ space: { at: trial, dim: 0.05 }
 <Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: -1, th1: 0, th2: 1, jp: 0, mine: 0 }" />
 
 <div class="say top">
-<p class="big">2008 m. – <span class="blue">ne.</span></p>
+<p class="kick blue">2008 m.</p>
+<p class="big">Su daugiau duomenų kauburys išnyko</p>
 </div>
 
 <!--
@@ -154,19 +156,21 @@ space: { at: lhcb, dim: 0.05 }
 <Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: -1, th1: 0, th2: 0, jp: 1, mine: 0 }" />
 
 <div class="say top swap-out">
-<p class="big">2015 m. – taip.</p>
+<p class="kick">2015 m.</p>
+<p class="big">LHCb duomenyse iškilo smailė</p>
 </div>
 
 <div class="say top swap-in">
-<p class="big">2019 m. – <em>trys.</em></p>
+<p class="kick">2019 m.</p>
+<p class="big">Trys pentakvarkai</p>
 </div>
 
 <!--
 Message: in 2015 LHCb saw a peak, checked everything, and it held; by 2019 it was three.
-Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate, fast at first, until the narrow peaks stand out (about 20 s); then the three peaks light up and the line on screen changes from „2015 m. – taip.“ to „2019 m. – trys.“. Time the last sentence of the script to that change.
+Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate, fast at first, until the narrow peaks stand out (about 20 s); then the three peaks light up and the line on screen changes from „LHCb duomenyse iškilo smailė“ (2015 m.) to „Trys pentakvarkai“ (2019 m.). Time the last sentence of the script to that change.
 Data: LHCb, PRL 122, 222001 (2019), HEPData ins1728691 Table 2 (m(Kp) > 1,9 GeV). These bins hold the 2015 sample and the later data together; the 2015 paper's own bins are not on HEPData.
 
-2015 metais LHCb grafike vėl iškilo smailė. Šįkart duomenų buvo dešimtys tūkstančių, o ne šimtai. Prieš paskelbdama, LHCb komanda tikrino viską, ką sugalvojo: ar smailė neatsiranda dėl detektoriaus, dėl kitų dalelių, dėl to, kaip atrinkti duomenys. Ir abejojo pati savimi, nes 2003-iųjų istoriją visi prisiminė. Smailė liko. 2019 metais, su dar daugiau duomenų, ji išsiskyrė į tris pentakvarkus – tai, ką matai dabar.
+2015 metais LHCb grafike vėl iškilo smailė. Šįkart duomenų buvo dešimtys tūkstančių, o ne šimtai. Prieš paskelbdama, LHCb komanda tikrino viską, ką sugalvojo: ar smailė neatsiranda dėl detektoriaus, dėl kitų dalelių, dėl to, kaip atrinkti duomenys. Ir abejojo pati savimi, nes 2003-iųjų istoriją dar gerai prisiminė. Smailė liko. 2019 metais, su dar daugiau duomenų, ji išsiskyrė į tris pentakvarkus – tai, ką matai dabar.
 
 (~0.7 min)
 -->
@@ -178,14 +182,14 @@ space: { at: lhcb, dist: 21, dim: 0.05 }
 <Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: -1, th1: 0, th2: 0, jp: 1, mine: 0 }" />
 
 <div class="say top">
-<p class="big">Kuo skyrėsi?</p>
+<p class="big">Šimtus kartų daugiau duomenų</p>
 </div>
 
 <!--
-Message: the difference was more data, checking by people who did not want the result, and doubting yourself.
+Message: the difference was far more data and checking by people outside the analysis.
 Picture: the full LHCb histogram, the camera drawing back.
 
-Tai kuo skyrėsi 2003 ir 2015 metai? Duomenų buvo šimtus kartų daugiau. Rezultatą tikrino ne tie patys žmonės, kurie jo norėjo. Ir buvo daug abejonės, nukreiptos į save. Šito nėra vadovėlio gale, bet to galima išmokti.
+2015 metais duomenų buvo šimtus kartų daugiau nei 2003-iaisiais. Be to, prieš paskelbiant rezultatą LHCb jį tikrino kolaboracijos nariai, kurie toje analizėje nedalyvavo, ir jų darbas buvo ieškoti klaidų. Tokio tikrinimo vadovėlyje nėra, jį išmoksti dirbdamas.
 
 (~0.4 min)
 -->
@@ -228,7 +232,7 @@ Note: illustrative, not the thesis plot: a random sample from a smooth spectrum 
 
 Ieškojau ketverius su puse metų ir neradau.
 [tyla 3 s]
-Dabar žinome, kad tame skilime šie pentakvarkai, jeigu ir atsiranda, tai labai retai. 2008 metų „ne“ reiškė, kad niekam nebereikia tirti dalelės, kurios nėra. Mano „ne“ reiškia, kad tie, kurie ieškos po manęs, žinos, kur jau ieškota. O mano sugalvotą būdą dabar naudoju kitame projekte.
+Dabar žinome, kad tame skilime šie pentakvarkai, jeigu ir atsiranda, tai labai retai. Tie, kurie ieškos po manęs, žinos, kur jau ieškota. O mano sugalvotą būdą dabar naudoju kitame projekte.
 
 (~0.6 min)
 -->
@@ -241,15 +245,15 @@ space: { at: whole, sway: 0, dim: 0.55 }
 
 <div class="say top wide">
 <p class="kick">Ko išmokau</p>
-<p class="big">Programuoti, statistikos, anglų kalbos,<br>dirbti komandoje ir abejoti savimi</p>
+<p class="big">Programavimas, statistika,<br>anglų kalba, darbas komandoje</p>
 </div>
 
 <!--
 IV. KO TAI IŠMOKO
-Message: the work trains skills that many jobs need; about three in four people who leave CERN work in industry.
+Message: the work trains skills other jobs need; about three in four people who leave CERN work in industry.
 Picture: the map of Europe gathers, dimmed, behind the line.
 
-Ką aš iš tikrųjų išmokau per tuos metus? Programuoti, nes be programų tokių duomenų neperžiūrėsi. Statistikos, nes reikia mokėti pasakyti, kada kauburys yra atsitiktinumas. Dirbti komandoje su žmonėmis iš visų žemynų ir kalbėtis su jais angliškai. Ir abejoti savo pačio rezultatu. Tų pačių dalykų reikia labai daugelyje darbų. CERN skaičiavimu, maždaug trys iš keturių žmonių, išėjusių iš CERN, dirba pramonėje: duomenų analizėje, medicinoje, inžinerijoje, finansuose.
+Per tuos metus išmokau programuoti, nes be programų tokių duomenų neperžiūrėsi, ir statistikos, nes reikia atskirti tikrą smailę nuo atsitiktinumo. Dirbau komandoje su žmonėmis iš daugelio šalių ir kalbėjausi su jais angliškai. Tokių įgūdžių reikia ir kituose darbuose. CERN skaičiavimu, maždaug trys iš keturių žmonių, išėjusių iš CERN, dirba pramonėje.
 
 (~0.6 min)
 -->
@@ -267,10 +271,10 @@ space: { at: whole, sway: 0, dim: 0.05 }
 <div class="city r" style="left: 405px; top: 254px">Bona</div>
 
 <!--
-Message: your own road is not in the back of the book either.
+Message: my own road was not planned either.
 Picture: the trail draws across Europe: Vilnius → CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius.
 
-Ir tavo paties kelio nėra vadovėlio gale. Iki dvylikos norėjau būti egiptologu. Studijavau Glazge ir ten dirbau vadybininku, kad turėčiau iš ko gyventi. Grįžęs į Lietuvą dirbau su lazeriais, doktorantūrą pradėjau Vokietijoje, o dabar Vilniaus universitete kartu su kolegomis kuriame LHCb grupę.
+Iki dvylikos metų norėjau būti egiptologu. Studijavau Glazge ir ten dirbau vadybininku, kad turėčiau iš ko gyventi. Grįžęs į Lietuvą dirbau su lazeriais, doktorantūrą pradėjau Vokietijoje, o dabar Vilniaus universitete kartu su kolegomis kuriame LHCb grupę.
 
 (~0.4 min)
 -->
@@ -294,7 +298,7 @@ Message: three real things a student can do this year.
 Picture: the five-quark particle far off, dimmed behind the three lines.
 Check before the talk: the 2027 masterclass date at VU (2026: 26 February) and the 2027 Beamline for Schools call (past rules: 16 or older, teams of at least five with an adult coach).
 
-O dabar tavo ėjimas. Kasmet vasarį–kovą Vilniaus universitete vyksta LHCb meistriškumo klasė: vieną dieną mokiniai analizuoja tikrus CERN duomenis ir rezultatus aptaria su kitų šalių grupėmis. CERN kasmet rengia konkursą „Beamline for Schools“: ne mažiau kaip penkių mokinių nuo šešiolikos metų komanda su mokytoju pasiūlo eksperimentą, o laimėtojai jį atlieka prie tikro greitintuvo. Ir LHCb duomenis gali atsisiųsti kiekvienas, nemokamai, adresu opendata.cern.ch.
+Štai ką gali padaryti jau šiais metais. Kasmet vasarį–kovą Vilniaus universitete vyksta LHCb meistriškumo klasė: vieną dieną mokiniai analizuoja tikrus CERN duomenis ir rezultatus aptaria su kitų šalių grupėmis. CERN kasmet rengia konkursą „Beamline for Schools“: ne mažiau kaip penkių mokinių nuo šešiolikos metų komanda su mokytoju pasiūlo eksperimentą, o laimėtojai jį atlieka prie tikro greitintuvo. Ir LHCb duomenis gali atsisiųsti kiekvienas, nemokamai, adresu opendata.cern.ch.
 
 (~0.8 min)
 -->
