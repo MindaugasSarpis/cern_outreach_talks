@@ -316,10 +316,10 @@ html.print .print-still { display: block; position: absolute; inset: 0; width: 1
    (a deliberate exception to "no labels in the world", for clarity): small,
    centred, gone before the photo condenses over it */
 html[data-stage] .part-word {
-  position: absolute; left: 0; right: 0; top: 24%; z-index: 30; text-align: center; pointer-events: none;
+  position: absolute; left: 0; right: 0; top: 9%; z-index: 30; text-align: center; pointer-events: none;
   font-size: 22px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--in-gold-hi);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 18px rgba(0, 0, 0, 0.8);
-  animation: part-word 2.9s ease both;
+  animation: part-word 1.7s ease both;   /* gone before the photo fills the frame */
 }
-@keyframes part-word { 0% { opacity: 0; } 12% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes part-word { 0% { opacity: 0; } 15% { opacity: 1; } 65% { opacity: 1; } 100% { opacity: 0; } }
 @media print { html[data-stage] .part-word { display: none; } }

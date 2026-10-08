@@ -274,14 +274,14 @@ Sakyti: „Šešios problemos: kaip valdyti mašiną, kaip tvarkyti informaciją
 -->
 
 ---
-space: { at: [19.5, 2.5, -9.53], dist: 9, yaw: -30, pitch: 30, dim: 0, flight: 1.6 }   # strand -60°: from its ring part, looking out along it to the product
+space: { at: stumpe, dim: 0, flight: 1.6 }   # place mode: the photo stands at its strand's product
 ---
 
 <Strands />
 
 <div class="part-word">Valdymo pultai</div>
 
-<StagePhoto src="/figures/hero_stumpe.jpg" arrive="camera" :dust-ms="[800, 600]" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
+<StagePhoto mode="place" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="/figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
 <div class="hero-text">
 <p class="kicker gold">Problema: valdymas</p>
 <div class="year">1973</div>
@@ -327,12 +327,12 @@ Pasiūlymo įžanga: daugelis diskusijų apie CERN ateitį ir LHC erą baigiasi 
 -->
 
 ---
-space: { at: [25.0, 2.5, 0.0], dist: 9, yaw: -82, pitch: 30, dim: 0, flight: 1.6 }   # strand 0°: from its ring part, looking out along it to the product
+space: { at: next, dim: 0, flight: 1.6 }   # place mode: the photo stands at its strand's product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_next.jpg" arrive="camera" :dust-ms="[800, 600]" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
+<StagePhoto mode="place" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="/figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: informacija</p>
 <div class="year">1993</div>
@@ -352,14 +352,14 @@ Faktai: pirmasis viešas paskelbimas — 1991 08 06 alt.hypertext grupėje; pirm
 -->
 
 ---
-space: { at: [19.5, 2.5, 9.53], dist: 9, yaw: -150, pitch: 30, dim: 0, flight: 1.6 }   # strand 60°: from its ring part, looking out along it to the product
+space: { at: pet, dim: 0, flight: 1.6 }   # place mode: the photo stands at its strand's product
 ---
 
 <Strands />
 
 <div class="part-word">Detektoriai</div>
 
-<StagePhoto src="/figures/hero_pet.jpg" arrive="camera" :dust-ms="[800, 600]" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
+<StagePhoto mode="place" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="/figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">1977</div>
@@ -379,12 +379,12 @@ Faktai: pirmasis CERN PET vaizdas — pelės; Townsendas dirbo Ženevos kantono 
 -->
 
 ---
-space: { at: [19.5, 2.5, 9.53], dist: 9, yaw: -142, pitch: 30, dim: 0, flight: 1.6 }   # strand 60°: from its ring part, looking out along it to the product
+space: { at: mars, dim: 0, flight: 1.6 }   # place mode: the photo stands at its strand's product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_mars.jpg" arrive="camera" :dust-ms="[800, 600]" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
+<StagePhoto mode="place" place-id="mars" :relief="0.25" :at="[16.6, 2.5, 13.51]" :size="3" :yaw="-150" src="/figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -405,12 +405,12 @@ Vaizdas: MARS Bioimaging Ltd (CERN KT CDS įrašas KTTGROUP-PHO-TECH-2020-001); 
 -->
 
 ---
-space: { at: [19.5, 2.5, 9.53], dist: 9, yaw: -142, pitch: 30, dim: 0, flight: 1.6 }   # strand 60°: from its ring part, looking out along it to the product
+space: { at: artemis, dim: 0, flight: 1.6 }   # place mode: the photo stands at its strand's product
 ---
 
 <Strands />
 
-<StagePhoto src="/figures/hero_artemis.jpg" arrive="camera" :dust-ms="[800, 600]" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
+<StagePhoto mode="place" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="/figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -428,14 +428,14 @@ Artemis II — pirmoji pilotuojama kelionė link Mėnulio nuo 1972 m. (startas 
 -->
 
 ---
-space: { at: [8.5, 2.5, 9.53], dist: 9, yaw: 150, pitch: 30, dim: 0, flight: 1.6 }   # strand 120°: from its ring part, looking out along it to the product
+space: { at: hadron, dim: 0, flight: 1.6 }   # place mode: the photo stands at its strand's product
 ---
 
 <Strands />
 
 <div class="part-word">Pluoštas</div>
 
-<StagePhoto src="/figures/hero_hadron.jpg" arrive="camera" :dust-ms="[800, 600]" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
+<StagePhoto mode="place" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="/figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pluošto nukreipimas</p>
 <div class="year">9 000+</div>
@@ -454,14 +454,14 @@ Faktai: PIMMS (CERN, TERA, MedAustron, Onkologie-2000). CNAO Pavijoje (pirmasis 
 -->
 
 ---
-space: { at: [3.0, 2.5, 0.0], dist: 9, yaw: 90, pitch: 30, dim: 0, flight: 1.6 }   # strand 180°: from its ring part, looking out along it to the product
+space: { at: datacentre, dim: 0, flight: 1.6 }   # place mode: the photo stands at its strand's product
 ---
 
 <Strands />
 
 <div class="part-word">Duomenys</div>
 
-<StagePhoto src="/figures/hero_datacentre.jpg" arrive="camera" :dust-ms="[800, 600]" alt="CERN duomenų centro serverių spintos" focus="50% 50%">
+<StagePhoto mode="place" place-id="datacentre" :relief="0.35" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="/figures/hero_datacentre.jpg" alt="CERN duomenų centro serverių spintos" focus="50% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: duomenys</p>
 <div class="year">1 EB</div>
@@ -480,14 +480,14 @@ Jei laikas leidžia: duomenų problema davė ir atvirojo mokslo įrankius — Ze
 -->
 
 ---
-space: { at: [8.5, 2.5, -9.53], dist: 9, yaw: 30, pitch: 30, dim: 0, flight: 1.6 }   # strand 240°: from its ring part, looking out along it to the product
+space: { at: cold, dim: 0, flight: 1.6 }   # place mode: the photo stands at its strand's product
 ---
 
 <Strands />
 
 <div class="part-word">Magnetai</div>
 
-<StagePhoto src="/figures/hero_cold.jpg" arrive="camera" :dust-ms="[800, 600]" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right">
+<StagePhoto mode="place" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="/figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: šaltis</p>
 <div class="year">−271 °C</div>

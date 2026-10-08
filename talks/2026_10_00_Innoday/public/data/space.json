@@ -128,7 +128,7 @@
           ],
           "radius": 7,
           "reach": 11,
-          "rise": 2.5,
+          "rise": 0.9,
           "strands": [
             {
               "angle": -60,
@@ -154,7 +154,8 @@
               "angle": 240,
               "label": "magnets, cold → superconducting line"
             }
-          ]
+          ],
+          "node": 0
         }
       ]
     },
