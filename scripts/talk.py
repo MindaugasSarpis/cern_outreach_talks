@@ -466,6 +466,60 @@ def invocation_dir() -> Path:
     return Path(os.environ.get("INIT_CWD") or os.getcwd())
 
 
+LOCK_DRIVER = ("pnpm-lock", "sh scripts/lockfile-merge.sh %O %A %B")
+
+
+def ensure_lock_driver(root: Path) -> None:
+    """Register the pnpm-lock.yaml merge driver (.gitattributes names it; git keeps drivers
+    in the repo's config, which every worktree shares). Idempotent."""
+    name, cmd = LOCK_DRIVER
+    if git_out(["config", "--get", f"merge.{name}.driver"], root) != cmd:
+        git(["config", f"merge.{name}.name", "take main's pnpm-lock.yaml, then pnpm install"], root)
+        git(["config", f"merge.{name}.driver", cmd], root)
+
+
+def lock_specifiers(lock_text: str, importer: str) -> dict[str, str]:
+    """{package: specifier} of one importer (`talks/<name>`) in a pnpm v9 lockfile, read by
+    indentation (stdlib only): importers: > <importer>: > (dev|optional)Dependencies: > name: > specifier."""
+    out, inside, section, name = {}, False, None, None
+    in_importers = False
+    for line in lock_text.splitlines():
+        if not line.strip():
+            continue
+        ind = len(line) - len(line.lstrip(" "))
+        key = line.strip()
+        if ind == 0:
+            in_importers = key == "importers:"
+            inside = False
+            continue
+        if not in_importers:
+            continue
+        if ind == 2:
+            inside = key.rstrip(":").strip("'\"") == importer
+            section = None
+        elif inside and ind == 4:
+            section = key.rstrip(":") if key.rstrip(":") in ("dependencies", "devDependencies", "optionalDependencies") else None
+        elif inside and section and ind == 6 and key.endswith(":"):
+            name = key[:-1].strip("'\"")
+        elif inside and section and ind == 8 and key.startswith("specifier:") and name:
+            out[name] = key.split(":", 1)[1].strip().strip("'\"")
+    return out
+
+
+def lock_drift(root: Path, talk: str) -> list[str]:
+    """The talk's package.json pins that its pnpm-lock.yaml importer does not record as such."""
+    try:
+        pkg = json.loads((root / "talks" / talk / "package.json").read_text(encoding="utf-8"))
+        lock = (root / "pnpm-lock.yaml").read_text(encoding="utf-8")
+    except (OSError, ValueError):
+        return []
+    want = {**pkg.get("dependencies", {}), **pkg.get("devDependencies", {}), **pkg.get("optionalDependencies", {})}
+    have = lock_specifiers(lock, f"talks/{talk}")
+    if not have:
+        return [f"talks/{talk} is not in pnpm-lock.yaml"]
+    return [f"{n}: package.json {v}, lockfile {have.get(n, '(none)')}" for n, v in sorted(want.items()) if have.get(n) != v]
+
+
 def find_repo(cwd: Path) -> Repo:
     common = git_out(["rev-parse", "--path-format=absolute", "--git-common-dir"], SCRIPTS)
     if not common:
@@ -1625,6 +1679,13 @@ def cmd_deploy(repo: Repo, a, extra) -> tuple[int, dict]:
     if git(["merge-base", "--is-ancestor", "origin/main", "HEAD"], wt).returncode != 0:
         OUT.say("HEAD is not on top of origin/main. Rebase first:\n  " + "\n  ".join(rebase))
         return fail("origin/main is not an ancestor of HEAD", rebase=rebase)
+    drift = lock_drift(wt, talk)
+    if drift:
+        fix = [f"git -C {wt} checkout origin/main -- pnpm-lock.yaml && (cd {wt} && pnpm install) "
+               f"&& git -C {wt} add pnpm-lock.yaml && git -C {wt} commit -m 'chore: pnpm-lock.yaml from main, reinstalled'"]
+        OUT.say("pnpm-lock.yaml does not record this talk's pins (a lockfile merged as text, or pins moved "
+                "without an install). Take main's and reinstall:\n  " + fix[0])
+        return fail("pnpm-lock.yaml does not match the talk's package.json", drift=drift, fix=fix)
     sha = git_out(["rev-parse", "HEAD"], wt)
     ahead = int(git_out(["rev-list", "--count", f"origin/main..{sha}"], wt) or 0)
     data.update(sha=sha, ahead=ahead)
@@ -2365,6 +2426,8 @@ def main(argv: list[str] | None = None) -> int:
         if extra and a.verb not in PASSTHROUGH:
             raise UsageError(f"unrecognized arguments: {' '.join(extra)}")
         repo = find_repo(invocation_dir())
+        if (repo.here / ".gitattributes").is_file():
+            ensure_lock_driver(repo.here)   # so git never text-merges pnpm-lock.yaml (.gitattributes)
         code, data = VERBS[a.verb](repo, a, extra)
         if data is None:             # a delegate printed its own result
             return code if code in (0, 1, 2) else 1

@@ -1009,3 +1009,75 @@ def test_deploy_finds_the_talks_build_job_in_either_workflow(jobs, want):
     # Innoday's deploy (run 37815139786: build success, deploy success) was reported
     # "build: None ... (not deployed)" because only `build <talk>` was looked for
     assert talk_cli.talk_build_job(jobs, "2026_10_00_Innoday") == want
+
+
+LOCK = """lockfileVersion: '9.0'
+
+importers:
+
+  .:
+    devDependencies:
+      pyright:
+        specifier: ^1.1.0
+        version: 1.1.0
+
+  talks/2026_10_00_Innoday:
+    dependencies:
+      '@slidev/cli':
+        specifier: ^52.14.2
+        version: 52.14.2
+    devDependencies:
+      slidev-addon-videos:
+        specifier: github:MindaugasSarpis/slidev-videos#v0.5.1
+        version: https://codeload.github.com/x
+
+packages:
+
+  '@slidev/cli@52.14.2':
+    resolution: {integrity: sha512-x}
+"""
+
+
+def test_lock_specifiers_reads_one_importer():
+    assert talk_cli.lock_specifiers(LOCK, "talks/2026_10_00_Innoday") == {
+        "@slidev/cli": "^52.14.2", "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.5.1"}
+    assert talk_cli.lock_specifiers(LOCK, "talks/nope") == {}
+
+
+def test_lock_drift_names_pins_the_lockfile_does_not_record(tmp_path):
+    (tmp_path / "talks/2026_10_00_Innoday").mkdir(parents=True)
+    (tmp_path / "pnpm-lock.yaml").write_text(LOCK)
+    pkg = tmp_path / "talks/2026_10_00_Innoday/package.json"
+    pkg.write_text(json.dumps({"dependencies": {"@slidev/cli": "^52.14.2"},
+                               "devDependencies": {"slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.5.1"}}))
+    assert talk_cli.lock_drift(tmp_path, "2026_10_00_Innoday") == []
+    pkg.write_text(json.dumps({"dependencies": {"@slidev/cli": "^52.14.2"},
+                               "devDependencies": {"slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.5.2"}}))
+    assert talk_cli.lock_drift(tmp_path, "2026_10_00_Innoday") == [
+        "slidev-addon-videos: package.json github:MindaugasSarpis/slidev-videos#v0.5.2, lockfile github:MindaugasSarpis/slidev-videos#v0.5.1"]
+
+
+def test_the_lockfile_is_never_merged_as_text(tmp_path):
+    # main and a talk branch both change pnpm-lock.yaml; merging main takes main's
+    env = {**os.environ, "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1",
+           "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t", "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"}
+    g = lambda *a: subprocess.run(["git", "-C", str(tmp_path), *a], env=env, capture_output=True, text=True, check=True)
+    g("init", "-q", "-b", "main")
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts/lockfile-merge.sh").write_text((ROOT / "scripts/lockfile-merge.sh").read_text())
+    (tmp_path / ".gitattributes").write_text((ROOT / ".gitattributes").read_text())
+    (tmp_path / "pnpm-lock.yaml").write_text("a: 1\nb: 1\nc: 1\n")
+    g("add", "."); g("commit", "-q", "-m", "base")
+    g("checkout", "-q", "-b", "talk")
+    (tmp_path / "pnpm-lock.yaml").write_text("a: 1\nb: 1\nc: talk\n")
+    g("commit", "-qam", "talk pins")
+    g("checkout", "-q", "main")
+    (tmp_path / "pnpm-lock.yaml").write_text("a: main\nb: 1\nc: 1\n")
+    g("commit", "-qam", "main moves")
+    g("update-ref", "refs/remotes/origin/main", "main")
+    talk_cli.ensure_lock_driver(tmp_path)
+    assert g("config", "--get", "merge.pnpm-lock.driver").stdout.strip() == talk_cli.LOCK_DRIVER[1]
+    g("checkout", "-q", "talk")
+    g("merge", "-q", "--no-edit", "main")
+    # a text merge would have given "a: main / c: talk"; the driver takes main's whole
+    assert (tmp_path / "pnpm-lock.yaml").read_text() == "a: main\nb: 1\nc: 1\n"
