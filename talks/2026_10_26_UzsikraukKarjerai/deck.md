@@ -51,8 +51,8 @@ I. KLAUSIMAS
 Message: in my work there is no answer at the back of the book; here is one such question.
 Picture: a cloud forms, gold grains (matter) and blue (antimatter).
 
-Kai mokykloje sprendi uždavinį ir nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Aš esu dalelių fizikas, ir mano darbe tokio vadovėlio nėra. Dirbu su klausimais, į kuriuos atsakymo dar niekas nežino.
-Štai vienas iš jų. Auksinės dalelės – tai medžiaga, iš jos sudaryta viskas aplink mus. Mėlynos – antimedžiaga, tarsi medžiagos veidrodinis atspindys. Visatos pradžioje atsirado ir vienų, ir kitų. O kai medžiagos dalelė susitinka su antimedžiagos dalele…
+Kai mokykloje sprendi uždavinį ir nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Aš esu dalelių fizikas ir mano darbe tokio vadovėlio nėra. Dirbu su klausimais, į kuriuos atsakymo dar niekas nežino.
+Štai vienas iš jų. Auksinės dalelės – tai medžiaga, iš kurios sudaryta viskas aplink mus. Mėlynos – antimedžiaga: tokios pat dalelės, tik su priešingu krūviu. Visatos pradžioje atsirado ir vienų, ir kitų. O kai medžiagos dalelė susitinka su antimedžiagos dalele…
 → spausk
 
 Source: CERN, „Antimatter“, home.cern/science/physics/antimatter.
@@ -69,7 +69,7 @@ space: { at: origin, dist: 24, dim: 0.05 }
 Message: if there had been equal amounts, everything would have vanished.
 Picture: the pairs meet and go out as light, from the edge inward; a handful of gold grains is left. The world full-frame.
 
-…abi išnyksta, lieka tik šviesa. Jeigu jų būtų buvę po lygiai, būtų išnykę viskas, ir mūsų nebūtų.
+…abi išnyksta, lieka tik šviesa. Jeigu jų būtų buvę po lygiai, būtų išnykę viskas ir mūsų nebūtų.
 [pauzė 3 s]
 (~0.3 min)
 -->
@@ -107,9 +107,9 @@ space: { at: origin, dist: 12, dim: 0 }
 Message: one way to look for the answer is collisions in the LHC at CERN.
 Picture: real footage, a travelling shot along the LHC tunnel (CERN-FOOTAGE-2022-013-001). Advance whenever you finish; the clip is long.
 
-Vienas iš būdų ieškoti atsakymo – dalelių susidūrimai. Prie Ženevos, CERN'e, šimto metrų gylyje yra Didysis hadronų greitintuvas – dvidešimt septynių kilometrų žiedas. Kai jis veikia, protonai lekia vieni priešais kitus beveik šviesos greičiu ir susiduria. Šią vasarą greitintuvą išjungė, nes iki 2030-ųjų jis bus atnaujinamas.
+Vienas iš būdų ieškoti atsakymo – dalelių susidūrimai. Susidūrimuose vėl atsiranda medžiagos ir antimedžiagos, todėl jas galima palyginti. Prie Ženevos, CERN'e, šimto metrų gylyje yra Didysis hadronų greitintuvas – dvidešimt septynių kilometrų žiedas. Kai jis veikia, protonai lekia vieni priešais kitus beveik šviesos greičiu ir susiduria.
 
-Sources: home.cern LHC page (27 km, 100 m underground, close to the speed of light); CERN, 29 Jun 2026: the LHC switched off for Long Shutdown 3, the High-Luminosity LHC scheduled for 2030.
+Sources: home.cern LHC page (27 km, 100 m underground, close to the speed of light); home.cern/science/experiments/lhcb (LHCb compares matter and antimatter in the particles collisions make). The LHC is off since 29 Jun 2026 (Long Shutdown 3), hence „kai jis veikia“.
 (~0.5 min)
 -->
 
@@ -117,15 +117,17 @@ Sources: home.cern LHC page (27 km, 100 m underground, close to the speed of lig
 space: { at: origin, dist: 12, dim: 0 }
 ---
 
-<VideoPlayer src="cern_footage_2022_042_001.mp4" muted />
+<div class="photo"><img src="/figures/photos/lhcb-cavern.jpg" alt="LHCb detektoriaus urvas CERN, 2019" /></div>
+
+<div class="photo-credit">LHCb, CERN · Foto: Rosa Menkman, CC BY 2.0</div>
 
 <!--
-Message: LHCb was built for this question, and I work on it; the road here was not straight.
-Picture: the LHCb detector (CERN-FOOTAGE-2022-042-001, silent).
+Message: LHCb was built for this question, and I work on it; I did not get here straight away.
+Picture: a real photograph of the LHCb cavern (2019), full frame, slowly drawing closer.
 
-Viename iš susidūrimo taškų stovi LHCb – 5 600 tonų detektorius. Jis pastatytas tam, kad ištirtų, kuo medžiaga skiriasi nuo antimedžiagos. LHCb eksperimente dirba daugiau nei 1 800 žmonių iš 27 šalių, ir aš esu vienas iš jų. Bet kelias iki čia nebuvo tiesus.
+Vienoje iš vietų, kur protonai susiduria, stovi LHCb – 5 600 tonų detektorius. Jis pastatytas tam, kad ištirtų, kuo medžiaga skiriasi nuo antimedžiagos. LHCb eksperimente dirba daugiau nei 1 800 žmonių iš 27 šalių, ir aš esu vienas iš jų. Bet čia atsidūriau ne iš karto.
 
-Sources: home.cern/science/experiments/lhcb (5 600 t; matter and antimatter); LHCb Starterkit, 1 Dec 2025 (1 844 members, 108 institutes, 27 countries).
+Sources: home.cern/science/experiments/lhcb (5 600 t; matter and antimatter); LHCb Starterkit, 1 Dec 2025 (1 844 members, 108 institutes, 27 countries). Photo: Rosa Menkman, flickr.com/photos/r00s/48815389756, CC BY 2.0 (cropped to 16:9).
 (~0.4 min)
 -->
 
@@ -137,10 +139,10 @@ space: { at: whole, dim: 0.05 }
 
 <!--
 II. KELIAS
-Message: I knew only that physics interested me; my first real research was on the very question I opened with.
+Message: my path went through other interests, and my first real research was on the very question I opened with.
 Picture: Europe gathers out of the dust; a trail of light runs Vilnius → CERN → Vilnius → Glasgow.
 
-Iki dvylikos norėjau būti egiptologu, o nuo dvylikos – fiziku. Po pamokų lankiau ne tik fizikos, bet ir verslo bei psichologijos užsiėmimus. Vienuoliktoje klasėje pirmą kartą nuvažiavau į CERN'ą. Studijuoti išvykau į Glazgą. Pragyvenimui užsidirbdavau darbu, kuris su fizika neturėjo nieko bendro, o bakalauro darbui pirmą kartą gavau tikrus LHCb duomenis. Tema buvo ta pati, nuo kurios pradėjau, – kuo skiriasi medžiaga ir antimedžiaga.
+Iki dvylikos norėjau būti egiptologu, o nuo dvylikos – fiziku. Po pamokų lankiau ne tik fizikos, bet ir verslo bei psichologijos užsiėmimus. Vienuoliktoje klasėje pirmą kartą nuvažiavau į CERN'ą. [PATIKSLINTI: kaip – iki šešių žodžių] Studijuoti išvykau į Glazgą. Kad turėčiau iš ko gyventi, dirbau vadybininku – su fizika tai neturėjo nieko bendro. O baigiamajam bakalauro darbui pirmą kartą gavau tikrus LHCb duomenis. Tyrinėjau tą patį klausimą, nuo kurio šiandien pradėjau, – kuo skiriasi medžiaga ir antimedžiaga.
 
 Sources: LRT „Širdyje lietuvis“ (2024), 03:11 (Egyptologist until 12, then physics) [ASR: re-listen]; Mokslo sriuba podcast #62 (2019), 00:39 (first visit to CERN in 11th grade) and 32:39 (BSc thesis on CP violation in B decays) [ASR: re-listen]; Substack „A New Beginning“ (2024): "had to support myself so ended up working as a manager"; INSPIRE: Glasgow 2011–15; the after-school courses: the speaker's own account.
 [PATIKSLINTI: užsiėmimų pavadinimai; ar minėti darbą Glazge taip.]
@@ -154,18 +156,18 @@ space: { at: whole, dim: 0.05 }
 <Grains :set="{ bang: 3, pq: 0, needle: 0, dance: 0, phantom: 0, route: 6 }" />
 
 <!--
-Message: I left particle physics, came back for a PhD, and the PhD gave me pentaquarks to look for.
+Message: I left particle physics, came back for a PhD, and the PhD gave me a second open question: pentaquarks.
 Picture: the trail runs on: back to Vilnius, then Heidelberg, then Bonn.
 
-Po studijų grįžau į Vilnių ir iš dalelių fizikos išėjau – dirbau su lazeriais. Į ją grįžau doktorantūroje, Heidelberge. Po pusmečio prasidėjo pandemija, o mūsų grupė persikėlė į Boną. Doktorantūroje gavau užduotį ieškoti pentakvarkų. Kad būtų aišku, kas tai, reikia grįžti į 1964-uosius.
+Po studijų grįžau į Vilnių ir iš dalelių fizikos išėjau – dirbau su lazeriais. [PATIKSLINTI: kodėl – viena frazė] Į dalelių fiziką grįžau per doktorantūrą – tai keleri metai, per kuriuos darai vieną didelį tyrimą. Rinkausi Heidelbergą, nes norėjau dirbti didelėje komandoje, kuri ieško naujų dalelių. Po pusmečio prasidėjo pandemija ir tais pačiais metais visa mūsų grupė persikėlė į Boną. Doktorantūroje gavau kitą klausimą be atsakymo – apie pentakvarkus. Kad būtų aišku, kas tai, reikia grįžti į 1964-uosius.
 
-Sources: INSPIRE: VU 2017–19, Heidelberg 2019–20, Bonn 2020–23; the thesis acknowledgements (Bonn, 2023): the pandemic six months in, the group's move to Bonn; the laser work: the speaker's own account.
-[PATIKSLINTI: ar „dirbau su lazeriais“ tinka.]
+Sources: INSPIRE: VU 2017–19, Heidelberg 2019–20, Bonn 2020–23; the thesis acknowledgements (Bonn, 2023): the pandemic six months in, the group's move to Bonn; LRT „Širdyje lietuvis“ (2024), 04:36–05:03: chose LHCb in Heidelberg over a laser PhD because he wanted the collaboration [ASR: re-listen]; the laser work: the speaker's own account.
+[PATIKSLINTI: ar „dirbau su lazeriais“ tinka; kodėl išėjai.]
 (~0.5 min)
 -->
 
 ---
-space: { at: quarks, dist: 15, dim: 0.1 }
+space: { at: [603.5, 0.2, 0], dist: 15, yaw: -18, pitch: 8, sway: 1, dim: 0.15 }
 ---
 
 <Grains :set="{ bang: 3, pq: 0, needle: 0, dance: 0, phantom: 0, route: 6 }" />
@@ -174,14 +176,21 @@ space: { at: quarks, dist: 15, dim: 0.1 }
 <p class="big huge">1964</p>
 </div>
 
+<div class="portraits">
+<figure><img src="/figures/photos/gell-mann.jpg" alt="Murray Gell-Mann" /><figcaption>Murray Gell-Mann</figcaption></figure>
+<figure><img src="/figures/photos/zweig.jpg" alt="George Zweig" /><figcaption>George Zweig</figcaption></figure>
+</div>
+
+<div class="credit">Foto: Joi Ito, CC BY 2.5 · Peacearth, CC BY-SA 4.0</div>
+
 <!--
 III. UŽDUOTIS
 Message: in 1964 the quark idea allowed particles of five quarks, and nobody knew whether they exist.
-Picture: five faint clusters drift apart; nothing holds yet.
+Picture: portraits of the two physicists; behind them five faint clusters drift apart, nothing holds yet.
 
-1964 metais du fizikai, Murray Gell-Mannas ir George'as Zweigas, pasiūlė idėją, kad protonai ir neutronai sudaryti iš dar mažesnių dalelių – kvarkų. Pagal tą pačią idėją galėjo būti ir dalelių iš penkių kvarkų – pentakvarkų. Ar jų iš tikrųjų yra, niekas nežinojo.
+1964 metais du fizikai, Murray Gell-Mannas ir George'as Zweigas, sugalvojo, kad protonai ir neutronai sudaryti iš dar mažesnių dalelių – kvarkų. Protonas – tai trys kvarkai. Pagal tą pačią idėją galėjo būti ir dalelių iš penkių kvarkų – pentakvarkų. Ar jų iš tikrųjų yra, niekas nežinojo.
 
-Sources: Gell-Mann, Phys. Lett. 8 (1964) 214; Zweig, CERN-TH-401 (1964); the same model allows pentaquarks (LHCb, arXiv:1507.03414).
+Sources: Gell-Mann, Phys. Lett. 8 (1964) 214; Zweig, CERN-TH-401 (1964); the same model allows pentaquarks (LHCb, arXiv:1507.03414). Photos: Joi Ito (commons.wikimedia.org/wiki/File:MurrayGellMannJI1.jpg, CC BY 2.5); Peacearth (commons.wikimedia.org/wiki/File:George_Zweig.jpg, CC BY-SA 4.0); both cropped.
 (~0.4 min)
 -->
 
@@ -199,7 +208,7 @@ space: { at: quarks, dist: 11, dim: 0.1 }
 Message: one was claimed in 2003 and shown not to exist by 2008.
 Picture: the clusters half-gather, dim, and do not hold.
 
-Jų ieškojo kelis dešimtmečius. 2003 metais viena tyrėjų grupė paskelbė, kad rado pentakvarką. Kiti bandė tai pakartoti ir nerado. 2008 metais pagrindinis dalelių fizikos žinynas paskelbė, kad daugybė įrodymų rodo: tokio pentakvarko nėra.
+Jų ieškojo kelis dešimtmečius. 2003 metais viena tyrėjų grupė paskelbė, kad rado pentakvarką. Kiti bandė tai pakartoti ir nerado. 2008 metais pagrindinis dalelių fizikos žinynas paskelbė, kad tokio pentakvarko nėra.
 
 Sources: LEPS, PRL 91, 012002 (2003); PDG 2008 review: "overwhelming evidence that the claimed pentaquarks do not exist".
 (~0.4 min)
@@ -224,7 +233,7 @@ space: { at: [601.6, 0.2, 0], dist: 11, yaw: 18, pitch: 8, sway: 1, dim: 0.2 }
 Message: LHCb found them in 2015, 51 years after the idea.
 Picture: on the left the five clusters gather, hold and burn bright; on the right the real LHCb plot.
 
-2015 metais LHCb pentakvarkus pagaliau aptiko. Šitame grafike – tikri LHCb duomenys. Siaura smailė – tai pentakvarkas. Nuo idėjos iki atradimo praėjo penkiasdešimt vieneri metai.
+2015 metais LHCb pagaliau aptiko pentakvarkus – tik kitokius nei tas, apie kurį skelbta 2003-iaisiais. Šiame grafike – tikri LHCb duomenys. Jeigu dalelė egzistuoja, matuojant daug kartų ta pati masė vis pasikartoja ir grafike iškyla smailė. Ši smailė – pentakvarkas. Nuo idėjos iki atradimo praėjo penkiasdešimt vieneri metai.
 
 Sources: LHCb, PRL 115, 072001 (2015), figure: m(J/ψ p) with the narrow Pc(4450)⁺ over the broad Pc(4380)⁺; CERN press release, 14 Jul 2015 (1 Feb 1964 → 14 Jul 2015 = 51 years).
 (~0.4 min)
@@ -248,7 +257,7 @@ space: { at: [601.6, 0.2, 0], dist: 11, yaw: 18, pitch: 8, sway: 1, dim: 0.2 }
 Message: in 2019 there were three, and my task was to check whether they appear in another decay.
 Picture: the same clusters; on the right the 2019 plot with three narrow peaks.
 
-2019 metais, surinkus daugiau duomenų, ta smailė pasirodė esanti dvi smailės, ir atsirado dar viena. Iš viso trys siauri pentakvarkai. Kaip penki kvarkai laikosi krūvoje, iki šiol tiksliai nežinoma. Mano užduotis buvo patikrinti, ar šie trys pasirodo ir kitame skilime – kai dalelė subyra kitaip.
+2019 metais, surinkus daugiau duomenų, paaiškėjo, kad ta smailė iš tikrųjų yra dvi, ir atsirado dar viena. Iš viso trys pentakvarkai. Kaip penki kvarkai laikosi krūvoje, iki šiol tiksliai nežinoma. Pentakvarkai atsiranda, kai subyra sunkesnė dalelė. Mano užduotis buvo patikrinti, ar šie trys atsiranda ir tada, kai ji subyra kitaip.
 
 Sources: LHCb, PRL 122, 222001 (2019): Pc(4312)⁺, and the 2015 Pc(4450)⁺ resolved into Pc(4440)⁺ and Pc(4457)⁺; CERN, 2022: their exact nature "largely unknown"; the speaker's thesis (Bonn, 2023) searched Λb⁰ → Λc⁺ D̄*⁰ K⁻ for these three.
 (~0.5 min)
@@ -262,14 +271,15 @@ space: { at: search, dim: 0.06 }
 
 <!--
 IV. PAIEŠKA
-Message: it is a search for a needle in a haystack, and after two years the method worked.
+Message: it is a search for a needle in a haystack; I had to invent a new way to find the particle, and after two years it worked.
 Picture: a wide, faint cloud of grains, the haystack; about 20 s in, a thread of light runs in and a small warm cluster gathers.
 
-Tai panašu į adatos paiešką šieno kupetoje, kuri yra visos Lietuvos dydžio, kai net nežinai, kaip adata atrodo. Didžiąją laiko dalį rašai programas, kurios atsijoja duomenis, ir kompiuteriu modeliuoji, ką turėtum pamatyti, jei adata ten yra. Ir daug kalbiesi su kolegomis, nes naujos dalelės vienas nerasi.
-Maždaug po dvejų metų pirmą kartą pažiūrėjau į savo duomenų grafiką ir pamačiau ne tas daleles, kurių ieškojau, o kitas – tikras, labai trumpai gyvenančias. Labai apsidžiaugiau, nes tai reiškė, kad metodas veikia.
+Tai kaip ieškoti adatos šieno kupetoje, didelėje kaip visa Lietuva. Ir net nežinai, kaip ta adata atrodo. Didžiąją laiko dalį rašai programas, kurios atsijoja duomenis, ir kompiuteriu modeliuoji, ką turėtum pamatyti, jei adata ten yra. Ir daug kalbiesi su kolegomis, nes naujos dalelės vienas nerasi.
+Kad apskritai galėčiau ieškoti, turėjau sugalvoti naują būdą aptikti dalelę, kurios detektorius dažnai nepagauna. Maždaug po dvejų metų pirmą kartą pažiūrėjau į savo duomenų grafiką ir pamačiau kitas, jau žinomas daleles. Labai apsidžiaugiau, nes tai reiškė, kad mano būdas veikia.
 
 Sources: LRT „Širdyje lietuvis“ (2024), 07:36 (the haystack), 06:15 („naujos dalelės vienas tikrai nerasi“), 11:12 (after about two years, other real short-lived particles, the happy dance) [ASR: re-listen].
-[PATIKSLINTI: ar taip atrodė darbo dienos; ar tas grafikas buvo iš tos pačios analizės; ar „metodas veikia“ – tavo žodžiai.]
+Method: the thesis (Extended Cone Closure).
+[PATIKSLINTI: ar taip atrodė darbo dienos; ar tos dalelės buvo „jau žinomos“; ar „sugalvoti“ pačiam ar su komanda.]
 (~0.8 min)
 -->
 
@@ -305,11 +315,10 @@ space: { at: search, dist: 18, yaw: -24, sway: 1, dim: 0.06 }
 Message: the work still counted: others know where it was searched, and the method became my next project.
 Picture: from the five faint clusters, arcs of gold run to one point beside them, where a cluster gathers and holds.
 
-Bet darbas nenuėjo veltui. Dabar kiti žino, kur ieškota, ir gali ieškoti kitur. Be to, norėdamas apskritai ieškoti, turėjau sukurti naują būdą, kaip atkurti dalelę, kurios detektorius dažnai nepagauna. Tas būdas liko, ir juo remiasi mano dabartinis projektas. Blogas rezultatas irgi yra rezultatas.
+Bet darbas nenuėjo veltui. Dabar kiti žino, kur ieškota, ir gali ieškoti kitur. O mano sugalvotas būdas liko – jį naudoju savo dabartiniame projekte.
 
-Sources: the thesis (Extended Cone Closure); CORDIS 101244743 (PHANTOM, 2025–27, uses that method); „blogas rezultatas irgi yra rezultatas“: Mokslo sriuba podcast #62 (2019), 44:34 [ASR: re-listen].
-[PATIKSLINTI: „sukurti“ pačiam ar su komanda?]
-(~0.5 min)
+Sources: the thesis (Extended Cone Closure); CORDIS 101244743 (PHANTOM, 2025–27, uses that method).
+(~0.3 min)
 -->
 
 ---
@@ -327,7 +336,7 @@ space: { at: search, dist: 30, dim: 0 }
 Message: at the same time I opened LHCb's data to everyone.
 Picture: real footage of the CERN data centre (CERN-FOOTAGE-2022-013-006).
 
-Tuo pat metu beveik dvejus metus ruošiau dar vieną dalyką: visus pirmojo LHCb darbo etapo duomenis – beveik petabaitą –, kad juos galėtų atsisiųsti bet kas. 2023 metų gruodžio 20 dieną jie tapo vieši. Kitą dieną gyniau disertaciją. Tie duomenys prieinami ir tau, adresas ekrane.
+Kol ieškojau pentakvarkų, beveik dvejus metus ruošiau visus LHCb pirmųjų darbo metų duomenis – beveik milijoną gigabaitų –, kad juos galėtų atsisiųsti bet kas. 2023 metų gruodžio 20 dieną juos paskelbėme. Kitą dieną gyniau daktaro disertaciją. Tie duomenys prieinami ir tau – adresas ekrane.
 
 Sources: M. Šarpis, „LHCb Run I Data is Released“ (Substack, 15 Jan 2024): close to two years, just under 1 PB; opendata.cern.ch: entire Run 1 public, 20 Dec 2023; thesis defence 21 Dec 2023.
 (~0.5 min)
@@ -346,10 +355,10 @@ space: { at: whole, dim: 0.35 }
 
 <!--
 V. PO TO
-Message: in the middle of the search I wrote down my plans, and they did not include what happened.
+Message: halfway through the search I wrote down my plans.
 Picture: my own slide from April 2022, over the map.
 
-Kol ieškojau, galvojau ir apie tai, kas bus toliau. 2022 metų pavasarį susirašiau ateities planus. Apsiginti disertaciją. Likti LHCb, jeigu pavyks. Dirbti nuotoliu, matyt, su JAV. Ir paskutinis punktas – „Gyventi Lietuvoje“ – su nustebusiu veiduku gale.
+Dar 2022 metų pavasarį, įpusėjęs paiešką, susirašiau ateities planus. Apsiginti disertaciją. Likti LHCb, jeigu pavyks. Dirbti nuotoliu, matyt, JAV universitetui. Ir paskutinis punktas – „Gyventi Lietuvoje“ – su nustebusiu veiduku gale.
 
 Source: M. Šarpis, LPPM 2022 participants' introductions (11 Apr 2022), MSarpisIntro.pdf p. 16 (public on Indico).
 [PATIKSLINTI: ar tinka rodyti šią skaidrę.]
@@ -363,37 +372,45 @@ space: { at: whole, dim: 0.05 }
 <Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 1, phantom: 5, route: 7 }" />
 
 <!--
-Message: a year and a half later I was building an LHCb group in Vilnius, which was in none of the plans.
+Message: a year and a half later I was building an LHCb group in Vilnius, which my plans had not foreseen.
 Picture: the trail arcs home from Bonn to Vilnius.
 
-Po pusantrų metų jau dirbau Vilniuje, ir kūrėme LHCb grupę Vilniaus universitete. Šito mano planuose nebuvo. Nuo 2024 metų Vilniaus universitetas – oficialus LHCb dalyvis, o dauguma mūsų grupės narių – studentai.
+Po pusantrų metų jau dirbau Vilniaus universitete ir kūrėme ten LHCb grupę. Grupės kūrimo mano planuose nebuvo. Nuo 2024 metų Vilniaus universitetas – oficialus LHCb dalyvis, o dauguma mūsų grupės narių – studentai.
 
 Sources: ff.vu.lt: VU admitted to LHCb on 2 Sep 2024; VU, 20 Aug 2026: most of the group are students; the move home: the speaker's own account.
 (~0.3 min)
 -->
 
 ---
-space: { at: cosmos, dim: 0.06 }
+space: { at: origin, dist: 14, dim: 0 }
 ---
 
 <Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 1, phantom: 5, route: 7 }" />
+
+<div class="photo"><img src="/figures/photos/ngc1300.jpg" alt="Galaktika NGC 1300, Hubble teleskopo nuotrauka" /></div>
+
+<div class="photo-credit">NGC 1300 · NASA, ESA ir The Hubble Heritage Team (STScI/AURA)</div>
 
 <!--
 VI. TAU
 Message: the question I opened with is still open, and someone who does not yet know what they will be may answer it.
-Picture: a turning spiral galaxy.
+Picture: a real Hubble photograph of the galaxy NGC 1300, full frame, slowly drawing closer.
 
-O klausimas, nuo kurio pradėjau, vis dar atviras. Iš to likučio – vienos dalelės milijardui – susidarė žvaigždės ir galaktikos. Pernai LHCb pirmą kartą pamatė, kad dalelės, giminingos protonams, elgiasi šiek tiek kitaip nei jų antimedžiagos atitikmenys. Tai dar viena užuomina. Atsakymo vis dar nėra. Gal jį ras žmogus, kuris šiandien sėdi klasėje ir dar nežino, kuo bus.
+O klausimas, nuo kurio pradėjau, vis dar atviras. Štai viena iš galaktikų, susidariusių iš to likučio, – Hubble teleskopo nuotrauka. Pernai LHCb pirmą kartą pamatė, kad dalelės, giminingos protonams, elgiasi šiek tiek kitaip nei tokios pat dalelės iš antimedžiagos. Bet šio skirtumo per maža, kad paaiškintų, kodėl liko medžiaga. Gal atsakymą ras žmogus, kuris šiandien sėdi klasėje ir dar nežino, kuo bus.
 
-Sources: CERN, 24 Mar 2025: first observation of CP violation in baryons (Λb).
+Sources: CERN, 24 Mar 2025: first observation of CP violation in baryons (Λb); the CP violation known in the Standard Model is too small to account for the matter–antimatter imbalance (CERN, „The matter-antimatter asymmetry problem“). Photo: NASA, ESA and The Hubble Heritage Team (STScI/AURA), esahubble.org/images/opo0501a, CC BY 4.0 (cropped to 16:9).
 (~0.6 min)
 -->
 
 ---
-space: { at: close, dim: 0.12 }
+space: { at: origin, dist: 14, dim: 0 }
 ---
 
 <Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 1, phantom: 5, route: 7 }" />
+
+<div class="photo dim"><img src="/figures/photos/ngc1300.jpg" alt="Galaktika NGC 1300, Hubble teleskopo nuotrauka" /></div>
+
+<div class="photo-credit">NGC 1300 · NASA, ESA ir The Hubble Heritage Team (STScI/AURA)</div>
 
 <div class="say wide">
 <p class="kick">Šią savaitę paklausk</p>
@@ -402,9 +419,9 @@ space: { at: close, dim: 0.12 }
 
 <!--
 Message: you do not need to know yet; try things, ask people, and here is a task for this week.
-Picture: the camera pulls back until the whole galaxy is in frame. Hold 2 s after the last word; no logos, no summary.
+Picture: the same galaxy, darker behind the question. Hold 2 s after the last word; no logos, no summary.
 
-Tau nebūtina jau dabar žinoti, kuo būsi. Šešiolikos metų aš žinojau tik tiek, kad man įdomi fizika, o kur ji nuves – nežinojau. Svarbiau bandyti: vasaros praktika, būrelis, savanorystė, savas projektas. Ir klausti žmonių, kurie dirba tai, kas tau įdomu. Tad štai užduotis šiai savaitei. Kai sutiksi žmogų, kurio darbas tau atrodo įdomus, paklausk jo: „Ko jūs savo darbe dar nežinote?“
+Tau nebūtina jau dabar žinoti, kuo būsi. Šešiolikos metų aš žinojau tik tiek, kad man įdomi fizika, bet nežinojau, kur ji mane nuves. Svarbiau bandyti įvairius dalykus – kaip aš mokykloje bandžiau verslą ir psichologiją. Turiu tau užduotį šiai savaitei. Kai sutiksi žmogų, kurio darbas tau atrodo įdomus, paklausk jo: „Ko jūs savo darbe dar nežinote?“
 [pauzė]
 Ir pažiūrėk, kas iš to išeis.
 (~0.6 min)

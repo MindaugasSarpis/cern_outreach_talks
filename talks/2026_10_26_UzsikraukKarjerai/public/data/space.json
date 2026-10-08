@@ -12,18 +12,6 @@
    "yaw": 0,
    "pitch": 60,
    "sway": 1.5
-  },
-  "close": {
-   "station": "cosmos",
-   "offset": [
-    -6,
-    0,
-    0
-   ],
-   "dist": 28,
-   "yaw": -8,
-   "pitch": 40,
-   "sway": 3
   }
  },
  "stations": [
@@ -380,44 +368,6 @@
      "alpha": 0.86,
      "color": "#ffc05a",
      "draw": 2.6
-    }
-   ]
-  },
-  {
-   "id": "cosmos",
-   "pos": [
-    1500,
-    0,
-    0
-   ],
-   "look": {
-    "target": [
-     -5,
-     0,
-     0
-    ],
-    "dist": 14,
-    "yaw": -14,
-    "pitch": 36,
-    "sway": 4
-   },
-   "gather": 0.1,
-   "objects": [
-    {
-     "type": "galaxy",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "radius": 9,
-     "arms": 2,
-     "tilt": 6,
-     "roll": -4,
-     "grains": 140000,
-     "arm": "#ffe2a0",
-     "rim": "#a99bff",
-     "core": "#fff0d8"
     }
    ]
   }
