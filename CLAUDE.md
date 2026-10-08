@@ -124,7 +124,7 @@ and skill.
 
 Every verb takes `--json` (`pnpm -s talk … --json`): one object on stdout;
 exit 0 ok, 1 problems, 2 usage. Output goes to
-`$OUTREACH_STATE/logs/<slug>-<verb>-<sha>.log`; the terminal gets a summary
+`$OUTREACH_STATE/logs/<slug>-<verb>-<sha>-<time>.log`; the terminal gets a summary
 and the log's path.
 
 ## Commands in a talk

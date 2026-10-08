@@ -48,8 +48,8 @@ A talk's own worktree (what open, session, deploy and pin use) is named after th
 is on its talk/<slug> branch, or changes that talk and no other. The talks' CLAUDE.md
 files count only where nothing else in talks/ changed: a branch that edits every talk's
 notes is none of theirs.
-What builds, checks and tools print goes to $OUTREACH_STATE/logs/<slug>-<verb>-<sha>.log;
-the terminal gets a summary and the log's path.
+What builds, checks and tools print goes to $OUTREACH_STATE/logs/<slug>-<verb>-<sha>-<time>.log,
+a new file each run; the terminal gets a summary and the log's path.
 
 Settings come from the environment, then ~/.config/outreach_talks/env (KEY=VALUE
 lines; scripts/bootstrap.sh writes it), then defaults: `talk config` shows them.
@@ -282,8 +282,9 @@ WARN_RE = re.compile(r"\bwarn(ing)?s?\b|\(!\)|⚠", re.I)
 
 
 class Log:
-    """One file per verb run, $OUTREACH_STATE/logs/<slug>-<verb>-<sha>.log: what the tools print
-    goes there, the terminal gets a summary. Made on the first command that writes to it."""
+    """One file per verb run, $OUTREACH_STATE/logs/<slug>-<verb>-<sha>-<time>.log: what the tools
+    print goes there, the terminal gets a summary. Made on the first command that writes to it,
+    and never reused: two runs at one commit (queued renders, a rerun) each keep their own."""
 
     def __init__(self):
         self.ctx: tuple | None = None
@@ -301,10 +302,19 @@ class Log:
         sha = git_out(["rev-parse", "--short=12", "HEAD"], root) or "nosha"
         d = Path(cfg()["OUTREACH_STATE"]) / "logs"
         d.mkdir(parents=True, exist_ok=True)
-        self.path = d / f"{slug}-{verb}-{sha}.log"
-        open(self.path, "w").close()
-        self.f = open(self.path, "a", encoding="utf-8", buffering=1)      # O_APPEND: children and we never overwrite
-        self.f.write(f"# talk {verb} {slug} at {sha} in {root}, {dt.datetime.now().isoformat(timespec='seconds')}\n")
+        now = dt.datetime.now()
+        stem = f"{slug}-{verb}-{sha}-{now:%Y%m%d-%H%M%S}"
+        for n in range(1, 1000):
+            self.path = d / (stem + (f"-{n}" if n > 1 else "") + ".log")
+            try:        # O_EXCL: a new file, never one another run has; O_APPEND: children and we never overwrite
+                fd = os.open(self.path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_APPEND, 0o644)
+                break
+            except FileExistsError:
+                continue
+        else:
+            raise FileExistsError(f"{d}/{stem}-*.log: 999 runs in one second?")
+        self.f = os.fdopen(fd, "a", encoding="utf-8", buffering=1)
+        self.f.write(f"# talk {verb} {slug} at {sha} in {root}, {now.isoformat(timespec='seconds')}, pid {os.getpid()}\n")
         OUT.say(f"log: {self.path}")
         return self.f
 

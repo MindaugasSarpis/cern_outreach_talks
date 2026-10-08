@@ -11,6 +11,7 @@ import json
 import re
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import pytest
@@ -464,6 +465,26 @@ def test_render_local_holds_the_lock(repo, env, tmp_path):
     assert obj["argv"] == ["true"] and obj["lock"] is None and "already in" in obj["note"]
 
 
+def test_two_renders_at_one_commit_keep_their_own_logs(repo, env, tmp_path):
+    logs = tmp_path / "state" / "logs"
+    cmd = [sys.executable, repo / "scripts" / "talk.py", "--json", "render", "--", "sh", "-c"]
+    a = subprocess.Popen([*cmd, "echo A start; sleep 1.5; echo A end"], cwd=repo, env=env,
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    for _ in range(100):                    # A is in the slot (its log says so) before B queues
+        if any("A start" in p.read_text() for p in logs.glob("*.log")):
+            break
+        time.sleep(0.1)
+    code, b, err = talk(repo, "render", "--", "sh", "-c", "echo B start; echo B end", env=env)
+    out, a_err = a.communicate(timeout=30)
+    a = json.loads(out)
+    assert a["exit"] == 0 and code == 0 and "waiting for" in err
+    assert a["log"] != b["log"] and sorted(str(p) for p in logs.glob("outreach-render-*.log")) == sorted([a["log"], b["log"]])
+    a_text, b_text = open(a["log"]).read(), open(b["log"]).read()
+    assert "A start" in a_text and "A end" in a_text and "B start" not in a_text
+    assert "B start" in b_text and "A start" not in b_text
+    assert a["summary"]["lines"] == 2 and b["summary"]["lines"] == 2
+
+
 # ---------------------------------------------------------------- the stage tools get the GL settings
 
 def test_stage_tools_get_the_gl_settings(repo, env, tmp_path):
@@ -516,8 +537,9 @@ def test_build_output_goes_to_the_log(repo, env, tmp_path):
     code, obj, err = talk(repo, "build", "opendata", env=path_with(b, env))
     assert code == 1 and obj["error"].startswith("build failed")
     sha = sh(["git", "rev-parse", "--short=12", "HEAD"], repo, env).stdout.strip()
-    log = tmp_path / "state" / "logs" / f"opendata-build-{sha}.log"
-    assert obj["log"] == str(log) and "transforming module 400" in log.read_text()
+    log = Path(obj["log"])
+    assert re.fullmatch(rf"opendata-build-{sha}-\d{{8}}-\d{{6}}\.log", log.name)
+    assert log.parent == tmp_path / "state" / "logs" and "transforming module 400" in log.read_text()
     assert obj["summary"]["error_lines"] == 1 and obj["summary"]["warning_lines"] == 1
     assert obj["summary"]["first"][0] == "error: [vite] could not resolve ./x.js"
     assert "transforming module 200" not in err and str(log) in err

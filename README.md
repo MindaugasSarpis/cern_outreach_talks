@@ -142,9 +142,10 @@ several and nothing else, is none of theirs.
   exit 0 ok, 1 problems found, 2 usage error. Through pnpm, add `-s`
   (`pnpm -s talk status --json`) or pnpm's own banner lands on stdout.
 - What builds, checks, lint and the tools print goes to
-  `$OUTREACH_STATE/logs/<slug>-<verb>-<sha>.log`; the terminal gets one line
-  per step, the first problem lines (the last lines too when a step fails)
-  and the log's path, which `--json` carries as `log`.
+  `$OUTREACH_STATE/logs/<slug>-<verb>-<sha>-<time>.log`, a new file each run;
+  the terminal gets one line per step, the first problem lines (the last
+  lines too when a step fails) and the log's path, which `--json` carries as
+  `log`.
 - Builds for checks and shots go to `$TALK_TMP/talk-<slug>/site`, never a
   talk's `dist/`; shots land in `talks/<name>/shots/` (not committed). Point
   `SLIDEV_STAGE_BIN` at a slidev-videos `packages/stage/bin` to use newer
