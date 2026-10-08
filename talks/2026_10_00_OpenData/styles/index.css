@@ -103,8 +103,8 @@ html[data-stage] .photo img {
 html[data-stage] .photo::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(2, 4, 10, 0.9) 0%, rgba(2, 4, 10, 0.62) 30%, rgba(2, 4, 10, 0.12) 58%, rgba(2, 4, 10, 0) 70%),
-    linear-gradient(0deg, rgba(2, 4, 10, 0.7) 0%, rgba(2, 4, 10, 0) 38%);
+    linear-gradient(90deg, rgba(2, 4, 10, 0.92) 0%, rgba(2, 4, 10, 0.78) 34%, rgba(2, 4, 10, 0.4) 56%, rgba(2, 4, 10, 0) 74%),
+    linear-gradient(0deg, rgba(2, 4, 10, 0.8) 0%, rgba(2, 4, 10, 0) 45%);
 }
 @keyframes od-push { from { transform: scale(1.1); } to { transform: scale(1.0); } }
 html[data-stage] .photo-text { position: absolute; left: 56px; bottom: 70px; z-index: 1; max-width: 52%; animation: stage-rise 0.9s var(--stage-ease) 0.25s both; }
@@ -116,11 +116,11 @@ html[data-stage] .photo-text h1 {
 html[data-stage] .stats { display: flex; gap: 40px; margin: 0 0 18px; }
 html[data-stage] .stats > div { display: flex; flex-direction: column; gap: 4px; }
 html[data-stage] .stats b { font-size: 46px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6); }
-html[data-stage] .stats span { font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.72); }
+html[data-stage] .stats span { font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.88); }
 html[data-stage] .photo-text .note { font-size: 20px; font-weight: 500; color: var(--od-gold-hi); margin: 0; text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7); }
 
 /* --- what it finds: a number on the left, the real spectrum on the right, light on dark */
-html[data-stage] .finds { position: absolute; inset: 0; display: grid; grid-template-columns: 0.9fr 1.1fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
+html[data-stage] .finds { position: absolute; inset: 0; background: rgb(var(--stage-bg-rgb, 0, 2, 6)); display: grid; grid-template-columns: 0.9fr 1.1fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
 html[data-stage] .finds-text { animation: stage-rise 0.85s var(--stage-ease) 0.2s both; }
 html[data-stage] .finds .kicker { color: var(--od-blue-hi); margin-bottom: 4px; }
 html[data-stage] .finds .big {
@@ -140,3 +140,32 @@ html[data-stage] .finds-plot img {
 @media (prefers-reduced-motion: reduce), print {
   html[data-stage] .photo img, html[data-stage] .photo-text, html[data-stage] .finds-text, html[data-stage] .finds-plot { animation: none !important; }
 }
+
+/* the photo's credit (the licence asks for it): small, in the corner, out of the way */
+html[data-stage] .photo .credit { position: absolute; right: 14px; bottom: 10px; z-index: 2; font-size: 10px; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.5); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); }
+/* the event display: the detector on the right half, so the text has the dark left */
+html[data-stage] .photo.event img {
+  position: absolute; top: 0; right: -6%; width: 100%; height: 100%;
+  object-fit: contain; object-position: 100% 50%; transform-origin: 80% 50%;
+  filter: contrast(1.12) saturate(1.15);
+}
+html[data-stage] .photo.event::after {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.45) 34%, rgba(0, 0, 0, 0) 55%);
+}
+html[data-stage] .slidev-layout .photo-text p.line { font-size: 24px; font-weight: 500; line-height: 1.25; color: #fff !important; opacity: 1 !important; margin: 0; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7); }
+html[data-stage] .slidev-layout .event-text { max-width: 36%; }
+html[data-stage] .slidev-layout .event-text h1 { white-space: nowrap; font-size: 46px !important; line-height: 1.02 !important; margin-bottom: 16px !important; letter-spacing: -0.03em; }
+
+/* LHCb keeps its lower-case b where the type is set in capitals */
+html[data-stage] .nt { text-transform: none !important; }
+/* what LHCb is for, one line under its name */
+html[data-stage] .photo-text .purpose { opacity: 1 !important; font-size: 24px; font-weight: 500; color: #fff; margin: -10px 0 22px; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75); }
+/* the chips: the year in its own column, the text wrapping under itself */
+html[data-stage] .chips li { margin: 0 !important; padding: 0 !important; line-height: 1.3; display: grid; grid-template-columns: 2.9em 1fr; column-gap: 12px; align-items: baseline; }
+html[data-stage] .chips li b { margin: 0; }
+/* no one-word orphans on a big screen */
+html[data-stage] .readout p, html[data-stage] .photo-text h1, html[data-stage] .photo-text .line, html[data-stage] .readout.thesis .sub, html[data-stage] .finds .line { text-wrap: balance; }
+/* the team at the close, big enough to read from the hall */
+html[data-stage] .slidev-layout.statement .team { font-size: 15px; max-width: 72ch; }
+/* the cover title breaks evenly, not with one word left over */
+html[data-stage] .slidev-layout.cover h1, html[data-stage] .chips li { text-wrap: balance; }

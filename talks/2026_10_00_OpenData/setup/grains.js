@@ -1,5 +1,5 @@
 import {
-  Group, Points, Mesh, SphereGeometry, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4,
+  Group, Points, Mesh, SphereGeometry, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4, Matrix4, Euler,
 } from 'three'
 
 // This talk's own forms, on the engine's stage (slidev-addon-stage):
@@ -125,11 +125,32 @@ const MAXB = 8
 // impostor piles and the single sphere's mesh, so both are the same metal.
 const METAL = /* glsl */ `
 vec3 studio(vec3 d) {
-  vec3 sky = mix(vec3(0.012, 0.016, 0.03), vec3(0.07, 0.10, 0.2), smoothstep(-0.25, 0.9, d.y));
+  vec3 sky = mix(vec3(0.012, 0.012, 0.014), vec3(0.08, 0.085, 0.095), smoothstep(-0.25, 0.9, d.y));
   float key = smoothstep(0.84, 0.975, dot(d, normalize(vec3(-6.0, 9.0, 7.0))));
   float fill = smoothstep(0.55, 0.95, dot(d, normalize(vec3(5.0, 1.0, 8.0))));
   float rim = smoothstep(0.93, 0.995, dot(d, normalize(vec3(7.0, 3.0, -6.0))));
   return sky + vec3(1.0, 0.96, 0.9) * key * 3.2 + vec3(0.9, 0.92, 1.0) * fill * 0.22 + vec3(0.55, 0.72, 1.0) * rim * 1.6;
+}
+// Up close a polished sphere shows its light's edges: a rectangular softbox
+// with crisp sides and a thin rim light, over a near-black room with a faint
+// horizon. For the single sphere, the one seen large.
+vec3 studioHard(vec3 d) {
+  vec3 room = mix(vec3(0.004, 0.004, 0.005), vec3(0.05, 0.052, 0.06), smoothstep(-0.05, 0.85, d.y));
+  room += vec3(0.07, 0.068, 0.065) * exp(-abs(d.y - 0.05) * 7.0);
+  vec3 kd = normalize(vec3(-6.0, 9.0, 7.0));
+  vec3 kx = normalize(cross(vec3(0.0, 1.0, 0.0), kd));
+  vec3 ky = cross(kd, kx);
+  float kz = dot(d, kd);
+  vec2 kp = vec2(dot(d, kx), dot(d, ky)) / max(kz, 0.05);
+  float key = step(0.0, kz) * (1.0 - smoothstep(0.25, 0.28, abs(kp.x))) * (1.0 - smoothstep(0.34, 0.37, abs(kp.y)));
+  vec2 h = normalize(d.xz + 1e-5);
+  float rim = smoothstep(0.9965, 0.9985, dot(h, normalize(vec2(7.0, -6.0)))) * smoothstep(-0.35, -0.15, d.y) * (1.0 - smoothstep(0.55, 0.75, d.y));
+  return room + vec3(1.0, 0.97, 0.92) * key * 4.0 + vec3(0.85, 0.9, 1.0) * rim * 2.2;
+}
+vec3 metalHard(vec3 nW, vec3 vW, vec3 F0) {
+  float ndv = max(dot(nW, vW), 0.0);
+  vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
+  return studioHard(reflect(-vW, nW)) * F + F0 * 0.02;
 }
 // nW, vW: world-space normal and direction toward the eye; F0: the metal's colour
 vec3 metal(vec3 nW, vec3 vW, vec3 F0) {
@@ -140,16 +161,17 @@ vec3 metal(vec3 nW, vec3 vW, vec3 F0) {
 
 const LINEUP_VERT = /* glsl */ `
 attribute float aSeed, aK, aBall;    // rank in its pile (0 the centre … 1 the rim), which pile
-uniform float uTime, uGrow, uReach, uRad, uViewH, uMaxPt;
+uniform float uTime, uGrow, uReach, uRad, uViewH, uMaxPt, uShell;
 uniform float uShowT[${MAXB}];
 uniform float uHideT[${MAXB}];
 uniform float uR[${MAXB}];
 uniform vec3 uCenter[${MAXB}];
 uniform vec3 uColor[${MAXB}];
 uniform vec3 uLight;
-varying vec3 vColor; varying vec3 vLv; varying vec3 vCv; varying float vShade; varying float vPx; varying vec3 vOut; varying float vF;
+varying vec3 vColor; varying vec3 vCv; varying float vShade; varying float vPx; varying vec3 vOut; varying float vF;
 float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
 float ease(float x) { x = clamp(x, 0.0, 1.0); return x * x * x * (x * (x * 6.0 - 15.0) + 10.0); }
+void off_() { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vCv = vec3(0.0); vShade = 0.0; vPx = 1.0; vOut = vec3(0.0, 1.0, 0.0); vF = 0.0; }
 void main() {
   int b = int(aBall + 0.5);
   float st = uShowT[b], ht = uHideT[b];
@@ -158,11 +180,18 @@ void main() {
   float f = ease((uTime - start) / 1.6);
   bool on = st >= 0.0 && uTime >= start;
   if (ht >= 0.0) { float g = 1.0 - ease((uTime - ht) / 1.1); f = min(f, g); on = on && g > 0.0; }
-  if (!on) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vLv = vec3(0.0, 0.0, 1.0); vCv = vec3(0.0); vShade = 0.0; vPx = 1.0; vOut = vec3(0.0, 1.0, 0.0); vF = 0.0; return; }
+  if (!on) { off_(); return; }
   vec3 c = uCenter[b];
   vec3 off = position - c;
   float r = length(off);
   vec3 dir = r > 1e-4 ? off / r : normalize(vec3(hash(aSeed * 3.0), hash(aSeed * 5.0), hash(aSeed * 9.0)) - 0.5 + 1e-4);
+  vec3 wp = (modelMatrix * vec4(c + off, 1.0)).xyz;
+  float facingS = dot(dir, normalize(cameraPosition - wp));
+  // a pile that stands is seen only by its skin: the buried spheres and its far
+  // side are never drawn (without this, ~80 hidden spheres under each visible pixel).
+  // The skin is 10 units deep: at 6, about one sight line in ten passed between
+  // the spheres to the black behind, and the steel pile showed pinholes
+  if (f >= 1.0 && ht < 0.0 && (r < uR[b] - uShell || facingS < -0.3)) { off_(); return; }
   vec3 side = normalize(cross(dir, vec3(0.0, 1.0, 0.0)) + 1e-4);
   // adrift: out along its own direction, well beyond the pile, swirling in as it comes
   float reach = (uReach + uR[b]) * (0.8 + 1.4 * hash(aSeed * 91.0));
@@ -171,51 +200,95 @@ void main() {
   far = vec3(cos(a) * far.x - sin(a) * far.z, far.y, sin(a) * far.x + cos(a) * far.z);
   vec4 mv = modelViewMatrix * vec4(c + mix(far, off, f), 1.0);
   gl_Position = projectionMatrix * mv;
-  // a sphere of radius uRad at this depth, in pixels of the target being drawn
-  gl_PointSize = clamp(uRad * projectionMatrix[1][1] * uViewH / max(-mv.z, 1e-3), 1.0, uMaxPt);
-  vPx = gl_PointSize;
+  // a sphere of radius uRad at this depth, in pixels of the target being drawn; a
+  // standing sphere under 8 px is drawn a little larger, so the thin skin stays closed
+  float px = uRad * projectionMatrix[1][1] * uViewH / max(-mv.z, 1e-3);
+  float grow = f >= 1.0 ? mix(2.4, 1.0, smoothstep(2.0, 8.0, px)) : 1.0;
+  gl_PointSize = clamp(px * grow, 1.0, min(uMaxPt, 0.2 * uViewH));
+  vPx = px;
   vCv = mv.xyz;
-  vLv = normalize((viewMatrix * vec4(uLight, 0.0)).xyz);
   // the pile read as one ball: its side toward the key light brighter, its far side
   // in shadow, and a thin bright rim where its surface turns away from the eye
-  vec3 wp = (modelMatrix * vec4(c + off, 1.0)).xyz;
-  float facing = max(dot(dir, normalize(cameraPosition - wp)), 0.0);
-  float lit = 0.5 + 0.62 * max(dot(dir, normalize(uLight)), 0.0) + 0.25 * pow(1.0 - facing, 3.0);
+  float lit = 0.5 + 0.62 * max(dot(dir, normalize(uLight)), 0.0) + 0.25 * pow(1.0 - max(facingS, 0.0), 3.0);
   vShade = mix(1.0, lit, f);
   vOut = dir; vF = f;
   vColor = uColor[b] * (0.9 + 0.2 * hash(aSeed * 7.0));
 }`
+// A heap of small polished balls, seen as one body, is satin, not a mirror:
+// every ball facing the light carries its own small highlight, so the lit side
+// is bright with a soft edge and there is no single hot oval.
+const HEAP = /* glsl */ `
+vec3 studioRough(vec3 d) {
+  vec3 sky = mix(vec3(0.006, 0.006, 0.008), vec3(0.06, 0.064, 0.075), smoothstep(-0.3, 0.9, d.y));
+  float key = pow(max(dot(d, normalize(vec3(-6.0, 9.0, 7.0))), 0.0), 6.0);
+  float rim = pow(max(dot(d, normalize(vec3(7.0, 3.0, -6.0))), 0.0), 10.0);
+  return sky + vec3(1.0, 0.96, 0.9) * key * 1.1 + vec3(0.55, 0.72, 1.0) * rim * 0.35;
+}
+vec3 heap(vec3 N, vec3 V, vec3 F0) {
+  float ndv = max(dot(N, V), 0.0);
+  vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0) * 0.4;
+  return mix(studioRough(N), studioRough(reflect(-V, N)), 0.55) * F;
+}`
 const LINEUP_FRAG = /* glsl */ `
 uniform mat4 projectionMatrix;
 uniform float uRad;
-varying vec3 vColor; varying vec3 vLv; varying vec3 vCv; varying float vShade; varying float vPx; varying vec3 vOut; varying float vF;
+varying vec3 vColor; varying vec3 vCv; varying float vShade; varying float vPx; varying vec3 vOut; varying float vF;
 ${METAL}
+${HEAP}
 void main() {
   vec2 q = gl_PointCoord * 2.0 - 1.0; q.y = -q.y;
   float r2 = dot(q, q);
-  if (r2 > 1.0) discard;
-  vec3 n = vec3(q, sqrt(1.0 - r2));
+  // a standing sphere a few pixels across is drawn whole, as its square: cut
+  // round, a sprite of 2 px keeps one pixel or none, and the pile shows pinholes
+  bool tiny = vPx < 3.0 && vF >= 1.0;
+  if (r2 > 1.0 && !tiny) discard;
+  r2 = min(r2, 1.0);
+  // the sphere's frame is built round the ray to it, not the view axis, so a
+  // sphere off to the side has no false bright crescent
+  vec3 fV = normalize(-vCv);
+  vec3 xV = normalize(cross(vec3(0.0, 1.0, 0.0), fV));
+  vec3 yV = cross(fV, xV);
+  float nz = sqrt(1.0 - r2);
+  vec3 nV = q.x * xV + q.y * yV + nz * fV;
   // the sphere's own surface depth, so neighbours and flyers cut each other right
-  vec4 clip = projectionMatrix * vec4(vCv + n * uRad, 1.0);
+  vec4 clip = projectionMatrix * vec4(vCv + nV * uRad, 1.0);
   gl_FragDepth = clip.z / clip.w * 0.5 + 0.5;
-  mat3 toWorld = transpose(mat3(viewMatrix));
-  vec3 nW = normalize(toWorld * n);
-  vec3 vW = normalize(toWorld * normalize(-vCv));
-  vec3 col = metal(nW, vW, vColor);
+  vec3 vW = fV * mat3(viewMatrix);
+  vec3 nW = nV * mat3(viewMatrix);
+  vec3 pile = heap(vOut, vW, vColor);
+  // a standing sphere a few pixels across shows the pile, not a highlight that would only shimmer
+  if (tiny) { gl_FragColor = vec4(pile * vShade + vColor * 0.02, 1.0); return; }
+  vec3 own = metal(nW, vW, vColor);
   // contact shadow: the side of a sphere that faces into its pile is in the
   // dark between its neighbours, and so is its edge where they touch
-  float ao = mix(0.28, 1.0, smoothstep(-0.45, 0.75, dot(nW, vOut))) * mix(0.5, 1.0, smoothstep(0.0, 0.55, n.z));
-  col *= mix(1.0, ao, vF) * vShade;
-  // the pile as one polished ball made of balls: its own reflection of the
-  // studio (a highlight, a rim) lights the small spheres it is made of, and a
-  // sphere a few pixels across shows that, not a highlight that would only shimmer
-  vec3 pile = metal(normalize(vOut), vW, vColor);
+  float ao = mix(0.28, 1.0, smoothstep(-0.45, 0.75, dot(nW, vOut))) * mix(0.5, 1.0, smoothstep(0.0, 0.55, nz));
+  vec3 col = own * mix(1.0, ao, vF) * vShade;
   float pileL = dot(pile, vec3(0.3, 0.55, 0.15));
-  vec3 small = pile * 0.82 + vColor * 0.05;
-  vec3 near = col * (0.5 + 0.75 * min(pileL, 1.6));
-  col = mix(small, mix(near, col, smoothstep(14.0, 40.0, vPx)), smoothstep(3.0, 11.0, vPx));
-  col = mix(col, metal(nW, vW, vColor), 1.0 - vF);   // flyers: just themselves
-  gl_FragColor = vec4(col, 1.0);
+  vec3 near = col * (0.55 + 0.9 * min(pileL, 1.4));
+  col = mix(pile * vShade, mix(near, col, smoothstep(14.0, 40.0, vPx)), smoothstep(3.0, 11.0, vPx));
+  gl_FragColor = vec4(mix(col, own, 1.0 - vF), 1.0);   // flyers: just themselves
+}`
+
+// A glint for a single sphere seen from far: a soft point a few pixels wide,
+// in its colour, fading in as the sphere itself drops under ~4 px across.
+const GLINT_VERT = /* glsl */ `
+uniform float uRad, uViewH, uShow;
+varying float vA;
+void main() {
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * mv;
+  float px = 2.0 * uRad * projectionMatrix[1][1] * 0.5 * uViewH / max(-mv.z, 1e-3);   // the sphere's diameter on screen
+  vA = uShow * (1.0 - smoothstep(2.0, 5.0, px));
+  gl_PointSize = (uViewH / 1080.0) * 9.0;
+}`
+const GLINT_FRAG = /* glsl */ `
+uniform vec3 uColor;
+varying float vA;
+void main() {
+  float d = length(gl_PointCoord - 0.5) * 2.0;
+  float a = exp(-d * d * 4.0) * vA;
+  if (a < 0.003) discard;
+  gl_FragColor = vec4(uColor * a * 1.6, 1.0);
 }`
 
 // The single sphere: a real sphere mesh in the same metal (no halo).
@@ -230,7 +303,7 @@ const UNIT_FRAG = /* glsl */ `
 uniform vec3 uColor;
 varying vec3 vNW; varying vec3 vPW;
 ${METAL}
-void main() { gl_FragColor = vec4(metal(normalize(vNW), normalize(cameraPosition - vPW), uColor), 1.0); }`
+void main() { gl_FragColor = vec4(metalHard(normalize(vNW), normalize(cameraPosition - vPW), uColor), 1.0); }`
 
 function buildLineup(o, ctx) {
   const { makeLabel } = ctx.helpers
@@ -255,7 +328,13 @@ function buildLineup(o, ctx) {
       vertexShader: UNIT_VERT, fragmentShader: UNIT_FRAG, uniforms: { uColor: { value: new Color(x.color || ctx.palette.accent) } },
     }))
     m.position.set(cx[b], 0, 0); m.scale.setScalar(0); m.visible = false
-    g.add(m); marbles.push({ b, m })
+    const gu = { uRad: { value: rad }, uViewH: { value: 1080 }, uShow: { value: 0 }, uColor: { value: new Color(x.color || ctx.palette.accent) } }
+    const gg = new BufferGeometry(); gg.setAttribute('position', new BufferAttribute(new Float32Array([cx[b], 0, 0]), 3))
+    const glint = new Points(gg, new ShaderMaterial({ vertexShader: GLINT_VERT, fragmentShader: GLINT_FRAG, uniforms: gu, transparent: true, depthWrite: false, blending: AdditiveBlending }))
+    glint.frustumCulled = false
+    const gvp = new Vector4()
+    glint.onBeforeRender = (renderer) => { renderer.getCurrentViewport(gvp); gu.uViewH.value = gvp.w || 1080 }
+    g.add(m); g.add(glint); marbles.push({ b, m, gu })
   })
 
   // the piles: one point per sphere, pile after pile
@@ -263,14 +342,17 @@ function buildLineup(o, ctx) {
   const total = piles.reduce((acc, b) => acc + balls[b].n, 0)
   const pos = new Float32Array(total * 3), seed = new Float32Array(total), rank = new Float32Array(total), which = new Float32Array(total)
   const end = new Array(NB).fill(0)
+  const TILT = new Matrix4().makeRotationFromEuler(new Euler(0.37, 0.61, 0.23)), tv = new Vector3()
   let q = 0
   for (const b of piles) {
-    // a pile of thousands is jittered more, so its rows do not beat against the pixel grid
-    const n = balls[b].n, jit = unit * Math.min(0.24, 0.05 + 0.065 * Math.max(0, Math.log10(n / 800)))
+    // a pile of thousands is jittered more, so its rows do not beat against the pixel
+    // grid; the lattice is turned once, so no row of it points at a camera
+    const n = balls[b].n, jit = unit * Math.min(0.24, 0.12 + 0.05 * Math.max(0, Math.log10(n / 800)))
     for (let j = 0; j < n; j++, q++) {
-      pos[q * 3] = cx[b] + lat[j * 3] * s + gauss() * jit
-      pos[q * 3 + 1] = lat[j * 3 + 1] * s + gauss() * jit
-      pos[q * 3 + 2] = lat[j * 3 + 2] * s + gauss() * jit
+      tv.set(lat[j * 3], lat[j * 3 + 1], lat[j * 3 + 2]).multiplyScalar(s).applyMatrix4(TILT)
+      pos[q * 3] = cx[b] + tv.x + gauss() * jit
+      pos[q * 3 + 1] = tv.y + gauss() * jit
+      pos[q * 3 + 2] = tv.z + gauss() * jit
       seed[q] = Math.random(); rank[q] = j / n; which[q] = b
     }
     end[b] = q
@@ -287,7 +369,7 @@ function buildLineup(o, ctx) {
     vertexShader: LINEUP_VERT, fragmentShader: LINEUP_FRAG, depthTest: true, depthWrite: true,
     uniforms: {
       uTime: { value: 0 }, uGrow: { value: o.grow ?? 3.2 }, uReach: { value: o.reach ?? 3 }, uRad: { value: rad },
-      uViewH: { value: 1080 }, uMaxPt: { value: 256 },
+      uViewH: { value: 1080 }, uMaxPt: { value: 256 }, uShell: { value: 10 * unit },
       uShowT: { value: showT }, uHideT: { value: hideT },
       uR: { value: pad(R, () => 0) },
       uCenter: { value: pad(cx.map((x) => new Vector3(x, 0, 0)), () => new Vector3()) },
@@ -369,10 +451,11 @@ function buildLineup(o, ctx) {
         if (showT[b] >= 0) count = Math.max(count, end[b])
       }
       geo.setDrawRange(0, count)                      // piles not shown are never drawn
-      for (const { b, m } of marbles) {
+      for (const { b, m, gu } of marbles) {
         const k = showT[b] < 0 ? 0 : hideT[b] >= 0 ? 1 - Math.min(1, (t - hideT[b]) / 0.6) : Math.min(1, Math.max(0, (t - showT[b]) / 0.9))
         const e = k * k * (3 - 2 * k)
         m.scale.setScalar(Math.max(e, 1e-4)); m.visible = e > 0.001
+        gu.uShow.value = e
       }
       for (const l of labels) {
         const b = l.userData.ball
@@ -405,7 +488,7 @@ ${PLACE}
 void main() {
   int i = int(aIdx + 0.5);
   float t0 = uShowT[i];
-  float since = t0 < 0.0 ? -1.0 : uTime - t0;
+  float since = t0 == -1.0 ? -1.0 : uTime - t0;   // -1 is off; an instant start sits before t = 0
   // a stream that is stopped fades out over 1.2 s, its grains still running
   float h = uHideT[i];
   float on = (since < 0.0 ? 0.0 : 1.0) * (h < 0.0 ? smoothstep(0.0, 1.2, uTime - uBackT[i]) : 1.0 - smoothstep(0.0, 1.2, uTime - h));
@@ -469,7 +552,7 @@ function buildStreams(o, ctx) {
     uFrom: { value: new Vector3(from[0], from[1], from[2]) }, uShowT: { value: showT }, uHideT: { value: hideT }, uBackT: { value: backT },
     uSpeed: { value: o.speed ?? 0.11 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.55 },
     uNodeR: { value: o.nodeRadius ?? 0.45 },
-    uColor: { value: new Color(...rgb(o.color || ctx.palette.accent)) }, uWhite: { value: new Color(1, 0.97, 0.9) },
+    uColor: { value: new Color(o.color || ctx.palette.accent).convertLinearToSRGB() }, uWhite: { value: new Color(1, 0.97, 0.9) },
   })
   const pts = new Points(geo, mat); pts.frustumCulled = false
   const g = new Group(); g.add(pts)
@@ -480,9 +563,10 @@ function buildStreams(o, ctx) {
   // apart, those stopping fade out (and start afresh if asked for again)
   const go = (k, { instant = false } = {}) => {
     let fresh = 0
+    const isOn = (i) => showT[i] !== -1
     for (let i = 0; i < MAXS; i++) {
-      const running = showT[i] >= 0 && hideT[i] < 0
-      const fading = showT[i] >= 0 && hideT[i] >= 0 && now - hideT[i] < 1.2
+      const running = isOn(i) && hideT[i] < 0
+      const fading = isOn(i) && hideT[i] >= 0 && now - hideT[i] < 1.2
       if (i < k && !running) {
         // still on its way out: take it back, fading in from the brightness it has now
         // (1 - S(x) = S(1.2 - x) for this smoothstep, so the fade-in starts where the fade-out was)
