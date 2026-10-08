@@ -16,7 +16,8 @@
   check NAME      videos:check, stage:check with the talk's own types, build
   shots NAME      slidev-stage-shots of that build into talks/<t>/shots/
   review NAME     check, then shots --changed --sheet
-  lint NAME       scripts/talk_lint.py      facts ...   scripts/facts.py
+  lint NAME       scripts/talk_lint.py
+  facts ...       scripts/facts.py, everything after `facts` passed as it is
   map NAME        scripts/talk_map.py
   ready NAME      before the venue: lint --release, check, shots, videos:preflight,
                   venue --dry-run (and the safe-area check for a broadcast talk)
@@ -589,8 +590,11 @@ def run_delegate(repo: Repo, verb: str, args: list, capture_json: bool = False) 
     script = delegate_script(repo, verb)
     if not script:
         raise UsageError(f"`{verb}` is not installed on this branch (scripts/{DELEGATES[verb]} comes with feat/facts-lint)")
-    want_json = OUT.json or capture_json
-    cmd = [sys.executable, script, *args, *(["--json"] if want_json and "--json" not in args else [])]
+    args = list(args)
+    cut = args.index("--") if "--" in args else len(args)
+    if (OUT.json or capture_json) and "--json" not in args[:cut]:
+        args.insert(cut, "--json")      # before a `--`, where it is still an option
+    cmd = [sys.executable, script, *args]
     if capture_json:
         r = run(cmd, cwd=repo.here, env=tool_env(), capture=True)
         if r.stderr:
@@ -1375,19 +1379,25 @@ def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     if argv[:1] == ["--"]:           # pnpm forwards the -- delimiter verbatim
         del argv[0]
-    if "facts" in argv[:1] or argv[:2] == ["--json", "facts"]:
-        # facts.py has flags of its own: they all pass through, --json too
-        cut = argv.index("facts") + 1
-        argv = split_json_flag(argv[:cut]) + argv[cut:]
-        OUT.json = OUT.json or "--json" in argv[cut:]
+    lead = 0
+    while argv[lead:lead + 1] == ["--json"]:
+        lead += 1
+    facts = argv[lead:lead + 1] == ["facts"]
+    if facts:
+        # facts.py has options of its own, before its verb or after it (--json, --facts, -h):
+        # everything after `facts` is its, verbatim; a --json in there is talk's too
+        rest = argv[lead + 1:]
+        cut = rest.index("--") if "--" in rest else len(rest)
+        OUT.json = lead > 0 or "--json" in rest[:cut]
+        verb = "facts"
     else:
         argv = split_json_flag(argv)
-    verb = next((x for x in argv if not x.startswith("-")), None)
+        verb = next((x for x in argv if not x.startswith("-")), None)
     result: dict = {"verb": verb}
     try:
         parser = build_parser()
-        if verb == "facts":
-            a, extra = parser.parse_args(argv), []
+        if facts:
+            a, extra = argparse.Namespace(verb="facts", rest=rest), []
         else:
             a, extra = parser.parse_known_args(argv)
         if not a.verb:

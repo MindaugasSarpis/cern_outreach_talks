@@ -92,6 +92,24 @@ def test_usage_errors_exit_2(repo, env, args, needle):
     assert obj["ok"] is False and obj["exit"] == 2 and needle in obj["error"]
 
 
+@pytest.mark.parametrize("args, want", [
+    (["facts", "--json", "search", "x"], ["--json", "search", "x"]),
+    (["facts", "--facts", "/tmp/x.jsonl", "search", "y"], ["--facts", "/tmp/x.jsonl", "search", "y"]),
+    (["facts", "--facts=/tmp/x.jsonl", "search", "y"], ["--facts=/tmp/x.jsonl", "search", "y"]),
+    (["facts", "-h"], ["-h"]),
+    (["facts", "search", "x", "--json"], ["search", "x", "--json"]),
+    (["--json", "facts", "search", "x"], ["search", "x", "--json"]),
+    (["--", "facts", "--limit", "3", "search", "x"], ["--limit", "3", "search", "x"]),
+    (["--json", "facts", "search", "--", "-x"], ["search", "--json", "--", "-x"]),
+])
+def test_facts_passes_everything_through(repo, env, args, want):
+    (repo / "scripts" / "facts.py").write_text("import json, sys\nprint(json.dumps({'argv': sys.argv[1:]}))\n")
+    r = subprocess.run([sys.executable, repo / "scripts" / "talk.py", *args], cwd=repo, env=env,
+                       capture_output=True, text=True)
+    assert r.returncode == 0, r.stderr
+    assert json.loads(r.stdout) == {"argv": want}         # facts.py's own object, alone on stdout
+
+
 def test_ambiguous_name_lists_candidates(repo, env):
     _, obj, _ = talk(repo, "map", "2026_10", env=env)
     assert obj["candidates"] == ["2026_10_00_Innoday", "2026_10_00_OpenData"]
