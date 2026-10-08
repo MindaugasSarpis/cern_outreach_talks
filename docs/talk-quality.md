@@ -338,3 +338,13 @@ after the commit: "/compact, then 'continue <talk>'" picks up from Status.
   subagent with an image cap: at most 12 images, the contact sheets first,
   single frames only for slides a sheet or the shots report flags. It
   returns text. OpenData's main loop spent 93 calls on framing by hand.
+- **Workflows set effort per stage** (`low` for planning, research and
+  other mechanical lanes, `medium` for verifiers, critics and judges, `high`
+  for the facts verifier of a review and wherever a blueprint is written),
+  overridable with `args.effort`. The split is not measured yet: compare one run before
+  widening it. No template pins a model; `args.models` is the owner's
+  choice, for the mechanical lanes in particular.
+- **A stopped workflow** is resumed by its run id when that is at hand;
+  otherwise it is run again with `args.done`, the lanes it already
+  finished, which it skips (the research, review and blueprint skills say
+  how to list them).

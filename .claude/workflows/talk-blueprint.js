@@ -1,7 +1,7 @@
 export const meta = {
   name: 'talk-blueprint',
   description: 'Design a talk from its Brief, or overhaul a deck: five critiques, three blueprints from different angles, three judges, and one editor who writes the blueprint (slide table with minutes, style rules, world plan, drop order, decisions, research gaps)',
-  whenToUse: 'At the start of a talk that matters, or for an overhaul. args: { talk: "talks/<dir>", repo: "<worktree root>", today: "YYYY-MM-DD", duration: minutes, lang?: "en"|"lt", audience?: string, delivery?: "venue"|"broadcast", sheets?: [contact sheet paths], angles?: [{ key, brief }], judges?: [string], out?: "talks/<dir>/notes/blueprint.md" }',
+  whenToUse: 'At the start of a talk that matters, or for an overhaul. args: { talk: "talks/<dir>", repo: "<worktree root>", today: "YYYY-MM-DD", duration: minutes, lang?: "en"|"lt", audience?: string, delivery?: "venue"|"broadcast", sheets?: [contact sheet paths], angles?: [{ key, brief }], judges?: [string], out?: "talks/<dir>/notes/blueprint.md", done?: ["critique-<lens>", "blueprint-<angle>", "judge-<n>" an earlier run finished] (skipped on a re-run), effort?: { stage or label: "low"|"medium"|"high"|"xhigh"|"max" }, models?: { stage or label: model id } (none pinned) }',
   phases: [
     { title: 'Critique', detail: 'five lenses on the Brief, the outline or the current deck' },
     { title: 'Blueprints', detail: 'three independent proposals from different angles' },
@@ -33,10 +33,41 @@ const BROADCAST = A.delivery === 'broadcast'
 const AUDIENCE = A.audience || 'as the Brief describes it'
 const SHEETS = Array.isArray(A.sheets) ? A.sheets : []
 const OUT = A.out ? `${REPO}/${String(A.out).replace(REPO + '/', '')}` : `${DIR}/notes/blueprint.md`
+// As scripts/new_talk.py worktree_slug: 2026_10_00_OpenData -> opendata.
+const NAME = TALK.split('/').pop()
+const SLUG = (/^\d{4}_\d{2}_\d{2}_./.test(NAME) ? NAME.slice(11) : NAME).toLowerCase().replace(/_/g, '-')
+// Every critique, proposal and judge also writes its result to RUN/<id>.json
+// (critique-<lens>, blueprint-<angle>, judge-<n>). After a stop, `ls ${RUN}`
+// names what a re-run can pass as args.done; the skipped stages' results are
+// read from their files by the stages after them. A run that can still be
+// resumed by its run id needs none of this.
+const RUN = `/tmp/talk-blueprint-${SLUG}`
+const resultFile = (id) => `${RUN}/${id}.json`
+const DONE = new Set((Array.isArray(A.done) ? A.done : []).map((d) => String(d).replace(':', '-')))
+
+// Effort per stage, set here rather than inherited (the usage audit of 8 October
+// 2026 found every sampled agent message at effort xhigh). The split is not
+// measured yet. args.effort overrides it by label ("judge:2") or by stage
+// ("critique"). The model is the owner's choice through args.models (a label or
+// a stage to a model id); none is pinned here, so every agent inherits the
+// session's model.
+const EFFORT = { critique: 'medium', blueprint: 'high', judge: 'medium', editor: 'high' }
+const LEVELS = ['low', 'medium', 'high', 'xhigh', 'max']
+for (const [k, v] of Object.entries(A.effort || {})) {
+  if (!LEVELS.includes(v)) throw new Error(`talk-blueprint: args.effort.${k} is ${JSON.stringify(v)}; use one of ${LEVELS.join(', ')}`)
+}
+const pick = (map, label) => (map && typeof map === 'object' ? map[label] || map[label.split(':')[0]] : undefined)
+const opts = (label, phase, schema) => {
+  const o = { label, phase, schema, effort: pick(A.effort, label) || pick(EFFORT, label) }
+  const model = pick(A.models, label)
+  if (model) o.model = String(model)
+  return o
+}
+const fromEarlier = (what, files) => (files.length ? `\n${what} FROM AN EARLIER RUN (read these files; they count as much as the ones above): ${files.join(', ')}` : '')
 
 const HOUSE = `HOUSE RULES (they bind every agent in this run; you will not see them anywhere else):
 - Report in English. Never write Russian. Lithuanian only in proposed slide text and notes.
-- Read only, except the one file the editor is told to write. No git command that changes state. Never touch the main checkout (the first entry of \`git worktree list\`) or another talk.
+- Read only, except the files your task names: your result as JSON under ${RUN}/, and the editor's blueprint. No git command that changes state. Never touch the main checkout (the first entry of \`git worktree list\`) or another talk.
 - The repo is public: nothing from mail, Drive, calendars or anyone's private life goes into the blueprint; refer to "the owner" (they/them) and to people by role unless the Brief names them publicly.
 - Facts: search the bank first (\`cd ${REPO} && pnpm talk facts search <words> --json\`, or grep ${REPO}/research/facts.jsonl). Every number in a proposal carries a fact id from the bank or is listed as a research gap with a proposed id; never invent a figure.
 - Headless browsers, if you need one: \`pnpm talk render -- <command>\`, at most 4 slides.
@@ -155,7 +186,7 @@ const LENSES = [
   { key: 'structure', prompt: `You review STRUCTURE AND TIME. Count the minutes the notes imply, plus clip durations, against ${MIN} minutes; find where time is over- or under-spent; propose the slide list with minutes per slide and what each added slide displaces; place the world's stations and poses where they carry meaning; choose at most one big world move per part from docs/spectacle.md and say which sparse and which dense slide a new mechanic is tried on first.` },
 ]
 
-const ANGLES = (Array.isArray(A.angles) && A.angles.length) ? A.angles : [
+const ANGLES = ((Array.isArray(A.angles) && A.angles.length) ? A.angles.map((a, i) => ({ ...a, key: String(a.key || `angle-${i + 1}`).toLowerCase().replace(/[^a-z0-9-]+/g, '-') })) : null) || [
   { key: 'rigour-first', brief: 'Design as the most exacting expert in the room would want: every claim precise and sourced, caveats visible, the concepts introduced in order. Readability still mandatory.' },
   { key: 'story-first', brief: `Design as a keynote for ${AUDIENCE}: one claim per slide in a plain declarative title, few words, a question posed in the first minute and answered in the last, tension built and released. Facts still exact.` },
   { key: 'world-first', brief: 'Design around the world of grains: every part told by a form or a camera move that carries its sentence, the figures and numbers made into matter where the engine can carry it (docs/spectacle.md), text as captions and claims. Facts still exact.' },
@@ -166,8 +197,17 @@ const JUDGES = (Array.isArray(A.judges) && A.judges.length) ? A.judges : [
   BROADCAST ? 'a TV producer who cuts talks for a stream watched in classrooms' : 'a presentation designer who has built keynotes and knows this engine',
 ]
 
+const liveLenses = LENSES.filter((l) => !DONE.has(`critique-${l.key}`))
+const earlierCritiques = LENSES.filter((l) => DONE.has(`critique-${l.key}`)).map((l) => resultFile(`critique-${l.key}`))
+const liveAngles = ANGLES.filter((a) => !DONE.has(`blueprint-${a.key}`))
+const earlierProposals = ANGLES.filter((a) => DONE.has(`blueprint-${a.key}`)).map((a) => resultFile(`blueprint-${a.key}`))
+const liveJudges = JUDGES.map((who, i) => ({ who, n: i + 1 })).filter((j) => !DONE.has(`judge-${j.n}`))
+const earlierJudges = JUDGES.map((who, i) => i + 1).filter((n) => DONE.has(`judge-${n}`)).map((n) => resultFile(`judge-${n}`))
+const skippedIds = [...earlierCritiques, ...earlierProposals, ...earlierJudges]
+if (skippedIds.length) log(`done in an earlier run, read from ${RUN}/: ${skippedIds.map((f) => f.split('/').pop().replace('.json', '')).join(', ')}`)
+
 phase('Critique')
-const critRaw = await parallel(LENSES.map((l) => () => agent(`${CONTEXT}
+const critRaw = await parallel(liveLenses.map((l) => () => agent(`${CONTEXT}
 
 YOUR LENS: ${l.key.toUpperCase()}. ${l.prompt}
 If the deck is still the scaffold, critique the Brief and any outline instead: what the audience needs, what would be wrong, what the world could carry.
@@ -178,17 +218,18 @@ ${VOICE}
 
 ${WORLD}
 
-Return structured findings, worst first.`, { label: `critique:${l.key}`, phase: 'Critique', schema: CRITIQUE })))
+Return structured findings, worst first. Also write them as JSON to ${resultFile(`critique-${l.key}`)} (mkdir -p ${RUN}) before you return.`, opts(`critique:${l.key}`, 'Critique', CRITIQUE))))
 const critiques = critRaw.filter(Boolean)
-const lostCritiques = LENSES.filter((l, i) => !critRaw[i]).map((l) => l.key)
+const lostCritiques = liveLenses.filter((l, i) => !critRaw[i]).map((l) => l.key)
 log(`critiques: ${critiques.map((c) => `${c.lens} ${c.findings.length}`).join(', ')}${lostCritiques.length ? `; lost: ${lostCritiques.join(', ')}` : ''}`)
-if (!critiques.length) throw new Error('talk-blueprint: every critique failed; nothing to design from')
+if (!critiques.length && !earlierCritiques.length) throw new Error('talk-blueprint: every critique failed; nothing to design from')
 
 const digest = critiques.map((c) => `### ${c.lens}\n${c.summary}\nGlobal: ${c.global.join(' | ')}\n` +
-  c.findings.map((f) => `- [s${f.slide} ${f.severity}] ${f.issue} -> ${f.recommendation}${f.source ? ` (${f.source})` : ''}`).join('\n')).join('\n\n')
+  c.findings.map((f) => `- [s${f.slide} ${f.severity}] ${f.issue} -> ${f.recommendation}${f.source ? ` (${f.source})` : ''}`).join('\n')).join('\n\n') +
+  fromEarlier('CRITIQUES', earlierCritiques)
 
 phase('Blueprints')
-const proposals = (await parallel(ANGLES.map((a) => () => agent(`${CONTEXT}
+const proposals = (await parallel(liveAngles.map((a) => () => agent(`${CONTEXT}
 
 You design the talk. Angle: ${a.key}: ${a.brief}
 
@@ -201,29 +242,31 @@ ${VOICE}
 
 ${WORLD}
 
-Produce a complete slide-by-slide blueprint whose minutes sum to ${MIN} or less. For each slide: kind, a plain title, the one-sentence message, the exact on-screen text in the owner's voice (typeset nearly verbatim later), the world (pose, what it shows, which sentence each world object carries), the visual, the gist of the notes with fact ids, and minutes. Also: the world plan (stations and forms, new mechanics and the sparse and dense slides they are tried on first), the drop order, the research gaps (claims needing a source, with proposed ids), the decisions you took, and open questions.`, { label: `blueprint:${a.key}`, phase: 'Blueprints', schema: BLUEPRINT })))).filter(Boolean)
-const lostProposals = ANGLES.length - proposals.length
+Produce a complete slide-by-slide blueprint whose minutes sum to ${MIN} or less. For each slide: kind, a plain title, the one-sentence message, the exact on-screen text in the owner's voice (typeset nearly verbatim later), the world (pose, what it shows, which sentence each world object carries), the visual, the gist of the notes with fact ids, and minutes. Also: the world plan (stations and forms, new mechanics and the sparse and dense slides they are tried on first), the drop order, the research gaps (claims needing a source, with proposed ids), the decisions you took, and open questions. Also write the blueprint as JSON to ${resultFile(`blueprint-${a.key}`)} (mkdir -p ${RUN}) before you return.`, opts(`blueprint:${a.key}`, 'Blueprints', BLUEPRINT))))).filter(Boolean)
+const lostProposals = liveAngles.length - proposals.length
 log(`proposals: ${proposals.map((p) => `${p.angle} (${p.slides.length} slides, ${p.slides.reduce((n, s) => n + (Number(s.minutes) || 0), 0).toFixed(1)} min)`).join(', ')}${lostProposals ? `; lost ${lostProposals}` : ''}`)
-if (!proposals.length) throw new Error('talk-blueprint: every proposal failed')
+if (!proposals.length && !earlierProposals.length) throw new Error('talk-blueprint: every proposal failed')
 
-const proposalsText = proposals.map((p) => `=== PROPOSAL ${p.angle} ===\n${JSON.stringify(p, null, 1)}`).join('\n\n')
+const proposalsText = proposals.map((p) => `=== PROPOSAL ${p.angle} ===\n${JSON.stringify(p, null, 1)}`).join('\n\n') +
+  fromEarlier('PROPOSALS', earlierProposals)
 
 phase('Judge')
-const judges = (await parallel(JUDGES.map((who, i) => () => agent(`${CONTEXT}
+const judges = (await parallel(liveJudges.map(({ who, n }) => () => agent(`${CONTEXT}
 
 You are ${who}. Score each proposal 1-10 on accuracy, message (one claim per slide, arc, takeaway), readability (words on screen, type, the world behind the text), fit (${MIN} minutes), voice (the owner's plain voice), world (every world object carries a sentence; feasible on the engine) and wow (would the owner call it impressive). total = the sum. Name the best, list the specific slides, devices and rules to graft from the others, and the risks of the best.
 
 ${BAR}
 
-${proposalsText}`, { label: `judge:${i + 1}`, phase: 'Judge', schema: SCORE })))).filter(Boolean)
+${proposalsText}
+Also write your scores as JSON to ${resultFile(`judge-${n}`)} (mkdir -p ${RUN}) before you return.`, opts(`judge:${n}`, 'Judge', SCORE))))).filter(Boolean)
 const tally = {}
 for (const j of judges) for (const s of j.scores) tally[s.proposal] = (tally[s.proposal] || 0) + (Number(s.total) || 0)
-log(`judges: ${judges.length} of ${JUDGES.length}; tally ${JSON.stringify(tally)}`)
+log(`judges: ${judges.length} of ${liveJudges.length}${earlierJudges.length ? ` (and ${earlierJudges.length} from an earlier run)` : ''}; tally ${JSON.stringify(tally)}`)
 
 phase('Edit')
 const final = await agent(`${CONTEXT}
 
-You are the editor. Merge the proposals into ONE blueprint. ${judges.length ? `Judges' tally (higher is better): ${JSON.stringify(tally)}. Their notes, grafts and risks:\n${JSON.stringify(judges, null, 1)}` : 'No judge finished: judge the proposals yourself against the bar and say so in decisions.'}${lostCritiques.length ? `\nCritiques lost in this run: ${lostCritiques.join(', ')}; cover those lenses yourself.` : ''}
+You are the editor. Merge the proposals into ONE blueprint. ${judges.length ? `Judges' tally (higher is better): ${JSON.stringify(tally)}. Their notes, grafts and risks:\n${JSON.stringify(judges, null, 1)}` : earlierJudges.length ? '' : 'No judge finished: judge the proposals yourself against the bar and say so in decisions.'}${earlierJudges.length ? `\nJUDGES FROM AN EARLIER RUN (read these files and add their totals to the tally): ${earlierJudges.join(', ')}` : ''}${lostCritiques.length ? `\nCritiques lost in this run: ${lostCritiques.join(', ')}; cover those lenses yourself.` : ''}
 
 PROPOSALS:
 ${proposalsText}
@@ -238,12 +281,12 @@ ${VOICE}
 ${WORLD}
 
 Rules for the final: minutes sum to ${MIN} or less; one claim per slide; the final on-screen wording; every number with a fact id or a research gap; every world object tied to a sentence; at most one big world move per part, each new mechanic with its sparse and dense prototype slides; a drop order; decisions taken without the owner, each with the alternative.
-WRITE the blueprint as readable markdown to ${OUT} (mkdir -p its directory): angle, arc and takeaway; the slide table (#, kind, title, message, world, minutes, with the total); the slide bodies and notes gists; the style rules; the world plan; the drop order; research gaps; decisions; open questions. Then return the structured blueprint.`, { label: 'editor', phase: 'Edit', schema: BLUEPRINT })
+WRITE the blueprint as readable markdown to ${OUT} (mkdir -p its directory): angle, arc and takeaway; the slide table (#, kind, title, message, world, minutes, with the total); the slide bodies and notes gists; the style rules; the world plan; the drop order; research gaps; decisions; open questions. Then return the structured blueprint.`, opts('editor', 'Edit', BLUEPRINT))
 
 const lost = [
   ...lostCritiques.map((k) => `critique:${k}`),
   ...(lostProposals ? [`${lostProposals} blueprint proposal(s)`] : []),
-  ...(JUDGES.length - judges.length ? [`${JUDGES.length - judges.length} judge(s)`] : []),
+  ...(liveJudges.length - judges.length ? [`${liveJudges.length - judges.length} judge(s)`] : []),
   ...(final ? [] : ['the editor: no blueprint was written; merge from proposals and judges']),
 ]
 if (final) log(`blueprint: ${final.slides.length} slides, ${final.slides.reduce((n, s) => n + (Number(s.minutes) || 0), 0).toFixed(1)} of ${MIN} min, ${final.research_gaps.length} research gaps -> ${OUT}`)
@@ -251,6 +294,7 @@ if (final) log(`blueprint: ${final.slides.length} slides, ${final.slides.reduce(
 return {
   talk: TALK,
   out: final ? OUT : null,
+  done: skippedIds,
   tally,
   blueprint: final,
   proposals: final ? proposals.map((p) => ({ angle: p.angle, slides: p.slides.length })) : proposals,

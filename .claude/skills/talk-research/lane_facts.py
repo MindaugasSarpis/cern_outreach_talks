@@ -13,6 +13,12 @@ Usage (from the worktree root):
     python3 -I .claude/skills/talk-research/lane_facts.py talks/<t>/research/*.json \\
         | pnpm -s talk facts add --from-json - --dry-run
     python3 -I .claude/skills/talk-research/lane_facts.py <lane files> --id <id> [--id <id>]
+    python3 -I .claude/skills/talk-research/lane_facts.py --done talks/<t>/research/*.json
+
+--done prints, instead, the lanes an earlier run finished, as the JSON list
+the workflow takes as args.done: each lane file whose status is "verified"
+(by its file name, which is the lane key), and "images" when images.json
+holds an images list.
 
 Exit 0 ok, 1 a file was skipped or an --id was not found (the rest is still
 printed), 2 usage error.
@@ -33,19 +39,27 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="lane_facts.py", description=__doc__.split("\n\n")[0])
     ap.add_argument("files", nargs="+", type=Path, help="lane files; images.json is skipped")
     ap.add_argument("--id", action="append", dest="ids", metavar="ID", help="only this fact; repeat for more")
+    ap.add_argument("--done", action="store_true", help="list the finished lanes for the workflow's args.done")
     try:
         args = ap.parse_args(argv)
     except SystemExit as exc:
         return 2 if exc.code else 0
     out, problems = [], 0
     for f in args.files:
-        if f.name == "images.json":
+        if f.name == "images.json" and not args.done:
             continue
         try:
             lane = json.loads(f.read_text(encoding="utf-8"))
         except (OSError, ValueError) as exc:
-            print(f"lane_facts: {f}: {exc}; not filed", file=sys.stderr)
+            print(f"lane_facts: {f}: {exc}; {'not done' if args.done else 'not filed'}", file=sys.stderr)
             problems += 1
+            continue
+        if args.done:
+            if f.name == "images.json":
+                if isinstance(lane, dict) and isinstance(lane.get("images"), list):
+                    out.append("images")
+            elif isinstance(lane, dict) and lane.get("status") == "verified":
+                out.append(f.stem)
             continue
         facts = lane.get("facts") if isinstance(lane, dict) else None
         if not isinstance(facts, list):
@@ -59,7 +73,7 @@ def main(argv: list[str] | None = None) -> int:
             if extra:
                 print(f"lane_facts: {f.name} {fact.get('id')}: dropped keys {', '.join(extra)}", file=sys.stderr)
             out.append({k: (None if fact[k] == "" else fact[k]) for k in FIELDS if k in fact})
-    if args.ids:
+    if args.ids and not args.done:
         found = {e.get("id") for e in out}
         for missing in [i for i in args.ids if i not in found]:
             print(f"lane_facts: no fact {missing!r} in these lane files", file=sys.stderr)

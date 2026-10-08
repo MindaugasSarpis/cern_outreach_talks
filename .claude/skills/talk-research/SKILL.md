@@ -45,6 +45,8 @@ Workflow({ name: 'talk-research-gaps', args: {
   // optional: Brief questions only the owner's own mail, Drive and calendar answer
   briefGaps: ['the award name and date'],
   images: ['the LHCb cavern', 'the first web server'],
+  // optional on a re-run: what an earlier run finished (see below)
+  done: ['lhc', 'images'],
 } })
 ```
 
@@ -58,6 +60,22 @@ on with the deck or end the turn. Public claims, including a blueprint's
 `research_gaps`, go in `lanes[].claims` or are left for the plan agent to
 find in the deck; never in `briefGaps`, which searches the owner's mail,
 Drive and calendar for them.
+
+Each stage's effort is set in the template: `low` for the plan, the
+research lanes, the images and the personal lane, `medium` for the
+verifiers (not measured yet; `effort: { verify: 'high' }` overrides a
+stage). The model is the owner's choice: none is pinned, every agent runs
+on the session's model unless the owner names one for a stage, for the
+mechanical lanes in particular (`models: { images: '<model id>', personal:
+'<model id>', plan: '<model id>' }`).
+
+If a run stops (a usage limit, a crash), resume it by its run id when you
+have it (`resumeFromRunId`; finished agents come back from the cache).
+Otherwise run it again with `done`, the lanes already verified:
+`python3 -I .claude/skills/talk-research/lane_facts.py --done talks/<t>/research/*.json`
+prints them as a list (with `images` when `images.json` exists); add
+`personal` if the private brief already has this run's
+`## talk-research-gaps <date>` section.
 
 ## 3. File the results
 

@@ -54,6 +54,7 @@ Workflow({ name: 'talk-blueprint', args: {
   duration: 12, lang: 'lt', audience: 'grade 9-12 students, watching a stream',
   delivery: 'broadcast',          // venue | broadcast
   sheets: ['<contact sheets of the current deck, if any>'],
+  done: ['critique-rigour', 'blueprint-story-first'],   // only on a re-run, see below
 } })
 ```
 
@@ -63,6 +64,16 @@ with proposed ids. Cite those ids in the deck draft and run `talk-research`
 (saved workflow `talk-research-gaps`): its plan agent finds them in the deck,
 or pass them as `lanes[].claims`. Never pass them as `briefGaps`, which
 searches the owner's own mail, Drive and calendar.
+
+Only the readability critic opens the contact sheets. Effort is set per
+stage (`medium` for critiques and judges, `high` for the three blueprints
+and the editor; `effort: { judge: 'high' }` overrides one); no model is
+pinned (`models: { <stage>: '<model id>' }` is the owner's choice). Each
+critique, blueprint and judge writes its result to
+`/tmp/talk-blueprint-<slug>/<id>.json`. If a run stops, resume it by its
+run id when you have it; otherwise run it again with `done` set to the ids
+`ls` finds there (`critique-<lens>`, `blueprint-<angle>`, `judge-<n>`): the
+stages after them read those files.
 
 Workflows report back when they finish. While one runs, never sleep, read
 its journal or open agent transcripts; work on something else or end the

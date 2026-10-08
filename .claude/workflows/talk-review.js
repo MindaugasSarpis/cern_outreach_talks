@@ -1,7 +1,7 @@
 export const meta = {
   name: 'talk-review',
   description: 'Review a pinned snapshot of a talk (facts, copy and timing, visuals from contact sheets, performance, slide state and render contexts); each reviewer is verified as soon as it lands; findings deduped by slide and kind; returns kept[] and unverified[]',
-  whenToUse: 'Before pnpm talk ready, or after a large edit. args: { talk: "talks/<dir>", repo: "<worktree root>", head: "<git rev-parse HEAD>", snapshot: "<git stash create SHA, or HEAD>", today: "YYYY-MM-DD", site?: "/tmp/talk-<slug>/site", slug?, lang?: "en"|"lt", duration?: minutes, delivery?: "venue"|"broadcast", since?: "<SHA of the last verified review>", sheets?: [paths], ndjson?: path, lenses?: ["facts","copy","visual","perf","state"], stageBin? }',
+  whenToUse: 'Before pnpm talk ready, or after a large edit. args: { talk: "talks/<dir>", repo: "<worktree root>", head: "<git rev-parse HEAD>", snapshot: "<git stash create SHA, or HEAD>", today: "YYYY-MM-DD", site?: "/tmp/talk-<slug>/site", slug?, lang?: "en"|"lt", duration?: minutes, delivery?: "venue"|"broadcast", since?: "<SHA of the last verified review>", sheets?: [paths], ndjson?: path, lenses?: ["facts","copy","visual","perf","state"], stageBin?, done?: [lenses an earlier run on the same snapshot finished] (skipped on a re-run), effort?: { stage or label: "low"|"medium"|"high"|"xhigh"|"max" }, models?: { stage or label: model id } (none pinned) }',
   phases: [
     { title: 'Review', detail: 'one reviewer per lens, all judging the same pinned snapshot' },
     { title: 'Verify', detail: 'one verifier per reviewer batch, started as soon as that reviewer lands' },
@@ -38,7 +38,33 @@ const STAGE_BIN = A.stageBin || `\${SLIDEV_STAGE_BIN:-${REPO}/${TALK}/node_modul
 const SHEETS = Array.isArray(A.sheets) ? A.sheets : []
 const NDJSON = A.ndjson || ''
 const SCRATCH = `/tmp/talk-review-${SLUG}`
-const exportDir = (lens) => `${SCRATCH}/${SNAP.slice(0, 12)}-${lens}`
+// One directory per snapshot: the exports, and <lens>.json for each lens that
+// finished (its findings with their verdicts). `ls ${RUN}/*.json` names the
+// lenses a re-run on the same snapshot can pass as args.done; a run that can
+// still be resumed by its run id needs none of this.
+const RUN = `${SCRATCH}/${SNAP.slice(0, 12)}`
+const exportDir = (lens) => `${RUN}/export-${lens}`
+const resultFile = (lens) => `${RUN}/${lens}.json`
+const DONE = new Set((Array.isArray(A.done) ? A.done : []).map(String))
+
+// Effort per stage, set here rather than inherited (the usage audit of 8 October
+// 2026 found every sampled agent message at effort xhigh). The split is not
+// measured yet. args.effort overrides it by label ("verify:copy") or by stage
+// ("review"). The model is the owner's choice through args.models (a label or
+// a stage to a model id); none is pinned here, so every agent inherits the
+// session's model.
+const EFFORT = { review: 'medium', verify: 'medium', 'verify:facts': 'high' }
+const LEVELS = ['low', 'medium', 'high', 'xhigh', 'max']
+for (const [k, v] of Object.entries(A.effort || {})) {
+  if (!LEVELS.includes(v)) throw new Error(`talk-review: args.effort.${k} is ${JSON.stringify(v)}; use one of ${LEVELS.join(', ')}`)
+}
+const pick = (map, label) => (map && typeof map === 'object' ? map[label] || map[label.split(':')[0]] : undefined)
+const opts = (label, phase, schema) => {
+  const o = { label, phase, schema, effort: pick(A.effort, label) || pick(EFFORT, label) }
+  const model = pick(A.models, label)
+  if (model) o.model = String(model)
+  return o
+}
 
 const HOUSE = `HOUSE RULES (they bind every agent in this run; you will not see them anywhere else):
 - Report in English. Never write Russian. Lithuanian only inside proposed slide text and notes.
@@ -84,6 +110,9 @@ const LENSES = {
 }
 const DEFAULT_LENSES = ['facts', 'copy', 'visual', 'perf', 'state']
 let chosen = (Array.isArray(A.lenses) && A.lenses.length ? A.lenses : DEFAULT_LENSES).filter((l) => LENSES[l])
+const skipped = chosen.filter((l) => DONE.has(l))
+if (skipped.length) log(`done in an earlier run on this snapshot, skipped: ${skipped.join(', ')} (results in ${RUN}/)`)
+chosen = chosen.filter((l) => !DONE.has(l))
 if (chosen.includes('visual') && !SHEETS.length && !NDJSON) {
   chosen = chosen.filter((l) => l !== 'visual')
   log('visual lens skipped: pass args.sheets (contact sheets) and args.ndjson from pnpm talk review --json')
@@ -152,7 +181,7 @@ ${LENSES[lens]}
 ${BAR}
 
 ${LIST}
-Use D=${exportDir(lens)} for the export.`, { label: `review:${lens}`, phase: 'Review', schema: ISSUES })
+Use D=${exportDir(lens)} for the export. If you find no issues, also write {"lens": "${lens}", "head": "${HEAD}", "snapshot": "${SNAP}", "issues": [], "not_checked": [...]} as JSON to ${resultFile(lens)} before you return; otherwise write nothing there (the verifier does).`, opts(`review:${lens}`, 'Review', ISSUES))
 
 const verify = (r, lens) => {
   if (!r) return { lens, review: null, verdicts: null }
@@ -165,9 +194,11 @@ ${VERIFY_LENS[lens]} Judge the same snapshot. Give one verdict per index.
 
 ${lens === 'copy' ? VOICE : lens === 'visual' ? WORLD : ''}
 Use D=${exportDir(lens + '-verify')} for the export.
+When you have decided, write {"lens": "${lens}", "head": "${HEAD}", "snapshot": "${SNAP}", "issues": [every finding below with your real, reason and better_fix added], "not_checked": the reviewer's list below} as JSON to ${resultFile(lens)}, then return the verdicts.
 
 FINDINGS (JSON):
-${JSON.stringify(list, null, 1)}`, { label: `verify:${lens}`, phase: 'Verify', schema: VERDICTS })
+${JSON.stringify(list, null, 1)}
+NOT CHECKED BY THE REVIEWER: ${JSON.stringify(r.not_checked || [])}`, opts(`verify:${lens}`, 'Verify', VERDICTS))
     .then((v) => ({ lens, review: r, verdicts: v ? v.verdicts : null }))
 }
 
@@ -216,10 +247,11 @@ return {
   talk: TALK,
   snapshot: { head: HEAD, snapshot: SNAP },
   lenses: chosen,
+  done: skipped.map((lens) => ({ lens, file: resultFile(lens) })),
   kept: deduped,
   high: deduped.filter((g) => g.severity === 'high').length,
   rejected,
   unverified,
   not_checked: notChecked,
-  next: `Write ${TALK}/notes/review.md from kept[] (one section per slide), apply the fixes to the current text (the snapshot may be older), rerun pnpm talk review, and report unverified[] and not_checked to the owner.`,
+  next: `Write ${TALK}/notes/review.md from kept[] (one section per slide)${skipped.length ? `, adding the findings marked real in ${skipped.map(resultFile).join(', ')} (lenses done in an earlier run)` : ''}, apply the fixes to the current text (the snapshot may be older), rerun pnpm talk review, and report unverified[] and not_checked to the owner.`,
 }

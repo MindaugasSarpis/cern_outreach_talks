@@ -86,8 +86,19 @@ Workflow({ name: 'talk-review', args: {
   today: '<YYYY-MM-DD>', lang: 'en', duration: 30,
   sheets: ['<sheet paths>'], ndjson: '<report path>',
   since: '<HEAD sha of the last review, from notes/review.md>',   // facts lens checks only what changed
+  done: ['facts'],   // only on a re-run of the same snapshot: lenses that finished
 } })
 ```
+
+Effort is set per stage in the template (`medium` for reviewers and
+verifiers, `high` for the facts verifier; `effort: { review: 'high' }`
+overrides one); no model is pinned (`models: { <stage>: '<model id>' }` is
+the owner's choice). Each finished lens writes its findings with their
+verdicts to `/tmp/talk-review-<slug>/<first 12 characters of the snapshot
+SHA>/<lens>.json`. If a run stops, resume it by its run id when you have
+it; otherwise run it again on the same snapshot with `done` set to the
+lenses `ls` finds there, and merge their files into `notes/review.md` with
+the new result.
 
 The run reports back when it finishes: do not sleep, read its journal or open
 agent transcripts meanwhile; fix the lint findings or end the turn. It
