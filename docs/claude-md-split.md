@@ -94,3 +94,13 @@ version replaced it (the older wording is in git history: the 600 PB pile,
 the earlier poses, Užsikrauk's 17-slide version, Innoday's first outline).
 `talks/2026_10_26_UzsikraukKarjerai/CLAUDE.md` already existed on main: it
 is kept as it was, with the moved notes appended.
+
+### Second landing (main at 1d836da)
+
+Main's root edits between the first landing (`eb4ecfc`) and `1d836da` were all
+talk-specific and went to their talks: Innoday's coherence pass and new pin
+into its list entry in `talks/2026_10_00_Innoday/CLAUDE.md`; Užsikrauk
+karjerai's fifth version and stations into the root section moved to
+`talks/2026_10_26_UzsikraukKarjerai/CLAUDE.md`. Every line main added to the
+root since the split (178 since `8b34b6e`, 23 since `eb4ecfc`) is in the
+merged tree, verbatim.

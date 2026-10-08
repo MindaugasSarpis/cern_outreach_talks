@@ -30,6 +30,21 @@
         1080
       ],
       "duration": 11.24
+    },
+    "vu_ff_unzoom.mp4": {
+      "file": "vu_ff_unzoom.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 8,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 30.067
     }
   }
 }
