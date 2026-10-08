@@ -1,6 +1,14 @@
 import {
   Group, Points, Mesh, SphereGeometry, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4, Matrix4, Euler,
+  LinearMipmapLinearFilter,
 } from 'three'
+
+// a label sprite from the engine, mipmapped: drawn far smaller than its canvas, it aliased into dither
+function smooth(l) {
+  const t = l.material.map
+  if (t) { t.generateMipmaps = true; t.minFilter = LinearMipmapLinearFilter; t.anisotropy = 4; t.needsUpdate = true }
+  return l
+}
 
 // This talk's own forms, on the engine's stage (slidev-addon-stage):
 //
@@ -55,7 +63,7 @@ varying vec3 vColor; varying float vAlpha;
 void main() {
   float d = length(gl_PointCoord - 0.5);
   float a = (1.0 - smoothstep(0.04, 0.5, d)) * vAlpha;
-  gl_FragColor = vec4(pow(vColor * a, vec3(2.2)), 1.0);
+  gl_FragColor = vec4(pow(max(vColor * a, vec3(1e-6)), vec3(2.2)), 1.0);
 }`
 
 function material(vertexShader, uniforms) {
@@ -136,25 +144,29 @@ vec3 studio(vec3 d) {
 // horizon. For the single sphere, the one seen large.
 vec3 studioHard(vec3 d) {
   vec3 room = mix(vec3(0.004, 0.004, 0.005), vec3(0.05, 0.052, 0.06), smoothstep(-0.05, 0.85, d.y));
-  room += vec3(0.07, 0.068, 0.065) * exp(-abs(d.y - 0.05) * 7.0);
+  room += vec3(0.035, 0.034, 0.033) * exp(-abs(d.y - 0.05) * 4.0);
   vec3 kd = normalize(vec3(-6.0, 9.0, 7.0));
   vec3 kx = normalize(cross(vec3(0.0, 1.0, 0.0), kd));
   vec3 ky = cross(kd, kx);
   float kz = dot(d, kd);
   vec2 kp = vec2(dot(d, kx), dot(d, ky)) / max(kz, 0.05);
-  float key = step(0.0, kz) * (1.0 - smoothstep(0.25, 0.28, abs(kp.x))) * (1.0 - smoothstep(0.34, 0.37, abs(kp.y)));
+  float key = step(0.0, kz) * (1.0 - smoothstep(0.14, 0.32, abs(kp.x))) * (1.0 - smoothstep(0.2, 0.42, abs(kp.y)));
   vec2 h = normalize(d.xz + 1e-5);
   float rim = smoothstep(0.9965, 0.9985, dot(h, normalize(vec2(7.0, -6.0)))) * smoothstep(-0.35, -0.15, d.y) * (1.0 - smoothstep(0.55, 0.75, d.y));
   return room + vec3(1.0, 0.97, 0.92) * key * 4.0 + vec3(0.85, 0.9, 1.0) * rim * 2.2;
 }
 vec3 metalHard(vec3 nW, vec3 vW, vec3 F0) {
-  float ndv = clamp(dot(nW, vW), 0.0, 1.0);   // a unit dot can pass 1 by rounding; pow() of a negative base is NaN
+  // a unit dot can pass 1 by rounding, and pow() of a negative base is NaN; a base of exactly 0
+  // can be NaN too where pow is exp2(y * log2(x)) (seen as black specks under SwiftShader)
+  float ndv = clamp(dot(nW, vW), 0.0, 1.0 - 1e-6);
   vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
   return studioHard(reflect(-vW, nW)) * F + F0 * 0.02;
 }
 // nW, vW: world-space normal and direction toward the eye; F0: the metal's colour
 vec3 metal(vec3 nW, vec3 vW, vec3 F0) {
-  float ndv = clamp(dot(nW, vW), 0.0, 1.0);   // a unit dot can pass 1 by rounding; pow() of a negative base is NaN
+  // a unit dot can pass 1 by rounding, and pow() of a negative base is NaN; a base of exactly 0
+  // can be NaN too where pow is exp2(y * log2(x)) (seen as black specks under SwiftShader)
+  float ndv = clamp(dot(nW, vW), 0.0, 1.0 - 1e-6);
   vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0);
   return studio(reflect(-vW, nW)) * F + F0 * 0.035;
 }`
@@ -176,7 +188,7 @@ void main() {
   int b = int(aBall + 0.5);
   float st = uShowT[b], ht = uHideT[b];
   // the inner spheres set out first; each takes 1.6 s to arrive
-  float start = st + uGrow * (0.78 * pow(aK, 0.8) + 0.22 * aSeed);
+  float start = st + uGrow * (0.78 * pow(max(aK, 1e-6), 0.8) + 0.22 * aSeed);
   float f = ease((uTime - start) / 1.6);
   bool on = st >= 0.0 && uTime >= start;
   if (ht >= 0.0) { float g = 1.0 - ease((uTime - ht) / 1.1); f = min(f, g); on = on && g > 0.0; }
@@ -209,7 +221,7 @@ void main() {
   vCv = mv.xyz;
   // the pile read as one ball: its side toward the key light brighter, its far side
   // in shadow, and a thin bright rim where its surface turns away from the eye
-  float lit = 0.5 + 0.62 * max(dot(dir, normalize(uLight)), 0.0) + 0.25 * pow(1.0 - clamp(facingS, 0.0, 1.0), 3.0);
+  float lit = 0.5 + 0.62 * max(dot(dir, normalize(uLight)), 0.0) + 0.25 * pow(1.0 - clamp(facingS, 0.0, 1.0 - 1e-6), 3.0);
   vShade = mix(1.0, lit, f);
   vOut = dir; vF = f;
   vColor = uColor[b] * (0.9 + 0.2 * hash(aSeed * 7.0));
@@ -220,12 +232,12 @@ void main() {
 const HEAP = /* glsl */ `
 vec3 studioRough(vec3 d) {
   vec3 sky = mix(vec3(0.006, 0.006, 0.008), vec3(0.06, 0.064, 0.075), smoothstep(-0.3, 0.9, d.y));
-  float key = pow(max(dot(d, normalize(vec3(-6.0, 9.0, 7.0))), 0.0), 6.0);
-  float rim = pow(max(dot(d, normalize(vec3(7.0, 3.0, -6.0))), 0.0), 10.0);
+  float key = pow(max(dot(d, normalize(vec3(-6.0, 9.0, 7.0))), 1e-6), 6.0);
+  float rim = pow(max(dot(d, normalize(vec3(7.0, 3.0, -6.0))), 1e-6), 10.0);
   return sky + vec3(1.0, 0.96, 0.9) * key * 1.1 + vec3(0.55, 0.72, 1.0) * rim * 0.35;
 }
 vec3 heap(vec3 N, vec3 V, vec3 F0) {
-  float ndv = clamp(dot(N, V), 0.0, 1.0);
+  float ndv = clamp(dot(N, V), 0.0, 1.0 - 1e-6);
   vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0) * 0.4;
   return mix(studioRough(N), studioRough(reflect(-V, N)), 0.55) * F;
 }`
@@ -394,7 +406,7 @@ function buildLineup(o, ctx) {
   const makeLabels = () => {
     balls.forEach((x, b) => {
       if (!x.label) return
-      const l = makeLabel(x.label, { px: 64, weight: 500, color: '#d4dcea', worldH: o.labelH ?? 0.036, letterSpacing: 0.14 })
+      const l = smooth(makeLabel(x.label, { px: 64, weight: 500, color: '#d4dcea', worldH: o.labelH ?? 0.036, letterSpacing: 0.14 }))
       l.material.sizeAttenuation = false; l.material.opacity = 0
       // under its pile; the single sphere's above it, clear of the next pile's label when both are small
       const above = x.above ?? x.n === 1
@@ -565,7 +577,7 @@ function buildStreams(o, ctx) {
   const makeLabels = () => {
     to.forEach((d, i) => {
       if (!d.label) return
-      const l = ctx.helpers.makeLabel(d.label, { px: 64, weight: 500, color: '#ffe3a8', worldH: o.labelH ?? 0.042, letterSpacing: 0.06, upper: false })
+      const l = smooth(ctx.helpers.makeLabel(d.label, { px: 64, weight: 500, color: '#ffe3a8', worldH: o.labelH ?? 0.042, letterSpacing: 0.06, upper: false }))
       l.material.sizeAttenuation = false; l.material.opacity = 0
       const e = d.pos || [0, 0, 0]
       l.center.set(0.5, 1.5)

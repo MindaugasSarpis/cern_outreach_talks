@@ -42,13 +42,14 @@ info: |
 layout: cover
 space:
   at: wide
+  dim: 0.25
 ---
 
 # Nominated for an open data award
 
 # Opening <span class="nt">LHCb</span>'s data
 
-## How data from a detector at CERN reached a bachelor's thesis in Vilnius
+## How <span class="nt">LHCb</span>'s data reached a bachelor's thesis in Vilnius
 
 <div class="mt-md">Mindaugas Šarpis · <span class="nt">LHCb</span> Vilnius · Vilnius University</div>
 
@@ -355,7 +356,7 @@ Sources: opendata.cern.ch, "LHCb releases entire Run 1 dataset" (20 December
 -->
 
 ---
-space: { at: [7.36, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
+space: { at: [5.5, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
 ---
 
 <Grains :set="{ scale: [1, 2], 'scale:labels': 1, world: 8, vilnius: 0, dominykas: 0 }" />
@@ -393,7 +394,7 @@ Global Report 2026; arXiv:2609.09275; LHCb, arXiv:2504.00610 (open data policy).
 -->
 
 ---
-space: { at: [11.5, -3.4, 4], dist: 27, yaw: 12, pitch: 4, dim: 0.3 }
+space: { at: [9.5, 0, 4], dist: 27, yaw: 12, pitch: 4, dim: 0.3 }
 ---
 
 <Grains :set="{ scale: [1, 2], 'scale:labels': 0, world: 0, vilnius: 3, dominykas: 0 }" />
@@ -437,7 +438,7 @@ space: { at: thesis, dim: 0.3 }
 
 <div class="readout thesis">
 
-<p class="kicker">Bachelor's thesis, Vilnius University</p>
+<p class="kicker">Bachelor's thesis<br>Vilnius University</p>
 
 # Dominykas Stonkus
 

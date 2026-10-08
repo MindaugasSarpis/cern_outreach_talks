@@ -95,8 +95,7 @@
             {
               "n": 800,
               "color": "#ffcf73",
-              "label": "800 TB",
-              "above": true
+              "label": "800 TB"
             },
             {
               "n": 4000,
@@ -211,27 +210,27 @@
           "to": [
             {
               "pos": [
-                -3,
-                -3.2,
-                11
+                -6,
+                4.5,
+                9
               ],
               "lift": 0.2,
               "label": "Z → μμ analysis"
             },
             {
               "pos": [
-                -12.5,
-                -2.5,
-                9
+                -4,
+                0.5,
+                10
               ],
               "lift": 0.22,
               "label": "University course"
             },
             {
               "pos": [
-                -5.5,
-                4.5,
-                9
+                -2,
+                -3.5,
+                11
               ],
               "lift": 0.15,
               "label": "Masterclass"
