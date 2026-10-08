@@ -34,10 +34,12 @@ Write what you found to the private brief, outside git:
 ~/.local/share/outreach_talks/briefs/<slug>.md
 ```
 
-(`<slug>` as `pnpm talk open <name> --json` reports it; `mkdir -p` the
-directory). Quote sources (subject and date, file title). Never copy mail,
-Drive content, contacts or family details into the repo, and never put the
-owner's email address into any request, header, URL or User-Agent.
+(`<slug>` is the part of the name after the date, lowercased, with `_` as
+`-`: `2026_11_05_Venue` gives `venue`; `pnpm talk list --json` reports it
+as `.slug` once the talk exists; `mkdir -p` the directory). Quote sources
+(subject and date, file title). Never copy mail, Drive content, contacts or
+family details into the repo, and never put the owner's email address into
+any request, header, URL or User-Agent.
 
 ## 3. The Brief questions, in one message
 

@@ -25,7 +25,9 @@ if (!A.talk || !A.repo || !A.head || !A.today) {
 const REPO = String(A.repo).replace(/\/+$/, '')
 const TALK = String(A.talk).replace(/\/+$/, '').replace(REPO + '/', '')
 const NAME = TALK.split('/').pop()
-const SLUG = A.slug || NAME.toLowerCase()
+// As scripts/new_talk.py worktree_slug: 2026_10_00_OpenData -> opendata, so the
+// default site is the /tmp/talk-<slug>/site that `pnpm talk build` writes.
+const SLUG = A.slug || (/^\d{4}_\d{2}_\d{2}_./.test(NAME) ? NAME.slice(11) : NAME).toLowerCase().replace(/_/g, '-')
 const HEAD = A.head
 const SNAP = A.snapshot || A.head
 const TODAY = A.today

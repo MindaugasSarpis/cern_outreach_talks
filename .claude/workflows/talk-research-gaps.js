@@ -29,7 +29,9 @@ const REPO = String(A.repo).replace(/\/+$/, '')
 const TALK = String(A.talk).replace(/\/+$/, '').replace(REPO + '/', '')
 const DIR = TALK.startsWith('/') ? TALK : `${REPO}/${TALK}`
 const NAME = DIR.split('/').pop()
-const SLUG = A.slug || NAME.toLowerCase()
+// As scripts/new_talk.py worktree_slug: 2026_10_00_OpenData -> opendata, the
+// name of the private brief, the worktree and /tmp/talk-<slug>/site.
+const SLUG = A.slug || (/^\d{4}_\d{2}_\d{2}_./.test(NAME) ? NAME.slice(11) : NAME).toLowerCase().replace(/_/g, '-')
 const TODAY = A.today
 const LANG = A.lang === 'lt' ? 'lt' : 'en'
 const MAX = A.maxAgents || 30

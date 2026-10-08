@@ -21,7 +21,8 @@ pnpm talk map <t> --json                  # which slide says what
 ```
 
 Read the Brief in `talks/<t>/CLAUDE.md` and, if it exists, the private brief
-`~/.local/share/outreach_talks/briefs/<slug>.md`.
+`~/.local/share/outreach_talks/briefs/<slug>.md` (`<slug>`: the name after
+the date, lowercased, `_` as `-`; `.slug` in `pnpm talk list --json`).
 
 ## 2. The gap list
 
