@@ -970,3 +970,19 @@ def test_bootstrap_gives_plain_pnpm_the_store(boot, tmp_path):
     glob.write_text("/elsewhere\n")
     r, _ = run(dry=False, extra=extra)
     assert "is /elsewhere, not /big/disk/pnpm-store" in r.stdout and glob.read_text() == "/elsewhere\n"
+
+
+@pytest.mark.parametrize("raw, want", [
+    ("stage:\n  options: { grain: 0 }", True),
+    ("stage:\n  options: { grain: 0.0, bloom: 1 }", True),
+    ("stage:\n  options:\n    grain: 0", True),
+    ("stage:\n  options: { nebula: 0.12, grain: 0.012, aberration: 0 }", False),   # Innoday: a projector deck
+    ("stage:\n  look: broadcast", True),
+    ("broadcast: true", True),
+    ("stage:\n  palette: { base: blue }", False),
+])
+def test_broadcast_reads_the_headmatter_not_the_text(raw, want, monkeypatch):
+    assert talk_cli.is_broadcast(raw) is want
+    # without talk_deck.py (an older branch) the text fallback agrees
+    monkeypatch.setitem(sys.modules, "talk_deck", None)
+    assert talk_cli.is_broadcast(raw) is want

@@ -586,6 +586,24 @@ def resolve_talk(repo: Repo, name: str | None, cwd: Path) -> tuple[str, Path]:
     return talk, repo.here / "talks" / talk
 
 
+def is_broadcast(raw: str) -> bool:
+    """A talk made for television: `stage.look: broadcast`, `broadcast: true`, or the
+    stage's film grain off (`stage.options.grain` exactly 0; 0.012 is a projector deck's)."""
+    try:
+        import talk_deck
+        hm = talk_deck.parse_yaml(raw)
+    except Exception:        # talk_deck.py missing, or a headmatter it cannot read: by the text
+        return bool(re.search(r"^\s*(look:\s*['\"]?broadcast|broadcast:\s*true)\b", raw, re.M)
+                    or re.search(r"\bgrain:\s*0(?:\.0*)?(?![.\d])", raw))
+    if not isinstance(hm, dict):
+        return False
+    stage = hm.get("stage") if isinstance(hm.get("stage"), dict) else {}
+    opts = stage.get("options") if isinstance(stage.get("options"), dict) else {}
+    grain = opts.get("grain")
+    return (str(stage.get("look", "")).lower() == "broadcast" or hm.get("broadcast") is True
+            or (isinstance(grain, (int, float)) and not isinstance(grain, bool) and grain == 0))
+
+
 def headmatter(deck: Path) -> tuple[dict, str]:
     """Top-level scalar keys of the deck's headmatter, and its raw text."""
     try:
@@ -630,7 +648,7 @@ def talk_info(root: Path, talk: str) -> dict:
         "lang": keys.get("lang"),
         "duration": keys.get("duration"),
         "stage": "slidev-addon-stage" in deps,
-        "broadcast": bool(re.search(r"^\s*look:\s*['\"]?broadcast", raw, re.M) or re.search(r"\bgrain:\s*0\b", raw)),
+        "broadcast": is_broadcast(raw),
         "pin": addon_pin(pkg),
         "url": f"{new_talk.PAGES}/{talk}/",
     }
@@ -1433,7 +1451,7 @@ def ready_stamp(repo: Repo, talk: str) -> Path:
 
 def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
     talk, d = resolve_talk(repo, a.name, invocation_dir())
-    skip = set(a.skip or [])
+    skip = {x.strip() for v in (a.skip or []) for x in v.split(",") if x.strip()}   # --skip a --skip b, or --skip a,b
     unknown = skip - {"lint", "check", "shots", "preflight", "venue", "safe"}
     if unknown:
         raise UsageError(f"--skip takes lint, check, shots, preflight, venue, safe (not {', '.join(sorted(unknown))})")
