@@ -6,7 +6,7 @@ description: Use when a talk in ~/outreach_talks needs facts, numbers, sources, 
 # Research a talk
 
 Research follows the deck draft, never the other way round: the deck is
-written first with fact ids in its notes (`docs/talk-quality.md` §2, step 4),
+written first, citing fact ids (`docs/talk-quality.md` §2, step 4),
 then only what it still lacks is researched. Innoday spent 28.5 minutes
 researching before a slide existed, and the TV talk then researched the same
 topics again.
@@ -68,8 +68,38 @@ python3 -I .claude/skills/talk-research/lane_facts.py talks/<t>/research/*.json 
 pnpm talk facts check
 ```
 
-Then cite the ids in the slide notes as `<!-- facts: id1, id2 -->` and run
-`pnpm talk lint <t>`.
+- `add` refuses an id the bank already has: the lane re-checked a stale
+  fact, or the deck said more than the stored claim. Compare with
+  `pnpm talk facts show <id>`. A re-check of the same claim that came back
+  `confirmed` or `corrected` replaces the stored one:
+  `python3 -I .claude/skills/talk-research/lane_facts.py talks/<t>/research/*.json --id <id> | pnpm -s talk facts add --from-json - --replace`.
+  A different claim gets a new id in the lane file, is filed, and the deck
+  cites the new id.
+- Anything else refused (an `as_of` that is not `YYYY`, `YYYY-MM` or
+  `YYYY-MM-DD`, a private source): fix it in the lane file and file again.
+- Photos the deck uses from `images.json`:
+  `python3 scripts/photo_fetch.py <ref> --record` (`ref` is `cds:<ID>` or
+  `commons:File:<name>`) fetches each into `assets/photos/` and records its
+  licence and credit in `assets/photos/photos.toml`.
+- Copy the lane `notes` the speaker needs (why a figure was corrected, its
+  caveats) under Figures in `talks/<t>/CLAUDE.md`.
+- Then delete the lane files and `images.json` (`rm talks/<t>/research/*.json`).
+  They are untracked scratch, never committed, and `facts check` warns about
+  each one until it is gone.
+
+Cite the ids in a separate comment placed before the slide's notes comment,
+never as the slide's last comment: Slidev takes a slide's last comment as its
+speaker notes, so a facts comment after the notes replaces the script. Then
+run `pnpm talk lint <t>`; it reports a misplaced facts comment as the warning
+`FACT-NOTES`, which does not fail `lint` or `ready`, so read the warnings.
+
+```md
+<!-- facts: lhc-circumference, lhc-run3-energy -->
+
+<!--
+The spoken script… (~1 min)
+-->
+```
 
 ## Rules
 

@@ -139,7 +139,7 @@ research brief was the only workflow of five that finished without losses.
 | 1 | Brief | `pnpm talk new`, skill `talk-new` | the Brief section of `talks/<t>/CLAUDE.md` answers audience, language, duration, venue or broadcast, must-haves, banned claims; private context sits outside git |
 | 2 | Blueprint | saved workflow `talk-blueprint` for a talk that matters, else by hand | angle, arc, takeaway, a slide table whose minutes sum to the duration or less, style rules, a drop order, a Decisions log |
 | 3 | Outline | `pnpm talk map` | every slide exists in `deck.md` with its title, one-sentence message (in the notes) and pose |
-| 4 | Deck draft | `pnpm talk facts search <words>` | slide text and notes are written; notes cite `<!-- facts: id1, id2 -->` for numbers the bank already has, and name new ids for the rest |
+| 4 | Deck draft | `pnpm talk facts search <words>` | slide text and notes are written; each slide cites `<!-- facts: id1, id2 -->` for numbers the bank already has, and names new ids for the rest, in a separate comment placed before the notes comment (§5) |
 | 5 | Research the gaps | skill `talk-research`, saved workflow `talk-research-gaps` | every cited id exists in `research/facts.jsonl` with verdict `confirmed` or `corrected`; the workflow's `unverified[]` is reported to the owner |
 | 6 | Lint | `pnpm talk lint <t>` | exit 0 |
 | 7 | Shots and contact-sheet review | `pnpm talk review <t>`, skill `talk-verify` | no overflow or page errors; a reviewer that saw the sheets and the metrics (not the main loop) reports no high finding |
@@ -223,11 +223,21 @@ From the Startertalk blueprint's style rules, generalised.
   used_in[]}`, verdict `confirmed | corrected | unverified | refuted`.
   `pnpm talk facts search <words>` before any research; `facts show <id>`,
   `facts add`, `facts check`.
-- Notes cite facts as `<!-- facts: id1, id2 -->`. The lint fails on an id that
+- Slides cite facts as `<!-- facts: id1, id2 -->`. The lint fails on an id that
   is missing or not `confirmed`/`corrected`.
+- The facts comment is a separate comment placed before the notes comment,
+  never the slide's last comment: Slidev takes a slide's last comment as its
+  speaker notes, so a facts comment placed after the notes replaces the
+  script. The lint reports this as the warning `FACT-NOTES`, which does not
+  fail `lint` or `ready`; treat it as an error.
+- The research workflow writes one `talks/<t>/research/<lane>.json` per
+  lane. Only its `facts` go into the bank (skill `talk-research`, step 3);
+  then the lane files are deleted: they are scratch and never committed.
 - The repo is public. The bank holds only claims with a public `source_url`.
   Anything from mail, Drive or calendars goes to the private brief
-  (`~/.local/share/outreach_talks/briefs/<slug>.md`), never into git.
+  (`~/.local/share/outreach_talks/briefs/<slug>.md`, where `<slug>` is the
+  name after the date, lowercased, `_` as `-`, so `2026_10_00_OpenData` is
+  `opendata`), never into git.
 - Physics traps that recurred in the Startertalk: thresholds from
   charge-consistent pairs with PDG masses; the η<sub>c</sub>p / J/ψp ratio
   of about 3 holds only for the Σ<sub>c</sub>D̄ 1/2⁻ state; a cusp stays put

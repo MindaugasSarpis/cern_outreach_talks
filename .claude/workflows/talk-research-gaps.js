@@ -153,7 +153,7 @@ const PERSONAL = {
   required: ['answered', 'unanswered', 'calls'],
 }
 
-const CONTEXT = `THE TALK: ${DIR} (a Slidev deck: deck.md holds the slides and, in <!-- --> comments, the speaker notes; notes cite facts as <!-- facts: id1, id2 -->). Its Brief (audience, language, duration, must-haves, banned claims) is the Brief section of ${DIR}/CLAUDE.md. The facts bank is ${REPO}/research/facts.jsonl, one JSON object per line {id, claim_en, claim_lt, value, unit, as_of, source_url, quote, verdict, verified_on, verified_by, used_in[]}, verdict confirmed | corrected | unverified | refuted. Today is ${TODAY}. Talk language: ${LANG}.
+const CONTEXT = `THE TALK: ${DIR} (a Slidev deck: deck.md holds the slides; a slide's last <!-- --> comment is its speaker notes, and facts are cited as <!-- facts: id1, id2 --> in a separate comment placed before the notes comment, never as the slide's last comment). Its Brief (audience, language, duration, must-haves, banned claims) is the Brief section of ${DIR}/CLAUDE.md. The facts bank is ${REPO}/research/facts.jsonl, one JSON object per line {id, claim_en, claim_lt, value, unit, as_of, source_url, quote, verdict, verified_on, verified_by, used_in[]}, verdict confirmed | corrected | unverified | refuted. Today is ${TODAY}. Talk language: ${LANG}.
 
 ${HOUSE}`
 

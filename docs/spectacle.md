@@ -37,7 +37,7 @@ one sparse and one dense slide before it spreads.
    2.5 Mbps. Broadcast devices use fewer, larger, brighter grains (see the
    broadcast look in [STAGE_QUICKSTART.md](STAGE_QUICKSTART.md)).
 7. Numbers in the world are real and sourced, baked into JSON with their
-   source, and cited by fact id in the notes.
+   source, and cited by fact id on their slide (`docs/talk-quality.md` §5).
 
 ## Openings
 

@@ -17,7 +17,7 @@ for the engine, [docs/STAGE_QUICKSTART.md](../../../docs/STAGE_QUICKSTART.md).
 | Brief | skill `talk-new` |
 | Blueprint | saved workflow `talk-blueprint` (below), or by hand for a short talk |
 | Outline | slides with title, message and pose; `pnpm talk map <t>` |
-| Deck draft | text and notes now, `<!-- facts: id -->` in the notes; `pnpm talk facts search` |
+| Deck draft | text and notes now; `<!-- facts: id -->` as its own comment before the notes comment, never the slide's last (that one is the notes); `pnpm talk facts search` |
 | Research the gaps | skill `talk-research` (saved workflow `talk-research-gaps`) |
 | Lint | `pnpm talk lint <t>` |
 | Shots and sheet review | skill `talk-verify` (`pnpm talk review <t>`) |
@@ -31,7 +31,8 @@ for the engine, [docs/STAGE_QUICKSTART.md](../../../docs/STAGE_QUICKSTART.md).
 - One claim; a plain title of six words or fewer; at most 60 words on screen.
 - One dominant visual; every world object on it maps to a sentence or label
   on the slide.
-- Every number sourced (`.src`, a fact id in the notes); nothing unverified.
+- Every number sourced (`.src`, a facts comment before the notes); nothing
+  unverified.
 - Every term and plot introduced before it is used.
 - Readable over the world (type floor, dim, no bright detail behind text).
 - Notes carry the spoken script and `(~N min)`.
