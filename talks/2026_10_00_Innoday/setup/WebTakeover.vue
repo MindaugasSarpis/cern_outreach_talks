@@ -15,10 +15,10 @@ const props = defineProps({
   grains: { type: Number, default: 140000 },
   near: { type: Number, default: 14 },
   far: { type: Number, default: 46 },
-  ms: { type: Number, default: 2600 },     // the dissolve
+  ms: { type: Number, default: 3200 },     // the dissolve
   hold: { type: Number, default: 450 },    // the still frame before it starts
   size: { type: Number, default: 0.4 },
-  gain: { type: Number, default: 0.6 },    // grains add up: 1.25 burned the knots white, 0.24 left the filaments faint
+  gain: { type: Number, default: 0.85 },   // grains add up: 1.25 burned the knots white, 0.24 left them faint, 0.6 still read dimmer than the frame
   gamma: { type: Number, default: 1.0 },   // density ~ brightness^gamma
 })
 const { $renderContext, $frontmatter, $page } = useSlideContext()
@@ -49,7 +49,6 @@ function stage() {
   return { api, h, camera, canvas }
 }
 const frame = () => new Promise((r) => requestAnimationFrame(() => r()))
-const ease = (u) => u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2
 
 // the world mounts with the deck and may not be up yet (a reload on this slide)
 async function waitStage(id) {
@@ -94,9 +93,8 @@ async function takeOver() {
   const step = (now) => {
     if (id !== run) return
     const u = Math.min(1, (now - t0) / props.ms)
-    const e = ease(u)
-    drawCopy(-0.1 + 1.25 * e)
-    pts.material.uniforms.uReveal.value = Math.min(1, e * 1.25)
+    drawCopy(-0.1 + 1.25 * u)
+    pts.material.uniforms.uReveal.value = Math.min(1, u * 1.3)
     if (u < 1) raf = requestAnimationFrame(step)
     else stopGl()
   }
@@ -114,8 +112,11 @@ void main() {
   float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
   float n = hash(floor(gl_FragCoord.xy / 2.0));            // grains of two pixels
   float th = mix(n, sqrt(l), 0.55);                         // the voids go first, the filaments last
-  float a = smoothstep(uT - 0.06, uT + 0.06, th);
-  float edge = 1.0 - min(1.0, abs(th - uT) / 0.06);         // a pixel lights up as it lets go
+  float lit = smoothstep(0.04, 0.22, l);
+  // the dark of the frame lets go evenly, so black becomes the world's ground without speckle;
+  // what is lit breaks into grains, the faint first, the knots last
+  float a = mix(1.0 - smoothstep(-0.1, 0.55, uT), smoothstep(uT - 0.06, uT + 0.06, th), lit);
+  float edge = (1.0 - min(1.0, abs(th - uT) / 0.06)) * lit;  // a pixel lights up as it lets go
   vec3 rgb = c * a + c * edge * 0.9 + vec3(0.55, 0.65, 1.0) * edge * l * 0.35;
   gl_FragColor = vec4(rgb, a);
 }`
@@ -159,7 +160,12 @@ function stopGl() { if (overlay.value) overlay.value.style.opacity = '0' }
 
 onSlideEnter(() => { if (live.value) takeOver() })
 onMounted(() => { if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver() })
-onSlideLeave(() => { run++; cancelAnimationFrame(raf); stopGl(); still.value = true })
+onSlideLeave(() => {
+  run++; cancelAnimationFrame(raf); stopGl(); still.value = true
+  // left before the dissolve finished: the world keeps its grains, whole
+  const p = stage()?.h.scene.getObjectByName('takeover-web')
+  if (p) p.material.uniforms.uReveal.value = 1
+})
 onUnmounted(() => { run++; cancelAnimationFrame(raf); gl?.getExtension('WEBGL_lose_context')?.loseContext(); gl = null })
 </script>
 
