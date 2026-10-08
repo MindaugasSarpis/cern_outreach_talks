@@ -131,7 +131,7 @@ OUT = Out()
 # lock defaults to it and every headless run here keeps one queue.
 TOOLKIT_LOCK = Path("/tmp/slidev-stage-shots.lock")
 CONFIG_KEYS = ("OUTREACH_ROOT", "SLIDEV_VIDEOS_DIR", "OUTREACH_STATE", "OUTREACH_ENV_BIN", "RENDER_BACKEND",
-               "RENDER_LOCK", "RENDER_GPUS", "RENDER_SRUN_ARGS", "TALK_TMP")
+               "RENDER_LOCK", "RENDER_GPUS", "RENDER_SRUN_ARGS", "RENDER_BROWSERS", "TALK_TMP")
 # the stage launcher's knobs: talk passes them to shots, record, safe and render as they are
 GL_KEYS = ("SLIDEV_STAGE_GL", "SLIDEV_STAGE_MESA_D3D12", "SLIDEV_STAGE_CHROMIUM_ARGS", "SLIDEV_STAGE_CHROMIUM_ENV")
 BACKENDS = ("slurm", "condor", "local")
@@ -194,6 +194,28 @@ def detect_backend(environ: Mapping[str, str]) -> str:
     return "local"
 
 
+# On the owner's cluster every render goes to photon (2026-10-08): it has the
+# free cores, gluon is oversubscribed by jobs outside Slurm. 16 cores: a record
+# measured 1.03 s/frame at 4, 0.86 at 8, 0.80-0.88 at 16 and 1.14-1.16 at 32.
+PHOTON = "photon_primary"
+PHOTON_SRUN_ARGS = f"-p {PHOTON} --cpus-per-task=16"
+
+
+def default_srun_args(environ: Mapping[str, str]) -> tuple[str, str]:
+    """photon_primary with 16 cores where the cluster has that partition; else nothing."""
+    path = environ.get("PATH", "")
+    if not shutil.which("sinfo", path=path):
+        return "", "default"
+    try:
+        r = subprocess.run(["sinfo", "-h", "-p", PHOTON, "-o", "%P"], capture_output=True, text=True,
+                           timeout=20, env={**environ})
+    except (OSError, subprocess.SubprocessError):
+        return "", "default"
+    if r.returncode == 0 and r.stdout.strip():
+        return PHOTON_SRUN_ARGS, f"default: {PHOTON} exists here (all renders go to photon)"
+    return "", "default"
+
+
 def default_env_bin(environ: Mapping[str, str], home: Path) -> tuple[str | None, str]:
     conda = environ.get("CONDA_PREFIX")
     if conda and (Path(conda) / "bin" / "pnpm").exists():
@@ -231,7 +253,9 @@ def resolve_config(environ: Mapping[str, str], main: Path) -> Config:
     pick("RENDER_LOCK", lambda: (TOOLKIT_LOCK, "default: the stage tools' lock, which exists here")
          if TOOLKIT_LOCK.exists() else state / "render.lock")
     pick("RENDER_GPUS", "auto")
-    pick("RENDER_SRUN_ARGS", "")
+    pick("RENDER_SRUN_ARGS", lambda: default_srun_args(environ) if backend == "slurm" else "")
+    # node-local Playwright browsers (scripts/playwright-local.sh); used by a job only where complete
+    pick("RENDER_BROWSERS", f"/var/tmp/{environ.get('USER') or 'user'}/ms-playwright")
     # a build has to be where the render runs: /tmp on one machine, the shared filesystem on a cluster
     pick("TALK_TMP", lambda: tempfile.gettempdir() if backend == "local"
          else (root / ".cache" / "talk-builds", "default on a cluster: shared with the compute nodes"))
@@ -796,6 +820,45 @@ def cluster_gpus(backend: str, env: dict) -> bool:
     return False
 
 
+def playwright_dirs(root: Path) -> list[str]:
+    """The browser directories every playwright-core in this checkout needs, as Playwright
+    names them under its browsers path (chromium_headless_shell-1217, chromium-1217, ffmpeg-1011)."""
+    want = set()
+    for bj in root.glob("node_modules/.pnpm/playwright-core@*/node_modules/playwright-core/browsers.json"):
+        try:
+            for b in json.loads(bj.read_text()).get("browsers", []):
+                if b.get("name") in ("chromium", "chromium-headless-shell", "ffmpeg") and b.get("revision"):
+                    want.add(f"{b['name'].replace('-', '_')}-{b['revision']}")
+        except (OSError, ValueError):
+            continue
+    return sorted(want)
+
+
+# A job uses the node-local browsers only when that node has every one this
+# checkout needs; otherwise Playwright keeps its own path (~/.cache on the share).
+BROWSERS_PRELUDE = ('d=$1; shift; ok=1; while [ "$1" != -- ]; do [ -f "$d/$1/INSTALLATION_COMPLETE" ] || ok=0; shift; done; '
+                    'shift; [ "$ok" = 1 ] && export PLAYWRIGHT_BROWSERS_PATH="$d"; exec "$@"')
+
+
+def with_local_browsers(cmd: list) -> list:
+    d = cfg()["RENDER_BROWSERS"]
+    dirs = playwright_dirs(find_repo(invocation_dir()).here) if d else []
+    if not dirs or os.environ.get("PLAYWRIGHT_BROWSERS_PATH"):
+        return cmd
+    return ["sh", "-c", BROWSERS_PRELUDE, "talk-render", d, *dirs, "--", *cmd]
+
+
+# srun starts one task per share of the allocation when only --cpus-per-task is
+# given (photon: -c 4 ran 8 recorders, -c 16 ran 2, writing the same files), so
+# the slot always asks for one task unless RENDER_SRUN_ARGS names a count.
+NTASKS_RE = re.compile(r"^(-n\d*|--ntasks(=.*)?)$")
+
+
+def srun_args(args: str) -> list:
+    a = shlex.split(args or "")
+    return a if any(NTASKS_RE.match(x) for x in a) else ["--ntasks=1", *a]
+
+
 def render_plan(cmd: list, env: dict, gpu: bool | None = None) -> dict:
     """How the render backend runs `cmd`: {backend, argv, env (added variables), lock, gpu, note}.
     Slurm: srun, with --gres=gpu:1 where the cluster has GPUs, plus $RENDER_SRUN_ARGS.
@@ -820,8 +883,9 @@ def render_plan(cmd: list, env: dict, gpu: bool | None = None) -> dict:
         gpu = truthy(cfg()["RENDER_GPUS"])
     if gpu is None:
         gpu = cluster_gpus(backend, env)
+    cmd = with_local_browsers(cmd)
     if backend == "slurm":
-        argv = ["srun", *(["--gres=gpu:1"] if gpu else []), *shlex.split(cfg()["RENDER_SRUN_ARGS"] or ""), *cmd]
+        argv = ["srun", *(["--gres=gpu:1"] if gpu else []), *srun_args(cfg()["RENDER_SRUN_ARGS"]), *cmd]
     else:
         argv = ["condor_run", *(["-a", "request_gpus = 1"] if gpu else []), "-a", "getenv = True", shlex.join(cmd)]
     return {"backend": backend, "argv": argv, "env": {"TALK_RENDER_SLOT": backend}, "lock": None, "gpu": gpu}

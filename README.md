@@ -93,7 +93,9 @@ defaults, and every line of the file also reaches the tools talk runs):
 | `OUTREACH_ENV_BIN` | the env's `bin` (bootstrap writes it), else `$CONDA_PREFIX/bin`, else `~/micromamba/envs/outreach_talks/bin` |
 | `RENDER_BACKEND` | `slurm`, `condor` or `local`, detected |
 | `RENDER_LOCK` | `/tmp/slidev-stage-shots.lock` where it exists (the stage tools' own lock, so talk and the tools keep one queue), else `$OUTREACH_STATE/render.lock` |
-| `RENDER_GPUS`, `RENDER_SRUN_ARGS` | ask for a GPU (`auto`: when the cluster has GPUs); more srun options (`-p`, `--time`, `--account`) |
+| `RENDER_GPUS` | ask for a GPU (`auto`: when the cluster has GPUs) |
+| `RENDER_SRUN_ARGS` | srun options (`-p`, `--cpus-per-task`, `--time`, `--account`); default `-p photon_primary --cpus-per-task=16` where that partition exists (photon has the free cores), else none. The slot always runs one task (`--ntasks=1`) unless this names a count: srun with only `-c` starts several copies of the job |
+| `RENDER_BROWSERS` | `/var/tmp/$USER/ms-playwright`: node-local Playwright browsers. A job uses them only on a node that has every browser the checkout pins; else Playwright's own `~/.cache/ms-playwright`. Install per node, and after a toolkit bump: `srun -p <partition> --ntasks=1 scripts/playwright-local.sh` (Playwright's own installer stalls unpacking onto the NFS home) |
 | `TALK_TMP` | where builds go: the temp directory, on a cluster `$OUTREACH_ROOT/.cache/talk-builds` |
 | `SLIDEV_STAGE_GL`, `SLIDEV_STAGE_MESA_D3D12`, `SLIDEV_STAGE_CHROMIUM_ARGS`, `SLIDEV_STAGE_CHROMIUM_ENV` | the stage launcher's; passed to shots, record, safe and render as they are. A backend set in `SLIDEV_STAGE_GL` is forced (a run that cannot reach it fails); `auto` falls through to the next |
 

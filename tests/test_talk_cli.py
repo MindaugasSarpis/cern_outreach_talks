@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import re
 import subprocess
 import sys
@@ -437,9 +438,51 @@ def test_render_on_slurm(repo, env, tmp_path, sinfo, gres):
     e["RENDER_SRUN_ARGS"] = "-p render --time=20"
     code, obj, _ = talk(repo, "render", "--dry-run", "--", "pnpm", "videos:encode", "--", "--only", "a.mp4", env=e)
     assert code == 0 and obj["backend"] == "slurm" and obj["lock"] is None
-    assert obj["argv"] == ["srun", *gres, "-p", "render", "--time=20", "pnpm", "videos:encode", "--", "--only", "a.mp4"]
+    assert obj["argv"] == ["srun", *gres, "--ntasks=1", "-p", "render", "--time=20", "pnpm", "videos:encode", "--", "--only", "a.mp4"]
     code, obj, _ = talk(repo, "render", "--dry-run", "--no-gpu", "--", "true", env=e)
-    assert obj["argv"] == ["srun", "-p", "render", "--time=20", "true"]
+    assert obj["argv"] == ["srun", "--ntasks=1", "-p", "render", "--time=20", "true"]
+
+
+@pytest.mark.parametrize("args, want", [("-n 2 -p x", ["-n", "2", "-p", "x"]), ("--ntasks=3", ["--ntasks=3"]),
+                                        ("-n4", ["-n4"]), ("-c 16", ["--ntasks=1", "-c", "16"]), ("", ["--ntasks=1"])])
+def test_srun_always_asks_for_one_task_unless_told(args, want):
+    # srun -c 16 alone started two recorders on photon, writing the same files
+    assert talk_cli.srun_args(args) == want
+
+
+@pytest.mark.parametrize("partitions, want", [("photon_primary\n", talk_cli.PHOTON_SRUN_ARGS), ("", "")])
+def test_slurm_renders_default_to_photon_where_it_exists(repo, env, tmp_path, partitions, want):
+    b = tmp_path / "bin"
+    fake_bin(b, "sbatch", "exit 0\n")
+    # sinfo -h -p photon_primary -o %P lists the partition if it exists; the gres query says no GPUs
+    fake_bin(b, "sinfo", f'case "$*" in *photon_primary*) printf \'{partitions}\' ;; *) printf \'(null)\\n\' ;; esac\n')
+    e = path_with(b, env)
+    del e["RENDER_BACKEND"]
+    e.pop("RENDER_SRUN_ARGS", None)
+    code, obj, _ = talk(repo, "render", "--dry-run", "--", "true", env=e)
+    assert code == 0 and obj["argv"] == ["srun", "--ntasks=1", *want.split(), "true"]
+
+
+def test_playwright_dirs_and_the_local_browsers_prelude(tmp_path):
+    pw = tmp_path / "node_modules/.pnpm/playwright-core@1.59.1/node_modules/playwright-core"
+    pw.mkdir(parents=True)
+    (pw / "browsers.json").write_text(json.dumps({"browsers": [
+        {"name": "chromium", "revision": "1217"}, {"name": "chromium-headless-shell", "revision": "1217"},
+        {"name": "ffmpeg", "revision": "1011"}, {"name": "firefox", "revision": "1511"}]}))
+    dirs = talk_cli.playwright_dirs(tmp_path)
+    assert dirs == ["chromium-1217", "chromium_headless_shell-1217", "ffmpeg-1011"]
+    local = tmp_path / "local"
+    prelude = ["sh", "-c", talk_cli.BROWSERS_PRELUDE, "talk-render", str(local), *dirs, "--",
+               "sh", "-c", 'echo "${PLAYWRIGHT_BROWSERS_PATH:-unset}"']
+    clean = {k: v for k, v in os.environ.items() if k != "PLAYWRIGHT_BROWSERS_PATH"}
+    # a node without all of them keeps Playwright's own path
+    for d in dirs[:2]:
+        (local / d).mkdir(parents=True)
+        (local / d / "INSTALLATION_COMPLETE").touch()
+    assert subprocess.run(prelude, capture_output=True, text=True, env=clean).stdout.strip() == "unset"
+    (local / dirs[2]).mkdir()
+    (local / dirs[2] / "INSTALLATION_COMPLETE").touch()
+    assert subprocess.run(prelude, capture_output=True, text=True, env=clean).stdout.strip() == str(local)
 
 
 def test_render_on_htcondor(repo, env, tmp_path):
