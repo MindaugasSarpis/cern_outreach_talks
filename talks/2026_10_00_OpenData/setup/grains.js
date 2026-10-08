@@ -266,7 +266,9 @@ void main() {
   float pileL = dot(pile, vec3(0.3, 0.55, 0.15));
   vec3 near = col * (0.55 + 0.9 * min(pileL, 1.4));
   col = mix(pile * vShade, mix(near, col, smoothstep(14.0, 40.0, vPx)), smoothstep(3.0, 11.0, vPx));
-  gl_FragColor = vec4(mix(col, own, 1.0 - vF), 1.0);   // flyers: just themselves
+  // flyers: just themselves, once they are big enough to show their own reflection; a
+  // smaller one shows the pile, else its mirror catches the dark floor as a black speck
+  gl_FragColor = vec4(mix(col, own, (1.0 - vF) * smoothstep(3.0, 11.0, vPx)), 1.0);
 }`
 
 // A glint for a single sphere seen from far: a soft point a few pixels wide,
@@ -279,16 +281,16 @@ void main() {
   gl_Position = projectionMatrix * mv;
   float px = 2.0 * uRad * projectionMatrix[1][1] * 0.5 * uViewH / max(-mv.z, 1e-3);   // the sphere's diameter on screen
   vA = uShow * (1.0 - smoothstep(2.0, 5.0, px));
-  gl_PointSize = (uViewH / 1080.0) * 9.0;
+  gl_PointSize = (uViewH / 1080.0) * 14.0;
 }`
 const GLINT_FRAG = /* glsl */ `
 uniform vec3 uColor;
 varying float vA;
 void main() {
   float d = length(gl_PointCoord - 0.5) * 2.0;
-  float a = exp(-d * d * 4.0) * vA;
+  float a = (exp(-d * d * 9.0) + 0.3 * exp(-d * d * 2.5)) * vA;
   if (a < 0.003) discard;
-  gl_FragColor = vec4(uColor * a * 1.6, 1.0);
+  gl_FragColor = vec4(uColor * a * 2.2, 1.0);
 }`
 
 // The single sphere: a real sphere mesh in the same metal (no halo).
@@ -392,17 +394,17 @@ function buildLineup(o, ctx) {
   const makeLabels = () => {
     balls.forEach((x, b) => {
       if (!x.label) return
-      const l = makeLabel(x.label, { px: 30, weight: 500, color: '#d4dcea', worldH: o.labelH ?? 0.036, letterSpacing: 0.14 })
+      const l = makeLabel(x.label, { px: 64, weight: 500, color: '#d4dcea', worldH: o.labelH ?? 0.036, letterSpacing: 0.14 })
       l.material.sizeAttenuation = false; l.material.opacity = 0
       // under its pile; the single sphere's above it, clear of the next pile's label when both are small
-      const above = x.n === 1
+      const above = x.above ?? x.n === 1
       l.center.set(0.5, above ? -0.6 : 1.6)
       l.position.set(cx[b], above ? R[b] : -R[b], 0)
       l.userData.vis = 0; l.userData.ball = b
       g.add(l); labels.push(l)
     })
   }
-  if (document.fonts?.load) document.fonts.load('500 30px "Space Grotesk"').catch(() => {}).finally(makeLabels)
+  if (document.fonts?.load) document.fonts.load('500 64px "Space Grotesk"').catch(() => {}).finally(makeLabels)
   else makeLabels()
 
   let now = 0, step = -1
@@ -469,7 +471,7 @@ function buildLineup(o, ctx) {
 }
 
 // ---- streams ------------------------------------------------------------------------
-//   { type: streams, name, pos, from: [x,y,z], to: [{ pos, lift?, node?: false }, …],
+//   { type: streams, name, pos, from: [x,y,z], to: [{ pos, lift?, node?: false, label? }, …],
 //     grains?: 2200 per stream, node?: 900 grains per end cluster, nodeRadius?: 0.45,
 //     speed?: 0.11 (laps a second), color?, spread?: 0.08 }
 // Step k shows the first k streams; a stream that starts gathers its end
@@ -558,6 +560,25 @@ function buildStreams(o, ctx) {
   const g = new Group(); g.add(pts)
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
 
+  // a label under each end that names it (a fixed size on screen, as the piles' labels)
+  const labels = []
+  const makeLabels = () => {
+    to.forEach((d, i) => {
+      if (!d.label) return
+      const l = ctx.helpers.makeLabel(d.label, { px: 64, weight: 500, color: '#ffe3a8', worldH: o.labelH ?? 0.042, letterSpacing: 0.06, upper: false })
+      l.material.sizeAttenuation = false; l.material.opacity = 0
+      const e = d.pos || [0, 0, 0]
+      l.center.set(0.5, 1.5)
+      l.position.set(e[0], e[1] - (o.nodeRadius ?? 0.45), e[2])
+      l.userData.vis = 0; l.userData.i = i
+      g.add(l); labels.push(l)
+    })
+  }
+  if (to.some((d) => d.label)) {
+    if (document.fonts?.load) document.fonts.load('500 64px "Space Grotesk"').catch(() => {}).finally(makeLabels)
+    else makeLabels()
+  }
+
   let now = 0
   // step k: the first k streams run; those starting now leave a quarter second
   // apart, those stopping fade out (and start afresh if asked for again)
@@ -583,7 +604,16 @@ function buildStreams(o, ctx) {
   if (state.has(o.name)) go(state.get(o.name), { instant: true })
   return {
     group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio,
-    update(t) { now = t; mat.uniforms.uTime.value = t },
+    update(t) {
+      now = t; mat.uniforms.uTime.value = t
+      for (const l of labels) {
+        const i = l.userData.i
+        const want = showT[i] !== -1 && hideT[i] < 0 && t - showT[i] > 1.5 ? 1 : 0
+        l.userData.vis += (want - l.userData.vis) * 0.08
+        l.material.opacity = 0.9 * l.userData.vis
+        l.visible = l.userData.vis > 0.01
+      }
+    },
     dispose: off2,
   }
 }

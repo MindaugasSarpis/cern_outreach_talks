@@ -237,10 +237,10 @@ tens of PB of data per year".
 -->
 
 ---
-space: { at: [5.59, 0, 0], dist: 73.5, yaw: -4, pitch: 4, dim: 0.15 }
+space: { at: [9.6, 0, 0], dist: 73.5, yaw: -4, pitch: 4, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [0, 3, 4], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [3, 4], 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
 
 <div class="legend"><span class="dot steel"></span>one sphere = one terabyte</div>
 
@@ -274,7 +274,7 @@ LHC" (17 December 2025).
 space: { at: [9.6, 0, 0], dist: 8.7, yaw: -4, pitch: 4, dim: 1 }
 ---
 
-<Grains :set="{ scale: [0, 3, 4], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [0, 3], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
 
 <div class="finds">
 <div class="finds-text">
@@ -358,7 +358,7 @@ Sources: opendata.cern.ch, "LHCb releases entire Run 1 dataset" (20 December
 space: { at: [7.36, 0, 0], dist: 37.5, yaw: -4, pitch: 4, dim: 0.15 }
 ---
 
-<Grains :set="{ scale: [1, 2, 3], 'scale:labels': 1, world: 8, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: [1, 2], 'scale:labels': 1, world: 8, vilnius: 0, dominykas: 0 }" />
 
 <div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
@@ -383,8 +383,8 @@ want, and LHCb's Ntupling Service selects those collisions for you. By July it
 had about 20 requests, mostly from theorists. In September two physicists at
 Brown University posted a study built on LHCb open data. Adam Morris, now in
 LHCb Vilnius, is one of the service's authors. LHCb releases about half of each
-run five years after it ends and all of it after ten, so the blue pile is on
-its way.
+run five years after it ends and all of it after ten, so more of the 100
+petabytes will follow.
 
 Sources: LHCb outreach, 3 March 2026 ("over 4 PB of data to explore"); DPHEP
 Global Report 2026; arXiv:2609.09275; LHCb, arXiv:2504.00610 (open data policy).
@@ -393,7 +393,7 @@ Global Report 2026; arXiv:2609.09275; LHCb, arXiv:2504.00610 (open data policy).
 -->
 
 ---
-space: { at: [15.5, -3.4, 4], dist: 27, yaw: 12, pitch: 4, dim: 0.3 }
+space: { at: [11.5, -3.4, 4], dist: 27, yaw: 12, pitch: 4, dim: 0.3 }
 ---
 
 <Grains :set="{ scale: [1, 2], 'scale:labels': 0, world: 0, vilnius: 3, dominykas: 0 }" />
@@ -414,7 +414,8 @@ through their decay into two muons, one of the first analyses of the released
 data. In the course "Best Research and Data Analysis Practices from CERN" every
 student works on the same LHCb open-data file, about 92 000 candidate decays.
 And in 2025 students organised Lithuania's first LHCb masterclass, with about
-100 participants from Lithuania and Ukraine. The three streams from the gold pile end in Vilnius.
+100 participants from Lithuania and Ukraine. The three streams from the gold pile end at the three uses, each
+labelled.
 
 Background: the Z → μμ analysis (N. E. Eimutis, M. Ambrozas, M. Šarpis) was
 presented at Open Readings, Vilnius, 23–26 April 2024. The course file is the
@@ -468,14 +469,14 @@ Kaunas, 2025.
 
 ---
 layout: statement
-space: { at: close }
+space: { at: close, dim: 0.3 }
 ---
 
 # Thank you
 
 <div class="mt-md"><span class="nt">LHCb</span> Vilnius · Vilnius University · opendata.cern.ch</div>
 
-<p class="team">Mindaugas Šarpis · Ramūnas Aleksiejūnas · Oleg Kravcov · Adam Morris · Augustas Vaitkevičius · Rūta Racz · Šarūnas Jacevičius · Margarita Biveinytė · Sophia Pennuttis · Mikas Paulius Iršėnas · Neilas Beniušis · Karolina German · Eliza Holvoet · Meda Paulavičiūtė · Dominykas Stonkus</p>
+<p class="team"><span>Mindaugas Šarpis</span> · <span>Ramūnas Aleksiejūnas</span> · <span>Oleg Kravcov</span> · <span>Adam Morris</span> · <span>Augustas Vaitkevičius</span> · <span>Rūta Racz</span> · <span>Šarūnas Jacevičius</span> · <span>Margarita Biveinytė</span> · <span>Sophia Pennuttis</span> · <span>Mikas Paulius Iršėnas</span> · <span>Neilas Beniušis</span> · <span>Karolina German</span> · <span>Eliza Holvoet</span> · <span>Meda Paulavičiūtė</span> · <span>Dominykas Stonkus</span></p>
 
 <!--
 Message: this is the work we were nominated for, and the people who did it.

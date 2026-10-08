@@ -8,6 +8,7 @@ html[data-stage] {
   --od-blue: #8fb2ff; --od-blue-hi: #cfe0ff;
   --od-steel: #dfe6f1; --od-steel-lo: #aab6c8;
   --od-shadow: 0 2px 18px rgba(0, 0, 0, 0.72);
+  --stage-type-min: 18px;   /* the kit's kickers, cover subtitle and bylines (11–14 px) up to the house floor */
 }
 
 /* LHCb keeps its lower-case b where the kit sets type in capitals */
@@ -42,7 +43,7 @@ html[data-stage] .readout.thesis h1 {
   font-size: 54px !important; font-weight: 700 !important; letter-spacing: -0.02em; line-height: 1.02 !important;
   margin: 0 0 12px !important; color: var(--stage-fg) !important; animation: none !important;
 }
-html[data-stage] .readout.thesis .line { color: var(--od-gold-hi); }
+html[data-stage] .readout.thesis .line { color: var(--stage-fg); }
 
 /* ---- the key, top right, on every slide that shows the piles */
 html[data-stage] .legend {
@@ -140,6 +141,7 @@ html[data-stage] .slidev-layout.statement .team {
   max-width: 64ch; margin: 24px auto 0; font-size: 18px; line-height: 1.6; letter-spacing: 0.02em;
   color: var(--stage-dim); animation: stage-rise 0.9s var(--stage-ease) 0.7s both;
 }
+html[data-stage] .slidev-layout.statement .team span { white-space: nowrap; }
 
 /* no one-word orphans on a big screen */
 html[data-stage] .slidev-layout.cover h1, html[data-stage] .readout .line, html[data-stage] .photo-text .line,
