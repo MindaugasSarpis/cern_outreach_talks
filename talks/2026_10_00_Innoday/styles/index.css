@@ -200,3 +200,11 @@ html[data-stage] .news .card h2 { font-size: 24px; line-height: 1.2; margin: 0; 
 html[data-stage] .rank > div { padding: 10px 16px; grid-template-columns: 52px 1fr; align-items: center; }
 html[data-stage] .rank .r { grid-row: auto; }
 html[data-stage] .rank .t { font-size: 23px; }
+
+/* the tiles carry a name only: give them room */
+html[data-stage] .tiles { top: 160px; gap: 18px; }
+html[data-stage] .tiles .card { padding: 26px 22px 24px; }
+html[data-stage] .tiles .card .k { font-size: 12.5px; margin-bottom: 10px; }
+html[data-stage] .tiles .card h2 { font-size: 28px; line-height: 1.12; }
+/* words the kit would uppercase but must keep their case (LHCb) */
+html[data-stage] .nc { text-transform: none; }

@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { onSlideEnter, useSlideContext } from '@slidev/client'
+import { ref, computed, onUnmounted } from 'vue'
+import { onSlideEnter, useSlideContext, useNav } from '@slidev/client'
 
 // <Count :to="1954" :from="1900" :ms="2400" />: the number counts when its
 // slide becomes the current one. Written the Lithuanian way: groups of three
@@ -16,12 +16,14 @@ const props = defineProps({
   plain: { type: Boolean, default: false },
 })
 const { $renderContext } = useSlideContext()
-const live = computed(() => ['slide', 'presenter'].includes($renderContext?.value))
+const { isPrintMode } = useNav()
+// print renders slides with the default render context, 'slide': ask the router as well
+const live = computed(() => ['slide', 'presenter'].includes($renderContext?.value) && !isPrintMode.value)
 const value = ref(props.to)
 let raf = 0
 onSlideEnter(() => {
-  if (!live.value || matchMedia('(prefers-reduced-motion: reduce)').matches) { value.value = props.to; return }
   cancelAnimationFrame(raf)
+  if (!live.value || matchMedia('(prefers-reduced-motion: reduce)').matches) { value.value = props.to; return }
   value.value = props.from
   const t0 = performance.now() + props.delay
   const tick = (now) => {
@@ -32,6 +34,7 @@ onSlideEnter(() => {
   }
   raf = requestAnimationFrame(tick)
 })
+onUnmounted(() => cancelAnimationFrame(raf))
 const text = computed(() => {
   const s = value.value.toFixed(props.decimals)
   const [int, dec] = s.split('.')

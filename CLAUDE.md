@@ -378,7 +378,14 @@ the package.
   `public/figures/` with their credit on the slide (`.credit`); CERN-terms
   photos are fine for this non-commercial site, the MARS wrist image is
   © MARS Bioimaging (hosted by CERN KT). Facts were checked on 7 Oct 2026;
-  every slide's source is in its `.src` footer and its notes.
+  every slide's source is in its `.src` footer and its notes. A review round
+  on 8 Oct 2026 (Lithuanian editor, fact-checker, talk coach, each edit checked
+  by a second agent) set the wording: never "kolaborantai" (it means
+  collaborators with occupiers) — "kolaboracijos nariai"; the +14 % is against
+  comparable firms; the HL-LHC 1,8 CHF counts discoveries at zero.
+  Open for the owner: the zoom-out plays whole (4:42; a manifest `trim` would
+  shorten it), the closing `lhcb_aciu.mp4` has English captions inside, the
+  MARS wrist image is © MARS Bioimaging, the date is still `10_00`.
 - **ffmpeg here.** `~/.local/bin/ffmpeg` and `ffprobe` (static build) crash on
   HTTPS input (exit 139). `videos:frames` works round it by downloading;
   `videos:preflight` of release-only clips needs the env's ffmpeg
