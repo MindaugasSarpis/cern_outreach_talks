@@ -122,6 +122,21 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Decisions
 
+- 2026-10-08 — Last focused review (talk-review on a0b80f8: facts since
+  01bed17, copy, unslop; 15 kept). Applied: slide 9's screen line is now
+  „Daugiau duomenų ir nepriklausomas patikrinimas“ (the „šimtus kartų“
+  ratio had no fact in the bank and compared unlike samples); a dot is a
+  computed mass, and slide 2 says whose mass and which side is heavier;
+  LHCb „beveik du tūkstančiai“ (bank, June 2026); the LHC „kai jis veikia“
+  (shut down since 29 Jun 2026), „maždaug šimto metrų“; slide 7 points at the
+  thin red lines from the vertex and says „tokiame grafike, kokį vertinai“;
+  slide 8 says the plot holds the data up to 2019; facts comments on slides
+  3–6 and 8. Rejected: the bridge „Kaip aš pats patekau į LHCb?“ (a question
+  that answers itself; „Į LHCb aš patekau ne tiesiu keliu.“ instead);
+  `duration: 9min` (the lint counts the tunnel clip whole, 4,6 min; a manifest
+  trim would need an encode and a release). Timing: the per-slide notes sum
+  to 6,4 min; the talk runs about 7 min.
+
 - 2026-10-08 — Owner, after reviewing the deployed version: an LHCb
   introduction before 2015 (slides 6–7, real photos), the search and
   „Neradau.“ removed, „Ko išmokau“ removed. The event display is © CERN /
