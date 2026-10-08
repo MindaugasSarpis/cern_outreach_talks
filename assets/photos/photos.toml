@@ -1,0 +1,281 @@
+# Photo bank: photos whose licence and credit were checked on their record
+# page, so the next talk can reuse them without hunting again.
+#
+# One [[photo]] per image; every key is required:
+#   subject      what the picture shows (with the date, when known)
+#   file         assets/photos/<file> (a slug with .jpg or .png)
+#   source_url   the record page: https://cds.cern.ch/images/<ID> or
+#                https://commons.wikimedia.org/wiki/File:<name>
+#                (scripts/photo_fetch.py takes cds:<ID> or commons:File:<name>)
+#   licence      as the record states it. "CERN terms (non-commercial)" means
+#                CDS's "© CERN, freely available for non-commercial use":
+#                fine on these talks' non-commercial site with the credit,
+#                but not a free licence and not for redistribution.
+#                "© <holder>, all rights reserved" means ask the holder.
+#   credit       the line to print on the slide (.credit)
+#   verified_on  when the licence and credit were read on the record (YYYY-MM-DD)
+#   px           [width, height] of the file as fetched
+#
+# The image files are not committed yet; scripts/photo_fetch.py fetches
+# them. Seeded from the Innoday photo search of 2026-10-07.
+
+[[photo]]
+subject = "The NeXT computer used as the first web server, with its 'This machine is a server. DO NOT POWER IT DOWN!!' sticker, CERN, 6 December 1990"
+file = "first-web-server-1990.jpg"
+source_url = "https://cds.cern.ch/images/CERN-CO-0108006-1"
+licence = "CC BY-SA 4.0"
+credit = "Photo: Patrice Loïez/CERN, CC BY-SA 4.0"
+verified_on = "2026-10-07"
+px = [2400, 1596]
+
+[[photo]]
+subject = "The first web server on display in CERN's Microcosm, with the proposal and 'Enquire Within upon Everything', 2005"
+file = "first-web-server-microcosm-2005.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:First_Web_Server.jpg"
+licence = "CC BY-SA 3.0"
+credit = "Photo: Coolcaesar (English Wikipedia), CC BY-SA 3.0, via Wikimedia Commons"
+verified_on = "2026-10-07"
+px = [2048, 1536]
+
+[[photo]]
+subject = "Page 1 of the March 1989 web proposal in a display case at CERN, with Mike Sendall's handwritten 'Vague but exciting…'"
+file = "www-proposal-vague-but-exciting.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:Ginevra,_centro_visitatori_del_cern,_primo_server_della_storia_(1989),_02.JPG"
+licence = "CC BY 3.0"
+credit = "Photo: Sailko, CC BY 3.0, via Wikimedia Commons"
+verified_on = "2026-10-07"
+px = [1920, 1915]
+
+[[photo]]
+subject = "Clean scan of page 1 of Tim Berners-Lee's March 1989 proposal (no handwritten note)"
+file = "www-proposal-scan-1989.jpg"
+source_url = "https://cds.cern.ch/images/OPEN-PHO-CCC-2019-001-1"
+licence = "CERN terms (non-commercial)"
+credit = "Image: CERN"
+verified_on = "2026-10-07"
+px = [1838, 2600]
+
+[[photo]]
+subject = "Bent Stumpe in 2016 holding one of his CERN touchscreen glass panels beside a smartphone"
+file = "bent-stumpe-touchscreen-2016.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:Bent_Stumpe_-_46_MAX_0989.jpg"
+licence = "CC BY 4.0"
+credit = "Photo: Sophia Elizabeth Bennett/CERN, CC BY 4.0"
+verified_on = "2026-10-07"
+px = [1920, 1281]
+
+[[photo]]
+subject = "CERN's 1977 x-y multi-touch prototype ('TOUCH SCREEN CERN SPS 2155') and the 1972 self-capacitance panel"
+file = "cern-touchscreens-1972-1977.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:CERN-Stumpe_Capacitance_Touchscreen.jpg"
+licence = "CC BY 2.0"
+credit = "Photo: Maximilien Brice, CC BY 2.0"
+verified_on = "2026-10-07"
+px = [1920, 1323]
+
+[[photo]]
+subject = "3D colour spectral CT of a human wrist made with the Medipix3 chip (bone white, soft tissue red, screws blue-green), 2020"
+file = "mars-3d-xray-wrist.png"
+source_url = "https://cds.cern.ch/images/KTTGROUP-PHO-TECH-2020-001-1"
+licence = "© MARS Bioimaging Ltd, all rights reserved (hosted on CDS by CERN Knowledge Transfer)"
+credit = "Image: MARS Bioimaging Ltd"
+verified_on = "2026-10-07"
+px = [1920, 1080]
+
+[[photo]]
+subject = "Side view of the same 3D colour X-ray of a wrist, 2020"
+file = "mars-3d-xray-wrist-side.png"
+source_url = "https://cds.cern.ch/images/KTTGROUP-PHO-TECH-2020-001-3"
+licence = "© MARS Bioimaging Ltd, all rights reserved (hosted on CDS by CERN Knowledge Transfer)"
+credit = "Image: MARS Bioimaging Ltd"
+verified_on = "2026-10-07"
+px = [1920, 1080]
+
+[[photo]]
+subject = "The MARS spectral CT scanner at Geneva University Hospitals with its team"
+file = "mars-scanner-hug-geneva.jpg"
+source_url = "https://cds.cern.ch/images/CERN-HOMEWEB-PHO-2021-145-1"
+licence = "CERN terms (non-commercial)"
+credit = "Image: CERN"
+verified_on = "2026-10-07"
+px = [1440, 958]
+
+[[photo]]
+subject = "Close-up of Medipix3 chips bonded to CdTe sensors"
+file = "medipix3-cdte-chips.jpg"
+source_url = "https://cds.cern.ch/images/CERN-HOMEWEB-PHO-2022-163-1"
+licence = "© Advacam Oy, all rights reserved"
+credit = "Image: ADVACAM"
+verified_on = "2026-10-07"
+px = [2400, 1600]
+
+[[photo]]
+subject = "Annotated photo of a Medipix2 detector assembly"
+file = "medipix2-assembly.png"
+source_url = "https://commons.wikimedia.org/wiki/File:Medipix_2_assembly.png"
+licence = "Public domain"
+credit = "IEAP CTU Prague, public domain, via Wikimedia Commons"
+verified_on = "2026-10-07"
+px = [847, 585]
+
+[[photo]]
+subject = "Front view of the LHCb detector in its cavern under the 'LHCb' banner, March 2024"
+file = "lhcb-cavern-2024.jpg"
+source_url = "https://cds.cern.ch/images/CERN-PHOTO-202403-050-3"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: Maximilien Brice/CERN"
+verified_on = "2026-10-07"
+px = [2400, 1600]
+
+[[photo]]
+subject = "The LHCb experiment seen from a crane in its cavern, 8 April 2022 (CDS 'large' size; the original is a 1.6 GB panorama)"
+file = "lhcb-cavern-crane-2022.jpg"
+source_url = "https://cds.cern.ch/images/CERN-PHOTO-202204-062-1"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: Maximilien Brice/CERN"
+verified_on = "2026-10-07"
+px = [1440, 1002]
+
+[[photo]]
+subject = "One half of the new LHCb VELO (pixel modules with red flex cables) being installed, May 2022"
+file = "lhcb-velo-install-2022.jpg"
+source_url = "https://cds.cern.ch/images/CERN-PHOTO-202205-078-13"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: Julien Marius Ordan/CERN"
+verified_on = "2026-10-07"
+px = [2400, 1920]
+
+[[photo]]
+subject = "The new LHCb VELO being installed, another angle, May 2022"
+file = "lhcb-velo-install-2022-b.jpg"
+source_url = "https://cds.cern.ch/images/CERN-PHOTO-202205-078-10"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: Julien Marius Ordan/CERN"
+verified_on = "2026-10-07"
+px = [2400, 1920]
+
+[[photo]]
+subject = "LHC tunnel: blue dipole cryostats with large 'LHC' lettering, September 2021"
+file = "lhc-tunnel-dipoles-2021.jpg"
+source_url = "https://cds.cern.ch/images/CERN-PHOTO-202109-138-6"
+licence = "CC BY 4.0"
+credit = "Photo: Samuel Joseph Hertzog/CERN, CC BY 4.0"
+verified_on = "2026-10-07"
+px = [2400, 1600]
+
+[[photo]]
+subject = "Aerial view towards Lake Geneva and Mont Blanc with the 27 km LHC ring, the SPS, the four experiments and the French-Swiss border drawn, July 2008"
+file = "cern-aerial-lhc-ring-2008.jpg"
+source_url = "https://cds.cern.ch/images/CERN-MI-0807031-01"
+licence = "CC BY-SA 4.0"
+credit = "Photo: Maximilien Brice/CERN, CC BY-SA 4.0"
+verified_on = "2026-10-07"
+px = [2400, 1800]
+
+[[photo]]
+subject = "The MedAustron synchrotron ring in its hall (hadron therapy, Wiener Neustadt)"
+file = "medaustron-synchrotron.jpg"
+source_url = "https://cds.cern.ch/images/CERN-HOMEWEB-PHO-2021-020-1"
+licence = "CERN terms (non-commercial)"
+credit = "Image: CERN"
+verified_on = "2026-10-07"
+px = [1200, 701]
+
+[[photo]]
+subject = "A Siemens Biograph PET-CT scanner room at CERMEP, Lyon (2010)"
+file = "pet-ct-scanner-cermep.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:Bron_-_CERMEP_-_Salle_du_scanner_TEP-CT_de_2010,_vue_d%27ensemble.jpg"
+licence = "CC0"
+credit = "Photo: Romainbehar, CC0, via Wikimedia Commons"
+verified_on = "2026-10-07"
+px = [1920, 1440]
+
+[[photo]]
+subject = "CERN's AX-PET detector modules around a test phantom, 2012"
+file = "cern-pet-demonstrator-2012.jpg"
+source_url = "https://cds.cern.ch/images/CERN-EX-1212265-07"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: Maximilien Brice/CERN"
+verified_on = "2026-10-07"
+px = [2400, 1602]
+
+[[photo]]
+subject = "A WRS-3/18 White Rabbit switch ('Licensed under CERN OHL v1.2') with more switches and yellow fibres behind, October 2024"
+file = "white-rabbit-switch-2024.jpg"
+source_url = "https://cds.cern.ch/images/KTTGROUP-PHO-TECH-2024-003-45"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: Marina Cavazza/CERN"
+verified_on = "2026-10-07"
+px = [2400, 1600]
+
+[[photo]]
+subject = "A stack of 18-port White Rabbit switches, October 2024"
+file = "white-rabbit-switch-stack-2024.jpg"
+source_url = "https://cds.cern.ch/images/KTTGROUP-PHO-TECH-2024-003-43"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: Marina Cavazza/CERN"
+verified_on = "2026-10-07"
+px = [2400, 1600]
+
+[[photo]]
+subject = "An aisle of server racks in the CERN Data Centre, Open Days 2019"
+file = "cern-data-centre-racks-2019.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:CERN_Computer_Center_02.jpg"
+licence = "CC BY-SA 4.0"
+credit = "Photo: SimonWaldherr, CC BY-SA 4.0, via Wikimedia Commons"
+verified_on = "2026-10-07"
+px = [1920, 1280]
+
+[[photo]]
+subject = "Tim Berners-Lee at his desk at CERN beside a monitor showing the CERN and W3 web pages, 11 July 1994"
+file = "tim-berners-lee-1994.jpg"
+source_url = "https://cds.cern.ch/images/CERN-GE-9407011-31"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: CERN"
+verified_on = "2026-10-07"
+px = [2400, 1540]
+
+[[photo]]
+subject = "Tim Berners-Lee beside the original NeXT at WWW@20, 13 March 2009 (the second person is not identified)"
+file = "tim-berners-lee-next-2009.jpg"
+source_url = "https://cds.cern.ch/images/CERN-HI-0903028-01"
+licence = "CC BY 4.0"
+credit = "Photo: Maximilien Brice/CERN, CC BY 4.0"
+verified_on = "2026-10-07"
+px = [2400, 1597]
+
+[[photo]]
+subject = "CMS 3D event display of a Higgs to ZZ to 2e2μ candidate, 27 May 2012 (CDS gives CC BY-SA 4.0, Commons CC BY 4.0: the stricter CDS licence applies)"
+file = "cms-higgs-candidate-2012.png"
+source_url = "https://cds.cern.ch/images/CMS-PHO-EVENTS-2012-007-1"
+licence = "CC BY-SA 4.0"
+credit = "Image: CMS Collaboration/CERN, CC BY-SA 4.0"
+verified_on = "2026-10-07"
+px = [1972, 1262]
+
+[[photo]]
+subject = "President Gitanas Nausėda with CERN Director-General Mark Thomson at CERN, 19 January 2026"
+file = "lithuania-president-at-cern-2026.jpg"
+source_url = "https://cds.cern.ch/images/CERN-PHOTO-202601-009-37"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: Marina Cavazza/CERN"
+verified_on = "2026-10-07"
+px = [2400, 1600]
+
+[[photo]]
+subject = "President Gitanas Nausėda with the Lithuanian community at CERN, 19 January 2026"
+file = "lithuania-community-at-cern-2026.jpg"
+source_url = "https://cds.cern.ch/images/CERN-PHOTO-202601-009-23"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: Marina Cavazza/CERN"
+verified_on = "2026-10-07"
+px = [2400, 1600]
+
+[[photo]]
+subject = "3D terrain render of the proposed ~91 km FCC ring around Geneva and Annecy beside the LHC ring"
+file = "fcc-map-2025.jpg"
+source_url = "https://cds.cern.ch/images/CERN-GRAPHICS-2025-002-1"
+licence = "CERN terms (non-commercial)"
+credit = "Image: Daniel Dominguez/CERN"
+verified_on = "2026-10-07"
+px = [2400, 1680]
