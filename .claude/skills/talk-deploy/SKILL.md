@@ -21,11 +21,14 @@ pnpm talk deploy <t>              # push HEAD to main, watch the Pages run, chec
 pnpm talk status --json           # every talk's recorded deploy state, under deploys[]
 ```
 
-Run them from the talk's own worktree. `deploy`:
+Run them from the root of the talk's own worktree (the path
+`pnpm talk open <name>` prints). `deploy`:
 
-- refuses a dirty tree and a branch that does not contain `origin/main`
-  (it prints the rebase command);
-- runs `ready` first unless told to skip it;
+- refuses a dirty tree, untracked files included, and a branch that does
+  not contain `origin/main`;
+- runs `ready` first, unless `ready` already passed this commit on a clean
+  tree (it stamps it) or it is told to skip it, so run `deploy` straight
+  after `ready`, with no commit between them;
 - pushes `HEAD` to `main`, watches the Pages run and requests the talk's URL;
 - records the result in `talk-status/<slug>.json` in the shared git directory
   (the main checkout's `.git`), not in a tracked file, so a deploy never
@@ -40,11 +43,15 @@ your own. Say "deployed" only after the run is green and the URL returned
 
 ## When it refuses
 
-- **Dirty tree**: commit the talk's own files (`git add` by path, never
+- **Dirty tree**: commit the talk's own files and the shared files the
+  steps changed (`git add` by path, `docs/talk-quality.md` §8; never
   `git add -A` at the root, never `git stash`).
-- **Behind origin/main**: rebase the talk branch in its worktree as printed.
-  On a `pnpm-lock.yaml` conflict take main's version and run `pnpm install`;
-  never hand-merge the lockfile. Then `ready` again.
+- **Behind origin/main**: merge it into the talk branch in its worktree
+  (`git fetch origin && git merge origin/main`). The CLI prints a rebase,
+  but the branch is pushed, and a rebased branch needs a force push. On a
+  `pnpm-lock.yaml` conflict take main's version
+  (`git checkout origin/main -- pnpm-lock.yaml`), run `pnpm install` and add
+  it; never hand-merge the lockfile. Then `ready` again.
 - **ready fails**: fix and rerun. `--skip-ready` only on the owner's word, and
   say so in the summary.
 
@@ -60,10 +67,12 @@ your own. Say "deployed" only after the run is green and the URL returned
 
 ## Hand-off
 
-After the green run and the 200 (`docs/talk-quality.md` §8): write Status,
-with the URL, the deployed commit and the run id, and Decisions in
-`talks/<t>/CLAUDE.md`, commit the talk's files by path, and update this
-session's line in `$OUTREACH_STATE/status.md`
+After the green run and the 200 (`docs/talk-quality.md` §8), from the
+worktree root: write Status, with the URL, the deployed commit and the run
+id, and Decisions in `talks/<t>/CLAUDE.md`, commit the talk's files by path,
+push the talk's branch (`git push -u origin HEAD`; `deploy` itself is the
+only push to main), and update this session's line in
+`$OUTREACH_STATE/status.md`
 (`name | branch | toolkit pin | doing | blocked on | next`):
 
 ```bash

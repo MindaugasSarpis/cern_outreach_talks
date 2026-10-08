@@ -70,7 +70,8 @@ const HOUSE = `HOUSE RULES (they bind every agent in this run; you will not see 
 - Report in English. Never write Russian. Lithuanian only inside proposed slide text and notes.
 - Read only. Do not edit any file in ${REPO}; your result is the report. Scratch files go under ${SCRATCH}/.
 - No git command that changes state (no commit, stash, checkout, merge, push, reset). Never touch the main checkout (the first entry of \`git worktree list\`) or another talk.
-- Renders share the machine with other sessions: \`pnpm talk shots\`, \`record\` and \`safe\` queue for the render slot themselves; run any other headless browser or encode through \`pnpm talk render -- <command>\`. At most 4 slides per run, 1280x720 or smaller.
+- Run \`pnpm talk …\` from ${REPO} (cd there first): it is a script of the root package, and pnpm does not find it from a talk directory.
+- Renders share the machine with other sessions: \`pnpm talk shots\`, \`record\` and \`safe\` queue for the render slot themselves; run any other headless browser or encode through \`pnpm talk render -- <command>\`, which runs it in the directory it is called from. At most 4 slides per run, 1280x720 or smaller.
 - Never let one command block for more than 240 s (give Bash a timeout of at most 240000 ms), and never sleep or poll in a loop. Work that would take longer goes into your result as an open item instead of a wait. Read only the fields you need from a command's JSON or log.
 - Never pkill -f a pattern from your own command; kill by PID. Quote globs (the shell may be zsh). If node, pnpm or ffmpeg misbehave, \`pnpm talk doctor\` says which binary is first on PATH.
 - Never put the owner's email address into a request, header, URL or User-Agent. Never create claude.ai artifacts. Never ask the owner a question.`
@@ -253,5 +254,5 @@ return {
   rejected,
   unverified,
   not_checked: notChecked,
-  next: `Write ${TALK}/notes/review.md from kept[] (one section per slide)${skipped.length ? `, adding the findings marked real in ${skipped.map(resultFile).join(', ')} (lenses done in an earlier run)` : ''}, apply the fixes to the current text (the snapshot may be older), rerun pnpm talk review, and report unverified[] and not_checked to the owner. Then hand off (docs/talk-quality.md §8): Status (with the review's HEAD SHA, the next since) and Decisions in ${TALK}/CLAUDE.md, a commit of the talk's files by path, and this session's line via python3 -I .claude/skills/talk-quality/status_line.py <slug>.`,
+  next: `Write ${TALK}/notes/review.md from kept[] (one section per slide)${skipped.length ? `, adding the findings marked real in ${skipped.map(resultFile).join(', ')} (lenses done in an earlier run)` : ''}, apply the fixes to the current text (the snapshot may be older), rerun pnpm talk review, and report unverified[] and not_checked to the owner. Then hand off (docs/talk-quality.md §8), from the worktree root: Status (with the review's HEAD SHA, the next since) and Decisions in ${TALK}/CLAUDE.md, a commit of the talk's files by path, a push of the talk's branch (never main), and this session's line via python3 -I .claude/skills/talk-quality/status_line.py <slug>.`,
 }

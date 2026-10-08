@@ -12,7 +12,7 @@ and `pnpm talk sessions` read:
 directory and the pin from the talk's package.json; fields not given keep
 their last value. A `|` inside a value becomes `/`, an empty value `-`.
 
-Usage (from the talk's worktree):
+Usage (from the root of the talk's worktree, which the paths below assume):
     python3 -I .claude/skills/talk-quality/status_line.py opendata \\
         --doing "review round 2" --blocked "-" --next "pnpm talk ready opendata"
     python3 -I .claude/skills/talk-quality/status_line.py --show [name]

@@ -82,9 +82,12 @@ open questions. Point to the private brief by path, never paste it.
 ## 6. Hand-off
 
 Once the scaffold builds and the Brief is filled (`docs/talk-quality.md`
-§8): write Status and Decisions, with `--blocked` naming the Brief questions
-while the owner has not answered them, in `talks/<t>/CLAUDE.md`, commit the
-talk's files by path, and update this session's line in
+§8), from the root of the talk's worktree: write Status and Decisions, with
+`--blocked` naming the Brief questions while the owner has not answered
+them, in `talks/<t>/CLAUDE.md`; commit by path the talk's files and the
+`pnpm-lock.yaml` that `pnpm talk new` changed when it installed
+(`git add talks/<t> pnpm-lock.yaml`); push the new branch
+(`git push -u origin HEAD`, never main); and update this session's line in
 `$OUTREACH_STATE/status.md`
 (`name | branch | toolkit pin | doing | blocked on | next`):
 

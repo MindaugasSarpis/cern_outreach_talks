@@ -23,6 +23,9 @@ already open.
   (`pnpm talk open <name>` prints the path). The main checkout (`$OUTREACH_ROOT`)
   stays on `main`.
 - `pnpm talk session scheduler`: you, in outreach_talks with `--add-dir ../slidev-videos`.
+- Session names (`claude --name`, which `pnpm talk session` sets): `Talk: <name>` (the
+  talk's directory name after the date, `Talk: OpenData`), `Tools` and `Scheduler`. The
+  tmux window and the status-file line use the talk's slug (`opendata`).
 - Status file: `$OUTREACH_STATE/status.md` (default `~/.local/state/outreach_talks/status.md`).
   Each session keeps one line there: `name | branch | toolkit pin | doing | blocked on | next`,
   written at each step boundary with
@@ -56,19 +59,22 @@ already open.
   machine). Content work runs in parallel freely; renders are queued.
 - **Toolkit release vs talks.** While a toolkit release is being built, talk sessions do
   content work (story, copy, notes, facts, assets) and pause renders. After the release is
-  on GitHub, each talk session moves its own pin in its worktree (`pnpm talk pin <sha>`:
-  both addon pins and a reinstall), checks it (`pnpm talk review`), re-renders and
-  commits on its own branch. `pnpm talk bump-toolkit <vX.Y.Z>` also moves env.yaml and
-  the scaffolder, and with `--talk` or `--active` several talks at once; it changes files
-  other sessions own, so it runs only when the owner asks. Talks stay on their pin
-  otherwise; no mid-flight upgrades.
+  on GitHub, each talk session bumps its pin from its worktree's root
+  (`pnpm talk pin <vX.Y.Z>`, a bare commit only with `--allow-sha`: both addon pins and a
+  reinstall), checks (`pnpm talk review`), re-renders, commits `talks/<t>/package.json`
+  and `pnpm-lock.yaml` with the talk's files by path, and pushes its own branch, never
+  main. `pnpm talk bump-toolkit <vX.Y.Z>` also moves env.yaml and the scaffolder, and with
+  `--talk` or `--active` several talks at once; it changes files other sessions own, so it
+  runs only when the owner asks. Talks stay on their pin otherwise; no mid-flight
+  upgrades.
 - **Who sends what.** Talk sessions do not message each other. The Tools session sends
   toolkit notes to you, and you release them to a talk when it can act on them.
   Relay a talk's requirements (custom builders, props, locale needs) to Tools as soon as you see them.
 - **Deadlines first**, then the talk closest to done, then toolkit work.
-- **Main and deploys.** A talk reaches `main` only through `pnpm talk deploy` from its
-  own worktree, after merging `origin/main` into its branch, and only when the owner
-  asked (`talk-deploy`). "Deployed" only after a green run and a 200 from the URL.
+- **Main and deploys.** Sessions merge `origin/main` into their branch before pushing it
+  (`docs/talk-quality.md` §8). A talk reaches `main` only through `pnpm talk deploy` from
+  its own worktree, and only when the owner asked (`talk-deploy`). "Deployed" only after
+  a green run and a 200 from the URL.
 
 ## Permissions
 

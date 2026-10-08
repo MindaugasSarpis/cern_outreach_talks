@@ -6,9 +6,13 @@ talk's pin, `talks/<t>/node_modules/slidev-addon-stage/README.md`. Items marked
 **from v0.6** are being built on the slidev-videos branches `feat/shots-v2`,
 `feat/broadcast` and `fix/stage-addon`; until a talk is bumped to v0.6 they are
 not in its `node_modules`. After the release the talk's session moves its
-own pins with `pnpm talk pin <sha>` in the talk's worktree (both addon pins
-and a reinstall); `pnpm talk bump-toolkit v0.6.0 --talk <name> --dry-run`,
-then without `--dry-run`, also moves env.yaml and the scaffolder.
+own pins with `pnpm talk pin v0.6.0` from the root of the talk's worktree
+(both addon pins and a reinstall; a bare commit needs `--allow-sha`), checks
+with `pnpm talk review`, and commits `talks/<t>/package.json` and the root
+`pnpm-lock.yaml` by path before pushing the talk's branch
+(`docs/talk-quality.md` §8).
+`pnpm talk bump-toolkit v0.6.0 --talk <name> --dry-run`, then without
+`--dry-run`, also moves env.yaml and the scaffolder.
 
 ## Start
 
@@ -36,7 +40,7 @@ videos:
   repo: MindaugasSarpis/cern_outreach_talks
   release: videos-<talk>
   fit: cover
-  transition: dust           # clips arrive and leave as grains (needs pnpm videos:frames)
+  transition: dust           # clips arrive and leave as grains (needs the videos:frames strips)
   dust: '#5b93ff'            # the palette's accent, so clip grains match the world's
 stage:
   space: data/space.json     # under public/

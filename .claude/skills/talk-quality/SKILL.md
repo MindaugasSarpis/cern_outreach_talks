@@ -96,9 +96,10 @@ owner's request.
 ## Hand-off
 
 The blueprint, the outline and the deck draft each end a step
-(`docs/talk-quality.md` §8). After each: write Status and Decisions in
-`talks/<t>/CLAUDE.md`, commit the talk's files by path, and update this
-session's line in `$OUTREACH_STATE/status.md`
+(`docs/talk-quality.md` §8). After each, from the worktree root: write
+Status and Decisions in `talks/<t>/CLAUDE.md`, commit the talk's files by
+path, push the talk's branch (never main), and update this session's line in
+`$OUTREACH_STATE/status.md`
 (`name | branch | toolkit pin | doing | blocked on | next`):
 
 ```bash

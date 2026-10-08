@@ -75,10 +75,13 @@ reports back when it finishes; do not poll it.
 
 ## Hand-off
 
-After a copy pass over the deck (`docs/talk-quality.md` §8): write Status,
-and each newly settled term under Decisions (and in the glossary above), in
-`talks/<t>/CLAUDE.md`, commit the talk's files by path, and update this
-session's line in `$OUTREACH_STATE/status.md`
+After a copy pass over the deck (`docs/talk-quality.md` §8), from the
+worktree root: write Status, and each newly settled term under Decisions, in
+`talks/<t>/CLAUDE.md`; commit the talk's files by path, with this skill's
+file when a term went into the glossary above
+(`git add talks/<t> .claude/skills/lt-copy/SKILL.md`); push the talk's
+branch (never main); and update this session's line in
+`$OUTREACH_STATE/status.md`
 (`name | branch | toolkit pin | doing | blocked on | next`):
 
 ```bash

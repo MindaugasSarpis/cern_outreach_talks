@@ -74,7 +74,7 @@ const HOUSE = `HOUSE RULES (they bind every agent in this run; you will not see 
 - Read only, except the files your task names: your result as JSON under ${RUN}/, and the editor's blueprint. No git command that changes state. Never touch the main checkout (the first entry of \`git worktree list\`) or another talk.
 - The repo is public: nothing from mail, Drive, calendars or anyone's private life goes into the blueprint; refer to "the owner" (they/them) and to people by role unless the Brief names them publicly.
 - Facts: search the bank first (\`cd ${REPO} && pnpm talk facts search <words> --json\`, or grep ${REPO}/research/facts.jsonl). Every number in a proposal carries a fact id from the bank or is listed as a research gap with a proposed id; never invent a figure.
-- Headless browsers, if you need one: \`pnpm talk render -- <command>\`, at most 4 slides.
+- Run \`pnpm talk …\` from ${REPO} (cd there first): it is a script of the root package, and pnpm does not find it from a talk directory. Headless browsers, if you need one: \`cd ${REPO} && pnpm talk render -- <command>\`, at most 4 slides.
 - Never let one command block for more than 240 s (give Bash a timeout of at most 240000 ms), and never sleep or poll in a loop. Work that would take longer goes into your result as an open item instead of a wait. Read only the fields you need from a command's JSON or log.
 - Quote globs (the shell may be zsh). Never create claude.ai artifacts. Never ask the owner a question: take the recommended option and record it as a decision.`
 

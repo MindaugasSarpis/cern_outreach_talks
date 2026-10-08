@@ -101,9 +101,12 @@ pnpm talk facts check
 - Anything else refused (an `as_of` that is not `YYYY`, `YYYY-MM` or
   `YYYY-MM-DD`, a private source): fix it in the lane file and file again.
 - Photos the deck uses from `images.json`:
-  `python3 scripts/photo_fetch.py <ref> --record` (`ref` is `cds:<ID>` or
-  `commons:File:<name>`) fetches each into `assets/photos/` and records its
-  licence and credit in `assets/photos/photos.toml`.
+  `python3 scripts/photo_fetch.py <ref> --record --out talks/<t>/public/figures`
+  (`ref` is `cds:<ID>` or `commons:File:<name>`) fetches each into the talk,
+  where the deck shows it as `/figures/<file>` and it is committed with the
+  talk, and records its licence and credit in `assets/photos/photos.toml`.
+  Without `--out` the file lands in `assets/photos/`, whose image files are
+  not committed, and leaves the tree dirty.
 - Copy the lane `notes` the speaker needs (why a figure was corrected, its
   caveats) under Figures in `talks/<t>/CLAUDE.md`.
 - Then delete the lane files and `images.json` (`rm talks/<t>/research/*.json`).
@@ -145,9 +148,13 @@ The spoken script… (~1 min)
 ## Hand-off
 
 Once the lanes are filed and the lane files deleted (`docs/talk-quality.md`
-§8): write Status, Decisions and the claims still unverified under Figures
-in `talks/<t>/CLAUDE.md`, commit the talk's files by path, and update this
-session's line in `$OUTREACH_STATE/status.md`
+§8), from the worktree root: write Status, Decisions and the claims still
+unverified under Figures in `talks/<t>/CLAUDE.md`; commit by path the talk's
+files and the two shared files filing changed,
+`git add talks/<t> research/facts.jsonl assets/photos/photos.toml`
+(`git status --short` then lists nothing; `deploy` refuses a dirty tree);
+push the talk's branch (never main); and update this session's line in
+`$OUTREACH_STATE/status.md`
 (`name | branch | toolkit pin | doing | blocked on | next`):
 
 ```bash

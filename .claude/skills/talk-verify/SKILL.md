@@ -128,9 +128,10 @@ carries the commands run and their results, failures included
 ## Hand-off
 
 Once `notes/review.md` is written and its fixes are in
-(`docs/talk-quality.md` §8): write Status, with the review's HEAD SHA (the
-next review's `since`), and Decisions in `talks/<t>/CLAUDE.md`, commit the
-talk's files by path, and update this session's line in
+(`docs/talk-quality.md` §8), from the worktree root: write Status, with the
+review's HEAD SHA (the next review's `since`), and Decisions in
+`talks/<t>/CLAUDE.md`, commit the talk's files by path, push the talk's
+branch (never main), and update this session's line in
 `$OUTREACH_STATE/status.md`
 (`name | branch | toolkit pin | doing | blocked on | next`):
 

@@ -9,12 +9,16 @@ Policy since 2026-07-18: every clip plays the 1080p H.264 web tier (at most
 1920 px, 10 Mbps), audio at -16 LUFS. The CLI is `slidev-videos`, the
 editable install of the slidev-videos checkout that every session shares
 (`$SLIDEV_VIDEOS_DIR`, by default `../slidev-videos` beside this repo);
-talks wrap it as `pnpm videos:*`. Run the commands inside the talk
-directory. Encodes need the env's ffmpeg (NVENC, HTTPS input):
+talks wrap it as `pnpm videos:*`. Run every command here from the root of
+the talk's worktree (the path `pnpm talk open <name>` prints): `pnpm talk`
+is a script of the root package, and from `talks/<t>` pnpm answers
+`Command "talk" not found`. The talk's own scripts run from the root too, as
+`pnpm -C talks/<t> videos:…`, and `slidev-videos` takes the talk with
+`--project talks/<t>`. Encodes need the env's ffmpeg (NVENC, HTTPS input):
 `pnpm talk doctor` names the ffmpeg, node and pnpm a command gets and flags
 a wrong one. Encodes and frame strips are renders: they go through
 `pnpm talk render -- <command>`, which queues them with the other sessions'
-renders.
+renders and runs the command in the directory it was called from.
 
 ## 1. Reuse before you search
 
@@ -50,17 +54,18 @@ notes   = """Source record, licence, credit line, and why this cut."""
 
 A shorter cut of a library clip is listed the same way under the talk's
 manifest; its encode on the talk's release wins the player's chain. Get the
-raw with `pnpm videos:sync` (from the gdrive `released/` folder into
-`<repo>/videos/raw/`) or `slidev-videos fetch <url> --name <name>` (yt-dlp,
+raw with `pnpm -C talks/<t> videos:sync` (from the gdrive `released/`
+folder into `<repo>/videos/raw/`) or
+`slidev-videos --project talks/<t> fetch <url> --name <name>` (yt-dlp,
 appends a manifest entry).
 
 ## 4. Encode, frames, publish
 
 ```bash
-pnpm talk render -- pnpm videos:encode   # add -- --only name.mp4 for one clip
-pnpm talk render -- pnpm videos:frames   # strips for transition: dust; commit public/video-frames/
-pnpm videos:publish -- --dry-run         # what would be uploaded
-pnpm videos:publish                      # to the talk's release videos-<talk>
+pnpm talk render -- pnpm -C talks/<t> videos:encode   # add -- --only name.mp4 for one clip
+pnpm talk render -- pnpm -C talks/<t> videos:frames   # strips for transition: dust; commit talks/<t>/public/video-frames/
+pnpm -C talks/<t> videos:publish -- --dry-run         # what would be uploaded
+pnpm -C talks/<t> videos:publish                      # to the talk's release videos-<talk>
 ```
 
 An encode or a publish of more than one clip runs for minutes: start it
@@ -89,20 +94,22 @@ the deck no longer references.
 ## 6. Check before the talk
 
 ```bash
-pnpm videos:check                       # manifest against files and slide refs
-pnpm videos:preflight                   # what each ref serves: codec, size, bitrate, audio, loudness
+pnpm -C talks/<t> videos:check          # manifest against files and slide refs
+pnpm -C talks/<t> videos:preflight      # what each ref serves: codec, size, bitrate, audio, loudness
 pnpm talk ready <t>                     # includes preflight and venue --dry-run
-pnpm venue                              # the offline bundle <talk>-venue.zip, for the venue laptop
+pnpm -C talks/<t> venue                 # the offline bundle <talk>-venue.zip, for the venue laptop
 ```
 
-`videos:preflight -- --no-loudness` is the quick version while iterating.
+`pnpm -C talks/<t> videos:preflight -- --no-loudness` is the quick version
+while iterating.
 
 ## Hand-off
 
-After an encode, a publish or new frame strips (`docs/talk-quality.md` §8):
-write Status, with the clips and the release they are on, and Decisions in
-`talks/<t>/CLAUDE.md`, commit the talk's files by path, and update this
-session's line in `$OUTREACH_STATE/status.md`
+After an encode, a publish or new frame strips (`docs/talk-quality.md` §8),
+from the worktree root: write Status, with the clips and the release they
+are on, and Decisions in `talks/<t>/CLAUDE.md`, commit the talk's files by
+path, push the talk's branch (never main), and update this session's line in
+`$OUTREACH_STATE/status.md`
 (`name | branch | toolkit pin | doing | blocked on | next`):
 
 ```bash

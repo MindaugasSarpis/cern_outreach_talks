@@ -107,10 +107,11 @@ separate request (`talk-deploy`).
 
 ## Hand-off
 
-After each recording, and at the hand-over (`docs/talk-quality.md` §8):
-write Status, with what was recorded, on which pin and where the files are,
-and Decisions in `talks/<t>/CLAUDE.md`, commit the talk's files by path, and
-update this session's line in `$OUTREACH_STATE/status.md`
+After each recording, and at the hand-over (`docs/talk-quality.md` §8), from
+the worktree root: write Status, with what was recorded, on which pin and
+where the files are, and Decisions in `talks/<t>/CLAUDE.md`, commit the
+talk's files by path, push the talk's branch (never main), and update this
+session's line in `$OUTREACH_STATE/status.md`
 (`name | branch | toolkit pin | doing | blocked on | next`):
 
 ```bash
