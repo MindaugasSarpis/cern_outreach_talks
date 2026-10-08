@@ -93,3 +93,15 @@ pnpm venue                              # the offline bundle <talk>-venue.zip, f
 ```
 
 `videos:preflight -- --no-loudness` is the quick version while iterating.
+
+## Hand-off
+
+After an encode, a publish or new frame strips (`docs/talk-quality.md` §8):
+write Status, with the clips and the release they are on, and Decisions in
+`talks/<t>/CLAUDE.md`, commit the talk's files by path, and update this
+session's line in `$OUTREACH_STATE/status.md`
+(`name | branch | toolkit pin | doing | blocked on | next`):
+
+```bash
+python3 -I .claude/skills/talk-quality/status_line.py <slug> --doing "…" --blocked "…" --next "…"
+```

@@ -99,3 +99,15 @@ the look.
 
 Run `pnpm talk ready <t>` before hand-over; deploying the web version is a
 separate request (`talk-deploy`).
+
+## Hand-off
+
+After each recording, and at the hand-over (`docs/talk-quality.md` §8):
+write Status, with what was recorded, on which pin and where the files are,
+and Decisions in `talks/<t>/CLAUDE.md`, commit the talk's files by path, and
+update this session's line in `$OUTREACH_STATE/status.md`
+(`name | branch | toolkit pin | doing | blocked on | next`):
+
+```bash
+python3 -I .claude/skills/talk-quality/status_line.py <slug> --doing "…" --blocked "…" --next "…"
+```

@@ -121,3 +121,15 @@ The spoken script… (~1 min)
 - The traps in `docs/talk-quality.md` §5 (what CERN did and did not invent,
   "first" claims, capacity against data, counts that change) are checked on
   every relevant claim.
+
+## Hand-off
+
+Once the lanes are filed and the lane files deleted (`docs/talk-quality.md`
+§8): write Status, Decisions and the claims still unverified under Figures
+in `talks/<t>/CLAUDE.md`, commit the talk's files by path, and update this
+session's line in `$OUTREACH_STATE/status.md`
+(`name | branch | toolkit pin | doing | blocked on | next`):
+
+```bash
+python3 -I .claude/skills/talk-quality/status_line.py <slug> --doing "…" --blocked "…" --next "…"
+```

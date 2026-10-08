@@ -93,3 +93,16 @@ Run `pnpm talk review <t>` again (it reshoots only changed slides) and
 `pnpm talk map <t>` after any structural change. The end-of-turn summary
 carries the commands run and their results, failures included
 (`docs/talk-quality.md` §7).
+
+## Hand-off
+
+Once `notes/review.md` is written and its fixes are in
+(`docs/talk-quality.md` §8): write Status, with the review's HEAD SHA (the
+next review's `since`), and Decisions in `talks/<t>/CLAUDE.md`, commit the
+talk's files by path, and update this session's line in
+`$OUTREACH_STATE/status.md`
+(`name | branch | toolkit pin | doing | blocked on | next`):
+
+```bash
+python3 -I .claude/skills/talk-quality/status_line.py <slug> --doing "…" --blocked "…" --next "…"
+```

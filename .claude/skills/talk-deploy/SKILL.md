@@ -55,3 +55,15 @@ keep working.
 - publish or prune video release assets as part of a deploy (`talk-videos`);
 - write "deployed" into a memory note, the talk's CLAUDE.md or a summary
   before the run is green.
+
+## Hand-off
+
+After the green run and the 200 (`docs/talk-quality.md` §8): write Status,
+with the URL, the deployed commit and the run id, and Decisions in
+`talks/<t>/CLAUDE.md`, commit the talk's files by path, and update this
+session's line in `$OUTREACH_STATE/status.md`
+(`name | branch | toolkit pin | doing | blocked on | next`):
+
+```bash
+python3 -I .claude/skills/talk-quality/status_line.py <slug> --doing "…" --blocked "…" --next "…"
+```

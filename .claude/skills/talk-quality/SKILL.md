@@ -71,3 +71,15 @@ it: never block on a question, take the recommended option, log it under
 Decisions in `talks/<t>/CLAUDE.md`, finish with the open questions batched
 in one message (`docs/talk-quality.md` §6). Pushing to main still needs the
 owner's request.
+
+## Hand-off
+
+The blueprint, the outline and the deck draft each end a step
+(`docs/talk-quality.md` §8). After each: write Status and Decisions in
+`talks/<t>/CLAUDE.md`, commit the talk's files by path, and update this
+session's line in `$OUTREACH_STATE/status.md`
+(`name | branch | toolkit pin | doing | blocked on | next`):
+
+```bash
+python3 -I .claude/skills/talk-quality/status_line.py <slug> --doing "…" --blocked "…" --next "…"
+```

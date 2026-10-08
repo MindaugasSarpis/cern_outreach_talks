@@ -75,10 +75,24 @@ The Brief holds only public-safe facts: audience, language, duration,
 delivery, must-haves, banned claims, the takeaway, palette and hero, and the
 open questions. Point to the private brief by path, never paste it.
 
+## 6. Hand-off
+
+Once the scaffold builds and the Brief is filled (`docs/talk-quality.md`
+§8): write Status and Decisions, with `--blocked` naming the Brief questions
+while the owner has not answered them, in `talks/<t>/CLAUDE.md`, commit the
+talk's files by path, and update this session's line in
+`$OUTREACH_STATE/status.md`
+(`name | branch | toolkit pin | doing | blocked on | next`):
+
+```bash
+python3 -I .claude/skills/talk-quality/status_line.py <slug> --doing "…" --blocked "…" --next "…"
+```
+
 ## Done when
 
 - the worktree exists and `pnpm talk check <name>` exits 0;
 - the Brief section is filled and the private brief written;
+- the hand-off is done (Status, a commit, the status line);
 - the questions went out in one message (or, under the AFK protocol in
   `docs/talk-quality.md` §6, the defaults are logged under Decisions);
 - the next step is named: a blueprint (`talk-quality`, saved workflow

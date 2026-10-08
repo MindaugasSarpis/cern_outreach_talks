@@ -71,3 +71,15 @@ pnpm talk lint <t>     # for lang: lt also Cyrillic, English leftovers, straight
 
 For a full pass, the saved workflow `talk-review` with `lang: 'lt'` runs a
 native-editor lens whose every edit a second editor accepts or rejects.
+
+## Hand-off
+
+After a copy pass over the deck (`docs/talk-quality.md` §8): write Status,
+and each newly settled term under Decisions (and in the glossary above), in
+`talks/<t>/CLAUDE.md`, commit the talk's files by path, and update this
+session's line in `$OUTREACH_STATE/status.md`
+(`name | branch | toolkit pin | doing | blocked on | next`):
+
+```bash
+python3 -I .claude/skills/talk-quality/status_line.py <slug> --doing "…" --blocked "…" --next "…"
+```

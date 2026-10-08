@@ -280,3 +280,34 @@ minutes against the duration, decisions taken, open questions, claims still
 unverified, which commands were run to verify (with their results, failures
 included), and the deploy state as `pnpm talk status` reports it (the talk's
 entry under `deploys`).
+
+## 8. Step boundaries
+
+A step ends after the brief, the blueprint, the outline, the deck draft, the
+research, a review round, `ready`, a recording and a deploy. At each
+boundary, before the next step starts:
+
+1. Write the outcome under Status in `talks/<t>/CLAUDE.md`, dated: what is
+   done, what is open, and the next command. Each choice goes under
+   Decisions. The next session, or this one after a compaction, starts from
+   there and not from the conversation.
+2. Commit the talk's files by path (`git add talks/<t>/…`; never
+   `git add -A` at the root, never `git stash`). A usage limit or a crash
+   then loses nothing, and nobody has to ask for a "commit and push". The
+   commit stays on the talk's branch; only a deploy pushes.
+3. Update this session's line in the status file:
+
+   ```bash
+   python3 -I .claude/skills/talk-quality/status_line.py <slug> --doing "…" --blocked "…" --next "…"
+   ```
+
+   The file is `$OUTREACH_STATE/status.md` (by default
+   `~/.local/state/outreach_talks/status.md`), one line per session:
+   `name | branch | toolkit pin | doing | blocked on | next`. The name is
+   the talk's slug, or `tools` or `scheduler`; the helper fills in the
+   branch and the pin and keeps the fields it is not given. The Scheduler
+   and `pnpm talk sessions` read this file, so keep the line current
+   instead of sending progress messages.
+
+When the context has grown large or a usage limit is close, tell the owner
+after the commit: "/compact, then 'continue <talk>'" picks up from Status.
