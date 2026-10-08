@@ -55,7 +55,7 @@ space:
 
 <!--
 Kalbėtojui. Prieš pradedant paspausti bet kurį klavišą arba spustelėti, kad galėtų skambėti foninis garsas (naršyklė garsą įjungia tik po naudotojo veiksmo). Už pavadinimo iš dulkių susirenka penki kvarkai — pentakvarkas, prie kurio grįšime I dalyje; „c“ jį surenka iš naujo. Kol ši skaidrė rodoma, grotuvas iš anksto įkelia pirmąjį klipą.
-Sakyti: „Laba diena. Esu Mindaugas Šarpis, vadovauju Vilniaus universiteto grupei, kuri dirba CERN LHCb eksperimente. Papasakosiu, kaip fizikams, norintiems sužinoti, iš ko sudarytas pasaulis, teko pastatyti mašiną, kokios niekas neturėjo ir negalėjo nusipirkti. Kaip jos problemų sprendimai atsidūrė jūsų telefonuose ir ligoninėse. Ir kodėl kitos tokios mašinos problemas gali spręsti Lietuvos įmonės.“
+Sakyti: „Laba diena. Esu Mindaugas Šarpis, vadovauju Vilniaus universiteto grupei, kuri dirba CERN LHCb eksperimente. Pradėsime nuo Saulėtekio.“
 (~0,5 min)
 -->
 
@@ -66,7 +66,7 @@ space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0 }   # the takeov
 <VideoPlayer src="vu_ff_zoom_galaxy.mp4" transition="fade" />
 
 <!--
-Kalbėtojui. Nutolinimas nuo VU Fizikos fakulteto ir NFTMC pastato Saulėtekyje: Vilnius, Lietuva, Žemė, mūsų galaktika. Klipas baigiasi mūsų galaktika iš šono (paskutinės 16 s, kuriose vaizdas užgęsta, nukirptos). Galima tylėti arba trumpai įvardyti etapus. Jei laiko mažai, klipą trumpinti manifeste (trim).
+Kalbėtojui. Nutolinimas nuo VU Fizikos fakulteto ir NFTMC pastato Saulėtekyje: Vilnius, Lietuva, Žemė, mūsų galaktika. Klipas baigiasi mūsų galaktika iš šono (paskutinės 16 s, kuriose vaizdas užgęsta, nukirptos). Galima tylėti arba trumpai įvardyti etapus. Jei laiko mažai, klipą trumpinti manifeste (trim).
 Pirmyn spausti tik klipui pasibaigus: kita skaidrė prasideda nuo to paties paskutinio kadro ir paverčia jį pasaulio grūdeliais.
 (klipas 4:26, su savo garso takeliu)
 -->
@@ -98,7 +98,7 @@ space: { at: [30, 40, -82], dist: 26, yaw: 28, pitch: 14, sway: 6, dim: 0.15 }  
 
 <!--
 Kalbėtojui. Kamera apskrieja grūdelius, kuriais ką tik virto paskutinis kadras: plokščias vaizdas pasirodo esąs erdvė. Šis klausimas — visos kalbos pradžia; kitos skaidrės į jį atsako ir parodo, ką atsakymo paieškos davė.
-Sakyti: „Žvaigždės, dujos, planetos ir mes patys sudaryti iš kelių rūšių dalelių. Norint pamatyti, kas yra jų viduje, daleles reikia sudaužyti labai didele energija. Tam reikia mašinos, kokios niekas neturėjo. Ją pastatė CERN, Europos dalelių fizikos laboratorija prie Ženevos. Lietuva yra asocijuotoji CERN narė.“
+Sakyti: „Žvaigždės, dujos, planetos ir mes patys sudaryti iš kelių rūšių dalelių. Norint pamatyti, kas yra jų viduje, daleles reikia sudaužyti labai didele energija. Tam reikia didžiausio pasaulyje dalelių greitintuvo. Jį pastatė CERN, Europos dalelių fizikos laboratorija prie Ženevos.“
 Pastaba: „žvaigždės, dujos, planetos ir mes“ — tyčia ne „galaktikos“: didžioji galaktikų masės dalis yra tamsioji materija, kurios sudėties nežinome.
 (~0,4 min)
 -->
@@ -148,7 +148,7 @@ space: { at: collider, dist: 20, yaw: 40, pitch: 30, dim: 0 }
 
 <!--
 Kalbėtojui. Pirmasis atsakymas į klausimą, iš ko viskas sudaryta.
-Sakyti: „Garsiausias šio greitintuvo atradimas — Higso bozonas. 1964 m. buvo pasiūlytas mechanizmas, kuris paaiškina, kodėl elementariosios dalelės turi masę, ir jis numatė šią dalelę. Jos ieškota beveik pusę amžiaus. 2012 m. liepos 4 d. ją vienu metu paskelbė du CERN eksperimentai, ATLAS ir CMS. Kitais metais François Englert'as ir Peteris Higgsas gavo Nobelio premiją. Nuotraukoje — vienas iš tų susidūrimų CMS detektoriuje.“
+Sakyti: „Garsiausias šio greitintuvo atradimas — Higso bozonas. 1964 m. buvo pasiūlytas mechanizmas, kuris paaiškina, kodėl elementariosios dalelės turi masę, ir pagal jį turėjo egzistuoti ši dalelė. Jos ieškota beveik pusę amžiaus. 2012 m. liepos 4 d. ją vienu metu paskelbė du CERN eksperimentai, ATLAS ir CMS. Kitais metais François Englert'as ir Peteris Higgsas gavo Nobelio premiją. Nuotraukoje — vienas iš tų susidūrimų CMS detektoriuje.“
 Nuotraukoje: 2012 m. gegužės 27 d. CMS įvykis, Higso bozono kandidatas H → ZZ → 2e2μ. Nobelio premijos formuluotėje paminėti ATLAS ir CMS eksperimentai.
 Šaltinis: home.cern (Nobelio premija 2013 10 08); cds.cern.ch/images/CMS-PHO-EVENTS-2012-007-1.
 (~0,6 min)
@@ -162,7 +162,7 @@ space: { at: [56, 5, -14], dist: 16, yaw: -28, pitch: 12 }
 
 <!--
 Kalbėtojui. LHCb detektoriaus 3D animacija (CERN-FOOTAGE-2022-042-001), be garso — kalbėti per ją.
-Sakyti: „Mūsų eksperimentas — LHCb. Jis tiria vieną klausimą: kodėl Visatoje liko materija. Didysis sprogimas turėjo sukurti po lygiai materijos ir antimaterijos, o susitikusios jos viena kitą sunaikina. Vis dėlto mes esame. Todėl LHCb lygina, kaip skyla dalelės ir jų antidalelės, ir ieško mažyčių skirtumų. Detektorius 21 m ilgio ir žiūri viena kryptimi, nes jį dominančios dalelės dažniausiai išlekia pirmyn, arti pluošto. Arčiausiai pluošto, vos 5 mm nuo jo, stovi VELO pikselių detektorius. Vilniaus universitetas yra LHCb kolaboracijos narys nuo 2024 m.“
+Sakyti: „Mūsų eksperimentas — LHCb. Jis, be kita ko, tiria, kodėl Visatoje liko materija. Didysis sprogimas turėjo sukurti po lygiai materijos ir antimaterijos, o susitikusios jos viena kitą sunaikina, tačiau materijos liko. Todėl LHCb lygina, kaip skyla dalelės ir jų antidalelės, ir ieško mažyčių skirtumų. Detektorius 21 m ilgio ir stovi tik vienoje susidūrimo taško pusėje, nes jį dominančios dalelės dažniausiai išlekia pirmyn, arti pluošto. Arčiausiai pluošto, vos 5 mm nuo jo, stovi VELO pikselių detektorius. Vilniaus universitetas yra LHCb kolaboracijos narys nuo 2024 m.“
 Jei klausia apie rezultatus: 2025 m. LHCb pirmą kartą pamatė materijos ir antimaterijos elgesio skirtumą barionuose — dalelių šeimoje, kuriai priklauso protonai ir neutronai (>80 000 Λb⁰ → p K⁻ π⁺ π⁻ skilimų, asimetrija (2,45 ± 0,47) %, 5,2σ; Nature 2025 07 16). Standartinio modelio CP pažeidimo nepakanka stebimam materijos pertekliui paaiškinti (barionų ir fotonų santykis ~10⁻¹⁰, SM numato ~10⁻¹⁸).
 Faktai: LHCb sveria 5 600 t, 21 × 10 × 13 m, 100 m po žeme; artimiausias VELO pikselis — 5,1 mm nuo pluošto; kolaboracijoje beveik 2 000 narių. VU priimtas 2024 m. rugsėjo 2 d. LHCb kolaboracijos tarybos sprendimu; grupė dirba VU FF Fotonikos ir nanotechnologijų institute (lhcb-vilnius.web.cern.ch). 2026 m. rugsėjo 14–18 d. LHCb savaitė pirmą kartą vyko Vilniuje (~200 dalyvių vietoje).
 Šaltinis: home.cern/science/experiments/lhcb; VU FF naujienos, 2024 09 16.
@@ -187,7 +187,7 @@ space: { at: [-29.5, 0.2, 0], dist: 11, yaw: -10, pitch: 6, dim: 0.15 }
 
 <!--
 Kalbėtojui. Kamera grįžta prie pentakvarko, kurį matėme pradžioje; „c“ surenka jį iš naujo.
-Sakyti: „Penki šviesos kamuoliukai, kuriuos matėte pradžioje, yra dalelė iš penkių kvarkų. Kai 1964 m. Gell-Mannas ir Zweigas pasiūlė kvarkų modelį, jau buvo aišku, kad tokios dalelės gali egzistuoti. Jų ieškota daugiau nei 50 metų. 2015 m. LHCb jas pamatė. Tai viena iš 86 naujų dalelių, atrastų prie šio greitintuvo; 76 iš jų atrado LHCb.“
+Sakyti: „Penki šviesos kamuoliukai, kuriuos matėte pradžioje, yra dalelė iš penkių kvarkų. Kai 1964 m. Gell-Mannas ir Zweigas pasiūlė kvarkų modelį, jau buvo aišku, kad tokios dalelės gali egzistuoti. Jų ieškota daugiau nei 50 metų. 2015 m. jas aptiko LHCb. Pentakvarkai — tarp 86 naujų dalelių, atrastų prie šio greitintuvo; 76 iš jų atrado LHCb.“
 Jei klausia: c c̄ u u d; 2015 m. liepos 14 d., Λb skilimuose; 2019 m., turint devynis kartus daugiau duomenų, paaiškėjo, kad tai kelios siauros būsenos — galbūt „molekulės“ iš bariono ir mezono. Rūta Racz, pirmoji VU doktorantė LHCb, ieško naujų pentakvarkų.
 Skaičius: Koppenburgo sąraše „86 hadrons have been discovered at the LHC, of which 76 by LHCb“ (paskutinis įrašas 2026 09 21, Bs0*(5700)0).
 (~0,6 min)
@@ -204,7 +204,7 @@ space: { at: collider, dist: 11, yaw: -48, pitch: 9, dim: 0 }
 
 <div class="head">
 
-# Ko reikėjo šiems atradimams
+# Didysis hadronų greitintuvas
 
 </div>
 
@@ -219,7 +219,7 @@ space: { at: collider, dist: 11, yaw: -48, pitch: 9, dim: 0 }
 
 <!--
 Kalbėtojui. Čia kalba pasisuka: nuo to, ką mašina rado, prie to, ko ji pareikalavo. Šie skaičiai — II dalies problemos.
-Sakyti: „Kad šie atradimai būtų įmanomi, Didysis hadronų greitintuvas turėjo būti toks. 27 km žiedas 100 m po žeme. 1 232 superlaidūs magnetai, atšaldyti iki 1,9 kelvino — šalčiau nei tarpgalaktinėje erdvėje. Protonai, kurie skrieja tik 2,85 m/s lėčiau už šviesą ir per sekundę apsuka žiedą 11 245 kartus. Ir apie pusantro milijardo susidūrimų per sekundę, kuriuos reikia pamatyti ir užrašyti. Nė vieno iš šių dalykų nebuvo galima nusipirkti. Taip buvo su kiekviena CERN mašina, ne tik su šia: kiekviena kėlė inžinerinių problemų, kurių niekas dar nebuvo išsprendęs.“
+Sakyti: „Kad šie atradimai būtų įmanomi, greitintuvas turėjo būti toks. Jo žiedas yra 27 km ilgio ir 100 m po žeme. 1 232 superlaidūs magnetai atšaldomi iki 1,9 kelvino, šalčiau nei erdvė tarp galaktikų. Protonai skrieja tik 2,85 m/s lėčiau už šviesą ir per sekundę apsuka žiedą 11 245 kartus, o kiekvieną sekundę įvyksta apie pusantro milijardo susidūrimų, kuriuos reikia pamatyti ir užrašyti. Nė vieno iš šių dalykų nebuvo galima nusipirkti. Su tokiomis problemomis susidūrė ir ankstesnės CERN mašinos.“
 Svarbu: nuo 2026 06 29 LHC neveikia — prasidėjo trečioji ilgoji techninė pertrauka (LS3), todėl skaičiai — darbo metu (3-iasis darbo etapas: 6,8 TeV, 99,99999905 % šviesos greičio). Dažnai cituojamas „99,9999991 %“ atitinka projektinę 7 TeV energiją. Kosminis fonas — 2,7 K.
 Faktai: 9 593 magnetai; vakuumas vamzdyje ~10⁻¹³ bar; pluošte sukaupta energija iki 490 MJ.
 Šaltinis: home.cern/science/accelerators/large-hadron-collider.
@@ -236,7 +236,7 @@ space: { at: collider, dist: 26, yaw: 24, pitch: 58, dim: 0.3 }
 
 <div class="big"><Count :from="0" :to="4" :ms="1600" /><span class="unit">TB/s</span></div>
 
-Tiek duomenų gauna detektorius. Pirmąją atranką atlieka vaizdo plokštės, kokios yra žaidimų kompiuteriuose.
+Tiek duomenų kas sekundę pagamina detektorius. Pirmąją atranką atlieka vaizdo plokštės, kokios yra žaidimų kompiuteriuose.
 
 </div>
 
@@ -244,7 +244,7 @@ Tiek duomenų gauna detektorius. Pirmąją atranką atlieka vaizdo plokštės, k
 
 <!--
 Kalbėtojui. Viena iš tų problemų — mūsų eksperimento šiandien.
-Sakyti: „Mūsų eksperimento problema šiandien — duomenys. LHCb detektorius kas sekundę pagamina apie 4 terabaitus. Tiek užrašyti neįmanoma, todėl reikia iš karto nuspręsti, ką pasilikti. Nuo 2022 m. tai daro vaizdo plokštės, iš esmės tokios pat kaip žaidimų kompiuteriuose. LHCb — pirmasis eksperimentas, kurio visa pirmoji atrankos pakopa veikia vaizdo plokštėse. Į diską patenka maždaug vienas baitas iš keturių šimtų. Taip CERN dirba nuo pat pradžių: kai reikalingo daikto nėra, jį sukuria. Pažiūrėkime, kas iš to išėjo per penkiasdešimt metų.“
+Sakyti: „Mūsų eksperimento problema šiandien — duomenys. LHCb detektorius kas sekundę pagamina apie 4 terabaitus. Tiek užrašyti neįmanoma, todėl reikia iš karto nuspręsti, ką pasilikti. Nuo 2022 m. tai daro vaizdo plokštės, iš esmės tokios pat kaip žaidimų kompiuteriuose. LHCb — pirmasis eksperimentas, kurio visa pirmoji atrankos pakopa veikia vaizdo plokštėse. Į diską patenka maždaug vienas baitas iš keturių šimtų. Dabar pažiūrėkime, kas per penkiasdešimt metų atsirado sprendžiant ankstesnių CERN mašinų problemas.“
 Faktai: GPU — NVIDIA RTX A5000 (profesionali žaidimų lusto versija); vietų ~500, bazinei HLT1 reikia ~200; antroji pakopa — >3 000 serverių; į diską ~10 GB/s.
 Jei klausia apie atviruosius duomenis: visus 2011–2012 m. LHCb duomenis (800 TB) viešam naudojimui parengė kalbėtojas; nuo 2023 m. gruodžio juos gali parsisiųsti bet kas, nuo 2026 m. kovo per internetinę paslaugą — ir antrojo etapo duomenis (kartu >4 PB).
 (~0,7 min)
@@ -255,13 +255,13 @@ layout: section
 space: { at: [84.2, -2.2, 0], dist: 13, yaw: -22, pitch: 16, dim: 0.08 }
 ---
 
-# II dalis · Išradimai
+# II dalis · Sprendimai
 
-Kas išėjo iš CERN problemų
+Kas atsirado sprendžiant CERN problemas
 
 <!--
 Kalbėtojui. Pasaulyje — tinklas: mazgai, sujungti tekančių grūdelių gijomis. Kiekviena šios dalies skaidrė prasideda problema (ji parašyta viršuje) ir baigiasi tuo, kas iš jos išėjo į pasaulį. Tvarka: kas yra jūsų kišenėje, kas yra ligoninėse, kas vyksta pramonėje šiandien.
-Sakyti: „Šešios problemos: kaip valdyti mašiną, kaip tvarkyti informaciją, kaip pamatyti dalelę, kaip nukreipti pluoštą, kur dėti duomenis ir kaip atšaldyti. Kiekviena davė ką nors, kas šiandien naudojama už CERN ribų. Pradėsiu nuo to, ką turite kišenėje.“
+Sakyti: „Šešios problemos: kaip valdyti mašiną, kaip tvarkyti informaciją, kaip pamatyti dalelę, kaip nukreipti pluoštą, kur dėti duomenis ir kaip atšaldyti. Iš kiekvienos atsirado kas nors, kas šiandien naudojama už CERN ribų. Pradėsiu nuo to, ką turite kišenėje.“
 (Jutiklinio ekrano nevadinti CERN išradimu: CERN buvo vienas pirmųjų, ne pirmasis — žr. jo skaidrę.)
 (~0,4 min)
 -->
@@ -307,8 +307,8 @@ space: { at: web, dist: 15, yaw: 14, pitch: 16, dim: 0 }
 
 <!--
 Kalbėtojui.
-Sakyti: „CERN dirba tūkstančiai žmonių, kurie atvyksta vidutiniškai dvejiems metams ir išvyksta, o jų žinios pasimeta. 1989 m. kovą CERN programuotojas Timas Bernersas-Lee pasiūlė, kaip tą informaciją sujungti. Jo pasiūlymo įžanga prasideda klausimu, kurį tada kėlė būsimasis LHC: kaip susigaudyti tokiame dideliame projekte? Vadovas Mike'as Sendallas ant pirmojo puslapio užrašė tris žodžius: „Vague but exciting…“ — „Miglota, bet įdomu…“ Iš to pasiūlymo atsirado pasaulinis žiniatinklis.“
-Pasiūlymo įžanga: daugelis diskusijų apie CERN ateitį ir LHC erą baigiasi klausimu „Yes, but how will we ever keep track of such a large project?“ 1990 m. lapkričio 12 d. formaliame projekto pasiūlyme (su Robert'u Cailliau) prašyta 4 programinės įrangos inžinierių ir programuotojo maždaug pusmečiui. Prie „miglota, bet įdomu“ grįšime pabaigoje.
+Sakyti: „CERN dirba tūkstančiai žmonių, kurie atvyksta vidutiniškai dvejiems metams ir išvyksta, o jų žinios pasimeta. 1989 m. kovą CERN programuotojas Timas Bernersas-Lee pasiūlė, kaip tą informaciją sujungti. Jo pasiūlymo įžanga prasideda klausimu apie būsimąjį LHC: kaip susigaudyti tokiame dideliame projekte? Vadovas Mike'as Sendallas ant pirmojo puslapio užrašė tris žodžius: „Vague but exciting…“ — „Miglota, bet įdomu…“ Iš to pasiūlymo atsirado pasaulinis žiniatinklis.“
+Pasiūlymo įžanga: daugelis diskusijų apie CERN ateitį ir LHC erą baigiasi klausimu „Yes, but how will we ever keep track of such a large project?“ 1990 m. lapkričio 12 d. formaliame projekto pasiūlyme (su Robert'u Cailliau) prašyta 4 programinės įrangos inžinierių ir programuotojo maždaug pusmečiui.
 Šaltiniai: w3.org/History/1989/proposal.html; w3.org/Proposal.html.
 (~0,7 min)
 -->
@@ -371,14 +371,14 @@ space: { at: web, dist: 15, yaw: -34, pitch: 18, dim: 0 }
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
 <h1>Spalvotas rentgenas</h1>
-<p class="line">JAV FDA leido skenerį su <b>CERN Medipix3</b> lustu</p>
+<p class="line">JAV FDA leido naudoti skenerį su <b>CERN Medipix3</b> lustu</p>
 </div>
 <div class="credit">Spalvotas 3D riešo vaizdas (Medipix3) · MARS Bioimaging Ltd</div>
 </div>
 
 <!--
 Kalbėtojui.
-Sakyti: „Mūsų detektoriuose dalelę pamato pikselių lustai. Tos pačios technologijos lustas Medipix3 skaičiuoja kiekvieną rentgeno fotoną atskirai ir išmatuoja jo energiją, tarsi spalvą. Įprastas rentgenas to nedaro, jis matuoja tik tai, kiek spinduliuotės praėjo. Naujosios Zelandijos įmonė MARS Bioimaging su šiuo lustu pastatė skenerį, kuris daro spalvotus 3D vaizdus. Nuotraukoje — riešas: kaulai balti, audiniai raudoni, metaliniai varžtai mėlyni. Šių metų kovą skeneris gavo JAV FDA leidimą, praėjus 20 metų nuo idėjos. Medipix technologija naudojama pagal 30 komercinių licencijų ir pramonei atnešė daugiau nei 100 mln. frankų pajamų.“
+Sakyti: „Mūsų detektoriuose dalelę užregistruoja pikselių lustai. Tos pačios technologijos lustas Medipix3 skaičiuoja kiekvieną rentgeno fotoną atskirai ir išmatuoja jo energiją, tarsi spalvą. Įprastas rentgenas to nedaro, jis matuoja tik tai, kiek spinduliuotės praėjo. Naujosios Zelandijos įmonė MARS Bioimaging su šiuo lustu pastatė skenerį, kuris daro spalvotus 3D vaizdus. Nuotraukoje — riešas: kaulai balti, audiniai raudoni, metaliniai varžtai mėlyni. Šių metų kovą skeneris gavo JAV FDA leidimą, praėjus 20 metų nuo idėjos. Medipix technologija naudojama pagal 30 komercinių licencijų ir pramonei atnešė daugiau nei 100 mln. frankų pajamų.“
 Ratas: hibridinių pikselių technologija gimė dalelių fizikoje, Medipix kolaboracija ją pritaikė rentgenui, o LHCb VELO detektorių nuskaito VeloPix lustai, sukurti Timepix3 pagrindu (41 mln. 55 µm pikselių) — CERN tai vadina „a direct spin back to high-energy physics“.
 Faktai: MARS įkūrė Philas ir Anthony Butleriai (2007); pirmasis spalvotas 3D žmogaus vaizdas — 2018 m. liepą. FDA 510(k) nešiojamam fotonų skaičiavimo KT skeneriui rankų tyrimams. Medipix (CERN 2026 m. studija): 30 aktyvių licencijų, >5 mln. CHF honorarų, >100 mln. CHF pramonės pajamų, 73 patentai, paremti Medipix publikacijomis.
 Vaizdas: MARS Bioimaging Ltd (CERN KT CDS įrašas KTTGROUP-PHO-TECH-2020-001); jei rodoma ne švietimo tikslais — paprašyti MARS leidimo.
@@ -415,7 +415,7 @@ space: { at: web, dist: 16, yaw: 62, pitch: 22, dim: 0 }
 <div class="hero" style="--focus: 50% 50%">
 <img src="/figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" />
 <div class="hero-text">
-<p class="kicker gold">Problema: pluoštai</p>
+<p class="kicker gold">Problema: pluošto nukreipimas</p>
 <div class="year">9 000+</div>
 <h1>Hadronų terapija</h1>
 <p class="line">pacientų gydyta CNAO ir MedAustron centruose</p>
@@ -425,8 +425,8 @@ space: { at: web, dist: 16, yaw: 62, pitch: 22, dim: 0 }
 
 <!--
 Kalbėtojui.
-Sakyti: „Greitintuvai moka nukreipti dalelių pluoštą labai tiksliai. Protonai ir anglies jonai didžiąją energijos dalį atiduoda tam tikrame gylyje, todėl jais galima paveikti naviką ir mažiau pažeisti aplinkinius audinius. CERN su partneriais 1996–2000 m. suprojektavo gydymui skirtą sinchrotroną ir projektą paskelbė atvirai. Pagal jį pastatyti du centrai: CNAO Italijoje ir MedAustron Austrijoje. Juose jau gydyta daugiau nei 9 000 pacientų su retais ir sunkiai pagydomais navikais.“
-Jei laikas leidžia: „CERN su Lozanos ligonine CHUV ir įmone THERYQ kuria FLASH greitintuvą DEFT: visa spindulinio gydymo dozė per mažiau nei 0,1 s, iki 25 cm gylio. Jis remiasi CERN CLIC technologija.“ Taip pat: CERN-MEDICIS 2025 m. IV ketv. pirmą kartą išsiuntė aktinio-225 pramonei — RayzeBio (2024 m. už 4,1 mlrd. USD įsigijo „Bristol Myers Squibb“).
+Sakyti: „Greitintuvais dalelių pluoštą galima nukreipti labai tiksliai. Protonai ir anglies jonai didžiąją energijos dalį atiduoda tam tikrame gylyje, todėl jais galima paveikti naviką ir mažiau pažeisti aplinkinius audinius. CERN su partneriais 1996–2000 m. suprojektavo gydymui skirtą sinchrotroną ir projektą paskelbė atvirai. Pagal jį pastatyti du centrai: CNAO Italijoje ir MedAustron Austrijoje. Juose jau gydyta daugiau nei 9 000 pacientų su retais ir sunkiai pagydomais navikais.“
+Jei laikas leidžia: „CERN su Lozanos ligonine CHUV ir įmone THERYQ kuria FLASH greitintuvą DEFT: visa spindulinio gydymo dozė per mažiau nei 0,1 s, iki 25 cm gylio. Jis remiasi CERN CLIC technologija.“ Taip pat: CERN-MEDICIS 2025 m. IV ketv. pirmą kartą išsiuntė aktinio-225 pramonei — RayzeBio (2024 m. už 4,1 mlrd. USD įsigijo „Bristol Myers Squibb“).
 Faktai: PIMMS (CERN, TERA, MedAustron, Onkologie-2000). CNAO Pavijoje (pirmasis pacientas 2011 m.), iki 2026 m. liepos >6 200 pacientų, vienas iš 8 pasaulio centrų, gydančių ir protonais, ir anglies jonais; MedAustron (pirmasis pacientas 2016 m. gruodį) iki 2025 m. sausio >2 700 pacientų. CERN 2026 m. studija: kartu „beveik 9 000“; su naujausiais centrų duomenimis — >9 000. DEFT: 140 MeV elektronai, 20–30 Gy. PRISMAP (2021–2025): 159 siuntos, 23 radionuklidai, 47 projektai iš 19 šalių.
 (~0,7 min)
 -->
@@ -448,7 +448,7 @@ space: { at: web, dist: 18, yaw: 78, pitch: 26, dim: 0 }
 
 <!--
 Kalbėtojui. Iš ligoninės — į pramonę šiandien.
-Sakyti: „2025 m. gruodį CERN saugomų LHC duomenų kiekis peržengė vieną eksabaitą — milijoną terabaitų. Vienas kompiuterių centras tiek neapdoros, todėl LHC duomenis apdoroja pasaulinis tinklas: daugiau nei 170 centrų 42 šalyse. Kad tiek įrenginių veiktų kartu, reikia vienodo laiko. CERN sistema White Rabbit sinchronizuoja tūkstančius įrenginių nanosekundės dalies tikslumu. Šiandien ja naudojasi Frankfurto birža, o Ženevoje — pirmasis Šveicarijos kvantinis tinklas.“
+Sakyti: „2025 m. gruodį CERN saugomų LHC duomenų kiekis peržengė vieną eksabaitą — milijoną terabaitų. Vienas kompiuterių centras tiek neapdoros, todėl LHC duomenis apdoroja pasaulinis tinklas: daugiau nei 170 centrų 42 šalyse. Tūkstančiai greitintuvo įrenginių turi veikti tiksliai vienu metu, todėl CERN sukūrė sistemą White Rabbit, kuri juos sinchronizuoja nanosekundės dalies tikslumu. Šiandien ja naudojasi Frankfurto birža, o Ženevoje — pirmasis Šveicarijos kvantinis tinklas.“
 Faktai: dauguma duomenų įrašyta į ~60 000 magnetinių juostų; CERN skaičiavimu, tai tik apie 10 % to, ką reikės saugoti per artimiausius dešimt metų. WLCG: ~1,4 mln. procesorių branduolių, 1,5 EB saugyklos, >2 mln. užduočių per dieną. Lietuva 2005 m. prisidėjo prie BalticGrid projekto. White Rabbit — nuo 2012 m., IEEE 1588-2019; Deutsche Börse — >500 prievadų; kvantinis tinklas — 262 km šviesolaidžių, tarp partnerių ID Quantique ir Rolex.
 Jei laikas leidžia: duomenų problema davė ir atvirojo mokslo įrankius — Zenodo, ROOT, Geant4 (paslėpta skaidrė po pabaigos).
 (~0,7 min)
@@ -487,7 +487,7 @@ Mokslo pasiekimai privačiame sektoriuje
 
 <!--
 Kalbėtojui. Pasaulyje — auksinė „sėkla“ ir aplink ją besisukantis mazgų ratas: žinios, išeinančios iš CERN.
-Sakyti: „Visi šie pavyzdžiai vyko vienodai. Fizikai išsprendė savo problemą, o paskui įmonė iš to padarė produktą: Siemens — skenerį, MARS — spalvotą rentgeną, ADVACAM — lustų modulius, Airbus — liniją lėktuvui. Pažiūrėkime, kaip tai vyksta ir kodėl tai gali būti Lietuvos įmonė.“
+Sakyti: „Daugumoje šių pavyzdžių fizikų sprendimą į produktą pavertė įmonė: Siemens — skenerį, MARS — spalvotą rentgeną, ADVACAM — lustų modulius, Airbus — liniją lėktuvui. Pažiūrėkime, kaip tai vyksta ir kodėl tai gali būti Lietuvos įmonė.“
 (~0,3 min)
 -->
 
@@ -497,15 +497,15 @@ space: { at: kt, dist: 17, yaw: 4, pitch: 34, dim: 0.4 }
 
 <div class="head">
 
-# Kaip CERN technologijos pasiekia rinką
+# CERN technologijų perdavimas įmonėms
 
 </div>
 
 <div class="stats gold">
 <div class="stat"><div class="n">700+</div><p class="l">sutarčių su partneriais nuo 2011 m.</p></div>
 <div class="stat"><div class="n">89</div><p class="l">sutartys vien 2025 m.</p></div>
-<div class="stat"><div class="n">~100</div><p class="l">startuolių</p></div>
-<div class="stat"><div class="n">2<small>%</small></div><p class="l">honoraras, be akcijų</p></div>
+<div class="stat"><div class="n">~100</div><p class="l">su CERN susijusių startuolių</p></div>
+<div class="stat"><div class="n">2<small>%</small></div><p class="l">licencinis mokestis, akcijų CERN neima</p></div>
 </div>
 
 <div class="src">CERN Knowledge Transfer Report 2025 · Technopolis ir CSIL, CERN socioekonominė studija (2026) · WIPO Global Innovation Index 2026</div>
@@ -528,7 +528,7 @@ space: { at: [118.5, -1.6, 0], dist: 13, yaw: -30, pitch: 14, dim: 0.25 }
 
 <div class="big gold">+<Count :from="0" :to="14" :ms="1800" /><span class="unit">%</span></div>
 
-didesnis apyvartos augimas nei panašių įmonių
+tiek labiau išaugo apyvarta nei panašių įmonių
 
 </div>
 
@@ -536,7 +536,7 @@ didesnis apyvartos augimas nei panašių įmonių
 
 <!--
 Kalbėtojui. Pagrindinis skaičius verslui.
-Sakyti: „Ar tai naudinga įmonėms? Nepriklausomas 2026 m. tyrimas palygino įmones, kurios 2016–2024 m. pirmą kartą gavo CERN užsakymą, su panašiomis įmonėmis, kurios jo negavo. Per penkerius metus CERN tiekėjų apyvarta išaugo 14 % daugiau, darbuotojų skaičius — 13 % daugiau, patentų — 15 % daugiau. Daugiau nei pusė tiekėjų dėl darbo su CERN pateko į naujas rinkas. Kai CERN užsako dar niekur negaminamą daiktą, įmonė išmoksta jį pagaminti ir paskui parduoda kitiems. Be to, maždaug trys iš keturių žmonių, išėjusių iš CERN, dirba pramonėje.“
+Sakyti: „Nepriklausomas 2026 m. tyrimas palygino įmones, kurios 2016–2024 m. pirmą kartą gavo CERN užsakymą, su panašiomis įmonėmis, kurios jo negavo. Per penkerius metus CERN tiekėjų apyvarta išaugo 14 % daugiau, darbuotojų skaičius — 13 % daugiau, patentų — 15 % daugiau. Daugiau nei pusė tiekėjų dėl darbo su CERN pateko į naujas rinkas. Maždaug trys iš keturių žmonių, išėjusių iš CERN, dirba pramonėje.“
 Jei laikas leidžia: „Visos visuomenės mastu CERN rugsėjį paskelbė, kad kiekvienas į didelio šviesio LHC investuotas frankas visuomenei grąžins apie 1,8 franko, net neskaičiuojant galimų atradimų.“ (94 % iš 50 000 modeliavimų rodo teigiamą grąžą; 40 % naudos — žmonės, kuriuos CERN parengė, 38 % — pramonė ir nemokama programinė įranga.)
 Faktai: nematerialusis turtas +63 %, materialusis +27 %; 54 % tiekėjų pateko į naujas rinkas, 70 % įgijo pažangių kompetencijų. WIFO (2025): CERN pirkimai kasmet sukuria ~680 mln. CHF pridėtinės vertės. Alumni: „Around three-quarters of CERN alumni move into industry“ (CERN socioekonominė studija, 2026; CERN Alumni Network, 2025 10).
 Šaltinis: kt-report-2025.web.cern.ch (CERN-socio-economic-final.pdf); home.cern (2026 06 23; 2026 09 23).
@@ -559,8 +559,8 @@ space: { at: kt, dist: 22, yaw: 200, pitch: 40, dim: 0 }
 </div>
 
 <!--
-Kalbėtojui. Kita mašina — kitas problemų ratas, ir jis prasideda dabar.
-Sakyti: „Šių metų birželio 27 d. LHC paskutinį kartą sukosi protonai; iki 2030 m. jis pertvarkomas, kad duotų iki dešimties kartų daugiau susidūrimų. O gegužę CERN Taryba priėmė Europos dalelių fizikos strategiją: kitu greitintuvu siūlomas 91 km žiedas, Būsimasis žiedinis greitintuvas. Sprendimas jį statyti laukiamas apie 2028 m. Jam vėl reikės dalykų, kurių šiandien niekas negamina: magnetų, vakuumo, šaldymo, lazerių, elektronikos. Pernai gruodį pirmą kartą CERN istorijoje privatūs rėmėjai pažadėjo naujam greitintuvui apie 860 mln. eurų.“
+Kalbėtojui. Kitos mašinos problemos.
+Sakyti: „Šių metų birželio 27 d. LHC paskutinį kartą prieš ilgąją pertrauką sukosi protonai; iki 2030 m. jis pertvarkomas, kad duotų iki dešimties kartų daugiau susidūrimų. O gegužę CERN Taryba priėmė Europos dalelių fizikos strategiją: kitu greitintuvu siūlomas 91 km žiedas, Būsimasis žiedinis greitintuvas. Sprendimas jį statyti laukiamas apie 2028 m. Jam reikės naujų magnetų, šaldymo ir vakuumo sistemų. Pernai gruodį pirmą kartą CERN istorijoje privatūs rėmėjai pažadėjo naujam greitintuvui apie 860 mln. eurų.“
 Faktai: FCC galimybių studija (2025 03 31): 90,7 km, vidutinis gylis ~200 m, FCC-ee kaina ~15 mlrd. CHF per ~12–15 metų. Strategija priimta 2026 05 22 Budapešte. Rėmėjai: Ericas ir Wendy Schmidtai, Johnas Elkannas, Breakthrough Prize fondas, Xavier'as Nielis; pažadai priklauso nuo valstybių narių sprendimo. HL-LHC fizika — nuo 2030 m. birželio iki 2041 m.
 Šaltiniai: home.cern/cern-bids-farewell-to-the-lhc-and-enters-long-shutdown-3/; council.web.cern.ch (2026 05 22 rezoliucija); home.cern/private-donors-pledge-860-million-euros-cerns-future-circular-collider/; cerncourier.com/a/fcc-feasibility-study-complete/.
 (~0,8 min)
@@ -595,21 +595,21 @@ space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45 }
 
 <div class="head">
 
-# Ką gali Lietuvos įmonė
+# Galimybės Lietuvos įmonėms
 
 </div>
 
 <div class="stats three gold">
 <div class="stat"><div class="n">Tiekti</div><p class="l">CERN per metus perka už ~600 mln. CHF</p></div>
-<div class="stat"><div class="n">Kurti FCC</div><p class="l">Ekspla, Ostaralab ir Sargasas jau pasirašė memorandumus</p></div>
-<div class="stat"><div class="n">Licencijuoti</div><p class="l">CERN technologijas arba kurti jas kartu</p></div>
+<div class="stat"><div class="n">FCC</div><p class="l">Ekspla, Ostaralab ir Sargasas jau pasirašė memorandumus</p></div>
+<div class="stat"><div class="n">Licencija</div><p class="l">naudoti CERN technologiją arba kurti ją kartu</p></div>
 </div>
 
 <div class="src">business-with-cern.web.cern.ch: Member States statuses 2026–2027, Who to contact · inovacijuagentura.lt (2026 01) · CERN pirkimai 2024: 613 mln. CHF</div>
 
 <!--
 Kalbėtojui. Kvietimas veikti.
-Sakyti: „Ką tai reiškia jūsų įmonei? Pirma, CERN yra klientas: 2024 m. jis pirko prekių ir paslaugų už 613 mln. frankų. Dešimt su viršum Lietuvos įmonių jau tiekia CERN elektroniką, radijo dažnių įrangą, optiką, fotoniką ir mechaniką. Pavyzdžiui, 2021 m. „Light Conversion“ laimėjo atvirą CERN konkursą, ir jos lazeris PHAROS buvo pasirinktas CERN greitintuvui CLEAR. O CERN 2026–2027 m. sąraše Lietuva pažymėta kaip asocijuotoji narė, jau pasiekusi 2026 m. tiekimo užsakymų lubas. Mūsų įmonės šiems metams išnaudojo tai, ką leidžia dabartinis statusas; tai dar viena priežastis siekti visateisės narystės. Antra, FCC: šių metų sausį „Ekspla“, „Ostaralab“ ir „Sargasas“ pasirašė su CERN ketinimų memorandumus dėl FCC technologijų ir tiekimo. Trečia, CERN technologijų licencijos ir bendri projektai. Pirmas žingsnis paprastas: užsiregistruokite CERN tiekėjų portale ir parašykite CERN pramonės ryšių pareigūnei Inovacijų agentūroje.“
+Sakyti: „Lietuvos įmonė gali dirbti su CERN trimis būdais. Pirma, CERN yra klientas: 2024 m. jis pirko prekių ir paslaugų už 613 mln. frankų. Dešimt su viršum Lietuvos įmonių jau tiekia CERN elektroniką, radijo dažnių įrangą, optiką, fotoniką ir mechaniką. Pavyzdžiui, 2021 m. „Light Conversion“ laimėjo atvirą CERN konkursą, ir jos lazeris PHAROS buvo pasirinktas CERN greitintuvui CLEAR. O CERN 2026–2027 m. sąraše Lietuva pažymėta kaip asocijuotoji narė, jau pasiekusi 2026 m. tiekimo užsakymų lubas. Mūsų įmonės šiems metams išnaudojo tai, ką leidžia dabartinis statusas; tai dar viena priežastis siekti visateisės narystės. Antra, FCC: šių metų sausį „Ekspla“, „Ostaralab“ ir „Sargasas“ pasirašė su CERN ketinimų memorandumus dėl FCC technologijų ir tiekimo. Trečia, CERN technologijų licencijos ir bendri projektai. Pirmiausia užsiregistruokite CERN tiekėjų portale ir parašykite Lietuvos pramonės ryšių su CERN pareigūnei Inovacijų agentūroje.“
 Light Conversion: 2021 m. birželį laimėjo atvirą CERN konkursą (atitiko specifikaciją, pasiūlė geresnę kainą); PHAROS pasirinktas fotokatodo lazeriu CLEAR greitintuvui (lightcon.com, 2021 06 18). Ar jis tebeveikia 2026 m., nepatvirtinta — nesakyti „dabar“. Nuo 2018 m. CERN iš Lietuvos įmonių pirko už ~2,5 mln. CHF (VU rektorius R. Petrauskas, LRT, 2026 m. birželis).
 Faktai: pirkimai nuo 50 000 CHF siunčiami ir nacionaliniams pramonės ryšių pareigūnams; >400 000 CHF — rinkos tyrimas ir konkursas. Paslaugų sutartims Lietuva — „poorly balanced“ (yra vietos). Pramonės ryšių pareigūnė — Aušrinė Krištopaitytė (Inovacijų agentūra). Lietuvos CERN BIC (2019) — ar dar veikia, nepatikrinta; neminėti.
 (~1 min)
@@ -627,8 +627,8 @@ space: { at: close }
 <p class="contacts">lhcb-vilnius.web.cern.ch · kt.cern · business-with-cern.web.cern.ch</p>
 
 <!--
-Kalbėtojui. Kamera grįžta ten, kur prasidėjo; ilgiausias skrydis (~4,5 s). Pentakvarkas išsibarsto ir vėl susirenka; „c“ — dar kartą.
-Sakyti: „Niekas CERN neužsakė nei žiniatinklio, nei jutiklinio ekrano, nei spalvoto rentgeno. Jie atsirado todėl, kad fizikai norėjo sužinoti, iš ko sudarytas pasaulis, ir sprendė problemas, kurias tas klausimas iškėlė. FCC iškels naujų problemų, ir jas spręs įmonės, kurios prisijungs dabar. Kai kas nors atneš jums miglotą, bet įdomią idėją, prisiminkite, kuo baigėsi 1989 m. pasiūlymas. Ačiū.“
+Kalbėtojui. Kamera grįžta ten, kur prasidėjo; ilgiausias skrydis (~4,5 s). Pentakvarkas išsibarsto ir vėl susirenka; „c“ — dar kartą.
+Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų, o trys Lietuvos įmonės jau pasirašė su CERN memorandumus dėl jo. Ačiū, laukiu klausimų.“
 Trukmė: kalba ~17,5 min; klipai — įžanginis 4:26, CERN iš oro 0:11, LHCb animacija 0:56 (kalbama per ją); iš viso apie 22 min. Jei skirta 15 min: įžanginį klipą trumpinti iki ~1,5 min (−3), praleisti Higso ir Artemis skaidres (−1), FCC ir +14 % sutrumpinti iki vieno sakinio (−1). Paslėpta skaidrė po šios (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
 (~0,4 min)
 -->

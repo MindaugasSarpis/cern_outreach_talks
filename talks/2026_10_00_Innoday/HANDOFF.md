@@ -93,3 +93,27 @@ the next round of problems, and Lithuanian firms can solve them.
 - How long is the slot? The deck runs ~22 min; the close's notes list cuts
   for 15 min.
 - The orbit clip, MARS image rights and the `10_00` date, as before.
+
+## Unslop pass (2026-10-08)
+
+Run by hand: `scripts/talk_copy.py` and `docs/unslop-lt.md` from
+origin/feat/unslop (not merged), unslop 1.8.4 check mode, levels 3 and 2 plus
+the Lithuanian seed list; a native-editor agent reviewed in parallel and its
+edits were folded in. Changed:
+
+- Titles as noun labels: "Didysis hadronų greitintuvas" (was the teaser
+  "Ko reikėjo šiems atradimams"), "CERN technologijų perdavimas įmonėms",
+  "Galimybės Lietuvos įmonėms". Part II is "Sprendimai", not "Išradimai":
+  its own notes say CERN did not invent the touchscreen or PET.
+- The takeaway ("a machine nobody could buy") is said once, on the LHC
+  slide; the cover no longer previews the talk and the close no longer
+  recaps it. The „Vague but exciting…“ callback at the close is gone (an
+  aphoristic kicker); the close ends on the FCC memoranda.
+- Cut: two colon-reveal maxims (LHC, 4 TB/s), two rhetorical openers, an
+  unsourced mechanism sentence (+14 %), an unsourced "niekas negamina" list
+  (FCC). The LHC notes are sentences, not a fragment run.
+- Corrected: White Rabbit is accelerator timing, not part of the grid;
+  "Licencija" (a firm takes a licence); the liaison officer is Lithuania's;
+  machines no longer "know", "look" or "give"; FDA "leido naudoti".
+- Gap: the notes give 27 June as the last LHC beam and 29 June as the start
+  of LS3; both came from the earlier research, not rechecked.
