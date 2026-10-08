@@ -18,8 +18,9 @@ stage:
   palette: blue
   plugins: [hadron]
   sound: true
-  # deeper than the blue palette's own look: little nebula, no film grain, no fringes
-  options: { nebula: 0.22, grain: 0.012, aberration: 0, bloom: 0.5 }
+  # deeper than the blue palette's own look: a black ground (fewer, dimmer dust
+  # grains, little nebula, a firmer vignette), no film grain, no fringes
+  options: { nebula: 0.12, grain: 0.012, aberration: 0, bloom: 0.55, density: 0.6, dustGain: 1.45, vignette: 0.42 }
 title: Nuo Vilniaus iki visatos pakraščių ir atgal prie novatoriškų mokslo pasiekimų pritaikymo privačiame sektoriuje
 info: |
   Innoday 2026, in Lithuanian. One spine: to see what the universe is made
@@ -419,7 +420,7 @@ space: { at: web, dist: 16, yaw: 62, pitch: 22, dim: 0 }
 <h1>pacientų gydyta CNAO ir MedAustron</h1>
 <p class="line">2025: FLASH projektas — visa dozė per 0,1 s</p>
 </div>
-<div class="credit">MedAustron sinchrotronas, Vyner Noištatas (Austrija) · CERN</div>
+<div class="credit">MedAustron sinchrotronas, Vyner Noištatas (Austrija) · © CERN</div>
 </div>
 
 <!--
@@ -443,7 +444,7 @@ space: { at: web, dist: 18, yaw: 78, pitch: 26, dim: 0 }
 <h1>Pasaulinis skaičiavimo tinklas</h1>
 <p class="line">170 centrų 42 šalyse · <b>White Rabbit</b> laikas — biržose</p>
 </div>
-<div class="credit">CERN duomenų centras · Nuotr. SimonWaldherr, CC BY-SA 4.0</div>
+<div class="credit">CERN duomenų centras · Nuotr. Sophia Bennett / CERN, CC BY 4.0</div>
 </div>
 
 <!--
@@ -461,14 +462,14 @@ space: { at: web, dist: 18, yaw: 92, pitch: 30, dim: 0 }
 ---
 
 <div class="hero" style="--focus: 50% 50%">
-<img src="/figures/hero_cold.jpg" alt="Superlaidžios elektros linijos demonstratorius" />
+<img src="/figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" />
 <div class="hero-text">
 <p class="kicker gold">Problema: šaltis</p>
 <div class="year">−271 °C</div>
 <h1>Superlaidumas</h1>
 <p class="line">superlaidi linija vandeniliniams lėktuvams (Airbus)</p>
 </div>
-<div class="credit">CERN</div>
+<div class="credit">Superlaidi MgB₂ linija HL-LHC, SM18 bandymų stendas · Nuotr. Maximilien Brice / © CERN</div>
 </div>
 
 <!--
@@ -539,7 +540,7 @@ space: { at: web, dist: 16, yaw: -18, pitch: 14, dim: 0 }
 <h1>Aplink Mėnulį</h1>
 <p class="line">6 CERN Timepix lustai matavo radiaciją įgulos kapsulėje</p>
 </div>
-<div class="credit">Artemis II startas · NASA</div>
+<div class="credit">Artemis II startas, 2026 04 01 · Nuotr. NASA / Michael DeMocker</div>
 </div>
 
 <!--

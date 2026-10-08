@@ -12,13 +12,13 @@ import { sampleFrame, placeAlongRays, makeGrains, setPositions } from './takeove
 // Printed, in the overview and without the world it is the still frame.
 const props = defineProps({
   src: { type: String, default: 'figures/opener_last.jpg' },
-  grains: { type: Number, default: 140000 },
+  grains: { type: Number, default: 280000 },   // a frame lit all over (a galaxy disk) needs the density
   near: { type: Number, default: 14 },
   far: { type: Number, default: 46 },
   ms: { type: Number, default: 3200 },     // the dissolve
   hold: { type: Number, default: 450 },    // the still frame before it starts
-  size: { type: Number, default: 0.4 },
-  gain: { type: Number, default: 0.85 },   // grains add up: 1.25 burned the knots white, 0.24 left them faint, 0.6 still read dimmer than the frame
+  size: { type: Number, default: 0.45 },
+  gain: { type: Number, default: 1.3 },    // grains add up; 140k grains at 0.85 left a lit-all-over frame at a fifth of its light
   gamma: { type: Number, default: 1.0 },   // density ~ brightness^gamma
 })
 const { $renderContext, $frontmatter, $page } = useSlideContext()

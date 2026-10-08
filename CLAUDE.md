@@ -394,19 +394,26 @@ the package.
   **The takeover** (2026-10-08, owner's design): the opener ends on the cosmic
   web; the next slide (`<WebTakeover />`, `setup/WebTakeover.vue` +
   `setup/takeover.js`) opens on that same frame (`public/figures/opener_last.jpg`),
-  snaps the camera to the slide's pose under it, puts 140 000 grains of the
+  snaps the camera to the slide's pose under it, puts 280 000 grains of the
   frame into the world along each pixel's line of sight from the live camera
   (depth 14–46 by a smooth noise), and dissolves the copy into them, voids
-  first; the slide after it orbits the web so the picture shows depth. Opener
+  first; the slide after it orbits the picture so it shows depth. Opener
   and takeover slides share the pose `[30, 40, -70]`, dist 18, yaw 0, pitch 0,
   sway 0; the clip uses `transition="fade"` (dust would break it up). Until the
-  owner's orbit clip exists, `opener_last.jpg` is a synthetic stand-in web and
-  the old zoom-out (which ends on black) still plays; swap steps are in
-  `videos/manifest.toml`. Exposure: `gain` 1.25 burned the knots white, 0.24
-  was too faint, 0.6 is untested pending the new toolkit's recorder.
-  Open for the owner: the zoom-out plays whole (4:42; a manifest `trim` would
-  shorten it), the closing `lhcb_aciu.mp4` has English captions inside, the
-  MARS wrist image is © MARS Bioimaging, the date is still `10_00`.
+  owner's orbit clip exists, the opener is `vu_ff_zoom_galaxy.mp4` (the
+  zoom-out cut at 4:26, before its fade to black) and `opener_last.jpg` is its
+  real last frame, our galaxy; swap steps are in `videos/manifest.toml`.
+  Exposure, judged in `record.mjs` takes: a frame lit all over (a galaxy disk)
+  needs 280 000 grains at `gain` 1.3 (140 000 at 0.85 gave a fifth of its
+  light; 1.25 at gamma 1.7 burned the knots white), and the grains start 1.35×
+  more saturated than their pixels because the tone mapper greys what adds up.
+  **Look** (owner, 8 Oct: "washed out… more striking, photorealistic"): the
+  world's ground is black, not navy (`stage.options` density 0.6, dustGain
+  1.45, nebula 0.12, vignette 0.42), the photographs are 2400 px CERN/NASA
+  originals, and the one small original (MedAustron, 1200 px) is a Lanczos
+  2× upscale, not an AI one, so no detail is invented.
+  Open for the owner: the spine and its wording, the MARS wrist image is
+  © MARS Bioimaging, the date is still `10_00`.
 - **ffmpeg here.** `~/.local/bin/ffmpeg` and `ffprobe` (static build) crash on
   HTTPS input (exit 139). `videos:frames` works round it by downloading;
   `videos:preflight` of release-only clips needs the env's ffmpeg
