@@ -73,11 +73,14 @@ Workflow({ name: 'talk-review', args: {
   snapshot: '<stash sha, or the HEAD sha>', site: '/tmp/talk-<slug>/site',
   today: '<YYYY-MM-DD>', lang: 'en', duration: 30,
   sheets: ['<sheet paths>'], ndjson: '<report path>',
+  since: '<HEAD sha of the last review, from notes/review.md>',   // facts lens checks only what changed
 } })
 ```
 
 It returns `kept[]` (verified findings with exact fixes, deduped by slide and
 kind) and `unverified[]`. Write `talks/<t>/notes/review.md` from the result,
+with both SHAs at the top (the HEAD SHA is the next review's `since`; a
+stash SHA is not kept by git for long),
 apply the fixes against the current text (the snapshot may be older), and
 report `unverified[]` to the owner.
 
