@@ -421,10 +421,12 @@ def build_current(repo: Repo, talk: str) -> bool:
 
 
 def stage_bin(kind: str, talkdir: Path) -> Path | None:
-    """$SLIDEV_STAGE_BIN first, then the talk's installed slidev-addon-stage."""
+    """$SLIDEV_STAGE_BIN first, then the talk's installed slidev-addon-stage, then
+    another talk's in the same checkout (the bins photograph any built deck)."""
     name = STAGE_BINS[kind]
     dirs = [Path(os.environ["SLIDEV_STAGE_BIN"])] if os.environ.get("SLIDEV_STAGE_BIN") else []
     dirs.append(talkdir / "node_modules" / "slidev-addon-stage" / "bin")
+    dirs += sorted(talkdir.parent.glob("*/node_modules/slidev-addon-stage/bin"), reverse=True)
     for b in dirs:
         for cand in (b / name, b / f"{kind}.mjs", b / f"{kind}.js"):
             if cand.is_file():
@@ -1254,6 +1256,10 @@ def cmd_bump(repo: Repo, a, extra) -> tuple[int, dict]:
 # ---------------------------------------------------------------- command line
 
 class Parser(argparse.ArgumentParser):
+    def __init__(self, *a, **kw):
+        kw.setdefault("allow_abbrev", False)     # a tool's --clicks must not be read as a prefix of ours
+        super().__init__(*a, **kw)
+
     def error(self, message):
         raise UsageError(message)
 
