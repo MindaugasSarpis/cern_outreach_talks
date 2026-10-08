@@ -16,6 +16,10 @@ Search ranks by how many of the words appear in the id, `claim_en` and
 "touch screen"). `--json` prints one JSON object; the exit code is 1 when
 nothing matches.
 
+`show` also lists the other usable facts that cite the same page (`same
+page:`, or `same_page` in the JSON). Read them before citing one: they
+should agree.
+
 ## Schema
 
 | key | type | meaning |
@@ -26,7 +30,7 @@ nothing matches.
 | `value` | number, string or null | The headline number, when there is one. |
 | `unit` | string or null | Its unit (`TB`, `members`, `% of matter`). |
 | `as_of` | `YYYY`, `YYYY-MM`, `YYYY-MM-DD` or null | When the claim holds: the event date, or the date of the statistic. |
-| `source_url` | URL | One public http(s) page that supports the claim. |
+| `source_url` | URL | One public http(s) page that supports the whole claim, by its canonical URL (follow redirects such as WordPress `?p=` links). |
 | `quote` | string or null | Verbatim text from that page, when the check recorded one. |
 | `verdict` | enum | `confirmed`, `corrected`, `unverified` or `refuted` (below). |
 | `verified_on` | `YYYY-MM-DD` | When the source was checked. Required unless the verdict is `unverified`. |
@@ -76,6 +80,11 @@ overwrites an entry with the same id (to record a re-check, update
 `verdict`, `verified_on` and `verified_by` and keep the id); `--dry-run`
 validates without writing. One bank only: a talk does not keep its own
 facts file (`check` warns about `talks/*/research/*.json`).
+
+When usable facts from one page were checked by different runs, `check`
+warns: two readings of one page can disagree. Read those facts together
+against the page, fix any that do not hold, and record the re-check on all
+of them (`verified_on`, and one `verified_by`); the warning then clears.
 
 ## Citing facts in a deck
 

@@ -86,6 +86,20 @@ class Search(unittest.TestCase):
     def test_cited_ids(self):
         self.assertEqual(fx.cited_ids("x <!-- facts: a-1, b-2 c --> y <!--fact: d-->"), ["a-1", "b-2", "c", "d"])
 
+    def test_page_key(self):
+        k = fx.page_key
+        self.assertEqual(k("https://www.cerncourier.com/a/touch/"), k("http://cerncourier.com/a/touch#top"))
+        self.assertNotEqual(k("https://cerncourier.com/?p=1"), k("https://cerncourier.com/?p=2"))
+        self.assertEqual(k("https://home.cern"), "home.cern/")
+
+    def test_same_page_usable_only(self):
+        a = good(id="a", source_url="https://cerncourier.com/a/touch/")
+        b = good(id="b", source_url="https://cerncourier.com/a/touch", verified_by="another run")
+        c = good(id="c", source_url="https://cerncourier.com/a/touch", verdict="refuted")
+        d = good(id="d", source_url="https://home.cern/")
+        self.assertEqual({k: [e["id"] for e in v] for k, v in fx.same_page([a, b, c, d]).items()},
+                         {"cerncourier.com/a/touch": ["a", "b"]})
+
 
 class Cli(unittest.TestCase):
     def setUp(self):
@@ -158,6 +172,27 @@ class Cli(unittest.TestCase):
         self.assertTrue(any("duplicate id" in e for e in errs))
         self.assertTrue(any("unknown fact 'ghost'" in e for e in errs))
         self.assertTrue(any("verdict unverified" in e for e in errs))
+
+
+    def test_same_page_show_and_check(self):
+        rc, out, _ = run("show", "lt-known-fact", "--facts", str(self.bank), "--json")
+        self.assertEqual(json.loads(out)["same_page"], [])          # the other home.cern fact is unverified
+        new = self.dir / "new.jsonl"
+        new.write_text(json.dumps(good(id="cern-page-fact", source_url="https://www.home.cern", verified_by="run b")),
+                       encoding="utf-8")
+        self.assertEqual(run("add", "--facts", str(self.bank), "--from-json", str(new))[0], 0)
+        self.assertIn("same page: cern-page-fact", run("show", "lt-known-fact", "--facts", str(self.bank))[1])
+        rc, out, _ = run("check", "--facts", str(self.bank), "--json")
+        runs = [w for w in json.loads(out)["warnings"] if "checked by 2 runs" in w]
+        self.assertEqual(rc, 0)
+        self.assertEqual(len(runs), 1)
+        self.assertTrue(runs[0].endswith("cern-page-fact, lt-known-fact"), runs[0])
+        # one re-check of both clears it
+        new.write_text(json.dumps(good(id="cern-page-fact", source_url="https://home.cern/", verified_by="test")),
+                       encoding="utf-8")
+        self.assertEqual(run("add", "--facts", str(self.bank), "--from-json", str(new), "--replace")[0], 0)
+        rc, out, _ = run("check", "--facts", str(self.bank), "--json")
+        self.assertFalse([w for w in json.loads(out)["warnings"] if " runs; " in w])
 
 
 class CommittedBank(unittest.TestCase):

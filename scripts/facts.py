@@ -8,14 +8,15 @@ research/README.md.
 Usage (from anywhere; the bank is found from this script's checkout):
     python3 scripts/facts.py search touchscreen [--json] [--limit 10]
     python3 scripts/facts.py touchscreen               # same as search
-    python3 scripts/facts.py show gave-touch-stumpe-1972 [--json]
+    python3 scripts/facts.py show gave-touch-stumpe-1972 [--json]   # and the other facts from its page
     python3 scripts/facts.py add --claim-en "..." --source-url https://... \\
         --verdict confirmed --verified-on 2026-10-08 --verified-by "the owner" \\
         [--id slug] [--claim-lt "..."] [--value 89] [--unit contracts] \\
         [--as-of 2025] [--quote "..."] [--used-in 2026_10_00_Innoday]
     python3 scripts/facts.py add --from-json new.jsonl  # one object, a list, or JSON lines; - for stdin
     python3 scripts/facts.py add --from-json run.json --loose --verified-by "..."  # a research run's facts
-    python3 scripts/facts.py check [--json]             # schema, ids, public sources, citations in talks
+    python3 scripts/facts.py check [--json]             # schema, ids, public sources, citations in talks,
+                                                        # one page's facts checked by different runs
 
 --facts PATH reads another bank (tests). Every verb takes --json: one JSON
 object on stdout, human text on stderr. Exit 0 ok, 1 problems found (no
@@ -228,6 +229,25 @@ def near_duplicates(entries: list[dict], threshold: float = 0.85) -> list[tuple[
     return out
 
 
+def page_key(url) -> str:
+    """One page however its URL is written: no scheme, 'www.', trailing slash or fragment."""
+    try:
+        p = urlsplit(url or "")
+    except ValueError:
+        return str(url)
+    host = (p.hostname or "").lower().removeprefix("www.")
+    return host + (p.path.rstrip("/") or "/") + (f"?{p.query}" if p.query else "")
+
+
+def same_page(entries: list[dict]) -> dict[str, list[dict]]:
+    """Usable facts grouped by the page they cite; only pages cited more than once."""
+    pages: dict[str, list[dict]] = {}
+    for e in entries:
+        if isinstance(e, dict) and e.get("verdict") in USABLE and isinstance(e.get("source_url"), str):
+            pages.setdefault(page_key(e["source_url"]), []).append(e)
+    return {k: v for k, v in pages.items() if len(v) > 1}
+
+
 def cited_ids(text: str) -> list[str]:
     """Fact ids a deck cites with <!-- facts: id1, id2 -->."""
     ids = []
@@ -281,13 +301,16 @@ def cmd_show(args) -> int:
             msg = f"no fact {args.id!r}" + (f"; did you mean: {', '.join(pref[:8])}" if pref else "")
             _out(args, {"fact": None, "error": msg}, msg)
             return 1
+    siblings = [x["id"] for x in same_page(entries).get(page_key(e.get("source_url")), []) if x is not e]
     if args.json:
-        _out(args, {"fact": e}, "")
+        _out(args, {"fact": e, "same_page": siblings}, "")
     else:
         print(_fmt(e))
         for k in ("value", "unit", "quote", "verified_on", "verified_by", "used_in"):
             if e.get(k) not in (None, "", []):
                 print(f"  {k}: {e[k]}")
+        if siblings:
+            print(f"  same page: {', '.join(siblings)}")
     return 0
 
 
@@ -411,6 +434,12 @@ def cmd_check(args) -> int:
         seen[fid] = e
     for a, b, j in near_duplicates(entries):
         warnings.append(f"near-duplicate claims: {a} ~ {b} ({j:.0%} of words shared)")
+    for group in same_page(entries).values():          # two runs that read one page may disagree
+        runs = sorted({str(e.get("verified_by")) for e in group})
+        if len(runs) > 1:
+            warnings.append(f"{len(group)} facts from {group[0]['source_url']} were checked by {len(runs)} runs; "
+                            f"read them together against the page and record the re-check: "
+                            + ", ".join(e["id"] for e in group))
     talks_dir = args.facts.resolve().parents[1] / "talks"
     talk_names = {d.name for d in talks_dir.glob("*") if d.is_dir()} if talks_dir.is_dir() else set()
     absent: dict[str, int] = {}
