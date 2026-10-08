@@ -116,9 +116,9 @@ html[data-stage] .photo-credit {
 }
 
 /* --- two portraits beside the world, named */
-html[data-stage] .portraits { position: absolute; right: 98px; top: 56px; display: flex; gap: 18px; animation: stage-rise 0.9s var(--stage-ease) 0.5s both; }
+html[data-stage] .portraits { position: absolute; right: 140px; top: 92px; display: flex; gap: 18px; animation: stage-rise 0.9s var(--stage-ease) 0.5s both; }
 html[data-stage] .portraits figure { margin: 0; }
-html[data-stage] .portraits img { width: 222px; height: 278px; object-fit: cover; border-radius: 8px; display: block; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55); filter: grayscale(1) contrast(1.05); max-width: none !important; }
+html[data-stage] .portraits img { width: 200px; height: 250px; object-fit: cover; border-radius: 8px; display: block; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55); filter: grayscale(1) contrast(1.05); max-width: none !important; }
 html[data-stage] .portraits figcaption { font-size: 18px; text-align: center; margin-top: 8px; color: var(--stage-fg); text-shadow: var(--kk-shadow); }
 html[data-stage] .portraits figcaption small { display: block; font-size: 18px; opacity: 0.7; white-space: nowrap; margin-top: 2px; }
 @media (prefers-reduced-motion: reduce), print {
@@ -133,7 +133,7 @@ html[data-stage] .scrim-left {
 
 /* --- city names on the map (positions projected from the `whole` pose, which has no sway) */
 html[data-stage] .city {
-  position: absolute; font-size: 22px; font-weight: 600; letter-spacing: 0.01em; color: #eef1ff;
+  position: absolute; font-size: 28px; font-weight: 600; letter-spacing: 0.01em; color: #eef1ff;
   text-shadow: var(--kk-shadow); white-space: nowrap; animation: stage-rise 0.8s var(--stage-ease) 1.6s both;
 }
 html[data-stage] .city.r { translate: -100% 0; text-align: right; }   /* `translate`, not `transform`: the rise-in animation holds transform: none */
@@ -144,7 +144,7 @@ html[data-stage] .city.home { color: var(--kk-gold-hi); }
 /* --- the title card */
 html[data-stage] .say.title { bottom: auto; top: 112px; max-width: 70%; }
 html[data-stage] .say.title .big.huge { font-size: 80px; text-transform: uppercase; line-height: 0.98; }
-html[data-stage] .say .byline { font-size: 22px; font-weight: 500; letter-spacing: 0.06em; margin: 22px 0 0; opacity: 0.88; }
+html[data-stage] .say .byline { font-size: 28px; font-weight: 500; letter-spacing: 0.06em; margin: 22px 0 0; opacity: 0.88; }
 
 /* --- a line over a clip: on a dark band, so it holds against any frame */
 html[data-stage] .say.on-clip {

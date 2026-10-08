@@ -10,8 +10,13 @@
 - The organisers' ask: real stories over conference talks; you don't need to
   know now what you will be; notice what interests you and dig; what working
   on questions with no textbook answer is like.
-- Delivery: broadcast. Laptop at 1920×1080, 50 Hz, silent. In past editions
-  the producers squeezed slides to about two thirds of the frame.
+- Delivery (owner, 2026-10-08, replaces the earlier broadcast brief): **a
+  private event delivered online, not TV.** No TV safe area, logo corners,
+  `safe` check, Delfi questions, per-slide MP4s for a broadcaster or a
+  2.5 Mbit/s gate. Keep: type readable on a laptop or a classroom
+  projector showing a stream, and no ultra-fine dust that video
+  compression smears. The normal stage look is allowed again. No sources
+  on slides and no reference lists required; facts must still be true.
 - Owner's steers: "doesn't have to be my life story"; the first version was
   rejected for too many slides, AI-sounding lines and a broken story; the
   second for incoherent flow and washed-out visuals ("more striking but not
@@ -48,6 +53,24 @@ they do not know yet.
 | 16 | You don't need to know yet; a task for this week | the map dimmed, „Ko jūs savo darbe dar nežinote?“ |
 
 ## Status
+
+- 2026-10-08 (late): **stopped before deploy; fifth storyline proposed.**
+  The owner does not see enough meaning in the fourth version (a
+  chronology from the speaker's side). `notes/outline-v5.md` puts the
+  viewer in the physicist's seat: judge a real bump (2003 yes → 2008 no →
+  2015 yes), his „Neradau.“, what the job trains, three things to do this
+  year, the closing question. **Awaiting the owner's approval; build
+  nothing until then.** Pending after approval: pin to slidev-videos
+  10ad67f (`talk pin … --allow-sha`), undo the TV-only deck settings,
+  prototype the histogram on the 2015 slide and send a frame sheet; renders
+  on photon (`RENDER_SRUN_ARGS="-p photon_primary -c 16 -n 1"`,
+  `PLAYWRIGHT_BROWSERS_PATH=/var/tmp/misarpis/ms-playwright`, output under
+  /home).
+- Findings on the fourth version kept for the build: shots need `--wait
+  30000` under SwiftShader (at the default 4.2 s the map and trail had not
+  drawn); at 30 s the map draws but slide 11 (haystack) stayed blank and
+  the cover's clusters were near-invisible; every world-only slide needs
+  something on screen before the grains arrive.
 
 - 2026-10-08 (evening): **fourth version, on the branch, not deployed.**
   The owner's order (relayed by the Scheduler): coherence first, plain
@@ -102,6 +125,18 @@ they do not know yet.
   the day.
 
 ## Decisions
+
+- 2026-10-08 — Not TV (owner): broadcast rules dropped from the brief;
+  TV-only deck settings (`look: broadcast` overrides, safe-box CSS) stay
+  until the fifth storyline is approved, then go. Undo: the old Brief in
+  git history.
+- 2026-10-08 — Fifth outline opens on the bump (viewer decides) rather
+  than on the antimatter question the Scheduler proposed: one question
+  followed to the end, as the second version was rejected for jumping
+  between two. Alternative kept in the outline: swap slide 1 for the
+  antimatter opening.
+- 2026-10-08 — Closing slide is its one line alone (owner's rule): no
+  kicker, name or URL under the question.
 
 - 2026-10-08 — One question, the speaker's own: pentaquarks. Cut the
   matter/antimatter opening (old slides 1–3, the `origin` station with its

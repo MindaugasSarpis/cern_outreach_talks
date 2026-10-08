@@ -109,7 +109,7 @@ space: { at: [602.5, 0.2, 0], dist: 20, yaw: -18, pitch: 8, sway: 1, dim: 0.15 }
 <Grains :set="{ pq: 0, needle: 0, dance: 0, phantom: 0, route: 6 }" />
 
 <div class="say">
-<p class="big huge">1964</p>
+<p class="num">1964</p>
 </div>
 
 <div class="portraits">
@@ -239,7 +239,7 @@ space: { at: [604.2, -1.6, 0], dist: 13.5, yaw: 18, pitch: 8, sway: 1, dim: 0.55
 <Grains :set="{ pq: 3, needle: 0, dance: 0, phantom: 0, route: 6 }" />
 
 <div class="say">
-<p class="big huge">2019</p>
+<p class="num">2019</p>
 </div>
 
 <img class="plot" src="/figures/lhcb/LHCb-PAPER-2019-014_mjpsip-spectrum-19_crop.png" alt="LHCb 2019: J/ψ p masės skirstinys su trimis siauromis smailėmis" />
