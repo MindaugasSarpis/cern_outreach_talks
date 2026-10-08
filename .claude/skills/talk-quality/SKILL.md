@@ -21,6 +21,7 @@ for the engine, [docs/STAGE_QUICKSTART.md](../../../docs/STAGE_QUICKSTART.md).
 | Research the gaps | skill `talk-research` (saved workflow `talk-research-gaps`) |
 | Lint | `pnpm talk lint <t>` |
 | Shots and sheet review | skill `talk-verify` (`pnpm talk review <t>`) |
+| Unslop pass | lens `unslop` of saved workflow `talk-review` (on by default), or by hand: `python3 -I scripts/talk_copy.py talks/<t> --out /tmp/talk-<slug>-copy.md`, then the `unslop` skill in check mode on that packet; Lithuanian: [docs/unslop-lt.md](../../../docs/unslop-lt.md) |
 | Diff-only fact check | saved workflow `talk-review`, facts lens |
 | Timing gate | `pnpm talk lint <t>`: notes and clips within `duration` + 5 % |
 | Ready | `pnpm talk ready <t>` |
@@ -35,6 +36,8 @@ for the engine, [docs/STAGE_QUICKSTART.md](../../../docs/STAGE_QUICKSTART.md).
   unverified.
 - Every term and plot introduced before it is used.
 - Readable over the world (type floor, dim, no bright detail behind text).
+- Nothing reads as generated: the unslop pass is clean on the slide face,
+  the spoken notes and the world labels (house VOICE wins where they differ).
 - Notes carry the spoken script and `(~N min)`.
 
 And for the talk: the cover and close each have an entrance and the hum; one
