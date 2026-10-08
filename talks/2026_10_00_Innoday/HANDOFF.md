@@ -117,3 +117,26 @@ edits were folded in. Changed:
   machines no longer "know", "look" or "give"; FDA "leido naudoti".
 - Gap: the notes give 27 June as the last LHC beam and 29 June as the start
   of LS3; both came from the earlier research, not rechecked.
+
+## Visual review (2026-10-08, `talk review` from chore/talk-cli, gluon)
+
+28 shots, no overflow; two reviewer rounds on the contact sheets. Fixed:
+- **Cover title** hid until the pentaquark finished assembling, which under
+  SwiftShader never came within 14 s. `styles/index.css` now shows it after
+  4 s regardless (a slow venue GPU must not leave the cover blank).
+- **1989 proposal**: new `.hero.page` — the photographed page fills the right
+  60 %, the year and quote stand on black at the left, credit on the left.
+- **Handshake (2018) and Stumpe (1973)**: new `.hero.low.deep` — a darker
+  floor, a smaller year, a bold kicker; the Lithuania kicker is gold (blue on
+  a blue jacket did not read). Text still crosses the lower half of the
+  woman's jacket on 2018; faces are clear (the 3:2 photo has no room to
+  shift). Accepted.
+- **Superconductivity**: text on the right, off the technician.
+- **LHC tunnel**: cards 0.8 opaque; credit and `.src` on one baseline.
+- **Credits** on every photo slide have a dark chip behind them.
+- **Dim** raised on the two section slides (0.08 → 0.4) and +14 % (0.45):
+  bright dust sat behind their text.
+- `videos/manifest.toml` no longer lists `vu_ff_zoom.mp4` (unused; its asset
+  stays on the release, do not `--prune`); `shots/` is ignored.
+Left as SwiftShader timing (confirm on a GPU): the pentaquark slide (09)
+showed two orbs, not five, at the 14 s shot.

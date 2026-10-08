@@ -105,7 +105,7 @@ Pastaba: „žvaigždės, dujos, planetos ir mes“ — tyčia ne „galaktikos�
 
 ---
 layout: section
-space: { at: [12.5, -3.4, 0], dist: 19, yaw: -30, pitch: 24, dim: 0.08 }
+space: { at: [12.5, -3.4, 0], dist: 19, yaw: -30, pitch: 24, dim: 0.4 }
 ---
 
 # I dalis · Mašina
@@ -270,7 +270,7 @@ Sakyti: „Šešios problemos: kaip valdyti mašiną, kaip tvarkyti informaciją
 space: { at: web, dist: 15, yaw: 46, pitch: 18, dim: 0 }
 ---
 
-<div class="hero low" style="--focus: 50% 30%">
+<div class="hero low deep" style="--focus: 50% 30%">
 <img src="/figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" />
 <div class="hero-text">
 <p class="kicker gold">Problema: valdymas</p>
@@ -294,7 +294,7 @@ Istorija: pasiūlymas ranka parašytas 1972 m. kovo 11 d. Stumpe atsisakė pasi
 space: { at: web, dist: 15, yaw: 14, pitch: 16, dim: 0 }
 ---
 
-<div class="hero low" style="--focus: 50% 20%">
+<div class="hero page" style="--focus: 50% 0%">
 <img src="/figures/hero_proposal.jpg" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" />
 <div class="hero-text">
 <p class="kicker gold">Problema: informacija</p>
@@ -458,7 +458,7 @@ Jei laikas leidžia: duomenų problema davė ir atvirojo mokslo įrankius — Ze
 space: { at: web, dist: 18, yaw: 92, pitch: 30, dim: 0 }
 ---
 
-<div class="hero" style="--focus: 50% 50%">
+<div class="hero right" style="--focus: 50% 50%">
 <img src="/figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" />
 <div class="hero-text">
 <p class="kicker gold">Problema: šaltis</p>
@@ -478,7 +478,7 @@ Faktai: SCALE (2022–2024, Airbus UpNext): lanksti REBCO linija, ±2 kA iki 63
 
 ---
 layout: section
-space: { at: [120, -2.4, 0], dist: 14, yaw: -22, pitch: 22, dim: 0.08 }
+space: { at: [120, -2.4, 0], dist: 14, yaw: -22, pitch: 22, dim: 0.4 }
 ---
 
 # III dalis · Atgal
@@ -519,7 +519,7 @@ Atsargiai: „27 su CERN susiję startuoliai pritraukė 3,2 mlrd. CHF“ — 2,
 -->
 
 ---
-space: { at: [118.5, -1.6, 0], dist: 13, yaw: -30, pitch: 14, dim: 0.25 }
+space: { at: [118.5, -1.6, 0], dist: 13, yaw: -30, pitch: 14, dim: 0.45 }
 ---
 
 <div class="readout gold-k">
@@ -570,10 +570,10 @@ Faktai: FCC galimybių studija (2025 03 31): 90,7 km, vidutinis gylis ~200 m, 
 space: { at: kt, dist: 18, yaw: 120, pitch: 12, dim: 0 }
 ---
 
-<div class="hero low" style="--focus: 50% 40%">
+<div class="hero low deep" style="--focus: 50% 30%">
 <img src="/figures/hero_lt.jpg" alt="Prezidentas Gitanas Nausėda spaudžia ranką CERN generaliniam direktoriui Markui Thomsonui, už jų CERN, Lietuvos ir ES vėliavos" />
 <div class="hero-text">
-<p class="kicker">Lietuva ir CERN</p>
+<p class="kicker gold">Lietuva ir CERN</p>
 <div class="year blue">2018</div>
 <h1>Asocijuotoji narė</h1>
 <p class="line">2026 m. Lietuva kreipėsi dėl <b>visateisės narystės</b></p>
