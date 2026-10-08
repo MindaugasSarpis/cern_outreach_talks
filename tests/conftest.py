@@ -19,14 +19,23 @@ SHA = "640eaa57fbe882a7f995379c25fa86b85c8a4e2d"
 REPO_URL = "github:MindaugasSarpis/slidev-videos"
 
 
+# what talk.py reads from the environment: the tests set their own, or none
+CLEARED = ("INIT_CWD", "SLIDEV_STAGE_BIN", "OUTREACH_ROOT", "SLIDEV_VIDEOS_DIR", "RENDER_GPUS", "RENDER_SRUN_ARGS",
+           "SLIDEV_STAGE_GL", "SLIDEV_STAGE_MESA_D3D12", "SLIDEV_STAGE_CHROMIUM_ARGS", "SLIDEV_STAGE_CHROMIUM_ENV",
+           "TALK_RENDER_SLOT", "SLIDEV_STAGE_SHOTS_LOCKED", "SLURM_JOB_ID", "_CONDOR_JOB_AD", "CONDA_PREFIX", "TMUX")
+
+
 def git_env(tmp: Path) -> dict:
+    """No owner config, state, env or lock leaks in: everything talk.py resolves points under tmp."""
     env = os.environ.copy()
     env.update(GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_NOSYSTEM="1",
                GIT_AUTHOR_NAME="Test", GIT_AUTHOR_EMAIL="test@example.invalid",
                GIT_COMMITTER_NAME="Test", GIT_COMMITTER_EMAIL="test@example.invalid",
-               TALK_TMP=str(tmp / "tmp"), TALK_ENV_BIN=str(tmp / "no-env"))
-    env.pop("INIT_CWD", None)
-    env.pop("SLIDEV_STAGE_BIN", None)
+               TALK_TMP=str(tmp / "tmp"), OUTREACH_ENV_BIN=str(tmp / "no-env"),
+               OUTREACH_CONFIG=str(tmp / "config" / "env"), OUTREACH_STATE=str(tmp / "state"),
+               RENDER_BACKEND="local", RENDER_LOCK=str(tmp / "render.lock"))
+    for k in CLEARED:
+        env.pop(k, None)
     return env
 
 
@@ -83,8 +92,18 @@ def repo(tmp_path, env):
 
 
 def talk(root: Path, *args, cwd: Path | None = None, env: dict) -> tuple[int, dict | None, str]:
-    """Run root/scripts/talk.py with --json; the exit code, the parsed object, stderr."""
-    r = subprocess.run([sys.executable, str(root / "scripts" / "talk.py"), *map(str, args), "--json"],
+    """Run root/scripts/talk.py with --json; the exit code, the parsed object, stderr.
+    --json goes first, so a `--` among the args (render's command) keeps the rest to itself."""
+    r = subprocess.run([sys.executable, str(root / "scripts" / "talk.py"), "--json", *map(str, args)],
                        cwd=cwd or root, env=env, capture_output=True, text=True)
     obj = json.loads(r.stdout) if r.stdout.strip() else None
     return r.returncode, obj, r.stderr
+
+
+def fake_bin(d: Path, name: str, body: str) -> Path:
+    """An executable shell script `name` in d."""
+    d.mkdir(parents=True, exist_ok=True)
+    p = d / name
+    p.write_text("#!/bin/sh\n" + body.lstrip("\n"))
+    p.chmod(0o755)
+    return p

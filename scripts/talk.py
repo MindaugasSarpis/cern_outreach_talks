@@ -23,9 +23,16 @@
                   venue --dry-run (and the safe-area check for a broadcast talk)
   record NAME     slidev-stage-record of the build: one MP4 per slide
   safe NAME       slidev-stage-safe of the build: the TV safe area
-  deploy NAME     only when the owner asked: from the talk's worktree, ready, then push
-                  the commit ready passed to main, watch the Pages run, check the URL;
-                  --dry-run checks only
+  deploy NAME     only when the owner asked: from the talk's worktree, ready (unless
+                  ready already passed this commit), then push the commit ready passed
+                  to main, watch the Pages run, check the URL; --dry-run checks only
+  render -- CMD   run CMD in the render slot: srun on Slurm, condor_run on HTCondor,
+                  else under the machine's render lock
+  pin [NAME] REF  both addon pins of one talk to a toolkit tag, then pnpm install
+  session NAME|tools|scheduler
+                  a Claude session in its own window of the tmux session "talks"
+  sessions        the windows of "talks" and each one's line in the status file
+  config          the settings talk resolved, and where each came from
   doctor          tool versions, and which pnpm a bare shell runs
   bump-toolkit vX.Y.Z [--talk NAME ... | --active]
                   move the talks' addon pins, env.yaml and the scaffolder together
@@ -36,6 +43,11 @@ banner on stdout). Exit 0 ok, 1 problems found, 2 usage error. NAME is any case-
 of a talk directory's name ("opendata", "karjer"); without it, the talk is
 the one the current directory is in, or the only one the worktree changes.
 Talks resolve from the git worktree the command runs in, else the main checkout.
+What builds, checks and tools print goes to $OUTREACH_STATE/logs/<slug>-<verb>-<sha>.log;
+the terminal gets a summary and the log's path.
+
+Settings come from the environment, then ~/.config/outreach_talks/env (KEY=VALUE
+lines; scripts/bootstrap.sh writes it), then defaults: `talk config` shows them.
 """
 from __future__ import annotations
 
@@ -51,26 +63,23 @@ import shlex
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 import urllib.error
 import urllib.request
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Mapping
 
 SCRIPTS = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPTS))
 sys.dont_write_bytecode = True      # no __pycache__ left in the checkouts it runs from
 import new_talk  # noqa: E402  (NAME_RE, REPO, PAGES, worktree_slug: one source for names and URLs)
 
-# The conda env carries node, pnpm and the NVENC ffmpeg. A bare shell here finds
-# a Windows pnpm shim first and a static ffmpeg that crashes on HTTPS.
-ENV_BIN = Path(os.environ.get("TALK_ENV_BIN", Path.home() / "micromamba/envs/outreach_talks/bin"))
-TMP = Path(os.environ.get("TALK_TMP", "/tmp"))
-SHOTS_LOCK = Path("/tmp/slidev-stage-shots.lock")   # every headless browser run on this machine takes it
 REPO_NAME = new_talk.REPO.split("/")[1]
 STAGE_BINS = {"shots": "slidev-stage-shots", "record": "slidev-stage-record", "safe": "slidev-stage-safe"}
 DELEGATES = {"lint": "talk_lint.py", "facts": "facts.py", "map": "talk_map.py"}
-PASSTHROUGH = {"dev", "build", "shots", "record", "safe"}   # extra args go to the tool
+PASSTHROUGH = {"dev", "build", "shots", "record", "safe", "render"}   # extra args go to the tool
 SHA_RE = re.compile(r"^[0-9a-f]{7,40}$")
 TAG_RE = re.compile(r"^v\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$")
 PIN_RE = re.compile(r'("slidev-addon-(?:videos|stage)"\s*:\s*"github:MindaugasSarpis/slidev-videos#)([^"&]+)')
@@ -105,12 +114,154 @@ class Out:
 OUT = Out()
 
 
+# ---------------------------------------------------------------- settings
+# One resolver for everything that differs between machines: the environment
+# first, then ~/.config/outreach_talks/env ($OUTREACH_CONFIG elsewhere; KEY=VALUE
+# lines that scripts/bootstrap.sh writes), then the defaults below. Every
+# KEY=VALUE in that file also reaches the tools talk runs (SLIDEV_STAGE_GL,
+# PLAYWRIGHT_BROWSERS_PATH, ...) unless the environment has it already.
+
+# The stage tools' own lock. Where it exists, sessions on this machine already
+# queue on it (the toolkit's shots and hand-run `flock` calls), so the render
+# lock defaults to it and every headless run here keeps one queue.
+TOOLKIT_LOCK = Path("/tmp/slidev-stage-shots.lock")
+CONFIG_KEYS = ("OUTREACH_ROOT", "SLIDEV_VIDEOS_DIR", "OUTREACH_STATE", "OUTREACH_ENV_BIN", "RENDER_BACKEND",
+               "RENDER_LOCK", "RENDER_GPUS", "RENDER_SRUN_ARGS", "TALK_TMP")
+# the stage launcher's knobs: talk passes them to shots, record, safe and render as they are
+GL_KEYS = ("SLIDEV_STAGE_GL", "SLIDEV_STAGE_MESA_D3D12", "SLIDEV_STAGE_CHROMIUM_ARGS", "SLIDEV_STAGE_CHROMIUM_ENV")
+BACKENDS = ("slurm", "condor", "local")
+
+
+@dataclass
+class Config:
+    values: dict
+    sources: dict
+    path: Path
+    file: dict = field(default_factory=dict)
+
+    def __getitem__(self, key: str) -> str | None:
+        return self.values.get(key)
+
+    def path_of(self, key: str) -> Path | None:
+        v = self.values.get(key)
+        return Path(v) if v else None
+
+
+def config_file(environ: Mapping[str, str]) -> Path:
+    return Path(environ.get("OUTREACH_CONFIG") or Path(environ.get("HOME") or Path.home()) / ".config/outreach_talks/env")
+
+
+def read_env_file(path: Path, environ: Mapping[str, str] | None = None) -> dict:
+    """KEY=VALUE lines, `export` allowed; '...' is literal, "..." and bare values expand ~ and $VAR."""
+    environ = os.environ if environ is None else environ
+    home = environ.get("HOME") or str(Path.home())
+
+    def expand(v: str) -> str:
+        v = re.sub(r"\$\{(\w+)\}|\$(\w+)", lambda m: environ.get(m.group(1) or m.group(2), m.group(0)), v)
+        return home + v[1:] if v == "~" or v.startswith("~/") else v
+    out = {}
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
+        return out
+    for line in text.splitlines():
+        m = re.match(r"\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)=(.*)$", line)
+        if not m:
+            continue
+        v = m.group(2).strip()
+        if len(v) >= 2 and v[0] == v[-1] == "'":
+            out[m.group(1)] = v[1:-1]
+            continue
+        if len(v) >= 2 and v[0] == v[-1] == '"':
+            v = v[1:-1]
+        else:
+            v = re.sub(r"\s+#.*$", "", v)
+        out[m.group(1)] = expand(v)
+    return out
+
+
+def detect_backend(environ: Mapping[str, str]) -> str:
+    path = environ.get("PATH", "")
+    if shutil.which("sbatch", path=path):
+        return "slurm"
+    if shutil.which("condor_submit", path=path):
+        return "condor"
+    return "local"
+
+
+def default_env_bin(environ: Mapping[str, str], home: Path) -> tuple[str | None, str]:
+    conda = environ.get("CONDA_PREFIX")
+    if conda and (Path(conda) / "bin" / "pnpm").exists():
+        return str(Path(conda) / "bin"), "the active conda env ($CONDA_PREFIX)"
+    guess = home / "micromamba" / "envs" / "outreach_talks" / "bin"
+    if guess.is_dir():
+        return str(guess), "bootstrap's default prefix"
+    return None, "none found: tools come from PATH"
+
+
+def resolve_config(environ: Mapping[str, str], main: Path) -> Config:
+    """`main` is the outreach_talks main checkout; OUTREACH_ROOT defaults to the directory holding it."""
+    path = config_file(environ)
+    file = read_env_file(path, environ)
+    values, sources = {}, {}
+    home = Path(environ.get("HOME") or Path.home())
+
+    def pick(key: str, default, why: str = "default") -> str | None:
+        if environ.get(key):
+            values[key], sources[key] = environ[key], "environment"
+        elif file.get(key):
+            values[key], sources[key] = file[key], str(path)
+        else:
+            d = default() if callable(default) else default
+            if isinstance(d, tuple):
+                d, why = d
+            values[key], sources[key] = (str(d) if d is not None else None), why
+        return values[key]
+
+    root = Path(pick("OUTREACH_ROOT", main.parent, "default: the directory holding outreach_talks"))
+    pick("SLIDEV_VIDEOS_DIR", root / "slidev-videos", "default: beside outreach_talks")
+    state = Path(pick("OUTREACH_STATE", home / ".local" / "state" / "outreach_talks"))
+    pick("OUTREACH_ENV_BIN", lambda: default_env_bin(environ, home))
+    backend = pick("RENDER_BACKEND", lambda: (detect_backend(environ), "detected (sbatch, condor_submit on PATH)"))
+    pick("RENDER_LOCK", lambda: (TOOLKIT_LOCK, "default: the stage tools' lock, which exists here")
+         if TOOLKIT_LOCK.exists() else state / "render.lock")
+    pick("RENDER_GPUS", "auto")
+    pick("RENDER_SRUN_ARGS", "")
+    # a build has to be where the render runs: /tmp on one machine, the shared filesystem on a cluster
+    pick("TALK_TMP", lambda: tempfile.gettempdir() if backend == "local"
+         else (root / ".cache" / "talk-builds", "default on a cluster: shared with the compute nodes"))
+    return Config(values, sources, path, file)
+
+
+@functools.lru_cache(maxsize=None)
+def cfg() -> Config:
+    r = subprocess.run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"], cwd=SCRIPTS,
+                       capture_output=True, text=True)
+    main = Path(r.stdout.strip()).resolve().parent if r.returncode == 0 and r.stdout.strip() else SCRIPTS.parent
+    return resolve_config(os.environ, main)
+
+
+def env_bin() -> Path | None:
+    p = cfg().path_of("OUTREACH_ENV_BIN")
+    return p if p and p.is_dir() else None
+
+
 # ---------------------------------------------------------------- processes
 
 def tool_env(extra: dict | None = None) -> dict:
-    env = os.environ.copy()
-    if ENV_BIN.is_dir():
-        env["PATH"] = f"{ENV_BIN}{os.pathsep}{env.get('PATH', '')}"
+    """What every tool talk runs gets: the env file's settings under the environment's,
+    the resolved settings, and the env's bin first on PATH (node, pnpm, the NVENC ffmpeg;
+    a bare shell may find a Windows pnpm shim and a static ffmpeg that crashes on HTTPS)."""
+    c = cfg()
+    env = dict(c.file)
+    env.update(os.environ)
+    for k in CONFIG_KEYS:
+        if c[k] is not None:
+            env.setdefault(k, c[k])
+    b = env_bin()
+    if b:
+        rest = [p for p in env.get("PATH", "").split(os.pathsep) if p and Path(p) != b]
+        env["PATH"] = os.pathsep.join([str(b), *rest])
     env.update(extra or {})
     return env
 
@@ -119,19 +270,109 @@ def which(name: str, env: dict | None = None) -> str | None:
     return shutil.which(name, path=(env or tool_env())["PATH"])
 
 
+ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
+ERR_RE = re.compile(r"\b(errors?|failed|failure|fatal|exception|traceback|cannot|not found)\b|ERR_|ERR!|✖|✗", re.I)
+NO_ERR_RE = re.compile(r"\b(0|no) (errors?|problems?|failed|failures?)\b", re.I)
+WARN_RE = re.compile(r"\bwarn(ing)?s?\b|\(!\)|⚠", re.I)
+
+
+class Log:
+    """One file per verb run, $OUTREACH_STATE/logs/<slug>-<verb>-<sha>.log: what the tools print
+    goes there, the terminal gets a summary. Made on the first command that writes to it."""
+
+    def __init__(self):
+        self.ctx: tuple | None = None
+        self.path: Path | None = None
+        self.f = None
+
+    def begin(self, root: Path, slug: str, verb: str) -> None:
+        if self.ctx is None:             # deploy's ready writes into deploy's log
+            self.ctx = (root, slug, verb)
+
+    def open(self):
+        if self.f or not self.ctx:
+            return self.f
+        root, slug, verb = self.ctx
+        sha = git_out(["rev-parse", "--short=12", "HEAD"], root) or "nosha"
+        d = Path(cfg()["OUTREACH_STATE"]) / "logs"
+        d.mkdir(parents=True, exist_ok=True)
+        self.path = d / f"{slug}-{verb}-{sha}.log"
+        open(self.path, "w").close()
+        self.f = open(self.path, "a", encoding="utf-8", buffering=1)      # O_APPEND: children and we never overwrite
+        self.f.write(f"# talk {verb} {slug} at {sha} in {root}, {dt.datetime.now().isoformat(timespec='seconds')}\n")
+        OUT.say(f"log: {self.path}")
+        return self.f
+
+    def write(self, text: str) -> None:
+        if self.open():
+            self.f.write(text if text.endswith("\n") else text + "\n")
+
+
+LOG = Log()
+
+
+def clip(line: str, n: int = 200) -> str:
+    return line if len(line) <= n else line[:n - 1] + "…"
+
+
+def summarize(text: str, ok: bool, first: int = 5, tail: int = 15, keep: str | None = None) -> dict:
+    """Counts and the first problem lines of a tool's output; its last lines when it failed.
+    `keep` matches lines that always belong in the summary (a renderer string)."""
+    lines = [ANSI_RE.sub("", l).rstrip() for l in text.splitlines()]
+    lines = [l for l in lines if l.strip()]
+    errs = [l for l in lines if ERR_RE.search(l) and not NO_ERR_RE.search(l)]
+    warns = [l for l in lines if l not in errs and WARN_RE.search(l)]
+    kept = [l for l in lines if keep and re.search(keep, l)][:3]
+    s = {"lines": len(lines), "error_lines": len(errs), "warning_lines": len(warns),
+         "first": [clip(l) for l in dict.fromkeys(kept + errs + warns)][:first + len(kept)]}
+    if not ok:
+        s["tail"] = [clip(l) for l in lines[-tail:]]
+    return s
+
+
+def say_summary(s: dict | None, indent: str = "    ") -> None:
+    if not s:
+        return
+    for l in s.get("first", []):
+        OUT.say(indent + l)
+    if s.get("tail"):
+        OUT.say(f"{indent}-- last {len(s['tail'])} lines:")
+        for l in s["tail"]:
+            if l not in s.get("first", []):
+                OUT.say(indent + l)
+
+
 def run(cmd: list, cwd: Path | None = None, env: dict | None = None, capture: bool = False,
-        timeout: float | None = None, quiet: bool = False, stdin=None) -> subprocess.CompletedProcess:
+        timeout: float | None = None, quiet: bool = False, stdin=None, log: bool = False) -> subprocess.CompletedProcess:
+    """log=True: the child's stdout and stderr go to the verb's log, and come back as .stdout."""
     cmd = [str(c) for c in cmd]
     if not quiet:
         OUT.say("$ " + shlex.join(cmd) + (f"   # in {cwd}" if cwd else ""))
+    f = LOG.open() if log and not capture else None
     try:
         if capture:
             return subprocess.run(cmd, cwd=cwd, env=env, capture_output=True, text=True, timeout=timeout, stdin=stdin)
+        if f:
+            f.write(f"\n$ {shlex.join(cmd)}" + (f"   # in {cwd}" if cwd else "") + "\n")
+            start = LOG.path.stat().st_size
+            try:
+                r = subprocess.run(cmd, cwd=cwd, env=env, stdout=f, stderr=subprocess.STDOUT, timeout=timeout,
+                                   stdin=stdin if stdin is not None else subprocess.DEVNULL)
+            finally:
+                with open(LOG.path, encoding="utf-8", errors="replace") as fh:
+                    fh.seek(start)
+                    out = fh.read()
+            f.write(f"# exit {r.returncode}\n")
+            return subprocess.CompletedProcess(cmd, r.returncode, out, "")
         return subprocess.run(cmd, cwd=cwd, env=env, stdout=OUT.child_stdout(), timeout=timeout, stdin=stdin)
     except FileNotFoundError:
-        return subprocess.CompletedProcess(cmd, 127, "", f"{cmd[0]}: not found")
+        if f:
+            f.write(f"# {cmd[0]}: not found\n")
+        return subprocess.CompletedProcess(cmd, 127, f"{cmd[0]}: not found", f"{cmd[0]}: not found")
     except subprocess.TimeoutExpired:
-        return subprocess.CompletedProcess(cmd, 124, "", f"timed out after {timeout:.0f} s")
+        if f:
+            f.write(f"# timed out after {timeout:.0f} s\n")
+        return subprocess.CompletedProcess(cmd, 124, f"timed out after {timeout:.0f} s", f"timed out after {timeout:.0f} s")
 
 
 def git(args: list, cwd: Path, timeout: float = 60) -> subprocess.CompletedProcess:
@@ -273,6 +514,9 @@ def default_talk(repo: Repo, cwd: Path) -> str | None:
         touched = talks_touched(repo.here)
         if len(touched) == 1:
             return touched[0]
+        named = [t for t in talks_in(repo.here) if wt_slug(t) == repo.here.name]
+        if len(named) == 1 and not touched:         # the talk's own worktree, nothing changed yet
+            return named[0]
     return None
 
 
@@ -376,7 +620,7 @@ def fingerprint(root: Path, talk: str) -> str:
 
 
 def build_dir(talk: str) -> Path:
-    return TMP / f"talk-{wt_slug(talk)}"
+    return Path(cfg()["TALK_TMP"]) / f"talk-{wt_slug(talk)}"
 
 
 def installed(root: Path, talkdir: Path) -> bool:
@@ -400,11 +644,16 @@ def do_build(repo: Repo, talk: str, pages: bool = False, extra: list | None = No
     if out.exists():
         shutil.rmtree(out)
     out.parent.mkdir(parents=True, exist_ok=True)
+    LOG.begin(repo.here, wt_slug(talk), "build")
     t0 = time.monotonic()
-    r = run([pnpm, "build", "--base", base, "--out", out, *(extra or [])], cwd=d, env=env)
+    r = run([pnpm, "build", "--base", base, "--out", out, *(extra or [])], cwd=d, env=env, log=True)
     data["seconds"] = round(time.monotonic() - t0, 1)
+    ok = r.returncode == 0 and (out / "index.html").exists()
+    data["summary"] = summarize(r.stdout, ok)
+    if LOG.path:
+        data["log"] = str(LOG.path)
     meta_path = build_dir(talk) / "build.json"
-    if r.returncode == 0 and (out / "index.html").exists():
+    if ok:
         meta = {"talk": talk, "root": str(repo.here), "head": git_out(["rev-parse", "HEAD"], repo.here),
                 "fingerprint": fingerprint(repo.here, talk), "base": base,
                 "built_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")}
@@ -412,6 +661,7 @@ def do_build(repo: Repo, talk: str, pages: bool = False, extra: list | None = No
         return 0, data
     meta_path.unlink(missing_ok=True)
     data["error"] = f"build failed (exit {r.returncode})"
+    say_summary(data["summary"])
     return 1, data
 
 
@@ -439,21 +689,126 @@ def stage_bin(kind: str, talkdir: Path) -> Path | None:
     return None
 
 
-class ShotsLock:
-    """The machine-wide lock every headless browser run takes (flock(1) and flock(2) agree)."""
+# ---------------------------------------------------------------- the render slot
+
+def proc_locks_held_by_ancestor(lock: Path) -> bool:
+    """An ancestor of this process holds a flock on `lock` (a run started inside `flock <lock> ...`)."""
+    try:
+        ino = lock.stat().st_ino
+        text = Path("/proc/locks").read_text()
+    except OSError:
+        return False
+    holders = set()
+    for line in text.splitlines():
+        parts = line.split()
+        if len(parts) > 5 and parts[1] == "FLOCK" and "->" not in parts:
+            if parts[5].rsplit(":", 1)[-1] == str(ino):
+                holders.add(int(parts[4]))
+    pid = os.getppid()
+    for _ in range(64):
+        if pid in holders:
+            return True
+        try:
+            stat = Path(f"/proc/{pid}/stat").read_text()
+            pid = int(stat.rsplit(")", 1)[1].split()[1])
+        except (OSError, ValueError, IndexError):
+            return False
+        if pid <= 1:
+            return False
+    return False
+
+
+class RenderLock:
+    """The machine's render lock ($RENDER_LOCK; flock(1) and flock(2) agree). A run already in
+    the slot (talk render, a stage tool told so, a hand-run `flock <lock> ...`) does not take it again."""
+
+    def __init__(self, path: Path | None = None):
+        self.path = Path(path or cfg()["RENDER_LOCK"])
+        self.f = None
+
+    def held(self) -> bool:
+        return (os.environ.get("TALK_RENDER_SLOT") is not None
+                or os.environ.get("SLIDEV_STAGE_SHOTS_LOCKED") == str(self.path)
+                or proc_locks_held_by_ancestor(self.path))
 
     def __enter__(self):
-        self.f = open(SHOTS_LOCK, "a")
+        if self.held():
+            return self
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.f = open(self.path, "a")
         try:
             fcntl.flock(self.f, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
-            OUT.say(f"waiting for {SHOTS_LOCK} (another headless run) ...")
+            OUT.say(f"waiting for {self.path} (another render) ...")
             fcntl.flock(self.f, fcntl.LOCK_EX)
         return self
 
     def __exit__(self, *exc):
-        fcntl.flock(self.f, fcntl.LOCK_UN)
-        self.f.close()
+        if self.f:
+            fcntl.flock(self.f, fcntl.LOCK_UN)
+            self.f.close()
+
+
+def truthy(v: str | None) -> bool | None:
+    v = (v or "").strip().lower()
+    return True if v in ("1", "yes", "true", "on") else False if v in ("0", "no", "false", "off") else None
+
+
+def cluster_gpus(backend: str, env: dict) -> bool:
+    """Does the cluster have GPU nodes: a gpu gres in sinfo, TotalGpus in condor_status."""
+    if backend == "slurm":
+        r = run(["sinfo", "-h", "-o", "%G"], env=env, capture=True, timeout=20, quiet=True)
+        return r.returncode == 0 and "gpu" in r.stdout
+    if backend == "condor":
+        r = run(["condor_status", "-af", "TotalGpus"], env=env, capture=True, timeout=30, quiet=True)
+        return r.returncode == 0 and any(x.isdigit() and int(x) > 0 for x in r.stdout.split())
+    return False
+
+
+def render_plan(cmd: list, env: dict, gpu: bool | None = None) -> dict:
+    """How the render backend runs `cmd`: {backend, argv, env (added variables), lock, gpu, note}.
+    Slurm: srun, with --gres=gpu:1 where the cluster has GPUs, plus $RENDER_SRUN_ARGS.
+    HTCondor: condor_run (it writes the submit file, waits for the job and prints its output;
+    the job runs in the current directory, so the repos must be on a filesystem the execute
+    nodes see), with request_gpus = 1 where the pool has GPUs. Else: the command itself under
+    $RENDER_LOCK. Inside the slot already (a job, or talk render calling talk), the command itself."""
+    cmd = [str(c) for c in cmd]
+    backend = cfg()["RENDER_BACKEND"] or "local"
+    if backend not in BACKENDS:
+        raise UsageError(f"RENDER_BACKEND={backend}: {', '.join(BACKENDS)} ({cfg().sources['RENDER_BACKEND']})")
+    inside = (os.environ.get("TALK_RENDER_SLOT") and "talk render") or (
+        backend == "slurm" and os.environ.get("SLURM_JOB_ID") and "a Slurm job") or (
+        backend == "condor" and os.environ.get("_CONDOR_JOB_AD") and "an HTCondor job")
+    if inside:
+        return {"backend": backend, "argv": cmd, "env": {}, "lock": None, "gpu": None, "note": f"already in {inside}"}
+    if backend == "local":
+        lock = str(cfg()["RENDER_LOCK"])
+        return {"backend": "local", "argv": cmd, "lock": lock, "gpu": None,
+                "env": {"TALK_RENDER_SLOT": "local", "SLIDEV_STAGE_SHOTS_LOCKED": lock}}
+    if gpu is None:
+        gpu = truthy(cfg()["RENDER_GPUS"])
+    if gpu is None:
+        gpu = cluster_gpus(backend, env)
+    if backend == "slurm":
+        argv = ["srun", *(["--gres=gpu:1"] if gpu else []), *shlex.split(cfg()["RENDER_SRUN_ARGS"] or ""), *cmd]
+    else:
+        argv = ["condor_run", *(["-a", "request_gpus = 1"] if gpu else []), "-a", "getenv = True", shlex.join(cmd)]
+    return {"backend": backend, "argv": argv, "env": {"TALK_RENDER_SLOT": backend}, "lock": None, "gpu": gpu}
+
+
+def render_run(cmd: list, cwd: Path, env: dict, gpu: bool | None = None) -> tuple[subprocess.CompletedProcess, dict]:
+    plan = render_plan(cmd, env, gpu)
+    env = {**env, **plan["env"]}
+    if plan.get("note"):
+        OUT.say(f"render: {plan['note']}")
+    if plan["lock"]:
+        with RenderLock(Path(plan["lock"])):
+            return run(plan["argv"], cwd=cwd, env=env, log=True), plan
+    return run(plan["argv"], cwd=cwd, env=env, log=True), plan
+
+
+def gl_settings(env: dict) -> dict:
+    return {k: env[k] for k in GL_KEYS if env.get(k)}
 
 
 def ensure_build(repo: Repo, talk: str, no_build: bool, rebuild: bool) -> tuple[int, dict | None]:
@@ -482,14 +837,22 @@ def run_stage_bin(repo: Repo, kind: str, talk: str, args: list, *, no_build=Fals
     if code:
         data.setdefault("error", (built or {}).get("error", "build failed"))
         return code, data
-    node = which("node")
+    env = tool_env()
+    node = which("node", env)
     if not node:
         data["error"] = "node not found"
         return 1, data
-    with ShotsLock():
-        # the stage tools lock for themselves unless told the lock is held already
-        r = run([node, b, build_dir(talk) / "site", *args], cwd=d, env=tool_env({"SLIDEV_STAGE_SHOTS_LOCKED": str(SHOTS_LOCK)}))
+    # shots, record and safe queue for the render slot themselves; the GL settings
+    # (SLIDEV_STAGE_GL, ..._CHROMIUM_ARGS, ..._CHROMIUM_ENV) reach them through env
+    data["gl"] = gl_settings(env)
+    LOG.begin(repo.here, wt_slug(talk), kind)
+    r, plan = render_run([node, b, build_dir(talk) / "site", *args], d, env)
+    data["render"] = {k: plan[k] for k in ("backend", "lock", "gpu") if plan.get(k) is not None}
     data["tool_exit"] = r.returncode
+    data["summary"] = summarize(r.stdout, r.returncode == 0, keep=r"\b(renderer|backend)\b|WARNING")
+    if LOG.path:
+        data["log"] = str(LOG.path)
+    say_summary(data["summary"])
     # shots exits 2 on bad arguments (safe's 2 is "could not check"); any other failure is 1
     return (0 if r.returncode == 0 else 2 if (r.returncode, kind) == (2, "shots") else 1), data
 
@@ -502,7 +865,7 @@ def supports(binfile: Path, flag: str) -> bool:
 
 
 def do_shots(repo: Repo, talk: str, *, slides=None, changed=False, sheet=False, out=None,
-             no_build=False, rebuild=False, extra: list | None = None) -> tuple[int, dict]:
+             no_build=False, rebuild=False, extra: list | None = None, quiet_flags: bool = False) -> tuple[int, dict]:
     d = repo.here / "talks" / talk
     b = stage_bin("shots", d)
     outdir = Path(out) if out else d / "shots"
@@ -513,7 +876,7 @@ def do_shots(repo: Repo, talk: str, *, slides=None, changed=False, sheet=False, 
         if on:
             if b and supports(b, flag):
                 args.append(flag)
-            else:
+            elif not quiet_flags:
                 OUT.say(f"warning: this slidev-stage-shots has no {flag} (SLIDEV_STAGE_BIN gives the new one); going without")
     # the settling shots tool writes <out>/shots.ndjson itself; the first one wants --json
     report = outdir / "shots.ndjson"
@@ -536,11 +899,15 @@ def step(name: str, cmd: list | None, cwd: Path, env: dict | None = None, skip: 
         return {"name": name, "ok": True, "skipped": skip}
     OUT.say(f"-- {name}")
     t0 = time.monotonic()
-    r = run(cmd, cwd=cwd, env=env or tool_env())
+    r = run(cmd, cwd=cwd, env=env or tool_env(), log=True)
     res = {"name": name, "ok": r.returncode == 0, "exit": r.returncode, "seconds": round(time.monotonic() - t0, 1),
-           "cmd": shlex.join(str(c) for c in cmd)}
+           "cmd": shlex.join(str(c) for c in cmd), "summary": summarize(r.stdout, r.returncode == 0)}
+    if LOG.path:
+        res["log"] = str(LOG.path)
     if r.returncode == 127:
         res["error"] = f"{cmd[0]} not found"
+    if r.returncode:
+        say_summary(res["summary"])
     return res
 
 
@@ -586,7 +953,8 @@ def delegate_script(repo: Repo, verb: str) -> Path | None:
 
 
 def run_delegate(repo: Repo, verb: str, args: list, capture_json: bool = False) -> tuple[int, dict | None]:
-    """lint / facts / map live in their own scripts; the JSON object is theirs."""
+    """lint / facts / map live in their own scripts; the JSON object is theirs.
+    capture_json: run it with --json, its whole output into the log, its object back."""
     script = delegate_script(repo, verb)
     if not script:
         raise UsageError(f"`{verb}` is not installed on this branch (scripts/{DELEGATES[verb]} comes with feat/facts-lint)")
@@ -597,15 +965,27 @@ def run_delegate(repo: Repo, verb: str, args: list, capture_json: bool = False) 
     cmd = [sys.executable, script, *args]
     if capture_json:
         r = run(cmd, cwd=repo.here, env=tool_env(), capture=True)
-        if r.stderr:
-            sys.stderr.write(r.stderr)
+        LOG.write(f"\n$ {shlex.join(str(c) for c in cmd)}\n{r.stdout}{r.stderr}# exit {r.returncode}")
         try:
             return r.returncode, json.loads(r.stdout) if r.stdout.strip() else None
         except ValueError:
-            sys.stderr.write(r.stdout)
             return r.returncode, None
     r = subprocess.run([str(c) for c in cmd], cwd=repo.here, env=tool_env())   # its stdout is ours
     return r.returncode, None
+
+
+def lint_digest(obj: dict | None, first: int = 5) -> dict:
+    """The counts of a talk_lint report and its first findings, errors first."""
+    if not isinstance(obj, dict):
+        return {"error": "lint printed no JSON report (see the log)"}
+    fs = sorted(obj.get("findings") or [], key=lambda f: f.get("severity") != "error")
+    lines = []
+    for f in fs[:first]:
+        where = f"{f.get('file')}:{f.get('line')}" if f.get("line") else str(f.get("file"))
+        sl = f" slide {f['slide']}" if f.get("slide") else ""
+        lines.append(clip(f"{where}{sl} {'E' if f.get('severity') == 'error' else 'W'} {f.get('code')} {f.get('message')}"))
+    return {"errors": obj.get("errors"), "warnings": obj.get("warnings"), "counts": obj.get("counts"),
+            "findings_total": len(fs), "first": lines}
 
 
 # ---------------------------------------------------------------- github
@@ -695,6 +1075,7 @@ def cmd_new(repo: Repo, a, extra) -> tuple[int, dict]:
         return 1, data
     data["installed"] = False
     if not a.no_install:
+        LOG.begin(wt, slug, "new")
         code = install(wt)
         data["installed"] = code == 0
         if code:
@@ -712,8 +1093,12 @@ def install(wt: Path) -> int:
     if not pnpm:
         OUT.say("error: pnpm not found")
         return 1
+    LOG.begin(wt, wt.name, "install")
     # Never prompt (agents have no TTY, and a prompt there exits 0 having done nothing).
-    return run([pnpm, "install", "--config.confirm-modules-purge=false"], cwd=wt, env=env, stdin=subprocess.DEVNULL).returncode
+    r = run([pnpm, "install", "--config.confirm-modules-purge=false"], cwd=wt, env=env, stdin=subprocess.DEVNULL, log=True)
+    if r.returncode:
+        say_summary(summarize(r.stdout, False))
+    return r.returncode
 
 
 def known_talks(repo: Repo) -> dict[str, list[str]]:
@@ -732,9 +1117,10 @@ def known_talks(repo: Repo) -> dict[str, list[str]]:
     return where
 
 
-def cmd_open(repo: Repo, a, extra) -> tuple[int, dict]:
+def open_worktree(repo: Repo, name: str, no_install: bool = False, dry_run: bool = False) -> tuple[int, dict]:
+    """The talk's worktree, made from origin/main (or its talk/<slug> branch) when it has none."""
     where = known_talks(repo)
-    talk = match_talk(a.name, sorted(where))
+    talk = match_talk(name, sorted(where))
     found = owners(repo, talk)
     data = {"talk": talk}
     if found:
@@ -742,7 +1128,6 @@ def cmd_open(repo: Repo, a, extra) -> tuple[int, dict]:
         data.update(worktree=str(w.path), branch=w.branch, created=False, others=[str(o.path) for o in found[1:]])
         for o in found[1:]:
             OUT.say(f"also changed in {o.path} ({o.branch})")
-        OUT.show(str(w.path))
         return 0, data
     slug = wt_slug(talk)
     wt = repo.main / ".claude" / "worktrees" / slug
@@ -751,19 +1136,32 @@ def cmd_open(repo: Repo, a, extra) -> tuple[int, dict]:
         data["error"] = f"talks/{talk} is in no worktree of its own and not on origin/main ({', '.join(where[talk])})"
         OUT.say(f"error: {data['error']}")
         return 1, data
-    if git(["rev-parse", "--verify", "--quiet", f"refs/heads/{branch}"], repo.main).returncode == 0:
-        r = run(["git", "worktree", "add", wt, branch], cwd=repo.main, capture=True)
-    else:
-        r = run(["git", "worktree", "add", wt, "-b", branch, "origin/main", "--no-track"], cwd=repo.main, capture=True)
+    has_branch = git(["rev-parse", "--verify", "--quiet", f"refs/heads/{branch}"], repo.main).returncode == 0
+    add = ["git", "worktree", "add", wt, branch] if has_branch else \
+        ["git", "worktree", "add", wt, "-b", branch, "origin/main", "--no-track"]
+    if dry_run:
+        OUT.say("dry run: would run " + shlex.join(str(x) for x in add))
+        data.update(worktree=str(wt), branch=branch, created=False, would_create=True)
+        return 0, data
+    r = run(add, cwd=repo.main, capture=True)
     if r.returncode:
         data["error"] = f"git worktree add failed: {r.stderr.strip()}"
         OUT.say(f"error: {data['error']}")
         return 1, data
     data.update(worktree=str(wt), branch=branch, created=True, installed=False)
-    if not a.no_install:
+    if not no_install:
+        LOG.begin(wt, slug, "open")
         data["installed"] = install(wt) == 0
-    OUT.show(str(wt))
-    return (0 if a.no_install or data["installed"] else 1), data
+        if LOG.path:
+            data["log"] = str(LOG.path)
+    return (0 if no_install or data["installed"] else 1), data
+
+
+def cmd_open(repo: Repo, a, extra) -> tuple[int, dict]:
+    code, data = open_worktree(repo, a.name, a.no_install)
+    if data.get("worktree"):
+        OUT.show(data["worktree"])
+    return code, data
 
 
 def cmd_list(repo: Repo, a, extra) -> tuple[int, dict]:
@@ -806,10 +1204,11 @@ def cmd_status(repo: Repo, a, extra) -> tuple[int, dict]:
             problems.append(f"the main checkout is on {w.branch or 'a detached HEAD'}; it stays on main "
                             f"(work in a worktree: pnpm talk open <name>)")
         rows.append(row)
-    deploys = []
+    deploys, readies = [], []
     sd = repo.common / "talk-status"
     if sd.is_dir():
-        deploys = [read_json(p) for p in sorted(sd.glob("*.json"))]
+        deploys = [read_json(p) for p in sorted(sd.glob("*.json")) if not p.name.endswith(".ready.json")]
+        readies = [read_json(p) for p in sorted(sd.glob("*.ready.json"))]
     pages = last_pages_run(repo)
     for r in rows:
         name = "main checkout" if r["main_checkout"] else Path(r["path"]).name
@@ -818,6 +1217,9 @@ def cmd_status(repo: Repo, a, extra) -> tuple[int, dict]:
             continue
         ab = f"ahead {r.get('ahead', '?')}, behind {r.get('behind', '?')}"
         OUT.show(f"{name:<22} {r['branch'] or '(detached)':<28} {ab:<22} dirty {r['dirty']:<4} {' '.join(r['talks'])}")
+    for d in readies:
+        OUT.show(f"ready   {d.get('talk')}: {'passed' if d.get('ok') else 'FAILED'} {(d.get('sha') or '')[:12]} "
+                 f"{d.get('finished_at', '')}" + (f" (skipped {', '.join(d['skip'])})" if d.get("skip") else ""))
     for d in deploys:
         OUT.show(f"deploy  {d.get('talk')}: {'deployed' if d.get('deployed') else 'NOT deployed'} {d.get('sha', '')[:12]} "
                  f"{d.get('finished_at', '')} {d.get('url', '')}")
@@ -828,7 +1230,8 @@ def cmd_status(repo: Repo, a, extra) -> tuple[int, dict]:
                  f"{pages.get('createdAt', '')} {pages.get('url', '')}")
     for p in problems:
         OUT.say(f"problem: {p}")
-    return (1 if problems else 0), {"worktrees": rows, "deploys": deploys, "pages": pages, "problems": problems}
+    return (1 if problems else 0), {"worktrees": rows, "deploys": deploys, "ready": readies, "pages": pages,
+                                    "problems": problems}
 
 
 def cmd_dev(repo: Repo, a, extra) -> tuple[int, dict]:
@@ -842,31 +1245,46 @@ def cmd_dev(repo: Repo, a, extra) -> tuple[int, dict]:
 
 def cmd_build(repo: Repo, a, extra) -> tuple[int, dict]:
     talk, _ = resolve_talk(repo, a.name, invocation_dir())
-    return do_build(repo, talk, pages=a.pages, extra=extra)
+    LOG.begin(repo.here, wt_slug(talk), "build")
+    code, data = do_build(repo, talk, pages=a.pages, extra=extra)
+    report_steps([{"name": "build", "ok": code == 0, **data}])
+    return code, data
 
 
 def cmd_check(repo: Repo, a, extra) -> tuple[int, dict]:
     talk, _ = resolve_talk(repo, a.name, invocation_dir())
+    LOG.begin(repo.here, wt_slug(talk), "check")
     code, data = do_check(repo, talk, pages=a.pages)
     report_steps(data["steps"])
     return code, data
 
 
 def report_steps(steps: list) -> None:
+    """One line per step; what the tools printed is in the log, whose path is printed once."""
     for s in steps:
         state = "FAILED" if not s["ok"] else ("skipped" if s.get("skipped") else "ok")
+        sm, notes = s.get("summary") or {}, []
+        if s.get("errors") is not None:                       # lint
+            notes.append(f"{s['errors']} errors, {s['warnings']} warnings")
+        elif sm.get("error_lines") or sm.get("warning_lines"):
+            notes.append(f"{sm.get('error_lines', 0)} error / {sm.get('warning_lines', 0)} warning lines")
         OUT.show(f"{s['name']:<14} {state}" + (f"  ({s['seconds']} s)" if s.get("seconds") is not None else "")
-                 + (f"  {s['error']}" if s.get("error") else "") + (f"  {s['skipped']}" if s.get("skipped") else ""))
+                 + (f"  {s['error']}" if s.get("error") else "") + (f"  {s['skipped']}" if s.get("skipped") else "")
+                 + "".join(f"  {n}" for n in notes))
+    if LOG.path:
+        OUT.show(f"{'log':<14} {LOG.path}")
 
 
 def cmd_shots(repo: Repo, a, extra) -> tuple[int, dict]:
     talk, _ = resolve_talk(repo, a.name, invocation_dir())
+    LOG.begin(repo.here, wt_slug(talk), "shots")
     return do_shots(repo, talk, slides=a.slides, changed=a.changed, sheet=a.sheet, out=a.out,
                     no_build=a.no_build, rebuild=a.rebuild, extra=extra)
 
 
 def cmd_review(repo: Repo, a, extra) -> tuple[int, dict]:
     talk, _ = resolve_talk(repo, a.name, invocation_dir())
+    LOG.begin(repo.here, wt_slug(talk), "review")
     code, check = do_check(repo, talk)
     steps = list(check["steps"])
     shots = None
@@ -885,10 +1303,33 @@ def cmd_delegate(repo: Repo, a, extra) -> tuple[int, dict | None]:
     if a.verb == "facts":
         code, _ = run_delegate(repo, "facts", list(a.rest))
         return code, None
-    _, d = resolve_talk(repo, a.name, invocation_dir())
+    talk, d = resolve_talk(repo, a.name, invocation_dir())
     args = [str(d)] + (["--release"] if getattr(a, "release", False) else [])
-    code, _ = run_delegate(repo, a.verb, args)
+    if a.verb != "lint":
+        code, _ = run_delegate(repo, a.verb, args)
+        return code, None
+    # lint: its report into the log; the terminal gets the counts and the first findings
+    LOG.begin(repo.here, wt_slug(talk), "lint")
+    code, obj = run_delegate(repo, "lint", args, capture_json=True)
+    if not isinstance(obj, dict):
+        OUT.say(f"error: lint printed no JSON report; see {LOG.path}")
+        return (code or 1), {"talk": talk, "error": "lint printed no JSON report", "log": str(LOG.path)}
+    obj["log"] = str(LOG.path)
+    if OUT.json:                     # the delegate's own object, with the log's path added
+        print(json.dumps(obj, ensure_ascii=False))
+        return (code if code in (0, 1, 2) else 1), None
+    dg = lint_digest(obj, first=15)
+    for line in dg["first"]:
+        OUT.show(line)
+    more = dg["findings_total"] - len(dg["first"])
+    OUT.show(f"{talk}: {dg['errors']} error(s), {dg['warnings']} warning(s)"
+             + (" — " + ", ".join(f"{k} {v}" for k, v in sorted((dg["counts"] or {}).items())) if dg["counts"] else ""))
+    OUT.show(f"{'... ' + str(more) + ' more; ' if more > 0 else ''}full report: {LOG.path}")
     return code, None
+
+
+def ready_stamp(repo: Repo, talk: str) -> Path:
+    return repo.common / "talk-status" / f"{wt_slug(talk)}.ready.json"
 
 
 def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
@@ -897,6 +1338,8 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
     unknown = skip - {"lint", "check", "shots", "preflight", "venue", "safe"}
     if unknown:
         raise UsageError(f"--skip takes lint, check, shots, preflight, venue, safe (not {', '.join(sorted(unknown))})")
+    LOG.begin(repo.here, wt_slug(talk), "ready")
+    head0 = git_out(["rev-parse", "HEAD"], repo.here)
     info = talk_info(repo.here, talk)
     env = tool_env()
     steps = []
@@ -907,7 +1350,10 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
     else:
         OUT.say("-- lint --release")
         code, obj = run_delegate(repo, "lint", [str(d), "--release"], capture_json=True)
-        steps.append({"name": "lint", "ok": code == 0, "exit": code, "report": obj})
+        dg = lint_digest(obj)
+        steps.append({"name": "lint", "ok": code == 0, "exit": code, **dg, "log": str(LOG.path)})
+        if code:
+            say_summary({"first": dg.get("first", [])})
     built = False
     if "check" in skip:
         steps.append(step("check", None, d, skip="--skip check"))
@@ -920,9 +1366,10 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
     elif "check" not in skip and not built:
         steps.append({"name": "shots", "ok": False, "skipped": "no build"})
     else:
-        OUT.say("-- shots (every slide)")
+        # the slides that changed since the last shots, where the tool can tell (review shot the rest)
+        OUT.say("-- shots (changed slides)")
         try:
-            code, shots = do_shots(repo, talk, no_build=built)
+            code, shots = do_shots(repo, talk, no_build=built, changed=True, quiet_flags=True)
             steps.append({"name": "shots", "ok": code == 0, **{k: v for k, v in shots.items() if k != "talk"}})
         except UsageError as e:
             steps.append({"name": "shots", "ok": False, "error": str(e)})
@@ -944,7 +1391,22 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
     report_steps(steps)
     ok = all(s["ok"] for s in steps)
     OUT.say(f"\n{talk}: " + ("ready" if ok else "NOT ready"))
-    return (0 if ok else 1), {"talk": talk, "ready": ok, "steps": steps}
+    data = {"talk": talk, "ready": ok, "steps": steps}
+    # The stamp: the commit these checks passed, so deploy does not run them again.
+    # Only a clean tree whose HEAD did not move is stamped: then the files checked are that commit.
+    head = git_out(["rev-parse", "HEAD"], repo.here)
+    dirty = porcelain_paths(git_out(["status", "--porcelain"], repo.here) or "")
+    if head and head == head0 and not dirty:
+        path = ready_stamp(repo, talk)
+        path.parent.mkdir(exist_ok=True)
+        path.write_text(json.dumps({
+            "talk": talk, "slug": wt_slug(talk), "sha": head, "worktree": str(repo.here.resolve()), "ok": ok,
+            "skip": sorted(skip), "safe": bool(a.safe), "log": str(LOG.path) if LOG.path else None,
+            "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")}, indent=2) + "\n")
+        data["stamp"] = str(path)
+    else:
+        data["not_stamped"] = "HEAD moved while ready ran" if head != head0 else "uncommitted changes"
+    return (0 if ok else 1), data
 
 
 def cmd_stage(repo: Repo, a, extra) -> tuple[int, dict]:
@@ -955,6 +1417,7 @@ def cmd_stage(repo: Repo, a, extra) -> tuple[int, dict]:
         args = [Path(a.out) if a.out else d / "shots" / "record", *args]
     elif talk_info(repo.here, talk)["broadcast"] and "--broadcast" not in args:
         args.append("--broadcast")      # the rules for a picture that goes to air
+    LOG.begin(repo.here, wt_slug(talk), a.verb)
     code, data = run_stage_bin(repo, a.verb, talk, args, no_build=a.no_build, rebuild=a.rebuild)
     return code, data
 
@@ -984,6 +1447,7 @@ def cmd_deploy(repo: Repo, a, extra) -> tuple[int, dict]:
         raise UsageError("which talk? deploy NAME")
     wt = deploy_worktree(repo, talk)
     data = {"talk": talk, "worktree": str(wt), "dry_run": a.dry_run, "url": f"{new_talk.PAGES}/{talk}/"}
+    LOG.begin(wt, wt_slug(talk), "deploy")
 
     def fail(msg: str, code: int = 1, **more) -> tuple[int, dict]:
         data.update(error=msg, **more)
@@ -1021,12 +1485,24 @@ def cmd_deploy(repo: Repo, a, extra) -> tuple[int, dict]:
     if others:
         OUT.say(f"note: these commits also change {', '.join(others)}")
     if not a.skip_ready:
-        OUT.say(f"-- ready {talk}")
-        sub = Repo(main=repo.main, common=repo.common, here=wt)
-        code, ready = cmd_ready(sub, argparse.Namespace(name=talk, skip=a.ready_skip, safe=False), [])
-        data["ready"] = ready
-        if code:
-            return fail(f"{talk} is not ready (fix it, or --skip-ready when the owner says so)")
+        # ready runs once per commit: when `pnpm talk ready` already passed this one (the
+        # stamp it writes), with no more steps skipped than now, it is not run again
+        stamp_path = ready_stamp(repo, talk)
+        stamp = read_json(stamp_path)
+        if (not a.rerun_ready and stamp.get("ok") is True and stamp.get("sha") == sha
+                and Path(stamp.get("worktree") or "/nowhere").resolve() == wt.resolve()
+                and set(stamp.get("skip") or []) <= set(a.ready_skip or [])):
+            OUT.say(f"-- ready: passed {sha[:12]} at {stamp.get('finished_at')} (skipped: "
+                    f"{', '.join(stamp.get('skip') or []) or 'nothing'}); not run again (--rerun-ready to)")
+            data["ready"] = {"ready": True, "reused": True, "stamp": str(stamp_path),
+                             "finished_at": stamp.get("finished_at"), "skip": stamp.get("skip"), "log": stamp.get("log")}
+        else:
+            OUT.say(f"-- ready {talk}")
+            sub = Repo(main=repo.main, common=repo.common, here=wt)
+            code, ready = cmd_ready(sub, argparse.Namespace(name=talk, skip=a.ready_skip, safe=False), [])
+            data["ready"] = ready
+            if code:
+                return fail(f"{talk} is not ready (fix it, or --skip-ready when the owner says so)")
     lock_path = repo.common / "talk-deploy.lock"
     with open(lock_path, "a") as lock:
         try:
@@ -1061,11 +1537,38 @@ def cmd_deploy(repo: Repo, a, extra) -> tuple[int, dict]:
                     f"watch the Pages run and check {data['url']}")
             data.update(pushed=False, would_push=sha)
             return 0, data
-        r = run(push, cwd=wt, timeout=120)
+        r = run(push, cwd=wt, timeout=120, log=True)
         if r.returncode:
+            say_summary(summarize(r.stdout, False))
             return fail(f"git push failed (exit {r.returncode})")
         data["pushed"] = True
     return watch_deploy(repo, wt, talk, sha, data)
+
+
+def poll_run(wt: Path, run_id: str, talk: str, timeout: float = 1800, every: float = 15) -> dict | None:
+    """Wait for a workflow run quietly: each poll goes to the log; the terminal gets a line
+    only when the talk's build, the Pages deploy or the run itself changes state."""
+    deadline = time.monotonic() + timeout
+    shown, view = None, None
+    while True:
+        v, err = gh_json(["run", "view", run_id, "--json", "status,conclusion,jobs"], wt)
+        if v:
+            view = v
+            jobs = {j["name"]: j.get("conclusion") or j.get("status") for j in v.get("jobs", [])}
+            LOG.write(f"# {dt.datetime.now().isoformat(timespec='seconds')} run {v.get('status')} "
+                      + json.dumps(jobs, sort_keys=True))
+            line = (f"run {v.get('status')}{' ' + v['conclusion'] if v.get('conclusion') else ''}; "
+                    f"build {talk}: {jobs.get(f'build {talk}', '-')}; deploy: {jobs.get('deploy', '-')}")
+            if line != shown:
+                OUT.say("  " + line)
+                shown = line
+            if v.get("status") == "completed":
+                return v
+        else:
+            LOG.write(f"# gh run view failed: {err}")
+        if time.monotonic() > deadline:
+            return view
+        time.sleep(every)
 
 
 def watch_deploy(repo: Repo, wt: Path, talk: str, sha: str, data: dict) -> tuple[int, dict]:
@@ -1087,8 +1590,10 @@ def watch_deploy(repo: Repo, wt: Path, talk: str, sha: str, data: dict) -> tuple
             return 1, data
         record.update(run_id=run_["databaseId"], run_url=run_["url"])
         OUT.say(f"watching {run_['url']}")
-        run(["gh", "run", "watch", str(run_["databaseId"]), "--interval", "10"], cwd=wt, timeout=1800)
-        view, err = gh_json(["run", "view", str(run_["databaseId"]), "--json", "status,conclusion,jobs"], wt)
+        view = poll_run(wt, str(run_["databaseId"]), talk)
+        if not view or view.get("status") != "completed":
+            record["error"] = f"the Pages run did not finish within 30 min ({(view or {}).get('status', 'unknown')})"
+            return 1, data
         jobs = {j["name"]: j.get("conclusion") for j in (view or {}).get("jobs", [])}
         record.update(run_conclusion=(view or {}).get("conclusion"),
                       talk_build=jobs.get(f"build {talk}"), pages_deploy=jobs.get("deploy"))
@@ -1149,9 +1654,13 @@ def cmd_doctor(repo: Repo, a, extra) -> tuple[int, dict]:
     if sys.version_info < (3, 11):
         problems.append("python 3.11 or newer is needed")
     tool("git", ["git", "--version"], required=True)
-    tools["env_bin"] = {"path": str(ENV_BIN), "present": ENV_BIN.is_dir()}
-    if not ENV_BIN.is_dir():
-        warnings.append(f"{ENV_BIN} is missing: tools come from the bare PATH")
+    c = cfg()
+    eb = c.path_of("OUTREACH_ENV_BIN")
+    tools["env_bin"] = {"path": str(eb) if eb else None, "present": bool(eb and eb.is_dir()),
+                        "source": c.sources.get("OUTREACH_ENV_BIN")}
+    if not (eb and eb.is_dir()):
+        warnings.append(f"no env bin ({eb or 'OUTREACH_ENV_BIN unset'}): tools come from the bare PATH; "
+                        f"scripts/bootstrap.sh makes the env")
     pn = tool("pnpm", ["pnpm", "--version"], required=True)
     node = tool("node", ["node", "--version"], required=True)
     if node.get("version") and int(re.sub(r"\D", "", node["version"].split(".")[0]) or 0) < 20:
@@ -1159,14 +1668,14 @@ def cmd_doctor(repo: Repo, a, extra) -> tuple[int, dict]:
     tools["pnpm_bare"] = {"path": bare, "version": version_of([bare, "--version"], os.environ.copy()) if bare else None}
     if bare and bare.startswith("/mnt/"):
         warnings.append(f"a bare shell runs the Windows pnpm shim {bare} ({tools['pnpm_bare']['version']}); "
-                        f"`pnpm talk` and `talk` put {ENV_BIN} first")
+                        f"`pnpm talk` and `talk` put {eb} first")
     ff = tool("ffmpeg", ["ffmpeg", "-hide_banner", "-version"])
     m = re.match(r"ffmpeg version (\S+)", ff.get("version") or "")
     if m:
         ff["version"] = m.group(1)
-    if ff.get("path") and "/.local/bin/" in ff["path"]:
-        warnings.append(f"ffmpeg is the static build at {ff['path']}: it crashes on HTTPS input")
-    elif ff.get("path"):
+    if ff.get("path"):
+        if eb and Path(ff["path"]).parent != eb:
+            warnings.append(f"ffmpeg is {ff['path']}, not the env's: a static build there may crash on HTTPS input")
         enc = run([ff["path"], "-hide_banner", "-encoders"], env=env, capture=True, timeout=20, quiet=True)
         ff["nvenc"] = "h264_nvenc" in (enc.stdout or "")
     gh = tool("gh", ["gh", "--version"])
@@ -1186,6 +1695,11 @@ def cmd_doctor(repo: Repo, a, extra) -> tuple[int, dict]:
             sv["doctor"] = r.returncode
             if r.returncode:
                 warnings.append("slidev-videos doctor found problems")
+    sv_dir = c.path_of("SLIDEV_VIDEOS_DIR")
+    tools["slidev_videos_dir"] = {"path": str(sv_dir), "present": bool(sv_dir and sv_dir.is_dir())}
+    if not (sv_dir and sv_dir.is_dir()):
+        warnings.append(f"no slidev-videos checkout at {sv_dir} (SLIDEV_VIDEOS_DIR): clone it beside outreach_talks")
+    tools["render"] = {"backend": c["RENDER_BACKEND"], "lock": c["RENDER_LOCK"], **gl_settings(env)}
     pkg = read_json(repo.here / "package.json")
     tools["packageManager"] = pkg.get("packageManager")
     shots_bin = os.environ.get("SLIDEV_STAGE_BIN")
@@ -1203,6 +1717,9 @@ def cmd_doctor(repo: Repo, a, extra) -> tuple[int, dict]:
     for name in ("python", "git", "pnpm", "pnpm_bare", "node", "ffmpeg", "gh", "rclone", "slidev-videos"):
         t = tools.get(name) or {}
         OUT.show(f"{name:<14} {t.get('version') or 'missing':<28} {t.get('path') or ''}")
+    rd = tools["render"]
+    OUT.show(f"{'render':<14} {rd['backend']:<28} lock {rd['lock']}"
+             + "".join(f", {k}={v}" for k, v in rd.items() if k.startswith("SLIDEV_")))
     for w in warnings:
         OUT.say(f"warning: {w}")
     for p in problems:
@@ -1210,12 +1727,60 @@ def cmd_doctor(repo: Repo, a, extra) -> tuple[int, dict]:
     return (1 if problems else 0), {"tools": tools, "warnings": warnings, "problems": problems}
 
 
-def cmd_bump(repo: Repo, a, extra) -> tuple[int, dict]:
-    ref = a.ref
-    if SHA_RE.match(ref) and not a.allow_sha:
+def check_ref(ref: str, allow_sha: bool) -> str:
+    """Pins move to release tags; a bare commit only with --allow-sha (both bump-toolkit and pin)."""
+    if SHA_RE.match(ref) and not allow_sha:
         raise UsageError(f"{ref} looks like a bare commit; pin a release tag (vX.Y.Z), or pass --allow-sha")
     if not SHA_RE.match(ref) and not TAG_RE.match(ref):
-        raise UsageError(f"{ref!r} is not a release tag vX.Y.Z")
+        raise UsageError(f"{ref!r} is not a release tag vX.Y.Z (or a commit, with --allow-sha)")
+    return ref
+
+
+class PinEdit:
+    """Pin rewrites in memory: edit() each file, then write() the ones that change."""
+
+    def __init__(self, root: Path, ref: str):
+        self.root, self.ref = root, ref
+        self.changes: list[dict] = []
+        self.files: dict[Path, str] = {}
+
+    def edit(self, path: Path, regex: re.Pattern, what) -> None:
+        if not path.is_file():
+            return
+        text = self.files.get(path) or path.read_text(encoding="utf-8")
+        found = False
+
+        def sub(mm: re.Match) -> str:
+            nonlocal found
+            found = True
+            if mm.group(2) != self.ref:
+                self.changes.append({"file": str(path.relative_to(self.root)), "what": what(mm) if callable(what) else what,
+                                     "before": mm.group(2), "after": self.ref})
+            return mm.group(1) + self.ref + (mm.group(3) if mm.re.groups >= 3 else "")
+        new = regex.sub(sub, text)
+        if found:
+            self.files[path] = new
+
+    def write(self, dry_run: bool) -> list[str]:
+        for path, text in self.files.items():
+            if path.suffix == ".json":
+                json.loads(text)          # still JSON
+        written = []
+        if not dry_run:
+            changed_files = {c["file"] for c in self.changes}
+            for path, text in self.files.items():
+                if str(path.relative_to(self.root)) in changed_files:
+                    path.write_text(text, encoding="utf-8")
+                    written.append(str(path.relative_to(self.root)))
+        return written
+
+
+def addon_what(mm: re.Match) -> str:
+    return mm.group(1).split('"')[1]
+
+
+def cmd_bump(repo: Repo, a, extra) -> tuple[int, dict]:
+    ref = check_ref(a.ref, a.allow_sha)
     if a.talk and a.active:
         raise UsageError("--talk or --active, not both")
     root = repo.here
@@ -1230,41 +1795,15 @@ def cmd_bump(repo: Repo, a, extra) -> tuple[int, dict]:
         talks = [t for t in names if upcoming(t) and (talk_info(root, t)["stage"] or talk_info(root, t)["pin"] == current)]
     else:
         talks = []
-    changes, files = [], {}
-
-    def edit(path: Path, regex: re.Pattern, what) -> None:
-        if not path.is_file():
-            return
-        text = files.get(path) or path.read_text(encoding="utf-8")
-        found = False
-
-        def sub(mm: re.Match) -> str:
-            nonlocal found
-            found = True
-            if mm.group(2) != ref:
-                changes.append({"file": str(path.relative_to(root)), "what": what(mm) if callable(what) else what,
-                                "before": mm.group(2), "after": ref})
-            return mm.group(1) + ref + (mm.group(3) if mm.re.groups >= 3 else "")
-        new = regex.sub(sub, text)
-        if found:
-            files[path] = new
-
+    pe = PinEdit(root, ref)
     for t in talks:
-        edit(root / "talks" / t / "package.json", PIN_RE, lambda mm: mm.group(1).split('"')[1])
+        pe.edit(root / "talks" / t / "package.json", PIN_RE, addon_what)
     if (root / "env.yaml").is_file():
-        edit(root / "env.yaml", ENV_PIN_RE, "pip slidev-videos")
+        pe.edit(root / "env.yaml", ENV_PIN_RE, "pip slidev-videos")
     if scaffold.is_file():
-        edit(scaffold, REF_RE, "ADDONS_REF")
-    for path, text in files.items():
-        if path.suffix == ".json":
-            json.loads(text)          # still JSON
-    written = []
-    if not a.dry_run:
-        changed_files = {c["file"] for c in changes}
-        for path, text in files.items():
-            if str(path.relative_to(root)) in changed_files:
-                path.write_text(text, encoding="utf-8")
-                written.append(str(path.relative_to(root)))
+        pe.edit(scaffold, REF_RE, "ADDONS_REF")
+    written = pe.write(a.dry_run)
+    changes = pe.changes
     skipped = [t for t in names if t not in talks]
     data = {"ref": ref, "dry_run": a.dry_run, "root": str(root), "talks": talks, "changes": changes,
             "written": written, "untouched_talks": skipped}
@@ -1277,6 +1816,221 @@ def cmd_bump(repo: Repo, a, extra) -> tuple[int, dict]:
         print(json.dumps(data, indent=2))      # the diff is this verb's human output too
         data["_printed"] = True
     return 0, data
+
+
+def cmd_pin(repo: Repo, a, extra) -> tuple[int, dict]:
+    """One talk's two addon pins (slidev-addon-videos, slidev-addon-stage) to a toolkit ref,
+    then pnpm install, in the talk's own worktree. bump-toolkit is the release-wide move
+    (several talks, env.yaml's CLI pin and the scaffolder); pin touches nothing but the talk."""
+    name, ref = (None, a.name) if a.ref is None else (a.name, a.ref)
+    if not ref:
+        raise UsageError("pin [NAME] REF: a toolkit tag vX.Y.Z (a commit with --allow-sha)")
+    check_ref(ref, a.allow_sha)
+    if not repo.in_worktree:
+        raise UsageError("pin changes a talk's worktree, never the main checkout: `pnpm talk open <name>`, then pin there")
+    talk, d = resolve_talk(repo, name, invocation_dir())
+    data = {"talk": talk, "ref": ref, "dry_run": a.dry_run}
+    if SHA_RE.match(ref):
+        # pnpm wants the commit pnpm-lock.yaml records; the slidev-videos checkout spells it out
+        sv = cfg().path_of("SLIDEV_VIDEOS_DIR")
+        full = git_out(["rev-parse", "--verify", "--quiet", f"{ref}^{{commit}}"], sv) if sv and sv.is_dir() else None
+        if full:
+            ref = data["ref"] = full
+        elif len(ref) < 40:
+            OUT.say(f"warning: {ref} is not in {sv}; pinning it as given (pnpm asks GitHub)")
+    pe = PinEdit(repo.here, ref)
+    pe.edit(d / "package.json", PIN_RE, addon_what)
+    if not pe.files:
+        data["error"] = f"talks/{talk}/package.json has no github: slidev-addon pins (a link: dev loop?)"
+        OUT.say(f"error: {data['error']}")
+        return 1, data
+    written = pe.write(a.dry_run)
+    data.update(changes=pe.changes, written=written, installed=False)
+    for c in pe.changes:
+        OUT.say(f"{c['what']}: {c['before']} -> {c['after']}")
+    if not pe.changes:
+        OUT.say(f"{talk} is on {ref} already")
+        return 0, data
+    if a.dry_run:
+        OUT.say("dry run: nothing written")
+        return 0, data
+    if not a.no_install:
+        LOG.begin(repo.here, wt_slug(talk), "pin")
+        code = install(repo.here)
+        data["installed"] = code == 0
+        data["log"] = str(LOG.path) if LOG.path else None
+        data["lockfile_changed"] = "pnpm-lock.yaml" in porcelain_paths(git_out(["status", "--porcelain"], repo.here) or "")
+        if code:
+            data["error"] = "pnpm install failed; the pins are written (fix it and run pnpm install again)"
+            OUT.say(f"error: {data['error']}")
+            return 1, data
+    OUT.say(f"next: pnpm talk review {wt_slug(talk)}, then commit talks/{talk}/package.json and pnpm-lock.yaml")
+    return 0, data
+
+
+def cmd_render(repo: Repo, a, extra) -> tuple[int, dict]:
+    if not extra:
+        raise UsageError("render -- COMMAND [ARGS]: what to run in the render slot")
+    cwd = invocation_dir()
+    talk = default_talk(repo, cwd)
+    LOG.begin(repo.here, wt_slug(talk) if talk else "outreach", "render")
+    env = tool_env()
+    plan = render_plan(extra, env, a.gpu)
+    data = {"backend": plan["backend"], "argv": plan["argv"], "gpu": plan["gpu"], "lock": plan["lock"],
+            "cwd": str(cwd), "gl": gl_settings(env)}
+    if plan.get("note"):
+        data["note"] = plan["note"]
+    if a.dry_run:
+        OUT.show(("flock " + shlex.quote(plan["lock"]) + " " if plan["lock"] else "") + shlex.join(plan["argv"]))
+        return 0, data
+    t0 = time.monotonic()
+    r, _ = render_run(extra, cwd, env, a.gpu)
+    data.update(tool_exit=r.returncode, seconds=round(time.monotonic() - t0, 1),
+                summary=summarize(r.stdout, r.returncode == 0), log=str(LOG.path) if LOG.path else None)
+    say_summary(data["summary"])
+    OUT.show(f"render ({plan['backend']}) {'ok' if r.returncode == 0 else f'FAILED (exit {r.returncode})'}"
+             f"  ({data['seconds']} s)  log {data['log']}")
+    return (0 if r.returncode == 0 else 1), data
+
+
+# ---------------------------------------------------------------- sessions: Claude in tmux windows
+
+TMUX_SESSION = "talks"
+STATUS_FIELDS = ("name", "branch", "pin", "doing", "blocked", "next")
+
+
+def session_env() -> dict:
+    """tool_env without what pnpm adds for a script run: a tmux server started from here keeps
+    its environment for every window, and INIT_CWD there would point talk at the wrong place."""
+    env = {k: v for k, v in tool_env().items()
+           if not (k.startswith("npm_") or k.startswith("PNPM_SCRIPT") or k in ("INIT_CWD", "TALK_RENDER_SLOT",
+                                                                                "SLIDEV_STAGE_SHOTS_LOCKED"))}
+    env["PATH"] = os.pathsep.join(p for p in env.get("PATH", "").split(os.pathsep) if "node_modules/.bin" not in p)
+    return env
+
+
+def tmux_windows(tmux: str, env: dict) -> list[dict] | None:
+    """The windows of the tmux session "talks"; None when it is not running."""
+    fmt = "#{window_index}\t#{window_name}\t#{pane_current_path}\t#{pane_current_command}\t#{window_active}"
+    r = run([tmux, "list-windows", "-t", f"={TMUX_SESSION}", "-F", fmt], env=env, capture=True, quiet=True, timeout=15)
+    if r.returncode:
+        return None
+    out = []
+    for line in r.stdout.splitlines():
+        parts = line.split("\t")
+        if len(parts) >= 5:
+            out.append({"index": parts[0], "name": parts[1], "path": parts[2], "command": parts[3], "active": parts[4] == "1"})
+    return out
+
+
+def read_status(path: Path) -> dict[str, dict]:
+    """$OUTREACH_STATE/status.md: one line per session, name | branch | pin | doing | blocked | next."""
+    lines = {}
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
+        return lines
+    for line in text.splitlines():
+        parts = [x.strip() for x in line.split("|")]
+        if len(parts) == len(STATUS_FIELDS) and re.match(r"^[a-z0-9][a-z0-9-]*$", parts[0]):
+            lines[parts[0]] = dict(zip(STATUS_FIELDS, parts))
+    return lines
+
+
+def claude_command(display: str, add_dir: str | None = None) -> list[str]:
+    cmd = ["claude", "--name", display, "--remote-control", display]
+    return cmd + (["--add-dir", add_dir] if add_dir else [])
+
+
+def cmd_session(repo: Repo, a, extra) -> tuple[int, dict]:
+    env = session_env()
+    tmux = which("tmux", env)
+    if not tmux:
+        raise UsageError("tmux is not installed: every session runs in a window of the tmux session \"talks\"")
+    key = a.name.strip().lower()
+    sv = cfg().path_of("SLIDEV_VIDEOS_DIR")
+    data: dict = {"name": key}
+    if key in ("tools", "scheduler"):
+        if not (sv and sv.is_dir()):
+            data["error"] = f"no slidev-videos checkout at {sv} (SLIDEV_VIDEOS_DIR): clone it beside outreach_talks"
+            OUT.say(f"error: {data['error']}")
+            return 1, data
+        if key == "tools":
+            win, cwd, cmd = "tools", sv, claude_command("Tools")
+        else:
+            win, cwd, cmd = "scheduler", repo.main, claude_command("Scheduler", str(sv))
+    else:
+        code, opened = open_worktree(repo, a.name, a.no_install, dry_run=a.dry_run)
+        data.update(opened)
+        if code or not opened.get("worktree"):
+            return code or 1, data
+        talk = opened["talk"]
+        win, cwd, cmd = wt_slug(talk), Path(opened["worktree"]), claude_command(f"Talk: {talk[11:]}")
+    target = f"{TMUX_SESSION}:{win}"
+    attach = f"tmux switch-client -t {target}" if os.environ.get("TMUX") else f"tmux attach -t {target}"
+    data.update(window=win, dir=str(cwd), command=cmd, attach=attach)
+    windows = tmux_windows(tmux, env)
+    if windows is not None and win in [w["name"] for w in windows]:
+        data["existing"] = True
+        OUT.say(f"{target} is open already")
+        OUT.show(attach)
+        return 0, data
+    common = ["-n", win, "-c", str(cwd), "-e", f"PATH={env['PATH']}", shlex.join(cmd)]
+    if windows is None:
+        argv = [tmux, "new-session", "-d", "-s", TMUX_SESSION, *common]
+    else:
+        argv = [tmux, "new-window", "-d", "-t", f"={TMUX_SESSION}:", *common]
+    data["tmux"] = argv
+    if a.dry_run:
+        OUT.say("dry run: would run " + shlex.join(argv))
+        return 0, data
+    r = run(argv, env=env, capture=True, timeout=20)
+    if r.returncode:
+        data["error"] = f"tmux failed: {(r.stderr or r.stdout).strip()[:300]}"
+        OUT.say(f"error: {data['error']}")
+        return 1, data
+    data["created"] = "session" if windows is None else "window"
+    OUT.say(f"started {shlex.join(cmd)} in {target} ({cwd})")
+    OUT.show(attach)
+    return 0, data
+
+
+def cmd_sessions(repo: Repo, a, extra) -> tuple[int, dict]:
+    env = session_env()
+    tmux = which("tmux", env)
+    windows = tmux_windows(tmux, env) if tmux else None
+    status_path = Path(cfg()["OUTREACH_STATE"]) / "status.md"
+    status = read_status(status_path)
+    rows = [{**w, "status": status.get(w["name"])} for w in windows or []]
+    names = {w["name"] for w in windows or []}
+    status_only = [line for n, line in status.items() if n not in names]
+
+    def fmt(st: dict | None) -> str:
+        if not st:
+            return "(no line in the status file)"
+        return f"{st['doing']} | blocked: {st['blocked']} | next: {st['next']} | {st['branch']} {st['pin']}"
+    if windows is None:
+        OUT.say(f"no tmux session \"{TMUX_SESSION}\"" + ("" if tmux else " (tmux is not installed)")
+                + ": `pnpm talk session <name>` starts one")
+    for w in rows:
+        OUT.show(f"{w['index'] + ':' + w['name']:<22} {fmt(w['status'])}")
+    for st in status_only:
+        OUT.show(f"{'-:' + st['name']:<22} {fmt(st)}  (no window)")
+    return 0, {"session": TMUX_SESSION, "running": windows is not None, "windows": rows,
+               "status_only": status_only, "status_file": str(status_path)}
+
+
+def cmd_config(repo: Repo, a, extra) -> tuple[int, dict]:
+    c = cfg()
+    env = tool_env()
+    for k in CONFIG_KEYS:
+        OUT.show(f"{k:<18} {c[k] if c[k] is not None else '-':<48} {c.sources[k]}")
+    passed = {k: v for k, v in c.file.items() if k not in CONFIG_KEYS}
+    for k, v in passed.items():
+        OUT.show(f"{k:<18} {env.get(k, v):<48} {'environment' if os.environ.get(k) else str(c.path)} (to the tools)")
+    OUT.say(f"settings file: {c.path}" + ("" if c.path.is_file() else " (none: scripts/bootstrap.sh writes it)"))
+    return 0, {"file": str(c.path), "exists": c.path.is_file(), "values": c.values, "sources": c.sources,
+               "passed": passed, "gl": gl_settings(env)}
 
 
 # ---------------------------------------------------------------- command line
@@ -1348,6 +2102,24 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--dry-run", action="store_true")
     sp.add_argument("--skip-ready", action="store_true")
     sp.add_argument("--ready-skip", action="append", metavar="STEP", help="pass --skip STEP to ready")
+    sp.add_argument("--rerun-ready", action="store_true", help="run ready even if it already passed this commit")
+    sp = verb("render", "run a command in the render slot: srun, condor_run, or under the render lock", talk=False)
+    sp.add_argument("--gpu", dest="gpu", action="store_const", const=True, default=None,
+                    help="ask the scheduler for a GPU (default: when the cluster has GPUs; RENDER_GPUS)")
+    sp.add_argument("--no-gpu", dest="gpu", action="store_const", const=False)
+    sp.add_argument("--dry-run", action="store_true", help="print how it would run")
+    sp = verb("pin", "both addon pins of one talk to a toolkit tag, then pnpm install", talk=False)
+    sp.add_argument("name", nargs="?", help="the talk (default: the one this worktree changes), then the ref")
+    sp.add_argument("ref", nargs="?", help="vX.Y.Z")
+    sp.add_argument("--allow-sha", action="store_true", help="a bare commit instead of a tag")
+    sp.add_argument("--dry-run", action="store_true")
+    sp.add_argument("--no-install", action="store_true")
+    sp = verb("session", "a Claude session in a window of the tmux session \"talks\"", talk=False)
+    sp.add_argument("name", help="a talk, tools (the slidev-videos checkout) or scheduler")
+    sp.add_argument("--no-install", action="store_true", help="when it makes the talk's worktree")
+    sp.add_argument("--dry-run", action="store_true", help="print the tmux command")
+    verb("sessions", "the windows of the tmux session \"talks\" and their lines in the status file", talk=False)
+    verb("config", "the settings talk resolved, and where each came from", talk=False)
     verb("doctor", "tool versions, and which pnpm a bare shell runs", talk=False)
     sp = verb("bump-toolkit", "move addon pins, env.yaml and the scaffolder to a toolkit release", talk=False)
     sp.add_argument("ref", help="vX.Y.Z")
@@ -1363,6 +2135,7 @@ VERBS = {
     "build": cmd_build, "check": cmd_check, "shots": cmd_shots, "review": cmd_review,
     "lint": cmd_delegate, "facts": cmd_delegate, "map": cmd_delegate, "ready": cmd_ready,
     "record": cmd_stage, "safe": cmd_stage, "deploy": cmd_deploy, "doctor": cmd_doctor, "bump-toolkit": cmd_bump,
+    "render": cmd_render, "pin": cmd_pin, "session": cmd_session, "sessions": cmd_sessions, "config": cmd_config,
 }
 
 
@@ -1405,7 +2178,7 @@ def main(argv: list[str] | None = None) -> int:
             raise UsageError("name a verb")
         if extra[:1] == ["--"]:
             extra = extra[1:]
-        elif "--" in extra:
+        elif "--" in extra and a.verb != "render":     # a render's command keeps its own --
             extra.remove("--")
         if extra and a.verb not in PASSTHROUGH:
             raise UsageError(f"unrecognized arguments: {' '.join(extra)}")
@@ -1415,6 +2188,8 @@ def main(argv: list[str] | None = None) -> int:
             return code if code in (0, 1, 2) else 1
         printed = data.pop("_printed", False)
         result.update(data)
+        if LOG.path:
+            result.setdefault("log", str(LOG.path))
         result.update(ok=code == 0, exit=code)
     except UsageError as e:
         OUT.say(f"error: {e}")
