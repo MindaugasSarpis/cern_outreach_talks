@@ -356,7 +356,7 @@ class Lint:
                 self.at(s, m.start(), "LT-WORD", "warning", why)
         for m in LT_ENGLISH.finditer(text):
             self.at(s, m.start(), "LT-ENGLISH", "warning", f"English {m.group(0)!r} on a Lithuanian slide")
-        for m in re.finditer(r"\"|“[^„“”\n]*”", text):
+        for m in re.finditer(r"\"[^\"\n]*\"|\"|“[^„“”\n]*”", text):
             self.at(s, m.start(), "LT-QUOTES", "warning", "use „…“ quotes in Lithuanian, not " + repr(m.group(0)[:20]))
         for m in re.finditer(r"(?<![\w.,:/#-])\d+\.\d+(?![\w.]|\.\d)", text):
             self.at(s, m.start(), "LT-DECIMAL", "warning", f"decimal comma in Lithuanian: {m.group(0).replace('.', ',')} not {m.group(0)}")

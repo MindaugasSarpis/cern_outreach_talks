@@ -327,12 +327,11 @@ def loosen(e: dict, defaults: dict) -> tuple[dict, list[str]]:
     out["verdict"] = _VERDICT_ALIASES.get(verdict, verdict)
     if not out.get("claim_en"):
         out["claim_en"] = (e.get("corrected_claim") if out["verdict"] == "corrected" else None) or e.get("claim")
-    if not out.get("source_url"):
-        for k in ("evidence_url", "source_url", "source", "url"):
-            m = re.search(r"https?://[^\s;,)\]]+", str(e.get(k) or ""))
-            if m and not public_url_problem(m.group(0).rstrip(".")):
-                out["source_url"] = m.group(0).rstrip(".")
-                break
+    for k in ("evidence_url", "source_url", "source", "url"):      # the first public page named
+        m = re.search(r"https?://[^\s;,)\]]+", str(e.get(k) or ""))
+        if m and not public_url_problem(m.group(0).rstrip(".")):
+            out["source_url"] = m.group(0).rstrip(".")
+            break
     if not out.get("as_of") and e.get("date"):
         dates = re.findall(r"\d{4}(?:-\d{2}(?:-\d{2})?)?", str(e["date"]))
         out["as_of"] = dates[-1] if dates else None

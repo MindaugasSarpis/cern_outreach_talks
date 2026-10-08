@@ -1,0 +1,4 @@
+/* words the kit would uppercase but must keep their case */
+html[data-stage] .nc { text-transform: none; }
+html[data-stage] .card p { font-size: 14px; }
+html[data-stage] .src { font-size: 12px; }
