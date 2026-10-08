@@ -559,6 +559,18 @@ Faktai: susitarimas pasirašytas 2017 06 27 Vilniuje, įsigaliojo 2018 01 08. Li
 -->
 
 ---
+space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45 }   # the firms slide's pose: the world rests there under the clip
+---
+
+<VideoPlayer src="vu_ff_unzoom.mp4" advance-on-end />
+
+<!--
+Kalbėtojui. „…ir atgal“: įžangos nutolinimas atbulai, pagreitintas iki 0:30, be garso — nuo mūsų galaktikos pro Žemę ir Lietuvą atgal į Saulėtekį, į VU Fizikos fakultetą. Kalbėti per klipą. Spausti nereikia: klipui pasibaigus, skaidrės pačios pereina į kitą (įmonių skaidrę); paspaudus anksčiau, pereinama iš karto. Savaime pereinama tik auditorijos lange, ne /presenter.
+Sakyti (per klipą): „O dabar atgal: nuo galaktikos iki Saulėtekio, kur pradėjome, ir prie to, ką visa tai reiškia Lietuvos įmonėms.“
+(klipas 0:30)
+-->
+
+---
 space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45 }
 ---
 
