@@ -347,15 +347,16 @@ class Lint:
         if s.layout not in NON_CONTENT and not is_video and (n >= 15 or (n >= 3 and re.search(r"\d", text))):
             if any("src" in el.classes for el in td.elements(s.body)):
                 return
-            in_notes = bool(NOTES_SRC.search(s.notes))
+            in_notes = NOTES_SRC.search(s.notes)
             if self.sources == "notes":
                 if not in_notes:
-                    self.add("NO-SRC", "warning", f"content slide ({n} words) without a 'Sources:' line in its notes "
+                    label = "Šaltiniai:" if self.lang == "lt" else "Sources:"
+                    self.add("NO-SRC", "warning", f"content slide ({n} words) without a '{label}' line in its notes "
                              "(the headmatter says sources: notes)", "deck.md", s.content_line, s.number)
             else:
                 self.add("NO-SRC", "warning", f"content slide ({n} words) without a .src line"
-                         + ("; its notes have a 'Sources:' line, so if the deck keeps its sources there, "
-                            "say `sources: notes` in the headmatter" if in_notes else ""),
+                         + (f"; its notes have a '{squash(in_notes.group(0))}' line, so if the deck keeps its "
+                            "sources there, say `sources: notes` in the headmatter" if in_notes else ""),
                          "deck.md", s.content_line, s.number)
 
     def check_marks(self, s: td.Slide, n_visible: int):

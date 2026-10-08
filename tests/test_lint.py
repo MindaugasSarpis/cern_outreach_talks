@@ -199,7 +199,9 @@ class SourcesInNotes(unittest.TestCase):
         self.assertEqual(l.sources, "slides")
         found = codes(l, "NO-SRC")
         self.assertEqual([f.slide for f in found], [2, 3, 5])
-        self.assertIn("say `sources: notes` in the headmatter", found[0].message)
+        self.assertIn("its notes have a 'Sources:' line, so if the deck keeps its sources there, "
+                      "say `sources: notes` in the headmatter", found[0].message)
+        self.assertIn("'Šaltiniai:' line", found[1].message)
         self.assertNotIn("sources: notes", found[2].message)       # slide 5's notes have no source line
 
     def test_unknown_value(self):
