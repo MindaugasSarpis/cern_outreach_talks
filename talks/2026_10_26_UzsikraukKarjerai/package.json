@@ -16,7 +16,7 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check . --types path,streams,pairs,ghost,map,quintet",
+    "stage:check": "slidev-stage-check . --types path,streams,pairs,ghost,map,quintet,histogram",
     "stage:shots": "slidev-stage-shots dist shots",
     "stage:safe": "slidev-stage-safe dist --broadcast",
     "stage:record": "slidev-stage-record dist record"
@@ -25,7 +25,7 @@
     "@slidev/cli": "^52.14.2"
   },
   "devDependencies": {
-    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#efacca273b5e2b41a3e3a14afabf0edce0f53a6b",
-    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#efacca273b5e2b41a3e3a14afabf0edce0f53a6b&path:/packages/stage"
+    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#46249aa1269d711ea75250f04d76b73cd6dcc033",
+    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#46249aa1269d711ea75250f04d76b73cd6dcc033&path:/packages/stage"
   }
 }

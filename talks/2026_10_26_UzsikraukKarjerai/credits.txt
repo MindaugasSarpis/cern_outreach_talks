@@ -6,13 +6,10 @@ Video (CERN footage, via the slidev-videos shared library)
 
 Photographs
 - LHCb cavern, 2019: Rosa Menkman, flickr.com/photos/r00s/48815389756, CC BY 2.0. Cropped to 16:9.
-- Murray Gell-Mann, 2007: Joi Ito, commons.wikimedia.org/wiki/File:MurrayGellMannJI1.jpg, CC BY 2.5. Cropped.
-- George Zweig, 2015: Peacearth, commons.wikimedia.org/wiki/File:George_Zweig.jpg, CC BY-SA 4.0. Cropped (the crop is CC BY-SA 4.0).
 
-Figures
-- LHCb collaboration, Phys. Rev. Lett. 115, 072001 (2015), m(J/ψ p) figure, CC BY 4.0.
-- LHCb collaboration, Phys. Rev. Lett. 122, 222001 (2019), m(J/ψ p) figure, CC BY 4.0.
-- M. Šarpis, LPPM 2022 introduction slide, indico.cern.ch/event/1128345 (the speaker's own slide).
+Data
+- LHCb collaboration, Phys. Rev. Lett. 122, 222001 (2019): the m(J/ψ p) bins drawn on slide 7, from HEPData ins1728691, Table 2 (doi:10.17182/hepdata.89271.v1/t2).
+- Slides 2–4 and 10: illustrations generated for this talk (no measured data).
 
 Map
 - Coastlines and borders: Natural Earth 1:50m, public domain.

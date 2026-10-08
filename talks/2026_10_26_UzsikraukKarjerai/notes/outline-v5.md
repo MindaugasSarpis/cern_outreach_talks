@@ -1,6 +1,7 @@
 # Fifth version — storyline outline for the owner's approval
 
-Status: **proposal, nothing built.** Written 2026-10-08 after the owner said
+Status: **approved by the owner on 2026-10-08 (as written, opening on the bump); being built.** Changes during the build are listed at the end.
+Originally: proposal, nothing built. Written 2026-10-08 after the owner said
 the fourth version (a chronology told from the speaker's side) does not
 show a 16-year-old what it means for them. No visuals, renders or deck
 edits until the owner approves this outline.
@@ -212,3 +213,25 @@ route becomes one beat on slide 13).
   2006 null result for slide 4.
 - The look: the normal stage look is allowed again (not TV); keep grains
   big enough to survive streaming.
+
+## Changes during the build (2026-10-08)
+
+- Owner: the 2022 plans slide is dropped (picture and „Mano planai“ line);
+  the route across Europe stays as the visual for "your own road is not in
+  the back of the book either", spoken shorter. 14 slides.
+- Slide 11 (the empty histogram beside the 2008 one) merged into „Neradau.“,
+  as the outline allowed.
+- Slides 2–4: HEPData has no Θ⁺ (2003) data. They fill an illustration
+  instead: a small random sample from a smooth spectrum in which chance
+  makes a bump at 1,54 GeV, then a sample 25 times larger that is smooth.
+  The spoken line says „toks grafikas“, not „tikras“; the notes say it is
+  an illustration (`public/data/theta-toy.json`, seeds in the file).
+- Slide 7: the 2015 paper's bins are not on HEPData; the fill uses LHCb's
+  published 2019 m(J/ψ p) bins (HEPData ins1728691, Table 2, m(Kp) >
+  1,9 GeV, 4,25–4,60 GeV, 27 292 candidates), which contain the 2015
+  sample. The script ends on „2019 metais … į tris pentakvarkus – tai, ką
+  matai dabar“, so what fills is what is said.
+- Slide 10: illustrative unless the speaker gives the thesis histogram
+  (`public/data/search-toy.json`).
+- Every slide has a line on screen before its grains arrive (owner's rule),
+  so slides 8 and 9 got „Kuo skyrėsi?“ and „2019–2023 m. · Mano paieška“.

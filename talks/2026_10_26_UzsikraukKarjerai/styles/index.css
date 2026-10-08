@@ -4,6 +4,8 @@
    The slides reach students through a 1080p stream at about 2.5 Mbps, on
    classroom projectors, and in past editions the producers shrank them to
    about two-thirds of the frame beside the speaker. So:
+   [2026-10-08: superseded. The event is online, not TV: the sizes below were
+   brought down to laptop/projector sizes; the comments are history.]
    - readable text is at least 49 px here (96 px at 1080p: Slidev's canvas is
      980 px wide, one canvas px is 1.96 broadcast px), big lines 58 px, numbers
      130 px; at most two lines of about 28 characters;
@@ -17,8 +19,8 @@
 
 html[data-stage] {
   --kk-gold: #ffc05a; --kk-gold-hi: #ffe3a8; --kk-blue: #8fb2ff; --kk-blue-hi: #dfe8ff;
-  --kk-x: 98px;          /* left and right edge of the text area */
-  --kk-floor: 168px;     /* distance of the text area's lower edge from the bottom (glyph boxes run ~20 px past it) */
+  --kk-x: 72px;          /* left and right edge of the text area */
+  --kk-floor: 84px;     /* distance of the text area's lower edge from the bottom (glyph boxes run ~20 px past it) */
   --kk-top: 55px;
   --kk-shadow: 0 0 26px rgba(0, 0, 0, 0.75), 0 0 6px rgba(0, 0, 0, 0.6);
 }
@@ -47,21 +49,21 @@ html[data-stage] .say {
   animation: stage-rise 0.9s var(--stage-ease) 0.5s both;
 }
 html[data-stage] .say.right { left: auto; right: var(--kk-x); text-align: right; }
-html[data-stage] .say.top { bottom: auto; top: 96px; }
+html[data-stage] .say.top { bottom: auto; top: 64px; }
 html[data-stage] .say.wide { max-width: calc(100% - 2 * var(--kk-x)); }
 html[data-stage] .say .kick {
   font-size: 20px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--kk-gold); margin: 0 0 12px;
 }
 html[data-stage] .say .kick.blue { color: var(--kk-blue); }
-html[data-stage] .say .big { font-size: 58px; font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; margin: 0; }
-html[data-stage] .say .big.huge { font-size: 76px; }
+html[data-stage] .say .big { font-size: 46px; font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; margin: 0; }
+html[data-stage] .say .big.huge { font-size: 62px; }
 html[data-stage] .say .big em { font-style: normal; color: var(--kk-gold-hi); }
 html[data-stage] .say .big .blue { color: var(--kk-blue-hi); }
-html[data-stage] .say .line { font-size: 40px; font-weight: 600; line-height: 1.12; margin: 14px 0 0; opacity: 0.94; }
+html[data-stage] .say .line { font-size: 30px; font-weight: 600; line-height: 1.12; margin: 14px 0 0; opacity: 0.94; }
 
 /* --- a counted number (and its unit), then one line */
 html[data-stage] .num {
-  font-size: 130px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9;
+  font-size: 110px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9;
   font-variant-numeric: tabular-nums; white-space: nowrap; margin: 0 0 6px;
   text-shadow: 0 0 18px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 0, 0, 0.7);
 }
@@ -143,7 +145,7 @@ html[data-stage] .city.home { color: var(--kk-gold-hi); }
 
 /* --- the title card */
 html[data-stage] .say.title { bottom: auto; top: 112px; max-width: 70%; }
-html[data-stage] .say.title .big.huge { font-size: 80px; text-transform: uppercase; line-height: 0.98; }
+html[data-stage] .say.title .big.huge { font-size: 66px; text-transform: uppercase; line-height: 0.98; }
 html[data-stage] .say .byline { font-size: 28px; font-weight: 500; letter-spacing: 0.06em; margin: 22px 0 0; opacity: 0.88; }
 
 /* --- a line over a clip: on a dark band, so it holds against any frame */
@@ -170,3 +172,6 @@ html[data-stage] .plans img { width: 100% !important; max-width: none !important
 @media (prefers-reduced-motion: reduce), print {
   html[data-stage] .say, html[data-stage] .chapter { animation: none !important; }
 }
+
+/* --- a short list of lines (what you can do this year) */
+html[data-stage] .say.list .line { font-size: 28px; margin: 10px 0 0; }

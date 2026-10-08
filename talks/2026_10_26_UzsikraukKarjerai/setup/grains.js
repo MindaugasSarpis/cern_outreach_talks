@@ -750,7 +750,125 @@ function buildQuintet(o, ctx) {
   }
 }
 
+// ---- histogram ----------------------------------------------------------------------
+//   { type: histogram, name, pos, src: 'data/….json' ({ counts: [...] }, or another `key`) or counts: [...],
+//     width?: 24, height?: 10, max?: (tallest bin), unit?: 1 (entries per grain),
+//     steps?: [0, 1] (the share of entries shown at each step), fill?: 20 (s for the whole set),
+//     fall?: 1.1 (s a grain takes to drop), size?: 1, alpha?: 0.35, color?, axis?: true }
+// A measured distribution building up entry by entry: each grain is one
+// entry (one candidate) dropping into its bin in a random order, so the
+// shape grows the way the data came in. A step's share is reached at a
+// constant rate (`fill` seconds for all of it); going back shows the share
+// at once. Arrival from elsewhere (or `c`) refills from nothing to the
+// current share, unless a fill started under 5 s ago.
+const HIST_VERT = /* glsl */ `
+attribute vec3 aEnd;
+attribute float aRank, aSeed;
+uniform float uFrom, uTo, uT0, uDur, uFall, uTop, uSize, uAlpha;
+uniform vec3 uColor, uHot;
+${PLACE}
+void main() {
+  float span = uTo - uFrom;
+  float land;                                  // when this grain lands
+  if (aRank < min(uFrom, uTo)) land = -1e6;    // already in
+  else if (span <= 0.0 || aRank >= uTo) { hide(); return; }
+  else land = uT0 + (aRank - uFrom) / span * uDur;
+  float k = (uTime - land) / uFall + 1.0;      // 0 at release, 1 on landing
+  if (k < 0.0) { hide(); return; }
+  vec3 p = aEnd;
+  float glow = 0.0;
+  if (k < 1.0) {
+    p.y = mix(uTop + 2.0 * hash(aSeed * 3.0), aEnd.y, k * k);
+    p.x += 0.15 * (1.0 - k) * (hash(aSeed * 5.0) - 0.5);
+  } else glow = exp(-(k - 1.0) * uFall * 3.0);  // a short warm glow as it lands
+  vec3 color = mix(uColor, uHot, 0.8 * glow);
+  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow);
+  float size = uSize * (0.85 + 0.3 * hash(aSeed * 11.0)) * (1.0 + 0.5 * glow);
+  place(p, size, alpha, color, aSeed);
+}`
+const AXIS_VERT = /* glsl */ `
+attribute float aSeed;
+uniform float uSize, uAlpha;
+uniform vec3 uColor;
+${PLACE}
+void main() { place(position, uSize * (0.8 + 0.4 * hash(aSeed * 7.0)), uAlpha, uColor, aSeed); }`
+function buildHistogram(o, ctx) {
+  const g = new Group()
+  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  const W = o.width ?? 24, H = o.height ?? 10, unitN = o.unit ?? 1
+  const steps = o.steps || [0, 1]
+  const mat = material(HIST_VERT, {
+    uFrom: { value: 0 }, uTo: { value: 0 }, uT0: { value: 0 }, uDur: { value: 1 }, uFall: { value: o.fall ?? 1.1 },
+    uTop: { value: H * 1.25 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.35 },
+    uColor: { value: new Color(...rgb(o.color || '#ffc05a')) }, uHot: { value: new Color(...rgb(o.hot || '#fff4dc')) },
+  })
+  const u = mat.uniforms
+  const build = (counts) => {
+    const nb = counts.length, bw = W / nb
+    const per = counts.map((c) => Math.round(c / unitN))
+    const N = per.reduce((a, b) => a + b, 0)
+    const max = (o.max ?? Math.max(...counts)) / unitN
+    const ranks = new Float32Array(N); for (let i = 0; i < N; i++) ranks[i] = Math.random()
+    const end = new Float32Array(N * 3), rank = new Float32Array(N), seed = new Float32Array(N)
+    let n = 0
+    for (let b = 0; b < nb; b++) {
+      // lower in the column, earlier in: the column grows from the bottom
+      const rs = Array.from(ranks.subarray(n, n + per[b])).sort((x, y) => x - y)
+      for (let j = 0; j < per[b]; j++, n++) {
+        const x = -W / 2 + (b + 0.15 + 0.7 * Math.random()) * bw
+        const y = (j + 0.5) / max * H
+        end.set([x, y, (Math.random() - 0.5) * bw], n * 3); rank[n] = rs[j]; seed[n] = Math.random()
+      }
+    }
+    const geo = new BufferGeometry()
+    geo.setAttribute('position', new BufferAttribute(new Float32Array(N * 3), 3))
+    geo.setAttribute('aEnd', new BufferAttribute(end, 3))
+    geo.setAttribute('aRank', new BufferAttribute(rank, 1))
+    geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
+    const pts = new Points(geo, mat); pts.frustumCulled = false
+    g.add(pts)
+    if (o.axis !== false) {
+      const A = 900, ap = new Float32Array(A * 3), as = new Float32Array(A)
+      for (let i = 0; i < A; i++) { ap.set([-W / 2 - 0.3 + (W + 0.6) * i / (A - 1), -0.12, 0], i * 3); as[i] = Math.random() }
+      const ag = new BufferGeometry()
+      ag.setAttribute('position', new BufferAttribute(ap, 3)); ag.setAttribute('aSeed', new BufferAttribute(as, 1))
+      const am = material(AXIS_VERT, { uSize: { value: (o.size ?? 1) * 0.9 }, uAlpha: { value: 0.5 }, uColor: { value: new Color(...rgb(o.axisColor || '#cfd6ff')) } })
+      am.uniforms.uTime = u.uTime; am.uniforms.uPixelRatio = u.uPixelRatio
+      const ax = new Points(ag, am); ax.frustumCulled = false
+      g.add(ax)
+    }
+  }
+  if (o.counts) build(o.counts)
+  else fetch(ctx.asset('/' + String(o.src).replace(/^\//, ''))).then((r) => r.json()).then((d) => build(d[o.key || 'counts']))
+    .catch(() => console.warn('stage: histogram data failed', o.src))
+  let now = 0, played = -100, share = 0
+  const shown = () => {
+    const x = Math.min(Math.max((now - u.uT0.value) / Math.max(u.uDur.value, 0.01), 0), 1)
+    return u.uFrom.value + (u.uTo.value - u.uFrom.value) * x
+  }
+  const fill = (from, to, delay = 0.6) => {
+    u.uFrom.value = from; u.uTo.value = to; u.uT0.value = now + delay
+    u.uDur.value = Math.max((to - from) * (o.fill ?? 20), 0.01); played = now
+  }
+  const go = (k, { instant = false } = {}) => {
+    const to = steps[Math.max(0, Math.min(steps.length - 1, k))]
+    share = to
+    const cur = shown()
+    if (instant || to <= cur) { u.uFrom.value = to; u.uTo.value = to; u.uT0.value = now - 100; u.uDur.value = 0.01; return }
+    fill(cur, to)
+  }
+  const off = listen(o.name, (k) => go(k))
+  mat.addEventListener('dispose', off)
+  if (state.has(o.name)) go(state.get(o.name), { instant: true })
+  const api = {
+    arm() {},
+    assemble(t, onDone) { now = t; if (share > 0 && now - played > 5) fill(0, share, 0.3); onDone?.() },
+  }
+  return { group: g, labels: [], api, pixelRatio: u.uPixelRatio, update(t) { now = t; u.uTime.value = t }, dispose: off }
+}
+
 export function installGrains(registerBuilder) {
+  registerBuilder('histogram', buildHistogram, { fields: ['pos', 'name'] })
   registerBuilder('pairs', buildPairs, { fields: ['pos', 'name'] })
   registerBuilder('path', buildPath, { fields: ['pos', 'name', 'points'] })
   registerBuilder('streams', buildStreams, { fields: ['pos', 'name', 'to'] })
