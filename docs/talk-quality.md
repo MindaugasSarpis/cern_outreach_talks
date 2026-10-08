@@ -268,4 +268,5 @@ mechanic the owner has not seen on a dense slide.
 Every summary to the owner carries: the talk map rows that changed, the total
 minutes against the duration, decisions taken, open questions, claims still
 unverified, which commands were run to verify (with their results, failures
-included), and the deploy state as `pnpm talk status <t>` reports it.
+included), and the deploy state as `pnpm talk status` reports it (the talk's
+entry under `deploys`).

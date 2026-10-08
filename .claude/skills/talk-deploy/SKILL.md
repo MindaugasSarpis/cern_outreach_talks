@@ -18,7 +18,7 @@ as an open question.
 pnpm talk ready <t>               # lint --release + check + shots + videos:preflight + venue --dry-run, one exit code
 pnpm talk deploy <t> --dry-run    # what would be pushed, and the checks it will make
 pnpm talk deploy <t>              # push HEAD to main, watch the Pages run, check the URL
-pnpm talk status <t> --json       # the recorded deploy state
+pnpm talk status --json           # every talk's recorded deploy state, under deploys[]
 ```
 
 Run them from the talk's own worktree. `deploy`:
@@ -27,8 +27,10 @@ Run them from the talk's own worktree. `deploy`:
   (it prints the rebase command);
 - runs `ready` first unless told to skip it;
 - pushes `HEAD` to `main`, watches the Pages run and requests the talk's URL;
-- records the result in `.git/talk-status/<slug>.json`, not in a tracked file,
-  so a deploy never leaves a dirty tree or triggers a second run.
+- records the result in `talk-status/<slug>.json` in the shared git directory
+  (`~/outreach_talks/.git`), not in a tracked file, so a deploy never leaves a
+  dirty tree or triggers a second run. `status` takes no talk name: read the
+  entry whose `talk` is this one.
 
 Say "deployed" only after the run is green and the URL returned 200, and give
 the URL, the commit and the run id. Let the watch run in the background and
