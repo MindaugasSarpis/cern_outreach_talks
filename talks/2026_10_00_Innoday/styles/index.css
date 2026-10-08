@@ -339,3 +339,17 @@ html[data-stage] .slidev-layout .world-caption.after-flight.short * { animation-
 }
 html.print .slidev-layout .world-caption.after-flight, html.print .slidev-layout .world-caption.after-flight *,
 html.print .slidev-layout .after-flight ~ .src { animation: none !important; opacity: 1 !important; }
+
+/* --- delta review 2026-10-09: type floors and small fixes */
+/* the kicker carries Part II's problem: at the floor, not the kit's 12.5 px */
+html[data-stage] .kicker { font-size: 18px; }
+html[data-stage] .slidev-layout.section h1:not(:only-child) { font-size: 18px !important; }
+/* the cover's subtitle and byline readable from the back of the room */
+html[data-stage] .slidev-layout.cover h2 { font-size: 20px !important; }
+html[data-stage] .slidev-layout.cover .mt-md { font-size: 16px !important; }
+/* a kicker on a busy photograph gets a ground of its own */
+html[data-stage] .hero.deep .kicker { background: rgba(4, 6, 16, 0.55); padding: 2px 6px; border-radius: 3px; display: inline-block; }
+/* the 1989 page: the credit stays on the dark side */
+html[data-stage] .hero.page .credit { max-width: 36%; }
+/* a bright, white photograph graded down so the text side reads */
+html[data-stage] .hero.dim > img { filter: brightness(0.78) contrast(1.06) saturate(1.04); }

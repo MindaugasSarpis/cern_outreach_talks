@@ -116,7 +116,8 @@ export function makeGrains(s, { size = 0.5, gain = 1.25 } = {}) {
   pts.frustumCulled = false
   pts.name = 'takeover-web'
   const t0 = performance.now()
-  pts.onBeforeRender = () => { mat.uniforms.uTime.value = (performance.now() - t0) / 1000 }
+  // the twinkle's clock and the renderer's pixel ratio, every frame (the frame-rate guard changes the ratio)
+  pts.onBeforeRender = (r) => { mat.uniforms.uTime.value = (performance.now() - t0) / 1000; mat.uniforms.uPixelRatio.value = r.getPixelRatio() }
   return pts
 }
 

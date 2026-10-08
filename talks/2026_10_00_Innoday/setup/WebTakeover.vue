@@ -176,7 +176,6 @@ watch(() => nav.currentSlideNo?.value, (n) => {
   if (!p) return
   const at = $page?.value ?? $page
   p.visible = n >= at && n <= at + PROLOGUE
-  p.onBeforeRender = (r) => { p.material.uniforms.uPixelRatio.value = r.getPixelRatio() }
 })
 </script>
 
