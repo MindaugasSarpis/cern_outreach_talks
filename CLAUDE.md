@@ -49,7 +49,7 @@ Current talks:
   made a product of it". Cut to notes: the 1954 counter, the antimatter
   question card, LHCb Vilnius, the VELO chip, the top ten. Decisions log in
   `talks/2026_10_00_Innoday/HANDOFF.md`.
-  Pinned to slidev-videos feat/broadcast efacca2. Date placeholder `10_00`.
+  Pinned to slidev-videos feat/dust-fullframe dca4e8f. Date placeholder `10_00`.
   See "The stage (Innoday)" below.
 - `talks/2026_10_00_OpenData/` — "Opening LHCb's data", a 6½-minute award talk
   (LHCb Vilnius nominated for an open data award). On the packaged stage, pinned

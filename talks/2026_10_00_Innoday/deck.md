@@ -38,7 +38,7 @@ info: |
   private sector: how technology leaves CERN, what it does for suppliers, the
   next machine, Lithuania, what a firm can do. Photographs are full bleed
   (`.hero`); slides carry a few words, the notes carry what is said. Toolkit:
-  slidev-videos feat/broadcast efacca2. Keys on a video slide: p play/pause,
+  slidev-videos feat/dust-fullframe dca4e8f. Keys on a video slide: p play/pause,
   + / - volume; `c` builds what stands where the camera is again.
 layout: cover
 space:

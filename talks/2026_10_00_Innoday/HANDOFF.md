@@ -1,6 +1,6 @@
 # Innoday — handoff (2026-10-08)
 
-**Pin.** slidev-videos feat/broadcast `efacca2` (both addons in `package.json`).
+**Pin.** slidev-videos feat/dust-fullframe `dca4e8f` (both addons in `package.json`; was feat/broadcast `efacca2`).
 Shots: feat/shots-v2 `35340a9`, run from its worktree
 (`node ~/slidev-videos/.claude/worktrees/feat-shots-v2/packages/stage/bin/shots.mjs <dist> <out> --sheet`).
 
@@ -158,3 +158,9 @@ showed two orbs, not five, at the 14 s shot.
 - Slide 8 (and 2, 6) were black only because the clips were not local;
   shot from a `VITE_VIDEOS_LOCAL_FIRST=1` build after `videos:pull
   --include-shared` they show their picture. The cover title shows (4 s fallback).
+- **Pin** moved to slidev-videos `dca4e8f` (feat/dust-fullframe, on top of
+  efacca2): clips arrive as grains over the whole frame and condense in place
+  (`dustStyle: frame`, the default). Recorded slides 5–9 (record, gluon):
+  slide 6 condenses cleanly; slide 8 shows ~1 s of black between the grains
+  and the clip, whose opening is dark (reported to Tools via the Scheduler).
+  The opener keeps `transition="fade"`.
