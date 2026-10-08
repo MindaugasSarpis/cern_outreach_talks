@@ -26,8 +26,15 @@ Toolkit pin: slidev-videos `12aa015`, for both addons.
   come from the final build.
 - Not run: the talk-review workflow (it needs the owner's own request in the
   session; the final review ran as separate reviewer agents instead).
-- Deploy: not done. It comes after Užsikrauk karjerai and Innoday, when the
-  Scheduler calls the order, and only on the owner's word in the session.
+- Deployed 2026-10-08 on the owner's go: commit 484a430 on main, Pages run
+  37834273740 (build success, deploy success). The talk's URL,
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_OpenData/,
+  answers 200 with the Lithuanian title; space.json, the stills, the portraits
+  and the thesis plot answer too. `talk deploy` printed "not deployed" only
+  because its per-talk build-job lookup does not match the new single `build`
+  job (deploy.yml after f67d367); checked by hand with gh and curl.
+  `ready` ran with lint skipped (not on this branch); the release lint was
+  clean on the same commit.
 
 ## Decisions
 
