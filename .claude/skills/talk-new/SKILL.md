@@ -1,6 +1,6 @@
 ---
 name: talk-new
-description: Use when the owner wants a new outreach talk, deck or presentation in ~/outreach_talks (a new venue, award, lecture, school event or TV appearance). Scaffolds the talk in its own worktree with pnpm talk new, gathers the owner's context from mail, Drive and calendar once into a private brief, and asks the Brief questions in one message.
+description: Use when the owner wants a new outreach talk, deck or presentation in the outreach_talks repo (a new venue, award, lecture, school event or TV appearance). Scaffolds the talk in its own worktree with pnpm talk new, gathers the owner's context from mail, Drive and calendar once into a private brief, and asks the Brief questions in one message.
 ---
 
 # New talk
@@ -17,7 +17,7 @@ pnpm talk status --json      # branches, dirty trees, last Pages run
 
 If the talk already has a worktree, `pnpm talk open <name>` and stop here.
 If pnpm, node or ffmpeg misbehave, `pnpm talk doctor` says which binary is
-first on PATH (a Windows pnpm shim under `/mnt/c` is a known trap).
+first on PATH and flags a wrong one.
 
 ## 2. Owner context, once
 

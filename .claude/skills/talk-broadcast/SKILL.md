@@ -1,6 +1,6 @@
 ---
 name: talk-broadcast
-description: Use when a talk in ~/outreach_talks will be filmed, recorded, streamed or shown on TV (a studio recording, a broadcast to classrooms, an OBS capture, slides squeezed beside a presenter or shown on an LED wall behind them). The checklist for the look, the type floor, the safe box, flash safety, the recorder, plates, credits and the questions for the broadcaster.
+description: Use when a talk in the outreach_talks repo will be filmed, recorded, streamed or shown on TV (a studio recording, a broadcast to classrooms, an OBS capture, slides squeezed beside a presenter or shown on an LED wall behind them). The checklist for the look, the type floor, the safe box, flash safety, the recorder, plates, credits and the questions for the broadcaster.
 ---
 
 # A talk for a camera
@@ -51,8 +51,8 @@ gradient bands at stream bitrates. Pick a palette no other October talk uses.
 - Text inside x 98–882 and y 55–408. Keep the logo corner (top right), the
   name-super corner (bottom left) and the clock corner (bottom right) clear.
 - Check (from v0.6): `pnpm talk safe <t>` runs `slidev-stage-safe` on the
-  build in `/tmp/talk-<slug>/site` (building it if needed), under the shots
-  lock, with `--broadcast` for a talk marked broadcast; `--slides 2-4` keeps
+  build in `/tmp/talk-<slug>/site` (building it if needed), in the render
+  queue, with `--broadcast` for a talk marked broadcast; `--slides 2-4` keeps
   it small and `-- --json` prints the tool's own report. It reports the
   smallest font and every text box outside the safe box; `pnpm talk ready`
   runs it for a broadcast talk. Until v0.6, read `fontPx` and the boxes from
@@ -77,13 +77,17 @@ pnpm talk record <t> --slides 2-2  # from v0.6: one slide first, to time it
 pnpm talk record <t>               # per-slide NN.mp4 at 1080p50 with a hold, NN-plate.mp4 without text, index.json
 ```
 
-`slidev-stage-record` steps the engine on a fixed clock, so frames are exact;
-on llvmpipe a 1080p frame takes about 1.3–2 s, so a whole talk is hours.
-Start the rehearsal render days before the filming. The manual fallback is
-OBS on the Windows side: Chrome on the GPU at 1920×1080 and DPR 1, display at
-50 Hz, muted, NVENC CQP 16, about 8 s held on each slide. Encode one test at
-the broadcast bitrate with the env ffmpeg and look at it on a phone and a
-projector before committing to the look.
+`slidev-stage-record` steps the engine on a fixed clock, so frames are exact.
+Its speed depends on the renderer headless Chromium gets on the machine:
+measured on one OpenData slide on 8 October, a 1080p frame took 0.18 s on a
+CPU renderer (llvmpipe) and 0.10 s on a GPU, which puts a 22-slide talk at
+roughly 30 to 50 minutes (an estimate from those rates). Time one slide
+first, and start the rehearsal render days before the filming. The manual
+fallback is an OBS capture on a machine with a GPU: Chrome at 1920×1080 and
+DPR 1, display at 50 Hz, muted, NVENC CQP 16, about 8 s held on each slide.
+Encode one test at the broadcast bitrate (`pnpm talk render -- <ffmpeg
+command>`) and look at it on a phone and a projector before committing to
+the look.
 
 ## 6. Hand-over
 

@@ -1,6 +1,6 @@
 ---
 name: lt-copy
-description: Use when writing, translating or editing Lithuanian slide text or speaker notes in ~/outreach_talks (decks with lang lt, Lithuanian talks such as Innoday or a TV talk for schools). Glossary of settled physics and CERN terms, Lithuanian typography (quotes, decimal comma, no-break spaces, dates), and the rule that chat with the owner stays in English.
+description: Use when writing, translating or editing Lithuanian slide text or speaker notes in the outreach_talks repo (decks with lang lt, Lithuanian talks such as Innoday or a TV talk for schools). Glossary of settled physics and CERN terms, Lithuanian typography (quotes, decimal comma, no-break spaces, dates), and the rule that chat with the owner stays in English.
 ---
 
 # Lithuanian copy

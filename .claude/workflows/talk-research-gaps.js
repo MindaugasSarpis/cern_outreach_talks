@@ -49,9 +49,9 @@ const HOUSE = `HOUSE RULES (they bind every agent in this run; you will not see 
 - The repo ${REPO} is public. Nothing from mail, Drive, calendars, contacts or anyone's private life goes into a file under it. Private context goes only to ${BRIEF} (outside git).
 - Never put the owner's email address, or any personal address, into a search query, a request header, a URL or a User-Agent.
 - Write only the files this prompt names. Do not edit deck.md, space.json, styles, setup code or research/facts.jsonl.
-- No git command that changes state (no commit, stash, checkout, merge, push). Never touch another talk's directory or the main checkout ~/outreach_talks.
+- No git command that changes state (no commit, stash, checkout, merge, push). Never touch another talk's directory or the main checkout (the first entry of \`git worktree list\`).
 - Search the facts bank before the web: \`cd ${REPO} && pnpm talk facts search <words> --json\`, or grep ${REPO}/research/facts.jsonl if the command is not installed.
-- The shell is zsh: quote globs. Put ~/micromamba/envs/outreach_talks/bin first on PATH for node, pnpm and ffmpeg.
+- Quote globs (the shell may be zsh). If node, pnpm or ffmpeg misbehave, \`pnpm talk doctor\` says which binary is first on PATH.
 - Never create claude.ai artifacts. Never ask the owner a question; record open questions in your result.`
 
 const SOURCES = `SOURCES: load WebSearch and WebFetch with ToolSearch ("select:WebSearch,WebFetch"). Prefer primary sources: home.cern, kt.cern, cds.cern.ch, the experiment's own pages, arXiv, journals, HEPData, PDG, opendata.cern.ch, official government and university sites. Every claim needs a public http(s) source you actually opened, the exact figure with its unit, the date the figure refers to, and a verbatim quote from that page. Never invent; when unsure, say so. Known traps: CERN made the web, not the internet; the touchscreen claim needs E.A. Johnson's 1965 precedent; a "first" resting on an absence of records must say so; a storage capacity is not data collected; Run 2 and Run 3 beam energies differ (6.5 vs 6.8 TeV); Internet users are not Web users; counts that change (member states, collaboration size, staff) are given with their date; thresholds come from charge-consistent pairs with PDG masses; yields are candidates.`

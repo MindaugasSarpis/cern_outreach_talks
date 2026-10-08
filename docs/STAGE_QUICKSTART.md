@@ -160,8 +160,10 @@ pnpm talk lint <t>       # language, slop, type floor, sources, timing, fact ids
 
 - Builds for shots go to `/tmp/talk-<slug>/site` with `--base /` and
   `VITE_VIDEOS_LOCAL_FIRST=1`, never into the talk's `dist/`.
-- Headless runs share the CPU with other sessions. Wrap any direct run in
-  `flock /tmp/slidev-stage-shots.lock …` and keep runs to a few slides while
+- Renders share the machine with other sessions. `pnpm talk shots`,
+  `review`, `ready`, `record` and `safe` queue for the render slot
+  themselves; run any other headless browser or encode through
+  `pnpm talk render -- <command>`, and keep runs to a few slides while
   iterating.
 - `pnpm talk shots` finds the shots tool in `$SLIDEV_STAGE_BIN`, else in the
   talk's `node_modules/slidev-addon-stage/bin`. To use the new tool before the

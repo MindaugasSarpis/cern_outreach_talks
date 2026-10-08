@@ -1,6 +1,6 @@
 ---
 name: talk-verify
-description: Use before telling the owner a talk in ~/outreach_talks is done or fixed, and whenever slides need checking for how they look, read, time or behave (screenshots, contact sheets, "is everything ok", a review round). Runs pnpm talk lint and review, and has a subagent judge the contact sheets and shots metrics so no screenshots enter the main context.
+description: Use before telling the owner a talk in the outreach_talks repo is done or fixed, and whenever slides need checking for how they look, read, time or behave (screenshots, contact sheets, "is everything ok", a review round). Runs pnpm talk lint and review, and has a subagent judge the contact sheets and shots metrics so no screenshots enter the main context.
 ---
 
 # Verify a talk
@@ -25,9 +25,11 @@ first: `pnpm talk shots <t> --probe --slides <n>` reports frames per second
 and engine seconds per wall second; below 0.5 the deck has a fill-rate
 problem, not a waiting problem.
 
-Headless browsers share the CPU with other sessions: any direct run of a
-shots, record or safe tool goes through `flock /tmp/slidev-stage-shots.lock`,
-with small runs (2 to 4 slides) while iterating.
+Renders share the machine with other sessions. `pnpm talk shots`, `review`,
+`ready`, `record` and `safe` queue for the render slot themselves; any other
+headless browser, Playwright capture or ffmpeg encode goes through
+`pnpm talk render -- <command>` (srun on Slurm, a job on HTCondor, a lock on a
+single machine). Keep runs small (2 to 4 slides) while iterating.
 
 ## 2. The visual judgement goes to a subagent
 

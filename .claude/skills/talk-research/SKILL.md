@@ -1,6 +1,6 @@
 ---
 name: talk-research
-description: Use when a talk in ~/outreach_talks needs facts, numbers, sources, quotes or photos researched or checked. Searches the repo's facts bank first, researches only the gaps the deck draft leaves (inline for a few claims, the saved talk-research-gaps workflow for more), and files verified claims back into research/facts.jsonl.
+description: Use when a talk in the outreach_talks repo needs facts, numbers, sources, quotes or photos researched or checked. Searches the repo's facts bank first, researches only the gaps the deck draft leaves (inline for a few claims, the saved talk-research-gaps workflow for more), and files verified claims back into research/facts.jsonl.
 ---
 
 # Research a talk

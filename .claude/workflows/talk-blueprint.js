@@ -36,11 +36,11 @@ const OUT = A.out ? `${REPO}/${String(A.out).replace(REPO + '/', '')}` : `${DIR}
 
 const HOUSE = `HOUSE RULES (they bind every agent in this run; you will not see them anywhere else):
 - Report in English. Never write Russian. Lithuanian only in proposed slide text and notes.
-- Read only, except the one file the editor is told to write. No git command that changes state. Never touch the main checkout ~/outreach_talks or another talk.
+- Read only, except the one file the editor is told to write. No git command that changes state. Never touch the main checkout (the first entry of \`git worktree list\`) or another talk.
 - The repo is public: nothing from mail, Drive, calendars or anyone's private life goes into the blueprint; refer to "the owner" (they/them) and to people by role unless the Brief names them publicly.
 - Facts: search the bank first (\`cd ${REPO} && pnpm talk facts search <words> --json\`, or grep ${REPO}/research/facts.jsonl). Every number in a proposal carries a fact id from the bank or is listed as a research gap with a proposed id; never invent a figure.
-- Headless browsers, if you need one: \`flock /tmp/slidev-stage-shots.lock <command>\`, at most 4 slides.
-- The shell is zsh: quote globs. Never create claude.ai artifacts. Never ask the owner a question: take the recommended option and record it as a decision.`
+- Headless browsers, if you need one: \`pnpm talk render -- <command>\`, at most 4 slides.
+- Quote globs (the shell may be zsh). Never create claude.ai artifacts. Never ask the owner a question: take the recommended option and record it as a decision.`
 
 const BAR = `THE OWNER'S BAR (verbatim; these are the acceptance criteria):
 - Busy: "at some angles the screen is too busy with everything and words are difficult to make out, more importantly, the plots don't immediately correspond to the text"; "slide 20 too busy, barely readable".

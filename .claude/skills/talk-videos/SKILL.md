@@ -1,26 +1,27 @@
 ---
 name: talk-videos
-description: Use when a talk in ~/outreach_talks needs a video clip found, added, trimmed, encoded, published or checked (VideoPlayer slides, videos/manifest.toml, the dust transition's frame strips, the talk's GitHub release, the venue preflight). The clip workflow with the slidev-videos CLI's real commands, and the one flag combination that deletes release assets.
+description: Use when a talk in the outreach_talks repo needs a video clip found, added, trimmed, encoded, published or checked (VideoPlayer slides, videos/manifest.toml, the dust transition's frame strips, the talk's GitHub release, the venue preflight). The clip workflow with the slidev-videos CLI's real commands, and the one flag combination that deletes release assets.
 ---
 
 # Clips in a talk
 
 Policy since 2026-07-18: every clip plays the 1080p H.264 web tier (at most
-1920 px, 10 Mbps), audio at -16 LUFS. The CLI is `slidev-videos` (the
-editable install every session shares); talks wrap it as `pnpm videos:*`.
-Run the commands inside the talk directory with the env first on PATH, or
-NVENC and HTTPS input fail (the bare `~/.local/bin/ffmpeg` crashes on HTTPS):
-
-```bash
-export PATH=~/micromamba/envs/outreach_talks/bin:$PATH
-```
+1920 px, 10 Mbps), audio at -16 LUFS. The CLI is `slidev-videos`, the
+editable install of the slidev-videos checkout that every session shares
+(`$SLIDEV_VIDEOS_DIR`, by default `../slidev-videos` beside this repo);
+talks wrap it as `pnpm videos:*`. Run the commands inside the talk
+directory. Encodes need the env's ffmpeg (NVENC, HTTPS input):
+`pnpm talk doctor` names the ffmpeg, node and pnpm a command gets and flags
+a wrong one. Encodes and frame strips are renders: they go through
+`pnpm talk render -- <command>`, which queues them with the other sessions'
+renders.
 
 ## 1. Reuse before you search
 
 - The library: `src/slidev_videos/shared.toml` in the slidev-videos checkout
-  the CLI is installed from (`~/slidev-videos`; read it, never edit it from a
-  talk session). A library clip is referenced by name and never listed in a
-  talk manifest.
+  the CLI is installed from (`$SLIDEV_VIDEOS_DIR`; read it, never edit it
+  from a talk session). A library clip is referenced by name and never
+  listed in a talk manifest.
 - Other talks: `grep -n 'name' talks/*/videos/manifest.toml`. A clip that a
   second talk wants belongs in the library, not in a second release copy.
 
@@ -56,8 +57,8 @@ appends a manifest entry).
 ## 4. Encode, frames, publish
 
 ```bash
-pnpm videos:encode                       # -- --only name.mp4 for one clip
-pnpm videos:frames                       # strips for transition: dust; commit public/video-frames/
+pnpm talk render -- pnpm videos:encode   # add -- --only name.mp4 for one clip
+pnpm talk render -- pnpm videos:frames   # strips for transition: dust; commit public/video-frames/
 pnpm videos:publish -- --dry-run         # what would be uploaded
 pnpm videos:publish                      # to the talk's release videos-<talk>
 ```

@@ -1,6 +1,6 @@
 ---
 name: talk-quality
-description: Use when designing, writing, overhauling or judging an outreach talk in ~/outreach_talks, or when the owner asks for a talk to be impressive, spectacular, "like the Startertalk", or reviewed for content, wording, flow or visuals. Points at the house quality bar (docs/talk-quality.md), the spectacle playbook (docs/spectacle.md), the pipeline from brief to deploy and the AFK protocol.
+description: Use when designing, writing, overhauling or judging an outreach talk in the outreach_talks repo, or when the owner asks for a talk to be impressive, spectacular, "like the Startertalk", or reviewed for content, wording, flow or visuals. Points at the house quality bar (docs/talk-quality.md), the spectacle playbook (docs/spectacle.md), the pipeline from brief to deploy and the AFK protocol.
 ---
 
 # Talk quality

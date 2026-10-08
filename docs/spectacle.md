@@ -267,5 +267,5 @@ Status: today. Ask the broadcaster first whether they add their own.
 **A recorded master.** Every slide recorded frame by frame at the
 broadcaster's 50 Hz, with text-free plates for the editor, in the broadcast
 look. Carries the talk exactly as designed on any screen. Status: from v0.6,
-`pnpm talk record <t>` (`slidev-stage-record`); the manual path is OBS on the
-Windows GPU. Checklist: the `talk-broadcast` skill.
+`pnpm talk record <t>` (`slidev-stage-record`); the manual path is an OBS
+capture on a machine with a GPU. Checklist: the `talk-broadcast` skill.

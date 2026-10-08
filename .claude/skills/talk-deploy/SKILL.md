@@ -1,6 +1,6 @@
 ---
 name: talk-deploy
-description: Use only when the owner explicitly asks to deploy, publish, push or put a talk in ~/outreach_talks live on GitHub Pages. Runs pnpm talk ready and pnpm talk deploy from the talk's worktree and reports deployed only after the Pages run is green and the URL answers.
+description: Use only when the owner explicitly asks to deploy, publish, push or put a talk in the outreach_talks repo live on GitHub Pages. Runs pnpm talk ready and pnpm talk deploy from the talk's worktree and reports deployed only after the Pages run is green and the URL answers.
 ---
 
 # Deploy a talk
@@ -28,7 +28,7 @@ Run them from the talk's own worktree. `deploy`:
 - runs `ready` first unless told to skip it;
 - pushes `HEAD` to `main`, watches the Pages run and requests the talk's URL;
 - records the result in `talk-status/<slug>.json` in the shared git directory
-  (`~/outreach_talks/.git`), not in a tracked file, so a deploy never leaves a
+  (the main checkout's `.git`), not in a tracked file, so a deploy never leaves a
   dirty tree or triggers a second run. `status` takes no talk name: read the
   entry whose `talk` is this one.
 
@@ -48,8 +48,9 @@ keep working.
 
 ## Never
 
-- touch the main checkout (`~/outreach_talks` stays on `main` for other
-  sessions), switch its branch, or merge another talk's branch;
+- touch the main checkout (`$OUTREACH_ROOT`, the first entry of
+  `git worktree list`, stays on `main` for other sessions), switch its
+  branch, or merge another talk's branch;
 - force-push, or push anything other than the talk's own commits;
 - publish or prune video release assets as part of a deploy (`talk-videos`);
 - write "deployed" into a memory note, the talk's CLAUDE.md or a summary
