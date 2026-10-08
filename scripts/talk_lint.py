@@ -35,8 +35,10 @@ Slidev counts it (hidden slides are not counted).
                           transcript, not re-listened yet), [TODO…]; an error
                           with --release
   CHECK-OPTIONAL warning  an open mark the deck calls optional, right after
-                          the mark: [CHECK, optional: …], [PATIKSLINTI,
-                          neprivaloma: …]; a warning with --release too
+                          the mark, in the notes (or another comment):
+                          [CHECK, optional: …], [PATIKSLINTI, neprivaloma: …];
+                          a warning with --release too. On screen it is a
+                          CHECK: Slidev shows the bracket as it is
   TIME-OVER      error    the timed notes ('(~N min)', '(N min)', '(m:ss)', dot
                           or comma decimals) plus clip lengths (manifest trim,
                           else public/video-frames/index.json) exceed the
@@ -360,13 +362,16 @@ class Lint:
                          "deck.md", s.content_line, s.number)
 
     def check_marks(self, s: td.Slide, n_visible: int):
+        hidden = td.comment_spans(s.content)                # the notes and any other comment: not on screen
         for m in OPEN_MARK.finditer(s.content):
             block = re.match(r"\[[^\]]{0,300}\]?", s.content[m.start():]).group(0)
-            if OPTIONAL_MARK.match(s.content, m.start()):
+            optional = OPTIONAL_MARK.match(s.content, m.start())
+            if optional and any(a <= m.start() < b for a, b in hidden):
                 self.at(s, m.start(), "CHECK-OPTIONAL", "warning", f"optional question: {squash(block)[:110]!r}")
             else:
                 self.at(s, m.start(), "CHECK", "error" if self.release else "warning",
-                        f"open check: {squash(block)[:110]!r}")
+                        f"open check{' on screen (optional only in the notes or a comment)' if optional else ''}: "
+                        f"{squash(block)[:110]!r}")
         for m in SLIDE_REF.finditer(s.content):
             if int(m.group(1)) > n_visible:
                 self.at(s, m.start(), "SLIDE-REF", "warning",
@@ -547,7 +552,7 @@ def main(argv=None) -> int:
     ap.add_argument("talk", help="talk directory, or a talk name under talks/")
     ap.add_argument("--release", action="store_true",
                     help="venue gate: open marks (" + ", ".join(f"[{m}]" for m in OPEN_MARKS) + ") are errors, "
-                    "except optional ones ([CHECK, optional: …], [PATIKSLINTI, neprivaloma: …])")
+                    "except optional ones in the notes ([CHECK, optional: …], [PATIKSLINTI, neprivaloma: …])")
     ap.add_argument("--json", action="store_true", help="one JSON object on stdout, the report on stderr")
     ap.add_argument("--facts", type=Path, default=factsbank.BANK, help=f"facts bank (default {factsbank.BANK})")
     try:

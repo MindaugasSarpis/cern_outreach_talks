@@ -115,8 +115,8 @@ python3 -m unittest discover -s tests            # the tools' own tests
 
 From the repo root, `python3 scripts/talk_lint.py talks/<name> --release`
 (open marks fail: `[CHECK…]`, `[PATIKSLINTI…]`, `[ASR…]`, `[TODO…]` in the
-slides or notes, except optional questions such as `[PATIKSLINTI,
-neprivaloma: …]`; so does overtime); then in the talk directory:
+slides or notes, except optional questions in the notes such as
+`[PATIKSLINTI, neprivaloma: …]`; so does overtime); then in the talk directory:
 
 ```bash
 pnpm videos:check

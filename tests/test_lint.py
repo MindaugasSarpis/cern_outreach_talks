@@ -4,6 +4,7 @@ python3 -m unittest discover -s tests
 """
 import io
 import json
+import shutil
 import sys
 import tempfile
 import unittest
@@ -172,6 +173,23 @@ class CleanFixture(unittest.TestCase):
         self.assertEqual([f.slide for f in codes(l, "CHECK-OPTIONAL")], [2])
         with redirect_stdout(io.StringIO()):
             self.assertEqual(talk_lint.main([str(EN), "--release", "--facts", str(BANK)]), 0)
+
+    def test_optional_mark_on_screen_is_an_open_check(self):
+        # Slidev shows a bracket in the slide text as it is, so 'optional' only counts in the notes or a comment
+        with tempfile.TemporaryDirectory() as d:
+            talk = Path(d) / "en_talk"
+            shutil.copytree(EN, talk)
+            deck = (talk / "deck.md").read_text(encoding="utf-8")
+            deck = deck.replace("<div class=\"mt-md\">A. Speaker",
+                                "Run 3 started in 2022 [CHECK, optional: the month]\n\n"
+                                "<!-- [TODO, optional: a photo of the cavern] -->\n\n<div class=\"mt-md\">A. Speaker")
+            (talk / "deck.md").write_text(deck, encoding="utf-8")
+            l = lint(talk, release=True)
+            self.assertEqual([(f.slide, f.line, f.severity) for f in codes(l, "CHECK")], [(1, 17, "error")])
+            self.assertIn("on screen", codes(l, "CHECK")[0].message)
+            self.assertEqual([(f.slide, f.line) for f in codes(l, "CHECK-OPTIONAL")], [(1, 19), (2, 55)])
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(talk_lint.main([str(talk), "--release", "--facts", str(BANK)]), 1)
 
     def test_usage_errors(self):
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
