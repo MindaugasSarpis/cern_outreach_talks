@@ -10,38 +10,24 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
 Toolkit pin: slidev-videos `12aa015`, for both addons.
 
-## Status (2026-10-08, coherence and prose rework)
+## Status (2026-10-08): complete, pending the owner's review
 
-Done:
-
-- One line of argument, one sentence per slide (each slide's notes open with
-  its `Message:`):
-  1. Cover.
-  2. Clip: this is LHCb.
-  3. What LHCb is, and Vilnius in it (photo).
-  4. Every collision becomes data, 4 TB a second (event display).
-  5. One sphere is one terabyte.
-  6. LHCb has kept 100 000 spheres.
-  7. The whole LHC has stored ten times as much again (1 EB).
-  8. What LHCb found in that data (76 of 86; the 2019 pentaquark peaks).
-  9. 800 TB open since 2023, prepared by the speaker.
-  10. Over 4 PB open since 2026, used outside LHCb.
-  11. Used in Vilnius.
-  12. Dominykas looks in the open data for the pentaquarks from slide 8.
-  13. Thanks.
-- Slide text is plain sentences: no `·` captions, no slogans. Notes are a
-  spoken script under "Say:", with "Sources:" and `(~N min)`.
-- Facts cited per slide as `<!-- facts: … -->`, all in the bank (feat/facts-lint)
-  as confirmed.
-- `duration: 6.5min`, `sources: notes` in the headmatter.
-- Checks: the house lint (`talk_lint.py --release`, from feat/facts-lint) gives
-  0 errors and 0 warnings, timed 6.2 of 6.5 min; `stage:check` ok; `pnpm build` ok.
-- Not yet rendered. Shots wait for the render queue (Užsikrauk karjerai first)
-  and Tools' Chromium fix.
-
-Next: `pnpm talk ready opendata` when the render slot and the CLI are
-available, then the visual review of the contact sheets, then the unslop pass.
-Deploy only on the owner's word.
+- 13 slides in Lithuanian, about 6.0 of 6.5 min (lint, lang lt: 0 errors, 0
+  warnings). Toolkit pin v0.5.1.
+- The line: the cover; the 3D clip (advances on its end); one real Z → μμ
+  collision from LHCb open data; it collapses into the 1 TB sphere; 800 TB and
+  4 PB open (gold; 4 PB forms from five 800 TB piles); LHCb's 100 PB (blue);
+  the exabyte (ten of LHCb's spheres merge into it); the users; Vilnius; LHCb's
+  2019 pentaquark plot; Dominykas's own plot with a pentaquark rising from its
+  peak; „Ačiū“ in a ring of the group's portraits made of grains.
+- Reviews: visual review clean (round 7, shots v16); the final copy review
+  (lt-copy + unslop-lt) applied, every overclaim on slides 11–13 removed.
+  Final shots and the print stills (public/stills/, shown only in print/PDF)
+  come from the final build.
+- Not run: the talk-review workflow (it needs the owner's own request in the
+  session; the final review ran as separate reviewer agents instead).
+- Deploy: not done. It comes after Užsikrauk karjerai and Innoday, when the
+  Scheduler calls the order, and only on the owner's word in the session.
 
 ## Decisions
 
@@ -154,6 +140,14 @@ Deploy only on the owner's word.
   field of view.
 
 ## Owner questions
+
+- Margarita Biveinytė's photo: the People page's alt text names someone else.
+  It is in the „Ačiū“ ring; confirm, or say to drop it.
+- The closing line names "coordinating the work in the collaboration" among
+  the nominated work (the role began on 1 August 2026). Keep it only if the
+  nomination covers it.
+- Slide 11's and Dominykas's plots keep their published English axis labels
+  and legend (accepted by the owner via the Scheduler).
 
 - Which award is it, and on what date? (The facts bank has VU's open science
   award: group nominations allowed, winners honoured in International Open

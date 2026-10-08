@@ -164,7 +164,7 @@ html[data-stage] .finds-plot img {
 html[data-stage] .thesis-slide { position: absolute; inset: 0; background: rgb(var(--stage-bg-rgb, 0, 2, 6)); display: grid; grid-template-columns: 0.62fr 1.38fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
 html[data-stage] .thesis-who { animation: stage-rise 0.85s var(--stage-ease) 0.15s both; }
 html[data-stage] .thesis-who .portrait { width: 100%; max-width: 165px; aspect-ratio: 4 / 5; border-radius: 6px; object-fit: cover; object-position: 50% 30%; display: block; margin: 0 0 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); }
-html[data-stage] .thesis-who .kicker { color: var(--od-gold); margin: 0 0 6px; }
+html[data-stage] .thesis-who .kicker { color: var(--od-gold); margin: 0 0 6px; white-space: nowrap; }
 html[data-stage] .thesis-who .name { font-size: 22px; font-weight: 600; color: var(--stage-fg); margin: 0 0 18px; }
 html[data-stage] .thesis-who .line { font-size: 22px; font-weight: 500; line-height: 1.25; color: #fff; margin: 0; text-wrap: balance; }
 html[data-stage] .thesis-plot { position: relative; padding-top: 90px; animation: stage-card-in 1s var(--stage-ease) 0.3s both; }
@@ -194,5 +194,5 @@ html[data-stage] .finds .line, html[data-stage] .chips li, html[data-stage] .poi
    itself (public/stills/, from the final shots) under its text */
 html[data-stage] .print-still { display: none; }
 @media print {
-  html[data-stage] .print-still { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+  html[data-stage] .print-still { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 50; }   /* the shot already carries the slide's text */
 }
