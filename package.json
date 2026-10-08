@@ -3,6 +3,7 @@
   "private": true,
   "description": "Monorepo of CERN outreach talks (Slidev decks + shared theme; videos via slidev-videos)",
   "scripts": {
+    "talk": "python3 scripts/talk.py",
     "videos:check-all": "for d in talks/*; do echo \"[$d]\"; (cd \"$d\" && slidev-videos check) || true; done",
     "new-talk": "python3 scripts/new_talk.py"
   },

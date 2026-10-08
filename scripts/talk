@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# `talk <verb> [args]` from anywhere: link this file into ~/.local/bin (from the
+# repo root: ln -s "$PWD/scripts/talk" ~/.local/bin/talk). It runs talk.py from
+# the checkout it lives in; talks resolve from the git worktree you are in,
+# else the main checkout. It also skips the pnpm a bare shell finds first.
+exec python3 "$(dirname "$(readlink -f "$0")")/talk.py" "$@"

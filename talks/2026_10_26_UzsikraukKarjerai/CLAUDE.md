@@ -273,3 +273,72 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 - Ask Delfi: feed type and squeeze-back size; files in advance and format;
   25p or 50p; who advances slides; confidence monitor; logo/super/clock
   positions; flash check.
+
+## Notes moved from the root CLAUDE.md (2026-10-08)
+
+From the root's list of current talks:
+
+- `talks/2026_10_26_UzsikraukKarjerai/` — „Vadovėlio gale atsakymo nėra“, an
+  ~10-minute Lithuanian talk for grades 9–12 at „Užsikrauk karjerai“ (Delfi ×
+  Lietuvos Junior Achievement), filmed in the Delfi studio on 26 Oct 2026
+  with no audience, streamed to classrooms on 27 Oct 2026 12:00. Built for
+  television on the packaged stage (same `640eaa5` pin), its own violet-gold
+  palette and six talk-owned builders. See "Užsikrauk karjerai" below.
+
+### Užsikrauk karjerai (2026_10_26_UzsikraukKarjerai)
+
+Fifth version (2026-10-08), 14 slides, about 10 minutes, online (not TV;
+the TV rules below are history). The viewer judges a bump: a histogram
+fills grain by grain (2003 yes, 2008 no as illustrations; LHCb's real 2019
+J/ψ p bins from HEPData on slide 7, the three peaks lighting up), then the
+speaker's search fills with no peak („Neradau.“), what the work trains, the
+route across Europe, three things to do this year, the closing question.
+Outline: `notes/outline-v5.md`; the talk's own `CLAUDE.md` holds status and
+decisions. Pinned to slidev-videos v0.5.0. Talk-owned builder `histogram`
+(`setup/grains.js`): one grain per entry, random order, easing fill,
+`marks` bins light once full.
+
+- **Television rules** (research 2026-10-07; from the event's past
+  recordings and broadcast standards): Delfi/LJA showed slides squeezed to about two-thirds
+  of the frame in past editions and stream at ~2.5 Mbps, watched on classroom
+  projectors. So `styles/index.css` sets readable text ≥ 49 px on the 980
+  canvas (96 px at 1080p), big lines 58–80 px, numbers 130 px, all inside
+  x 98–882 / y 55–408 and out of the logo/name-super corners; the headmatter
+  turns off film grain, aberration, halos and sound and sets fewer, bigger
+  dust grains, a low nebula and slower flights (`options: { grain: 0,
+  aberration: 0, dustSize: 3, density: 0.6, streak: 0.4, nebula: 0.3, bloom:
+  0.45, flight: [2.5, 5] }`); the grains' twinkle is slow and shallow. Laptop
+  output 1920×1080 at 50 Hz. No full-frame flashes (ITU-R BT.1702).
+- **Stations** (one axis, 300 apart, so only one is ever in frame): `quarks`
+  (hero; `quintet`), `search` (`ghost` with a haystack,
+  `streams` `dance` and `phantom`), `europe` (`map`, `path` `route`: Vilnius →
+  CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius; pose
+  `whole`, no sway, with HTML city labels projected from it).
+  `stage.options.reach: 22`. The clips and photos cover the world on their
+  slides; the collider ring, the grain galaxy and the `origin` station with
+  its matter/antimatter `pairs` are gone.
+- **Talk-owned builders** (`setup/grains.js`, `stage:check --types
+  path,streams,pairs,ghost,map,quintet`), all driven by `<Grains :set>`:
+  - `pairs` — matter (gold) and antimatter (blue): 1 the hot cloud forms, 2 the
+    pairs meet and go out as light (outer first; brightness only falls), 3 the
+    remainder gathers into a knot. Forward one step plays it, anything else
+    shows the step settled; an arrival from elsewhere (or `c`) replays up to
+    the current step unless a step started under 5 s ago.
+  - `quintet` — five clusters joined by flowing strings; per-step `{ hold,
+    light }`: idea (scattered), claim (half-held, dim), retraction (scattered),
+    discovery (held, bright).
+  - `ghost` — faint clusters that come together and drift apart, never
+    holding; `hay` adds a wide faint cloud round it; with a `name`, step 0
+    hides the clusters and step 1 lets them appear (the single „Neradau.“).
+  - `path` — a Catmull-Rom trail through ≤ 16 waypoints, drawn on to waypoint
+    k, each leg arcing off the ground (`arc`); a waypoint at the same place as
+    an earlier one relights that cluster instead of stacking a new one.
+  - `map` — Europe's coastline and land borders as grains on the ground plane,
+    from Natural Earth 1:50m (`scripts/make_europe.py` → `public/data/
+    europe.json`; one unit = one degree of latitude, x scaled by cos 52°).
+  - `streams` — OpenData's, with a per-stream `from` (many places to one).
+- `setup/Count.vue` prints Lithuanian numbers: a narrow space from five digits
+  up, none in years (`:group="false"`), decimal comma.
+- `public/figures/planai-2022.jpg` is the speaker's own LPPM 2022 slide (p. 16
+  of the public MSarpisIntro.pdf on Indico).
+- Shots: `stage:shots --wait 30000` under SwiftShader.

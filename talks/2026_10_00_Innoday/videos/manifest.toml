@@ -26,6 +26,18 @@ side and the takeover slide can start from that real frame \
 encode (not the raw): ffmpeg -t 266, h264_nvenc VBR ~7 Mbit/s, 3 s audio \
 fade-out at the end."""
 
+[[videos]]
+name    = "vu_ff_unzoom.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = """\
+The bookend („…ir atgal“): vu_ff_zoom_galaxy.mp4 reversed and sped up 8.87x \
+to 30 s, silent, from our galaxy back past Earth and Lithuania to the VU \
+Faculty of Physics in Saulėtekis (the Google Earth credit is in the footage). \
+Made from the 1080p web encode by ~/talks/.cache/innoday/unzoom/make.sh \
+(5 s segments reversed and joined in reverse order); the raw is that output, \
+not on gdrive."""
+
 # The owner's new opener, in preparation: an orbit from VU out to the cosmic web.
 # It must END on the cosmic web, held (no fade to black): the next slide opens on
 # that same last frame and turns it into the world's grains (<WebTakeover>).

@@ -1,0 +1,3 @@
+[[videos]]
+name = "intro.mp4"
+trim = ["0:10", "1:10"]
