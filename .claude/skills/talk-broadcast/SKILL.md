@@ -74,7 +74,7 @@ gradient bands at stream bitrates. Pick a palette no other October talk uses.
 ```bash
 pnpm talk build <t>                # into /tmp/talk-<slug>/site
 pnpm talk record <t> --slides 2-2  # from v0.6: one slide first, to time it
-pnpm talk record <t>               # per-slide NN.mp4 at 1080p50 with a hold, NN-plate.mp4 without text, index.json
+pnpm talk record <t> --plate       # per-slide NN.mp4 at 1080p50 with a hold, NN-plate.mp4 without text, index.json
 ```
 
 `slidev-stage-record` steps the engine on a fixed clock, so frames are exact.
