@@ -21,3 +21,16 @@ galaxies to the cosmic web, 4:42 with its own audio track. The same web encode \
 as the World of Particles opener (release videos-2026-09-10-worldofparticles, \
 2026-09-07), copied to this talk's release. Raw is a 4K60 H.264 254 Mbps \
 Resolve master (9.0 GB) on gdrive as vu_ff_zoom.mp4."""
+
+# The owner's new opener, in preparation: an orbit from VU out to the cosmic web.
+# It must END on the cosmic web, held (no fade to black): the next slide opens on
+# that same last frame and turns it into the world's grains (<WebTakeover>).
+# When the raw is on gdrive `released/` or in the raw bank: uncomment, then
+#   pnpm videos:sync && pnpm videos:encode && pnpm videos:publish
+#   pnpm takeover:frame public/videos/vu_orbit.mp4 && pnpm videos:frames
+# and point the deck's opener slide at it.
+# [[videos]]
+# name    = "vu_orbit.mp4"
+# profile = "high-motion"
+# used_in = ["deck"]
+# notes   = "Opener: orbit from the VU Faculty of Physics / NFTMC out to the cosmic web, ending held on the web."

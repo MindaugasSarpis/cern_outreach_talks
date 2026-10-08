@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { onSlideEnter, onSlideLeave, useSlideContext } from '@slidev/client'
+import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
 import { sampleFrame, placeAlongRays, makeGrains, setPositions } from './takeover.js'
 
 // <WebTakeover src="figures/opener_last.jpg" />, on the slide after the opener.
@@ -18,10 +18,11 @@ const props = defineProps({
   ms: { type: Number, default: 2600 },     // the dissolve
   hold: { type: Number, default: 450 },    // the still frame before it starts
   size: { type: Number, default: 0.4 },
-  gain: { type: Number, default: 0.24 },   // grains add up: dense knots must not burn white
+  gain: { type: Number, default: 0.6 },    // grains add up: 1.25 burned the knots white, 0.24 left the filaments faint
   gamma: { type: Number, default: 1.0 },   // density ~ brightness^gamma
 })
-const { $renderContext, $frontmatter } = useSlideContext()
+const { $renderContext, $frontmatter, $page } = useSlideContext()
+const nav = useNav()
 const url = computed(() => (props.src.startsWith('/') || /^https?:/.test(props.src)) ? props.src : import.meta.env.BASE_URL + props.src)
 const live = computed(() => $renderContext?.value === 'slide')
 const root = ref(null)
@@ -50,10 +51,20 @@ function stage() {
 const frame = () => new Promise((r) => requestAnimationFrame(() => r()))
 const ease = (u) => u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2
 
+// the world mounts with the deck and may not be up yet (a reload on this slide)
+async function waitStage(id) {
+  for (let i = 0; i < 80; i++) {
+    const s = stage()
+    if (s || id !== run) return s
+    await new Promise((r) => setTimeout(r, 100))
+  }
+  return null
+}
+
 async function takeOver() {
   const id = ++run
   still.value = true
-  const s = stage()
+  const s = await waitStage(id)
   const image = await ready
   if (id !== run || !s || !image || !live.value) return
   const slide = root.value?.closest('#slide-content') || root.value?.closest('.slidev-slide-content')
@@ -147,6 +158,7 @@ function drawCopy(t) {
 function stopGl() { if (overlay.value) overlay.value.style.opacity = '0' }
 
 onSlideEnter(() => { if (live.value) takeOver() })
+onMounted(() => { if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver() })
 onSlideLeave(() => { run++; cancelAnimationFrame(raf); stopGl(); still.value = true })
 onUnmounted(() => { run++; cancelAnimationFrame(raf); gl?.getExtension('WEBGL_lose_context')?.loseContext(); gl = null })
 </script>
