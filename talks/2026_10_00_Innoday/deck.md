@@ -108,6 +108,8 @@ layout: section
 space: { at: [12.5, -3.4, 0], dist: 19, yaw: -30, pitch: 24, dim: 0.4 }
 ---
 
+<Strands :on="false" />
+
 # I dalis · Mašina
 
 <!--
@@ -118,6 +120,8 @@ Kalbėtojui. Sakyti: „CERN ir Didysis hadronų greitintuvas.“ Pasaulyje — 
 ---
 space: { at: [20, 5, -12], dist: 18, yaw: -30, pitch: 14 }
 ---
+
+<Strands :on="false" />
 
 <VideoPlayer src="cern_overview_short.mp4" />
 
@@ -132,6 +136,8 @@ Faktai: konvencija pasirašyta 1953 m., CERN oficialiai įsteigtas 1954 m. rug
 ---
 space: { at: collider, dist: 20, yaw: 40, pitch: 30, dim: 0 }
 ---
+
+<Strands :on="false" />
 
 <StagePhoto src="/figures/hero_higgs.jpg" alt="CMS detektoriaus įvykis: Higso bozono kandidatas, skylantis į du elektronus ir du miuonus" focus="30% 50%" class="right">
 <div class="hero-text">
@@ -191,6 +197,8 @@ Skaičius: Koppenburgo sąraše „86 hadrons have been discovered at the LHC, o
 space: { at: collider, dist: 11, yaw: -48, pitch: 9, dim: 0 }
 ---
 
+<Strands :on="false" />
+
 <StagePhoto src="/figures/hero_tunnel.jpg" alt="LHC tunelis su mėlynais dipoliniais magnetais" class="frame">
 <div class="credit">LHC tunelis · Nuotr. Samuel Joseph Hertzog / CERN, CC BY 4.0</div>
 </StagePhoto>
@@ -223,6 +231,8 @@ Faktai: 9 593 magnetai; vakuumas vamzdyje ~10⁻¹³ bar; pluošte sukaupta ene
 space: { at: collider, dist: 26, yaw: 24, pitch: 58, dim: 0.3 }
 ---
 
+<Strands :on="false" />
+
 <div class="readout">
 
 <p class="kicker"><span class="nc">LHCb</span> · nuo 2022 m.</p>
@@ -245,8 +255,10 @@ Jei klausia apie atviruosius duomenis: visus 2011–2012 m. LHCb duomenis (800�
 
 ---
 layout: section
-space: { at: [84.2, -2.2, 0], dist: 13, yaw: -22, pitch: 16, dim: 0.08 }
+space: { at: [14, 1, 0], dist: 36, yaw: -20, pitch: 52, dim: 0.15 }   # the ring and every strand leaving it
 ---
+
+<Strands />
 
 # II dalis · Sprendimai
 
@@ -258,8 +270,10 @@ Sakyti: „Šešios problemos: kaip valdyti mašiną, kaip tvarkyti informaciją
 -->
 
 ---
-space: { at: web, dist: 15, yaw: 46, pitch: 18, dim: 0 }
+space: { at: [21.5, 3, -12.99], dist: 6, yaw: 150, pitch: 12, dim: 0 }   # the end of strand -60°
 ---
+
+<Strands />
 
 <StagePhoto src="/figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
 <div class="hero-text">
@@ -281,8 +295,10 @@ Istorija: pasiūlymas ranka parašytas 1972 m. kovo 11 d. Stumpe atsisakė pasi
 -->
 
 ---
-space: { at: web, dist: 15, yaw: 14, pitch: 16, dim: 0 }
+space: { at: [29.0, 3, 0.0], dist: 6, yaw: 90, pitch: 12, dim: 0 }   # the end of strand 0°
 ---
+
+<Strands />
 
 <StagePhoto src="/figures/hero_proposal.jpg" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" class="page">
 <div class="hero-text">
@@ -303,8 +319,10 @@ Pasiūlymo įžanga: daugelis diskusijų apie CERN ateitį ir LHC erą baigiasi 
 -->
 
 ---
-space: { at: web, dist: 15, yaw: 30, pitch: 14, dim: 0 }
+space: { at: [29.0, 3, 0.0], dist: 6.5, yaw: 102, pitch: 12, dim: 0 }   # the end of strand 0°
 ---
+
+<Strands />
 
 <StagePhoto src="/figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
 <div class="hero-text">
@@ -326,8 +344,10 @@ Faktai: pirmasis viešas paskelbimas — 1991 08 06 alt.hypertext grupėje; pirm
 -->
 
 ---
-space: { at: web, dist: 15, yaw: -2, pitch: 12, dim: 0 }
+space: { at: [21.5, 3, 12.99], dist: 6, yaw: 30, pitch: 12, dim: 0 }   # the end of strand 60°
 ---
+
+<Strands />
 
 <StagePhoto src="/figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
 <div class="hero-text">
@@ -349,8 +369,10 @@ Faktai: pirmasis CERN PET vaizdas — pelės; Townsendas dirbo Ženevos kantono 
 -->
 
 ---
-space: { at: web, dist: 15, yaw: -34, pitch: 18, dim: 0 }
+space: { at: [21.5, 3, 12.99], dist: 6.5, yaw: 40, pitch: 12, dim: 0 }   # the end of strand 60°
 ---
+
+<Strands />
 
 <StagePhoto src="/figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
 <div class="hero-text">
@@ -373,8 +395,10 @@ Vaizdas: MARS Bioimaging Ltd (CERN KT CDS įrašas KTTGROUP-PHO-TECH-2020-001); 
 -->
 
 ---
-space: { at: web, dist: 16, yaw: -18, pitch: 14, dim: 0 }
+space: { at: [21.5, 3, 12.99], dist: 6.5, yaw: 20, pitch: 12, dim: 0 }   # the end of strand 60°
 ---
+
+<Strands />
 
 <StagePhoto src="/figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
 <div class="hero-text">
@@ -394,8 +418,10 @@ Artemis II — pirmoji pilotuojama kelionė link Mėnulio nuo 1972 m. (startas 
 -->
 
 ---
-space: { at: web, dist: 16, yaw: 62, pitch: 22, dim: 0 }
+space: { at: [6.5, 3, 12.99], dist: 6, yaw: -30, pitch: 12, dim: 0 }   # the end of strand 120°
 ---
+
+<Strands />
 
 <StagePhoto src="/figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
 <div class="hero-text">
@@ -416,8 +442,10 @@ Faktai: PIMMS (CERN, TERA, MedAustron, Onkologie-2000). CNAO Pavijoje (pirmasis 
 -->
 
 ---
-space: { at: web, dist: 18, yaw: 78, pitch: 26, dim: 0 }
+space: { at: [-1.0, 3, 0.0], dist: 6, yaw: -90, pitch: 12, dim: 0 }   # the end of strand 180°
 ---
+
+<Strands />
 
 <StagePhoto src="/figures/hero_datacentre.jpg" alt="CERN duomenų centro serverių spintos" focus="50% 50%">
 <div class="hero-text">
@@ -438,8 +466,10 @@ Jei laikas leidžia: duomenų problema davė ir atvirojo mokslo įrankius — Ze
 -->
 
 ---
-space: { at: web, dist: 18, yaw: 92, pitch: 30, dim: 0 }
+space: { at: [6.5, 3, -12.99], dist: 6, yaw: -150, pitch: 12, dim: 0 }   # the end of strand 240°
 ---
+
+<Strands />
 
 <StagePhoto src="/figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right">
 <div class="hero-text">

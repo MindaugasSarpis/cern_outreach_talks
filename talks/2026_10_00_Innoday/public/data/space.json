@@ -118,6 +118,43 @@
           ],
           "radius": 7,
           "lap": 8
+        },
+        {
+          "type": "strands",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "radius": 7,
+          "reach": 15,
+          "rise": 3,
+          "strands": [
+            {
+              "angle": -60,
+              "label": "control room → touchscreen"
+            },
+            {
+              "angle": 0,
+              "label": "information → the web"
+            },
+            {
+              "angle": 60,
+              "label": "detectors → PET, colour X-ray, Timepix"
+            },
+            {
+              "angle": 120,
+              "label": "beams → hadron therapy"
+            },
+            {
+              "angle": 180,
+              "label": "data → the grid"
+            },
+            {
+              "angle": 240,
+              "label": "magnets, cold → superconducting line"
+            }
+          ]
         }
       ]
     },
