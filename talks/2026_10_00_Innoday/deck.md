@@ -85,11 +85,11 @@ Techniškai: kadras — public/figures/opener_last.jpg, išsitrauktas komanda pn
 -->
 
 ---
-space: { at: [30, 40, -112], dist: 12, yaw: 0, pitch: 4, dim: 0, flight: 3.5 }   # the funnel's mouth: galaxies, and down the funnel the past
+space: { at: [30, 40, -123], dist: 30, yaw: 38, pitch: 10, dim: 0, flight: 3.5 }   # the funnel from outside, three-quarters from the mouth: the classic figure in grains
 ---
 
 <!--
-Kalbėtojui. Kamera praskrenda pro mūsų galaktikos grūdelius ir sustoja ties piltuvo žiotimis: Visatos istorija iš grūdelių, nuo Didžiojo sprogimo (toli, siauroji dalis) iki šiandienos (čia, platusis galas). Ekrane teksto nėra.
+Kalbėtojui. Kamera praskrenda pro mūsų galaktikos grūdelius ir parodo piltuvą iš šono: Visatos istorija iš grūdelių, nuo Didžiojo sprogimo (siauroji dalis) iki šiandienos (platusis galas, arčiau mūsų). Ekrane teksto nėra. Kitoje skaidrėje kamera įskrenda į piltuvą.
 Sakyti: „Mūsų galaktika — tik viena iš šimtų milijardų. Šis piltuvas yra Visatos istorija: siauroji dalis — Didysis sprogimas prieš 13,8 mlrd. metų, platusis galas — šiandien. Visata plečiasi, o maždaug pastaruosius penkis milijardus metų — vis greičiau. Kuo toliau žiūrime, tuo senesnę šviesą matome. Grįžkime atgal.“
 Faktai: Visatos amžius 13,787 ± 0,020 mlrd. m. (Planck 2018, A&A 641, A6); spartėjantis plėtimasis — 1998 m. atradimas (2011 m. Nobelio premija), tamsioji energija vyrauja maždaug nuo 5 mlrd. metų.
 (~0,4 min)

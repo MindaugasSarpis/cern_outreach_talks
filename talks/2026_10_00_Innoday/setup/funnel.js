@@ -64,16 +64,16 @@ function buildFunnel(o, ctx) {
   const rings = o.rings ?? 15, lines = o.lines ?? 12
   for (let k = 0; k < rings; k++) {
     const s = cmbAt + (L - cmbAt) * (k / (rings - 1)) ** 1.15, r = R(s), n = Math.round(160 + 40 * r)
-    for (let i = 0; i < n; i++) { const t = (i / n) * Math.PI * 2; add(s, r * Math.cos(t), r * Math.sin(t), pale, 0.55, 0.15) }
+    for (let i = 0; i < n; i++) { const t = (i / n) * Math.PI * 2; add(s, r * Math.cos(t), r * Math.sin(t), pale, 0.8, 0.15) }
   }
   for (let k = 0; k < lines; k++) {
     const t = (k / lines) * Math.PI * 2
-    for (let i = 0; i < 420; i++) { const s = cmbAt + (L - cmbAt) * (i / 419); const r = R(s); add(s, r * Math.cos(t), r * Math.sin(t), pale, 0.5, 0.15) }
+    for (let i = 0; i < 420; i++) { const s = cmbAt + (L - cmbAt) * (i / 419); const r = R(s); add(s, r * Math.cos(t), r * Math.sin(t), pale, 0.75, 0.15) }
   }
   // the Big Bang: a dense knot of white light, and inflation flaring from it
-  for (let i = 0; i < 2600; i++) {
-    const s = Math.pow(hash(i * 1.7), 2.2) * cmbAt, r = R(s) * Math.sqrt(hash(i * 3.1)), t = hash(i * 5.3) * Math.PI * 2
-    add(s, r * Math.cos(t), r * Math.sin(t), s < 0.25 ? white : warm, s < 0.25 ? 2.2 : 1.2, 0.4)
+  for (let i = 0; i < 1100; i++) {
+    const s = Math.pow(hash(i * 1.7), 2.2) * cmbAt * 0.85, r = R(s) * Math.sqrt(hash(i * 3.1)), t = hash(i * 5.3) * Math.PI * 2
+    add(s, r * Math.cos(t), r * Math.sin(t), s < 0.2 ? [0.9, 0.9, 0.85] : [0.55, 0.5, 0.42], s < 0.2 ? 1.1 : 0.8, 0.4)
   }
   // the CMB: a cap across the funnel, bulging towards the mouth; colours come from the Planck map
   const capN = 120, capFirst = pts.length
