@@ -1,7 +1,7 @@
 # Open data talk: handoff
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos `dca4e8f` (feat/dust-fullframe), for both addons.
+Toolkit pin: slidev-videos `12aa015`, for both addons.
 
 ## Status (2026-10-08, coherence and prose rework)
 
@@ -109,6 +109,10 @@ Deploy only on the owner's word.
     1 TB; the 4 PB target is x 4.5, showing only gold; the close is dimmed to 0.3.
 - 2026-10-08. Toolkit pin `dca4e8f` (feat/dust-fullframe): clips arrive as
   dust over the whole frame. Checked on the kick-off at 0.8, 2 and 4.5 s.
+- 2026-10-08. Toolkit pin `12aa015` (full-frame dust, the dark-clip fix,
+  `advance-on-end`). The kick-off clip uses `advance-on-end`: the cut ends on a
+  lit frame as the music fades, and the next slide is the LHCb photo the
+  spoken line introduces. Undo: drop the attribute and press → by hand.
 
 ## Open
 

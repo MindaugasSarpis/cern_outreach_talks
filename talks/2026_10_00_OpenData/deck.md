@@ -75,7 +75,7 @@ space: { at: wide }
 ---
 
 <!-- Kick-off: the LHCb detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release videos-2026-10-00-opendata. It condenses out of the dust over the ring and breaks back into it as the camera flies to the collision point. -->
-<VideoPlayer src="lhcb.mp4" />
+<VideoPlayer src="lhcb.mp4" advance-on-end />
 
 <!--
 Message: this is LHCb.
@@ -84,8 +84,9 @@ Let the clip play; it runs 39 s and its time is counted from the manifest.
 It goes from the shafts above the cavern down to LHCb, the detector built up in
 3D, with a person standing in it for scale. Say at most one line over the
 music, near the end: "This is LHCb, the detector our data come from."
-Press → when the music has faded. The last frame breaks into grains while the
-camera flies to where the bunches meet. `p` pauses; `+` and `-` set the volume
+When the cut ends, as the music fades, the deck moves on by itself
+(`advance-on-end`); → moves on earlier. The last frame breaks into grains
+while the camera flies to where the bunches meet. `p` pauses; `+` and `-` set the volume
 for the rest of the talk.
 -->
 
