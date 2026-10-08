@@ -750,7 +750,166 @@ function buildQuintet(o, ctx) {
   }
 }
 
+// ---- histogram ----------------------------------------------------------------------
+//   { type: histogram, name, pos, src: 'data/….json' ({ counts: [...] }, or another `key`) or counts: [...],
+//     width?: 24, height?: 10, max?: (tallest bin), unit?: 1 (entries per grain),
+//     steps?: [0, 1] (the share of entries shown at each step), fill?: 20 (s for the whole set),
+//     fall?: 1.1 (s a grain takes to drop), size?: 1, alpha?: 0.35, color?, axis?: true,
+//     curve?: 1 (>1: the first entries drop faster, the last slower), marks?: [[lo, hi], …] }
+// A measured distribution building up entry by entry: each grain is one
+// entry (one candidate) dropping into its bin in a random order, so the
+// shape grows the way the data came in. A step's share is reached at a
+// constant rate (`fill` seconds for all of it); going back shows the share
+// at once. Arrival from elsewhere (or `c`) refills from nothing to the
+// current share, unless a fill started under 5 s ago.
+const HIST_VERT = /* glsl */ `
+attribute vec3 aEnd;
+attribute float aRank, aSeed, aMark;
+uniform float uFrom, uTo, uT0, uDur, uFall, uTop, uSize, uAlpha, uCurve, uMarkT;
+uniform vec3 uColor, uHot;
+${PLACE}
+void main() {
+  float span = uTo - uFrom;
+  float land;                                  // when this grain lands
+  if (aRank < min(uFrom, uTo)) land = -1e6;    // already in
+  else if (span <= 0.0 || aRank >= uTo) { hide(); return; }
+  else land = uT0 + pow((aRank - uFrom) / span, uCurve) * uDur;   // fast at first, slower as the shape fills in
+  float k = (uTime - land) / uFall + 1.0;      // 0 at release, 1 on landing
+  if (k < 0.0) { hide(); return; }
+  vec3 p = aEnd;
+  float glow = 0.0;
+  if (k < 1.0) {
+    p.y = mix(uTop + 2.0 * hash(aSeed * 3.0), aEnd.y, k * k);
+    p.x += 0.15 * (1.0 - k) * (hash(aSeed * 5.0) - 0.5);
+  } else glow = exp(-(k - 1.0) * uFall * 3.0);  // a short warm glow as it lands
+  // once filled, the marked bins (the peaks) brighten and the rest step back
+  float m = clamp((uTime - uMarkT) / 1.6, 0.0, 1.0);
+  m = m * m * (3.0 - 2.0 * m);
+  vec3 color = mix(uColor, uHot, clamp(0.8 * glow + 0.85 * m * aMark, 0.0, 1.0));
+  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow) * (1.0 + m * (1.8 * aMark - 0.55 * (1.0 - aMark)));
+  float size = uSize * (0.85 + 0.3 * hash(aSeed * 11.0)) * (1.0 + 0.5 * glow);
+  place(p, size, alpha, color, aSeed);
+}`
+// a short upright tick of grains over a marked peak, shown once the fill is complete
+const TICK_VERT = /* glsl */ `
+attribute float aSeed;
+uniform float uSize, uAlpha, uMarkT;
+uniform vec3 uColor;
+${PLACE}
+void main() {
+  float m = clamp((uTime - uMarkT - aSeed * 0.5) / 1.2, 0.0, 1.0);
+  if (m <= 0.0) { hide(); return; }
+  place(position + vec3(0.0, 0.6 * (1.0 - m), 0.0), uSize * (0.8 + 0.4 * hash(aSeed * 7.0)), uAlpha * m * m, uColor, aSeed);
+}`
+const AXIS_VERT = /* glsl */ `
+attribute float aSeed;
+uniform float uSize, uAlpha;
+uniform vec3 uColor;
+${PLACE}
+void main() { place(position, uSize * (0.8 + 0.4 * hash(aSeed * 7.0)), uAlpha, uColor, aSeed); }`
+function buildHistogram(o, ctx) {
+  const g = new Group()
+  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  const W = o.width ?? 24, H = o.height ?? 10, unitN = o.unit ?? 1
+  const steps = o.steps || [0, 1]
+  const mat = material(HIST_VERT, {
+    uFrom: { value: 0 }, uTo: { value: 0 }, uT0: { value: 0 }, uDur: { value: 1 }, uFall: { value: o.fall ?? 1.1 },
+    uTop: { value: H * 1.25 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.35 },
+    uCurve: { value: o.curve ?? 1 }, uMarkT: { value: 1e9 },
+    uColor: { value: new Color(...rgb(o.color || '#ffc05a')) }, uHot: { value: new Color(...rgb(o.hot || '#fff4dc')) },
+  })
+  const u = mat.uniforms
+  const build = (counts, d = {}) => {
+    const nb = counts.length, bw = W / nb
+    // marks: [[lo, hi], …] in the data's units (needs d.lo and d.bin): the bins to light once filled
+    const marked = new Uint8Array(nb)
+    for (const [a, b] of o.marks || []) for (let i = 0; i < nb; i++) {
+      const c = (d.lo ?? 0) + (i + 0.5) * (d.bin ?? 1)
+      if (c >= a && c <= b) marked[i] = 1
+    }
+    const per = counts.map((c) => Math.round(c / unitN))
+    const N = per.reduce((a, b) => a + b, 0)
+    const max = (o.max ?? Math.max(...counts)) / unitN
+    const ranks = new Float32Array(N); for (let i = 0; i < N; i++) ranks[i] = Math.random()
+    const end = new Float32Array(N * 3), rank = new Float32Array(N), seed = new Float32Array(N), mark = new Float32Array(N)
+    let n = 0
+    for (let b = 0; b < nb; b++) {
+      // lower in the column, earlier in: the column grows from the bottom
+      const rs = Array.from(ranks.subarray(n, n + per[b])).sort((x, y) => x - y)
+      for (let j = 0; j < per[b]; j++, n++) {
+        const x = -W / 2 + (b + 0.15 + 0.7 * Math.random()) * bw
+        const y = (j + 0.5) / max * H
+        end.set([x, y, (Math.random() - 0.5) * bw], n * 3); rank[n] = rs[j]; seed[n] = Math.random(); mark[n] = marked[b]
+      }
+    }
+    const geo = new BufferGeometry()
+    geo.setAttribute('position', new BufferAttribute(new Float32Array(N * 3), 3))
+    geo.setAttribute('aEnd', new BufferAttribute(end, 3))
+    geo.setAttribute('aRank', new BufferAttribute(rank, 1))
+    geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
+    geo.setAttribute('aMark', new BufferAttribute(mark, 1))
+    const pts = new Points(geo, mat); pts.frustumCulled = false
+    g.add(pts)
+    if (o.marks && d.lo != null) {
+      // one tick per mark, over its tallest bin
+      const T = 160, tp = [], ts = []
+      for (const [a, b] of o.marks) {
+        let best = -1
+        for (let i = 0; i < nb; i++) { const c = d.lo + (i + 0.5) * d.bin; if (c >= a && c <= b && (best < 0 || counts[i] > counts[best])) best = i }
+        if (best < 0) continue
+        const x = -W / 2 + (best + 0.5) * bw, y0 = counts[best] / unitN / max * H + 0.6
+        for (let i = 0; i < T; i++) { tp.push(x + (Math.random() - 0.5) * 0.06, y0 + 1.9 * i / (T - 1), 0); ts.push(Math.random()) }
+      }
+      const tg = new BufferGeometry()
+      tg.setAttribute('position', new BufferAttribute(new Float32Array(tp), 3)); tg.setAttribute('aSeed', new BufferAttribute(new Float32Array(ts), 1))
+      const tm = material(TICK_VERT, { uSize: { value: (o.size ?? 1) * 1.6 }, uAlpha: { value: 1.0 }, uColor: { value: new Color(...rgb(o.hot || '#fff4dc')) } })
+      tm.uniforms.uTime = u.uTime; tm.uniforms.uPixelRatio = u.uPixelRatio; tm.uniforms.uMarkT = u.uMarkT
+      const tk = new Points(tg, tm); tk.frustumCulled = false
+      g.add(tk)
+    }
+    if (o.axis !== false) {
+      const A = 900, ap = new Float32Array(A * 3), as = new Float32Array(A)
+      for (let i = 0; i < A; i++) { ap.set([-W / 2 - 0.3 + (W + 0.6) * i / (A - 1), -0.12, 0], i * 3); as[i] = Math.random() }
+      const ag = new BufferGeometry()
+      ag.setAttribute('position', new BufferAttribute(ap, 3)); ag.setAttribute('aSeed', new BufferAttribute(as, 1))
+      const am = material(AXIS_VERT, { uSize: { value: (o.size ?? 1) * 0.9 }, uAlpha: { value: 0.5 }, uColor: { value: new Color(...rgb(o.axisColor || '#cfd6ff')) } })
+      am.uniforms.uTime = u.uTime; am.uniforms.uPixelRatio = u.uPixelRatio
+      const ax = new Points(ag, am); ax.frustumCulled = false
+      g.add(ax)
+    }
+  }
+  if (o.counts) build(o.counts)
+  else fetch(ctx.asset('/' + String(o.src).replace(/^\//, ''))).then((r) => r.json()).then((d) => build(d[o.key || 'counts'], d))
+    .catch(() => console.warn('stage: histogram data failed', o.src))
+  let now = 0, played = -100, share = 0
+  const shown = () => {
+    const x = Math.min(Math.max((now - u.uT0.value) / Math.max(u.uDur.value, 0.01), 0), 1)
+    return u.uFrom.value + (u.uTo.value - u.uFrom.value) * Math.pow(x, 1 / u.uCurve.value)
+  }
+  const fill = (from, to, delay = 0.6) => {
+    u.uFrom.value = from; u.uTo.value = to; u.uT0.value = now + delay
+    u.uDur.value = Math.max((to - from) * (o.fill ?? 20), 0.01); played = now
+    u.uMarkT.value = to >= 1 && o.marks ? u.uT0.value + u.uDur.value + u.uFall.value + 0.6 : 1e9
+  }
+  const go = (k, { instant = false } = {}) => {
+    const to = steps[Math.max(0, Math.min(steps.length - 1, k))]
+    share = to
+    const cur = shown()
+    if (instant || to <= cur) { u.uFrom.value = to; u.uTo.value = to; u.uT0.value = now - 100; u.uDur.value = 0.01; u.uMarkT.value = to >= 1 && o.marks ? now - 100 : 1e9; return }
+    fill(cur, to)
+  }
+  const off = listen(o.name, (k) => go(k))
+  mat.addEventListener('dispose', off)
+  if (state.has(o.name)) go(state.get(o.name), { instant: true })
+  const api = {
+    arm() {},
+    assemble(t, onDone) { now = t; if (share > 0 && now - played > 5) fill(0, share, 0.3); onDone?.() },
+  }
+  return { group: g, labels: [], api, pixelRatio: u.uPixelRatio, update(t) { now = t; u.uTime.value = t }, dispose: off }
+}
+
 export function installGrains(registerBuilder) {
+  registerBuilder('histogram', buildHistogram, { fields: ['pos', 'name'] })
   registerBuilder('pairs', buildPairs, { fields: ['pos', 'name'] })
   registerBuilder('path', buildPath, { fields: ['pos', 'name', 'points'] })
   registerBuilder('streams', buildStreams, { fields: ['pos', 'name', 'to'] })

@@ -41,7 +41,15 @@ Current talks:
   I the machine, II the inventions (each slide names the problem it solved),
   III back to the private sector. Photographs are full bleed (`.hero`);
   slides carry a few words, the notes carry what is said; no slogan cards.
-  Pinned to slidev-videos feat/broadcast efacca2. Date placeholder `10_00`.
+  Coherence pass (8 Oct, owner: "weird, not coherent and sloppy"): 33 → 28
+  visible slides. Part I answers the prologue's question (Higgs, LHCb, the
+  pentaquark) and ends on the limits that made it possible (LHC extremes,
+  LHCb's 4 TB/s); Part II follows its "Problema:" kickers grouped pocket →
+  hospital → industry today, ending on Airbus so Part III opens on "a firm
+  made a product of it". Cut to notes: the 1954 counter, the antimatter
+  question card, LHCb Vilnius, the VELO chip, the top ten. Decisions log in
+  `talks/2026_10_00_Innoday/HANDOFF.md`.
+  Pinned to slidev-videos 12aa015 (dust-fullframe + advance-on-end). Date placeholder `10_00`.
   See "The stage (Innoday)" below.
 - `talks/2026_10_00_OpenData/` — "Opening LHCb's data", a 6½-minute award talk
   (LHCb Vilnius nominated for an open data award). On the packaged stage, pinned
@@ -522,26 +530,16 @@ the far-back scale poses.
 
 ## Užsikrauk karjerai (2026_10_26_UzsikraukKarjerai)
 
-Third version, 19 slides, about 10 minutes, one chronological thread (the
-owner rejected a 31-slide committee-written first version and a second whose
-flow jumped between questions and whose world looked washed out). The
-talk's own `CLAUDE.md` holds the brief, story table, status and decisions.
-Pinned to slidev-videos `feat/broadcast` (efacca2) for `look: broadcast`,
-`slidev-stage-safe` and `slidev-stage-record`. Real photographs and footage
-carry the real things (LHC tunnel, LHCb cavern, Gell-Mann and Zweig, the
-LHCb plots, NGC 1300), credited on screen and in `credits.txt`. Earlier
-outline, kept for the world's mechanics:
-I. the question nobody can answer yet (why matter survived: one in a
-billion), then where it is asked (the LHC, LHCb); II. what working on such a
-question looks like: one particle followed from idea (1964) to false find
-(2003), retraction (2008) and discovery (2015), then the speaker's own
-search for three of them, which ended in „Neradau.“, why that still counts,
-and the open data; III. what it has to do with the viewer: his crooked
-route across Europe, his own 2022 plans slide, back to the open question
-(galaxy), and one task for the week. Slide text is only numbers, years, a
-URL, his word „Neradau.“ and the closing question: no slogan cards. The
-full spoken script, timings, public sources and [PATIKSLINTI] items are in
-the notes.
+Fifth version (2026-10-08), 14 slides, about 10 minutes, online (not TV;
+the TV rules below are history). The viewer judges a bump: a histogram
+fills grain by grain (2003 yes, 2008 no as illustrations; LHCb's real 2019
+J/ψ p bins from HEPData on slide 7, the three peaks lighting up), then the
+speaker's search fills with no peak („Neradau.“), what the work trains, the
+route across Europe, three things to do this year, the closing question.
+Outline: `notes/outline-v5.md`; the talk's own `CLAUDE.md` holds status and
+decisions. Pinned to slidev-videos v0.5.0. Talk-owned builder `histogram`
+(`setup/grains.js`): one grain per entry, random order, easing fill,
+`marks` bins light once full.
 
 - **Television rules** (research 2026-10-07; from the event's past
   recordings and broadcast standards): Delfi/LJA showed slides squeezed to about two-thirds
@@ -554,13 +552,14 @@ the notes.
   aberration: 0, dustSize: 3, density: 0.6, streak: 0.4, nebula: 0.3, bloom:
   0.45, flight: [2.5, 5] }`); the grains' twinkle is slow and shallow. Laptop
   output 1920×1080 at 50 Hz. No full-frame flashes (ITU-R BT.1702).
-- **Stations** (one axis, 300 apart, so only one is ever in frame): `origin`
-  (hero; `pairs`), `quarks` (`quintet`), `search` (`ghost` with a haystack,
+- **Stations** (one axis, 300 apart, so only one is ever in frame): `quarks`
+  (hero; `quintet`), `search` (`ghost` with a haystack,
   `streams` `dance` and `phantom`), `europe` (`map`, `path` `route`: Vilnius →
   CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius; pose
   `whole`, no sway, with HTML city labels projected from it).
   `stage.options.reach: 22`. The clips and photos cover the world on their
-  slides; the collider ring and the grain galaxy are gone.
+  slides; the collider ring, the grain galaxy and the `origin` station with
+  its matter/antimatter `pairs` are gone.
 - **Talk-owned builders** (`setup/grains.js`, `stage:check --types
   path,streams,pairs,ghost,map,quintet`), all driven by `<Grains :set>`:
   - `pairs` — matter (gold) and antimatter (blue): 1 the hot cloud forms, 2 the
