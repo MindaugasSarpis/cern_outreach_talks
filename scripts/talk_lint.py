@@ -15,8 +15,11 @@ Slidev counts it (hidden slides are not counted).
                           section title and its line, .kicker. Wrap it in a class
                           the talk's CSS sets to text-transform: none
   EMOJI-HEADING  warning  emoji in a heading
-  SLOP-*         warning  'X, not Y'; stock phrases ("Here's the thing"); data
-                          that 'tells' or 'whispers'; banned words (BANNED). On
+  SLOP-*         warning  'X, not Y' (English decks); stock phrases ("Here's the
+                          thing", "Let that sink in", PHRASES); data that 'tells'
+                          or 'whispers'; banned words: cosmos, journey, unlock,
+                          delve, tapestry, unleash, embark, realm, game-changer,
+                          mind-blowing, paradigm shift, testament to (BANNED). On
                           screen; phrases and banned words also in the notes
   WORDS          warning  more than 60 words on screen (backup slides excepted)
   FONT-SMALL     warning  a talk CSS or inline font size under 18 px outside
