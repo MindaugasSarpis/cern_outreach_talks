@@ -1,29 +1,88 @@
 name: Deploy talks to GitHub Pages
 
+# Push to main: every talk is built on its own. A talk whose files have not
+# changed restores its last build from the cache instead of rebuilding; a talk
+# that fails to build keeps its last good build on the site. Whatever is in
+# site/ then deploys, and a summary job after the deploy fails the run if any
+# talk failed. Pull request: build the talks it changes, as a check; no deploy.
+#
+# Cache: one entry per talk and set of inputs, key site-<talk>-<hash of the
+# talk dir, theme/, components/, pnpm-lock.yaml, package.json, this file>.
+# Only a successful build saves one (actions/cache/save), so the newest entry
+# under the prefix site-<talk>- is always the talk's last good build.
+
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: ${{ github.event_name == 'pull_request' && format('check-{0}', github.ref) || 'pages' }}
   cancel-in-progress: true
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
-  build:
+  plan:
     runs-on: ubuntu-latest
+    outputs:
+      talks: ${{ steps.talks.outputs.talks }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: talks
+        name: Pick the talks to build
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          all=$(for d in talks/*/; do [ -f "$d/package.json" ] && basename "$d"; done || true)
+          pick=$all
+          if [ "$EVENT" = pull_request ]; then
+            changed=$(git diff --name-only "$BASE...HEAD")
+            # shared inputs change every talk; otherwise only the talks touched
+            if ! grep -qE '^(theme/|components/|pnpm-lock\.yaml$|package\.json$|pnpm-workspace\.yaml$|\.github/workflows/deploy\.yml$)' <<<"$changed"; then
+              pick=$(grep -oE '^talks/[^/]+/' <<<"$changed" | cut -d/ -f2 | sort -u | grep -Fx -f <(printf '%s\n' "$all") || true)
+            fi
+          fi
+          json=$(printf '%s\n' "$pick" | jq -Rnc '[inputs | select(length > 0)]')
+          echo "talks=$json" >> "$GITHUB_OUTPUT"
+          echo "talks to build: $json"
+
+  build:
+    needs: plan
+    if: needs.plan.outputs.talks != '[]'
+    name: build ${{ matrix.talk }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        talk: ${{ fromJSON(needs.plan.outputs.talks) }}
+    env:
+      TALK: ${{ matrix.talk }}
+      REPO_NAME: ${{ github.event.repository.name }}
+      DEPLOYING: ${{ github.event_name != 'pull_request' }}
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      # The talk as last built from exactly these files: a hit skips the build.
+      - id: cache
+        if: env.DEPLOYING == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: site/${{ matrix.talk }}
+          key: site-${{ matrix.talk }}-${{ hashFiles(format('talks/{0}/**', matrix.talk), 'theme/**', 'components/**', 'pnpm-lock.yaml', 'package.json', '.github/workflows/deploy.yml') }}
+
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: pnpm/action-setup@v4
         with:
           version: 9
 
@@ -31,52 +90,171 @@ jobs:
       # the same slidev-videos git tarball (the stage by its /packages/stage
       # path) with one integrity hash, and a restored store then fails the
       # install with ERR_PNPM_UNEXPECTED_PKG_CONTENT_IN_STORE (Pages run
-      # 37832082933). A cold install costs a minute; a poisoned cache, every deploy.
-      - uses: actions/setup-node@v4
+      # 37832082933). The site cache above already skips unchanged talks.
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - run: pnpm install
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm install --frozen-lockfile
 
-      - name: Build every talk under talks/*
+      - id: build
+        if: steps.cache.outputs.cache-hit != 'true'
+        name: Build
+        working-directory: talks/${{ matrix.talk }}
+        run: pnpm build --base "/${REPO_NAME}/${TALK}/" --out "${GITHUB_WORKSPACE}/site/${TALK}"
+
+      - if: steps.build.outcome == 'success' && env.DEPLOYING == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: site/${{ matrix.talk }}
+          key: ${{ steps.cache.outputs.cache-primary-key }}
+
+      # A talk that did not build keeps its last good build on the site.
+      - if: failure() && steps.cache.outputs.cache-hit != 'true' && steps.build.outcome != 'success' && env.DEPLOYING == 'true'
+        name: Drop the half-built site
+        run: rm -rf "site/${TALK}"
+
+      - id: lastgood
+        if: failure() && steps.cache.outputs.cache-hit != 'true' && steps.build.outcome != 'success' && env.DEPLOYING == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: site/${{ matrix.talk }}
+          key: ${{ steps.cache.outputs.cache-primary-key }}
+          restore-keys: site-${{ matrix.talk }}-
+
+      - if: always() && env.DEPLOYING == 'true'
+        name: Record the result
         env:
-          REPO_NAME: ${{ github.event.repository.name }}
+          HIT: ${{ steps.cache.outputs.cache-hit }}
+          BUILT: ${{ steps.build.outcome }}
+          LASTGOOD: ${{ steps.lastgood.outputs.cache-matched-key }}
         run: |
-          set -euo pipefail
-          mkdir -p site
-          for d in talks/*/; do
-            talk=$(basename "$d")
-            echo "::group::Building $talk"
-            (cd "$d" && pnpm build \
-              --base "/${REPO_NAME}/${talk}/" \
-              --out "${GITHUB_WORKSPACE}/site/${talk}")
-            echo "::endgroup::"
-          done
+          if [ "$HIT" = true ]; then r=cached
+          elif [ "$BUILT" = success ]; then r=built
+          elif [ -n "$LASTGOOD" ]; then r=last-good
+          else r=failed; fi
+          mkdir -p site/.talk-status
+          echo "$r" > "site/.talk-status/${TALK}"
+          echo "${TALK}: ${r}"
 
-      - name: Write index.html listing all talks
+      # One path, so the artifact's root is site/: <talk>/ and .talk-status/<talk>.
+      - if: always() && env.DEPLOYING == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-${{ matrix.talk }}
+          path: site/
+          include-hidden-files: true
+          retention-days: 1
+
+  assemble:
+    needs: [plan, build]
+    if: ${{ !cancelled() && github.event_name != 'pull_request' && needs.plan.outputs.talks != '[]' }}
+    runs-on: ubuntu-latest
+    outputs:
+      failed: ${{ steps.collect.outputs.failed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: site-*
+          merge-multiple: true
+          path: site
+
+      - id: collect
+        name: Check every talk is on the site
+        env:
+          PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
         run: |
-          {
-            echo '<!doctype html><meta charset=utf-8>'
-            echo '<title>Outreach talks</title>'
-            echo '<style>body{font-family:system-ui;max-width:40rem;margin:3rem auto;padding:0 1rem}a{display:block;padding:.5rem 0}</style>'
-            echo '<h1>Outreach talks</h1><ul>'
-            for d in talks/*/; do
-              talk=$(basename "$d")
-              echo "<li><a href=\"./${talk}/\">${talk}</a></li>"
-            done
-            echo '</ul>'
-          } > site/index.html
+          failed=() block=()
+          for d in talks/*/; do
+            t=$(basename "$d")
+            [ -f "$d/package.json" ] || continue
+            r=$(cat "site/.talk-status/$t" 2>/dev/null || echo failed)
+            case "$r" in
+              built|cached) ;;
+              last-good) failed+=("$t"); echo "::error::$t failed to build; its last good build stays on the site" ;;
+              *)
+                failed+=("$t")
+                if curl -sfI -o /dev/null "$PAGES_URL/$t/"; then
+                  block+=("$t"); echo "::error::$t failed with no last good build in the cache, and it is live: not deploying a site without it"
+                else
+                  echo "::error::$t failed and was never deployed; the site goes without it"
+                fi ;;
+            esac
+          done
+          echo "failed=${failed[*]}" >> "$GITHUB_OUTPUT"
+          echo "block=${block[*]}" >> "$GITHUB_OUTPUT"
+
+      - if: steps.collect.outputs.block != ''
+        name: Keep the live site
+        run: exit 1
+
+      - name: Write index.html from each talk's package.json
+        run: |
+          python3 - <<'EOF'
+          import html, json, pathlib, re
+          items = []
+          for d in sorted(pathlib.Path("talks").iterdir()):
+              if not (pathlib.Path("site") / d.name / "index.html").is_file():
+                  continue
+              title = json.loads((d / "package.json").read_text()).get("description", "")
+              if not title and (d / "deck.md").is_file():
+                  m = re.search(r"^title:\s*(.+)$", (d / "deck.md").read_text().split("\n---", 1)[0], re.M)
+                  title = m.group(1).strip().strip("'\"") if m else ""
+              items.append(f'<li><a href="./{d.name}/">{html.escape(title or d.name)}</a> <small>{d.name}</small></li>')
+          page = ("<!doctype html><meta charset=utf-8><title>Outreach talks</title>"
+                  "<style>body{font-family:system-ui;max-width:44rem;margin:3rem auto;padding:0 1rem}"
+                  "li{padding:.4rem 0}small{color:#888;margin-left:.5rem}</style>"
+                  "<h1>Outreach talks</h1><ul>" + "".join(items) + "</ul>")
+          pathlib.Path("site/index.html").write_text(page + "\n")
+          EOF
+          rm -rf site/.talk-status
 
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
 
   deploy:
-    needs: build
+    needs: assemble
+    if: ${{ !cancelled() && needs.assemble.result == 'success' }}
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # After the deploy, so a failed talk never holds the others back, but the
+  # run still ends red.
+  summary:
+    needs: [plan, build, assemble, deploy]
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail the run if any talk failed
+        env:
+          EVENT: ${{ github.event_name }}
+          TALKS: ${{ needs.plan.outputs.talks }}
+          PLAN: ${{ needs.plan.result }}
+          BUILD: ${{ needs.build.result }}
+          ASSEMBLE: ${{ needs.assemble.result }}
+          DEPLOY: ${{ needs.deploy.result }}
+          FAILED: ${{ needs.assemble.outputs.failed }}
+        run: |
+          status=0
+          fail() { echo "::error::$1"; status=1; }
+          [ "$PLAN" = success ] || fail "could not list the talks"
+          for t in $FAILED; do fail "$t failed"; done
+          [ "$BUILD" != failure ] || [ -n "$FAILED" ] || fail "a talk failed to build (see its build job)"
+          if [ "$EVENT" != pull_request ] && [ "$TALKS" != "[]" ]; then
+            [ "$ASSEMBLE" = success ] || fail "the site was not assembled; nothing was deployed"
+            [ "$DEPLOY" = success ] || fail "the Pages deploy did not succeed ($DEPLOY)"
+          fi
+          exit $status
