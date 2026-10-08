@@ -157,8 +157,9 @@ after 2026-09-10 to drop the six superseded Yaga-lineage copies.
 Only when the owner asks: `pnpm talk deploy <name>`, from the talk's
 worktree. It refuses uncommitted changes and a branch that is not on top of
 `origin/main` (and prints the rebase), runs `pnpm talk ready`, pushes the
-branch to `main`, watches the Pages run and checks the talk's URL before it
-says "deployed".
+commit that ready passed to `main` (it stops if anything was committed or
+edited in the worktree while ready ran), watches the Pages run and checks
+the talk's URL before it says "deployed".
 
 The Pages workflow builds each talk on its own: a talk whose files did not
 change comes from the cache, and a talk that fails to build keeps its last

@@ -22,8 +22,9 @@
                   venue --dry-run (and the safe-area check for a broadcast talk)
   record NAME     slidev-stage-record of the build: one MP4 per slide
   safe NAME       slidev-stage-safe of the build: the TV safe area
-  deploy NAME     only when the owner asked: from the talk's worktree, push HEAD to
-                  main, watch the Pages run, check the URL; --dry-run checks only
+  deploy NAME     only when the owner asked: from the talk's worktree, ready, then push
+                  the commit ready passed to main, watch the Pages run, check the URL;
+                  --dry-run checks only
   doctor          tool versions, and which pnpm a bare shell runs
   bump-toolkit vX.Y.Z [--talk NAME ... | --active]
                   move the talks' addon pins, env.yaml and the scaffolder together
@@ -1003,13 +1004,13 @@ def cmd_deploy(repo: Repo, a, extra) -> tuple[int, dict]:
         OUT.say("HEAD is not on top of origin/main. Rebase first:\n  " + "\n  ".join(rebase))
         return fail("origin/main is not an ancestor of HEAD", rebase=rebase)
     sha = git_out(["rev-parse", "HEAD"], wt)
-    ahead = int(git_out(["rev-list", "--count", "origin/main..HEAD"], wt) or 0)
+    ahead = int(git_out(["rev-list", "--count", f"origin/main..{sha}"], wt) or 0)
     data.update(sha=sha, ahead=ahead)
     if ahead == 0:
         OUT.say(f"origin/main already has {sha[:12]}; nothing to push")
         data["pushed"] = False
         return 0, data
-    talks = sorted({p.split("/")[1] for p in (git_out(["diff", "--name-only", "origin/main..HEAD"], wt) or "").splitlines()
+    talks = sorted({p.split("/")[1] for p in (git_out(["diff", "--name-only", f"origin/main..{sha}"], wt) or "").splitlines()
                     if p.startswith("talks/") and "/" in p[6:]})
     data["talks_changed"] = talks
     others = [t for t in talks if t != talk]
@@ -1029,18 +1030,30 @@ def cmd_deploy(repo: Repo, a, extra) -> tuple[int, dict]:
         except BlockingIOError:
             OUT.say("waiting for another deploy to finish ...")
             fcntl.flock(lock, fcntl.LOCK_EX)
+        # ready takes minutes, often in the background: what goes out is the commit it
+        # passed, and only if nothing was committed or edited in the worktree meanwhile
+        head = git_out(["rev-parse", "HEAD"], wt)
+        if head != sha:
+            return fail(f"HEAD moved from {sha[:12]} to {(head or '?')[:12]} while ready ran; "
+                        f"deploy again, so ready checks the new commit", head=head)
+        dirty = porcelain_paths(git_out(["status", "--porcelain"], wt) or "")
+        if dirty:
+            return fail(f"{wt} changed while ready ran, so the build ready passed is not {sha[:12]}; "
+                        f"commit or set the changes aside and deploy again", dirty=dirty[:20])
         # main may have moved while ready ran or the lock was held
         git(["fetch", "--quiet", "origin", "main"], wt, timeout=60)
-        if git(["merge-base", "--is-ancestor", "origin/main", "HEAD"], wt).returncode != 0:
+        if git(["merge-base", "--is-ancestor", "origin/main", sha], wt).returncode != 0:
             OUT.say("origin/main moved meanwhile. Rebase first:\n  " + "\n  ".join(rebase))
-            return fail("origin/main moved and is no longer an ancestor of HEAD", rebase=rebase)
-        push = ["git", "push", "origin", "HEAD:main"]
+            return fail(f"origin/main moved and is no longer an ancestor of {sha[:12]}", rebase=rebase)
+        refspec = f"{sha}:refs/heads/main"
+        push = ["git", "push", "origin", refspec]
+        data["push"] = shlex.join(push)
         if a.dry_run:
-            r = run(["git", "push", "--dry-run", "--porcelain", "origin", "HEAD:main"], cwd=wt, capture=True, timeout=60)
+            r = run(["git", "push", "--dry-run", "--porcelain", "origin", refspec], cwd=wt, capture=True, timeout=60)
             data["push_check"] = (r.stdout + r.stderr).strip().splitlines()[-3:]
             if r.returncode:
-                return fail("git push --dry-run failed", push=shlex.join(push))
-            OUT.say(f"dry run: would run `{shlex.join(push)}` in {wt} ({ahead} commit{'s' * (ahead != 1)}, {sha[:12]}), "
+                return fail("git push --dry-run failed")
+            OUT.say(f"dry run: would run `{data['push']}` in {wt} ({ahead} commit{'s' * (ahead != 1)}), "
                     f"watch the Pages run and check {data['url']}")
             data.update(pushed=False, would_push=sha)
             return 0, data
@@ -1327,7 +1340,7 @@ def build_parser() -> argparse.ArgumentParser:
         sp.add_argument("--rebuild", action="store_true")
         if name == "record":
             sp.add_argument("--out")
-    sp = verb("deploy", "only when the owner asked: push the talk's worktree HEAD to main, watch Pages, check the URL")
+    sp = verb("deploy", "only when the owner asked: ready, push the commit it passed to main, watch Pages, check the URL")
     sp.add_argument("--dry-run", action="store_true")
     sp.add_argument("--skip-ready", action="store_true")
     sp.add_argument("--ready-skip", action="append", metavar="STEP", help="pass --skip STEP to ready")

@@ -200,8 +200,35 @@ def test_deploy_dry_run_passes_and_pushes_nothing(repo, od_worktree, env):
     code, obj, err = talk(od_worktree, "deploy", "opendata", "--dry-run", "--skip-ready", cwd=od_worktree, env=env)
     assert code == 0, err
     assert obj["would_push"] == head and obj["pushed"] is False and obj["ahead"] == 1
+    assert obj["push"] == f"git push origin {head}:refs/heads/main"      # the commit itself, not HEAD
     assert origin_main(repo, env) == before
     assert not (repo / ".git" / "talk-status").exists()      # a dry run records nothing
+
+
+# A lint step that does what a session working beside a background deploy might:
+# commit, or leave an edit, while ready runs.
+MEANWHILE = """import json, pathlib, subprocess, sys
+if {mode!r} == "commit":
+    subprocess.run(["git", "commit", "-q", "--allow-empty", "-m", "meanwhile"], check=True)
+else:
+    pathlib.Path(sys.argv[1], "deck.md").open("a").write("meanwhile\\n")
+print(json.dumps({{"ok": True}}))
+"""
+
+
+@pytest.mark.parametrize("mode, needle", [("commit", "HEAD moved"), ("edit", "changed while ready ran")])
+def test_deploy_refuses_what_changed_while_ready_ran(repo, od_worktree, env, mode, needle):
+    (od_worktree / "scripts" / "talk_lint.py").write_text(MEANWHILE.format(mode=mode))
+    sh(["git", "add", "scripts/talk_lint.py"], od_worktree, env)
+    commit_change(od_worktree, env)
+    head = sh(["git", "rev-parse", "HEAD"], od_worktree, env).stdout.strip()
+    before = origin_main(repo, env)
+    code, obj, err = talk(od_worktree, "deploy", "opendata", "--dry-run", "--ready-skip", "check",
+                          "--ready-skip", "shots", cwd=od_worktree, env=env)
+    assert code == 1, err
+    assert obj["ready"]["ready"] is True and obj["sha"] == head
+    assert needle in obj["error"] and "would_push" not in obj
+    assert origin_main(repo, env) == before
 
 
 def test_deploy_needs_the_talks_own_worktree(repo, od_worktree, env):
