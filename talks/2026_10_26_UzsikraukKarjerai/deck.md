@@ -15,10 +15,10 @@ videos:
   dust: '#ffc05a'
 stage:
   space: data/space.json
-  palette: { base: blue, accent: '#ffc05a', dust: '#5b4fd6', dustBright: '#ebe6ff', nebula: '#3a2a9e', nebulaAlt: '#0f6e86', sky: '#9a8cff', fill: '#c9b8ff', highlight: '#fff0d0', dim: '#a39dc0' }
+  palette: { base: blue, bg: '#020307', accent: '#ffc05a', dust: '#5b4fd6', dustBright: '#ebe6ff', nebula: '#3a2a9e', nebulaAlt: '#0f6e86', sky: '#9a8cff', fill: '#c9b8ff', highlight: '#fff0d0', dim: '#a39dc0' }
   look: broadcast
   sound: false
-  options: { lift: 0.035, nebula: 0.18, bloom: 0.5, exposure: 1.12, vignette: 0.4, dustGain: 1.5, reach: 22 }
+  options: { lift: 0, nebula: 0, bloom: 0.32, exposure: 1.0, vignette: 0.45, dustGain: 1.0, density: 0.45, dustSize: 2.2, reach: 22 }
 title: Vadovėlio gale atsakymo nėra
 info: |
   „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement): a Lithuanian
@@ -35,10 +35,12 @@ info: |
   silent. Speaker notes carry the full script, timings, sources and every
   [PATIKSLINTI] item.
 layout: default
-space: { at: origin, dim: 0.05 }
+space: { at: [-7, 0, 0], dist: 20, yaw: -12, pitch: 8, sway: 1, dim: 0.05 }
 ---
 
 <Grains :set="{ bang: 1, pq: 0, needle: 0, dance: 0, phantom: 0, route: -1 }" />
+
+<div class="scrim-left"></div>
 
 <div class="say title">
 <p class="kick">Užsikrauk karjerai</p>
@@ -60,7 +62,7 @@ Source: CERN, „Antimatter“, home.cern/science/physics/antimatter.
 -->
 
 ---
-space: { at: origin, dist: 24, dim: 0.05 }
+space: { at: [-5, 0, 0], dist: 19, yaw: -12, pitch: 8, sway: 1, dim: 0.05 }
 ---
 
 <Grains :set="{ bang: 2, pq: 0, needle: 0, dance: 0, phantom: 0, route: -1 }" />
@@ -75,10 +77,12 @@ Picture: the pairs meet and go out as light, from the edge inward; a handful of 
 -->
 
 ---
-space: { at: origin, dist: 17, dim: 0.1 }
+space: { at: [-8, 0, 0], dist: 17, yaw: -12, pitch: 8, sway: 1, dim: 0.1 }
 ---
 
 <Grains :set="{ bang: 2, pq: 0, needle: 0, dance: 0, phantom: 0, route: -1 }" />
+
+<div class="scrim-left"></div>
 
 <div class="say wide">
 <p class="num small blue">1&#8239;000&#8239;000&#8239;000</p>
@@ -132,10 +136,14 @@ Sources: home.cern/science/experiments/lhcb (5 600 t; matter and antimatter); LH
 -->
 
 ---
-space: { at: whole, dim: 0.05 }
+space: { at: whole, sway: 0, dim: 0.05 }
 ---
 
 <Grains :set="{ bang: 3, pq: 0, needle: 0, dance: 0, phantom: 0, route: 3 }" />
+
+<div class="city" style="left: 716px; top: 168px">Vilnius</div>
+<div class="city" style="left: 406px; top: 374px">CERN</div>
+<div class="city" style="left: 270px; top: 146px">Glazgas</div>
 
 <!--
 II. KELIAS
@@ -150,10 +158,16 @@ Sources: LRT „Širdyje lietuvis“ (2024), 03:11 (Egyptologist until 12, then 
 -->
 
 ---
-space: { at: whole, dim: 0.05 }
+space: { at: whole, sway: 0, dim: 0.05 }
 ---
 
 <Grains :set="{ bang: 3, pq: 0, needle: 0, dance: 0, phantom: 0, route: 6 }" />
+
+<div class="city" style="left: 716px; top: 168px">Vilnius</div>
+<div class="city" style="left: 406px; top: 374px">CERN</div>
+<div class="city" style="left: 270px; top: 146px">Glazgas</div>
+<div class="city" style="left: 462px; top: 318px">Heidelbergas</div>
+<div class="city r" style="left: 413px; top: 268px">Bona</div>
 
 <!--
 Message: I left particle physics, came back for a PhD, and the PhD gave me a second open question: pentaquarks.
@@ -167,7 +181,7 @@ Sources: INSPIRE: VU 2017–19, Heidelberg 2019–20, Bonn 2020–23; the thesis
 -->
 
 ---
-space: { at: [603.5, 0.2, 0], dist: 15, yaw: -18, pitch: 8, sway: 1, dim: 0.15 }
+space: { at: [602.5, 0.2, 0], dist: 20, yaw: -18, pitch: 8, sway: 1, dim: 0.15 }
 ---
 
 <Grains :set="{ bang: 3, pq: 0, needle: 0, dance: 0, phantom: 0, route: 6 }" />
@@ -177,11 +191,9 @@ space: { at: [603.5, 0.2, 0], dist: 15, yaw: -18, pitch: 8, sway: 1, dim: 0.15 }
 </div>
 
 <div class="portraits">
-<figure><img src="/figures/photos/gell-mann.jpg" alt="Murray Gell-Mann" /><figcaption>Murray Gell-Mann</figcaption></figure>
-<figure><img src="/figures/photos/zweig.jpg" alt="George Zweig" /><figcaption>George Zweig</figcaption></figure>
+<figure><img src="/figures/photos/gell-mann.jpg" alt="Murray Gell-Mann" /><figcaption>Murray Gell-Mann<small>Foto: Joi Ito, CC BY 2.5</small></figcaption></figure>
+<figure><img src="/figures/photos/zweig.jpg" alt="George Zweig" /><figcaption>George Zweig<small>Foto: Peacearth, CC BY-SA 4.0</small></figcaption></figure>
 </div>
-
-<div class="credit">Foto: Joi Ito, CC BY 2.5 · Peacearth, CC BY-SA 4.0</div>
 
 <!--
 III. UŽDUOTIS
@@ -215,7 +227,7 @@ Sources: LEPS, PRL 91, 012002 (2003); PDG 2008 review: "overwhelming evidence th
 -->
 
 ---
-space: { at: [601.6, 0.2, 0], dist: 11, yaw: 18, pitch: 8, sway: 1, dim: 0.2 }
+space: { at: [601.6, 0.2, 0], dist: 11, yaw: 18, pitch: 8, sway: 1, dim: 0.42 }
 ---
 
 <Grains :set="{ bang: 3, pq: 3, needle: 0, dance: 0, phantom: 0, route: 6 }" />
@@ -240,7 +252,7 @@ Sources: LHCb, PRL 115, 072001 (2015), figure: m(J/ψ p) with the narrow Pc(4450
 -->
 
 ---
-space: { at: [601.6, 0.2, 0], dist: 11, yaw: 18, pitch: 8, sway: 1, dim: 0.2 }
+space: { at: [601.6, 0.2, 0], dist: 11, yaw: 18, pitch: 8, sway: 1, dim: 0.42 }
 ---
 
 <Grains :set="{ bang: 3, pq: 3, needle: 0, dance: 0, phantom: 0, route: 6 }" />
@@ -309,7 +321,7 @@ Source: the thesis (Bonn, 2023): no signal; upper limits at 95 % CL: Pc(4312)⁺
 space: { at: search, dist: 18, yaw: -24, sway: 1, dim: 0.06 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 1, phantom: 5, route: 6 }" />
+<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 6 }" />
 
 <!--
 Message: the work still counted: others know where it was searched, and the method became my next project.
@@ -343,10 +355,10 @@ Sources: M. Šarpis, „LHCb Run I Data is Released“ (Substack, 15 Jan 2024): 
 -->
 
 ---
-space: { at: whole, dim: 0.35 }
+space: { at: whole, sway: 0, dim: 0.78 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 1, phantom: 5, route: 6 }" />
+<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 6 }" />
 
 <div class="plans">
 <p class="kick">Mano planai · 2022 m. balandis</p>
@@ -366,10 +378,16 @@ Source: M. Šarpis, LPPM 2022 participants' introductions (11 Apr 2022), MSarpis
 -->
 
 ---
-space: { at: whole, dim: 0.05 }
+space: { at: whole, sway: 0, dim: 0.05 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 1, phantom: 5, route: 7 }" />
+<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 7 }" />
+
+<div class="city home" style="left: 716px; top: 168px">Vilnius</div>
+<div class="city" style="left: 406px; top: 374px">CERN</div>
+<div class="city" style="left: 270px; top: 146px">Glazgas</div>
+<div class="city" style="left: 462px; top: 318px">Heidelbergas</div>
+<div class="city r" style="left: 413px; top: 268px">Bona</div>
 
 <!--
 Message: a year and a half later I was building an LHCb group in Vilnius, which my plans had not foreseen.
@@ -385,7 +403,7 @@ Sources: ff.vu.lt: VU admitted to LHCb on 2 Sep 2024; VU, 20 Aug 2026: most of t
 space: { at: origin, dist: 14, dim: 0 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 1, phantom: 5, route: 7 }" />
+<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 7 }" />
 
 <div class="photo"><img src="/figures/photos/ngc1300.jpg" alt="Galaktika NGC 1300, Hubble teleskopo nuotrauka" /></div>
 
@@ -406,9 +424,11 @@ Sources: CERN, 24 Mar 2025: first observation of CP violation in baryons (Λb); 
 space: { at: origin, dist: 14, dim: 0 }
 ---
 
-<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 1, phantom: 5, route: 7 }" />
+<Grains :set="{ bang: 3, pq: 3, needle: 1, dance: 0, phantom: 5, route: 7 }" />
 
-<div class="photo dim"><img src="/figures/photos/ngc1300.jpg" alt="Galaktika NGC 1300, Hubble teleskopo nuotrauka" /></div>
+<div class="photo dim right"><img src="/figures/photos/ngc1300.jpg" alt="Galaktika NGC 1300, Hubble teleskopo nuotrauka" /></div>
+
+<div class="scrim-left"></div>
 
 <div class="photo-credit">NGC 1300 · NASA, ESA ir The Hubble Heritage Team (STScI/AURA)</div>
 

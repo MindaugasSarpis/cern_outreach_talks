@@ -93,13 +93,13 @@ html[data-stage] .slidev-layout.statement .mt-md { font-size: 24px; letter-spaci
 /* --- a real plot beside the world: inverted to light lines on the dark ground and
    added to it (screen), so no white sheet flashes up on air; right half, in the safe box */
 html[data-stage] img.plot {
-  position: absolute; right: 98px; top: 110px; width: 36%; height: auto;
+  position: absolute; right: 98px; top: 84px; width: 45%; height: auto; max-width: none !important; max-height: none !important;
   filter: invert(1) hue-rotate(180deg) brightness(1.1) contrast(1.15);
   mix-blend-mode: screen; opacity: 0.95;
   animation: stage-rise 0.9s var(--stage-ease) 0.6s both;
 }
 html[data-stage] .credit {
-  position: absolute; right: 98px; top: 86px; width: 36%; text-align: left;
+  position: absolute; right: 98px; top: 58px; width: 45%; text-align: left; white-space: nowrap;
   font-size: 16px; letter-spacing: 0.02em; color: var(--stage-fg); opacity: 0.75;
 }
 
@@ -111,17 +111,34 @@ html[data-stage] .photo.dim::after { content: ''; position: absolute; inset: 0; 
 @keyframes kk-in { from { opacity: 0; } to { opacity: 1; } }
 html[data-stage] .photo-credit {
   position: absolute; left: var(--kk-x); top: 58px; z-index: 2; font-size: 16px; letter-spacing: 0.02em;
-  color: #f1f3f8; background: rgba(0, 0, 0, 0.5); padding: 2px 8px; border-radius: 4px;
+  color: #f1f3f8; background: rgba(0, 0, 0, 0.72); padding: 3px 10px; border-radius: 4px;
 }
 
 /* --- two portraits beside the world, named */
 html[data-stage] .portraits { position: absolute; right: 98px; top: 112px; display: flex; gap: 18px; animation: stage-rise 0.9s var(--stage-ease) 0.5s both; }
 html[data-stage] .portraits figure { margin: 0; }
-html[data-stage] .portraits img { width: 168px; height: 210px; object-fit: cover; border-radius: 8px; display: block; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55); }
+html[data-stage] .portraits img { width: 168px; height: 210px; object-fit: cover; border-radius: 8px; display: block; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55); filter: grayscale(1) contrast(1.05); max-width: none !important; }
 html[data-stage] .portraits figcaption { font-size: 18px; text-align: center; margin-top: 8px; color: var(--stage-fg); text-shadow: var(--kk-shadow); }
+html[data-stage] .portraits figcaption small { display: block; font-size: 16px; opacity: 0.7; white-space: nowrap; margin-top: 2px; }
 @media (prefers-reduced-motion: reduce), print {
   html[data-stage] .photo, html[data-stage] .photo img, html[data-stage] .portraits { animation: none !important; }
 }
+
+/* --- a dark band behind text on the left, so the world or a photo can stay bright on the right */
+html[data-stage] .scrim-left {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.38) 32%, rgba(0, 0, 0, 0) 58%);
+}
+html[data-stage] .photo.right img { object-position: 80% 50%; }
+
+/* --- city names on the map (positions projected from the `whole` pose, which has no sway) */
+html[data-stage] .city {
+  position: absolute; font-size: 22px; font-weight: 600; letter-spacing: 0.01em; color: #eef1ff;
+  text-shadow: var(--kk-shadow); white-space: nowrap; animation: stage-rise 0.8s var(--stage-ease) 1.6s both;
+}
+html[data-stage] .city.r { transform: translateX(-100%); text-align: right; }
+html[data-stage] .city.home { color: var(--kk-gold-hi); }
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .city { animation: none !important; } }
 
 /* --- the title card */
 html[data-stage] .say.title { bottom: auto; top: 112px; max-width: 70%; }
@@ -142,11 +159,11 @@ html[data-stage] .say.late { animation-delay: 3.2s; }
 
 /* --- the speaker's own 2022 slide */
 html[data-stage] .plans {
-  position: absolute; left: 22%; top: 60px; width: 56%;
+  position: absolute; left: 21%; top: 58px; width: 58%;
   text-align: center; animation: stage-rise 0.9s var(--stage-ease) 0.4s both;
 }
 html[data-stage] .plans .kick { font-size: 20px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--kk-gold); margin: 0 0 12px; text-shadow: var(--kk-shadow); }
-html[data-stage] .plans img { width: 100%; border-radius: 10px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55); }
+html[data-stage] .plans img { width: 100% !important; max-width: none !important; max-height: none !important; height: auto; border-radius: 10px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55); }
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .plans { animation: none !important; } }
 
 @media (prefers-reduced-motion: reduce), print {
