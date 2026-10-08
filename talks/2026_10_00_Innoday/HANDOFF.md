@@ -93,6 +93,10 @@ the next round of problems, and Lithuanian firms can solve them.
 - How long is the slot? The deck runs ~22 min; the close's notes list cuts
   for 15 min.
 - The orbit clip, MARS image rights and the `10_00` date, as before.
+- Slide 9 (pentaquark): the SwiftShader shots show two orbs, not the five-quark
+  form. Probably the slow renderer; check on a real GPU (`pnpm dev`, go to
+  slide 9, press `c`) before the talk.
+- 27 June (last beam) vs 29 June (LS3 start): confirm (FCC slide notes).
 
 ## Unslop pass (2026-10-08)
 
