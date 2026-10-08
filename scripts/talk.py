@@ -1694,7 +1694,7 @@ def poll_run(wt: Path, run_id: str, talk: str, timeout: float = 1800, every: flo
             LOG.write(f"# {dt.datetime.now().isoformat(timespec='seconds')} run {v.get('status')} "
                       + json.dumps(jobs, sort_keys=True))
             line = (f"run {v.get('status')}{' ' + v['conclusion'] if v.get('conclusion') else ''}; "
-                    f"build {talk}: {jobs.get(f'build {talk}', '-')}; deploy: {jobs.get('deploy', '-')}")
+                    f"build {talk}: {talk_build_job(jobs, talk) or '-'}; deploy: {jobs.get('deploy', '-')}")
             if line != shown:
                 OUT.say("  " + line)
                 shown = line
@@ -1705,6 +1705,14 @@ def poll_run(wt: Path, run_id: str, talk: str, timeout: float = 1800, every: flo
         if time.monotonic() > deadline:
             return view
         time.sleep(every)
+
+
+def talk_build_job(jobs: dict, talk: str) -> str | None:
+    """The conclusion of the job that built `talk`: `build <talk>` in the per-talk workflow,
+    else the single `build` job of the workflow before it (which builds every talk)."""
+    if f"build {talk}" in jobs:
+        return jobs[f"build {talk}"]
+    return jobs.get("build")
 
 
 def watch_deploy(repo: Repo, wt: Path, talk: str, sha: str, data: dict) -> tuple[int, dict]:
@@ -1732,7 +1740,7 @@ def watch_deploy(repo: Repo, wt: Path, talk: str, sha: str, data: dict) -> tuple
             return 1, data
         jobs = {j["name"]: j.get("conclusion") for j in (view or {}).get("jobs", [])}
         record.update(run_conclusion=(view or {}).get("conclusion"),
-                      talk_build=jobs.get(f"build {talk}"), pages_deploy=jobs.get("deploy"))
+                      talk_build=talk_build_job(jobs, talk), pages_deploy=jobs.get("deploy"))
         failed_others = [n[6:] for n, c in jobs.items() if n.startswith("build ") and c == "failure" and n != f"build {talk}"]
         if failed_others:
             record["other_talks_failed"] = failed_others

@@ -986,3 +986,16 @@ def test_broadcast_reads_the_headmatter_not_the_text(raw, want, monkeypatch):
     # without talk_deck.py (an older branch) the text fallback agrees
     monkeypatch.setitem(sys.modules, "talk_deck", None)
     assert talk_cli.is_broadcast(raw) is want
+
+
+@pytest.mark.parametrize("jobs, want", [
+    ({"build": "success", "deploy": "success"}, "success"),                      # one build job (main's workflow before the split)
+    ({"plan": "success", "build 2026_10_00_Innoday": "success", "build 2026_10_00_OpenData": "failure",
+      "assemble": "success", "deploy": "success"}, "success"),                   # one job per talk
+    ({"plan": "success", "build 2026_10_00_Innoday": "failure", "deploy": "success"}, "failure"),
+    ({"plan": "success", "deploy": "success"}, None),                            # the talk was not built in this run
+])
+def test_deploy_finds_the_talks_build_job_in_either_workflow(jobs, want):
+    # Innoday's deploy (run 37815139786: build success, deploy success) was reported
+    # "build: None ... (not deployed)" because only `build <talk>` was looked for
+    assert talk_cli.talk_build_job(jobs, "2026_10_00_Innoday") == want
