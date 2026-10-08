@@ -488,8 +488,8 @@ def run_stage_bin(repo: Repo, kind: str, talk: str, args: list, *, no_build=Fals
         # the stage tools lock for themselves unless told the lock is held already
         r = run([node, b, build_dir(talk) / "site", *args], cwd=d, env=tool_env({"SLIDEV_STAGE_SHOTS_LOCKED": str(SHOTS_LOCK)}))
     data["tool_exit"] = r.returncode
-    # the tools exit 2 on bad arguments; anything else non-zero is problems found or a failed run
-    return (0 if r.returncode == 0 else 2 if r.returncode == 2 else 1), data
+    # shots exits 2 on bad arguments (safe's 2 is "could not check"); any other failure is 1
+    return (0 if r.returncode == 0 else 2 if (r.returncode, kind) == (2, "shots") else 1), data
 
 
 def supports(binfile: Path, flag: str) -> bool:
@@ -932,7 +932,7 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
             steps.append({"name": "safe", "ok": True, "skipped": "slidev-stage-safe not installed (SLIDEV_STAGE_BIN)"})
         else:
             OUT.say("-- safe area")
-            code, sd = run_stage_bin(repo, "safe", talk, [], no_build=built or False)
+            code, sd = run_stage_bin(repo, "safe", talk, ["--broadcast"] if info["broadcast"] else [], no_build=built)
             steps.append({"name": "safe", "ok": code == 0, **{k: v for k, v in sd.items() if k != "talk"}})
     report_steps(steps)
     ok = all(s["ok"] for s in steps)
@@ -946,6 +946,8 @@ def cmd_stage(repo: Repo, a, extra) -> tuple[int, dict]:
     args = list(extra)
     if a.verb == "record":
         args = [Path(a.out) if a.out else d / "shots" / "record", *args]
+    elif talk_info(repo.here, talk)["broadcast"] and "--broadcast" not in args:
+        args.append("--broadcast")      # the rules for a picture that goes to air
     code, data = run_stage_bin(repo, a.verb, talk, args, no_build=a.no_build, rebuild=a.rebuild)
     return code, data
 
