@@ -485,9 +485,11 @@ def run_stage_bin(repo: Repo, kind: str, talk: str, args: list, *, no_build=Fals
         data["error"] = "node not found"
         return 1, data
     with ShotsLock():
-        r = run([node, b, build_dir(talk) / "site", *args], cwd=d, env=tool_env())
+        # the stage tools lock for themselves unless told the lock is held already
+        r = run([node, b, build_dir(talk) / "site", *args], cwd=d, env=tool_env({"SLIDEV_STAGE_SHOTS_LOCKED": str(SHOTS_LOCK)}))
     data["tool_exit"] = r.returncode
-    return (0 if r.returncode == 0 else 1), data
+    # the tools exit 2 on bad arguments; anything else non-zero is problems found or a failed run
+    return (0 if r.returncode == 0 else 2 if r.returncode == 2 else 1), data
 
 
 def supports(binfile: Path, flag: str) -> bool:
@@ -511,12 +513,15 @@ def do_shots(repo: Repo, talk: str, *, slides=None, changed=False, sheet=False, 
                 args.append(flag)
             else:
                 OUT.say(f"warning: this slidev-stage-shots has no {flag} (SLIDEV_STAGE_BIN gives the new one); going without")
-    report = outdir / "report.json"
-    if b and supports(b, "--json") and "--json" not in (extra or []):
+    # the settling shots tool writes <out>/shots.ndjson itself; the first one wants --json
+    report = outdir / "shots.ndjson"
+    if b and not supports(b, "--changed") and supports(b, "--json") and "--json" not in (extra or []):
+        report = outdir / "report.json"
         args += ["--json", report]
+    started = time.time()
     code, data = run_stage_bin(repo, "shots", talk, args + list(extra or []), no_build=no_build, rebuild=rebuild)
     data["out"] = str(outdir)
-    if report.exists() and "--json" in [str(a) for a in args]:
+    if report.exists() and report.stat().st_mtime >= started:      # this run's, not an old one
         data["report"] = str(report)
     return code, data
 
