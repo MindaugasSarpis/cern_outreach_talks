@@ -133,8 +133,7 @@ Faktai: konvencija pasirašyta 1953 m., CERN oficialiai įsteigtas 1954 m. rug
 space: { at: collider, dist: 20, yaw: 40, pitch: 30, dim: 0 }
 ---
 
-<div class="hero right" style="--focus: 30% 50%">
-<img src="/figures/hero_higgs.jpg" alt="CMS detektoriaus įvykis: Higso bozono kandidatas, skylantis į du elektronus ir du miuonus" />
+<StagePhoto src="/figures/hero_higgs.jpg" alt="CMS detektoriaus įvykis: Higso bozono kandidatas, skylantis į du elektronus ir du miuonus" focus="30% 50%" class="right">
 <div class="hero-text">
 <p class="kicker">Ką mašina rado</p>
 <div class="year blue">2012</div>
@@ -142,7 +141,7 @@ space: { at: collider, dist: 20, yaw: 40, pitch: 30, dim: 0 }
 <p class="line">2013 m. Nobelio premija</p>
 </div>
 <div class="credit">Higso bozono kandidatas CMS detektoriuje, 2012 · CMS Collaboration / CERN, CC BY-SA 4.0</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui. Pirmasis atsakymas į klausimą, iš ko viskas sudaryta.
@@ -192,10 +191,9 @@ Skaičius: Koppenburgo sąraše „86 hadrons have been discovered at the LHC, o
 space: { at: collider, dist: 11, yaw: -48, pitch: 9, dim: 0 }
 ---
 
-<div class="hero frame">
-<img src="/figures/hero_tunnel.jpg" alt="LHC tunelis su mėlynais dipoliniais magnetais" />
+<StagePhoto src="/figures/hero_tunnel.jpg" alt="LHC tunelis su mėlynais dipoliniais magnetais" class="frame">
 <div class="credit">LHC tunelis · Nuotr. Samuel Joseph Hertzog / CERN, CC BY 4.0</div>
-</div>
+</StagePhoto>
 
 <div class="head">
 
@@ -263,8 +261,7 @@ Sakyti: „Šešios problemos: kaip valdyti mašiną, kaip tvarkyti informaciją
 space: { at: web, dist: 15, yaw: 46, pitch: 18, dim: 0 }
 ---
 
-<div class="hero low deep" style="--focus: 50% 30%">
-<img src="/figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" />
+<StagePhoto src="/figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
 <div class="hero-text">
 <p class="kicker gold">Problema: valdymas</p>
 <div class="year">1973</div>
@@ -272,7 +269,7 @@ space: { at: web, dist: 15, yaw: 46, pitch: 18, dim: 0 }
 <p class="line">2025 m. parduota <b>1,26 mlrd.</b> išmaniųjų telefonų</p>
 </div>
 <div class="credit">Bentas Stumpe su jutiklinio ekrano plokšte, 2016 · Nuotr. Sophia Elizabeth Bennett / CERN, CC BY 4.0</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui.
@@ -287,8 +284,7 @@ Istorija: pasiūlymas ranka parašytas 1972 m. kovo 11 d. Stumpe atsisakė pasi
 space: { at: web, dist: 15, yaw: 14, pitch: 16, dim: 0 }
 ---
 
-<div class="hero page" style="--focus: 50% 0%">
-<img src="/figures/hero_proposal.jpg" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" />
+<StagePhoto src="/figures/hero_proposal.jpg" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" class="page">
 <div class="hero-text">
 <p class="kicker gold">Problema: informacija</p>
 <div class="year">1989</div>
@@ -296,7 +292,7 @@ space: { at: web, dist: 15, yaw: 14, pitch: 16, dim: 0 }
 <p class="line">„Miglota, bet įdomu…“</p>
 </div>
 <div class="credit">T. Bernerso-Lee pasiūlymas su M. Sendallo pastaba, CERN ekspozicija · Nuotr. Sailko, CC BY 3.0</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui.
@@ -310,8 +306,7 @@ Pasiūlymo įžanga: daugelis diskusijų apie CERN ateitį ir LHC erą baigiasi 
 space: { at: web, dist: 15, yaw: 30, pitch: 14, dim: 0 }
 ---
 
-<div class="hero right" style="--focus: 35% 55%">
-<img src="/figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" />
+<StagePhoto src="/figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: informacija</p>
 <div class="year">1993</div>
@@ -319,7 +314,7 @@ space: { at: web, dist: 15, yaw: 30, pitch: 14, dim: 0 }
 <p class="line">Šiandien <b>~1,5 mlrd.</b> svetainių ir <b>~6 mlrd.</b> žmonių internete</p>
 </div>
 <div class="credit">Pirmasis žiniatinklio serveris, CERN, 1990 · Nuotr. Patrice Loïez / CERN, CC BY-SA 4.0</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui.
@@ -334,8 +329,7 @@ Faktai: pirmasis viešas paskelbimas — 1991 08 06 alt.hypertext grupėje; pirm
 space: { at: web, dist: 15, yaw: -2, pitch: 12, dim: 0 }
 ---
 
-<div class="hero" style="--focus: 60% 50%">
-<img src="/figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" />
+<StagePhoto src="/figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">1977</div>
@@ -343,7 +337,7 @@ space: { at: web, dist: 15, yaw: -2, pitch: 12, dim: 0 }
 <p class="line">2000 m. TIME PET/KT skenerį paskelbė metų medicinos išradimu</p>
 </div>
 <div class="credit">Šiuolaikinis PET/KT skeneris, CERMEP, Lionas · Nuotr. Romainbehar, CC0</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui. Iš kišenės — į ligoninę.
@@ -358,8 +352,7 @@ Faktai: pirmasis CERN PET vaizdas — pelės; Townsendas dirbo Ženevos kantono 
 space: { at: web, dist: 15, yaw: -34, pitch: 18, dim: 0 }
 ---
 
-<div class="hero right" style="--focus: 40% 50%">
-<img src="/figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" />
+<StagePhoto src="/figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -367,7 +360,7 @@ space: { at: web, dist: 15, yaw: -34, pitch: 18, dim: 0 }
 <p class="line">JAV FDA leido naudoti skenerį su <b>CERN Medipix3</b> lustu</p>
 </div>
 <div class="credit">Spalvotas 3D riešo vaizdas (Medipix3) · MARS Bioimaging Ltd</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui.
@@ -383,8 +376,7 @@ Vaizdas: MARS Bioimaging Ltd (CERN KT CDS įrašas KTTGROUP-PHO-TECH-2020-001); 
 space: { at: web, dist: 16, yaw: -18, pitch: 14, dim: 0 }
 ---
 
-<div class="hero" style="--focus: 50% 40%">
-<img src="/figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" />
+<StagePhoto src="/figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -392,7 +384,7 @@ space: { at: web, dist: 16, yaw: -18, pitch: 14, dim: 0 }
 <p class="line">6 CERN Timepix lustai matavo radiaciją įgulos kapsulėje</p>
 </div>
 <div class="credit">Artemis II startas, 2026 04 01 · Nuotr. NASA / Michael DeMocker</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui. Ta pati lustų šeima.
@@ -405,8 +397,7 @@ Artemis II — pirmoji pilotuojama kelionė link Mėnulio nuo 1972 m. (startas 
 space: { at: web, dist: 16, yaw: 62, pitch: 22, dim: 0 }
 ---
 
-<div class="hero" style="--focus: 50% 50%">
-<img src="/figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" />
+<StagePhoto src="/figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pluošto nukreipimas</p>
 <div class="year">9 000+</div>
@@ -414,7 +405,7 @@ space: { at: web, dist: 16, yaw: 62, pitch: 22, dim: 0 }
 <p class="line">pacientų gydyta CNAO ir MedAustron centruose</p>
 </div>
 <div class="credit">MedAustron sinchrotronas, Vyner Noištatas (Austrija) · © CERN</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui.
@@ -428,8 +419,7 @@ Faktai: PIMMS (CERN, TERA, MedAustron, Onkologie-2000). CNAO Pavijoje (pirmasis 
 space: { at: web, dist: 18, yaw: 78, pitch: 26, dim: 0 }
 ---
 
-<div class="hero" style="--focus: 50% 50%">
-<img src="/figures/hero_datacentre.jpg" alt="CERN duomenų centro serverių spintos" />
+<StagePhoto src="/figures/hero_datacentre.jpg" alt="CERN duomenų centro serverių spintos" focus="50% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: duomenys</p>
 <div class="year">1 EB</div>
@@ -437,7 +427,7 @@ space: { at: web, dist: 18, yaw: 78, pitch: 26, dim: 0 }
 <p class="line">LHC duomenis apdoroja <b>170</b> centrų <b>42</b> šalyse</p>
 </div>
 <div class="credit">CERN duomenų centras · Nuotr. Sophia Bennett / CERN, CC BY 4.0</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui. Iš ligoninės — į pramonę šiandien.
@@ -451,8 +441,7 @@ Jei laikas leidžia: duomenų problema davė ir atvirojo mokslo įrankius — Ze
 space: { at: web, dist: 18, yaw: 92, pitch: 30, dim: 0 }
 ---
 
-<div class="hero right" style="--focus: 50% 50%">
-<img src="/figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" />
+<StagePhoto src="/figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: šaltis</p>
 <div class="year">−271 °C</div>
@@ -460,7 +449,7 @@ space: { at: web, dist: 18, yaw: 92, pitch: 30, dim: 0 }
 <p class="line">superlaidi elektros linija Airbus vandeniliniams lėktuvams</p>
 </div>
 <div class="credit">Superlaidi MgB₂ linija HL-LHC, SM18 bandymų stendas · Nuotr. Maximilien Brice / © CERN</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui. Paskutinis II dalies pavyzdys: technologija, kurią CERN šiandien kuria kartu su įmonėmis.
@@ -529,8 +518,7 @@ Faktai: nematerialusis turtas +63 %, materialusis +27 %; 54 % tiekėjų patek
 space: { at: kt, dist: 22, yaw: 200, pitch: 40, dim: 0 }
 ---
 
-<div class="hero" style="--focus: 55% 50%">
-<img src="/figures/hero_fcc.jpg" alt="Siūlomo 91 km FCC žiedo aplink Ženevą žemėlapis šalia LHC žiedo" />
+<StagePhoto src="/figures/hero_fcc.jpg" alt="Siūlomo 91 km FCC žiedo aplink Ženevą žemėlapis šalia LHC žiedo" focus="55% 50%">
 <div class="hero-text">
 <p class="kicker">Kita mašina</p>
 <div class="year blue">91 km</div>
@@ -538,7 +526,7 @@ space: { at: kt, dist: 22, yaw: 200, pitch: 40, dim: 0 }
 <p class="line">Sprendimas statyti — apie 2028 m.</p>
 </div>
 <div class="credit">Būsimojo žiedinio greitintuvo (FCC) trasa · Daniel Dominguez / CERN</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui. Kitos mašinos problemos.
@@ -552,8 +540,7 @@ Faktai: FCC galimybių studija (2025 03 31): 90,7 km, vidutinis gylis ~200 m, 
 space: { at: kt, dist: 18, yaw: 120, pitch: 12, dim: 0 }
 ---
 
-<div class="hero low deep" style="--focus: 50% 30%">
-<img src="/figures/hero_lt.jpg" alt="Prezidentas Gitanas Nausėda spaudžia ranką CERN generaliniam direktoriui Markui Thomsonui, už jų CERN, Lietuvos ir ES vėliavos" />
+<StagePhoto src="/figures/hero_lt.jpg" alt="Prezidentas Gitanas Nausėda spaudžia ranką CERN generaliniam direktoriui Markui Thomsonui, už jų CERN, Lietuvos ir ES vėliavos" focus="50% 30%" class="low deep">
 <div class="hero-text">
 <p class="kicker gold">Lietuva ir CERN</p>
 <div class="year blue">2018</div>
@@ -561,7 +548,7 @@ space: { at: kt, dist: 18, yaw: 120, pitch: 12, dim: 0 }
 <p class="line">2026 m. Lietuva kreipėsi dėl <b>visateisės narystės</b></p>
 </div>
 <div class="credit">Prezidento G. Nausėdos vizitas CERN, 2026 01 19 · Nuotr. Marina Cavazza / CERN</div>
-</div>
+</StagePhoto>
 
 <!--
 Kalbėtojui.
