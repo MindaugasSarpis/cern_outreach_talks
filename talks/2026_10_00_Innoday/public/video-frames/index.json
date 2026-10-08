@@ -1,21 +1,6 @@
 {
   "version": 1,
   "clips": {
-    "cern_footage_2022_013_001.mp4": {
-      "file": "cern_footage_2022_013_001.mp4.jpg",
-      "tile": [
-        320,
-        180
-      ],
-      "cols": 8,
-      "count": 64,
-      "interval": 3.969,
-      "size": [
-        1920,
-        1080
-      ],
-      "duration": 254.0
-    },
     "cern_footage_2022_042_001.mp4": {
       "file": "cern_footage_2022_042_001.mp4.jpg",
       "tile": [
@@ -45,36 +30,6 @@
         1080
       ],
       "duration": 11.24
-    },
-    "lhcb_aciu.mp4": {
-      "file": "lhcb_aciu.mp4.jpg",
-      "tile": [
-        320,
-        178
-      ],
-      "cols": 8,
-      "count": 38,
-      "interval": 4.0,
-      "size": [
-        1920,
-        1066
-      ],
-      "duration": 148.7
-    },
-    "vu_ff_zoom.mp4": {
-      "file": "vu_ff_zoom.mp4.jpg",
-      "tile": [
-        320,
-        180
-      ],
-      "cols": 8,
-      "count": 64,
-      "interval": 4.405,
-      "size": [
-        1920,
-        1080
-      ],
-      "duration": 281.9
     }
   }
 }
