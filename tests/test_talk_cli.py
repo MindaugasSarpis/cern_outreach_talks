@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import re
 import subprocess
 import sys
 
@@ -652,3 +653,86 @@ def test_sessions_lists_windows_with_their_status_lines(repo, tmux, tmp_path):
     windows.unlink()
     code, obj, err = talk(repo, "sessions", env=env)
     assert code == 0 and obj["running"] is False and 'no tmux session "talks"' in err
+
+
+# ---------------------------------------------------------------- scripts/bootstrap.sh: what it detects and writes
+
+BOOT = ROOT / "scripts" / "bootstrap.sh"
+
+
+@pytest.fixture
+def boot(tmp_path):
+    """Run bootstrap.sh against tmp: its own HOME, settings file, prefix and repos root; no /dev/dxg, no X."""
+    (tmp_path / "root" / "slidev-videos" / ".git").mkdir(parents=True)
+    conf = tmp_path / "home" / ".config" / "outreach_talks" / "env"
+
+    def run(*args, bins=(), extra=None, dry=True):
+        b = tmp_path / "bin"
+        b.mkdir(exist_ok=True)
+        for name, body in bins:
+            fake_bin(b, name, body)
+        env = {"HOME": str(tmp_path / "home"), "PATH": f"{b}:/usr/bin:/bin", "OUTREACH_ROOT": str(tmp_path / "root"),
+               "BOOTSTRAP_DXG": str(tmp_path / "no-dxg"), "BOOTSTRAP_X0": str(tmp_path / "no-x0"), **(extra or {})}
+        r = subprocess.run(["bash", BOOT, *(["--dry-run"] if dry else []), "--no-env", "--no-install",
+                            "--prefix", tmp_path / "mm", "--config", conf, *args], env=env, capture_output=True, text=True)
+        written = dict(re.findall(r"^     \| (\w+)='(.*)'$", r.stdout, re.M))
+        return r, written
+    return run, conf
+
+
+SBATCH = ("sbatch", "exit 0\n")
+NVIDIA_SMI = ("nvidia-smi", "echo 'GPU 0: NVIDIA (fake)'\n")
+
+
+@pytest.mark.parametrize("bins, want", [
+    ([SBATCH, ("sinfo", "printf 'gpu:a100:4\\n(null)\\n'\n")],
+     {"RENDER_BACKEND": "slurm", "RENDER_GPUS": "1", "SLIDEV_STAGE_GL": "auto"}),
+    ([SBATCH, ("sinfo", "echo '(null)'\n")], {"RENDER_BACKEND": "slurm", "RENDER_GPUS": "0"}),
+    ([("condor_submit", "exit 0\n"), ("condor_status", "printf '0\\n2\\n'\n")],
+     {"RENDER_BACKEND": "condor", "RENDER_GPUS": "1", "SLIDEV_STAGE_GL": "auto"}),
+    ([NVIDIA_SMI], {"RENDER_BACKEND": "local", "SLIDEV_STAGE_GL": "gpu-nvidia"}),
+    ([], {"RENDER_BACKEND": "local", "SLIDEV_STAGE_GL": "auto"}),        # no GPU, no X display
+])
+def test_bootstrap_detects_the_render_backend(boot, bins, want):
+    run, conf = boot
+    r, written = run(bins=bins)
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert {k: written.get(k) for k in want} == want
+    assert "RENDER_GPUS" in written or want["RENDER_BACKEND"] == "local"
+    assert "dry run: nothing was changed" in r.stdout and not conf.exists()
+
+
+def test_bootstrap_on_wsl_takes_d3d12_only_with_the_mesa_prefix(boot, tmp_path):
+    run, _ = boot
+    (tmp_path / "dxg").touch()
+    (tmp_path / "x0").touch()
+    wsl = {"BOOTSTRAP_DXG": str(tmp_path / "dxg"), "BOOTSTRAP_X0": str(tmp_path / "x0")}
+    r, written = run(bins=[NVIDIA_SMI], extra=wsl)
+    assert written["SLIDEV_STAGE_GL"] == "llvmpipe" and "--mesa-d3d12" in r.stdout
+    mesa = tmp_path / "mesa"
+    (mesa / "root" / "usr" / "lib64" / "dri").mkdir(parents=True)
+    (mesa / "root" / "usr" / "lib64" / "dri" / "d3d12_dri.so").touch()
+    r, written = run(bins=[NVIDIA_SMI], extra={**wsl, "SLIDEV_STAGE_MESA_D3D12": str(mesa)})
+    assert written["SLIDEV_STAGE_GL"] == "d3d12" and written["SLIDEV_STAGE_MESA_D3D12"] == str(mesa)
+    assert written["SLIDEV_STAGE_CHROMIUM_ENV"] == "MESA_D3D12_DEFAULT_ADAPTER_NAME=NVIDIA"
+
+
+def test_bootstrap_writes_once_and_keeps_the_owners_values(boot, tmp_path):
+    run, conf = boot
+    r, _ = run(dry=False)
+    assert r.returncode == 0, r.stdout + r.stderr
+    first = conf.read_text()
+    assert f"OUTREACH_ROOT='{tmp_path / 'root'}'" in first and "RENDER_BACKEND='local'" in first
+    assert (tmp_path / "home" / ".local" / "state" / "outreach_talks" / "logs").is_dir()
+    assert not (tmp_path / "home" / ".claude").exists()                    # never settings or hooks
+    assert "permissions" in r.stdout and "pnpm talk session scheduler" in r.stdout
+    r, _ = run(dry=False)
+    assert "unchanged" in r.stdout and conf.read_text() == first           # idempotent
+    conf.write_text(first.replace("SLIDEV_STAGE_GL='auto'", "SLIDEV_STAGE_GL='swiftshader'") + "MY_OWN=1\n")
+    r, _ = run(dry=False, bins=[NVIDIA_SMI])
+    text = conf.read_text()
+    assert "SLIDEV_STAGE_GL='swiftshader'" in text and "MY_OWN=1" in text and "--redetect" in r.stdout
+    r, _ = run("--redetect", dry=False, bins=[NVIDIA_SMI])
+    assert "SLIDEV_STAGE_GL='gpu-nvidia'" in conf.read_text()
+    c = talk_cli.resolve_config({"HOME": str(tmp_path / "home"), "PATH": ""}, tmp_path / "root" / "outreach_talks")
+    assert c["OUTREACH_ROOT"] == str(tmp_path / "root") and c.file["SLIDEV_STAGE_GL"] == "gpu-nvidia"
