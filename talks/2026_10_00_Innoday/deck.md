@@ -54,7 +54,7 @@ space:
 <div class="mt-md">Dr. Mindaugas Šarpis · <span class="nc">LHCb</span> Vilnius · Vilniaus universitetas</div>
 
 <!--
-Kalbėtojui. Prieš pradedant paspausti bet kurį klavišą arba spustelėti, kad galėtų skambėti foninis garsas (naršyklė garsą įjungia tik po naudotojo veiksmo). Už pavadinimo iš dulkių susirenka penki kvarkai — pentakvarkas, prie kurio grįšime I dalyje; „c“ jį surenka iš naujo. Kol ši skaidrė rodoma, grotuvas iš anksto įkelia pirmąjį klipą.
+Kalbėtojui. Prieš pradedant paspausti bet kurį klavišą arba spustelėti, kad galėtų skambėti foninis garsas (naršyklė garsą įjungia tik po naudotojo veiksmo). Už pavadinimo iš dulkių susirenka penki kvarkai — pentakvarkas, vienas LHCb atradimų; „c“ jį surenka iš naujo. Kol ši skaidrė rodoma, grotuvas iš anksto įkelia pirmąjį klipą.
 Sakyti: „Laba diena. Esu Mindaugas Šarpis, vadovauju Vilniaus universiteto grupei, kuri dirba CERN LHCb eksperimente. Pradėsime nuo Saulėtekio.“
 (~0,5 min)
 -->
@@ -85,19 +85,48 @@ Techniškai: kadras — public/figures/opener_last.jpg, išsitrauktas komanda pn
 -->
 
 ---
-space: { at: [30, 40, -82], dist: 26, yaw: 28, pitch: 14, sway: 6, dim: 0.15 }   # round the picture the frame became: gently, or the strands read as streaks
+space: { at: [30, 40, -112], dist: 12, yaw: 0, pitch: 4, dim: 0, flight: 3.5 }   # the funnel's mouth: galaxies, and down the funnel the past
+---
+
+<!--
+Kalbėtojui. Kamera praskrenda pro mūsų galaktikos grūdelius ir sustoja ties piltuvo žiotimis: Visatos istorija iš grūdelių, nuo Didžiojo sprogimo (toli, siauroji dalis) iki šiandienos (čia, platusis galas). Ekrane teksto nėra.
+Sakyti: „Mūsų galaktika — tik viena iš šimtų milijardų. Šis piltuvas yra Visatos istorija: siauroji dalis — Didysis sprogimas prieš 13,8 mlrd. metų, platusis galas — šiandien. Visata plečiasi, o maždaug pastaruosius penkis milijardus metų — vis greičiau. Kuo toliau žiūrime, tuo senesnę šviesą matome. Grįžkime atgal.“
+Faktai: Visatos amžius 13,787 ± 0,020 mlrd. m. (Planck 2018, A&A 641, A6); spartėjantis plėtimasis — 1998 m. atradimas (2011 m. Nobelio premija), tamsioji energija vyrauja maždaug nuo 5 mlrd. metų.
+(~0,4 min)
+-->
+
+---
+space: { at: [30, 40, -134.4], dist: 2.6, yaw: 0, pitch: 0, dim: 0.1, flight: 5 }   # back in time down the funnel, past the galaxies, the first stars and the dark ages, to the CMB
 ---
 
 <div class="world-caption narrow">
 
-<p class="kicker">Klausimas</p>
+<p class="line">380 000 metų po Didžiojo sprogimo</p>
+
+</div>
+
+<div class="src">Planck CMB žemėlapis (SMICA, 2018): ESA ir Planck kolaboracija</div>
+
+<!--
+Kalbėtojui. Kamera skrenda piltuvu atgal laiku: pro galaktikas, pirmąsias žvaigždes, tamsiuosius amžius, ir sustoja prie švytinčio skydo — kosminės foninės spinduliuotės. Jo grūdelių spalvos — tikras Planck temperatūros žemėlapis.
+Sakyti: „Pro galaktikas, pro pirmąsias žvaigždes ir tamsiuosius amžius grįžtame iki seniausios šviesos, kurią įmanoma pamatyti. Tai kosminė foninė spinduliuotė: Visatai tada buvo apie 380 000 metų. Europos kosmoso agentūros palydovas Planck ją išmatavo visame danguje. Spalvos rodo temperatūros skirtumus, vos dešimttūkstantąsias kelvino dalis. Iš tokių nelygumų vėliau susiformavo galaktikos.“
+Faktai: foninės spinduliuotės temperatūra 2,725 K; skirtumai žemėlapyje ~±100–300 µK (iki ~1 mK). Paskutinė sklaida — ~380 000 m. po Didžiojo sprogimo (z ≈ 1090).
+Šaltiniai ir vaizdas: Planck 2018 SMICA žemėlapis (COM_CMB_IQU-smica-nosz_2048_R3.00, užpildytas), IRSA/ESA Planck Legacy Archive; ESA ir Planck kolaboracija. Perprojektuota į ilgumą ir platumą, nuspalvinta Planck stiliaus skale; skyde rodomas vienas dangaus pusrutulis.
+(~0,6 min)
+-->
+
+---
+space: { at: [30, 40, -134.4], dist: 7, yaw: 24, pitch: 8, dim: 0.3 }   # pulled back from the CMB: the question stands over the oldest light
+---
+
+<div class="world-caption narrow">
 
 # Iš ko visa tai sudaryta?
 
 </div>
 
 <!--
-Kalbėtojui. Kamera apskrieja grūdelius, kuriais ką tik virto paskutinis kadras: plokščias vaizdas pasirodo esąs erdvė. Šis klausimas — visos kalbos pradžia; kitos skaidrės į jį atsako ir parodo, ką atsakymo paieškos davė.
+Kalbėtojui. Kamera atsitraukia nuo foninės spinduliuotės skydo; klausimas stovi prieš seniausią šviesą. Šis klausimas — visos kalbos pradžia: kitos skaidrės rodo mašiną, kurią jam atsakyti teko pastatyti, ir ką jos problemos davė.
 Sakyti: „Žvaigždės, dujos, planetos ir mes patys sudaryti iš kelių rūšių dalelių. Norint pamatyti, kas yra jų viduje, daleles reikia sudaužyti labai didele energija. Tam reikia didžiausio pasaulyje dalelių greitintuvo. Jį pastatė CERN, Europos dalelių fizikos laboratorija prie Ženevos.“
 Pastaba: „žvaigždės, dujos, planetos ir mes“ — tyčia ne „galaktikos“: didžioji galaktikų masės dalis yra tamsioji materija, kurios sudėties nežinome.
 (~0,4 min)
@@ -136,30 +165,6 @@ Faktai: konvencija pasirašyta 1953 m., CERN oficialiai įsteigtas 1954 m. rug
 -->
 
 ---
-space: { at: collider, dist: 20, yaw: 40, pitch: 30, dim: 0 }
----
-
-<Strands :on="false" />
-
-<StagePhoto src="/figures/hero_higgs.jpg" arrive="camera" alt="CMS detektoriaus įvykis: Higso bozono kandidatas, skylantis į du elektronus ir du miuonus" focus="30% 50%" class="right">
-<div class="hero-text">
-<p class="kicker">Ką mašina rado</p>
-<div class="year blue">2012</div>
-<h1>Higso bozonas</h1>
-<p class="line">2013 m. Nobelio premija</p>
-</div>
-<div class="credit">Higso bozono kandidatas CMS detektoriuje, 2012 · CMS Collaboration / CERN, CC BY-SA 4.0</div>
-</StagePhoto>
-
-<!--
-Kalbėtojui. Pirmasis atsakymas į klausimą, iš ko viskas sudaryta.
-Sakyti: „Garsiausias šio greitintuvo atradimas — Higso bozonas. 1964 m. buvo pasiūlytas mechanizmas, kuris paaiškina, kodėl elementariosios dalelės turi masę, ir pagal jį turėjo egzistuoti ši dalelė. Jos ieškota beveik pusę amžiaus. 2012 m. liepos 4 d. ją vienu metu paskelbė du CERN eksperimentai, ATLAS ir CMS. Kitais metais François Englert'as ir Peteris Higgsas gavo Nobelio premiją. Nuotraukoje — vienas iš tų susidūrimų CMS detektoriuje.“
-Nuotraukoje: 2012 m. gegužės 27 d. CMS įvykis, Higso bozono kandidatas H → ZZ → 2e2μ. Nobelio premijos formuluotėje paminėti ATLAS ir CMS eksperimentai.
-Šaltinis: home.cern (Nobelio premija 2013 10 08); cds.cern.ch/images/CMS-PHO-EVENTS-2012-007-1.
-(~0,6 min)
--->
-
----
 space: { at: [56, 5, -14], dist: 16, yaw: -28, pitch: 12 }
 ---
 
@@ -172,27 +177,6 @@ Jei klausia apie rezultatus: 2025 m. LHCb pirmą kartą pamatė materijos ir an
 Faktai: LHCb sveria 5 600 t, 21 × 10 × 13 m, 100 m po žeme; artimiausias VELO pikselis — 5,1 mm nuo pluošto; kolaboracijoje beveik 2 000 narių. VU priimtas 2024 m. rugsėjo 2 d. LHCb kolaboracijos tarybos sprendimu; grupė dirba VU FF Fotonikos ir nanotechnologijų institute (lhcb-vilnius.web.cern.ch). 2026 m. rugsėjo 14–18 d. LHCb savaitė pirmą kartą vyko Vilniuje (~200 dalyvių vietoje).
 Šaltinis: home.cern/science/experiments/lhcb; VU FF naujienos, 2024 09 16.
 (klipas 0:56; kalbos ~1 min)
--->
-
----
-space: { at: [-29.5, 0.2, 0], dist: 11, yaw: -10, pitch: 6, dim: 0.15 }
----
-
-<div class="payoff">
-<p class="kicker"><span class="nc">LHCb</span> · 2015 m. pentakvarkas</p>
-<div class="big blue">76<span class="unit">iš 86</span></div>
-<h1>naujų LHC hadronų atrado <span class="nc">LHCb</span></h1>
-<p>Vienas jų — pentakvarkas, dalelė iš penkių kvarkų.</p>
-</div>
-
-<div class="src">LHCb, PRL 115 (2015) 072001 · P. Koppenburg, New particles discovered at the LHC (2026 09 21)</div>
-
-<!--
-Kalbėtojui. Kamera grįžta prie pentakvarko, kurį matėme pradžioje; „c“ surenka jį iš naujo.
-Sakyti: „Penki šviesos kamuoliukai, kuriuos matėte pradžioje, yra dalelė iš penkių kvarkų. Kai 1964 m. Gell-Mannas ir Zweigas pasiūlė kvarkų modelį, jau buvo aišku, kad tokios dalelės gali egzistuoti. Jų ieškota daugiau nei 50 metų. 2015 m. jas aptiko LHCb. Pentakvarkai — tarp 86 naujų dalelių, atrastų prie šio greitintuvo; 76 iš jų atrado LHCb.“
-Jei klausia: c c̄ u u d; 2015 m. liepos 14 d., Λb skilimuose; 2019 m., turint devynis kartus daugiau duomenų, paaiškėjo, kad tai kelios siauros būsenos — galbūt „molekulės“ iš bariono ir mezono. Rūta Racz, pirmoji VU doktorantė LHCb, ieško naujų pentakvarkų.
-Skaičius: Koppenburgo sąraše „86 hadrons have been discovered at the LHC, of which 76 by LHCb“ (paskutinis įrašas 2026 09 21, Bs0*(5700)0).
-(~0,6 min)
 -->
 
 ---
@@ -214,8 +198,8 @@ Tiek duomenų kas sekundę pagamina detektorius. Pirmąją atranką atlieka vaiz
 <div class="src">LHCb, The LHCb Upgrade I, arXiv:2305.10515 · CERN EP Newsletter: LHCb adopts GPUs for the Run 3 trigger (2020)</div>
 
 <!--
-Kalbėtojui. Po pentakvarko: kaip LHCb jį randa. Kamera nusileidžia ant grūdelių žiedo ir žiūri išilgai jo — kitoje skaidrėje žiedo lankas tampa tunelio lanku.
-Sakyti: „Kad tokias daleles rastume, reikia išspręsti mūsų eksperimento problemą — duomenis. LHCb detektorius kas sekundę pagamina apie 4 terabaitus. Tiek užrašyti neįmanoma, todėl reikia iš karto nuspręsti, ką pasilikti. Nuo 2022 m. tai daro vaizdo plokštės, iš esmės tokios pat kaip žaidimų kompiuteriuose. LHCb — pirmasis eksperimentas, kurio visa pirmoji atrankos pakopa veikia vaizdo plokštėse. Į diską patenka maždaug vienas baitas iš keturių šimtų.“
+Kalbėtojui. Po LHCb animacijos: mūsų eksperimento problema. Kamera nusileidžia ant grūdelių žiedo ir žiūri išilgai jo — kitoje skaidrėje žiedo lankas tampa tunelio lanku.
+Sakyti: „Mūsų eksperimento problema šiandien — duomenys. LHCb detektorius kas sekundę pagamina apie 4 terabaitus. Tiek užrašyti neįmanoma, todėl reikia iš karto nuspręsti, ką pasilikti. Nuo 2022 m. tai daro vaizdo plokštės, iš esmės tokios pat kaip žaidimų kompiuteriuose. LHCb — pirmasis eksperimentas, kurio visa pirmoji atrankos pakopa veikia vaizdo plokštėse. Į diską patenka maždaug vienas baitas iš keturių šimtų.“
 Faktai: GPU — NVIDIA RTX A5000 (profesionali žaidimų lusto versija); vietų ~500, bazinei HLT1 reikia ~200; antroji pakopa — >3 000 serverių; į diską ~10 GB/s.
 Jei klausia apie atviruosius duomenis: visus 2011–2012 m. LHCb duomenis (800 TB) viešam naudojimui parengė kalbėtojas; nuo 2023 m. gruodžio juos gali parsisiųsti bet kas, nuo 2026 m. kovo per internetinę paslaugą — ir antrojo etapo duomenis (kartu >4 PB).
 (~0,7 min)
