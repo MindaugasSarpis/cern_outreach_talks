@@ -253,5 +253,5 @@ return {
   rejected,
   unverified,
   not_checked: notChecked,
-  next: `Write ${TALK}/notes/review.md from kept[] (one section per slide)${skipped.length ? `, adding the findings marked real in ${skipped.map(resultFile).join(', ')} (lenses done in an earlier run)` : ''}, apply the fixes to the current text (the snapshot may be older), rerun pnpm talk review, and report unverified[] and not_checked to the owner.`,
+  next: `Write ${TALK}/notes/review.md from kept[] (one section per slide)${skipped.length ? `, adding the findings marked real in ${skipped.map(resultFile).join(', ')} (lenses done in an earlier run)` : ''}, apply the fixes to the current text (the snapshot may be older), rerun pnpm talk review, and report unverified[] and not_checked to the owner. Then hand off (docs/talk-quality.md §8): Status (with the review's HEAD SHA, the next since) and Decisions in ${TALK}/CLAUDE.md, a commit of the talk's files by path, and this session's line via python3 -I .claude/skills/talk-quality/status_line.py <slug>.`,
 }

@@ -67,6 +67,10 @@ pnpm talk check <name>                 # the scaffold builds
 
 Use `00` for an unknown day or month, as the October talks did. Work only
 inside the talk's worktree from now on; the main checkout stays on main.
+The talk then gets its own session: `pnpm talk session <name>` opens a
+window named after it in the tmux session `talks`, running Claude in the
+worktree (or prints the attach command when that window is already open).
+The rest of the talk's work happens there, starting from its Status.
 
 ## 5. Fill talks/<t>/CLAUDE.md
 

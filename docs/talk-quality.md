@@ -310,8 +310,14 @@ boundary, before the next step starts:
    and `pnpm talk sessions` read this file, so keep the line current
    instead of sending progress messages.
 
+The saved workflows end a step as well. Their agents change no git state,
+so when a run returns, the main loop files its result and does the three
+steps above; each workflow's `next` says so.
+
 When the context has grown large or a usage limit is close, tell the owner
 after the commit: "/compact, then 'continue <talk>'" picks up from Status.
+A parked talk ends on a hand-off like any step; its window can then be
+closed, and `pnpm talk session <name>` reopens it from Status later.
 
 ## 9. Waiting, renders and pictures
 

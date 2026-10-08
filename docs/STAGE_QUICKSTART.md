@@ -5,15 +5,17 @@ README is the reference for everything else; read the copy that matches the
 talk's pin, `talks/<t>/node_modules/slidev-addon-stage/README.md`. Items marked
 **from v0.6** are being built on the slidev-videos branches `feat/shots-v2`,
 `feat/broadcast` and `fix/stage-addon`; until a talk is bumped to v0.6 they are
-not in its `node_modules`. After the release a talk moves with
-`pnpm talk bump-toolkit v0.6.0 --talk <name> --dry-run`, then without
-`--dry-run`.
+not in its `node_modules`. After the release the talk's session moves its
+own pins with `pnpm talk pin <sha>` in the talk's worktree (both addon pins
+and a reinstall); `pnpm talk bump-toolkit v0.6.0 --talk <name> --dry-run`,
+then without `--dry-run`, also moves env.yaml and the scaffolder.
 
 ## Start
 
 ```bash
 pnpm talk new 2026_11_05_Venue --stage blue     # worktree, branch, scaffold, install
 pnpm talk open venue                            # prints the worktree path
+pnpm talk session venue                         # the talk's own Claude session, a window in tmux session "talks"
 pnpm talk dev venue                             # http://localhost:3030
 ```
 

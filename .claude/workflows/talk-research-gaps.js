@@ -41,7 +41,8 @@ const BUDGET = A.personalBudget || 15
 // files): skipped, their files are filed with the rest. "images" and
 // "personal" skip those lanes. A run that can still be resumed by its run id
 // needs none of this; resume caches every finished agent.
-const DONE = new Set((Array.isArray(A.done) ? A.done : []).map((d) => String(d).replace(':', '-')))
+// A label such as research:lhc or verify:lhc names its lane.
+const DONE = new Set((Array.isArray(A.done) ? A.done : []).map((d) => String(d).replace(/^(research|verify):/, '')))
 
 // Effort per stage, set here rather than inherited (the usage audit of 8 October
 // 2026 found every sampled agent message at effort xhigh). The split is not
@@ -320,5 +321,5 @@ return {
   personal: personalResult ? { answered: personalResult.answered.map((a) => a.gap), unanswered: personalResult.unanswered, calls: personalResult.calls, brief: BRIEF } : null,
   open_questions: [...(plan.open_questions || []), ...laneResults.filter(Boolean).flatMap((r) => r.open_questions || [])],
   unverified,
-  next: `To retry failed lanes, rerun with args.done from \`python3 -I .claude/skills/talk-research/lane_facts.py --done ${TALK}/research/*.json\`, which skips the verified ones. File the lanes as skill talk-research step 3 says, from ${REPO}: python3 -I .claude/skills/talk-research/lane_facts.py ${TALK}/research/*.json | pnpm -s talk facts add --from-json - --dry-run, then without --dry-run (an existing id is refused: compare, then --id <id> and --replace), then pnpm talk facts check; copy the speaker caveats from the lane notes under Figures in ${TALK}/CLAUDE.md, record the photos with scripts/photo_fetch.py <ref> --record, and delete ${TALK}/research/*.json. Cite the ids as <!-- facts: id --> in a separate comment before each slide's notes comment, never as its last comment. Report unverified[] to the owner.`,
+  next: `To retry failed lanes, rerun with args.done from \`python3 -I .claude/skills/talk-research/lane_facts.py --done ${TALK}/research/*.json\`, which skips the verified ones. File the lanes as skill talk-research step 3 says, from ${REPO}: python3 -I .claude/skills/talk-research/lane_facts.py ${TALK}/research/*.json | pnpm -s talk facts add --from-json - --dry-run, then without --dry-run (an existing id is refused: compare, then --id <id> and --replace), then pnpm talk facts check; copy the speaker caveats from the lane notes under Figures in ${TALK}/CLAUDE.md, record the photos with scripts/photo_fetch.py <ref> --record, and delete ${TALK}/research/*.json. Cite the ids as <!-- facts: id --> in a separate comment before each slide's notes comment, never as its last comment. Report unverified[] to the owner. Then hand off (docs/talk-quality.md §8): Status and Decisions in ${TALK}/CLAUDE.md, a commit of the talk's files by path, and this session's line via python3 -I .claude/skills/talk-quality/status_line.py <slug>.`,
 }

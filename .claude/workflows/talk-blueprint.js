@@ -301,5 +301,5 @@ return {
   judges: final ? judges.map((j) => ({ best: j.best, risks: j.risks })) : judges,
   research_gaps: final ? final.research_gaps : proposals.flatMap((p) => p.research_gaps || []),
   unverified: lost,
-  next: 'Review the blueprint with the owner (or log it under Decisions when AFK), write the outline and draft into deck.md citing the research_gaps ids, then run the talk-research-gaps workflow (skill talk-research): its plan agent finds the uncited and missing ids in the deck, or pass research_gaps as lanes[].claims. Never pass them as briefGaps, which only searches the owner\'s own mail, Drive and calendar.',
+  next: `Hand off first (docs/talk-quality.md §8): Status and Decisions (the blueprint's decisions among them) in ${TALK}/CLAUDE.md, a commit of the talk's files by path with the blueprint, and this session's line via python3 -I .claude/skills/talk-quality/status_line.py <slug>. Then review the blueprint with the owner (or log it under Decisions when AFK), write the outline and draft into deck.md citing the research_gaps ids, then run the talk-research-gaps workflow (skill talk-research): its plan agent finds the uncited and missing ids in the deck, or pass research_gaps as lanes[].claims. Never pass them as briefGaps, which only searches the owner's own mail, Drive and calendar.`,
 }
