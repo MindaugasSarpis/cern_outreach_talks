@@ -59,14 +59,23 @@ or busy world detail (high lumVar behind body text), that nothing is near
 white (lumMean), that no readable text is under <floor> canvas px, that
 mixed-case names are not uppercased (LHCb), and that the lower third of
 content slides is clear. Do not praise; list problems only, worst first.
+Never let one command block for more than 240 s (a Bash timeout of at most
+240000 ms), and never sleep or poll: what would take longer goes back as
+an open item.
 ```
 
 `<floor>` is 18 for a projector talk and 37 for a broadcast (`talk-broadcast`).
 
 Framing goes the same way. A subagent changes the slide's `space:` pose,
-reshoots that slide (`pnpm talk shots <t> --slides <n>`), looks within the
-same cap of 12 images, and returns the pose it settled on and why; the main
-loop reads its text, checks the diff and commits.
+reshoots that slide (`pnpm talk shots <t> --slides <n>`, from the worktree
+root), looks within the same cap of 12 images, and returns the pose it
+settled on and why; the main loop reads its text, checks the diff and
+commits. Its brief carries the same rule as the one above: never block one
+command for more than 240 s (a Bash timeout of at most 240000 ms). The
+shots wait for the render slot while another session renders (a full
+recording holds it for half an hour or more), so a reshoot that cannot
+start in time comes back as an open item, with the pose untested, never as
+a wait.
 
 ## 3. A full review
 
