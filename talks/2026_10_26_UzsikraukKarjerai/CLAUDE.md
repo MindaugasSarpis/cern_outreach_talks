@@ -46,6 +46,16 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Status
 
+- 2026-10-08 (night, latest): **complete, pending the owner's review; on the
+  branch, not yet deployed.** After the owner reviewed 01bed17 (live, run
+  37832082933): an LHCb introduction (slides 6–7), the search, „Neradau.“ and
+  „Ko išmokau“ removed; then the confirmed findings of the final talk-review
+  workflow (6 lenses with verifiers) applied. Recorded on the exact clock
+  and checked: slides 6–8, 10, 11 (sheets in ~/talks/.cache/uzk-review/v6,
+  v8r, v9r). `talk lint --release` 0 errors; check/build ok. Merged
+  origin/main (tooling, 9f7cea0). Next: redeploy when the Scheduler calls the
+  turn (after OpenData and Innoday).
+
 - 2026-10-08 (late night): **complete, pending the owner's review.** Fifth
   version deployed as main 336e0ea (Pages run 37830786185 green; the talk
   URL returns 200). After it, a final text round on the branch, not yet
@@ -109,38 +119,6 @@ Approved outline: `notes/outline-v5.md` with its two change sections
   Then the speaker's answers (Figures below) and Delfi's (Brief).
 - Earlier: third version deployed as main 047fe53 (Pages run 37779392470);
   a3001a1 and 71fb6f1 before it, all rejected by the owner.
-
-### Handoff (2026-10-08, workstation session ended; the owner moved to the HPC cluster)
-
-- **Owner's rework state.** Third version deployed (main 047fe53). The
-  owner's last verdict, on the second version, was "the story telling and
-  the flow is not coherent; visuals good but a bit washed out, needs to be
-  more striking but not synthetic not sloppy, photorealistic". This third
-  version answers that (one chronological thread, real photos/footage/plots,
-  near-black ground) but the owner has not reviewed it yet.
-- **Branch ahead of main, not deployed** (this commit): denser coastline
-  grains (Natural Earth points every 0.07°, size 4, alpha 0.8), a dull straw
-  haystack (`hayColor` #8f7d55) so the white-gold "method works" cluster on
-  slide 12 stands out (`dance`: #ffe08a, larger, delay 6 s), CERN label 8 px
-  right. Unverified: headless shots on the slow software clock caught slides
-  6 and 12 mid-assembly. Verify the end states with the recorder on its exact
-  clock (`slidev-stage-record dist out --slides 6-6 --fps 10 --size 1280x720
-  --hold 14 --gl auto`, then the same for 12 with `--hold 22`; take the last
-  frame), then deploy if they read.
-- **Next step.** The owner reviews the deployed deck (story and look); then
-  the speaker's [PATIKSLINTI] items (re-listen to the transcript quotes,
-  confirm the after-school courses, the Glasgow job and the laser work, why
-  he left particle physics, the "known particles" plot, the 2022 slide) and
-  Delfi's answers (feed type, squeeze size, 25p/50p, who advances slides,
-  logo/super/clock positions, files in advance).
-- **Pin.** slidev-videos `feat/broadcast` efacca2 (both addons), not yet a
-  release. Move to the release tag once the toolkit integration lands
-  (`pnpm talk pin` when the talk CLI is on main), re-run `slidev-stage-safe
-  --broadcast` and reshoot.
-- **Filming.** Delfi studio, Vilnius, 26 Oct 2026 16:00–18:00, no audience;
-  streamed to classrooms 27 Oct 2026 12:00. Laptop at 1920×1080, 50 Hz,
-  silent; a clicker. Record per-slide MP4s and plates as a backup before
-  the day.
 
 ## Decisions
 
@@ -274,71 +252,33 @@ Approved outline: `notes/outline-v5.md` with its two change sections
   25p or 50p; who advances slides; confidence monitor; logo/super/clock
   positions; flash check.
 
-## Notes moved from the root CLAUDE.md (2026-10-08)
+## The world (current, 2026-10-08)
 
-From the root's list of current talks:
+Online talk (not TV): the TV rules in earlier notes are history. Pinned to
+slidev-videos v0.5.0. Palette `blue` with the talk's own violet-gold
+colours; `options: { dustSize: 2.2, reach: 22, nebula: 0.4 }`.
 
-- `talks/2026_10_26_UzsikraukKarjerai/` — „Vadovėlio gale atsakymo nėra“, an
-  ~10-minute Lithuanian talk for grades 9–12 at „Užsikrauk karjerai“ (Delfi ×
-  Lietuvos Junior Achievement), filmed in the Delfi studio on 26 Oct 2026
-  with no audience, streamed to classrooms on 27 Oct 2026 12:00. Built for
-  television on the packaged stage (same `640eaa5` pin), its own violet-gold
-  palette and six talk-owned builders. See "Užsikrauk karjerai" below.
-
-### Užsikrauk karjerai (2026_10_26_UzsikraukKarjerai)
-
-Fifth version (2026-10-08), 14 slides, about 10 minutes, online (not TV;
-the TV rules below are history). The viewer judges a bump: a histogram
-fills grain by grain (2003 yes, 2008 no as illustrations; LHCb's real 2019
-J/ψ p bins from HEPData on slide 7, the three peaks lighting up), then the
-speaker's search fills with no peak („Neradau.“), what the work trains, the
-route across Europe, three things to do this year, the closing question.
-Outline: `notes/outline-v5.md`; the talk's own `CLAUDE.md` holds status and
-decisions. Pinned to slidev-videos v0.5.0. Talk-owned builder `histogram`
-(`setup/grains.js`): one grain per entry, random order, easing fill,
-`marks` bins light once full.
-
-- **Television rules** (research 2026-10-07; from the event's past
-  recordings and broadcast standards): Delfi/LJA showed slides squeezed to about two-thirds
-  of the frame in past editions and stream at ~2.5 Mbps, watched on classroom
-  projectors. So `styles/index.css` sets readable text ≥ 49 px on the 980
-  canvas (96 px at 1080p), big lines 58–80 px, numbers 130 px, all inside
-  x 98–882 / y 55–408 and out of the logo/name-super corners; the headmatter
-  turns off film grain, aberration, halos and sound and sets fewer, bigger
-  dust grains, a low nebula and slower flights (`options: { grain: 0,
-  aberration: 0, dustSize: 3, density: 0.6, streak: 0.4, nebula: 0.3, bloom:
-  0.45, flight: [2.5, 5] }`); the grains' twinkle is slow and shallow. Laptop
-  output 1920×1080 at 50 Hz. No full-frame flashes (ITU-R BT.1702).
-- **Stations** (one axis, 300 apart, so only one is ever in frame): `quarks`
-  (hero; `quintet`), `search` (`ghost` with a haystack,
-  `streams` `dance` and `phantom`), `europe` (`map`, `path` `route`: Vilnius →
-  CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius; pose
-  `whole`, no sway, with HTML city labels projected from it).
-  `stage.options.reach: 22`. The clips and photos cover the world on their
-  slides; the collider ring, the grain galaxy and the `origin` station with
-  its matter/antimatter `pairs` are gone.
-- **Talk-owned builders** (`setup/grains.js`, `stage:check --types
-  path,streams,pairs,ghost,map,quintet`), all driven by `<Grains :set>`:
-  - `pairs` — matter (gold) and antimatter (blue): 1 the hot cloud forms, 2 the
-    pairs meet and go out as light (outer first; brightness only falls), 3 the
-    remainder gathers into a knot. Forward one step plays it, anything else
-    shows the step settled; an arrival from elsewhere (or `c`) replays up to
-    the current step unless a step started under 5 s ago.
-  - `quintet` — five clusters joined by flowing strings; per-step `{ hold,
-    light }`: idea (scattered), claim (half-held, dim), retraction (scattered),
-    discovery (held, bright).
-  - `ghost` — faint clusters that come together and drift apart, never
-    holding; `hay` adds a wide faint cloud round it; with a `name`, step 0
-    hides the clusters and step 1 lets them appear (the single „Neradau.“).
-  - `path` — a Catmull-Rom trail through ≤ 16 waypoints, drawn on to waypoint
-    k, each leg arcing off the ground (`arc`); a waypoint at the same place as
-    an earlier one relights that cluster instead of stacking a new one.
-  - `map` — Europe's coastline and land borders as grains on the ground plane,
-    from Natural Earth 1:50m (`scripts/make_europe.py` → `public/data/
-    europe.json`; one unit = one degree of latitude, x scaled by cos 52°).
-  - `streams` — OpenData's, with a per-stream `from` (many places to one).
-- `setup/Count.vue` prints Lithuanian numbers: a narrow space from five digits
-  up, none in years (`:group="false"`), decimal comma.
-- `public/figures/planai-2022.jpg` is the speaker's own LPPM 2022 slide (p. 16
-  of the public MSarpisIntro.pdf on Indico).
-- Shots: `stage:shots --wait 30000` under SwiftShader.
+- **Stations** (one axis, 300 apart, only one in frame): `quarks` (hero,
+  `quintet`: the cover and the close), `europe` at 1200 (`map` and the `path`
+  `route` Vilnius → CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn →
+  Vilnius; pose `whole`, no sway, HTML city labels projected from it, shown
+  after 7.5 s), `trial` at 1500 (`histogram` `th1` 140 entries and `th2`
+  3 500, the illustration of slides 2–4), `lhcb` at 1800 (`histogram` `jp`,
+  LHCb's 2019 m(J/ψ p) bins, `marks` over Pc(4312), Pc(4440), Pc(4457)). The
+  LHC clip and the two photographs cover the world on slides 5–7, which rests
+  at `lhcb` under them.
+- **Talk-owned builders** (`setup/grains.js`, driven by `<Grains :set>`):
+  `histogram` (one grain per entry in random order, an easing fill, ticks
+  and a dimmed background once full; a fill requested during a flight starts
+  on arrival, with a 6 s fallback), `quintet` (five clusters, per-step hold
+  and light), `map`, `path`; `pairs`, `ghost` and `streams` stay registered
+  but no slide uses them. Every grain sprite is capped at 48 px and fades
+  within a few units of the camera.
+- **Data**: `public/data/jpsip-2019.json` (HEPData ins1728691 Table 2),
+  `theta-toy.json` (illustration, seeds inside), `europe.json` (Natural
+  Earth 1:50m via `scripts/make_europe.py`).
+- `setup/Count.vue` prints Lithuanian numbers (no slide uses it now).
+- Shots under SwiftShader: `--wait 30000` or more; a fresh single-slide load
+  needs about 40 s before the world draws. For animated slides use
+  `slidev-stage-record` (exact clock); it enters each slide right after the
+  one before, so a fill that restarts there is an artefact.
