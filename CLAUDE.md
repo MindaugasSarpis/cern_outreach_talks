@@ -451,6 +451,8 @@ far-back scale poses stay nearest the store.
   `videos:publish`, `videos:preflight`.
 - Slides carry main points only (owner, 2026-10-08: "people will not read it,
   I will just say it"); what they leave out is in the notes under "Say:".
+  No `.src` footers on the slides either ("don't need the sources"): each
+  slide's sources are a "Sources:" line in its notes.
 - `vite.config.ts` excludes `slidev-addon-stage` and `three` from
   pre-bundling, else `slidev dev` has two builder registries (the world never
   sees `lineup`/`streams`) and two copies of three.

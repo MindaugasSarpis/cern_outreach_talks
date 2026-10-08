@@ -90,8 +90,6 @@ space: { at: [-59.6, -1.4, 7], dist: 10, yaw: -30, pitch: 10, dim: 0.25 }
 
 </div>
 
-<div class="src">R. Aaij et al. (LHCb), “Evolution of the energy efficiency of LHCb’s real-time processing”, EPJ Web Conf. 251 (2021) 04009 · LHCb Starterkit, Run 3 data flow</div>
-
 <!--
 Speaker (~0.6 min): we are where the bunches meet. Each spray is one
 crossing; LHCb sees what flies out of it: tracks, energies, particle types.
@@ -101,6 +99,7 @@ keep. About one byte in four hundred goes to tape."
 Background, not for the slide: the first software stage runs at the average
 non-empty crossing rate, 30 MHz; raw data about 4 TB/s (Aaij et al. 2021);
 the design rate to tape is 10 GB/s (LHCb Sprucing paper, arXiv:2506.20309).
+Sources: R. Aaij et al. (LHCb), “Evolution of the energy efficiency of LHCb’s real-time processing”, EPJ Web Conf. 251 (2021) 04009 · LHCb Starterkit, Run 3 data flow
 -->
 
 ---
@@ -121,8 +120,6 @@ One sphere: a laptop's disk
 
 </div>
 
-<div class="src">HD streaming: up to 3 GB an hour (Netflix help centre) · decimal units, 1 TB = 1000 GB</div>
-
 <!--
 Speaker (~0.4 min). Say: one sphere is one terabyte, the disk of a laptop,
 about 330 hours of HD video. The scale for the rest of the talk. One terabyte, one
@@ -130,6 +127,7 @@ sphere; point at it. LHCb's detector reads out four of these every second.
 From here on every sphere is a terabyte, every pile is built of the same
 spheres, and nothing shrinks: when the camera pulls back, what came before
 stays beside the new pile at its true size.
+Sources: HD streaming: up to 3 GB an hour (Netflix help centre) · decimal units, 1 TB = 1000 GB
 -->
 
 ---
@@ -150,8 +148,6 @@ All of Run 1, public · prepared and released by Mindaugas Šarpis
 
 </div>
 
-<div class="src">LHCb, “LHCb releases entire Run 1 dataset”, opendata.cern.ch, 20 Dec 2023 · VU Faculty of Physics news · VU news, 30 Jul 2026</div>
-
 <!--
 Speaker (~0.6 min): eight hundred spheres pile up beside the first one. The release completed on
 20 December 2023: the whole Run 1 proton–proton sample, about 800 TB. A
@@ -162,6 +158,7 @@ close to two years (M. Šarpis, "LHCb Run I Data is Released", Jan 2024). I
 did this work in Bonn as part of LHCb's Data Processing and Analysis (DPA)
 project, and brought it with me to Vilnius. Since 1 August 2026 I coordinate
 the collaboration's Analysis Preservation and Open Data work package.
+Sources: LHCb, “LHCb releases entire Run 1 dataset”, opendata.cern.ch, 20 Dec 2023 · VU Faculty of Physics news · VU news, 30 Jul 2026
 -->
 
 ---
@@ -182,8 +179,6 @@ Over 4 PB · half after 5 years, all after 10
 
 </div>
 
-<div class="src">LHCb outreach, “LHCb releases service to access Run II data”, 3 Mar 2026 · policy: LHCb, arXiv:2504.00610 (2025)</div>
-
 <!--
 Speaker (~0.5 min). Say: since 2026 Run 2 is open as well: with Run 1,
 over 4 petabytes, four thousand spheres. You do not download it whole: you
@@ -196,6 +191,7 @@ The policy: LHCb agreed in 2013 to publish about 50% of a run's data five
 years after it ends and all of it after ten (since 2020 within CERN's Open
 Data Policy for the LHC experiments). The dates have slipped a little: all
 of Run 1 was due by the end of 2022 and was complete in December 2023.
+Sources: LHCb outreach, “LHCb releases service to access Run II data”, 3 Mar 2026 · policy: LHCb, arXiv:2504.00610 (2025)
 -->
 
 ---
@@ -221,11 +217,6 @@ Speaker (~0.6 min). Say: and this is what is coming: the High-Luminosity
 LHC, 600 petabytes, six hundred thousand spheres, 150 times everything that
 is open today. Under CERN's open data policy its analysis-ready part is to
 be opened too, and that work is what we do in Vilnius. The first terabyte is a speck under its label.
-[CHECK: source for 600 PB in the HL-LHC era, and whether it is LHCb's or
-all LHC experiments'. The only public "600 PB" found is CERN's figure for
-what all LHC experiments prepared to store in Run 3 (home.cern, "Storage");
-public HL-LHC storage estimates are about ten times today's per year. Add
-the source as a .src line here once known.]
 -->
 
 ---
@@ -241,8 +232,6 @@ space: { at: [10, -3.2, -1], dist: 30, yaw: 26, pitch: 10, dim: 0.3 }
 <li>Theorists, schools, other universities</li>
 <li>Service co-written in LHCb Vilnius</li>
 </ul>
-
-<div class="src">LHCb outreach, 3 Mar 2026 · arXiv:2504.00610 · DPHEP Global Report 2026, arXiv:2607.06775 · arXiv:2609.09275</div>
 
 <!--
 Speaker (~0.6 min). Say: name the particle decay you want and LHCb's online
@@ -260,6 +249,7 @@ about 20 requests, from theorists and phenomenologists (exotic hadrons, CP
 asymmetries), people testing fitting methods, and school projects.
 Stamenkovic and Landsberg (Brown), arXiv:2609.09275: simulated LHCb open
 data, checked on 2017 collision open data.
+Sources: LHCb outreach, 3 Mar 2026 · arXiv:2504.00610 · DPHEP Global Report 2026, arXiv:2607.06775 · arXiv:2609.09275
 -->
 
 ---
@@ -276,8 +266,6 @@ space: { at: [15.5, -3.4, 4], dist: 27, yaw: 12, pitch: 4, dim: 0.3 }
 <li>First LHCb masterclass in Lithuania, 2025</li>
 </ul>
 
-<div class="src">M. Šarpis, “LHCb Run I Data is Released”, Jan 2024 · CERN Open Data record 401 · VU course workbook · LHCb Vilnius report, Jan 2026</div>
-
 <!--
 Speaker (~0.6 min). Say: Z bosons seen through their decay into two muons,
 one of the first analyses of the released data, done in Vilnius; every
@@ -293,6 +281,7 @@ gives every student the same open LHCb file: the D⁰ → K⁻π⁺ masterclass
 sample, record 401 (53 948 events, 91 583 candidates). The 2025 masterclass:
 about 65 participants from Lithuania and 35 from Ukraine, in English, run by
 students [CHECK: that it ran on the open masterclass files].
+Sources: M. Šarpis, “LHCb Run I Data is Released”, Jan 2024 · CERN Open Data record 401 · VU course workbook · LHCb Vilnius report, Jan 2026
 -->
 
 ---
@@ -311,8 +300,6 @@ space: { at: thesis, dim: 0.3 }
 
 </div>
 
-<div class="src">LHCb, PRL 115 (2015) 072001 · LHCb Vilnius, CERN Baltic Conference, Kaunas, 2025 · “First”: no earlier thesis analysing LHCb open data on INSPIRE, Oct 2026</div>
-
 <!--
 Speaker (~0.8 min). Say: in 2015 LHCb discovered pentaquarks, particles of
 five quarks. The collisions they were found in are now public, and Dominykas
@@ -330,6 +317,7 @@ data; they did not analyse it.)
 decay and the data (Run 1 files, or Run 2 through the Ntupling Service);
 his result or a plot; that the Z → μμ analysis on the previous slide was not
 a thesis.] `c` builds the pentaquark again.
+Sources: LHCb, PRL 115 (2015) 072001 · LHCb Vilnius, CERN Baltic Conference, Kaunas, 2025 · “First”: no earlier thesis analysing LHCb open data on INSPIRE, Oct 2026
 -->
 
 ---
