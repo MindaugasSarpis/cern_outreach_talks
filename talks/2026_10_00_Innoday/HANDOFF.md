@@ -203,3 +203,23 @@ Now: speech ~17,5 min + clips (opener 4:26, bookend 0:30; the CERN aerial
   firms slide instead); one photo per problem in Part II — drop the 1993 web
   slide (−0,7) and Artemis (−0,4); KT and +14 % to one sentence each (−0,8).
   The spine (machine → limits → inventions → firms) stays whole.
+
+## Deployed (2026-10-08, second round)
+
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+commit 1d836da, Pages run 37836227756 (build and deploy green), URL 200; the
+live assets carry place mode, the depth maps and the bookend strip.
+On the owner's go, with `--ready-skip lint` (run by hand: 0 errors) and
+`--ready-skip safe` (talk.py still reads `grain: 0.012` as broadcast).
+In this round: Part II as places (each photo a depth relief at the end of its
+LHC part's strand; strands from the ring; the part named during the flight;
+flight 1.6 s, condense 0.8 s, text up in ~2.6–3.8 s); Part I in runs (media,
+then world) with one match cut (the grain ring → the tunnel's curve); the
+bookend clip; „Ačiū“ and the part titles without subtitles; the alumni claim
+corrected; the ending ask in the notes; slidev-videos v0.5.1.
+A text-merged pnpm-lock.yaml had re-resolved @slidev/cli to 52.20 and
+markdown-it 15 (build: ERR_PACKAGE_PATH_NOT_EXPORTED); fixed by taking main's
+lock and reinstalling (1d836da).
+Next: the expansion funnel → CMB opening (Planck map reprojected in
+~/talks/.cache/innoday/funnel/cmb), cut the Higgs and 76/86 slides, the final
+text round, print stills, the ultracode review, deploy.
