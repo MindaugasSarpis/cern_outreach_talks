@@ -25,7 +25,10 @@ Slidev counts it (hidden slides are not counted).
   FONT-SMALL     warning  a talk CSS or inline font size under 18 px outside
                           .src, .credit and .k
   NO-SRC         warning  a content slide without a .src line (15 words or more,
-                          or a number on it)
+                          or a number on it). With `sources: notes` in the
+                          headmatter (the deck keeps its sources in the
+                          notes) a 'Sources:' / 'Šaltiniai:' line in the
+                          slide's notes is asked for instead
   CHECK          warning  an open mark left in the deck below the headmatter
                           (OPEN_MARKS): [CHECK…], [PATIKSLINTI…] (a question
                           for the owner), [ASR…] (a quote from an automatic
@@ -91,6 +94,9 @@ LT_ENGLISH = re.compile(r"\b(Part|Thank you|Thanks|Questions?|Q&A)\b(?![\w-])")
 SLIDE_REF = re.compile(r"\b(?:slides?|skaidr\w*)\s+(\d{1,3})\b", re.I)
 OPEN_MARKS = ("CHECK", "PATIKSLINTI", "ASR", "TODO")     # [CHECK], [ASR: re-listen], …: still to settle
 OPEN_MARK = re.compile(r"\[(?:%s)\b" % "|".join(OPEN_MARKS))
+SOURCES = ("slides", "notes")                            # headmatter `sources:` where a slide's sources are
+NOTES_SRC = re.compile(r"(?im)^[ \t]*(?:[-*•][ \t]*)?(?:sources?|šaltin(?:is|iai)|references?)"
+                       r"(?:[ \t]*\([^)\n]*\))?[ \t]*:")
 LHCB = re.compile(r"LHCb")
 
 LT_WORDS = {   # Lithuanian words with a meaning the talk does not want
@@ -138,6 +144,7 @@ class Lint:
         self.upper = self._contexts("uppercase")
         self.keep = self._contexts("none")
         self.lang = self._lang()
+        self.sources = self._sources()
         self.timing: dict = {}
 
     # ---------------------------------------------------------------- utils
@@ -168,6 +175,16 @@ class Lint:
                 words += 1
                 lt += bool(LT_LETTERS.search(w))
         return "lt" if words and lt / words >= 0.08 else "en"
+
+    def _sources(self) -> str:
+        val = self.deck.headmatter.get("sources")
+        if val is None:
+            return "slides"
+        if str(val).strip().lower() in SOURCES:
+            return str(val).strip().lower()
+        self.add("NO-SRC", "warning", f"headmatter `sources: {val}` is neither slides nor notes; read as slides",
+                 "deck.md", 1)
+        return "slides"
 
     # --------------------------------------------------------------- checks
     def run(self):
@@ -323,8 +340,17 @@ class Lint:
             self.add("WORDS", "warning", f"{n} words on screen (at most {MAX_WORDS})", "deck.md", s.content_line, s.number)
         is_video = bool(td.VIDEO.search(s.body))
         if s.layout not in NON_CONTENT and not is_video and (n >= 15 or (n >= 3 and re.search(r"\d", text))):
-            if not any("src" in el.classes for el in td.elements(s.body)):
-                self.add("NO-SRC", "warning", f"content slide ({n} words) without a .src line",
+            if any("src" in el.classes for el in td.elements(s.body)):
+                return
+            in_notes = bool(NOTES_SRC.search(s.notes))
+            if self.sources == "notes":
+                if not in_notes:
+                    self.add("NO-SRC", "warning", f"content slide ({n} words) without a 'Sources:' line in its notes "
+                             "(the headmatter says sources: notes)", "deck.md", s.content_line, s.number)
+            else:
+                self.add("NO-SRC", "warning", f"content slide ({n} words) without a .src line"
+                         + ("; its notes have a 'Sources:' line, so if the deck keeps its sources there, "
+                            "say `sources: notes` in the headmatter" if in_notes else ""),
                          "deck.md", s.content_line, s.number)
 
     def check_marks(self, s: td.Slide, n_visible: int):

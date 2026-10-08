@@ -5,6 +5,7 @@ python3 -m unittest discover -s tests
 import io
 import json
 import sys
+import tempfile
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
@@ -18,6 +19,7 @@ import talk_map             # noqa: E402
 FIX = HERE / "fixtures"
 LT = FIX / "lt_talk"
 EN = FIX / "en_talk"
+NOTES = FIX / "notes_src_talk"
 BANK = FIX / "facts.jsonl"
 
 
@@ -153,6 +155,43 @@ class CleanFixture(unittest.TestCase):
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
             self.assertEqual(talk_lint.main([]), 2)
             self.assertEqual(talk_lint.main([str(FIX / "no_such_talk")]), 2)
+
+
+class SourcesInNotes(unittest.TestCase):
+    def lint_text(self, deck: str):
+        with tempfile.TemporaryDirectory() as d:
+            (Path(d) / "deck.md").write_text(deck, encoding="utf-8")
+            return lint(Path(d))
+
+    def test_notes_mode(self):
+        # `sources: notes`: 'Sources:', 'Šaltiniai:' and a .src footer all do; slide 5 has none
+        l = lint(NOTES)
+        self.assertEqual(l.sources, "notes")
+        found = codes(l, "NO-SRC")
+        self.assertEqual([f.slide for f in found], [5])
+        self.assertEqual(found[0].severity, "warning")
+        self.assertIn("'Sources:' line in its notes", found[0].message)
+
+    def test_default_mode_names_the_choice(self):
+        l = self.lint_text((NOTES / "deck.md").read_text(encoding="utf-8").replace("sources: notes\n", ""))
+        self.assertEqual(l.sources, "slides")
+        found = codes(l, "NO-SRC")
+        self.assertEqual([f.slide for f in found], [2, 3, 5])
+        self.assertIn("say `sources: notes` in the headmatter", found[0].message)
+        self.assertNotIn("sources: notes", found[2].message)       # slide 5's notes have no source line
+
+    def test_unknown_value(self):
+        l = self.lint_text((NOTES / "deck.md").read_text(encoding="utf-8").replace("sources: notes", "sources: footer"))
+        found = codes(l, "NO-SRC")
+        self.assertEqual([(f.line, f.slide) for f in found][0], (1, None))
+        self.assertIn("neither slides nor notes", found[0].message)
+        self.assertEqual([f.slide for f in found[1:]], [2, 3, 5])
+
+    def test_notes_source_pattern(self):
+        hit = lambda s: bool(talk_lint.NOTES_SRC.search(s))
+        self.assertTrue(all(map(hit, ("Sources: a · b", "x\nSource: CERN", "Šaltiniai: home.cern",
+                                      "  - Šaltinis: lrt.lt", "References (checked 2026-10-08): arXiv"))))
+        self.assertFalse(any(map(hit, ("The source for 600 PB is open.", "Sources say so", "Resources: none"))))
 
 
 class Map(unittest.TestCase):

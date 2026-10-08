@@ -139,7 +139,10 @@ The lint's timing gate sums `(~N min)`, `(N min)` and `(m:ss)` in the notes
 (cover title, subtitle and `.mt-md`, section title, `.kicker`) is an error:
 wrap it in a class the talk's CSS sets to `text-transform: none`. Cite
 facts in a deck with `<!-- facts: id1, id2 -->` above the speaker notes;
-the lint checks they exist and are confirmed or corrected.
+the lint checks they exist and are confirmed or corrected. A content slide
+wants a `.src` line; a deck that keeps its sources in the notes says
+`sources: notes` in the headmatter, and the lint then asks for a
+`Sources:` (or `Šaltiniai:`) line in that slide's notes instead.
 Open marks are `[CHECK…]`, `[PATIKSLINTI…]` (a question for the owner),
 `[ASR…]` (a quote from an automatic transcript, not re-listened yet) and
 `[TODO…]`, anywhere below the headmatter: warnings, errors with `--release`.
