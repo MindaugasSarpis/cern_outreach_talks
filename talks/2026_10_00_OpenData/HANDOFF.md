@@ -129,6 +129,10 @@ Toolkit pin: slidev-videos `12aa015`, for both addons.
 
 ## Open
 
+- After the tooling merge (chore/tooling-merge fddfcff parses the headmatter as
+  YAML) reaches main: write `grain: .012` back as `grain: 0.012`. The `.012`
+  only kept talk.py's old broadcast regex from misreading this venue talk.
+
 - Specks: gone on shots v12 (confirmed on a full-resolution crop of slide 7).
 - Opened directly at slide 7 (a deep link or a reload), the piles never
   appear; navigating there from earlier slides works. Cause not found yet:
