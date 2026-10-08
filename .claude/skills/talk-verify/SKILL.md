@@ -18,11 +18,12 @@ pnpm talk review <t> --json    # check + build into /tmp/talk-<slug>/site + shot
 ```
 
 Fix what lint reports before anyone looks at pictures. The `--json` output of
-`review` names the contact sheets and the NDJSON shots report (by default
-under `talks/<t>/shots/`). If shots are slow, probe first:
-`pnpm talk shots <t> --probe --slides <n>` reports frames per second and
-engine seconds per wall second; below 0.5 the deck has a fill-rate problem,
-not a waiting problem.
+`review` gives the shots directory as `.shots` (by default `talks/<t>/shots/`)
+and the NDJSON shots report as the `report` of the step named `shots`; the
+contact sheet is `sheet.png` in the shots directory. If shots are slow, probe
+first: `pnpm talk shots <t> --probe --slides <n>` reports frames per second
+and engine seconds per wall second; below 0.5 the deck has a fill-rate
+problem, not a waiting problem.
 
 Headless browsers share the CPU with other sessions: any direct run of a
 shots, record or safe tool goes through `flock /tmp/slidev-stage-shots.lock`,

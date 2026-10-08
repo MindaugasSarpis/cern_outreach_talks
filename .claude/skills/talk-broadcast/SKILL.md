@@ -50,12 +50,13 @@ gradient bands at stream bitrates. Pick a palette no other October talk uses.
   `styles/index.css`; keep `canvasWidth` at 980.
 - Text inside x 98–882 and y 55–408. Keep the logo corner (top right), the
   name-super corner (bottom left) and the clock corner (bottom right) clear.
-- Check (from v0.6, on the build `pnpm talk build <t>` writes):
-  `flock /tmp/slidev-stage-shots.lock node "$SLIDEV_STAGE_BIN/safe.mjs" /tmp/talk-<slug>/site --broadcast --json`
-  (`slidev-stage-safe`; without `SLIDEV_STAGE_BIN` the tool is in the talk's
-  `node_modules/slidev-addon-stage/bin`), which reports the smallest font and
-  every text box outside the safe box. Until then, read `fontPx` and the
-  boxes from the shots report (`talk-verify`).
+- Check (from v0.6): `pnpm talk safe <t>` runs `slidev-stage-safe` on the
+  build in `/tmp/talk-<slug>/site` (building it if needed), under the shots
+  lock, with `--broadcast` for a talk marked broadcast; `--slides 2-4` keeps
+  it small and `-- --json` prints the tool's own report. It reports the
+  smallest font and every text box outside the safe box; `pnpm talk ready`
+  runs it for a broadcast talk. Until v0.6, read `fontPx` and the boxes from
+  the shots report (`talk-verify`).
 
 ## 4. Motion and flashes
 
