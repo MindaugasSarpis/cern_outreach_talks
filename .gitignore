@@ -21,3 +21,10 @@ dist/
 *.webm
 *.m4v
 *.avi
+# claude code worktrees — separate checkouts, never committed (one per talk: pnpm talk new/open)
+.claude/worktrees/
+.claude/settings.local.json
+# per talk, never committed: headless shots (pnpm talk shots), throwaway scripts, workflow state
+talks/*/shots/
+talks/*/.scratch/
+talks/*/.wf/
