@@ -76,7 +76,7 @@ Techniškai: kadras — public/figures/opener_last.jpg (kol nėra naujo klipo �
 -->
 
 ---
-space: { at: [30, 40, -82], dist: 30, yaw: 55, pitch: 22, sway: 6, dim: 0.15 }   # round the web the frame became
+space: { at: [30, 40, -82], dist: 26, yaw: 28, pitch: 14, sway: 6, dim: 0.15 }   # round the web the frame became: gently, or the strands read as streaks
 ---
 
 <div class="world-caption narrow">

@@ -48,7 +48,9 @@ export function sampleFrame(img, { n = 140000, w = 960, h = 540, gamma = 1.7, fl
 // `rect` is where the picture is on screen, `view` the canvas the world is drawn
 // in (both client rects). Depth runs from `near` to `far` (camera units), set by
 // a smooth noise over the picture so a filament stays one curve in space.
-export function placeAlongRays(s, camera, rect, view, { near = 14, far = 46, relief = 0.85, jitter = 0.12, seed = 2 } = {}) {
+// `jitter` and `lift` (bright grains a little nearer) stay small: more of
+// either and a filament seen from the side is a smear, not a strand.
+export function placeAlongRays(s, camera, rect, view, { near = 14, far = 46, relief = 0.85, jitter = 0.03, lift = 0.05, seed = 2 } = {}) {
   camera.updateMatrixWorld()
   const m = camera.matrixWorld
   const tanH = Math.tan((camera.fov * Math.PI) / 360), aspect = camera.aspect
@@ -60,7 +62,7 @@ export function placeAlongRays(s, camera, rect, view, { near = 14, far = 46, rel
     const sx = rect.left + u * rect.width, sy = rect.top + w * rect.height
     const nx = ((sx - view.left) / view.width) * 2 - 1
     const ny = 1 - ((sy - view.top) / view.height) * 2
-    const d = clamp01(0.5 + relief * (fbm(u * 2.2, w * 2.2 * (rect.height / rect.width) * 1.78) - 0.5) + jitter * (rnd() - 0.5) - 0.18 * s.lum[k])
+    const d = clamp01(0.5 + relief * (fbm(u * 2.2, w * 2.2 * (rect.height / rect.width) * 1.78) - 0.5) + jitter * (rnd() - 0.5) - lift * s.lum[k])
     const z = near + (far - near) * d
     v.set(nx * tanH * aspect * z, ny * tanH * z, -z).applyMatrix4(m)
     pos[k * 3] = v.x; pos[k * 3 + 1] = v.y; pos[k * 3 + 2] = v.z
