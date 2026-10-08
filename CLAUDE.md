@@ -5,6 +5,13 @@ detailed operating reference; the human-oriented lifecycle walkthrough
 (new talk → media → preflight → venue → cleanup) is in
 [README.md](README.md) — keep the two consistent when workflows change.
 
+**Before any research, search the facts bank:** `python3 scripts/facts.py
+search <words>` (`pnpm talk facts <words>`) over `research/facts.jsonl`,
+290 checked public claims. Research only what it lacks, and add what a run
+confirms (`facts.py add`, `research/README.md`). Photos with checked
+licences are in `assets/photos/photos.toml`. Before handing a deck back,
+run `python3 scripts/talk_lint.py talks/<name>` (`pnpm talk lint`).
+
 ## Project overview
 
 Monorepo of CERN outreach talks delivered as **Slidev** decks. Shared
@@ -71,6 +78,10 @@ The conda env bundles everything: `nodejs`, `pnpm`, `python>=3.11`,
 ├── components/                   # shared Vue components (ParticleHero, ParticleDiagram, …)
 │   └── particle-hero/            # three.js scene behind ParticleHero (ported from CERN lessons landing)
 ├── scripts/new_talk.py           # scaffolder;  scripts/render_lib.py — animation rendering
+├── scripts/talk_lint.py          # deck lint (talk_deck.py parses), talk_map.py (slide map), facts.py, photo_fetch.py
+├── research/facts.jsonl          # FACTS BANK: one checked public claim per line (research/README.md)
+├── assets/photos/photos.toml     # photos with checked licence and credit (files fetched by photo_fetch.py)
+├── tests/                        # python3 -m unittest discover -s tests
 ├── videos/raw/                   # RAW BANK: originals for every talk (gitignored)
 └── talks/<name>/
     ├── deck.md                   # Slidev entry — theme: ../../theme, addons: [slidev-addon-videos], videos: {repo, release, fit}
@@ -109,6 +120,25 @@ pnpm venue              # pull --include-shared -> preflight -> build:portable -
 ```
 
 From the repo root: `pnpm videos:check-all`, `pnpm new-talk <YYYY_MM_DD_Name>`.
+
+Facts, lint and the map (stdlib Python, from the repo root; a talk is its
+directory or a unique part of its name; `--json` on all of them):
+
+```bash
+python3 scripts/facts.py search touchscreen   # rank research/facts.jsonl; show <id>; add …; check
+python3 scripts/talk_lint.py talks/<name>     # exit 1 on errors; --release makes open [CHECK]s errors
+python3 scripts/talk_map.py talks/<name>      # slide number, title, layout, clicks, pose, clip, minutes
+python3 scripts/photo_fetch.py cds:<ID>       # or commons:File:<name>; --dry-run, --record, --check
+```
+
+The lint's timing gate sums `(~N min)`, `(N min)` and `(m:ss)` in the notes
+(dot or comma decimals) plus clip lengths (manifest `trim`, else
+`public/video-frames/index.json`) against the headmatter `duration`
+(`duration: 30min`) plus 5%. 'LHCb' where the stage kit uppercases it
+(cover title, subtitle and `.mt-md`, section title, `.kicker`) is an error:
+wrap it in a class the talk's CSS sets to `text-transform: none`. Cite
+facts in a deck with `<!-- facts: id1, id2 -->` above the speaker notes;
+the lint checks they exist and are confirmed or corrected.
 `slidev-videos discover <keywords>` (any dir) searches open archives for clips.
 NVENC: the env ffmpeg has it, the bare `~/.local/bin/ffmpeg` does not —
 prefix `PATH=~/micromamba/envs/outreach_talks/bin:$PATH` for GPU encodes.
@@ -442,7 +472,7 @@ far-back scale poses stay nearest the store.
 - Structure: cover → quote → motivation → section breaks (`layout: section` + `hideInToc: true`).
 - Card system: `<div class="card card-primary pad-tight">…</div>`. Colors: `primary|secondary|accent|info|success|warning`. Padding: `pad-tight|compact|snug|balanced`.
 - Grids: `grid-2`, `grid-3` (theme classes — built-in gap; do **not** add `class="grid ..."` or `gap-md`).
-- Emoji format: `## 📊 **Title**` — emoji outside bold.
+- No emoji in headings (`talk_lint.py` flags them). The older decks' `## 📊 **Title**` is not for new talks.
 
 ## Aspect ratio and canvas
 
