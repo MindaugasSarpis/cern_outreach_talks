@@ -11,6 +11,7 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -393,8 +394,28 @@ def test_config_verb_reports_sources_and_passes_the_file_on(repo, env, tmp_path)
 
 # ---------------------------------------------------------------- render: srun, condor_run, or the lock
 
+# The system's own tools, without its job schedulers: a test fakes the
+# scheduler it is about, and a cluster with a real sbatch in /usr/bin (gluon)
+# must not answer for it.
+SCHEDULER_TOOLS = re.compile(r"^(sbatch|srun|sinfo|squeue|scancel|salloc|condor_\w+)$")
+_SYSTEM_BIN = None
+
+
+def system_bin():
+    global _SYSTEM_BIN
+    if _SYSTEM_BIN is None:
+        d = Path(tempfile.mkdtemp(prefix="talk-test-sysbin-"))
+        for src in (Path("/usr/bin"), Path("/bin")):
+            for f in src.iterdir() if src.is_dir() else ():
+                link = d / f.name
+                if not SCHEDULER_TOOLS.match(f.name) and not link.exists():
+                    link.symlink_to(f)
+        _SYSTEM_BIN = str(d)
+    return _SYSTEM_BIN
+
+
 def path_with(d, env):
-    return {**env, "PATH": f"{d}:/usr/bin:/bin"}
+    return {**env, "PATH": f"{d}:{system_bin()}"}
 
 
 @pytest.mark.parametrize("bins, want", [({"sbatch"}, "slurm"), ({"condor_submit"}, "condor"),
@@ -810,7 +831,7 @@ def boot(tmp_path):
         b.mkdir(exist_ok=True)
         for name, body in bins:
             fake_bin(b, name, body)
-        env = {"HOME": str(tmp_path / "home"), "PATH": f"{b}:/usr/bin:/bin", "OUTREACH_ROOT": str(tmp_path / "root"),
+        env = {"HOME": str(tmp_path / "home"), "PATH": f"{b}:{system_bin()}", "OUTREACH_ROOT": str(tmp_path / "root"),
                "BOOTSTRAP_DXG": str(tmp_path / "no-dxg"), "BOOTSTRAP_X0": str(tmp_path / "no-x0"), **(extra or {})}
         r = subprocess.run(["bash", BOOT, *(["--dry-run"] if dry else []), "--no-env", "--no-install",
                             "--prefix", tmp_path / "mm", "--config", conf, *args], env=env, capture_output=True, text=True)
