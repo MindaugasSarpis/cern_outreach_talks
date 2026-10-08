@@ -104,6 +104,7 @@ licence and credit were read on their record.
 
 ```bash
 python3 scripts/facts.py search touchscreen      # what is already checked
+python3 scripts/facts.py add --from-lane talks/<name>/research/*.json --dry-run   # file a research run
 python3 scripts/talk_lint.py talks/<name>        # language, wording, density, sources, timing, facts
 python3 scripts/talk_map.py talks/<name>         # one line per slide, numbered as Slidev numbers them
 python3 scripts/photo_fetch.py cds:<ID> --dry-run  # licence and credit before fetching

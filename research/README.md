@@ -78,8 +78,29 @@ schema above; add `--loose` to import a research run's output as it comes
 validated, and a source that is not public is refused. `--replace`
 overwrites an entry with the same id (to record a re-check, update
 `verdict`, `verified_on` and `verified_by` and keep the id); `--dry-run`
-validates without writing. One bank only: a talk does not keep its own
-facts file (`check` warns about `talks/*/research/*.json`).
+validates without writing. A value written as a plain number (`"89"`,
+`"6.8"`) is stored as a number. One bank only: a talk does not keep its own
+facts file (`check` warns about `talks/*/research/*.json` and says what to
+do with each).
+
+The `talk-research-gaps` workflow writes each lane to
+`talks/<t>/research/<lane>.json`: `{lane, slides, topic, status, facts:
+[...], notes, open_questions}`. `--from-json` refuses such a file, since it
+takes facts; `--from-lane` takes its facts list, drops keys the bank does
+not know (with a note) and reads empty strings as null. `images.json`, the
+image lane's file, is skipped: its photos go through `photo_fetch.py <ref>
+--record`. From the repo root:
+
+```bash
+python3 scripts/facts.py add --from-lane talks/<t>/research/*.json --dry-run   # then without --dry-run
+python3 scripts/facts.py add --from-lane talks/<t>/research/*.json --only <id> --replace   # a re-checked id
+```
+
+This files the same lines as the talk-research skill's
+`lane_facts.py talks/<t>/research/*.json | facts.py add --from-json -`.
+Then copy the speaker's caveats from the lane `notes` under Figures in the
+talk's `CLAUDE.md` and delete the lane files; they are scratch, never
+committed.
 
 When usable facts from one page were checked by different runs, `check`
 warns: two readings of one page can disagree. Read those facts together

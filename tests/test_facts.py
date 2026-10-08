@@ -4,6 +4,7 @@ python3 -m unittest discover -s tests
 """
 import io
 import json
+import re
 import shutil
 import sys
 import tempfile
@@ -158,6 +159,72 @@ class Cli(unittest.TestCase):
         e = {x["id"]: x for x in map(json.loads, self.bank.read_text(encoding="utf-8").splitlines())}["lt-test"]
         self.assertEqual((e["claim_en"], e["source_url"], e["as_of"]), ("New wording, corrected.", "https://home.cern/x", "2018-01-08"))
         self.assertIn("confidence", json.loads(out)["notes"][0])
+
+    def lane(self, name="lhc"):
+        """A lane file as talk-research-gaps writes it: empty strings, value a string, a stray key."""
+        d = self.dir / "talks" / "t1" / "research"
+        d.mkdir(parents=True, exist_ok=True)
+        (d / f"{name}.json").write_text(json.dumps({
+            "lane": name, "slides": "3-5", "topic": "the LHC", "status": "verified",
+            "facts": [
+                good(id="lhc-circumference", claim_lt="", value="26659", as_of="", used_in=["t1"],
+                     verified_by="talk-research-gaps verify:lhc 2026-11-01") | {"confidence": "high"},
+                good(id="lhc-run3-energy", claim_en="Run 3 collides protons at 13.6 TeV.", value="13.6", unit="TeV",
+                     verdict="unverified", verified_on="", verified_by="", used_in=["t1"]),
+            ],
+            "notes": [{"id": "lhc-circumference", "note": "often rounded to 27 km"}], "open_questions": [],
+        }), encoding="utf-8")
+        (d / "images.json").write_text('{"images": [], "missing": []}', encoding="utf-8")
+        return d / f"{name}.json"
+
+    def test_lane_file_hint_is_the_command(self):
+        lane = self.lane()
+        # --from-json refuses a lane file and names the verb that takes it
+        rc, out, _ = run("add", "--facts", str(self.bank), "--from-json", str(lane), "--loose", "--json")
+        self.assertEqual(rc, 1)
+        self.assertIn(f"facts.py add --from-lane {lane}", json.loads(out)["errors"][0]["errors"][0])
+        # check says what to run, from the repo root; run exactly that
+        rc, out, _ = run("check", "--facts", str(self.bank), "--json")
+        warns = json.loads(out)["warnings"]
+        hint = next(w for w in warns if w.startswith("talks/t1/research/lhc.json"))
+        self.assertIn("2 of its 2 facts are not in the bank", hint)
+        self.assertTrue(any(w.startswith("talks/t1/research/images.json") and "--record" in w for w in warns))
+        cmd = re.search(r"facts\.py (add --from-lane \S+ --dry-run)", hint).group(1).split()
+        cmd[2] = str(self.dir / cmd[2])                                # the hint is relative to the repo root
+        before = self.bank.read_text(encoding="utf-8")
+        rc, out, _ = run(*cmd, "--facts", str(self.bank), "--json")
+        self.assertEqual((rc, json.loads(out)["added"]), (0, ["lhc-circumference", "lhc-run3-energy"]))
+        self.assertEqual(self.bank.read_text(encoding="utf-8"), before)
+        rc, out, _ = run(*cmd[:-1], "--facts", str(self.bank), "--json")
+        self.assertEqual(rc, 0, out)
+        self.assertTrue(any("dropped keys confidence" in n for n in json.loads(out)["notes"]))
+        e = {x["id"]: x for x in map(json.loads, self.bank.read_text(encoding="utf-8").splitlines())}
+        self.assertEqual((e["lhc-circumference"]["value"], e["lhc-circumference"]["as_of"],
+                          e["lhc-circumference"]["claim_lt"]), (26659, None, None))
+        self.assertEqual((e["lhc-run3-energy"]["value"], e["lhc-run3-energy"]["verified_on"]), (13.6, None))
+        rc, out, _ = run("check", "--facts", str(self.bank), "--json")
+        hint = next(w for w in json.loads(out)["warnings"] if w.startswith("talks/t1/research/lhc.json"))
+        self.assertIn("its fact ids are all in the bank", hint)
+
+    def test_lane_only_and_replace(self):
+        lane = self.lane()
+        self.assertEqual(run("add", "--facts", str(self.bank), "--from-lane", str(lane))[0], 0)
+        self.assertEqual(run("add", "--facts", str(self.bank), "--from-lane", str(lane))[0], 1)    # ids exist
+        rc, out, _ = run("add", "--facts", str(self.bank), "--from-lane", str(lane), "--only", "lhc-circumference",
+                         "--replace", "--json")
+        self.assertEqual((rc, json.loads(out)["added"]), (0, ["lhc-circumference"]))
+        rc, out, _ = run("add", "--facts", str(self.bank), "--from-lane", str(lane), "--only", "nope", "--json")
+        self.assertEqual((rc, json.loads(out)["errors"][0]["id"]), (1, "nope"))
+        self.assertEqual(run("add", "--facts", str(self.bank), "--only", "lhc-circumference")[0], 2)
+        facts_list = self.dir / "facts.json"
+        facts_list.write_text(json.dumps([good(id="a-list-not-a-lane")]), encoding="utf-8")
+        rc, out, _ = run("add", "--facts", str(self.bank), "--from-lane", str(facts_list), "--json")
+        self.assertEqual(rc, 1)
+        self.assertIn("not a lane file", json.loads(out)["errors"][0]["errors"][0])
+        shutil.move(facts_list, lane.parent / "run.json")             # a research run's own list: --from-json --loose
+        rc, out, _ = run("check", "--facts", str(self.bank), "--json")
+        self.assertTrue(any("facts.py add --from-json talks/t1/research/run.json --loose" in w
+                            for w in json.loads(out)["warnings"]))
 
     def test_check(self):
         rc, out, _ = run("check", "--facts", str(self.bank), "--json")

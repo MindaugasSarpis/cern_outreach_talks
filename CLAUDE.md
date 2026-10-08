@@ -126,6 +126,7 @@ directory or a unique part of its name; `--json` on all of them):
 
 ```bash
 python3 scripts/facts.py search touchscreen   # rank research/facts.jsonl; show <id>; add …; check
+python3 scripts/facts.py add --from-lane talks/<name>/research/*.json   # file a research run's lanes (--dry-run first)
 python3 scripts/talk_lint.py talks/<name>     # exit 1 on errors; --release makes open marks errors
 python3 scripts/talk_map.py talks/<name>      # slide number, title, layout, clicks, pose, clip, minutes
 python3 scripts/photo_fetch.py cds:<ID>       # or commons:File:<name>; --dry-run, --record, --check

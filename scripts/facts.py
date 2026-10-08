@@ -15,8 +15,11 @@ Usage (from anywhere; the bank is found from this script's checkout):
         [--as-of 2025] [--quote "..."] [--used-in 2026_10_00_Innoday]
     python3 scripts/facts.py add --from-json new.jsonl  # one object, a list, or JSON lines; - for stdin
     python3 scripts/facts.py add --from-json run.json --loose --verified-by "..."  # a research run's facts
+    python3 scripts/facts.py add --from-lane talks/<t>/research/*.json [--only <id>] [--dry-run]
+                                                        # talk-research-gaps lane files; images.json is skipped
     python3 scripts/facts.py check [--json]             # schema, ids, public sources, citations in talks,
-                                                        # one page's facts checked by different runs
+                                                        # one page's facts checked by different runs,
+                                                        # lane files left in talks/*/research/
 
 --facts PATH reads another bank (tests). Every verb takes --json: one JSON
 object on stdout, human text on stderr. Exit 0 ok, 1 problems found (no
@@ -315,15 +318,14 @@ def cmd_show(args) -> int:
 
 
 def _value(s: str | None):
+    """'89' -> 89, '6.8' -> 6.8; anything else ('26 659', '1e3', 'nan') stays a string."""
     if s is None:
         return None
-    try:
+    if re.fullmatch(r"-?\d+", s.strip()):
         return int(s)
-    except ValueError:
-        try:
-            return float(s)
-        except ValueError:
-            return s
+    if re.fullmatch(r"-?\d+\.\d+", s.strip()):
+        return float(s)
+    return s
 
 
 def _from_json(src: str) -> list:
@@ -336,6 +338,44 @@ def _from_json(src: str) -> list:
         return data if isinstance(data, list) else [data]
     except json.JSONDecodeError:
         return [json.loads(line) for line in text.splitlines() if line.strip()]
+
+
+def is_lane(obj) -> bool:
+    """A talk-research-gaps lane file: {lane, slides, topic, status, facts: [...], notes, open_questions}."""
+    return isinstance(obj, dict) and isinstance(obj.get("facts"), list) and "claim_en" not in obj
+
+
+def lane_facts(paths: list[Path], only: list[str] | None = None) -> tuple[list[dict], list[dict], list[str]]:
+    """(facts, problems, notes) of lane files, as the bank takes them: the facts
+    list only, keys the bank does not know dropped, empty strings null (as the
+    talk-research skill's lane_facts.py does). images.json is the image lane's
+    (photo_fetch.py --record)."""
+    out, problems, notes = [], [], []
+    for f in paths:
+        if f.name == "images.json":
+            notes.append(f"{f}: skipped (the image lane's photos go through photo_fetch.py <ref> --record)")
+            continue
+        try:
+            lane = json.loads(f.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            problems.append({"id": None, "errors": [f"{f}: {exc}"]})
+            continue
+        if not is_lane(lane):
+            problems.append({"id": None, "errors": [f"{f}: no facts list, so not a lane file (--from-json takes facts)"]})
+            continue
+        for fact in lane["facts"]:
+            if not isinstance(fact, dict):
+                problems.append({"id": None, "errors": [f"{f}: a fact that is not a JSON object"]})
+                continue
+            extra = sorted(k for k in fact if k not in FIELDS)
+            if extra:
+                notes.append(f"{f.name} {fact.get('id')}: dropped keys {', '.join(extra)}")
+            out.append({k: (None if fact[k] == "" else fact[k]) for k in FIELDS if k in fact})
+    if only:
+        found = {e.get("id") for e in out}
+        problems += [{"id": i, "errors": ["not in these lane files"]} for i in only if i not in found]
+        out = [e for e in out if e.get("id") in only]
+    return out, problems, notes
 
 
 _VERDICT_ALIASES = {"unverifiable": "unverified", "unconfirmed": "unverified", "likely": "unverified",
@@ -371,15 +411,28 @@ def cmd_add(args) -> int:
         print("the bank has problems; fix them first (facts.py check):\n  " + "\n  ".join(problems[:10]), file=sys.stderr)
         return 1
     ids = by_id(entries)
-    if args.from_json:
+    added, errors, notes = [], [], []
+    if args.only and not args.from_lane:
+        print("--only goes with --from-lane", file=sys.stderr)
+        return 2
+    if args.from_lane:
+        new, errors, notes = lane_facts(args.from_lane, args.only)
+    elif args.from_json:
         try:
             new = _from_json(args.from_json)
         except (OSError, json.JSONDecodeError) as exc:
             print(f"--from-json: {exc}", file=sys.stderr)
             return 2
+        lanes = [e for e in new if is_lane(e)]
+        if lanes:
+            lane_file = args.from_json if args.from_json != "-" else "<lane file>"
+            errors += [{"id": None, "errors": [f"{args.from_json} is a lane file ({e.get('lane') or 'no lane name'}); "
+                                               f"file its facts with: facts.py add --from-lane {lane_file}"]}
+                       for e in lanes]
+            new = [e for e in new if not is_lane(e)]
     else:
         if not args.claim_en or not args.source_url:
-            print("add needs --claim-en and --source-url (or --from-json)", file=sys.stderr)
+            print("add needs --claim-en and --source-url (or --from-json, --from-lane)", file=sys.stderr)
             return 2
         new = [{
             "id": args.id, "claim_en": args.claim_en, "claim_lt": args.claim_lt,
@@ -388,7 +441,6 @@ def cmd_add(args) -> int:
             "verified_on": args.verified_on or (dt.date.today().isoformat() if args.verdict != "unverified" else None),
             "verified_by": args.verified_by, "used_in": args.used_in or [],
         }]
-    added, errors, notes = [], [], []
     taken = set(ids)
     defaults = {"verified_by": args.verified_by, "verified_on": args.verified_on or dt.date.today().isoformat(),
                 "used_in": args.used_in or []}
@@ -401,6 +453,8 @@ def cmd_add(args) -> int:
             if dropped:
                 notes.append(f"{e.get('id')}: dropped keys {', '.join(dropped)}")
         e = {k: e.get(k, [] if k == "used_in" else None) for k in FIELDS} | {k: v for k, v in e.items() if k not in FIELDS}
+        if isinstance(e["value"], str):
+            e["value"] = _value(e["value"])            # "89" -> 89, as --value; research runs write strings
         if not e.get("id"):
             e["id"] = slugify(e.get("claim_en") or "", taken)
         errs = validate(e)
@@ -416,10 +470,31 @@ def cmd_add(args) -> int:
         write_bank(list(ids.values()), args.facts)
     human = "\n".join(
         [f"added {i}" + (" (dry run)" if args.dry_run else "") for i in added]
-        + [f"refused {x['id']}: " + "; ".join(x["errors"]) for x in errors] + notes)
+        + [f"refused{' ' + x['id'] if x['id'] else ''}: " + "; ".join(x["errors"]) for x in errors] + notes)
     _out(args, {"added": added, "errors": errors, "notes": notes, "dry_run": args.dry_run,
                 "bank": str(args.facts)}, human)
     return 1 if errors else 0
+
+
+def scratch_hint(f: Path, rel: str, bank: dict) -> str:
+    """What to do with a JSON file under talks/<t>/research/: a lane file, the
+    image lane's images.json, or some other facts file."""
+    if f.name == "images.json":
+        return (f"{rel}: the image lane's photos; record the ones the deck uses "
+                f"(photo_fetch.py <ref> --record), then delete it")
+    try:
+        data = json.loads(f.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        data = None
+    if is_lane(data):
+        ids = [x.get("id") for x in data["facts"] if isinstance(x, dict)]
+        todo = [i for i in ids if i not in bank]
+        filed = (f"{len(todo)} of its {len(ids)} facts are not in the bank; file them "
+                 f"(facts.py add --from-lane {rel} --dry-run, then without --dry-run; an id the bank has "
+                 f"needs --only <id> --replace)" if todo else "its fact ids are all in the bank")
+        return (f"{rel}: a research lane file; {filed}, copy the speaker's caveats from its notes "
+                f"under Figures in the talk's CLAUDE.md, then delete it")
+    return f"{rel}: a second facts file; import it (facts.py add --from-json {rel} --loose) and delete it"
 
 
 def cmd_check(args) -> int:
@@ -450,8 +525,7 @@ def cmd_check(args) -> int:
     for u, n in sorted(absent.items()):
         warnings.append(f"used_in names {u!r} ({n} facts), not a directory under talks/ on this checkout")
     for f in sorted(talks_dir.glob("*/research/*.json")) if talks_dir.is_dir() else []:
-        warnings.append(f"{f.relative_to(talks_dir.parent)}: a second facts file; import it "
-                        f"(facts.py add --from-json {f.name} --loose) and delete it")
+        warnings.append(scratch_hint(f, f.relative_to(talks_dir.parent).as_posix(), seen))
     for deck in sorted(talks_dir.glob("*/deck.md")) if talks_dir.is_dir() else []:
         for fid in cited_ids(deck.read_text(encoding="utf-8")):
             e = seen.get(fid)
@@ -490,7 +564,11 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("show", parents=[common], help="one fact by id")
     s.add_argument("id")
     s = sub.add_parser("add", parents=[common], help="add a checked fact")
-    s.add_argument("--from-json", metavar="FILE", help="a JSON object, a list, or JSON lines; - for stdin")
+    src = s.add_mutually_exclusive_group()
+    src.add_argument("--from-json", metavar="FILE", help="a JSON object, a list, or JSON lines; - for stdin")
+    src.add_argument("--from-lane", metavar="FILE", nargs="+", type=Path,
+                     help="talk-research-gaps lane files (talks/<t>/research/<lane>.json): their facts; images.json is skipped")
+    s.add_argument("--only", action="append", metavar="ID", help="with --from-lane: only this fact; repeat for more")
     s.add_argument("--id")
     s.add_argument("--claim-en")
     s.add_argument("--claim-lt")
