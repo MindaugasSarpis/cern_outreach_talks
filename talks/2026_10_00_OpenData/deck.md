@@ -18,14 +18,16 @@ stage:
   space: data/space.json
   palette: blue
   sound: true
+  options: { reach: 20 }      # the 600 PB pose stands far back: still at the store station
 title: Opening LHCb's data
 info: |
   LHCb Vilnius, nominated for an open data award: a 6½-minute talk told inside
   one world of grains (slidev-addon-stage, blue palette, pinned to the
-  slidev-videos feat/effects-v2 commit 640eaa5). One grain of light is one
-  terabyte: the open data grow as a gold ball, LHC Run 3 as a blue one, and
-  streams carry the open grains to the people who use them. The talk's own
-  forms are setup/grains.js (`volume`, `streams`); `<Grains>` on a slide sets
+  slidev-videos feat/effects-v2 commit 640eaa5). One sphere is one terabyte:
+  piles of the same sphere stand side by side (1 TB, 800 TB, 55 PB gold;
+  LHC Run 3's 600 PB blue) and keep their size as the camera pulls back, and
+  streams of grains carry the open data to the people who use them. The
+  talk's own forms are setup/grains.js (`lineup`, `streams`); `<Grains>` sets
   their step, `<Count>` counts with them. On any station `c` builds it again.
   Kick-off: lhcb.mp4, the LHCb detector in 3D with music, this talk's 39 s
   cut of the library clip (videos/manifest.toml), arrives and leaves as dust;
@@ -52,7 +54,7 @@ the detector." Then → for the LHCb clip (the cover gives it a head start to
 buffer).
 The world: behind the title, the LHC. Two bunches of protons run round
 against each other and meet twice a lap; each meeting throws out a spray of
-tracks. Everything after this is made of the same grains of light: data.
+tracks. Everything after this is made of light: data.
 Before starting, press a key or click once, so the low hum can play
 (browsers start sound only after a gesture).
 -->
@@ -75,7 +77,7 @@ the talk.
 -->
 
 ---
-space: { at: [-29.6, -1.4, 7], dist: 10, yaw: -30, pitch: 10, dim: 0.25 }
+space: { at: [-59.6, -1.4, 7], dist: 10, yaw: -30, pitch: 10, dim: 0.25 }
 ---
 
 <div class="world-caption narrow">
@@ -84,11 +86,11 @@ space: { at: [-29.6, -1.4, 7], dist: 10, yaw: -30, pitch: 10, dim: 0.25 }
 
 # Forty million times a second
 
-That is how often the LHC brings bunches of protons together. Since 2022 LHCb reads its whole detector at that pace, about 4 terabytes a second, and software decides on the spot which collisions to keep.
+4 TB every second, sorted in software
 
 </div>
 
-<div class="src">LHCb, “Allen”, arXiv:2106.07701 · LHCb Starterkit, Run 3 data flow</div>
+<div class="src">R. Aaij et al. (LHCb), “Evolution of the energy efficiency of LHCb’s real-time processing”, EPJ Web Conf. 251 (2021) 04009 · LHCb Starterkit, Run 3 data flow</div>
 
 <!--
 Speaker (~0.6 min): we are where the bunches meet. Each spray is one
@@ -102,12 +104,12 @@ the design rate to tape is 10 GB/s (LHCb Sprucing paper, arXiv:2506.20309).
 -->
 
 ---
-space: { at: [19.1, 0, 0], dist: 4, yaw: -16, pitch: 6, dim: 0.2 }
+space: { at: [7.92, 0, 0], dist: 0.75, yaw: -6, pitch: 4, dim: 0.2 }
 ---
 
-<Grains :set="{ open: 0, run3: -1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 0, 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0 }" />
 
-<div class="legend"><span class="dot gold"></span>one grain = one terabyte</div>
+<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
 <div class="readout">
 
@@ -115,26 +117,28 @@ space: { at: [19.1, 0, 0], dist: 4, yaw: -16, pitch: 6, dim: 0.2 }
 
 <div class="big gold"><Count name="open" :from="1" :to="1" /><span class="unit">TB</span></div>
 
-One grain of light is one terabyte: the disk of a laptop, or about 330 hours of HD video.
+One sphere: a laptop's disk
 
 </div>
 
 <div class="src">HD streaming: up to 3 GB an hour (Netflix help centre) · decimal units, 1 TB = 1000 GB</div>
 
 <!--
-Speaker (~0.4 min): the scale for the rest of the talk. One terabyte, one
-grain; point at it. LHCb's detector reads out four of these every second.
-From here on every grain is a terabyte, and the number on the left counts
-them.
+Speaker (~0.4 min). Say: one sphere is one terabyte, the disk of a laptop,
+about 330 hours of HD video. The scale for the rest of the talk. One terabyte, one
+sphere; point at it. LHCb's detector reads out four of these every second.
+From here on every sphere is a terabyte, every pile is built of the same
+spheres, and nothing shrinks: when the camera pulls back, what came before
+stays beside the new pile at its true size.
 -->
 
 ---
-space: { at: [18.3, 0, 0], dist: 7, yaw: -18, pitch: 6, dim: 0.2 }
+space: { at: [7.16, 0, 0], dist: 8.7, yaw: -4, pitch: 4, dim: 0.2 }
 ---
 
-<Grains :set="{ open: 1, run3: -1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 1, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
 
-<div class="legend"><span class="dot gold"></span>one grain = one terabyte</div>
+<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
 <div class="readout">
 
@@ -142,14 +146,14 @@ space: { at: [18.3, 0, 0], dist: 7, yaw: -18, pitch: 6, dim: 0.2 }
 
 <div class="big gold"><Count name="open" :from="1" :to="800" /><span class="unit">TB</span></div>
 
-LHCb's whole 2011–2012 proton-collision data set, ready for analysis, on the CERN Open Data portal for anyone to download. Mindaugas Šarpis prepared the data and built the release; since August 2026 he coordinates LHCb's open data.
+All of Run 1, public · prepared and released by Mindaugas Šarpis
 
 </div>
 
 <div class="src">LHCb, “LHCb releases entire Run 1 dataset”, opendata.cern.ch, 20 Dec 2023 · VU Faculty of Physics news · VU news, 30 Jul 2026</div>
 
 <!--
-Speaker (~0.6 min): eight hundred grains come in. The release completed on
+Speaker (~0.6 min): eight hundred spheres pile up beside the first one. The release completed on
 20 December 2023: the whole Run 1 proton–proton sample, about 800 TB. A
 first 200 TB (three streams) came out in December 2022; LHCb's earliest open
 files were small masterclass samples from 2014. Every one of more than a
@@ -161,12 +165,12 @@ the collaboration's Analysis Preservation and Open Data work package.
 -->
 
 ---
-space: { at: [15.8, 0, 0], dist: 14, yaw: -20, pitch: 8, dim: 0.2 }
+space: { at: [5.46, 0, 0], dist: 25.9, yaw: -4, pitch: 4, dim: 0.2 }
 ---
 
-<Grains :set="{ open: 2, run3: -1, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 2, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
 
-<div class="legend"><span class="dot gold"></span>one grain = one terabyte</div>
+<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
 <div class="readout">
 
@@ -174,14 +178,15 @@ space: { at: [15.8, 0, 0], dist: 14, yaw: -20, pitch: 8, dim: 0.2 }
 
 <div class="big gold"><Count name="open" :from="800" :to="55000" /><span class="unit">TB</span></div>
 
-55 petabytes. LHCb has committed to a schedule: about half of each run's data five years after the run ends, and all of it after ten.
+Half after 5 years · all after 10
 
 </div>
 
 <div class="src">Policy: LHCb, “LHCb Open Data Ntupling Service”, arXiv:2504.00610 (2025)</div>
 
 <!--
-Speaker (~0.5 min): fifty-five thousand grains.
+Speaker (~0.5 min): fifty-five thousand spheres; the first terabyte is now a
+dot on the left.
 [CHECK before the talk: "55 PB open" is the figure as given by the speaker.
 The group's own LMT applications (2024, 2025) use ~55 PB for LHCb's TOTAL
 data set; public figures for open LHCb data are ~800 TB (Run 1 files) and
@@ -197,12 +202,12 @@ of Run 1 was due by the end of 2022 and was complete in December 2023.
 -->
 
 ---
-space: { at: [13, 0, 0], dist: 46, yaw: -8, pitch: 8, dim: 0.15 }
+space: { at: [2.3, 0, 0], dist: 57.5, yaw: -4, pitch: 4, dim: 0.15 }
 ---
 
-<Grains :set="{ open: 2, run3: 0, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 3, 'scale:labels': 1, world: 0, vilnius: 0, dominykas: 0 }" />
 
-<div class="legend"><span class="dot gold"></span>one grain = one terabyte</div>
+<div class="legend"><span class="dot gold"></span>one sphere = one terabyte</div>
 
 <div class="readout">
 
@@ -210,15 +215,16 @@ space: { at: [13, 0, 0], dist: 46, yaw: -8, pitch: 8, dim: 0.15 }
 
 <div class="big blue"><Count name="run3" :from="0" :to="600000" /><span class="unit">TB</span></div>
 
-600 petabytes: what CERN got ready to store and analyse from all the LHC experiments together in Run 3. Over 20 000 years of HD video, running day and night.
+All LHC experiments · 20 000 years of HD video
 
 </div>
 
 <div class="src">CERN, “Storage”, home.cern/science/computing/storage</div>
 
 <!--
-Speaker (~0.7 min): and now Run 3. Six hundred thousand grains: the blue
-ball is eleven times the gold in volume. CERN's own comparison: more than
+Speaker (~0.7 min): and now Run 3. Six hundred thousand spheres: the blue
+ball is eleven times the gold in volume, and the first terabyte is a speck
+under its label. CERN's own comparison: more than
 600 PB is over 20 000 years of HD video recorded around the clock. In
 December 2025 CERN passed one exabyte of stored LHC data, and the second
 half of it was collected in Run 3 alone. Run 3 ended in June 2026. LHCb's
@@ -230,31 +236,25 @@ five years after the run, all of it after ten.
 space: { at: [10, -3.2, -1], dist: 30, yaw: 26, pitch: 10, dim: 0.3 }
 ---
 
-<Grains :set="{ open: 2, run3: 0, world: 8, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ scale: 3, 'scale:labels': 0, world: 8, vilnius: 0, dominykas: 0 }" />
 
 # Anyone can take it
 
-<div class="three-col low two">
-<div class="card">
-
-## Ask for what you need
-
-Name the particle decay you want, and LHCb's online service picks those collisions out for you: Run 1 and, since 2026, Run 2. Adam Morris of LHCb Vilnius is one of its authors.
-
-</div>
-<div class="card">
-
-## Who uses it
-
-About 20 requests by July 2026: theorists, people testing analysis methods, school projects. In September 2026 two Brown University physicists posted a study built on LHCb open data.
-
-</div>
-</div>
+<ul class="points">
+<li>Ask for a decay, get the collisions</li>
+<li>Theorists, schools, other universities</li>
+<li>Service co-written in LHCb Vilnius</li>
+</ul>
 
 <div class="src">LHCb outreach, 3 Mar 2026 · arXiv:2504.00610 · DPHEP Global Report 2026, arXiv:2607.06775 · arXiv:2609.09275</div>
 
 <!--
-Speaker (~0.6 min): open means the grains leave. Each stream is someone
+Speaker (~0.6 min). Say: name the particle decay you want and LHCb's online
+service picks those collisions out for you, Run 1 and, since 2026, Run 2;
+Adam Morris of LHCb Vilnius is one of its authors. About 20 requests by July
+2026: theorists, people testing analysis methods, school projects; in
+September 2026 two Brown University physicists posted a study built on LHCb
+open data. Open means the data leave. Each stream is someone
 taking data out. The service is the LHCb Ntupling Service (LHCb with the
 CERN Open Data team; paper arXiv:2504.00610, Adam Morris among the authors,
 as on the Ntuple Wizard paper of 2023): it runs the selection for you and
@@ -270,38 +270,26 @@ data, checked on 2017 collision open data.
 space: { at: [15.5, -3.4, 4], dist: 27, yaw: 12, pitch: 4, dim: 0.3 }
 ---
 
-<Grains :set="{ open: 2, run3: 0, world: 0, vilnius: 3, dominykas: 0 }" />
+<Grains :set="{ scale: 3, 'scale:labels': 0, world: 0, vilnius: 3, dominykas: 0 }" />
 
 # Used in Vilnius
 
-<div class="three-col low">
-<div class="card">
-
-## Z bosons
-
-One of the first analyses of LHCb's released data was done in Vilnius: Z bosons, seen through their decay into two muons.
-
-</div>
-<div class="card">
-
-## A university course
-
-Every seminar of the Vilnius University course “Best Research and Data Analysis Practices from CERN” works on one LHCb open-data file: 91 583 candidate decays.
-
-</div>
-<div class="card">
-
-## 2025 · masterclass
-
-The first LHCb masterclass in Lithuania, organised by students: about 100 participants from Lithuania and Ukraine.
-
-</div>
-</div>
+<ul class="points">
+<li>Z → μμ: among the first open-data analyses</li>
+<li>A university course built on open data</li>
+<li>First LHCb masterclass in Lithuania, 2025</li>
+</ul>
 
 <div class="src">M. Šarpis, “LHCb Run I Data is Released”, Jan 2024 · CERN Open Data record 401 · VU course workbook · LHCb Vilnius report, Jan 2026</div>
 
 <!--
-Speaker (~0.6 min): three streams from the same gold, here in Vilnius. The
+Speaker (~0.6 min). Say: Z bosons seen through their decay into two muons,
+one of the first analyses of the released data, done in Vilnius; every
+seminar of the VU course "Best Research and Data Analysis Practices from
+CERN" works on one LHCb open-data file (91 583 candidate decays); the first
+LHCb masterclass in Lithuania, organised by students, about 100
+participants from Lithuania and Ukraine. Three streams from the same gold,
+here in Vilnius. The
 Z → μμ analysis was among the very first uses of the released data [CHECK:
 year and who did it; if it was a thesis, the "first thesis" claim on the
 next slide needs rewording]. The course (Faculty of Physics, every autumn)
@@ -315,24 +303,25 @@ students [CHECK: that it ran on the open masterclass files].
 space: { at: thesis, dim: 0.3 }
 ---
 
-<Grains :set="{ open: 2, run3: 0, world: 0, vilnius: 0, dominykas: 1 }" />
+<Grains :set="{ scale: 3, 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 1 }" />
 
 <div class="readout thesis">
 
-<p class="kicker">The first thesis analysing LHCb open data</p>
+<p class="kicker">The first known thesis analysing LHCb open data</p>
 
 # Dominykas Stonkus
 
 <p class="sub">BSc thesis project, Vilnius University · <em>Rediscovering pentaquarks with LHCb open data</em></p>
-
-In 2015 LHCb discovered pentaquarks, particles of five quarks. The collisions they were found in are now public, and Dominykas looks for the same particles in the open data.
 
 </div>
 
 <div class="src">LHCb, PRL 115 (2015) 072001 · LHCb Vilnius, CERN Baltic Conference, Kaunas, 2025 · “First”: no earlier thesis analysing LHCb open data on INSPIRE, Oct 2026</div>
 
 <!--
-Speaker (~0.8 min): the stream that matters most today. One stream of gold
+Speaker (~0.8 min). Say: in 2015 LHCb discovered pentaquarks, particles of
+five quarks. The collisions they were found in are now public, and Dominykas
+looks for the same particles in the open data. The stream that matters most
+today. One stream of gold
 from the open ball, and at its end five quarks gather into one particle: a
 pentaquark. Dominykas Stonkus joined LHCb Vilnius in 2025 as a bachelor's
 student; his project is to find again, in open data, what LHCb found in

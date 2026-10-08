@@ -398,54 +398,44 @@ the package.
 
 ## Open data talk (2026_10_00_OpenData)
 
-One world of grains; one grain of light is one terabyte. The hero is the
-engine's `collider` (cover, the collisions slide, the close); the `store`
-station holds the talk's own forms; `thesis` is a gold five-node
-`constellation` (the pentaquark of Dominykas Stonkus's BSc project).
+One world; one sphere is one terabyte. The hero is the engine's `collider`
+(cover, the collisions slide, the close); the `store` station holds the
+talk's own forms; `thesis` is a gold five-node `constellation` (the
+pentaquark of Dominykas Stonkus's BSc project), moved out to z = 24 so the
+far-back scale poses stay nearest the store.
 
 - **Talk-owned builders** (`setup/grains.js`, registered from `setup/main.ts`;
-  `stage:check` runs with `--types volume,streams`):
-  - `volume` `{ name, pos, steps: [n…], scale, color, core, size, alpha, fade, reach, lone }`:
-    a ball whose first n grains always fill radius `scale·∛n` evenly (grain j at
-    `scale·∛(j+u)`, rank from `gl_VertexID`), so a step adds the grains it needs
-    and they fly in, inner first; few grains are drawn large (`lone`). Steps here:
-    `open` 1 → 800 → 55 000, `run3` 600 000 (0.1 · ∛600 000 ≈ 8.4 units).
+  `stage:check` runs with `--types lineup,streams`):
+  - `lineup` `{ name, pos, balls: [{ n, color, label }], unit, anchor, gaps, grow, reach, glow, labelH }`:
+    piles of one and the same sphere side by side along x (1, 800, 55 000
+    gold; 600 000 blue), each pile the first n points of a face-centred cubic
+    lattice taken shell by shell, so the first n always make a ball. Piles keep
+    their size: the slides pull the camera back (dist 0.75 → 8.7 → 25.9 → 57.5)
+    and what came before is seen shrinking into the new scale (the owner's ask,
+    2026-10-07: a single ball per step "looked the same after zooming out").
+    A ball of one is the engine's marble; piles are sphere impostors (a point
+    sprite shaded as a lit ball, writing its own depth via gl_FragDepth, sized
+    from the projection and the current viewport, clamped to the GPU's
+    ALIASED_POINT_SIZE_RANGE), jittered more as piles grow so rows do not beat
+    against the pixel grid, highlights dropped below ~10 px. Step k shows balls
+    0..k; `${name}:labels` (0/1) shows constant-screen-size labels
+    (`sizeAttenuation: false`), the single sphere's above it.
   - `streams` `{ name, pos, from, to: [{ pos, lift, node }], grains, node, nodeRadius, speed }`:
     grains along quadratic arcs, an end cluster that gathers when its stream
     starts (`node: false` where a form of its own stands, e.g. the pentaquark);
     a stopped stream fades out over 1.2 s.
-  - Slides drive them with `<Grains :set="{ open: 2, run3: 0, world: 8, vilnius: 0 }" />`
-    (fires on slide enter; the last step per name is kept for forms built later)
-    and count with `<Count :from :to :ms />`. Arrival at `store` (and `c`) regrows
-    the balls from nothing; `onDone` is always called.
-- **Kick-off clip** (slide 2, after the cover so it buffers): `lhcb.mp4`, the
-  LHCb detector in 3D with music, as this talk's own 39 s cut of the library
-  clip (`trim = ["0:08", "0:47.1"]` in `videos/manifest.toml`, raw gdrive
-  `released/lhcb.mp4`, on release `videos-2026-10-00-opendata`, which wins the
-  chain by name). Why the cut: the library copy opens on 8 s of dark tunnel
-  (mean brightness < 0.07, the player's `DARK`) and ends on black, so the
-  default `dustFrom: lit` finds no lit tile in its first 12 s and gathers the
-  grains into a black frame (invisible), and a clip left after its end breaks
-  up as black. The cut starts at the shafts above the cavern (white CG on
-  black, drawn by the grains with `videos.dustFrom: start`) and ends at 47.1 s,
-  as the music fades and before the picture does. After re-encoding:
-  `pnpm videos:frames` (commit `public/video-frames/`), `videos:publish`,
-  `videos:preflight`.
-- **Figures to confirm before the talk**: "55 PB open" is the speaker's figure;
-  the group's LMT applications use ~55 PB for LHCb's *total* data set, and public
-  sources give ~800 TB (Run 1 files) and >4 PB (Run 1 + Run 2 via the Ntupling
-  Service, 2026) for LHCb open data. "600 PB" is CERN's Run 3 figure for all
-  LHC experiments (home.cern/science/computing/storage). Change a number in the
-  `volume` steps in `public/data/space.json` and the slide's `<Count :to>`.
-- `vite.config.ts` excludes `slidev-addon-stage` and `three` from
-  pre-bundling, else `slidev dev` has two builder registries (the world never
-  sees `volume`/`streams`) and two copies of three.
+  - Slides drive them with `<Grains :set="{ scale: 3, 'scale:labels': 1, world: 8 }" />`
+    (fires on slide enter; the last step per name is kept for forms built
+    later) and count with `<Count name :from :to />`. Arrival at `store` (and
+    `c`) regathers the piles; `onDone` is always called, on the engine clock.
+- The deck sets `stage.options.reach: 20`: the 600 PB pose targets x = 2.3,
+  17.7 from the store station, and must still count as *at* it.
 - Streams on the store station: `world` (8 anonymous users, "Anyone can take
   it"), `vilnius` (3: the Z → μμ analysis, the course, the masterclass) and
   `dominykas` (1, ends at the `thesis` pentaquark, alone on the climax slide);
   the Dominykas slide is the last content slide, the close follows.
-- Under SwiftShader the 600 000-grain ball needs ~80 s of wall time to form
-  (dt clamp); `stage:shots --wait 30000` catches most slides mid-build.
+- Under SwiftShader the 600 000-sphere pile renders at ~7 fps (1280×720), so
+  flights and gathers run slow (dt clamp); shoot with `--wait 34000`.
 
 ## Slidev gotchas
 

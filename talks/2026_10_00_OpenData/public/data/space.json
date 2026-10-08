@@ -18,7 +18,7 @@
     {
       "id": "hero",
       "pos": [
-        -30,
+        -60,
         0,
         0
       ],
@@ -71,43 +71,42 @@
       "gather": 0.2,
       "objects": [
         {
-          "type": "volume",
-          "name": "open",
+          "type": "lineup",
+          "name": "scale",
           "pos": [
             0,
             0,
             0
           ],
-          "steps": [
-            1,
-            800,
-            55000
+          "unit": 0.1,
+          "anchor": 2,
+          "gaps": [
+            3.0,
+            2.2,
+            3.0
           ],
-          "scale": 0.1,
-          "color": "#ffc05a",
-          "core": "#fff6e2",
-          "size": 1.25,
-          "alpha": 0.95,
-          "reach": 3
-        },
-        {
-          "type": "volume",
-          "name": "run3",
-          "pos": [
-            14,
-            0,
-            0
-          ],
-          "steps": [
-            600000
-          ],
-          "scale": 0.1,
-          "color": "#6f9dff",
-          "core": "#e3ecff",
-          "size": 1.0,
-          "alpha": 0.5,
-          "fade": 0.08,
-          "reach": 7
+          "balls": [
+            {
+              "n": 1,
+              "color": "#ffc05a",
+              "label": "1 TB"
+            },
+            {
+              "n": 800,
+              "color": "#ffc05a",
+              "label": "800 TB"
+            },
+            {
+              "n": 55000,
+              "color": "#ffc05a",
+              "label": "55 PB"
+            },
+            {
+              "n": 600000,
+              "color": "#6f9dff",
+              "label": "600 PB"
+            }
+          ]
         },
         {
           "type": "streams",
@@ -252,7 +251,7 @@
               "pos": [
                 -8,
                 3,
-                12
+                24
               ],
               "node": false,
               "lift": 0.18
@@ -271,7 +270,7 @@
       "pos": [
         12,
         3,
-        12
+        24
       ],
       "look": {
         "target": [
