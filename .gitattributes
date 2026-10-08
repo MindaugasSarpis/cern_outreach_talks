@@ -1,0 +1,3 @@
+# pnpm-lock.yaml is never merged as text: take main's, then pnpm install
+# (the driver is registered by scripts/talk.py; see scripts/lockfile-merge.sh)
+pnpm-lock.yaml merge=pnpm-lock

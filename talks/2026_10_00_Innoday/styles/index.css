@@ -307,3 +307,19 @@ html[data-stage] .payoff .big.blue { background: linear-gradient(180deg, #ffffff
 html[data-stage] .payoff .big .unit { font-size: 0.34em; letter-spacing: -0.01em; margin-left: 0.18em; }
 html[data-stage] .payoff h1 { font-size: 44px !important; line-height: 1.08 !important; margin: 0 0 14px !important; max-width: 20ch; text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7); animation: none !important; }
 html[data-stage] .payoff p:not(.kicker) { font-size: 24px; line-height: 1.38; margin: 0; max-width: 34ch; opacity: 0.95; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7); }
+
+/* <PrintStill>: only in print/export, over the slide it stands for */
+html[data-stage] .print-still { display: none; }
+html.print .print-still { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 60; }
+
+/* --- the LHC part a strand starts from, named for the length of the flight
+   (a deliberate exception to "no labels in the world", for clarity): small,
+   centred, gone before the photo condenses over it */
+html[data-stage] .part-word {
+  position: absolute; left: 0; right: 0; top: 9%; z-index: 30; text-align: center; pointer-events: none;
+  font-size: 22px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--in-gold-hi);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 18px rgba(0, 0, 0, 0.8);
+  animation: part-word 1.7s ease both;   /* gone before the photo fills the frame */
+}
+@keyframes part-word { 0% { opacity: 0; } 15% { opacity: 1; } 65% { opacity: 1; } 100% { opacity: 0; } }
+@media print { html[data-stage] .part-word { display: none; } }
