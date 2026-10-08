@@ -155,8 +155,9 @@ Two things the pipeline does not do:
   again; a claim whose wording goes beyond the stored fact is.
 - It does not read screenshots in the main context. Visual review runs in a
   subagent that gets the contact sheets, the shots metrics and the owner's
-  quotes above, and returns text. The final Startertalk session read 270
-  PNGs; its context grew to 943k tokens and was compacted.
+  quotes above, opens at most 12 images, and returns text (§9). The final
+  Startertalk session read 270 PNGs; its context grew to 943k tokens and was
+  compacted.
 
 ## 3. Slide rules
 
@@ -311,3 +312,29 @@ boundary, before the next step starts:
 
 When the context has grown large or a usage limit is close, tell the owner
 after the commit: "/compact, then 'continue <talk>'" picks up from Status.
+
+## 9. Waiting, renders and pictures
+
+- **No polling in a main loop.** Workflows and background commands report
+  back on their own. Never sleep, run an until-loop, tail a workflow's
+  journal or open agent transcripts to see how one is going; work on
+  something else or end the turn. Start long commands (`pnpm talk review`,
+  `ready`, `record`, `deploy`, encodes) with `run_in_background`. On the
+  night of 7 October the TV session spent about 97 minutes in 20 foreground
+  wait loops.
+- **No long blocking wait inside an agent.** A subagent or workflow lane
+  never blocks on one command for more than 240 s: its prompt cache expires
+  after five minutes, and the next call writes it again. Renders stay at 2
+  to 4 slides; work that would take longer goes back in the result as an
+  open item, not as a wait.
+- **Read only what is needed** from a result: the fields of
+  `pnpm -s talk … --json`, the failing lines of a log, never the whole log.
+- **Renders queue.** Shots, recordings, Playwright captures and encodes
+  share the machine with other sessions. `pnpm talk shots`, `review`,
+  `ready`, `record` and `safe` queue for the render slot themselves; any
+  other render runs as `pnpm talk render -- <command>`.
+- **Pictures stay out of the main loop.** Visual review, framing (a pose
+  changed, rebuilt and reshot until it reads) and any look at a PNG go to a
+  subagent with an image cap: at most 12 images, the contact sheets first,
+  single frames only for slides a sheet or the shots report flags. It
+  returns text. OpenData's main loop spent 93 calls on framing by hand.

@@ -89,6 +89,11 @@ Encode one test at the broadcast bitrate (`pnpm talk render -- <ffmpeg
 command>`) and look at it on a phone and a projector before committing to
 the look.
 
+A recording runs for many minutes: start it with `run_in_background` and
+keep working; its notification brings the result. Frames and plates are
+looked at by a subagent within the cap of 12 images (`talk-verify` §2),
+never in the main loop.
+
 ## 6. Hand-over
 
 - per-slide MP4s and text-free plates, the stills PDF with the spoken cue

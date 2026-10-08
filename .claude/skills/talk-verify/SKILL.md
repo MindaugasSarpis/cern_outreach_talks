@@ -14,11 +14,12 @@ was compacted.
 
 ```bash
 pnpm talk lint <t>             # language, slop, words, type floor, sources, timing, fact ids
-pnpm talk review <t> --json    # check + build into /tmp/talk-<slug>/site + shots --changed --sheet
+pnpm -s talk review <t> --json # check + build into /tmp/talk-<slug>/site + shots --changed --sheet
 ```
 
-Fix what lint reports before anyone looks at pictures. The `--json` output of
-`review` gives the shots directory as `.shots` (by default `talks/<t>/shots/`)
+Start `review` with `run_in_background` and fix what lint reports while it
+runs; its notification brings the result. Do not poll it. Its `--json`
+output gives the shots directory as `.shots` (by default `talks/<t>/shots/`)
 and the NDJSON shots report as the `report` of the step named `shots`; the
 contact sheet is `sheet.png` in the shots directory. If shots are slow, probe
 first: `pnpm talk shots <t> --probe --slides <n>` reports frames per second
@@ -33,15 +34,18 @@ single machine). Keep runs small (2 to 4 slides) while iterating.
 
 ## 2. The visual judgement goes to a subagent
 
-Dispatch one subagent (Agent tool, general-purpose) with this brief and wait
-for its text. Do not Read the PNGs yourself; open at most one sheet when a
-specific finding needs a second look.
+Dispatch one subagent (Agent tool, general-purpose) with this brief; its
+text comes back on its own. Never Read a PNG in the main loop, a contact
+sheet included: a finding that needs a second look goes back to a subagent,
+with the slide named.
 
 ```
 You review the slides of <talk> for the owner. Read these contact sheets:
 <paths>. Read the shots report <ndjson path> (one JSON line per frame:
 slide, click, station, overflowPx, pageErrors, wordsOnScreen, textBoxes with
 fontPx, lumMean, lumVar). The slide map: <pnpm talk map output>.
+Open at most 12 images in all: the contact sheets first, then single frames
+(the png of a report line) only for slides a sheet or the report flags.
 Calibrate on the owner's own words (docs/talk-quality.md §1, busy and
 meaning): "at some angles the screen is too busy with everything and words
 are difficult to make out", "slide 20 too busy, barely readable", "the space
@@ -58,6 +62,11 @@ content slides is clear. Do not praise; list problems only, worst first.
 ```
 
 `<floor>` is 18 for a projector talk and 37 for a broadcast (`talk-broadcast`).
+
+Framing goes the same way. A subagent changes the slide's `space:` pose,
+reshoots that slide (`pnpm talk shots <t> --slides <n>`), looks within the
+same cap of 12 images, and returns the pose it settled on and why; the main
+loop reads its text, checks the diff and commits.
 
 ## 3. A full review
 
@@ -80,7 +89,9 @@ Workflow({ name: 'talk-review', args: {
 } })
 ```
 
-It returns `kept[]` (verified findings with exact fixes, deduped by slide and
+The run reports back when it finishes: do not sleep, read its journal or open
+agent transcripts meanwhile; fix the lint findings or end the turn. It
+returns `kept[]` (verified findings with exact fixes, deduped by slide and
 kind) and `unverified[]`. Write `talks/<t>/notes/review.md` from the result,
 with both SHAs at the top (the HEAD SHA is the next review's `since`; a
 stash SHA is not kept by git for long),

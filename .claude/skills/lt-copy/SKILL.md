@@ -70,7 +70,8 @@ pnpm talk lint <t>     # for lang: lt also Cyrillic, English leftovers, straight
 ```
 
 For a full pass, the saved workflow `talk-review` with `lang: 'lt'` runs a
-native-editor lens whose every edit a second editor accepts or rejects.
+native-editor lens whose every edit a second editor accepts or rejects. It
+reports back when it finishes; do not poll it.
 
 ## Hand-off
 

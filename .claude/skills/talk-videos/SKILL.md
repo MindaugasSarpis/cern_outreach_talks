@@ -63,6 +63,9 @@ pnpm videos:publish -- --dry-run         # what would be uploaded
 pnpm videos:publish                      # to the talk's release videos-<talk>
 ```
 
+An encode or a publish of more than one clip runs for minutes: start it
+with `run_in_background` and keep working; do not poll it.
+
 **Never combine `--only` with `--prune`.** On the current CLI,
 `publish --only X --prune` deletes every other asset of the talk's release
 (v0.6 refuses the combination). `--prune` alone drops assets the manifest no

@@ -52,7 +52,9 @@ It splits the gaps into disjoint slide-scoped lanes of about a dozen claims,
 writes each lane to `talks/<t>/research/<lane>.json` as it lands, verifies
 each lane adversarially, runs one image lane, searches mail, Drive and
 calendar only for `briefGaps` within 15 calls, caps itself at about 30
-agents, and returns `unverified[]`. Public claims, including a blueprint's
+agents, and returns `unverified[]`. It reports back when it finishes: do
+not sleep, read its journal or open agent transcripts while it runs; carry
+on with the deck or end the turn. Public claims, including a blueprint's
 `research_gaps`, go in `lanes[].claims` or are left for the plan agent to
 find in the deck; never in `briefGaps`, which searches the owner's mail,
 Drive and calendar for them.

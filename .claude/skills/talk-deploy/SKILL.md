@@ -28,13 +28,15 @@ Run them from the talk's own worktree. `deploy`:
 - runs `ready` first unless told to skip it;
 - pushes `HEAD` to `main`, watches the Pages run and requests the talk's URL;
 - records the result in `talk-status/<slug>.json` in the shared git directory
-  (the main checkout's `.git`), not in a tracked file, so a deploy never leaves a
-  dirty tree or triggers a second run. `status` takes no talk name: read the
-  entry whose `talk` is this one.
+  (the main checkout's `.git`), not in a tracked file, so a deploy never
+  leaves a dirty tree or triggers a second run. `status` takes no talk name:
+  read the entry whose `talk` is this one.
 
-Say "deployed" only after the run is green and the URL returned 200, and give
-the URL, the commit and the run id. Let the watch run in the background and
-keep working.
+`ready` and `deploy` each run for minutes: start them with
+`run_in_background` and keep working; the notification brings the result.
+`deploy` watches the Pages run itself, so never poll the run in a loop of
+your own. Say "deployed" only after the run is green and the URL returned
+200, and give the URL, the commit and the run id.
 
 ## When it refuses
 

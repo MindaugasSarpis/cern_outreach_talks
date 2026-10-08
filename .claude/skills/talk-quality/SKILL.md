@@ -64,6 +64,11 @@ with proposed ids. Cite those ids in the deck draft and run `talk-research`
 or pass them as `lanes[].claims`. Never pass them as `briefGaps`, which
 searches the owner's own mail, Drive and calendar.
 
+Workflows report back when they finish. While one runs, never sleep, read
+its journal or open agent transcripts; work on something else or end the
+turn. The rest of the waiting rules, the render queue and the image cap
+are in `docs/talk-quality.md` §9.
+
 ## AFK protocol
 
 After "go", "finish", "afk", "continue to completion" or a hand-off like
