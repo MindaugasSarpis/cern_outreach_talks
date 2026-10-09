@@ -87,7 +87,6 @@ async function takeOver() {
   sample ||= sampleFrame(image, { n: props.grains, gamma: props.gamma })
   let pts = s.h.scene.getObjectByName('takeover-web')
   if (!pts) { pts = makeGrains(sample, { size: props.size, gain: props.gain }); s.h.scene.add(pts) }
-  pts.material.uniforms.uPixelRatio.value = s.h.dpr || 1
   pts.material.uniforms.uReveal.value = 0
   setPositions(pts, placeAlongRays(sample, s.camera, box.value, s.canvas.getBoundingClientRect(), { near: props.near, far: props.far }))
   still.value = false

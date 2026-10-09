@@ -1,6 +1,8 @@
 import {
   Group, Points, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Vector3,
+  Mesh, MeshBasicMaterial, CircleGeometry, TextureLoader, SRGBColorSpace, Color, DoubleSide,
 } from 'three'
+import { POINT_GLSL, viewScale } from './view.js'
 
 // Innoday's opening form, on the engine's stage (slidev-addon-stage):
 //
@@ -14,9 +16,11 @@ import {
 //            faster at the end (accelerating expansion). A clean wireframe of
 //            rings and lines, and a faint perspective floor grid below.
 //
-// The CMB disk carries the Planck 2018 SMICA map (ESA and the Planck
-// Collaboration), reprojected to longitude/latitude and coloured on a
-// WMAP-like scale: public/figures/cmb_wmap.png. The disk shows one hemisphere.
+// The CMB disk is the Planck 2018 SMICA-noSZ map (ESA and the Planck
+// Collaboration): with `cmbDisk`, a picture (public/figures/cmb_disk.jpg,
+// rendered straight from the HEALPix map: the northern Galactic hemisphere,
+// azimuthal equal-area, smoothed to 1°, WMAP-like colours); without it, grains
+// coloured from public/figures/cmb_wmap.png. Either way one hemisphere.
 //
 //   { type: funnel, pos, axis: 'z+' | 'z-' | 'x+' | 'x-', length: 26, mouth: 6.3,
 //     neck: 3.4, cmb: 'figures/cmb_wmap.png', rings: 15, lines: 16,
@@ -30,15 +34,17 @@ const gauss = (n) => { let v = 0; for (let k = 0; k < 4; k++) v += hash(n * 7.31
 
 const VERT = /* glsl */ `
 attribute vec3 aColor; attribute float aSize, aSeed, aTw, aAlpha, aFlare, aDisk;
-uniform float uTime, uPixelRatio, uSize, uAlpha, uFlare, uDisk;
+uniform float uTime, uSize, uAlpha, uFlare, uDisk;
 varying vec3 vColor; varying float vAlpha;
+${POINT_GLSL}
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 1.0 - aTw * (0.5 - 0.5 * sin(uTime * (0.7 + aSeed * 1.9) + aSeed * 40.0));
-  // capped at 48 px, fading out within a unit of the camera (the camera flies through)
-  gl_PointSize = min(uPixelRatio * uSize * aSize * tw * (72.0 / max(-mv.z, 0.1)), 48.0 * uPixelRatio);
-  vColor = aColor; vAlpha = uAlpha * aAlpha * tw * smoothstep(0.25, 1.0, -mv.z) * mix(1.0, uFlare, aFlare) * mix(1.0, uDisk, aDisk);
+  // sized to the frame (setup/view.js), capped, fading out within a unit of the camera (the camera flies through)
+  float ps = uView * uSize * aSize * tw * (72.0 / max(-mv.z, 0.1));
+  gl_PointSize = pointSize(ps, 48.0);
+  vColor = aColor; vAlpha = uAlpha * aAlpha * tw * coverage(ps) * smoothstep(0.25, 1.0, -mv.z) * mix(1.0, uFlare, aFlare) * mix(1.0, uDisk, aDisk);
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;
@@ -98,7 +104,8 @@ function buildFunnel(o, ctx) {
   }
   flare = 0
   // the CMB: a disk across the narrow end; colours come from the map
-  const capN = 150, capFirst = pts.length
+  // (with `cmbDisk` the disk is a picture instead: see below)
+  const capN = o.cmbDisk ? 0 : 150, capFirst = pts.length
   for (let i = 0; i < capN; i++) for (let j = 0; j < capN; j++) {
     const u = (i + 0.5) / capN * 2 - 1, v = (j + 0.5) / capN * 2 - 1
     if (u * u + v * v > 1) continue
@@ -111,10 +118,12 @@ function buildFunnel(o, ctx) {
     const s = 0.3 + 0.45 * Math.pow(hash(i * 6.1), 1.2), r = R(s) * (0.94 + 0.06 * hash(i * 3.9)), t = hash(i * 7.3) * Math.PI * 2
     add(s, r * Math.cos(t), r * Math.sin(t), [0.7, 0.85, 1], 1.5, 0.1, 1.2 * (1 - (s - 0.3) / 0.45))
   }
-  // and a faint pale-blue sheet across it
-  for (let i = 0; i < 2600; i++) {
+  // and a faint pale-blue sheet across it (`cmbSheet` scales it: in front of the picture
+  // disk it would pale the map, so there it is thinner)
+  const sheetK = o.cmbSheet ?? 1
+  for (let i = 0; i < (sheetK > 0 ? 2600 : 0); i++) {
     const s = 0.15 + 1.2 * Math.pow(hash(i * 8.3), 1.5), r = R(s) * 0.97 * Math.sqrt(hash(i * 2.2)), t = hash(i * 9.1) * Math.PI * 2
-    add(s, r * Math.cos(t), r * Math.sin(t), [0.66, 0.82, 1], 3.0, 0.12, 1.0 * (1 - (s - 0.15) / 1.2))
+    add(s, r * Math.cos(t), r * Math.sin(t), [0.66, 0.82, 1], 3.0, 0.12, sheetK * (1 - (s - 0.15) / 1.2))
   }
   // the dark ages: few, dim grains
   for (let i = 0; i < 500; i++) {
@@ -185,7 +194,7 @@ function buildFunnel(o, ctx) {
   geo.setAttribute('aAlpha', new BufferAttribute(al, 1)); geo.setAttribute('aFlare', new BufferAttribute(fl, 1)); geo.setAttribute('aDisk', new BufferAttribute(dk, 1))
   const mat = new ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
-    uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.6 }, uFlare: { value: 1 }, uDisk: { value: 1 } },
+    uniforms: { uTime: { value: 0 }, uView: { value: 1 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.6 }, uFlare: { value: 1 }, uDisk: { value: 1 } },
   })
   const points = new Points(geo, mat); points.frustumCulled = false
   const g = new Group(); g.add(points)
@@ -198,7 +207,7 @@ function buildFunnel(o, ctx) {
   const along = (v) => axis === 'z-' ? -v.z : axis === 'z+' ? v.z : axis === 'x-' ? -v.x : v.x
   const across = (v) => axis === 'z-' || axis === 'z+' ? Math.hypot(v.x, v.y) : Math.hypot(v.y, v.z)
   points.onBeforeRender = (r, scene, camera) => {
-    mat.uniforms.uPixelRatio.value = r.getPixelRatio()
+    mat.uniforms.uView.value = viewScale(r)
     g.worldToLocal(cam.copy(camera.position))
     const sAx = along(cam), off = across(cam)
     const k = sAx <= 0 ? 1 : Math.min(1, Math.max(0, (off / sAx - 0.6) / 0.3))
@@ -209,9 +218,35 @@ function buildFunnel(o, ctx) {
     mat.uniforms.uDisk.value = 0.6 + 0.4 * face
   }
 
-  // the disk's colours from the map: the hemisphere seen from the mouth,
+  // The CMB as a picture (owner, 9 Oct: "a real image of cmb at that plane
+  // exactly"): a disk in the old grain disk's plane, textured with the Planck map
+  // projected the same way (the northern Galactic hemisphere, azimuthal
+  // equal-area, l = 0 up, l = 90° right as seen from the mouth). Drawn opaque, so
+  // nothing adds up toward white on a small screen. `cmbDisk`: the image (a
+  // square, the disk inscribed; `cmbDiskSmall` for touch devices); `cmbTint`:
+  // its brightness (0–1).
+  let alive = true, diskTex = null
+  const r0d = R(0) * 0.985
+  const diskMat = new MeshBasicMaterial({ color: new Color().setScalar(o.cmbTint ?? 0.85), side: DoubleSide })
+  const disk = new Mesh(new CircleGeometry(r0d, 192), diskMat)
+  disk.visible = false
+  if (o.cmbDisk && axis === 'z+') {
+    // the circle faces +z (the mouth); its u runs with world x (b, right), v with world y (a, up)
+    disk.position.set(0, 0, 0.02)
+    g.add(disk)
+    // a phone or tablet (coarse pointer) takes the smaller image: a quarter of the GPU memory
+    let small = false
+    try { small = !!o.cmbDiskSmall && matchMedia('(pointer: coarse)').matches } catch {}
+    const src = small ? o.cmbDiskSmall : o.cmbDisk
+    new TextureLoader().load(`${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`, (tex) => {
+      if (!alive) { tex.dispose(); return }
+      tex.colorSpace = SRGBColorSpace; tex.anisotropy = ctx?.anisotropy || 1
+      diskMat.map = tex; diskMat.needsUpdate = true; diskTex = tex; disk.visible = true
+    })
+  }
+
+  // the grain disk's colours from the map: the hemisphere seen from the mouth,
   // azimuthal equal-area (the disk's centre is a pole of the map)
-  let alive = true
   const img = new Image()
   img.onload = () => {
     if (!alive) return
@@ -232,13 +267,13 @@ function buildFunnel(o, ctx) {
     }
     colAttr.needsUpdate = true
   }
-  img.src = `${import.meta.env.BASE_URL}${(o.cmb || 'figures/cmb_wmap.png').replace(/^\//, '')}`
+  if (capN) img.src = `${import.meta.env.BASE_URL}${(o.cmb || 'figures/cmb_wmap.png').replace(/^\//, '')}`
   void floorFirst
 
   return {
-    group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio,
+    group: g, labels: [],
     update(t) { mat.uniforms.uTime.value = t },
-    dispose() { alive = false; geo.dispose(); mat.dispose() },
+    dispose() { alive = false; geo.dispose(); mat.dispose(); disk.geometry.dispose(); diskMat.dispose(); diskTex?.dispose() },
   }
 }
 
