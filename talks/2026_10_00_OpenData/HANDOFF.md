@@ -8,15 +8,21 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 „adresuoti“.
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos v0.6.4, for both addons.
+Toolkit pin: slidev-videos v0.6.6, for both addons (the Scheduler: stay on it for now).
 
 **Deploys (owner, 2026-10-09: "Deploy now, and always").** The standing rule
 holds for this talk: it deploys without asking once `talk ready` passes with
 nothing skipped and the Scheduler gives it main. Anything else still needs
 the owner's word.
 
-## Status (2026-10-09): approved by the owner; deployed on v0.6.4
+## Status (2026-10-09): approved by the owner; deployed on v0.6.6
 
+- Redeployed 2026-10-09 under the standing rule: commit 8a88b32 on main,
+  Pages run 37949433367 (every job success); `talk deploy`'s live check
+  passed. `talk ready` passed on 8a88b32 with nothing skipped. v0.6.6's kit
+  owns print pages (each animation jumps to its end); the talk's own
+  `.print-slide-container` rule is gone. Rasterised PDF: 13 pages, each with
+  its text and its own still.
 - Redeployed 2026-10-09 on the owner's go: commit ef5b903 on main, Pages run
   37946636011 (every job success); `talk deploy`'s live check passed (13
   slides, nothing failed). `talk ready` passed on ef5b903 with nothing
@@ -39,7 +45,7 @@ the owner's word.
   ring's `motion`. `talk ready` passed on the same commit.
 
 - 13 slides in Lithuanian, about 6.0 of 6.5 min (lint, lang lt: 0 errors, 0
-  warnings). Toolkit pin v0.6.4.
+  warnings). Toolkit pin v0.6.6.
 - The line: the cover; the 3D clip (advances on its end); one real Z → μμ
   collision from LHCb open data; it collapses into the 1 TB sphere; 800 TB and
   4 PB open (gold; 4 PB forms from five 800 TB piles); LHCb's 100 PB (blue);

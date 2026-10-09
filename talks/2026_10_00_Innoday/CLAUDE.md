@@ -78,18 +78,19 @@ the part word during a Part II flight, gone before the photo lands).
   (talk-owned bookend, 0:30, made by reversing the opener; do not `--prune`
   `vu_ff_zoom.mp4`, its source), library `cern_overview_short.mp4`,
   `cern_footage_2022_042_001.mp4`.
-- Toolkit: slidev-videos v0.6.6 (both addons; `strands` registered `enterable: true`; print shows every animation at its end state). The talks stay on v0.6.6 for now (Scheduler, 9 Oct): place groups, `humAt: all`,
+- Toolkit: slidev-videos v0.6.7 (both addons; `strands` registered `enterable: true`; print shows every animation at its end state; every pixel clamped finite before bloom: the funnel's additive core overflowed the half-float target to Inf → NaN → black on iOS). Device switches for a phone: `?stage-debug`, `?stage-post=off`, `?stage-targets=half`, `?stage-tier=0..3`. A lite mode for phones (fewer, smaller grains in the talk's forms, no takeover overlay) is parked on `wip/innoday-lite`, unused unless the iPhone still struggles: place groups, `humAt: all`,
   `?stage-debug`, quality tiers (a phone starts at 2; desktop and the headless
   recorder at 0, `pages:check` prints it), lighter photo places, the context-
   loss fixes, stills and posters for print (v0.5.4: correct per page).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** Deployed d77c4c2 (v0.6.5)
+2026-10-09: **complete, pending the owner's review.** Deployed 9e20f1f (v0.6.6)
 — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
-Pages run 37948674216 (green), URL 200; `ready` passed with nothing skipped;
-the live walk: 30 slides, 0 failed requests, 0 context losses, tier 0.
-Waiting: the Light Conversion photo (owner). On the branch: v0.6.6, export checked.
+Pages run 37950349600 (green), URL 200; `ready` passed with nothing skipped;
+the live walk: 30 slides, 0 failed requests, 0 context losses, tier 0. The PDF
+export is checked page by page. Waiting: the Light Conversion photo (owner);
+when it comes, slide 28 becomes a StagePhoto at its pose.
 
 ## Decisions
 
