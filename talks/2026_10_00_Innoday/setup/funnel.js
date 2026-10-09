@@ -29,8 +29,8 @@ const hash = (n) => { const s = Math.sin(n * 12.9898 + 78.233) * 43758.5453; ret
 const gauss = (n) => { let v = 0; for (let k = 0; k < 4; k++) v += hash(n * 7.31 + k * 1.37); return (v - 2) / 1.15 }
 
 const VERT = /* glsl */ `
-attribute vec3 aColor; attribute float aSize, aSeed, aTw, aAlpha, aFlare;
-uniform float uTime, uPixelRatio, uSize, uAlpha, uFlare;
+attribute vec3 aColor; attribute float aSize, aSeed, aTw, aAlpha, aFlare, aDisk;
+uniform float uTime, uPixelRatio, uSize, uAlpha, uFlare, uDisk;
 varying vec3 vColor; varying float vAlpha;
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
@@ -38,7 +38,7 @@ void main() {
   float tw = 1.0 - aTw * (0.5 - 0.5 * sin(uTime * (0.7 + aSeed * 1.9) + aSeed * 40.0));
   // capped at 48 px, fading out within a unit of the camera (the camera flies through)
   gl_PointSize = min(uPixelRatio * uSize * aSize * tw * (72.0 / max(-mv.z, 0.1)), 48.0 * uPixelRatio);
-  vColor = aColor; vAlpha = uAlpha * aAlpha * tw * smoothstep(0.25, 1.0, -mv.z) * mix(1.0, uFlare, aFlare);
+  vColor = aColor; vAlpha = uAlpha * aAlpha * tw * smoothstep(0.25, 1.0, -mv.z) * mix(1.0, uFlare, aFlare) * mix(1.0, uDisk, aDisk);
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;
@@ -106,7 +106,12 @@ function buildFunnel(o, ctx) {
     add(0.02, u * r, v * r, [0.6, 0.85, 0.5], 1.15, 0.05, 1, 1)
   }
   const capLast = pts.length
-  // the afterglow: a pale blue sheet just after the disk, fading
+  // the afterglow: a bright pale-blue ring at the wall just after the disk
+  for (let i = 0; i < 5200; i++) {
+    const s = 0.3 + 0.45 * Math.pow(hash(i * 6.1), 1.2), r = R(s) * (0.94 + 0.06 * hash(i * 3.9)), t = hash(i * 7.3) * Math.PI * 2
+    add(s, r * Math.cos(t), r * Math.sin(t), [0.7, 0.85, 1], 1.5, 0.1, 1.2 * (1 - (s - 0.3) / 0.45))
+  }
+  // and a faint pale-blue sheet across it
   for (let i = 0; i < 2600; i++) {
     const s = 0.15 + 1.2 * Math.pow(hash(i * 8.3), 1.5), r = R(s) * 0.97 * Math.sqrt(hash(i * 2.2)), t = hash(i * 9.1) * Math.PI * 2
     add(s, r * Math.cos(t), r * Math.sin(t), [0.66, 0.82, 1], 3.0, 0.12, 1.0 * (1 - (s - 0.15) / 1.2))
@@ -121,8 +126,15 @@ function buildFunnel(o, ctx) {
     const s = 5 + hash(i * 9.1) * 3, r = R(s) * 0.88 * Math.sqrt(hash(i * 6.3)), t = hash(i * 8.7) * Math.PI * 2
     add(s, r * Math.cos(t), r * Math.sin(t), hash(i) > 0.5 ? [0.75, 0.88, 1] : [1, 0.95, 0.85], 2.2, 0.6, 1)
   }
+  // the body: a faint blue-violet haze of fine grains inside the bell, thicker toward the mouth
+  for (let i = 0; i < 16000; i++) {
+    const q = Math.pow(hash(i * 2.17), 0.75), s = 5 + (L - 5.2) * q
+    const r = R(s) * 0.95 * Math.sqrt(hash(i * 5.31)), t = hash(i * 8.17) * Math.PI * 2
+    const c = hash(i * 1.71) < 0.55 ? [0.38, 0.45, 0.95] : [0.6, 0.4, 0.9]
+    add(s, r * Math.cos(t), r * Math.sin(t), c, 2.6, 0.05, 0.24 + 0.32 * q)
+  }
   // galaxies: colourful clusters, some larger spirals, denser and brighter toward the mouth
-  const G = o.galaxies ?? 1000
+  const G = o.galaxies ?? 2000
   const palette = [[0.55, 0.72, 1], [1, 1, 1], [1, 0.82, 0.45], [0.78, 0.6, 1], [0.6, 0.9, 1], [1, 0.65, 0.5]]
   for (let g = 0; g < G; g++) {
     const q = Math.pow(hash(g * 1.13), 0.6)                 // more of them toward the mouth
@@ -130,10 +142,10 @@ function buildFunnel(o, ctx) {
     const r = R(s) * 0.86 * Math.sqrt(hash(g * 2.71)), t = hash(g * 3.33) * Math.PI * 2
     const cy = r * Math.cos(t), cz = r * Math.sin(t)
     const col = palette[Math.floor(hash(g * 4.4) * palette.length)]
-    const bright = 0.8 + 0.2 * q
-    const spiral = hash(g * 7.7) < 0.12, big = spiral ? 0.35 + 0.35 * hash(g * 5.5) : 0.08 + 0.18 * hash(g * 5.5)
+    const bright = 0.55 + 0.4 * q
+    const spiral = hash(g * 7.7) < 0.18, big = spiral ? 0.45 + 0.55 * hash(g * 5.5) : 0.08 + 0.18 * hash(g * 5.5)
     const tilt = hash(g * 6.6) * Math.PI, turn = hash(g * 8.8) * Math.PI * 2
-    const per = spiral ? 160 : 28
+    const per = spiral ? 220 : 26
     for (let k = 0; k < per; k++) {
       let dx, dy
       if (spiral) {   // two arms
@@ -144,7 +156,7 @@ function buildFunnel(o, ctx) {
         const a = hash(g * 31 + k * 7.1) * Math.PI * 2, rr = big * Math.pow(hash(g * 17 + k * 3.7), 1.6)
         dx = rr * Math.cos(a); dy = rr * Math.sin(a)
       }
-      add(s + dx, cy + dy * Math.cos(tilt), cz + dy * Math.sin(tilt), col, k < 3 ? 4.0 : 1.1, 0.3, bright)
+      add(s + dx, cy + dy * Math.cos(tilt), cz + dy * Math.sin(tilt), col, k < 3 ? 3.0 : 0.85, 0.3, bright)
     }
   }
   // the floor: a faint perspective grid below the funnel
@@ -157,23 +169,23 @@ function buildFunnel(o, ctx) {
 
   // into world space along the axis
   const N = pts.length, pos = new Float32Array(N * 3), color = new Float32Array(N * 3)
-  const size = new Float32Array(N), seed = new Float32Array(N), tw = new Float32Array(N), al = new Float32Array(N), fl = new Float32Array(N)
+  const size = new Float32Array(N), seed = new Float32Array(N), tw = new Float32Array(N), al = new Float32Array(N), fl = new Float32Array(N), dk = new Float32Array(N)
   const axis = o.axis || 'z+'
   // (s, a, b) → world: a is up (y) for the floor to lie flat; b runs across
   const place = (s, a, b) => axis === 'z-' ? [b, a, -s] : axis === 'z+' ? [b, a, s] : axis === 'x-' ? [-s, a, b] : [s, a, b]
   pts.forEach((p, i) => {
     pos.set(place(p[0], p[1], p[2]), i * 3); color.set([p[3], p[4], p[5]], i * 3)
-    size[i] = p[6]; tw[i] = p[7]; al[i] = p[8]; fl[i] = p[10]; seed[i] = hash(i * 0.731)
+    size[i] = p[6]; tw[i] = p[7]; al[i] = p[8]; fl[i] = p[10]; dk[i] = p[9] === 1 ? 1 : 0; seed[i] = hash(i * 0.731)
   })
   const geo = new BufferGeometry()
   geo.setAttribute('position', new BufferAttribute(pos, 3))
   const colAttr = new BufferAttribute(color, 3)
   geo.setAttribute('aColor', colAttr); geo.setAttribute('aSize', new BufferAttribute(size, 1))
   geo.setAttribute('aSeed', new BufferAttribute(seed, 1)); geo.setAttribute('aTw', new BufferAttribute(tw, 1))
-  geo.setAttribute('aAlpha', new BufferAttribute(al, 1)); geo.setAttribute('aFlare', new BufferAttribute(fl, 1))
+  geo.setAttribute('aAlpha', new BufferAttribute(al, 1)); geo.setAttribute('aFlare', new BufferAttribute(fl, 1)); geo.setAttribute('aDisk', new BufferAttribute(dk, 1))
   const mat = new ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
-    uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.6 }, uFlare: { value: 1 } },
+    uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.6 }, uFlare: { value: 1 }, uDisk: { value: 1 } },
   })
   const points = new Points(geo, mat); points.frustumCulled = false
   const g = new Group(); g.add(points)
@@ -191,6 +203,10 @@ function buildFunnel(o, ctx) {
     const sAx = along(cam), off = across(cam)
     const k = sAx <= 0 ? 1 : Math.min(1, Math.max(0, (off / sAx - 0.6) / 0.3))
     mat.uniforms.uFlare.value = 0.06 + 0.94 * k * k * (3 - 2 * k)
+    // the CMB disk seen at an angle: its grains overlap in projection and add up
+    // toward white, so it dims with the angle and keeps its colours
+    const face = Math.abs(sAx) / Math.max(Math.hypot(sAx, off), 1e-3)
+    mat.uniforms.uDisk.value = 0.6 + 0.4 * face
   }
 
   // the disk's colours from the map: the hemisphere seen from the mouth,
@@ -210,7 +226,9 @@ function buildFunnel(o, ctx) {
       const px = Math.min(c.width - 1, Math.floor(((lon + Math.PI) / (2 * Math.PI)) * c.width))
       const py = Math.min(c.height - 1, Math.floor(((Math.PI / 2 - lat) / Math.PI) * c.height))
       const k = (py * c.width + px) * 4
-      color.set([data[k] / 255, data[k + 1] / 255, data[k + 2] / 255], i * 3)
+      // saturate and lift: the additive gamma greys mid colours from far away
+      const rr = data[k] / 255, gg = data[k + 1] / 255, bl = data[k + 2] / 255, m = (rr + gg + bl) / 3, sat = 1.5, lift = 1.0
+      color.set([Math.min(1, (m + (rr - m) * sat) * lift), Math.min(1, (m + (gg - m) * sat) * lift), Math.min(1, (m + (bl - m) * sat) * lift)], i * 3)
     }
     colAttr.needsUpdate = true
   }

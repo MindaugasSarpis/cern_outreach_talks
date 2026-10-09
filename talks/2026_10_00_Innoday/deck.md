@@ -97,7 +97,7 @@ space: { at: [30, 39, -119], dist: 25, yaw: -72, pitch: 13, dim: 0, flight: 3.5 
 <PrintStill src="stills/04.jpg" />
 
 <AfterFlight :delay="3.4">
-<div class="world-caption narrow">
+<div class="world-caption narrow small">
 
 # 13,8 mlrd. metų nuo Didžiojo sprogimo
 

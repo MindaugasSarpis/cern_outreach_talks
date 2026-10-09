@@ -343,3 +343,7 @@ html[data-stage] .hero.dim > img { filter: brightness(0.78) contrast(1.06) satur
 
 /* a world caption at the top left, where a wide form fills the lower frame (the funnel) */
 html[data-stage] .world-caption.top { top: 52px !important; bottom: auto !important; }
+
+/* a step smaller: the funnel slide's line stays clear of the form */
+html[data-stage] .world-caption.narrow.small h1 { font-size: 34px !important; line-height: 1.12 !important; }
+html[data-stage] .world-caption.narrow.small { max-width: 32%; }
