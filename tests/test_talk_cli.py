@@ -629,6 +629,47 @@ def test_build_output_goes_to_the_log(repo, env, tmp_path):
     assert "transforming module 200" not in err and str(log) in err
 
 
+
+def test_export_waits_for_load_in_the_render_slot(repo, env, tmp_path):
+    # networkidle never comes under the stage, so slidev export timed out on every slide
+    installed_tree(repo)
+    b = tmp_path / "bin"
+    fake_bin(b, "pnpm", 'echo "$PWD $*" > "$PNPM_ARGS_OUT"\nwhile [ "$1" != --output ]; do shift; done\n'
+                        'echo "%PDF" > "$2"\necho "slot=$TALK_RENDER_SLOT"\n')
+    e = {**path_with(b, env), "PNPM_ARGS_OUT": str(tmp_path / "pnpm.args")}
+    code, obj, err = talk(repo, "export", "opendata", env=e)
+    assert code == 0, obj
+    cwd, args = (tmp_path / "pnpm.args").read_text().split(" ", 1)
+    out = tmp_path / "tmp" / "talk-opendata" / "opendata.pdf"
+    assert cwd == str(repo / "talks" / "2026_10_00_OpenData")
+    assert args.split() == ["exec", "slidev", "export", "deck.md", "--format", "pdf", "--output", str(out),
+                            "--wait-until", "load", "--wait", "4000", "--timeout", "120000"]
+    assert obj["out"] == str(out) and out.exists() and str(out) in err
+    assert "slot=local" in Path(obj["log"]).read_text()
+    # the talk's own --wait-until and further slidev args win and pass through
+    code, obj, _ = talk(repo, "export", "opendata", "--format", "png", "--out", str(tmp_path / "x"), "--",
+                        "--wait-until", "domcontentloaded", "--range", "1-3", env=e)
+    args = (tmp_path / "pnpm.args").read_text().split(" ", 1)[1].split()
+    assert code == 0 and args[-4:] == ["--wait-until", "domcontentloaded", "--range", "1-3"] and args.count("--wait-until") == 1
+    assert args[-8:-4] == ["--wait", "4000", "--timeout", "120000"]
+
+
+def test_the_render_slot_line_is_what_srun_runs(repo, env, tmp_path):
+    # it printed RENDER_SRUN_ARGS alone, so sessions added --ntasks=1 by hand
+    b = tmp_path / "bin"
+    fake_bin(b, "sbatch", "exit 0\n")
+    fake_bin(b, "sinfo", "printf '(null)\\n'\n")
+    fake_bin(b, "srun", 'while [ "${1#-}" != "$1" ]; do shift; done\nexec "$@"\n')
+    e = path_with(b, env)
+    del e["RENDER_BACKEND"]
+    e["RENDER_SRUN_ARGS"] = "--partition=photon_primary --cpus-per-task=16"
+    code, obj, err = talk(repo, "render", "--", "true", env=e)
+    assert code == 0
+    assert "render slot: srun --ntasks=1 --partition=photon_primary --cpus-per-task=16 (RENDER_SRUN_ARGS: environment)" in err
+    code, obj, err = talk(repo, "config", env=e)
+    assert "srun --ntasks=1 --partition=photon_primary --cpus-per-task=16" in err
+
+
 LINT_FAKE = """import json, sys
 findings = [{"code": "W%d" % i, "severity": "warning", "message": "warn %d" % i, "file": "deck.md", "line": i, "slide": 1}
             for i in range(40)]

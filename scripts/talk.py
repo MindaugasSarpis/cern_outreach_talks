@@ -22,6 +22,9 @@
   ready NAME      before the venue: lint --release, check, shots, videos:preflight,
                   venue --dry-run (and the safe-area check for a broadcast talk)
   record NAME     slidev-stage-record of the build: one MP4 per slide
+  export NAME     slidev export (PDF; --format png|pptx) in the render slot, with
+                  --wait-until load --wait 4000 (the stage never lets the network go idle),
+                  into $TALK_TMP/talk-<slug>/ unless --out; more slidev args after --
   safe NAME       slidev-stage-safe of the build: the TV safe area
   deploy NAME     only when the owner asked: from the talk's worktree, ready (unless
                   ready already passed this commit), then push the commit ready passed
@@ -84,7 +87,7 @@ import new_talk  # noqa: E402  (NAME_RE, REPO, PAGES, worktree_slug: one source 
 REPO_NAME = new_talk.REPO.split("/")[1]
 STAGE_BINS = {"shots": "slidev-stage-shots", "record": "slidev-stage-record", "safe": "slidev-stage-safe"}
 DELEGATES = {"lint": "talk_lint.py", "facts": "facts.py", "map": "talk_map.py"}
-PASSTHROUGH = {"dev", "build", "shots", "record", "safe", "render"}   # extra args go to the tool
+PASSTHROUGH = {"dev", "build", "shots", "record", "safe", "export", "render"}   # extra args go to the tool
 SHA_RE = re.compile(r"^[0-9a-f]{7,40}$")
 TAG_RE = re.compile(r"^v\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$")
 PIN_RE = re.compile(r'("slidev-addon-(?:videos|stage)"\s*:\s*"github:MindaugasSarpis/slidev-videos#)([^"&]+)')
@@ -973,10 +976,12 @@ def render_plan(cmd: list, env: dict, gpu: bool | None = None) -> dict:
         gpu = cluster_gpus(backend, env)
     cmd = with_local_browsers(cmd)
     if backend == "slurm":
-        argv = ["srun", *(["--gres=gpu:1"] if gpu else []), *srun_args(cfg()["RENDER_SRUN_ARGS"]), *cmd]
+        slot = ["srun", *(["--gres=gpu:1"] if gpu else []), *srun_args(cfg()["RENDER_SRUN_ARGS"])]
+        argv = [*slot, *cmd]
     else:
-        argv = ["condor_run", *(["-a", "request_gpus = 1"] if gpu else []), "-a", "getenv = True", shlex.join(cmd)]
-    return {"backend": backend, "argv": argv, "env": {"TALK_RENDER_SLOT": backend}, "lock": None, "gpu": gpu}
+        slot = ["condor_run", *(["-a", "request_gpus = 1"] if gpu else []), "-a", "getenv = True"]
+        argv = [*slot, shlex.join(cmd)]
+    return {"backend": backend, "argv": argv, "slot": slot, "env": {"TALK_RENDER_SLOT": backend}, "lock": None, "gpu": gpu}
 
 
 def render_run(cmd: list, cwd: Path, env: dict, gpu: bool | None = None) -> tuple[subprocess.CompletedProcess, dict]:
@@ -985,7 +990,8 @@ def render_run(cmd: list, cwd: Path, env: dict, gpu: bool | None = None) -> tupl
     if plan.get("note"):
         OUT.say(f"render: {plan['note']}")
     elif plan["backend"] == "slurm":
-        OUT.say(f"render slot: {cfg()['RENDER_SRUN_ARGS'] or 'srun defaults'} ({cfg().sources['RENDER_SRUN_ARGS']})")
+        # what runs, --ntasks=1 and --gres included, not only the setting
+        OUT.say(f"render slot: {shlex.join(plan['slot'])} (RENDER_SRUN_ARGS: {cfg().sources['RENDER_SRUN_ARGS']})")
     if plan["lock"]:
         with RenderLock(Path(plan["lock"])):
             return run(plan["argv"], cwd=cwd, env=env, log=True), plan
@@ -2095,6 +2101,52 @@ def cmd_pin(repo: Repo, a, extra) -> tuple[int, dict]:
     return 0, data
 
 
+# Slidev's export waits for networkidle by default, which never comes under the
+# stage (its render loop and audio keep the page busy): it timed out. `load`,
+# then 4 s for the print stills and photos to mount, and a long timeout for a
+# deck of full-bleed photographs (Innoday's export: 30 pages, all with content).
+# Each is only a default: the talk's own flag after -- wins.
+EXPORT_DEFAULTS = (("--wait-until", "load"), ("--wait", "4000"), ("--timeout", "120000"))
+
+
+def cmd_export(repo: Repo, a, extra) -> tuple[int, dict]:
+    talk, _ = resolve_talk(repo, a.name, invocation_dir())
+    d = repo.here / "talks" / talk
+    data = {"talk": talk}
+    if not installed(repo.here, d):
+        data["error"] = f"not installed: run `pnpm install` in {repo.here}"
+        OUT.say(f"error: {data['error']}")
+        return 1, data
+    env = tool_env({"VITE_VIDEOS_LOCAL_FIRST": "1"})
+    pnpm = which("pnpm", env)
+    if not pnpm:
+        data["error"] = "pnpm not found"
+        return 1, data
+    fmt = a.format or "pdf"
+    out = Path(a.out).resolve() if a.out else build_dir(talk) / f"{wt_slug(talk)}.{fmt}"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    given = {x.split("=")[0] for x in extra}
+    if "--range" in given:
+        OUT.say("warning: under the stage, slidev export with --range has come out blank (toolkit v0.5.3 "
+                "looks at it); without it the whole deck exports")
+    cmd = [pnpm, "exec", "slidev", "export", "deck.md", "--format", fmt, "--output", str(out),
+           *[x for k, v in EXPORT_DEFAULTS if k not in given for x in (k, v)], *extra]
+    LOG.begin(repo.here, wt_slug(talk), "export")
+    t0 = time.monotonic()
+    r, plan = render_run(cmd, d, env)
+    ok = r.returncode == 0 and (out.exists() or fmt == "png")
+    data.update(out=str(out), format=fmt, argv=plan["argv"], tool_exit=r.returncode,
+                seconds=round(time.monotonic() - t0, 1), summary=summarize(r.stdout, ok),
+                log=str(LOG.path) if LOG.path else None)
+    if not ok:
+        data["error"] = f"export failed (exit {r.returncode})"
+        say_summary(data["summary"])
+    report_steps([{"name": "export", "ok": ok, **data}])
+    if ok:
+        OUT.show(f"{'out':<14} {out}")
+    return (0 if ok else 1), data
+
+
 def cmd_render(repo: Repo, a, extra) -> tuple[int, dict]:
     if not extra:
         raise UsageError("render -- COMMAND [ARGS]: what to run in the render slot")
@@ -2268,6 +2320,8 @@ def cmd_config(repo: Repo, a, extra) -> tuple[int, dict]:
     env = tool_env()
     for k in CONFIG_KEYS:
         OUT.show(f"{k:<18} {c[k] if c[k] is not None else '-':<48} {c.sources[k]}")
+        if k == "RENDER_SRUN_ARGS" and c["RENDER_BACKEND"] == "slurm":
+            OUT.show(f"{'':<18} {'srun ' + shlex.join(srun_args(c[k] or '')):<48} what a render runs (--gres=gpu:1 too where there are GPUs)")
     passed = {k: v for k, v in c.file.items() if k not in CONFIG_KEYS}
     for k, v in passed.items():
         OUT.show(f"{k:<18} {env.get(k, v):<48} {'environment' if os.environ.get(k) else str(c.path)} (to the tools)")
@@ -2341,6 +2395,9 @@ def build_parser() -> argparse.ArgumentParser:
         sp.add_argument("--rebuild", action="store_true")
         if name == "record":
             sp.add_argument("--out")
+    sp = verb("export", "slidev export in the render slot, --wait-until load --wait 4000 (more slidev args after --)")
+    sp.add_argument("--format", choices=("pdf", "png", "pptx"))
+    sp.add_argument("--out", help="the file (default $TALK_TMP/talk-<slug>/<slug>.<format>)")
     sp = verb("deploy", "only when the owner asked: ready, push the commit it passed to main, watch Pages, check the URL")
     sp.add_argument("--dry-run", action="store_true")
     sp.add_argument("--skip-ready", action="store_true")
@@ -2377,7 +2434,7 @@ VERBS = {
     "new": cmd_new, "open": cmd_open, "list": cmd_list, "status": cmd_status, "dev": cmd_dev,
     "build": cmd_build, "check": cmd_check, "shots": cmd_shots, "review": cmd_review,
     "lint": cmd_delegate, "facts": cmd_delegate, "map": cmd_delegate, "ready": cmd_ready,
-    "record": cmd_stage, "safe": cmd_stage, "deploy": cmd_deploy, "doctor": cmd_doctor, "bump-toolkit": cmd_bump,
+    "record": cmd_stage, "safe": cmd_stage, "export": cmd_export, "deploy": cmd_deploy, "doctor": cmd_doctor, "bump-toolkit": cmd_bump,
     "render": cmd_render, "pin": cmd_pin, "session": cmd_session, "sessions": cmd_sessions, "config": cmd_config,
 }
 
