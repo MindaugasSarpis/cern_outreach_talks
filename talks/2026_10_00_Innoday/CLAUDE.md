@@ -75,16 +75,16 @@ the part word during a Part II flight, gone before the photo lands).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** Deployed 7163101 —
+2026-10-09: **complete, pending the owner's review.** Deployed fe15a19 —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
-Pages run 37898098431 (per-talk build and deploy green), URL 200. `talk ready`
-passed with nothing skipped (lint 0 errors, check, shots, preflight, venue).
-In it: the funnel → CMB opening (Planck 2018 map), Higgs and 76/86 cut, the
-text round, the final talk-review (six lenses, 36 findings) and its delta
-review (five lenses, 30 findings), White Rabbit in place of the grid, Part II's
-photos kept out of Part I's frames, print stills on 16 slides.
-Next: the owner's review on Pages; Tools' place visibility and `humAt: all`
-when they land (then re-pose Part I if wanted).
+Pages run 37906723499 (per-talk build and deploy green), URL 200; `talk
+ready` passed with nothing skipped. This round: the funnel rebuilt to the
+owner's NASA/WMAP reference (a bell on its side, crisp wireframe, Big Bang
+flare, WMAP-coloured CMB disk, blue-violet haze and colourful galaxies, floor
+grid; the flight down to the CMB), the Scheduler's 33-point Lithuanian text
+audit, captions timed from the slide's arrival (<AfterFlight>), print stills
+refreshed. Next: the owner's review; v0.5.2 place groups (then widen Part I's
+poses again); `humAt: all`.
 
 ## Decisions
 
@@ -99,6 +99,13 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 - No slogans, no subtitles under „Ačiū“ or part titles, no colon or dash
   reveals, no rhetorical openers; kickers only where they add information.
 - Part II is "Sprendimai" (solutions), each slide names its problem.
+- The accelerator is „greitintuvas“, never „mašina“ (a CERN-English calque);
+  White Rabbit „suderina laikrodžius“; the liaison is an Inovacijų agentūros
+  „specialistė“, not „pareigūnė“ (Scheduler's audit, 9 Oct).
+- The funnel follows the NASA/WMAP figure (owner, 9 Oct): CMB in a WMAP-like
+  palette from the Planck 2018 map (`cmb_wmap.png`); the Big Bang flare fades
+  when the camera looks down the axis, and the disk dims with the viewing angle
+  so overlapping grains keep their colours.
 - Match cuts: only ring → tunnel; ring → CERN aerial and loop → FCC were weak.
 - Part II's photo places are built when their slides mount (all of them 3 s
   after load) and stay in the world. Until the toolkit can hide them, Part I's

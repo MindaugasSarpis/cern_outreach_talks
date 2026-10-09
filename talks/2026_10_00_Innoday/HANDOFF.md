@@ -247,3 +247,10 @@ text round, print stills, the ultracode review, deploy.
 7163101, Pages run 37898098431 (per-talk build and deploy green), URL 200;
 `talk ready` passed with nothing skipped. Status: complete, pending the
 owner's review.
+
+## Deployed (2026-10-09, fourth round)
+
+fe15a19, Pages run 37906723499 (green), URL 200: the funnel to the NASA/WMAP
+reference (six recording rounds against it, wmap1–wmap9 in
+~/talks/.cache/innoday), the 33-point text audit, AfterFlight captions,
+stills. Status: complete, pending the owner's review.
