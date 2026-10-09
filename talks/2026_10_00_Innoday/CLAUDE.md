@@ -78,7 +78,7 @@ the part word during a Part II flight, gone before the photo lands).
   (talk-owned bookend, 0:30, made by reversing the opener; do not `--prune`
   `vu_ff_zoom.mp4`, its source), library `cern_overview_short.mp4`,
   `cern_footage_2022_042_001.mp4`.
-- Toolkit: slidev-videos v0.6.5 (both addons; `strands` registered `enterable: true`; the kit's print block stops every animation): place groups, `humAt: all`,
+- Toolkit: slidev-videos v0.6.6 (both addons; `strands` registered `enterable: true`; print shows every animation at its end state). The talks stay on v0.6.6 for now (Scheduler, 9 Oct): place groups, `humAt: all`,
   `?stage-debug`, quality tiers (a phone starts at 2; desktop and the headless
   recorder at 0, `pages:check` prints it), lighter photo places, the context-
   loss fixes, stills and posters for print (v0.5.4: correct per page).
@@ -89,8 +89,7 @@ the part word during a Part II flight, gone before the photo lands).
 — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
 Pages run 37948674216 (green), URL 200; `ready` passed with nothing skipped;
 the live walk: 30 slides, 0 failed requests, 0 context losses, tier 0.
-Waiting: the Light Conversion photo (owner). Next: v0.6.6 (print shows
-animations at their end state).
+Waiting: the Light Conversion photo (owner). On the branch: v0.6.6, export checked.
 
 ## Decisions
 
@@ -150,8 +149,9 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   page has its text (the AfterFlight captions too), its own still and the
   deck's fonts, 11 MB; a blank last page is Slidev's. Slidev's default
   `h1 + p { opacity: .5 }` greyed Part II's invention line: `.pf .answer` sets
-  opacity 1. Since v0.6.5 print stops every animation, so the part words (whose
-  animation ends hidden) are `display: none` in print.
+  opacity 1. v0.6.5 printed the part words over the photos; v0.6.6 prints
+  animations at their end state (hidden), and the deck keeps its own
+  `display: none` for them in print as a belt.
 - Place mode over screen mode for Part II (owner via the Scheduler, 8 Oct):
   the inventions visibly hang off the machine.
 - The opener stays whole (slot ≥ 25 min).
