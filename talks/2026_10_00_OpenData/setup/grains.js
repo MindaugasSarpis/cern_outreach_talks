@@ -1003,7 +1003,7 @@ void main() {
   if (a <= 0.002) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vAlpha = 0.0; vColor = vec3(0.0); return; }
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = projectionMatrix * mv;
-  gl_PointSize = max(1.0, uPixelRatio * size * (2.6 / max(-mv.z, 0.05)) * 4.0);
+  gl_PointSize = max(1.5, uPixelRatio * size * (2.6 / max(-mv.z, 0.05)) * 4.0);
   vAlpha = a;
 }`
 
