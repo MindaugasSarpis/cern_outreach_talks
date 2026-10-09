@@ -472,13 +472,48 @@ def invocation_dir() -> Path:
 LOCK_DRIVER = ("pnpm-lock", "sh scripts/lockfile-merge.sh %O %A %B")
 
 
+HOOK_MARK = "# talk.py: pnpm install after a merge or rebase that moved the lockfile or a package.json"
+HOOK_BODY = f"""#!/bin/sh
+{HOOK_MARK}
+top=$(git rev-parse --show-toplevel 2>/dev/null) && [ -f "$top/scripts/post-merge.sh" ] && exec sh "$top/scripts/post-merge.sh" "$@"
+exit 0
+"""
+
+
 def ensure_lock_driver(root: Path) -> None:
     """Register the pnpm-lock.yaml merge driver (.gitattributes names it; git keeps drivers
-    in the repo's config, which every worktree shares). Idempotent."""
+    in the repo's config, which every worktree shares), and the post-merge / post-rewrite
+    hooks that reinstall after it (scripts/post-merge.sh). Idempotent; a hook of someone
+    else's is left alone."""
     name, cmd = LOCK_DRIVER
     if git_out(["config", "--get", f"merge.{name}.driver"], root) != cmd:
         git(["config", f"merge.{name}.name", "take main's pnpm-lock.yaml, then pnpm install"], root)
         git(["config", f"merge.{name}.driver", cmd], root)
+    if not (root / "scripts" / "post-merge.sh").is_file():
+        return
+    hooks = git_out(["rev-parse", "--path-format=absolute", "--git-path", "hooks"], root)
+    if not hooks:
+        return
+    for hook in ("post-merge", "post-rewrite"):
+        path = Path(hooks) / hook
+        try:
+            if path.is_file() and HOOK_MARK not in path.read_text(encoding="utf-8", errors="ignore"):
+                continue                          # someone else's hook
+            if not path.is_file() or path.read_text(encoding="utf-8") != HOOK_BODY:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(HOOK_BODY, encoding="utf-8")
+                path.chmod(0o755)
+        except OSError:
+            pass
+
+
+def lock_fix(wt: Path) -> list[str]:
+    return [f"git -C {wt} checkout origin/main -- pnpm-lock.yaml && (cd {wt} && pnpm install) "
+            f"&& git -C {wt} add pnpm-lock.yaml && git -C {wt} commit -m 'chore: pnpm-lock.yaml from main, reinstalled'"]
+
+
+LOCK_DRIFT_SAY = ("pnpm-lock.yaml does not record this talk's pins (a lockfile merged as text, or pins moved "
+                  "without an install). Take main's and reinstall:\n  ")
 
 
 def lock_specifiers(lock_text: str, importer: str) -> dict[str, str]:
@@ -1534,6 +1569,14 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
     if unknown:
         raise UsageError(f"--skip takes lint, check, shots, preflight, venue, safe (not {', '.join(sorted(unknown))})")
     LOG.begin(repo.here, wt_slug(talk), "ready")
+    # first, before a build that would run on what the lockfile says rather than what is pinned
+    drift = lock_drift(repo.here, talk)
+    if drift:
+        fix = lock_fix(repo.here)
+        OUT.say(LOCK_DRIFT_SAY + fix[0])
+        OUT.say(f"\n{talk}: NOT ready")
+        return 1, {"talk": talk, "ready": False, "error": "pnpm-lock.yaml does not match the talk's package.json",
+                   "drift": drift, "fix": fix, "steps": [{"name": "lockfile", "ok": False, "drift": drift}]}
     head0 = git_out(["rev-parse", "HEAD"], repo.here)
     dirty0 = porcelain_paths(git_out(["status", "--porcelain"], repo.here) or "")
     info = talk_info(repo.here, talk)
@@ -1687,10 +1730,8 @@ def cmd_deploy(repo: Repo, a, extra) -> tuple[int, dict]:
         return fail("origin/main is not an ancestor of HEAD", rebase=rebase)
     drift = lock_drift(wt, talk)
     if drift:
-        fix = [f"git -C {wt} checkout origin/main -- pnpm-lock.yaml && (cd {wt} && pnpm install) "
-               f"&& git -C {wt} add pnpm-lock.yaml && git -C {wt} commit -m 'chore: pnpm-lock.yaml from main, reinstalled'"]
-        OUT.say("pnpm-lock.yaml does not record this talk's pins (a lockfile merged as text, or pins moved "
-                "without an install). Take main's and reinstall:\n  " + fix[0])
+        fix = lock_fix(wt)
+        OUT.say(LOCK_DRIFT_SAY + fix[0])
         return fail("pnpm-lock.yaml does not match the talk's package.json", drift=drift, fix=fix)
     sha = git_out(["rev-parse", "HEAD"], wt)
     ahead = int(git_out(["rev-list", "--count", f"origin/main..{sha}"], wt) or 0)
