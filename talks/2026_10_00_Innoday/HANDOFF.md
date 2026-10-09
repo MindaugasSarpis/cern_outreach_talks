@@ -388,3 +388,13 @@ text, no part words, 11.4 MB. The talks stay on v0.6.6 for now.
 
 9e20f1f (12f4637 + main 8a88b32), v0.6.6, Pages run 37950349600 (green), URL
 200; live walk 30 slides, 0 failed, 0 context losses.
+
+## v0.6.7 (2026-10-09, the iOS black)
+
+The owner's iPhone/iPad: the funnel flashed, then every world slide was black,
+with the stage at 60 fps and no context loss. Tools' finding: the funnel's
+additive core overflowed the half-float composer target to Inf, which bloom
+and ACES turned into NaN (black). v0.6.7 clamps every pixel finite before
+bloom. The talk's builders use no float textures (checked). Pinned v0.6.7;
+slides 1, 4, 5, 7, 13, 25 look as before. The lite mode prepared on the first
+diagnosis is parked on `wip/innoday-lite` (85edd2b).
