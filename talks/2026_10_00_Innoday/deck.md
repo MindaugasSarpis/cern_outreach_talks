@@ -47,7 +47,7 @@ space:
   at: wide
 ---
 
-<PrintStill src="stills/01.jpg" />
+<PrintStill src="figures/stills/01.jpg" />
 
 # Innoday 2026
 
@@ -67,7 +67,7 @@ Sakyti: „Laba diena. Esu Mindaugas Šarpis, vadovauju Vilniaus universiteto gr
 space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0 }   # the takeover's pose: the next slide stands exactly here
 ---
 
-<PrintStill src="stills/02.jpg" />
+<PrintStill src="figures/stills/02.jpg" />
 
 <VideoPlayer src="vu_ff_zoom_galaxy.mp4" transition="fade" advance-on-end />
 
@@ -94,7 +94,7 @@ Techniškai: kadras — public/figures/opener_last.jpg, išsitrauktas komanda pn
 space: { at: [30, 39, -119], dist: 25, yaw: -72, pitch: 13, dim: 0, flight: 3.5 }   # the bell on its side, narrow end left, from three-quarters on the mouth side (the NASA/WMAP figure)
 ---
 
-<PrintStill src="stills/04.jpg" />
+<PrintStill src="figures/stills/04.jpg" />
 
 <AfterFlight :delay="3.4">
 <div class="world-caption narrow small">
@@ -115,7 +115,7 @@ Faktai: Visatos amžius 13,787 ± 0,020 mlrd. m. (Planck 2018, A&A 641, A6); spa
 space: { at: [30, 40, -136], dist: 7.5, yaw: 0, pitch: 0, dim: 0.1, flight: 5 }   # in at the mouth and back down the funnel, past the galaxies, the first stars and the dark ages, to the CMB disk
 ---
 
-<PrintStill src="stills/05.jpg" />
+<PrintStill src="figures/stills/05.jpg" />
 
 <AfterFlight :delay="4.6">
 <div class="world-caption narrow">
@@ -138,7 +138,7 @@ Faktai: foninės spinduliuotės temperatūra 2,725 K; skirtumai žemėlapyje ~±
 space: { at: [30, 40, -136], dist: 12, yaw: 24, pitch: 8, dim: 0.3 }   # pulled back from the CMB disk: the question stands over the oldest light
 ---
 
-<PrintStill src="stills/06.jpg" />
+<PrintStill src="figures/stills/06.jpg" />
 
 <div class="world-caption narrow">
 
@@ -158,7 +158,7 @@ layout: section
 space: { at: [14, 0, 7], dist: 6, yaw: 90, pitch: 40, dim: 0.15 }   # down on the ring between two strands, along it: Part II's photos stay above the frame
 ---
 
-<PrintStill src="stills/07.jpg" />
+<PrintStill src="figures/stills/07.jpg" />
 
 # I dalis
 
@@ -175,7 +175,7 @@ Kalbėtojui. Sakyti: „CERN ir Didysis hadronų greitintuvas.“ Pasaulyje — 
 space: { at: [20, 5, -12], dist: 18, yaw: -30, pitch: 14 }
 ---
 
-<PrintStill src="stills/08.jpg" />
+<PrintStill src="figures/stills/08.jpg" />
 
 <Strands :on="false" />
 
@@ -193,7 +193,7 @@ Faktai: konvencija pasirašyta 1953 m., CERN oficialiai įsteigtas 1954 m. rug
 space: { at: [56, 5, -14], dist: 16, yaw: -28, pitch: 12 }
 ---
 
-<PrintStill src="stills/09.jpg" />
+<PrintStill src="figures/stills/09.jpg" />
 
 <VideoPlayer src="cern_footage_2022_042_001.mp4" />
 
@@ -210,7 +210,7 @@ Faktai: LHCb sveria 5 600 t, 21 × 10 × 13 m, 100 m po žeme; artimiausias 
 space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 40, dim: 0.3 }   # match cut: down on the ring, looking along it; its curve becomes the tunnel's
 ---
 
-<PrintStill src="stills/10.jpg" />
+<PrintStill src="figures/stills/10.jpg" />
 
 <Strands :on="false" />
 
@@ -241,7 +241,7 @@ space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 40, dim: 0 }   # the same pos
 
 <Strands :on="false" />
 
-<StagePhoto src="/figures/hero_tunnel.jpg" alt="LHC tunelis su mėlynais dipoliniais magnetais" class="frame">
+<StagePhoto src="figures/hero_tunnel.jpg" alt="LHC tunelis su mėlynais dipoliniais magnetais" class="frame">
 <div class="credit">LHC tunelis · Nuotr. Samuel Joseph Hertzog / CERN, CC BY 4.0</div>
 </StagePhoto>
 
@@ -276,7 +276,7 @@ layout: section
 space: { at: [14, 1, 0], dist: 36, yaw: -20, pitch: 52, dim: 0.15 }   # the ring and every strand leaving it
 ---
 
-<PrintStill src="stills/12.jpg" />
+<PrintStill src="figures/stills/12.jpg" />
 
 # II dalis
 
@@ -299,7 +299,7 @@ space: { at: stumpe, dim: 0, flight: 1.6 }   # place mode: the photo stands at i
 
 <div class="part-word">Valdymo pultai</div>
 
-<StagePhoto mode="place" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="/figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
+<StagePhoto mode="place" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
 <div class="hero-text">
 <p class="kicker gold">Problema: valdyti greitintuvą</p>
 <div class="year">1973</div>
@@ -328,7 +328,7 @@ space: { at: [25.0, 2.5, 0.0], dist: 9, yaw: -90, pitch: 30, dim: 0, flight: 1.6
 
 <div class="part-word">Kompiuteriai</div>
 
-<StagePhoto src="/figures/hero_proposal.jpg" arrive="camera" :dust-ms="[800, 600]" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" class="page">
+<StagePhoto src="figures/hero_proposal.jpg" arrive="camera" :dust-ms="[800, 600]" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" class="page">
 <div class="hero-text">
 <p class="kicker gold">Problema: tvarkyti informaciją</p>
 <div class="year">1989</div>
@@ -352,7 +352,7 @@ space: { at: next, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 
 <Strands />
 
-<StagePhoto mode="place" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="/figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
+<StagePhoto mode="place" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: tvarkyti informaciją</p>
 <div class="year">1993</div>
@@ -381,7 +381,7 @@ space: { at: pet, dim: 0, flight: 1.6 }   # place mode: the photo stands at its 
 
 <div class="part-word">Detektoriai</div>
 
-<StagePhoto mode="place" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="/figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
+<StagePhoto mode="place" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">1977</div>
@@ -408,7 +408,7 @@ space: { at: mars, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 
 <Strands />
 
-<StagePhoto mode="place" :grains="360" place-id="mars" :relief="0.25" :at="[16.6, 2.5, 13.51]" :size="3" :yaw="-150" src="/figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
+<StagePhoto mode="place" :grains="360" place-id="mars" :relief="0.25" :at="[16.6, 2.5, 13.51]" :size="3" :yaw="-150" src="figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -436,7 +436,7 @@ space: { at: artemis, dim: 0, flight: 1.6 }   # place mode: the photo stands at 
 
 <Strands />
 
-<StagePhoto mode="place" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="/figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
+<StagePhoto mode="place" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -463,7 +463,7 @@ space: { at: hadron, dim: 0, flight: 1.6 }   # place mode: the photo stands at i
 
 <div class="part-word">Pluoštas</div>
 
-<StagePhoto mode="place" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="/figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
+<StagePhoto mode="place" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: nukreipti pluoštą</p>
 <div class="year">2011</div>
@@ -491,7 +491,7 @@ space: { at: whiterabbit, dim: 0, flight: 1.6 }   # place mode: the photo stands
 
 <div class="part-word">Laiko sistema</div>
 
-<StagePhoto mode="place" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="/figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim">
+<StagePhoto mode="place" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim">
 <div class="hero-text">
 <p class="kicker gold">Problema: suderinti laikrodžius</p>
 <div class="year">2012</div>
@@ -521,7 +521,7 @@ space: { at: cold, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 
 <div class="part-word">Magnetai</div>
 
-<StagePhoto mode="place" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="/figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right deep">
+<StagePhoto mode="place" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right deep">
 <div class="hero-text">
 <p class="kicker gold">Problema: atšaldyti magnetus</p>
 <div class="year">2022–2024</div>
@@ -545,7 +545,7 @@ layout: section
 space: { at: [120, -2.4, 0], dist: 14, yaw: -22, pitch: 22, dim: 0.4 }
 ---
 
-<PrintStill src="stills/22.jpg" />
+<PrintStill src="figures/stills/22.jpg" />
 
 # III dalis
 
@@ -561,7 +561,7 @@ Sakyti: „Daugumoje šių pavyzdžių fizikų sprendimą produktu pavertė įmo
 space: { at: kt, dist: 17, yaw: 4, pitch: 34, dim: 0.4 }
 ---
 
-<PrintStill src="stills/23.jpg" />
+<PrintStill src="figures/stills/23.jpg" />
 
 <div class="payoff">
 <p class="kicker gold">CERN žinių perdavimas įmonėms</p>
@@ -586,7 +586,7 @@ Atsargiai: „27 su CERN susiję startuoliai pritraukė 3,2 mlrd. CHF“ — 2,
 space: { at: [118.5, -1.6, 0], dist: 13, yaw: -30, pitch: 14, dim: 0.45 }
 ---
 
-<PrintStill src="stills/24.jpg" />
+<PrintStill src="figures/stills/24.jpg" />
 
 <div class="payoff">
 <p class="kicker gold">CERN tiekėjai · 2026 m. tyrimas</p>
@@ -612,7 +612,7 @@ Faktai: nematerialusis turtas +63 %, materialusis +27 %; 54 % tiekėjų patek
 space: { at: kt, dist: 22, yaw: 200, pitch: 40, dim: 0 }
 ---
 
-<StagePhoto src="/figures/hero_fcc.jpg" alt="Siūlomo 91 km FCC žiedo aplink Ženevą žemėlapis šalia LHC žiedo" focus="55% 50%">
+<StagePhoto src="figures/hero_fcc.jpg" alt="Siūlomo 91 km FCC žiedo aplink Ženevą žemėlapis šalia LHC žiedo" focus="55% 50%">
 <div class="hero-text">
 <p class="kicker">Kitas greitintuvas</p>
 <div class="year blue">91 km</div>
@@ -636,7 +636,7 @@ Faktai: FCC galimybių studija (2025 03 31): 90,7 km, vidutinis gylis ~200 m, 
 space: { at: kt, dist: 18, yaw: 120, pitch: 12, dim: 0 }
 ---
 
-<StagePhoto src="/figures/hero_lt.jpg" arrive="camera" alt="Prezidentas Gitanas Nausėda spaudžia ranką CERN generaliniam direktoriui Markui Thomsonui, už jų CERN, Lietuvos ir ES vėliavos" focus="50% 30%" class="low deep">
+<StagePhoto src="figures/hero_lt.jpg" arrive="camera" alt="Prezidentas Gitanas Nausėda spaudžia ranką CERN generaliniam direktoriui Markui Thomsonui, už jų CERN, Lietuvos ir ES vėliavos" focus="50% 30%" class="low deep">
 <div class="hero-text">
 <p class="kicker gold">Lietuva ir CERN</p>
 <div class="year blue">2018</div>
@@ -660,7 +660,7 @@ Faktai: susitarimas pasirašytas 2017 06 27 Vilniuje, įsigaliojo 2018 01 08. Li
 space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45 }   # the firms slide's pose: the world rests there under the clip
 ---
 
-<PrintStill src="stills/27.jpg" />
+<PrintStill src="figures/stills/27.jpg" />
 
 <VideoPlayer src="vu_ff_unzoom.mp4" advance-on-end />
 
@@ -674,7 +674,7 @@ Sakyti (per klipą): „O dabar grįžtame nuo galaktikos iki Saulėtekio, kur p
 space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45 }
 ---
 
-<PrintStill src="stills/28.jpg" />
+<PrintStill src="figures/stills/28.jpg" />
 
 <div class="payoff">
 <p class="kicker gold">CERN pirkimai · 2024 m.</p>
@@ -701,7 +701,7 @@ layout: statement
 space: { at: wide }   # the cover's pose: the pentaquark whole, clear of „Ačiū“
 ---
 
-<PrintStill src="stills/29.jpg" />
+<PrintStill src="figures/stills/29.jpg" />
 
 # Ačiū
 

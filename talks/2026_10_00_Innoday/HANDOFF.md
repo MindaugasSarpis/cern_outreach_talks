@@ -254,3 +254,15 @@ fe15a19, Pages run 37906723499 (green), URL 200: the funnel to the NASA/WMAP
 reference (six recording rounds against it, wmap1–wmap9 in
 ~/talks/.cache/innoday), the 33-point text audit, AfterFlight captions,
 stills. Status: complete, pending the owner's review.
+
+## Pages-base fix (2026-10-09, Scheduler's report)
+
+The fourth deploy 404'd on every print still and every Part II place photo:
+both were written `/figures/…`, which resolves at the site root, outside the
+Pages base; a build with base `/` cannot show it. Now `figures/…` (StagePhoto,
+12) and `figures/stills/NN.jpg` (PrintStill, 16; the component prefixes
+`BASE_URL`). New standing check, `pnpm pages:check` (`scripts/pages-check.mjs`):
+clean; with one photo put back to `/figures/` it reports
+`404 /figures/hero_stumpe.jpg`. `stage:check` now passes `--types
+strands,funnel` itself. Not deployed: waits for the v0.5.2 pin (place groups,
+`humAt`) and the owner's go.

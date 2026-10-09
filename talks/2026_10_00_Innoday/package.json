@@ -16,8 +16,9 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check .",
+    "stage:check": "slidev-stage-check . --types strands,funnel",
     "stage:shots": "slidev-stage-shots dist shots",
+    "pages:check": "slidev build deck.md --base /cern_outreach_talks/2026_10_00_Innoday/ --out shots/pages-dist && node scripts/pages-check.mjs shots/pages-dist /cern_outreach_talks/2026_10_00_Innoday/ shots/pages 11,13",
     "takeover:frame": "bash scripts/last_frame.sh"
   },
   "dependencies": {

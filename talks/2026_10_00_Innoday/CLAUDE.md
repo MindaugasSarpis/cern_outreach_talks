@@ -52,7 +52,7 @@ the part word during a Part II flight, gone before the photo lands).
 - Talk-owned builders (`setup/`, registered in `main.ts`; `stage:check
   --types strands,funnel`): `strands.js` (grains from ring parts to products;
   `<Strands :on>` fades them in with Part II), `funnel.js` (wall rings and
-  lines, the Big Bang, the CMB cap coloured from `public/figures/cmb_planck.png`,
+  lines, the Big Bang, the CMB disk coloured from `public/figures/cmb_wmap.png`,
   dark ages, first stars, galaxies). `PrintStill.vue` shows a still of a
   world-only slide in print/export only.
 - Part II photos are StagePhoto places with depth maps
@@ -75,7 +75,10 @@ the part word during a Part II flight, gone before the photo lands).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** Deployed fe15a19 —
+2026-10-09: **complete, pending the owner's review.** The live deploy (fe15a19)
+404s on the print stills and the Part II place photos under the Pages base;
+fixed on the branch (base-relative paths, `pnpm pages:check` clean), to go out
+with the next deploy (after the v0.5.2 pin and the owner's go). Deployed fe15a19 —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
 Pages run 37906723499 (per-talk build and deploy green), URL 200; `talk
 ready` passed with nothing skipped. This round: the funnel rebuilt to the
@@ -124,6 +127,13 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 - Place mode over screen mode for Part II (owner via the Scheduler, 8 Oct):
   the inventions visibly hang off the machine.
 - The opener stays whole (slot ≥ 25 min).
+- Asset paths are relative to the deck's base: `src="figures/…"` on StagePhoto
+  and PrintStill, never `/figures/…` (that resolves outside
+  `/cern_outreach_talks/2026_10_00_Innoday/` on Pages, and a local build with
+  base `/` hides it). Before a deploy, `pnpm pages:check`: builds with the
+  Pages base, serves it under that prefix, opens slides 11 and 13 and print
+  mode, and fails on any request that fails (clips excepted: they come from
+  the release).
 
 ## Figures and open items (for the speaker)
 
