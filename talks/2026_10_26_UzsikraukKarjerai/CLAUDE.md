@@ -156,6 +156,37 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Decisions
 
+- 2026-10-09 — No gold text (the owner: gold letters read as AI design). Every kicker,
+  including the year kickers, is one light blue (`--kk-kick`, #8fb2ff from the
+  palette). Emphasis, numbers and labels are white. Gold stays only in the world,
+  where it is matter: the plots, the route and the pentaquark. The peak ticks
+  were already white.
+- 2026-10-09 — Focused review of slide 9 and the state code (talk-review on 52a64e7,
+  since c211acd; 5 lenses, verified). Applied:
+  - the cover pentaquark gathers on a fresh load (it used to appear formed);
+  - a reload on a plot slide fills from empty, with no full plot flashing first;
+  - slide 8's peak ticks light at the click with „Trys pentakvarkai“
+    (`markStep: 2`, jp steps [0, 1, 1]; `<Grains :clicks>`, also when a slide is
+    entered at its last click);
+  - slides 5–7 set jp 0, so 8 → 7 → 8 fills again;
+  - the route on slide 10 draws once the camera has arrived (`.city.late` 8,5 s);
+  - slide 9's labels say „Kaip 2003 m. · 140 taškų“ and „LHCb, 2019 m. · 27 292
+    taškai“. Its spoken text no longer implies that 4,6σ failed for being under
+    5σ: other 2003 bumps were reported near 5σ and still went away. It says the
+    bump vanished with more data, and that LHCb's peaks held with nine times
+    more;
+  - copy on slides 1, 2, 7 and 8 (rigour on slide 7: the computers give the mass
+    a parent would have had, not which particle it was).
+
+  Not applied:
+  - an on-screen „Atradimui reikia 5 σ“ line: it would put the misleading
+    comparison on screen, and the approved idea had the speaker say it;
+  - CLAS's 5,2σ: not in the bank.
+
+  Verified by a click test (step events through 7 → 8 → click → 9 → back), a
+  probe of the uniforms in a real page, and recordings. Recordings below 12 fps
+  slow the world, because the engine clamps a frame to 1/12 s, so check timing
+  at `--fps 12` or higher.
 - 2026-10-09 — Ideas 1 and 3 (the owner's picks, through the Scheduler). Slide 9 no
   longer says „nepriklausomas patikrinimas“: LHCb's check was its own internal
   review, and other groups had also seen the 2003 bump. It now shows the
