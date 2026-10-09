@@ -5,11 +5,12 @@ Video (CERN footage, via the slidev-videos shared library)
   [Check before broadcast: the licence on the CDS record (CERN footage is usually CC BY 4.0; some records say non-commercial).]
 
 Photographs
+- LHCb event display, a proton–proton collision in the upgraded detector, 2022: © CERN, for the LHCb collaboration (CDS LHCb photo collection); free for educational, non-commercial use. [Confirm the use for this event.]
 - LHCb cavern, 2019: Rosa Menkman, flickr.com/photos/r00s/48815389756, CC BY 2.0. Cropped to 16:9.
 
 Data
 - LHCb collaboration, Phys. Rev. Lett. 122, 222001 (2019): the m(J/ψ p) bins drawn on slide 7, from HEPData ins1728691, Table 2 (doi:10.17182/hepdata.89271.v1/t2).
-- Slides 2–4 and 10: illustrations generated for this talk (no measured data).
+- Slides 2–4: illustrations generated for this talk (no measured data).
 
 Map
 - Coastlines and borders: Natural Earth 1:50m, public domain.

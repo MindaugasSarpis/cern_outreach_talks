@@ -139,14 +139,14 @@ html[data-stage] .city {
   text-shadow: var(--kk-shadow); white-space: nowrap; animation: stage-rise 0.8s var(--stage-ease) 1.6s both;
 }
 html[data-stage] .city.r { translate: -100% 0; text-align: right; }   /* `translate`, not `transform`: the rise-in animation holds transform: none */
-html[data-stage] .city.late { animation-delay: 5s; }   /* after the flight in and the map gathering */
+html[data-stage] .city.late { animation-delay: 7.5s; }   /* after the flight in (up to 4.5 s) and the map gathering (3.6 s) */
 html[data-stage] .city.home { color: var(--kk-gold-hi); }
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .city { animation: none !important; } }
 
 /* --- the title card */
 html[data-stage] .say.title { bottom: auto; top: 112px; max-width: 70%; }
 html[data-stage] .say.title .big.huge { font-size: 66px; text-transform: uppercase; line-height: 0.98; }
-html[data-stage] .say .byline { font-size: 28px; font-weight: 500; letter-spacing: 0.06em; margin: 22px 0 0; opacity: 0.88; }
+html[data-stage] .say .byline { font-size: 28px; font-weight: 500; line-height: 1.3; letter-spacing: 0.06em; margin: 22px 0 0; opacity: 0.88; }
 
 /* --- a line over a clip: on a dark band, so it holds against any frame */
 html[data-stage] .say.on-clip {
@@ -176,8 +176,16 @@ html[data-stage] .plans img { width: 100% !important; max-width: none !important
 /* --- a short list of lines (what you can do this year) */
 html[data-stage] .say.list .line { font-size: 28px; margin: 10px 0 0; }
 
-/* --- one line that gives way to the next as a slide's fill completes (slide 7: 2015 → 2019) */
-html[data-stage] .say.swap-out { animation: stage-rise 0.9s var(--stage-ease) 0.5s both, kk-out 0.6s ease 21.6s forwards; }
-html[data-stage] .say.swap-in { opacity: 0; animation: kk-in 0.8s ease 22.4s forwards; }
-@keyframes kk-out { to { opacity: 0; } }
-@media (prefers-reduced-motion: reduce), print { html[data-stage] .say.swap-out { display: none; } html[data-stage] .say.swap-in { opacity: 1; animation: none; } }
+/* --- a line that gives way to the next on a click (slide 8: 2015 → 2019). The rise-in
+   animation's end state (opacity 1) would beat Slidev's hidden class, hence !important. */
+html[data-stage] .say.slidev-vclick-hidden { opacity: 0 !important; visibility: hidden; }
+
+/* --- a year kicker: the kit uppercases kickers, which would turn „m.“ into „M.“ */
+html[data-stage] .say .kick.year { text-transform: none; letter-spacing: 0.04em; }
+
+/* --- a one-line caption on a photograph, lower right, on a soft dark pill */
+html[data-stage] .photo-caption {
+  position: absolute; right: var(--kk-x); bottom: 64px; z-index: 6; max-width: 46%; text-align: right;
+  font-size: 26px; font-weight: 600; line-height: 1.2; color: #f4f6ff;
+  background: rgba(0, 0, 0, 0.55); padding: 8px 16px; border-radius: 8px;
+}

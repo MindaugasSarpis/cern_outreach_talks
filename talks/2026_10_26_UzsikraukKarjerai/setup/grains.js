@@ -60,9 +60,11 @@ void place(vec3 p, float size, float alpha, vec3 color, float seed) {
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 0.86 + 0.14 * sin(uTime * (0.6 + seed * 1.2) + seed * 40.0);   // a slow, shallow twinkle: a stream encoder smears fast sparkle
-  gl_PointSize = uPixelRatio * size * tw * (72.0 / max(-mv.z, 0.1));
+  // capped, and faded out within a few units of the camera: a flight that passes through a
+  // scattered form must not fill the frame with huge additive sprites (a flash, and a fill-rate spike)
+  gl_PointSize = min(uPixelRatio * size * tw * (72.0 / max(-mv.z, 0.1)), 48.0 * uPixelRatio);
   vColor = color;
-  vAlpha = alpha * tw;
+  vAlpha = alpha * tw * smoothstep(1.5, 5.0, -mv.z);
 }
 void hide() { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vAlpha = 0.0; }
 float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
@@ -785,8 +787,10 @@ void main() {
   // once filled, the marked bins (the peaks) brighten and the rest step back
   float m = clamp((uTime - uMarkT) / 1.6, 0.0, 1.0);
   m = m * m * (3.0 - 2.0 * m);
-  vec3 color = mix(uColor, uHot, clamp(0.8 * glow + 0.85 * m * aMark, 0.0, 1.0));
-  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow) * (1.0 + m * (1.8 * aMark - 0.55 * (1.0 - aMark)));
+  // the peaks keep their light and warm slightly; the rest steps back (brightening a dense
+  // additive column only burns it white under the bloom, a flash)
+  vec3 color = mix(uColor, uHot, clamp(0.8 * glow + 0.3 * m * aMark, 0.0, 1.0));
+  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow) * (1.0 - 0.55 * m * (1.0 - aMark));
   float size = uSize * (0.85 + 0.3 * hash(aSeed * 11.0)) * (1.0 + 0.5 * glow);
   place(p, size, alpha, color, aSeed);
 }`
@@ -862,7 +866,7 @@ function buildHistogram(o, ctx) {
       }
       const tg = new BufferGeometry()
       tg.setAttribute('position', new BufferAttribute(new Float32Array(tp), 3)); tg.setAttribute('aSeed', new BufferAttribute(new Float32Array(ts), 1))
-      const tm = material(TICK_VERT, { uSize: { value: (o.size ?? 1) * 1.6 }, uAlpha: { value: 1.0 }, uColor: { value: new Color(...rgb(o.hot || '#fff4dc')) } })
+      const tm = material(TICK_VERT, { uSize: { value: (o.size ?? 1) * 1.3 }, uAlpha: { value: 0.55 }, uColor: { value: new Color(...rgb(o.hot || '#fff4dc')) } })
       tm.uniforms.uTime = u.uTime; tm.uniforms.uPixelRatio = u.uPixelRatio; tm.uniforms.uMarkT = u.uMarkT
       const tk = new Points(tg, tm); tk.frustumCulled = false
       g.add(tk)
@@ -898,14 +902,34 @@ function buildHistogram(o, ctx) {
     if (instant || to <= cur) { u.uFrom.value = to; u.uTo.value = to; u.uT0.value = now - 100; u.uDur.value = 0.01; u.uMarkT.value = to >= 1 && o.marks ? now - 100 : 1e9; return }
     fill(cur, to)
   }
-  const off = listen(o.name, (k) => go(k))
+  // While the camera flies here (armed), a requested step only records its share and the
+  // fill starts on arrival, so it is seen from the first grain. A fill started by the same
+  // slide change just before the flight is held back the same way. Arming never wipes a fill
+  // that is already under way, and if no arrival follows within 6 s the fill starts anyway.
+  let armed = false, armT = 0
+  const hold = () => { u.uFrom.value = 0; u.uTo.value = 0; u.uT0.value = now - 100; u.uDur.value = 0.01; u.uMarkT.value = 1e9 }
+  const request = (k) => {
+    if (!armed) return go(k)
+    share = steps[Math.max(0, Math.min(steps.length - 1, k))]
+    hold()
+  }
+  const arrive = () => {
+    const was = armed; armed = false
+    if (share <= 0) return
+    if (was) { if (u.uTo.value < share) fill(0, share, 0.3) } else if (now - played > 5) fill(0, share, 0.3)
+  }
+  const off = listen(o.name, request)
   mat.addEventListener('dispose', off)
   if (state.has(o.name)) go(state.get(o.name), { instant: true })
   const api = {
-    arm() {},
-    assemble(t, onDone) { now = t; if (share > 0 && now - played > 5) fill(0, share, 0.3); onDone?.() },
+    arm() { armed = true; armT = now; if (now - played < 1.5) hold() },
+    assemble(t, onDone) { now = t; arrive(); onDone?.() },
   }
-  return { group: g, labels: [], api, pixelRatio: u.uPixelRatio, update(t) { now = t; u.uTime.value = t }, dispose: off }
+  return {
+    group: g, labels: [], api, pixelRatio: u.uPixelRatio,
+    update(t) { now = t; u.uTime.value = t; if (armed && now - armT > 6) arrive() },
+    dispose: off,
+  }
 }
 
 export function installGrains(registerBuilder) {
