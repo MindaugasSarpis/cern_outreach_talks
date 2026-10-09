@@ -188,7 +188,11 @@ html[data-stage] .slidev-layout.statement .team span { white-space: nowrap; }
 html[data-stage] .slidev-layout.cover h1, html[data-stage] .readout .line, html[data-stage] .photo-text .line,
 html[data-stage] .finds .line, html[data-stage] .chips li, html[data-stage] .points li { text-wrap: balance; }
 
+/* the text as it lands, with no rise (every rise ends on the element's own style):
+   under reduced motion, in print, and on Slidev's print pages, which its PDF export
+   prints with screen media, so @media print never applies there; a rise that waits
+   2.6–5.2 s left slides 4–9 without their text in the PDF */
 @media (prefers-reduced-motion: reduce), print {
-  html[data-stage] .readout, html[data-stage] .points li, html[data-stage] .photo img, html[data-stage] .photo-text,
-  html[data-stage] .finds-text, html[data-stage] .finds-plot, html[data-stage] .slidev-layout.statement .team { animation: none !important; }
+  html[data-stage] .slidev-layout, html[data-stage] .slidev-layout * { animation: none !important; }
 }
+.print-slide-container .slidev-layout, .print-slide-container .slidev-layout * { animation: none !important; }
