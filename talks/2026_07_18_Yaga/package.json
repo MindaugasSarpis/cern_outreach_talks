@@ -1,7 +1,7 @@
 {
   "name": "talk-2026-07-18-yaga",
   "private": true,
-  "description": "CERN Crash Course — Yaga, 2026-07-18 (4K 16:9)",
+  "description": "CERN Crash Course · Yaga · 2026-07-18",
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",
