@@ -8,7 +8,7 @@
 ours="$2"
 if git show origin/main:pnpm-lock.yaml > "$ours.main" 2>/dev/null; then
   mv "$ours.main" "$ours"
-  echo "pnpm-lock.yaml: took origin/main's. Run pnpm install, then commit pnpm-lock.yaml." >&2
+  echo "pnpm-lock.yaml: took origin/main's; the post-merge hook runs pnpm install (scripts/post-merge.sh), then commit pnpm-lock.yaml." >&2
   exit 0
 fi
 rm -f "$ours.main"

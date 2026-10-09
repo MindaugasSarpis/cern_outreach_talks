@@ -1122,3 +1122,66 @@ def test_the_lockfile_is_never_merged_as_text(tmp_path):
     g("merge", "-q", "--no-edit", "main")
     # a text merge would have given "a: main / c: talk"; the driver takes main's whole
     assert (tmp_path / "pnpm-lock.yaml").read_text() == "a: main\nb: 1\nc: 1\n"
+
+
+def test_a_merge_that_moves_the_lockfile_reinstalls(tmp_path):
+    # the driver takes main's lockfile; the post-merge hook talk.py installs runs pnpm install
+    env = {**os.environ, "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1",
+           "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t", "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"}
+    repo, bin_ = tmp_path / "repo", tmp_path / "bin"
+    repo.mkdir(); bin_.mkdir()
+    # a pnpm that records its run and writes the branch's pins into the lockfile, as a real install would
+    (bin_ / "pnpm").write_text('#!/bin/sh\necho "$@" >> "$PNPM_LOG"\nprintf "a: main\\nb: 1\\nc: talk\\n" > pnpm-lock.yaml\n')
+    (bin_ / "pnpm").chmod(0o755)
+    env = {**env, "PATH": f"{bin_}:{env['PATH']}", "PNPM_LOG": str(tmp_path / "pnpm.log")}
+    g = lambda *a: subprocess.run(["git", "-C", str(repo), *a], env=env, capture_output=True, text=True, check=True)
+    g("init", "-q", "-b", "main")
+    (repo / "scripts").mkdir()
+    for f in ("lockfile-merge.sh", "post-merge.sh"):
+        (repo / "scripts" / f).write_text((ROOT / "scripts" / f).read_text())
+    (repo / ".gitattributes").write_text((ROOT / ".gitattributes").read_text())
+    (repo / "pnpm-lock.yaml").write_text("a: 1\nb: 1\nc: 1\n")
+    (repo / "deck.md").write_text("x\n")
+    g("add", "."); g("commit", "-q", "-m", "base")
+    g("checkout", "-q", "-b", "talk")
+    (repo / "pnpm-lock.yaml").write_text("a: 1\nb: 1\nc: talk\n")
+    g("commit", "-qam", "talk pins")
+    g("checkout", "-q", "main")
+    (repo / "pnpm-lock.yaml").write_text("a: main\nb: 1\nc: 1\n")
+    g("commit", "-qam", "main moves")
+    g("update-ref", "refs/remotes/origin/main", "main")
+    talk_cli.ensure_lock_driver(repo)
+    hook = repo / ".git" / "hooks" / "post-merge"
+    assert talk_cli.HOOK_MARK in hook.read_text() and os.access(hook, os.X_OK)
+    assert (repo / ".git" / "hooks" / "post-rewrite").read_text() == talk_cli.HOOK_BODY
+    g("checkout", "-q", "talk")
+    out = g("merge", "-q", "--no-edit", "main")
+    assert (tmp_path / "pnpm.log").read_text().strip() == "install"
+    assert "commit it" in out.stderr
+    assert (repo / "pnpm-lock.yaml").read_text() == "a: main\nb: 1\nc: talk\n"     # reinstalled, left to commit
+    # a merge that touches neither the lockfile nor a package.json does not reinstall
+    g("commit", "-qam", "reinstalled")
+    g("checkout", "-q", "main"); (repo / "deck.md").write_text("y\n"); g("commit", "-qam", "deck")
+    g("checkout", "-q", "talk"); g("merge", "-q", "--no-edit", "main")
+    assert (tmp_path / "pnpm.log").read_text().strip() == "install"
+
+
+def test_someone_elses_hook_is_left_alone(tmp_path):
+    env = {**os.environ, "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1"}
+    subprocess.run(["git", "init", "-q", str(tmp_path)], env=env, check=True)
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts" / "post-merge.sh").write_text("exit 0\n")
+    mine = tmp_path / ".git" / "hooks" / "post-merge"
+    mine.write_text("#!/bin/sh\necho mine\n")
+    talk_cli.ensure_lock_driver(tmp_path)
+    assert mine.read_text() == "#!/bin/sh\necho mine\n"
+    assert talk_cli.HOOK_MARK in (tmp_path / ".git" / "hooks" / "post-rewrite").read_text()
+
+
+def test_ready_fails_first_on_a_lockfile_that_does_not_record_the_pins(od_worktree, counted):
+    env, runs = counted
+    (od_worktree / "pnpm-lock.yaml").write_text("lockfileVersion: '9.0'\n\nimporters:\n\n  talks/other:\n    dependencies: {}\n")
+    code, obj, err = talk(od_worktree, "ready", "opendata", *SKIPS, cwd=od_worktree, env=env)
+    assert code == 1 and obj["ready"] is False and runs() == 0, err        # lint never ran
+    assert obj["drift"] == ["talks/2026_10_00_OpenData is not in pnpm-lock.yaml"]
+    assert "pnpm install" in obj["fix"][0] and "does not record this talk's pins" in err
