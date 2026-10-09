@@ -221,6 +221,7 @@ space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 
 <!--
 Message: the difference was the amount of data and how far the peak stood above chance: 2003 reported 4,6σ, below the 5σ physicists call a discovery; LHCb's new peak in 2019 had 7,3σ.
 Picture: the camera draws back to show two plots at the same scale, one grain per entry and the same height per entry. On the left is the 140-entry plot from slides 2–3: an illustration, not LEPS's data. On the right are LHCb's 27 292 candidates (the 2019 bins) with their three marked peaks. Labels underneath read „2003 m.“ and „LHCb, 2019 m.“; the left one appears as a thin strip.
+Background, if asked: LEPS's own peak was 19 events over a background of 17 (19/√17 = 4,6σ, their paper's own estimate; arXiv:hep-ex/0301020).
 
 Štai abu grafikai tuo pačiu masteliu: vienas taškelis – viena apskaičiuota masė. Kairėje – tas pats grafikas, kurį matėte pradžioje, šimtas keturiasdešimt taškų. Dešinėje – LHCb duomenys, jų daugiau nei dvidešimt septyni tūkstančiai. Dalelių fizikoje atradimu paprastai vadinamas rezultatas, kurio reikšmingumas – bent penkios sigmos. Tada tikimybė, kad tai tik atsitiktinis svyravimas, – maždaug viena iš trijų su puse milijono. 2003 metais buvo paskelbta 4,6 sigmos. Naujos LHCb smailės reikšmingumas 2019 metais buvo 7,3 sigmos.
 
