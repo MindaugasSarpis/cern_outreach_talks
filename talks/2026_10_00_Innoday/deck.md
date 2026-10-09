@@ -47,8 +47,6 @@ space:
   at: wide
 ---
 
-<PrintStill src="figures/stills/01.jpg" />
-
 # Innoday 2026
 
 # Nuo Vilniaus iki visatos pakraščių
@@ -66,8 +64,6 @@ Sakyti: „Laba diena. Esu Mindaugas Šarpis, vadovauju Vilniaus universiteto gr
 ---
 space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0 }   # the takeover's pose: the next slide stands exactly here
 ---
-
-<PrintStill src="figures/stills/02.jpg" />
 
 <VideoPlayer src="vu_ff_zoom_galaxy.mp4" transition="fade" advance-on-end />
 
@@ -94,8 +90,6 @@ Techniškai: kadras — public/figures/opener_last.jpg, išsitrauktas komanda pn
 space: { at: [30, 39, -119], dist: 25, yaw: -72, pitch: 13, dim: 0, flight: 3.5 }   # the bell on its side, narrow end left, from three-quarters on the mouth side (the NASA/WMAP figure)
 ---
 
-<PrintStill src="figures/stills/04.jpg" />
-
 <AfterFlight :delay="3.4">
 <div class="world-caption narrow small">
 
@@ -114,8 +108,6 @@ Faktai: Visatos amžius 13,787 ± 0,020 mlrd. m. (Planck 2018, A&A 641, A6); spa
 ---
 space: { at: [30, 40, -136], dist: 7.5, yaw: 0, pitch: 0, dim: 0.1, flight: 5 }   # in at the mouth and back down the funnel, past the galaxies, the first stars and the dark ages, to the CMB disk
 ---
-
-<PrintStill src="figures/stills/05.jpg" />
 
 <AfterFlight :delay="4.6">
 <div class="world-caption narrow">
@@ -138,8 +130,6 @@ Faktai: foninės spinduliuotės temperatūra 2,725 K; skirtumai žemėlapyje ~±
 space: { at: [30, 40, -136], dist: 12, yaw: 24, pitch: 8, dim: 0.3 }   # pulled back from the CMB disk: the question stands over the oldest light
 ---
 
-<PrintStill src="figures/stills/06.jpg" />
-
 <div class="world-caption narrow">
 
 # Iš ko visa tai sudaryta?
@@ -158,8 +148,6 @@ layout: section
 space: { at: [8.8, 0, -3], dist: 20, yaw: -30, pitch: 55, dim: 0.15 }   # the ring from above in the right half, clear of the title
 ---
 
-<PrintStill src="figures/stills/07.jpg" />
-
 # I dalis
 
 Greitintuvas
@@ -174,8 +162,6 @@ Kalbėtojui. Sakyti: „CERN ir Didysis hadronų greitintuvas.“ Pasaulyje — 
 ---
 space: { at: [20, 5, -12], dist: 18, yaw: -30, pitch: 14 }
 ---
-
-<PrintStill src="figures/stills/08.jpg" />
 
 <Strands :on="false" />
 
@@ -193,8 +179,6 @@ Faktai: konvencija pasirašyta 1953 m., CERN oficialiai įsteigtas 1954 m. rug
 space: { at: [56, 5, -14], dist: 16, yaw: -28, pitch: 12 }
 ---
 
-<PrintStill src="figures/stills/09.jpg" />
-
 <VideoPlayer src="cern_footage_2022_042_001.mp4" />
 
 <!--
@@ -209,8 +193,6 @@ Faktai: LHCb sveria 5 600 t, 21 × 10 × 13 m, 100 m po žeme; artimiausias 
 ---
 space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 22, dim: 0.3 }   # match cut: down on the ring, looking along it; its curve becomes the tunnel's
 ---
-
-<PrintStill src="figures/stills/10.jpg" />
 
 <Strands :on="false" />
 
@@ -276,8 +258,6 @@ layout: section
 space: { at: [14, 1, 0], dist: 36, yaw: -20, pitch: 52, dim: 0.15 }   # the ring and every strand leaving it
 places: { inventions: true }   # Part II's photos stand in the world from here (hidden before)
 ---
-
-<PrintStill src="figures/stills/12.jpg" />
 
 # II dalis
 
@@ -547,8 +527,6 @@ space: { at: [120, -2.4, 0], dist: 14, yaw: -22, pitch: 22, dim: 0.4 }
 places: { inventions: false }   # and are gone again in Part III
 ---
 
-<PrintStill src="figures/stills/22.jpg" />
-
 # III dalis
 
 Privačiam sektoriui
@@ -562,8 +540,6 @@ Sakyti: „Daugumoje šių pavyzdžių fizikų sprendimą produktu pavertė įmo
 ---
 space: { at: kt, dist: 17, yaw: 4, pitch: 34, dim: 0.4 }
 ---
-
-<PrintStill src="figures/stills/23.jpg" />
 
 <div class="payoff">
 <p class="kicker gold">CERN žinių perdavimas įmonėms</p>
@@ -587,8 +563,6 @@ Atsargiai: „27 su CERN susiję startuoliai pritraukė 3,2 mlrd. CHF“ — 2,
 ---
 space: { at: [118.5, -1.6, 0], dist: 13, yaw: -30, pitch: 14, dim: 0.45 }
 ---
-
-<PrintStill src="figures/stills/24.jpg" />
 
 <div class="payoff">
 <p class="kicker gold">CERN tiekėjai · 2026 m. tyrimas</p>
@@ -662,8 +636,6 @@ Faktai: susitarimas pasirašytas 2017 06 27 Vilniuje, įsigaliojo 2018 01 08. Li
 space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45 }   # the firms slide's pose: the world rests there under the clip
 ---
 
-<PrintStill src="figures/stills/27.jpg" />
-
 <VideoPlayer src="vu_ff_unzoom.mp4" advance-on-end />
 
 <!--
@@ -675,8 +647,6 @@ Sakyti (per klipą): „O dabar grįžtame nuo galaktikos iki Saulėtekio, kur p
 ---
 space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45 }
 ---
-
-<PrintStill src="figures/stills/28.jpg" />
 
 <div class="payoff">
 <p class="kicker gold">CERN pirkimai · 2024 m.</p>
@@ -702,8 +672,6 @@ Faktai: pirkimai nuo 50 000 CHF siunčiami ir nacionaliniams pramonės ryšių
 layout: statement
 space: { at: wide }   # the cover's pose: the pentaquark whole, clear of „Ačiū“
 ---
-
-<PrintStill src="figures/stills/29.jpg" />
 
 # Ačiū
 
