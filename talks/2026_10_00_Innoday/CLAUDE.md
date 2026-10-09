@@ -85,12 +85,13 @@ the part word during a Part II flight, gone before the photo lands).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** Deployed 9e20f1f (v0.6.6)
-— https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
-Pages run 37950349600 (green), URL 200; `ready` passed with nothing skipped;
-the live walk: 30 slides, 0 failed requests, 0 context losses, tier 0. The PDF
-export is checked page by page. Waiting: the Light Conversion photo (owner);
-when it comes, slide 28 becomes a StagePhoto at its pose.
+2026-10-09: **complete, pending the owner's review and iPhone retest.**
+Deployed 11721f1 (v0.6.7) —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+Pages run 37956977377 (green), URL 200; `ready` passed with nothing skipped;
+the live walk: 30 slides, 0 failed requests, 0 context losses, tier 0.
+Waiting: the owner's iPhone/iPad retest (v0.6.7 clamps the funnel's overflow);
+the Light Conversion photo.
 
 ## Decisions
 
