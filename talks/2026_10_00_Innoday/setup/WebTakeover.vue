@@ -31,6 +31,10 @@ const overlay = ref(null)        // the dissolving copy, fixed over the slide
 const box = ref({ left: 0, top: 0, width: 0, height: 0 })
 
 let img = null, sample = null, raf = 0, run = 0, gl = null
+// the copy's WebGL context lives only while it dissolves: a second context beside the
+// world's the rest of the talk raises the odds of a context loss on a phone. A released
+// context cannot be had again from the same canvas, so each takeover gets a new one.
+const gen = ref(0)
 const ready = new Promise((resolve) => {
   if (typeof Image === 'undefined') return resolve(null)
   img = new Image()
@@ -96,7 +100,7 @@ async function takeOver() {
     drawCopy(-0.1 + 1.25 * u)
     pts.material.uniforms.uReveal.value = Math.min(1, u * 1.3)
     if (u < 1) raf = requestAnimationFrame(step)
-    else stopGl()
+    else { stopGl(); releaseGl() }
   }
   raf = requestAnimationFrame(step)
 }
@@ -157,16 +161,18 @@ function drawCopy(t) {
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
 }
 function stopGl() { if (overlay.value) overlay.value.style.opacity = '0' }
+function releaseGl() { gl?.getExtension('WEBGL_lose_context')?.loseContext(); gl = null; gen.value++ }
 
 onSlideEnter(() => { if (live.value) takeOver() })
 onMounted(() => { if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver() })
 onSlideLeave(() => {
-  run++; cancelAnimationFrame(raf); stopGl(); still.value = true
+  const id = ++run; cancelAnimationFrame(raf); stopGl(); still.value = true
+  setTimeout(() => { if (id === run) releaseGl() }, 400)   // after the copy's fade
   // left before the dissolve finished: the world keeps its grains, whole
   const p = stage()?.h.scene.getObjectByName('takeover-web')
   if (p) p.material.uniforms.uReveal.value = 1
 })
-onUnmounted(() => { run++; cancelAnimationFrame(raf); gl?.getExtension('WEBGL_lose_context')?.loseContext(); gl = null })
+onUnmounted(() => { run++; cancelAnimationFrame(raf); releaseGl() })
 // the frame's grains are the prologue's (this slide and the three after it: the
 // funnel, the CMB, the question); elsewhere they would be 280 000 points nobody
 // sees but every frame draws. Hidden, not removed, so going back finds them.
@@ -183,7 +189,7 @@ watch(() => nav.currentSlideNo?.value, (n) => {
   <div ref="root" class="web-takeover">
     <img v-if="still" class="takeover-still" :src="url" alt="Paskutinis įžanginio vaizdo klipo kadras" />
     <Teleport to="body">
-      <canvas v-if="live" ref="overlay" class="takeover-copy" aria-hidden="true"
+      <canvas v-if="live" :key="gen" ref="overlay" class="takeover-copy" aria-hidden="true"
         :style="{ left: box.left + 'px', top: box.top + 'px', width: box.width + 'px', height: box.height + 'px' }"></canvas>
     </Teleport>
   </div>

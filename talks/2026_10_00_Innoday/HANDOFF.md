@@ -278,3 +278,11 @@ along the ring at pitch 22. `humAt: all`. Recorded on gluon (g1a–c, st7b,
 st10 in ~/talks/.cache/innoday): no place in Part I or III frames, the places
 fade in during the flight to section II. Stills 07, 10, 12 refreshed from the
 settled last frames. `pages:check` clean on v0.5.2.
+
+Then, on the Scheduler's word (the owner's iPhone shows black where the world
+should be): pinned slidev-videos `15a7142` (feat/v0.5.3: `?stage-debug`, the
+static background after a context loss). WebTakeover's overlay context is
+released as soon as its dissolve ends (it used to stay open all talk long).
+ParticleHero is not in this deck. Recorded slides 3–4, 7, 12–13 on the pin
+(g3a–c): the takeover, the funnel, section I and Part II's places as before;
+`pages:check` clean.
