@@ -331,7 +331,7 @@ space: { at: [16, 6, -2], dist: 32, yaw: 0, pitch: 1.8, dim: 0.15 }
 
 <div class="big"><Count name="asks" :from="0" :to="20" :delay="2400" /></div>
 
-<p class="line">užklausų LHCb duomenų atrankos paslaugai per 2026 m. pirmąjį pusmetį, daugiausia teoretikų.</p>
+<p class="line">užklausų LHCb duomenų atrankos paslaugai iki 2026 m. liepos, daugiausia teoretikų.</p>
 
 </div>
 
