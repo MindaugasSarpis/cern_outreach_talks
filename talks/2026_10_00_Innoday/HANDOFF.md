@@ -203,3 +203,41 @@ Now: speech ~17,5 min + clips (opener 4:26, bookend 0:30; the CERN aerial
   firms slide instead); one photo per problem in Part II — drop the 1993 web
   slide (−0,7) and Artemis (−0,4); KT and +14 % to one sentence each (−0,8).
   The spine (machine → limits → inventions → firms) stays whole.
+
+## Deployed (2026-10-08, second round)
+
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+commit 1d836da, Pages run 37836227756 (build and deploy green), URL 200; the
+live assets carry place mode, the depth maps and the bookend strip.
+On the owner's go, with `--ready-skip lint` (run by hand: 0 errors) and
+`--ready-skip safe` (talk.py still reads `grain: 0.012` as broadcast).
+In this round: Part II as places (each photo a depth relief at the end of its
+LHC part's strand; strands from the ring; the part named during the flight;
+flight 1.6 s, condense 0.8 s, text up in ~2.6–3.8 s); Part I in runs (media,
+then world) with one match cut (the grain ring → the tunnel's curve); the
+bookend clip; „Ačiū“ and the part titles without subtitles; the alumni claim
+corrected; the ending ask in the notes; slidev-videos v0.5.1.
+A text-merged pnpm-lock.yaml had re-resolved @slidev/cli to 52.20 and
+markdown-it 15 (build: ERR_PACKAGE_PATH_NOT_EXPORTED); fixed by taking main's
+lock and reinstalling (1d836da).
+Next: the expansion funnel → CMB opening (Planck map reprojected in
+~/talks/.cache/innoday/funnel/cmb), cut the Higgs and 76/86 slides, the final
+text round, print stills, the ultracode review, deploy.
+
+## Funnel round, final reviews (2026-10-08/09, wip/innoday-funnel)
+
+- Opening: zoom-out → takeover → the history of the Universe as a funnel of
+  grains (`setup/funnel.js`, station `funnel` at [30, 40, −110]) seen from
+  outside („13,8 mlrd. metų nuo Didžiojo sprogimo“ after the flight) → down
+  the funnel to the CMB cap in Planck 2018 SMICA colours
+  (`public/figures/cmb_planck.png`, reprojected from the IRSA preview; „380 000
+  metų po Didžiojo sprogimo“ after landing) → „Iš ko visa tai sudaryta?“.
+  Higgs and 76/86 cut (owner's choice).
+- Text round: talk-review (facts, copy, unslop) on 82ad284, 21 findings
+  verified; final talk-review (six lenses) on 2ba63fe, 36 kept; delta review
+  (five lenses) on 213abe9, 30 kept; all applied but per-slide facts ids
+  for the funnel and CMB (no bank entry; the sources are in the notes).
+- Before → after lists were sent to the Scheduler for its text audit.
+- Render: point sprites capped and faded near the camera (funnel, takeover);
+  takeover grains hidden outside the prologue; strands not drawn while off;
+  places at 360 columns.

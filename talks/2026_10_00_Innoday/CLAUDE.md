@@ -3,82 +3,128 @@
 The notes for this talk: Claude Code reads this file when it works in the
 talk's directory, and the root CLAUDE.md holds what every talk shares. Keep it
 current (Status, Decisions, Figures). The repo is public: nothing private here.
+The round-by-round log (what each round changed, recordings, deploys) is
+`HANDOFF.md`; this file is the state.
 
-## Notes moved from the root CLAUDE.md (2026-10-08)
+## Brief
 
-From the root's list of current talks:
+„Nuo Vilniaus iki visatos pakraščių ir atgal prie novatoriškų mokslo pasiekimų
+pritaikymo privačiame sektoriuje“, Innoday 2026, in Lithuanian, for an
+innovation-day audience (business, policy). Venue, 16:9 projector. Slot about
+25 min or more (owner, 2026-10-08); the deck runs ≈ 23 min with the clips.
+Date placeholder `10_00`. Speaker: Dr. Mindaugas Šarpis, LHCb Vilnius, VU.
 
-- `talks/2026_10_00_Innoday/` — Innoday (Lithuanian): "Nuo Vilniaus iki
-  visatos pakraščių ir atgal prie novatoriškų mokslo pasiekimų pritaikymo
-  privačiame sektoriuje". One spine (owner's feedback 8 Oct: the first flow
-  was not coherent): to see what the universe is made of, physicists built a
-  machine that pushed every technology past its limit; each limit broken
-  became something in daily use, and Lithuanian firms can be in the next
-  round. Prologue (NFTMC zoom-out → its last frame becomes the world),
-  I the machine, II the inventions (each slide names the problem it solved),
-  III back to the private sector. Photographs are full bleed (`.hero`);
-  slides carry a few words, the notes carry what is said; no slogan cards.
-  Coherence pass (8 Oct, owner: "weird, not coherent and sloppy"): 33 → 28
-  visible slides. Part I answers the prologue's question (Higgs, LHCb, the
-  pentaquark) and ends on the limits that made it possible (LHC extremes,
-  LHCb's 4 TB/s); Part II follows its "Problema:" kickers grouped pocket →
-  hospital → industry today, ending on Airbus so Part III opens on "a firm
-  made a product of it". Cut to notes: the 1954 counter, the antimatter
-  question card, LHCb Vilnius, the VELO chip, the top ten. Decisions log in
-  `talks/2026_10_00_Innoday/HANDOFF.md`.
-  Pinned to slidev-videos 5c72c33 (dust-fullframe, advance-on-end, StagePhoto). Date placeholder `10_00`.
-  See "The stage (Innoday)" below.
+## Story
 
-### From "The stage (Innoday, and talks after it)"
+One spine, retellable in a breath: to see what the world is made of,
+physicists needed a machine nobody could buy; each of its limits had to be
+broken; the solutions left CERN as things in daily use; the next machine (FCC)
+brings the next round, and Lithuanian firms can solve it.
 
-The stage in general (headmatter, palette, slides, clips, checks, pins) is in
-`docs/authoring.md`. Innoday's own parts:
+- **Prologue.** Zoom-out from the VU Faculty of Physics to our galaxy (clip,
+  advance-on-end) → the takeover (its last frame becomes the world's grains) →
+  the history of the Universe as a funnel of grains, seen from outside → the
+  camera flies back down it to the CMB („380 000 metų po Didžiojo sprogimo“,
+  Planck map) → „Iš ko visa tai sudaryta?“ over the oldest light.
+- **I · Mašina.** CERN aerial clip, LHCb animation (media run), then LHCb's
+  4 TB/s at grain level on the ring, whose curve becomes the tunnel's (the one
+  match cut), and the LHC's limits on the tunnel photo.
+- **II · Sprendimai.** The ring with six strands of grains, each from the part
+  that forced an invention to the invention's photo standing at its end
+  (StagePhoto place mode): control room → touchscreen; information → the web
+  (1989 proposal, 1993 public domain); detectors → PET, colour X-ray, Timepix
+  round the Moon; beams → hadron therapy; the timing system → White Rabbit (Frankfurt
+  exchange); magnets → the superconducting line (tested with Airbus). The part is named during the flight.
+- **III · Privačiam sektoriui.** How technology leaves CERN (700+), what suppliers gain
+  (+14 %), the next machine (FCC), Lithuania (associate, full-membership bid),
+  the bookend clip (the zoom-out reversed, back to Saulėtekis), what a firm can
+  do (613 mln. CHF a year; register, write to the liaison officer), „Ačiū“.
 
-- **Everything in the world is made of grains.** Innoday's stations are the
-  particle pentaquark (`hero`: cover, the pentaquark slide of Part II, close),
-  a `collider` (Part I, CERN), a `galaxy` (`cosmos`: the edge of the Universe
-  and LHCb's antimatter question), `web` (two rings of `constellation` nodes
-  whose strings cross like links: what CERN gave the world) and `kt` (a gold
-  three-node seed with a ten-node loop round it: knowledge transfer); all
-  points of light, no solid shapes, no labels, no scale bars. A first version opened Part I on a Solar
-  System of lit spheres, rings and labels; it read as a classroom diagram
-  standing in the scene and was removed (2026-09-29). Each form is born
-  scattered and gathers when the camera arrives at its station; `c` builds it
-  again. Grains streak while the camera flies; flights and arriving clips
-  have a quiet sound (`stage.sound: { hum, flight, clip, level }`).
-- **Innoday's own pieces.** `setup/Count.vue` (registered from `setup/main.ts`)
-  counts a slide's big number as it arrives, Lithuanian style (thin space,
-  decimal comma, `plain` for years). `styles/index.css` adds `.readout`,
-  `.stats` (`.three`, `.gold`), `.feature` (photo, year, headline, one gold
-  `.today` line), `.tiles`, `.news`, `.rank`. Photos live in
-  `public/figures/` with their credit on the slide (`.credit`); CERN-terms
-  photos are fine for this non-commercial site, the MARS wrist image is
-  © MARS Bioimaging (hosted by CERN KT). Facts were checked on 7 Oct 2026;
-  every slide's source is in its `.src` footer and its notes. A review round
-  on 8 Oct 2026 (Lithuanian editor, fact-checker, talk coach, each edit checked
-  by a second agent) set the wording: never "kolaborantai" (it means
-  collaborators with occupiers) — "kolaboracijos nariai"; the +14 % is against
-  comparable firms; the HL-LHC 1,8 CHF counts discoveries at zero.
-  **The takeover** (2026-10-08, owner's design): the opener ends on the cosmic
-  web; the next slide (`<WebTakeover />`, `setup/WebTakeover.vue` +
-  `setup/takeover.js`) opens on that same frame (`public/figures/opener_last.jpg`),
-  snaps the camera to the slide's pose under it, puts 280 000 grains of the
-  frame into the world along each pixel's line of sight from the live camera
-  (depth 14–46 by a smooth noise), and dissolves the copy into them, voids
-  first; the slide after it orbits the picture so it shows depth. Opener
-  and takeover slides share the pose `[30, 40, -70]`, dist 18, yaw 0, pitch 0,
-  sway 0; the clip uses `transition="fade"` (dust would break it up). Until the
-  owner's orbit clip exists, the opener is `vu_ff_zoom_galaxy.mp4` (the
-  zoom-out cut at 4:26, before its fade to black) and `opener_last.jpg` is its
-  real last frame, our galaxy; swap steps are in `videos/manifest.toml`.
-  Exposure, judged in `record.mjs` takes: a frame lit all over (a galaxy disk)
-  needs 280 000 grains at `gain` 1.3 (140 000 at 0.85 gave a fifth of its
-  light; 1.25 at gamma 1.7 burned the knots white), and the grains start 1.35×
-  more saturated than their pixels because the tone mapper greys what adds up.
-  **Look** (owner, 8 Oct: "washed out… more striking, photorealistic"): the
-  world's ground is black, not navy (`stage.options` density 0.6, dustGain
-  1.45, nebula 0.12, vignette 0.42), the photographs are 2400 px CERN/NASA
-  originals, and the one small original (MedAustron, 1200 px) is a Lanczos
-  2× upscale, not an AI one, so no detail is invented.
-  Open for the owner: the spine and its wording, the MARS wrist image is
-  © MARS Bioimaging, the date is still `10_00`.
+## World
+
+Everything is grains; no solid shapes, no labels (one deliberate exception:
+the part word during a Part II flight, gone before the photo lands).
+
+- Stations (`public/data/space.json`): `hero` (the pentaquark: cover, close),
+  `collider` (the LHC ring; carries `strands`), `cosmos`, `web`, `kt` (the gold
+  seed and loop: Part III), `funnel` (the history of the Universe, at
+  [30, 40, −110], its axis along −z behind the takeover's galaxy).
+- Talk-owned builders (`setup/`, registered in `main.ts`; `stage:check
+  --types strands,funnel`): `strands.js` (grains from ring parts to products;
+  `<Strands :on>` fades them in with Part II), `funnel.js` (wall rings and
+  lines, the Big Bang, the CMB cap coloured from `public/figures/cmb_planck.png`,
+  dark ages, first stars, galaxies). `PrintStill.vue` shows a still of a
+  world-only slide in print/export only.
+- Part II photos are StagePhoto places with depth maps
+  (`public/figures/*.depth.png`, `slidev-videos depth`, committed), relief
+  0.25–0.35, `flight: 1.6`, condense 0.8 s; text is up 2.6–3.8 s after the
+  click. The 1989 page and the tunnel stay screen StagePhotos (not full bleed).
+- The takeover (`setup/WebTakeover.vue`, `takeover.js`): the opener's last
+  frame (`public/figures/opener_last.jpg`, our galaxy) as 280 000 grains, gain
+  1.3, saturation 1.35; opener and takeover share the pose [30, 40, −70],
+  dist 18, yaw 0, pitch 0, sway 0; the clip uses `transition="fade"`.
+- Look (owner, 8 Oct: "more striking, photorealistic"): black ground
+  (`palette.bg #000103`, density 0.6, dustGain 1.45, nebula 0.12, vignette
+  0.42); 2400 px photographs; MedAustron is a Lanczos 2× upscale, nothing
+  invented.
+- Clips: `vu_ff_zoom_galaxy.mp4` (talk-owned, 4:26), `vu_ff_unzoom.mp4`
+  (talk-owned bookend, 0:30, made by reversing the opener; do not `--prune`
+  `vu_ff_zoom.mp4`, its source), library `cern_overview_short.mp4`,
+  `cern_footage_2022_042_001.mp4`.
+- Toolkit: slidev-videos v0.5.1 (both addons).
+
+## Status
+
+2026-10-09. Deployed: 1d836da (place mode, bookend). Ready on
+`wip/innoday-funnel` for the next deploy (owner's go needed): the funnel → CMB
+opening, Higgs and 76/86 cut, the text round, the final talk-review (six
+lenses, 36 findings) and its delta review (five lenses, 30 findings) applied,
+print stills on 16 slides (checked with a real `slidev export`), White Rabbit
+in place of the grid. Lint 0 errors; stage:check clean.
+
+## Decisions
+
+Dated detail in `HANDOFF.md`. The ones a later session must not undo:
+
+- Wording (review of 8 Oct): never „kolaborantai“ (collaborators with
+  occupiers) but „kolaboracijos nariai“; the +14 % is against comparable firms;
+  the HL-LHC 1,8 CHF counts discoveries at zero; CERN made the web, not the
+  internet; the touchscreen and PET are "among the first", not CERN inventions;
+  CERN alumni: about three in four work outside research and education (2026
+  study §5.4), not "in industry".
+- No slogans, no subtitles under „Ačiū“ or part titles, no colon or dash
+  reveals, no rhetorical openers; kickers only where they add information.
+- Part II is "Sprendimai" (solutions), each slide names its problem.
+- Match cuts: only ring → tunnel; ring → CERN aerial and loop → FCC were weak.
+- Part II's photo places are built when their slides mount (all of them 3 s
+  after load) and stay in the world. Until the toolkit can hide them, Part I's
+  poses keep them out of frame: section I and the 4 TB/s/tunnel slides look
+  down along the ring at pitch 40 from just above it, so the photos (y 2.5,
+  4–6 outside the ring) stay above the top edge.
+- Data → White Rabbit (2012, Frankfurt exchange), the thing that left CERN;
+  the grid figures are in the notes. The photo's credit („© CERN (KT
+  ataskaita, 2024)“) is taken from the KT report page; the photographer is
+  not named there.
+- Part II kickers name the problem in the words slide 12 speaks („Problema:
+  valdyti mašiną“ …); part words name ring parts only.
+- Print and PDF: `<PrintStill>` on the world-only and clip slides, the stills
+  are settled last frames of `slidev-stage-record` runs in sequence (a shot
+  taken after a jump catches flights mid-way); export with `--wait-until load`.
+- Place mode over screen mode for Part II (owner via the Scheduler, 8 Oct):
+  the inventions visibly hang off the machine.
+- The opener stays whole (slot ≥ 25 min).
+
+## Figures and open items (for the speaker)
+
+- The MARS wrist image is © MARS Bioimaging (CERN KT hosts it); ask MARS
+  before any non-educational use.
+- Part II's photo places: a visibility control is asked of Tools (8 Oct);
+  the Part I poses avoid them meanwhile (see Decisions).
+- The hum drops on the open-space prologue poses (takeover, CMB, question):
+  `humAt: all` asked of Tools (9 Oct).
+- `ktbest-alumni` in research/facts.jsonl still says "into industry"; the
+  deck does not cite it (reported to the Scheduler).
+- On the venue laptop, read the stage's frame-rate guard at the close
+  (`document.querySelector('.stage canvas').__space.guardStage`); above 0
+  means a slide was too heavy.
+- The date is still `10_00`.
