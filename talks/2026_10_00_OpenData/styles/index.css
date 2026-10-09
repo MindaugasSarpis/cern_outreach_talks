@@ -1,10 +1,13 @@
 /* Opening LHCb's data: the talk's own type over the stage kit
    (slidev-addon-stage styles/index.css).
-   One colour per kind of data, on the slides and in the world:
-   gold = open data, blue = LHCb's own data, steel = all of the LHC's. */
+   One colour per kind of data, in the world only: gold = open data, blue =
+   LHCb's own data, steel = all of the LHC's. The type is white with one light
+   blue accent for kickers, units and emphasis: no gold letters (owner,
+   2026-10-09: "these gold letters are all over the internet now"). */
 
 html[data-stage] {
   --od-gold: #ffc05a; --od-gold-hi: #ffe3a8;
+  --od-accent: #9cc4ff;   /* the one text accent */
   --od-blue: #8fb2ff; --od-blue-hi: #cfe0ff;
   --od-steel: #dfe6f1; --od-steel-lo: #aab6c8;
   --od-shadow: 0 2px 18px rgba(0, 0, 0, 0.72);
@@ -17,6 +20,10 @@ html[data-stage] .slidev-layout.cover h2 { max-width: 40ch; text-wrap: balance; 
 /* the cover's byline breaks before the university, clear of the collider */
 html[data-stage] .slidev-layout.cover .mt-md { max-width: 34ch; }
 
+/* every kicker, the kit's and the cover's too, in the one accent */
+html[data-stage] .kicker { color: var(--od-accent); }
+html[data-stage] .slidev-layout.cover h1:first-of-type { color: var(--od-accent) !important; }
+
 /* LHCb keeps its lower-case b where the kit sets type in capitals */
 html[data-stage] .nt { text-transform: none !important; }
 
@@ -27,21 +34,17 @@ html[data-stage] .readout {
   animation: stage-rise 0.8s var(--stage-ease) 0.2s both;
 }
 html[data-stage] .readout p { margin: 0 0 10px; }
-html[data-stage] .readout .kicker { margin-bottom: 6px; color: var(--od-gold); }
+html[data-stage] .readout .kicker { margin-bottom: 6px; color: var(--od-accent); }
 html[data-stage] .readout .big {
   font-size: 104px; font-weight: 700; letter-spacing: -0.035em; line-height: 0.92;
   font-variant-numeric: tabular-nums; margin: 0 0 18px; white-space: nowrap;
-  color: var(--od-gold-hi); text-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
+  color: #fff; text-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
 }
-html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--od-gold); }
+html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--od-accent); }
 html[data-stage] .readout .line { font-size: 26px; font-weight: 500; line-height: 1.3; color: #fff; opacity: 1; text-shadow: var(--od-shadow); }
 
 html[data-stage] .readout.blue { max-width: 50%; }
-html[data-stage] .readout.blue .kicker, html[data-stage] .readout.blue .unit { color: var(--od-blue); }
-html[data-stage] .readout.blue .big { color: #dfe8ff; }
 html[data-stage] .readout.steel { max-width: 50%; }
-html[data-stage] .readout.steel .kicker, html[data-stage] .readout.steel .unit { color: var(--od-steel-lo); }
-html[data-stage] .readout.steel .big { color: var(--od-steel); }
 
 /* the thesis slide: a name in place of the number */
 html[data-stage] .readout.thesis { bottom: 80px; }
@@ -53,7 +56,7 @@ html[data-stage] .readout.thesis .line { color: #fff; opacity: 0.92; }
 
 /* the close: the thanks low on the left, the group's portraits to the right */
 html[data-stage] .readout.close h1 { font-size: 72px !important; }
-html[data-stage] .readout.close .line { color: var(--od-gold-hi); }
+html[data-stage] .readout.close .line { color: #fff; }
 
 /* motion between ideas: where the world moves first, the text rises after it */
 html[data-stage] .readout.late { animation-delay: 2.6s; }
@@ -63,7 +66,7 @@ html[data-stage] .readout.last { animation-delay: 5.2s; }   /* after copies of t
 html[data-stage] .legend.later { opacity: 0; animation: stage-rise 0.8s var(--stage-ease) 4.2s both; }
 /* the event: its title in the place of a number, the text kept to the left of the tracks */
 html[data-stage] .readout.event { max-width: 40%; }
-html[data-stage] .readout.event h1 { font-size: 72px !important; font-weight: 700 !important; letter-spacing: -0.02em; line-height: 1 !important; margin: 0 0 14px !important; color: var(--od-gold-hi) !important; animation: none !important; }
+html[data-stage] .readout.event h1 { font-size: 72px !important; font-weight: 700 !important; letter-spacing: -0.02em; line-height: 1 !important; margin: 0 0 14px !important; color: #fff !important; animation: none !important; }
 
 /* „Ačiū“ alone, in the middle of the ring of the group's portraits */
 html[data-stage] .thanks { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 96px; font-weight: 700; letter-spacing: -0.03em; color: #fff; text-shadow: 0 4px 40px rgba(0, 0, 0, 0.7); animation: stage-rise 0.9s var(--stage-ease) 0.4s both; }
@@ -90,7 +93,7 @@ html[data-stage] .points li:nth-child(2) { animation-delay: 0.15s; }
 html[data-stage] .points li:nth-child(3) { animation-delay: 0.3s; }
 html[data-stage] .points li::before {
   content: ''; position: absolute; left: 0; top: 0.62em; width: 10px; height: 10px; border-radius: 50%;
-  transform: translateY(-50%); background: var(--od-gold-hi); box-shadow: 0 0 10px 3px rgba(255, 192, 90, 0.6);
+  transform: translateY(-50%); background: var(--od-accent); box-shadow: 0 0 10px 3px rgba(156, 196, 255, 0.5);
 }
 
 /* ---- a photograph, full bleed: the real place, pushed in slowly, the text on a shadow */
@@ -111,7 +114,7 @@ html[data-stage] .photo::after {
 html[data-stage] .photo .credit { position: absolute; right: 14px; bottom: 10px; z-index: 2; font-size: 10px; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.5); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); }
 
 html[data-stage] .photo-text { position: absolute; left: 56px; bottom: 70px; z-index: 1; max-width: 52%; animation: stage-rise 0.9s var(--stage-ease) 0.25s both; }
-html[data-stage] .photo-text .kicker { color: var(--od-gold); margin-bottom: 8px; }
+html[data-stage] .photo-text .kicker { color: var(--od-accent); margin-bottom: 8px; }
 html[data-stage] .photo-text h1 {
   font-size: 128px !important; font-weight: 700 !important; letter-spacing: -0.04em; line-height: 0.9 !important;
   margin: 0 0 26px !important; color: #fff !important; text-shadow: 0 4px 40px rgba(0, 0, 0, 0.6); animation: none !important;
@@ -141,10 +144,10 @@ html[data-stage] .slidev-layout .event-text h1 { white-space: nowrap; font-size:
    Opaque: the scrim is a gradient, and even dim 1 left the blue pile glowing through the plot */
 html[data-stage] .finds { position: absolute; inset: 0; background: rgb(var(--stage-bg-rgb, 0, 2, 6)); display: grid; grid-template-columns: 0.9fr 1.1fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
 html[data-stage] .finds-text { animation: stage-rise 0.85s var(--stage-ease) 0.2s both; }
-html[data-stage] .finds .kicker { color: var(--od-blue-hi); margin-bottom: 4px; }
+html[data-stage] .finds .kicker { color: var(--od-accent); margin-bottom: 4px; }
 html[data-stage] .finds .big {
   font-size: 168px; font-weight: 700; letter-spacing: -0.05em; line-height: 0.88; margin: 0 0 8px;
-  background: linear-gradient(180deg, #ffffff, var(--od-blue-hi) 55%, #6f9dff); -webkit-background-clip: text; background-clip: text; color: transparent;
+  color: #fff;   /* a number: plain white, like the readouts' */
 }
 html[data-stage] .finds .line { font-size: 26px; font-weight: 500; line-height: 1.25; margin: 0 0 26px; color: var(--stage-fg); }
 html[data-stage] .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
@@ -152,7 +155,7 @@ html[data-stage] .chips li {
   margin: 0 !important; padding: 0 !important; font-size: 21px; font-weight: 500; line-height: 1.3; color: var(--stage-fg);
   display: grid; grid-template-columns: 2.9em 1fr; column-gap: 12px; align-items: baseline;
 }
-html[data-stage] .chips li b { margin: 0; color: var(--od-gold-hi); font-variant-numeric: tabular-nums; }
+html[data-stage] .chips li b { margin: 0; color: var(--od-accent); font-variant-numeric: tabular-nums; }
 html[data-stage] .finds-plot { animation: stage-card-in 1s var(--stage-ease) 0.35s both; }
 html[data-stage] .finds-plot img {
   width: 100%; max-height: 440px; object-fit: contain; display: block;
@@ -164,7 +167,7 @@ html[data-stage] .finds-plot img {
 html[data-stage] .thesis-slide { position: absolute; inset: 0; background: rgb(var(--stage-bg-rgb, 0, 2, 6)); display: grid; grid-template-columns: 0.62fr 1.38fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
 html[data-stage] .thesis-who { animation: stage-rise 0.85s var(--stage-ease) 0.15s both; }
 html[data-stage] .thesis-who .portrait { width: 100%; max-width: 165px; aspect-ratio: 4 / 5; border-radius: 6px; object-fit: cover; object-position: 50% 30%; display: block; margin: 0 0 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); }
-html[data-stage] .thesis-who .kicker { color: var(--od-gold); margin: 0 0 6px; white-space: nowrap; }
+html[data-stage] .thesis-who .kicker { color: var(--od-accent); margin: 0 0 6px; white-space: nowrap; }
 html[data-stage] .thesis-who .name { font-size: 22px; font-weight: 600; color: var(--stage-fg); margin: 0 0 18px; }
 html[data-stage] .thesis-who .line { font-size: 22px; font-weight: 500; line-height: 1.25; color: #fff; margin: 0; text-wrap: balance; }
 html[data-stage] .thesis-plot { position: relative; padding-top: 90px; animation: stage-card-in 1s var(--stage-ease) 0.3s both; }
@@ -185,7 +188,11 @@ html[data-stage] .slidev-layout.statement .team span { white-space: nowrap; }
 html[data-stage] .slidev-layout.cover h1, html[data-stage] .readout .line, html[data-stage] .photo-text .line,
 html[data-stage] .finds .line, html[data-stage] .chips li, html[data-stage] .points li { text-wrap: balance; }
 
+/* the text as it lands, with no rise (every rise ends on the element's own style):
+   under reduced motion, in print, and on Slidev's print pages, which its PDF export
+   prints with screen media, so @media print never applies there; a rise that waits
+   2.6–5.2 s left slides 4–9 without their text in the PDF */
 @media (prefers-reduced-motion: reduce), print {
-  html[data-stage] .readout, html[data-stage] .points li, html[data-stage] .photo img, html[data-stage] .photo-text,
-  html[data-stage] .finds-text, html[data-stage] .finds-plot, html[data-stage] .slidev-layout.statement .team { animation: none !important; }
+  html[data-stage] .slidev-layout, html[data-stage] .slidev-layout * { animation: none !important; }
 }
+.print-slide-container .slidev-layout, .print-slide-container .slidev-layout * { animation: none !important; }
