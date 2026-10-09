@@ -73,8 +73,9 @@ the part word during a Part II flight, gone before the photo lands).
   (talk-owned bookend, 0:30, made by reversing the opener; do not `--prune`
   `vu_ff_zoom.mp4`, its source), library `cern_overview_short.mp4`,
   `cern_footage_2022_042_001.mp4`.
-- Toolkit: slidev-videos `5d7e786` (feat/v0.5.3, both addons; the Scheduler's
-  pin for the owner's iPhone black screen): v0.5.2's place groups and `humAt:
+- Toolkit: slidev-videos `e5d05a9` (feat/v0.5.3, both addons; the Scheduler's
+  pin for the owner's iPhone black screen; it fixes 5d7e786's restored context
+  left behind the fallback and a rebuild under a covering clip still drawing): v0.5.2's place groups and `humAt:
   all`, `?stage-debug` (the fallback's reason on screen), quality tiers (a phone
   starts at 2; desktop and the headless recorder at 0, `pages:check` prints it),
   place textures ~10× smaller, a rebuild one tier lower after a lost context.

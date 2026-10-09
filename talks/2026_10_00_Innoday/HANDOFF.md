@@ -300,3 +300,10 @@ Live: a headless pass over slides 7, 13 and print mode saw no failed request
 under the Pages base, stage tier 0; still 07 on the site matches the commit.
 For the owner's iPhone: open the deck with `?stage-debug` to see the
 fallback's reason if it still shows black.
+
+## e5d05a9 pin (2026-10-09, Scheduler's follow-up)
+
+slidev-videos `e5d05a9` (feat/v0.5.3): after a restored context the stage no
+longer stays behind the static fallback, and a rebuild under a covering clip
+no longer draws. Recorded slides 3–4 and 12–13 (g5a–b): as before;
+`pages:check` clean, tier 0.
