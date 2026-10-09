@@ -46,7 +46,17 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Status
 
-- 2026-10-09 (latest): **the live 00ade4a has no photos on slides 6–7**
+- 2026-10-09 (latest): **deployed f2eecec** on the owner's go (Pages run
+  37924290671 green, URL 200; in headless Chromium on the live site slides
+  6 and 7 load both photos, ~/talks/.cache/uzk-review/livecheck). It is the
+  photo fix below, slidev-videos e5d05a9, the lockfile regenerated after a
+  merge had taken main's (which named this talk's v0.5.0), and origin/main
+  b5e8a75. `talk ready` passed on it with nothing skipped. Still open for
+  the owner: the licences of the slide 7 event display and the tunnel clip,
+  the ~7 min length, slide 2's ~8 s before the plot appears (the long flight
+  from the cover), the 2027 masterclass date and the BL4S call.
+
+- 2026-10-09: **the live 00ade4a has no photos on slides 6–7**
   (the Scheduler's render): StagePhoto in v0.5.0 ignores the Pages base, so
   `/figures/photos/…` 404s at the domain root. Fixed on the branch (b59572e)
   with relative sources, checked on a `--pages` build served under the real
