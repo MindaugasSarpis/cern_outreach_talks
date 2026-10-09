@@ -383,3 +383,8 @@ d77c4c2 (a77fd2a + main a8b4f46), v0.6.5, Pages run 37948674216 (green), URL
 200; live walk 30 slides, 0 failed, 0 context losses.
 v0.6.6 pinned (print: animations at their end state); export read again: all
 text, no part words, 11.4 MB. The talks stay on v0.6.6 for now.
+
+## Deployed (2026-10-09, eleventh round)
+
+9e20f1f (12f4637 + main 8a88b32), v0.6.6, Pages run 37950349600 (green), URL
+200; live walk 30 slides, 0 failed, 0 context losses.
