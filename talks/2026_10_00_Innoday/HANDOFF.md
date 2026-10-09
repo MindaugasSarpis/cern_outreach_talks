@@ -328,3 +328,9 @@ Screen: slides 3–6 and 12–14 recorded, `pages:check` clean, tier 0. Export:
 `--range 4-6` gives three pages, but every page has slide 1's still under the
 theme's `background_default.jpg` in PT Serif (no `html[data-stage]` on the
 export page): toolkit, v0.5.4. The full PDF is 168 MB.
+
+## Deployed (2026-10-09, seventh round)
+
+2daa302 (v0.5.3, after merging main b3b07a7), Pages run 37927529517 (green),
+URL 200, on the owner's "deploy" and the Scheduler's go for main. Live: no
+failed request, `stills/07.jpg` and the LHCb poster served, tier 0.

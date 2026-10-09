@@ -79,13 +79,13 @@ the part word during a Part II flight, gone before the photo lands).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** v0.5.3 round on the
-branch (stills and posters for print, PrintStill retired); the screen is
-checked (recordings of slides 3–6 and 12–14, `pages:check` clean, tier 0); the
-PDF export waits for v0.5.4. Last deploy 4ba0ceb (pin e5d05a9) —
-https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
-Pages run 37921708418. Next: deploy this round after OpenData, then pin v0.5.4
-and check the export.
+2026-10-09: **complete, pending the owner's review.** Deployed 2daa302 (v0.5.3)
+— https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+Pages run 37927529517 (green), URL 200; `talk ready` passed with nothing
+skipped. Live: no failed request under the Pages base, stills and posters
+served, tier 0. The screen is checked; the PDF export waits for v0.5.4 (see
+Decisions, Print and PDF). Next: the owner's review; pin v0.5.4 and check
+`talk export`.
 
 ## Decisions
 
