@@ -196,19 +196,31 @@ jobs:
         run: |
           python3 - <<'EOF'
           import html, json, pathlib, re
+          # "Title · event · date" from each talk's package.json description, newest first
           items = []
-          for d in sorted(pathlib.Path("talks").iterdir()):
+          for d in sorted(pathlib.Path("talks").iterdir(), reverse=True):
               if not (pathlib.Path("site") / d.name / "index.html").is_file():
                   continue
               title = json.loads((d / "package.json").read_text()).get("description", "")
               if not title and (d / "deck.md").is_file():
                   m = re.search(r"^title:\s*(.+)$", (d / "deck.md").read_text().split("\n---", 1)[0], re.M)
                   title = m.group(1).strip().strip("'\"") if m else ""
-              items.append(f'<li><a href="./{d.name}/">{html.escape(title or d.name)}</a> <small>{d.name}</small></li>')
-          page = ("<!doctype html><meta charset=utf-8><title>Outreach talks</title>"
-                  "<style>body{font-family:system-ui;max-width:44rem;margin:3rem auto;padding:0 1rem}"
-                  "li{padding:.4rem 0}small{color:#888;margin-left:.5rem}</style>"
-                  "<h1>Outreach talks</h1><ul>" + "".join(items) + "</ul>")
+              name, _, rest = (title or d.name).partition(" · ")
+              items.append(f'<li><a href="./{d.name}/">{html.escape(name)}</a>'
+                           + (f'<span class="meta">{html.escape(rest)}</span>' if rest else "")
+                           + f'<small>{d.name}</small></li>')
+          page = ("<!doctype html><html lang=lt><meta charset=utf-8>"
+                  "<meta name=viewport content='width=device-width,initial-scale=1'>"
+                  "<title>Paskaitos ir pranešimai</title>"
+                  "<style>:root{color-scheme:light dark;--fg:#1d1f24;--muted:#6b7280;--line:#e5e7eb;--link:#1d4ed8;--bg:#fff}"
+                  "@media(prefers-color-scheme:dark){:root{--fg:#e5e7eb;--muted:#9ca3af;--line:#2a2f3a;--link:#93c5fd;--bg:#0f1115}}"
+                  "body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--fg);max-width:46rem;margin:3.5rem auto;padding:0 1rem;line-height:1.4}"
+                  "h1{font-size:1.6rem;font-weight:650;margin:0 0 1.5rem}ul{list-style:none;padding:0;margin:0}"
+                  "li{padding:.85rem 0;border-top:1px solid var(--line)}li:last-child{border-bottom:1px solid var(--line)}"
+                  "a{color:var(--link);font-weight:600;font-size:1.08rem;text-decoration:none}a:hover{text-decoration:underline}"
+                  ".meta{display:block;color:var(--fg);opacity:.8;margin-top:.15rem}"
+                  "small{display:block;color:var(--muted);font-size:.75rem;margin-top:.2rem;font-family:ui-monospace,monospace}</style>"
+                  "<h1>Paskaitos ir pranešimai</h1><ul>" + "".join(items) + "</ul>")
           pathlib.Path("site/index.html").write_text(page + "\n")
           EOF
           rm -rf site/.talk-status

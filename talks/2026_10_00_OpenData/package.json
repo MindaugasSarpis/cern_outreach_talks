@@ -1,7 +1,7 @@
 {
   "name": "talk-2026-10-00-opendata",
   "private": true,
-  "description": "Open data at LHCb (2026_10_00)",
+  "description": "Atveriame LHCb duomenis · atvirųjų duomenų apdovanojimai · 2026 m. spalis",
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",

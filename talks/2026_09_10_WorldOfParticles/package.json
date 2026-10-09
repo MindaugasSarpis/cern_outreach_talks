@@ -1,7 +1,7 @@
 {
   "name": "talk-2026-09-10-worldofparticles",
   "private": true,
-  "description": "World of Particles — open-course opening lecture, 2026-09-10 (16:9, 1080p H.264 web tier)",
+  "description": "World of Particles · atviro kurso pradžios paskaita · 2026-09-10",
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",

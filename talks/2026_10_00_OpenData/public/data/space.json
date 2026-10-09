@@ -197,7 +197,26 @@
       }
      ],
      "onEnter": true,
-     "labels": false
+     "labels": false,
+     "motion": {
+      "speed": 0.9,
+      "charge": 6,
+      "dashBy": 2,
+      "view": 27,
+      "title": [
+       33,
+       2.8
+      ],
+      "keepOut": [
+       4.8,
+       2.2
+      ],
+      "frame": [
+       19.8,
+       11.0
+      ],
+      "seed": 7
+     }
     }
    ]
   },

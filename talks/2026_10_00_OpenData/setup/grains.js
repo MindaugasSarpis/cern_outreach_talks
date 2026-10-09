@@ -1,7 +1,8 @@
 import {
   Group, Points, Mesh, SphereGeometry, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4, Matrix4, Euler,
-  LinearMipmapLinearFilter,
+  LinearMipmapLinearFilter, DynamicDrawUsage,
 } from 'three'
+import { makeRing, mulberry32 } from './ring.js'
 
 // a label sprite from the engine, mipmapped: drawn far smaller than its canvas, it aliased into dither
 function smooth(l) {
@@ -736,12 +737,18 @@ function buildFloor(o) {
 
 // ---- portraits ----------------------------------------------------------------------
 //   { type: portraits, name, pos, size?: 2.4, res?: 120, gain?: 1, labelH?: 0.026,
-//     people: [{ src: '/figures/people/x.jpg', name, at: [x, y, z] }, …] }
+//     people: [{ src: '/figures/people/x.jpg', name, at: [x, y, z] }, …],
+//     motion?: { speed, charge, dashBy, view, title, keepOut, frame, seed, … }, sparks?: 1 }
 // Each photograph is a round disc of grains, one grain per pixel of a res × res
 // sampling, in the photo's own colours, with a little relief by brightness.
 // Step 1 gathers them (the middle of each face first, the edge last) out of
 // a wide swirl; step 0 sends them apart. The name sits under each, at a fixed
 // size on screen. The engine's arrival (and `c`) gathers them again.
+// With `motion` (its fields in setup/ring.js) the people are bodies on a ring
+// through their `at`s: they run round it, push each other away and bump, and
+// where two meet a few gold grains fly out of the contact, the way a collision
+// throws out particles (`sparks` scales how many; 0, none). The motion starts
+// over at the homes each time they gather. Without it each stays at its `at`.
 const PORTRAIT_VERT = /* glsl */ `
 attribute float aSeed, aR;
 attribute vec3 aCol;
@@ -778,11 +785,63 @@ void main() {
   gl_FragColor = vec4(vCol * uGain, a);
 }`
 
+// the grains thrown out where two portraits meet: a pool reused round and round
+const SPARK_VERT = /* glsl */ `
+attribute vec3 aVel;
+attribute float aT0, aLife, aSeed;
+uniform float uSize, uAlpha;
+${PLACE}
+void main() {
+  float age = uTime - aT0;
+  if (age < 0.0 || age > aLife) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vAlpha = 0.0; return; }
+  float f = 1.0 - age / aLife;
+  vec3 p = position + aVel * (1.0 - exp(-2.5 * age)) / 2.5;   // they slow as they go
+  place(p, uSize * (0.6 + 0.8 * aSeed), uAlpha * f * f, mix(vec3(1.0, 0.62, 0.22), vec3(1.0, 0.92, 0.75), f * aSeed), aSeed);
+}`
+
+function makeSparks(N, seed, pr) {
+  const pos = new Float32Array(N * 3), vel = new Float32Array(N * 3), t0 = new Float32Array(N).fill(-1e6)
+  const life = new Float32Array(N).fill(1), sd = new Float32Array(N)
+  const geo = new BufferGeometry()
+  const names = { position: [pos, 3], aVel: [vel, 3], aT0: [t0, 1], aLife: [life, 1], aSeed: [sd, 1] }
+  for (const [name, [arr, k]] of Object.entries(names)) geo.setAttribute(name, new BufferAttribute(arr, k).setUsage(DynamicDrawUsage))
+  const mat = material(SPARK_VERT, { uPixelRatio: pr, uSize: { value: 1.8 }, uAlpha: { value: 0.9 } })
+  const points = new Points(geo, mat); points.frustumCulled = false
+  let k = 0, rnd = mulberry32(seed), dirty = false
+  return {
+    points, mat,
+    reset() { rnd = mulberry32(seed); t0.fill(-1e6); k = 0; dirty = true },
+    burst(h, gain) {
+      // sideways out of the contact, into the gap between the two faces both ways, a
+      // little in and out of the plane; a harder bump throws more of them, faster. They
+      // have to clear the faces' soft rims (about 0.74 along the gap) to be seen at all:
+      // gold added over a photograph's light background does not show
+      const m = Math.round(Math.min(64, 14 + 60 * h.v) * gain)
+      for (let c = 0; c < m; c++, k = (k + 1) % N) {
+        const side = rnd() < 0.5 ? -1 : 1, sp = (1.2 + 2.6 * rnd()) * (0.6 + h.v)
+        const across = (rnd() - 0.5) * 0.7, out = (rnd() - 0.5) * 1.0
+        vel[k * 3] = (h.tx * side + h.nx * across) * sp; vel[k * 3 + 1] = (h.ty * side + h.ny * across) * sp; vel[k * 3 + 2] = out * sp
+        pos[k * 3] = h.x; pos[k * 3 + 1] = h.y; pos[k * 3 + 2] = h.z + 0.1
+        t0[k] = h.t; life[k] = 0.7 + 0.7 * rnd(); sd[k] = rnd()
+      }
+      dirty = true
+    },
+    flush() {
+      if (!dirty) return
+      for (const name of Object.keys(names)) geo.attributes[name].needsUpdate = true
+      dirty = false
+    },
+  }
+}
+
 function buildPortraits(o, ctx) {
   const size = o.size ?? 2.4, res = Math.round(o.res ?? 120)
   const people = o.people || []
   const g = new Group()
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  // one group per person, at their `at`: the motion moves the group, the grains sit in it
+  const homes = people.map((person) => person.at || [0, 0, 0])
+  const nodes = homes.map((at) => { const node = new Group(); node.position.set(at[0], at[1], at[2]); g.add(node); return node })
   const showT = { value: -1 }, hideT = { value: -1 }, viewH = { value: 1080 }, pr = { value: Math.min(devicePixelRatio || 1, 2) }
   const uni = { uTime: { value: 0 }, uShowT: showT, uHideT: hideT, uViewH: viewH, uGrain: { value: size / res },
     uPixelRatio: pr, uGain: { value: o.gain ?? 0.8 } }
@@ -792,8 +851,8 @@ function buildPortraits(o, ctx) {
   const base = (import.meta.env?.BASE_URL || '/').replace(/\/$/, '')
   const toLin = (v) => Math.pow(v / 255, 2.2)
   const labels = []
-  people.forEach((person) => {
-    const at = person.at || [0, 0, 0]
+  people.forEach((person, n) => {
+    const node = nodes[n]
     const img = new Image()
     img.onload = () => {
       const c = document.createElement('canvas'); c.width = res; c.height = res
@@ -807,7 +866,7 @@ function buildPortraits(o, ctx) {
         const i = (y * res + x) * 4
         const R = px[i], G = px[i + 1], B = px[i + 2]
         const l = (0.2126 * R + 0.7152 * G + 0.0722 * B) / 255
-        pos.push(at[0] + u * size, at[1] - v * size, at[2] + (l - 0.5) * 0.06 * size + (Math.random() - 0.5) * 0.01 * size)
+        pos.push(u * size, -v * size, (l - 0.5) * 0.06 * size + (Math.random() - 0.5) * 0.01 * size)
         col.push(toLin(R), toLin(G), toLin(B))
         seed.push(Math.random()); rr.push(r)
       }
@@ -818,7 +877,7 @@ function buildPortraits(o, ctx) {
       geo.setAttribute('aR', new BufferAttribute(new Float32Array(rr), 1))
       const p = new Points(geo, mat); p.frustumCulled = false
       p.onBeforeRender = (renderer) => { renderer.getCurrentViewport(vp); viewH.value = vp.w || 1080 }
-      g.add(p)
+      node.add(p)
     }
     img.src = String(person.src || '').startsWith('/') ? base + person.src : person.src
     if (person.name && o.labels !== false) {   // labels: false keeps the names off the screen (they are in the notes)
@@ -826,24 +885,39 @@ function buildPortraits(o, ctx) {
         const l = smooth(ctx.helpers.makeLabel(person.name, { px: 64, weight: 500, color: '#dfe6f1', worldH: o.labelH ?? 0.026, letterSpacing: 0.04, upper: false }))
         l.material.sizeAttenuation = false; l.material.opacity = 0
         l.center.set(0.5, 1.25)
-        l.position.set(at[0], at[1] - size / 2, at[2])
+        l.position.set(0, -size / 2, 0)
         l.userData.vis = 0
-        g.add(l); labels.push(l)
+        node.add(l); labels.push(l)
       }
       if (document.fonts?.load) document.fonts.load('500 64px "Space Grotesk"').catch(() => {}).finally(make)
       else make()
     }
   })
 
+  const ring = o.motion && people.length > 1 ? makeRing(homes, { radius: size / 2 * 0.9, ...o.motion }) : null
+  const sparks = ring && o.sparks !== 0 ? makeSparks(1200, (o.motion.seed ?? 7) + 1, pr) : null
+  if (sparks) { sparks.points.renderOrder = 1; g.add(sparks.points) }   // over the faces: the transparent sort would go by a key frozen at the group's origin
+  const moveNodes = () => {
+    for (let i = 0; i < nodes.length; i++) { nodes[i].position.set(ring.x[i], ring.y[i], ring.z[i]); nodes[i].rotation.z = ring.a[i] }
+  }
+  // they gather: the motion starts over from the homes
+  const show = (t) => {
+    showT.value = t; hideT.value = -1
+    if (ring) { ring.reset(t); sparks?.reset(); moveNodes() }
+  }
+
   let now = 0, step = state.has(o.name) ? state.get(o.name) : 0, armed = false, armedAt = 0
   const go = (k) => {
     step = k
     if (armed) return
-    if (k) { if (showT.value < 0 || hideT.value >= 0) { showT.value = now; hideT.value = -1 } }
+    if (k) { if (showT.value < 0 || hideT.value >= 0) show(now) }
     else if (showT.value >= 0 && hideT.value < 0) hideT.value = now
   }
   const off = listen(o.name, go)
   mat.addEventListener('dispose', off)
+  // their slide opened before the world was built (a reload, or a link straight to it):
+  // with onEnter nothing else would gather them, so the first frame does
+  let late = !!(o.onEnter && step)
   // onEnter: they gather the moment their slide opens, during the flight, rather than on
   // arrival. The hook stays, answering at once: the engine announces a station as
   // assembled only through its builders' hooks, and the cover's title waits on that
@@ -851,7 +925,7 @@ function buildPortraits(o, ctx) {
     arm() { armed = true; armedAt = now; if (showT.value >= 0 && hideT.value < 0) hideT.value = now },
     assemble(t, onDone) {
       now = t; armed = false
-      if (step) { showT.value = t; hideT.value = -1 } else if (showT.value >= 0 && hideT.value < 0) hideT.value = t
+      if (step) show(t); else if (showT.value >= 0 && hideT.value < 0) hideT.value = t
       onDone?.()
     },
   }
@@ -859,8 +933,14 @@ function buildPortraits(o, ctx) {
     group: g, labels: [], api, pixelRatio: pr,
     update(t) {
       now = t; uni.uTime.value = t
+      if (late) { late = false; if (step && showT.value < 0) show(t) }
       if (armed && t - armedAt > 6) { armed = false; go(step) }
       if (hideT.value >= 0 && t - hideT.value > 1.6) { showT.value = -1; hideT.value = -1 }
+      if (ring && showT.value >= 0) {
+        ring.advance(t, sparks ? (h) => sparks.burst(h, o.sparks ?? 1) : null)
+        moveNodes(); sparks?.flush()
+      }
+      if (sparks) sparks.mat.uniforms.uTime.value = t
       const on = showT.value >= 0 && hideT.value < 0 && t - showT.value > 1.2
       for (const l of labels) {
         l.userData.vis += ((on ? 1 : 0) - l.userData.vis) * 0.06

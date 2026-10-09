@@ -1,7 +1,7 @@
 {
   "name": "talk-2026-10-00-innoday",
   "private": true,
-  "description": "World of Particles (2026_10_00)",
+  "description": "Nuo Vilniaus iki visatos pakraščių ir atgal · Innoday · 2026 m. spalis",
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",
