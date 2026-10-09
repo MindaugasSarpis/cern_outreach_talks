@@ -8,10 +8,22 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 „adresuoti“.
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos v0.5.4, for both addons.
+Toolkit pin: slidev-videos v0.6.4, for both addons.
 
-## Status (2026-10-09): approved by the owner; deployed on v0.5.4
+**Deploys (owner, 2026-10-09: "Deploy now, and always").** The standing rule
+holds for this talk: it deploys without asking once `talk ready` passes with
+nothing skipped and the Scheduler gives it main. Anything else still needs
+the owner's word.
 
+## Status (2026-10-09): approved by the owner; deployed on v0.6.4
+
+- Redeployed 2026-10-09 on the owner's go: commit ef5b903 on main, Pages run
+  37946636011 (every job success); `talk deploy`'s live check passed (13
+  slides, nothing failed). `talk ready` passed on ef5b903 with nothing
+  skipped (lint, check, build, shots, pages, preflight, venue).
+- In it: no gold text (white type, one light-blue accent); the PDF shows
+  every slide's text (it did not on v0.5.3–v0.5.4, see the decision); v0.6.4
+  with the floor `enterable`; stills on the v0.6 settle.
 - Redeployed 2026-10-09 on the owner's go: commit 23a3bf7 on main, Pages run
   37930240036 (every job success). The URL answers 200 with the Lithuanian
   title; stills, the clip's poster and space.json answer too. `talk ready`
@@ -27,7 +39,7 @@ Toolkit pin: slidev-videos v0.5.4, for both addons.
   ring's `motion`. `talk ready` passed on the same commit.
 
 - 13 slides in Lithuanian, about 6.0 of 6.5 min (lint, lang lt: 0 errors, 0
-  warnings). Toolkit pin v0.5.4.
+  warnings). Toolkit pin v0.6.4.
 - The line: the cover; the 3D clip (advances on its end); one real Z → μμ
   collision from LHCb open data; it collapses into the 1 TB sphere; 800 TB and
   4 PB open (gold; 4 PB forms from five 800 TB piles); LHCb's 100 PB (blue);
@@ -52,6 +64,25 @@ Toolkit pin: slidev-videos v0.5.4, for both addons.
 
 ## Decisions
 
+- 2026-10-09. No gold letters (owner, via the Scheduler: "these gold letters
+  are all over the internet now because everyone uses AI as a designer").
+  Kickers (the kit's and the cover's too), units, slide 10's bullets and
+  slide 11's years are one light-blue accent, `--od-accent: #9cc4ff`; big
+  numbers and headlines are white (slide 11's 76 was a gradient); slide 10's
+  stream labels in the world are the pile labels' neutral `#d4dcea`. The
+  gold in the world (muons, open-data piles and streams, the portraits'
+  grains) keeps its meaning. Undo: bbbfa0a^.
+- 2026-10-09. The PDF: Slidev's export prints its print pages with screen
+  media, so the talk's `@media print` rule never applied there, and the
+  readouts that rise 2.6–5.2 s late (slides 4–9) printed without their text
+  on v0.5.3–v0.5.4 (deployed 1c7330b and 23a3bf7). The PNG export I checked
+  then waits longer and showed the text; check a rasterised PDF instead.
+  Now every animation in the slide is off on `.print-slide-container`, under
+  reduced motion and in print (each ends on the element's own style).
+- 2026-10-09. v0.6.3, then v0.6.4 (the Scheduler's round): stills with the
+  engine-clock settle, `--stills --settle 20` (the streams and the collision
+  have neither `assemble()` nor `api.busy`); v0.5.4's real-time settle had
+  called slides 1, 5 and 10 still too early. The floor is `enterable`.
 - 2026-10-09. Slide 9: „per 2026 m. pirmąjį pusmetį“ → „iki 2026 m. liepos“
   (the Ideas backlog's item 1, owner-approved). The DPHEP Global Report 2026
   (arXiv:2607.06775, submitted 7 Jul 2026) says "At the time of writing,
