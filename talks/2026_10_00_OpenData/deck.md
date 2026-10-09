@@ -522,14 +522,19 @@ space: { at: [53, 2.8, 160], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 <!--
 Message: this is the work we were nominated for, and the people who did it.
 
-Sakyti: „Mus nominavo už tai, kad parengėme LHCb duomenis paskelbti, koordinuojame
-šį darbą kolaboracijoje ir patys naudojame šiuos duomenis tyrimams ir mokymui
-Vilniuje.
+Sakyti: „Mus nominavo už tai, kad parengėme LHCb duomenis paskelbti ir patys juos
+naudojame tyrimams ir mokymui Vilniuje.
 Duomenis gali atsisiųsti bet kas, svetainėje opendata.cern.ch. Ačiū jums ir ačiū visai mūsų grupei.“
 
 The camera flies back to the collisions where the data begin, and the group
-gathers beside them: fifteen portraits made of the same gold grains of data,
-each with the name under it.
+gathers beside them: fifteen portraits made of the same gold grains of data.
+Then the ring starts to move like a beam of particles: the portraits run
+round it, push one another away and bump, and where two meet a few gold
+grains fly out. The names stay off the screen: Mindaugas Šarpis, Ramūnas
+Aleksiejūnas, Oleg Kravcov, Adam Morris, Augustas Vaitkevičius, Rūta Racz,
+Šarūnas Jacevičius, Margarita Biveinytė, Sophia Pennuttis, Mikas Paulius
+Iršėnas, Neilas Beniušis, Karolina German, Eliza Holvoet, Meda Paulavičiūtė,
+Dominykas Stonkus.
 
 Photos: LHCb Vilnius group members, used with permission (as on
 lhcb-vilnius.web.cern.ch/people.html); cropped square, metadata removed.
