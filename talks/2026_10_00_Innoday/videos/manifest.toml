@@ -50,3 +50,10 @@ not on gdrive."""
 # profile = "high-motion"
 # used_in = ["deck"]
 # notes   = "Opener: orbit from the VU Faculty of Physics / NFTMC out to the cosmic web, ending held on the web."
+
+# A library clip, listed only for its print poster: its first lit frame is the
+# detector a speck on black, 0:24 is the whole detector in its cavern. Not
+# encoded or published here; the deck plays the shared release's copy.
+[[videos]]
+name   = "cern_footage_2022_042_001.mp4"
+poster = "0:24"

@@ -16,24 +16,30 @@ import {
 // grains, a depth point cloud, a plain image) is the slide's business.
 // Drawn like the engine's collider and galaxy: points of light, added together.
 //
-//   { type: strands, pos, center?: [x,y,z], radius: 7, reach?: 15, rise?: 3,
+//   { type: strands, group?: 'inventions', pos, center?: [x,y,z], radius: 7, reach?: 15, rise?: 3,
 //     strands: [{ angle (deg, in the ring's plane), label? (ignored: no labels in this world) }, …],
-//     grains?: 1600 per strand, node?: 700 per end cluster, nodeRadius?: 0.6,
-//     speed?: 0.09 (strands a second), lift?: 0.35, color?: gold, size?: 1, alpha?: 0.5 }
+//     grains?: 1600 per strand, node?: 700 per end cluster (0: the strand ends empty), nodeRadius?: 0.6,
+//     speed?: 0.09 (strands a second), lift?: 0.35, color?: gold, size?: 1, alpha?: 0.5,
+//     ring?: { grains: 12000, width: 0.12, size: 1.3, alpha: 0.6, speed: 0.01 (turns a second) } }
+//
+// `ring` draws the ring itself in grains, round `center` at `radius`: the FCC
+// (slide 25) is a second strands object with its own ring, 90.7/26.7 times the
+// LHC's, its strands ending empty: the next machine's problems, not solved yet.
 
 // Part I shows the machine before anything has left it: the strands come on
-// with Part II. <Strands :on="true|false" /> sets this when its slide becomes
-// current; the last value is kept for a form built later.
-let shown = false
-export function setStrands(on) { shown = on }
+// with Part II. <Strands :on="true|false" group="…" /> sets a group when its
+// slide becomes current; the last value is kept for a form built later.
+const shown = { inventions: false }
+export function setStrands(on, group = 'inventions') { shown[group] = on }
 
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
 
 const VERT = /* glsl */ `
-attribute float aSeed, aKind;          // 0 a grain on the way, 1 a grain of the end cluster
+attribute float aSeed, aKind;          // 0 a grain on the way, 1 a grain of the end cluster, 2 of the ring
 attribute vec3 aFrom, aEnd, aCtl, aOff;
 uniform float uTime, uPixelRatio, uSpeed, uSize, uAlpha, uNodeR, uOn;
-uniform vec3 uColor, uWhite;
+uniform float uRadius, uRingSpeed, uRingSize, uRingAlpha;
+uniform vec3 uColor, uWhite, uCenter;
 varying vec3 vColor; varying float vAlpha;
 float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
 void main() {
@@ -45,6 +51,13 @@ void main() {
     p = mix(a, b, s) + aOff * (0.35 + sin(s * 3.14159));
     alpha = uAlpha * smoothstep(0.0, 0.08, s) * (1.0 - smoothstep(0.88, 1.0, s));
     size = uSize * (0.7 + 0.7 * hash(aSeed * 13.0));
+  } else if (aKind > 1.5) {
+    // the ring: grains round the centre, drifting slowly along it
+    float a = aSeed * 6.2831853 + uRingSpeed * 6.2831853 * uTime;
+    float r = uRadius + aOff.x;
+    p = uCenter + vec3(cos(a) * r, aOff.y, sin(a) * r);
+    alpha = uRingAlpha;
+    size = uRingSize * (0.75 + 0.6 * hash(aSeed * 17.0));
   } else {
     // the product: a slow cluster of grains round the strand's end
     float w = uTime * (0.2 + 0.35 * hash(aSeed * 5.0));
@@ -80,9 +93,10 @@ export function strandEnds(o, angle) {
 }
 
 function buildStrands(o, ctx) {
-  const list = o.strands || []
+  const list = o.strands || [], group = o.group || 'inventions'
   const per = Math.round(o.grains ?? 1600), node = Math.round(o.node ?? 700)
-  const N = list.length * (per + node)
+  const ring = o.ring || null, nRing = ring ? Math.round(ring.grains ?? 12000) : 0
+  const N = list.length * (per + node) + nRing
   const seed = new Float32Array(N), kind = new Float32Array(N)
   const from = new Float32Array(N * 3), end = new Float32Array(N * 3), ctl = new Float32Array(N * 3), off = new Float32Array(N * 3)
   const spread = o.spread ?? 0.06
@@ -101,6 +115,10 @@ function buildStrands(o, ctx) {
       }
     }
   }
+  for (let k = 0; k < nRing; k++, n++) {
+    seed[n] = Math.random(); kind[n] = 2
+    off.set([gauss() * (ring.width ?? 0.12), gauss() * (ring.width ?? 0.12) * 0.5, 0], n * 3)
+  }
   const geo = new BufferGeometry()
   geo.setAttribute('position', new BufferAttribute(end.slice(), 3))
   for (const [k, a, sz] of [['aSeed', seed, 1], ['aKind', kind, 1], ['aFrom', from, 3], ['aEnd', end, 3], ['aCtl', ctl, 3], ['aOff', off, 3]]) geo.setAttribute(k, new BufferAttribute(a, sz))
@@ -109,7 +127,9 @@ function buildStrands(o, ctx) {
     uniforms: {
       uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) },
       uSpeed: { value: o.speed ?? 0.09 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.5 },
-      uNodeR: { value: o.nodeRadius ?? 0.6 }, uOn: { value: shown ? 1 : 0 },
+      uNodeR: { value: o.nodeRadius ?? 0.6 }, uOn: { value: shown[group] ? 1 : 0 },
+      uCenter: { value: o.center || [0, 0, 0] }, uRadius: { value: o.radius ?? 7 },
+      uRingSpeed: { value: ring?.speed ?? 0.01 }, uRingSize: { value: ring?.size ?? 1.3 }, uRingAlpha: { value: ring?.alpha ?? 0.6 },
       uColor: { value: new Color(o.color || '#ffc96b').convertLinearToSRGB() }, uWhite: { value: new Color(1, 0.97, 0.9) },
     },
   })
@@ -122,7 +142,7 @@ function buildStrands(o, ctx) {
   return {
     group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio,
     update(t) {
-      const u = mat.uniforms, goal = shown ? 1 : 0
+      const u = mat.uniforms, goal = shown[group] ? 1 : 0
       if (last != null) u.uOn.value += Math.sign(goal - u.uOn.value) * Math.min(Math.abs(goal - u.uOn.value), (t - last) / 1.5)
       last = t; u.uTime.value = t
       pts.visible = u.uOn.value > 0.002 || goal > 0
