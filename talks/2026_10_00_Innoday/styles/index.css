@@ -1,11 +1,11 @@
 /* Innoday — the talk's own type over the stage kit (slidev-addon-stage
-   styles/index.css). Blue is the world's (the palette's accent); gold marks
-   what left CERN for the rest of the world: inventions, licences, companies.
-   Sizes are px against Slidev's 980-wide canvas. */
+   styles/index.css). Text is white, with one light-blue accent (--in-accent)
+   for kickers and the rare emphasis: no gold text (owner, 2026-10-09: gold
+   letters read as AI design). Gold stays only in the world's grains (strands,
+   the KT seed, the FCC ring). Sizes are px against Slidev's 980-wide canvas. */
 
 html[data-stage] {
-  --in-gold: #ffc96b;
-  --in-gold-hi: #ffe6b3;
+  --in-accent: #9cc4ff;
   --in-blue-hi: #dfe8ff;
   --in-line: rgba(var(--stage-fg-rgb, 230, 236, 245), 0.16);
 }
@@ -25,13 +25,11 @@ html[data-stage] .readout .big {
   font-variant-numeric: tabular-nums; margin: 0 0 18px; white-space: nowrap;
   color: var(--in-blue-hi); text-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
 }
-html[data-stage] .readout .big.gold { color: var(--in-gold-hi); }
-html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.01em; margin-left: 0.25em; color: var(--stage-accent); }
-html[data-stage] .readout .big.gold .unit { color: var(--in-gold); }
+html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.01em; margin-left: 0.25em; color: var(--in-accent); }
 html[data-stage] .readout h1 { font-size: 46px !important; line-height: 1.04 !important; margin: 0 0 14px !important; animation: none !important; }
 
-/* gold kickers on the slides about what CERN gave away */
-html[data-stage] .kicker.gold, html[data-stage] .gold-k .kicker { color: var(--in-gold) !important; }
+/* every kicker in the one light-blue accent (the kit's is the darker palette accent) */
+html[data-stage] .kicker { color: var(--in-accent); }
 
 /* --- stats: a row of big numbers with a line under each, low across the slide */
 html[data-stage] .stats {
@@ -52,10 +50,8 @@ html[data-stage] .stat .n {
   font-size: 44px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
   font-variant-numeric: tabular-nums; color: var(--in-blue-hi); white-space: nowrap; margin: 0 0 10px;
 }
-html[data-stage] .stat .n small { font-size: 0.45em; font-weight: 500; letter-spacing: 0; margin-left: 0.2em; color: var(--stage-accent); }
+html[data-stage] .stat .n small { font-size: 0.45em; font-weight: 500; letter-spacing: 0; margin-left: 0.2em; color: var(--in-accent); }
 html[data-stage] .stat .l { font-size: 16px; line-height: 1.32; color: var(--stage-fg); opacity: 0.9; margin: 0; }
-html[data-stage] .stats.gold .stat .n { color: var(--in-gold-hi); }
-html[data-stage] .stats.gold .stat .n small { color: var(--in-gold); }
 
 /* a content slide's title, when cards or stats stand low */
 html[data-stage] .head { position: absolute; left: 56px; top: 52px; max-width: 88%; }
@@ -80,24 +76,22 @@ html[data-stage] .figure .credit { font-size: 11px; letter-spacing: 0.03em; colo
 html[data-stage] .feature .text { animation: stage-rise 0.85s var(--stage-ease) 0.25s both; }
 html[data-stage] .feature .year {
   font-size: 92px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9; margin: 0 0 6px;
-  background: linear-gradient(180deg, var(--in-gold-hi), var(--in-gold) 70%, rgba(255, 201, 107, 0.55));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  color: #fff;
   font-variant-numeric: tabular-nums;
 }
-html[data-stage] .feature .year.blue { background: linear-gradient(180deg, #ffffff, var(--in-blue-hi) 45%, var(--stage-accent)); -webkit-background-clip: text; background-clip: text; }
 html[data-stage] .feature h1 { font-size: 38px !important; line-height: 1.08 !important; margin: 0 0 14px !important; animation: none !important; }
 html[data-stage] .feature p { font-size: 19px; line-height: 1.42; margin: 0 0 10px; opacity: 0.94; }
 html[data-stage] .feature .today {
   margin-top: 14px; padding: 10px 14px; border-radius: 10px; font-size: 17px; line-height: 1.38;
-  background: rgba(255, 201, 107, 0.09); box-shadow: inset 2px 0 0 var(--in-gold);
+  background: rgba(156, 196, 255, 0.08); box-shadow: inset 2px 0 0 var(--in-accent);
 }
-html[data-stage] .feature .today b { color: var(--in-gold-hi); font-weight: 600; }
+html[data-stage] .feature .today b { color: var(--in-accent); font-weight: 600; }
 
 /* --- a quotation with its source standing beside it */
 html[data-stage] .handnote {
   font-size: 34px; font-weight: 500; line-height: 1.2; letter-spacing: -0.01em; color: var(--stage-fg); margin: 0 0 12px;
 }
-html[data-stage] .handnote .lt { display: block; margin-top: 10px; font-size: 22px; font-weight: 400; color: var(--in-gold-hi); }
+html[data-stage] .handnote .lt { display: block; margin-top: 10px; font-size: 22px; font-weight: 400; color: var(--in-accent); }
 
 /* --- tiles: many small things at once, four across */
 html[data-stage] .tiles {
@@ -106,7 +100,7 @@ html[data-stage] .tiles {
 }
 html[data-stage] .tiles .card { max-width: none; padding: 12px 15px 12px; animation-delay: 0.1s; }
 html[data-stage] .tiles .card:nth-child(n+5) { animation-delay: 0.3s; }
-html[data-stage] .tiles .card h2 { font-size: 17.5px; margin: 0 0 4px; color: var(--in-gold-hi); }
+html[data-stage] .tiles .card h2 { font-size: 17.5px; margin: 0 0 4px; color: #fff; }
 html[data-stage] .tiles .card p { font-size: 15px; line-height: 1.34; margin: 0; }
 html[data-stage] .tiles .card .k { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stage-accent); margin: 0 0 6px; }
 
@@ -117,7 +111,7 @@ html[data-stage] .news {
 }
 html[data-stage] .news.three { grid-template-columns: repeat(3, 1fr); }
 html[data-stage] .news .card { max-width: none; padding: 14px 18px 14px; }
-html[data-stage] .news .card .date { font-size: 11.5px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--in-gold); margin: 0 0 6px; }
+html[data-stage] .news .card .date { font-size: 11.5px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--in-accent); margin: 0 0 6px; }
 html[data-stage] .news .card h2 { font-size: 20px; margin: 0 0 6px; }
 html[data-stage] .news .card p { font-size: 16px; line-height: 1.36; margin: 0; }
 
@@ -133,7 +127,7 @@ html[data-stage] .rank > div {
   backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   animation: stage-card-in 0.6s var(--stage-ease) both;
 }
-html[data-stage] .rank .r { grid-row: span 2; font-size: 34px; font-weight: 700; letter-spacing: -0.03em; color: var(--in-gold); line-height: 1; font-variant-numeric: tabular-nums; }
+html[data-stage] .rank .r { grid-row: span 2; font-size: 34px; font-weight: 700; letter-spacing: -0.03em; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
 html[data-stage] .rank .t { font-size: 18px; font-weight: 600; line-height: 1.2; }
 html[data-stage] .rank .d { font-size: 14.5px; line-height: 1.3; opacity: 0.86; }
 
@@ -189,7 +183,7 @@ html[data-stage] .world-caption.narrow h1 { font-size: 52px !important; line-hei
 html[data-stage] .world-caption.narrow p:not(.kicker) { font-size: 22px; }
 html[data-stage] .stat .l { font-size: 18px; }
 html[data-stage] .stats.three .stat .n { font-size: 52px; }
-html[data-stage] .stats.three.gold .stat .n { font-size: 34px; margin-bottom: 12px; }
+html[data-stage] .stats.three.small .stat .n { font-size: 34px; margin-bottom: 12px; }
 html[data-stage] .tiles { top: 150px; gap: 16px; }
 html[data-stage] .tiles .card { padding: 16px 18px; }
 html[data-stage] .tiles .card .k { font-size: 12px; }
@@ -239,13 +233,11 @@ html[data-stage] .hero.low .hero-text { max-width: 70%; }
 html[data-stage] .hero .kicker { margin-bottom: 8px; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6); }
 html[data-stage] .hero .year {
   font-size: 108px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9; margin: 0 0 8px;
-  background: linear-gradient(180deg, #fff6e2, var(--in-gold) 75%); -webkit-background-clip: text; background-clip: text; color: transparent;
-  font-variant-numeric: tabular-nums; filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.55));
+  color: #fff; font-variant-numeric: tabular-nums; filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.55));
 }
-html[data-stage] .hero .year.blue { background: linear-gradient(180deg, #ffffff, var(--in-blue-hi) 50%, var(--stage-accent)); -webkit-background-clip: text; background-clip: text; }
 html[data-stage] .hero h1 { font-size: 46px !important; line-height: 1.04 !important; margin: 0 0 12px !important; text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6); animation: none !important; }
 html[data-stage] .hero .line { font-size: 21px; line-height: 1.35; margin: 0; color: var(--stage-fg); opacity: 0.95; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7); }
-html[data-stage] .hero .line b { color: var(--in-gold-hi); font-weight: 600; }
+html[data-stage] .hero .line b { color: var(--in-accent); font-weight: 600; }
 html[data-stage] .hero .credit {
   position: absolute; z-index: 2; right: 18px; bottom: 12px; max-width: 48%; text-align: right;
   font-size: 10.5px; letter-spacing: 0.03em; color: rgba(230, 236, 245, 0.62); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
@@ -300,10 +292,8 @@ html[data-stage] .payoff .kicker { margin-bottom: 10px; text-shadow: 0 1px 8px r
 html[data-stage] .payoff .big {
   font-size: 176px; font-weight: 700; letter-spacing: -0.045em; line-height: 0.86; margin: 0 0 16px;
   white-space: nowrap; font-variant-numeric: tabular-nums;
-  background: linear-gradient(180deg, #fff6e2, var(--in-gold) 75%); -webkit-background-clip: text; background-clip: text; color: transparent;
-  filter: drop-shadow(0 2px 18px rgba(0, 0, 0, 0.6));
+  color: #fff; filter: drop-shadow(0 2px 18px rgba(0, 0, 0, 0.6));
 }
-html[data-stage] .payoff .big.blue { background: linear-gradient(180deg, #ffffff, var(--in-blue-hi) 50%, var(--stage-accent)); -webkit-background-clip: text; background-clip: text; }
 html[data-stage] .payoff .big .unit { font-size: 0.34em; letter-spacing: -0.01em; margin-left: 0.18em; }
 html[data-stage] .payoff h1 { font-size: 44px !important; line-height: 1.08 !important; margin: 0 0 14px !important; max-width: 20ch; text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7); animation: none !important; }
 html[data-stage] .payoff p:not(.kicker) { font-size: 24px; line-height: 1.38; margin: 0; max-width: 34ch; opacity: 0.95; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7); }
@@ -313,7 +303,7 @@ html[data-stage] .payoff p:not(.kicker) { font-size: 24px; line-height: 1.38; ma
    centred, gone before the photo condenses over it */
 html[data-stage] .part-word {
   position: absolute; left: 0; right: 0; top: 9%; z-index: 30; text-align: center; pointer-events: none;
-  font-size: 22px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--in-gold-hi);
+  font-size: 22px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--in-accent);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 18px rgba(0, 0, 0, 0.8);
   animation: part-word 1.7s ease both;   /* gone before the photo fills the frame */
 }
@@ -348,11 +338,7 @@ html[data-stage] .world-caption.narrow.small { max-width: 32%; }
    they are the biggest thing on the slide) */
 html[data-stage] .hero .pf h1 { font-size: 52px !important; line-height: 1.02 !important; margin: 0 0 14px !important; }
 html[data-stage] .hero .pf .answer {
-  font-size: 28px; font-weight: 600; line-height: 1.15; margin: 0 0 10px; color: var(--in-gold-hi);
+  font-size: 28px; font-weight: 600; line-height: 1.15; margin: 0 0 10px; color: #fff;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
-}
-html[data-stage] .hero .pf .answer .y {
-  display: block; margin-bottom: 4px; font-size: 15px; font-weight: 600; letter-spacing: 0.14em;
-  color: var(--in-gold); font-variant-numeric: tabular-nums;
 }
 html[data-stage] .hero .pf .kicker.year-k { font-variant-numeric: tabular-nums; letter-spacing: 0.14em; }
