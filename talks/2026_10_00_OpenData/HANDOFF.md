@@ -15,11 +15,14 @@ holds for this talk: it deploys without asking once `talk ready` passes with
 nothing skipped and the Scheduler gives it main. Anything else still needs
 the owner's word.
 
-## Status (2026-10-09): approved by the owner; deployed on v0.6.8, v0.7.0 ready
+## Status (2026-10-09): approved by the owner; deployed on v0.7.0
 
-- Pinned v0.7.0 (the Scheduler's batch round), not yet deployed: the forms
-  on their own clock say `api.busy`, `<Grains :later>` runs on the world's
-  clock, the stills are new. See the v0.7.0 decision.
+- Redeployed 2026-10-09 under the standing rule, after Užsikrauk karjerai:
+  commit 82b19d9 on main, Pages run 37989538553 (success); `talk deploy`'s
+  live check passed (13 slides, nothing failed). `talk ready` passed on
+  82b19d9 with nothing skipped. On v0.7.0: the forms on their own clock say
+  `api.busy`, `<Grains :later>` runs on the world's clock, the stills are
+  new. See the v0.7.0 decision.
 
 - Redeployed 2026-10-09 under the standing rule: commit 546aed5 on main,
   Pages run 37974807816 (success); `talk deploy`'s live check passed (13
