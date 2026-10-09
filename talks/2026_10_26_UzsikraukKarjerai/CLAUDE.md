@@ -50,7 +50,7 @@ Approved outline: `notes/outline-v5.md` with its two change sections
   (the Scheduler's render): StagePhoto in v0.5.0 ignores the Pages base, so
   `/figures/photos/…` 404s at the domain root. Fixed on the branch (b59572e)
   with relative sources, checked on a `--pages` build served under the real
-  subpath. Awaiting the owner's go to redeploy. Pinned slidev-videos 5d7e786
+  subpath. Awaiting the owner's go to redeploy. Pinned slidev-videos e5d05a9 (5d7e786 plus the two lost-context fixes this review found); first 5d7e786
   (v0.5.3: device quality tiers, lost-context rebuild, StagePhoto under the
   base; its assetUrl leaves relative paths alone). Checked on that pin: the
   `--pages` photo check again; recordings of slides 1–4, 8 (+click), 9, 10
