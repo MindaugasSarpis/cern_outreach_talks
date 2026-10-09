@@ -45,6 +45,12 @@ const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
 
 // A grain's twinkle, size from distance, and the engine's linear-light point.
+// uPixelRatio is the frame's scale, not the device's: each builder returns it as
+// `frameScale`, which the engine keeps at the drawing buffer's height / 900 (v0.6.8),
+// so a grain is the same share of the picture on a phone as at 1600×900 (in device
+// pixels it covered several times as much on a phone's small slide band, and the
+// additive piles washed out to white). The lineup's spheres and the portraits'
+// faces size from the viewport (uViewH) already.
 const PLACE = /* glsl */ `
 uniform float uTime, uPixelRatio;
 varying vec3 vColor; varying float vAlpha;
@@ -665,7 +671,7 @@ function buildStreams(o, ctx) {
   mat.addEventListener('dispose', off2)
   if (state.has(o.name)) go(state.get(o.name), { instant: true })
   return {
-    group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio,
+    group: g, labels: [], frameScale: mat.uniforms.uPixelRatio,
     update(t) {
       now = t; mat.uniforms.uTime.value = t
       for (const l of labels) {
@@ -732,7 +738,7 @@ function buildFloor(o) {
   const p = new Points(geo, mat); p.frustumCulled = false
   const g = new Group(); g.add(p)
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
-  return { group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio, update(t) { mat.uniforms.uTime.value = t } }
+  return { group: g, labels: [], frameScale: mat.uniforms.uPixelRatio, update(t) { mat.uniforms.uTime.value = t } }
 }
 
 // ---- portraits ----------------------------------------------------------------------
@@ -930,7 +936,7 @@ function buildPortraits(o, ctx) {
     },
   }
   return {
-    group: g, labels: [], api, pixelRatio: pr,
+    group: g, labels: [], api, frameScale: pr,   // the sparks' size (the faces size from uViewH)
     update(t) {
       now = t; uni.uTime.value = t
       if (late) { late = false; if (step && showT.value < 0) show(t) }
@@ -1058,7 +1064,7 @@ function buildCollision(o) {
   const off = listen(o.name, go)
   mat.addEventListener('dispose', off)
   if (state.has(o.name)) queueMicrotask(() => go(state.get(o.name)))
-  return { group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio, update(t) { now = t; mat.uniforms.uTime.value = t } }
+  return { group: g, labels: [], frameScale: mat.uniforms.uPixelRatio, update(t) { now = t; mat.uniforms.uTime.value = t } }
 }
 
 export function installGrains(registerBuilder) {
