@@ -47,8 +47,6 @@ space:
   dim: 0.25
 ---
 
-<img class="print-still" src="/stills/01.jpg" alt="" />
-
 <Grains :set="{ team: 0 }" />
 
 # Atvirųjų duomenų apdovanojimo nominantai
@@ -95,8 +93,6 @@ prie Ženevos. Vilniaus universitetas – LHCb kolaboracijos narys nuo 2024 m.�
 ---
 space: { at: [24.4, -0.6, 5.9], dist: 5.2, yaw: 8, pitch: 30, sway: 10, dim: 0.15 }
 ---
-
-<img class="print-still" src="/stills/03.jpg" alt="" />
 
 <Grains :set="{ collision: 1, scale: [], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
@@ -145,8 +141,6 @@ Background, if asked: LHCb sees up to 40 million bunch crossings a second; since
 space: { at: [23.02, 0.1, 6.0], dist: 0.76, yaw: -13.7, pitch: 19.1, dim: 0.2 }
 ---
 
-<img class="print-still" src="/stills/04.jpg" alt="" />
-
 <Grains :set="{ collision: 2, scale: [], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" :later="{ scale: [[0], 3.0], collision: [0, 4.8] }" />
 
 <div class="readout later">
@@ -186,8 +180,6 @@ of them.
 space: { at: [12.5, 1.4, 5.0], dist: 13.8, yaw: 73, pitch: 7.5, dim: 0.15 }
 ---
 
-<img class="print-still" src="/stills/05.jpg" alt="" />
-
 
 <Grains :set="{ scale: [0, 1], 'scale:labels': 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
@@ -225,8 +217,6 @@ VU Fizikos fakulteto naujienos; M. Šarpis, PhD thesis, University of Bonn
 space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, flight: 5, dim: 0.15 }
 ---
 
-<img class="print-still" src="/stills/06.jpg" alt="" />
-
 <Grains :set="{ scale: [0, 1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="readout last">
@@ -256,8 +246,6 @@ Data portalas, 2026-02-22.
 ---
 space: { at: [3.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0.15 }
 ---
-
-<img class="print-still" src="/stills/07.jpg" alt="" />
 
 <Grains :set="{ scale: [0, 1, 2, 3], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
@@ -294,8 +282,6 @@ data per year“); LHCb, arXiv:2504.00610 (atvirųjų duomenų politika).
 ---
 space: { at: [-2, 9, -18], dist: 60.1, yaw: -1.9, pitch: 2.9, sway: 4, flight: 5, dim: 0.15 }
 ---
-
-<img class="print-still" src="/stills/08.jpg" alt="" />
 
 <Grains :set="{ scale: [0, 1, 2, 3, 4], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
@@ -337,8 +323,6 @@ the LHC“ (2025-12-17).
 space: { at: [16, 6, -2], dist: 32, yaw: 0, pitch: 1.8, dim: 0.15 }
 ---
 
-<img class="print-still" src="/stills/09.jpg" alt="" />
-
 <Grains :set="{ scale: [1, 2], 'scale:labels': 0, collision: 0, world: 8, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="readout late">
@@ -371,8 +355,6 @@ LHCb Vilnius grupėje.“
 ---
 space: { at: [12.5, 2.5, 4], dist: 27, yaw: 12, pitch: 2.1, dim: 0.3 }
 ---
-
-<img class="print-still" src="/stills/10.jpg" alt="" />
 
 <Grains :set="{ scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 3, dominykas: 0, team: 0 }" />
 
@@ -512,8 +494,6 @@ repository.vu.lt/VU:ELABAETD308118793 (open access); LHCb, PRL 115 (2015) 072001
 ---
 space: { at: [53, 2.8, 160], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 ---
-
-<img class="print-still" src="/stills/13.jpg" alt="" />
 
 <Grains :set="{ team: 1, collision: 0, world: 0, vilnius: 0, dominykas: 0 }" />
 
