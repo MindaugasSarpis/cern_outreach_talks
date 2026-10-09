@@ -342,3 +342,17 @@ html[data-stage] .world-caption.top { top: 52px !important; bottom: auto !import
 /* a step smaller: the funnel slide's line stays clear of the form */
 html[data-stage] .world-caption.narrow.small h1 { font-size: 34px !important; line-height: 1.12 !important; }
 html[data-stage] .world-caption.narrow.small { max-width: 32%; }
+
+/* --- Part II: the problem is the headline, the year a small kicker (the
+   years run out of order, by ring part, and read as a broken timeline when
+   they are the biggest thing on the slide) */
+html[data-stage] .hero .pf h1 { font-size: 52px !important; line-height: 1.02 !important; margin: 0 0 14px !important; }
+html[data-stage] .hero .pf .answer {
+  font-size: 28px; font-weight: 600; line-height: 1.15; margin: 0 0 10px; color: var(--in-gold-hi);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
+}
+html[data-stage] .hero .pf .answer .y {
+  display: block; margin-bottom: 4px; font-size: 15px; font-weight: 600; letter-spacing: 0.14em;
+  color: var(--in-gold); font-variant-numeric: tabular-nums;
+}
+html[data-stage] .hero .pf .kicker.year-k { font-variant-numeric: tabular-nums; letter-spacing: 0.14em; }

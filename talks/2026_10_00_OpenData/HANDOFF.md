@@ -8,9 +8,20 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 „adresuoti“.
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos `12aa015`, for both addons.
+Toolkit pin: slidev-videos v0.5.3, for both addons.
 
-## Status (2026-10-09): approved by the owner; deployed with the moving ring
+## Status (2026-10-09): approved by the owner; deployed on v0.5.3
+
+- Redeployed 2026-10-09 on the owner's "Deploy", for the owner's laptop
+  review on the latest tools: commit 1c7330b on main, Pages run 37925969848
+  (every job success). The URL answers 200 with the Lithuanian title; the
+  stills, the clip's poster and space.json answer too. `talk ready` passed
+  on 1c7330b with nothing skipped.
+- Known in this deploy: print and PDF export show slide 1's still behind
+  every page (a v0.5.3 bug: the stage reads the global nav, which stays at 1
+  on the print route, not the print page's own). Screen, phone and the
+  reduced-motion fallback are right. The fix is with Tools as v0.5.4: pin it
+  (`talk pin 2026_10_00_OpenData v0.5.4`) and redeploy when it is out.
 
 - The owner, 2026-10-09: "All good, just the ring with people should be
   dynamic, moving, interacting like particles". Done (see the decision
@@ -21,7 +32,7 @@ Toolkit pin: slidev-videos `12aa015`, for both addons.
   ring's `motion`. `talk ready` passed on the same commit.
 
 - 13 slides in Lithuanian, about 6.0 of 6.5 min (lint, lang lt: 0 errors, 0
-  warnings). Toolkit pin v0.5.1.
+  warnings). Toolkit pin v0.5.3.
 - The line: the cover; the 3D clip (advances on its end); one real Z → μμ
   collision from LHCb open data; it collapses into the 1 TB sphere; 800 TB and
   4 PB open (gold; 4 PB forms from five 800 TB piles); LHCb's 100 PB (blue);
@@ -30,8 +41,8 @@ Toolkit pin: slidev-videos `12aa015`, for both addons.
   peak; „Ačiū“ in a ring of the group's portraits made of grains.
 - Reviews: visual review clean (round 7, shots v16); the final copy review
   (lt-copy + unslop-lt) applied, every overclaim on slides 11–13 removed.
-  Final shots and the print stills (public/stills/, shown only in print/PDF)
-  come from the final build.
+  Final shots come from the final build. The stills (public/stills/) are
+  the stage's own since v0.5.3; see the v0.5.3 decision.
 - Not run: the talk-review workflow (it needs the owner's own request in the
   session; the final review ran as separate reviewer agents instead).
 - Deployed 2026-10-08 on the owner's go: commit 484a430 on main, Pages run
@@ -46,6 +57,24 @@ Toolkit pin: slidev-videos `12aa015`, for both addons.
 
 ## Decisions
 
+- 2026-10-09. Pinned slidev-videos v0.5.3 (the Scheduler's round for the
+  owner's laptop review): iPhone quality tiers, lost-context recovery,
+  `?stage-debug`, the stage's own stills, clip posters.
+  - The talk's print stills (shots with the slide's text, laid over the page
+    in print by `.print-still`) are retired: the stage now draws
+    `public/stills/NN.jpg` under the live text in print and in the static
+    fallback, so those shots would have doubled the text.
+  - The stills are the world alone (`slidev-stage-shots <dist> public/stills
+    --stills`) after a 30 s settle: at 9 s SwiftShader's slow engine clock
+    left the ring flying in and the piles forming. All 13 slides have one.
+  - lhcb.mp4's poster came from `frames --all` with the v0.5.3 CLI, run from
+    a `git archive v0.5.3` of the toolkit: the env's editable CLI (toolkit
+    main b7e160f) predates the poster code.
+  - Checked: a build with the Pages base served under its prefix (no failed
+    request on any slide, in print or under reduced motion); a real
+    `talk export` (13 pages, each with its text; the wrong still above).
+  - Undo: `talk pin 2026_10_00_OpenData v0.5.1` and restore the
+    `.print-still` images and CSS from 1c7330b^ (12824f5^).
 - 2026-10-08. The exabyte now follows LHCb's 100 PB, and "What it finds"
   comes after it. Before, the order was 100 PB → finds → 1 EB → 800 TB.
   - Why: the camera now pulls back in one move (1 TB → 100 PB → 1 EB). The
@@ -182,8 +211,8 @@ Toolkit pin: slidev-videos `12aa015`, for both addons.
 
 ## Open
 
-- Deployed in d97015a: `grain` 0.012 again, slide 5's print still, the
-  moving ring and the owner's answers.
+- Pin v0.5.4 when Tools tags it (the print stills fix above), re-check a
+  `talk export` (each page its own still), redeploy.
 - The pinned shots tool (`talk ready`'s shots) waits a fixed 4.2 s of real
   time per slide; on SwiftShader the engine clock runs far slower, so its
   slide 13 catches the flight in (no ring yet, or the ring off centre). The
