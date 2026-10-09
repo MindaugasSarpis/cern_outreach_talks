@@ -808,9 +808,13 @@ def installed(root: Path, talkdir: Path) -> bool:
     return (root / "node_modules").is_dir() and (talkdir / "node_modules").is_dir()
 
 
-def do_build(repo: Repo, talk: str, pages: bool = False, extra: list | None = None) -> tuple[int, dict]:
+def do_build(repo: Repo, talk: str, pages: bool = False, extra: list | None = None,
+             out_name: str = "site") -> tuple[int, dict]:
+    """Build the talk into $TALK_TMP/talk-<slug>/<out_name>. Only the `site` build is the
+    one shots, record and safe reuse (build.json); another (`pages`) is left out of it."""
     d = repo.here / "talks" / talk
-    out = build_dir(talk) / "site"
+    out = build_dir(talk) / out_name
+    own = out_name == "site"
     base = f"/{REPO_NAME}/{talk}/" if pages else "/"
     data = {"talk": talk, "out": str(out), "base": base}
     if not installed(repo.here, d):
@@ -834,16 +838,51 @@ def do_build(repo: Repo, talk: str, pages: bool = False, extra: list | None = No
     if LOG.path:
         data["log"] = str(LOG.path)
     meta_path = build_dir(talk) / "build.json"
+    if ok and not own:
+        return 0, data
     if ok:
         meta = {"talk": talk, "root": str(repo.here), "head": git_out(["rev-parse", "HEAD"], repo.here),
                 "fingerprint": fingerprint(repo.here, talk), "base": base,
                 "built_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")}
         meta_path.write_text(json.dumps(meta, indent=2) + "\n")
         return 0, data
-    meta_path.unlink(missing_ok=True)
+    if own:
+        meta_path.unlink(missing_ok=True)
     data["error"] = f"build failed (exit {r.returncode})"
     say_summary(data["summary"])
     return 1, data
+
+
+def pages_check(root: Path, talk: str, *, url: str | None = None, site: str | None = None,
+                prefix: str | None = None) -> dict:
+    """scripts/pages_check.mjs in the render slot: a Pages-base build served under its prefix
+    (site, prefix), or the live deck (url). → {ok, slides, failed, context_lost, …}"""
+    env = tool_env()
+    node = which("node", env)
+    script = next((p for p in (root / "scripts" / "pages_check.mjs", SCRIPTS / "pages_check.mjs") if p.is_file()), None)
+    if not node or not script:
+        return {"ok": False, "error": "node not found" if not node else "scripts/pages_check.mjs not on this branch"}
+    report = build_dir(talk) / ("pages-live.json" if url else "pages-check.json")
+    report.parent.mkdir(parents=True, exist_ok=True)
+    report.unlink(missing_ok=True)
+    where = ["--url", url] if url else ["--site", site, "--prefix", prefix]
+    t0 = time.monotonic()
+    r, _plan = render_run([node, script, *where, "--json", report], root, env)
+    rep = read_json(report)
+    out = {"seconds": round(time.monotonic() - t0, 1), "exit": r.returncode, "report": str(report)}
+    if not rep:
+        say_summary(summarize(r.stdout, False))
+        return {"ok": False, **out, "error": f"pages check wrote no report (exit {r.returncode})"}
+    out.update(ok=r.returncode == 0 and rep.get("ok") is True, slides=rep.get("slides"), tier=rep.get("tier"),
+               failed=(rep.get("failed") or [])[:20], context_lost=(rep.get("context_lost") or [])[:10])
+    if rep.get("error"):
+        out["error"] = rep["error"]
+    if not out["ok"]:
+        for f in out["failed"][:8]:
+            OUT.say(f"  slide {f.get('slide')}: {f.get('request')}")
+        for c in out["context_lost"][:4]:
+            OUT.say(f"  slide {c.get('slide')}: {c.get('text')}")
+    return out
 
 
 def build_current(repo: Repo, talk: str) -> bool:
@@ -1565,9 +1604,9 @@ def ready_stamp(repo: Repo, talk: str) -> Path:
 def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
     talk, d = resolve_talk(repo, a.name, invocation_dir())
     skip = {x.strip() for v in (a.skip or []) for x in v.split(",") if x.strip()}   # --skip a --skip b, or --skip a,b
-    unknown = skip - {"lint", "check", "shots", "preflight", "venue", "safe"}
+    unknown = skip - {"lint", "check", "shots", "pages", "preflight", "venue", "safe"}
     if unknown:
-        raise UsageError(f"--skip takes lint, check, shots, preflight, venue, safe (not {', '.join(sorted(unknown))})")
+        raise UsageError(f"--skip takes lint, check, shots, pages, preflight, venue, safe (not {', '.join(sorted(unknown))})")
     LOG.begin(repo.here, wt_slug(talk), "ready")
     # first, before a build that would run on what the lockfile says rather than what is pinned
     drift = lock_drift(repo.here, talk)
@@ -1612,6 +1651,17 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
             steps.append({"name": "shots", "ok": code == 0, **{k: v for k, v in shots.items() if k != "talk"}})
         except UsageError as e:
             steps.append({"name": "shots", "ok": False, "error": str(e)})
+    # the deck as Pages serves it: built with the Pages base, served under that prefix
+    # with nothing at the root, every slide walked; an asset outside the base fails here
+    if "pages" in skip:
+        steps.append(step("pages", None, d, skip="--skip pages"))
+    else:
+        OUT.say("-- pages (the Pages base, served under its prefix)")
+        code, pb = do_build(repo, talk, pages=True, out_name="pages")
+        if code:
+            steps.append({"name": "pages", "ok": False, "error": pb.get("error", "the Pages-base build failed"), "build": pb})
+        else:
+            steps.append({"name": "pages", **pages_check(repo.here, talk, site=pb["out"], prefix=pb["base"])})
     sv = which("slidev-videos", env) or "slidev-videos"
     has_videos = (d / "videos.toml").exists()
     steps.append(step("preflight", [sv, "preflight"], d, env,
@@ -1804,7 +1854,7 @@ def cmd_deploy(repo: Repo, a, extra) -> tuple[int, dict]:
             say_summary(summarize(r.stdout, False))
             return fail(f"git push failed (exit {r.returncode})")
         data["pushed"] = True
-    return watch_deploy(repo, wt, talk, sha, data)
+    return watch_deploy(repo, wt, talk, sha, data, live_check=not a.no_live_check)
 
 
 def poll_run(wt: Path, run_id: str, talk: str, timeout: float = 1800, every: float = 15) -> dict | None:
@@ -1841,7 +1891,7 @@ def talk_build_job(jobs: dict, talk: str) -> str | None:
     return jobs.get("build")
 
 
-def watch_deploy(repo: Repo, wt: Path, talk: str, sha: str, data: dict) -> tuple[int, dict]:
+def watch_deploy(repo: Repo, wt: Path, talk: str, sha: str, data: dict, live_check: bool = True) -> tuple[int, dict]:
     started = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
     record = {"talk": talk, "slug": wt_slug(talk), "sha": sha, "url": data["url"], "pushed_at": started, "deployed": False}
     try:
@@ -1885,6 +1935,17 @@ def watch_deploy(repo: Repo, wt: Path, talk: str, sha: str, data: dict) -> tuple
             record["error"] = f"{data['url']} answers {code or 'nothing'}"
             return 1, data
         record["deployed"] = True
+        if live_check:
+            # the live deck, walked: a request that fails or a WebGL context lost there is a
+            # failed deploy even though Pages answered 200
+            OUT.say(f"-- live check {data['url']}")
+            live = pages_check(wt, talk, url=data["url"])
+            record["live"] = live
+            if not live["ok"]:
+                record["error"] = (f"live check: {len(live.get('failed') or [])} failed request(s), "
+                                   f"{len(live.get('context_lost') or [])} lost context(s) at {data['url']}"
+                                   + (f" ({live['error']})" if live.get("error") else ""))
+                return 1, data
         OUT.say(f"deployed: {data['url']} ({sha[:12]}, {run_['url']})")
         return 0, data
     finally:
@@ -1894,7 +1955,7 @@ def watch_deploy(repo: Repo, wt: Path, talk: str, sha: str, data: dict) -> tuple
         (sd / f"{record['slug']}.json").write_text(json.dumps(record, indent=2) + "\n")
         data["status"] = record
         if record.get("error"):
-            OUT.say(f"error: {record['error']} (not deployed)")
+            OUT.say(f"error: {record['error']} " + ("(deployed, but the live deck fails)" if record.get("deployed") else "(not deployed)"))
 
 
 def version_of(cmd: list, env: dict, timeout: float = 20) -> str | None:
@@ -2427,8 +2488,8 @@ def build_parser() -> argparse.ArgumentParser:
     sp = verb("facts", "scripts/facts.py search|add|show|check ...", talk=False)
     sp.add_argument("rest", nargs=argparse.REMAINDER)
     verb("map", "scripts/talk_map.py")
-    sp = verb("ready", "lint --release, check, shots, videos:preflight, venue --dry-run")
-    sp.add_argument("--skip", action="append", metavar="STEP", help="lint, check, shots, preflight, venue, safe")
+    sp = verb("ready", "lint --release, check, shots, pages, videos:preflight, venue --dry-run")
+    sp.add_argument("--skip", action="append", metavar="STEP", help="lint, check, shots, pages, preflight, venue, safe")
     sp.add_argument("--safe", action="store_true", help="run the safe-area check even if the talk is not marked broadcast")
     for name, what in (("record", "slidev-stage-record: one MP4 per slide"), ("safe", "slidev-stage-safe: the TV safe area")):
         sp = verb(name, what)
@@ -2444,6 +2505,7 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--skip-ready", action="store_true")
     sp.add_argument("--ready-skip", action="append", metavar="STEP", help="pass --skip STEP to ready")
     sp.add_argument("--rerun-ready", action="store_true", help="run ready even if it already passed this commit")
+    sp.add_argument("--no-live-check", action="store_true", help="after the deploy, do not walk the live deck")
     sp = verb("render", "run a command in the render slot: srun, condor_run, or under the render lock", talk=False)
     sp.add_argument("--gpu", dest="gpu", action="store_const", const=True, default=None,
                     help="ask the scheduler for a GPU (default: when the cluster has GPUs; RENDER_GPUS)")

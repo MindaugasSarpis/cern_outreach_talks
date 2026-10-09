@@ -367,7 +367,7 @@ space: { at: pet, dim: 0, flight: 1.6 }   # place mode: the photo stands at its 
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">1977</div>
 <h1>PET tomografija</h1>
-<p class="line">1977 m. CERN gautas pirmasis PET vaizdas</p>
+<p class="line">Pirmasis CERN PET vaizdas</p>
 </div>
 <div class="credit">Šiuolaikinis PET/KT skeneris, CERMEP, Lionas · Nuotr. Romainbehar, CC0</div>
 </StagePhoto>
@@ -449,7 +449,7 @@ space: { at: hadron, dim: 0, flight: 1.6 }   # place mode: the photo stands at i
 <p class="kicker gold">Problema: nukreipti pluoštą</p>
 <div class="year">2011</div>
 <h1>Hadronų terapija</h1>
-<p class="line">CNAO ir MedAustron centruose gydyta <b>daugiau nei 9 000</b> pacientų</p>
+<p class="line">2011 m. CNAO gydė pirmąjį pacientą. Iš viso – <b>daugiau nei 9 000</b></p>
 </div>
 <div class="credit">MedAustron sinchrotronas, Vyner Noištatas (Austrija) · © CERN</div>
 </StagePhoto>

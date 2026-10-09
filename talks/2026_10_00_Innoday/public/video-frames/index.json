@@ -16,7 +16,8 @@
       ],
       "duration": 56.12,
       "poster": "cern_footage_2022_042_001.mp4.poster.jpg",
-      "lit": 0.2
+      "lit": 24.0,
+      "poster_at": "0:24"
     },
     "cern_overview_short.mp4": {
       "file": "cern_overview_short.mp4.jpg",
