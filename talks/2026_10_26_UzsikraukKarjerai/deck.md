@@ -262,9 +262,12 @@ Picture: the trail draws across Europe: Vilnius → CERN → Vilnius → Glasgow
 space: { at: [1205.6, 0.25, -0.7], dist: 24, yaw: 0, pitch: 60, sway: 0.5, dim: 0.2 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 1, jx: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
 
-<div class="say top">
+<div class="city" style="left: 726px; top: 128px">Vilnius</div>
+<div class="city" style="left: 232px; top: 428px">CERN</div>
+
+<div class="say right">
 <p class="big">Dažniausiai dirbu Vilniaus universitete</p>
 </div>
 
@@ -272,16 +275,14 @@ space: { at: [1205.6, 0.25, -0.7], dist: 24, yaw: 0, pitch: 60, sway: 0.5, dim: 
 
 <!--
 Message: what the work is like: mostly at a desk in Vilnius, results reachable from anywhere, a lot of travel, and long careful jobs such as preparing LHCb's open data.
-Picture: the camera comes down from the whole map to Vilnius and the arc to CERN.
+Picture: the camera comes down from the whole map to Vilnius (upper right) and the arcs to CERN (lower left), labelled; the line sits bottom right, over the sea.
 Words: lines 1–4 are the draft the owner approved on 2026-10-09 (through the Scheduler), built from the speaker's own public words. Line 2 comes from an automatic transcript and is kept as the draft wrote it.
 
 Dabar dažniausiai dirbu Vilniaus universitete. Į CERN su savo grupe važiuojame tik ypatingomis progomis. Detektorius renka duomenis, prie jo dirba inžinieriai, o rezultatus aš galiu gauti iš bet kurios pasaulio vietos. Bet keliauti tenka daug. Mūsų srityje dvidešimt–keturiasdešimt skrydžių per metus nėra retenybė. Doktorantūros metais Bonoje man teko paruošti LHCb duomenis viešam naudojimui. Šimtus tūkstančių failų reikėjo nukopijuoti ir patikrinti, iš viso beveik petabaitą. Tai užtruko beveik dvejus metus.
 
-[TODO: the owner's own moments (a plot, a check, CERN), one or two, in their words; the Scheduler relays them. Invent nothing here.]
-
 Šaltiniai: LRT KLASIKA „Šviesi ateitis“, LRT.lt, 2024-05-20; „Tapk geresniu“, 2026-09-14 (automatinis įrašo tekstas); M. Šarpio tinklaraštis, 2024-01-08 („Hello from RAL“) ir 2024-01-15 („LHCb Run I data is released“).
 
-(~0.7 min, more with the owner's moments)
+(~0.7 min)
 -->
 
 ---
