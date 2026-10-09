@@ -10,7 +10,7 @@ From the root's list of current talks:
 
 - `talks/2026_10_00_OpenData/` — "Opening LHCb's data", a 6½-minute award talk
   (LHCb Vilnius nominated for an open data award). On the packaged stage, pinned
-  to slidev-videos v0.6.7, plus two talk-owned builders. Date placeholder `10_00`. See
+  to slidev-videos v0.6.8, plus two talk-owned builders. Date placeholder `10_00`. See
   "Open data talk" below.
 
 ### Open data talk (2026_10_00_OpenData)

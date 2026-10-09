@@ -8,15 +8,19 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 „adresuoti“.
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos v0.6.7, for both addons.
+Toolkit pin: slidev-videos v0.6.8, for both addons.
 
 **Deploys (owner, 2026-10-09: "Deploy now, and always").** The standing rule
 holds for this talk: it deploys without asking once `talk ready` passes with
 nothing skipped and the Scheduler gives it main. Anything else still needs
 the owner's word.
 
-## Status (2026-10-09): approved by the owner; deployed on v0.6.7
+## Status (2026-10-09): approved by the owner; deployed on v0.6.8
 
+- Redeployed 2026-10-09 under the standing rule: commit 546aed5 on main,
+  Pages run 37974807816 (success); `talk deploy`'s live check passed (13
+  slides, nothing failed). `talk ready` passed on 546aed5 with nothing
+  skipped. The phone washout fix: see the v0.6.8 decision.
 - Redeployed 2026-10-09 under the standing rule, after Innoday: commit
   64dbf61 on main, Pages run 37957885051 (success); `talk deploy`'s live
   check passed (13 slides, nothing failed). `talk ready` passed on 64dbf61
@@ -52,7 +56,7 @@ the owner's word.
   ring's `motion`. `talk ready` passed on the same commit.
 
 - 13 slides in Lithuanian, about 6.0 of 6.5 min (lint, lang lt: 0 errors, 0
-  warnings). Toolkit pin v0.6.7.
+  warnings). Toolkit pin v0.6.8.
 - The line: the cover; the 3D clip (advances on its end); one real Z → μμ
   collision from LHCb open data; it collapses into the 1 TB sphere; 800 TB and
   4 PB open (gold; 4 PB forms from five 800 TB piles); LHCb's 100 PB (blue);
@@ -77,6 +81,16 @@ the owner's word.
 
 ## Decisions
 
+- 2026-10-09. v0.6.8: grains sized to the frame, not in device pixels (on a
+  phone's small slide band pixel-sized grains overlapped many times over and
+  the additive piles washed out to white). The streams, the floor, the
+  collision and the portraits' sparks return `frameScale` (buffer height /
+  900) instead of `pixelRatio`; the lineup's spheres and the faces size from
+  the viewport already. The collision's grains are at least 1.5 px, so the
+  muon tracks stay unbroken on a phone. Checked: 1600×900 stills unchanged;
+  an iPhone 13 shot (390×844, DPR 3) of the live v0.6.7 site blew slide 3's
+  vertex and slide 10's streams out to white, this build does not. Undo: return
+  `pixelRatio` again (16b3950^, 546aed5^).
 - 2026-10-09. No gold letters (owner, via the Scheduler: "these gold letters
   are all over the internet now because everyone uses AI as a designer").
   Kickers (the kit's and the cover's too), units, slide 10's bullets and
