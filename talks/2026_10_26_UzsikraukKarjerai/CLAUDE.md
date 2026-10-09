@@ -46,7 +46,16 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Status
 
-- 2026-10-08 (night, latest): **complete, pending the owner's review; on the
+- 2026-10-09 (latest): **deployed 00ade4a** (Pages run 37901453790 green,
+  URL 200; the live bundle carries slide 9's new line, the slide 7 event
+  display and the dimmed-not-burnt peaks). It is 29347fa (the last review:
+  a dot is a computed mass, no unsourced ratio) with origin/main 7163101
+  merged. `talk ready` passed: lint --release 0 errors, check, build, shots,
+  preflight, venue. Open for the owner: the licences of the slide 7 event
+  display and the tunnel clip, the ~7 min length, the 2027 masterclass date
+  and the BL4S call.
+
+- 2026-10-08 (night): **complete, pending the owner's review; on the
   branch, not yet deployed.** After the owner reviewed 01bed17 (live, run
   37832082933): an LHCb introduction (slides 6–7), the search, „Neradau.“ and
   „Ko išmokau“ removed; then the confirmed findings of the final talk-review
