@@ -414,3 +414,12 @@ bloom threshold: a yellow halo). Credit line notes the changes (CC BY-NC 3.0
 IGO). Pages run 37971468844 green; live walk 30/30 on rerun. Candidate
 images and scripts: scratchpad cmb2/ (not in the repo).
 v0.6.8 pinned: the engine's forms sized to the frame too; desktop 1600×900 unchanged, the iPhone's pentaquark, collider and constellation now crisp (v8-sheet.png).
+
+## Deployed (2026-10-09, v0.6.8)
+
+be73ad6 (d9e369b + main 546aed5), Pages run 37975431628 (green), URL 200.
+The CMB texture now goes to the GPU when it loads. The short live walks (3,
+4 slides) come from main-thread blocks that the pre-change build has too: ~2 s
+entering slide 3 (the takeover's sampling) and 10–20 s around slide 8 (the
+CERN clip's dust arrival) under SwiftShader; reruns with `--wait 2500` walk
+30/30. Probe: scratchpad stall-probe.mjs.
