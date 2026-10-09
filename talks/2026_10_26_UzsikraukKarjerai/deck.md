@@ -216,13 +216,17 @@ space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 
 <div class="heap" style="left: 161px; top: 404px">2003 m.</div>
 <div class="heap" style="left: 557px; top: 404px">LHCb, 2019 m.</div>
 
+<!-- facts: theta-plus-2003-false-alarm, lhcb-pentaquark-2019, particle-physics-5-sigma-discovery -->
+
 <!--
-Message: the difference was far more data and checking by people outside the analysis.
-Picture: the full LHCb histogram, the camera drawing back.
+Message: the difference was the amount of data and how far the peak stood above chance: 2003 reported 4,6σ, below the 5σ physicists call a discovery; LHCb's new peak in 2019 had 7,3σ.
+Picture: the camera draws back to show two plots at the same scale, one grain per entry and the same height per entry. On the left is the 140-entry plot from slides 2–3: an illustration, not LEPS's data. On the right are LHCb's 27 292 candidates (the 2019 bins) with their three marked peaks. Labels underneath read „2003 m.“ and „LHCb, 2019 m.“; the left one appears as a thin strip.
 
-LHCb 2015 metais turėjo daug kartų daugiau duomenų nei fizikai 2003-iaisiais. Be to, rezultatą dar tikrino kiti LHCb mokslininkai, kurie toje analizėje nedalyvavo. Jų darbas buvo ieškoti klaidų.
+Štai abu grafikai tuo pačiu masteliu: vienas taškelis – viena apskaičiuota masė. Kairėje – tas pats grafikas, kurį matėte pradžioje, šimtas keturiasdešimt taškų. Dešinėje – LHCb duomenys, jų daugiau nei dvidešimt septyni tūkstančiai. Dalelių fizikoje atradimu paprastai vadinamas rezultatas, kurio reikšmingumas – bent penkios sigmos. Tada tikimybė, kad tai tik atsitiktinis svyravimas, – maždaug viena iš trijų su puse milijono. 2003 metais buvo paskelbta 4,6 sigmos. Naujos LHCb smailės reikšmingumas 2019 metais buvo 7,3 sigmos.
 
-(~0.4 min)
+Šaltiniai: LEPS, Phys. Rev. Lett. 91, 012002 (2003), arXiv:hep-ex/0301020 („a Gaussian significance of 4.6 sigma“); LHCb, Phys. Rev. Lett. 122, 222001 (2019), HEPData ins1728691; Physics World, 2007-05-01, „The tale of the blogs’ boson“ (3σ – požymiai, 5σ – atradimas).
+
+(~0.5 min)
 -->
 
 ---
