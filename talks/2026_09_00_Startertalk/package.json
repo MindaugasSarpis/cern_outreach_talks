@@ -1,7 +1,7 @@
 {
   "name": "talk-2026-09-00-startertalk",
   "private": true,
-  "description": "Pentaquarks at LHCb (2026_09_00)",
+  "description": "Pentaquarks at LHCb · seminaras · data dar nežinoma",
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",

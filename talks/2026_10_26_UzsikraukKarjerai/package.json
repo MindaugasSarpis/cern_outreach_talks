@@ -1,7 +1,7 @@
 {
   "name": "talk-2026-10-26-uzsikraukkarjerai",
   "private": true,
-  "description": "Užsikrauk karjerai — Delfi × Junior Achievement, Lithuanian, filmed 2026-10-26",
+  "description": "Vadovėlio gale atsakymo nėra · Užsikrauk karjerai · 2026-10-26",
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",

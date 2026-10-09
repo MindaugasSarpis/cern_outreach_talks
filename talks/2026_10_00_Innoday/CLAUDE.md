@@ -52,7 +52,7 @@ the part word during a Part II flight, gone before the photo lands).
 - Talk-owned builders (`setup/`, registered in `main.ts`; `stage:check
   --types strands,funnel`): `strands.js` (grains from ring parts to products;
   `<Strands :on>` fades them in with Part II), `funnel.js` (wall rings and
-  lines, the Big Bang, the CMB cap coloured from `public/figures/cmb_planck.png`,
+  lines, the Big Bang, the CMB disk coloured from `public/figures/cmb_wmap.png`,
   dark ages, first stars, galaxies). `PrintStill.vue` shows a still of a
   world-only slide in print/export only.
 - Part II photos are StagePhoto places with depth maps
@@ -61,7 +61,9 @@ the part word during a Part II flight, gone before the photo lands).
   click. The 1989 page and the tunnel stay screen StagePhotos (not full bleed).
 - The takeover (`setup/WebTakeover.vue`, `takeover.js`): the opener's last
   frame (`public/figures/opener_last.jpg`, our galaxy) as 280 000 grains, gain
-  1.3, saturation 1.35; opener and takeover share the pose [30, 40, −70],
+  1.3, saturation 1.35; the dissolving copy has its own WebGL context only
+  for the 3 s dissolve (released after it, a new canvas each time: a second
+  context held all talk long raises the odds of a context loss on iPhone); opener and takeover share the pose [30, 40, −70],
   dist 18, yaw 0, pitch 0, sway 0; the clip uses `transition="fade"`.
 - Look (owner, 8 Oct: "more striking, photorealistic"): black ground
   (`palette.bg #000103`, density 0.6, dustGain 1.45, nebula 0.12, vignette
@@ -71,16 +73,25 @@ the part word during a Part II flight, gone before the photo lands).
   (talk-owned bookend, 0:30, made by reversing the opener; do not `--prune`
   `vu_ff_zoom.mp4`, its source), library `cern_overview_short.mp4`,
   `cern_footage_2022_042_001.mp4`.
-- Toolkit: slidev-videos v0.5.1 (both addons).
+- Toolkit: slidev-videos `e5d05a9` (feat/v0.5.3, both addons; the Scheduler's
+  pin for the owner's iPhone black screen; it fixes 5d7e786's restored context
+  left behind the fallback and a rebuild under a covering clip still drawing): v0.5.2's place groups and `humAt:
+  all`, `?stage-debug` (the fallback's reason on screen), quality tiers (a phone
+  starts at 2; desktop and the headless recorder at 0, `pages:check` prints it),
+  place textures ~10× smaller, a rebuild one tier lower after a lost context.
+  Move to the v0.5.3 tag when it is cut.
 
 ## Status
 
-2026-10-09. Deployed: 1d836da (place mode, bookend). Ready on
-`wip/innoday-funnel` for the next deploy (owner's go needed): the funnel → CMB
-opening, Higgs and 76/86 cut, the text round, the final talk-review (six
-lenses, 36 findings) and its delta review (five lenses, 30 findings) applied,
-print stills on 16 slides (checked with a real `slidev export`), White Rabbit
-in place of the grid. Lint 0 errors; stage:check clean.
+2026-10-09: **complete, pending the owner's review.** Deployed 622461c —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+Pages run 37917644568 (green), URL 200; `talk ready` passed with nothing
+skipped. Live check: no failed request under the Pages base (stills, place
+photos), stage tier 0 on desktop. This round: the Pages-base fix
+(`pnpm pages:check`), v0.5.2 place groups (Part I's wide poses back),
+`humAt: all`, the 5d7e786 pin (quality tiers, lighter places, `?stage-debug`)
+and the takeover's short-lived WebGL context, for the owner's iPhone black
+screen. Next: the owner's review; the v0.5.3 tag when it is cut.
 
 ## Decisions
 
@@ -95,12 +106,20 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 - No slogans, no subtitles under „Ačiū“ or part titles, no colon or dash
   reveals, no rhetorical openers; kickers only where they add information.
 - Part II is "Sprendimai" (solutions), each slide names its problem.
+- The accelerator is „greitintuvas“, never „mašina“ (a CERN-English calque);
+  White Rabbit „suderina laikrodžius“; the liaison is an Inovacijų agentūros
+  „specialistė“, not „pareigūnė“ (Scheduler's audit, 9 Oct).
+- The funnel follows the NASA/WMAP figure (owner, 9 Oct): CMB in a WMAP-like
+  palette from the Planck 2018 map (`cmb_wmap.png`); the Big Bang flare fades
+  when the camera looks down the axis, and the disk dims with the viewing angle
+  so overlapping grains keep their colours.
 - Match cuts: only ring → tunnel; ring → CERN aerial and loop → FCC were weak.
-- Part II's photo places are built when their slides mount (all of them 3 s
-  after load) and stay in the world. Until the toolkit can hide them, Part I's
-  poses keep them out of frame: section I and the 4 TB/s/tunnel slides look
-  down along the ring at pitch 40 from just above it, so the photos (y 2.5,
-  4–6 outside the ring) stay above the top edge.
+- Part II's photo places are one group, `group="inventions"`: section II
+  says `places: { inventions: true }`, section III `false`, so they are hidden
+  in the prologue, Part I and Part III (v0.5.2). Part I keeps its wide poses:
+  section I sees the ring from above in the right half, clear of the title (target [8.8, 0, −3], dist 20, pitch 55), 4 TB/s and the tunnel
+  look along the ring at pitch 22. (On v0.5.1 those poses had to look down at
+  pitch 40 to keep the photos above the frame.)
 - Data → White Rabbit (2012, Frankfurt exchange), the thing that left CERN;
   the grid figures are in the notes. The photo's credit („© CERN (KT
   ataskaita, 2024)“) is taken from the KT report page; the photographer is
@@ -113,17 +132,18 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 - Place mode over screen mode for Part II (owner via the Scheduler, 8 Oct):
   the inventions visibly hang off the machine.
 - The opener stays whole (slot ≥ 25 min).
+- Asset paths are relative to the deck's base: `src="figures/…"` on StagePhoto
+  and PrintStill, never `/figures/…` (that resolves outside
+  `/cern_outreach_talks/2026_10_00_Innoday/` on Pages, and a local build with
+  base `/` hides it). Before a deploy, `pnpm pages:check`: builds with the
+  Pages base, serves it under that prefix, opens slides 11 and 13 and print
+  mode, and fails on any request that fails (clips excepted: they come from
+  the release).
 
 ## Figures and open items (for the speaker)
 
 - The MARS wrist image is © MARS Bioimaging (CERN KT hosts it); ask MARS
   before any non-educational use.
-- Part II's photo places: a visibility control is asked of Tools (8 Oct);
-  the Part I poses avoid them meanwhile (see Decisions).
-- The hum drops on the open-space prologue poses (takeover, CMB, question):
-  `humAt: all` asked of Tools (9 Oct).
-- `ktbest-alumni` in research/facts.jsonl still says "into industry"; the
-  deck does not cite it (reported to the Scheduler).
 - On the venue laptop, read the stage's frame-rate guard at the close
   (`document.querySelector('.stage canvas').__space.guardStage`); above 0
   means a slide was too heavy.

@@ -16,7 +16,7 @@
   confirms (`research/README.md`). Licensed photos: `assets/photos/photos.toml`.
   Lint before handing a deck back: `pnpm talk lint <name>`.
 - Review with `pnpm talk review <name>`. Deploy with `pnpm talk deploy
-  <name>`, and only when the owner asked for a deploy. Say "deployed" only
+  <name>` under `talk-deploy`'s standing rule. Say "deployed" only
   after the Pages run is green and the talk's URL returns 200.
 - Every step has a command: `pnpm talk --help`, and README's "Day to day".
 

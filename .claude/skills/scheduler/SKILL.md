@@ -73,8 +73,9 @@ already open.
 - **Deadlines first**, then the talk closest to done, then toolkit work.
 - **Main and deploys.** Sessions merge `origin/main` into their branch before pushing it
   (`docs/talk-quality.md` §8). A talk reaches `main` only through `pnpm talk deploy` from
-  its own worktree, and only when the owner asked (`talk-deploy`). "Deployed" only after
-  a green run and a 200 from the URL.
+  its own worktree, under the owner's standing rule (`talk-deploy`: ready passed with
+  nothing skipped, and the Scheduler gave it `main`; one push to `main` at a time), or
+  when the owner asked. "Deployed" only after a green run and a 200 from the URL.
 
 ## Permissions
 

@@ -1,7 +1,7 @@
 {
   "name": "talk-2026-04-28-editai",
   "private": true,
-  "description": "CERN Crash Course — EditAI Seminar, 2026-04-28",
+  "description": "CERN Crash Course · EditAI seminaras · 2026-04-28",
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",

@@ -1,7 +1,7 @@
 {
   "name": "talk-2026-05-11-sceptics",
   "private": true,
-  "description": "Quantum Mechanics for Sceptics — general public, 2026-05-11",
+  "description": "Kvantinė mechanika skeptikams · Skeptikų draugija · 2026-05-11",
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",

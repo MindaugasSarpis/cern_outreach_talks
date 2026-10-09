@@ -241,3 +241,69 @@ text round, print stills, the ultracode review, deploy.
 - Render: point sprites capped and faded near the camera (funnel, takeover);
   takeover grains hidden outside the prologue; strands not drawn while off;
   places at 360 columns.
+
+## Deployed (2026-10-09, third round)
+
+7163101, Pages run 37898098431 (per-talk build and deploy green), URL 200;
+`talk ready` passed with nothing skipped. Status: complete, pending the
+owner's review.
+
+## Deployed (2026-10-09, fourth round)
+
+fe15a19, Pages run 37906723499 (green), URL 200: the funnel to the NASA/WMAP
+reference (six recording rounds against it, wmap1–wmap9 in
+~/talks/.cache/innoday), the 33-point text audit, AfterFlight captions,
+stills. Status: complete, pending the owner's review.
+
+## Pages-base fix (2026-10-09, Scheduler's report)
+
+The fourth deploy 404'd on every print still and every Part II place photo:
+both were written `/figures/…`, which resolves at the site root, outside the
+Pages base; a build with base `/` cannot show it. Now `figures/…` (StagePhoto,
+12) and `figures/stills/NN.jpg` (PrintStill, 16; the component prefixes
+`BASE_URL`). New standing check, `pnpm pages:check` (`scripts/pages-check.mjs`):
+clean; with one photo put back to `/figures/` it reports
+`404 /figures/hero_stumpe.jpg`. `stage:check` now passes `--types
+strands,funnel` itself. Not deployed: waits for the v0.5.2 pin (place groups,
+`humAt`) and the owner's go.
+
+## v0.5.2 round (2026-10-09)
+
+Pinned v0.5.2. Part II's eight places are `group="inventions"`: shown from
+section II (`places: { inventions: true }`), hidden again from section III.
+Part I's wide poses are back: section I sees the ring from above, now in the
+right half clear of the title (target [8.8, 0, −3], dist 20, pitch 55; the
+old [16, 0, 0] dist 24 put a bunch on the title), 4 TB/s and the tunnel look
+along the ring at pitch 22. `humAt: all`. Recorded on gluon (g1a–c, st7b,
+st10 in ~/talks/.cache/innoday): no place in Part I or III frames, the places
+fade in during the flight to section II. Stills 07, 10, 12 refreshed from the
+settled last frames. `pages:check` clean on v0.5.2.
+
+Then, on the Scheduler's word (the owner's iPhone shows black where the world
+should be): pinned slidev-videos `15a7142` (feat/v0.5.3: `?stage-debug`, the
+static background after a context loss). WebTakeover's overlay context is
+released as soon as its dissolve ends (it used to stay open all talk long).
+ParticleHero is not in this deck. Recorded slides 3–4, 7, 12–13 on the pin
+(g3a–c): the takeover, the funnel, section I and Part II's places as before;
+`pages:check` clean.
+
+Then pinned `5d7e786` (feat/v0.5.3: quality tiers, ~10× less GPU memory per
+place, a rebuild one tier lower after a lost context). Re-recorded Part II's
+nine slides at 1600×900 (g4a–c, tier 0): every photo settles full screen and
+stays sharp at 1:1. `pages:check` clean and now prints the tier (0).
+
+## Deployed (2026-10-09, fifth round)
+
+622461c, Pages run 37917644568 (green), URL 200, under the owner's standing
+deploy rule (confirmed in this session) and the Scheduler's go for main.
+Live: a headless pass over slides 7, 13 and print mode saw no failed request
+under the Pages base, stage tier 0; still 07 on the site matches the commit.
+For the owner's iPhone: open the deck with `?stage-debug` to see the
+fallback's reason if it still shows black.
+
+## e5d05a9 pin (2026-10-09, Scheduler's follow-up)
+
+slidev-videos `e5d05a9` (feat/v0.5.3): after a restored context the stage no
+longer stays behind the static fallback, and a rebuild under a covering clip
+no longer draws. Recorded slides 3–4 and 12–13 (g5a–b): as before;
+`pages:check` clean, tier 0.
