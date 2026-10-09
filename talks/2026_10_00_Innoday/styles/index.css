@@ -325,20 +325,7 @@ html[data-stage] .part-word {
 @keyframes part-word { 0% { opacity: 0; } 15% { opacity: 1; } 65% { opacity: 1; } 100% { opacity: 0; } }
 @media print { html[data-stage] .part-word { display: none; } }
 
-/* a caption that waits for a long flight to land (the CMB slide: 5 s down the
-   funnel); the point lands after the motion, never during it */
-html[data-stage] .slidev-layout .world-caption.after-flight,
-html[data-stage] .slidev-layout .world-caption.after-flight * { animation: after-flight 0.6s ease 4.6s both !important; }
-html[data-stage] .slidev-layout .after-flight ~ .src { animation: after-flight 0.6s ease 4.6s both !important; }
-@keyframes after-flight { from { opacity: 0; } to { opacity: 1; } }
-html[data-stage] .slidev-layout .world-caption.after-flight.short,
-html[data-stage] .slidev-layout .world-caption.after-flight.short * { animation-delay: 3.4s !important; }
-@media print, (prefers-reduced-motion: reduce) {
-  html[data-stage] .slidev-layout .world-caption.after-flight, html[data-stage] .slidev-layout .world-caption.after-flight *,
-  html[data-stage] .slidev-layout .after-flight ~ .src { animation: none !important; opacity: 1 !important; }
-}
-html.print .slidev-layout .world-caption.after-flight, html.print .slidev-layout .world-caption.after-flight *,
-html.print .slidev-layout .after-flight ~ .src { animation: none !important; opacity: 1 !important; }
+/* captions that wait for a flight: setup/AfterFlight.vue (timed from the slide's arrival) */
 
 /* --- delta review 2026-10-09: type floors and small fixes */
 /* the kicker carries Part II's problem: at the floor, not the kit's 12.5 px */
@@ -353,3 +340,6 @@ html[data-stage] .hero.deep .kicker { background: rgba(4, 6, 16, 0.55); padding:
 html[data-stage] .hero.page .credit { max-width: 36%; }
 /* a bright, white photograph graded down so the text side reads */
 html[data-stage] .hero.dim > img { filter: brightness(0.78) contrast(1.06) saturate(1.04); }
+
+/* a world caption at the top left, where a wide form fills the lower frame (the funnel) */
+html[data-stage] .world-caption.top { top: 52px !important; bottom: auto !important; }

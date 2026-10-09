@@ -544,9 +544,9 @@
           ],
           "axis": "z+",
           "length": 26,
-          "mouth": 9,
-          "neck": 1.4,
-          "cmbAt": 1.6
+          "mouth": 6.3,
+          "neck": 3.4,
+          "cmb": "figures/cmb_wmap.png"
         }
       ]
     }
