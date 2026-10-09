@@ -358,3 +358,21 @@ Light Conversion as slide 28 (in the world until a photo comes), and no gold
 text (white plus one light blue, #9cc4ff). `hero_fcc.jpg` removed (unused).
 Sheets: `~/talks/.cache/innoday/r2-13-21.png`, `r2-part3.png`,
 `r2-prologue.png`; stills 25–30 re-shot (the new slide shifts the numbers).
+
+## Deployed (2026-10-09, ninth round)
+
+6001e31 (c2bb434 + main's Pages-check tooling 87f1380), Pages run
+37944984688 (green), URL 200. `ready` now walks the Pages-base build; deploy's
+live check walked 30 slides: 0 failed, 0 context losses, tier 0.
+
+## v0.6.4 (2026-10-09, Scheduler)
+
+Pinned v0.6.4; `strands` registered `enterable: true` (stage:check clean).
+All 30 stills re-taken with plain `--stills` (66 s). The cover's title lands
+with the pentaquark (~4 s), as before. Full export rasterised and read page by
+page: nothing empty (captions, headlines, StagePhoto text all print), so no
+print-container override needed. Found there: Slidev's `h1 + p` half opacity
+greyed Part II's invention line (on screen too); fixed.
+Then v0.6.5 (the kit's print block): full export read again; every caption
+prints; the part words printed over the photos (their fade-out is an
+animation), now hidden in print.

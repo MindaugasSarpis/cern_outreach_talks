@@ -152,5 +152,5 @@ function buildStrands(o, ctx) {
 }
 
 export function installStrands(registerBuilder) {
-  registerBuilder('strands', buildStrands, { fields: ['pos', 'strands'] })
+  registerBuilder('strands', buildStrands, { fields: ['pos', 'strands'], enterable: true })
 }

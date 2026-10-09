@@ -24,7 +24,7 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (fifth version after the owner's review, 12 slides, about 7 min)
+## Story (fifth version after the owner's review, plus ideas 1, 3 and 7: 13 slides, about 8 min)
 
 Approved outline: `notes/outline-v5.md` with its two change sections
 (owner, 2026-10-08). The viewer sits in the physicist's seat.
@@ -38,15 +38,34 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 | 5 | (clip) | LHC tunnel footage |
 | 6 | (photo) | LHCb cavern, StagePhoto: what LHCb studies and why |
 | 7 | „Vienas susidūrimas LHCb detektoriuje“ | LHCb Run 3 event display, StagePhoto: how a collision becomes a dot |
-| 8 | 2015 m. · „LHCb duomenyse iškilo smailė“ → 2019 m. · „Trys pentakvarkai“ | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks |
-| 9 | „Šimtus kartų daugiau duomenų nei 2003 m.“ | the full LHCb histogram, camera back |
+| 8 | 2015 m. · „LHCb duomenyse iškilo smailė“ → 2019 m. · „Trys pentakvarkai“ | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks at the click |
+| 9 | labels only: „Kaip 2003 m. · 140 taškų“ · „LHCb, 2019 m. · 27 292 taškai“ | `jx`: the 140-entry plot of slides 2–3 at LHCb's scale beside `jp` (one grain per entry, the same bin width and height per entry); a coordinate pose between them |
 | 10 | city labels | the route across Europe |
-| 11 | three things to do this school year | the form far off, dimmed |
-| 12 | „„Ko jūs savo darbe dar nežinote?““ alone | the form, held |
+| 11 | „Dažniausiai dirbu Vilniaus universitete“ (Vilnius, CERN labelled) | the map close on Vilnius and the arcs to CERN: the working day (idea 7), in the speaker's own public words |
+| 12 | three things to do this school year | the form far off, dimmed |
+| 13 | „„Ko jūs savo darbe dar nežinote?““ alone | the form, held |
 
 ## Status
 
-- 2026-10-09 (latest): **the live 00ade4a has no photos on slides 6–7**
+- 2026-10-09 (latest): **round 2 complete on the branch, awaiting the owner's go.**
+  It holds v0.5.4, slide 9 (ideas 1 and 3), the review fixes, no gold text, and
+  the working-day slide 11 (idea 7, lines 1–4 of the owner-approved draft).
+  Open for the owner: one or two moments of their own for slide 11 (a plot, a
+  check, CERN), relayed by the Scheduler. Add them to slide 11's notes when they
+  come, and invent none. Still open: the licences of the event display and the
+  tunnel clip, the 2027 masterclass date and the BL4S call.
+
+- 2026-10-09 (latest): **deployed f2eecec** on the owner's go (Pages run
+  37924290671 green, URL 200; in headless Chromium on the live site slides
+  6 and 7 load both photos, ~/talks/.cache/uzk-review/livecheck). It is the
+  photo fix below, slidev-videos e5d05a9, the lockfile regenerated after a
+  merge had taken main's (which named this talk's v0.5.0), and origin/main
+  b5e8a75. `talk ready` passed on it with nothing skipped. Still open for
+  the owner: the licences of the slide 7 event display and the tunnel clip,
+  the ~7 min length, slide 2's ~8 s before the plot appears (the long flight
+  from the cover), the 2027 masterclass date and the BL4S call.
+
+- 2026-10-09: **the live 00ade4a has no photos on slides 6–7**
   (the Scheduler's render): StagePhoto in v0.5.0 ignores the Pages base, so
   `/figures/photos/…` 404s at the domain root. Fixed on the branch (b59572e)
   with relative sources, checked on a `--pages` build served under the real
@@ -146,6 +165,52 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Decisions
 
+- 2026-10-09 — No gold text (the owner: gold letters read as AI design). Every kicker,
+  including the year kickers, is one light blue (`--kk-kick`, #8fb2ff from the
+  palette). Emphasis, numbers and labels are white. Gold stays only in the world,
+  where it is matter: the plots, the route and the pentaquark. The peak ticks
+  were already white.
+- 2026-10-09 — Focused review of slide 9 and the state code (talk-review on 52a64e7,
+  since c211acd; 5 lenses, verified). Applied:
+  - the cover pentaquark gathers on a fresh load (it used to appear formed);
+  - a reload on a plot slide fills from empty, with no full plot flashing first;
+  - slide 8's peak ticks light at the click with „Trys pentakvarkai“
+    (`markStep: 2`, jp steps [0, 1, 1]; `<Grains :clicks>`, also when a slide is
+    entered at its last click);
+  - slides 5–7 set jp 0, so 8 → 7 → 8 fills again;
+  - the route on slide 10 draws once the camera has arrived (`.city.late` 8,5 s);
+  - slide 9's labels say „Kaip 2003 m. · 140 taškų“ and „LHCb, 2019 m. · 27 292
+    taškai“. Its spoken text no longer implies that 4,6σ failed for being under
+    5σ: other 2003 bumps were reported near 5σ and still went away. It says the
+    bump vanished with more data, and that LHCb's peaks held with nine times
+    more;
+  - copy on slides 1, 2, 7 and 8 (rigour on slide 7: the computers give the mass
+    a parent would have had, not which particle it was).
+
+  Not applied:
+  - an on-screen „Atradimui reikia 5 σ“ line: it would put the misleading
+    comparison on screen, and the approved idea had the speaker say it;
+  - CLAS's 5,2σ: not in the bank.
+
+  Verified by a click test (step events through 7 → 8 → click → 9 → back), a
+  probe of the uniforms in a real page, and recordings. Recordings below 12 fps
+  slow the world, because the engine clamps a frame to 1/12 s, so check timing
+  at `--fps 12` or higher.
+- 2026-10-09 — Ideas 1 and 3 (the owner's picks, through the Scheduler). Slide 9 no
+  longer says „nepriklausomas patikrinimas“: LHCb's check was its own internal
+  review, and other groups had also seen the 2003 bump. It now shows the
+  140-entry illustration from slides 2–3 beside LHCb's 27 292 candidates at
+  the same scale. A `jx` histogram at the lhcb station, x −14,4, has width
+  30 × 22/175 and `max: 297`, LHCb's tallest bin, so one grain is one entry
+  in both. It reads as a thin strip beside the heap. The speaker names the
+  two amounts and the significances: LEPS 4,6σ (the paper's own abstract;
+  19 events over 17 of background), 5σ as the usual discovery bar (Physics
+  World 2007 and LHCb's outreach page; new fact
+  `particle-physics-5-sigma-discovery`), and Pc(4312) 7,3σ. The notes keep
+  the left plot labelled as an illustration.
+- 2026-10-09 — Idea 7 (a "working day" slide after 10) waits for the owner. A draft
+  built only from verified public words (109 passages, 40 sources) is in
+  ~/talks/.cache/uzk-review/working-day-draft.md.
 - 2026-10-08 — Last focused review (talk-review on a0b80f8: facts since
   01bed17, copy, unslop; 15 kept). Applied: slide 9's screen line is now
   „Daugiau duomenų ir nepriklausomas patikrinimas“ (the „šimtus kartų“

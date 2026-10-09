@@ -78,18 +78,17 @@ the part word during a Part II flight, gone before the photo lands).
   (talk-owned bookend, 0:30, made by reversing the opener; do not `--prune`
   `vu_ff_zoom.mp4`, its source), library `cern_overview_short.mp4`,
   `cern_footage_2022_042_001.mp4`.
-- Toolkit: slidev-videos v0.5.4 (both addons): place groups, `humAt: all`,
+- Toolkit: slidev-videos v0.6.5 (both addons; `strands` registered `enterable: true`; the kit's print block stops every animation): place groups, `humAt: all`,
   `?stage-debug`, quality tiers (a phone starts at 2; desktop and the headless
   recorder at 0, `pages:check` prints it), lighter photo places, the context-
   loss fixes, stills and posters for print (v0.5.4: correct per page).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** Live: 42d4c5f (v0.5.4,
-the fixed PDF), Pages run 37938998047. On the branch for the next deploy: Part
-II layout A, the FCC ring on 25, the Light Conversion slide (28, waiting for a
-photo with permission), and no gold text anywhere. Slides are now 30 (+ the
-hidden backup).
+2026-10-09: **complete, pending the owner's review.** Live: 6001e31, Pages run
+37944984688. On the branch: v0.6.5 (stills re-taken on the engine clock, the
+cover title still lands with the pentaquark at ~4 s), Part II's invention line
+at full white. Waiting: the Light Conversion photo (owner).
 
 ## Decisions
 
@@ -141,13 +140,16 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 - Print and PDF (toolkit, since v0.5.3; the talk's own PrintStill is retired):
   the stage prints `public/stills/NN.jpg` under each slide's own text, and the
   on-screen fallback shows the same stills. They are the world alone, from
-  `slidev-stage-shots <dist> public/stills --stills --wait 30000` (9000 caught
-  flights and gathers mid-way under SwiftShader; v0.5.4's `--settle` waits for
-  them by itself). Clips print their posters (`public/video-frames/*.poster.jpg`,
+  `slidev-stage-shots <dist> public/stills --stills` (v0.6.4 settles each
+  slide on the engine clock: the whole deck in about a minute). Clips print their posters (`public/video-frames/*.poster.jpg`,
   `slidev-videos frames --all`); the LHCb animation's is at 0:24 by the
   manifest's `poster = "0:24"` (its first lit frame is a speck on black), which
-  lists that library clip for the poster only. v0.5.4's export checked: 30
-  pages, 12.7 MB, each its own still, the deck's fonts, `--range` works.
+  lists that library clip for the poster only. Export checked on v0.6.4: every
+  page has its text (the AfterFlight captions too), its own still and the
+  deck's fonts, 11 MB; a blank last page is Slidev's. Slidev's default
+  `h1 + p { opacity: .5 }` greyed Part II's invention line: `.pf .answer` sets
+  opacity 1. Since v0.6.5 print stops every animation, so the part words (whose
+  animation ends hidden) are `display: none` in print.
 - Place mode over screen mode for Part II (owner via the Scheduler, 8 Oct):
   the inventions visibly hang off the machine.
 - The opener stays whole (slot ≥ 25 min).

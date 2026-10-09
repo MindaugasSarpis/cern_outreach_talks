@@ -308,6 +308,8 @@ html[data-stage] .part-word {
   animation: part-word 1.7s ease both;   /* gone before the photo fills the frame */
 }
 @keyframes part-word { 0% { opacity: 0; } 15% { opacity: 1; } 65% { opacity: 1; } 100% { opacity: 0; } }
+/* print stops every animation (kit, v0.6.5), which would leave the part word over the photo */
+.print-slide-container .part-word, html.print .part-word { display: none !important; }
 @media print { html[data-stage] .part-word { display: none; } }
 
 /* captions that wait for a flight: setup/AfterFlight.vue (timed from the slide's arrival) */
@@ -339,6 +341,7 @@ html[data-stage] .world-caption.narrow.small { max-width: 32%; }
 html[data-stage] .hero .pf h1 { font-size: 52px !important; line-height: 1.02 !important; margin: 0 0 14px !important; }
 html[data-stage] .hero .pf .answer {
   font-size: 28px; font-weight: 600; line-height: 1.15; margin: 0 0 10px; color: #fff;
+  opacity: 1;   /* Slidev's default `h1 + p` is half opacity */
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
 }
 html[data-stage] .hero .pf .kicker.year-k { font-variant-numeric: tabular-nums; letter-spacing: 0.14em; }

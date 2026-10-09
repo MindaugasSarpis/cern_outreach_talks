@@ -22,11 +22,11 @@ duration: 12min
 sources: notes
 info: |
   „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement): a Lithuanian
-  talk for grades 9–12, delivered online on 27 Oct 2026. About 7 minutes,
-  12 slides. The viewer sits in the physicist's seat: judge a bump in a
+  talk for grades 9–12, delivered online on 27 Oct 2026. About 8 minutes,
+  13 slides. The viewer sits in the physicist's seat: judge a bump in a
   histogram (2003 yes, 2008 no), what LHCb is and how a collision becomes a
   dot on that plot, 2015 yes, what made the difference, the speaker's
-  route, three things a student can do this school year, and one question
+  route and working day, three things a student can do this school year, and one question
   to ask someone this week. The histograms fill
   grain by grain: slide 8 from LHCb's published 2019 J/ψ p bins (HEPData);
   slides 2–4 are an illustration, said so in the notes.
@@ -34,7 +34,7 @@ layout: default
 space: { at: [594, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 0, jx: 0 }" />
 
 <div class="scrim-left"></div>
 
@@ -49,7 +49,7 @@ I. VADOVĖLIO GALE ATSAKYMO NĖRA
 Message: in my work there is no answer at the back of the book; today you will try it yourself.
 Picture: a five-quark particle gathers out of the dust beside the title.
 
-Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Esu dalelių fizikas Vilniaus universitete ir mano darbe tokio vadovėlio nėra. Dirbu su klausimais, į kuriuos dar niekas neatsakė. Šalia pavadinimo – dalelė iš penkių kvarkų. Apie tokias daleles ir bus šis pasakojimas, o tokį darbą šiandien pabandysi ir tu.
+Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Esu dalelių fizikas Vilniaus universitete ir mano darbe tokio vadovėlio nėra. Dirbu su klausimais, į kuriuos dar niekas neatsakė. Šalia pavadinimo – dalelė iš penkių kvarkų. Apie tokias daleles ir bus šis pasakojimas, o tokį darbą šiandien išbandysi ir tu.
 
 (~0.5 min)
 -->
@@ -58,7 +58,7 @@ Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Esu dalel
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0, jx: 0 }" />
 
 <div class="say top">
 <p class="big">Ar čia dalelė?</p>
@@ -70,7 +70,7 @@ Message: you decide: is this bump a particle or chance?
 Picture: a histogram fills dot by dot (140 dots); one bin near the middle rises well above its neighbours.
 Note: the plot is an illustration, not measured data: a random sample from a smooth spectrum with no particle in it, in which chance made the bump (public/data/theta-toy.json). Say „toks grafikas“, never „tikras“.
 
-Štai toks grafikas, kokių matome kasdien. Kiekvienas taškelis – viena masė. Ją apskaičiuojame iš dalelių, atsiradusių detektoriaus užregistruotame susidūrime, – tai masė tos dalelės, iš kurios jos galėjo atsirasti. Taškelis krenta į tą masę atitinkantį stulpelį: kairėje – lengvesnės, dešinėje – sunkesnės. Kuo stulpelis aukštesnis, tuo dažniau tokia masė pasitaikė. Jeigu kurioje nors vietoje susidaro kauburys, gal ten yra dalelė, kurios dar niekas nematė. O gal tai tik atsitiktinumas, kaip kad metant kauliuką kelis kartus iš eilės iškrenta šešetas. Kaip manai, ar čia dalelė?
+Štai toks grafikas, kokių matome kasdien. Kiekvienas taškelis – viena masė. Ją apskaičiuojame iš dalelių, kurias detektorius užregistravo susidūrime. Tai masė tos dalelės, iš kurios jos galėjo atsirasti. Taškelis krenta į tą masę atitinkantį stulpelį: kairėje – lengvesnės, dešinėje – sunkesnės. Kuo stulpelis aukštesnis, tuo dažniau tokia masė pasitaikė. Jeigu kurioje nors vietoje susidaro kauburys, gal ten yra dalelė, kurios dar niekas nematė. O gal tai tik atsitiktinumas, kaip kad metant kauliuką kelis kartus iš eilės iškrenta šešetas. Kaip manai, ar čia dalelė?
 [pauzė 3 s]
 
 (~0.6 min)
@@ -80,7 +80,7 @@ Note: the plot is an illustration, not measured data: a random sample from a smo
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0, jx: 0 }" />
 
 <div class="say top">
 <p class="kick year">2003 m.</p>
@@ -102,10 +102,10 @@ Picture: the same small histogram.
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0 }" />
 
 <div class="say top">
-<p class="kick blue year">2008 m.</p>
+<p class="kick year">2008 m.</p>
 <p class="big">Surinkus daugiau duomenų kauburys išnyko</p>
 </div>
 
@@ -123,6 +123,8 @@ Vėliau kiti eksperimentai, surinkę daug daugiau duomenų, pakartojo matavimą.
 ---
 space: { at: lhcb, dim: 0 }
 ---
+
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0 }" />
 
 <VideoPlayer src="cern_footage_2022_013_001.mp4" muted />
 
@@ -143,6 +145,8 @@ Pentakvarkų istorija tuo nesibaigė. Ji tęsėsi eksperimente, kuriame dabar di
 space: { at: lhcb, dim: 0 }
 ---
 
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0 }" />
+
 <StagePhoto src="figures/photos/lhcb-cavern.jpg" alt="LHCb detektoriaus požeminė salė, CERN, 2019 m.">
 <div class="photo-credit">LHCb, CERN · Rosa Menkman nuotr., CC BY 2.0</div>
 </StagePhoto>
@@ -162,6 +166,8 @@ Viename iš susidūrimo taškų stovi LHCb – penkių tūkstančių šešių š
 space: { at: lhcb, dim: 0 }
 ---
 
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0 }" />
+
 <StagePhoto src="figures/photos/lhcb-event-run3.jpg" alt="Vienas protonų susidūrimas atnaujintame LHCb detektoriuje, 2022 m.: dalelių pėdsakai sklinda per detektorių" focus="35% 50%">
 <div class="photo-caption">Protonų susidūrimas LHCb detektoriuje</div>
 <div class="photo-credit">© CERN, LHCb</div>
@@ -172,7 +178,7 @@ Message: how a collision becomes one dot on the plot the viewer judged.
 Picture: a real LHCb event display (a proton–proton collision in the upgraded detector, 2022), condensing out of grains; the collision point on the left, the tracks fanning out to the right.
 Licence: CERN / LHCb image, free for educational, non-commercial use; confirm before the event (see the talk's CLAUDE.md, Figures).
 
-Taip atrodo protonų susidūrimas LHCb detektoriuje. Kairėje, kur susiduria protonai, atsiranda daug naujų dalelių, ir kiekviena plona raudona linija, sklindanti iš ten, – vienos jų kelias. Detektorius išmatuoja, kur jos praskriejo ir kaip stipriai magnetas išlenkė jų kelią. Iš to kompiuteriai apskaičiuoja, iš kokios sunkesnės dalelės jos atsirado ir kokia buvo tos dalelės masė. Viena tokia apskaičiuota masė – vienas taškelis tokiame grafike, kokį vertinai pradžioje. Susidūrimų yra tiek daug, kad kompiuteriai iš karto atrenka tik tuos, kurie gali būti įdomūs.
+Taip atrodo protonų susidūrimas LHCb detektoriuje. Kairėje, kur susiduria protonai, atsiranda daug naujų dalelių, ir kiekviena plona raudona linija, sklindanti iš ten, – vienos jų kelias. Detektorius išmatuoja, kur jos praskriejo ir kaip stipriai magnetas išlenkė jų kelią. Iš to kompiuteriai apskaičiuoja, kokią masę turėtų dalelė, iš kurios kelios iš jų galėjo atsirasti. Viena tokia apskaičiuota masė – vienas taškelis tokiame grafike, kokį vertinai pradžioje. Susidūrimų yra tiek daug, kad kompiuteriai iš karto atrenka tik tuos, kurie gali būti įdomūs.
 
 (~0.6 min)
 -->
@@ -181,7 +187,7 @@ Taip atrodo protonų susidūrimas LHCb detektoriuje. Kairėje, kur susiduria pro
 space: { at: lhcb, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1, jx: 0 }" :clicks="{ 1: { jp: 2 } }" />
 
 <div class="say top" v-click-hide="1">
 <p class="kick year">2015 m.</p>
@@ -197,40 +203,44 @@ space: { at: lhcb, dim: 0.05 }
 
 <!--
 Message: in 2015 LHCb, studying a heavier particle's decay, found a peak it had not looked for, checked everything, and it held; by 2019 the peak was two states and a third had appeared.
-Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate, fast at first, until the narrow peaks stand out (about 20 s); then ticks light over the three peaks. → spausk at „2019 metais…“: the line on screen changes from „LHCb duomenyse iškilo smailė“ (2015 m.) to „Trys pentakvarkai“ (2019 m.).
+Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate, fast at first, until the narrow peaks stand out (about 20 s). → spausk at „2019 metais…“: the line on screen changes from „LHCb duomenyse iškilo smailė“ (2015 m.) to „Trys pentakvarkai“ (2019 m.), and ticks light over the three peaks while the rest of the plot steps back (jp step 2; at once if the fill is done, else when it ends).
 Data: LHCb, PRL 122, 222001 (2019), HEPData ins1728691 Table 2 (m(Kp) > 1,9 GeV). These bins hold the 2015 sample and the later data together; the 2015 paper's own bins are not on HEPData.
 
-2015 metais LHCb tyrė, kaip skyla viena sunki dalelė, ir grafike netikėtai iškilo smailė – aukštas, siauras kauburys. Čia matai visus duomenis iki 2019 metų, todėl smailių daugiau. Apie jas – po akimirkos. Prieš skelbdama rezultatą, LHCb komanda tikrino viską, ką tik galėjo: ar smailės nesukuria detektorius, kitos dalelės ar tai, kaip atrinkti duomenys. Smailė liko.
+2015 metais LHCb tyrė, kaip skyla viena sunki dalelė, ir grafike netikėtai iškilo smailė – aukštas, siauras kauburys. Čia matai visus duomenis iki 2019 metų, todėl smailių daugiau. Apie jas – po akimirkos. Prieš skelbdama rezultatą, LHCb komanda tikrino viską, ką tik galėjo: ar smailės nesukuria detektorius, kitos dalelės ar tai, kaip buvo atrinkti duomenys. Smailė liko.
 → spausk
-2019 metais, surinkus dar daugiau duomenų, paaiškėjo, kad ta smailė iš tikrųjų yra dvi, ir atsirado trečia. Tai trys pentakvarkai, kuriuos matai dabar.
+2019 metais, surinkus dar daugiau duomenų, paaiškėjo, kad tai iš tikrųjų dvi smailės, ir atsirado trečia. Tai trys pentakvarkai, kuriuos matai dabar.
 
 (~0.7 min)
 -->
 
 ---
-space: { at: lhcb, dist: 21, dim: 0.05 }
+space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 2, jx: 1 }" />
 
-<div class="say top">
-<p class="big">Daugiau duomenų ir nepriklausomas patikrinimas</p>
-</div>
+<div class="heap" style="left: 557px; top: 404px">LHCb, 2019 m.<br><span class="n">27 292 taškai</span></div>
+<div class="heap" style="left: 161px; top: 404px">Kaip 2003 m.<br><span class="n">140 taškų</span></div>
+
+<!-- facts: theta-plus-2003-false-alarm, lhcb-pentaquark-2019, particle-physics-5-sigma-discovery -->
 
 <!--
-Message: the difference was far more data and checking by people outside the analysis.
-Picture: the full LHCb histogram, the camera drawing back.
+Message: the difference was the amount of data. A bump reported at 4,6σ in 2003 went away with more data; LHCb's peaks held with nine times more data in 2019, the new one at 7,3σ. (Not: 'it failed because 4,6 < 5'. Other 2003 bumps were reported near 5σ and went away too.)
+Picture: the camera draws back to show two plots at the same scale, one grain per entry and the same height per entry. On the left is the 140-entry plot from slides 2–3: an illustration, not LEPS's data. On the right are LHCb's 27 292 candidates (the 2019 bins) with their three marked peaks. Labels underneath read „Kaip 2003 m. · 140 taškų“ and „LHCb, 2019 m. · 27 292 taškai“; the left one appears as a thin strip.
+Background, if asked: LEPS's own peak was 19 events over a background of 17 (19/√17 = 4,6σ, their paper's own estimate; arXiv:hep-ex/0301020).
 
-LHCb 2015 metais turėjo daug kartų daugiau duomenų nei fizikai 2003-iaisiais. Be to, rezultatą dar tikrino kiti LHCb mokslininkai, kurie toje analizėje nedalyvavo. Jų darbas buvo ieškoti klaidų.
+Štai abu grafikai šalia, ir abiejuose vienas taškelis – viena apskaičiuota masė. Kairėje – pavyzdinis grafikas, kurį matei pradžioje, šimtas keturiasdešimt taškų. Dešinėje – LHCb duomenys, jų daugiau nei dvidešimt septyni tūkstančiai. Fizikai skaičiuoja, kiek kauburys iškyla virš atsitiktinių svyravimų. Tai vadinama reikšmingumu ir matuojama sigmomis. Atradimu paprastai vadinamas rezultatas, kurio reikšmingumas – bent penkios sigmos. Tada tikimybė, kad tai tik atsitiktinis svyravimas, – maždaug viena iš trijų su puse milijono. 2003 metų kauburio reikšmingumas buvo 4,6 sigmos, bet surinkus daugiau duomenų jis išnyko. 2019 metais LHCb turėjo devynis kartus daugiau duomenų nei 2015-aisiais, ir smailės liko. Naujos smailės reikšmingumas buvo 7,3 sigmos.
 
-(~0.4 min)
+Šaltiniai: LEPS, Phys. Rev. Lett. 91, 012002 (2003), arXiv:hep-ex/0301020 („a Gaussian significance of 4.6 sigma“); LHCb, Phys. Rev. Lett. 122, 222001 (2019), HEPData ins1728691; Physics World, 2007-05-01, „The tale of the blogs’ boson“ (3σ – požymiai, 5σ – atradimas).
+
+(~0.6 min)
 -->
 
 ---
 space: { at: whole, sway: 0, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 1 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
 
 <div class="city late" style="left: 716px; top: 168px">Vilnius</div>
 <div class="city late" style="left: 414px; top: 374px">CERN</div>
@@ -249,10 +259,37 @@ Picture: the trail draws across Europe: Vilnius → CERN → Vilnius → Glasgow
 -->
 
 ---
+space: { at: [1205.6, 0.25, -0.7], dist: 24, yaw: 0, pitch: 60, sway: 0.5, dim: 0.2 }
+---
+
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
+
+<div class="city" style="left: 726px; top: 128px">Vilnius</div>
+<div class="city" style="left: 232px; top: 428px">CERN</div>
+
+<div class="say right">
+<p class="big">Dažniausiai dirbu Vilniaus universitete</p>
+</div>
+
+<!-- facts: lhcb-run1-release-sarpis, sarpis-phd-bonn-2023 -->
+
+<!--
+Message: what the work is like: mostly at a desk in Vilnius, results reachable from anywhere, a lot of travel, and long careful jobs such as preparing LHCb's open data.
+Picture: the camera comes down from the whole map to Vilnius (upper right) and the arcs to CERN (lower left), labelled; the line sits bottom right, over the sea.
+Words: lines 1–4 are the draft the owner approved on 2026-10-09 (through the Scheduler), built from the speaker's own public words. Line 2 comes from an automatic transcript and is kept as the draft wrote it.
+
+Dabar dažniausiai dirbu Vilniaus universitete. Į CERN su savo grupe važiuojame tik ypatingomis progomis. Detektorius renka duomenis, prie jo dirba inžinieriai, o rezultatus aš galiu gauti iš bet kurios pasaulio vietos. Bet keliauti tenka daug. Mūsų srityje dvidešimt–keturiasdešimt skrydžių per metus nėra retenybė. Doktorantūros metais Bonoje man teko paruošti LHCb duomenis viešam naudojimui. Šimtus tūkstančių failų reikėjo nukopijuoti ir patikrinti, iš viso beveik petabaitą. Tai užtruko beveik dvejus metus.
+
+Šaltiniai: LRT KLASIKA „Šviesi ateitis“, LRT.lt, 2024-05-20; „Tapk geresniu“, 2026-09-14 (automatinis įrašo tekstas); M. Šarpio tinklaraštis, 2024-01-08 („Hello from RAL“) ir 2024-01-15 („LHCb Run I data is released“).
+
+(~0.7 min)
+-->
+
+---
 space: { at: [690, 6, 30], dist: 20, yaw: 40, pitch: 6, sway: 0.5, dim: 0.6 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 1 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
 
 <div class="say top wide list">
 <p class="kick">Ką gali padaryti jau šiais mokslo metais</p>
@@ -276,7 +313,7 @@ Check before the talk: the 2027 masterclass date at VU (2026: 26 February) and t
 space: { at: quarks, dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.35 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 1 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
 
 <div class="scrim-left"></div>
 
