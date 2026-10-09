@@ -1,6 +1,7 @@
 import {
   Group, Points, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color,
 } from 'three'
+import { POINT_GLSL, viewScale } from './view.js'
 
 // Innoday's own world form, on the engine's stage (slidev-addon-stage):
 //
@@ -37,11 +38,12 @@ const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random();
 const VERT = /* glsl */ `
 attribute float aSeed, aKind;          // 0 a grain on the way, 1 a grain of the end cluster, 2 of the ring
 attribute vec3 aFrom, aEnd, aCtl, aOff;
-uniform float uTime, uPixelRatio, uSpeed, uSize, uAlpha, uNodeR, uOn;
+uniform float uTime, uSpeed, uSize, uAlpha, uNodeR, uOn;
 uniform float uRadius, uRingSpeed, uRingSize, uRingAlpha;
 uniform vec3 uColor, uWhite, uCenter;
 varying vec3 vColor; varying float vAlpha;
 float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
+${POINT_GLSL}
 void main() {
   vec3 p; float alpha; float size;
   if (aKind < 0.5) {
@@ -69,9 +71,11 @@ void main() {
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 0.72 + 0.28 * sin(uTime * (1.1 + aSeed * 2.3) + aSeed * 40.0);
-  gl_PointSize = uPixelRatio * size * tw * (72.0 / max(-mv.z, 0.1));
+  // sized to the frame (setup/view.js)
+  float ps = uView * size * tw * (72.0 / max(-mv.z, 0.1));
+  gl_PointSize = pointSize(ps, 48.0);
   vColor = mix(uColor, uWhite, 0.35 * hash(aSeed * 41.0) + (aKind > 0.5 ? 0.25 : 0.0));
-  vAlpha = alpha * tw * uOn;
+  vAlpha = alpha * tw * uOn * coverage(ps);
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;
@@ -125,7 +129,7 @@ function buildStrands(o, ctx) {
   const mat = new ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
     uniforms: {
-      uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) },
+      uTime: { value: 0 }, uView: { value: 1 },
       uSpeed: { value: o.speed ?? 0.09 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.5 },
       uNodeR: { value: o.nodeRadius ?? 0.6 }, uOn: { value: shown[group] ? 1 : 0 },
       uCenter: { value: o.center || [0, 0, 0] }, uRadius: { value: o.radius ?? 7 },
@@ -134,13 +138,14 @@ function buildStrands(o, ctx) {
     },
   })
   const pts = new Points(geo, mat); pts.frustumCulled = false
+  pts.onBeforeRender = (r) => { mat.uniforms.uView.value = viewScale(r) }
   const g = new Group(); g.add(pts)
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
   // fade in or out over 1.5 s on the engine clock, towards the module's `shown`
   // (read every frame: no listener, since a station never calls a form's dispose)
   let last = null
   return {
-    group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio,
+    group: g, labels: [],
     update(t) {
       const u = mat.uniforms, goal = shown[group] ? 1 : 0
       if (last != null) u.uOn.value += Math.sign(goal - u.uOn.value) * Math.min(Math.abs(goal - u.uOn.value), (t - last) / 1.5)

@@ -115,14 +115,14 @@ space: { at: [30, 40, -136], dist: 7.5, yaw: 0, pitch: 0, dim: 0.1, flight: 5 } 
 # 380 000 metų po Didžiojo sprogimo
 
 </div>
-<div class="src">Planck CMB žemėlapis (SMICA, 2018): ESA ir Planck kolaboracija</div>
+<div class="src">Planck CMB žemėlapis (SMICA-noSZ, 2018; perprojektuotas, išlygintas, nuspalvintas): ESA ir Planck kolaboracija</div>
 </AfterFlight>
 
 <!--
-Kalbėtojui. Kamera skrenda piltuvu atgal laiku: pro galaktikas, pirmąsias žvaigždes, tamsiuosius amžius, ir sustoja prie švytinčio skydo — kosminės foninės spinduliuotės. Jo grūdelių spalvos — tikras Planck temperatūros žemėlapis.
+Kalbėtojui. Kamera skrenda piltuvu atgal laiku: pro galaktikas, pirmąsias žvaigždes, tamsiuosius amžius, ir sustoja prie švytinčio skydo — kosminės foninės spinduliuotės. Skydas — tikras Planck temperatūros žemėlapis, nupieštas toje pačioje plokštumoje.
 Sakyti: „Pro galaktikas, pro pirmąsias žvaigždes ir tamsiuosius amžius grįžtame iki seniausios šviesos, kurią įmanoma pamatyti. Tai kosminė foninė spinduliuotė: Visatai tada buvo apie 380 000 metų. Europos kosmoso agentūros palydovas Planck ją išmatavo visame danguje. Spalvos rodo temperatūros skirtumus, vos dešimttūkstantąsias kelvino dalis. Iš tokių nelygumų vėliau susiformavo galaktikos.“
 Faktai: foninės spinduliuotės temperatūra 2,725 K; skirtumai žemėlapyje ~±100–300 µK (iki ~1 mK). Paskutinė sklaida — ~380 000 m. po Didžiojo sprogimo (z ≈ 1090).
-Šaltiniai ir vaizdas: Planck 2018 SMICA žemėlapis (COM_CMB_IQU-smica-nosz_2048_R3.00, užpildytas), IRSA/ESA Planck Legacy Archive; ESA ir Planck kolaboracija. Perprojektuota į ilgumą ir platumą, nuspalvinta Planck stiliaus skale; skyde rodomas vienas dangaus pusrutulis.
+Šaltiniai ir vaizdas: Planck 2018 SMICA-noSZ žemėlapis (COM_CMB_IQU-smica-nosz_2048_R3.00_full, I_STOKES_INP — užpildytas ties Galaktikos plokštuma, apie 4 % skydo ploto), IRSA/ESA Planck Legacy Archive; ESA ir Planck kolaboracija; Planck 2018 results IV (A&A 641, A4). Skyde — šiaurinis Galaktikos pusrutulis (lygiaplotė projekcija, centre šiaurinis Galaktikos polius), išlyginta iki 1° (WMAP raiška), nuspalvinta WMAP stiliaus skale. Licencija CC BY-NC 3.0 IGO (nekomercinis naudojimas su nuoroda).
 (~0,6 min)
 -->
 

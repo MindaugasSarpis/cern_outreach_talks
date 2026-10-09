@@ -1,4 +1,5 @@
 import { Points, BufferGeometry, BufferAttribute, ShaderMaterial, AdditiveBlending, Vector3 } from 'three'
+import { POINT_GLSL, viewScale } from './view.js'
 
 // The opener's last frame becomes the world. Every bright pixel of the frame
 // is a grain; each grain is placed along its own pixel's line of sight from
@@ -77,18 +78,21 @@ export function placeAlongRays(s, camera, rect, view, { near = 14, far = 46, rel
 const VERT = /* glsl */ `
 attribute vec3 aColor;
 attribute float aSize, aSeed;
-uniform float uTime, uReveal, uPixelRatio, uGain;
+uniform float uTime, uReveal, uGain;
 varying vec3 vColor; varying float vAlpha;
+${POINT_GLSL}
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 0.78 + 0.22 * sin(uTime * (0.8 + aSeed * 1.9) + aSeed * 40.0);
   // each grain lights at its own moment while the picture lets go of it
   float r = clamp(uReveal * 1.35 - aSeed * 0.35, 0.0, 1.0);
-  // capped, and fading out near the camera: a flight through the cloud must not fill the screen
-  gl_PointSize = min(uPixelRatio * aSize * (72.0 / max(-mv.z, 0.1)), 48.0 * uPixelRatio);
+  // sized to the frame (setup/view.js), capped, and fading out near the camera: a flight
+  // through the cloud must not fill the screen
+  float ps = uView * aSize * (72.0 / max(-mv.z, 0.1));
+  gl_PointSize = pointSize(ps, 48.0);
   vColor = aColor * uGain;
-  vAlpha = r * tw * smoothstep(0.25, 1.0, -mv.z);
+  vAlpha = r * tw * coverage(ps) * smoothstep(0.25, 1.0, -mv.z);
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;
@@ -109,15 +113,15 @@ export function makeGrains(s, { size = 0.5, gain = 1.25 } = {}) {
   geo.setAttribute('aSeed', new BufferAttribute(sd, 1))
   const mat = new ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG,
-    uniforms: { uTime: { value: 0 }, uReveal: { value: 0 }, uPixelRatio: { value: 1 }, uGain: { value: gain } },
+    uniforms: { uTime: { value: 0 }, uReveal: { value: 0 }, uView: { value: 1 }, uGain: { value: gain } },
     transparent: true, depthWrite: false, blending: AdditiveBlending,
   })
   const pts = new Points(geo, mat)
   pts.frustumCulled = false
   pts.name = 'takeover-web'
   const t0 = performance.now()
-  // the twinkle's clock and the renderer's pixel ratio, every frame (the frame-rate guard changes the ratio)
-  pts.onBeforeRender = (r) => { mat.uniforms.uTime.value = (performance.now() - t0) / 1000; mat.uniforms.uPixelRatio.value = r.getPixelRatio() }
+  // the twinkle's clock and the frame's size, every frame (the frame-rate guard changes the buffer)
+  pts.onBeforeRender = (r) => { mat.uniforms.uTime.value = (performance.now() - t0) / 1000; mat.uniforms.uView.value = viewScale(r) }
   return pts
 }
 

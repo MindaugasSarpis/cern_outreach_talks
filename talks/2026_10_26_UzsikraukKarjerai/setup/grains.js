@@ -395,6 +395,8 @@ function buildPath(o, ctx) {
   const api = {
     arm() { armed = true; armT = now; if (now - played < 1.5 && u.uTo.value >= 0) { pending = Math.round(u.uTo.value); hide() } },
     assemble(t, onDone) { now = t; arrive(); onDone?.() },
+    // waiting for its arrival, or still drawing (a step that waits at another station is not)
+    busy: () => armed || (u.uTo.value >= 0 && headNow() < u.uTo.value - 1e-3),
   }
   return {
     group: g, labels: [], api, pixelRatio: u.uPixelRatio,
@@ -765,6 +767,8 @@ function buildQuintet(o, ctx) {
       if (now - played > 5) { played = now; goTo(steps[Math.max(0, Math.min(steps.length - 1, step))], { from: { hold: 0, light: 0.1 } }) }
       onDone?.()
     },
+    // still gathering (the headless tools' settle and the cover title wait for it)
+    busy: () => now < anim.t0 + anim.dur,
   }
   return {
     group: g, labels: [], api, pixelRatio: u.uPixelRatio,
@@ -958,6 +962,10 @@ function buildHistogram(o, ctx) {
   const api = {
     arm() { armed = true; armT = now; if (now - played < 1.5) hold() },
     assemble(t, onDone) { now = t; arrive(); onDone?.() },
+    // waiting for its arrival, still filling, or its marks still lighting
+    busy: () => armed
+      || (u.uTo.value > u.uFrom.value && now < u.uT0.value + u.uDur.value + u.uFall.value)
+      || (u.uMarkT.value < 1e8 && now < u.uMarkT.value + 2.4),
   }
   return {
     group: g, labels: [], api, pixelRatio: u.uPixelRatio,
