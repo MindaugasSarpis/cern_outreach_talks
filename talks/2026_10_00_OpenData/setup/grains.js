@@ -626,7 +626,7 @@ function buildStreams(o, ctx) {
   const makeLabels = () => {
     to.forEach((d, i) => {
       if (!d.label) return
-      const l = smooth(ctx.helpers.makeLabel(d.label, { px: 64, weight: 500, color: '#ffe3a8', worldH: o.labelH ?? 0.042, letterSpacing: 0.06, upper: false }))
+      const l = smooth(ctx.helpers.makeLabel(d.label, { px: 64, weight: 500, color: '#d4dcea', worldH: o.labelH ?? 0.042, letterSpacing: 0.06, upper: false }))
       l.material.sizeAttenuation = false; l.material.opacity = 0
       const e = d.pos || [0, 0, 0]
       // beside its own cloud, to the right, so a column of labels reads against a column of clouds
@@ -1064,7 +1064,7 @@ function buildCollision(o) {
 export function installGrains(registerBuilder) {
   registerBuilder('lineup', buildLineup, { fields: ['pos', 'name', 'balls'] })
   registerBuilder('streams', buildStreams, { fields: ['pos', 'name', 'from', 'to'] })
-  registerBuilder('floor', buildFloor, { fields: ['pos'] })
+  registerBuilder('floor', buildFloor, { fields: ['pos'], enterable: true })
   registerBuilder('portraits', buildPortraits, { fields: ['pos', 'name', 'people'] })
   registerBuilder('collision', buildCollision, { fields: ['pos', 'name', 'tracks'] })
 }

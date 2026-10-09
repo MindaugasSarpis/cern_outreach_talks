@@ -10,7 +10,7 @@ From the root's list of current talks:
 
 - `talks/2026_10_00_OpenData/` — "Opening LHCb's data", a 6½-minute award talk
   (LHCb Vilnius nominated for an open data award). On the packaged stage, pinned
-  to slidev-videos v0.5.3, plus two talk-owned builders. Date placeholder `10_00`. See
+  to slidev-videos v0.5.4, plus two talk-owned builders. Date placeholder `10_00`. See
   "Open data talk" below.
 
 ### Open data talk (2026_10_00_OpenData)
@@ -107,7 +107,7 @@ the far-back scale poses.
   `dominykas` (1, ends at the `thesis` pentaquark, alone on the climax slide);
   the Dominykas slide is the last content slide, the close follows.
 - Stills for print, export and the static fallback are the stage's own
-  (v0.5.3): `public/stills/NN.jpg`, the world alone, from `slidev-stage-shots
+  (since v0.5.3): `public/stills/NN.jpg`, the world alone, from `slidev-stage-shots
   <dist> public/stills --stills --wait 30000` (SwiftShader needs the long
   settle). Remake them when a pose or a form changes.
 - Verify with the shots tool from feat/shots-v2 (`bin/shots.mjs dist <out>

@@ -365,23 +365,42 @@ function buildPath(o, ctx) {
     u.uDur.value = legTime(to - from)
     played = now
   }
-  const off = listen(o.name, (k) => go(k))
-  mat.addEventListener('dispose', off)
-  if (state.has(o.name)) go(state.get(o.name), { instant: true })
-  // an arrival from elsewhere, or `c`: the whole path is drawn again, quicker, from the start to where it stands
-  const api = {
-    arm() {},
-    assemble(t, onDone) {
-      now = t
-      const to = u.uTo.value
-      if (to >= 0 && now - played > 5) {
-        played = now
-        u.uFrom.value = -0.55; u.uTo.value = to; u.uT0.value = now + 0.2; u.uDur.value = legTime(to + 0.55) * 0.6
-      }
-      onDone?.()
-    },
+  // While the camera flies here (armed), a requested step waits and the path is drawn on
+  // arrival, as the map gathers under it; a draw started by the same slide change just before
+  // the flight is held back the same way. With no arrival within 6 s it draws anyway.
+  let armed = false, armT = 0, pending = null
+  const hide = () => { u.uFrom.value = -1; u.uTo.value = -1; u.uT0.value = now - 100 }
+  const drawFromStart = (to, delay, quick) => {
+    played = now
+    u.uFrom.value = -0.55; u.uTo.value = to; u.uT0.value = now + delay; u.uDur.value = legTime(to + 0.55) * (quick ? 0.6 : 1)
   }
-  return { group: g, labels: [], api, pixelRatio: u.uPixelRatio, update(t) { now = t; u.uTime.value = t }, dispose: off }
+  const request = (k) => {
+    if (!armed) return go(k)
+    pending = k; hide()
+  }
+  const arrive = () => {
+    armed = false
+    if (pending != null) {
+      const k = Math.max(-1, Math.min(np - 1, pending)); pending = null
+      if (k >= 0) drawFromStart(k, 1.2, false)
+      return
+    }
+    // an arrival from elsewhere, or `c`: the whole path is drawn again, quicker, from the start to where it stands
+    const to = u.uTo.value
+    if (to >= 0 && now - played > 5) drawFromStart(to, 0.2, true)
+  }
+  const off = listen(o.name, request)
+  mat.addEventListener('dispose', off)
+  if (state.has(o.name)) pending = state.get(o.name)   // drawn by the station's first assembly
+  const api = {
+    arm() { armed = true; armT = now; if (now - played < 1.5 && u.uTo.value >= 0) { pending = Math.round(u.uTo.value); hide() } },
+    assemble(t, onDone) { now = t; arrive(); onDone?.() },
+  }
+  return {
+    group: g, labels: [], api, pixelRatio: u.uPixelRatio,
+    update(t) { now = t; u.uTime.value = t; if (armed && now - armT > 6) arrive() },
+    dispose: off,
+  }
 }
 
 // ---- streams ------------------------------------------------------------------------
@@ -736,7 +755,9 @@ function buildQuintet(o, ctx) {
   const go = (k, opts = {}) => { step = k; goTo(steps[Math.max(0, Math.min(steps.length - 1, k))], opts); played = now }
   const off = listen(o.name, (k) => go(k))
   mat.addEventListener('dispose', off)
-  if (state.has(o.name)) go(state.get(o.name), { instant: true })
+  // a step set before the build is kept, but the form stays scattered until the station's
+  // first assembly gathers it (a load on the cover: it gathers beside the title)
+  if (state.has(o.name)) step = state.get(o.name)
   const api = {
     arm() {},
     assemble(t, onDone) {
@@ -885,7 +906,11 @@ function buildHistogram(o, ctx) {
   if (o.counts) build(o.counts)
   else fetch(ctx.asset('/' + String(o.src).replace(/^\//, ''))).then((r) => r.json()).then((d) => build(d[o.key || 'counts'], d))
     .catch(() => console.warn('stage: histogram data failed', o.src))
-  let now = 0, played = -100, share = 0
+  let now = 0, played = -100, share = 0, step = 0
+  const at = (k) => steps[Math.max(0, Math.min(steps.length - 1, k))]
+  // the marked peaks light once the set is full and the step has reached `markStep`
+  // (default 1; a later step lets a click light them)
+  const marksOn = (to) => !!o.marks && to >= 1 && step >= (o.markStep ?? 1)
   const shown = () => {
     const x = Math.min(Math.max((now - u.uT0.value) / Math.max(u.uDur.value, 0.01), 0), 1)
     return u.uFrom.value + (u.uTo.value - u.uFrom.value) * Math.pow(x, 1 / u.uCurve.value)
@@ -893,13 +918,20 @@ function buildHistogram(o, ctx) {
   const fill = (from, to, delay = 0.6) => {
     u.uFrom.value = from; u.uTo.value = to; u.uT0.value = now + delay
     u.uDur.value = Math.max((to - from) * (o.fill ?? 20), 0.01); played = now
-    u.uMarkT.value = to >= 1 && o.marks ? u.uT0.value + u.uDur.value + u.uFall.value + 0.6 : 1e9
+    u.uMarkT.value = marksOn(to) ? u.uT0.value + u.uDur.value + u.uFall.value + 0.6 : 1e9
   }
   const go = (k, { instant = false } = {}) => {
-    const to = steps[Math.max(0, Math.min(steps.length - 1, k))]
+    step = k
+    const to = at(k)
     share = to
     const cur = shown()
-    if (instant || to <= cur) { u.uFrom.value = to; u.uTo.value = to; u.uT0.value = now - 100; u.uDur.value = 0.01; u.uMarkT.value = to >= 1 && o.marks ? now - 100 : 1e9; return }
+    if (instant || to <= cur) {
+      const lit = u.uMarkT.value < 1e8
+      u.uFrom.value = to; u.uTo.value = to; u.uT0.value = now - 100; u.uDur.value = 0.01
+      // marks switched on with the set already full fade in now; switched off, they go at once
+      u.uMarkT.value = !marksOn(to) ? 1e9 : instant ? now - 100 : lit ? u.uMarkT.value : now + 0.2
+      return
+    }
     fill(cur, to)
   }
   // While the camera flies here (armed), a requested step only records its share and the
@@ -910,7 +942,7 @@ function buildHistogram(o, ctx) {
   const hold = () => { u.uFrom.value = 0; u.uTo.value = 0; u.uT0.value = now - 100; u.uDur.value = 0.01; u.uMarkT.value = 1e9 }
   const request = (k) => {
     if (!armed) return go(k)
-    share = steps[Math.max(0, Math.min(steps.length - 1, k))]
+    step = k; share = at(k)
     hold()
   }
   const arrive = () => {
@@ -920,7 +952,9 @@ function buildHistogram(o, ctx) {
   }
   const off = listen(o.name, request)
   mat.addEventListener('dispose', off)
-  if (state.has(o.name)) go(state.get(o.name), { instant: true })
+  // a step set before the build is kept, but the set stays hidden until the station's first
+  // assembly fills it (a reload on a plot slide: no full plot flashing before the fill)
+  if (state.has(o.name)) { step = state.get(o.name); share = at(step) }
   const api = {
     arm() { armed = true; armT = now; if (now - played < 1.5) hold() },
     assemble(t, onDone) { now = t; arrive(); onDone?.() },
