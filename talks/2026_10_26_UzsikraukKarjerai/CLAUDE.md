@@ -185,6 +185,16 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Decisions
 
+- 2026-10-09 — slidev-videos v0.7.0 (stage 0.4.0, from v0.6.8), the batch round
+  the owner chose. Its new `unsaid-clock` warning stays quiet here: histogram,
+  path and quintet already report `api.busy` (v0.6.6 below). A copy of
+  grains.js with `busy` removed makes the check flag those three, so it does read
+  them. `pairs` and `streams` still have no `busy`, but no station uses them; give
+  them one if a slide ever does. `--stills` now shoots each slide at its last
+  click, so all 13 stills are retaken with plain `--stills`. 08 is at click 1
+  (marks lit), as print shows it, and the special 08 is gone. v0.6.9's dust fix
+  only skips a frame copy for the tunnel clip, which comes from the release (its
+  strip stands in, as before).
 - 2026-10-09 — slidev-videos v0.6.8: grains sized to the frame. The talk's builders
   (histogram, path, quintet, map, pairs, ghost, streams) return their
   `uPixelRatio` as `frameScale`, so the engine keeps it at the buffer's height
