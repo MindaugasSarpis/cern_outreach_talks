@@ -47,7 +47,13 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Status
 
-- 2026-10-09 (latest): **round 2 complete on the branch, awaiting the owner's go.**
+- 2026-10-09 (latest): **deployed a8b4f46** on the owner's go (Pages run
+  37947797885 green; the deploy's live walk passed; URL 200). It holds round 2,
+  the PDF print fix (every line prints; checked on a rasterised PDF) and main
+  ef5b903. Next: the move to slidev-videos v0.6.4 (stills again, the cover
+  timing check), then the owner's moments for slide 11.
+
+- 2026-10-09: **round 2 complete on the branch, awaiting the owner's go.**
   It holds v0.5.4, slide 9 (ideas 1 and 3), the review fixes, no gold text, and
   the working-day slide 11 (idea 7, lines 1–4 of the owner-approved draft).
   Open for the owner: one or two moments of their own for slide 11 (a plot, a
