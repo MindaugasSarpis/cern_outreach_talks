@@ -156,6 +156,54 @@
             }
           ],
           "node": 0
+        },
+        {
+          "type": "strands",
+          "group": "fcc",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "center": [
+            -6.75,
+            0,
+            11.7
+          ],
+          "radius": 23.78,
+          "reach": 35,
+          "rise": 2.5,
+          "grains": 3200,
+          "node": 0,
+          "alpha": 0.8,
+          "strands": [
+            {
+              "angle": -130
+            },
+            {
+              "angle": -5
+            },
+            {
+              "angle": 45
+            },
+            {
+              "angle": 95
+            },
+            {
+              "angle": 145
+            },
+            {
+              "angle": 195
+            }
+          ],
+          "ring": {
+            "grains": 30000,
+            "width": 0.25,
+            "size": 3.4,
+            "alpha": 0.7,
+            "speed": 0.004
+          },
+          "size": 2.4
         }
       ]
     },

@@ -72,20 +72,20 @@ the part word during a Part II flight, gone before the photo lands).
   (talk-owned bookend, 0:30, made by reversing the opener; do not `--prune`
   `vu_ff_zoom.mp4`, its source), library `cern_overview_short.mp4`,
   `cern_footage_2022_042_001.mp4`.
-- Toolkit: slidev-videos v0.5.3 (both addons): place groups, `humAt: all`,
+- Toolkit: slidev-videos v0.5.4 (both addons): place groups, `humAt: all`,
   `?stage-debug`, quality tiers (a phone starts at 2; desktop and the headless
   recorder at 0, `pages:check` prints it), lighter photo places, the context-
-  loss fixes, and stills and posters for print.
+  loss fixes, stills and posters for print (v0.5.4: correct per page).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** v0.5.3 round on the
-branch (stills and posters for print, PrintStill retired); the screen is
-checked (recordings of slides 3–6 and 12–14, `pages:check` clean, tier 0); the
-PDF export waits for v0.5.4. Last deploy 4ba0ceb (pin e5d05a9) —
-https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
-Pages run 37921708418. Next: deploy this round after OpenData, then pin v0.5.4
-and check the export.
+2026-10-09: **complete, pending the owner's review.** On the branch (73a47c5+):
+v0.5.4 (the PDF export now correct), the LHCb poster at 0:24, slides 16 and 19
+reworded. Waiting on the owner (via the Scheduler) for the backlog round:
+Part II problem-first layout A or B (#2), the FCC ring on slide 25 (#6,
+prototype in `~/talks/.cache/innoday/proto/deck-fcc.md`), and which Lithuanian
+firm goes before „613 mln. CHF“ (#5; Light Conversion recommended). Last
+deploy 2daa302 (v0.5.3), Pages run 37927529517.
 
 ## Decisions
 
@@ -120,19 +120,16 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   not named there.
 - Part II kickers name the problem in the words slide 12 speaks („Problema:
   valdyti mašiną“ …); part words name ring parts only.
-- Print and PDF (v0.5.3; the talk's own PrintStill is retired): the stage
-  prints `public/stills/NN.jpg` under each slide's own text, and the on-screen
-  fallback shows the same stills. They are the world alone, from
-  `slidev-stage-shots <dist> public/stills --stills --wait 30000` (the
-  README's 9000 caught most flights and gathers mid-way under SwiftShader).
-  Clips print their posters (`public/video-frames/*.poster.jpg`, `slidev-videos
-  frames --all`); the LHCb animation's poster is hand-picked at 24 s, the whole
-  detector (its first lit frame is a speck on black), so `frames --force`
-  would undo it. Check with a real `pnpm talk export`. On v0.5.3 the export
-  is wrong (toolkit, fixed in v0.5.4): every page carries slide 1's still, and
-  `html[data-stage]` is missing on the export page, so the theme's
-  `background_default.jpg` covers the still and the type falls back to PT
-  Serif; `--range` itself works. The screen is unaffected.
+- Print and PDF (toolkit, since v0.5.3; the talk's own PrintStill is retired):
+  the stage prints `public/stills/NN.jpg` under each slide's own text, and the
+  on-screen fallback shows the same stills. They are the world alone, from
+  `slidev-stage-shots <dist> public/stills --stills --wait 30000` (9000 caught
+  flights and gathers mid-way under SwiftShader; v0.5.4's `--settle` waits for
+  them by itself). Clips print their posters (`public/video-frames/*.poster.jpg`,
+  `slidev-videos frames --all`); the LHCb animation's is at 0:24 by the
+  manifest's `poster = "0:24"` (its first lit frame is a speck on black), which
+  lists that library clip for the poster only. v0.5.4's export checked: 30
+  pages, 12.7 MB, each its own still, the deck's fonts, `--range` works.
 - Place mode over screen mode for Part II (owner via the Scheduler, 8 Oct):
   the inventions visibly hang off the machine.
 - The opener stays whole (slot ≥ 25 min).

@@ -19,7 +19,7 @@ go, still needs the owner's own word in this conversation ("deploy", "push",
 ## Steps
 
 ```bash
-pnpm talk ready <t>               # lint --release + check + shots + videos:preflight + venue --dry-run, one exit code
+pnpm talk ready <t>               # lint --release + check + shots + pages + videos:preflight + venue --dry-run, one exit code
 pnpm talk deploy <t> --dry-run    # what would be pushed, and the checks it will make
 pnpm talk deploy <t>              # push HEAD to main, watch the Pages run, check the URL
 pnpm talk status --json           # every talk's recorded deploy state, under deploys[]
@@ -34,6 +34,9 @@ Run them from the root of the talk's own worktree (the path
   tree (it stamps it) or it is told to skip it, so run `deploy` straight
   after `ready`, with no commit between them;
 - pushes `HEAD` to `main`, watches the Pages run and requests the talk's URL;
+- then walks the live deck headless (scripts/pages_check.mjs) and fails on
+  any request that fails (release clips aside) or a lost WebGL context:
+  "deployed, but the live deck fails" is a failed deploy to fix;
 - records the result in `talk-status/<slug>.json` in the shared git directory
   (the main checkout's `.git`), not in a tracked file, so a deploy never
   leaves a dirty tree or triggers a second run. `status` takes no talk name:
@@ -44,6 +47,11 @@ Run them from the root of the talk's own worktree (the path
 `deploy` watches the Pages run itself, so never poll the run in a loop of
 your own. Say "deployed" only after the run is green and the URL returned
 200, and give the URL, the commit and the run id.
+
+`ready`'s **pages** step builds the talk with the Pages base, serves it under
+`/cern_outreach_talks/<talk>/` with nothing at the root, and walks every slide:
+an asset written `/figures/…` that a component does not resolve against the
+base fails there, as it does on Pages.
 
 ## When it refuses
 
