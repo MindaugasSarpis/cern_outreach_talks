@@ -50,8 +50,16 @@ Approved outline: `notes/outline-v5.md` with its two change sections
   (the Scheduler's render): StagePhoto in v0.5.0 ignores the Pages base, so
   `/figures/photos/…` 404s at the domain root. Fixed on the branch (b59572e)
   with relative sources, checked on a `--pages` build served under the real
-  subpath. Awaiting the owner's go to redeploy. When Tools ships v0.5.2 (the
-  base fix), pin it; the relative sources keep working with it.
+  subpath. Awaiting the owner's go to redeploy. Pinned slidev-videos 5d7e786
+  (v0.5.3: device quality tiers, lost-context rebuild, StagePhoto under the
+  base; its assetUrl leaves relative paths alone). Checked on that pin: the
+  `--pages` photo check again; recordings of slides 1–4, 8 (+click), 9, 10
+  (~/talks/.cache/uzk-review/v053), and slides 2 and 10 frame-identical to a
+  v0.5.0 build (v050, ab-02.png, ab-10.png). A review workflow of the
+  toolkit diff found only minor effects, all after a lost WebGL context:
+  plots refill from empty (slide 8's ticks after ~22 s), one quality tier
+  lower until a reload, softer bloom under 1280 px. Reload the page if the
+  console says "stage: context lost".
 
 - 2026-10-09: **deployed 00ade4a** (Pages run 37901453790 green,
   URL 200; the live bundle carries slide 9's new line, the slide 7 event
