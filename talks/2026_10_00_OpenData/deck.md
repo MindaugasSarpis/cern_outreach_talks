@@ -21,7 +21,7 @@ stage:
   space: data/space.json
   palette: { base: blue, bg: '#000206' }   # a true black ground: the blue palette's navy read as haze
   sound: true
-  options: { reach: 30, nebula: 0.12, dustGain: 1.0, exposure: 1.1, vignette: 0.7, grain: .012, aberration: 0, bloom: 0.42 }   # reach: the 1 EB pose stands far back (27 from the store); the rest: deep, crisp, not hazy
+  options: { reach: 30, nebula: 0.12, dustGain: 1.0, exposure: 1.1, vignette: 0.7, grain: 0.012, aberration: 0, bloom: 0.42 }   # reach: the 1 EB pose stands far back (27 from the store); the rest: deep, crisp, not hazy
 title: Atveriame LHCb duomenis
 info: |
   In Lithuanian. LHCb Vilnius, nominated for an open data award: a 6½-minute
@@ -185,6 +185,8 @@ of them.
 ---
 space: { at: [12.5, 1.4, 5.0], dist: 13.8, yaw: 73, pitch: 7.5, dim: 0.15 }
 ---
+
+<img class="print-still" src="/stills/05.jpg" alt="" />
 
 
 <Grains :set="{ scale: [0, 1], 'scale:labels': 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
@@ -520,14 +522,19 @@ space: { at: [53, 2.8, 160], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 <!--
 Message: this is the work we were nominated for, and the people who did it.
 
-Sakyti: „Mus nominavo už tai, kad parengėme LHCb duomenis paskelbti, koordinuojame
-šį darbą kolaboracijoje ir patys naudojame šiuos duomenis tyrimams ir mokymui
-Vilniuje.
+Sakyti: „Mus nominavo už tai, kad parengėme LHCb duomenis paskelbti ir patys juos
+naudojame tyrimams ir mokymui Vilniuje.
 Duomenis gali atsisiųsti bet kas, svetainėje opendata.cern.ch. Ačiū jums ir ačiū visai mūsų grupei.“
 
 The camera flies back to the collisions where the data begin, and the group
-gathers beside them: fifteen portraits made of the same gold grains of data,
-each with the name under it.
+gathers beside them: fifteen portraits made of the same gold grains of data.
+Then the ring starts to move like a beam of particles: the portraits run
+round it, push one another away and bump, and where two meet a few gold
+grains fly out. The names stay off the screen: Mindaugas Šarpis, Ramūnas
+Aleksiejūnas, Oleg Kravcov, Adam Morris, Augustas Vaitkevičius, Rūta Racz,
+Šarūnas Jacevičius, Margarita Biveinytė, Sophia Pennuttis, Mikas Paulius
+Iršėnas, Neilas Beniušis, Karolina German, Eliza Holvoet, Meda Paulavičiūtė,
+Dominykas Stonkus.
 
 Photos: LHCb Vilnius group members, used with permission (as on
 lhcb-vilnius.web.cern.ch/people.html); cropped square, metadata removed.

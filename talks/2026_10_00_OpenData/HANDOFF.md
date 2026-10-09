@@ -10,7 +10,11 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
 Toolkit pin: slidev-videos `12aa015`, for both addons.
 
-## Status (2026-10-08): complete, pending the owner's review
+## Status (2026-10-09): approved by the owner; the moving ring is on the branch, not deployed
+
+- The owner, 2026-10-09: "All good, just the ring with people should be
+  dynamic, moving, interacting like particles". Done on the branch (see the
+  decision below); deployed is still 484a430.
 
 - 13 slides in Lithuanian, about 6.0 of 6.5 min (lint, lang lt: 0 errors, 0
   warnings). Toolkit pin v0.5.1.
@@ -26,8 +30,15 @@ Toolkit pin: slidev-videos `12aa015`, for both addons.
   come from the final build.
 - Not run: the talk-review workflow (it needs the owner's own request in the
   session; the final review ran as separate reviewer agents instead).
-- Deploy: not done. It comes after Užsikrauk karjerai and Innoday, when the
-  Scheduler calls the order, and only on the owner's word in the session.
+- Deployed 2026-10-08 on the owner's go: commit 484a430 on main, Pages run
+  37834273740 (build success, deploy success). The talk's URL,
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_OpenData/,
+  answers 200 with the Lithuanian title; space.json, the stills, the portraits
+  and the thesis plot answer too. `talk deploy` printed "not deployed" only
+  because its per-talk build-job lookup does not match the new single `build`
+  job (deploy.yml after f67d367); checked by hand with gh and curl.
+  `ready` ran with lint skipped (not on this branch); the release lint was
+  clean on the same commit.
 
 ## Decisions
 
@@ -125,13 +136,51 @@ Toolkit pin: slidev-videos `12aa015`, for both addons.
     a qualitative reproduction.
   - Portraits: the members' own photos, used with permission (owner). Credit:
     „Photos: LHCb Vilnius group members, used with permission“. Margarita
-    Biveinytė's photo still awaits the owner's confirmation.
+    Biveinytė's photo was confirmed on 2026-10-09 (below).
+
+- 2026-10-09. The owner's answers (via the Scheduler):
+  - The photo is Margarita Biveinytė's: she stays in the ring. The alt text
+    on the group's People page, which names someone else, is a slip on the
+    site.
+  - The closing line drops „koordinuojame šį darbą kolaboracijoje“: the
+    nomination names only preparing the data release and using the data for
+    research and teaching in Vilnius. It now reads „Mus nominavo už tai, kad
+    parengėme LHCb duomenis paskelbti ir patys juos naudojame tyrimams ir
+    mokymui Vilniuje.“ The clause was never on screen. The 800 TB slide's
+    notes still say, as a fact about the role and not the nomination, „Nuo
+    šių metų rugpjūčio koordinuoju visos kolaboracijos analizių išsaugojimo
+    ir atvirųjų duomenų darbus.“
+- 2026-10-09. The „Ačiū“ ring moves like particles (owner). The portraits
+  run round the ring like a beam, push one another away at a distance (a
+  charge-like 1/d² push, so the ring keeps its spacing rather than queueing
+  behind its slowest), bump as discs with friction (a glancing hit turns a
+  face; a soft torque rights it), now and then one sprints into its
+  neighbour, and where two meet a few gold grains fly out of the contact.
+  - Code: `setup/ring.js` (pure, seeded, fixed 1/120 s steps on the engine
+    clock, so a recording or a still repeats exactly); the `portraits`
+    builder takes `motion` (one Group per person, moved by the sim) and
+    `sparks`. Settings in space.json: speed 0.9, charge 6, dashBy 2, seed 7.
+  - Everything is solved in the picture plane as the camera sees it from
+    `view: 27` (the „Ačiū“ pose's dist): solved in the scene's plane, faces at
+    different depths overlapped on screen by up to 75 % (seen on the first
+    recording). `title`/`keepOut` keep the discs clear of „Ačiū“; `frame`
+    [19.8, 11.0] keeps them inside the 16:9 frame with the idle sway.
+  - Offline, 3 seeds × 180 s: about 5 bumps per 10 s, the first at 5.6 s; no
+    on-screen overlap; at most 3–4 discs bunched; title clearance ≥ 0.7
+    units beyond a disc's edge; edges within 89 % of the frame.
+  - Reviewed by four reviewers, each finding checked by a skeptic. Fixed:
+    sparks draw after the faces (`renderOrder = 1`; three's transparent sort
+    used a key frozen at the group origin, so the faces covered or showed
+    the bursts with the camera's sway); a reload or a link straight to
+    slide 13 now gathers the ring (before, with `onEnter`, nothing did).
+  - Undo: drop `motion` from the portraits object in space.json (the faces
+    stand still at their `at`s again).
 
 ## Open
 
-- After the tooling merge (chore/tooling-merge fddfcff parses the headmatter as
-  YAML) reaches main: write `grain: .012` back as `grain: 0.012`. The `.012`
-  only kept talk.py's old broadcast regex from misreading this venue talk.
+- On the branch, not yet deployed: `grain` is 0.012 again (the tooling merge
+  fixed the broadcast detector), slide 5 has its print still, and the moving
+  ring. Redeploy when the owner asks (or the Scheduler calls it).
 
 - Specks: gone on shots v12 (confirmed on a full-resolution crop of slide 7).
 - Opened directly at slide 7 (a deep link or a reload), the piles never
@@ -145,11 +194,6 @@ Toolkit pin: slidev-videos `12aa015`, for both addons.
 
 ## Owner questions
 
-- Margarita Biveinytė's photo: the People page's alt text names someone else.
-  It is in the „Ačiū“ ring; confirm, or say to drop it.
-- The closing line names "coordinating the work in the collaboration" among
-  the nominated work (the role began on 1 August 2026). Keep it only if the
-  nomination covers it.
 - Slide 11's and Dominykas's plots keep their published English axis labels
   and legend (accepted by the owner via the Scheduler).
 
