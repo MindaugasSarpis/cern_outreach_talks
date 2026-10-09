@@ -24,7 +24,7 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (fifth version after the owner's review, 12 slides, about 7 min)
+## Story (fifth version after the owner's review, plus ideas 1, 3 and 7: 13 slides, about 8 min)
 
 Approved outline: `notes/outline-v5.md` with its two change sections
 (owner, 2026-10-08). The viewer sits in the physicist's seat.
@@ -38,13 +38,22 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 | 5 | (clip) | LHC tunnel footage |
 | 6 | (photo) | LHCb cavern, StagePhoto: what LHCb studies and why |
 | 7 | „Vienas susidūrimas LHCb detektoriuje“ | LHCb Run 3 event display, StagePhoto: how a collision becomes a dot |
-| 8 | 2015 m. · „LHCb duomenyse iškilo smailė“ → 2019 m. · „Trys pentakvarkai“ | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks |
-| 9 | labels only: „2003 m.“ · „LHCb, 2019 m.“ | `jx`: the 140-entry plot of slides 2–3 at LHCb's scale beside `jp` (one grain per entry, the same bin width and height per entry); a coordinate pose between them |
+| 8 | 2015 m. · „LHCb duomenyse iškilo smailė“ → 2019 m. · „Trys pentakvarkai“ | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks at the click |
+| 9 | labels only: „Kaip 2003 m. · 140 taškų“ · „LHCb, 2019 m. · 27 292 taškai“ | `jx`: the 140-entry plot of slides 2–3 at LHCb's scale beside `jp` (one grain per entry, the same bin width and height per entry); a coordinate pose between them |
 | 10 | city labels | the route across Europe |
-| 11 | three things to do this school year | the form far off, dimmed |
-| 12 | „„Ko jūs savo darbe dar nežinote?““ alone | the form, held |
+| 11 | „Dažniausiai dirbu Vilniaus universitete“ (Vilnius, CERN labelled) | the map close on Vilnius and the arcs to CERN: the working day (idea 7), in the speaker's own public words |
+| 12 | three things to do this school year | the form far off, dimmed |
+| 13 | „„Ko jūs savo darbe dar nežinote?““ alone | the form, held |
 
 ## Status
+
+- 2026-10-09 (latest): **round 2 complete on the branch, awaiting the owner's go.**
+  It holds v0.5.4, slide 9 (ideas 1 and 3), the review fixes, no gold text, and
+  the working-day slide 11 (idea 7, lines 1–4 of the owner-approved draft).
+  Open for the owner: one or two moments of their own for slide 11 (a plot, a
+  check, CERN), relayed by the Scheduler. Add them to slide 11's notes when they
+  come, and invent none. Still open: the licences of the event display and the
+  tunnel clip, the 2027 masterclass date and the BL4S call.
 
 - 2026-10-09 (latest): **deployed f2eecec** on the owner's go (Pages run
   37924290671 green, URL 200; in headless Chromium on the live site slides

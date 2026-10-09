@@ -22,11 +22,11 @@ duration: 12min
 sources: notes
 info: |
   „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement): a Lithuanian
-  talk for grades 9–12, delivered online on 27 Oct 2026. About 7 minutes,
-  12 slides. The viewer sits in the physicist's seat: judge a bump in a
+  talk for grades 9–12, delivered online on 27 Oct 2026. About 8 minutes,
+  13 slides. The viewer sits in the physicist's seat: judge a bump in a
   histogram (2003 yes, 2008 no), what LHCb is and how a collision becomes a
   dot on that plot, 2015 yes, what made the difference, the speaker's
-  route, three things a student can do this school year, and one question
+  route and working day, three things a student can do this school year, and one question
   to ask someone this week. The histograms fill
   grain by grain: slide 8 from LHCb's published 2019 J/ψ p bins (HEPData);
   slides 2–4 are an illustration, said so in the notes.
