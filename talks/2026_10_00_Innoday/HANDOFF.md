@@ -376,3 +376,10 @@ greyed Part II's invention line (on screen too); fixed.
 Then v0.6.5 (the kit's print block): full export read again; every caption
 prints; the part words printed over the photos (their fade-out is an
 animation), now hidden in print.
+
+## Deployed (2026-10-09, tenth round)
+
+d77c4c2 (a77fd2a + main a8b4f46), v0.6.5, Pages run 37948674216 (green), URL
+200; live walk 30 slides, 0 failed, 0 context losses.
+v0.6.6 pinned (print: animations at their end state); export read again: all
+text, no part words, 11.4 MB. The talks stay on v0.6.6 for now.
