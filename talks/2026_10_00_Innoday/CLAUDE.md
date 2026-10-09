@@ -82,14 +82,15 @@ the part word during a Part II flight, gone before the photo lands).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** On the branch, not yet
-deployed: the Pages-base fix (stills and place photos 404'd under the live
-deploy fe15a19; `pnpm pages:check` now clean) and the v0.5.2 round (place
-groups, Part I's wide poses back, `humAt: all`, stills 07/10/12), then the
-5d7e786 pin (quality tiers, lighter places) and the takeover's short-lived
-WebGL context. Last
-deploy fe15a19 — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/
-— Pages run 37906723499. Next: `talk ready`, deploy, the owner's review.
+2026-10-09: **complete, pending the owner's review.** Deployed 622461c —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+Pages run 37917644568 (green), URL 200; `talk ready` passed with nothing
+skipped. Live check: no failed request under the Pages base (stills, place
+photos), stage tier 0 on desktop. This round: the Pages-base fix
+(`pnpm pages:check`), v0.5.2 place groups (Part I's wide poses back),
+`humAt: all`, the 5d7e786 pin (quality tiers, lighter places, `?stage-debug`)
+and the takeover's short-lived WebGL context, for the owner's iPhone black
+screen. Next: the owner's review; the v0.5.3 tag when it is cut.
 
 ## Decisions
 

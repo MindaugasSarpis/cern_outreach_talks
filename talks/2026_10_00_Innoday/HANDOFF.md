@@ -291,3 +291,12 @@ Then pinned `5d7e786` (feat/v0.5.3: quality tiers, ~10× less GPU memory per
 place, a rebuild one tier lower after a lost context). Re-recorded Part II's
 nine slides at 1600×900 (g4a–c, tier 0): every photo settles full screen and
 stays sharp at 1:1. `pages:check` clean and now prints the tier (0).
+
+## Deployed (2026-10-09, fifth round)
+
+622461c, Pages run 37917644568 (green), URL 200, under the owner's standing
+deploy rule (confirmed in this session) and the Scheduler's go for main.
+Live: a headless pass over slides 7, 13 and print mode saw no failed request
+under the Pages base, stage tier 0; still 07 on the site matches the commit.
+For the owner's iPhone: open the deck with `?stage-debug` to see the
+fallback's reason if it still shows black.
