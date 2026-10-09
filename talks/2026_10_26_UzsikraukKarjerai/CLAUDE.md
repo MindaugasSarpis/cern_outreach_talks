@@ -47,7 +47,16 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Status
 
-- 2026-10-09 (latest): **round 2 complete on the branch, awaiting the owner's go.**
+- 2026-10-09 (latest): **v0.6.6 on the branch, awaiting main and the owner's go.**
+  Live is still a8b4f46; see Decisions for the move.
+
+- 2026-10-09: **deployed a8b4f46** on the owner's go (Pages run
+  37947797885 green; the deploy's live walk passed; URL 200). It holds round 2,
+  the PDF print fix (every line prints; checked on a rasterised PDF) and main
+  ef5b903. Next: the move to slidev-videos v0.6.4 (stills again, the cover
+  timing check), then the owner's moments for slide 11.
+
+- 2026-10-09: **round 2 complete on the branch, awaiting the owner's go.**
   It holds v0.5.4, slide 9 (ideas 1 and 3), the review fixes, no gold text, and
   the working-day slide 11 (idea 7, lines 1–4 of the owner-approved draft).
   Open for the owner: one or two moments of their own for slide 11 (a plot, a
@@ -165,6 +174,18 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Decisions
 
+- 2026-10-09 — slidev-videos v0.6.6 (from v0.5.4). Shots settle on the engine's clock,
+  and a station counts as assembled only when its last form finishes. Print holds
+  each animation at its end state, so the talk's own `animation: none` print rule
+  is gone. The talk's builders report `api.busy` (histogram: armed, filling or
+  lighting its marks; route: armed or drawing; quintet: gathering), so
+  `--stills` waits for them. Stills 01–07 and 09–13 are retaken with plain
+  `--stills`. 08 is the settled one with the marks, because print shows slide 8 at
+  its last click and `--stills` shoots click 0 (sent to Tools). Checked:
+  - a rasterised PDF: 13 pages, all text, 3,3 MB;
+  - a 12 fps recording: the cover title is up at 0,5 s and the pentaquark gathers
+    by about 3 s; slide 8's ticks light at the click;
+  - the click test.
 - 2026-10-09 — No gold text (the owner: gold letters read as AI design). Every kicker,
   including the year kickers, is one light blue (`--kk-kick`, #8fb2ff from the
   palette). Emphasis, numbers and labels are white. Gold stays only in the world,
