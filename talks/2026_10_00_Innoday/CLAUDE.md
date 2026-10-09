@@ -95,21 +95,19 @@ the part word during a Part II flight, gone before the photo lands).
   Licence CC BY-NC 3.0 IGO: the on-slide credit says it was reprojected,
   smoothed and recoloured (required). The scripts are not in the repo; the
   parameters are in the speaker notes and this file.
-- Toolkit: slidev-videos v0.6.8 (both addons; the engine's grains sized to the frame; `strands` registered `enterable: true`; print shows every animation at its end state; every pixel clamped finite before bloom: the funnel's additive core overflowed the half-float target to Inf → NaN → black on iOS). Device switches for a phone: `?stage-debug`, `?stage-post=off`, `?stage-targets=half`, `?stage-tier=0..3`. A lite mode for phones (fewer, smaller grains in the talk's forms, no takeover overlay) is parked on `wip/innoday-lite`, unused unless the iPhone still struggles: place groups, `humAt: all`,
+- Toolkit: slidev-videos v0.7.0 (both addons; stills at each slide's last click, which is click 0 here: the deck has no clicks; v0.6.8: the engine's grains sized to the frame; `strands` registered `enterable: true`; print shows every animation at its end state; every pixel clamped finite before bloom: the funnel's additive core overflowed the half-float target to Inf → NaN → black on iOS). Device switches for a phone: `?stage-debug`, `?stage-post=off`, `?stage-targets=half`, `?stage-tier=0..3`. A lite mode for phones (fewer, smaller grains in the talk's forms, no takeover overlay) is parked on `wip/innoday-lite`, unused unless the iPhone still struggles: place groups, `humAt: all`,
   `?stage-debug`, quality tiers (a phone starts at 2; desktop and the headless
   recorder at 0, `pages:check` prints it), lighter photo places, the context-
   loss fixes, stills and posters for print (v0.5.4: correct per page).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's iPhone retest.** Deployed be73ad6
-(v0.6.8: the engine's grains and the talk's sized to the frame; the CMB disk
-the real Planck map) —
+2026-10-09: **complete, pending the owner's iPhone retest.** Deployed 9dc21bd
+(v0.7.0: stills shot at each slide's last click, the unsaid-clock check;
+c618855 + main 90d5458) —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
-Pages run 37975431628 (green), URL 200; `ready` passed with nothing skipped.
-Deploy's live walk stopped at slide 4 (the known pre-existing main-thread
-stalls on slides 3 and 8 under SwiftShader, reported to Tools); two reruns
-with `--wait 2500` walked 30/30, 0 failed, 0 context losses.
+Pages run 37988179265 (green), URL 200; `ready` passed with nothing skipped
+and the live walk went 30/30 first time (main's retrying walk).
 
 ## Decisions
 
@@ -162,7 +160,8 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   the stage prints `public/stills/NN.jpg` under each slide's own text, and the
   on-screen fallback shows the same stills. They are the world alone, from
   `slidev-stage-shots <dist> public/stills --stills` (v0.6.4 settles each
-  slide on the engine clock: the whole deck in about a minute). Clips print their posters (`public/video-frames/*.poster.jpg`,
+  slide on the engine clock: the whole deck in about a minute; reshot on
+  v0.7.0, so 05–06 print the real Planck map). Clips print their posters (`public/video-frames/*.poster.jpg`,
   `slidev-videos frames --all`); the LHCb animation's is at 0:24 by the
   manifest's `poster = "0:24"` (its first lit frame is a speck on black), which
   lists that library clip for the poster only. Export checked on v0.6.4: every
