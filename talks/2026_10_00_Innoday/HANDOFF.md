@@ -358,3 +358,9 @@ Light Conversion as slide 28 (in the world until a photo comes), and no gold
 text (white plus one light blue, #9cc4ff). `hero_fcc.jpg` removed (unused).
 Sheets: `~/talks/.cache/innoday/r2-13-21.png`, `r2-part3.png`,
 `r2-prologue.png`; stills 25–30 re-shot (the new slide shifts the numbers).
+
+## Deployed (2026-10-09, ninth round)
+
+6001e31 (c2bb434 + main's Pages-check tooling 87f1380), Pages run
+37944984688 (green), URL 200. `ready` now walks the Pages-base build; deploy's
+live check walked 30 slides: 0 failed, 0 context losses, tier 0.

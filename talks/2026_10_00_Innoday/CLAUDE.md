@@ -85,11 +85,13 @@ the part word during a Part II flight, gone before the photo lands).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** Live: 42d4c5f (v0.5.4,
-the fixed PDF), Pages run 37938998047. On the branch for the next deploy: Part
-II layout A, the FCC ring on 25, the Light Conversion slide (28, waiting for a
-photo with permission), and no gold text anywhere. Slides are now 30 (+ the
-hidden backup).
+2026-10-09: **complete, pending the owner's review.** Deployed 6001e31 —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+Pages run 37944984688 (green), URL 200; `talk ready` passed with nothing
+skipped (now with the Pages-base walk), and deploy's live check walked all 30
+slides: 0 failed requests, 0 context losses, tier 0. Live: Part II layout A,
+the FCC ring on 25, Light Conversion on 28 (in the world; the photo request
+is with the owner), no gold text. Next: the v0.6.4 pin (Scheduler, 9 Oct).
 
 ## Decisions
 
