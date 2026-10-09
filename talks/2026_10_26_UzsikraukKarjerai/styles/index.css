@@ -199,3 +199,10 @@ html[data-stage] .photo-caption {
   font-size: 26px; font-weight: 600; line-height: 1.2; color: #f4f6ff;
   background: rgba(0, 0, 0, 0.55); padding: 8px 16px; border-radius: 8px;
 }
+
+/* --- PDF export: Slidev prints with screen media, so the @media print rules above do not
+   run there, and a line that rises in after a delay (the map's city names at 8,5 s) printed
+   empty. In its print pages every line shows at once, in its final state. */
+html[data-stage] .print-slide-container *,
+html[data-stage] .print-slide-container *::before,
+html[data-stage] .print-slide-container *::after { animation: none !important; transition: none !important; }
