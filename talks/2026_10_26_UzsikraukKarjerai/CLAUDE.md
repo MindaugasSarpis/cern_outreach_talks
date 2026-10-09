@@ -46,7 +46,31 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Status
 
-- 2026-10-08 (night, latest): **complete, pending the owner's review; on the
+- 2026-10-09 (latest): **the live 00ade4a has no photos on slides 6–7**
+  (the Scheduler's render): StagePhoto in v0.5.0 ignores the Pages base, so
+  `/figures/photos/…` 404s at the domain root. Fixed on the branch (b59572e)
+  with relative sources, checked on a `--pages` build served under the real
+  subpath. Awaiting the owner's go to redeploy. Pinned slidev-videos e5d05a9 (5d7e786 plus the two lost-context fixes this review found); first 5d7e786
+  (v0.5.3: device quality tiers, lost-context rebuild, StagePhoto under the
+  base; its assetUrl leaves relative paths alone). Checked on that pin: the
+  `--pages` photo check again; recordings of slides 1–4, 8 (+click), 9, 10
+  (~/talks/.cache/uzk-review/v053), and slides 2 and 10 frame-identical to a
+  v0.5.0 build (v050, ab-02.png, ab-10.png). A review workflow of the
+  toolkit diff found only minor effects, all after a lost WebGL context:
+  plots refill from empty (slide 8's ticks after ~22 s), one quality tier
+  lower until a reload, softer bloom under 1280 px. Reload the page if the
+  console says "stage: context lost".
+
+- 2026-10-09: **deployed 00ade4a** (Pages run 37901453790 green,
+  URL 200; the live bundle carries slide 9's new line, the slide 7 event
+  display and the dimmed-not-burnt peaks). It is 29347fa (the last review:
+  a dot is a computed mass, no unsourced ratio) with origin/main 7163101
+  merged. `talk ready` passed: lint --release 0 errors, check, build, shots,
+  preflight, venue. Open for the owner: the licences of the slide 7 event
+  display and the tunnel clip, the ~7 min length, the 2027 masterclass date
+  and the BL4S call.
+
+- 2026-10-08 (night): **complete, pending the owner's review; on the
   branch, not yet deployed.** After the owner reviewed 01bed17 (live, run
   37832082933): an LHCb introduction (slides 6–7), the search, „Neradau.“ and
   „Ko išmokau“ removed; then the confirmed findings of the final talk-review
