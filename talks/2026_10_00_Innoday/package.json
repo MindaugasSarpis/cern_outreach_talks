@@ -16,15 +16,16 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check .",
+    "stage:check": "slidev-stage-check . --types strands,funnel",
     "stage:shots": "slidev-stage-shots dist shots",
+    "pages:check": "slidev build deck.md --base /cern_outreach_talks/2026_10_00_Innoday/ --out shots/pages-dist && node scripts/pages-check.mjs shots/pages-dist /cern_outreach_talks/2026_10_00_Innoday/ shots/pages 11,13",
     "takeover:frame": "bash scripts/last_frame.sh"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2"
   },
   "devDependencies": {
-    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.5.1",
-    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#v0.5.1&path:/packages/stage"
+    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#5d7e7861744bc2d82ace4010d2a0a3809871e058",
+    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#5d7e7861744bc2d82ace4010d2a0a3809871e058&path:/packages/stage"
   }
 }
