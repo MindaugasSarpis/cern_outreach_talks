@@ -313,3 +313,18 @@ no longer draws. Recorded slides 3–4 and 12–13 (g5a–b): as before;
 4ba0ceb (pin e5d05a9), Pages run 37921708418 (green), URL 200, under the
 standing rule with the Scheduler's go for main. Live headless pass: no failed
 request under the Pages base, tier 0.
+
+## v0.5.3 round (2026-10-09)
+
+Pinned v0.5.3 (merged main f2eecec; the hook reinstalled the lockfile).
+PrintStill retired: the stage prints `public/stills/NN.jpg` (world only,
+`slidev-stage-shots --stills`) under the slide's own text, clips print
+`public/video-frames/<clip>.poster.jpg` (`frames --all`, run with the v0.5.3
+CLI from a scratch install because the shared slidev_videos checkout is on an
+older main). Stills: `--wait 9000` left 12 world slides mid-flight or before
+their forms gathered under SwiftShader; those were re-shot at 30000. The LHCb
+animation's poster is taken at 24 s by hand (the first lit frame is a speck).
+Screen: slides 3–6 and 12–14 recorded, `pages:check` clean, tier 0. Export:
+`--range 4-6` gives three pages, but every page has slide 1's still under the
+theme's `background_default.jpg` in PT Serif (no `html[data-stage]` on the
+export page): toolkit, v0.5.4. The full PDF is 168 MB.

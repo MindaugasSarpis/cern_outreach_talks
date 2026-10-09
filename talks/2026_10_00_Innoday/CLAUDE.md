@@ -79,15 +79,13 @@ the part word during a Part II flight, gone before the photo lands).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** Deployed 4ba0ceb (pin
-e5d05a9) — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
-Pages run 37921708418 (green), URL 200; `talk ready` passed with nothing
-skipped. Live check: no failed request under the Pages base (stills, place
-photos), stage tier 0 on desktop. This round: the Pages-base fix
-(`pnpm pages:check`), v0.5.2 place groups (Part I's wide poses back),
-`humAt: all`, the 5d7e786 pin (quality tiers, lighter places, `?stage-debug`)
-and the takeover's short-lived WebGL context, for the owner's iPhone black
-screen. Next: the owner's review; the v0.5.3 tag when it is cut.
+2026-10-09: **complete, pending the owner's review.** v0.5.3 round on the
+branch (stills and posters for print, PrintStill retired); the screen is
+checked (recordings of slides 3–6 and 12–14, `pages:check` clean, tier 0); the
+PDF export waits for v0.5.4. Last deploy 4ba0ceb (pin e5d05a9) —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+Pages run 37921708418. Next: deploy this round after OpenData, then pin v0.5.4
+and check the export.
 
 ## Decisions
 
@@ -130,7 +128,11 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   Clips print their posters (`public/video-frames/*.poster.jpg`, `slidev-videos
   frames --all`); the LHCb animation's poster is hand-picked at 24 s, the whole
   detector (its first lit frame is a speck on black), so `frames --force`
-  would undo it. Check with a real `pnpm talk export`.
+  would undo it. Check with a real `pnpm talk export`. On v0.5.3 the export
+  is wrong (toolkit, fixed in v0.5.4): every page carries slide 1's still, and
+  `html[data-stage]` is missing on the export page, so the theme's
+  `background_default.jpg` covers the still and the type falls back to PT
+  Serif; `--range` itself works. The screen is unaffected.
 - Place mode over screen mode for Part II (owner via the Scheduler, 8 Oct):
   the inventions visibly hang off the machine.
 - The opener stays whole (slot ≥ 25 min).
