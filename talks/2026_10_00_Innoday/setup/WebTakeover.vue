@@ -2,6 +2,7 @@
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
 import { sampleFrame, placeAlongRays, makeGrains, setPositions } from './takeover.js'
+import { LITE } from './lite.js'
 
 // <WebTakeover src="figures/opener_last.jpg" />, on the slide after the opener.
 // The opener ends on the cosmic web; this slide opens on that same last frame,
@@ -27,6 +28,7 @@ const url = computed(() => (props.src.startsWith('/') || /^https?:/.test(props.s
 const live = computed(() => $renderContext?.value === 'slide')
 const root = ref(null)
 const still = ref(true)          // the still frame shows until the world can take over
+const fading = ref(false)        // lite: the still itself fades over the grains (no copy, no second context)
 const overlay = ref(null)        // the dissolving copy, fixed over the slide
 const box = ref({ left: 0, top: 0, width: 0, height: 0 })
 
@@ -74,8 +76,11 @@ async function takeOver() {
   if (!slide) return
   const r = slide.getBoundingClientRect()
   box.value = { left: r.left, top: r.top, width: r.width, height: r.height }
-  if (!startGl(image)) return
-  drawCopy(-0.1)
+  // lite (phones, tablets): no dissolving copy, so no second WebGL context; the still
+  // fades out over the grains instead
+  const copy = !LITE && startGl(image)
+  if (!copy && !LITE) return
+  if (copy) drawCopy(-0.1)
   // the camera stands exactly where this slide's pose puts it, under the copy
   await frame()
   if (id !== run) return
@@ -84,13 +89,15 @@ async function takeOver() {
   await frame(); await frame()
   if (id !== run) return
   // the grains: made once, placed again on every arrival from the camera as it is now
-  sample ||= sampleFrame(image, { n: props.grains, gamma: props.gamma })
+  // lite: under half the grains, each brighter, so the frame keeps most of its light
+  sample ||= sampleFrame(image, { n: LITE ? Math.round(props.grains * 0.4) : props.grains, gamma: props.gamma })
   let pts = s.h.scene.getObjectByName('takeover-web')
-  if (!pts) { pts = makeGrains(sample, { size: props.size, gain: props.gain }); s.h.scene.add(pts) }
+  if (!pts) { pts = makeGrains(sample, { size: props.size, gain: props.gain * (LITE ? 1.9 : 1) }); s.h.scene.add(pts) }
   pts.material.uniforms.uPixelRatio.value = s.h.dpr || 1
   pts.material.uniforms.uReveal.value = 0
   setPositions(pts, placeAlongRays(sample, s.camera, box.value, s.canvas.getBoundingClientRect(), { near: props.near, far: props.far }))
-  still.value = false
+  if (LITE) fading.value = true
+  else still.value = false
   await new Promise((r) => setTimeout(r, props.hold))
   if (id !== run) return
   const t0 = performance.now()
@@ -100,7 +107,7 @@ async function takeOver() {
     drawCopy(-0.1 + 1.25 * u)
     pts.material.uniforms.uReveal.value = Math.min(1, u * 1.3)
     if (u < 1) raf = requestAnimationFrame(step)
-    else { stopGl(); releaseGl() }
+    else { stopGl(); releaseGl(); if (LITE) { still.value = false; fading.value = false } }
   }
   raf = requestAnimationFrame(step)
 }
@@ -166,7 +173,7 @@ function releaseGl() { gl?.getExtension('WEBGL_lose_context')?.loseContext(); gl
 onSlideEnter(() => { if (live.value) takeOver() })
 onMounted(() => { if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver() })
 onSlideLeave(() => {
-  const id = ++run; cancelAnimationFrame(raf); stopGl(); still.value = true
+  const id = ++run; cancelAnimationFrame(raf); stopGl(); still.value = true; fading.value = false
   setTimeout(() => { if (id === run) releaseGl() }, 400)   // after the copy's fade
   // left before the dissolve finished: the world keeps its grains, whole
   const p = stage()?.h.scene.getObjectByName('takeover-web')
@@ -187,9 +194,9 @@ watch(() => nav.currentSlideNo?.value, (n) => {
 
 <template>
   <div ref="root" class="web-takeover">
-    <img v-if="still" class="takeover-still" :src="url" alt="Paskutinis įžanginio vaizdo klipo kadras" />
+    <img v-if="still" class="takeover-still" :class="{ fading }" :style="fading ? { transitionDuration: `${props.ms}ms` } : null" :src="url" alt="Paskutinis įžanginio vaizdo klipo kadras" />
     <Teleport to="body">
-      <canvas v-if="live" :key="gen" ref="overlay" class="takeover-copy" aria-hidden="true"
+      <canvas v-if="live && !LITE" :key="gen" ref="overlay" class="takeover-copy" aria-hidden="true"
         :style="{ left: box.left + 'px', top: box.top + 'px', width: box.width + 'px', height: box.height + 'px' }"></canvas>
     </Teleport>
   </div>
@@ -197,6 +204,7 @@ watch(() => nav.currentSlideNo?.value, (n) => {
 
 <style>
 .web-takeover { position: absolute; inset: 0; pointer-events: none; }
-.web-takeover .takeover-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.web-takeover .takeover-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 3.2s ease-in; }
+.web-takeover .takeover-still.fading { opacity: 0; }
 .takeover-copy { position: fixed; z-index: 40; pointer-events: none; opacity: 0; transition: opacity 0.35s ease; }
 </style>

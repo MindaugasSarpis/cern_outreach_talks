@@ -1,4 +1,5 @@
 import { Points, BufferGeometry, BufferAttribute, ShaderMaterial, AdditiveBlending, Vector3 } from 'three'
+import { POINT_CAP } from './lite.js'
 
 // The opener's last frame becomes the world. Every bright pixel of the frame
 // is a grain; each grain is placed along its own pixel's line of sight from
@@ -86,7 +87,7 @@ void main() {
   // each grain lights at its own moment while the picture lets go of it
   float r = clamp(uReveal * 1.35 - aSeed * 0.35, 0.0, 1.0);
   // capped, and fading out near the camera: a flight through the cloud must not fill the screen
-  gl_PointSize = min(uPixelRatio * aSize * (72.0 / max(-mv.z, 0.1)), 48.0 * uPixelRatio);
+  gl_PointSize = min(uPixelRatio * aSize * (72.0 / max(-mv.z, 0.1)), ${POINT_CAP.toFixed(1)} * uPixelRatio);
   vColor = aColor * uGain;
   vAlpha = r * tw * smoothstep(0.25, 1.0, -mv.z);
 }`

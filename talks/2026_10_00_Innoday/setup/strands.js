@@ -1,6 +1,7 @@
 import {
   Group, Points, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color,
 } from 'three'
+import { LITE, grains, POINT_CAP } from './lite.js'
 
 // Innoday's own world form, on the engine's stage (slidev-addon-stage):
 //
@@ -69,7 +70,7 @@ void main() {
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 0.72 + 0.28 * sin(uTime * (1.1 + aSeed * 2.3) + aSeed * 40.0);
-  gl_PointSize = uPixelRatio * size * tw * (72.0 / max(-mv.z, 0.1));
+  gl_PointSize = min(uPixelRatio * size * tw * (72.0 / max(-mv.z, 0.1)), ${POINT_CAP.toFixed(1)} * uPixelRatio);
   vColor = mix(uColor, uWhite, 0.35 * hash(aSeed * 41.0) + (aKind > 0.5 ? 0.25 : 0.0));
   vAlpha = alpha * tw * uOn;
 }`
@@ -94,8 +95,9 @@ export function strandEnds(o, angle) {
 
 function buildStrands(o, ctx) {
   const list = o.strands || [], group = o.group || 'inventions'
-  const per = Math.round(o.grains ?? 1600), node = Math.round(o.node ?? 700)
-  const ring = o.ring || null, nRing = ring ? Math.round(ring.grains ?? 12000) : 0
+  // lite (setup/lite.js): half the grains, each a little brighter
+  const per = grains(Math.round(o.grains ?? 1600), 0.5), node = grains(Math.round(o.node ?? 700), 0.5)
+  const ring = o.ring || null, nRing = ring ? grains(Math.round(ring.grains ?? 12000), 0.4) : 0
   const N = list.length * (per + node) + nRing
   const seed = new Float32Array(N), kind = new Float32Array(N)
   const from = new Float32Array(N * 3), end = new Float32Array(N * 3), ctl = new Float32Array(N * 3), off = new Float32Array(N * 3)
@@ -126,10 +128,10 @@ function buildStrands(o, ctx) {
     vertexShader: VERT, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
     uniforms: {
       uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) },
-      uSpeed: { value: o.speed ?? 0.09 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.5 },
+      uSpeed: { value: o.speed ?? 0.09 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: (o.alpha ?? 0.5) * (LITE ? 1.4 : 1) },
       uNodeR: { value: o.nodeRadius ?? 0.6 }, uOn: { value: shown[group] ? 1 : 0 },
       uCenter: { value: o.center || [0, 0, 0] }, uRadius: { value: o.radius ?? 7 },
-      uRingSpeed: { value: ring?.speed ?? 0.01 }, uRingSize: { value: ring?.size ?? 1.3 }, uRingAlpha: { value: ring?.alpha ?? 0.6 },
+      uRingSpeed: { value: ring?.speed ?? 0.01 }, uRingSize: { value: ring?.size ?? 1.3 }, uRingAlpha: { value: Math.min(1, (ring?.alpha ?? 0.6) * (LITE ? 1.5 : 1)) },
       uColor: { value: new Color(o.color || '#ffc96b').convertLinearToSRGB() }, uWhite: { value: new Color(1, 0.97, 0.9) },
     },
   })

@@ -1,6 +1,7 @@
 import {
   Group, Points, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Vector3,
 } from 'three'
+import { LITE, grains, POINT_CAP } from './lite.js'
 
 // Innoday's opening form, on the engine's stage (slidev-addon-stage):
 //
@@ -37,7 +38,7 @@ void main() {
   gl_Position = projectionMatrix * mv;
   float tw = 1.0 - aTw * (0.5 - 0.5 * sin(uTime * (0.7 + aSeed * 1.9) + aSeed * 40.0));
   // capped at 48 px, fading out within a unit of the camera (the camera flies through)
-  gl_PointSize = min(uPixelRatio * uSize * aSize * tw * (72.0 / max(-mv.z, 0.1)), 48.0 * uPixelRatio);
+  gl_PointSize = min(uPixelRatio * uSize * aSize * tw * (72.0 / max(-mv.z, 0.1)), ${POINT_CAP.toFixed(1)} * uPixelRatio);
   vColor = aColor; vAlpha = uAlpha * aAlpha * tw * smoothstep(0.25, 1.0, -mv.z) * mix(1.0, uFlare, aFlare) * mix(1.0, uDisk, aDisk);
 }`
 const FRAG = /* glsl */ `
@@ -57,6 +58,10 @@ function radius(s, L, neck, mouth) {
   return neck + (mouth - neck) * (0.82 * t + 0.18 * Math.pow(t, 4))
 }
 
+// lite (phones, tablets: setup/lite.js): fewer grains, each group a little brighter
+// so the whole keeps its light; the wireframe and floor drawn coarser
+const lw = (share) => (LITE ? Math.min(2, 1 / Math.sqrt(share)) : 1)
+
 function buildFunnel(o, ctx) {
   const L = o.length ?? 26, mouth = o.mouth ?? 6.3, neck = o.neck ?? 3.4
   const R = (s) => radius(s, L, neck, mouth)
@@ -67,30 +72,30 @@ function buildFunnel(o, ctx) {
   const W = [1, 1, 1], ICE = [0.78, 0.88, 1]
 
   // the wireframe: rings and lines as dense lines of fine white grains
-  const rings = o.rings ?? 15, lines = o.lines ?? 16
+  const rings = o.rings ?? 15, lines = o.lines ?? 16, STEP = LITE ? 0.06 : 0.035
   for (let k = 0; k < rings; k++) {
-    const s = L * (k / (rings - 1)), r = R(s), n = Math.round(2 * Math.PI * r / 0.035)
+    const s = L * (k / (rings - 1)), r = R(s), n = Math.round(2 * Math.PI * r / STEP)
     for (let i = 0; i < n; i++) { const t = (i / n) * Math.PI * 2; add(s, r * Math.cos(t), r * Math.sin(t), W, 1.05, 0.03, 1) }
   }
   for (let k = 0; k < lines; k++) {
-    const t = (k / lines) * Math.PI * 2, n = Math.round(L / 0.035)
+    const t = (k / lines) * Math.PI * 2, n = Math.round(L / STEP)
     for (let i = 0; i <= n; i++) { const s = L * (i / n), r = R(s); add(s, r * Math.cos(t), r * Math.sin(t), W, 1.05, 0.03, 1) }
   }
   // the inflation neck: a faint flaring sheath from the flare to the disk
-  for (let i = 0; i < 1600; i++) {
+  for (let i = 0, N = grains(1600, 0.5); i < N; i++) {
     const s = -1.3 * hash(i * 1.9), t = hash(i * 3.7) * Math.PI * 2, r = R(s)
     add(s, r * Math.cos(t), r * Math.sin(t), ICE, 0.55, 0.3, 0.45)
   }
   // the Big Bang: a white-blue flare with a soft glow and spikes, just before the neck
   const bb = -2.6
   flare = 1
-  for (let i = 0; i < 900; i++) {   // the core
+  for (let i = 0, N = grains(900, 0.5); i < N; i++) {   // the core
     const r = 0.6 * Math.abs(gauss(i)), t = hash(i * 2.3) * Math.PI * 2, u = hash(i * 4.1) * 2 - 1
     add(bb + r * u, r * Math.sqrt(1 - u * u) * Math.cos(t), r * Math.sqrt(1 - u * u) * Math.sin(t), W, 4.5, 0.1, 1)
   }
-  for (let i = 0; i < 2600; i++) {   // the glow: big, soft
+  for (let i = 0, N = grains(2600, 0.35); i < N; i++) {   // the glow: big, soft
     const r = 4.2 * Math.abs(gauss(i + 900)), t = hash(i * 5.9) * Math.PI * 2, u = hash(i * 6.7) * 2 - 1
-    add(bb + r * u * 0.6, r * Math.sqrt(1 - u * u) * Math.cos(t), r * Math.sqrt(1 - u * u) * Math.sin(t), [0.72, 0.86, 1], 14, 0.06, 0.4)
+    add(bb + r * u * 0.6, r * Math.sqrt(1 - u * u) * Math.cos(t), r * Math.sqrt(1 - u * u) * Math.sin(t), [0.72, 0.86, 1], 14, 0.06, 0.4 * lw(0.35))
   }
   for (let k = 0; k < 10; k++) {    // spikes, as a lens draws a bright light
     const t = (k / 10) * Math.PI * 2 + 0.2, len = 4 + 3 * hash(k * 3.3)
@@ -98,21 +103,21 @@ function buildFunnel(o, ctx) {
   }
   flare = 0
   // the CMB: a disk across the narrow end; colours come from the map
-  const capN = 150, capFirst = pts.length
+  const capN = LITE ? 100 : 150, capFirst = pts.length
   for (let i = 0; i < capN; i++) for (let j = 0; j < capN; j++) {
     const u = (i + 0.5) / capN * 2 - 1, v = (j + 0.5) / capN * 2 - 1
     if (u * u + v * v > 1) continue
     const r = R(0) * 0.985
-    add(0.02, u * r, v * r, [0.6, 0.85, 0.5], 1.15, 0.05, 1, 1)
+    add(0.02, u * r, v * r, [0.6, 0.85, 0.5], LITE ? 1.6 : 1.15, 0.05, 1, 1)
   }
   const capLast = pts.length
   // the afterglow: a bright pale-blue ring at the wall just after the disk
-  for (let i = 0; i < 5200; i++) {
+  for (let i = 0, N = grains(5200, 0.5); i < N; i++) {
     const s = 0.3 + 0.45 * Math.pow(hash(i * 6.1), 1.2), r = R(s) * (0.94 + 0.06 * hash(i * 3.9)), t = hash(i * 7.3) * Math.PI * 2
-    add(s, r * Math.cos(t), r * Math.sin(t), [0.7, 0.85, 1], 1.5, 0.1, 1.2 * (1 - (s - 0.3) / 0.45))
+    add(s, r * Math.cos(t), r * Math.sin(t), [0.7, 0.85, 1], 1.5, 0.1, 1.2 * lw(0.5) * (1 - (s - 0.3) / 0.45))
   }
   // and a faint pale-blue sheet across it
-  for (let i = 0; i < 2600; i++) {
+  for (let i = 0, N = grains(2600, 0.5); i < N; i++) {
     const s = 0.15 + 1.2 * Math.pow(hash(i * 8.3), 1.5), r = R(s) * 0.97 * Math.sqrt(hash(i * 2.2)), t = hash(i * 9.1) * Math.PI * 2
     add(s, r * Math.cos(t), r * Math.sin(t), [0.66, 0.82, 1], 3.0, 0.12, 1.0 * (1 - (s - 0.15) / 1.2))
   }
@@ -127,14 +132,14 @@ function buildFunnel(o, ctx) {
     add(s, r * Math.cos(t), r * Math.sin(t), hash(i) > 0.5 ? [0.75, 0.88, 1] : [1, 0.95, 0.85], 2.2, 0.6, 1)
   }
   // the body: a faint blue-violet haze of fine grains inside the bell, thicker toward the mouth
-  for (let i = 0; i < 16000; i++) {
+  for (let i = 0, N = grains(16000, 0.35); i < N; i++) {
     const q = Math.pow(hash(i * 2.17), 0.75), s = 5 + (L - 5.2) * q
     const r = R(s) * 0.95 * Math.sqrt(hash(i * 5.31)), t = hash(i * 8.17) * Math.PI * 2
     const c = hash(i * 1.71) < 0.55 ? [0.38, 0.45, 0.95] : [0.6, 0.4, 0.9]
-    add(s, r * Math.cos(t), r * Math.sin(t), c, 2.6, 0.05, 0.24 + 0.32 * q)
+    add(s, r * Math.cos(t), r * Math.sin(t), c, 2.6, 0.05, (0.24 + 0.32 * q) * lw(0.35))
   }
   // galaxies: colourful clusters, some larger spirals, denser and brighter toward the mouth
-  const G = o.galaxies ?? 2000
+  const G = grains(o.galaxies ?? 2000, 0.45)
   const palette = [[0.55, 0.72, 1], [1, 1, 1], [1, 0.82, 0.45], [0.78, 0.6, 1], [0.6, 0.9, 1], [1, 0.65, 0.5]]
   for (let g = 0; g < G; g++) {
     const q = Math.pow(hash(g * 1.13), 0.6)                 // more of them toward the mouth
@@ -145,7 +150,7 @@ function buildFunnel(o, ctx) {
     const bright = 0.55 + 0.4 * q
     const spiral = hash(g * 7.7) < 0.18, big = spiral ? 0.45 + 0.55 * hash(g * 5.5) : 0.08 + 0.18 * hash(g * 5.5)
     const tilt = hash(g * 6.6) * Math.PI, turn = hash(g * 8.8) * Math.PI * 2
-    const per = spiral ? 220 : 26
+    const per = spiral ? (LITE ? 110 : 220) : 26
     for (let k = 0; k < per; k++) {
       let dx, dy
       if (spiral) {   // two arms
@@ -163,8 +168,9 @@ function buildFunnel(o, ctx) {
   const floorFirst = pts.length
   if (o.floor !== false) {
     const y = -(mouth + 1.2), x0 = -8, x1 = L + 10, z0 = -18, z1 = 18, step = 2
-    for (let x = x0; x <= x1; x += step) for (let i = 0; i <= 500; i++) add(x, y, z0 + (z1 - z0) * i / 500, [0.5, 0.6, 0.9], 1.3, 0.02, 0.9)
-    for (let z = z0; z <= z1; z += step) for (let i = 0; i <= 700; i++) add(x0 + (x1 - x0) * i / 700, y, z, [0.5, 0.6, 0.9], 1.3, 0.02, 0.9)
+    const fx = LITE ? 250 : 500, fz = LITE ? 350 : 700
+    for (let x = x0; x <= x1; x += step) for (let i = 0; i <= fx; i++) add(x, y, z0 + (z1 - z0) * i / fx, [0.5, 0.6, 0.9], 1.3, 0.02, 0.9)
+    for (let z = z0; z <= z1; z += step) for (let i = 0; i <= fz; i++) add(x0 + (x1 - x0) * i / fz, y, z, [0.5, 0.6, 0.9], 1.3, 0.02, 0.9)
   }
 
   // into world space along the axis
