@@ -47,8 +47,11 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Status
 
-- 2026-10-09 (latest): **v0.6.6 on the branch, awaiting main and the owner's go.**
-  Live is still a8b4f46; see Decisions for the move.
+- 2026-10-09 (latest): **deployed a9269bf** on the owner's go: slidev-videos v0.6.7
+  (the iPhone NaN guard) on top of the v0.6.6 move. Pages run 37964270854 green,
+  live walk passed, URL 200. Open for the owner: their moments for slide 11
+  (relayed by the Scheduler), the licences of the event display and the tunnel
+  clip, the 2027 masterclass date and the BL4S call.
 
 - 2026-10-09: **deployed a8b4f46** on the owner's go (Pages run
   37947797885 green; the deploy's live walk passed; URL 200). It holds round 2,
