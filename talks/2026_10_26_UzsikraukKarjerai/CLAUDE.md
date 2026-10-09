@@ -46,7 +46,14 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Status
 
-- 2026-10-09 (latest): **deployed 00ade4a** (Pages run 37901453790 green,
+- 2026-10-09 (latest): **the live 00ade4a has no photos on slides 6–7**
+  (the Scheduler's render): StagePhoto in v0.5.0 ignores the Pages base, so
+  `/figures/photos/…` 404s at the domain root. Fixed on the branch (b59572e)
+  with relative sources, checked on a `--pages` build served under the real
+  subpath. Awaiting the owner's go to redeploy. When Tools ships v0.5.2 (the
+  base fix), pin it; the relative sources keep working with it.
+
+- 2026-10-09: **deployed 00ade4a** (Pages run 37901453790 green,
   URL 200; the live bundle carries slide 9's new line, the slide 7 event
   display and the dimmed-not-burnt peaks). It is 29347fa (the last review:
   a dot is a computed mass, no unsourced ratio) with origin/main 7163101
