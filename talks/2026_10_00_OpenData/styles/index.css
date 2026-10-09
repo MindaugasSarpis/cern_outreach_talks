@@ -189,10 +189,3 @@ html[data-stage] .finds .line, html[data-stage] .chips li, html[data-stage] .poi
   html[data-stage] .readout, html[data-stage] .points li, html[data-stage] .photo img, html[data-stage] .photo-text,
   html[data-stage] .finds-text, html[data-stage] .finds-plot, html[data-stage] .slidev-layout.statement .team { animation: none !important; }
 }
-
-/* ---- print and PDF: the world is not drawn there, so a world slide shows a still of
-   itself (public/stills/, from the final shots) under its text */
-html[data-stage] .print-still { display: none; }
-@media print {
-  html[data-stage] .print-still { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 50; }   /* the shot already carries the slide's text */
-}

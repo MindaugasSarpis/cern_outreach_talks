@@ -10,11 +10,15 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
 Toolkit pin: slidev-videos `12aa015`, for both addons.
 
-## Status (2026-10-09): approved by the owner; the moving ring is on the branch, not deployed
+## Status (2026-10-09): approved by the owner; deployed with the moving ring
 
 - The owner, 2026-10-09: "All good, just the ring with people should be
-  dynamic, moving, interacting like particles". Done on the branch (see the
-  decision below); deployed is still 484a430.
+  dynamic, moving, interacting like particles". Done (see the decision
+  below).
+- Redeployed 2026-10-09 on the owner's go, after Užsikrauk karjerai: commit
+  d97015a on main, Pages run 37902214612 (every job success). The talk's URL
+  answers 200 with the Lithuanian title, and the live space.json carries the
+  ring's `motion`. `talk ready` passed on the same commit.
 
 - 13 slides in Lithuanian, about 6.0 of 6.5 min (lint, lang lt: 0 errors, 0
   warnings). Toolkit pin v0.5.1.
@@ -178,9 +182,12 @@ Toolkit pin: slidev-videos `12aa015`, for both addons.
 
 ## Open
 
-- On the branch, not yet deployed: `grain` is 0.012 again (the tooling merge
-  fixed the broadcast detector), slide 5 has its print still, and the moving
-  ring. Redeploy when the owner asks (or the Scheduler calls it).
+- Deployed in d97015a: `grain` 0.012 again, slide 5's print still, the
+  moving ring and the owner's answers.
+- The pinned shots tool (`talk ready`'s shots) waits a fixed 4.2 s of real
+  time per slide; on SwiftShader the engine clock runs far slower, so its
+  slide 13 catches the flight in (no ring yet, or the ring off centre). The
+  record tool (a fake clock) shows the closing slide as it plays.
 
 - Specks: gone on shots v12 (confirmed on a full-resolution crop of slide 7).
 - Opened directly at slide 7 (a deep link or a reload), the piles never
