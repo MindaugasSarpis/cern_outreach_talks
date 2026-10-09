@@ -9,8 +9,11 @@
 //   node scripts/pages_check.mjs --url https://…/<talk>/ [--json out.json]
 //       the live deck, after a deploy (talk deploy)
 //
-// Options: --wait <ms> per slide (default 1200), --slides <n> at most (default: until a
-// slide does not appear). Exit 0 clean, 1 something failed, 2 could not run.
+// Options: --wait <ms> per slide (default 1200), --slides <n> at most (default: the deck's
+// count, from the stage's window.__stage, else until a slide does not appear). A slide that does not appear within 5 s is
+// asked for again and given 20 s more (a long main-thread block, a clip arriving, a cold
+// CDN); one that still does not, before the deck's last, fails the walk.
+// Exit 0 clean, 1 something failed, 2 could not run.
 // Promoted from the Innoday talk's scripts/pages-check.mjs (2026-10-09).
 import { createServer } from 'node:http'
 import { readFile, stat, readdir, writeFile } from 'node:fs/promises'
@@ -69,18 +72,30 @@ page.on('response', (r) => { if (r.status() >= 400 && !clip(r.url())) note(`${r.
 page.on('requestfailed', (r) => { if (!clip(r.url()) && !/ERR_ABORTED/.test(r.failure()?.errorText || '')) note(`ERR ${r.url()} ${r.failure()?.errorText}`) })
 page.on('console', (m) => { if (lost.test(m.text())) contextLost.push({ slide: at, text: m.text().slice(0, 200) }) })
 
-let slides = 0, error = null
+// slide n, asked for by the hash: on screen within `ms`, and the hash still says n
+// (past the last slide Slidev puts the hash back)
+async function reach(n, ms) {
+  await page.evaluate((n) => { location.hash = `#/${n}` }, n)
+  const there = await page.waitForSelector(`.slidev-page[data-slidev-no="${n}"]`, { state: 'attached', timeout: ms }).then(() => true, () => false)
+  return there && await page.evaluate((n) => Number((/^#\/(\d+)/.exec(location.hash) || [])[1]) === n, n)
+}
+let slides = 0, total = null, error = null
+const retried = []
 try {
   await page.goto(`${base}#/1`, { waitUntil: 'load', timeout: 60000 })
   await page.waitForSelector('.slidev-page[data-slidev-no="1"]', { state: 'attached', timeout: 60000 })
   await page.waitForTimeout(Math.max(wait, 3000))
   slides = 1
-  for (let n = 2; n <= most; n++) {
+  // the deck's count: the stage's probe has it (a production build exposes no __slidev__)
+  total = await page.evaluate(() => Number(window.__stage?.state?.()?.total || window.__slidev__?.nav?.total) || null).catch(() => null)
+  for (let n = 2; n <= Math.min(most, total ?? most); n++) {
     at = n
-    await page.evaluate((n) => { location.hash = `#/${n}` }, n)
-    const there = await page.waitForSelector(`.slidev-page[data-slidev-no="${n}"]`, { state: 'attached', timeout: 5000 }).then(() => true, () => false)
-    const on = there && await page.evaluate((n) => Number((/^#\/(\d+)/.exec(location.hash) || [])[1]) === n, n)
-    if (!on) break
+    let on = await reach(n, 5000)
+    if (!on && (total == null || n <= total)) { retried.push(n); on = await reach(n, 20000) }
+    if (!on) {
+      if (total != null) error = `slide ${n} of ${total} did not appear (asked twice, 25 s)`
+      break
+    }
     slides = n
     await page.waitForTimeout(wait)
   }
@@ -89,10 +104,11 @@ const tier = await page.evaluate(() => document.querySelector('.stage canvas')?.
 await browser.close(); server?.close()
 
 const strip = (s) => (live ? s : s.replace(base.slice(0, base.length - prefix.length), ''))
-const report = { ok: !error && failed.size === 0 && contextLost.length === 0, where: live || prefix, slides, tier,
+const report = { ok: !error && failed.size === 0 && contextLost.length === 0, where: live || prefix, slides, total, retried, tier,
   failed: [...failed].map(([line, slide]) => ({ slide, request: strip(line) })), context_lost: contextLost, ...(error ? { error } : {}) }
 for (const f of report.failed) console.log(`slide ${f.slide}: ${f.request}`)
 for (const c of contextLost) console.log(`slide ${c.slide}: ${c.text}`)
+if (retried.length) console.log(`slow to appear, asked again: slide ${retried.join(', ')}`)
 if (error) console.log(`error: ${error}`)
 console.log(report.ok ? `pages ok: ${slides} slide(s) under ${report.where}, nothing failed`
   : `${report.failed.length} failed request(s), ${contextLost.length} lost context(s) in ${slides} slide(s) under ${report.where}`)

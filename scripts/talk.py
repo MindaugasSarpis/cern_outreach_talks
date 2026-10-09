@@ -885,6 +885,16 @@ def pages_check(root: Path, talk: str, *, url: str | None = None, site: str | No
     return out
 
 
+def live_summary(live: dict) -> str:
+    """One pages_check result in a line: what failed, and how far the walk got."""
+    parts = [f"{len(live.get('failed') or [])} failed request(s)",
+             f"{len(live.get('context_lost') or [])} lost context(s)",
+             f"{live.get('slides') or 0} slide(s) walked"]
+    if live.get("error"):
+        parts.append(str(live["error"]))
+    return ", ".join(parts)
+
+
 def build_current(repo: Repo, talk: str) -> bool:
     meta = read_json(build_dir(talk) / "build.json")
     return (meta.get("root") == str(repo.here) and meta.get("base") == "/"
@@ -1937,16 +1947,23 @@ def watch_deploy(repo: Repo, wt: Path, talk: str, sha: str, data: dict, live_che
         record["deployed"] = True
         if live_check:
             # the live deck, walked: a request that fails or a WebGL context lost there is a
-            # failed deploy even though Pages answered 200
+            # failed deploy even though Pages answered 200. Walked once more before that is
+            # said: a fresh deploy's first walk can meet a cold CDN or a slow first clip
             OUT.say(f"-- live check {data['url']}")
             live = pages_check(wt, talk, url=data["url"])
+            if not live["ok"]:
+                OUT.say(f"   live check failed ({live_summary(live)}); walking it once more")
+                first = live
+                live = pages_check(wt, talk, url=data["url"])
+                live["attempts"] = [live_summary(first), live_summary(live)]
+                if not live["ok"]:
+                    live["first"] = {k: first.get(k) for k in ("slides", "failed", "context_lost", "error")}
             record["live"] = live
             if not live["ok"]:
-                record["error"] = (f"live check: {len(live.get('failed') or [])} failed request(s), "
-                                   f"{len(live.get('context_lost') or [])} lost context(s) at {data['url']}"
-                                   + (f" ({live['error']})" if live.get("error") else ""))
+                record["error"] = "live check failed twice: " + "; then ".join(live["attempts"]) + f" at {data['url']}"
                 return 1, data
-        OUT.say(f"deployed: {data['url']} ({sha[:12]}, {run_['url']})")
+        again = " (live check clean on the second walk)" if live_check and record["live"].get("attempts") else ""
+        OUT.say(f"deployed: {data['url']} ({sha[:12]}, {run_['url']}){again}")
         return 0, data
     finally:
         record["finished_at"] = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")

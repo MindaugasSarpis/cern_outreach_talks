@@ -11,6 +11,7 @@ import json
 import os
 import re
 import shutil
+import types
 import subprocess
 import sys
 import tempfile
@@ -1216,3 +1217,29 @@ def test_pages_check_reads_the_walk(tmp_path, monkeypatch):
     assert bad["failed"] == [{"slide": 2, "request": "404 /figures/x.jpg"}]
     assert bad["context_lost"][0]["text"].endswith("context-lost")
     assert bad["report"].endswith("pages-live.json")
+
+
+@pytest.mark.parametrize("walks, rc, error", [
+    ([{"ok": True, "slides": 30}], 0, None),
+    ([{"ok": False, "slides": 3, "error": "slide 4 of 30 did not appear"}, {"ok": True, "slides": 30}], 0, None),
+    ([{"ok": False, "slides": 3, "error": "slide 4 of 30 did not appear"},
+      {"ok": False, "slides": 30, "failed": [{"slide": 9, "request": "404 /x.jpg"}]}], 1,
+     "live check failed twice: 0 failed request(s), 0 lost context(s), 3 slide(s) walked, slide 4 of 30 did not appear; "
+     "then 1 failed request(s), 0 lost context(s), 30 slide(s) walked at https://example.org/t/"),
+])
+def test_deploy_walks_the_live_deck_once_more_before_it_fails(tmp_path, monkeypatch, walks, rc, error):
+    left = list(walks)
+    monkeypatch.setattr(talk_cli, "pages_check", lambda root, talk, url=None, **k: dict(left.pop(0)))
+    monkeypatch.setattr(talk_cli, "on_github", lambda repo: True)
+    monkeypatch.setattr(talk_cli, "gh_json", lambda args, cwd: ([{"headSha": "abc", "databaseId": 7, "url": "https://gh/run/7"}], None))
+    monkeypatch.setattr(talk_cli, "poll_run", lambda wt, rid, talk: {"status": "completed", "conclusion": "success",
+                                                                     "jobs": [{"name": "deploy", "conclusion": "success"}]})
+    monkeypatch.setattr(talk_cli, "talk_build_job", lambda jobs, talk: "success")
+    monkeypatch.setattr(talk_cli, "http_status", lambda url: 200)
+    repo = types.SimpleNamespace(common=tmp_path, here=tmp_path)
+    code, data = talk_cli.watch_deploy(repo, tmp_path, "2026_10_00_OpenData", "abc", {"url": "https://example.org/t/"})
+    assert code == rc and not left
+    assert data["status"].get("error") == error
+    assert data["status"]["deployed"] is True
+    if len(walks) == 2:
+        assert len(data["status"]["live"]["attempts"]) == 2

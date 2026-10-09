@@ -207,6 +207,10 @@ function buildFunnel(o, ctx) {
   const along = (v) => axis === 'z-' ? -v.z : axis === 'z+' ? v.z : axis === 'x-' ? -v.x : v.x
   const across = (v) => axis === 'z-' || axis === 'z+' ? Math.hypot(v.x, v.y) : Math.hypot(v.y, v.z)
   points.onBeforeRender = (r, scene, camera) => {
+    // the CMB picture goes to the GPU as soon as it has loaded (on the cover, while the
+    // deck is idle), not on the frame that first shows it: a 2048² upload with its
+    // mipmaps stalled the arrival at slide 4 (seconds on a software renderer)
+    if (diskTex && !diskUp) { r.initTexture(diskTex); diskUp = true }
     mat.uniforms.uView.value = viewScale(r)
     g.worldToLocal(cam.copy(camera.position))
     const sAx = along(cam), off = across(cam)
@@ -225,7 +229,7 @@ function buildFunnel(o, ctx) {
   // nothing adds up toward white on a small screen. `cmbDisk`: the image (a
   // square, the disk inscribed; `cmbDiskSmall` for touch devices); `cmbTint`:
   // its brightness (0–1).
-  let alive = true, diskTex = null
+  let alive = true, diskTex = null, diskUp = false
   const r0d = R(0) * 0.985
   const diskMat = new MeshBasicMaterial({ color: new Color().setScalar(o.cmbTint ?? 0.85), side: DoubleSide })
   const disk = new Mesh(new CircleGeometry(r0d, 192), diskMat)
