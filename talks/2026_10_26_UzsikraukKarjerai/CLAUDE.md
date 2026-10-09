@@ -47,7 +47,15 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Status
 
-- 2026-10-09 (latest): **deployed 852e96a** on the owner's go: slidev-videos v0.6.8
+- 2026-10-09 (latest): **deployed 1ed62a9** under the owner's standing deploy rule
+  (set in this talk's session before this round): slidev-videos v0.7.0, the
+  batch round. Stills are at each slide's last click, and main 9dc21bd is merged.
+  `talk ready` passed with nothing skipped. Pages run 37988984512 green, live walk
+  passed for 13 slides, URL 200. Still open for the owner: their moments for
+  slide 11, the licences of the event display and the tunnel clip, the 2027
+  masterclass date and the BL4S call.
+
+- 2026-10-09: **deployed 852e96a** on the owner's go: slidev-videos v0.6.8
   (the phone washout fix: the talk's builders return a frame-relative
   `frameScale`, so grains keep their size on a high-density screen; laptops
   unchanged) and main be73ad6. `talk ready` passed with nothing skipped. Pages
