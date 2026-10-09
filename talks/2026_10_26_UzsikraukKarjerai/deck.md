@@ -143,7 +143,7 @@ Pentakvarkų istorija tuo nesibaigė. Ji tęsėsi eksperimente, kuriame dabar di
 space: { at: lhcb, dim: 0 }
 ---
 
-<StagePhoto src="/figures/photos/lhcb-cavern.jpg" alt="LHCb detektoriaus požeminė salė, CERN, 2019 m.">
+<StagePhoto src="figures/photos/lhcb-cavern.jpg" alt="LHCb detektoriaus požeminė salė, CERN, 2019 m.">
 <div class="photo-credit">LHCb, CERN · Rosa Menkman nuotr., CC BY 2.0</div>
 </StagePhoto>
 
@@ -162,7 +162,7 @@ Viename iš susidūrimo taškų stovi LHCb – penkių tūkstančių šešių š
 space: { at: lhcb, dim: 0 }
 ---
 
-<StagePhoto src="/figures/photos/lhcb-event-run3.jpg" alt="Vienas protonų susidūrimas atnaujintame LHCb detektoriuje, 2022 m.: dalelių pėdsakai sklinda per detektorių" focus="35% 50%">
+<StagePhoto src="figures/photos/lhcb-event-run3.jpg" alt="Vienas protonų susidūrimas atnaujintame LHCb detektoriuje, 2022 m.: dalelių pėdsakai sklinda per detektorių" focus="35% 50%">
 <div class="photo-caption">Protonų susidūrimas LHCb detektoriuje</div>
 <div class="photo-credit">© CERN, LHCb</div>
 </StagePhoto>
