@@ -14,7 +14,9 @@
         1920,
         1080
       ],
-      "duration": 39.12
+      "duration": 39.12,
+      "poster": "lhcb.mp4.poster.jpg",
+      "lit": 0.0
     }
   }
 }
