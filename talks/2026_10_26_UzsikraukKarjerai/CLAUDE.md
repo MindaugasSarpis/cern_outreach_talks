@@ -177,6 +177,14 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Decisions
 
+- 2026-10-09 — slidev-videos v0.6.8: grains sized to the frame. The talk's builders
+  (histogram, path, quintet, map, pairs, ghost, streams) return their
+  `uPixelRatio` as `frameScale`, so the engine keeps it at the buffer's height
+  / 900 instead of the device pixel ratio. At 1600×900 the stills keep their
+  mean brightness to within 0,05 of a level. At phone size (844×390 and 390×844
+  viewports, the same grain-to-slide ratio as an iPhone 13 at ratio 3), the
+  LHCb heap no longer saturates to flat yellow, and the ticks and map lines stay
+  fine (~/talks/.cache/uzk-review/phone/landscape-ab.png).
 - 2026-10-09 — slidev-videos v0.6.6 (from v0.5.4). Shots settle on the engine's clock,
   and a station counts as assembled only when its last form finishes. Print holds
   each animation at its end state, so the talk's own `animation: none` print rule

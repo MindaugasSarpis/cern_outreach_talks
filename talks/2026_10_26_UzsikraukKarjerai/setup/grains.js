@@ -82,7 +82,9 @@ void main() {
 function material(vertexShader, uniforms) {
   return new ShaderMaterial({
     vertexShader, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
-    uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) }, ...uniforms },
+    // uPixelRatio carries the frame scale (the buffer's height / 900; each builder returns it as
+    // `frameScale`), so a grain is the same share of the picture at 1600×900 and on a phone
+    uniforms: { uTime: { value: 0 }, uPixelRatio: { value: 1 }, ...uniforms },
   })
 }
 function pointsGroup(geo, mat, pos) {
@@ -229,7 +231,7 @@ function buildPairs(o, ctx) {
       onDone?.()
     },
   }
-  return { group: g, labels: [], api, pixelRatio: u.uPixelRatio, update(t) { now = t; u.uTime.value = t }, dispose: off }
+  return { group: g, labels: [], api, frameScale: u.uPixelRatio, update(t) { now = t; u.uTime.value = t }, dispose: off }
 }
 
 // ---- path ---------------------------------------------------------------------------
@@ -399,7 +401,7 @@ function buildPath(o, ctx) {
     busy: () => armed || (u.uTo.value >= 0 && headNow() < u.uTo.value - 1e-3),
   }
   return {
-    group: g, labels: [], api, pixelRatio: u.uPixelRatio,
+    group: g, labels: [], api, frameScale: u.uPixelRatio,
     update(t) { now = t; u.uTime.value = t; if (armed && now - armT > 6) arrive() },
     dispose: off,
   }
@@ -504,7 +506,7 @@ function buildStreams(o, ctx) {
   const off2 = listen(o.name, (k) => go(k))
   mat.addEventListener('dispose', off2)
   if (state.has(o.name)) go(state.get(o.name), { instant: true })
-  return { group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio, update(t) { now = t; mat.uniforms.uTime.value = t }, dispose: off2 }
+  return { group: g, labels: [], frameScale: mat.uniforms.uPixelRatio, update(t) { now = t; mat.uniforms.uTime.value = t }, dispose: off2 }
 }
 
 // ---- ghost --------------------------------------------------------------------------
@@ -596,7 +598,7 @@ function buildGhost(o, ctx) {
     assemble(t, onDone) { t0 = t; u.uForm.value = 0; done = onDone || null },
   }
   return {
-    group: g, labels: [], api, pixelRatio: u.uPixelRatio,
+    group: g, labels: [], api, frameScale: u.uPixelRatio,
     update(t) {
       now = t; u.uTime.value = t
       if (t0 >= 0) { const x = Math.min((t - t0) / 3.2, 1); u.uForm.value = x; if (x >= 1) { t0 = -1; const cb = done; done = null; cb?.() } }
@@ -664,7 +666,7 @@ function buildMap(o, ctx) {
     assemble(t, onDone) { t0 = t; u.uForm.value = 0; done = onDone || null },
   }
   return {
-    group: g, labels: [], api, pixelRatio: u.uPixelRatio,
+    group: g, labels: [], api, frameScale: u.uPixelRatio,
     update(t) {
       u.uTime.value = t
       if (t0 >= 0) { const x = Math.min((t - t0) / 3.6, 1); u.uForm.value = x; if (x >= 1) { t0 = -1; const cb = done; done = null; cb?.() } }
@@ -771,7 +773,7 @@ function buildQuintet(o, ctx) {
     busy: () => now < anim.t0 + anim.dur,
   }
   return {
-    group: g, labels: [], api, pixelRatio: u.uPixelRatio,
+    group: g, labels: [], api, frameScale: u.uPixelRatio,
     update(t) { now = t; u.uTime.value = t; const c = cur(); u.uHold.value = c.hold; u.uLight.value = c.light },
     dispose: off,
   }
@@ -968,7 +970,7 @@ function buildHistogram(o, ctx) {
       || (u.uMarkT.value < 1e8 && now < u.uMarkT.value + 2.4),
   }
   return {
-    group: g, labels: [], api, pixelRatio: u.uPixelRatio,
+    group: g, labels: [], api, frameScale: u.uPixelRatio,
     update(t) { now = t; u.uTime.value = t; if (armed && now - armT > 6) arrive() },
     dispose: off,
   }
