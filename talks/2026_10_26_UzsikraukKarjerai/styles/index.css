@@ -143,6 +143,13 @@ html[data-stage] .city.late { animation-delay: 7.5s; }   /* after the flight in 
 html[data-stage] .city.home { color: var(--kk-gold-hi); }
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .city { animation: none !important; } }
 
+/* --- labels under slide 9's two plots (positions projected from its pose), centred on each */
+html[data-stage] .heap {
+  position: absolute; translate: -50% 0; font-size: 24px; font-weight: 600; color: #eef1ff;
+  text-shadow: var(--kk-shadow); white-space: nowrap; animation: stage-rise 0.8s var(--stage-ease) 2.2s both;
+}
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .heap { animation: none !important; } }
+
 /* --- the title card */
 html[data-stage] .say.title { bottom: auto; top: 112px; max-width: 70%; }
 html[data-stage] .say.title .big.huge { font-size: 66px; text-transform: uppercase; line-height: 0.98; }

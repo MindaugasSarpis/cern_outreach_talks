@@ -34,7 +34,7 @@ layout: default
 space: { at: [594, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 0, jx: 0 }" />
 
 <div class="scrim-left"></div>
 
@@ -58,7 +58,7 @@ Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Esu dalel
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0, jx: 0 }" />
 
 <div class="say top">
 <p class="big">Ar čia dalelė?</p>
@@ -80,7 +80,7 @@ Note: the plot is an illustration, not measured data: a random sample from a smo
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0, jx: 0 }" />
 
 <div class="say top">
 <p class="kick year">2003 m.</p>
@@ -102,7 +102,7 @@ Picture: the same small histogram.
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0 }" />
 
 <div class="say top">
 <p class="kick blue year">2008 m.</p>
@@ -181,7 +181,7 @@ Taip atrodo protonų susidūrimas LHCb detektoriuje. Kairėje, kur susiduria pro
 space: { at: lhcb, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1, jx: 0 }" />
 
 <div class="say top" v-click-hide="1">
 <p class="kick year">2015 m.</p>
@@ -208,14 +208,13 @@ Data: LHCb, PRL 122, 222001 (2019), HEPData ins1728691 Table 2 (m(Kp) > 1,9 GeV)
 -->
 
 ---
-space: { at: lhcb, dist: 21, dim: 0.05 }
+space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1, jx: 1 }" />
 
-<div class="say top">
-<p class="big">Daugiau duomenų ir nepriklausomas patikrinimas</p>
-</div>
+<div class="heap" style="left: 161px; top: 404px">2003 m.</div>
+<div class="heap" style="left: 557px; top: 404px">LHCb, 2019 m.</div>
 
 <!--
 Message: the difference was far more data and checking by people outside the analysis.
@@ -230,7 +229,7 @@ LHCb 2015 metais turėjo daug kartų daugiau duomenų nei fizikai 2003-iaisiais.
 space: { at: whole, sway: 0, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 1 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 1, jx: 0 }" />
 
 <div class="city late" style="left: 716px; top: 168px">Vilnius</div>
 <div class="city late" style="left: 414px; top: 374px">CERN</div>
@@ -252,7 +251,7 @@ Picture: the trail draws across Europe: Vilnius → CERN → Vilnius → Glasgow
 space: { at: [690, 6, 30], dist: 20, yaw: 40, pitch: 6, sway: 0.5, dim: 0.6 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 1 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 1, jx: 0 }" />
 
 <div class="say top wide list">
 <p class="kick">Ką gali padaryti jau šiais mokslo metais</p>
@@ -276,7 +275,7 @@ Check before the talk: the 2027 masterclass date at VU (2026: 26 February) and t
 space: { at: quarks, dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.35 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 1 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 1, jx: 0 }" />
 
 <div class="scrim-left"></div>
 

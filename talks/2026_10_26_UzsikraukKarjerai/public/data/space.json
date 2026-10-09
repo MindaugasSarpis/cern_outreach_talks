@@ -283,6 +283,25 @@
        4463
       ]
      ]
+    },
+    {
+     "type": "histogram",
+     "name": "jx",
+     "pos": [
+      -14.4,
+      0,
+      0
+     ],
+     "src": "data/theta-toy.json",
+     "key": "small",
+     "width": 3.7714,
+     "height": 8.5,
+     "max": 297,
+     "size": 1.7,
+     "alpha": 0.8,
+     "fill": 2,
+     "fall": 0.9,
+     "color": "#ffc05a"
     }
    ]
   }
