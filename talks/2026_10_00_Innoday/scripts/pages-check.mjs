@@ -47,10 +47,12 @@ for (const n of list.split(',').map(Number)) {
   await page.waitForTimeout(wait)
   await page.screenshot({ path: join(out, `${String(n).padStart(2, '0')}.png`) })
 }
+const tier = await page.evaluate(() => document.querySelector('.stage canvas')?.__space?.tier)
 await page.goto(`${base}?print=true#/1`); await page.waitForTimeout(6000)
 await page.screenshot({ path: join(out, 'print-top.png') })
 await browser.close(); server.close()
 const uniq = [...new Set(failed)].map((f) => f.replace(`http://localhost:${port}`, ''))
 for (const f of uniq) console.log(f)
+console.log(`stage tier: ${tier ?? 'no world'}`)
 console.log(uniq.length ? `${uniq.length} failed request(s) under ${prefix}` : `pages ok: nothing failed under ${prefix}; shots in ${out}`)
 process.exit(uniq.length ? 1 : 0)

@@ -286,3 +286,8 @@ released as soon as its dissolve ends (it used to stay open all talk long).
 ParticleHero is not in this deck. Recorded slides 3–4, 7, 12–13 on the pin
 (g3a–c): the takeover, the funnel, section I and Part II's places as before;
 `pages:check` clean.
+
+Then pinned `5d7e786` (feat/v0.5.3: quality tiers, ~10× less GPU memory per
+place, a rebuild one tier lower after a lost context). Re-recorded Part II's
+nine slides at 1600×900 (g4a–c, tier 0): every photo settles full screen and
+stays sharp at 1:1. `pages:check` clean and now prints the tier (0).
