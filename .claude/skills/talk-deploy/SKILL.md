@@ -55,7 +55,11 @@ your own. Say "deployed" only after the run is green and the URL returned
   but the branch is pushed, and a rebased branch needs a force push. On a
   `pnpm-lock.yaml` conflict take main's version
   (`git checkout origin/main -- pnpm-lock.yaml`), run `pnpm install` and add
-  it; never hand-merge the lockfile. Then `ready` again.
+  it; never hand-merge the lockfile. Then `ready` again. A merge or rebase
+  that brings in a lockfile or a package.json runs `pnpm install` by itself
+  (the post-merge hook `talk` installs, scripts/post-merge.sh); commit
+  `pnpm-lock.yaml` when it says so. `ready` and `deploy` refuse a lockfile
+  that does not record the talk's pins.
 - **ready fails**: fix and rerun. `--skip-ready` only on the owner's word, and
   say so in the summary.
 
