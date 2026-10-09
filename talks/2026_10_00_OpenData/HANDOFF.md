@@ -8,14 +8,18 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 „adresuoti“.
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos v0.6.8, for both addons.
+Toolkit pin: slidev-videos v0.7.0, for both addons.
 
 **Deploys (owner, 2026-10-09: "Deploy now, and always").** The standing rule
 holds for this talk: it deploys without asking once `talk ready` passes with
 nothing skipped and the Scheduler gives it main. Anything else still needs
 the owner's word.
 
-## Status (2026-10-09): approved by the owner; deployed on v0.6.8
+## Status (2026-10-09): approved by the owner; deployed on v0.6.8, v0.7.0 ready
+
+- Pinned v0.7.0 (the Scheduler's batch round), not yet deployed: the forms
+  on their own clock say `api.busy`, `<Grains :later>` runs on the world's
+  clock, the stills are new. See the v0.7.0 decision.
 
 - Redeployed 2026-10-09 under the standing rule: commit 546aed5 on main,
   Pages run 37974807816 (success); `talk deploy`'s live check passed (13
@@ -81,6 +85,22 @@ the owner's word.
 
 ## Decisions
 
+- 2026-10-09. v0.7.0: `stage:check` warns (`unsaid-clock`) about a builder
+  that moves on its own clock without saying so. The streams, the portraits
+  and the collision now return `api.busy` (a stream filling its arc, 1/speed
+  s; the faces gathering and the ring's drive ramping in, 3.3 s; the tracks
+  growing, the event shrinking and its cloud fading, 4.7 s; any fade or
+  label still moving), and so does the lineup (a pile growing or merging on
+  a step of its own). `<Grains :later>` ran on `setTimeout`, wall time, so a
+  headless still caught slide 4's 1 TB sphere only if the render was slow
+  enough (with the default settle it was missing); it now runs on the
+  world's clock (`setGrainsLater`, driven by the forms' updates), and a
+  step still to come keeps its form busy. The stills are remade at each
+  slide's last click (v0.7.0's `--stills`; this deck has no clicks) with
+  `--settle 20`, which keeps the owner-approved phases (the collider's flash
+  on slides 1–2, the ring on the close); the default settle now waits on
+  its own (slide 4 to 9.25 engine-s, slide 10 to 8.75). Undo: the pin
+  commit's parent.
 - 2026-10-09. v0.6.8: grains sized to the frame, not in device pixels (on a
   phone's small slide band pixel-sized grains overlapped many times over and
   the additive piles washed out to white). The streams, the floor, the

@@ -10,7 +10,7 @@ From the root's list of current talks:
 
 - `talks/2026_10_00_OpenData/` — "Opening LHCb's data", a 6½-minute award talk
   (LHCb Vilnius nominated for an open data award). On the packaged stage, pinned
-  to slidev-videos v0.6.8, plus two talk-owned builders. Date placeholder `10_00`. See
+  to slidev-videos v0.7.0, plus two talk-owned builders. Date placeholder `10_00`. See
   "Open data talk" below.
 
 ### Open data talk (2026_10_00_OpenData)
@@ -108,8 +108,12 @@ the far-back scale poses.
   the Dominykas slide is the last content slide, the close follows.
 - Stills for print, export and the static fallback are the stage's own
   (since v0.5.3): `public/stills/NN.jpg`, the world alone, from `slidev-stage-shots
-  <dist> public/stills --stills --settle 20` (v0.6: the streams and the
-  collision have neither assemble() nor api.busy). Remake them when a pose or a form changes.
+  <dist> public/stills --stills --settle 20` (v0.7: every form says
+  `api.busy` and the default settle waits for them; 20 s keeps the approved
+  phases of the collider and the ring). Remake them when a pose or a form changes.
+- `<Grains :later>` steps run on the world's clock (`setGrainsLater` in
+  `setup/grains.js`), not `setTimeout`: the headless tools stretch the
+  engine's time, and a step still to come keeps its form busy.
 - Verify with the shots tool from feat/shots-v2 (`bin/shots.mjs dist <out>
   --sheet --size 1600x900`): it settles each slide on the engine clock and
   takes the shared render lock itself.
