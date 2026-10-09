@@ -308,6 +308,8 @@ html[data-stage] .part-word {
   animation: part-word 1.7s ease both;   /* gone before the photo fills the frame */
 }
 @keyframes part-word { 0% { opacity: 0; } 15% { opacity: 1; } 65% { opacity: 1; } 100% { opacity: 0; } }
+/* print stops every animation (kit, v0.6.5), which would leave the part word over the photo */
+.print-slide-container .part-word, html.print .part-word { display: none !important; }
 @media print { html[data-stage] .part-word { display: none; } }
 
 /* captions that wait for a flight: setup/AfterFlight.vue (timed from the slide's arrival) */

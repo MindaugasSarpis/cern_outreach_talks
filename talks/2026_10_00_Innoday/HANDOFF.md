@@ -373,3 +373,6 @@ with the pentaquark (~4 s), as before. Full export rasterised and read page by
 page: nothing empty (captions, headlines, StagePhoto text all print), so no
 print-container override needed. Found there: Slidev's `h1 + p` half opacity
 greyed Part II's invention line (on screen too); fixed.
+Then v0.6.5 (the kit's print block): full export read again; every caption
+prints; the part words printed over the photos (their fade-out is an
+animation), now hidden in print.
