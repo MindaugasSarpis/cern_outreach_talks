@@ -398,3 +398,4 @@ and ACES turned into NaN (black). v0.6.7 clamps every pixel finite before
 bloom. The talk's builders use no float textures (checked). Pinned v0.6.7;
 slides 1, 4, 5, 7, 13, 25 look as before. The lite mode prepared on the first
 diagnosis is parked on `wip/innoday-lite` (85edd2b).
+Deployed 11721f1 (v0.6.7), Pages run 37956977377 (green), URL 200; live walk 30 slides, 0 failed, 0 context losses.

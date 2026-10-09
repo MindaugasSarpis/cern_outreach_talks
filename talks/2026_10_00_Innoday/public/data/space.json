@@ -594,7 +594,11 @@
           "length": 26,
           "mouth": 6.3,
           "neck": 3.4,
-          "cmb": "figures/cmb_wmap.png"
+          "cmb": "figures/cmb_wmap.png",
+          "cmbDisk": "figures/cmb_disk.jpg",
+          "cmbDiskSmall": "figures/cmb_disk_1024.jpg",
+          "cmbTint": 0.5,
+          "cmbSheet": 0.6
         }
       ]
     }
