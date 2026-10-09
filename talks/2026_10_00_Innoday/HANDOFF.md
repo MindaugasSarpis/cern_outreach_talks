@@ -399,3 +399,17 @@ bloom. The talk's builders use no float textures (checked). Pinned v0.6.7;
 slides 1, 4, 5, 7, 13, 25 look as before. The lite mode prepared on the first
 diagnosis is parked on `wip/innoday-lite` (85edd2b).
 Deployed 11721f1 (v0.6.7), Pages run 37956977377 (green), URL 200; live walk 30 slides, 0 failed, 0 context losses.
+
+## Phones washed out; the real CMB (2026-10-09, deployed 61dd223)
+
+The owner's iPhone, after v0.6.7: slides 4 and 5 white. Headless iPhone
+(390×844, tier 2) reproduced it (slide 5 mean luma 191 vs desktop 57); the
+funnel's grains made ~100 % of it: sized in raw pixels, they overlapped ~15×
+more on a ~220 px band. `setup/view.js` sizes the talk's grains to the frame
+height (identical at 1600×900). The owner asked for "a real image of cmb at
+that plane exactly": `cmb_disk.jpg`, rendered from the Planck PR3 SMICA-noSZ
+HEALPix map in the old projection and orientation (verified by a second
+agent), 1° smoothing, `cmbTint 0.5`, `cmbSheet 0.6` (brighter crossed the
+bloom threshold: a yellow halo). Credit line notes the changes (CC BY-NC 3.0
+IGO). Pages run 37971468844 green; live walk 30/30 on rerun. Candidate
+images and scripts: scratchpad cmb2/ (not in the repo).
