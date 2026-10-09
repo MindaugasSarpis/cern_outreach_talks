@@ -1064,7 +1064,7 @@ function buildCollision(o) {
 export function installGrains(registerBuilder) {
   registerBuilder('lineup', buildLineup, { fields: ['pos', 'name', 'balls'] })
   registerBuilder('streams', buildStreams, { fields: ['pos', 'name', 'from', 'to'] })
-  registerBuilder('floor', buildFloor, { fields: ['pos'] })
+  registerBuilder('floor', buildFloor, { fields: ['pos'], enterable: true })
   registerBuilder('portraits', buildPortraits, { fields: ['pos', 'name', 'people'] })
   registerBuilder('collision', buildCollision, { fields: ['pos', 'name', 'tracks'] })
 }
