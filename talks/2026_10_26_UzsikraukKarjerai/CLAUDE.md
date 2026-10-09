@@ -39,7 +39,7 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 | 6 | (photo) | LHCb cavern, StagePhoto: what LHCb studies and why |
 | 7 | „Vienas susidūrimas LHCb detektoriuje“ | LHCb Run 3 event display, StagePhoto: how a collision becomes a dot |
 | 8 | 2015 m. · „LHCb duomenyse iškilo smailė“ → 2019 m. · „Trys pentakvarkai“ | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks |
-| 9 | „Šimtus kartų daugiau duomenų nei 2003 m.“ | the full LHCb histogram, camera back |
+| 9 | labels only: „2003 m.“ · „LHCb, 2019 m.“ | `jx`: the 140-entry plot of slides 2–3 at LHCb's scale beside `jp` (one grain per entry, the same bin width and height per entry); a coordinate pose between them |
 | 10 | city labels | the route across Europe |
 | 11 | three things to do this school year | the form far off, dimmed |
 | 12 | „„Ko jūs savo darbe dar nežinote?““ alone | the form, held |
@@ -156,6 +156,21 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Decisions
 
+- 2026-10-09 — Ideas 1 and 3 (the owner's picks, through the Scheduler). Slide 9 no
+  longer says „nepriklausomas patikrinimas“: LHCb's check was its own internal
+  review, and other groups had also seen the 2003 bump. It now shows the
+  140-entry illustration from slides 2–3 beside LHCb's 27 292 candidates at
+  the same scale. A `jx` histogram at the lhcb station, x −14,4, has width
+  30 × 22/175 and `max: 297`, LHCb's tallest bin, so one grain is one entry
+  in both. It reads as a thin strip beside the heap. The speaker names the
+  two amounts and the significances: LEPS 4,6σ (the paper's own abstract;
+  19 events over 17 of background), 5σ as the usual discovery bar (Physics
+  World 2007 and LHCb's outreach page; new fact
+  `particle-physics-5-sigma-discovery`), and Pc(4312) 7,3σ. The notes keep
+  the left plot labelled as an illustration.
+- 2026-10-09 — Idea 7 (a "working day" slide after 10) waits for the owner. A draft
+  built only from verified public words (109 passages, 40 sources) is in
+  ~/talks/.cache/uzk-review/working-day-draft.md.
 - 2026-10-08 — Last focused review (talk-review on a0b80f8: facts since
   01bed17, copy, unslop; 15 kept). Applied: slide 9's screen line is now
   „Daugiau duomenų ir nepriklausomas patikrinimas“ (the „šimtus kartų“
