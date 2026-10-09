@@ -14,7 +14,9 @@
         1920,
         1080
       ],
-      "duration": 56.12
+      "duration": 56.12,
+      "poster": "cern_footage_2022_042_001.mp4.poster.jpg",
+      "lit": 0.2
     },
     "cern_overview_short.mp4": {
       "file": "cern_overview_short.mp4.jpg",
@@ -29,7 +31,9 @@
         1920,
         1080
       ],
-      "duration": 11.24
+      "duration": 11.24,
+      "poster": "cern_overview_short.mp4.poster.jpg",
+      "lit": 0.0
     },
     "vu_ff_unzoom.mp4": {
       "file": "vu_ff_unzoom.mp4.jpg",
@@ -44,7 +48,26 @@
         1920,
         1080
       ],
-      "duration": 30.067
+      "duration": 30.067,
+      "poster": "vu_ff_unzoom.mp4.poster.jpg",
+      "lit": 0.0
+    },
+    "vu_ff_zoom_galaxy.mp4": {
+      "file": "vu_ff_zoom_galaxy.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 64,
+      "interval": 4.156,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 266.0,
+      "poster": "vu_ff_zoom_galaxy.mp4.poster.jpg",
+      "lit": 0.0
     }
   }
 }
