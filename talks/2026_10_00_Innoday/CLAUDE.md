@@ -61,7 +61,9 @@ the part word during a Part II flight, gone before the photo lands).
   click. The 1989 page and the tunnel stay screen StagePhotos (not full bleed).
 - The takeover (`setup/WebTakeover.vue`, `takeover.js`): the opener's last
   frame (`public/figures/opener_last.jpg`, our galaxy) as 280 000 grains, gain
-  1.3, saturation 1.35; opener and takeover share the pose [30, 40, −70],
+  1.3, saturation 1.35; the dissolving copy has its own WebGL context only
+  for the 3 s dissolve (released after it, a new canvas each time: a second
+  context held all talk long raises the odds of a context loss on iPhone); opener and takeover share the pose [30, 40, −70],
   dist 18, yaw 0, pitch 0, sway 0; the clip uses `transition="fade"`.
 - Look (owner, 8 Oct: "more striking, photorealistic"): black ground
   (`palette.bg #000103`, density 0.6, dustGain 1.45, nebula 0.12, vignette
@@ -71,14 +73,18 @@ the part word during a Part II flight, gone before the photo lands).
   (talk-owned bookend, 0:30, made by reversing the opener; do not `--prune`
   `vu_ff_zoom.mp4`, its source), library `cern_overview_short.mp4`,
   `cern_footage_2022_042_001.mp4`.
-- Toolkit: slidev-videos v0.5.2 (both addons): place groups, `humAt: all`.
+- Toolkit: slidev-videos `15a7142` (feat/v0.5.3, both addons; the Scheduler's
+  pin for the owner's iPhone diagnosis): v0.5.2's place groups and `humAt: all`,
+  plus `?stage-debug` (the fallback's reason on screen) and the static
+  background after a context loss. Move to the v0.5.3 tag when it is cut.
 
 ## Status
 
 2026-10-09: **complete, pending the owner's review.** On the branch, not yet
 deployed: the Pages-base fix (stills and place photos 404'd under the live
 deploy fe15a19; `pnpm pages:check` now clean) and the v0.5.2 round (place
-groups, Part I's wide poses back, `humAt: all`, stills 07/10/12). Last
+groups, Part I's wide poses back, `humAt: all`, stills 07/10/12), then the
+15a7142 pin and the takeover's short-lived WebGL context. Last
 deploy fe15a19 — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/
 — Pages run 37906723499. Next: `talk ready`, deploy, the owner's review.
 
