@@ -75,12 +75,16 @@ the part word during a Part II flight, gone before the photo lands).
 
 ## Status
 
-2026-10-09. Deployed: 1d836da (place mode, bookend). Ready on
-`wip/innoday-funnel` for the next deploy (owner's go needed): the funnel → CMB
-opening, Higgs and 76/86 cut, the text round, the final talk-review (six
-lenses, 36 findings) and its delta review (five lenses, 30 findings) applied,
-print stills on 16 slides (checked with a real `slidev export`), White Rabbit
-in place of the grid. Lint 0 errors; stage:check clean.
+2026-10-09: **complete, pending the owner's review.** Deployed 7163101 —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+Pages run 37898098431 (per-talk build and deploy green), URL 200. `talk ready`
+passed with nothing skipped (lint 0 errors, check, shots, preflight, venue).
+In it: the funnel → CMB opening (Planck 2018 map), Higgs and 76/86 cut, the
+text round, the final talk-review (six lenses, 36 findings) and its delta
+review (five lenses, 30 findings), White Rabbit in place of the grid, Part II's
+photos kept out of Part I's frames, print stills on 16 slides.
+Next: the owner's review on Pages; Tools' place visibility and `humAt: all`
+when they land (then re-pose Part I if wanted).
 
 ## Decisions
 

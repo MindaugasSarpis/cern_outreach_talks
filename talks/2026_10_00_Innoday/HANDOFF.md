@@ -241,3 +241,9 @@ text round, print stills, the ultracode review, deploy.
 - Render: point sprites capped and faded near the camera (funnel, takeover);
   takeover grains hidden outside the prologue; strands not drawn while off;
   places at 360 columns.
+
+## Deployed (2026-10-09, third round)
+
+7163101, Pages run 37898098431 (per-talk build and deploy green), URL 200;
+`talk ready` passed with nothing skipped. Status: complete, pending the
+owner's review.

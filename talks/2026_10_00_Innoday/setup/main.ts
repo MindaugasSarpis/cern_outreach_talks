@@ -4,6 +4,7 @@ import { installFunnel } from './funnel.js'
 import Count from './Count.vue'
 import Strands from './Strands.vue'
 import PrintStill from './PrintStill.vue'
+import AfterFlight from './AfterFlight.vue'
 import WebTakeover from './WebTakeover.vue'
 
 // <Count> counts a slide's big number up as the slide arrives; <WebTakeover>
@@ -17,5 +18,6 @@ export default ({ app }) => {
   app.component('Count', Count)
   app.component('Strands', Strands)
   app.component('PrintStill', PrintStill)
+  app.component('AfterFlight', AfterFlight)
   app.component('WebTakeover', WebTakeover)
 }
