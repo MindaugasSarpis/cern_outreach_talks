@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
 import { sampleFrame, placeAlongRays, makeGrains, setPositions } from './takeover.js'
 
@@ -167,6 +167,16 @@ onSlideLeave(() => {
   if (p) p.material.uniforms.uReveal.value = 1
 })
 onUnmounted(() => { run++; cancelAnimationFrame(raf); gl?.getExtension('WEBGL_lose_context')?.loseContext(); gl = null })
+// the frame's grains are the prologue's (this slide and the three after it: the
+// funnel, the CMB, the question); elsewhere they would be 280 000 points nobody
+// sees but every frame draws. Hidden, not removed, so going back finds them.
+const PROLOGUE = 3
+watch(() => nav.currentSlideNo?.value, (n) => {
+  const p = stage()?.h.scene.getObjectByName('takeover-web')
+  if (!p) return
+  const at = $page?.value ?? $page
+  p.visible = n >= at && n <= at + PROLOGUE
+})
 </script>
 
 <template>

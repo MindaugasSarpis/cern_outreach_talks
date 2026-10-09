@@ -30,7 +30,7 @@
         ],
         "dist": 15,
         "yaw": -22,
-        "pitch": 7,
+        "pitch": 11,
         "sway": 9
       },
       "gather": 3.6,
@@ -148,7 +148,7 @@
             },
             {
               "angle": 180,
-              "label": "data → the grid"
+              "label": "timing → White Rabbit"
             },
             {
               "angle": 240,
@@ -519,6 +519,34 @@
               "core": "#ece6ff"
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "funnel",
+      "pos": [
+        30,
+        40,
+        -110
+      ],
+      "look": {
+        "dist": 30,
+        "yaw": 90,
+        "pitch": 12
+      },
+      "objects": [
+        {
+          "type": "funnel",
+          "pos": [
+            0,
+            0,
+            -26
+          ],
+          "axis": "z+",
+          "length": 26,
+          "mouth": 9,
+          "neck": 1.4,
+          "cmbAt": 1.6
         }
       ]
     }

@@ -85,15 +85,16 @@ void main() {
   float tw = 0.78 + 0.22 * sin(uTime * (0.8 + aSeed * 1.9) + aSeed * 40.0);
   // each grain lights at its own moment while the picture lets go of it
   float r = clamp(uReveal * 1.35 - aSeed * 0.35, 0.0, 1.0);
-  gl_PointSize = uPixelRatio * aSize * (72.0 / max(-mv.z, 0.1));
+  // capped, and fading out near the camera: a flight through the cloud must not fill the screen
+  gl_PointSize = min(uPixelRatio * aSize * (72.0 / max(-mv.z, 0.1)), 48.0 * uPixelRatio);
   vColor = aColor * uGain;
-  vAlpha = r * tw;
+  vAlpha = r * tw * smoothstep(0.25, 1.0, -mv.z);
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;
 void main() {
   float d = length(gl_PointCoord - 0.5);
-  float a = smoothstep(0.5, 0.05, d) * vAlpha;
+  float a = (1.0 - smoothstep(0.05, 0.5, d)) * vAlpha;
   gl_FragColor = vec4(pow(vColor * a, vec3(2.2)), 1.0);
 }`
 
@@ -115,7 +116,8 @@ export function makeGrains(s, { size = 0.5, gain = 1.25 } = {}) {
   pts.frustumCulled = false
   pts.name = 'takeover-web'
   const t0 = performance.now()
-  pts.onBeforeRender = () => { mat.uniforms.uTime.value = (performance.now() - t0) / 1000 }
+  // the twinkle's clock and the renderer's pixel ratio, every frame (the frame-rate guard changes the ratio)
+  pts.onBeforeRender = (r) => { mat.uniforms.uTime.value = (performance.now() - t0) / 1000; mat.uniforms.uPixelRatio.value = r.getPixelRatio() }
   return pts
 }
 

@@ -24,13 +24,8 @@ import {
 // Part I shows the machine before anything has left it: the strands come on
 // with Part II. <Strands :on="true|false" /> sets this when its slide becomes
 // current; the last value is kept for a form built later.
-const BUS = 'innoday:strands'
 let shown = false
-export function setStrands(on) {
-  if (shown === on) return
-  shown = on
-  window.dispatchEvent(new CustomEvent(BUS, { detail: on }))
-}
+export function setStrands(on) { shown = on }
 
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
 
@@ -121,18 +116,18 @@ function buildStrands(o, ctx) {
   const pts = new Points(geo, mat); pts.frustumCulled = false
   const g = new Group(); g.add(pts)
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
-  // fade in or out over 1.5 s on the engine clock
-  let goal = shown ? 1 : 0, last = null
-  const h = (e) => { goal = e.detail ? 1 : 0 }
-  window.addEventListener(BUS, h)
+  // fade in or out over 1.5 s on the engine clock, towards the module's `shown`
+  // (read every frame: no listener, since a station never calls a form's dispose)
+  let last = null
   return {
     group: g, labels: [], pixelRatio: mat.uniforms.uPixelRatio,
     update(t) {
-      const u = mat.uniforms
+      const u = mat.uniforms, goal = shown ? 1 : 0
       if (last != null) u.uOn.value += Math.sign(goal - u.uOn.value) * Math.min(Math.abs(goal - u.uOn.value), (t - last) / 1.5)
       last = t; u.uTime.value = t
+      pts.visible = u.uOn.value > 0.002 || goal > 0
     },
-    dispose() { window.removeEventListener(BUS, h); geo.dispose(); mat.dispose() },
+    dispose() { geo.dispose(); mat.dispose() },
   }
 }
 
