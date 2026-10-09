@@ -84,8 +84,8 @@ the part word during a Part II flight, gone before the photo lands).
   surfaces overlapped ~15× more. `setup/view.js`: funnel, takeover and strands
   now size grains to the frame height (against 900 px; identical at 1600×900),
   with a 1 px floor dimmed by coverage. Headless iPhone (390×844, tier 2)
-  slide 5 went from mean luma 191 to the desktop's look. The engine's own
-  forms keep raw-pixel sizing (oversized but not blown out on a phone: Tools).
+  slide 5 went from mean luma 191 to the desktop's look. Since v0.6.8 the
+  engine sizes its own field and forms the same way (buffer height / 900).
 - The CMB disk is a picture of the real map (owner, 9 Oct: "a real image of
   cmb at that plane exactly"): `public/figures/cmb_disk.jpg` (2048, 1024 for
   touch), rendered from the Planck PR3 SMICA-noSZ HEALPix map (Nside 2048,
@@ -95,7 +95,7 @@ the part word during a Part II flight, gone before the photo lands).
   Licence CC BY-NC 3.0 IGO: the on-slide credit says it was reprojected,
   smoothed and recoloured (required). The scripts are not in the repo; the
   parameters are in the speaker notes and this file.
-- Toolkit: slidev-videos v0.6.7 (both addons; `strands` registered `enterable: true`; print shows every animation at its end state; every pixel clamped finite before bloom: the funnel's additive core overflowed the half-float target to Inf → NaN → black on iOS). Device switches for a phone: `?stage-debug`, `?stage-post=off`, `?stage-targets=half`, `?stage-tier=0..3`. A lite mode for phones (fewer, smaller grains in the talk's forms, no takeover overlay) is parked on `wip/innoday-lite`, unused unless the iPhone still struggles: place groups, `humAt: all`,
+- Toolkit: slidev-videos v0.6.8 (both addons; the engine's grains sized to the frame; `strands` registered `enterable: true`; print shows every animation at its end state; every pixel clamped finite before bloom: the funnel's additive core overflowed the half-float target to Inf → NaN → black on iOS). Device switches for a phone: `?stage-debug`, `?stage-post=off`, `?stage-targets=half`, `?stage-tier=0..3`. A lite mode for phones (fewer, smaller grains in the talk's forms, no takeover overlay) is parked on `wip/innoday-lite`, unused unless the iPhone still struggles: place groups, `humAt: all`,
   `?stage-debug`, quality tiers (a phone starts at 2; desktop and the headless
   recorder at 0, `pages:check` prints it), lighter photo places, the context-
   loss fixes, stills and posters for print (v0.5.4: correct per page).
@@ -107,8 +107,8 @@ the part word during a Part II flight, gone before the photo lands).
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
 Pages run 37971468844 (green), URL 200; `ready` passed with nothing skipped.
 Deploy's live walk stopped at slide 3 once (a cluster hiccup); two reruns
-walked all 30 slides, 0 failed, 0 context losses. Next: v0.6.8 (the engine's
-own grains sized to the frame too).
+walked all 30 slides, 0 failed, 0 context losses. On the branch: v0.6.8 (the
+engine's own grains sized to the frame too; iPhone shots match the desktop).
 
 ## Decisions
 

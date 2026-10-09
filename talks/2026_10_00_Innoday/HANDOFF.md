@@ -413,3 +413,4 @@ agent), 1° smoothing, `cmbTint 0.5`, `cmbSheet 0.6` (brighter crossed the
 bloom threshold: a yellow halo). Credit line notes the changes (CC BY-NC 3.0
 IGO). Pages run 37971468844 green; live walk 30/30 on rerun. Candidate
 images and scripts: scratchpad cmb2/ (not in the repo).
+v0.6.8 pinned: the engine's forms sized to the frame too; desktop 1600×900 unchanged, the iPhone's pentaquark, collider and constellation now crisp (v8-sheet.png).
