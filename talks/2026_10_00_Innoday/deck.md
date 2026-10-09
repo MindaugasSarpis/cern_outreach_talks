@@ -20,7 +20,7 @@ stage:
   palette: { base: blue, bg: '#000103' }
   plugins: [hadron]
   sound: { hum: true, flight: true, clip: true }
-  humAt: [hero, collider, cosmos, web, kt, funnel]   # the low hum through the talk, not only at the cover
+  humAt: all   # the low hum through the talk, out in the open dust of the prologue too
   # deeper than the blue palette's own look: a black ground (fewer, dimmer dust
   # grains, little nebula, a firmer vignette), no film grain, no fringes
   options: { nebula: 0.12, grain: 0.012, aberration: 0, bloom: 0.55, density: 0.6, dustGain: 1.45, vignette: 0.42 }
@@ -155,7 +155,7 @@ Pastaba: „žvaigždės, dujos, planetos ir mes“ — tyčia ne „galaktikos�
 
 ---
 layout: section
-space: { at: [14, 0, 7], dist: 6, yaw: 90, pitch: 40, dim: 0.15 }   # down on the ring between two strands, along it: Part II's photos stay above the frame
+space: { at: [8.8, 0, -3], dist: 20, yaw: -30, pitch: 55, dim: 0.15 }   # the ring from above in the right half, clear of the title
 ---
 
 <PrintStill src="figures/stills/07.jpg" />
@@ -207,7 +207,7 @@ Faktai: LHCb sveria 5 600 t, 21 × 10 × 13 m, 100 m po žeme; artimiausias 
 -->
 
 ---
-space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 40, dim: 0.3 }   # match cut: down on the ring, looking along it; its curve becomes the tunnel's
+space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 22, dim: 0.3 }   # match cut: down on the ring, looking along it; its curve becomes the tunnel's
 ---
 
 <PrintStill src="figures/stills/10.jpg" />
@@ -236,7 +236,7 @@ Jei klausia apie atviruosius duomenis: visus 2011–2012 m. LHCb duomenis (800 T
 -->
 
 ---
-space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 40, dim: 0 }   # the same pose under the photo
+space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 22, dim: 0 }   # the same pose under the photo
 ---
 
 <Strands :on="false" />
@@ -274,6 +274,7 @@ Faktai: 9 593 magnetai; vakuumas vamzdyje ~10⁻¹³ bar; pluošte sukaupta ene
 ---
 layout: section
 space: { at: [14, 1, 0], dist: 36, yaw: -20, pitch: 52, dim: 0.15 }   # the ring and every strand leaving it
+places: { inventions: true }   # Part II's photos stand in the world from here (hidden before)
 ---
 
 <PrintStill src="figures/stills/12.jpg" />
@@ -299,7 +300,7 @@ space: { at: stumpe, dim: 0, flight: 1.6 }   # place mode: the photo stands at i
 
 <div class="part-word">Valdymo pultai</div>
 
-<StagePhoto mode="place" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
 <div class="hero-text">
 <p class="kicker gold">Problema: valdyti greitintuvą</p>
 <div class="year">1973</div>
@@ -352,7 +353,7 @@ space: { at: next, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 
 <Strands />
 
-<StagePhoto mode="place" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: tvarkyti informaciją</p>
 <div class="year">1993</div>
@@ -381,7 +382,7 @@ space: { at: pet, dim: 0, flight: 1.6 }   # place mode: the photo stands at its 
 
 <div class="part-word">Detektoriai</div>
 
-<StagePhoto mode="place" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">1977</div>
@@ -408,7 +409,7 @@ space: { at: mars, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 
 <Strands />
 
-<StagePhoto mode="place" :grains="360" place-id="mars" :relief="0.25" :at="[16.6, 2.5, 13.51]" :size="3" :yaw="-150" src="figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="mars" :relief="0.25" :at="[16.6, 2.5, 13.51]" :size="3" :yaw="-150" src="figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -436,7 +437,7 @@ space: { at: artemis, dim: 0, flight: 1.6 }   # place mode: the photo stands at 
 
 <Strands />
 
-<StagePhoto mode="place" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
 <div class="hero-text">
 <p class="kicker gold">Problema: pamatyti dalelę</p>
 <div class="year">2026</div>
@@ -463,7 +464,7 @@ space: { at: hadron, dim: 0, flight: 1.6 }   # place mode: the photo stands at i
 
 <div class="part-word">Pluoštas</div>
 
-<StagePhoto mode="place" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
 <div class="hero-text">
 <p class="kicker gold">Problema: nukreipti pluoštą</p>
 <div class="year">2011</div>
@@ -491,7 +492,7 @@ space: { at: whiterabbit, dim: 0, flight: 1.6 }   # place mode: the photo stands
 
 <div class="part-word">Laiko sistema</div>
 
-<StagePhoto mode="place" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim">
 <div class="hero-text">
 <p class="kicker gold">Problema: suderinti laikrodžius</p>
 <div class="year">2012</div>
@@ -521,7 +522,7 @@ space: { at: cold, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 
 <div class="part-word">Magnetai</div>
 
-<StagePhoto mode="place" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right deep">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right deep">
 <div class="hero-text">
 <p class="kicker gold">Problema: atšaldyti magnetus</p>
 <div class="year">2022–2024</div>
@@ -543,6 +544,7 @@ Faktai: SCALE (2022–2024, Airbus UpNext): lanksti REBCO linija, ±2 kA iki 63
 ---
 layout: section
 space: { at: [120, -2.4, 0], dist: 14, yaw: -22, pitch: 22, dim: 0.4 }
+places: { inventions: false }   # and are gone again in Part III
 ---
 
 <PrintStill src="figures/stills/22.jpg" />

@@ -71,23 +71,16 @@ the part word during a Part II flight, gone before the photo lands).
   (talk-owned bookend, 0:30, made by reversing the opener; do not `--prune`
   `vu_ff_zoom.mp4`, its source), library `cern_overview_short.mp4`,
   `cern_footage_2022_042_001.mp4`.
-- Toolkit: slidev-videos v0.5.1 (both addons).
+- Toolkit: slidev-videos v0.5.2 (both addons): place groups, `humAt: all`.
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** The live deploy (fe15a19)
-404s on the print stills and the Part II place photos under the Pages base;
-fixed on the branch (base-relative paths, `pnpm pages:check` clean), to go out
-with the next deploy (after the v0.5.2 pin and the owner's go). Deployed fe15a19 —
-https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
-Pages run 37906723499 (per-talk build and deploy green), URL 200; `talk
-ready` passed with nothing skipped. This round: the funnel rebuilt to the
-owner's NASA/WMAP reference (a bell on its side, crisp wireframe, Big Bang
-flare, WMAP-coloured CMB disk, blue-violet haze and colourful galaxies, floor
-grid; the flight down to the CMB), the Scheduler's 33-point Lithuanian text
-audit, captions timed from the slide's arrival (<AfterFlight>), print stills
-refreshed. Next: the owner's review; v0.5.2 place groups (then widen Part I's
-poses again); `humAt: all`.
+2026-10-09: **complete, pending the owner's review.** On the branch, not yet
+deployed: the Pages-base fix (stills and place photos 404'd under the live
+deploy fe15a19; `pnpm pages:check` now clean) and the v0.5.2 round (place
+groups, Part I's wide poses back, `humAt: all`, stills 07/10/12). Last
+deploy fe15a19 — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/
+— Pages run 37906723499. Next: `talk ready`, deploy, the owner's review.
 
 ## Decisions
 
@@ -110,11 +103,12 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   when the camera looks down the axis, and the disk dims with the viewing angle
   so overlapping grains keep their colours.
 - Match cuts: only ring → tunnel; ring → CERN aerial and loop → FCC were weak.
-- Part II's photo places are built when their slides mount (all of them 3 s
-  after load) and stay in the world. Until the toolkit can hide them, Part I's
-  poses keep them out of frame: section I and the 4 TB/s/tunnel slides look
-  down along the ring at pitch 40 from just above it, so the photos (y 2.5,
-  4–6 outside the ring) stay above the top edge.
+- Part II's photo places are one group, `group="inventions"`: section II
+  says `places: { inventions: true }`, section III `false`, so they are hidden
+  in the prologue, Part I and Part III (v0.5.2). Part I keeps its wide poses:
+  section I sees the ring from above in the right half, clear of the title (target [8.8, 0, −3], dist 20, pitch 55), 4 TB/s and the tunnel
+  look along the ring at pitch 22. (On v0.5.1 those poses had to look down at
+  pitch 40 to keep the photos above the frame.)
 - Data → White Rabbit (2012, Frankfurt exchange), the thing that left CERN;
   the grid figures are in the notes. The photo's credit („© CERN (KT
   ataskaita, 2024)“) is taken from the KT report page; the photographer is
@@ -139,12 +133,6 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
 - The MARS wrist image is © MARS Bioimaging (CERN KT hosts it); ask MARS
   before any non-educational use.
-- Part II's photo places: a visibility control is asked of Tools (8 Oct);
-  the Part I poses avoid them meanwhile (see Decisions).
-- The hum drops on the open-space prologue poses (takeover, CMB, question):
-  `humAt: all` asked of Tools (9 Oct).
-- `ktbest-alumni` in research/facts.jsonl still says "into industry"; the
-  deck does not cite it (reported to the Scheduler).
 - On the venue laptop, read the stage's frame-rate guard at the close
   (`document.querySelector('.stage canvas').__space.guardStage`); above 0
   means a slide was too heavy.

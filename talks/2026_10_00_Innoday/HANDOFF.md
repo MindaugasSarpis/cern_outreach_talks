@@ -266,3 +266,15 @@ clean; with one photo put back to `/figures/` it reports
 `404 /figures/hero_stumpe.jpg`. `stage:check` now passes `--types
 strands,funnel` itself. Not deployed: waits for the v0.5.2 pin (place groups,
 `humAt`) and the owner's go.
+
+## v0.5.2 round (2026-10-09)
+
+Pinned v0.5.2. Part II's eight places are `group="inventions"`: shown from
+section II (`places: { inventions: true }`), hidden again from section III.
+Part I's wide poses are back: section I sees the ring from above, now in the
+right half clear of the title (target [8.8, 0, −3], dist 20, pitch 55; the
+old [16, 0, 0] dist 24 put a bunch on the title), 4 TB/s and the tunnel look
+along the ring at pitch 22. `humAt: all`. Recorded on gluon (g1a–c, st7b,
+st10 in ~/talks/.cache/innoday): no place in Part I or III frames, the places
+fade in during the flight to section II. Stills 07, 10, 12 refreshed from the
+settled last frames. `pages:check` clean on v0.5.2.
