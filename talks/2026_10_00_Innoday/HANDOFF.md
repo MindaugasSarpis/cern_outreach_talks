@@ -348,3 +348,13 @@ grain ring 90.7/26.7 × the LHC's with six empty strands, `fcc3-25.png`
 (strands.js now takes `group` and `ring`). #5 shortlist (Light Conversion,
 EKSPLA, Sargasas, Teltonika, Ostaralab) with sources; the owner picks.
 Prototype decks: `~/talks/.cache/innoday/proto/`.
+
+## Deployed (2026-10-09, eighth round) and the owner's picks
+
+42d4c5f (v0.5.4, the fixed PDF), Pages run 37938998047 (green), URL 200; the
+first attempt refused because the tree changed while its ready ran (nothing
+pushed). Then the owner's picks: Part II layout A, the FCC grain ring on 25,
+Light Conversion as slide 28 (in the world until a photo comes), and no gold
+text (white plus one light blue, #9cc4ff). `hero_fcc.jpg` removed (unused).
+Sheets: `~/talks/.cache/innoday/r2-13-21.png`, `r2-part3.png`,
+`r2-prologue.png`; stills 25–30 re-shot (the new slide shifts the numbers).

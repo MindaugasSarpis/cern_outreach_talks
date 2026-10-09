@@ -36,9 +36,12 @@ brings the next round, and Lithuanian firms can solve it.
   round the Moon; beams → hadron therapy; the timing system → White Rabbit (Frankfurt
   exchange); magnets → the superconducting line (tested with Airbus). The part is named during the flight.
 - **III · Privačiam sektoriui.** How technology leaves CERN (700+), what suppliers gain
-  (+14 %), the next machine (FCC), Lithuania (associate, full-membership bid),
-  the bookend clip (the zoom-out reversed, back to Saulėtekis), what a firm can
-  do (613 mln. CHF a year; register, write to the liaison officer), „Ačiū“.
+  (+14 %), the next machine (FCC: its ring in grains round the LHC at true
+  scale, its strands ending empty), Lithuania (associate, full-membership bid),
+  the bookend clip (the zoom-out reversed, back to Saulėtekis), one Lithuanian
+  firm (Light Conversion: PHAROS chosen in CERN's 2021 tender for CLEAR), what a
+  firm can do (613 mln. CHF a year; register, write to the liaison officer),
+  „Ačiū“.
 
 ## World
 
@@ -50,8 +53,11 @@ the part word during a Part II flight, gone before the photo lands).
   seed and loop: Part III), `funnel` (the history of the Universe, at
   [30, 40, −110], its axis along −z behind the takeover's galaxy).
 - Talk-owned builders (`setup/`, registered in `main.ts`; `stage:check
-  --types strands,funnel`): `strands.js` (grains from ring parts to products;
-  `<Strands :on>` fades them in with Part II), `funnel.js` (wall rings and
+  --types strands,funnel`): `strands.js` (grains from ring parts to products,
+  in groups: `inventions`, Part II's, on from section II and off from section
+  III; `fcc`, a second object on the collider station with its own `ring` of
+  grains at 7 × 90.7/26.7 = 23.8 and six strands ending empty, on slide 25 only;
+  `<Strands :on group>`), `funnel.js` (wall rings and
   lines, the Big Bang, the CMB disk coloured from `public/figures/cmb_wmap.png`,
   dark ages, first stars, galaxies).
 - Part II photos are StagePhoto places with depth maps
@@ -79,13 +85,11 @@ the part word during a Part II flight, gone before the photo lands).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's review.** On the branch (73a47c5+):
-v0.5.4 (the PDF export now correct), the LHCb poster at 0:24, slides 16 and 19
-reworded. Waiting on the owner (via the Scheduler) for the backlog round:
-Part II problem-first layout A or B (#2), the FCC ring on slide 25 (#6,
-prototype in `~/talks/.cache/innoday/proto/deck-fcc.md`), and which Lithuanian
-firm goes before „613 mln. CHF“ (#5; Light Conversion recommended). Last
-deploy 2daa302 (v0.5.3), Pages run 37927529517.
+2026-10-09: **complete, pending the owner's review.** Live: 42d4c5f (v0.5.4,
+the fixed PDF), Pages run 37938998047. On the branch for the next deploy: Part
+II layout A, the FCC ring on 25, the Light Conversion slide (28, waiting for a
+photo with permission), and no gold text anywhere. Slides are now 30 (+ the
+hidden backup).
 
 ## Decisions
 
@@ -118,8 +122,22 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   the grid figures are in the notes. The photo's credit („© CERN (KT
   ataskaita, 2024)“) is taken from the KT report page; the photographer is
   not named there.
-- Part II kickers name the problem in the words slide 12 speaks („Problema:
-  valdyti mašiną“ …); part words name ring parts only.
+- Part II, layout A (owner, 9 Oct): the problem is the headline, in the words
+  slide 12 speaks („Valdyti greitintuvą“ …), the year a small kicker above it,
+  the invention under it, then one line. The strands keep their ring order, so
+  the years run out of order; as the biggest text they read as a broken
+  timeline. Part words name ring parts only.
+- No gold text (owner, 9 Oct: "gold letters are all over the internet now
+  because everyone uses AI as a designer"): headlines and numbers white, one
+  light-blue accent (`--in-accent: #9cc4ff`) for kickers, units and the rare
+  emphasis. Gold stays only in the world's grains (strands, the KT seed, the
+  FCC ring), which read as warm light beside the blue.
+- Slide 25 is the FCC in grains, not the map photo (owner, 9 Oct): the number
+  counts 27 → 91 km; the strands carry no labels.
+- Slide 28, Light Conversion (owner's pick, 9 Oct), stands in the world until
+  the firm gives a photo with permission; then it becomes a StagePhoto at that
+  pose. Its line is the owner's: „Light Conversion“ lazeris PHAROS 2021 m. buvo
+  pasirinktas CERN greitintuvui CLEAR. Never "dabar" (2026 use unconfirmed).
 - Print and PDF (toolkit, since v0.5.3; the talk's own PrintStill is retired):
   the stage prints `public/stills/NN.jpg` under each slide's own text, and the
   on-screen fallback shows the same stills. They are the world alone, from
