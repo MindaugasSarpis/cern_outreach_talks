@@ -3,7 +3,6 @@ import { installStrands } from './strands.js'
 import { installFunnel } from './funnel.js'
 import Count from './Count.vue'
 import Strands from './Strands.vue'
-import PrintStill from './PrintStill.vue'
 import AfterFlight from './AfterFlight.vue'
 import WebTakeover from './WebTakeover.vue'
 
@@ -17,7 +16,6 @@ export default ({ app }) => {
   installFunnel(registerBuilder)
   app.component('Count', Count)
   app.component('Strands', Strands)
-  app.component('PrintStill', PrintStill)
   app.component('AfterFlight', AfterFlight)
   app.component('WebTakeover', WebTakeover)
 }

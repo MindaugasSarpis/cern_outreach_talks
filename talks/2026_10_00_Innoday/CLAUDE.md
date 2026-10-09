@@ -53,8 +53,7 @@ the part word during a Part II flight, gone before the photo lands).
   --types strands,funnel`): `strands.js` (grains from ring parts to products;
   `<Strands :on>` fades them in with Part II), `funnel.js` (wall rings and
   lines, the Big Bang, the CMB disk coloured from `public/figures/cmb_wmap.png`,
-  dark ages, first stars, galaxies). `PrintStill.vue` shows a still of a
-  world-only slide in print/export only.
+  dark ages, first stars, galaxies).
 - Part II photos are StagePhoto places with depth maps
   (`public/figures/*.depth.png`, `slidev-videos depth`, committed), relief
   0.25–0.35, `flight: 1.6`, condense 0.8 s; text is up 2.6–3.8 s after the
@@ -73,13 +72,10 @@ the part word during a Part II flight, gone before the photo lands).
   (talk-owned bookend, 0:30, made by reversing the opener; do not `--prune`
   `vu_ff_zoom.mp4`, its source), library `cern_overview_short.mp4`,
   `cern_footage_2022_042_001.mp4`.
-- Toolkit: slidev-videos `e5d05a9` (feat/v0.5.3, both addons; the Scheduler's
-  pin for the owner's iPhone black screen; it fixes 5d7e786's restored context
-  left behind the fallback and a rebuild under a covering clip still drawing): v0.5.2's place groups and `humAt:
-  all`, `?stage-debug` (the fallback's reason on screen), quality tiers (a phone
-  starts at 2; desktop and the headless recorder at 0, `pages:check` prints it),
-  place textures ~10× smaller, a rebuild one tier lower after a lost context.
-  Move to the v0.5.3 tag when it is cut.
+- Toolkit: slidev-videos v0.5.3 (both addons): place groups, `humAt: all`,
+  `?stage-debug`, quality tiers (a phone starts at 2; desktop and the headless
+  recorder at 0, `pages:check` prints it), lighter photo places, the context-
+  loss fixes, and stills and posters for print.
 
 ## Status
 
@@ -126,14 +122,20 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   not named there.
 - Part II kickers name the problem in the words slide 12 speaks („Problema:
   valdyti mašiną“ …); part words name ring parts only.
-- Print and PDF: `<PrintStill>` on the world-only and clip slides, the stills
-  are settled last frames of `slidev-stage-record` runs in sequence (a shot
-  taken after a jump catches flights mid-way); export with `--wait-until load`.
+- Print and PDF (v0.5.3; the talk's own PrintStill is retired): the stage
+  prints `public/stills/NN.jpg` under each slide's own text, and the on-screen
+  fallback shows the same stills. They are the world alone, from
+  `slidev-stage-shots <dist> public/stills --stills --wait 30000` (the
+  README's 9000 caught most flights and gathers mid-way under SwiftShader).
+  Clips print their posters (`public/video-frames/*.poster.jpg`, `slidev-videos
+  frames --all`); the LHCb animation's poster is hand-picked at 24 s, the whole
+  detector (its first lit frame is a speck on black), so `frames --force`
+  would undo it. Check with a real `pnpm talk export`.
 - Place mode over screen mode for Part II (owner via the Scheduler, 8 Oct):
   the inventions visibly hang off the machine.
 - The opener stays whole (slot ≥ 25 min).
 - Asset paths are relative to the deck's base: `src="figures/…"` on StagePhoto
-  and PrintStill, never `/figures/…` (that resolves outside
+  and WebTakeover, never `/figures/…` (that resolves outside
   `/cern_outreach_talks/2026_10_00_Innoday/` on Pages, and a local build with
   base `/` hides it). Before a deploy, `pnpm pages:check`: builds with the
   Pages base, serves it under that prefix, opens slides 11 and 13 and print
