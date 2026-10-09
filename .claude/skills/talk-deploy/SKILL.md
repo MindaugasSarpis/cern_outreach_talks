@@ -1,16 +1,20 @@
 ---
 name: talk-deploy
-description: Use only when the owner explicitly asks to deploy, publish, push or put a talk in the outreach_talks repo live on GitHub Pages. Runs pnpm talk ready and pnpm talk deploy from the talk's worktree and reports deployed only after the Pages run is green and the URL answers.
+description: Use when a talk in the outreach_talks repo should go live on GitHub Pages, under the owner's standing deploy rule (talk ready passed with nothing skipped and the Scheduler gave main) or when the owner asks to deploy, publish or push. Runs pnpm talk ready and pnpm talk deploy from the talk's worktree and reports deployed only after the Pages run is green and the URL answers.
 ---
 
 # Deploy a talk
 
 The deploy model is the owner's existing one: a push to `main` triggers the
-Pages workflow, which builds every talk. Nothing deploys unless the owner asked
-for it in this conversation ("deploy", "push", "publish", "put it live", or a
-hand-off such as "finish and push"). A plain "finish" or "afk" is not a deploy
-request; under the AFK protocol the talk is left ready and the deploy is listed
-as an open question.
+Pages workflow, which builds every talk.
+
+**Standing rule (owner, 2026-10-09).** A talk session deploys without asking
+once `pnpm talk ready` has passed on the commit with nothing skipped and the
+Scheduler has given it `main` (pushes to `main` stay one at a time). It reports
+the Pages run and the URL's status afterwards. A deploy that needs a skipped
+step (`--ready-skip`, `--skip-ready`), or that comes without the Scheduler's
+go, still needs the owner's own word in this conversation ("deploy", "push",
+"publish", "put it live", or a hand-off such as "finish and push").
 
 ## Steps
 
