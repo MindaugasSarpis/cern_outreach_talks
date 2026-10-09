@@ -8,31 +8,26 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 „adresuoti“.
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos v0.5.3, for both addons.
+Toolkit pin: slidev-videos v0.5.4, for both addons.
 
-## Status (2026-10-09): approved by the owner; deployed on v0.5.3
+## Status (2026-10-09): approved by the owner; deployed on v0.5.4
 
-- Redeployed 2026-10-09 on the owner's "Deploy", for the owner's laptop
-  review on the latest tools: commit 1c7330b on main, Pages run 37925969848
-  (every job success). The URL answers 200 with the Lithuanian title; the
-  stills, the clip's poster and space.json answer too. `talk ready` passed
-  on 1c7330b with nothing skipped.
-- Known in this deploy: print and PDF export show slide 1's still behind
-  every page (a v0.5.3 bug: the stage reads the global nav, which stays at 1
-  on the print route, not the print page's own). Screen, phone and the
-  reduced-motion fallback are right. The fix is with Tools as v0.5.4: pin it
-  (`talk pin 2026_10_00_OpenData v0.5.4`) and redeploy when it is out.
-
-- The owner, 2026-10-09: "All good, just the ring with people should be
-  dynamic, moving, interacting like particles". Done (see the decision
-  below).
+- Redeployed 2026-10-09 on the owner's go: commit 23a3bf7 on main, Pages run
+  37930240036 (every job success). The URL answers 200 with the Lithuanian
+  title; stills, the clip's poster and space.json answer too. `talk ready`
+  passed on 23a3bf7 with nothing skipped.
+- v0.5.4 fixed v0.5.3's print bug: a `talk export` gives each of the 13 pages
+  its own still, and the PDF is 1.7 MB (42 MB on v0.5.3).
+- Slide 9 now says „iki 2026 m. liepos“ (see the decision).
+- Before: deployed 1c7330b on v0.5.3 (Pages run 37925969848) for the owner's
+  laptop review, with the print bug.
 - Redeployed 2026-10-09 on the owner's go, after Užsikrauk karjerai: commit
   d97015a on main, Pages run 37902214612 (every job success). The talk's URL
   answers 200 with the Lithuanian title, and the live space.json carries the
   ring's `motion`. `talk ready` passed on the same commit.
 
 - 13 slides in Lithuanian, about 6.0 of 6.5 min (lint, lang lt: 0 errors, 0
-  warnings). Toolkit pin v0.5.3.
+  warnings). Toolkit pin v0.5.4.
 - The line: the cover; the 3D clip (advances on its end); one real Z → μμ
   collision from LHCb open data; it collapses into the 1 TB sphere; 800 TB and
   4 PB open (gold; 4 PB forms from five 800 TB piles); LHCb's 100 PB (blue);
@@ -57,6 +52,13 @@ Toolkit pin: slidev-videos v0.5.3, for both addons.
 
 ## Decisions
 
+- 2026-10-09. Slide 9: „per 2026 m. pirmąjį pusmetį“ → „iki 2026 m. liepos“
+  (the Ideas backlog's item 1, owner-approved). The DPHEP Global Report 2026
+  (arXiv:2607.06775, submitted 7 Jul 2026) says "At the time of writing,
+  about 20 requests…"; the service ran as a beta from October 2024 and was
+  released in February 2026, so the 20 are a total by July, not a half-year
+  count. The screen keeps "20"; the notes say „apie dvidešimt“ (the
+  Scheduler: fine as is). Undo: the old line in 9126ae2^.
 - 2026-10-09. Pinned slidev-videos v0.5.3 (the Scheduler's round for the
   owner's laptop review): iPhone quality tiers, lost-context recovery,
   `?stage-debug`, the stage's own stills, clip posters.
@@ -211,8 +213,6 @@ Toolkit pin: slidev-videos v0.5.3, for both addons.
 
 ## Open
 
-- Pin v0.5.4 when Tools tags it (the print stills fix above), re-check a
-  `talk export` (each page its own still), redeploy.
 - The pinned shots tool (`talk ready`'s shots) waits a fixed 4.2 s of real
   time per slide; on SwiftShader the engine clock runs far slower, so its
   slide 13 catches the flight in (no ring yet, or the ring off centre). The
