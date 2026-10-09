@@ -281,10 +281,10 @@ space: { at: stumpe, dim: 0, flight: 1.6 }   # place mode: the photo stands at i
 <div class="part-word">Valdymo pultai</div>
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="low deep">
-<div class="hero-text">
-<p class="kicker gold">Problema: valdyti greitintuvą</p>
-<div class="year">1973</div>
-<h1>Jutiklinis ekranas</h1>
+<div class="hero-text pf">
+<p class="kicker year-k">1973</p>
+<h1>Valdyti greitintuvą</h1>
+<p class="answer">Jutiklinis ekranas</p>
 <p class="line">Vienas pirmųjų <b>talpinių</b> jutiklinių ekranų pasaulyje</p>
 </div>
 <div class="credit">Bentas Stumpe su jutiklinio ekrano plokšte, 2016 · Nuotr. Sophia Elizabeth Bennett / CERN, CC BY 4.0</div>
@@ -310,10 +310,10 @@ space: { at: [25.0, 2.5, 0.0], dist: 9, yaw: -90, pitch: 30, dim: 0, flight: 1.6
 <div class="part-word">Kompiuteriai</div>
 
 <StagePhoto src="figures/hero_proposal.jpg" arrive="camera" :dust-ms="[800, 600]" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" class="page">
-<div class="hero-text">
-<p class="kicker gold">Problema: tvarkyti informaciją</p>
-<div class="year">1989</div>
-<h1>„Vague but exciting…“</h1>
+<div class="hero-text pf">
+<p class="kicker year-k">1989</p>
+<h1>Tvarkyti informaciją</h1>
+<p class="answer">„Vague but exciting…“</p>
 <p class="line">„Miglota, bet įdomu…“</p>
 </div>
 <div class="credit">T. Bernerso-Lee pasiūlymas su M. Sendallo pastaba, CERN ekspozicija · Nuotr. Sailko, CC BY 3.0</div>
@@ -334,10 +334,10 @@ space: { at: next, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 <Strands />
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="right">
-<div class="hero-text">
-<p class="kicker gold">Problema: tvarkyti informaciją</p>
-<div class="year">1993</div>
-<h1>CERN atsisakė teisių į žiniatinklio programas</h1>
+<div class="hero-text pf">
+<p class="kicker year-k">1993</p>
+<h1>Tvarkyti informaciją</h1>
+<p class="answer">CERN atsisakė teisių į žiniatinklio programas</p>
 <p class="line">Šiandien <b>~1,5 mlrd.</b> svetainių ir <b>~6 mlrd.</b> žmonių internete</p>
 </div>
 <div class="credit">Pirmasis žiniatinklio serveris, CERN, 1990 · Nuotr. Patrice Loïez / CERN, CC BY-SA 4.0</div>
@@ -363,10 +363,10 @@ space: { at: pet, dim: 0, flight: 1.6 }   # place mode: the photo stands at its 
 <div class="part-word">Detektoriai</div>
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
-<div class="hero-text">
-<p class="kicker gold">Problema: pamatyti dalelę</p>
-<div class="year">1977</div>
-<h1>PET tomografija</h1>
+<div class="hero-text pf">
+<p class="kicker year-k">1977</p>
+<h1>Pamatyti dalelę</h1>
+<p class="answer">PET tomografija</p>
 <p class="line">Pirmasis CERN PET vaizdas</p>
 </div>
 <div class="credit">Šiuolaikinis PET/KT skeneris, CERMEP, Lionas · Nuotr. Romainbehar, CC0</div>
@@ -390,10 +390,10 @@ space: { at: mars, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 <Strands />
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="mars" :relief="0.25" :at="[16.6, 2.5, 13.51]" :size="3" :yaw="-150" src="figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" class="right">
-<div class="hero-text">
-<p class="kicker gold">Problema: pamatyti dalelę</p>
-<div class="year">2026</div>
-<h1>Spalvotas rentgenas</h1>
+<div class="hero-text pf">
+<p class="kicker year-k">2026</p>
+<h1>Pamatyti dalelę</h1>
+<p class="answer">Spalvotas rentgenas</p>
 <p class="line">JAV FDA leido naudoti skenerį su <b>CERN Medipix3</b> lustu</p>
 </div>
 <div class="credit">Spalvotas 3D riešo vaizdas (Medipix3) · MARS Bioimaging Ltd</div>
@@ -418,10 +418,10 @@ space: { at: artemis, dim: 0, flight: 1.6 }   # place mode: the photo stands at 
 <Strands />
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
-<div class="hero-text">
-<p class="kicker gold">Problema: pamatyti dalelę</p>
-<div class="year">2026</div>
-<h1>Aplink Mėnulį</h1>
+<div class="hero-text pf">
+<p class="kicker year-k">2026</p>
+<h1>Pamatyti dalelę</h1>
+<p class="answer">Aplink Mėnulį</p>
 <p class="line">6 CERN Timepix lustai matavo spinduliuotę įgulos kapsulėje</p>
 </div>
 <div class="credit">Artemis II startas, 2026 m. balandžio 1 d. · Nuotr. NASA / Michael DeMocker</div>
@@ -445,10 +445,10 @@ space: { at: hadron, dim: 0, flight: 1.6 }   # place mode: the photo stands at i
 <div class="part-word">Pluoštas</div>
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
-<div class="hero-text">
-<p class="kicker gold">Problema: nukreipti pluoštą</p>
-<div class="year">2011</div>
-<h1>Hadronų terapija</h1>
+<div class="hero-text pf">
+<p class="kicker year-k">2011</p>
+<h1>Nukreipti pluoštą</h1>
+<p class="answer">Hadronų terapija</p>
 <p class="line">2011 m. CNAO gydė pirmąjį pacientą. Iš viso – <b>daugiau nei 9 000</b></p>
 </div>
 <div class="credit">MedAustron sinchrotronas, Vyner Noištatas (Austrija) · © CERN</div>
@@ -473,10 +473,10 @@ space: { at: whiterabbit, dim: 0, flight: 1.6 }   # place mode: the photo stands
 <div class="part-word">Laiko sistema</div>
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim">
-<div class="hero-text">
-<p class="kicker gold">Problema: suderinti laikrodžius</p>
-<div class="year">2012</div>
-<h1>White Rabbit</h1>
+<div class="hero-text pf">
+<p class="kicker year-k">2012</p>
+<h1>Suderinti laikrodžius</h1>
+<p class="answer">White Rabbit</p>
 <p class="line">CERN laiko sinchronizavimas veikia Frankfurto biržoje</p>
 </div>
 <div class="credit">White Rabbit jungiklis · © CERN (KT ataskaita, 2024)</div>
@@ -503,10 +503,10 @@ space: { at: cold, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 <div class="part-word">Magnetai</div>
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="right deep">
-<div class="hero-text">
-<p class="kicker gold">Problema: atšaldyti magnetus</p>
-<div class="year">2022–2024</div>
-<h1>Superlaidžios elektros linijos</h1>
+<div class="hero-text pf">
+<p class="kicker year-k">2022–2024</p>
+<h1>Atšaldyti magnetus</h1>
+<p class="answer">Superlaidžios elektros linijos</p>
 <p class="line">Su <b>Airbus</b> ši technologija išbandyta vandeniliniams lėktuvams</p>
 </div>
 <div class="credit">CERN superlaidi MgB₂ linija HL-LHC greitintuvui (SM18); jos technologija panaudota linijai, kurią CERN kūrė su Airbus · Nuotr. Maximilien Brice / © CERN</div>
@@ -527,6 +527,8 @@ space: { at: [120, -2.4, 0], dist: 14, yaw: -22, pitch: 22, dim: 0.4 }
 places: { inventions: false }   # and are gone again in Part III
 ---
 
+<Strands :on="false" />
+
 # III dalis
 
 Privačiam sektoriui
@@ -542,7 +544,7 @@ space: { at: kt, dist: 17, yaw: 4, pitch: 34, dim: 0.4 }
 ---
 
 <div class="payoff">
-<p class="kicker gold">CERN žinių perdavimas įmonėms</p>
+<p class="kicker">CERN žinių perdavimas įmonėms</p>
 <div class="big">700+</div>
 <h1>sutarčių su partneriais nuo 2011 m.</h1>
 <p>CERN Venture Connect: akcijų CERN neima, 2 % licencinis mokestis — tik nuo 1 mln. CHF metinių pajamų.</p>
@@ -564,8 +566,10 @@ Atsargiai: „27 su CERN susiję startuoliai pritraukė 3,2 mlrd. CHF“ — 2,
 space: { at: [118.5, -1.6, 0], dist: 13, yaw: -30, pitch: 14, dim: 0.45 }
 ---
 
+<Strands group="fcc" :on="false" />
+
 <div class="payoff">
-<p class="kicker gold">CERN tiekėjai · 2026 m. tyrimas</p>
+<p class="kicker">CERN tiekėjai · 2026 m. tyrimas</p>
 <div class="big">+<Count :from="0" :to="14" :ms="1800" /><span class="unit">%</span></div>
 <h1>apyvartos augimo per penkerius metus</h1>
 <p>palyginti su panašiomis įmonėmis, kurios CERN užsakymo negavo</p>
@@ -585,23 +589,26 @@ Faktai: nematerialusis turtas +63 %, materialusis +27 %; 54 % tiekėjų patek
 -->
 
 ---
-space: { at: kt, dist: 22, yaw: 200, pitch: 40, dim: 0 }
+space: { at: [22.5, 0, -14.7], dist: 70, yaw: -120, pitch: 58, dim: 0.15 }   # the FCC ring round the LHC at true scale (90.7 / 26.7 km); its strands end empty
 ---
 
-<StagePhoto src="figures/hero_fcc.jpg" alt="Siūlomo 91 km FCC žiedo aplink Ženevą žemėlapis šalia LHC žiedo" focus="55% 50%">
-<div class="hero-text">
+<Strands group="fcc" />
+
+<div class="readout">
+
 <p class="kicker">Kitas greitintuvas</p>
-<div class="year blue">91 km</div>
-<h1>Būsimasis žiedinis greitintuvas</h1>
-<p class="line">Sprendimas statyti — apie 2028 m.</p>
+
+<div class="big"><Count :from="27" :to="91" :ms="2400" /><span class="unit">km</span></div>
+
+<p>Būsimasis žiedinis greitintuvas. Sprendimas statyti – apie 2028 m.</p>
+
 </div>
-<div class="credit">Būsimojo žiedinio greitintuvo (FCC) trasa · Daniel Dominguez / CERN</div>
-</StagePhoto>
 
 <!-- facts: cern-fcc-study, cern-espp-2026, ktnews-fcc-donors, cern-run3-end -->
 
 <!--
 Kalbėtojui. Kitos mašinos problemos.
+Vaizdas: auksinis FCC žiedas tikru masteliu aplink mėlyną LHC žiedą (90,7 ir 26,7 km); šešios gijos baigiasi tuščiai — naujos mašinos problemos dar neišspręstos. Skaičius auga nuo 27 iki 91 km.
 Sakyti: „Šių metų birželio 27 d. LHC žiede paskutinį kartą prieš ilgąją pertrauką skriejo protonai; iki 2030 m. jis pertvarkomas, kad duotų iki dešimties kartų daugiau susidūrimų. O gegužę CERN Taryba priėmė Europos dalelių fizikos strategiją: kitu greitintuvu siūlomas 91 km žiedas — Būsimasis žiedinis greitintuvas, sutrumpintai FCC. Sprendimas jį statyti laukiamas apie 2028 m. Jam reikės naujų magnetų, šaldymo ir vakuumo sistemų. Pernai gruodį pirmą kartą CERN istorijoje privatūs rėmėjai pažadėjo naujam greitintuvui apie 860 mln. eurų.“
 Faktai: FCC galimybių studija (2025 03 31): 90,7 km, vidutinis gylis ~200 m, FCC-ee kaina ~15 mlrd. CHF per ~12–15 metų. Strategija priimta 2026 05 22 Budapešte. Datos: 2026 06 27 05:52 — paskutiniai 3-iojo etapo protonai (CERN Courier); 06 29 — LHC išjungtas, prasidėjo LS3 (home.cern). Rėmėjai: Ericas ir Wendy Schmidtai, Johnas Elkannas, Breakthrough Prize fondas, Xavier'as Nielis; pažadai priklauso nuo valstybių narių sprendimo. HL-LHC fizika — nuo 2030 m. birželio iki 2041 m.
 Šaltiniai: home.cern/cern-bids-farewell-to-the-lhc-and-enters-long-shutdown-3/; council.web.cern.ch (2026 05 22 rezoliucija); home.cern/private-donors-pledge-860-million-euros-cerns-future-circular-collider/; cerncourier.com/a/fcc-feasibility-study-complete/.
@@ -612,9 +619,11 @@ Faktai: FCC galimybių studija (2025 03 31): 90,7 km, vidutinis gylis ~200 m, 
 space: { at: kt, dist: 18, yaw: 120, pitch: 12, dim: 0 }
 ---
 
+<Strands group="fcc" :on="false" />
+
 <StagePhoto src="figures/hero_lt.jpg" arrive="camera" alt="Prezidentas Gitanas Nausėda spaudžia ranką CERN generaliniam direktoriui Markui Thomsonui, už jų CERN, Lietuvos ir ES vėliavos" focus="50% 30%" class="low deep">
 <div class="hero-text">
-<p class="kicker gold">Lietuva ir CERN</p>
+<p class="kicker">Lietuva ir CERN</p>
 <div class="year blue">2018</div>
 <h1>Asocijuotoji narė</h1>
 <p class="line">2026 m. Lietuva kreipėsi dėl <b>visateisės narystės</b></p>
@@ -633,7 +642,7 @@ Faktai: susitarimas pasirašytas 2017 06 27 Vilniuje, įsigaliojo 2018 01 08. Li
 -->
 
 ---
-space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45 }   # the firms slide's pose: the world rests there under the clip
+space: { at: [118.5, -1.6, 0], dist: 12, yaw: -18, pitch: 18, dim: 0.35 }   # the Light Conversion slide's pose: the world rests there under the clip
 ---
 
 <VideoPlayer src="vu_ff_unzoom.mp4" advance-on-end />
@@ -645,11 +654,37 @@ Sakyti (per klipą): „O dabar grįžtame nuo galaktikos iki Saulėtekio, kur p
 -->
 
 ---
+space: { at: [118.5, -1.6, 0], dist: 12, yaw: -18, pitch: 18, dim: 0.35 }   # one Lithuanian firm; a StagePhoto stands here once the firm sends a photo
+---
+
+<div class="world-caption narrow">
+
+<p class="kicker">Vilniaus universiteto atžala</p>
+
+# Light Conversion
+
+<p>„Light Conversion“ lazeris PHAROS 2021 m. buvo pasirinktas CERN greitintuvui CLEAR.</p>
+
+</div>
+<div class="src">lightcon.com, 2021 06 18 · CERN, CLEAR lazerių laboratorija (indico.cern.ch/event/1203308), 2022</div>
+
+<!-- facts: lt-lightcon, light-conversion-vu-spinoff -->
+
+<!--
+Kalbėtojui. Viena Lietuvos įmonė, kuri jau laimėjo CERN konkursą — prieš kvietimą veikti.
+Sakyti: „Vienas pavyzdys. „Light Conversion“ 1994 m. atsiskyrė nuo Vilniaus universiteto. 2021 m. ji laimėjo atvirą CERN konkursą: jos lazeris PHAROS buvo pasirinktas CERN greitintuvui CLEAR — jis išmuša elektronus, iš kurių greitintuve formuojamas pluoštas. Šiandien įmonė turi daugiau nei 800 darbuotojų ir pasaulyje įdiegusi daugiau nei 10 000 savo sistemų.“
+Faktai: konkursas — 2021 m. birželis (atitiko specifikaciją, pasiūlė geresnę kainą); PHAROS su ultravioletine harmonika — CLEAR fotoinžektoriaus lazeris. CERN skaidrė (M. Martinez Calderon, SY-STI-LP, 2022 10 06): „Light Conversion PHAROS system already installed and tested at CLEAR laser-lab“. Ar jis tebeveikia 2026 m., nepatvirtinta — nesakyti „dabar“.
+Vaizdas: kol kas pasaulis (auksinis žinių perdavimo branduolys). Kai įmonė atsiųs nuotrauką su leidimu, ji stovės čia kaip StagePhoto.
+Šaltiniai: lightcon.com/news/pharos-will-generate-electron-beams-for-linear-electron-accelerator-at-cern-laboratory/; indico.cern.ch/event/1203308 (Run2c UV beamline, AWAKE); lightcon.com/about-us/.
+(~0,5 min)
+-->
+
+---
 space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45 }
 ---
 
 <div class="payoff">
-<p class="kicker gold">CERN pirkimai · 2024 m.</p>
+<p class="kicker">CERN pirkimai · 2024 m.</p>
 <div class="big">613<span class="unit">mln. CHF</span></div>
 <h1>tiek CERN pirko prekių ir paslaugų</h1>
 <p>Registracija CERN tiekėjų portale <b>business-with-cern.web.cern.ch</b>; ryšiai su CERN — per Inovacijų agentūrą.</p>
@@ -661,7 +696,7 @@ space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45 }
 
 <!--
 Kalbėtojui. Kvietimas veikti.
-Sakyti: „Lietuvos įmonė gali dirbti su CERN trimis būdais. Pirma, CERN yra klientas: 2024 m. jis pirko prekių ir paslaugų už 613 mln. frankų. Dešimt su viršum Lietuvos įmonių jau tiekia CERN elektroniką, radijo dažnių įrangą, optiką, fotoniką ir mechaniką. Pavyzdžiui, 2021 m. „Light Conversion“ laimėjo atvirą CERN konkursą, ir jos lazeris PHAROS buvo pasirinktas CERN greitintuvui CLEAR. Šiemet Lietuva jau pasiekė asocijuotajai narei nustatytas lubas. Tos lubos bendros: ir CERN darbuotojams iš Lietuvos, ir sutartims su mūsų įmonėmis; pavyzdžiui, kandidatų iš Lietuvos į darbo vietas, kuriose pradėti dirbti reikėtų 2026 m., CERN nebesvarsto. Visateisė narystė šias lubas panaikintų. Todėl registruotis verta jau dabar, kad tada jūsų įmonė jau būtų CERN tiekėjų sąraše. Antra, FCC: šių metų sausį „Ekspla“, „Ostaralab“ ir „Sargasas“ pasirašė su CERN ketinimų memorandumus dėl FCC technologijų ir tiekimo. Trečia, CERN technologijų licencijos ir bendri projektai.“
+Sakyti: „Lietuvos įmonė gali dirbti su CERN trimis būdais. Pirma, CERN yra klientas: 2024 m. jis pirko prekių ir paslaugų už 613 mln. frankų. Dešimt su viršum Lietuvos įmonių jau tiekia CERN elektroniką, radijo dažnių įrangą, optiką, fotoniką ir mechaniką. „Light Conversion“ — vienas pavyzdys. Šiemet Lietuva jau pasiekė asocijuotajai narei nustatytas lubas. Tos lubos bendros: ir CERN darbuotojams iš Lietuvos, ir sutartims su mūsų įmonėmis; pavyzdžiui, kandidatų iš Lietuvos į darbo vietas, kuriose pradėti dirbti reikėtų 2026 m., CERN nebesvarsto. Visateisė narystė šias lubas panaikintų. Todėl registruotis verta jau dabar, kad tada jūsų įmonė jau būtų CERN tiekėjų sąraše. Antra, FCC: šių metų sausį „Ekspla“, „Ostaralab“ ir „Sargasas“ pasirašė su CERN ketinimų memorandumus dėl FCC technologijų ir tiekimo. Trečia, CERN technologijų licencijos ir bendri projektai.“
 Light Conversion: 2021 m. birželį laimėjo atvirą CERN konkursą (atitiko specifikaciją, pasiūlė geresnę kainą); PHAROS pasirinktas fotokatodo lazeriu CLEAR greitintuvui (lightcon.com, 2021 06 18). Ar jis tebeveikia 2026 m., nepatvirtinta — nesakyti „dabar“. Nuo 2018 m. CERN iš Lietuvos įmonių pirko už ~2,5 mln. CHF (VU rektorius R. Petrauskas, LRT, 2026 m. birželis).
 Šaltiniai: 613 mln. CHF — CERN pirkimų pristatymas, FCC Week 2025.
 Faktai: pirkimai nuo 50 000 CHF siunčiami ir nacionaliniams pramonės ryšių su CERN specialistams; >400 000 CHF — rinkos tyrimas ir konkursas. CERN 2026 03 01–2027 02 28 sąraše Lietuva pažymėta „Associate Member State that has reached its ceiling for 2026“ (todėl tiekimui laikoma „well balanced“); lubos — bendra darbuotojų ir sutarčių vertė, ne didesnė už metinį įnašą (1,0 mln. CHF). Šaltiniai: CERN pramonės grąžos sąrašas 2026–2027; CERN darbo skelbimai („Lithuanian … nationals cannot currently be considered for positions with a 2026 start date“). Ryšių su CERN specialistė — Aušrinė Krištopaitytė (Inovacijų agentūra). Lietuvos CERN BIC (2019) — ar dar veikia, nepatikrinta; neminėti.
