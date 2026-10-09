@@ -10,6 +10,7 @@ import importlib.util
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -247,7 +248,7 @@ def test_deploy_refuses_what_changed_while_ready_ran(repo, od_worktree, env, mod
     head = sh(["git", "rev-parse", "HEAD"], od_worktree, env).stdout.strip()
     before = origin_main(repo, env)
     code, obj, err = talk(od_worktree, "deploy", "opendata", "--dry-run", "--ready-skip", "check",
-                          "--ready-skip", "shots", cwd=od_worktree, env=env)
+                          "--ready-skip", "shots", "--ready-skip", "pages", cwd=od_worktree, env=env)
     assert code == 1, err
     assert obj["ready"]["ready"] is True and obj["sha"] == head
     assert needle in obj["error"] and "would_push" not in obj
@@ -712,8 +713,8 @@ def counted(od_worktree, env, tmp_path):
     return {**env, "LINT_COUNT": str(count)}, (lambda: len(count.read_text()) if count.exists() else 0)
 
 
-SKIPS = ["--skip", "check", "--skip", "shots"]
-READY_SKIPS = ["--ready-skip", "check", "--ready-skip", "shots"]
+SKIPS = ["--skip", "check", "--skip", "shots", "--skip", "pages"]
+READY_SKIPS = ["--ready-skip", "check", "--ready-skip", "shots", "--ready-skip", "pages"]
 
 
 def test_deploy_reuses_the_ready_that_passed_this_commit(od_worktree, counted):
@@ -721,7 +722,7 @@ def test_deploy_reuses_the_ready_that_passed_this_commit(od_worktree, counted):
     code, obj, err = talk(od_worktree, "ready", "opendata", *SKIPS, cwd=od_worktree, env=env)
     assert code == 0 and runs() == 1, err
     stamp = json.loads(open(obj["stamp"]).read())
-    assert stamp["ok"] is True and stamp["skip"] == ["check", "shots"]
+    assert stamp["ok"] is True and stamp["skip"] == ["check", "pages", "shots"]
     code, obj, err = talk(od_worktree, "deploy", "opendata", "--dry-run", *READY_SKIPS, cwd=od_worktree, env=env)
     assert code == 0 and runs() == 1, err                 # not run a second time
     assert obj["ready"]["reused"] is True and obj["would_push"] == stamp["sha"]
@@ -1185,3 +1186,33 @@ def test_ready_fails_first_on_a_lockfile_that_does_not_record_the_pins(od_worktr
     assert code == 1 and obj["ready"] is False and runs() == 0, err        # lint never ran
     assert obj["drift"] == ["talks/2026_10_00_OpenData is not in pnpm-lock.yaml"]
     assert "pnpm install" in obj["fix"][0] and "does not record this talk's pins" in err
+
+
+FAKE_PAGES = """const a = process.argv.slice(2), at = (k) => a[a.indexOf(k) + 1]
+const fail = process.env.PAGES_FAIL === '1';
+require('fs').writeFileSync(at('--json'), JSON.stringify({ ok: !fail, where: at('--url') || at('--prefix'), slides: 3, tier: 0,
+  failed: fail ? [{ slide: 2, request: '404 /figures/x.jpg' }] : [], context_lost: fail ? [{ slide: 3, text: 'stage: fallback — context-lost' }] : [] }))
+process.exit(fail ? 1 : 0)
+"""
+
+
+@pytest.mark.skipif(not shutil.which("node"), reason="needs node")
+def test_pages_check_reads_the_walk(tmp_path, monkeypatch):
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts" / "pages_check.mjs").write_text(FAKE_PAGES.replace("require('fs')", "(await import('node:fs'))"))
+    monkeypatch.setattr(talk_cli, "build_dir", lambda talk: tmp_path / "build")
+    calls = []
+
+    def local(cmd, cwd, env, gpu=None):
+        calls.append([str(c) for c in cmd])
+        return subprocess.run([str(c) for c in cmd], cwd=cwd, env=env, capture_output=True, text=True), {}
+    monkeypatch.setattr(talk_cli, "render_run", local)
+    ok = talk_cli.pages_check(tmp_path, "2026_10_00_OpenData", site="/x/site", prefix="/cern_outreach_talks/2026_10_00_OpenData/")
+    assert ok["ok"] is True and ok["slides"] == 3 and ok["failed"] == [], ok
+    assert calls[-1][2:6] == ["--site", "/x/site", "--prefix", "/cern_outreach_talks/2026_10_00_OpenData/"]
+    monkeypatch.setenv("PAGES_FAIL", "1")
+    bad = talk_cli.pages_check(tmp_path, "2026_10_00_OpenData", url="https://example.org/t/")
+    assert bad["ok"] is False and calls[-1][2:4] == ["--url", "https://example.org/t/"]
+    assert bad["failed"] == [{"slide": 2, "request": "404 /figures/x.jpg"}]
+    assert bad["context_lost"][0]["text"].endswith("context-lost")
+    assert bad["report"].endswith("pages-live.json")
