@@ -12,7 +12,7 @@ Usage (from anywhere; the bank is found from this script's checkout):
     python3 scripts/facts.py add --claim-en "..." --source-url https://... \\
         --verdict confirmed --verified-on 2026-10-08 --verified-by "the owner" \\
         [--id slug] [--claim-lt "..."] [--value 89] [--unit contracts] \\
-        [--as-of 2025] [--quote "..."] [--used-in 2026_10_00_Innoday]
+        [--as-of 2025] [--quote "..."] [--used-in 2026_10_23_Innoday]
     python3 scripts/facts.py add --from-json new.jsonl  # one object, a list, or JSON lines; - for stdin
     python3 scripts/facts.py add --from-json run.json --loose --verified-by "..."  # a research run's facts
     python3 scripts/facts.py add --from-lane talks/<t>/research/*.json [--only <id>] [--dry-run]
