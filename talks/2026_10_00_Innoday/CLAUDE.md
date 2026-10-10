@@ -144,6 +144,12 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   instead of a step: Chrome pauses a clip unmuted before any press, so the
   first → used to skip it. The slide says `layout: default` (Slidev gives a
   first slide the cover layout, whose box held the clip at 0 px).
+- Taken overnight on 10 Oct (owner asleep, "complete everything"; the
+  recommended option, for the morning): the closing pentaquark keeps the
+  `wide` pose though it sits right, where „Ačiū“ left room (centre it?); the
+  three CERN photos under CC licences stay in the credits (drop them if
+  CERN-user covers them?); presenting through /presenter, click the audience
+  window once before the first press (its notes say so).
 - No slogans, no rhetorical openers in the notes either.
 - Part II is "Sprendimai" (solutions); the speaker names each problem.
 - The accelerator is „greitintuvas“, never „mašina“ (a CERN-English calque);
