@@ -49,12 +49,6 @@ space:
 
 <Grains :set="{ team: 0 }" />
 
-# Atvirųjų duomenų apdovanojimo nominantai
-
-# Atveriame <span class="nt">LHCb</span> duomenis
-
-<div class="mt-md">Mindaugas Šarpis · <span class="nt">LHCb</span> Vilnius · Vilniaus universitetas</div>
-
 <!--
 Message: this talk is about the work we were nominated for, opening LHCb's data.
 
@@ -96,16 +90,6 @@ space: { at: [24.4, -0.6, 5.9], dist: 5.2, yaw: 8, pitch: 30, sway: 10, dim: 0.1
 
 <Grains :set="{ collision: 1, scale: [], 'scale:labels': 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
-<div class="readout event">
-
-<p class="kicker">Vienas susidūrimas · 2012 m.</p>
-
-# Z → μμ
-
-<p class="line">Čia Z bozonas suskilo į du miuonus. Šį susidūrimą gali atsisiųsti kiekvienas.</p>
-
-</div>
-
 <!-- facts: lhcb-run3-readout-4tbs -->
 
 <!--
@@ -145,11 +129,7 @@ space: { at: [23.02, 0.1, 6.0], dist: 0.76, yaw: -13.7, pitch: 19.1, dim: 0.2 }
 
 <div class="readout later">
 
-<p class="kicker">Mastelis</p>
-
 <div class="big"><Count name="unit" :from="1" :to="1" /><span class="unit">TB</span></div>
-
-<p class="line">Viena sfera – vienas terabaitas, keliasdešimt milijonų tokių susidūrimų.</p>
 
 </div>
 
@@ -185,11 +165,7 @@ space: { at: [12.5, 1.4, 5.0], dist: 13.8, yaw: 73, pitch: 7.5, dim: 0.15 }
 
 <div class="readout late">
 
-<p class="kicker">Atverti 2023 m. gruodį</p>
-
 <div class="big"><Count name="open" :from="0" :to="800" :delay="2400" /><span class="unit">TB</span></div>
-
-<p class="line">Visi 2011–2012 m. LHCb protonų susidūrimų duomenys. Duomenis paskelbti parengė Mindaugas Šarpis.</p>
 
 </div>
 
@@ -221,11 +197,7 @@ space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, flight: 5, dim
 
 <div class="readout last">
 
-<p class="kicker">Atverti 2026 m.</p>
-
 <div class="big"><Count name="open" :from="800" :to="4000" :delay="5200" :ms="900" /><span class="unit">TB</span></div>
-
-<p class="line">Dalis 2015–2018 m. duomenų. Iš viso penkis kartus daugiau nei 2023 m.</p>
 
 </div>
 
@@ -251,11 +223,7 @@ space: { at: [3.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0.15
 
 <div class="readout blue late">
 
-<p class="kicker"><span class="nt">LHCb</span> nuo 2010 m.</p>
-
 <div class="big"><Count name="lhcb" :from="0" :to="100000" :delay="2400" /><span class="unit">TB</span></div>
-
-<p class="line">Iš viso daugiau nei 100 PB. Auksinė dalis priekyje jau atvira.</p>
 
 </div>
 
@@ -287,11 +255,7 @@ space: { at: [-2, 9, -18], dist: 60.1, yaw: -1.9, pitch: 2.9, sway: 4, flight: 5
 
 <div class="readout steel last">
 
-<p class="kicker">Visi LHC eksperimentai, 2025 m. gruodis</p>
-
 <div class="big"><Count name="lhc" :from="0" :to="1000000" :delay="5200" :ms="900" /><span class="unit">TB</span></div>
-
-<p class="line">Vienas eksabaitas – maždaug dešimt kartų daugiau nei LHCb.</p>
 
 </div>
 
@@ -327,11 +291,7 @@ space: { at: [16, 6, -2], dist: 32, yaw: 0, pitch: 1.8, dim: 0.15 }
 
 <div class="readout late">
 
-<p class="kicker">Naudotojai</p>
-
 <div class="big"><Count name="asks" :from="0" :to="20" :delay="2400" /></div>
-
-<p class="line">užklausų LHCb duomenų atrankos paslaugai iki 2026 m. liepos, daugiausia teoretikų.</p>
 
 </div>
 
@@ -357,14 +317,6 @@ space: { at: [12.5, 2.5, 4], dist: 27, yaw: 12, pitch: 2.1, dim: 0.3 }
 ---
 
 <Grains :set="{ scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 3, dominykas: 0, team: 0 }" />
-
-# Naudojame Vilniuje
-
-<ul class="points">
-<li>Z → μμ: viena pirmųjų LHCb atvirųjų duomenų analizių (2024)</li>
-<li>VU kursas: kiekvienas studentas dirba su atviraisiais duomenimis</li>
-<li>Pirmoji <span class="nt">LHCb</span> meistriškumo klasė Lietuvoje (2025)</li>
-</ul>
 
 <!--
 Message: in Vilnius we use the open data for research and for teaching.
@@ -397,16 +349,7 @@ space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, dim: 1 }
 <div class="finds">
 <div class="finds-text">
 
-<p class="kicker">Ką <span class="nt">LHCb</span> rado savo duomenyse</p>
-
-<div class="big">76</div>
-
-<p class="line">iš 86 naujų hadronų, atrastų LHC eksperimentuose</p>
-
-<ul class="chips">
-<li><b>2015</b> Pentakvarkai, penkių kvarkų dalelės</li>
-<li><b>2025</b> Materija ir antimaterija barionuose elgiasi skirtingai</li>
-</ul>
+<div class="big">76<span class="unit">/ 86</span></div>
 
 </div>
 <div class="finds-plot"><img src="/figures/pentaquarks_2019.png" alt="LHCb 2019 m.: trys siauros pentakvarkų smailės, Pc(4312), Pc(4440), Pc(4457), su pritaikyta kreive" /></div>
@@ -444,12 +387,6 @@ space: { at: thesis, dim: 1 }
 <div class="thesis-who">
 
 <img class="portrait" src="/figures/people/dominykas-stonkus.jpg" alt="Dominykas Stonkus" />
-
-<p class="kicker">Bakalauro darbas, VU, 2026</p>
-
-<p class="name">Dominykas Stonkus</p>
-
-<p class="line">Atviruosiuose 2012&nbsp;m. <span class="nt">LHCb</span> duomenyse jis rado pakilimą ten pat, kur LHCb 2015&nbsp;m. atrado pentakvarkus.</p>
 
 </div>
 <div class="thesis-plot">
@@ -496,8 +433,6 @@ space: { at: [53, 2.8, 160], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 ---
 
 <Grains :set="{ team: 1, collision: 0, world: 0, vilnius: 0, dominykas: 0 }" />
-
-<div class="thanks">Ačiū</div>
 
 <!--
 Message: this is the work we were nominated for, and the people who did it.
