@@ -22,15 +22,98 @@ duration: 12min
 sources: notes
 info: |
   „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement): a Lithuanian
-  talk for grades 9–12, delivered online on 27 Oct 2026. About 8 minutes,
-  13 slides. The viewer sits in the physicist's seat: judge a bump in a
+  talk for grades 9–12, delivered online on 27 Oct 2026. About 9 minutes,
+  15 slides. It opens with the LHC opening it shares with OpenData
+  (components/lhc-opening/: the real tunnel, into the beam pipe, one real 2012
+  LHCb collision in slow motion, the 3D LHCb clip). The viewer sits in the physicist's seat: judge a bump in a
   histogram (2003 yes, 2008 no), what LHCb is and how a collision becomes a
   dot on that plot, 2015 yes, what made the difference, the speaker's
   route and working day, three things a student can do this school year, and one question
   to ask someone this week. The histograms fill
-  grain by grain: slide 8 from LHCb's published 2019 J/ψ p bins (HEPData);
-  slides 2–4 are an illustration, said so in the notes.
+  grain by grain: slide 10 from LHCb's published 2019 J/ψ p bins (HEPData);
+  slides 6–8 are an illustration, said so in the notes.
 layout: default
+space: { at: opening, dim: 1, ambient: 0, hum: false }
+---
+
+<!--
+The standby: black, while the LHC tunnel clip buffers behind it. → starts the
+shared LHC opening (components/lhc-opening/, the same as OpenData's); that key
+is also the gesture browsers ask for before any sound.
+-->
+
+---
+space: { at: opening, dim: 1, ambient: 0, hum: false }
+---
+
+<!-- The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, an 18 s cut (videos/manifest.toml). It moves on by itself at its end, into the beam pipe. -->
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" advance-on-end :volume="0.5" exit="push" exit-at="0.45,0.53" />
+
+<LhcOpening part="tunnel" />
+
+<!-- facts: cern-lhc-size-cost -->
+
+<!--
+Picture: the real LHC tunnel, 100 m under the border, the magnets on the right;
+„LHC 27 km“ low on the left. Let it run: at its end the camera goes on into the
+beam pipe (it moves on by itself; → earlier). Its sound is the tunnel's own
+ventilation hum.
+Words: the story's LHC and LHCb paragraphs stay where the story tells them, on
+the event display (slide 9). Move them here if you want them over the opening.
+
+Source: CERN-FOOTAGE-2022-013-001 (CERN).
+
+(~0.3 min)
+-->
+
+---
+space:
+  at: opening
+  dim: 0
+  ambient: 0
+  hum: false
+  rate: [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.4, 2.2], [8.5, 1]]
+  cameraRate: 1
+  path:
+    - [0, { at: [0, -400, 0], dist: 3.4, yaw: 28, pitch: 4 }]
+    - [2.6, { at: [0, -400, 0], dist: 2.3, yaw: 16, pitch: 6 }]
+    - [5.6, { at: [0, -400, 0], dist: 2.0, yaw: -24, pitch: 13 }]
+    - [7.8, { at: [2.4, -400, 0], dist: 6.0, yaw: -30, pitch: 12 }]
+    - [10.5, { at: [3.4, -400, 0], dist: 8.4, yaw: -32, pitch: 13 }]
+---
+
+<LhcOpening name="opening" />
+
+<!--
+Picture: one real collision in the black. Two bunches of protons run in along
+the beam pipe and cross; the world nearly stops at the crossing while the camera
+keeps moving round it, then runs on fast as the debris flies out: 237 particles
+bending in LHCb's magnet, stopping in the calorimeter in splashes of energy, the
+muons running on. „8 TeV“ at the crossing, „237 dalelės“ as it flies apart. A
+low swell, a thump at the crossing, the boom as it flies apart: quiet enough to
+talk over. → for the LHCb clip.
+
+The event: one real crossing from LHCb's 2012 open data (CERN Open Data record
+24506, run 133488), the same as OpenData's; components/lhc-opening/README.md
+has its provenance.
+
+(~0.2 min)
+-->
+
+---
+
+<!-- The shared opening's LHCb reel: the detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release. It condenses out of the dust and moves on by itself when it ends. -->
+<VideoPlayer src="lhcb.mp4" advance-on-end />
+
+<!--
+Picture: the LHCb detector in 3D, with music. Let the clip play (39 s); it ends
+by itself as the music fades; → moves on earlier. Here the two talks part: next
+is this talk's own cover, the five-quark particle gathering.
+
+(~0.7 min)
+-->
+
+---
 space: { at: [594, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.05 }
 ---
 
@@ -91,7 +174,7 @@ space: { at: trial, dim: 0.05 }
 
 <!--
 Message: with far more data the bump went away; by 2008 the PDG review concluded the particle does not exist.
-Picture: the small histogram clears; 3 500 dots fall into the same bins and make a smooth, falling shape with no bump. Illustration, as on slide 2.
+Picture: the small histogram clears; 3 500 dots fall into the same bins and make a smooth, falling shape with no bump. Illustration, as on slide 6.
 
 Vėliau kiti eksperimentai, surinkę daug daugiau duomenų, pakartojo matavimą. Kauburys išnyko. 2008 metų pagrindiniame dalelių fizikos žinyne parašyta, kad to pentakvarko nėra. Kauburys buvo atsitiktinumas, kurį fizikai per anksti palaikė dalele.
 
@@ -104,54 +187,23 @@ space: { at: lhcb, dim: 0 }
 
 <Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0 }" />
 
-<VideoPlayer src="cern_footage_2022_013_001.mp4" muted />
-
-<!-- facts: cern-lhc-collisions, cern-run3-end -->
-
-<!--
-Message: my experiment is at CERN, where the LHC collides protons, about a billion collisions a second.
-Picture: real footage, a travelling shot along the LHC tunnel. Advance whenever you finish; the clip is long.
-
-Pentakvarkų istorija tuo nesibaigė. Ji tęsėsi eksperimente, kuriame dabar dirbu ir aš. Jis yra CERN, prie Ženevos. Ten, maždaug šimto metrų gylyje, yra dvidešimt septynių kilometrų žiedas – Didysis hadronų greitintuvas. Kai jis veikia, protonai jame susiduria beveik šviesos greičiu ir per sekundę įvyksta apie milijardą susidūrimų.
-
-(~0.4 min)
--->
-
----
-space: { at: lhcb, dim: 0 }
----
-
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0 }" />
-
-<StagePhoto src="figures/photos/lhcb-cavern.jpg" alt="LHCb detektoriaus požeminė salė, CERN, 2019 m." />
-
-<!-- facts: lhcb-detector-size, lhcb-mission, lhcb-collaboration-2026, lhcb-collaboration-dec-2025 -->
-
-<!--
-Message: LHCb is one of the collision points; it studies particles with heavy quarks, above all how matter differs from antimatter, and the same data let it look for new particles made of quarks. I am one of the nearly 2 000 people who work on it.
-Picture: the real photograph of the LHCb cavern condenses out of grains.
-
-Viename iš susidūrimo taškų stovi LHCb – penkių tūkstančių šešių šimtų tonų detektorius. LHCb tiria daleles, kuriose yra sunkiųjų kvarkų, ypač gražiojo kvarko. Pirmiausia jis tiria, kuo materija skiriasi nuo antimaterijos. Visatos pradžioje jų turėjo atsirasti po lygiai, o šiandien beveik viskas aplink mus yra materija, ir kodėl taip yra, kol kas niekas nežino. Tie patys duomenys leidžia ieškoti ir naujų dalelių, sudarytų iš kvarkų. Šiame eksperimente dirba beveik du tūkstančiai žmonių iš dvidešimt septynių šalių. Aš esu vienas iš jų.
-
-(~0.6 min)
--->
-
----
-space: { at: lhcb, dim: 0 }
----
-
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0 }" />
-
 <StagePhoto src="figures/photos/lhcb-event-run3.jpg" alt="Vienas protonų susidūrimas atnaujintame LHCb detektoriuje, 2022 m.: dalelių pėdsakai sklinda per detektorių" focus="35% 50%" />
 
+<!-- facts: cern-lhc-collisions, cern-run3-end, lhcb-detector-size, lhcb-mission, lhcb-collaboration-2026, lhcb-collaboration-dec-2025 -->
+
 <!--
-Message: how a collision becomes one dot on the plot the viewer judged.
+Message: the story moves to LHCb: the LHC, the experiment, and how a collision becomes one dot on the plot the viewer judged.
+Words: the LHC and LHCb paragraphs had pictures of their own (the tunnel clip, the cavern photograph) until the shared opening showed both (2026-10-11). They stay here, in the story's order and unchanged; the opening's notes say where they are.
 Picture: a real LHCb event display (a proton–proton collision in the upgraded detector, 2022), condensing out of grains; the collision point on the left, the tracks fanning out to the right.
 Licence: CERN / LHCb image, free for educational, non-commercial use; confirm before the event (see the talk's CLAUDE.md, Figures).
 
+Pentakvarkų istorija tuo nesibaigė. Ji tęsėsi eksperimente, kuriame dabar dirbu ir aš. Jis yra CERN, prie Ženevos. Ten, maždaug šimto metrų gylyje, yra dvidešimt septynių kilometrų žiedas – Didysis hadronų greitintuvas. Kai jis veikia, protonai jame susiduria beveik šviesos greičiu ir per sekundę įvyksta apie milijardą susidūrimų.
+
+Viename iš susidūrimo taškų stovi LHCb – penkių tūkstančių šešių šimtų tonų detektorius. LHCb tiria daleles, kuriose yra sunkiųjų kvarkų, ypač gražiojo kvarko. Pirmiausia jis tiria, kuo materija skiriasi nuo antimaterijos. Visatos pradžioje jų turėjo atsirasti po lygiai, o šiandien beveik viskas aplink mus yra materija, ir kodėl taip yra, kol kas niekas nežino. Tie patys duomenys leidžia ieškoti ir naujų dalelių, sudarytų iš kvarkų. Šiame eksperimente dirba beveik du tūkstančiai žmonių iš dvidešimt septynių šalių. Aš esu vienas iš jų.
+
 Taip atrodo protonų susidūrimas LHCb detektoriuje. Kairėje, kur susiduria protonai, atsiranda daug naujų dalelių, ir kiekviena plona raudona linija, sklindanti iš ten, – vienos jų kelias. Detektorius išmatuoja, kur jos praskriejo ir kaip stipriai magnetas išlenkė jų kelią. Iš to kompiuteriai apskaičiuoja, kokią masę turėtų dalelė, iš kurios kelios iš jų galėjo atsirasti. Viena tokia apskaičiuota masė – vienas taškelis tokiame grafike, kokį vertinai pradžioje. Susidūrimų yra tiek daug, kad kompiuteriai iš karto atrenka tik tuos, kurie gali būti įdomūs.
 
-(~0.6 min)
+(~1.6 min)
 -->
 
 ---
@@ -188,7 +240,7 @@ space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 
 
 <!--
 Message: the difference was the amount of data. A bump reported at 4,6σ in 2003 went away with more data; LHCb's peaks held with nine times more data in 2019, the new one at 7,3σ. (Not: 'it failed because 4,6 < 5'. Other 2003 bumps were reported near 5σ and went away too.)
-Picture: the camera draws back to show two plots at the same scale, one grain per entry and the same height per entry. On the left is the 140-entry plot from slides 2–3: an illustration, not LEPS's data. On the right are LHCb's 27 292 candidates (the 2019 bins) with their three marked peaks. Under them, their counts: „140 taškų“ and „27 292 taškai“; the left plot appears as a thin strip.
+Picture: the camera draws back to show two plots at the same scale, one grain per entry and the same height per entry. On the left is the 140-entry plot from slides 6–7: an illustration, not LEPS's data. On the right are LHCb's 27 292 candidates (the 2019 bins) with their three marked peaks. Under them, their counts: „140 taškų“ and „27 292 taškai“; the left plot appears as a thin strip.
 Background, if asked: LEPS's own peak was 19 events over a background of 17 (19/√17 = 4,6σ, their paper's own estimate; arXiv:hep-ex/0301020).
 
 Štai abu grafikai šalia, ir abiejuose vienas taškelis – viena apskaičiuota masė. Kairėje – pavyzdinis grafikas, kurį matei pradžioje, šimtas keturiasdešimt taškų. Dešinėje – LHCb duomenys, jų daugiau nei dvidešimt septyni tūkstančiai. Fizikai skaičiuoja, kiek kauburys iškyla virš atsitiktinių svyravimų. Tai vadinama reikšmingumu ir matuojama sigmomis. Atradimu paprastai vadinamas rezultatas, kurio reikšmingumas – bent penkios sigmos. Tada tikimybė, kad tai tik atsitiktinis svyravimas, – maždaug viena iš trijų su puse milijono. 2003 metų kauburio reikšmingumas buvo 4,6 sigmos, bet surinkus daugiau duomenų jis išnyko. 2019 metais LHCb turėjo devynis kartus daugiau duomenų nei 2015-aisiais, ir smailės liko. Naujos smailės reikšmingumas buvo 7,3 sigmos.
@@ -263,11 +315,9 @@ space: { at: quarks, dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.35 }
 
 <Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
 
-<div class="src credits">LHCb salės nuotrauka: Rosa Menkman, CC BY 2.0</div>
-
 <!--
 Message: one task for this week.
-Picture: the five-quark particle of the cover, held. The speaker asks the question; on screen only the tiny-print credit the slide 6 photo's licence asks for (CERN's material needs none).
+Picture: the five-quark particle of the cover, held. The speaker asks the question. No text on screen: every picture in the talk is CERN's, which needs no credit.
 
 Ir viena užduotis šiai savaitei. Kai sutiksi žmogų, kurio darbas tau atrodo įdomus, paklausk jo: „Ko jūs savo darbe dar nežinote?“
 [pauzė 2 s]

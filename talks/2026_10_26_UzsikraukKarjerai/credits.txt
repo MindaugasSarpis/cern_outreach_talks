@@ -1,16 +1,17 @@
 „Vadovėlio gale atsakymo nėra“ — clips, photographs and figures
 
-Video (CERN footage, via the slidev-videos shared library)
-- CERN-FOOTAGE-2022-013-001, LHC tunnel travelling shot. © CERN. CERN audiovisual media, cds.cern.ch.
+Video (this talk's release videos-2026-10-26-uzsikraukkarjerai; the shared LHC opening)
+- CERN-FOOTAGE-2022-013-001, LHC tunnel travelling shot, an 18 s cut (2:35–2:53, slide 2). © CERN. CERN audiovisual media, cds.cern.ch.
   [Check before broadcast: the licence on the CDS record (CERN footage is usually CC BY 4.0; some records say non-commercial).]
+- LHCb reel, the detector in 3D with music (lhcb.mp4 from the slidev-videos library, a 39 s cut, 0:08–0:47.1; slide 4). LHCb collaboration outreach.
 
 Photographs
-- LHCb event display, a proton–proton collision in the upgraded detector, 2022: © CERN, for the LHCb collaboration (CDS LHCb photo collection); free for educational, non-commercial use. [Confirm the use for this event.]
-- LHCb cavern, 2019: Rosa Menkman, flickr.com/photos/r00s/48815389756, CC BY 2.0. Cropped to 16:9.
+- LHCb event display (slide 9), a proton–proton collision in the upgraded detector, 2022: © CERN, for the LHCb collaboration (CDS LHCb photo collection); free for educational, non-commercial use. [Confirm the use for this event.]
 
 Data
-- LHCb collaboration, Phys. Rev. Lett. 122, 222001 (2019): the m(J/ψ p) bins drawn on slides 8 and 9, from HEPData ins1728691, Table 2 (doi:10.17182/hepdata.89271.v1/t2).
-- Slides 2–4 and the left plot of slide 9: illustrations generated for this talk (no measured data).
+- LHCb collaboration, Phys. Rev. Lett. 122, 222001 (2019): the m(J/ψ p) bins drawn on slides 10 and 11, from HEPData ins1728691, Table 2 (doi:10.17182/hepdata.89271.v1/t2).
+- Slides 6–8 and the left plot of slide 11: illustrations generated for this talk (no measured data).
+- Slide 3, the collision: one real LHCb crossing from CERN Open Data record 24506 (LHCb 2012, 8 TeV, EW stream), run 133488, event 2028034058; its provenance is in components/lhc-opening/README.md.
 
 Map
 - Coastlines and borders: Natural Earth 1:50m, public domain.

@@ -14,3 +14,29 @@
 # profile = "standard"
 # used_in = ["deck"]
 # notes   = "What this clip is and where it came from."
+
+[[videos]]
+name    = "lhcb.mp4"
+profile = "standard"
+used_in = ["deck"]
+trim    = ["0:08", "0:47.1"]
+notes   = """\
+The shared opening's LHCb reel (the detector in 3D, with music), the same cut \
+as OpenData's (its manifest, 2026-10-10): from the shafts above the cavern to \
+the detector as the music fades, without the library copy's 8 s of dark tunnel \
+at the start or its black tail. Same name as the library clip, so this talk's \
+release wins the chain. Raw: gdrive released/lhcb.mp4 (117 MB)."""
+
+[[videos]]
+name     = "cern_footage_2022_013_001_1080p_lhc.mp4"
+profile  = "high-motion"
+used_in  = ["deck"]
+trim     = ["2:35", "2:53"]
+loudnorm = false
+notes    = """\
+The shared opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, \
+the same 18 s cut as OpenData's (its manifest): the travelling shot with the magnets on the \
+right; on its last frame the magnet string vanishes at (0.45, 0.53), where the camera goes on \
+into the beam pipe. Named as its raw on gdrive (released/cern_footage_2022_013_001_1080p_lhc.mp4) \
+so videos:sync finds it. Its sound is the tunnel's own ventilation hum, kept at the source's \
+level (loudnorm off)."""
