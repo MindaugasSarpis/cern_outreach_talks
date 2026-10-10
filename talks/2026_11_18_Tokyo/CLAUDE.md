@@ -158,6 +158,13 @@ The owner's decisions, dated, newest last.
   exception. The project's name is now cleared for the site; its dates,
   funders and the Nagoya meeting still wait for the owner.
 
+- 2026-10-11 (owner: "update talks to latest tools"): toolkit v0.8.0;
+  `public/stills/01–12.jpg` from `slidev-stage-shots --stills` for print,
+  PDF and the fallback. The rasterised PDF (pypdfium2) matches the stills
+  page by page, the title and numbers print, so the slide-1 dim print bug
+  does not touch this deck (dim 0.15) and no `.scrim` workaround is added.
+  The clip slide prints dark (a video has no print frame).
+
 ## Verify
 
 ```bash
