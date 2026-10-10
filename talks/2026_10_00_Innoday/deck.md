@@ -215,7 +215,7 @@ places: { inventions: true }   # Part II's photos stand in the world from here (
 <Strands />
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%">
-<p class="invention">Jutiklinis ekranas</p>
+<p class="caption invention">Jutiklinis ekranas</p>
 </StagePhoto>
 
 <!-- facts: gave-touch-stumpe-1972, gave-touch-sps-1976, gave-touch-design-80um, gave-touch-johnson-1965 -->
@@ -239,7 +239,7 @@ space: { at: [25.0, 2.5, 0.0], dist: 9, yaw: -90, pitch: 30, dim: 0, flight: 1.6
 <Strands />
 
 <StagePhoto src="figures/hero_proposal.jpg" arrive="camera" :dust-ms="[800, 600]" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%">
-<p class="invention">Pasaulinis žiniatinklis</p>
+<p class="caption invention">Pasaulinis žiniatinklis</p>
 </StagePhoto>
 
 <!--
@@ -258,7 +258,7 @@ space: { at: next, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 <Strands />
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%">
-<p class="invention">Žiniatinklio serveris</p>
+<p class="caption invention">Žiniatinklio serveris</p>
 </StagePhoto>
 
 <!-- facts: gave-www-next-server, gave-www-public-domain-1993, gave-www-sites-2026, gave-www-users-2025 -->
@@ -280,7 +280,7 @@ space: { at: pet, dim: 0, flight: 1.6 }   # place mode: the photo stands at its 
 <Strands />
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
-<p class="invention">PET tomografija</p>
+<p class="caption invention">PET tomografija</p>
 </StagePhoto>
 
 <!-- facts: ktbest-pet-1977, gave-pet-mouse-1977 -->
@@ -302,7 +302,7 @@ space: { at: mars, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 <Strands />
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="mars" :relief="0.25" :at="[16.6, 2.5, 13.51]" :size="3" :yaw="-150" src="figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%">
-<p class="invention">Spalvotas rentgenas</p>
+<p class="caption invention">Spalvotas rentgenas</p>
 </StagePhoto>
 
 <!-- facts: ktbest-mars-fda-2026, ktbest-medipix-licences -->
@@ -324,7 +324,7 @@ space: { at: artemis, dim: 0, flight: 1.6 }   # place mode: the photo stands at 
 <Strands />
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
-<p class="invention">Timepix lustai</p>
+<p class="caption invention">Timepix lustai</p>
 </StagePhoto>
 
 <!-- facts: gave-timepix-artemis, ktbest-advacam -->
@@ -344,7 +344,7 @@ space: { at: hadron, dim: 0, flight: 1.6 }   # place mode: the photo stands at i
 <Strands />
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
-<p class="invention">Hadronų terapija</p>
+<p class="caption invention">Hadronų terapija</p>
 </StagePhoto>
 
 <!-- facts: ktbest-hadron-9000, gave-hadron-pimms -->
@@ -365,7 +365,7 @@ space: { at: whiterabbit, dim: 0, flight: 1.6 }   # place mode: the photo stands
 <Strands />
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim">
-<p class="invention">White Rabbit</p>
+<p class="caption invention">White Rabbit</p>
 </StagePhoto>
 
 <!-- facts: gave-white-rabbit, ktbest-whiterabbit-boerse, ktnews-wr-quantum -->
@@ -387,7 +387,7 @@ space: { at: cold, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 <Strands />
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%">
-<p class="invention">Superlaidžios linijos</p>
+<p class="caption invention">Superlaidžios linijos</p>
 </StagePhoto>
 
 <!-- facts: ktnews-airbus-samba, ktnews-cipea -->
