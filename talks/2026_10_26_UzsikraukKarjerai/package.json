@@ -16,7 +16,7 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check . --types path,streams,pairs,ghost,map,quintet,histogram",
+    "stage:check": "slidev-stage-check . --types path,streams,pairs,ghost,map,quintet,histogram,lhc-collision",
     "stage:shots": "slidev-stage-shots dist shots",
     "stage:safe": "slidev-stage-safe dist --broadcast",
     "stage:record": "slidev-stage-record dist record"
