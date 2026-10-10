@@ -32,6 +32,8 @@ for the engine, [docs/STAGE_QUICKSTART.md](../../../docs/STAGE_QUICKSTART.md).
 - Pictures and numbers only (owner, 2026-10-10): no title, statement, kicker,
   caption or credit on screen, the cover included; the owner narrates. A
   number keeps its short unit; `talk lint` warns `TEXT` on any other word.
+  The one exception: credits a licence asks for, in tiny print on the last
+  slide (CERN's material needs none).
 - One claim; one dominant visual; every world object on it maps to a
   sentence in the notes.
 - Every number sourced (a facts comment before the notes, sources in the
