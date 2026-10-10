@@ -8,7 +8,7 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 „adresuoti“.
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos v0.7.0, for both addons.
+Toolkit pin: slidev-videos v0.8.0, for both addons.
 
 **Deploys (owner, 2026-10-09: "Deploy now, and always").** The standing rule
 holds for this talk: it deploys without asking once `talk ready` passes with
@@ -29,8 +29,7 @@ videos-2026-10-00-opendata.
   34bb306 on main, Pages run 38085959149 (success); `talk deploy`'s live
   check passed (13 slides, nothing failed). `talk ready` passed on 34bb306
   with nothing skipped. In it: the units follow-up (44cf1e4, e0a5cc9).
-- The opening is on the local branch wip/opendata-opening (not pushed), to be
-  pinned to v0.8.0 and deployed on its own.
+- The opening: see the 2026-10-11 decision; deployed with the rename.
 
 - Redeployed 2026-10-10 under the standing rule: commit 8e1b223 on main,
   Pages run 38081755288 (success); `talk deploy`'s live check passed (13
@@ -113,6 +112,29 @@ videos-2026-10-00-opendata.
 
 ## Decisions
 
+- 2026-10-11. The shared LHC opening (owner, via the Scheduler: "start with
+  the real video of LHC, then go into it, make everything black and show
+  really exciting collision with slow down speed up effect, many particles,
+  low sound, then we go to 3d lhcb video … ultrarealistic"). Built once in
+  components/lhc-opening/ (its README has the shot, the event and how a talk
+  adopts it); Užsikrauk karjerai adopts it next. Slides 1–3 now: a black
+  standby (the old cover, no text), the real LHC tunnel
+  (CERN-FOOTAGE-2022-013-001, an 18 s cut 2:35–2:53 on this talk's release,
+  its own ventilation hum, loudnorm off) leaving by the player's
+  `exit="push"` into the magnet string's vanishing point (0.45, 0.53), and
+  the collision in a black world (`ambient: 0`): two bunches run in along the
+  beam pipe, cross, the world nearly stops (`rate` 0.03) while the camera
+  orbits on real time (`cameraRate: 1`, a five-key `path`), then the debris
+  flies out at 2.2×. The event is the busiest crossing with one or two PVs in
+  the 2012 open-data file (owner's pick, option B): entry 2178, run 133488,
+  event 2028034058, a dijet; 237 good tracks bending in LHCb's dipole
+  between their measured states, 153 real ECAL clusters and the HCAL energy
+  of 92 tracks as splashes, the muons on to the muon stations. Sound
+  synthesised (WebAudio: a sub-bass swell, a thump at the crossing, a boom on
+  the fly-out), through the stage's audio output, quiet enough to talk over.
+  Toolkit v0.8.0 (Tools built the clock rate, camera path, ambient, the push,
+  ctx.audio and the tier budget for it). Stills remade for all 15 slides.
+  Undo: the opening's commit's parent.
 - 2026-10-10. No titles, statements, kickers or captions on any slide, the
   cover included (owner, via the Scheduler: "No titles, statements - I will
   be there … What can stay is the numbers. I will narrate myself"; root

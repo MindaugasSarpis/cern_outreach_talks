@@ -26,7 +26,10 @@ title: Atveriame LHCb duomenis
 info: |
   In Lithuanian. LHCb Vilnius, nominated for an open data award: a 6½-minute
   talk told inside one world of grains (slidev-addon-stage, blue palette,
-  toolkit pin slidev-videos v0.7.0).
+  toolkit pin slidev-videos v0.8.0).
+  The opening (components/lhc-opening/, shared with Užsikrauk karjerai): the
+  real LHC tunnel, on into the beam pipe, black, one real 2012 LHCb crossing in
+  slow motion (237 tracks, the calorimeters' splashes), a low synthesised sound.
   The line: the LHCb detector (3D clip); one real collision from LHCb open data
   (a 2012 Z → μμ event, its tracks drawn as grains); that collision shrinks into
   one grain among tens of millions, which pack into a sphere of one terabyte;
@@ -43,8 +46,10 @@ info: |
   The talk: 21 October 2026.
 layout: cover
 space:
-  at: wide
-  dim: 0.25
+  at: opening
+  dim: 1
+  ambient: 0
+  hum: false
 ---
 
 <Grains :set="{ team: 0 }" />
@@ -57,9 +62,60 @@ universiteto komandai CERN LHCb eksperimente. Mus nominavo už darbą su
 atviraisiais duomenimis.
 Pradėkime nuo detektoriaus.“
 
-Then press → for the clip; the cover gives it time to buffer. Before starting,
-press a key or click once so the low hum can play (browsers start sound only
-after a gesture).
+The standby: black, while the LHC tunnel clip buffers behind it. → starts the
+opening; that key is also the gesture browsers ask for before any sound.
+
+(~0.3 min)
+-->
+
+---
+space: { at: opening, dim: 1, ambient: 0, hum: false }
+---
+
+<!-- The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, an 18 s cut (videos/manifest.toml). It moves on by itself at its end, into the beam pipe. -->
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" advance-on-end :volume="0.5" exit="push" exit-at="0.45,0.53" />
+
+<LhcOpening part="tunnel" />
+
+<!--
+The LHC itself: the real tunnel, 100 m under the border, the magnets on the right.
+Let it run; at its end the camera goes on into the beam pipe (it moves on by
+itself; → earlier). Its sound is the tunnel's own ventilation hum.
+
+Source: CERN-FOOTAGE-2022-013-001 (CERN).
+
+(~0.3 min)
+-->
+
+---
+space:
+  at: opening
+  dim: 0
+  ambient: 0
+  hum: false
+  rate: [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.4, 2.2], [8.5, 1]]
+  cameraRate: 1
+  path:
+    - [0, { at: [0, -400, 0], dist: 3.4, yaw: 28, pitch: 4 }]
+    - [2.6, { at: [0, -400, 0], dist: 2.3, yaw: 16, pitch: 6 }]
+    - [5.6, { at: [0, -400, 0], dist: 2.0, yaw: -24, pitch: 13 }]
+    - [7.8, { at: [2.4, -400, 0], dist: 6.0, yaw: -30, pitch: 12 }]
+    - [10.5, { at: [3.4, -400, 0], dist: 8.4, yaw: -32, pitch: 13 }]
+---
+
+<LhcOpening name="opening" />
+
+<!--
+One real collision in the black: two bunches of protons run in along the beam
+pipe, cross, and the world nearly stops at the crossing while the camera keeps
+moving round it; then it runs on fast as the debris flies out, hundreds of
+particles bending in LHCb's magnet, stopping in the calorimeter in splashes of
+energy, the muons running on. A low swell, a thump at the crossing, the boom as
+it flies apart: quiet enough to talk over. → for the LHCb clip.
+
+The event: one real crossing from LHCb's 2012 open data (CERN Open Data record
+24506), drawn from its reconstructed tracks; components/lhc-opening/event.json
+has its provenance.
 
 (~0.3 min)
 -->
