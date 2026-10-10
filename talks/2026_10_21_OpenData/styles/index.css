@@ -36,8 +36,12 @@ html[data-stage] .readout {
 html[data-stage] .readout p { margin: 0 0 10px; }
 html[data-stage] .readout .kicker { margin-bottom: 6px; color: var(--od-accent); }
 html[data-stage] .readout .big {
-  font-size: 104px; font-weight: 700; letter-spacing: -0.035em; line-height: 0.92;
-  font-variant-numeric: tabular-nums; margin: 0 0 18px; white-space: nowrap;
+  font-size: 104px; font-weight: 700; letter-spacing: -0.01em; line-height: 0.92;
+  margin: 0 0 18px; white-space: nowrap;
+  /* Space Grotesk's own (proportional) figures: its tabular ones are a 1 with a long
+     flag and foot that read as a slanted stroke, and a 0 and 4 narrower than their
+     shapes, so with tight tracking „16 407“'s 4 ran into its 0 */
+  font-variant-numeric: normal;
   color: #fff; text-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
 }
 html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--od-accent); }
@@ -146,7 +150,7 @@ html[data-stage] .finds { position: absolute; inset: 0; background: rgb(var(--st
 html[data-stage] .finds-text { animation: stage-rise 0.85s var(--stage-ease) 0.2s both; }
 html[data-stage] .finds .kicker { color: var(--od-accent); margin-bottom: 4px; }
 html[data-stage] .finds .big {
-  font-size: 168px; font-weight: 700; letter-spacing: -0.05em; line-height: 0.88; margin: 0 0 8px;
+  font-size: 168px; font-weight: 700; letter-spacing: -0.01em; line-height: 0.88; margin: 0 0 8px;
   color: #fff;   /* a number: plain white, like the readouts' */
 }
 html[data-stage] .finds .big .unit { display: block; margin-top: 10px; font-size: 0.3em; font-weight: 500; letter-spacing: 0.02em; line-height: 1.1; color: var(--od-accent); white-space: nowrap; }   /* „/ 86 hadronų“ under the 76, as the readouts' units */
