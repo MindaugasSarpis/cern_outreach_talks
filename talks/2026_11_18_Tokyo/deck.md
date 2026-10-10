@@ -16,6 +16,8 @@ videos:
 stage:
   space: data/space.json
   palette: classic
+  plugins: [hadron]
+  lang: en
 title: "Penta-Charm: Lithuania and Japan"
 lang: en                  # slides and notes; `pnpm talk lint` reads it
 htmlAttrs:
@@ -27,9 +29,213 @@ space:
 ---
 
 <!--
-Cover: no words on screen. The hero station builds itself behind; `c` replays it.
-Opening (draft): thank the Ambassador and the guests; I lead the LHCb Vilnius
-group at Vilnius University; the next minutes are about a very small thing
-that Lithuania and Japan are now studying together. Script follows once the
-outline is agreed.
+Cover. No words on screen: the five quarks fly in out of the dust and lock
+into one particle while the low hum swells; `c` replays it.
+
+Your Excellency, ladies and gentlemen, thank you for having me. I am
+Mindaugas Šarpis. I lead the LHCb group at Vilnius University, which works
+on one of the four large experiments at CERN, near Geneva. In the next
+fifteen minutes I would like to show you what this object behind me is, why
+physicists waited half a century to find it, and why Lithuanian and Japanese
+scientists are now studying it together. (~1 min)
+-->
+
+---
+space: { at: lhc, dim: 0.15 }
+---
+
+<div class="num tr">27 km</div>
+
+<!-- facts: cern-lhc-size-cost, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
+
+<!--
+This is the Large Hadron Collider at CERN: a ring 27 kilometres long, about
+100 metres under the border between France and Switzerland. Two beams of
+protons go round it in opposite directions, more than eleven thousand times a
+second, and meet at four points. Where they meet, the detectors record what
+comes out of each collision.
+
+Lithuania has been an Associate Member State of CERN since 2018. Japan has
+an observer for the LHC, and Japanese institutes helped build both the
+machine and its experiments. My group works on one of those
+experiments, LHCb.
+
+Sources: home.cern (LHC facts; member states; Lithuania; "Japan contributes
+an additional 5 billion yen", 1998). (~1.5 min)
+-->
+
+---
+space: { at: atom, dim: 0.15 }
+---
+
+<!-- facts: atom-nucleus-size-ratio -->
+
+<!--
+What do we study with it? Let us go down in size. Everything around us, this
+room and ourselves, is made of atoms. An atom is mostly empty: a cloud of
+electrons, and at its centre a tiny bright point, the nucleus. The nucleus is
+ten thousand to a hundred thousand times smaller than the atom, yet it holds
+almost all of its mass.
+
+Source: M. Strassler, "The nuclei of atoms" (profmattstrassler.com). (~1 min)
+-->
+
+---
+space: { at: nucleus, dim: 0.15 }
+---
+
+<!--
+Come closer, and the nucleus is a tight bundle of protons and neutrons, held
+together by the strong force. At these distances it is far stronger than the
+electric force that pushes the protons apart. (~0.75 min)
+-->
+
+---
+space: { at: proton, dim: 0.2 }
+---
+
+<div class="num tr">1 %</div>
+
+<!-- facts: proton-mass-quarks-1-percent -->
+
+<!--
+Come closer again, into one proton, and we find three smaller particles:
+quarks. Two of one kind, called "up", and one called "down". They are bound
+by that same strong force, carried by particles called gluons.
+
+Two things about quarks are strange. First, no one has ever seen a quark on
+its own: pull two apart, and the energy you put in turns into new quarks.
+They only exist in groups. Second, the three quarks make up only about one
+percent of the proton's mass. The other ninety-nine percent is the energy of
+their motion and of the force that holds them. Most of the mass of your body
+comes from this energy.
+
+Source: Yang et al., PRL 121 (2018) 212001; Brookhaven National Laboratory
+news. (~1.5 min)
+-->
+
+---
+space: { at: families, dim: 0.15 }
+---
+
+<!--
+For more than fifty years every particle built from quarks that we knew fell
+into one of two families. On the left, a quark with an antiquark: a meson.
+On the right, three quarks: a baryon, like the proton. Hundreds of such
+particles are known, and they all follow these two recipes.
+
+The question is whether nature allows more: four quarks, five, six. (~1.25 min)
+-->
+
+---
+space: { at: paper, dim: 0.06 }
+---
+
+<div class="num bl">1964</div>
+
+<!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
+
+<!--
+The idea of quarks came in 1964, from two physicists working independently.
+Murray Gell-Mann, at the top, in a two-page letter titled "A schematic model
+of baryons and mesons", received by the journal on 4 January. George Zweig,
+below, at CERN, in a report dated 17 January, where he called the particles
+"aces".
+
+Both papers already allow more than the two recipes. Gell-Mann writes that
+baryons can be made of three quarks, or of four quarks and an antiquark.
+Zweig's footnote says the same in his words. That five-particle combination,
+four quarks and one antiquark, is what we now call a pentaquark.
+
+Neither paper could say whether such a particle really exists. The search
+took the rest of the century. (~1.5 min)
+-->
+
+---
+space: { at: lhcb, dim: 0.06 }
+---
+
+<div class="num tl">2015</div>
+<div class="num bl">2019</div>
+
+<!-- facts: lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
+
+<!--
+Many experiments looked, and several claims did not survive. Then in July
+2015, LHCb reported the first convincing pentaquarks, fifty-one years after
+Gell-Mann's paper. They are made of two up quarks, a down quark, and a pair
+of a heavy "charm" quark and its antiquark.
+
+In 2019, with nine times more data, LHCb looked again. This is the result:
+each point counts collisions at a given mass, and the three narrow peaks are
+three pentaquarks. Where we had seen one bump in 2015, there were in fact
+two, and a third appeared beside them.
+
+Sources: LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001; CERN
+press release, 14 July 2015. (~1.75 min)
+-->
+
+---
+space: { at: interiors, dim: 0.15 }
+---
+
+<!-- facts: lhcb-pentaquark-2019 -->
+
+<!--
+So pentaquarks exist. But we still do not know how they are built, and there
+are two main pictures.
+
+On the left, the five quarks are really two particles, a baryon and a meson,
+held loosely next to each other, like two atoms in a molecule. On the right,
+all five quarks are packed into one tight ball.
+
+The narrow peaks of 2019 point toward the molecule, but the question is
+open. To settle it, we need precise measurements and precise theory that
+predicts what each picture should look like in the data, worked out
+together. (~1.5 min)
+-->
+
+---
+space: { at: project, dim: 0.15 }
+---
+
+<div class="num tl">2026–2028</div>
+<div class="num bl">24–27.11</div>
+
+<!-- facts: lhcb-vilnius-joined -->
+
+<!--
+This is what our project does. On the left, the LHCb group at Vilnius
+University, which analyses LHCb data. On the right, theorists in Japan, at
+Nagoya University and partner institutes, who specialise in the theory of
+these particles. In the middle, the pentaquark that
+both sides study.
+
+From 2026 to 2028, supported by the Research Council of Lithuania and the
+Japan Society for the Promotion of Science, we work as one team: the theory
+predicts what each picture of the pentaquark should leave in the data, and
+we test those predictions with LHCb measurements. PhD and master's
+students take part, and learn to work across experiment and theory.
+
+The first big meeting is next week: from 24 to 27 November, Nagoya
+University hosts a workshop on exotic particles, organised as part of this
+programme, with researchers from Japan, Lithuania and other countries. A
+meeting in Vilnius follows.
+
+Sources: Vilnius University (LHCb Vilnius, 2024); the project's dates and
+the workshop's (24–27 November 2026, KMI, Nagoya University) are our own,
+from the organisers. (~2 min)
+-->
+
+---
+space: { at: wide }
+---
+
+<!--
+Close. Back at the pentaquark from the start; the hum returns.
+
+Five quarks were allowed on paper in 1964 and found in 2015. What they are
+made of is the question that Lithuanian and Japanese physicists now answer
+together. Thank you, and thank you to the Embassy for bringing us together
+today. (~0.5 min)
 -->

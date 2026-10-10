@@ -1,123 +1,985 @@
 {
-  "hero": "hero",
-  "stations": [
+ "hero": "hero",
+ "stations": [
+  {
+   "id": "hero",
+   "pos": [
+    -26,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 13,
+    "yaw": -18,
+    "pitch": 7,
+    "sway": 9
+   },
+   "gather": 3.6,
+   "pulse": 6,
+   "objects": [
     {
-      "id": "hero",
-      "pos": [
-        -26,
+     "type": "pentaquark",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 3.1,
+     "quarkRadius": 0.72,
+     "quarks": [
+      {
+       "flavour": "c",
+       "pos": [
+        1.2,
+        0.9,
+        0.3
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        0.4,
+        -1.5,
+        -0.9
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        1.5,
+        -0.3,
+        -1.2
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        -0.9,
+        1.3,
+        -1.0
+       ]
+      },
+      {
+       "flavour": "cbar",
+       "pos": [
+        -1.3,
+        -0.6,
+        0.6
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lhc",
+   "pos": [
+    10,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 19,
+    "yaw": -20,
+    "pitch": 28,
+    "sway": 2
+   },
+   "gather": 1.2,
+   "objects": [
+    {
+     "type": "collider",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 7
+    }
+   ]
+  },
+  {
+   "id": "atom",
+   "pos": [
+    45,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 15,
+    "yaw": -15,
+    "pitch": 8,
+    "sway": 2
+   },
+   "objects": [
+    {
+     "type": "constellation",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 5,
+     "nodeRadius": 0.22,
+     "coreSize": 9,
+     "nodes": [
+      {
+       "pos": [
+        0.02,
         0,
         0
-      ],
-      "look": {
-        "target": [
-          -7.8,
-          0.4,
-          0
-        ],
-        "dist": 15,
-        "yaw": -22,
-        "pitch": 7,
-        "sway": 9
+       ],
+       "color": "#ffffff",
+       "core": "#ffffff"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nucleus",
+   "pos": [
+    75,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 9,
+    "yaw": -15,
+    "pitch": 8,
+    "sway": 2
+   },
+   "objects": [
+    {
+     "type": "constellation",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 2.5,
+     "nodeRadius": 0.5,
+     "speed": 0.4,
+     "nodes": [
+      {
+       "pos": [
+        0.33,
+        0.76,
+        0.0
+       ],
+       "color": "#ff8f7a",
+       "core": "#ffe9e4"
       },
-      "gather": 3.6,
-      "pulse": 6,
-      "objects": [
-        {
-          "type": "constellation",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "radius": 3.1,
-          "nodeRadius": 0.72,
-          "nodes": [
-            {
-              "pos": [
-                1.2,
-                0.9,
-                0.3
-              ]
-            },
-            {
-              "pos": [
-                0.4,
-                -1.5,
-                -0.9
-              ],
-              "color": "#dfe6ee"
-            },
-            {
-              "pos": [
-                1.5,
-                -0.3,
-                -1.2
-              ]
-            },
-            {
-              "pos": [
-                -0.9,
-                1.3,
-                -1.0
-              ],
-              "color": "#dfe6ee"
-            },
-            {
-              "pos": [
-                -1.3,
-                -0.6,
-                0.6
-              ]
-            }
-          ]
-        }
-      ]
+      {
+       "pos": [
+        -0.53,
+        0.82,
+        0.49
+       ],
+       "color": "#9fb4c8",
+       "core": "#eef4fa"
+      },
+      {
+       "pos": [
+        0.1,
+        0.8,
+        -1.1
+       ],
+       "color": "#ff8f7a",
+       "core": "#ffe9e4"
+      },
+      {
+       "pos": [
+        0.49,
+        0.37,
+        0.64
+       ],
+       "color": "#9fb4c8",
+       "core": "#eef4fa"
+      },
+      {
+       "pos": [
+        -1.11,
+        0.29,
+        -0.2
+       ],
+       "color": "#ff8f7a",
+       "core": "#ffe9e4"
+      },
+      {
+       "pos": [
+        1.2,
+        0.12,
+        -0.77
+       ],
+       "color": "#9fb4c8",
+       "core": "#eef4fa"
+      },
+      {
+       "pos": [
+        -0.25,
+        -0.08,
+        0.92
+       ],
+       "color": "#ff8f7a",
+       "core": "#ffe9e4"
+      },
+      {
+       "pos": [
+        -0.55,
+        -0.31,
+        -1.06
+       ],
+       "color": "#9fb4c8",
+       "core": "#eef4fa"
+      },
+      {
+       "pos": [
+        1.28,
+        -0.63,
+        0.47
+       ],
+       "color": "#ff8f7a",
+       "core": "#ffe9e4"
+      },
+      {
+       "pos": [
+        -0.77,
+        -0.6,
+        0.32
+       ],
+       "color": "#9fb4c8",
+       "core": "#eef4fa"
+      },
+      {
+       "pos": [
+        0.36,
+        -0.97,
+        -0.78
+       ],
+       "color": "#ff8f7a",
+       "core": "#ffe9e4"
+      },
+      {
+       "pos": [
+        0.1,
+        -0.76,
+        0.31
+       ],
+       "color": "#9fb4c8",
+       "core": "#eef4fa"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "proton",
+   "pos": [
+    105,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 8.5,
+    "yaw": -15,
+    "pitch": 6,
+    "sway": 3
+   },
+   "gather": 1.5,
+   "objects": [
+    {
+     "type": "pentaquark",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 2.2,
+     "quarkRadius": 0.62,
+     "quarks": [
+      {
+       "flavour": "u",
+       "pos": [
+        1.0,
+        0.6,
+        0.2
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        -1.0,
+        0.5,
+        -0.3
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        0.1,
+        -1.1,
+        0.3
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "families",
+   "pos": [
+    135,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 14,
+    "yaw": 0,
+    "pitch": 5,
+    "sway": 1.5
+   },
+   "objects": [
+    {
+     "type": "pentaquark",
+     "pos": [
+      -3.8,
+      0,
+      0
+     ],
+     "radius": 1.6,
+     "quarkRadius": 0.55,
+     "quarks": [
+      {
+       "flavour": "u",
+       "pos": [
+        0.7,
+        0.3,
+        0
+       ]
+      },
+      {
+       "flavour": "dbar",
+       "pos": [
+        -0.7,
+        -0.3,
+        0.1
+       ]
+      }
+     ]
     },
     {
-      "id": "first",
-      "pos": [
-        8,
-        0,
-        0
-      ],
-      "look": {
-        "dist": 10,
-        "yaw": -24,
-        "pitch": 7
+     "type": "pentaquark",
+     "pos": [
+      3.8,
+      0,
+      0
+     ],
+     "radius": 2.0,
+     "quarkRadius": 0.55,
+     "quarks": [
+      {
+       "flavour": "u",
+       "pos": [
+        0.9,
+        0.5,
+        0.1
+       ]
       },
-      "objects": [
-        {
-          "type": "ring",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "radius": 3,
-          "thickness": 0.01,
-          "tilt": 80,
-          "spin": 0
-        },
-        {
-          "type": "orbs",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "items": [
-            {
-              "id": "here",
-              "pos": [
-                0,
-                0,
-                0
-              ],
-              "label": "start here"
-            }
-          ]
-        }
-      ]
+      {
+       "flavour": "d",
+       "pos": [
+        -0.9,
+        0.4,
+        -0.2
+       ]
+      },
+      {
+       "flavour": "s",
+       "pos": [
+        0.05,
+        -1.0,
+        0.25
+       ]
+      }
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "id": "paper",
+   "pos": [
+    165,
+    0,
+    0
+   ],
+   "look": {
+    "target": [
+     5.55,
+     1.5,
+     0
+    ],
+    "dist": 11,
+    "yaw": 0,
+    "pitch": 2,
+    "sway": 0.8
+   },
+   "objects": [
+    {
+     "type": "page",
+     "src": "/figures/GellMannPhoto.png",
+     "pos": [
+      0,
+      3.99,
+      0
+     ],
+     "width": 1.6,
+     "height": 2.42,
+     "tone": "#6c7076",
+     "halo": false
+    },
+    {
+     "type": "page",
+     "src": "/figures/Gell-Mann.png",
+     "pos": [
+      4.9,
+      3.4625,
+      0
+     ],
+     "width": 7.6,
+     "height": 3.475,
+     "paper": "#f4f1ea",
+     "tone": "#6c7076",
+     "halo": false
+    },
+    {
+     "type": "page",
+     "src": "/figures/ZweigPhoto.png",
+     "pos": [
+      0,
+      -0.585,
+      0
+     ],
+     "width": 1.6,
+     "height": 2.27,
+     "tone": "#6c7076",
+     "halo": false
+    },
+    {
+     "type": "page",
+     "src": "/figures/Zweig.png",
+     "pos": [
+      4.9,
+      -0.4825,
+      0
+     ],
+     "width": 7.6,
+     "height": 2.065,
+     "paper": "#f4f1ea",
+     "tone": "#6c7076",
+     "halo": false
+    },
+    {
+     "type": "cluster",
+     "pos": [
+      10.4,
+      -1.0,
+      0.6
+     ],
+     "radius": 1.5,
+     "spin": 0.12,
+     "quarks": [
+      {
+       "flavour": "u",
+       "pos": [
+        0.55,
+        0.25,
+        0
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        -0.5,
+        0.35,
+        0.2
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        0,
+        -0.55,
+        -0.1
+       ]
+      },
+      {
+       "flavour": "c",
+       "pos": [
+        0.1,
+        0.05,
+        0.55
+       ]
+      },
+      {
+       "flavour": "cbar",
+       "pos": [
+        -0.3,
+        -0.2,
+        -0.55
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lhcb",
+   "pos": [
+    200,
+    0,
+    0
+   ],
+   "look": {
+    "target": [
+     1.2,
+     0,
+     0
+    ],
+    "dist": 11,
+    "yaw": 0,
+    "pitch": 2,
+    "sway": 0.8
+   },
+   "objects": [
+    {
+     "type": "page",
+     "src": "/figures/lhcb_2019_pc.png",
+     "pos": [
+      0,
+      2.6,
+      0
+     ],
+     "width": 6.2,
+     "height": 5.15,
+     "paper": "#ffffff",
+     "tone": "#6c7076",
+     "halo": false
+    },
+    {
+     "type": "pentaquark",
+     "pos": [
+      -5.6,
+      0,
+      0.5
+     ],
+     "radius": 1.9,
+     "quarkRadius": 0.5,
+     "quarks": [
+      {
+       "flavour": "c",
+       "pos": [
+        0.75,
+        0.55,
+        0.2
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        0.25,
+        -0.95,
+        -0.55
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        0.95,
+        -0.2,
+        -0.75
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        -0.55,
+        0.8,
+        -0.6
+       ]
+      },
+      {
+       "flavour": "cbar",
+       "pos": [
+        -0.8,
+        -0.35,
+        0.4
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "interiors",
+   "pos": [
+    235,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 16,
+    "yaw": -25,
+    "pitch": 10,
+    "sway": 1.5
+   },
+   "objects": [
+    {
+     "type": "molecule",
+     "pos": [
+      -6.5,
+      0,
+      0
+     ],
+     "separation": 6.0,
+     "link": true,
+     "a": {
+      "radius": 1.6,
+      "quarks": [
+       {
+        "flavour": "c",
+        "pos": [
+         0,
+         0.5,
+         0
+        ]
+       },
+       {
+        "flavour": "u",
+        "pos": [
+         -0.5,
+         -0.35,
+         0.1
+        ]
+       },
+       {
+        "flavour": "d",
+        "pos": [
+         0.5,
+         -0.35,
+         -0.1
+        ]
+       }
+      ]
+     },
+     "b": {
+      "radius": 1.3,
+      "quarks": [
+       {
+        "flavour": "cbar",
+        "pos": [
+         -0.35,
+         0.05,
+         0
+        ]
+       },
+       {
+        "flavour": "u",
+        "pos": [
+         0.4,
+         -0.1,
+         0.05
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "type": "cluster",
+     "pos": [
+      7.0,
+      0,
+      0
+     ],
+     "radius": 1.9,
+     "shell": true,
+     "spin": 0.15,
+     "quarks": [
+      {
+       "flavour": "c",
+       "pos": [
+        0.1,
+        0.55,
+        0.2
+       ]
+      },
+      {
+       "flavour": "cbar",
+       "pos": [
+        -0.55,
+        0.1,
+        -0.2
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        0.55,
+        -0.15,
+        -0.25
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        -0.1,
+        -0.55,
+        0.3
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        0.05,
+        0.0,
+        -0.6
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "project",
+   "pos": [
+    270,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 21,
+    "yaw": 0,
+    "pitch": 12,
+    "sway": 2
+   },
+   "gather": 1.0,
+   "objects": [
+    {
+     "type": "constellation",
+     "pos": [
+      -8,
+      0,
+      0
+     ],
+     "radius": 2.4,
+     "nodeRadius": 0.5,
+     "speed": 0.5,
+     "haze": "#7dd3fc",
+     "nodes": [
+      {
+       "pos": [
+        0.4,
+        0.53,
+        0.0
+       ],
+       "color": "#7dd3fc"
+      },
+      {
+       "pos": [
+        -0.59,
+        0.35,
+        0.54
+       ],
+       "color": "#7dd3fc"
+      },
+      {
+       "pos": [
+        0.1,
+        0.0,
+        -1.09
+       ],
+       "color": "#7dd3fc"
+      },
+      {
+       "pos": [
+        0.4,
+        -0.29,
+        0.52
+       ],
+       "color": "#7dd3fc"
+      },
+      {
+       "pos": [
+        -0.55,
+        -0.74,
+        -0.1
+       ],
+       "color": "#7dd3fc"
+      }
+     ]
+    },
+    {
+     "type": "constellation",
+     "pos": [
+      8,
+      0,
+      0
+     ],
+     "radius": 2.6,
+     "nodeRadius": 0.5,
+     "speed": 0.5,
+     "haze": "#ff8a9a",
+     "nodes": [
+      {
+       "pos": [
+        0.4,
+        0.6,
+        0.0
+       ],
+       "color": "#ff8a9a",
+       "core": "#fff0f2"
+      },
+      {
+       "pos": [
+        -0.61,
+        0.47,
+        0.56
+       ],
+       "color": "#ff8a9a",
+       "core": "#fff0f2"
+      },
+      {
+       "pos": [
+        0.1,
+        0.2,
+        -1.16
+       ],
+       "color": "#ff8a9a",
+       "core": "#fff0f2"
+      },
+      {
+       "pos": [
+        0.46,
+        -0.13,
+        0.61
+       ],
+       "color": "#ff8a9a",
+       "core": "#fff0f2"
+      },
+      {
+       "pos": [
+        -0.86,
+        -0.5,
+        -0.15
+       ],
+       "color": "#ff8a9a",
+       "core": "#fff0f2"
+      },
+      {
+       "pos": [
+        0.58,
+        -1.03,
+        -0.37
+       ],
+       "color": "#ff8a9a",
+       "core": "#fff0f2"
+      }
+     ]
+    },
+    {
+     "type": "cluster",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 1.5,
+     "orbit": true,
+     "core": true,
+     "quarks": [
+      {
+       "flavour": "c",
+       "pos": [
+        0.7,
+        0.5,
+        0.2
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        0.25,
+        -0.85,
+        -0.5
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        0.85,
+        -0.2,
+        -0.7
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        -0.5,
+        0.75,
+        -0.55
+       ]
+      },
+      {
+       "flavour": "cbar",
+       "pos": [
+        -0.75,
+        -0.3,
+        0.4
+       ]
+      }
+     ]
+    },
+    {
+     "type": "tracks",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "pulse": true,
+     "tracks": [
+      {
+       "points": [
+        [
+         -5.4,
+         0,
+         0
+        ],
+        [
+         -1.8,
+         0,
+         0
+        ]
+       ],
+       "color": "#7dd3fc"
+      },
+      {
+       "points": [
+        [
+         5.2,
+         0,
+         0
+        ],
+        [
+         1.8,
+         0,
+         0
+        ]
+       ],
+       "color": "#ff8a9a"
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }

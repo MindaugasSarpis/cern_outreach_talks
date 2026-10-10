@@ -1,0 +1,15 @@
+/* Numbers are the only words on screen: large, white or light blue, never gold. */
+.slidev-layout .num {
+  position: absolute;
+  font-size: 72px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: #e8f6ff;
+  text-shadow: 0 0 24px rgba(125, 211, 252, 0.35);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.slidev-layout .num.tr { top: 48px; right: 56px; }
+.slidev-layout .num.tl { top: 48px; left: 56px; }
+.slidev-layout .num.bl { bottom: 48px; left: 56px; }
+.slidev-layout .num.br { bottom: 48px; right: 56px; }
