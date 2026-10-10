@@ -25,3 +25,32 @@
   text-shadow: none;
 }
 .slidev-layout .num.bl span, .slidev-layout .num.br span { margin-top: 8px; }
+/* the title slide (owner's exception, 2026-10-11): project name and the two leaders, left of the pentaquark */
+.slidev-layout .tokyo-title {
+  position: absolute;
+  left: 56px;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 470px;
+  text-align: left;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+html[data-space-assembled] .slidev-layout .tokyo-title { opacity: 1; }
+.slidev-layout .tokyo-title .t {
+  font-size: 29px;
+  font-weight: 600;
+  line-height: 1.28;
+  color: #e8f6ff;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.slidev-layout .tokyo-title .t sub { font-size: 0.62em; }
+.slidev-layout .tokyo-title .who {
+  margin-top: 24px;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #9fd8ff;
+  text-transform: none;
+}
