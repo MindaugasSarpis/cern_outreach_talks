@@ -47,7 +47,8 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 | # | Station | Picture | On screen | Spoken | Min |
 |---|---|---|---|---|---|
 | 1 | hero | five quarks fly in, the hum | | thanks; who I am; what follows | 1 |
-| 2 | lhc | the collider of grains | 27 km | the LHC; Lithuania and Japan at CERN | 1.5 |
+| 2 | lhc | the collider of grains | 27 km LHC | the LHC; Lithuania and Japan at CERN | 1.25 |
+| 2b | lhc | clip lhcb.mp4 | | LHCb, my experiment | 0.8 |
 | 3 | atom | grain cloud, bright point | | atoms are empty; the nucleus | 1 |
 | 4 | nucleus | protons and neutrons, strings | | the strong force | 0.75 |
 | 5 | proton | u u d | 1 % | quarks; never alone; mass from energy | 1.5 |
@@ -58,7 +59,7 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 | 10 | project | two teams, one pentaquark | 2026–2028, 24–27.11 | the project, the workshop | 2 |
 | 11 | hero | the pentaquark again | | close | 0.5 |
 
-Total 14.25 min of 15.
+Total 14.8 min of 15 (numbers carry one word each; see Decisions).
 
 ## Figures
 
@@ -117,6 +118,20 @@ The owner's decisions, dated, newest last.
 - 2026-10-10: on-screen numbers are 27 km, 1 %, 1964, 2015, 2019,
   2026–2028, 24–27.11 (`.num` in `styles/index.css`, #e8f6ff). Everything
   else is in the notes.
+
+- 2026-10-10 (owner rule, main 8c7fd47, then "fewer words so I can adapt to
+  the audience; these slides are not lecture slides", via the Scheduler):
+  one word under each number (27 km LHC, 1 % mass, 1964 quarks, 2015
+  discovery, 2019 precision, 2026–2028 project, 24–27 Nov Nagoya); world
+  names only where the picture needs them: Gell-Mann, Zweig, Vilnius
+  University, Nagoya University. Everything else is narrated. The opener is
+  the pentaquark picture alone (no title or section slides).
+- 2026-10-10 (AFK, "complete everything"): added the library clip lhcb.mp4
+  (0:47, the LHCb detector in 3D with music) after the LHC slide, so the
+  embassy sees the real detector once; the LHC slide drops to 1.25 min.
+  Undo: delete the clip slide and `public/video-frames/lhcb*`.
+- 2026-10-10: three sheet reviews by subagents (busy, meaning, legibility,
+  framing); fixes in a22923a, c7f7d1c, 8f987b2.
 
 ## Verify
 

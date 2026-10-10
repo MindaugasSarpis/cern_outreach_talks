@@ -61,7 +61,21 @@ machine and its experiments. My group works on one of those
 experiments, LHCb.
 
 Sources: home.cern (LHC facts; member states; Lithuania; "Japan contributes
-an additional 5 billion yen", 1998). (~1.5 min)
+an additional 5 billion yen", 1998). (~1.25 min)
+-->
+
+---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
+---
+
+<VideoPlayer src="lhcb.mp4" />
+
+<!--
+Clip: lhcb.mp4, the LHCb detector in 3D with music (0:47, library clip).
+Let it play; at most one line over the music: "This is LHCb, the experiment
+my group works on: a detector the size of a house, built to catch what comes
+out of the collisions." It condenses out of the dust and leaves the same way.
+(~0.8 min)
 -->
 
 ---
@@ -94,7 +108,7 @@ electric force that pushes the protons apart. (~0.75 min)
 space: { at: proton, dim: 0.2 }
 ---
 
-<div class="num tr">1 %<span>quark mass</span></div>
+<div class="num tr">1 %<span>mass</span></div>
 
 <!-- facts: proton-mass-quarks-1-percent -->
 
@@ -131,7 +145,7 @@ The question is whether nature allows more: four quarks, five, six. (~1.25 min)
 space: { at: paper, dim: 0.06 }
 ---
 
-<div class="num tr">1964<span>quark model</span></div>
+<div class="num tr">1964<span>quarks</span></div>
 
 <!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
 
@@ -159,7 +173,7 @@ space: { at: lhcb, dim: 0.06 }
 ---
 
 <div class="num tl">2015<span>discovery</span></div>
-<div class="num bl">2019<span>three pentaquarks</span></div>
+<div class="num bl">2019<span>precision</span></div>
 
 <!-- facts: lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
 
@@ -203,8 +217,8 @@ together. (~1.5 min)
 space: { at: project, dim: 0.15 }
 ---
 
-<div class="num tl">2026–2028<span>Penta-Charm</span></div>
-<div class="num bl">24–27 Nov<span>Nagoya workshop</span></div>
+<div class="num tl">2026–2028<span>project</span></div>
+<div class="num bl">24–27 Nov<span>Nagoya</span></div>
 
 <!-- facts: lhcb-vilnius-joined -->
 

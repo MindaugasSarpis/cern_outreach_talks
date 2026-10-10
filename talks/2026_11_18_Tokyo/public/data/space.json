@@ -133,32 +133,6 @@
       }
      ],
      "haze": "#3d7fa6"
-    },
-    {
-     "type": "label",
-     "text": "atom",
-     "pos": [
-      5.9,
-      -4.3,
-      0
-     ],
-     "height": 0.6,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
-    },
-    {
-     "type": "label",
-     "text": "nucleus",
-     "pos": [
-      0,
-      -1.0,
-      0
-     ],
-     "height": 0.6,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
     }
    ]
   },
@@ -296,19 +270,6 @@
        "core": "#eef4fa"
       }
      ]
-    },
-    {
-     "type": "label",
-     "text": "nucleus",
-     "pos": [
-      4.4,
-      -2.7,
-      0
-     ],
-     "height": 0.45,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
     }
    ]
   },
@@ -362,19 +323,6 @@
        ]
       }
      ]
-    },
-    {
-     "type": "label",
-     "text": "proton",
-     "pos": [
-      0,
-      2.95,
-      0
-     ],
-     "height": 0.42,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
     }
    ]
   },
@@ -455,32 +403,6 @@
        ]
       }
      ]
-    },
-    {
-     "type": "label",
-     "text": "meson",
-     "pos": [
-      -3.8,
-      -2.75,
-      0
-     ],
-     "height": 0.5,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
-    },
-    {
-     "type": "label",
-     "text": "baryon",
-     "pos": [
-      3.8,
-      -2.75,
-      0
-     ],
-     "height": 0.5,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
     }
    ]
   },
@@ -721,32 +643,6 @@
        ]
       }
      ]
-    },
-    {
-     "type": "label",
-     "text": "LHCb",
-     "pos": [
-      0,
-      -2.85,
-      0
-     ],
-     "height": 0.55,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
-    },
-    {
-     "type": "label",
-     "text": "pentaquark",
-     "pos": [
-      6.0,
-      -2.85,
-      0.5
-     ],
-     "height": 0.55,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
     }
    ]
   },
@@ -879,32 +775,6 @@
        ]
       }
      ]
-    },
-    {
-     "type": "label",
-     "text": "molecule",
-     "pos": [
-      -4.55,
-      -3.0,
-      0
-     ],
-     "height": 0.65,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
-    },
-    {
-     "type": "label",
-     "text": "compact",
-     "pos": [
-      5.6,
-      -3.0,
-      0
-     ],
-     "height": 0.65,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
     }
    ]
   },
@@ -1220,19 +1090,6 @@
      "pos": [
       8.5,
       -3.1,
-      0
-     ],
-     "height": 0.8,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
-    },
-    {
-     "type": "label",
-     "text": "pentaquark",
-     "pos": [
-      0,
-      -3.55,
       0
      ],
      "height": 0.8,
