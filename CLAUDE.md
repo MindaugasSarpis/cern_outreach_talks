@@ -6,8 +6,9 @@
   slide text and speaker notes.
 - No title or section slides, titles or statements: the owner narrates. On
   screen: numbers with their unit or a word naming them, and a name of a word
-  or two for a thing shown (an invention); fewest words. Licence credits: tiny print on the last slide
-  (none for CERN's). White or light blue, never gold. Notes stay.
+  or two for a thing shown (an invention); fewest words. Licence credits: tiny
+  print on the last slide (none for CERN's). White or light blue, never gold.
+  Notes stay.
 - One worktree per talk, made with `pnpm talk new <YYYY_MM_DD_Name>` or
   `pnpm talk open <name>`. The main checkout stays on `main`: never switch
   its branch or build a talk in it.
