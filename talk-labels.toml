@@ -1,0 +1,15 @@
+# The landing page's link text for each talk (the index step in
+# .github/workflows/deploy.yml): its date and name, newest first by this
+# label. Keyed by slug, the directory name without its date, so a talk
+# whose date changes keeps its label. A talk not listed shows its
+# directory name.
+[labels]
+Tokyo = "2026_11_18_Tokyo_Embassy"
+UzsikraukKarjerai = "2026_10_26_Uzsikrauk_Karjerai"
+Innoday = "2026_10_23_Innoday"
+OpenData = "2026_10_21_Open_Data_Award"
+Startertalk = "2026_09_15_LHCb_Startertalk"
+WorldOfParticles = "2026_09_10_World_of_Particles"
+Yaga = "2026_07_18_Yaga"
+Sceptics = "2026_05_11_Skeptikai"
+editAI = "2026_04_28_EditAi"
