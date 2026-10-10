@@ -504,3 +504,10 @@ colours; `options: { dustSize: 2.2, reach: 22, nebula: 0.4 }`.
   needs about 40 s before the world draws. For animated slides use
   `slidev-stage-record` (exact clock); it enters each slide right after the
   one before, so a fill that restarts there is an artefact.
+- `talk ready` after a small edit shoots only the changed slides (`--changed`).
+  It walks the unchanged ones on a held clock, which arms `jp`, `jx` and `route`
+  out of view. Their 6 s fallback then fills them for about 30 engine-s, and the
+  settle waits on every station. So a reshot slide 09–13 can end "not settled"
+  under load (2026-10-10, slide 13; the v0.8.0 review). Recovery: delete
+  `shots/.shots-cache.json` and run `talk ready` again, so all slides are shot in
+  order. The toolkit fix (settle on the station in view) is with Tools.
