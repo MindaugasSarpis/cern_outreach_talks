@@ -257,9 +257,11 @@ space: { at: quarks, dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.35 }
 
 <Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
 
+<div class="src">LHCb salės nuotrauka: Rosa Menkman, CC BY 2.0</div>
+
 <!--
 Message: one task for this week.
-Picture: the five-quark particle of the cover, held. No text on screen: the speaker asks the question.
+Picture: the five-quark particle of the cover, held. The speaker asks the question; on screen only the tiny-print credit the slide 6 photo's licence asks for (CERN's material needs none).
 
 Ir viena užduotis šiai savaitei. Kai sutiksi žmogų, kurio darbas tau atrodo įdomus, paklausk jo: „Ko jūs savo darbe dar nežinote?“
 [pauzė 2 s]

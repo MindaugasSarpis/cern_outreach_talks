@@ -46,7 +46,7 @@ statements, captions, labels or credits; the speaker narrates from the notes.
 | 10 | — | the route across Europe |
 | 11 | — | the map close on Vilnius and the arcs to CERN: the working day (idea 7), in the speaker's own public words |
 | 12 | — | the form far off, dimmed (the three things are said, not shown) |
-| 13 | — | the form, held (the question is said, not shown) |
+| 13 | the credit in tiny print: „LHCb salės nuotrauka: Rosa Menkman, CC BY 2.0“ | the form, held (the question is said, not shown) |
 
 ## Status
 
@@ -209,8 +209,11 @@ statements, captions, labels or credits; the speaker narrates from the notes.
   Notes changed only where they described text that is gone (slide 1's
   „Šalia pavadinimo“ → „Ekrane“, and the Picture lines of 1, 8, 9, 11, 12 and
   13). Provenance stays in `credits.txt`. The slide 6 cavern photo is not
-  CERN's (Rosa Menkman, CC BY 2.0, which asks for attribution); that is with
-  the owner. The CSS for the removed text (`.say`, `.city`, `.photo-credit`,
+  CERN's (Rosa Menkman, CC BY 2.0, which asks for attribution). Then the
+  owner: "Credit on last slide tiny print" (root CLAUDE.md,
+  main 51f4c3e): slide 13 carries the one credit a licence asks for, the
+  cavern photo's, in the kit's `.src` footer (12 px). CERN's clip and event
+  display need none. `talk lint` still warns TEXT on that line. The CSS for the removed text (`.say`, `.city`, `.photo-credit`,
   `.scrim-left`) is left in place, unused.
 
 - 2026-10-09 — slidev-videos v0.7.0 (stage 0.4.0, from v0.6.8), the batch round
@@ -416,10 +419,6 @@ statements, captions, labels or credits; the speaker narrates from the notes.
 - Licences to confirm for this event: the LHC tunnel clip
   (CERN-FOOTAGE-2022-013-001) and the LHCb event display (slide 7), both
   CERN material for educational, non-commercial use.
-- The slide 6 cavern photo is not CERN's: Rosa Menkman, CC BY 2.0, which asks
-  for attribution. Since 2026-10-10 no credit is on screen (the owner); it is
-  in `credits.txt`. Open for the owner: attribute it somewhere else (the
-  talk's page, the hand-over to Delfi), or swap the photo.
 
 - Length: the script is about 7–8 minutes spoken; the brief allows 10–15.
   If the speaker wants more, slide 11 (what a working day is like) is where
