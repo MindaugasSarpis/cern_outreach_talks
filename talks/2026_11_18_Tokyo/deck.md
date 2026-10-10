@@ -229,7 +229,7 @@ from the organisers. (~2 min)
 -->
 
 ---
-space: { at: hero, dist: 8, yaw: 20 }
+space: { at: hero, dist: 8, yaw: 20, pitch: -6, dim: 0.1 }
 ---
 
 <!--

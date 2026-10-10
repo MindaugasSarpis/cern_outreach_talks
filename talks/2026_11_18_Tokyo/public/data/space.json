@@ -81,7 +81,7 @@
    "look": {
     "dist": 14,
     "yaw": -20,
-    "pitch": 18,
+    "pitch": 30,
     "sway": 2
    },
    "gather": 1.2,
@@ -140,39 +140,6 @@
       0,
       0
      ],
-     "radius": 1.6,
-     "haze": "#3d7fa6",
-     "nodes": []
-    },
-    {
-     "type": "constellation",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "radius": 2.6,
-     "haze": "#3d7fa6",
-     "nodes": []
-    },
-    {
-     "type": "constellation",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "radius": 3.5,
-     "haze": "#3d7fa6",
-     "nodes": []
-    },
-    {
-     "type": "constellation",
-     "pos": [
-      0,
-      0,
-      0
-     ],
      "radius": 4.3,
      "haze": "#3d7fa6",
      "nodes": []
@@ -201,13 +168,13 @@
       0
      ],
      "radius": 3,
-     "nodeRadius": 0.42,
+     "nodeRadius": 0.34,
      "speed": 0.4,
      "nodes": [
       {
        "pos": [
-        0.42,
-        0.96,
+        0.55,
+        1.25,
         0.0
        ],
        "color": "#ff8f7a",
@@ -215,99 +182,99 @@
       },
       {
        "pos": [
-        -0.68,
-        1.04,
-        0.62
+        -0.88,
+        1.35,
+        0.81
        ],
        "color": "#9fb4c8",
        "core": "#eef4fa"
       },
       {
        "pos": [
-        0.12,
-        1.01,
-        -1.4
+        0.16,
+        1.31,
+        -1.82
        ],
        "color": "#ff8f7a",
        "core": "#ffe9e4"
       },
       {
        "pos": [
-        0.63,
-        0.47,
-        0.82
+        0.82,
+        0.61,
+        1.07
        ],
        "color": "#9fb4c8",
        "core": "#eef4fa"
       },
       {
        "pos": [
-        -1.4,
-        0.37,
-        -0.25
+        -1.82,
+        0.48,
+        -0.33
        ],
        "color": "#ff8f7a",
        "core": "#ffe9e4"
       },
       {
        "pos": [
-        1.53,
-        0.15,
-        -0.97
+        1.99,
+        0.2,
+        -1.26
        ],
        "color": "#9fb4c8",
        "core": "#eef4fa"
       },
       {
        "pos": [
-        -0.31,
-        -0.1,
-        1.17
+        -0.4,
+        -0.13,
+        1.52
        ],
        "color": "#ff8f7a",
        "core": "#ffe9e4"
       },
       {
        "pos": [
-        -0.7,
-        -0.39,
-        -1.34
+        -0.91,
+        -0.51,
+        -1.74
        ],
        "color": "#9fb4c8",
        "core": "#eef4fa"
       },
       {
        "pos": [
-        1.62,
-        -0.79,
-        0.59
+        2.11,
+        -1.03,
+        0.77
        ],
        "color": "#ff8f7a",
        "core": "#ffe9e4"
       },
       {
        "pos": [
-        -0.98,
-        -0.76,
-        0.4
+        -1.27,
+        -0.99,
+        0.52
        ],
        "color": "#9fb4c8",
        "core": "#eef4fa"
       },
       {
        "pos": [
-        0.46,
-        -1.23,
-        -0.98
+        0.6,
+        -1.6,
+        -1.27
        ],
        "color": "#ff8f7a",
        "core": "#ffe9e4"
       },
       {
        "pos": [
-        0.13,
-        -0.96,
-        0.4
+        0.17,
+        -1.25,
+        0.52
        ],
        "color": "#9fb4c8",
        "core": "#eef4fa"
@@ -585,7 +552,7 @@
    ],
    "look": {
     "target": [
-     1.2,
+     1.0,
      0,
      0
     ],
@@ -603,8 +570,8 @@
       0,
       0
      ],
-     "width": 7.5,
-     "height": 5.23,
+     "width": 6.8,
+     "height": 4.74,
      "paper": "#ffffff",
      "tone": "#6c7076",
      "halo": false
@@ -616,7 +583,7 @@
       0,
       0.5
      ],
-     "radius": 1.9,
+     "radius": 2.1,
      "quarkRadius": 0.5,
      "quarks": [
       {
@@ -671,7 +638,7 @@
     0
    ],
    "look": {
-    "dist": 17,
+    "dist": 13,
     "yaw": -6,
     "pitch": 6,
     "sway": 1.5
@@ -680,35 +647,35 @@
     {
      "type": "pentaquark",
      "pos": [
-      -7.3,
+      -6.2,
       0,
       0
      ],
-     "radius": 1.7,
+     "radius": 1.8,
      "quarkRadius": 0.5,
      "quarks": [
       {
        "flavour": "c",
        "pos": [
         0,
-        0.7,
+        0.9,
         0
        ]
       },
       {
        "flavour": "u",
        "pos": [
-        -0.7,
-        -0.45,
-        0.15
+        -0.85,
+        -0.5,
+        0.2
        ]
       },
       {
        "flavour": "d",
        "pos": [
-        0.7,
-        -0.45,
-        -0.15
+        0.85,
+        -0.5,
+        -0.2
        ]
       }
      ]
@@ -716,7 +683,7 @@
     {
      "type": "pentaquark",
      "pos": [
-      -3.8,
+      -2.9,
       0,
       0
      ],
@@ -726,7 +693,7 @@
       {
        "flavour": "cbar",
        "pos": [
-        -0.5,
+        -0.6,
         0.1,
         0
        ]
@@ -734,7 +701,7 @@
       {
        "flavour": "u",
        "pos": [
-        0.55,
+        0.6,
         -0.1,
         0.05
        ]
@@ -744,7 +711,7 @@
     {
      "type": "pentaquark",
      "pos": [
-      6,
+      5.6,
       0,
       0
      ],
@@ -803,7 +770,7 @@
     0
    ],
    "look": {
-    "dist": 16,
+    "dist": 17,
     "yaw": 0,
     "pitch": 8,
     "sway": 2
@@ -813,15 +780,15 @@
     {
      "type": "constellation",
      "pos": [
-      -8,
+      -8.5,
       0,
       0
      ],
-     "radius": 2.6,
+     "radius": 2.3,
      "nodeRadius": 0.3,
      "coreSize": 10,
      "speed": 0.4,
-     "haze": "#16303d",
+     "haze": "#3d7fa6",
      "nodes": [
       {
        "pos": [
@@ -900,15 +867,15 @@
     {
      "type": "constellation",
      "pos": [
-      8,
+      8.5,
       0,
       0
      ],
-     "radius": 2.6,
+     "radius": 2.3,
      "nodeRadius": 0.3,
      "coreSize": 10,
      "speed": 0.4,
-     "haze": "#3a1a20",
+     "haze": "#a8505e",
      "nodes": [
       {
        "pos": [
@@ -1000,8 +967,8 @@
       0,
       0
      ],
-     "radius": 2.4,
-     "quarkRadius": 0.6,
+     "radius": 3.0,
+     "quarkRadius": 0.75,
      "quarks": [
       {
        "flavour": "c",
@@ -1057,12 +1024,12 @@
       {
        "points": [
         [
-         -5.3,
+         -6.1,
          0,
          0
         ],
         [
-         -2.5,
+         -3.1,
          0,
          0
         ]
@@ -1073,12 +1040,12 @@
       {
        "points": [
         [
-         5.3,
+         6.1,
          0,
          0
         ],
         [
-         2.5,
+         3.1,
          0,
          0
         ]
