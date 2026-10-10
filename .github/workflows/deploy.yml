@@ -195,13 +195,15 @@ jobs:
       - name: Write index.html, one bold line per talk (talk-labels.toml)
         run: |
           python3 - <<'EOF'
-          import html, pathlib, tomllib
-          # the link text is the talk's label (date and name) from talk-labels.toml, else its
-          # directory name; newest first by that text
+          import html, pathlib, re, tomllib
+          # the link text is the talk's label (date and name) from talk-labels.toml, keyed by
+          # its slug (the directory name without its date), else its directory name; newest
+          # first by that text
           f = pathlib.Path("talk-labels.toml")
           labels = tomllib.loads(f.read_text()).get("labels", {}) if f.is_file() else {}
           talks = [d.name for d in pathlib.Path("talks").iterdir() if (pathlib.Path("site") / d.name / "index.html").is_file()]
-          rows = sorted(((str(labels.get(n) or n), n) for n in talks), reverse=True)
+          slug = lambda n: re.sub(r"^\d{4}_\d{2}_\d{2}_", "", n)
+          rows = sorted(((str(labels.get(slug(n)) or n), n) for n in talks), reverse=True)
           items = [f'<li><a href="./{n}/">{html.escape(label)}</a></li>' for label, n in rows]
           page = ("<!doctype html><html lang=lt><meta charset=utf-8>"
                   "<meta name=viewport content='width=device-width,initial-scale=1'>"
