@@ -121,7 +121,10 @@ the package.
   nebula behind the dust. `videos.dust` is set to the same accent so the
   clips' grains match the world's. CSS reads `--stage-*`.
 - **Slides** steer the camera exactly as in Startertalk (`space: { at, dist,
-  yaw, pitch, dim }`). The addon's CSS kit supplies the type: cover as kicker
+  yaw, pitch, dim }`). **Pictures and numbers only** (the owner, 2026-10-10):
+  a slide carries no title, kicker, statement, caption or credit, the cover
+  included; a number may stand. The rest goes to the notes, sources too
+  (`pnpm talk lint`: TEXT). For the delivered decks, the addon's CSS kit supplies the type: cover as kicker
   / title / subtitle / byline (`# Innoday`, `# Title`, `## …`, `.mt-md`),
   section as a kicker and a large line low on the left (`# Part I` and a
   paragraph), cards, `.src`, `.world-caption`. A talk's own

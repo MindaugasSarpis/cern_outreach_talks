@@ -31,9 +31,15 @@ that catches it before the owner has to.
 - "slides 19 and 20 are nice, but can be improved, show diagrams much larger (or even make photo realistic 3d as well)"
 
 OpenData, 8 October, on slide text: "people will not read it, I will just say
-it". Slides carry the main points; the rest is in the notes.
+it". The owner, 10 October, for all talks and tools: "No titles, statements -
+I will be there. Don't need newspaper-like titles. What can stay is the
+numbers. I will narrate myself." And no on-screen credits: "it's cern
+license, I'm CERN user". Slides are pictures and numbers; everything said is
+in the notes; provenance stays in `photos.toml` and the manifests.
 
-Check: `pnpm talk lint` (more than 60 words on screen, talk CSS under 18 px).
+Check: `pnpm talk lint` (TEXT: any word on screen that is not a number, from
+the talks dated 2026-10 on; more than 60 words on screen and talk CSS under
+18 px for the older decks).
 In the shots report, `wordsOnScreen` and each text box's `fontPx`, `lumMean`
 and `lumVar` (from v0.6): high variance behind body text means world detail
 behind the words, so raise `dim` or move the pose. Judge every slide on the
@@ -167,6 +173,14 @@ Two things the pipeline does not do:
 
 ## 3. Slide rules
 
+**Pictures and numbers only** (the owner, 2026-10-10; talks dated 2026-10 on).
+No titles, kickers, statements, captions, labels, bylines or credit lines on
+screen, the cover included. A number may stand, with a short unit (13,6 TeV,
+12 639, 95 %). What the slide would have said goes into the notes, with its
+sources. `pnpm talk lint` flags the rest (TEXT); a review or audit checks
+"pictures and numbers only" before anything below. Rules 1–3 and 8–9 apply
+to the delivered decks (dated before 2026-10), which are left as they are.
+
 From the Startertalk blueprint's style rules, generalised.
 
 1. One claim per slide. The title states it in six words or fewer, sentence
@@ -191,7 +205,8 @@ From the Startertalk blueprint's style rules, generalised.
 7. Journal-style references (PRL, PLB, PRD, EPJC); an arXiv id only where no
    journal reference exists, never inside a sentence.
 8. A number appears once on screen, at a precision that matches its error, and
-   with a source: one `.src` line per slide, at most two references.
+   with a source: one `.src` line per slide, at most two references (in the
+   newer decks the source is in the notes, `Sources:` / `Šaltiniai:`).
 9. Type: nothing is shrunk to fit; content is cut. Projector floors on the
    980 px canvas: body and cards 20 px, nothing below 18 px outside `.src` and
    credits. Broadcast floors are higher (skill `talk-broadcast`).

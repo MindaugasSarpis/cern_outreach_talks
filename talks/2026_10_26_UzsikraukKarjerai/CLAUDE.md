@@ -47,7 +47,15 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Status
 
-- 2026-10-09 (latest): **deployed a9269bf** on the owner's go: slidev-videos v0.6.7
+- 2026-10-09 (latest): **deployed 852e96a** on the owner's go: slidev-videos v0.6.8
+  (the phone washout fix: the talk's builders return a frame-relative
+  `frameScale`, so grains keep their size on a high-density screen; laptops
+  unchanged) and main be73ad6. `talk ready` passed with nothing skipped. Pages
+  run 37984117962 green, live walk passed for 13 slides, URL 200. Still open for
+  the owner: their moments for slide 11, the licences of the event display and
+  the tunnel clip, the 2027 masterclass date and the BL4S call.
+
+- 2026-10-09: **deployed a9269bf** on the owner's go: slidev-videos v0.6.7
   (the iPhone NaN guard) on top of the v0.6.6 move. Pages run 37964270854 green,
   live walk passed, URL 200. Open for the owner: their moments for slide 11
   (relayed by the Scheduler), the licences of the event display and the tunnel
@@ -67,7 +75,7 @@ Approved outline: `notes/outline-v5.md` with its two change sections
   come, and invent none. Still open: the licences of the event display and the
   tunnel clip, the 2027 masterclass date and the BL4S call.
 
-- 2026-10-09 (latest): **deployed f2eecec** on the owner's go (Pages run
+- 2026-10-09: **deployed f2eecec** on the owner's go (Pages run
   37924290671 green, URL 200; in headless Chromium on the live site slides
   6 and 7 load both photos, ~/talks/.cache/uzk-review/livecheck). It is the
   photo fix below, slidev-videos e5d05a9, the lockfile regenerated after a
@@ -177,6 +185,16 @@ Approved outline: `notes/outline-v5.md` with its two change sections
 
 ## Decisions
 
+- 2026-10-09 — slidev-videos v0.7.0 (stage 0.4.0, from v0.6.8), the batch round
+  the owner chose. Its new `unsaid-clock` warning stays quiet here: histogram,
+  path and quintet already report `api.busy` (v0.6.6 below). A copy of
+  grains.js with `busy` removed makes the check flag those three, so it does read
+  them. `pairs` and `streams` still have no `busy`, but no station uses them; give
+  them one if a slide ever does. `--stills` now shoots each slide at its last
+  click, so all 13 stills are retaken with plain `--stills`. 08 is at click 1
+  (marks lit), as print shows it, and the special 08 is gone. v0.6.9's dust fix
+  only skips a frame copy for the tunnel clip, which comes from the release (its
+  strip stands in, as before).
 - 2026-10-09 — slidev-videos v0.6.8: grains sized to the frame. The talk's builders
   (histogram, path, quintet, map, pairs, ghost, streams) return their
   `uPixelRatio` as `frameScale`, so the engine keeps it at the buffer's height

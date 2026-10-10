@@ -26,6 +26,10 @@ function smooth(l) {
 // The slides drive both through `setGrains(name, step)` (the <Grains> slide
 // component calls it when its slide becomes the current one). The last step
 // of every name is kept, so a form built after the call still starts right.
+// A step for later (`setGrainsLater`, <Grains :later>) runs on the world's clock,
+// as the motion it waits for does: a slow GPU or a headless tool stretches both.
+// Every form's update moves that clock on, and a step still to come keeps its
+// form busy (api.busy), so a still is never taken before it lands.
 
 const BUS = 'opendata:grains'
 const state = new Map()
@@ -35,6 +39,18 @@ export function setGrains(name, step) {
   state.set(name, step)
   window.dispatchEvent(new CustomEvent(BUS, { detail: { name, step } }))
 }
+let clock = 0
+const pending = new Set()
+export function setGrainsLater(name, step, s) {
+  const p = { name, step, at: clock + s }
+  pending.add(p)
+  return () => pending.delete(p)
+}
+function tick(t) {
+  clock = t
+  for (const p of pending) if (t >= p.at) { pending.delete(p); setGrains(p.name, p.step) }
+}
+const waiting = (name) => [...pending].some((p) => p.name === name)
 function listen(name, fn) {
   const h = (e) => { if (e.detail?.name === name) fn(e.detail.step) }
   window.addEventListener(BUS, h)
@@ -497,7 +513,14 @@ function buildLineup(o, ctx) {
   // opened mid-talk: the step is known; the piles build when the engine assembles the opening station, else at 1 s
   if (state.has(o.name)) { step = state.get(o.name); armed = true; armedAt = -5 }
 
-  const api = o.assemble === false ? undefined : {
+  // busy (v0.7) while a pile gathers or breaks up on a step of its own (an arrival is the
+  // engine's assembly), a label fades, or a step for later is still to come
+  const settles = () => Math.max(GROW(), mat.uniforms.uMergeAt.value + 2.8)
+  let labelsMoving = false
+  const busy = () => labelsMoving || waiting(o.name) || waiting(`${o.name}:labels`)
+    || showT.some((s, b) => s >= 0 && (hideT[b] >= 0 || now - s < settles()))
+  const api = o.assemble === false ? { busy } : {
+    busy,
     // a flight toward the station: what stands flies apart, and stays out until the arrival
     arm() { armed = true; armedAt = now; for (let b = 0; b < NB; b++) hide(b, now) },
     // the arrival (and `c`): every pile up to the step gathers again
@@ -511,6 +534,7 @@ function buildLineup(o, ctx) {
   return {
     group: g, labels: [], api,
     update(t) {
+      tick(t)
       now = t; mat.uniforms.uTime.value = t
       if (armed && t - armedAt > 6) { armed = false; for (let b = 0; b < NB; b++) if (wants(b)) show(b, t) }   // the flight was turned away
       if (doneCbs.length && t >= doneAt) { const cbs = doneCbs; doneCbs = []; for (const cb of cbs) cb() }
@@ -526,10 +550,12 @@ function buildLineup(o, ctx) {
         m.scale.setScalar(Math.max(e, 1e-4)); m.visible = e > 0.001
         gu.uShow.value = e
       }
+      labelsMoving = false
       for (const l of labels) {
         const b = l.userData.ball
         const want = labelsOn && shown(b) && t - showT[b] > 1.2 ? 1 : 0
         l.userData.vis += (want - l.userData.vis) * 0.08
+        if (Math.abs(want - l.userData.vis) > 0.01) labelsMoving = true
         l.material.opacity = 0.85 * l.userData.vis
         l.visible = l.userData.vis > 0.01
       }
@@ -670,14 +696,23 @@ function buildStreams(o, ctx) {
   const off2 = listen(o.name, (k) => go(k))
   mat.addEventListener('dispose', off2)
   if (state.has(o.name)) go(state.get(o.name), { instant: true })
+  // its own clock, said (v0.7): busy while a stream fills its arc (1/speed s, its
+  // cluster gathers sooner), fades in or out, a label is still fading, or a step
+  // for later is still to come
+  const fill = 1 / mat.uniforms.uSpeed.value + 0.1
+  let labelsMoving = false
+  const busy = () => labelsMoving || waiting(o.name) || showT.some((s, i) => s !== -1 && (hideT[i] < 0 ? now - s < fill || now - backT[i] < 1.2 : now - hideT[i] < 1.2))
   return {
-    group: g, labels: [], frameScale: mat.uniforms.uPixelRatio,
+    group: g, labels: [], api: { busy }, frameScale: mat.uniforms.uPixelRatio,
     update(t) {
+      tick(t)
       now = t; mat.uniforms.uTime.value = t
+      labelsMoving = false
       for (const l of labels) {
         const i = l.userData.i
         const want = showT[i] !== -1 && hideT[i] < 0 && t - showT[i] > 1.5 ? 1 : 0
         l.userData.vis += (want - l.userData.vis) * 0.08
+        if (Math.abs(want - l.userData.vis) > 0.01) labelsMoving = true
         l.material.opacity = 0.9 * l.userData.vis
         l.visible = l.userData.vis > 0.01
       }
@@ -738,7 +773,7 @@ function buildFloor(o) {
   const p = new Points(geo, mat); p.frustumCulled = false
   const g = new Group(); g.add(p)
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
-  return { group: g, labels: [], frameScale: mat.uniforms.uPixelRatio, update(t) { mat.uniforms.uTime.value = t } }
+  return { group: g, labels: [], frameScale: mat.uniforms.uPixelRatio, update(t) { tick(t); mat.uniforms.uTime.value = t } }
 }
 
 // ---- portraits ----------------------------------------------------------------------
@@ -924,20 +959,27 @@ function buildPortraits(o, ctx) {
   // their slide opened before the world was built (a reload, or a link straight to it):
   // with onEnter nothing else would gather them, so the first frame does
   let late = !!(o.onEnter && step)
+  // busy (v0.7) while they gather (1.7 s) and the ring's drive ramps in (3.3 s), while they
+  // break up (1.6 s), a name still fades or a step for later is to come: the ring itself
+  // runs on as long as it is seen
+  let labelsMoving = false
+  const busy = () => labelsMoving || waiting(o.name) || (showT.value >= 0 && (hideT.value >= 0 || now - showT.value < (ring ? 3.3 : 1.7)))
   // onEnter: they gather the moment their slide opens, during the flight, rather than on
   // arrival. The hook stays, answering at once: the engine announces a station as
   // assembled only through its builders' hooks, and the cover's title waits on that
-  const api = o.onEnter ? { arm() {}, assemble(t, onDone) { onDone?.() } } : {
+  const api = o.onEnter ? { arm() {}, assemble(t, onDone) { onDone?.() }, busy } : {
     arm() { armed = true; armedAt = now; if (showT.value >= 0 && hideT.value < 0) hideT.value = now },
     assemble(t, onDone) {
       now = t; armed = false
       if (step) show(t); else if (showT.value >= 0 && hideT.value < 0) hideT.value = t
       onDone?.()
     },
+    busy,
   }
   return {
     group: g, labels: [], api, frameScale: pr,   // the sparks' size (the faces size from uViewH)
     update(t) {
+      tick(t)
       now = t; uni.uTime.value = t
       if (late) { late = false; if (step && showT.value < 0) show(t) }
       if (armed && t - armedAt > 6) { armed = false; go(step) }
@@ -948,8 +990,10 @@ function buildPortraits(o, ctx) {
       }
       if (sparks) sparks.mat.uniforms.uTime.value = t
       const on = showT.value >= 0 && hideT.value < 0 && t - showT.value > 1.2
+      labelsMoving = false
       for (const l of labels) {
         l.userData.vis += ((on ? 1 : 0) - l.userData.vis) * 0.06
+        if (Math.abs((on ? 1 : 0) - l.userData.vis) > 0.01) labelsMoving = true
         l.material.opacity = 0.9 * l.userData.vis
         l.visible = l.userData.vis > 0.01
       }
@@ -1064,7 +1108,10 @@ function buildCollision(o) {
   const off = listen(o.name, go)
   mat.addEventListener('dispose', off)
   if (state.has(o.name)) queueMicrotask(() => go(state.get(o.name)))
-  return { group: g, labels: [], frameScale: mat.uniforms.uPixelRatio, update(t) { now = t; mat.uniforms.uTime.value = t } }
+  // busy (v0.7) while the tracks grow (1.65 s), while the event shrinks into the many,
+  // they pack and fade (4.7 s), or a step for later is still to come
+  const busy = () => { const u = mat.uniforms; return waiting(o.name) || (u.uT1.value >= 0 && now - u.uT1.value < 1.7) || (u.uT2.value >= 0 && now - u.uT2.value < 4.7) }
+  return { group: g, labels: [], api: { busy }, frameScale: mat.uniforms.uPixelRatio, update(t) { tick(t); now = t; mat.uniforms.uTime.value = t } }
 }
 
 export function installGrains(registerBuilder) {
