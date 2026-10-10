@@ -55,7 +55,7 @@ const c = captions
   font-family: 'Space Grotesk', system-ui, sans-serif; color: #fff;
   text-shadow: 0 1px 14px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.6);
 }
-.lhc-cap b { font-size: 56px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.lhc-cap b { font-size: 56px; font-weight: 700; letter-spacing: -0.01em; line-height: 1; font-variant-numeric: normal; }
 .lhc-unit, .lhc-name { font-size: 22px; font-weight: 500; letter-spacing: 0.04em; color: #9cc4ff; margin-left: 0.4em; }
 .lhc-name { margin: 0 0.6em 0 0; font-size: 24px; letter-spacing: 0.08em; }
 .lhc-tunnel { opacity: 0; animation: lhc-in 1.2s ease 1.6s forwards; }
