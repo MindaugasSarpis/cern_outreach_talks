@@ -5,7 +5,8 @@
 - Chat with the owner in English, never in Russian. Lithuanian goes only in
   slide text and speaker notes.
 - No titles, statements or captions on slides: the owner narrates. Only
-  numbers stay on screen; notes stay. White or light blue text, never gold.
+  numbers stay on screen; notes stay. Credits a licence asks for go in tiny
+  print on the last slide (none for CERN's). White or light blue, never gold.
 - One worktree per talk, made with `pnpm talk new <YYYY_MM_DD_Name>` or
   `pnpm talk open <name>`. The main checkout stays on `main`: never switch
   its branch or build a talk in it.
@@ -165,8 +166,7 @@ Cite facts as `<!-- facts: id1, id2 -->` above the speaker notes. Open marks are
 
 - Frontmatter: `theme: ../../theme`, `colorSchema: dark`, `transition: fade`, optional `background: /figures/…`.
 - Custom layouts: `cover`, `section`, `quote`, `fact`, `statement`, `intro`, `center-bkg`.
-- Card system: `<div class="card card-primary pad-tight">…</div>`. Colors: `primary|secondary|accent|info|success|warning`. Padding: `pad-tight|compact|snug|balanced`.
-- Grids: `grid-2`, `grid-3` (theme classes — built-in gap; do **not** add `class="grid ..."` or `gap-md`).
+- Cards `card card-<color> pad-<size>`; grids `grid-2`, `grid-3` with their own gap (no `grid`, `gap-md`).
 - Layouts and cards are for the older decks; no emoji in headings (lint).
 - Leave `canvasWidth` at Slidev's 980; per venue set only `aspectRatio`
   (`9/5` LED wall, `16/9` projector). A video slide has no h1: the player is
