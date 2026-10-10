@@ -52,7 +52,15 @@ licence credit is tiny print on the last slide.
 
 ## Status
 
-- 2026-10-10 (latest): **deployed b675427** under the owner's standing deploy
+- 2026-10-10 (latest): **deployed 4de8e57** under the owner's standing deploy
+  rule: the names follow-up and fewer words (Decisions, 2026-10-10). On screen:
+  slide 9's „140 taškų“ and „27 292 taškai“, Vilnius and CERN on slides 10 and
+  11, and slide 13's credit. Lint 0 warnings (main 7f6b0fe's TEXT). `talk ready`
+  passed with nothing skipped. Pages run 38085005443 green, live walk passed for
+  13 slides, URL 200, and the live text scan matches. Next: the shared opening
+  with v0.8.0, once OpenData's module is on main.
+
+- 2026-10-10: **deployed b675427** under the owner's standing deploy
   rule: pictures and numbers only (Decisions, 2026-10-10). On screen: slide 9's
   „140“ and „27 292“, and slide 13's tiny-print credit for the slide 6 photo
   (Rosa Menkman, CC BY 2.0). Main 8e1b223 is merged. `talk ready` passed with
