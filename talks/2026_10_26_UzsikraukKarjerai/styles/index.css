@@ -202,10 +202,3 @@ html[data-stage] .photo-caption {
 
 /* --- PDF export: the kit (v0.6.6) holds every animation at its end state on print pages,
    so a line that rises in late (the map's city names at 8,5 s) prints. */
-
-/* --- PDF export, v0.8.0: a print page's scrim takes `dim` from the deck's current slide,
-   which stays at slide 1 on the print route, not from the page's own. Since the opening,
-   slide 1 is the black standby (dim 1), and every printed still went under a near-opaque
-   scrim. Until the stage reads the page's dim (with Tools), print the scrim as every page
-   printed it before the opening: slide 1's old 0.05. */
-html[data-stage] .print-slide-container .scrim { opacity: 0.05 !important; }

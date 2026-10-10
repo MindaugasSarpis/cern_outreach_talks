@@ -455,3 +455,7 @@ The deck is now at
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/; the
 old address is gone with the next Pages run. The URLs above were rewritten to
 the new one. The videos release tag keeps `videos-2026-10-00-innoday`.
+
+Deployed 8a67c84 (merged main 6209ea2, the landing labels keyed by slug), Pages
+run 38086927761 (green): the new address 200, the old one 404, live walk 26/26,
+the site index links `2026_10_23_Innoday/`.

@@ -54,7 +54,17 @@ since the opening replaced the cavern photograph, so no credit is on screen.
 
 ## Status
 
-- 2026-10-10 (latest): **deployed 4de8e57** under the owner's standing deploy
+- 2026-10-11 (latest): **deployed f23d671** under the owner's standing deploy
+  rule: the shared LHC opening (Decisions, 2026-10-11) on slidev-videos v0.8.0,
+  15 slides. Main fe69406 is merged. `talk ready` passed with nothing skipped.
+  Pages run 38089305763 green, live walk passed for 15 slides, URL 200. Both
+  clips are on the release `videos-2026-10-26-uzsikraukkarjerai`. First version
+  for the owner's review. Open for the owner: whether to move the LHC and LHCb
+  lines from the event display (slide 9) over the opening, their moments for
+  slide 13 (the working day), the licences of the CERN clips and event display
+  for Delfi, the 2027 masterclass date and the BL4S call.
+
+- 2026-10-10: **deployed 4de8e57** under the owner's standing deploy
   rule: the names follow-up and fewer words (Decisions, 2026-10-10). On screen:
   slide 9's „140 taškų“ and „27 292 taškai“, Vilnius and CERN on slides 10 and
   11, and slide 13's credit. Lint 0 warnings (main 7f6b0fe's TEXT). `talk ready`
@@ -240,8 +250,8 @@ since the opening replaced the cavern photograph, so no credit is on screen.
   ambient and push. First version for the owner's review (AFK protocol).
   Print: a printed page's scrim takes `dim` from the deck's current slide, which
   stays at 1 on the print route, so the standby's `dim: 1` darkened every printed
-  still (v0.8.0, sent to Tools). styles/index.css pins the print scrim at 0.05,
-  as every page printed before the opening. The rasterised PDF: 15 pages, bright.
+  still (v0.8.0, sent to Tools). v0.8.1 reads each print page's own frontmatter,
+  so the talk's print-scrim workaround is gone again.
 - 2026-10-10 — Fewer words (the owner, before sleeping: "fewer words so I can
   adapt to the audience; these slides are not lecture slides"; AFK protocol,
   the recommended option). Slide 10 names only Vilnius and CERN, the route's
