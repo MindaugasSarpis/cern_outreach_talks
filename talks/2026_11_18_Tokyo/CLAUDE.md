@@ -36,9 +36,12 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 - Branch `talk/tokyo`, worktree `.claude/worktrees/tokyo` (`pnpm talk open tokyo`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/
-- 2026-10-10: deck draft done on the defaults: 11 slides, 14.25 min, lint
-  0/0, `talk check` ok. Next: shots and a sheet review (`pnpm talk review
-  tokyo`), then the owner's answers to the Brief questions.
+- 2026-10-10: deck v1 complete: 12 slides, 14.8 of 15 min; `talk ready`
+  passed on a1d69fd with nothing skipped (lint 0 errors, 4 TEXT warnings on
+  the allowed number words until the lint fix lands). Three sheet reviews
+  and a final frame check by subagents. Waiting for the Scheduler's main to
+  deploy a first version; the owner's 10 Brief questions are on the
+  Scheduler's morning list.
 - Not deployed yet. `pnpm talk deploy` records each deploy in
   `.git/talk-status/tokyo.json`; `pnpm talk status` shows it.
 
