@@ -111,6 +111,11 @@ the owner's word.
   No credits on screen (owner: "it's cern license, I'm CERN user"); none
   were left. Still 10 remade (its labels are gone). Undo: this commit's
   parent.
+  - Refined the same day (owner: "numbers should have units or name what
+    they are"; a thing shown may carry a short name): the 20 has
+    „užklausų“ again, „76 / 86 hadronų“, and slide 10's three stream labels
+    (they only name the analysis, the course and the masterclass) and its
+    still are back.
 - 2026-10-09. v0.7.0: `stage:check` warns (`unsaid-clock`) about a builder
   that moves on its own clock without saying so. The streams, the portraits
   and the collision now return `api.busy` (a stream filling its arc, 1/speed

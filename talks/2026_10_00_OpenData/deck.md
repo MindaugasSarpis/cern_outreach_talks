@@ -291,7 +291,7 @@ space: { at: [16, 6, -2], dist: 32, yaw: 0, pitch: 1.8, dim: 0.15 }
 
 <div class="readout late">
 
-<div class="big"><Count name="asks" :from="0" :to="20" :delay="2400" /></div>
+<div class="big"><Count name="asks" :from="0" :to="20" :delay="2400" /><span class="unit">užklausų</span></div>
 
 </div>
 
@@ -349,7 +349,7 @@ space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, dim: 1 }
 <div class="finds">
 <div class="finds-text">
 
-<div class="big">76<span class="unit">/ 86</span></div>
+<div class="big">76<span class="unit">/ 86 hadronų</span></div>
 
 </div>
 <div class="finds-plot"><img src="/figures/pentaquarks_2019.png" alt="LHCb 2019 m.: trys siauros pentakvarkų smailės, Pc(4312), Pc(4440), Pc(4457), su pritaikyta kreive" /></div>
