@@ -423,3 +423,13 @@ The CMB texture now goes to the GPU when it loads. The short live walks (3,
 entering slide 3 (the takeover's sampling) and 10–20 s around slide 8 (the
 CERN clip's dust arrival) under SwiftShader; reruns with `--wait 2500` walk
 30/30. Probe: scratchpad stall-probe.mjs.
+
+## Deployed (2026-10-09, v0.7.0)
+
+9dc21bd (c618855 + main 90d5458), Pages run 37988179265 (green), URL 200.
+v0.7.0 pinned for the Scheduler's batch round; stage:check passes (no
+unsaid-clock). Stills reshot with `--stills` (each slide's last click; the
+deck has no clicks, so click 0): 28 of 30 unchanged, 05 and 06 now the real
+Planck disk (the v0.6.4 stills predated it). Lint: the same 25 warnings
+(TIME-NODUR, NO-SRC, FONT-SMALL). Main's retrying live walk went 30/30 on
+the first pass.
