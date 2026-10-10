@@ -18,7 +18,7 @@ stage:
   palette: classic
   plugins: [hadron]
   lang: en
-title: "Penta-Charm: Lithuania and Japan"
+title: "Lithuania and Japan: pentaquarks"
 lang: en                  # slides and notes; `pnpm talk lint` reads it
 htmlAttrs:
   lang: en
@@ -217,32 +217,23 @@ together. (~1.5 min)
 space: { at: project, dim: 0.15 }
 ---
 
-<div class="num tl">2026–2028<span>project</span></div>
-<div class="num bl">24–27 Nov<span>Nagoya</span></div>
-
 <!-- facts: lhcb-vilnius-joined -->
 
 <!--
 This is what our project does. On the left, the people of the LHCb group at
-Vilnius University, who analyse LHCb data. On the right, theorists in Japan, at
-Nagoya University and partner institutes, who specialise in the theory of
-these particles. In the middle, the pentaquark that
-both sides study.
+Vilnius University, who analyse LHCb data. On the right, theorists in Japan,
+at Nagoya University, who specialise in the theory of these particles. In
+the middle, the pentaquark that both sides study.
 
-From 2026 to 2028, supported by the Research Council of Lithuania and the
-Japan Society for the Promotion of Science, we work as one team: the theory
-predicts what each picture of the pentaquark should leave in the data, and
-we test those predictions with LHCb measurements. PhD and master's
-students take part, and learn to work across experiment and theory.
+We work as one team: the theory predicts what each picture of the
+pentaquark should leave in the data, and we test those predictions with
+LHCb measurements. Young researchers on both sides learn to work across
+experiment and theory.
 
-The first big meeting is next week: from 24 to 27 November, Nagoya
-University hosts a workshop on exotic particles, organised as part of this
-programme, with researchers from Japan, Lithuania and other countries. A
-meeting in Vilnius follows.
+(The project's dates, its funders and next week's meeting in Nagoya go on
+this slide once the owner confirms they may be shown.)
 
-Sources: Vilnius University (LHCb Vilnius, 2024); the project's dates and
-the workshop's (24–27 November 2026, KMI, Nagoya University) are our own,
-from the organisers. (~2 min)
+Sources: Vilnius University (LHCb Vilnius, 2024). (~2 min)
 -->
 
 ---

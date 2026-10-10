@@ -11,10 +11,10 @@ makes them, Figures as they are checked. The repo is public: private context
 Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs/tokyo.md`.
 
 - Event: introduction of the Lithuanian–Japanese bilateral research project
-  "Penta-Charm" (Vilnius University LHCb group × Nagoya University theory,
-  LMT + JSPS bilateral programme, 2026-04 to 2028-03) at the Embassy of the
-  Republic of Lithuania in Japan, Tokyo. A week later (24–27 Nov) the project
-  holds its workshop at Nagoya University.
+  (Vilnius University LHCb group and Nagoya University theory) at the
+  Embassy of the Republic of Lithuania in Japan, Tokyo. Project details
+  (name, funders, dates, meetings) stay in the private brief until the owner
+  says they may be shown: the site and its speaker notes are public.
 - Date and slot: 2026-11-18; 15 min assumed, time of day TBC
 - Venue and screen: embassy room; 16:9 projector or TV assumed (TBC)
 - Audience: ambassadors and dignitaries, no physics background; Japanese and
@@ -56,7 +56,7 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 | 7 | paper | Gell-Mann, Zweig, passages | 1964 | five quarks allowed on paper | 1.5 |
 | 8 | lhcb | 2019 spectrum, pentaquark | 2015, 2019 | the discovery | 1.75 |
 | 9 | interiors | molecule and compact ball | | the open question | 1.5 |
-| 10 | project | two teams, one pentaquark | 2026–2028, 24–27.11 | the project, the workshop | 2 |
+| 10 | project | two teams, one pentaquark | (dates once confirmed) | the project | 2 |
 | 11 | hero | the pentaquark again | | close | 0.5 |
 
 Total 14.8 min of 15 (numbers carry one word each; see Decisions).
@@ -73,8 +73,6 @@ Every number on a slide, with its source. Search the facts bank first
 | 1 % | quark masses ≈1 % of proton mass | BNL / PRL 121 212001 | | proton-mass-quarks-1-percent | OK |
 | 1964 | Gell-Mann, Zweig papers | Phys. Lett. 8 214; CERN-TH-401 | | quark-model-1964-papers | OK |
 | 2015, 2019 | LHCb pentaquarks | home.cern; lhcb-outreach | | lhcb-pentaquark-2015/-2019 | OK |
-| 2026–2028 | project period | owner (no public source) | | none | owner |
-| 24–27.11 | Nagoya workshop | organisers; indico page needs login | | none | owner |
 
 Open: provenance and licence of `GellMannPhoto.png`, `ZweigPhoto.png` and
 the two passage scans (copied from Startertalk, not in photos.toml). If a
@@ -116,13 +114,13 @@ The owner's decisions, dated, newest last.
   Alternative: a globe builder with Vilnius, CERN and Nagoya, prototyped
   first.
 - 2026-10-10: on-screen numbers are 27 km, 1 %, 1964, 2015, 2019,
-  2026–2028, 24–27.11 (`.num` in `styles/index.css`, #e8f6ff). Everything
+  (`.num` in `styles/index.css`, #e8f6ff). Everything
   else is in the notes.
 
 - 2026-10-10 (owner rule, main 8c7fd47, then "fewer words so I can adapt to
   the audience; these slides are not lecture slides", via the Scheduler):
   one word under each number (27 km LHC, 1 % mass, 1964 quarks, 2015
-  discovery, 2019 precision, 2026–2028 project, 24–27 Nov Nagoya); world
+  discovery, 2019 precision); world
   names only where the picture needs them: Gell-Mann, Zweig, Vilnius
   University, Nagoya University. Everything else is narrated. The opener is
   the pentaquark picture alone (no title or section slides).
@@ -132,6 +130,15 @@ The owner's decisions, dated, newest last.
   Undo: delete the clip slide and `public/video-frames/lhcb*`.
 - 2026-10-10: three sheet reviews by subagents (busy, meaning, legibility,
   framing); fixes in a22923a, c7f7d1c, 8f987b2.
+
+- 2026-10-10 (Scheduler, owner AFK): nothing sourced only from the owner's
+  own mail or Drive goes into the deck, its notes or this file, because the
+  Pages site and the notes are public. The project slide shows the two teams
+  and the pentaquark with no dates; the project's name, funders, dates and
+  the Nagoya meeting wait for the owner's yes (question 5). The page title
+  no longer carries the project acronym. Earlier commits on `talk/tokyo`
+  (66cec05 … bae5c35) still hold those details in history; whether to
+  rewrite the branch is the owner's call.
 
 ## Verify
 
