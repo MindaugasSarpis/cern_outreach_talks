@@ -1,0 +1,28 @@
+{
+  "name": "talk-2026-11-18-tokyo",
+  "private": true,
+  "description": "Lithuania and Japan: the bilateral project (2026_11_18)",
+  "scripts": {
+    "dev": "slidev deck.md",
+    "build": "slidev build deck.md",
+    "build:portable": "VITE_VIDEOS_LOCAL_FIRST=1 slidev build deck.md --base ./ --out dist-portable",
+    "export": "slidev export deck.md",
+    "videos:sync": "slidev-videos sync",
+    "videos:encode": "slidev-videos encode",
+    "videos:publish": "slidev-videos publish",
+    "videos:pull": "slidev-videos pull",
+    "videos:check": "slidev-videos check",
+    "videos:clean": "slidev-videos clean",
+    "videos:preflight": "slidev-videos preflight",
+    "venue": "slidev-videos venue",
+    "videos:frames": "slidev-videos frames",
+    "stage:check": "slidev-stage-check ."
+  },
+  "dependencies": {
+    "@slidev/cli": "^52.14.2"
+  },
+  "devDependencies": {
+    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.7.0",
+    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#v0.7.0&path:/packages/stage"
+  }
+}

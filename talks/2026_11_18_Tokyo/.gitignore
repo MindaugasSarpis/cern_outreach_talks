@@ -1,0 +1,5 @@
+# Never committed: headless shots (`pnpm talk shots`), throwaway scripts,
+# workflow state.
+shots/
+.scratch/
+.wf/
