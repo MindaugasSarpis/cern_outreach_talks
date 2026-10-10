@@ -149,6 +149,8 @@ html[data-stage] .finds .big {
   font-size: 168px; font-weight: 700; letter-spacing: -0.05em; line-height: 0.88; margin: 0 0 8px;
   color: #fff;   /* a number: plain white, like the readouts' */
 }
+html[data-stage] .finds .big { white-space: nowrap; }
+html[data-stage] .finds .big .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--od-accent); }   /* the 86 of „76 / 86“, as the readouts' units */
 html[data-stage] .finds .line { font-size: 26px; font-weight: 500; line-height: 1.25; margin: 0 0 26px; color: var(--stage-fg); }
 html[data-stage] .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 html[data-stage] .chips li {
