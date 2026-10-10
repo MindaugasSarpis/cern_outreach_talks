@@ -23,13 +23,23 @@ https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_21_OpenData/
 (the old 2026_10_00 address is gone). The videos release keeps its storage name,
 videos-2026-10-00-opendata.
 
-## Status (2026-10-11): deployed on v0.7.0, numbers with their names; the shared LHC opening in progress
+## Status (2026-10-11): deployed on v0.8.0 with the shared LHC opening, at 2026_10_21_OpenData
+
+- Redeployed 2026-10-11 under the standing rule: commit dc6e463 on main,
+  Pages run 38087905982 (success); `talk deploy`'s live check passed (15
+  slides, nothing failed). `talk ready` passed on dc6e463 with nothing
+  skipped. In it: the rename to talks/2026_10_21_OpenData (the new URL
+  answers 200, the old 2026_10_00 one 404), the shared LHC opening on
+  v0.8.0 with its captions (see the 2026-10-11 decision), the tunnel cut on
+  the talk's release. First live version for the owner's review.
+- Next: the owner's feedback on the opening; then od-story-everyday
+  (prototype slides 6 and 9 first), with placeholders for the owner's
+  numbers and photos.
 
 - Redeployed 2026-10-11 under the standing rule ("Deploy all"): commit
   34bb306 on main, Pages run 38085959149 (success); `talk deploy`'s live
   check passed (13 slides, nothing failed). `talk ready` passed on 34bb306
   with nothing skipped. In it: the units follow-up (44cf1e4, e0a5cc9).
-- The opening: see the 2026-10-11 decision; deployed with the rename.
 
 - Redeployed 2026-10-10 under the standing rule: commit 8e1b223 on main,
   Pages run 38081755288 (success); `talk deploy`'s live check passed (13
