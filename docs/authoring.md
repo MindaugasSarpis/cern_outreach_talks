@@ -98,7 +98,7 @@ shot script pattern in the 2026-09-08 migration plan.
 Moved from "The stage (Innoday, and talks after it)". The bullets about
 Innoday's own stations (with how a form is born scattered and gathers when
 the camera arrives, `c`, and `stage.sound`) and its own pieces went to
-`talks/2026_10_00_Innoday/CLAUDE.md`; the ffmpeg note went to the root's
+`talks/2026_10_23_Innoday/CLAUDE.md`; the ffmpeg note went to the root's
 "This workstation".
 
 Startertalk's world is packaged as **`slidev-addon-stage`**
