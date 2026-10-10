@@ -216,6 +216,9 @@ licence credit is tiny print on the last slide.
   those stops or skip them. Slide 11 keeps Vilnius and CERN, since the slide is
   about those two places. Slide 9 keeps „140 taškų“ and „27 292 taškai“: one
   word each, the least a number needs to say what it counts.
+  For the lint (main 7f6b0fe): the city names carry `.caption` and the last
+  slide's credit `.credits`. The stage's `.caption` style leaves them at 45,7 px
+  in the same places, with a box 6 px shorter. Lint: 0 warnings.
 - 2026-10-10 — Names back, as the owner refined the rule: "numbers should have
   units or name what they are", and a thing shown may carry a short caption that
   names it, a name and never a sentence (root CLAUDE.md, main 8c7fd47). Slide 9's

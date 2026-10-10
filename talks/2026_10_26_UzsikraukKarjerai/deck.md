@@ -204,8 +204,8 @@ space: { at: whole, sway: 0, dim: 0.05 }
 
 <Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
 
-<div class="city late" style="left: 716px; top: 168px">Vilnius</div>
-<div class="city late" style="left: 414px; top: 374px">CERN</div>
+<div class="city late caption" style="left: 716px; top: 168px">Vilnius</div>
+<div class="city late caption" style="left: 414px; top: 374px">CERN</div>
 
 <!--
 III. KELIAS
@@ -223,8 +223,8 @@ space: { at: [1205.6, 0.25, -0.7], dist: 24, yaw: 0, pitch: 60, sway: 0.5, dim: 
 
 <Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
 
-<div class="city" style="left: 726px; top: 128px">Vilnius</div>
-<div class="city" style="left: 232px; top: 428px">CERN</div>
+<div class="city caption" style="left: 726px; top: 128px">Vilnius</div>
+<div class="city caption" style="left: 232px; top: 428px">CERN</div>
 
 <!-- facts: lhcb-run1-release-sarpis, sarpis-phd-bonn-2023 -->
 
@@ -263,7 +263,7 @@ space: { at: quarks, dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.35 }
 
 <Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
 
-<div class="src">LHCb salės nuotrauka: Rosa Menkman, CC BY 2.0</div>
+<div class="src credits">LHCb salės nuotrauka: Rosa Menkman, CC BY 2.0</div>
 
 <!--
 Message: one task for this week.
