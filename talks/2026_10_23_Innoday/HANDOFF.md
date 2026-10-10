@@ -173,7 +173,7 @@ showed two orbs, not five, at the 14 s shot.
 
 ## Deployed (2026-10-08)
 
-https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
 commit 6bf60b2, Pages run 37815139786 (build and deploy green), URL 200, and
 the live assets carry this round's text. The owner's go was for
 `talk deploy innoday --ready-skip lint --ready-skip safe`: lint is not on
@@ -206,7 +206,7 @@ Now: speech ~17,5 min + clips (opener 4:26, bookend 0:30; the CERN aerial
 
 ## Deployed (2026-10-08, second round)
 
-https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
 commit 1d836da, Pages run 37836227756 (build and deploy green), URL 200; the
 live assets carry place mode, the depth maps and the bookend strip.
 On the owner's go, with `--ready-skip lint` (run by hand: 0 errors) and
@@ -433,3 +433,25 @@ deck has no clicks, so click 0): 28 of 30 unchanged, 05 and 06 now the real
 Planck disk (the v0.6.4 stills predated it). Lint: the same 25 warnings
 (TIME-NODUR, NO-SRC, FONT-SMALL). Main's retrying live walk went 30/30 on
 the first pass.
+
+## Deployed (2026-10-10, pictures and numbers)
+
+f02d412, Pages run 38084549720 (green), URL 200, live walk 26/26. The owner's
+rule (no titles, statements, kickers, captions or credits on screen; numbers
+stay), then its refinements the same evening: no cover (the deck opens on the
+zoom-out; `setup/OpenerStart.vue` holds it on its first frame and starts it with
+sound on the first press), no section slides, a one- or two-word name on each
+invention, a unit or one word on each number, the licence credits in tiny print
+on the last slide. Opener tested headless on the Pages-base build (key, click,
+autoplay allowed, the real release clip; scratchpad opener/). Slidev gives a
+first slide the cover layout, whose box held the clip at 0 px: `layout:
+default`. Stills reshot for 26 slides.
+
+## Renamed (2026-10-11)
+
+`talks/2026_10_00_Innoday` → `talks/2026_10_23_Innoday` (owner: the talk is on
+23 October; "Change web addresses as well, I don't share this with anyone").
+The deck is now at
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/; the
+old address is gone with the next Pages run. The URLs above were rewritten to
+the new one. The videos release tag keeps `videos-2026-10-00-innoday`.
