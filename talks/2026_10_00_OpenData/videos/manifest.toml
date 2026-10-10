@@ -39,8 +39,8 @@ loudnorm = false
 notes    = """\
 The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, \
 the library's cern_footage_2022_013_001.mp4 from its 1080p raw, cut to 18 s of the \
-travelling shot with the magnets on the right and the beam line vanishing near \
-(0.44, 0.40) of the frame, where the camera goes on into the beam pipe. Named as \
+travelling shot with the magnets on the right; on its last frame the magnet \
+string vanishes at (0.45, 0.53), where the camera goes on into the beam pipe. Named as \
 its raw on gdrive (released/cern_footage_2022_013_001_1080p_lhc.mp4) so \
 videos:sync finds it. Its sound is the tunnel's own ventilation hum, kept at the \
 source's level (loudnorm off), not lifted to -16 LUFS."""

@@ -99,8 +99,11 @@ void main() {
     float glow = exp(-d / tail);
     float stays = (k > 4.5 ? 0.5 : 0.32) * (1.0 - 0.25 * smoothstep(3.0, 9.0, te));
     p = position;
-    a = (stays + (1.0 - stays) * glow) * fade * aW;
-    size = (k > 4.5 ? 0.85 : 0.6) * (1.0 + 1.6 * exp(-d / 0.12));
+    // every path starts at a vertex: there two hundred trails share a point, and their
+    // first grains are dimmed so the first sparks leaving it stay apart
+    float near = mix(0.12, 1.0, smoothstep(0.0, 0.45, aS));
+    a = (stays + (1.0 - stays) * glow) * fade * aW * near;
+    size = (k > 4.5 ? 0.85 : 0.6) * (1.0 + 1.2 * exp(-d / 0.12) * near);
     col = mix(k > 4.5 ? uMuon : uTrack, vec3(1.0), 0.6 * exp(-d / 0.3) + 0.15 * hash(aSeed * 11.0));
   } else {
     // a splash where a particle stopped: the energy it carried, spread out

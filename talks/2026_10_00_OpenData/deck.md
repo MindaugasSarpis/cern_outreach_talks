@@ -45,6 +45,7 @@ layout: cover
 space:
   at: opening
   dim: 1
+  ambient: 0
   hum: false
 ---
 
@@ -65,11 +66,11 @@ opening; that key is also the gesture browsers ask for before any sound.
 -->
 
 ---
-space: { at: opening, dim: 1, hum: false }
+space: { at: opening, dim: 1, ambient: 0, hum: false }
 ---
 
 <!-- The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, an 18 s cut (videos/manifest.toml). It moves on by itself at its end, into the beam pipe. -->
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" advance-on-end :volume="0.5" />
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" advance-on-end :volume="0.5" exit="push" exit-at="0.45,0.53" />
 
 <!--
 The LHC itself: the real tunnel, 100 m under the border, the magnets on the right.
@@ -85,6 +86,7 @@ Source: CERN-FOOTAGE-2022-013-001 (CERN).
 space:
   at: opening
   dim: 0
+  ambient: 0
   hum: false
   rate: [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.4, 2.2], [8.5, 1]]
   cameraRate: 1
