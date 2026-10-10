@@ -353,3 +353,11 @@ html[data-stage] .hero .pf .kicker.year-k { font-variant-numeric: tabular-nums; 
 html[data-stage] .hero::after { background: none !important; }
 /* the credits a licence asks for, in tiny print on the last slide (owner, 2026-10-10) */
 html[data-stage] .src.credits { font-size: 10px; opacity: 0.55; max-width: 92%; }
+/* an invention's name, the one caption a Part II photo carries (owner, 2026-10-10:
+   "inventions in innoday can have a short caption"): bottom left, on its own ground */
+html[data-stage] .hero .invention {
+  position: absolute; z-index: 2; left: 56px; bottom: 52px; margin: 0; opacity: 1;
+  font-size: 30px; font-weight: 600; line-height: 1.15; letter-spacing: 0; color: #fff;
+  background: rgba(4, 6, 16, 0.62); padding: 6px 14px; border-radius: 4px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}

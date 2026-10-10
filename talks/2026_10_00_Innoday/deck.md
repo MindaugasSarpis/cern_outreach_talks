@@ -40,7 +40,8 @@ info: |
   superconducting lines. Part III the private sector: how technology leaves
   CERN, what it does for suppliers, the next machine, Lithuania, the zoom-out
   reversed back to Saulėtekis, what a firm can do. Slides carry no words (owner,
-  2026-10-10: he narrates), only a few numbers; the notes carry what is said.
+  2026-10-10: he narrates) but the inventions' names and the numbers with what
+  they count; no section slides; the notes carry what is said.
   No cover: the deck opens on the zoom-out, held on its first frame until the
   first press (<OpenerStart>). Toolkit: slidev-videos v0.5.1. Keys on a video
   slide: p play/pause, + / - volume; `c` builds what stands where the camera is.
@@ -125,18 +126,6 @@ Pastaba: „žvaigždės, dujos, planetos ir mes“ — tyčia ne „galaktikos�
 -->
 
 ---
-layout: section
-space: { at: [8.8, 0, -3], dist: 20, yaw: -30, pitch: 55, dim: 0.15 }   # the ring from above in the right half, clear of the title
----
-
-<Strands :on="false" />
-
-<!--
-Kalbėtojui. Sakyti: „CERN ir Didysis hadronų greitintuvas.“ Pasaulyje — greitintuvo žiedas: du protonų paketai skrieja priešingomis kryptimis ir susitinka du kartus per ratą; iš kiekvieno susitikimo taško sklinda dalelių pėdsakai.
-(~0,2 min)
--->
-
----
 space: { at: [20, 5, -12], dist: 18, yaw: -30, pitch: 14 }
 ---
 
@@ -145,7 +134,7 @@ space: { at: [20, 5, -12], dist: 18, yaw: -30, pitch: 14 }
 <VideoPlayer src="cern_overview_short.mp4" />
 
 <!--
-Kalbėtojui. CERN iš paukščio skrydžio: Ženevos priemiestis, Prancūzijos ir Šveicarijos pasienis. Klipas trumpas (0:11) — kalbėti per jį ir po jo.
+Kalbėtojui. I dalis (Greitintuvas) prasideda čia. CERN iš paukščio skrydžio: Ženevos priemiestis, Prancūzijos ir Šveicarijos pasienis. Klipas trumpas (0:11) — kalbėti per jį ir po jo.
 Sakyti: „Tai CERN. Jį 1954 m. įkūrė 12 Europos valstybių, kad po karo galėtų kartu tirti, iš ko sudarytas pasaulis. Šiandien jis turi 25 valstybes nares ir 11 asocijuotųjų narių, tarp jų Lietuvą. Su CERN dirba daugiau nei 12 000 mokslininkų, daugiau nei 110 tautybių atstovų. Po šiais laukais, apie 100 m gylyje, yra 27 km ilgio greitintuvo žiedas.“
 Faktai: konvencija pasirašyta 1953 m., CERN oficialiai įsteigtas 1954 m. rugsėjo 29 d. Steigėjos — Belgija, Danija, Prancūzija, VFR, Graikija, Italija, Nyderlandai, Norvegija, Švedija, Šveicarija, JK, Jugoslavija. Naujausios narės — Estija (2024) ir Slovėnija (2025). Asocijuotosios narės (11): Brazilija, Čilė, Kroatija, Kipras (parengiamasis etapas), Indija, Airija, Latvija, Lietuva, Pakistanas, Turkija, Ukraina. Apie 2 500 darbuotojų, 12 639 registruoti naudotojai (2025). 2026 m. biudžeto įnašai — apie 1,28 mlrd. CHF.
 Šaltiniai: home.cern/about/who-we-are/our-history; home.cern/about/who-we-are/member-states; usersoffice.web.cern.ch (2025 m. statistika); fap-dep.web.cern.ch (2026 m. įnašai).
@@ -202,7 +191,7 @@ space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 22, dim: 0 }   # the same pos
 <div class="stat"><div class="n">26,7<small>km</small></div></div>
 <div class="stat"><div class="n">−271,3<small>°C</small></div></div>
 <div class="stat"><div class="n">2,85<small>m/s</small></div></div>
-<div class="stat"><div class="n">1,5<small>mlrd.</small></div></div>
+<div class="stat"><div class="n">1,5<small>mlrd. susidūrimų/s</small></div></div>
 </div>
 
 <!-- facts: cern-lhc-size-cost, cern-lhc-cold, cern-lhc-speed, cern-lhc-collisions -->
@@ -219,38 +208,28 @@ Vaizdas: LHC tunelis; nuotr. Samuel Joseph Hertzog / CERN, CC BY 4.0.
 -->
 
 ---
-layout: section
-space: { at: [14, 1, 0], dist: 36, yaw: -20, pitch: 52, dim: 0.15 }   # the ring and every strand leaving it
+space: { at: stumpe, dim: 0, flight: 1.6 }   # place mode: the photo stands at its strand's product
 places: { inventions: true }   # Part II's photos stand in the world from here (hidden before)
 ---
 
 <Strands />
 
-<!--
-Kalbėtojui. Pasaulyje — greitintuvo žiedas ir iš jo išeinančios šešios tekančių grūdelių gijos: kiekviena veda nuo greitintuvo dalies prie to, kas iš jos atsirado. Kiekviena šios dalies skaidrė prasideda problema ir baigiasi tuo, kas iš jos išėjo į pasaulį. Tvarka: kas yra jūsų kišenėje, kas padeda gydytojams ir astronautams, kas vyksta pramonėje šiandien.
-Sakyti: „Šešios problemos: kaip valdyti greitintuvą, kaip tvarkyti informaciją, kaip pamatyti dalelę, kaip nukreipti pluoštą, kaip suderinti laikrodžius ir kaip atšaldyti. Iš kiekvienos atsirado kas nors, kas šiandien naudojama už CERN ribų. Pradėsiu nuo jutiklinio ekrano, kurį turite savo telefone.“
-(Jutiklinio ekrano nevadinti CERN išradimu: CERN buvo vienas pirmųjų, ne pirmasis — žr. jo skaidrę.)
-(~0,4 min)
--->
-
----
-space: { at: stumpe, dim: 0, flight: 1.6 }   # place mode: the photo stands at its strand's product
----
-
-<Strands />
-
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" />
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%">
+<p class="invention">Jutiklinis ekranas</p>
+</StagePhoto>
 
 <!-- facts: gave-touch-stumpe-1972, gave-touch-sps-1976, gave-touch-design-80um, gave-touch-johnson-1965 -->
 
 <!--
-Kalbėtojui.
+Kalbėtojui. II dalis (Sprendimai) prasideda čia: kamera skrenda nuo tunelio prie pirmosios gijos galo. Šešios tekančių grūdelių gijos veda nuo greitintuvo dalių prie to, kas iš jų atsirado; kiekviena šios dalies skaidrė prasideda problema ir baigiasi tuo, kas iš jos išėjo į pasaulį. Tvarka: kas yra jūsų kišenėje, kas padeda gydytojams ir astronautams, kas vyksta pramonėje šiandien.
+Sakyti (pirmiausia): „Šešios problemos: kaip valdyti greitintuvą, kaip tvarkyti informaciją, kaip pamatyti dalelę, kaip nukreipti pluoštą, kaip suderinti laikrodžius ir kaip atšaldyti. Iš kiekvienos atsirado kas nors, kas šiandien naudojama už CERN ribų. Pradėsiu nuo jutiklinio ekrano, kurį turite savo telefone.“
+(Jutiklinio ekrano nevadinti CERN išradimu: CERN buvo vienas pirmųjų, ne pirmasis.)
 Sakyti: „Naujajam SPS greitintuvui valdyti reikėjo tiek mygtukų ir rankenėlių, kad jie netilpo į pultus. 1972 m. CERN inžinierius Bentas Stumpe pasiūlė ekraną, kurio mygtukai yra programuojami ir kurį tereikia paliesti pirštu. Kartu su Franku Becku jis sukūrė skaidrų talpinį jutiklinį ekraną. Vario linijos ant stiklo buvo 80 mikrometrų pločio, todėl jų nesimatė. 1973 m. pagamintas pirmasis veikiantis prototipas, o kai 1976 m. SPS pradėjo veikti, jo valdymo pultuose ekranai jau buvo. Nuotraukoje — Stumpe su savo ekrano plokšte ir išmaniuoju telefonu.“
 Sąžiningai: tai vienas pirmųjų talpinių jutiklinių ekranų pasaulyje, ne pirmasis — pirmąjį aprašė E. A. Johnsonas (JK) 1965 m. CERN Courier CERN ekraną vadina „apparently the first application of the capacitative touch screen in the world“ ir šiuolaikinių telefonų ekranų pirmtaku — tai CERN požiūris, tiesioginė technologijų linija iki išmaniųjų telefonų neįrodyta.
 Istorija: pasiūlymas ranka parašytas 1972 m. kovo 11 d. Stumpe atsisakė pasirašyti konfidencialumo sutartį dėl vėlesnio X–Y ekrano, nes CERN išradimus skelbia viešai.
 Vaizdas: Bentas Stumpe su jutiklinio ekrano plokšte, 2016; nuotr. Sophia Elizabeth Bennett / CERN, CC BY 4.0 (Wikimedia Commons).
 Šaltiniai: cerncourier.com/?p=9153; repository.cern/records/xrg56-9ha60; IDC (2026 01 13).
-(~0,8 min)
+(~1,2 min)
 -->
 
 ---
@@ -259,7 +238,9 @@ space: { at: [25.0, 2.5, 0.0], dist: 9, yaw: -90, pitch: 30, dim: 0, flight: 1.6
 
 <Strands />
 
-<StagePhoto src="figures/hero_proposal.jpg" arrive="camera" :dust-ms="[800, 600]" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" />
+<StagePhoto src="figures/hero_proposal.jpg" arrive="camera" :dust-ms="[800, 600]" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%">
+<p class="invention">Pasaulinis žiniatinklis</p>
+</StagePhoto>
 
 <!--
 Kalbėtojui.
@@ -276,7 +257,9 @@ space: { at: next, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 
 <Strands />
 
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" />
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%">
+<p class="invention">Žiniatinklio serveris</p>
+</StagePhoto>
 
 <!-- facts: gave-www-next-server, gave-www-public-domain-1993, gave-www-sites-2026, gave-www-users-2025 -->
 
@@ -296,7 +279,9 @@ space: { at: pet, dim: 0, flight: 1.6 }   # place mode: the photo stands at its 
 
 <Strands />
 
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%" />
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
+<p class="invention">PET tomografija</p>
+</StagePhoto>
 
 <!-- facts: ktbest-pet-1977, gave-pet-mouse-1977 -->
 
@@ -316,7 +301,9 @@ space: { at: mars, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 
 <Strands />
 
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="mars" :relief="0.25" :at="[16.6, 2.5, 13.51]" :size="3" :yaw="-150" src="figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%" />
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="mars" :relief="0.25" :at="[16.6, 2.5, 13.51]" :size="3" :yaw="-150" src="figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%">
+<p class="invention">Spalvotas rentgenas</p>
+</StagePhoto>
 
 <!-- facts: ktbest-mars-fda-2026, ktbest-medipix-licences -->
 
@@ -336,7 +323,9 @@ space: { at: artemis, dim: 0, flight: 1.6 }   # place mode: the photo stands at 
 
 <Strands />
 
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%" />
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
+<p class="invention">Timepix lustai</p>
+</StagePhoto>
 
 <!-- facts: gave-timepix-artemis, ktbest-advacam -->
 
@@ -354,7 +343,9 @@ space: { at: hadron, dim: 0, flight: 1.6 }   # place mode: the photo stands at i
 
 <Strands />
 
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%" />
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
+<p class="invention">Hadronų terapija</p>
+</StagePhoto>
 
 <!-- facts: ktbest-hadron-9000, gave-hadron-pimms -->
 
@@ -373,7 +364,9 @@ space: { at: whiterabbit, dim: 0, flight: 1.6 }   # place mode: the photo stands
 
 <Strands />
 
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim" />
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim">
+<p class="invention">White Rabbit</p>
+</StagePhoto>
 
 <!-- facts: gave-white-rabbit, ktbest-whiterabbit-boerse, ktnews-wr-quantum -->
 
@@ -393,7 +386,9 @@ space: { at: cold, dim: 0, flight: 1.6 }   # place mode: the photo stands at its
 
 <Strands />
 
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" />
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%">
+<p class="invention">Superlaidžios linijos</p>
+</StagePhoto>
 
 <!-- facts: ktnews-airbus-samba, ktnews-cipea -->
 
@@ -406,36 +401,26 @@ Vaizdas: CERN superlaidi MgB₂ linija HL-LHC greitintuvui (SM18); jos technolog
 -->
 
 ---
-layout: section
-space: { at: [120, -2.4, 0], dist: 14, yaw: -22, pitch: 22, dim: 0.4 }
+space: { at: kt, dist: 17, yaw: 4, pitch: 34, dim: 0.4 }
 places: { inventions: false }   # and are gone again in Part III
 ---
 
 <Strands :on="false" />
 
-<!--
-Kalbėtojui. Dalies pavadinimas ištisai: „Prie novatoriškų mokslo pasiekimų pritaikymo privačiame sektoriuje.“ Pasaulyje — auksinė „sėkla“ ir aplink ją besisukantis mazgų ratas: žinios, išeinančios iš CERN.
-Sakyti: „Daugumoje šių pavyzdžių fizikų sprendimą produktu pavertė įmonė: Siemens — PET/KT skenerį, MARS — spalvotą rentgeną, ADVACAM — lustų modulius. O su Airbus CERN dabar bando superlaidžią liniją lėktuvams. Tokia įmonė galėtų būti ir lietuviška.“
-(~0,3 min)
--->
-
----
-space: { at: kt, dist: 17, yaw: 4, pitch: 34, dim: 0.4 }
----
-
 <div class="payoff">
-<div class="big">700+</div>
+<div class="big">700+<span class="unit">sutarčių</span></div>
 </div>
 
 <!-- facts: ktbest-kt2025-contracts, ktbest-socio-700contracts, ktnews-cvc-terms -->
 
 <!--
-Kalbėtojui.
+Kalbėtojui. III dalis (Privačiam sektoriui; ištisai: „Prie novatoriškų mokslo pasiekimų pritaikymo privačiame sektoriuje“) prasideda čia. Pasaulyje — auksinė „sėkla“ ir aplink ją besisukantis mazgų ratas: žinios, išeinančios iš CERN.
+Sakyti (pirmiausia): „Daugumoje šių pavyzdžių fizikų sprendimą produktu pavertė įmonė: Siemens — PET/KT skenerį, MARS — spalvotą rentgeną, ADVACAM — lustų modulius. O su Airbus CERN dabar bando superlaidžią liniją lėktuvams. Tokia įmonė galėtų būti ir lietuviška.“
 Sakyti: „CERN turi žinių perdavimo grupę, kuri rūpinasi licencijomis, bendrais mokslinių tyrimų ir eksperimentinės plėtros projektais ir startuoliais. Nuo 2011 m. ji pasirašė daugiau nei 700 sutarčių, vien 2025 m. — 89; daugumos partneriai yra įmonės. CERN stebi apie šimtą su juo susijusių startuolių. Startuoliams per CERN Venture Connect programą CERN taiko paprastas sąlygas: akcijų neima, o 2 % licencinis mokestis mokamas tik tada, kai metinės pardavimo pajamos pasiekia milijoną frankų. Pasaulinė intelektinės nuosavybės organizacija šiemet šią programą aprašė savo Pasauliniame inovacijų indekse.“
 Faktai: 2025 m. — 32 bendri MTEP projektai, 28 licencijos, 15 paslaugų ir konsultavimo sutarčių, 8 startuolių sutartys; 63 partneriai — įmonės. CERN Venture Connect — nuo 2023 m. spalio; 2026 m. spalį: 9 licencijai paruoštos technologijos, 21 startuolis, >50 partnerių; 2025 m. CVC startuoliai pritraukė 5,6 mln. CHF. Licencija — 10 metų, pasaulinė, neišimtinė, viena taikymo sritis.
 Atsargiai: „27 su CERN susiję startuoliai pritraukė 3,2 mlrd. CHF“ — 2,4 mlrd. iš jų — vienas Novartis skolos pritraukimas; šio skaičiaus nevartoti. Paties CERN pajamos iš licencijų kuklios (2007–2024 m. vidutiniškai ~1,5 mln. CHF per metus): tikslas — poveikis, o ne honorarai.
 Šaltiniai: CERN Knowledge Transfer Report 2025; Technopolis ir CSIL, CERN socioekonominė studija (2026); WIPO Global Innovation Index 2026.
-(~0,8 min)
+(~1,1 min)
 -->
 
 ---
@@ -445,7 +430,7 @@ space: { at: [118.5, -1.6, 0], dist: 13, yaw: -30, pitch: 14, dim: 0.45 }
 <Strands group="fcc" :on="false" />
 
 <div class="payoff">
-<div class="big">+<Count :from="0" :to="14" :ms="1800" /><span class="unit">%</span></div>
+<div class="big">+<Count :from="0" :to="14" :ms="1800" /><span class="unit">% apyvartos</span></div>
 </div>
 
 <!-- facts: ktnews-socioeco-suppliers -->

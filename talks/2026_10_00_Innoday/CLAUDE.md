@@ -54,8 +54,8 @@ Everything is grains; no solid shapes, no labels.
   [30, 40, −110], its axis along −z behind the takeover's galaxy).
 - Talk-owned builders (`setup/`, registered in `main.ts`; `stage:check
   --types strands,funnel`): `strands.js` (grains from ring parts to products,
-  in groups: `inventions`, Part II's, on from section II and off from section
-  III; `fcc`, a second object on the collider station with its own `ring` of
+  in groups: `inventions`, Part II's, on from the touchscreen and off from
+  700+; `fcc`, a second object on the collider station with its own `ring` of
   grains at 7 × 90.7/26.7 = 23.8 and six strands ending empty, on slide 25 only;
   `<Strands :on group>`), `funnel.js` (wall rings and
   lines, the Big Bang, the CMB disk coloured from `public/figures/cmb_wmap.png`,
@@ -121,10 +121,17 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   study §5.4), not "in industry".
 - No words on the slides (owner, 10 Oct: "No titles, statements - I will be
   there. Don't need newspaper-like titles. What can stay is the numbers. I
-  will narrate myself"): no titles, kickers, captions, part words, years or
-  credits, the cover included. A number keeps its unit (13,8 mlrd. metų,
-  4 TB/s, the tunnel's four, 700+, +14 %, 91 km, 613 mln. CHF); `talk lint`'s
-  TEXT flags the units too (its unit rule takes one short word after a digit).
+  will narrate myself"): no titles, kickers, part words, years or credits,
+  the cover and the section slides included ("without title and section
+  slides"). Two exceptions, the owner's too: each invention carries its name
+  as a caption of a word or two („Jutiklinis ekranas“ …, `.invention`, bottom
+  left on its own ground), and a number says what it is with its unit or one
+  word for what it counts (owner: "I prefer fewer words so I can adapt to the
+  audience. These slides are not lecture slides") (13,8 mlrd. metų, 4 TB/s, 26,7 km … 1,5 mlrd. susidūrimų/s,
+  700+ sutarčių, +14 % apyvartos, 91 km, 613 mln. CHF). `talk lint`'s TEXT
+  still flags those (expected until Tools' fix). The section slides' switches
+  moved to the next slide: `places: { inventions: true }` on the touchscreen,
+  `false` and the strands off on 700+; their notes open those slides.
   Each removed credit and source is in its slide's notes. The credits a licence
   asks for stand in tiny print on the last slide (owner: "Credit on last slide
   tiny print"; CERN's material needs none): the Planck map, the 1989 proposal
@@ -147,11 +154,10 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   when the camera looks down the axis, and the disk dims with the viewing angle
   so overlapping grains keep their colours.
 - Match cuts: only ring → tunnel; ring → CERN aerial and loop → FCC were weak.
-- Part II's photo places are one group, `group="inventions"`: section II
-  says `places: { inventions: true }`, section III `false`, so they are hidden
+- Part II's photo places are one group, `group="inventions"`: the touchscreen
+  slide says `places: { inventions: true }`, 700+ `false`, so they are hidden
   in the prologue, Part I and Part III (v0.5.2). Part I keeps its wide poses:
-  section I sees the ring from above in the right half, clear of the title (target [8.8, 0, −3], dist 20, pitch 55), 4 TB/s and the tunnel
-  look along the ring at pitch 22. (On v0.5.1 those poses had to look down at
+  4 TB/s and the tunnel look along the ring at pitch 22. (On v0.5.1 those poses had to look down at
   pitch 40 to keep the photos above the frame.)
 - Data → White Rabbit (2012, Frankfurt exchange), the thing that left CERN;
   the grid figures are in the notes. The photo's credit („© CERN (KT
