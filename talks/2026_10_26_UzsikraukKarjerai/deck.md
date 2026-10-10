@@ -181,14 +181,14 @@ space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 
 
 <Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 2, jx: 1 }" />
 
-<div class="heap" style="left: 557px; top: 404px"><span class="n">27 292</span></div>
-<div class="heap" style="left: 161px; top: 404px"><span class="n">140</span></div>
+<div class="heap" style="left: 557px; top: 404px"><span class="n">27 292 taškai</span></div>
+<div class="heap" style="left: 161px; top: 404px"><span class="n">140 taškų</span></div>
 
 <!-- facts: theta-plus-2003-false-alarm, lhcb-pentaquark-2019, particle-physics-5-sigma-discovery -->
 
 <!--
 Message: the difference was the amount of data. A bump reported at 4,6σ in 2003 went away with more data; LHCb's peaks held with nine times more data in 2019, the new one at 7,3σ. (Not: 'it failed because 4,6 < 5'. Other 2003 bumps were reported near 5σ and went away too.)
-Picture: the camera draws back to show two plots at the same scale, one grain per entry and the same height per entry. On the left is the 140-entry plot from slides 2–3: an illustration, not LEPS's data. On the right are LHCb's 27 292 candidates (the 2019 bins) with their three marked peaks. Under them, only their counts: „140“ and „27 292“; the left plot appears as a thin strip.
+Picture: the camera draws back to show two plots at the same scale, one grain per entry and the same height per entry. On the left is the 140-entry plot from slides 2–3: an illustration, not LEPS's data. On the right are LHCb's 27 292 candidates (the 2019 bins) with their three marked peaks. Under them, their counts: „140 taškų“ and „27 292 taškai“; the left plot appears as a thin strip.
 Background, if asked: LEPS's own peak was 19 events over a background of 17 (19/√17 = 4,6σ, their paper's own estimate; arXiv:hep-ex/0301020).
 
 Štai abu grafikai šalia, ir abiejuose vienas taškelis – viena apskaičiuota masė. Kairėje – pavyzdinis grafikas, kurį matei pradžioje, šimtas keturiasdešimt taškų. Dešinėje – LHCb duomenys, jų daugiau nei dvidešimt septyni tūkstančiai. Fizikai skaičiuoja, kiek kauburys iškyla virš atsitiktinių svyravimų. Tai vadinama reikšmingumu ir matuojama sigmomis. Atradimu paprastai vadinamas rezultatas, kurio reikšmingumas – bent penkios sigmos. Tada tikimybė, kad tai tik atsitiktinis svyravimas, – maždaug viena iš trijų su puse milijono. 2003 metų kauburio reikšmingumas buvo 4,6 sigmos, bet surinkus daugiau duomenų jis išnyko. 2019 metais LHCb turėjo devynis kartus daugiau duomenų nei 2015-aisiais, ir smailės liko. Naujos smailės reikšmingumas buvo 7,3 sigmos.
@@ -203,6 +203,12 @@ space: { at: whole, sway: 0, dim: 0.05 }
 ---
 
 <Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
+
+<div class="city late" style="left: 716px; top: 168px">Vilnius</div>
+<div class="city late" style="left: 414px; top: 374px">CERN</div>
+<div class="city late" style="left: 270px; top: 146px">Glazgas</div>
+<div class="city late" style="left: 474px; top: 318px">Heidelbergas</div>
+<div class="city r late" style="left: 405px; top: 254px">Bona</div>
 
 <!--
 III. KELIAS
@@ -220,11 +226,14 @@ space: { at: [1205.6, 0.25, -0.7], dist: 24, yaw: 0, pitch: 60, sway: 0.5, dim: 
 
 <Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0 }" />
 
+<div class="city" style="left: 726px; top: 128px">Vilnius</div>
+<div class="city" style="left: 232px; top: 428px">CERN</div>
+
 <!-- facts: lhcb-run1-release-sarpis, sarpis-phd-bonn-2023 -->
 
 <!--
 Message: what the work is like: mostly at a desk in Vilnius, results reachable from anywhere, a lot of travel, and long careful jobs such as preparing LHCb's open data.
-Picture: the camera comes down from the whole map to Vilnius (upper right) and the arcs to CERN (lower left).
+Picture: the camera comes down from the whole map to Vilnius (upper right) and the arcs to CERN (lower left), both named.
 Words: lines 1–4 are the draft the owner approved on 2026-10-09 (through the Scheduler), built from the speaker's own public words. Line 2 comes from an automatic transcript and is kept as the draft wrote it.
 
 Dabar dažniausiai dirbu Vilniaus universitete. Į CERN su savo grupe važiuojame tik ypatingomis progomis. Detektorius renka duomenis, prie jo dirba inžinieriai, o rezultatus aš galiu gauti iš bet kurios pasaulio vietos. Bet keliauti tenka daug. Mūsų srityje dvidešimt–keturiasdešimt skrydžių per metus nėra retenybė. Doktorantūros metais Bonoje man teko paruošti LHCb duomenis viešam naudojimui. Šimtus tūkstančių failų reikėjo nukopijuoti ir patikrinti, iš viso beveik petabaitą. Tai užtruko beveik dvejus metus.
