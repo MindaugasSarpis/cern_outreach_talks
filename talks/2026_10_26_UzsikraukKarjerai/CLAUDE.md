@@ -50,7 +50,18 @@ statements, captions, labels or credits; the speaker narrates from the notes.
 
 ## Status
 
-- 2026-10-09 (latest): **deployed 1ed62a9** under the owner's standing deploy rule
+- 2026-10-10 (latest): **deployed b675427** under the owner's standing deploy
+  rule: pictures and numbers only (Decisions, 2026-10-10). On screen: slide 9's
+  „140“ and „27 292“, and slide 13's tiny-print credit for the slide 6 photo
+  (Rosa Menkman, CC BY 2.0). Main 8e1b223 is merged. `talk ready` passed with
+  nothing skipped (TEXT warns on the credit line). Pages run 38082352299 green,
+  live walk passed for 13 slides, URL 200; a visible-text scan of the live deck
+  finds nothing else. Next: the shared opening (LHC footage, a collision, the 3D
+  LHCb video), once OpenData's module is on main. Still open for the owner:
+  their moments for slide 11, the licences of the CERN clip and event display
+  for Delfi, the 2027 masterclass date and the BL4S call.
+
+- 2026-10-09: **deployed 1ed62a9** under the owner's standing deploy rule
   (set in this talk's session before this round): slidev-videos v0.7.0, the
   batch round. Stills are at each slide's last click, and main 9dc21bd is merged.
   `talk ready` passed with nothing skipped. Pages run 37988984512 green, live walk
