@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "clips": {
+    "cern_footage_2022_013_001_1080p_lhc.mp4": {
+      "file": "cern_footage_2022_013_001_1080p_lhc.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 5,
+      "count": 5,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 18.0,
+      "poster": "cern_footage_2022_013_001_1080p_lhc.mp4.poster.jpg",
+      "lit": 0.0
+    },
+    "lhcb.mp4": {
+      "file": "lhcb.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 10,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 39.12,
+      "poster": "lhcb.mp4.poster.jpg",
+      "lit": 0.0
+    }
+  }
+}
