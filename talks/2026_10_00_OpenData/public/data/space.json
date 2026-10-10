@@ -507,8 +507,7 @@
         5.5,
         9
        ],
-       "lift": 0.2,
-       "label": "Z → μμ analizė"
+       "lift": 0.2
       },
       {
        "pos": [
@@ -516,8 +515,7 @@
         3.3,
         10.5
        ],
-       "lift": 0.22,
-       "label": "VU kursas"
+       "lift": 0.22
       },
       {
        "pos": [
@@ -525,8 +523,7 @@
         1.0,
         11
        ],
-       "lift": 0.15,
-       "label": "Meistriškumo klasė"
+       "lift": 0.15
       }
      ],
      "grains": 2600,
