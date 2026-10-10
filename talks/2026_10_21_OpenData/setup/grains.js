@@ -1114,10 +1114,119 @@ function buildCollision(o) {
   return { group: g, labels: [], api: { busy }, frameScale: mat.uniforms.uPixelRatio, update(t) { tick(t); now = t; mat.uniforms.uTime.value = t } }
 }
 
+// ---- histogram ----------------------------------------------------------------------
+//   { type: histogram, name, pos, bins: [counts…], width?: 4, height?: 2.4, depth?: 0.25,
+//     from?: [x, y, z] (where the grains come from, relative to the object: a stream's end),
+//     fill?: 6 (engine-s until the last sets out), fly?: 1.4, per?: candidates a grain
+//     (default: one each, or as many as the device's budget asks), count?: the number its
+//     counter reaches (default: the bins' sum; e.g. a file's candidates, some outside the
+//     drawn window), color?, base?: true }
+// Real candidates stacking into their histogram, a grain each: they leave `from` in
+// random order, as data arrives, fly in on arcs and settle in their bin, the k-th to
+// land in a bin on the k-th place up its column, so the shape grows out of the noise as
+// the count does. A faint baseline of grains carries the bins. Step 1 fills it (every
+// visit from empty), 0 lets the grains fly apart. api.value() is the count landed so
+// far (for a counter that runs with it), api.busy while it fills or flies apart.
+const HIST_VERT = /* glsl */ `
+attribute float aSeed, aT, aBase;   // aT: when it sets out (engine-s into the fill); aBase 1: the baseline
+attribute vec3 aEnd;
+uniform vec3 uFrom;
+uniform float uStart, uHide, uFly, uSize, uAlpha;
+uniform vec3 uColor, uWhite;
+${PLACE}
+void main() {
+  float hide = uHide < 0.0 ? 0.0 : smoothstep(0.0, 1.2, uTime - uHide);
+  if (uStart < 0.0 || hide >= 1.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vAlpha = 0.0; vColor = vec3(0.0); return; }
+  if (aBase > 0.5) {
+    float a = 0.22 * smoothstep(0.0, 0.8, uTime - uStart) * (1.0 - hide);
+    place(aEnd, uSize * 0.7, a, mix(uColor, uWhite, 0.5), aSeed);
+    return;
+  }
+  float u = (uTime - uStart - aT) / uFly;            // 0 → 1 along its flight
+  if (u < 0.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vAlpha = 0.0; vColor = vec3(0.0); return; }
+  float f = ease(u), landed = step(1.0, u);
+  float span = length(aEnd - uFrom);
+  vec3 mid = mix(uFrom, aEnd, 0.5) + vec3(0.0, span * (0.18 + 0.2 * hash(aSeed * 3.0)), 0.0)
+           + (vec3(hash(aSeed * 13.0), 0.0, hash(aSeed * 17.0)) - 0.5) * span * 0.25;
+  vec3 p = mix(mix(uFrom, mid, f), mix(mid, aEnd, f), f);
+  p += (vec3(hash(aSeed * 5.0), hash(aSeed * 7.0), hash(aSeed * 9.0)) - 0.5) * 4.0 * hide;
+  float a = uAlpha * mix(0.9, 0.55, landed) * (1.0 - hide);
+  vec3 col = mix(uColor, uWhite, 0.45 * (1.0 - landed) + 0.2 * hash(aSeed * 11.0));
+  place(p, uSize * mix(1.15, 0.8, landed), a, col, aSeed);
+}`
+
+function buildHistogram(o, ctx) {
+  const bins = (o.bins || []).map((v) => Math.max(0, Math.round(v)))
+  const total = bins.reduce((a, b) => a + b, 0)
+  const budget = ctx.budget ?? 300000
+  const per = o.per ?? Math.max(1, Math.ceil(total / Math.min(budget * 0.4, 120000)))
+  const nb = bins.length, W = o.width ?? 4, H = o.height ?? 2.4, D = o.depth ?? 0.25
+  const fill = o.fill ?? 6, fly = o.fly ?? 1.4
+  const counts = bins.map((c) => Math.round(c / per))
+  const N = counts.reduce((a, b) => a + b, 0)
+  const maxC = Math.max(1, ...counts)
+  const nBase = o.base === false ? 0 : 240
+  const rnd = mulberry32(o.seed ?? 401)
+  // the order they arrive in: random, as candidates come out of a file
+  const order = []
+  counts.forEach((c, b) => { for (let k = 0; k < c; k++) order.push(b) })
+  for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]] }
+  const M = N + nBase
+  const end = new Float32Array(M * 3), seed = new Float32Array(M), tA = new Float32Array(M), base = new Float32Array(M)
+  const level = new Array(nb).fill(0)
+  for (let i = 0; i < N; i++) {
+    const b = order[i], k = level[b]++
+    end[i * 3] = -W / 2 + (b + 0.12 + 0.76 * rnd()) / nb * W
+    end[i * 3 + 1] = (k + rnd()) / maxC * H
+    end[i * 3 + 2] = (rnd() - 0.5) * D
+    seed[i] = rnd(); tA[i] = fill * i / Math.max(1, N)
+  }
+  for (let i = 0; i < nBase; i++) {
+    const n = N + i
+    end[n * 3] = -W / 2 + (i + rnd()) / nBase * W; end[n * 3 + 1] = -0.03; end[n * 3 + 2] = (rnd() - 0.5) * D * 0.5
+    seed[n] = rnd(); base[n] = 1
+  }
+  const geo = new BufferGeometry()
+  geo.setAttribute('position', new BufferAttribute(new Float32Array(M * 3), 3))   // placed in the shader
+  for (const [k, a, sz] of [['aEnd', end, 3], ['aSeed', seed, 1], ['aT', tA, 1], ['aBase', base, 1]]) geo.setAttribute(k, new BufferAttribute(a, sz))
+  const from = o.from || [-W, H, 0]
+  const mat = material(HIST_VERT, {
+    uFrom: { value: new Vector3(from[0], from[1], from[2]) }, uStart: { value: -1 }, uHide: { value: -1 },
+    uFly: { value: fly }, uSize: { value: o.size ?? (per > 1 ? 0.55 : 0.4) }, uAlpha: { value: o.alpha ?? 0.6 },
+    uColor: { value: new Color(o.color || ctx.palette.accent).convertLinearToSRGB() }, uWhite: { value: new Color(1, 0.97, 0.9) },
+  })
+  const pts = new Points(geo, mat); pts.frustumCulled = false
+  const g = new Group(); g.add(pts)
+  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  let now = 0
+  const u = mat.uniforms
+  const go = (k) => {
+    if (k) { u.uStart.value = now; u.uHide.value = -1 }
+    else if (u.uStart.value >= 0 && u.uHide.value < 0) u.uHide.value = now
+  }
+  const off = listen(o.name, go)
+  mat.addEventListener('dispose', off)
+  if (state.has(o.name)) queueMicrotask(() => go(state.get(o.name)))
+  // how many have landed: the k-th sets out at fill·k/N and lands fly later
+  const landed = () => {
+    if (u.uStart.value < 0 || u.uHide.value >= 0) return 0
+    const t = now - u.uStart.value - fly
+    if (t < 0) return 0
+    const shown = o.count ?? total
+    return t >= fill ? shown : Math.min(shown, Math.round(shown * Math.floor(t / fill * N) / Math.max(1, N)))
+  }
+  const busy = () => waiting(o.name) || (u.uStart.value >= 0 && (u.uHide.value >= 0 ? now - u.uHide.value < 1.3 : now - u.uStart.value < fill + fly + 0.1))
+  return {
+    group: g, labels: [], api: { busy, value: landed }, frameScale: mat.uniforms.uPixelRatio,
+    update(t) { tick(t); now = t; mat.uniforms.uTime.value = t },
+  }
+}
+
 export function installGrains(registerBuilder) {
   registerBuilder('lineup', buildLineup, { fields: ['pos', 'name', 'balls'] })
   registerBuilder('streams', buildStreams, { fields: ['pos', 'name', 'from', 'to'] })
   registerBuilder('floor', buildFloor, { fields: ['pos'], enterable: true })
   registerBuilder('portraits', buildPortraits, { fields: ['pos', 'name', 'people'] })
   registerBuilder('collision', buildCollision, { fields: ['pos', 'name', 'tracks'] })
+  registerBuilder('histogram', buildHistogram, { fields: ['pos', 'name', 'bins'] })
 }

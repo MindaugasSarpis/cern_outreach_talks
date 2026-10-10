@@ -396,10 +396,40 @@ masterclass: about 65 participants from Lithuania and 35 from Ukraine.
 -->
 
 ---
+space: { at: [23.0, 1.0, 11.0], dist: 6.8, yaw: 0, pitch: 6, dim: 0.1 }
+---
+
+<Grains :set="{ scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0, course: 1, d0: 1 }" />
+
+<div class="readout">
+
+<div class="big"><StageCount for="d0" :to="91583" lang="lt" /><span class="unit">kandidatai</span></div>
+
+</div>
+
+<!--
+PROTOTYPE (od-story-everyday, slide 6): the course. A stream leaves the gold
+pile for the course, and the course file's D⁰ → K⁻π⁺ candidates stack into
+their mass histogram, one grain each, in the order they come out of the file:
+the D⁰ peak grows out of the background as the count runs to 91 583. (The
+photo of the course room comes when the owner sends it.)
+
+Gist (section G): every student in the course „Geriausios tyrimų ir duomenų
+analizės praktikos iš CERN“ works on the same open LHCb file, 92 thousand
+candidates.
+
+The file: CERN Open Data record 401 (MasterclassData.root, DecayTree, D0_MM):
+91 583 candidates; drawn 90 120 of them in 1816–1914 MeV, 56 bins; the peak
+at 1864.5 MeV, σ 7.7 MeV.
+
+(~0.5 min)
+-->
+
+---
 space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, dim: 1 }
 ---
 
-<Grains :set="{ scale: [0, 1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
+<Grains :set="{ scale: [0, 1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0, course: 0, d0: 0 }" />
 
 <div class="finds">
 <div class="finds-text">
@@ -433,29 +463,27 @@ The slide is opaque, as the next one: two plots in a row, LHCb's and then a stud
 -->
 
 ---
-space: { at: thesis, dim: 1 }
+space: { at: [10.4, -43.4, 24], dist: 12.5, yaw: 0, pitch: 5, dim: 0.1 }
 ---
 
-<Grains :set="{ scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
+<Grains :set="{ scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 1, team: 0, course: 0, d0: 0, peak: 1 }" />
 
-<div class="thesis-slide">
-<div class="thesis-who">
+<div class="readout">
 
-<img class="portrait" src="/figures/people/dominykas-stonkus.jpg" alt="Dominykas Stonkus" />
+<div class="big"><StageCount for="peak" :to="16407" lang="lt" /><span class="unit">skilimai</span></div>
 
-</div>
-<div class="thesis-plot">
-<div class="plot-box">
-<img src="/figures/thesis/jpsip-mass.png" alt="Dominyko Stonkaus bakalauro darbas: J/ψ p invariantinė masė, atėmus foną; pakilimas ties 4,4–4,5 GeV" />
-<PeakRise :x="0.44" :y="0.29" :delay="1.4" :rise="0.2" :size="0.09" />
-</div>
-</div>
 </div>
 
 <!-- facts: lhcb-pentaquark-2015 -->
 
 <!--
 Message: a student here has found the pentaquark region again in public data.
+
+PROTOTYPE (od-story-everyday, slide 9): the last stream, from the gold pile to
+here, becomes his peak: his 16 407 Λb⁰ → J/ψ p K⁻ decays stack, one grain each,
+into his m(J/ψ p) (thesis Fig. 17, sideband-subtracted, 80 bins of 15 MeV,
+digitised from the figure: the bins sum to 16 387), and the pentaquark stands
+over the peak. His plot as an image and his portrait are off this version.
 
 Motion: the slide opens on his plot; 1,4 s later grains of gold rise out of
 its peak and gather into a pentaquark above it.
@@ -487,7 +515,7 @@ repository.vu.lt/VU:ELABAETD308118793 (open access); LHCb, PRL 115 (2015) 072001
 space: { at: [53, 2.8, 160], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 ---
 
-<Grains :set="{ team: 1, collision: 0, world: 0, vilnius: 0, dominykas: 0 }" />
+<Grains :set="{ team: 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, course: 0, d0: 0, peak: 0 }" />
 
 <!--
 Message: this is the work we were nominated for, and the people who did it.
