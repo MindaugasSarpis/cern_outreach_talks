@@ -44,6 +44,9 @@ gradient bands at stream bitrates. Pick a palette no other October talk uses.
 
 ## 3. Type and the safe box (980 px canvas)
 
+- On screen: pictures and numbers only, no headline, kicker, caption or
+  credit (owner, 2026-10-10); the sizes below are for numbers and for
+  delivered decks.
 - Readable text 37 px or more (49 is better); headlines 72–92; kickers 24 or
   more; nothing below 16, `.src` included. At most two lines of about 28
   characters per text block. Override the kit sizes in the talk's
