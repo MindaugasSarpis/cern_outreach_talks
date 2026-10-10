@@ -26,7 +26,7 @@ title: Atveriame LHCb duomenis
 info: |
   In Lithuanian. LHCb Vilnius, nominated for an open data award: a 6½-minute
   talk told inside one world of grains (slidev-addon-stage, blue palette,
-  toolkit pin slidev-videos v0.5.4).
+  toolkit pin slidev-videos v0.7.0).
   The line: the LHCb detector (3D clip); one real collision from LHCb open data
   (a 2012 Z → μμ event, its tracks drawn as grains); that collision shrinks into
   one grain among tens of millions, which pack into a sphere of one terabyte;
