@@ -122,6 +122,10 @@ videos-2026-10-00-opendata.
 
 ## Decisions
 
+- 2026-10-11. The owner: "Dominykas slide should have text and the last one as
+  well." The thesis slide has its kicker („Bakalauro darbas, VU, 2026“), his
+  name and its line back, and the close its „Ačiū“, as before the title strip
+  (the house rule's exception for these two, on the owner's word).
 - 2026-10-11. The shared LHC opening (owner, via the Scheduler: "start with
   the real video of LHC, then go into it, make everything black and show
   really exciting collision with slow down speed up effect, many particles,
