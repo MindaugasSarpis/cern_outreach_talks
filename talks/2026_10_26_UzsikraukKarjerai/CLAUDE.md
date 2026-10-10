@@ -416,6 +416,10 @@ statements, captions, labels or credits; the speaker narrates from the notes.
 - Licences to confirm for this event: the LHC tunnel clip
   (CERN-FOOTAGE-2022-013-001) and the LHCb event display (slide 7), both
   CERN material for educational, non-commercial use.
+- The slide 6 cavern photo is not CERN's: Rosa Menkman, CC BY 2.0, which asks
+  for attribution. Since 2026-10-10 no credit is on screen (the owner); it is
+  in `credits.txt`. Open for the owner: attribute it somewhere else (the
+  talk's page, the hand-over to Delfi), or swap the photo.
 
 - Length: the script is about 7–8 minutes spoken; the brief allows 10–15.
   If the speaker wants more, slide 11 (what a working day is like) is where
@@ -443,8 +447,7 @@ colours; `options: { dustSize: 2.2, reach: 22, nebula: 0.4 }`.
 - **Stations** (one axis, 300 apart, only one in frame): `quarks` (hero,
   `quintet`: the cover and the close), `europe` at 1200 (`map` and the `path`
   `route` Vilnius → CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn →
-  Vilnius; pose `whole`, no sway, HTML city labels projected from it, shown
-  after 7.5 s), `trial` at 1500 (`histogram` `th1` 140 entries and `th2`
+  Vilnius; pose `whole`, no sway; no city labels since 2026-10-10), `trial` at 1500 (`histogram` `th1` 140 entries and `th2`
   3 500, the illustration of slides 2–4), `lhcb` at 1800 (`histogram` `jp`,
   LHCb's 2019 m(J/ψ p) bins, `marks` over Pc(4312), Pc(4440), Pc(4457)). The
   LHC clip and the two photographs cover the world on slides 5–7, which rests
