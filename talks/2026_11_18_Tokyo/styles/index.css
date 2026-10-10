@@ -14,3 +14,14 @@
 .slidev-layout .num.tl { top: 48px; left: 56px; }
 .slidev-layout .num.bl { bottom: 48px; left: 56px; }
 .slidev-layout .num.br { bottom: 48px; right: 56px; }
+/* the word or two naming what a number counts (owner, 2026-10-10) */
+.slidev-layout .num span {
+  display: block;
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #9fd8ff;
+  text-shadow: none;
+}
+.slidev-layout .num.bl span, .slidev-layout .num.br span { margin-top: 8px; }

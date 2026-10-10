@@ -44,7 +44,7 @@ scientists are now studying it together. (~1 min)
 space: { at: lhc, dim: 0.25 }
 ---
 
-<div class="num tr">27 km</div>
+<div class="num tr">27 km<span>LHC</span></div>
 
 <!-- facts: cern-lhc-size-cost, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
 
@@ -94,7 +94,7 @@ electric force that pushes the protons apart. (~0.75 min)
 space: { at: proton, dim: 0.2 }
 ---
 
-<div class="num tr">1 %</div>
+<div class="num tr">1 %<span>quark mass</span></div>
 
 <!-- facts: proton-mass-quarks-1-percent -->
 
@@ -131,7 +131,7 @@ The question is whether nature allows more: four quarks, five, six. (~1.25 min)
 space: { at: paper, dim: 0.06 }
 ---
 
-<div class="num tr">1964</div>
+<div class="num tr">1964<span>quark model</span></div>
 
 <!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
 
@@ -148,15 +148,18 @@ Zweig's footnote says the same in his words. That five-particle combination,
 four quarks and one antiquark, is what we now call a pentaquark.
 
 Neither paper could say whether such a particle really exists. The search
-took the rest of the century. (~1.5 min)
+took the rest of the century.
+
+Sources: M. Gell-Mann, Phys. Lett. 8 (1964) 214; G. Zweig, CERN-TH-401
+(1964). (~1.5 min)
 -->
 
 ---
 space: { at: lhcb, dim: 0.06 }
 ---
 
-<div class="num tl">2015</div>
-<div class="num bl">2019</div>
+<div class="num tl">2015<span>discovery</span></div>
+<div class="num bl">2019<span>three pentaquarks</span></div>
 
 <!-- facts: lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
 
@@ -200,8 +203,8 @@ together. (~1.5 min)
 space: { at: project, dim: 0.15 }
 ---
 
-<div class="num tl">2026–2028</div>
-<div class="num bl">24–27.11</div>
+<div class="num tl">2026–2028<span>Penta-Charm</span></div>
+<div class="num bl">24–27 Nov<span>Nagoya workshop</span></div>
 
 <!-- facts: lhcb-vilnius-joined -->
 
