@@ -12,7 +12,8 @@ The round-by-round log (what each round changed, recordings, deploys) is
 pritaikymo privačiame sektoriuje“, Innoday 2026, in Lithuanian, for an
 innovation-day audience (business, policy). Venue, 16:9 projector. Slot about
 25 min or more (owner, 2026-10-08); the deck runs ≈ 23 min with the clips.
-Date placeholder `10_00`. Speaker: Dr. Mindaugas Šarpis, LHCb Vilnius, VU.
+Date: 23 October 2026 (owner, 11 Oct); the dir and release tag keep `10_00`
+until the owner renames them (a rename changes the URL). Speaker: Dr. Mindaugas Šarpis, LHCb Vilnius, VU.
 
 ## Story
 
@@ -217,4 +218,5 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 - On the venue laptop, read the stage's frame-rate guard at the close
   (`document.querySelector('.stage canvas').__space.guardStage`); above 0
   means a slide was too heavy.
-- The date is still `10_00`.
+- The talk is on 23 October 2026; the dir and release tag still say `10_00`
+  (renaming waits for the owner: it changes the URL).
