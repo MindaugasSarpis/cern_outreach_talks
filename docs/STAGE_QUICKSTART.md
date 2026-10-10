@@ -133,6 +133,10 @@ export default ({ app }) => {
 
 ## Kit CSS
 
+**New talks put no text on slides** (the owner, 2026-10-10): no cover title,
+kicker, byline, section line, caption or credit; numbers may stand
+(`pnpm talk lint`: TEXT). The kit below is what the delivered decks use.
+
 Keyed on `html[data-stage]`; a talk's `styles/index.css` overrides it. Colours
 come in as `--stage-bg`, `--stage-fg`, `--stage-dim`, `--stage-accent` (and
 `-rgb` triplets).

@@ -213,7 +213,8 @@ class SourcesInNotes(unittest.TestCase):
         self.assertIn("'Sources:' line in its notes", found[0].message)
 
     def test_default_mode_names_the_choice(self):
-        l = self.lint_text((NOTES / "deck.md").read_text(encoding="utf-8").replace("sources: notes\n", ""))
+        # an older deck (words on screen): sources default to slides
+        l = self.lint_text((NOTES / "deck.md").read_text(encoding="utf-8").replace("sources: notes\n", "onscreen: words\n"))
         self.assertEqual(l.sources, "slides")
         found = codes(l, "NO-SRC")
         self.assertEqual([f.slide for f in found], [2, 3, 5])
@@ -234,6 +235,55 @@ class SourcesInNotes(unittest.TestCase):
         self.assertTrue(all(map(hit, ("Sources: a · b", "x\nSource: CERN", "Šaltiniai: home.cern",
                                       "  - Šaltinis: lrt.lt", "References (checked 2026-10-08): arXiv"))))
         self.assertFalse(any(map(hit, ("The source for 600 PB is open.", "Sources say so", "Resources: none"))))
+
+
+class NumbersOnly(unittest.TestCase):
+    """No titles, statements, captions or credits on screen: numbers stay (CLAUDE.md, 2026-10-10)."""
+
+    def lint_at(self, name: str, deck: str):
+        with tempfile.TemporaryDirectory() as d:
+            talk = Path(d) / name
+            talk.mkdir()
+            (talk / "deck.md").write_text(deck, encoding="utf-8")
+            return lint(talk)
+
+    DECK = """---
+theme: ../../theme
+duration: 4min
+{extra}---
+
+# The detector
+
+---
+
+<div class="big">13,6 TeV</div>
+<div>12 639 · 95 % · 3 mln.</div>
+
+<!--
+Speaker (~1 min). Notes are free to say anything at all.
+Sources: CERN.
+-->
+
+---
+
+<div class="big">2026</div>
+<div class="credit">Photo: CERN</div>
+"""
+
+    def test_words_are_flagged_numbers_and_notes_are_not(self):
+        l = self.lint_at("2026_11_01_New", self.DECK.format(extra=""))
+        self.assertTrue(l.numbers_only)
+        found = codes(l, "TEXT")
+        self.assertEqual([f.slide for f in found], [1, 3])          # the title; the credit
+        self.assertIn("'The detector'", found[0].message)
+        self.assertIn("'Photo CERN'", found[1].message)
+        self.assertEqual(l.sources, "notes")
+        self.assertEqual(codes(l, "NO-SRC"), [])
+
+    def test_older_decks_and_opt_outs(self):
+        self.assertEqual(codes(self.lint_at("2026_09_10_Old", self.DECK.format(extra="")), "TEXT"), [])
+        self.assertEqual(codes(self.lint_at("2026_11_01_New", self.DECK.format(extra="onscreen: words\n")), "TEXT"), [])
+        self.assertEqual(len(codes(self.lint_at("2026_09_10_Old", self.DECK.format(extra="onscreen: numbers\n")), "TEXT")), 2)
 
 
 class Map(unittest.TestCase):
