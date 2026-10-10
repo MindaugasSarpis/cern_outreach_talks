@@ -29,8 +29,10 @@
 Approved outline: `notes/outline-v5.md` with its two change sections
 (owner, 2026-10-08). The viewer sits in the physicist's seat.
 
-No text on screen but numbers (owner, 2026-10-10): no titles, kickers,
-statements, captions, labels or credits; the speaker narrates from the notes.
+Pictures and numbers (owner, 2026-10-10): no titles, kickers, statements or
+section slides; the speaker narrates from the notes. A number carries the word
+that names it; a thing shown may carry its name (the map's cities); the one
+licence credit is tiny print on the last slide.
 
 | # | Screen | Picture |
 |---|---|---|
@@ -42,15 +44,26 @@ statements, captions, labels or credits; the speaker narrates from the notes.
 | 6 | — (photo) | LHCb cavern, StagePhoto: what LHCb studies and why |
 | 7 | — (photo) | LHCb Run 3 event display, StagePhoto: how a collision becomes a dot |
 | 8 | — (one click, `clicks: 1`) | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks at the click |
-| 9 | the counts alone: „140“ · „27 292“ | `jx`: the 140-entry plot of slides 2–3 at LHCb's scale beside `jp` (one grain per entry, the same bin width and height per entry); a coordinate pose between them |
-| 10 | — | the route across Europe |
-| 11 | — | the map close on Vilnius and the arcs to CERN: the working day (idea 7), in the speaker's own public words |
+| 9 | the counts with their word: „140 taškų“ · „27 292 taškai“ | `jx`: the 140-entry plot of slides 2–3 at LHCb's scale beside `jp` (one grain per entry, the same bin width and height per entry); a coordinate pose between them |
+| 10 | Vilnius, CERN | the route across Europe |
+| 11 | Vilnius, CERN | the map close on Vilnius and the arcs to CERN: the working day (idea 7), in the speaker's own public words |
 | 12 | — | the form far off, dimmed (the three things are said, not shown) |
 | 13 | the credit in tiny print: „LHCb salės nuotrauka: Rosa Menkman, CC BY 2.0“ | the form, held (the question is said, not shown) |
 
 ## Status
 
-- 2026-10-09 (latest): **deployed 1ed62a9** under the owner's standing deploy rule
+- 2026-10-10 (latest): **deployed b675427** under the owner's standing deploy
+  rule: pictures and numbers only (Decisions, 2026-10-10). On screen: slide 9's
+  „140“ and „27 292“, and slide 13's tiny-print credit for the slide 6 photo
+  (Rosa Menkman, CC BY 2.0). Main 8e1b223 is merged. `talk ready` passed with
+  nothing skipped (TEXT warns on the credit line). Pages run 38082352299 green,
+  live walk passed for 13 slides, URL 200; a visible-text scan of the live deck
+  finds nothing else. Next: the shared opening (LHC footage, a collision, the 3D
+  LHCb video), once OpenData's module is on main. Still open for the owner:
+  their moments for slide 11, the licences of the CERN clip and event display
+  for Delfi, the 2027 masterclass date and the BL4S call.
+
+- 2026-10-09: **deployed 1ed62a9** under the owner's standing deploy rule
   (set in this talk's session before this round): slidev-videos v0.7.0, the
   batch round. Stills are at each slide's last click, and main 9dc21bd is merged.
   `talk ready` passed with nothing skipped. Pages run 37988984512 green, live walk
@@ -196,6 +209,22 @@ statements, captions, labels or credits; the speaker narrates from the notes.
 
 ## Decisions
 
+- 2026-10-10 — Fewer words (the owner, before sleeping: "fewer words so I can
+  adapt to the audience; these slides are not lecture slides"; AFK protocol,
+  the recommended option). Slide 10 names only Vilnius and CERN, the route's
+  anchors; Glazgas, Heidelbergas and Bona are gone, so the speaker can tell
+  those stops or skip them. Slide 11 keeps Vilnius and CERN, since the slide is
+  about those two places. Slide 9 keeps „140 taškų“ and „27 292 taškai“: one
+  word each, the least a number needs to say what it counts.
+  For the lint (main 7f6b0fe): the city names carry `.caption` and the last
+  slide's credit `.credits`. The stage's `.caption` style leaves them at 45,7 px
+  in the same places, with a box 6 px shorter. Lint: 0 warnings.
+- 2026-10-10 — Names back, as the owner refined the rule: "numbers should have
+  units or name what they are", and a thing shown may carry a short caption that
+  names it, a name and never a sentence (root CLAUDE.md, main 8c7fd47). Slide 9's
+  counts read „140 taškų“ and „27 292 taškai“ again, and the map's city names
+  return on slides 10 and 11, at the same places and timing as before. Slide 7's
+  event display stays without its caption: the speaker names it.
 - 2026-10-10 — No text on screen but numbers. The owner: "No titles, statements -
   I will be there. Don't need newspaper-like titles. What can stay is the
   numbers. I will narrate myself." Then: "Don't do the small photo credits,
@@ -204,7 +233,7 @@ statements, captions, labels or credits; the speaker narrates from the notes.
   name; every slide line and year kicker (2003, 2008, 2015, 2019 m.); slide 7's
   caption; the map's city names (slides 10 and 11); slide 12's three lines
   (the opendata.cern.ch address with them); slide 13's question; the two text
-  scrims; the three credits. Kept: slide 9's two counts as bare numbers („140“, „27 292“: „taškai“ is a word, not a short unit, so the speaker says it), the notes, and every
+  scrims; the three credits. Kept: slide 9's two counts (bare for one deploy, then with their word again, above), the notes, and every
   camera pose and dim. Slide 8 keeps its click (`clicks: 1`): the ticks light at it.
   Notes changed only where they described text that is gone (slide 1's
   „Šalia pavadinimo“ → „Ekrane“, and the Picture lines of 1, 8, 9, 11, 12 and
@@ -446,7 +475,8 @@ colours; `options: { dustSize: 2.2, reach: 22, nebula: 0.4 }`.
 - **Stations** (one axis, 300 apart, only one in frame): `quarks` (hero,
   `quintet`: the cover and the close), `europe` at 1200 (`map` and the `path`
   `route` Vilnius → CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn →
-  Vilnius; pose `whole`, no sway; no city labels since 2026-10-10), `trial` at 1500 (`histogram` `th1` 140 entries and `th2`
+  Vilnius; pose `whole`, no sway, HTML city labels projected from it, shown
+  after 8.5 s), `trial` at 1500 (`histogram` `th1` 140 entries and `th2`
   3 500, the illustration of slides 2–4), `lhcb` at 1800 (`histogram` `jp`,
   LHCb's 2019 m(J/ψ p) bins, `marks` over Pc(4312), Pc(4440), Pc(4457)). The
   LHC clip and the two photographs cover the world on slides 5–7, which rests
