@@ -81,3 +81,6 @@ pnpm talk ready tokyo     # before the venue: lint --release, check, shots, pref
 - 2026-10-10: Brief questions sent; defaults used until answered are those
   in the message (15 min talk + Q&A separate, projector 16:9, English, no
   people photos without consent, classic palette).
+- 2026-10-10 (house rule, main 51f4c3e): credits a licence requires go in
+  tiny print on the last slide only; CERN material needs none. Nothing else
+  on screen but numbers.
