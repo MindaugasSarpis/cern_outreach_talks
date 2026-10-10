@@ -44,7 +44,7 @@ scientists are now studying it together. (~1 min)
 space: { at: lhc, dim: 0.25 }
 ---
 
-<div class="num tr">27 km<span>LHC</span></div>
+<div class="num tr">27 km<span class="name">LHC</span></div>
 
 <!-- facts: cern-lhc-size-cost, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
 
@@ -108,7 +108,7 @@ electric force that pushes the protons apart. (~0.75 min)
 space: { at: proton, dim: 0.2 }
 ---
 
-<div class="num tr">1 %<span>mass</span></div>
+<div class="num tr">1 %<span class="name">mass</span></div>
 
 <!-- facts: proton-mass-quarks-1-percent -->
 
@@ -145,7 +145,7 @@ The question is whether nature allows more: four quarks, five, six. (~1.25 min)
 space: { at: paper, dim: 0.06 }
 ---
 
-<div class="num tr">1964<span>quarks</span></div>
+<div class="num tr">1964<span class="name">quarks</span></div>
 
 <!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
 
@@ -172,8 +172,8 @@ Sources: M. Gell-Mann, Phys. Lett. 8 (1964) 214; G. Zweig, CERN-TH-401
 space: { at: lhcb, dim: 0.06 }
 ---
 
-<div class="num tl">2015<span>discovery</span></div>
-<div class="num bl">2019<span>precision</span></div>
+<div class="num tl">2015<span class="name">discovery</span></div>
+<div class="num bl">2019<span class="name">precision</span></div>
 
 <!-- facts: lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
 
