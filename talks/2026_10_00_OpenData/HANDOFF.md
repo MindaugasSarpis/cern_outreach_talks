@@ -15,7 +15,17 @@ holds for this talk: it deploys without asking once `talk ready` passes with
 nothing skipped and the Scheduler gives it main. Anything else still needs
 the owner's word.
 
-## Status (2026-10-09): approved by the owner; deployed on v0.7.0
+## Status (2026-10-10): deployed on v0.7.0, pictures and numbers only; the shared LHC opening in progress
+
+- Redeployed 2026-10-10 under the standing rule: commit 8e1b223 on main,
+  Pages run 38081755288 (success); `talk deploy`'s live check passed (13
+  slides, nothing failed). `talk ready` passed on 8e1b223 with nothing
+  skipped. The title strip: see the 2026-10-10 decision.
+- Next (the Scheduler's brief, 2026-10-10): the shared opening, real LHC
+  tunnel footage → into the beam pipe → a slow-motion collision in the black
+  → lhcb.mp4, built once in components/lhc-opening/ (Užsikrauk karjerai
+  adopts it). Tools builds the stage clock rate, camera path, ctx.audio and
+  tier budget for it.
 
 - Redeployed 2026-10-09 under the standing rule, after Užsikrauk karjerai:
   commit 82b19d9 on main, Pages run 37989538553 (success); `talk deploy`'s
@@ -101,6 +111,11 @@ the owner's word.
   No credits on screen (owner: "it's cern license, I'm CERN user"); none
   were left. Still 10 remade (its labels are gone). Undo: this commit's
   parent.
+  - Refined the same day (owner: "numbers should have units or name what
+    they are"; a thing shown may carry a short name): the 20 has
+    „užklausų“ again, „76 / 86 hadronų“, and slide 10's three stream labels
+    (they only name the analysis, the course and the masterclass) and its
+    still are back.
 - 2026-10-09. v0.7.0: `stage:check` warns (`unsaid-clock`) about a builder
   that moves on its own clock without saying so. The streams, the portraits
   and the collision now return `api.busy` (a stream filling its arc, 1/speed

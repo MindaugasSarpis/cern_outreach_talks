@@ -1,5 +1,5 @@
 {
-  "name": "talk-2026-10-00-innoday",
+  "name": "talk-2026-10-23-innoday",
   "private": true,
   "description": "Nuo Vilniaus iki visatos pakraščių ir atgal · Innoday · 2026 m. spalis",
   "scripts": {
@@ -18,7 +18,7 @@
     "videos:frames": "slidev-videos frames",
     "stage:check": "slidev-stage-check . --types strands,funnel",
     "stage:shots": "slidev-stage-shots dist shots",
-    "pages:check": "slidev build deck.md --base /cern_outreach_talks/2026_10_00_Innoday/ --out shots/pages-dist && node scripts/pages-check.mjs shots/pages-dist /cern_outreach_talks/2026_10_00_Innoday/ shots/pages 11,13",
+    "pages:check": "slidev build deck.md --base /cern_outreach_talks/2026_10_23_Innoday/ --out shots/pages-dist && node scripts/pages-check.mjs shots/pages-dist /cern_outreach_talks/2026_10_23_Innoday/ shots/pages 11,13",
     "takeover:frame": "bash scripts/last_frame.sh"
   },
   "dependencies": {

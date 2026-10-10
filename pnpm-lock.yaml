@@ -65,19 +65,6 @@ importers:
         specifier: github:MindaugasSarpis/slidev-videos#v0.3.3
         version: https://codeload.github.com/MindaugasSarpis/slidev-videos/tar.gz/3b098fc29fbc9ef4db67b47326d92db62b2140ac(@slidev/cli@52.14.2(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@nuxt/kit@3.21.2)(@types/markdown-it@14.1.2)(@types/node@22.19.17)(@vue/compiler-sfc@3.5.32)(markdown-it@14.1.1)(playwright-chromium@1.59.1)(postcss@8.5.9))
 
-  talks/2026_10_00_Innoday:
-    dependencies:
-      '@slidev/cli':
-        specifier: ^52.14.2
-        version: 52.14.2(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@nuxt/kit@3.21.2)(@types/markdown-it@14.1.2)(@types/node@22.19.17)(@vue/compiler-sfc@3.5.32)(markdown-it@14.1.1)(playwright-chromium@1.59.1)(postcss@8.5.9)
-    devDependencies:
-      slidev-addon-stage:
-        specifier: github:MindaugasSarpis/slidev-videos#v0.7.0&path:/packages/stage
-        version: https://codeload.github.com/MindaugasSarpis/slidev-videos/tar.gz/2c0fb77eae0afe852caf993fb646092ecd32a46e#path:/packages/stage(@slidev/cli@52.14.2(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@nuxt/kit@3.21.2)(@types/markdown-it@14.1.2)(@types/node@22.19.17)(@vue/compiler-sfc@3.5.32)(markdown-it@14.1.1)(playwright-chromium@1.59.1)(postcss@8.5.9))(playwright-chromium@1.59.1)
-      slidev-addon-videos:
-        specifier: github:MindaugasSarpis/slidev-videos#v0.7.0
-        version: https://codeload.github.com/MindaugasSarpis/slidev-videos/tar.gz/2c0fb77eae0afe852caf993fb646092ecd32a46e(@slidev/cli@52.14.2(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@nuxt/kit@3.21.2)(@types/markdown-it@14.1.2)(@types/node@22.19.17)(@vue/compiler-sfc@3.5.32)(markdown-it@14.1.1)(playwright-chromium@1.59.1)(postcss@8.5.9))
-
   talks/2026_10_00_OpenData:
     dependencies:
       '@slidev/cli':
@@ -86,6 +73,19 @@ importers:
       three:
         specifier: ^0.185.1
         version: 0.185.1
+    devDependencies:
+      slidev-addon-stage:
+        specifier: github:MindaugasSarpis/slidev-videos#v0.7.0&path:/packages/stage
+        version: https://codeload.github.com/MindaugasSarpis/slidev-videos/tar.gz/2c0fb77eae0afe852caf993fb646092ecd32a46e#path:/packages/stage(@slidev/cli@52.14.2(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@nuxt/kit@3.21.2)(@types/markdown-it@14.1.2)(@types/node@22.19.17)(@vue/compiler-sfc@3.5.32)(markdown-it@14.1.1)(playwright-chromium@1.59.1)(postcss@8.5.9))(playwright-chromium@1.59.1)
+      slidev-addon-videos:
+        specifier: github:MindaugasSarpis/slidev-videos#v0.7.0
+        version: https://codeload.github.com/MindaugasSarpis/slidev-videos/tar.gz/2c0fb77eae0afe852caf993fb646092ecd32a46e(@slidev/cli@52.14.2(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@nuxt/kit@3.21.2)(@types/markdown-it@14.1.2)(@types/node@22.19.17)(@vue/compiler-sfc@3.5.32)(markdown-it@14.1.1)(playwright-chromium@1.59.1)(postcss@8.5.9))
+
+  talks/2026_10_23_Innoday:
+    dependencies:
+      '@slidev/cli':
+        specifier: ^52.14.2
+        version: 52.14.2(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@nuxt/kit@3.21.2)(@types/markdown-it@14.1.2)(@types/node@22.19.17)(@vue/compiler-sfc@3.5.32)(markdown-it@14.1.1)(playwright-chromium@1.59.1)(postcss@8.5.9)
     devDependencies:
       slidev-addon-stage:
         specifier: github:MindaugasSarpis/slidev-videos#v0.7.0&path:/packages/stage
