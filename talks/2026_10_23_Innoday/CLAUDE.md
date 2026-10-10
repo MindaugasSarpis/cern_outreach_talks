@@ -1,4 +1,4 @@
-# Innoday (talks/2026_10_00_Innoday)
+# Innoday (talks/2026_10_23_Innoday)
 
 The notes for this talk: Claude Code reads this file when it works in the
 talk's directory, and the root CLAUDE.md holds what every talk shares. Keep it
@@ -12,8 +12,10 @@ The round-by-round log (what each round changed, recordings, deploys) is
 pritaikymo privačiame sektoriuje“, Innoday 2026, in Lithuanian, for an
 innovation-day audience (business, policy). Venue, 16:9 projector. Slot about
 25 min or more (owner, 2026-10-08); the deck runs ≈ 23 min with the clips.
-Date: 23 October 2026 (owner, 11 Oct); the dir and release tag keep `10_00`
-until the owner renames them (a rename changes the URL). Speaker: Dr. Mindaugas Šarpis, LHCb Vilnius, VU.
+Date: 23 October 2026 (owner, 11 Oct). The dir and the Pages address carry it
+since 11 Oct (owner: "Change web addresses as well, I don't share this with
+anyone"); the videos release tag keeps `videos-2026-10-00-innoday` (a storage
+name, renamed later if at all). Speaker: Dr. Mindaugas Šarpis, LHCb Vilnius, VU.
 
 ## Story
 
@@ -106,7 +108,7 @@ Everything is grains; no solid shapes, no labels.
 2026-10-10: **complete, stripped to pictures and numbers.** Deployed f02d412
 (no cover, no section slides, inventions named, numbers named, licence credits
 on the last slide, the opener waits for the first press; v0.7.0) —
-https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
 Pages run 38084549720 (green), URL 200; `ready` passed with nothing skipped and
 the live walk went 26/26. Open for the owner: the closing pose and the CERN CC
 credits (Decisions, "Taken overnight"); the iPhone retest of 9 Oct.
@@ -205,7 +207,7 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 - The opener stays whole (slot ≥ 25 min).
 - Asset paths are relative to the deck's base: `src="figures/…"` on StagePhoto
   and WebTakeover, never `/figures/…` (that resolves outside
-  `/cern_outreach_talks/2026_10_00_Innoday/` on Pages, and a local build with
+  `/cern_outreach_talks/2026_10_23_Innoday/` on Pages, and a local build with
   base `/` hides it). Before a deploy, `pnpm pages:check`: builds with the
   Pages base, serves it under that prefix, opens slides 11 and 13 and print
   mode, and fails on any request that fails (clips excepted: they come from
@@ -218,5 +220,4 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 - On the venue laptop, read the stage's frame-rate guard at the close
   (`document.querySelector('.stage canvas').__space.guardStage`); above 0
   means a slide was too heavy.
-- The talk is on 23 October 2026; the dir and release tag still say `10_00`
-  (renaming waits for the owner: it changes the URL).
+- The talk is on 23 October 2026. The videos release tag still says `10_00`.
