@@ -250,8 +250,8 @@ since the opening replaced the cavern photograph, so no credit is on screen.
   ambient and push. First version for the owner's review (AFK protocol).
   Print: a printed page's scrim takes `dim` from the deck's current slide, which
   stays at 1 on the print route, so the standby's `dim: 1` darkened every printed
-  still (v0.8.0, sent to Tools). styles/index.css pins the print scrim at 0.05,
-  as every page printed before the opening. The rasterised PDF: 15 pages, bright.
+  still (v0.8.0, sent to Tools). v0.8.1 reads each print page's own frontmatter,
+  so the talk's print-scrim workaround is gone again.
 - 2026-10-10 — Fewer words (the owner, before sleeping: "fewer words so I can
   adapt to the audience; these slides are not lecture slides"; AFK protocol,
   the recommended option). Slide 10 names only Vilnius and CERN, the route's
