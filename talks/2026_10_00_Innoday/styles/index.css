@@ -1,5 +1,7 @@
 /* Innoday — the talk's own type over the stage kit (slidev-addon-stage
-   styles/index.css). Text is white, with one light-blue accent (--in-accent)
+   styles/index.css). Since 2026-10-10 the slides carry no words, only a few
+   numbers (owner: he narrates); the rules for headlines, kickers, captions and
+   credits below are unused until words come back. Text is white, with one light-blue accent (--in-accent)
    for kickers and the rare emphasis: no gold text (owner, 2026-10-09: gold
    letters read as AI design). Gold stays only in the world's grains (strands,
    the KT seed, the FCC ring). Sizes are px against Slidev's 980-wide canvas. */
@@ -345,3 +347,17 @@ html[data-stage] .hero .pf .answer {
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
 }
 html[data-stage] .hero .pf .kicker.year-k { font-variant-numeric: tabular-nums; letter-spacing: 0.14em; }
+
+/* --- no words on the slides (owner, 2026-10-10): a photograph carries no text,
+   so it gets no dark ground for one either (the kit's and the rules above) */
+html[data-stage] .hero::after { background: none !important; }
+/* the credits a licence asks for, in tiny print on the last slide (owner, 2026-10-10) */
+html[data-stage] .src.credits { font-size: 10px; opacity: 0.55; max-width: 92%; }
+/* an invention's name, the one caption a Part II photo carries (owner, 2026-10-10:
+   "inventions in innoday can have a short caption"): bottom left, on its own ground */
+html[data-stage] .hero .invention {
+  position: absolute; z-index: 2; left: 56px; bottom: 52px; margin: 0; opacity: 1;
+  font-size: 30px; font-weight: 600; line-height: 1.15; letter-spacing: 0; color: #fff;
+  background: rgba(4, 6, 16, 0.62); padding: 6px 14px; border-radius: 4px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}

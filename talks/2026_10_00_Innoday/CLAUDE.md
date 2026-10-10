@@ -21,11 +21,11 @@ physicists needed a machine nobody could buy; each of its limits had to be
 broken; the solutions left CERN as things in daily use; the next machine (FCC)
 brings the next round, and Lithuanian firms can solve it.
 
-- **Prologue.** Zoom-out from the VU Faculty of Physics to our galaxy (clip,
-  advance-on-end) → the takeover (its last frame becomes the world's grains) →
+- **Prologue.** No cover: the deck opens on the zoom-out from the VU Faculty
+  of Physics to our galaxy (clip, advance-on-end) → the takeover (its last frame becomes the world's grains) →
   the history of the Universe as a funnel of grains, seen from outside → the
-  camera flies back down it to the CMB („380 000 metų po Didžiojo sprogimo“,
-  Planck map) → „Iš ko visa tai sudaryta?“ over the oldest light.
+  camera flies back down it to the CMB (380 000 metų, Planck map) → the
+  question „Iš ko visa tai sudaryta?“ (spoken) over the oldest light.
 - **I · Mašina.** CERN aerial clip, LHCb animation (media run), then LHCb's
   4 TB/s at grain level on the ring, whose curve becomes the tunnel's (the one
   match cut), and the LHC's limits on the tunnel photo.
@@ -34,19 +34,19 @@ brings the next round, and Lithuanian firms can solve it.
   (StagePhoto place mode): control room → touchscreen; information → the web
   (1989 proposal, 1993 public domain); detectors → PET, colour X-ray, Timepix
   round the Moon; beams → hadron therapy; the timing system → White Rabbit (Frankfurt
-  exchange); magnets → the superconducting line (tested with Airbus). The part is named during the flight.
+  exchange); magnets → the superconducting line (tested with Airbus). The
+  speaker names the part during the flight.
 - **III · Privačiam sektoriui.** How technology leaves CERN (700+), what suppliers gain
   (+14 %), the next machine (FCC: its ring in grains round the LHC at true
   scale, its strands ending empty), Lithuania (associate, full-membership bid),
   the bookend clip (the zoom-out reversed, back to Saulėtekis), one Lithuanian
   firm (Light Conversion: PHAROS chosen in CERN's 2021 tender for CLEAR), what a
   firm can do (613 mln. CHF a year; register, write to the liaison officer),
-  „Ačiū“.
+  the pentaquark (thanks spoken; the licence credits in tiny print).
 
 ## World
 
-Everything is grains; no solid shapes, no labels (one deliberate exception:
-the part word during a Part II flight, gone before the photo lands).
+Everything is grains; no solid shapes, no labels.
 
 - Stations (`public/data/space.json`): `hero` (the pentaquark: cover, close),
   `collider` (the LHC ring; carries `strands`), `cosmos`, `web`, `kt` (the gold
@@ -54,8 +54,8 @@ the part word during a Part II flight, gone before the photo lands).
   [30, 40, −110], its axis along −z behind the takeover's galaxy).
 - Talk-owned builders (`setup/`, registered in `main.ts`; `stage:check
   --types strands,funnel`): `strands.js` (grains from ring parts to products,
-  in groups: `inventions`, Part II's, on from section II and off from section
-  III; `fcc`, a second object on the collider station with its own `ring` of
+  in groups: `inventions`, Part II's, on from the touchscreen and off from
+  700+; `fcc`, a second object on the collider station with its own `ring` of
   grains at 7 × 90.7/26.7 = 23.8 and six strands ending empty, on slide 25 only;
   `<Strands :on group>`), `funnel.js` (wall rings and
   lines, the Big Bang, the CMB disk coloured from `public/figures/cmb_wmap.png`,
@@ -95,21 +95,19 @@ the part word during a Part II flight, gone before the photo lands).
   Licence CC BY-NC 3.0 IGO: the on-slide credit says it was reprojected,
   smoothed and recoloured (required). The scripts are not in the repo; the
   parameters are in the speaker notes and this file.
-- Toolkit: slidev-videos v0.6.8 (both addons; the engine's grains sized to the frame; `strands` registered `enterable: true`; print shows every animation at its end state; every pixel clamped finite before bloom: the funnel's additive core overflowed the half-float target to Inf → NaN → black on iOS). Device switches for a phone: `?stage-debug`, `?stage-post=off`, `?stage-targets=half`, `?stage-tier=0..3`. A lite mode for phones (fewer, smaller grains in the talk's forms, no takeover overlay) is parked on `wip/innoday-lite`, unused unless the iPhone still struggles: place groups, `humAt: all`,
+- Toolkit: slidev-videos v0.7.0 (both addons; stills at each slide's last click, which is click 0 here: the deck has no clicks; v0.6.8: the engine's grains sized to the frame; `strands` registered `enterable: true`; print shows every animation at its end state; every pixel clamped finite before bloom: the funnel's additive core overflowed the half-float target to Inf → NaN → black on iOS). Device switches for a phone: `?stage-debug`, `?stage-post=off`, `?stage-targets=half`, `?stage-tier=0..3`. A lite mode for phones (fewer, smaller grains in the talk's forms, no takeover overlay) is parked on `wip/innoday-lite`, unused unless the iPhone still struggles: place groups, `humAt: all`,
   `?stage-debug`, quality tiers (a phone starts at 2; desktop and the headless
   recorder at 0, `pages:check` prints it), lighter photo places, the context-
   loss fixes, stills and posters for print (v0.5.4: correct per page).
 
 ## Status
 
-2026-10-09: **complete, pending the owner's iPhone retest.** Deployed be73ad6
-(v0.6.8: the engine's grains and the talk's sized to the frame; the CMB disk
-the real Planck map) —
+2026-10-09: **complete, pending the owner's iPhone retest.** Deployed 9dc21bd
+(v0.7.0: stills shot at each slide's last click, the unsaid-clock check;
+c618855 + main 90d5458) —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
-Pages run 37975431628 (green), URL 200; `ready` passed with nothing skipped.
-Deploy's live walk stopped at slide 4 (the known pre-existing main-thread
-stalls on slides 3 and 8 under SwiftShader, reported to Tools); two reruns
-with `--wait 2500` walked 30/30, 0 failed, 0 context losses.
+Pages run 37988179265 (green), URL 200; `ready` passed with nothing skipped
+and the live walk went 30/30 first time (main's retrying walk).
 
 ## Decisions
 
@@ -121,9 +119,39 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   internet; the touchscreen and PET are "among the first", not CERN inventions;
   CERN alumni: about three in four work outside research and education (2026
   study §5.4), not "in industry".
-- No slogans, no subtitles under „Ačiū“ or part titles, no colon or dash
-  reveals, no rhetorical openers; kickers only where they add information.
-- Part II is "Sprendimai" (solutions), each slide names its problem.
+- No words on the slides (owner, 10 Oct: "No titles, statements - I will be
+  there. Don't need newspaper-like titles. What can stay is the numbers. I
+  will narrate myself"): no titles, kickers, part words, years or credits,
+  the cover and the section slides included ("without title and section
+  slides"). Two exceptions, the owner's too: each invention carries its name
+  as a caption of a word or two („Jutiklinis ekranas“ …, `.invention`, bottom
+  left on its own ground), and a number says what it is with its unit or one
+  word for what it counts (owner: "I prefer fewer words so I can adapt to the
+  audience. These slides are not lecture slides") (13,8 mlrd. metų, 4 TB/s, 26,7 km … 1,5 mlrd. susidūrimų/s,
+  700+ sutarčių, +14 % apyvartos, 91 km, 613 mln. CHF). `talk lint`'s TEXT
+  still flags those (expected until Tools' fix). The section slides' switches
+  moved to the next slide: `places: { inventions: true }` on the touchscreen,
+  `false` and the strands off on 700+; their notes open those slides.
+  Each removed credit and source is in its slide's notes. The credits a licence
+  asks for stand in tiny print on the last slide (owner: "Credit on last slide
+  tiny print"; CERN's material needs none): the Planck map, the 1989 proposal
+  photo, the MARS image and the three CERN photos under CC licences. The photos
+  have no dark text ground any more (`.hero::after` off).
+- No cover (owner, 10 Oct: "I will start with the second slide - the video"):
+  the deck opens on the zoom-out. `setup/OpenerStart.vue` shows its first frame
+  (the poster) at once while the clip buffers, holds the clip at 0, and turns
+  the first press (→, space, PageDown, ↓, p, click) into play-with-sound
+  instead of a step: Chrome pauses a clip unmuted before any press, so the
+  first → used to skip it. The slide says `layout: default` (Slidev gives a
+  first slide the cover layout, whose box held the clip at 0 px).
+- Taken overnight on 10 Oct (owner asleep, "complete everything"; the
+  recommended option, for the morning): the closing pentaquark keeps the
+  `wide` pose though it sits right, where „Ačiū“ left room (centre it?); the
+  three CERN photos under CC licences stay in the credits (drop them if
+  CERN-user covers them?); presenting through /presenter, click the audience
+  window once before the first press (its notes say so).
+- No slogans, no rhetorical openers in the notes either.
+- Part II is "Sprendimai" (solutions); the speaker names each problem.
 - The accelerator is „greitintuvas“, never „mašina“ (a CERN-English calque);
   White Rabbit „suderina laikrodžius“; the liaison is an Inovacijų agentūros
   „specialistė“, not „pareigūnė“ (Scheduler's audit, 9 Oct).
@@ -132,21 +160,18 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   when the camera looks down the axis, and the disk dims with the viewing angle
   so overlapping grains keep their colours.
 - Match cuts: only ring → tunnel; ring → CERN aerial and loop → FCC were weak.
-- Part II's photo places are one group, `group="inventions"`: section II
-  says `places: { inventions: true }`, section III `false`, so they are hidden
+- Part II's photo places are one group, `group="inventions"`: the touchscreen
+  slide says `places: { inventions: true }`, 700+ `false`, so they are hidden
   in the prologue, Part I and Part III (v0.5.2). Part I keeps its wide poses:
-  section I sees the ring from above in the right half, clear of the title (target [8.8, 0, −3], dist 20, pitch 55), 4 TB/s and the tunnel
-  look along the ring at pitch 22. (On v0.5.1 those poses had to look down at
+  4 TB/s and the tunnel look along the ring at pitch 22. (On v0.5.1 those poses had to look down at
   pitch 40 to keep the photos above the frame.)
 - Data → White Rabbit (2012, Frankfurt exchange), the thing that left CERN;
   the grid figures are in the notes. The photo's credit („© CERN (KT
   ataskaita, 2024)“) is taken from the KT report page; the photographer is
   not named there.
-- Part II, layout A (owner, 9 Oct): the problem is the headline, in the words
-  slide 12 speaks („Valdyti greitintuvą“ …), the year a small kicker above it,
-  the invention under it, then one line. The strands keep their ring order, so
-  the years run out of order; as the biggest text they read as a broken
-  timeline. Part words name ring parts only.
+- Part II's years stay off the slides (with layout A gone, 10 Oct): the strands
+  keep their ring order, so the years run out of order and read as a broken
+  timeline.
 - No gold text (owner, 9 Oct: "gold letters are all over the internet now
   because everyone uses AI as a designer"): headlines and numbers white, one
   light-blue accent (`--in-accent: #9cc4ff`) for kickers, units and the rare
@@ -162,7 +187,8 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   the stage prints `public/stills/NN.jpg` under each slide's own text, and the
   on-screen fallback shows the same stills. They are the world alone, from
   `slidev-stage-shots <dist> public/stills --stills` (v0.6.4 settles each
-  slide on the engine clock: the whole deck in about a minute). Clips print their posters (`public/video-frames/*.poster.jpg`,
+  slide on the engine clock: the whole deck in about a minute; reshot on
+  v0.7.0, so 05–06 print the real Planck map). Clips print their posters (`public/video-frames/*.poster.jpg`,
   `slidev-videos frames --all`); the LHCb animation's is at 0:24 by the
   manifest's `poster = "0:24"` (its first lit frame is a speck on black), which
   lists that library clip for the poster only. Export checked on v0.6.4: every
