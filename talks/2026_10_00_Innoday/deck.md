@@ -548,12 +548,14 @@ Faktai: pirkimai nuo 50 000 CHF siunčiami ir nacionaliniams pramonės ryšių
 -->
 
 ---
-layout: statement
 space: { at: wide }   # the pentaquark whole
 ---
 
+<div class="src credits">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas) · 1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0 · Riešo vaizdas: MARS Bioimaging Ltd · LHC tunelis: S. J. Hertzog / CERN, CC BY 4.0 · B. Stumpe: S. E. Bennett / CERN, CC BY 4.0 · NeXT serveris: P. Loïez / CERN, CC BY-SA 4.0</div>
+
 <!--
 Kalbėtojui. Kamera nuskrenda prie pentakvarko — penkių kvarkų dalelės, kurią 2015 m. atrado LHCb; ilgiausias skrydis (~4,5 s). Pentakvarkas išsibarsto ir vėl susirenka; „c“ — dar kartą.
+Apačioje smulkiu šriftu — licencijų reikalaujamos nuorodos (savininkas, 2026 10 10; CERN medžiagai jų nereikia).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
 Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė: kalba ~17,5 min; klipai — įžanginis 4:26, grįžimas („…ir atgal“) 0:30, CERN iš oro 0:11 ir LHCb animacija 0:56 (kalbama per juos); iš viso apie 22 min. Paslėpta skaidrė po šios (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.

@@ -21,11 +21,11 @@ physicists needed a machine nobody could buy; each of its limits had to be
 broken; the solutions left CERN as things in daily use; the next machine (FCC)
 brings the next round, and Lithuanian firms can solve it.
 
-- **Prologue.** Zoom-out from the VU Faculty of Physics to our galaxy (clip,
-  advance-on-end) → the takeover (its last frame becomes the world's grains) →
+- **Prologue.** No cover: the deck opens on the zoom-out from the VU Faculty
+  of Physics to our galaxy (clip, advance-on-end) → the takeover (its last frame becomes the world's grains) →
   the history of the Universe as a funnel of grains, seen from outside → the
-  camera flies back down it to the CMB („380 000 metų po Didžiojo sprogimo“,
-  Planck map) → „Iš ko visa tai sudaryta?“ over the oldest light.
+  camera flies back down it to the CMB (380 000 metų, Planck map) → the
+  question „Iš ko visa tai sudaryta?“ (spoken) over the oldest light.
 - **I · Mašina.** CERN aerial clip, LHCb animation (media run), then LHCb's
   4 TB/s at grain level on the ring, whose curve becomes the tunnel's (the one
   match cut), and the LHC's limits on the tunnel photo.
@@ -34,19 +34,19 @@ brings the next round, and Lithuanian firms can solve it.
   (StagePhoto place mode): control room → touchscreen; information → the web
   (1989 proposal, 1993 public domain); detectors → PET, colour X-ray, Timepix
   round the Moon; beams → hadron therapy; the timing system → White Rabbit (Frankfurt
-  exchange); magnets → the superconducting line (tested with Airbus). The part is named during the flight.
+  exchange); magnets → the superconducting line (tested with Airbus). The
+  speaker names the part during the flight.
 - **III · Privačiam sektoriui.** How technology leaves CERN (700+), what suppliers gain
   (+14 %), the next machine (FCC: its ring in grains round the LHC at true
   scale, its strands ending empty), Lithuania (associate, full-membership bid),
   the bookend clip (the zoom-out reversed, back to Saulėtekis), one Lithuanian
   firm (Light Conversion: PHAROS chosen in CERN's 2021 tender for CLEAR), what a
   firm can do (613 mln. CHF a year; register, write to the liaison officer),
-  „Ačiū“.
+  the pentaquark (thanks spoken; the licence credits in tiny print).
 
 ## World
 
-Everything is grains; no solid shapes, no labels (one deliberate exception:
-the part word during a Part II flight, gone before the photo lands).
+Everything is grains; no solid shapes, no labels.
 
 - Stations (`public/data/space.json`): `hero` (the pentaquark: cover, close),
   `collider` (the LHC ring; carries `strands`), `cosmos`, `web`, `kt` (the gold
@@ -119,9 +119,26 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   internet; the touchscreen and PET are "among the first", not CERN inventions;
   CERN alumni: about three in four work outside research and education (2026
   study §5.4), not "in industry".
-- No slogans, no subtitles under „Ačiū“ or part titles, no colon or dash
-  reveals, no rhetorical openers; kickers only where they add information.
-- Part II is "Sprendimai" (solutions), each slide names its problem.
+- No words on the slides (owner, 10 Oct: "No titles, statements - I will be
+  there. Don't need newspaper-like titles. What can stay is the numbers. I
+  will narrate myself"): no titles, kickers, captions, part words, years or
+  credits, the cover included. A number keeps its unit (13,8 mlrd. metų,
+  4 TB/s, the tunnel's four, 700+, +14 %, 91 km, 613 mln. CHF); `talk lint`'s
+  TEXT flags the units too (its unit rule takes one short word after a digit).
+  Each removed credit and source is in its slide's notes. The credits a licence
+  asks for stand in tiny print on the last slide (owner: "Credit on last slide
+  tiny print"; CERN's material needs none): the Planck map, the 1989 proposal
+  photo, the MARS image and the three CERN photos under CC licences. The photos
+  have no dark text ground any more (`.hero::after` off).
+- No cover (owner, 10 Oct: "I will start with the second slide - the video"):
+  the deck opens on the zoom-out. `setup/OpenerStart.vue` shows its first frame
+  (the poster) at once while the clip buffers, holds the clip at 0, and turns
+  the first press (→, space, PageDown, ↓, p, click) into play-with-sound
+  instead of a step: Chrome pauses a clip unmuted before any press, so the
+  first → used to skip it. The slide says `layout: default` (Slidev gives a
+  first slide the cover layout, whose box held the clip at 0 px).
+- No slogans, no rhetorical openers in the notes either.
+- Part II is "Sprendimai" (solutions); the speaker names each problem.
 - The accelerator is „greitintuvas“, never „mašina“ (a CERN-English calque);
   White Rabbit „suderina laikrodžius“; the liaison is an Inovacijų agentūros
   „specialistė“, not „pareigūnė“ (Scheduler's audit, 9 Oct).
@@ -140,11 +157,9 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   the grid figures are in the notes. The photo's credit („© CERN (KT
   ataskaita, 2024)“) is taken from the KT report page; the photographer is
   not named there.
-- Part II, layout A (owner, 9 Oct): the problem is the headline, in the words
-  slide 12 speaks („Valdyti greitintuvą“ …), the year a small kicker above it,
-  the invention under it, then one line. The strands keep their ring order, so
-  the years run out of order; as the biggest text they read as a broken
-  timeline. Part words name ring parts only.
+- Part II's years stay off the slides (with layout A gone, 10 Oct): the strands
+  keep their ring order, so the years run out of order and read as a broken
+  timeline.
 - No gold text (owner, 9 Oct: "gold letters are all over the internet now
   because everyone uses AI as a designer"): headlines and numbers white, one
   light-blue accent (`--in-accent: #9cc4ff`) for kickers, units and the rare
