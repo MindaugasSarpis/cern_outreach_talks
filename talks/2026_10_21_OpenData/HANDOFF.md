@@ -32,6 +32,13 @@ videos-2026-10-00-opendata.
   answers 200, the old 2026_10_00 one 404), the shared LHC opening on
   v0.8.0 with its captions (see the 2026-10-11 decision), the tunnel cut on
   the talk's release. First live version for the owner's review.
+- Redeployed 2026-10-11 under the standing rule: commit 182a5c6 on main,
+  Pages run 38090574213 (success); live check passed (15 slides, nothing
+  failed); `talk ready` passed on 182a5c6 with nothing skipped (lint: the two
+  TEXT warnings of the owner's exception). In it: the opening's heads faint
+  in the freeze (no blot), printed pages keep their stills (the scrim held at
+  0.05 in print until v0.8.1), the big numbers in the font's own figures,
+  and the thesis slide's text and „Ačiū“ back on the owner's word.
 - Next: the owner's feedback on the opening; then od-story-everyday
   (prototype slides 6 and 9 first), with placeholders for the owner's
   numbers and photos.
