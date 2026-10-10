@@ -175,7 +175,9 @@ Two things the pipeline does not do:
 
 **Pictures and numbers only** (the owner, 2026-10-10; talks dated 2026-10 on).
 No titles, kickers, statements, captions, labels, bylines or credit lines on
-screen, the cover included. A number may stand, with a short unit (13,6 TeV,
+screen, the cover included. Credits a licence asks for go in tiny print in a
+`.credits` block on the last slide ("Credit on last slide tiny print"); none
+for CERN's material. A number may stand, with a short unit (13,6 TeV,
 12 639, 95 %). What the slide would have said goes into the notes, with its
 sources. `pnpm talk lint` flags the rest (TEXT); a review or audit checks
 "pictures and numbers only" before anything below. Rules 1–3 and 8–9 apply

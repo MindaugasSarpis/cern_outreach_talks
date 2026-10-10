@@ -24,10 +24,14 @@ Slidev counts it (hidden slides are not counted).
   TEXT           warning  words on screen that are not numbers: no titles, statements
                           or captions, the owner narrates (CLAUDE.md, 2026-10-10).
                           Numbers stay, with a short unit after one (13,6 TeV,
-                          12 639, 95 %, 3 mln.); only the notes are exempt, not
-                          .src or .credit lines either (provenance stays in
-                          photos.toml and the manifests; sources in the notes,
-                          so NO-SRC reads such a deck as `sources: notes`).
+                          12 639, 95 %, 3 mln.), a unit of UNITS standing on its
+                          own (a <Count> beside it) or in a `.unit` element;
+                          the notes are exempt, and a `.credits` block on the
+                          last slide (licence credits, in tiny print; none for
+                          CERN's material). Not .src or .credit lines elsewhere
+                          (provenance stays in photos.toml and the manifests;
+                          sources in the notes, so NO-SRC reads such a deck as
+                          `sources: notes`).
                           One finding per slide. Talks dated before
                           2026-10 (delivered) are skipped; headmatter
                           `onscreen: words` opts a deck out, `onscreen: numbers` in
@@ -116,6 +120,9 @@ NOTES_SRC = re.compile(r"(?im)^[ \t]*(?:[-*•][ \t]*)?(?:sources?|šaltin(?:is|
                        r"(?:[ \t]*\([^)\n]*\))?[ \t]*:")
 LHCB = re.compile(r"LHCb")
 NUMBERS_FROM = "2026_10"          # talks dated from here on keep only numbers on screen
+UNITS = {"%", "‰", "eV", "keV", "MeV", "GeV", "TeV", "PeV", "B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB",
+         "Hz", "kHz", "MHz", "GHz", "THz", "m", "km", "cm", "mm", "µm", "nm", "fm", "s", "ms", "µs", "ns",
+         "kg", "g", "t", "K", "°C", "W", "kW", "MW", "GW", "V", "kV", "T", "fb⁻¹", "pb⁻¹", "mln.", "mlrd.", "tūkst."}
 UNIT = re.compile(r"[^\W\d_]{1,4}\.?")   # a short unit right after a number: TeV, km, mln., s
 
 LT_WORDS = {   # Lithuanian words with a meaning the talk does not want
@@ -230,7 +237,8 @@ class Lint:
             self.check_slop(s, text)
             self.check_words_and_sources(s, text)
             if self.numbers_only:
-                self.check_numbers(s, td.screen_text(body))
+                last = s is self.deck.visible[-1] if self.deck.visible else False
+                self.check_numbers(s, td.screen_text(body, ("unit", "credits") if last else ("unit",)))
             self.check_inline_sizes(s)
             self.check_marks(s, n_visible)
             self.check_facts(s, bank)
@@ -369,7 +377,7 @@ class Lint:
             if not tok or not re.search(r"[^\W\d_]", tok):        # a number, a sign, a symbol
                 prev_num = bool(re.search(r"\d", tok))
                 continue
-            if re.search(r"\d", tok) or (prev_num and UNIT.fullmatch(m.group(0).strip("(),;:"))):
+            if re.search(r"\d", tok) or tok in UNITS or m.group(0).strip("(),;:") in UNITS or (prev_num and UNIT.fullmatch(m.group(0).strip("(),;:"))):
                 prev_num = bool(re.search(r"\d", tok))           # 5x, 2026-ieji, or a unit after a number
                 continue
             words.append((m.start(), tok))
