@@ -8,7 +8,7 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 „adresuoti“.
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos v0.8.0, for both addons.
+Toolkit pin: slidev-videos v0.8.1, for both addons.
 
 **Deploys (owner, 2026-10-09: "Deploy now, and always").** The standing rule
 holds for this talk: it deploys without asking once `talk ready` passes with

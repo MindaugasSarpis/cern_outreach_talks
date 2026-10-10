@@ -200,9 +200,3 @@ html[data-stage] .finds .line, html[data-stage] .chips li, html[data-stage] .poi
 @media (prefers-reduced-motion: reduce), print {
   html[data-stage] .slidev-layout, html[data-stage] .slidev-layout * { animation: none !important; }
 }
-
-/* print and PDF: the stage reads slide 1's `dim` on the print route (the standby's dim: 1),
-   so every printed page sat under a near-opaque scrim and its still went black. Until the
-   kit takes each page's own dim (Užsikrauk karjerai found it, 2026-10-11), the printed
-   pages keep only a breath of it */
-html[data-stage] .print-slide-container .scrim { opacity: 0.05 !important; }
