@@ -361,3 +361,8 @@ html[data-stage] .hero .invention {
   background: rgba(4, 6, 16, 0.62); padding: 6px 14px; border-radius: 4px;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
+/* print (toolkit v0.8.0 bug, until Tools' fix): on the print route the stage's
+   scrim takes slide 1's dim for every page, and slide 1 (the opener) has none,
+   so the content layout's default dimmed each printed world to about half its
+   still. Tools' workaround: a near-clear scrim in print. */
+.print-slide-container .scrim { opacity: 0.05 !important; }
