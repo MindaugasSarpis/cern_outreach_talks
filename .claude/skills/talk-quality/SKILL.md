@@ -16,7 +16,7 @@ for the engine, [docs/STAGE_QUICKSTART.md](../../../docs/STAGE_QUICKSTART.md).
 |---|---|
 | Brief | skill `talk-new` |
 | Blueprint | saved workflow `talk-blueprint` (below), or by hand for a short talk |
-| Outline | slides with title, message and pose; `pnpm talk map <t>` |
+| Outline | slides with the spoken line, message and pose (no on-screen title); `pnpm talk map <t>` |
 | Deck draft | text and notes now; `<!-- facts: id -->` as its own comment before the notes comment, never the slide's last (that one is the notes); `pnpm talk facts search` |
 | Research the gaps | skill `talk-research` (saved workflow `talk-research-gaps`) |
 | Lint | `pnpm talk lint <t>` |
@@ -25,22 +25,27 @@ for the engine, [docs/STAGE_QUICKSTART.md](../../../docs/STAGE_QUICKSTART.md).
 | Diff-only fact check | saved workflow `talk-review`, facts lens |
 | Timing gate | `pnpm talk lint <t>`: notes and clips within `duration` + 5 % |
 | Ready | `pnpm talk ready <t>` |
-| Deploy | skill `talk-deploy`, only on the owner's request |
+| Deploy | skill `talk-deploy`, under its standing rule |
 
 ## Checklist for every slide
 
-- One claim; a plain title of six words or fewer; at most 60 words on screen.
-- One dominant visual; every world object on it maps to a sentence or label
-  on the slide.
-- Every number sourced (`.src`, a facts comment before the notes); nothing
-  unverified.
+- Pictures and numbers only (owner, 2026-10-10): no title, statement, kicker,
+  caption or credit on screen, the cover included; the owner narrates. A
+  number keeps its short unit; `talk lint` warns `TEXT` on any other word.
+  The one exception: credits a licence asks for, in tiny print on the last
+  slide (CERN's material needs none).
+- One claim; one dominant visual; every world object on it maps to a
+  sentence in the notes.
+- Every number sourced (a facts comment before the notes, sources in the
+  notes); nothing unverified.
 - Every term and plot introduced before it is used.
-- Readable over the world (type floor, dim, no bright detail behind text).
-- Nothing reads as generated: the unslop pass is clean on the slide face,
-  the spoken notes and the world labels (house VOICE wins where they differ).
+- Numbers readable over the world (type floor, dim, no bright detail behind
+  them).
+- Nothing reads as generated: the unslop pass is clean on the spoken notes
+  and anything left on screen (house VOICE wins where they differ).
 - Notes carry the spoken script and `(~N min)`.
 
-And for the talk: the cover and close each have an entrance and the hum; one
+And for the talk: the opening and close each have an entrance and the hum; one
 big move per part; the minutes fit; a new world mechanic was tried on one
 sparse and one dense slide before it spread.
 
