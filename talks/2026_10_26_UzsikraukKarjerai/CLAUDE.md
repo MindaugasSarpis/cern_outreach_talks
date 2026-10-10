@@ -24,35 +24,55 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (fifth version after the owner's review, plus ideas 1, 3 and 7: 13 slides, about 8 min)
+## Story (fifth version after the owner's review, plus ideas 1, 3 and 7, after the shared LHC opening: 15 slides, about 9 min)
 
 Approved outline: `notes/outline-v5.md` with its two change sections
 (owner, 2026-10-08). The viewer sits in the physicist's seat.
 
 Pictures and numbers (owner, 2026-10-10): no titles, kickers, statements or
 section slides; the speaker narrates from the notes. A number carries the word
-that names it; a thing shown may carry its name (the map's cities); the one
-licence credit is tiny print on the last slide.
+that names it; a thing shown may carry its name (the map's cities). Every picture is CERN's
+since the opening replaced the cavern photograph, so no credit is on screen.
 
 | # | Screen | Picture |
 |---|---|---|
-| 1 | — | the five-quark form gathers (hero, `quarks`) |
-| 2 | — | `th1` fills: 140 dots, a chance bump at 1,54 GeV (illustration) |
-| 3 | — | same |
-| 4 | — | `th2` fills: 3 500 dots, smooth (illustration) |
-| 5 | — (clip) | LHC tunnel footage |
-| 6 | — (photo) | LHCb cavern, StagePhoto: what LHCb studies and why |
-| 7 | — (photo) | LHCb Run 3 event display, StagePhoto: how a collision becomes a dot |
-| 8 | — (one click, `clicks: 1`) | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks at the click |
-| 9 | the counts with their word: „140 taškų“ · „27 292 taškai“ | `jx`: the 140-entry plot of slides 2–3 at LHCb's scale beside `jp` (one grain per entry, the same bin width and height per entry); a coordinate pose between them |
-| 10 | Vilnius, CERN | the route across Europe |
-| 11 | Vilnius, CERN | the map close on Vilnius and the arcs to CERN: the working day (idea 7), in the speaker's own public words |
-| 12 | — | the form far off, dimmed (the three things are said, not shown) |
-| 13 | the credit in tiny print: „LHCb salės nuotrauka: Rosa Menkman, CC BY 2.0“ | the form, held (the question is said, not shown) |
+| 1 | — | black standby, at the `opening` station (`dim: 1, ambient: 0, hum: false`); → starts the opening |
+| 2 | „LHC 27 km“ | the shared opening: the real LHC tunnel (18 s cut), on into the beam pipe (`exit="push"`) |
+| 3 | „8 TeV“, then „237 dalelės“ | the shared opening: one real 2012 LHCb crossing in slow motion (`lhc-collision`, `rate` keys, camera `path`) |
+| 4 | — (clip) | the shared opening: `lhcb.mp4`, the LHCb detector in 3D (39 s cut, music); moves on by itself |
+| 5 | — | the five-quark form gathers (hero, `quarks`): the talk's own cover |
+| 6 | — | `th1` fills: 140 dots, a chance bump at 1,54 GeV (illustration) |
+| 7 | — | same |
+| 8 | — | `th2` fills: 3 500 dots, smooth (illustration) |
+| 9 | — (photo) | LHCb Run 3 event display, StagePhoto: the LHC, LHCb and how a collision becomes a dot (the words of the old tunnel and cavern slides) |
+| 10 | — (one click, `clicks: 1`) | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks at the click |
+| 11 | the counts with their word: „140 taškų“ · „27 292 taškai“ | `jx`: the 140-entry plot of slides 6–7 at LHCb's scale beside `jp` (one grain per entry, the same bin width and height per entry); a coordinate pose between them |
+| 12 | Vilnius, CERN | the route across Europe |
+| 13 | Vilnius, CERN | the map close on Vilnius and the arcs to CERN: the working day (idea 7), in the speaker's own public words |
+| 14 | — | the form far off, dimmed (the three things are said, not shown) |
+| 15 | — | the form, held (the question is said, not shown) |
 
 ## Status
 
-- 2026-10-10 (latest): **deployed b675427** under the owner's standing deploy
+- 2026-10-11 (latest): **deployed f23d671** under the owner's standing deploy
+  rule: the shared LHC opening (Decisions, 2026-10-11) on slidev-videos v0.8.0,
+  15 slides. Main fe69406 is merged. `talk ready` passed with nothing skipped.
+  Pages run 38089305763 green, live walk passed for 15 slides, URL 200. Both
+  clips are on the release `videos-2026-10-26-uzsikraukkarjerai`. First version
+  for the owner's review. Open for the owner: whether to move the LHC and LHCb
+  lines from the event display (slide 9) over the opening, their moments for
+  slide 13 (the working day), the licences of the CERN clips and event display
+  for Delfi, the 2027 masterclass date and the BL4S call.
+
+- 2026-10-10: **deployed 4de8e57** under the owner's standing deploy
+  rule: the names follow-up and fewer words (Decisions, 2026-10-10). On screen:
+  slide 9's „140 taškų“ and „27 292 taškai“, Vilnius and CERN on slides 10 and
+  11, and slide 13's credit. Lint 0 warnings (main 7f6b0fe's TEXT). `talk ready`
+  passed with nothing skipped. Pages run 38085005443 green, live walk passed for
+  13 slides, URL 200, and the live text scan matches. Next: the shared opening
+  with v0.8.0, once OpenData's module is on main.
+
+- 2026-10-10: **deployed b675427** under the owner's standing deploy
   rule: pictures and numbers only (Decisions, 2026-10-10). On screen: slide 9's
   „140“ and „27 292“, and slide 13's tiny-print credit for the slide 6 photo
   (Rosa Menkman, CC BY 2.0). Main 8e1b223 is merged. `talk ready` passed with
@@ -209,6 +229,29 @@ licence credit is tiny print on the last slide.
 
 ## Decisions
 
+- 2026-10-11 — The shared LHC opening (components/lhc-opening/, built by
+  OpenData; the owner: "start with the real video of LHC, then go into it, make
+  everything black and show really exciting collision ... then we go to 3d lhcb
+  video, then the two talks diverge"). Slides 1–4 are OpenData's opening as its
+  README asks: a black standby; the tunnel (an 18 s cut of
+  CERN-FOOTAGE-2022-013-001, `exit="push"` into the beam pipe, „LHC 27 km“); the
+  2012 collision („8 TeV“, „237 dalelės“; the same event and timing); `lhcb.mp4`
+  (the same 39 s cut). Both clips are in this talk's manifest and on its release
+  `videos-2026-10-26-uzsikraukkarjerai`, with their own strips and posters (cut
+  with the v0.8.0 CLI from an extracted copy, since the editable install is at
+  v0.4.0). The talk's own deck follows from slide 5, the cover.
+  LHCb is not introduced twice. The old tunnel clip (5) and cavern photograph (6)
+  are gone, and their words move unchanged, in the story's order, onto the event
+  display (now 9). Its facts comment takes both slides' ids, and its notes say so.
+  The opening's notes point there, so the owner can move the LHC and LHCb lines
+  over the opening when retelling. With the cavern photograph gone, the last
+  slide's credit goes too: every picture is CERN's. Notes that cite slide
+  numbers are renumbered. Toolkit v0.8.0 (stage 0.5.0) for the rate, path,
+  ambient and push. First version for the owner's review (AFK protocol).
+  Print: a printed page's scrim takes `dim` from the deck's current slide, which
+  stays at 1 on the print route, so the standby's `dim: 1` darkened every printed
+  still (v0.8.0, sent to Tools). v0.8.1 reads each print page's own frontmatter,
+  so the talk's print-scrim workaround is gone again.
 - 2026-10-10 — Fewer words (the owner, before sleeping: "fewer words so I can
   adapt to the audience; these slides are not lecture slides"; AFK protocol,
   the recommended option). Slide 10 names only Vilnius and CERN, the route's
@@ -496,3 +539,10 @@ colours; `options: { dustSize: 2.2, reach: 22, nebula: 0.4 }`.
   needs about 40 s before the world draws. For animated slides use
   `slidev-stage-record` (exact clock); it enters each slide right after the
   one before, so a fill that restarts there is an artefact.
+- `talk ready` after a small edit shoots only the changed slides (`--changed`).
+  It walks the unchanged ones on a held clock, which arms `jp`, `jx` and `route`
+  out of view. Their 6 s fallback then fills them for about 30 engine-s, and the
+  settle waits on every station. So a reshot slide 09–13 can end "not settled"
+  under load (2026-10-10, slide 13; the v0.8.0 review). Recovery: delete
+  `shots/.shots-cache.json` and run `talk ready` again, so all slides are shot in
+  order. The toolkit fix (settle on the station in view) is with Tools.

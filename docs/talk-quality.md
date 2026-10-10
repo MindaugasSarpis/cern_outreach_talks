@@ -260,7 +260,7 @@ From the Startertalk blueprint's style rules, generalised.
 - The repo is public. The bank holds only claims with a public `source_url`.
   Anything from mail, Drive or calendars goes to the private brief
   (`~/.local/share/outreach_talks/briefs/<slug>.md`, where `<slug>` is the
-  name after the date, lowercased, `_` as `-`, so `2026_10_00_OpenData` is
+  name after the date, lowercased, `_` as `-`, so `2026_10_21_OpenData` is
   `opendata`), never into git.
 - Physics traps that recurred in the Startertalk: thresholds from
   charge-consistent pairs with PDG masses; the η<sub>c</sub>p / J/ψp ratio

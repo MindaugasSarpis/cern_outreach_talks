@@ -1,5 +1,6 @@
 import { registerBuilder } from 'slidev-addon-stage'
 import { installGrains } from './grains.js'
+import { installOpening } from '../components/lhc-opening/index.js'
 import Grains from './Grains.vue'
 import Count from './Count.vue'
 
@@ -9,6 +10,7 @@ import Count from './Count.vue'
 // is the identity, and @slidev/types is not a dependency of the talk.)
 export default ({ app }) => {
   installGrains(registerBuilder)
+  installOpening({ app, registerBuilder })   // the shared LHC opening: its collision, sound and <LhcOpening>
   app.component('Grains', Grains)
   app.component('Count', Count)
 }

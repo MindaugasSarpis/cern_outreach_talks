@@ -310,6 +310,36 @@
      "color": "#ffc05a"
     }
    ]
+  },
+  {
+   "id": "opening",
+   "pos": [
+    0,
+    -400,
+    0
+   ],
+   "look": {
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 6,
+    "yaw": 60,
+    "pitch": 6,
+    "sway": 0
+   },
+   "objects": [
+    {
+     "type": "lhc-collision",
+     "name": "opening",
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
   }
  ]
 }
