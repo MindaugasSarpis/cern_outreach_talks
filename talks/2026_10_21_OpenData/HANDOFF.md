@@ -39,6 +39,11 @@ videos-2026-10-00-opendata.
   in the freeze (no blot), printed pages keep their stills (the scrim held at
   0.05 in print until v0.8.1), the big numbers in the font's own figures,
   and the thesis slide's text and „Ačiū“ back on the owner's word.
+- Redeployed 2026-10-11 under the standing rule: commit d50898a on main,
+  Pages run 38092713877 (success); live check passed (15 slides, nothing
+  failed); `talk ready` passed on d50898a with nothing skipped. In it:
+  slidev-videos v0.8.1 (print takes each page's own dim), the talk's scrim
+  workaround dropped.
 - Next: the owner's feedback on the opening; then od-story-everyday
   (prototype slides 6 and 9 first), with placeholders for the owner's
   numbers and photos.
