@@ -51,10 +51,11 @@ meaning): "at some angles the screen is too busy with everything and words
 are difficult to make out", "slide 20 too busy, barely readable", "the space
 doesn't bear any meaning", "isn't clear what they symbolize", "Zweig paper is
 just white".
-For every slide report, as text only: slide number and title, kind (busy,
+For every slide report, as text only: slide number and what it shows (decks have no titles), kind (busy,
 illegible, meaning, overexposed, overflow, layout, render), severity (high,
-medium, low), what is wrong and the exact fix. Check that every world object
-on a slide maps to a sentence or label on it, that text never sits on bright
+medium, low), what is wrong and the exact fix. Flag any on-screen word that
+is not a number (pictures and numbers only, owner 2026-10-10). Check that
+every world object on a slide maps to a sentence in its notes, that a number never sits on bright
 or busy world detail (high lumVar behind body text), that nothing is near
 white (lumMean), that no readable text is under <floor> canvas px, that
 mixed-case names are not uppercased (LHCb), and that the lower third of
