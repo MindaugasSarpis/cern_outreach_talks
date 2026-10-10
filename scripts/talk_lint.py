@@ -21,6 +21,16 @@ Slidev counts it (hidden slides are not counted).
                           delve, tapestry, unleash, embark, realm, game-changer,
                           mind-blowing, paradigm shift, testament to (BANNED). On
                           screen; phrases and banned words also in the notes
+  TEXT           warning  words on screen that are not numbers: no titles, statements
+                          or captions, the owner narrates (CLAUDE.md, 2026-10-10).
+                          Numbers stay, with a short unit after one (13,6 TeV,
+                          12 639, 95 %, 3 mln.); only the notes are exempt, not
+                          .src or .credit lines either (provenance stays in
+                          photos.toml and the manifests; sources in the notes,
+                          so NO-SRC reads such a deck as `sources: notes`).
+                          One finding per slide. Talks dated before
+                          2026-10 (delivered) are skipped; headmatter
+                          `onscreen: words` opts a deck out, `onscreen: numbers` in
   WORDS          warning  more than 60 words on screen (backup slides excepted)
   FONT-SMALL     warning  a talk CSS or inline font size under 18 px outside
                           .src, .credit and .k
@@ -105,6 +115,8 @@ SOURCES = ("slides", "notes")                            # headmatter `sources:`
 NOTES_SRC = re.compile(r"(?im)^[ \t]*(?:[-*•][ \t]*)?(?:sources?|šaltin(?:is|iai)|references?)"
                        r"(?:[ \t]*\([^)\n]*\))?[ \t]*:")
 LHCB = re.compile(r"LHCb")
+NUMBERS_FROM = "2026_10"          # talks dated from here on keep only numbers on screen
+UNIT = re.compile(r"[^\W\d_]{1,4}\.?")   # a short unit right after a number: TeV, km, mln., s
 
 LT_WORDS = {   # Lithuanian words with a meaning the talk does not want
     "kolaborant": "'kolaborantai' means collaborators with an occupier; say 'kolaboracijos nariai'",
@@ -152,6 +164,7 @@ class Lint:
         self.keep = self._contexts("none")
         self.lang = self._lang()
         self.sources = self._sources()
+        self.numbers_only = self._numbers_only()
         self.timing: dict = {}
 
     # ---------------------------------------------------------------- utils
@@ -186,12 +199,19 @@ class Lint:
     def _sources(self) -> str:
         val = self.deck.headmatter.get("sources")
         if val is None:
-            return "slides"
+            return "notes" if self._numbers_only() else "slides"
         if str(val).strip().lower() in SOURCES:
             return str(val).strip().lower()
         self.add("NO-SRC", "warning", f"headmatter `sources: {val}` is neither slides nor notes; read as slides",
                  "deck.md", 1)
         return "slides"
+
+    def _numbers_only(self) -> bool:
+        val = str(self.deck.headmatter.get("onscreen") or "").strip().lower()
+        if val in ("numbers", "words"):
+            return val == "numbers"
+        m = re.match(r"(\d{4}_\d{2})", self.talk.name)
+        return not m or m.group(1) >= NUMBERS_FROM
 
     # --------------------------------------------------------------- checks
     def run(self):
@@ -209,6 +229,8 @@ class Lint:
             self.check_headings(s, screen)
             self.check_slop(s, text)
             self.check_words_and_sources(s, text)
+            if self.numbers_only:
+                self.check_numbers(s, td.screen_text(body))
             self.check_inline_sizes(s)
             self.check_marks(s, n_visible)
             self.check_facts(s, bank)
@@ -339,6 +361,24 @@ class Lint:
             for w in BANNED:
                 for m in re.finditer(rf"(?<![\w-]){re.escape(w)}(?![\w-])", low):
                     self.at(s, base + m.start(), "SLOP-WORD", "warning", f"{where}banned word {w!r}")
+
+    def check_numbers(self, s: td.Slide, text: str):
+        words, prev_num = [], False
+        for m in re.finditer(r"\S+", text):
+            tok = m.group(0).strip("()[]{}„“”\"'«»:;,.!?–—-…")
+            if not tok or not re.search(r"[^\W\d_]", tok):        # a number, a sign, a symbol
+                prev_num = bool(re.search(r"\d", tok))
+                continue
+            if re.search(r"\d", tok) or (prev_num and UNIT.fullmatch(m.group(0).strip("(),;:"))):
+                prev_num = bool(re.search(r"\d", tok))           # 5x, 2026-ieji, or a unit after a number
+                continue
+            words.append((m.start(), tok))
+            prev_num = False
+        if words:
+            shown = " ".join(w for _, w in words[:6]) + (" …" if len(words) > 6 else "")
+            self.at(s, words[0][0], "TEXT", "warning",
+                    f"{len(words)} word(s) on screen that are not numbers: {shown!r} (pictures and numbers "
+                    "only; the owner narrates: put it in the notes)")
 
     def check_words_and_sources(self, s: td.Slide, text: str):
         n = td.count_words(text)
