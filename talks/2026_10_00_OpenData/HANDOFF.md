@@ -15,7 +15,18 @@ holds for this talk: it deploys without asking once `talk ready` passes with
 nothing skipped and the Scheduler gives it main. Anything else still needs
 the owner's word.
 
-## Status (2026-10-10): deployed on v0.7.0, pictures and numbers only; the shared LHC opening in progress
+**The talk: 21 October 2026** (owner, via the Scheduler, 2026-10-11). The
+opening and the everyday story are due before it. The dir and the release tag
+stay 2026_10_00 until the owner says (renaming changes the URL).
+
+## Status (2026-10-11): deployed on v0.7.0, numbers with their names; the shared LHC opening in progress
+
+- Redeployed 2026-10-11 under the standing rule ("Deploy all"): commit
+  34bb306 on main, Pages run 38085959149 (success); `talk deploy`'s live
+  check passed (13 slides, nothing failed). `talk ready` passed on 34bb306
+  with nothing skipped. In it: the units follow-up (44cf1e4, e0a5cc9).
+- The opening is on the local branch wip/opendata-opening (not pushed), to be
+  pinned to v0.8.0 and deployed on its own.
 
 - Redeployed 2026-10-10 under the standing rule: commit 8e1b223 on main,
   Pages run 38081755288 (success); `talk deploy`'s live check passed (13
