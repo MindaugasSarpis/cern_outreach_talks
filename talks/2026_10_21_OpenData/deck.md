@@ -40,7 +40,7 @@ info: |
   Kick-off: lhcb.mp4, the LHCb detector in 3D with music, this talk's 39 s cut
   of the library clip (videos/manifest.toml). It arrives as dust and moves on
   by itself when it ends.
-  Date placeholder 2026_10_00.
+  The talk: 21 October 2026.
 layout: cover
 space:
   at: wide

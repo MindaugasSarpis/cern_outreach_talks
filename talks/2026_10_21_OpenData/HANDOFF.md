@@ -16,8 +16,12 @@ nothing skipped and the Scheduler gives it main. Anything else still needs
 the owner's word.
 
 **The talk: 21 October 2026** (owner, via the Scheduler, 2026-10-11). The
-opening and the everyday story are due before it. The dir and the release tag
-stay 2026_10_00 until the owner says (renaming changes the URL).
+opening and the everyday story are due before it. The dir is
+talks/2026_10_21_OpenData since 2026-10-11 (owner: "Change web addresses as
+well, I don't share this with anyone"), so the URL is
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_21_OpenData/
+(the old 2026_10_00 address is gone). The videos release keeps its storage name,
+videos-2026-10-00-opendata.
 
 ## Status (2026-10-11): deployed on v0.7.0, numbers with their names; the shared LHC opening in progress
 
