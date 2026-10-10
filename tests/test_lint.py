@@ -291,6 +291,30 @@ Sources: CERN.
         self.assertEqual([f.slide for f in found], [1])                 # credits on any other slide are text
         self.assertIn("'Photo J Doe'", found[0].message)
 
+    def test_named_numbers_captions_and_bare_numbers(self):
+        deck = """---
+theme: ../../theme
+---
+
+<div class="big">140 taškų</div>
+<div class="caption">Pirmasis tranzistorius</div>
+
+---
+
+<div class="big">20</div>
+
+---
+
+<div class="caption">Tai buvo pirmasis tranzistorius, pakeitęs pasaulį.</div>
+
+---
+
+<div class="big"><Count :to="12" /> <span class="name">užklausų</span></div>
+"""
+        l = self.lint_at("2026_11_01_New", deck)
+        self.assertEqual([f.slide for f in codes(l, "TEXT")], [3])            # a sentence is no caption
+        self.assertEqual([f.slide for f in codes(l, "NUMBER-BARE")], [2])     # 20 of what?
+
     def test_older_decks_and_opt_outs(self):
         self.assertEqual(codes(self.lint_at("2026_09_10_Old", self.DECK.format(extra="")), "TEXT"), [])
         self.assertEqual(codes(self.lint_at("2026_11_01_New", self.DECK.format(extra="onscreen: words\n")), "TEXT"), [])

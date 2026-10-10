@@ -24,8 +24,11 @@ Slidev counts it (hidden slides are not counted).
   TEXT           warning  words on screen that are not numbers: no titles, statements
                           or captions, the owner narrates (CLAUDE.md, 2026-10-10).
                           Numbers stay, with a short unit after one (13,6 TeV,
-                          12 639, 95 %, 3 mln.), a unit of UNITS standing on its
-                          own (a <Count> beside it) or in a `.unit` element;
+                          12 639, 95 %, 3 mln.) or a naming word or two (140
+                          taškų), a unit of UNITS standing on its own (a <Count>
+                          beside it) or in a `.unit` / `.name` element, and a
+                          short naming caption on a thing shown (`.caption`, at
+                          most 5 words, no sentence punctuation);
                           the notes are exempt, and a `.credits` block on the
                           last slide (licence credits, in tiny print; none for
                           CERN's material). Not .src or .credit lines elsewhere
@@ -35,6 +38,9 @@ Slidev counts it (hidden slides are not counted).
                           One finding per slide. Talks dated before
                           2026-10 (delivered) are skipped; headmatter
                           `onscreen: words` opts a deck out, `onscreen: numbers` in
+  NUMBER-BARE    warning  (the same decks) a number with neither a unit nor a name
+                          beside it: '140 taškų', '20 užklausų', or a `.unit` /
+                          `.name` element
   WORDS          warning  more than 60 words on screen (backup slides excepted)
   FONT-SMALL     warning  a talk CSS or inline font size under 18 px outside
                           .src, .credit and .k
@@ -120,6 +126,7 @@ NOTES_SRC = re.compile(r"(?im)^[ \t]*(?:[-*•][ \t]*)?(?:sources?|šaltin(?:is|
                        r"(?:[ \t]*\([^)\n]*\))?[ \t]*:")
 LHCB = re.compile(r"LHCb")
 NUMBERS_FROM = "2026_10"          # talks dated from here on keep only numbers on screen
+CAPTION_WORDS = 5                # a naming caption on a thing shown: a few words, no sentence
 UNITS = {"%", "‰", "eV", "keV", "MeV", "GeV", "TeV", "PeV", "B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB",
          "Hz", "kHz", "MHz", "GHz", "THz", "m", "km", "cm", "mm", "µm", "nm", "fm", "s", "ms", "µs", "ns",
          "kg", "g", "t", "K", "°C", "W", "kW", "MW", "GW", "V", "kV", "T", "fb⁻¹", "pb⁻¹", "mln.", "mlrd.", "tūkst."}
@@ -237,8 +244,7 @@ class Lint:
             self.check_slop(s, text)
             self.check_words_and_sources(s, text)
             if self.numbers_only:
-                last = s is self.deck.visible[-1] if self.deck.visible else False
-                self.check_numbers(s, td.screen_text(body, ("unit", "credits") if last else ("unit",)))
+                self.check_numbers(s, self.numbers_text(s))
             self.check_inline_sizes(s)
             self.check_marks(s, n_visible)
             self.check_facts(s, bank)
@@ -370,23 +376,66 @@ class Lint:
                 for m in re.finditer(rf"(?<![\w-]){re.escape(w)}(?![\w-])", low):
                     self.at(s, base + m.start(), "SLOP-WORD", "warning", f"{where}banned word {w!r}")
 
+    def numbers_text(self, s: td.Slide) -> str:
+        """The slide's screen text for TEXT: units and names beside a number (`.unit`,
+        `.name`), a short naming caption (`.caption`), and the last slide's `.credits`
+        blanked; a caption of more than CAPTION_WORDS words or with sentence
+        punctuation stays text."""
+        last = bool(self.deck.visible) and s is self.deck.visible[-1]
+        body = s.body
+        spans = []
+        for el in td.elements(body):
+            if el.classes & {"unit", "name"} or (last and "credits" in el.classes):
+                spans.append((el.start, el.end))
+            elif "caption" in el.classes:
+                inner = td.screen_text(body[el.inner_start:el.inner_end])
+                if td.count_words(inner) <= CAPTION_WORDS and not re.search(r"[!?…;:]|\.(\s|$)", inner.strip()):
+                    spans.append((el.start, el.end))
+        text = td.screen_text(body)
+        for a, b in spans:
+            text = text[:a] + re.sub(r"\S", " ", text[a:b]) + text[b:]
+        return text
+
     def check_numbers(self, s: td.Slide, text: str):
-        words, prev_num = [], False
-        for m in re.finditer(r"\S+", text):
+        words, bare = [], []
+        toks = list(re.finditer(r"\S+", text))
+        named = any(el.classes & {"unit", "name"} for el in td.elements(s.body))
+        i = 0
+        while i < len(toks):
+            m = toks[i]
             tok = m.group(0).strip("()[]{}„“”\"'«»:;,.!?–—-…")
             if not tok or not re.search(r"[^\W\d_]", tok):        # a number, a sign, a symbol
-                prev_num = bool(re.search(r"\d", tok))
+                if re.search(r"\d", tok):
+                    j = i + 1                                         # 12 639: one number
+                    while j < len(toks) and re.fullmatch(r"[\d\s.,  ]+", toks[j].group(0).strip("()„“\"'")):
+                        j += 1
+                    # a unit, or a naming word or two, right after it: 13,6 TeV, 140 taškų, 20 užklausų
+                    k = j
+                    while k < len(toks) and k - j < 2 and "\n" not in text[toks[k - 1].end():toks[k].start()]:
+                        w = toks[k].group(0).strip("()[]{}„“”\"'«»:;,.!?–—-…")
+                        if not w or not re.search(r"[^\W\d_]", w) or re.search(r"\d", w):
+                            break
+                        k += 1
+                    if k == j and not named:
+                        bare.append((m.start(), " ".join(t.group(0) for t in toks[i:j])))
+                    i = k
+                    continue
+                i += 1
                 continue
-            if re.search(r"\d", tok) or tok in UNITS or m.group(0).strip("(),;:") in UNITS or (prev_num and UNIT.fullmatch(m.group(0).strip("(),;:"))):
-                prev_num = bool(re.search(r"\d", tok))           # 5x, 2026-ieji, or a unit after a number
+            if re.search(r"\d", tok) or tok in UNITS or m.group(0).strip("(),;:") in UNITS:
+                i += 1                                                # 5x, 2026-ieji, a unit on its own
                 continue
             words.append((m.start(), tok))
-            prev_num = False
+            i += 1
         if words:
             shown = " ".join(w for _, w in words[:6]) + (" …" if len(words) > 6 else "")
             self.at(s, words[0][0], "TEXT", "warning",
                     f"{len(words)} word(s) on screen that are not numbers: {shown!r} (pictures and numbers "
                     "only; the owner narrates: put it in the notes)")
+        if bare:
+            self.at(s, bare[0][0], "NUMBER-BARE", "warning",
+                    f"a number with neither a unit nor a name: {bare[0][1]!r} (say what it counts: "
+                    "'140 taškų', or a .unit / .name beside it)")
 
     def check_words_and_sources(self, s: td.Slide, text: str):
         n = td.count_words(text)
