@@ -459,3 +459,14 @@ the new one. The videos release tag keeps `videos-2026-10-00-innoday`.
 Deployed 8a67c84 (merged main 6209ea2, the landing labels keyed by slug), Pages
 run 38086927761 (green): the new address 200, the old one 404, live walk 26/26,
 the site index links `2026_10_23_Innoday/`.
+
+## Deployed (2026-10-11, v0.8.1)
+
+77180c1 (df749b1 + main 99ac5d4), Pages run 38092070008 (green), URL 200, live
+walk 26/26. v0.8.0 printed every world page at about half its still (the print
+route gave each page slide 1's dim, and the opener has none); Tools' CSS
+workaround held, then v0.8.1 fixed it and the workaround went. Rasterised PDFs
+(pypdfium2 in the scratchpad): on v0.8.1 each page prints at its own dim. The
+export's 4 s wait was marginal here (twice "Loading slide…" or play icons and
+fallback fonts); `-- --wait 12000` gave a whole PDF. Stills reshot on v0.8.0
+and v0.8.1.

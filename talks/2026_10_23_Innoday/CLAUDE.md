@@ -105,12 +105,14 @@ Everything is grains; no solid shapes, no labels.
 
 ## Status
 
-2026-10-11: **complete, at its real date.** Deployed 8a67c84 (the strip of
-10 Oct, the dir renamed to 2026_10_23; v0.7.0) —
+2026-10-11: **complete, at its real date, on toolkit v0.8.1.** Deployed 77180c1
+(df749b1 + main 99ac5d4) —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
-Pages run 38086927761 (green), URL 200, the old 2026_10_00 address 404; `ready`
-passed with nothing skipped and the live walk went 26/26. Open for the owner:
-the closing pose and the CERN CC credits (Decisions, "Taken overnight"); the
+Pages run 38092070008 (green), URL 200; `ready` passed with nothing skipped and
+the live walk went 26/26. For a PDF, `pnpm talk export innoday --format pdf --
+--wait 12000` (the default 4 s wait printed "Loading slide…", play icons and
+fallback fonts on this render node; reported to Tools). Open for the owner: the
+closing pose and the CERN CC credits (Decisions, "Taken overnight"); the
 iPhone retest of 9 Oct.
 
 ## Decisions
