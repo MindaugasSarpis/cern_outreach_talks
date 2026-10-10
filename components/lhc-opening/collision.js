@@ -52,7 +52,9 @@ void main() {
     float cx = bunchX(side);
     float streak = 1.0 + uTail * 0.6;
     p = vec3(cx + aOff.x * streak, aOff.y, aOff.z);
-    float after = te > 0.0 ? 1.0 - smoothstep(0.08, 0.9, te) : 1.0;
+    // past the crossing they dissolve within the freeze, as the first particles leave
+    // (flying on through each other close to the camera they bloomed into two blots)
+    float after = te > 0.0 ? 1.0 - smoothstep(0.0, 0.15, te) : 1.0;
     float far = 1.0 - smoothstep(18.0, 30.0, abs(cx));
     float overlap = 1.0 - 0.6 * exp(-cx * cx / 0.5);
     a = 0.11 * on * after * far * overlap * (0.6 + 0.4 * hash(aSeed * 7.0));
@@ -65,7 +67,7 @@ void main() {
     float la = 0.0;
     for (int s = 0; s < 2; s++) {
       float cx = bunchX(s == 0 ? 1.0 : -1.0);
-      float bright = te > 0.0 ? 1.0 - smoothstep(0.08, 0.9, te) : 1.0;
+      float bright = te > 0.0 ? 1.0 - smoothstep(0.0, 0.15, te) : 1.0;
       float d = abs(p.x - cx);
       la += bright * 0.6 / (1.0 + d * d * 1.6);
     }

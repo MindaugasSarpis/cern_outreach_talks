@@ -82,9 +82,8 @@ The LHC itself: the real tunnel, 100 m under the border, the magnets on the righ
 Let it run; at its end the camera goes on into the beam pipe (it moves on by
 itself; → earlier). Its sound is the tunnel's own ventilation hum.
 
-Source: CERN-FOOTAGE-2022-013-001 (CERN).
-
-(~0.3 min)
+Source: CERN-FOOTAGE-2022-013-001 (CERN). Its 18 s are counted from the
+manifest.
 -->
 
 ---
@@ -117,7 +116,7 @@ The event: one real crossing from LHCb's 2012 open data (CERN Open Data record
 24506), drawn from its reconstructed tracks; components/lhc-opening/event.json
 has its provenance.
 
-(~0.3 min)
+(~0.2 min)
 -->
 
 ---
