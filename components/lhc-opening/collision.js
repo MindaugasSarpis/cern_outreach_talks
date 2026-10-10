@@ -103,9 +103,13 @@ void main() {
     p = position;
     // every path starts at a vertex: there two hundred trails share a point, and their
     // first grains are dimmed so the first sparks leaving it stay apart
-    float near = mix(0.12, 1.0, smoothstep(0.0, 0.45, aS));
-    a = (stays + (0.75 - stays) * glow) * fade * aW * near;
-    size = (k > 4.5 ? 0.85 : 0.6) * (1.0 + 0.8 * exp(-d / 0.12) * near);
+    float near = mix(0.12, 1.0, smoothstep(0.0, 0.8, aS));
+    // a head is a streak of light at speed and a faint sharp point when the world
+    // stands still: in the freeze every head is on one shell round the vertex, and the
+    // forward cone's hundred and fifty, bright, bloomed into one blot
+    float motion = mix(0.2, 1.0, smoothstep(0.08, 0.7, uTail));
+    a = (stays + (0.75 - stays) * glow * motion) * fade * aW * near;
+    size = (k > 4.5 ? 0.85 : 0.6) * (1.0 + 0.8 * exp(-d / 0.12) * near * motion);
     col = mix(k > 4.5 ? uMuon : uTrack, vec3(1.0), 0.6 * exp(-d / 0.3) + 0.15 * hash(aSeed * 11.0));
   } else {
     // a splash where a particle stopped: the energy it carried, spread out
