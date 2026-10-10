@@ -45,8 +45,8 @@ licence credit is tiny print on the last slide.
 | 7 | — (photo) | LHCb Run 3 event display, StagePhoto: how a collision becomes a dot |
 | 8 | — (one click, `clicks: 1`) | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks at the click |
 | 9 | the counts with their word: „140 taškų“ · „27 292 taškai“ | `jx`: the 140-entry plot of slides 2–3 at LHCb's scale beside `jp` (one grain per entry, the same bin width and height per entry); a coordinate pose between them |
-| 10 | city names (Vilnius, CERN, Glazgas, Heidelbergas, Bona) | the route across Europe |
-| 11 | city names (Vilnius, CERN) | the map close on Vilnius and the arcs to CERN: the working day (idea 7), in the speaker's own public words |
+| 10 | Vilnius, CERN | the route across Europe |
+| 11 | Vilnius, CERN | the map close on Vilnius and the arcs to CERN: the working day (idea 7), in the speaker's own public words |
 | 12 | — | the form far off, dimmed (the three things are said, not shown) |
 | 13 | the credit in tiny print: „LHCb salės nuotrauka: Rosa Menkman, CC BY 2.0“ | the form, held (the question is said, not shown) |
 
@@ -209,6 +209,13 @@ licence credit is tiny print on the last slide.
 
 ## Decisions
 
+- 2026-10-10 — Fewer words (the owner, before sleeping: "fewer words so I can
+  adapt to the audience; these slides are not lecture slides"; AFK protocol,
+  the recommended option). Slide 10 names only Vilnius and CERN, the route's
+  anchors; Glazgas, Heidelbergas and Bona are gone, so the speaker can tell
+  those stops or skip them. Slide 11 keeps Vilnius and CERN, since the slide is
+  about those two places. Slide 9 keeps „140 taškų“ and „27 292 taškai“: one
+  word each, the least a number needs to say what it counts.
 - 2026-10-10 — Names back, as the owner refined the rule: "numbers should have
   units or name what they are", and a thing shown may carry a short caption that
   names it, a name and never a sentence (root CLAUDE.md, main 8c7fd47). Slide 9's

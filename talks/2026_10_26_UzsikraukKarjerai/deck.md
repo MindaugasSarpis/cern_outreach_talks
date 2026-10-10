@@ -206,14 +206,11 @@ space: { at: whole, sway: 0, dim: 0.05 }
 
 <div class="city late" style="left: 716px; top: 168px">Vilnius</div>
 <div class="city late" style="left: 414px; top: 374px">CERN</div>
-<div class="city late" style="left: 270px; top: 146px">Glazgas</div>
-<div class="city late" style="left: 474px; top: 318px">Heidelbergas</div>
-<div class="city r late" style="left: 405px; top: 254px">Bona</div>
 
 <!--
 III. KELIAS
 Message: my own road into LHCb was not planned either.
-Picture: the trail draws across Europe: Vilnius → CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius.
+Picture: the trail draws across Europe: Vilnius → CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius. Only Vilnius and CERN are named on screen; Glasgow, Heidelberg and Bonn are the speaker's to tell or skip.
 
 Į LHCb aš patekau ne tiesiu keliu. Iki dvylikos metų norėjau būti egiptologu. Vienuoliktoje klasėje pirmą kartą nuvažiavau į CERN. Studijavau Glazge ir ten dirbau vadybininku, kad turėčiau iš ko gyventi. Parvykęs į Lietuvą dirbau su lazeriais. Į dalelių fiziką grįžau per doktorantūrą. Ją pradėjau Heidelberge, o pandemijos metais visa mūsų grupė persikėlė į Boną. Dabar Vilniaus universitete kartu su kolegomis kuriame LHCb grupę.
 
