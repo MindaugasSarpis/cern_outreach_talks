@@ -36,20 +36,20 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 - Branch `talk/tokyo`, worktree `.claude/worktrees/tokyo` (`pnpm talk open tokyo`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/
-- 2026-10-10: deck v1 complete: 12 slides, 14.8 of 15 min; `talk ready`
-  passed on a1d69fd with nothing skipped (lint 0 errors, 4 TEXT warnings on
-  the allowed number words until the lint fix lands). Three sheet reviews
-  and a final frame check by subagents. Waiting for the Scheduler's main to
-  deploy a first version; the owner's 10 Brief questions are on the
-  Scheduler's morning list.
-- Not deployed yet. `pnpm talk deploy` records each deploy in
-  `.git/talk-status/tokyo.json`; `pnpm talk status` shows it.
+- 2026-10-10: first version deployed for the owner's review: commit 40aaef6,
+  Pages run 38085599191 (success), URL 200, the live walk passed all 12
+  slides, listed on the site index. 12 slides, 14.8 of 15 min; lint 0/0.
+  Next: the owner's answers to the 10 Brief questions (on the Scheduler's
+  list), above all whether the project's dates, funders and the Nagoya
+  meeting may be shown.
+- `pnpm talk deploy` records each deploy in `.git/talk-status/tokyo.json`;
+  `pnpm talk status` shows it.
 
 ## Arc
 
 | # | Station | Picture | On screen | Spoken | Min |
 |---|---|---|---|---|---|
-| 1 | hero | five quarks fly in, the hum | | thanks; who I am; what follows | 1 |
+| 1 | hero | five quarks fly in, the hum | project name, two names | thanks; who we are; what follows | 1 |
 | 2 | lhc | the collider of grains | 27 km LHC | the LHC; Lithuania and Japan at CERN | 1.25 |
 | 2b | lhc | clip lhcb.mp4 | | LHCb, my experiment | 0.8 |
 | 3 | atom | grain cloud, bright point | | atoms are empty; the nucleus | 1 |
@@ -142,6 +142,17 @@ The owner's decisions, dated, newest last.
   no longer carries the project acronym. Earlier commits on `talk/tokyo`
   (66cec05 … bae5c35) still hold those details in history; whether to
   rewrite the branch is the owner's call.
+
+- 2026-10-11 (owner via the Scheduler: "Embassy talk should have a title
+  indicating myself, yasuhiro, full name of the project"): a title slide, an
+  exception to the no-title rule for this talk only. The project's full name
+  (as in the application), "Mindaugas Šarpis · Yasuhiro Yamaguchi", white and
+  light blue, left of the pentaquark, fading in as it assembles. No
+  affiliations: Yamaguchi's reads Nagoya University in the application and
+  Tokyo Metropolitan University in the 2026 workshop memo, so it does not
+  read cleanly in a word or two. Lint's TEXT warning on slide 1 is this
+  exception. The project's name is now cleared for the site; its dates,
+  funders and the Nagoya meeting still wait for the owner.
 
 ## Verify
 

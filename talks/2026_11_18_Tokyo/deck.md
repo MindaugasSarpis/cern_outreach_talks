@@ -24,16 +24,24 @@ htmlAttrs:
   lang: en
 duration: 15min
 layout: cover
-space:
-  at: wide
+space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.15 }
 ---
 
+<div class="tokyo-title">
+  <div class="t">Unraveling the Structure of P<sub>c</sub> Pentaquarks through Joint Experimental and Theoretical Effort between Lithuanian and Japanese scientists</div>
+  <div class="who">Mindaugas Šarpis · Yasuhiro Yamaguchi</div>
+</div>
+
 <!--
-Cover. No words on screen: the five quarks fly in out of the dust and lock
-into one particle while the low hum swells; `c` replays it.
+Title slide (the owner's exception to the no-title rule): the project's full
+name and the two project leaders, Mindaugas Šarpis (Vilnius) and Yasuhiro
+Yamaguchi (Japan). The five quarks fly in out of the dust and lock into one
+particle at the right while the low hum swells; the title fades in as they
+land; `c` replays it.
 
 Your Excellency, ladies and gentlemen, thank you for having me. I am
-Mindaugas Šarpis. I lead the LHCb group at Vilnius University, which works
+Mindaugas Šarpis, and together with Yasuhiro Yamaguchi I lead the project
+named on the screen. I lead the LHCb group at Vilnius University, which works
 on one of the four large experiments at CERN, near Geneva. In the next
 fifteen minutes I would like to show you what this object behind me is, why
 physicists waited half a century to find it, and why Lithuanian and Japanese

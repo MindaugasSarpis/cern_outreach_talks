@@ -67,7 +67,7 @@ python3 scripts/facts.py add \
   --source-url https://kt-report-2025.web.cern.ch/ \
   --value 89 --unit contracts --as-of 2025 \
   --verdict confirmed --verified-on 2026-10-08 --verified-by "the owner" \
-  --used-in 2026_10_00_Innoday
+  --used-in 2026_10_23_Innoday
 ```
 
 Without `--id` an id is made from the claim's first words. `--from-json
