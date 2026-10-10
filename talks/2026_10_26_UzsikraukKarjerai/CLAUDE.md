@@ -42,7 +42,7 @@ statements, captions, labels or credits; the speaker narrates from the notes.
 | 6 | — (photo) | LHCb cavern, StagePhoto: what LHCb studies and why |
 | 7 | — (photo) | LHCb Run 3 event display, StagePhoto: how a collision becomes a dot |
 | 8 | — (one click, `clicks: 1`) | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks at the click |
-| 9 | the counts: „140 taškų“ · „27 292 taškai“ | `jx`: the 140-entry plot of slides 2–3 at LHCb's scale beside `jp` (one grain per entry, the same bin width and height per entry); a coordinate pose between them |
+| 9 | the counts alone: „140“ · „27 292“ | `jx`: the 140-entry plot of slides 2–3 at LHCb's scale beside `jp` (one grain per entry, the same bin width and height per entry); a coordinate pose between them |
 | 10 | — | the route across Europe |
 | 11 | — | the map close on Vilnius and the arcs to CERN: the working day (idea 7), in the speaker's own public words |
 | 12 | — | the form far off, dimmed (the three things are said, not shown) |
@@ -204,7 +204,7 @@ statements, captions, labels or credits; the speaker narrates from the notes.
   name; every slide line and year kicker (2003, 2008, 2015, 2019 m.); slide 7's
   caption; the map's city names (slides 10 and 11); slide 12's three lines
   (the opendata.cern.ch address with them); slide 13's question; the two text
-  scrims; the three credits. Kept: slide 9's two counts, the notes, and every
+  scrims; the three credits. Kept: slide 9's two counts as bare numbers („140“, „27 292“: „taškai“ is a word, not a short unit, so the speaker says it), the notes, and every
   camera pose and dim. Slide 8 keeps its click (`clicks: 1`): the ticks light at it.
   Notes changed only where they described text that is gone (slide 1's
   „Šalia pavadinimo“ → „Ekrane“, and the Picture lines of 1, 8, 9, 11, 12 and

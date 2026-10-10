@@ -181,14 +181,14 @@ space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 
 
 <Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 2, jx: 1 }" />
 
-<div class="heap" style="left: 557px; top: 404px"><span class="n">27 292 taškai</span></div>
-<div class="heap" style="left: 161px; top: 404px"><span class="n">140 taškų</span></div>
+<div class="heap" style="left: 557px; top: 404px"><span class="n">27 292</span></div>
+<div class="heap" style="left: 161px; top: 404px"><span class="n">140</span></div>
 
 <!-- facts: theta-plus-2003-false-alarm, lhcb-pentaquark-2019, particle-physics-5-sigma-discovery -->
 
 <!--
 Message: the difference was the amount of data. A bump reported at 4,6σ in 2003 went away with more data; LHCb's peaks held with nine times more data in 2019, the new one at 7,3σ. (Not: 'it failed because 4,6 < 5'. Other 2003 bumps were reported near 5σ and went away too.)
-Picture: the camera draws back to show two plots at the same scale, one grain per entry and the same height per entry. On the left is the 140-entry plot from slides 2–3: an illustration, not LEPS's data. On the right are LHCb's 27 292 candidates (the 2019 bins) with their three marked peaks. Under them, only their counts: „140 taškų“ and „27 292 taškai“; the left plot appears as a thin strip.
+Picture: the camera draws back to show two plots at the same scale, one grain per entry and the same height per entry. On the left is the 140-entry plot from slides 2–3: an illustration, not LEPS's data. On the right are LHCb's 27 292 candidates (the 2019 bins) with their three marked peaks. Under them, only their counts: „140“ and „27 292“; the left plot appears as a thin strip.
 Background, if asked: LEPS's own peak was 19 events over a background of 17 (19/√17 = 4,6σ, their paper's own estimate; arXiv:hep-ex/0301020).
 
 Štai abu grafikai šalia, ir abiejuose vienas taškelis – viena apskaičiuota masė. Kairėje – pavyzdinis grafikas, kurį matei pradžioje, šimtas keturiasdešimt taškų. Dešinėje – LHCb duomenys, jų daugiau nei dvidešimt septyni tūkstančiai. Fizikai skaičiuoja, kiek kauburys iškyla virš atsitiktinių svyravimų. Tai vadinama reikšmingumu ir matuojama sigmomis. Atradimu paprastai vadinamas rezultatas, kurio reikšmingumas – bent penkios sigmos. Tada tikimybė, kad tai tik atsitiktinis svyravimas, – maždaug viena iš trijų su puse milijono. 2003 metų kauburio reikšmingumas buvo 4,6 sigmos, bet surinkus daugiau duomenų jis išnyko. 2019 metais LHCb turėjo devynis kartus daugiau duomenų nei 2015-aisiais, ir smailės liko. Naujos smailės reikšmingumas buvo 7,3 sigmos.
