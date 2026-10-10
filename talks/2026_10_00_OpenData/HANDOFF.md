@@ -15,11 +15,14 @@ holds for this talk: it deploys without asking once `talk ready` passes with
 nothing skipped and the Scheduler gives it main. Anything else still needs
 the owner's word.
 
-## Status (2026-10-09): approved by the owner; deployed on v0.6.8, v0.7.0 ready
+## Status (2026-10-09): approved by the owner; deployed on v0.7.0
 
-- Pinned v0.7.0 (the Scheduler's batch round), not yet deployed: the forms
-  on their own clock say `api.busy`, `<Grains :later>` runs on the world's
-  clock, the stills are new. See the v0.7.0 decision.
+- Redeployed 2026-10-09 under the standing rule, after Užsikrauk karjerai:
+  commit 82b19d9 on main, Pages run 37989538553 (success); `talk deploy`'s
+  live check passed (13 slides, nothing failed). `talk ready` passed on
+  82b19d9 with nothing skipped. On v0.7.0: the forms on their own clock say
+  `api.busy`, `<Grains :later>` runs on the world's clock, the stills are
+  new. See the v0.7.0 decision.
 
 - Redeployed 2026-10-09 under the standing rule: commit 546aed5 on main,
   Pages run 37974807816 (success); `talk deploy`'s live check passed (13
@@ -85,6 +88,19 @@ the owner's word.
 
 ## Decisions
 
+- 2026-10-10. No titles, statements, kickers or captions on any slide, the
+  cover included (owner, via the Scheduler: "No titles, statements - I will
+  be there … What can stay is the numbers. I will narrate myself"; root
+  CLAUDE.md, main 1016ce2). Gone: the cover's three lines, slide 3's
+  readout, every kicker and sentence of the readouts (slides 4–9), slide
+  10's heading and points, slide 11's kicker, line and chips, slide 12's
+  kicker, name and line, slide 13's „Ačiū“, and slide 10's stream labels in
+  the world (`label` in space.json). Kept: the numbers with their units (1,
+  800, 4 000, 100 000, 1 000 000 TB; 20; „76 / 86“, the 86 styled as a
+  unit), the pile labels (numbers), the plots, the portraits, the notes.
+  No credits on screen (owner: "it's cern license, I'm CERN user"); none
+  were left. Still 10 remade (its labels are gone). Undo: this commit's
+  parent.
 - 2026-10-09. v0.7.0: `stage:check` warns (`unsaid-clock`) about a builder
   that moves on its own clock without saying so. The streams, the portraits
   and the collision now return `api.busy` (a stream filling its arc, 1/speed
