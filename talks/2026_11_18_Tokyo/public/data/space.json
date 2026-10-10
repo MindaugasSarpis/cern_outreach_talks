@@ -535,11 +535,11 @@
      "type": "label",
      "text": "Gell-Mann",
      "pos": [
-      -0.3,
-      2.4,
+      -0.5,
+      2.3,
       0
      ],
-     "height": 0.5,
+     "height": 0.65,
      "color": "#cfeaff",
      "upper": false,
      "tracking": 0.06
@@ -549,10 +549,10 @@
      "text": "Zweig",
      "pos": [
       0,
-      -2.1,
+      -2.2,
       0
      ],
-     "height": 0.5,
+     "height": 0.65,
      "color": "#cfeaff",
      "upper": false,
      "tracking": 0.06
