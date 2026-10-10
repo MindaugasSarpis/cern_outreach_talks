@@ -28,7 +28,7 @@
 /* the title slide (owner's exception, 2026-10-11): project name and the two leaders, left of the pentaquark */
 .slidev-layout .tokyo-title {
   position: absolute;
-  left: 56px;
+  left: -40px;   /* the cover's content box is padded and offset ~108 px: this lands at ~68 canvas px */
   top: 50%;
   transform: translateY(-50%);
   max-width: 470px;

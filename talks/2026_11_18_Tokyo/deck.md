@@ -24,7 +24,7 @@ htmlAttrs:
   lang: en
 duration: 15min
 layout: cover
-space: { at: [-31.5, 0.4, 0], dist: 13, yaw: -16, pitch: 7, dim: 0.15 }
+space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.15 }
 ---
 
 <div class="tokyo-title">
