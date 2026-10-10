@@ -33,8 +33,10 @@ for the engine, [docs/STAGE_QUICKSTART.md](../../../docs/STAGE_QUICKSTART.md).
   caption or credit on screen, and no title or section slides; the owner
   narrates. Every number carries its unit or a word or two naming what it
   counts (a bare number doesn't read). A thing shown, such as an invention,
-  may carry a short caption that names it: a name, never a sentence. `talk
-  lint` warns `TEXT` on any other word.
+  may carry a short caption that names it: a name, never a sentence. Fewer
+  words is better: the owner adapts the talk to the audience, and these are
+  not lecture slides that must stand on their own. `talk lint` warns `TEXT`
+  on any other word.
   The one exception: credits a licence asks for, in tiny print on the last
   slide (CERN's material needs none).
 - One claim; one dominant visual; every world object on it maps to a
