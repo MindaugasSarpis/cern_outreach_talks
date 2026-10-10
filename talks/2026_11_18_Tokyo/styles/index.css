@@ -2,6 +2,7 @@
 .slidev-layout .num {
   position: absolute;
   font-size: 72px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0.01em;

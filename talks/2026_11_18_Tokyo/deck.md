@@ -41,7 +41,7 @@ scientists are now studying it together. (~1 min)
 -->
 
 ---
-space: { at: lhc, dim: 0.15 }
+space: { at: lhc, dim: 0.25 }
 ---
 
 <div class="num tr">27 km</div>
@@ -131,7 +131,7 @@ The question is whether nature allows more: four quarks, five, six. (~1.25 min)
 space: { at: paper, dim: 0.06 }
 ---
 
-<div class="num bl">1964</div>
+<div class="num tr">1964</div>
 
 <!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
 
@@ -167,8 +167,8 @@ Gell-Mann's paper. They are made of two up quarks, a down quark, and a pair
 of a heavy "charm" quark and its antiquark.
 
 In 2019, with nine times more data, LHCb looked again. This is the result:
-each point counts collisions at a given mass, and the three narrow peaks are
-three pentaquarks. Where we had seen one bump in 2015, there were in fact
+each black point counts the particles we found at a given mass, the red line
+is the fit, and the three narrow peaks are three pentaquarks. Where we had seen one bump in 2015, there were in fact
 two, and a third appeared beside them.
 
 Sources: LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001; CERN
@@ -185,9 +185,10 @@ space: { at: interiors, dim: 0.15 }
 So pentaquarks exist. But we still do not know how they are built, and there
 are two main pictures.
 
-On the left, the five quarks are really two particles, a baryon and a meson,
-held loosely next to each other, like two atoms in a molecule. On the right,
-all five quarks are packed into one tight ball.
+On the left, the five quarks are really two particles side by side, three
+quarks in one and a quark with an antiquark in the other, held loosely
+together like two atoms in a molecule. On the right, all five quarks are
+packed into one ball.
 
 The narrow peaks of 2019 point toward the molecule, but the question is
 open. To settle it, we need precise measurements and precise theory that
@@ -205,8 +206,8 @@ space: { at: project, dim: 0.15 }
 <!-- facts: lhcb-vilnius-joined -->
 
 <!--
-This is what our project does. On the left, the LHCb group at Vilnius
-University, which analyses LHCb data. On the right, theorists in Japan, at
+This is what our project does. On the left, the people of the LHCb group at
+Vilnius University, who analyse LHCb data. On the right, theorists in Japan, at
 Nagoya University and partner institutes, who specialise in the theory of
 these particles. In the middle, the pentaquark that
 both sides study.
@@ -228,7 +229,7 @@ from the organisers. (~2 min)
 -->
 
 ---
-space: { at: wide }
+space: { at: hero, dist: 8, yaw: 20 }
 ---
 
 <!--

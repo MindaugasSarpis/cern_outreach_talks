@@ -9,7 +9,7 @@
     0
    ],
    "look": {
-    "dist": 13,
+    "dist": 9.5,
     "yaw": -18,
     "pitch": 7,
     "sway": 9
@@ -79,9 +79,9 @@
     0
    ],
    "look": {
-    "dist": 19,
+    "dist": 14,
     "yaw": -20,
-    "pitch": 28,
+    "pitch": 18,
     "sway": 2
    },
    "gather": 1.2,
@@ -105,7 +105,7 @@
     0
    ],
    "look": {
-    "dist": 15,
+    "dist": 12,
     "yaw": -15,
     "pitch": 8,
     "sway": 2
@@ -132,6 +132,50 @@
        "core": "#ffffff"
       }
      ]
+    },
+    {
+     "type": "constellation",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 1.6,
+     "haze": "#3d7fa6",
+     "nodes": []
+    },
+    {
+     "type": "constellation",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 2.6,
+     "haze": "#3d7fa6",
+     "nodes": []
+    },
+    {
+     "type": "constellation",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 3.5,
+     "haze": "#3d7fa6",
+     "nodes": []
+    },
+    {
+     "type": "constellation",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 4.3,
+     "haze": "#3d7fa6",
+     "nodes": []
     }
    ]
   },
@@ -143,7 +187,7 @@
     0
    ],
    "look": {
-    "dist": 9,
+    "dist": 8,
     "yaw": -15,
     "pitch": 8,
     "sway": 2
@@ -156,14 +200,14 @@
       0,
       0
      ],
-     "radius": 2.5,
-     "nodeRadius": 0.5,
+     "radius": 3,
+     "nodeRadius": 0.42,
      "speed": 0.4,
      "nodes": [
       {
        "pos": [
-        0.33,
-        0.76,
+        0.42,
+        0.96,
         0.0
        ],
        "color": "#ff8f7a",
@@ -171,99 +215,99 @@
       },
       {
        "pos": [
-        -0.53,
-        0.82,
-        0.49
+        -0.68,
+        1.04,
+        0.62
        ],
        "color": "#9fb4c8",
        "core": "#eef4fa"
       },
       {
        "pos": [
-        0.1,
-        0.8,
-        -1.1
-       ],
-       "color": "#ff8f7a",
-       "core": "#ffe9e4"
-      },
-      {
-       "pos": [
-        0.49,
-        0.37,
-        0.64
-       ],
-       "color": "#9fb4c8",
-       "core": "#eef4fa"
-      },
-      {
-       "pos": [
-        -1.11,
-        0.29,
-        -0.2
-       ],
-       "color": "#ff8f7a",
-       "core": "#ffe9e4"
-      },
-      {
-       "pos": [
-        1.2,
         0.12,
-        -0.77
-       ],
-       "color": "#9fb4c8",
-       "core": "#eef4fa"
-      },
-      {
-       "pos": [
-        -0.25,
-        -0.08,
-        0.92
+        1.01,
+        -1.4
        ],
        "color": "#ff8f7a",
        "core": "#ffe9e4"
       },
       {
        "pos": [
-        -0.55,
+        0.63,
+        0.47,
+        0.82
+       ],
+       "color": "#9fb4c8",
+       "core": "#eef4fa"
+      },
+      {
+       "pos": [
+        -1.4,
+        0.37,
+        -0.25
+       ],
+       "color": "#ff8f7a",
+       "core": "#ffe9e4"
+      },
+      {
+       "pos": [
+        1.53,
+        0.15,
+        -0.97
+       ],
+       "color": "#9fb4c8",
+       "core": "#eef4fa"
+      },
+      {
+       "pos": [
         -0.31,
-        -1.06
-       ],
-       "color": "#9fb4c8",
-       "core": "#eef4fa"
-      },
-      {
-       "pos": [
-        1.28,
-        -0.63,
-        0.47
+        -0.1,
+        1.17
        ],
        "color": "#ff8f7a",
        "core": "#ffe9e4"
       },
       {
        "pos": [
-        -0.77,
-        -0.6,
-        0.32
+        -0.7,
+        -0.39,
+        -1.34
        ],
        "color": "#9fb4c8",
        "core": "#eef4fa"
       },
       {
        "pos": [
-        0.36,
-        -0.97,
-        -0.78
+        1.62,
+        -0.79,
+        0.59
        ],
        "color": "#ff8f7a",
        "core": "#ffe9e4"
       },
       {
        "pos": [
-        0.1,
+        -0.98,
         -0.76,
-        0.31
+        0.4
+       ],
+       "color": "#9fb4c8",
+       "core": "#eef4fa"
+      },
+      {
+       "pos": [
+        0.46,
+        -1.23,
+        -0.98
+       ],
+       "color": "#ff8f7a",
+       "core": "#ffe9e4"
+      },
+      {
+       "pos": [
+        0.13,
+        -0.96,
+        0.4
        ],
        "color": "#9fb4c8",
        "core": "#eef4fa"
@@ -333,9 +377,9 @@
     0
    ],
    "look": {
-    "dist": 14,
+    "dist": 9.5,
     "yaw": 0,
-    "pitch": 5,
+    "pitch": 3,
     "sway": 1.5
    },
    "objects": [
@@ -347,7 +391,7 @@
       0
      ],
      "radius": 1.6,
-     "quarkRadius": 0.55,
+     "quarkRadius": 0.7,
      "quarks": [
       {
        "flavour": "u",
@@ -375,7 +419,7 @@
       0
      ],
      "radius": 2.0,
-     "quarkRadius": 0.55,
+     "quarkRadius": 0.7,
      "quarks": [
       {
        "flavour": "u",
@@ -479,53 +523,53 @@
      "halo": false
     },
     {
-     "type": "cluster",
+     "type": "pentaquark",
      "pos": [
       10.4,
       -1.0,
       0.6
      ],
-     "radius": 1.5,
-     "spin": 0.12,
+     "radius": 1.6,
+     "quarkRadius": 0.45,
      "quarks": [
       {
-       "flavour": "u",
+       "flavour": "c",
        "pos": [
-        0.55,
-        0.25,
-        0
+        0.6000000000000001,
+        0.44000000000000006,
+        0.16000000000000003
        ]
       },
       {
        "flavour": "u",
        "pos": [
-        -0.5,
-        0.35,
-        0.2
+        0.2,
+        -0.76,
+        -0.44000000000000006
        ]
       },
       {
        "flavour": "d",
        "pos": [
-        0,
-        -0.55,
-        -0.1
+        0.76,
+        -0.16000000000000003,
+        -0.6000000000000001
        ]
       },
       {
-       "flavour": "c",
+       "flavour": "u",
        "pos": [
-        0.1,
-        0.05,
-        0.55
+        -0.44000000000000006,
+        0.6400000000000001,
+        -0.48
        ]
       },
       {
        "flavour": "cbar",
        "pos": [
-        -0.3,
-        -0.2,
-        -0.55
+        -0.6400000000000001,
+        -0.27999999999999997,
+        0.32000000000000006
        ]
       }
      ]
@@ -553,14 +597,14 @@
    "objects": [
     {
      "type": "page",
-     "src": "/figures/lhcb_2019_pc.png",
+     "src": "/figures/lhcb_2019_peaks.png",
      "pos": [
       0,
-      2.6,
+      0,
       0
      ],
-     "width": 6.2,
-     "height": 5.15,
+     "width": 7.5,
+     "height": 5.23,
      "paper": "#ffffff",
      "tone": "#6c7076",
      "halo": false
@@ -568,7 +612,7 @@
     {
      "type": "pentaquark",
      "pos": [
-      -5.6,
+      6.0,
       0,
       0.5
      ],
@@ -627,121 +671,124 @@
     0
    ],
    "look": {
-    "dist": 16,
-    "yaw": -25,
-    "pitch": 10,
+    "dist": 17,
+    "yaw": -6,
+    "pitch": 6,
     "sway": 1.5
    },
    "objects": [
     {
-     "type": "molecule",
+     "type": "pentaquark",
      "pos": [
-      -6.5,
+      -7.3,
       0,
       0
      ],
-     "separation": 6.0,
-     "link": true,
-     "a": {
-      "radius": 1.6,
-      "quarks": [
-       {
-        "flavour": "c",
-        "pos": [
-         0,
-         0.5,
-         0
-        ]
-       },
-       {
-        "flavour": "u",
-        "pos": [
-         -0.5,
-         -0.35,
-         0.1
-        ]
-       },
-       {
-        "flavour": "d",
-        "pos": [
-         0.5,
-         -0.35,
-         -0.1
-        ]
-       }
-      ]
-     },
-     "b": {
-      "radius": 1.3,
-      "quarks": [
-       {
-        "flavour": "cbar",
-        "pos": [
-         -0.35,
-         0.05,
-         0
-        ]
-       },
-       {
-        "flavour": "u",
-        "pos": [
-         0.4,
-         -0.1,
-         0.05
-        ]
-       }
-      ]
-     }
-    },
-    {
-     "type": "cluster",
-     "pos": [
-      7.0,
-      0,
-      0
-     ],
-     "radius": 1.9,
-     "shell": true,
-     "spin": 0.15,
+     "radius": 1.7,
+     "quarkRadius": 0.5,
      "quarks": [
       {
        "flavour": "c",
        "pos": [
-        0.1,
-        0.55,
-        0.2
-       ]
-      },
-      {
-       "flavour": "cbar",
-       "pos": [
-        -0.55,
-        0.1,
-        -0.2
+        0,
+        0.7,
+        0
        ]
       },
       {
        "flavour": "u",
        "pos": [
-        0.55,
-        -0.15,
-        -0.25
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        -0.1,
-        -0.55,
-        0.3
+        -0.7,
+        -0.45,
+        0.15
        ]
       },
       {
        "flavour": "d",
        "pos": [
-        0.05,
-        0.0,
+        0.7,
+        -0.45,
+        -0.15
+       ]
+      }
+     ]
+    },
+    {
+     "type": "pentaquark",
+     "pos": [
+      -3.8,
+      0,
+      0
+     ],
+     "radius": 1.4,
+     "quarkRadius": 0.5,
+     "quarks": [
+      {
+       "flavour": "cbar",
+       "pos": [
+        -0.5,
+        0.1,
+        0
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        0.55,
+        -0.1,
+        0.05
+       ]
+      }
+     ]
+    },
+    {
+     "type": "pentaquark",
+     "pos": [
+      6,
+      0,
+      0
+     ],
+     "radius": 2.4,
+     "quarkRadius": 0.5,
+     "quarks": [
+      {
+       "flavour": "c",
+       "pos": [
+        0.75,
+        0.55,
+        0.2
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        0.25,
+        -0.95,
+        -0.55
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        0.95,
+        -0.2,
+        -0.75
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        -0.55,
+        0.8,
         -0.6
+       ]
+      },
+      {
+       "flavour": "cbar",
+       "pos": [
+        -0.8,
+        -0.35,
+        0.4
        ]
       }
      ]
@@ -756,9 +803,9 @@
     0
    ],
    "look": {
-    "dist": 21,
+    "dist": 16,
     "yaw": 0,
-    "pitch": 12,
+    "pitch": 8,
     "sway": 2
    },
    "gather": 1.0,
@@ -770,48 +817,81 @@
       0,
       0
      ],
-     "radius": 2.4,
-     "nodeRadius": 0.5,
-     "speed": 0.5,
-     "haze": "#7dd3fc",
+     "radius": 2.6,
+     "nodeRadius": 0.3,
+     "coreSize": 10,
+     "speed": 0.4,
+     "haze": "#16303d",
      "nodes": [
       {
        "pos": [
-        0.4,
-        0.53,
+        0.45,
+        0.88,
         0.0
        ],
        "color": "#7dd3fc"
       },
       {
        "pos": [
-        -0.59,
-        0.35,
-        0.54
+        -0.72,
+        0.88,
+        0.66
        ],
        "color": "#7dd3fc"
       },
       {
        "pos": [
-        0.1,
+        0.13,
+        0.73,
+        -1.46
+       ],
+       "color": "#7dd3fc"
+      },
+      {
+       "pos": [
+        0.64,
+        0.24,
+        0.83
+       ],
+       "color": "#7dd3fc"
+      },
+      {
+       "pos": [
+        -1.37,
         0.0,
-        -1.09
+        -0.24
        ],
        "color": "#7dd3fc"
       },
       {
        "pos": [
-        0.4,
-        -0.29,
-        0.52
+        1.41,
+        -0.38,
+        -0.9
        ],
        "color": "#7dd3fc"
       },
       {
        "pos": [
-        -0.55,
-        -0.74,
-        -0.1
+        -0.27,
+        -0.51,
+        1.0
+       ],
+       "color": "#7dd3fc"
+      },
+      {
+       "pos": [
+        -0.51,
+        -0.98,
+        -0.98
+       ],
+       "color": "#7dd3fc"
+      },
+      {
+       "pos": [
+        0.77,
+        -1.6,
+        0.28
        ],
        "color": "#7dd3fc"
       }
@@ -825,115 +905,142 @@
       0
      ],
      "radius": 2.6,
-     "nodeRadius": 0.5,
-     "speed": 0.5,
-     "haze": "#ff8a9a",
+     "nodeRadius": 0.3,
+     "coreSize": 10,
+     "speed": 0.4,
+     "haze": "#3a1a20",
      "nodes": [
       {
        "pos": [
-        0.4,
-        0.6,
+        0.45,
+        0.88,
         0.0
        ],
-       "color": "#ff8a9a",
+       "color": "#ff9aa8",
        "core": "#fff0f2"
       },
       {
        "pos": [
-        -0.61,
-        0.47,
-        0.56
+        -0.72,
+        0.88,
+        0.66
        ],
-       "color": "#ff8a9a",
+       "color": "#ff9aa8",
        "core": "#fff0f2"
       },
       {
        "pos": [
-        0.1,
-        0.2,
-        -1.16
+        0.13,
+        0.73,
+        -1.46
        ],
-       "color": "#ff8a9a",
+       "color": "#ff9aa8",
        "core": "#fff0f2"
       },
       {
        "pos": [
-        0.46,
-        -0.13,
-        0.61
+        0.64,
+        0.24,
+        0.83
        ],
-       "color": "#ff8a9a",
+       "color": "#ff9aa8",
        "core": "#fff0f2"
       },
       {
        "pos": [
-        -0.86,
-        -0.5,
-        -0.15
+        -1.37,
+        0.0,
+        -0.24
        ],
-       "color": "#ff8a9a",
+       "color": "#ff9aa8",
        "core": "#fff0f2"
       },
       {
        "pos": [
-        0.58,
-        -1.03,
-        -0.37
+        1.41,
+        -0.38,
+        -0.9
        ],
-       "color": "#ff8a9a",
+       "color": "#ff9aa8",
+       "core": "#fff0f2"
+      },
+      {
+       "pos": [
+        -0.27,
+        -0.51,
+        1.0
+       ],
+       "color": "#ff9aa8",
+       "core": "#fff0f2"
+      },
+      {
+       "pos": [
+        -0.51,
+        -0.98,
+        -0.98
+       ],
+       "color": "#ff9aa8",
+       "core": "#fff0f2"
+      },
+      {
+       "pos": [
+        0.77,
+        -1.6,
+        0.28
+       ],
+       "color": "#ff9aa8",
        "core": "#fff0f2"
       }
      ]
     },
     {
-     "type": "cluster",
+     "type": "pentaquark",
      "pos": [
       0,
       0,
       0
      ],
-     "radius": 1.5,
-     "orbit": true,
-     "core": true,
+     "radius": 2.4,
+     "quarkRadius": 0.6,
      "quarks": [
       {
        "flavour": "c",
        "pos": [
-        0.7,
-        0.5,
-        0.2
+        0.8999999999999999,
+        0.66,
+        0.24
        ]
       },
       {
        "flavour": "u",
        "pos": [
-        0.25,
-        -0.85,
-        -0.5
+        0.3,
+        -1.14,
+        -0.66
        ]
       },
       {
        "flavour": "d",
        "pos": [
-        0.85,
-        -0.2,
-        -0.7
+        1.14,
+        -0.24,
+        -0.8999999999999999
        ]
       },
       {
        "flavour": "u",
        "pos": [
-        -0.5,
-        0.75,
-        -0.55
+        -0.66,
+        0.96,
+        -0.72
        ]
       },
       {
        "flavour": "cbar",
        "pos": [
-        -0.75,
-        -0.3,
-        0.4
+        -0.96,
+        -0.42,
+        0.48
        ]
       }
      ]
@@ -950,32 +1057,34 @@
       {
        "points": [
         [
-         -5.4,
+         -5.3,
          0,
          0
         ],
         [
-         -1.8,
+         -2.5,
          0,
          0
         ]
        ],
-       "color": "#7dd3fc"
+       "color": "#9fe0ff",
+       "width": 2.5
       },
       {
        "points": [
         [
-         5.2,
+         5.3,
          0,
          0
         ],
         [
-         1.8,
+         2.5,
          0,
          0
         ]
        ],
-       "color": "#ff8a9a"
+       "color": "#ffb3be",
+       "width": 2.5
       }
      ]
     }
