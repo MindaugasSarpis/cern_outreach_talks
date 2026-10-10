@@ -433,3 +433,16 @@ deck has no clicks, so click 0): 28 of 30 unchanged, 05 and 06 now the real
 Planck disk (the v0.6.4 stills predated it). Lint: the same 25 warnings
 (TIME-NODUR, NO-SRC, FONT-SMALL). Main's retrying live walk went 30/30 on
 the first pass.
+
+## Deployed (2026-10-10, pictures and numbers)
+
+f02d412, Pages run 38084549720 (green), URL 200, live walk 26/26. The owner's
+rule (no titles, statements, kickers, captions or credits on screen; numbers
+stay), then its refinements the same evening: no cover (the deck opens on the
+zoom-out; `setup/OpenerStart.vue` holds it on its first frame and starts it with
+sound on the first press), no section slides, a one- or two-word name on each
+invention, a unit or one word on each number, the licence credits in tiny print
+on the last slide. Opener tested headless on the Pages-base build (key, click,
+autoplay allowed, the real release clip; scratchpad opener/). Slidev gives a
+first slide the cover layout, whose box held the clip at 0 px: `layout:
+default`. Stills reshot for 26 slides.

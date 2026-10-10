@@ -102,12 +102,13 @@ Everything is grains; no solid shapes, no labels.
 
 ## Status
 
-2026-10-09: **complete, pending the owner's iPhone retest.** Deployed 9dc21bd
-(v0.7.0: stills shot at each slide's last click, the unsaid-clock check;
-c618855 + main 90d5458) —
+2026-10-10: **complete, stripped to pictures and numbers.** Deployed f02d412
+(no cover, no section slides, inventions named, numbers named, licence credits
+on the last slide, the opener waits for the first press; v0.7.0) —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_00_Innoday/ —
-Pages run 37988179265 (green), URL 200; `ready` passed with nothing skipped
-and the live walk went 30/30 first time (main's retrying walk).
+Pages run 38084549720 (green), URL 200; `ready` passed with nothing skipped and
+the live walk went 26/26. Open for the owner: the closing pose and the CERN CC
+credits (Decisions, "Taken overnight"); the iPhone retest of 9 Oct.
 
 ## Decisions
 
