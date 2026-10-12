@@ -16,7 +16,7 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check . --types lineup,streams,floor,portraits,collision,lhc-collision",
+    "stage:check": "slidev-stage-check . --types lineup,streams,floor,portraits,collision,lhc-collision,histogram,figures,backdrop",
     "stage:shots": "slidev-stage-shots dist shots"
   },
   "dependencies": {
@@ -24,7 +24,7 @@
     "three": "^0.185.1"
   },
   "devDependencies": {
-    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.8.0",
-    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#v0.8.0&path:/packages/stage"
+    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.8.1",
+    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#v0.8.1&path:/packages/stage"
   }
 }
