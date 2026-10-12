@@ -434,10 +434,10 @@ Morris (co-author of the service's paper) is said on the next slide.
 -->
 
 ---
-space: { at: [20, 5.2, 6], dist: 22, yaw: 0, pitch: 3, dim: 0.05 }
+space: { at: [20.17, -1.03, 0], dist: 30.45, yaw: 0, pitch: 3, dim: 0.05 }
 ---
 
-<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 9, dominykas: 0, team: 0, sun: 0 }" />
+<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 1, dominykas: 0, team: 0, sun: 0 }" />
 
 <div class="role">
 <img class="portrait" src="/figures/people/mindaugas-sarpis.jpg" alt="Mindaugas Šarpis" />
@@ -454,12 +454,20 @@ Message: open data is what we do, every day: we opened it, we work by FAIR
 and make analyses repeatable, students write their theses on it, we teach with
 it, we present it; and I now coordinate it for the whole LHCb experiment.
 
-Motion: nine streams leave the gold pile, one to each thing we do with open
-data, named in a word or two: Run 1 opened, FAIR, repeatable analyses, master's
-and bachelor's theses, the course, the masterclass, where we presented it (Riga,
-Boston, Kaunas). Bottom left: the role. (The owner, 2026-10-12: FAIR, analysis
-reproducibility and the theses in; the selection service and the Z → μμ
-analysis out.)
+Motion: a second sun round the gold pile, the group's own: nine rays of grains
+leave the pile to every side, in front of it and behind, each ending at a white
+cluster named in a word or two for something we do with open data: Run 1
+opened, FAIR, repeatable analyses, master's and bachelor's theses, the course,
+the masterclass, where we presented it (Riga, Boston, Kaunas). Four more rays
+end at empty places, gold clouds breathing slowly: room for what comes next
+(say so if there is time). The whole sun turns slowly, once in 100 s: the
+clusters sweep round in front of the pile and behind it, larger and brighter in
+front. The names stay bright, each beside its own cluster and clear of the
+frame's darker edges; one whose cluster passes behind the pile or under a
+nearer one steps back until it comes out again. All nine read for the first
+80 s. On the next click the names go at once, the grains within a second.
+Bottom left: the role. (The owner, 2026-10-12: FAIR, analysis reproducibility
+and the theses in; the selection service and the Z → μμ analysis out.)
 
 Sakyti: „Atvirieji duomenys – mūsų kasdienybė. Nuo šių metų rugpjūčio 1 d.
 esu viso LHCb eksperimento analizių išsaugojimo ir atvirųjų duomenų
