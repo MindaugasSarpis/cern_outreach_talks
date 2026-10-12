@@ -44,22 +44,26 @@ import { state, listen, tick, waiting, material, PLACE, smooth as mipmapped } fr
 //
 // A name stands outward from the pile on the screen, just off its cluster's rim, so it
 // reads on from its ray, and keeps a fixed size on the screen (a little larger in front,
-// smaller behind); the grains under it give way, so no ray runs through its letters.
-// Its cluster passing behind the pile, or the name passing under a nearer name or
-// cluster, it steps back almost to nothing, so text never lies on text; over the
-// slide's `keepOut` box, or off the frame, it fades out. The names were laid out with
-// the rest (`at`, `axis`, `squash` and the slide's pose searched together), so that
-// this seldom happens while the slide is up. With a `pulse`, the empty places breathe
-// as they wait, each in its own time.
+// smaller behind; behind, it hardly dims, so it reads from the back of the hall).
+// The grains under it give way, so no ray runs through its letters. Its cluster passing
+// behind the pile, or the name passing under a nearer name or cluster, it steps back
+// almost to nothing, so text never lies on text; over the slide's `keepOut` box, or off
+// the frame, it fades out. The names were laid out with the rest: `at`, `axis`, `squash`
+// and the slide's pose were searched together (tools/sun_layout: a model of what is
+// drawn here, which reads space.json and the deck), so that every name reads, plainly
+// its own cluster's and clear of the frame's edges (the stage's vignette greys them),
+// for the time the slide is up; a new name, or a pose or a size changed, wants that
+// search again. With a `pulse`, the empty places breathe as they wait, each in its own
+// time.
 //
 // Step 1: the rays grow out of the pile one after another, round the sun from the
 // top, and each plot shows as its first grains land (a name, as its cluster gathers);
 // the turn starts at the layout above. When the camera flies in to the store, the
 // piles gather there again, and the rays set out `after` seconds after it lands, out of
 // the gathering gold (`delay` holds the first ray back on a step: slide 12's waits
-// for slide 11's sun to fade). Step 0: everything fades within 1.2 s. Taken back
-// while fading, it comes back from where it is, still turning; `c` leaves a sun that
-// stands as it is.
+// for slide 11's sun to fade). Step 0: everything fades within 1.2 s, the names within
+// 0.3 s, so none is left over the next slide's words. Taken back while fading, it comes
+// back from where it is, still turning; `c` leaves a sun that stands as it is.
 const MAXI = 32, MAXN = 16
 const SUN_VERT = /* glsl */ `
 attribute float aSeed, aKind, aDelay, aLook, aIdx;  // 0 a grain on its ray, 1 a grain of a cloud, 2 one shed as it turns; its item's look (0 a plot, 1 an empty place, 2 a named cluster); its item
@@ -314,12 +318,19 @@ function buildSun(o, ctx) {
   // sprites, aligned on the side it is held by.
   const labelH = o.labelH ?? 0.04, rimR = 0.36 * Math.min(w, h) * 1.15
   const PITCH = 0.8   // a line's pitch in a stack, in sprite heights (a sprite is half again as tall as its letters)
+  // Drawn at about its size on a 4K projector (the stage draws at most 2560 wide, where
+  // a name of 0.044 is some 68 px tall: px 44 makes its canvas 66), so it is neither
+  // blurred by mipmaps nor by much enlarging. Its colour is as bright as the finish lets
+  // a name be and stay crisp: just under the bloom's threshold (a luminance of 0.8 before
+  // tone mapping; anything over it glows), which comes out at about 210 of 255 in the
+  // frame's middle.
+  const NAME_PX = 44, NAME_COLOR = '#dee5f0'
   const names = []
   const makeNames = () => {
     items.forEach((it, i) => {
       if (!it.label) return
       const lines = String(it.label).split('\n').map((text) => {
-        const l = mipmapped(ctx.helpers.makeLabel(text, { px: 64, weight: 500, color: o.labelColor || '#e6edf8', worldH: labelH, letterSpacing: 0.06, upper: false }))
+        const l = mipmapped(ctx.helpers.makeLabel(text, { px: NAME_PX, weight: 500, color: o.labelColor || NAME_COLOR, worldH: labelH, letterSpacing: 0.06, upper: false }))
         l.material.sizeAttenuation = false; l.material.opacity = 0
         l.userData.w = l.scale.x
         // drawn after the grains, so they add under it; set out before it is drawn, whichever part comes first
@@ -347,7 +358,7 @@ function buildSun(o, ctx) {
         standAt(ends[nm.i], u.uAng.value, stand)
         at.copy(stand).addScaledVector(u.uRight.value, dx * rimR).addScaledVector(u.uUp.value, dy * rimR)
         // a little larger in front, smaller behind, as the clusters are
-        const s = Math.min(1.12, Math.max(0.9, Math.sqrt(dist / Math.max(cp.distanceTo(stand), 1e-3))))
+        const s = Math.min(1.1, Math.max(0.95, Math.sqrt(dist / Math.max(cp.distanceTo(stand), 1e-3))))
         const n = nm.lines.length, H = 1 + PITCH * (n - 1), cy = (0.5 - 0.5 * sy) * H
         nm.lines.forEach((l, j) => {
           l.position.copy(at); l.scale.set(l.userData.w * s, labelH * s, 1)
@@ -377,14 +388,15 @@ function buildSun(o, ctx) {
           * (1 - smooth(0, 0.05, cross(nm.box, capt))) * smooth(0.9, 0.99, cross(nm.box, frameBox))
       }
       nm.veil += (want - nm.veil) * k
-      // it shows once its cluster has gathered
-      const shown = ease((u.uSince.value - delay[nm.i] - travel - 0.2) / 0.9)
-      const a = 0.92 * u.uOn.value * shown * (0.62 + 0.38 * (nm.near ?? 1)) * nm.veil
+      // it shows once its cluster has gathered; behind, it hardly dims (its size tells the
+      // depth: a name has to read from the back of the hall wherever it is)
+      const on = ease(nameLevel) * ease((u.uSince.value - delay[nm.i] - travel - 0.2) / 0.9)
+      const a = on * (0.94 + 0.06 * (nm.near ?? 1)) * nm.veil
       for (const l of nm.lines) l.material.opacity = a
       // the grains under it (but its own cluster's) give way as far as it shows
       if (j < MAXN) {
         u.uName.value[j].set(nm.box.x, nm.box.y, nm.box.hx + 0.01, nm.box.hy + 0.01)
-        u.uNameA.value[j] = u.uOn.value * shown * nm.veil; u.uNameI.value[j] = nm.i
+        u.uNameA.value[j] = on * nm.veil; u.uNameI.value[j] = nm.i
       }
     })
   }
@@ -437,12 +449,14 @@ function buildSun(o, ctx) {
     geo.attributes.aLand.needsUpdate = true
   }
 
-  // t0: when the rays set out (it may lie ahead: nothing shows before it); the turn starts there
-  let now = 0, last = 0, t0 = -1, hideT = -1, level = 0
+  // t0: when the rays set out (it may lie ahead: nothing shows before it); the turn starts there.
+  // The names have a level of their own: they go in 0.3 s, so none lies on the next
+  // slide's words while the grains fade
+  let now = 0, last = 0, t0 = -1, hideT = -1, level = 0, nameLevel = 0
   let step = state.has(o.name) ? state.get(o.name) : 0, armed = false, armedAt = 0
   let doneCbs = []                             // the arrival's onDone, called once the plots stand
   const done = () => { const cbs = doneCbs; doneCbs = []; for (const cb of cbs) cb() }
-  const start = (t) => { t0 = t; hideT = -1; level = 1 }
+  const start = (t) => { t0 = t; hideT = -1; level = 1; nameLevel = 1 }
   const go = (k) => {
     step = k
     if (armed) return                          // the camera is on its way here: the arrival starts it
@@ -485,6 +499,7 @@ function buildSun(o, ctx) {
       if (t0 >= 0) {
         // the fade: down over 1.2 s once stopped, back up as fast if taken back
         level = Math.min(1, Math.max(0, level + (hideT >= 0 ? -dt : dt) / 1.2))
+        nameLevel = Math.min(1, Math.max(0, nameLevel + (hideT >= 0 ? -dt / 0.3 : dt / 1.2)))
         if (hideT >= 0 && level <= 0) { t0 = -1; hideT = -1 }
       }
       g.visible = t0 >= 0
