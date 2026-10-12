@@ -17,7 +17,7 @@ html[data-stage] {
 /* the cover's subtitle on two even lines, clear of the collider below it */
 html[data-stage] .slidev-layout.cover h2 { max-width: 40ch; text-wrap: balance; }
 
-/* the cover's byline breaks before the university, clear of the collider */
+/* the cover's byline breaks before the university (a <br> in deck.md), clear of the collider */
 html[data-stage] .slidev-layout.cover .mt-md { max-width: 34ch; }
 
 /* every kicker, the kit's and the cover's too, in the one accent */

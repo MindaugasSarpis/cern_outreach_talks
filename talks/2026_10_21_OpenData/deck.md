@@ -59,7 +59,7 @@ space:
 
 # Atveriame <span class="nt">LHCb</span> duomenis
 
-<div class="mt-md">Dr. Mindaugas Šarpis · <span class="nt">LHCb</span> Vilnius · Vilniaus universitetas</div>
+<div class="mt-md">Dr. Mindaugas Šarpis · <span class="nt">LHCb</span> Vilnius<br>Vilniaus universitetas</div>
 
 <!--
 Message: this talk is about the work we were nominated for, opening LHCb's data.
