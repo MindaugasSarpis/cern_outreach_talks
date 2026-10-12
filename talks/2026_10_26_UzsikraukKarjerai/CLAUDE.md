@@ -54,7 +54,17 @@ since the opening replaced the cavern photograph, so no credit is on screen.
 
 ## Status
 
-- 2026-10-11 (latest): **deployed f23d671** under the owner's standing deploy
+- 2026-10-11 (latest): **deployed 99ac5d4** under the owner's standing deploy
+  rule: slidev-videos v0.8.1 (print reads each page's own dim, so the talk's print
+  workaround is gone), OpenData's bloom fix in the shared opening (main 8bd087b),
+  and still 03 retaken for it. `talk ready` passed with nothing skipped. Pages
+  run 38091421726 green, live walk passed for 15 slides, URL 200. The open items
+  went to the owner through the Scheduler in one morning list. They are: the LHC
+  and LHCb lines over the opening or on slide 9; the fewer-words choices; the
+  licences for Delfi; their moments for slide 13; the masterclass and BL4S dates;
+  the length.
+
+- 2026-10-11: **deployed f23d671** under the owner's standing deploy
   rule: the shared LHC opening (Decisions, 2026-10-11) on slidev-videos v0.8.0,
   15 slides. Main fe69406 is merged. `talk ready` passed with nothing skipped.
   Pages run 38089305763 green, live walk passed for 15 slides, URL 200. Both

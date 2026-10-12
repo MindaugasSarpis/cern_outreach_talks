@@ -1,5 +1,7 @@
 import { registerBuilder } from 'slidev-addon-stage'
 import { installGrains } from './grains.js'
+import { installDataspace } from './dataspace.js'
+import { installSun } from './sun.js'
 import { installOpening } from '../components/lhc-opening/index.js'
 import Grains from './Grains.vue'
 import Count from './Count.vue'
@@ -11,6 +13,8 @@ import PeakRise from './PeakRise.vue'
 // identity, and @slidev/types is not a dependency of the talk.)
 export default ({ app }) => {
   installGrains(registerBuilder)
+  installDataspace(registerBuilder)   // the space of data behind the piles (setup/dataspace.js)
+  installSun(registerBuilder)         // the sun of plots made from the open data (setup/sun.js)
   installOpening({ app, registerBuilder })   // the shared LHC opening: its collision, sound and <LhcOpening>
   app.component('Grains', Grains)
   app.component('Count', Count)

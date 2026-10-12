@@ -26,7 +26,11 @@
 //
 //   const ring = makeRing(homes, { speed, spread, radius, view, title, keepOut, frame, seed, … })
 //   ring.reset(t)                  at the homes, at rest; the drive and the wander ramp in
-//   ring.advance(t, onHit)         steps up to t; onHit({ t, x, y, z, nx, ny, tx, ty, v }) as two meet
+//   ring.advance(t, onHit, onStep) steps up to t; onHit({ t, i, j, x, y, z, sx, sy, nx, ny, tx, ty, v })
+//                                  as two meet (x, y, z where, sx, sy where it is seen);
+//                                  onStep(t, h) after every step, for what moves with them (beam.js)
+//   ring.seen                      { x, y, r, vx, vy }: the bodies as they are seen, live
+//   ring.dir                       which way they run: -1 clockwise on screen, 1 the other way
 
 const H = 1 / 120   // the step, s
 
@@ -160,7 +164,7 @@ export function makeRing(homes, o = {}) {
       const first = !touching[i * n + j]; touching[i * n + j] = 1
       if (first && -rvn > hitMin && onHit) {
         const cz = (z[i] + z[j]) / 2, [hx, hy] = unproject(x[i] + dx * rad[i], y[i] + dy * rad[i], cz)
-        onHit({ t: simT, x: hx, y: hy, z: cz, nx: dx, ny: dy, tx, ty, v: -rvn })
+        onHit({ t: simT, i, j, x: hx, y: hy, z: cz, sx: x[i] + dx * rad[i], sy: y[i] + dy * rad[i], nx: dx, ny: dy, tx, ty, v: -rvn })
       }
     }
     for (let i = 0; i < n; i++) {
@@ -186,15 +190,16 @@ export function makeRing(homes, o = {}) {
     }
   }
 
-  function advance(t, onHit) {
+  function advance(t, onHit, onStep) {
     // the engine holds a frame to 1/12 s, so this catches up ten steps at most;
     // a longer gap (a hidden tab) skips ahead rather than racing
     if (t - (t0 + steps * H) > 1) steps = Math.floor((t - 1 - t0) / H)
     let moved = false
-    while (t0 + (steps + 1) * H <= t) { step(t0 + steps * H, onHit); steps++; moved = true }
+    while (t0 + (steps + 1) * H <= t) { step(t0 + steps * H, onHit); steps++; moved = true; onStep?.(t0 + steps * H, H) }
     if (moved) place()
   }
 
   reset(0)
-  return { n, x: px, y: py, z: pz, a, seen: { x, y, r: rad }, reset, advance, get t() { return t0 + steps * H }, ring: { cx, cy, rx, ry } }
+  return { n, x: px, y: py, z: pz, a, seen: { x, y, r: rad, vx, vy }, reset, advance, view: D, dir: o.dir ?? -1, get t() { return t0 + steps * H },
+    ring: { cx, cy, rx, ry }, title: { x: tc[0], y: tc[1], w: box[0], h: box[1] } }
 }
