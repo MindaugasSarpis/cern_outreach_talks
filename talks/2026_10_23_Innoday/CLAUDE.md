@@ -129,13 +129,13 @@ lit `page` sheets in the world).
 
 ## Status
 
-2026-10-12: **the owner's restructure is live.** Deployed d9f3abb (v0.8.1) —
+2026-10-12: **the owner's restructure is live, with his CMS collision.**
+Deployed 2adf086 (v0.8.1) —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
-Pages run 38272139749 (green), URL 200, live walk 31/31; `ready` passed with
-nothing skipped. Published before it, with `--only`: vu_zoom_web.mp4 and
-cern_footage_2022_013_001_1080p_lhc.mp4. Open for the owner: lhcb.mp4's music
-(probably a commercial film score), vm_zoom's music and the NCSA web's
-licence, the CERN CC credits, the CMS 4π swap when OpenData lands, the paper
+Pages run 38277433372 (green), URL 200, live walk 31/31; `ready` passed with
+nothing skipped. (The restructure itself went out as d9f3abb, run 38272139749.)
+Open for the owner: lhcb.mp4's music (probably a commercial film score),
+vm_zoom's music and the NCSA web's licence, the CERN CC credits, the paper
 count on 22 Oct, the iPhone retest. For a PDF: `pnpm talk export innoday
 --format pdf -- --wait 12000`.
 
