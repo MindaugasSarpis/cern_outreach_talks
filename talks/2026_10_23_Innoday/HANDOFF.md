@@ -507,4 +507,9 @@ workflows; agent reports in the session scratchpad):
 - Deployed d9f3abb, Pages run 38272139749 (green), URL 200, live walk 31/31;
   the two new clips published first with `--only` (sizes match the encodes,
   both serve 206 from the release).
+- The CMS swap (once components/lhc-opening's CMS event reached main,
+  2852775): both collisions `"event": "cms"`, OpenData's CMS camera path on
+  slide 9 (`:count="290"`), „Ačiū“ slower and square to the beam at dist 6.4,
+  filling the width. Both instances shot together in one page: no errors.
+  Deployed 2adf086, Pages run 38277433372 (green), URL 200, live walk 31/31.
 
