@@ -17,8 +17,12 @@ Its sound (`sound.js`): a low swell under the run-in, a thump at the crossing,
 a held drone that fades at its own pitch as the debris flies out. The fly-out's
 boom (a saturated sine falling 110 → 28 Hz) went on 12 Oct for all three talks:
 the owner heard it as "weird driving sound" here and "the driving away sound" in
-Innoday. On a laptop's speakers the collision is now near silent. The stage's
-flight whoosh is the next suspect if the owner still hears one (`stage.sound`).
+Innoday. On a laptop's speakers the collision is now near silent.
+
+The stage's own voices are off in this deck (`stage.sound: { hum: false, flight:
+false, clip: false }`): no whoosh on a flight, no rising tone as a clip gathers,
+no hum (owner, 13 Oct: "transitions were like driving sounds"). Sound stays on,
+so the collision's swell, thump and drone (`ctx.audio()`) and the clips play.
 
 ## The deck now (r3, 2026-10-12)
 

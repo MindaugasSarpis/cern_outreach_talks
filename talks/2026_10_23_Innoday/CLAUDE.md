@@ -161,6 +161,13 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   over a slow collision filling the screen. These supersede the 10 Oct "no
   cover / no sections / no words" for those slides (lint's TEXT warns on them,
   expected).
+- No driving sounds (owner, 12 Oct: "don't use the 'driving away sound', sounds
+  funny"; to OpenData, 13 Oct: "transitions were like driving sounds"): the
+  collision's falling boom is gone from components/lhc-opening (27e9837, for
+  every talk), and the stage's flight whoosh and clip rise are off here
+  (`stage.sound: { hum: true, flight: false, clip: false }`). What still
+  sounds: the funnel hum (slides 4-5), the collision's swell, thump and drone
+  (slide 9; sub-bass, barely there on laptop speakers), the clips' own audio.
 - The LHCb clip's sound is the owner's own edit `lhcb.mp4` (owner: "should be on
   gdrive"): its music is the drive's untagged `Sunshine Adagio in D Minor.mp3`,
   probably John Murphy's commercial film score (2007); seven other decks
