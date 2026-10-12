@@ -508,112 +508,165 @@
      "alpha": 0.6
     },
     {
-     "type": "streams",
+     "type": "sun",
      "name": "vilnius",
      "pos": [
-      0,
-      0,
-      0
-     ],
-     "from": [
       0,
       1.86,
       0
      ],
-     "color": "#ffe3a8",
-     "to": [
-      {
-       "pos": [
-        -6.2,
-        4.6,
-        9.0
-       ],
-       "lift": 0.22,
-       "label": "Run 1 atvėrimas",
-       "side": "left"
-      },
-      {
-       "pos": [
-        -5.8,
-        7.0,
-        9.0
-       ],
-       "lift": 0.22,
-       "label": "FAIR",
-       "side": "left"
-      },
-      {
-       "pos": [
-        -4.6,
-        9.2,
-        9.0
-       ],
-       "lift": 0.22,
-       "label": "Analizės atkartojamumas",
-       "side": "left"
-      },
-      {
-       "pos": [
-        -2.2,
-        10.8,
-        9.0
-       ],
-       "lift": 0.22,
-       "label": "Magistro ir\nbakalauro darbai",
-       "side": "left"
-      },
-      {
-       "pos": [
-        2.0,
-        10.8,
-        9.0
-       ],
-       "lift": 0.22,
-       "label": "Geriausios tyrimų\nir duomenų analizės\npraktikos iš CERN"
-      },
-      {
-       "pos": [
-        4.4,
-        8.8,
-        9.0
-       ],
-       "lift": 0.22,
-       "label": "Meistriškumo pamoka"
-      },
-      {
-       "pos": [
-        5.6,
-        6.6,
-        9.0
-       ],
-       "lift": 0.22,
-       "label": "CBC 2023"
-      },
-      {
-       "pos": [
-        6.0,
-        4.6,
-        9.0
-       ],
-       "lift": 0.22,
-       "label": "LHCP 2024"
-      },
-      {
-       "pos": [
-        5.8,
-        2.8,
-        9.2
-       ],
-       "lift": 0.22,
-       "label": "LNFK 2025"
-      }
+     "pileR": 1.9,
+     "piles": [
+      [
+       0,
+       0,
+       0,
+       1.9
+      ],
+      [
+       -2.6,
+       -0.72,
+       3.2,
+       1.15
+      ]
      ],
-     "grains": 2600,
-     "node": 1400,
-     "nodeRadius": 0.7,
-     "speed": 0.2,
-     "alpha": 0.7,
-     "labelH": 0.042
+     "axis": [
+      -0.0012,
+      -0.6853,
+      -0.7283
+     ],
+     "turn": 100.0,
+     "squash": [
+      11.11,
+      10.75,
+      10.95,
+      6.71
+     ],
+     "w": 2.64,
+     "aspect": 1,
+     "after": 0.5,
+     "delay": 0.7,
+     "stagger": 0.1,
+     "travel": 1.9,
+     "lag": 0.12,
+     "back": 0.45,
+     "color": "#ffe3a8",
+     "placeColor": "#ffc05a",
+     "alpha": 0.75,
+     "grains": 900,
+     "cloud": 900,
+     "cluster": 1100,
+     "shed": 110,
+     "pulse": 0.3,
+     "labelH": 0.044,
+     "keepOut": [
+      -0.92,
+      0.33,
+      -0.88,
+      -0.44
+     ],
+     "items": [
+      {
+       "label": "Run 1 atvėrimas",
+       "at": [
+        -10.15,
+        -0.8,
+        -1.11
+       ]
+      },
+      {
+       "label": "FAIR",
+       "at": [
+        10.41,
+        -1.44,
+        0.74
+       ]
+      },
+      {
+       "label": "Analizės atkartojamumas",
+       "at": [
+        0.7,
+        6.24,
+        -7.09
+       ]
+      },
+      {
+       "label": "Magistro ir\nbakalauro darbai",
+       "at": [
+        -6.59,
+        5.27,
+        -4.53
+       ]
+      },
+      {
+       "label": "Geriausios tyrimų\nir duomenų analizės\npraktikos iš CERN",
+       "at": [
+        -6.29,
+        -4.71,
+        3.71
+       ]
+      },
+      {
+       "label": "Meistriškumo pamoka",
+       "at": [
+        10.34,
+        2.43,
+        -3.14
+       ]
+      },
+      {
+       "label": "CBC 2023",
+       "at": [
+        7.17,
+        5.66,
+        -6.06
+       ]
+      },
+      {
+       "label": "LHCP 2024",
+       "at": [
+        4.8,
+        -4.25,
+        7.03
+       ]
+      },
+      {
+       "label": "LNFK 2025",
+       "at": [
+        8.59,
+        -3.06,
+        4.84
+       ]
+      },
+      {
+       "at": [
+        -6.36,
+        0.91,
+        8.76
+       ]
+      },
+      {
+       "at": [
+        1.58,
+        3.28,
+        -6.03
+       ]
+      },
+      {
+       "at": [
+        6.68,
+        0.13,
+        -1.74
+       ]
+      },
+      {
+       "at": [
+        -0.07,
+        -4.09,
+        4.02
+       ]
+      }
+     ]
     },
     {
      "type": "streams",

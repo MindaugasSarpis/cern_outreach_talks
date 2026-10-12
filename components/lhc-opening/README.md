@@ -36,7 +36,9 @@ all sides" and chose "a real CMS event, 4π").
    (`cameraRate: 1`, a `path`); then it runs on fast as the debris flies out:
    237 reconstructed tracks bending in LHCb's dipole, splashes of energy in the
    ECAL (153 real clusters) and HCAL, the muons running on through the muon
-   stations. A low swell, a thump at the crossing, the boom on the fly-out.
+   stations. A low swell, a thump at the crossing, and a drone that fades as the
+   debris flies out. The fly-out's boom went on 12 Oct 2026, in every talk: on a
+   laptop it read as a car driving away (the owner: "no weird driving sound").
 
    With `"event": "cms"` the same run draws the CMS crossing: the flash lights
    each of its 19 collisions along the beam, and the debris flies out to every

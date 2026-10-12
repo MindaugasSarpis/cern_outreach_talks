@@ -6,7 +6,8 @@ import { makeRing, mulberry32 } from './ring.js'
 import { makeBeam } from './beam.js'
 
 // a label sprite from the engine, mipmapped: drawn far smaller than its canvas, it aliased into dither
-function smooth(l) {
+// (the sun's named clusters take it too: setup/sun.js)
+export function smooth(l) {
   const t = l.material.map
   if (t) { t.generateMipmaps = true; t.minFilter = LinearMipmapLinearFilter; t.anisotropy = 4; t.needsUpdate = true }
   return l
