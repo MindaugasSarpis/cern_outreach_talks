@@ -1693,32 +1693,18 @@
      "bin": 1.75
     },
     {
-     "type": "backdrop",
+     "type": "dataspace",
      "name": "vault",
      "pos": [
       0,
-      6,
-      -165
-     ],
-     "src": "/figures/bg/tape-vault.jpg",
-     "yaw": 0,
-     "width": 340,
-     "relief": 0.25,
-     "dim": 0.6
-    },
-    {
-     "type": "backdrop",
-     "name": "vault",
-     "pos": [
-      -175,
-      6,
+      0,
       0
      ],
-     "src": "/figures/bg/tape-vault.jpg",
-     "yaw": 90,
-     "width": 340,
-     "relief": 0.25,
-     "dim": 0.6
+     "from": [
+      3.2,
+      0.1,
+      6.0
+     ]
     },
     {
      "type": "streams",
