@@ -32,6 +32,9 @@ and the builders are in the talk's CLAUDE.md, "The deck now (r3)".
   Vilnius sun: 3fe3545 on main, Pages run 38288574537 (success). The URL
   answers 200, and `talk deploy`'s live check passed (14 slides, none failed).
   `talk ready` had passed on 3fe3545 with nothing skipped.
+- Deployed 2026-10-12 with the Vilnius sun: 9bae6d9 on main, Pages run
+  38296136915 (success). The URL answers 200, and the live check passed (14
+  slides, none failed). `talk ready` had passed on 9bae6d9 with nothing skipped.
 
 - The way in:
   - CERN from above (slide 2), pushing into the ring.
