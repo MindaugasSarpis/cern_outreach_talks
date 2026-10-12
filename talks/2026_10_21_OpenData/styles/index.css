@@ -211,6 +211,8 @@ html[data-stage] .finds .line, html[data-stage] .chips li, html[data-stage] .poi
 html[data-stage] .readout .caption { font-size: 30px; font-weight: 500; letter-spacing: 0.02em; color: var(--od-accent); margin: 0; text-shadow: var(--od-shadow); }
 /* the sun's caption: the sun (setup/sun.js) keeps its plots and grains off the box `keepOut`
    (space.json's sun, in the screen's -1…1 at 16:9), measured from this caption: change one, change both */
+html[data-stage] .readout .who { margin: 14px 0 0; font-size: 20px; font-weight: 500; letter-spacing: 0.02em; color: var(--od-accent); opacity: 0.9; text-shadow: var(--od-shadow); }   /* a small line under the caption: who, and the award (800 TB) */
+html[data-stage] .readout .who span { color: #fff; }
 html[data-stage] .readout .sun-caption { font-size: 40px; white-space: nowrap; }
 
 /* the crux slide: the role, bottom left: a portrait, the name, the role as a caption */
