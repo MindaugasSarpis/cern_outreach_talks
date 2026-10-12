@@ -3,8 +3,6 @@ import {
   LinearMipmapLinearFilter, DynamicDrawUsage, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColorSpace, Quaternion,
 } from 'three'
 import { makeRing, mulberry32 } from './ring.js'
-// the engine's photo relief (not in the addon's exports yet: by its file, the same module the engine loads)
-import { createPhotoPlace } from '../node_modules/slidev-addon-stage/stage/photo-place.js'
 
 // a label sprite from the engine, mipmapped: drawn far smaller than its canvas, it aliased into dither
 function smooth(l) {
@@ -58,8 +56,9 @@ function listen(name, fn) {
   window.addEventListener(BUS, h)
   return () => window.removeEventListener(BUS, h)
 }
-// for the talk's forms kept in files of their own (setup/dataspace.js)
-export { listen, waiting, tick, state as steps }
+// for the talk's forms kept in files of their own (setup/dataspace.js): a name's last step
+export const stepOf = (name) => state.get(name)
+export { listen, waiting, tick }
 
 const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
@@ -1454,39 +1453,6 @@ function buildFigures(o, ctx) {
   }
 }
 
-// ---- backdrop -----------------------------------------------------------------------
-//   { type: backdrop, name, pos, src, depth?: <src>.depth.png, yaw?: 0, width?: 300,
-//     cols?: 600 (half on a phone), relief?: 0.25, dim?: 0.6 }
-// A photograph standing far off in the world as a relief of grains (the engine's photo
-// place, without a slide of its own: nothing flies to it or flattens it), behind a scene
-// that would otherwise stand in empty black. Step 1 fades it in over a few seconds, 0 out.
-function buildBackdrop(o, ctx) {
-  const g = new Group()   // at the station's origin: the relief stands at o.pos itself
-  const base = (import.meta.env?.BASE_URL || '/').replace(/\/$/, '')
-  const url = (src) => (ctx.asset ? ctx.asset(src) : String(src).startsWith('/') ? base + src : src)
-  const load = (src) => new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = url(src) })
-  const cols = Math.round((o.cols ?? 600) * ((ctx.tier ?? 0) >= 2 ? 0.5 : 1))
-  let handle = null, failed = false, vis = 0
-  let want = state.has(o.name) && state.get(o.name) ? 1 : 0
-  Promise.all([load(o.src), load(o.depth || String(o.src).replace(/\.[^.\/]+$/, '.depth.png'))]).then(([image, depth]) => {
-    handle = createPhotoPlace({ image, depth, pos: o.pos || [0, 0, 0], yaw: o.yaw ?? 0, width: o.width ?? 300, cols, relief: o.relief ?? 0.25 })
-    handle.set({ dim: o.dim ?? 0.6, opacity: vis })
-    g.add(handle.object)
-  }).catch(() => { failed = true; console.warn('stage: backdrop failed', o.src) })
-  const off = listen(o.name, (k) => { want = k ? 1 : 0 })
-  const busy = () => waiting(o.name) || (!failed && want > 0 && !handle) || Math.abs(want - vis) > 0.01
-  return {
-    group: g, labels: [], api: { busy },
-    update(t) {
-      tick(t)
-      vis += (want - vis) * 0.04
-      if (handle) handle.set({ opacity: vis })
-      g.visible = vis > 0.005
-    },
-    dispose() { off(); handle?.dispose() },
-  }
-}
-
 export function installGrains(registerBuilder) {
   registerBuilder('lineup', buildLineup, { fields: ['pos', 'name', 'balls'] })
   registerBuilder('streams', buildStreams, { fields: ['pos', 'name', 'from', 'to'] })
@@ -1495,5 +1461,4 @@ export function installGrains(registerBuilder) {
   registerBuilder('collision', buildCollision, { fields: ['pos', 'name', 'tracks'] })
   registerBuilder('histogram', buildHistogram, { fields: ['pos', 'name'] })
   registerBuilder('figures', buildFigures, { fields: ['pos', 'name', 'items'] })
-  registerBuilder('backdrop', buildBackdrop, { fields: ['pos', 'name', 'src'] })
 }

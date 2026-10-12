@@ -16,7 +16,7 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check . --types lineup,streams,floor,portraits,collision,lhc-collision,histogram,figures,backdrop,dataspace",
+    "stage:check": "slidev-stage-check . --types lineup,streams,floor,portraits,collision,lhc-collision,histogram,figures,dataspace",
     "stage:shots": "slidev-stage-shots dist shots"
   },
   "dependencies": {
