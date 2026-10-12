@@ -23,7 +23,13 @@ https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_21_OpenData/
 (the old 2026_10_00 address is gone). The videos release keeps its storage name,
 videos-2026-10-00-opendata.
 
-## Status (2026-10-12): the owner's rework
+## Status (2026-10-12): the owner's rework, deployed
+
+- Deployed 2026-10-12 under the standing rule: commit f9d018a on main, Pages
+  run 38240449914 (success); the URL answers 200 and `talk deploy`'s live
+  check passed (15 slides, nothing failed). `talk ready` passed on f9d018a
+  with nothing skipped (lint: 0 errors, the three TEXT warnings of the
+  owner's captions and text).
 
 The owner's list of 2026-10-11 (captions, no title slides; the vault behind
 the spheres; the users slide as a sun; the Vilnius slide as the crux; the
