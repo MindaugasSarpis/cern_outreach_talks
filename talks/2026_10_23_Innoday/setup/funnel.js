@@ -10,11 +10,13 @@ import { POINT_GLSL, viewScale } from './view.js'
 //            universe" figure draws it, in grains: a bell lying on its side,
 //            a white-blue Big Bang flare at the narrow end, inflation flaring
 //            the neck fast, the CMB as a disk across the narrow end in a
-//            WMAP-like palette, a pale blue afterglow, the dark ages, the first
-//            stars, then galaxies (blue, white, gold, violet, some spirals)
-//            ever denser and brighter toward the mouth, which widens a little
-//            faster at the end (accelerating expansion). A clean wireframe of
-//            rings and lines, and a faint perspective floor grid below.
+//            WMAP-like palette, a pale blue afterglow, then (owner, 12 Oct) the
+//            dark ages with no stars, the first light (a crowd of small, hot,
+//            blue-white proto-galaxies at `dawn`, densest at `peak`), and from
+//            there ever fewer, cooler, dimmer galaxies, their groups drifting
+//            apart, to a cold dark mouth (today), which widens a little faster
+//            at the end (accelerating expansion). A clean wireframe of rings
+//            and lines, and a faint perspective floor grid below.
 //
 // The CMB disk is the Planck 2018 SMICA-noSZ map (ESA and the Planck
 // Collaboration): with `cmbDisk`, a picture (public/figures/cmb_disk.jpg,
@@ -24,13 +26,47 @@ import { POINT_GLSL, viewScale } from './view.js'
 //
 //   { type: funnel, pos, axis: 'z+' | 'z-' | 'x+' | 'x-', length: 26, mouth: 6.3,
 //     neck: 3.4, cmb: 'figures/cmb_wmap.png', rings: 15, lines: 16,
-//     galaxies: 520, floor: true, alpha: 0.6, size: 1 }
+//     galaxies: 2400, group: 6, spirals: 0.22, haze: 12000, sparks: 1200, dawn: 0.32,
+//     peak: 0.37, thin: 0.11, rest: 0.05, spread: [0.12, 1.0], floor: true, alpha: 0.6, size: 1 }
 //
 // s runs along the axis from the CMB disk (s = 0, at pos) to the mouth
 // (s = length); the inflation neck and the Big Bang lie just before it (s < 0).
+// The epochs are fractions of the length, t = s / length: the dark ages run
+// to `dawn` (keep dawn * length past the slide-4 camera, which stands 7.5 in
+// front of the disk: nothing hot between it and the CMB); the galaxies per
+// unit of length rise over 0.05 to 1 at `peak`, then fall as
+// exp(-(t - peak) / thin) to `rest` of it; `spread` is how far a group's
+// members stand from its centre at the dawn and at the mouth. A grown galaxy
+// carries about five times a proto-galaxy's light, so `thin` stays short: with
+// a slower fall the grown ones just past the peak outshine the crowd at the
+// dawn in the side view (slide 3).
 
 const hash = (n) => { const s = Math.sin(n * 12.9898 + 78.233) * 43758.5453; return s - Math.floor(s) }
 const gauss = (n) => { let v = 0; for (let k = 0; k < 4; k++) v += hash(n * 7.31 + k * 1.37); return (v - 2) / 1.15 }
+const sstep = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k) }
+const mix3 = (a, b, k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k]
+// a colour ramp: [t, [r, g, b]] stops → the colour at t, linear between them
+const ramp = (stops, t) => {
+  if (t <= stops[0][0]) return stops[0][1]
+  for (let i = 1; i < stops.length; i++) if (t <= stops[i][0]) return mix3(stops[i - 1][1], stops[i][1], (t - stops[i - 1][0]) / (stops[i][0] - stops[i - 1][0]))
+  return stops[stops.length - 1][1]
+}
+// a density along t in [0, 1] → a sampler: u in [0, 1) → t, by its tabulated
+// cumulative sum (deterministic: u comes from hash, so every build is the same)
+function sampler(f, n = 1024) {
+  const c = new Float64Array(n + 1)
+  for (let i = 0; i < n; i++) c[i + 1] = c[i] + Math.max(0, f((i + 0.5) / n))
+  return (u) => {
+    const x = u * c[n]; let lo = 0, hi = n
+    while (hi - lo > 1) { const m = (lo + hi) >> 1; if (c[m] <= x) lo = m; else hi = m }
+    return (lo + (x - c[lo]) / Math.max(c[lo + 1] - c[lo], 1e-12)) / n
+  }
+}
+// the galaxies' colour by epoch: hot blue-white at the first light, white, warm
+// white, orange, a dim red at the mouth (the brightness falls with it: `glow`)
+const HEAT = [[0.30, [0.62, 0.78, 1]], [0.40, [0.86, 0.93, 1]], [0.52, [1, 0.95, 0.86]], [0.68, [1, 0.8, 0.56]], [0.85, [0.95, 0.6, 0.44]], [1, [0.74, 0.44, 0.4]]]
+// the haze between them: blue-white hot gas at the dawn, violet, then a cold grey-violet
+const HAZE = [[0.30, [0.55, 0.66, 1]], [0.5, [0.55, 0.45, 0.95]], [1, [0.36, 0.32, 0.46]]]
 
 const VERT = /* glsl */ `
 attribute vec3 aColor; attribute float aSize, aSeed, aTw, aAlpha, aFlare, aDisk;
@@ -125,36 +161,55 @@ function buildFunnel(o, ctx) {
     const s = 0.15 + 1.2 * Math.pow(hash(i * 8.3), 1.5), r = R(s) * 0.97 * Math.sqrt(hash(i * 2.2)), t = hash(i * 9.1) * Math.PI * 2
     add(s, r * Math.cos(t), r * Math.sin(t), [0.66, 0.82, 1], 3.0, 0.12, sheetK * (1 - (s - 0.15) / 1.2))
   }
-  // the dark ages: few, dim grains
-  for (let i = 0; i < 500; i++) {
-    const s = 1.4 + hash(i * 7.7) * 3.6, r = R(s) * 0.92 * Math.sqrt(hash(i * 2.9)), t = hash(i * 4.1) * Math.PI * 2
-    add(s, r * Math.cos(t), r * Math.sin(t), [0.35, 0.4, 0.6], 0.6, 0.1, 0.5)
+  // the epochs (fractions of L; see the header)
+  const dawn = o.dawn ?? 0.32, peak = o.peak ?? 0.37, thin = o.thin ?? 0.11, rest = o.rest ?? 0.05
+  const sDawn = dawn * L
+  const fall = (t, k) => Math.exp(-Math.max(0, t - peak) / k)
+  // galaxies per unit of length: none before the dawn, up over 0.05, then thinning out
+  const dens = (t) => sstep(dawn, dawn + 0.05, t) * (rest + (1 - rest) * fall(t, thin))
+  // a galaxy's brightness: full at the peak, about half at the mouth
+  const glow = (t) => 0.5 + 0.5 * fall(t, 0.25)
+  // the dark ages: no stars, only a few dim neutral grains of cooling gas
+  for (let i = 0; i < 300; i++) {
+    const s = 1.4 + hash(i * 7.7) * (sDawn - 1.9), r = R(s) * 0.92 * Math.sqrt(hash(i * 2.9)), t = hash(i * 4.1) * Math.PI * 2
+    add(s, r * Math.cos(t), r * Math.sin(t), [0.34, 0.31, 0.33], 0.6, 0.1, 0.35)
   }
-  // the first stars: scattered bright points
-  for (let i = 0; i < 320; i++) {
-    const s = 5 + hash(i * 9.1) * 3, r = R(s) * 0.88 * Math.sqrt(hash(i * 6.3)), t = hash(i * 8.7) * Math.PI * 2
-    add(s, r * Math.cos(t), r * Math.sin(t), hash(i) > 0.5 ? [0.75, 0.88, 1] : [1, 0.95, 0.85], 2.2, 0.6, 1)
+  // the first light: hot blue-white sparks crowding in just at the dawn
+  for (let i = 0; i < (o.sparks ?? 1200); i++) {
+    const s = sDawn + L * 0.07 * Math.pow(hash(i * 9.1), 1.6), r = R(s) * 0.88 * Math.sqrt(hash(i * 6.3)), t = hash(i * 8.7) * Math.PI * 2
+    add(s, r * Math.cos(t), r * Math.sin(t), hash(i) > 0.35 ? [0.75, 0.88, 1] : [1, 0.97, 0.9], 2.0, 0.6, 0.9)
   }
-  // the body: a faint blue-violet haze of fine grains inside the bell, thicker toward the mouth
-  for (let i = 0; i < 16000; i++) {
-    const q = Math.pow(hash(i * 2.17), 0.75), s = 5 + (L - 5.2) * q
+  // the body: a haze of fine grains inside the bell, thickest and hottest at the dawn, thin and cold at the mouth
+  const hazeAt = sampler((t) => sstep(dawn - 0.01, dawn + 0.06, t) * (0.06 + 0.94 * fall(t, 0.16)))
+  for (let i = 0, n = o.haze ?? 12000; i < n; i++) {
+    const q = hazeAt(hash(i * 2.17)), s = Math.min(L - 0.2, q * L)
     const r = R(s) * 0.95 * Math.sqrt(hash(i * 5.31)), t = hash(i * 8.17) * Math.PI * 2
-    const c = hash(i * 1.71) < 0.55 ? [0.38, 0.45, 0.95] : [0.6, 0.4, 0.9]
-    add(s, r * Math.cos(t), r * Math.sin(t), c, 2.6, 0.05, 0.24 + 0.32 * q)
+    add(s, r * Math.cos(t), r * Math.sin(t), ramp(HAZE, q + 0.05 * (hash(i * 1.71) - 0.5)), 2.6, 0.05, 0.14 + 0.36 * fall(q, 0.22))
   }
-  // galaxies: colourful clusters, some larger spirals, denser and brighter toward the mouth
-  const G = o.galaxies ?? 2000
-  const palette = [[0.55, 0.72, 1], [1, 1, 1], [1, 0.82, 0.45], [0.78, 0.6, 1], [0.6, 0.9, 1], [1, 0.65, 0.5]]
+  // galaxies, in groups: each group's centre drawn by `dens`; its members stand
+  // `spread` apart, from tight at the dawn to loose at the mouth. Small, hot,
+  // flickering proto-galaxies first; grown ones (some spirals) after the peak,
+  // cooler and dimmer toward the mouth.
+  const G = o.galaxies ?? 2400, per0 = o.group ?? 6, sp = o.spread ?? [0.12, 1.0]
+  const centreAt = sampler(dens)
   for (let g = 0; g < G; g++) {
-    const q = Math.pow(hash(g * 1.13), 0.6)                 // more of them toward the mouth
-    const s = 8 + (L - 8.3) * q
-    const r = R(s) * 0.86 * Math.sqrt(hash(g * 2.71)), t = hash(g * 3.33) * Math.PI * 2
-    const cy = r * Math.cos(t), cz = r * Math.sin(t)
-    const col = palette[Math.floor(hash(g * 4.4) * palette.length)]
-    const bright = 0.55 + 0.4 * q
-    const spiral = hash(g * 7.7) < 0.18, big = spiral ? 0.45 + 0.55 * hash(g * 5.5) : 0.08 + 0.18 * hash(g * 5.5)
+    const c = Math.floor(g / per0)
+    const tc = centreAt(hash(c * 1.13 + 0.37)), sc = tc * L
+    const rc = R(sc) * 0.82 * Math.sqrt(hash(c * 2.71)), ac = hash(c * 3.33) * Math.PI * 2
+    const spread = sp[0] + (sp[1] - sp[0]) * sstep(dawn, 1, tc)
+    const s = Math.min(L - 0.3, Math.max(sDawn + 0.1, sc + spread * gauss(g * 3.17)))
+    let cy = rc * Math.cos(ac) + spread * gauss(g * 4.31), cz = rc * Math.sin(ac) + spread * gauss(g * 5.77)
+    const rmax = R(s) * 0.86, rr0 = Math.hypot(cy, cz)
+    if (rr0 > rmax) { cy *= rmax / rr0; cz *= rmax / rr0 }
+    const t = s / L
+    const grown = hash(g * 9.9) < sstep(peak, peak + 0.22, t)     // a proto-galaxy until it has grown
+    const spiral = grown && hash(g * 7.7) < (o.spirals ?? 0.22)
+    let col = ramp(HEAT, t + 0.08 * (hash(g * 4.4) - 0.5))
+    if (spiral) col = mix3(col, [0.72, 0.82, 1], 0.25)            // a spiral still makes stars: a little bluer
+    const bright = glow(t)
+    const big = spiral ? 0.4 + 0.6 * hash(g * 5.5) : grown ? 0.1 + 0.18 * hash(g * 5.5) : 0.05 + 0.1 * hash(g * 5.5)
     const tilt = hash(g * 6.6) * Math.PI, turn = hash(g * 8.8) * Math.PI * 2
-    const per = spiral ? 220 : 26
+    const per = spiral ? 220 : grown ? 26 : 12, cores = grown ? 3 : 2
     for (let k = 0; k < per; k++) {
       let dx, dy
       if (spiral) {   // two arms
@@ -165,7 +220,7 @@ function buildFunnel(o, ctx) {
         const a = hash(g * 31 + k * 7.1) * Math.PI * 2, rr = big * Math.pow(hash(g * 17 + k * 3.7), 1.6)
         dx = rr * Math.cos(a); dy = rr * Math.sin(a)
       }
-      add(s + dx, cy + dy * Math.cos(tilt), cz + dy * Math.sin(tilt), col, k < 3 ? 3.0 : 0.85, 0.3, bright)
+      add(s + dx, cy + dy * Math.cos(tilt), cz + dy * Math.sin(tilt), col, k < cores ? (grown ? 3.0 : 2.2) : grown ? 0.85 : 0.7, grown ? 0.3 : 0.5, bright)
     }
   }
   // the floor: a faint perspective grid below the funnel

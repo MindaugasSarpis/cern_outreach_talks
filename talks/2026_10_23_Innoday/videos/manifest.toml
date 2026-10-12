@@ -8,52 +8,81 @@
 
 [defaults]
 # release_tag comes from videos.toml (videos-2026-10-00-innoday).
-max_size_mb = 320   # vu_ff_zoom 253 MB; vu_ff_zoom_galaxy (4:26, re-encoded from the web copy at ~9.2 Mbit/s) 305 MB
+max_size_mb = 320   # vu_zoom_web (2:47 at 6.6 Mbit/s) 138 MB; 320 was set for vu_ff_zoom_galaxy (4:26, 305 MB), no longer in the deck
 
 # vu_ff_zoom.mp4 (the whole 4:42 zoom-out, 253 MB) is the source of the cut
 # below. The deck no longer plays it, so it is not listed; its asset stays on
-# the release (do not publish with --prune until the orbit clip replaces both).
+# the release (do not publish with --prune: this and the two old clips below
+# keep their assets).
 
+# vu_ff_zoom_galaxy.mp4 (high-motion): no longer in the deck (12 Oct); its asset
+# stays on the release. Its notes: The opener until the owner's orbit clip
+# exists: vu_ff_zoom.mp4 cut at 4:26, before its last 16 s fade to black, so it
+# ends on our galaxy seen from the side and the takeover slide can start from
+# that real frame (public/figures/opener_last.jpg, pnpm takeover:frame). Made
+# from the 1080p web encode (not the raw): ffmpeg -t 266, h264_nvenc VBR
+# ~7 Mbit/s, 3 s audio fade-out at the end.
+
+# vu_ff_unzoom.mp4 (high-motion): no longer in the deck (12 Oct); its asset stays
+# on the release. Its notes: The bookend („…ir atgal“): vu_ff_zoom_galaxy.mp4
+# reversed and sped up 8.87x to 30 s, silent, from our galaxy back past Earth and
+# Lithuania to the VU Faculty of Physics in Saulėtekis (the Google Earth credit
+# is in the footage). Made from the 1080p web encode by
+# ~/talks/.cache/innoday/unzoom/make.sh (5 s segments reversed and joined in
+# reverse order); the raw is that output, not on gdrive.
+
+# Fetch raws one at a time, never with a plain `videos:sync`: it is an rclone
+# sync of every name listed here, so it would DELETE vu_zoom_web.mp4's raw (cut
+# here, not on gdrive released/) and fetch lhcb.mp4's 112 MiB raw, which nothing
+# here encodes. A raw on released/: rclone copyto
+# gdrive:work/outreach/resources/videos/released/<name> ../../videos/raw/<name>
+# --checksum. vu_zoom_web.mp4's: copy its source the same way (its notes) and
+# cut it again with the command there.
 [[videos]]
-name    = "vu_ff_zoom_galaxy.mp4"
+name    = "vu_zoom_web.mp4"
 profile = "high-motion"
 used_in = ["deck"]
 notes   = """\
-The opener until the owner's orbit clip exists: vu_ff_zoom.mp4 cut at 4:26, \
-before its last 16 s fade to black, so it ends on our galaxy seen from the \
-side and the takeover slide can start from that real frame \
-(public/figures/opener_last.jpg, pnpm takeover:frame). Made from the 1080p web \
-encode (not the raw): ffmpeg -t 266, h264_nvenc VBR ~7 Mbit/s, 3 s audio \
-fade-out at the end."""
+The opener (owner, 12 Oct: "Then we move to video of zooming out. It will end \
+with cosmic web"): the owner's SpaceEngine edit spaceengine/vm_zoom.mp4 \
+(gdrive:work/outreach/resources/videos/spaceengine/, 4:11, 1080p60 HEVC) cut at \
+167.4 s, before its crossfade into the CMB (first mixed frame 167.567 s), with \
+a 3 s audio fade-out. It starts over Saulėtekis (the VU Business School roof, \
+Google Earth) and ends held on the cosmic web (the NCSA AVL 'Cosmic Bubble \
+Bath' visualisation) for the takeover (public/figures/opener_last.jpg, pnpm \
+takeover:frame). 126-145 s is near-black flight between the galaxies. The raw \
+is that cut, 60 fps kept (at the 8 Mbit/s ceiling 30 fps was no sharper), made \
+by: ffmpeg -i vm_zoom.mp4 -t 167.4 -map 0:v:0 -map 0:a:0 -map_metadata -1 \
+-write_tmcd 0 -c:v libx264 -preset slow -crf 14 -profile:v high -pix_fmt \
+yuv420p -af afade=t=out:st=164.4:d=3 -c:a aac -b:a 256k -movflags +faststart \
+vu_zoom_web.mp4 (in pnpm talk render). Not on gdrive \
+released/, so a plain videos:sync would delete it: fetch raws with rclone \
+copyto, as the comment above says."""
 
 [[videos]]
-name    = "vu_ff_unzoom.mp4"
-profile = "high-motion"
-used_in = ["deck"]
-notes   = """\
-The bookend („…ir atgal“): vu_ff_zoom_galaxy.mp4 reversed and sped up 8.87x \
-to 30 s, silent, from our galaxy back past Earth and Lithuania to the VU \
-Faculty of Physics in Saulėtekis (the Google Earth credit is in the footage). \
-Made from the 1080p web encode by ~/talks/.cache/innoday/unzoom/make.sh \
-(5 s segments reversed and joined in reverse order); the raw is that output, \
-not on gdrive."""
-
-# The owner's new opener, in preparation: an orbit from VU out to the cosmic web.
-# It must END on the cosmic web, held (no fade to black): the next slide opens on
-# that same last frame and turns it into the world's grains (<WebTakeover>).
-# When the raw is on gdrive `released/` or in the raw bank: uncomment, then
-#   pnpm videos:sync && pnpm videos:encode && pnpm videos:publish
-#   pnpm takeover:frame public/videos/vu_orbit.mp4 && pnpm videos:frames
-# and point the deck's opener slide at it.
-# [[videos]]
-# name    = "vu_orbit.mp4"
-# profile = "high-motion"
-# used_in = ["deck"]
-# notes   = "Opener: orbit from the VU Faculty of Physics / NFTMC out to the cosmic web, ending held on the web."
+name     = "cern_footage_2022_013_001_1080p_lhc.mp4"
+profile  = "high-motion"
+used_in  = ["deck"]
+trim     = ["3:00", "3:39.5"]
+loudnorm = false
+notes    = """\
+The LHC numbers slide: the real LHC tunnel, CERN-FOOTAGE-2022-013-001 (the \
+library's cern_footage_2022_013_001.mp4, full 4:13), from its 1080p raw, cut to \
+39.5 s of its third shot: one continuous move along the dipoles on the right, \
+teal at first, past the warm-lit wall, then the blue dipoles with the white \
+'LHC' and 'CERN' letters; it stops on 'CERN' (a lit last frame for the dust \
+exit), just before the 3:40 darkening. The four LHC numbers sit over it on \
+their dark card ground. OpenData's and Užsikrauk karjerai's opening is \
+2:35-2:53 of the same shot, so this cut does not repeat it. Named as its raw \
+on gdrive (released/cern_footage_2022_013_001_1080p_lhc.mp4) so videos:sync \
+finds it. Its sound is the tunnel's own ventilation hum, kept at the source's \
+level (loudnorm off)."""
 
 # A library clip, listed only for its print poster: its first lit frame is the
 # detector a speck on black, 0:24 is the whole detector in its cavern. Not
-# encoded or published here; the deck plays the shared release's copy.
+# encoded here, and NEVER published: the deck plays the shared release's copy,
+# so publish only with --only <talk-owned names> (a plain publish would upload
+# a local copy of it to this talk's release, which wins the chain).
 [[videos]]
-name   = "cern_footage_2022_042_001.mp4"
+name   = "lhcb.mp4"
 poster = "0:24"

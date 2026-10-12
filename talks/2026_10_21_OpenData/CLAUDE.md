@@ -4,6 +4,15 @@ The notes for this talk: Claude Code reads this file when it works in the
 talk's directory, and the root CLAUDE.md holds what every talk shares. Keep it
 current (Status, Decisions, Figures). The repo is public: nothing private here.
 
+## The opening (components/lhc-opening/)
+
+Shared with Užsikrauk karjerai and Innoday; this talk is where it changes. LHCb's
+2012 crossing is the default. `"event": "cms"` on the `lhc-collision` object draws
+a CMS crossing instead, flying out to every side: CMS Open Data record 300, run
+195099, event 137440354, a 2012 Higgs candidate, 290 of its tracks drawn
+(`<LhcOpening :count="290" />`). The owner chose the CMS event for this talk
+(2026-10-12); the module landed on main first, so Innoday could take it up.
+
 ## Notes moved from the root CLAUDE.md (2026-10-08)
 
 From the root's list of current talks:
