@@ -1,6 +1,6 @@
 import {
   Group, Points, Mesh, SphereGeometry, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4, Matrix4, Euler,
-  LinearMipmapLinearFilter, DynamicDrawUsage, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColorSpace,
+  LinearMipmapLinearFilter, DynamicDrawUsage, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColorSpace, Quaternion,
 } from 'three'
 import { makeRing, mulberry32 } from './ring.js'
 // the engine's photo relief (not in the addon's exports yet: by its file, the same module the engine loads)
@@ -1312,14 +1312,18 @@ function buildHistogram(o, ctx) {
     const rk = new Points(rg, rm); rk.frustumCulled = false
     g.add(rk)
   }
+  // the axis stands only while the histogram is shown (step > 0): seen from the slides
+  // around it, a lone line of grains read as a stray scratch
+  let axU = null
+  const AXIS = 0.5
   if (o.axis !== false) {
     const A = 900, ap = new Float32Array(A * 3), as = new Float32Array(A)
     for (let i = 0; i < A; i++) { ap.set([-W / 2 - 0.012 * W + (W * 1.024) * i / (A - 1), -0.012 * H, 0], i * 3); as[i] = rnd() }
     const ag = new BufferGeometry()
     ag.setAttribute('position', new BufferAttribute(ap, 3)); ag.setAttribute('aSeed', new BufferAttribute(as, 1))
-    const am = share(material(HAXIS_VERT, { uSize: { value: u.uSize.value * 0.9 }, uAlpha: { value: 0.5 }, uColor: { value: new Color(...rgb(o.axisColor || '#cfd6ff')) } }))
+    const am = share(material(HAXIS_VERT, { uSize: { value: u.uSize.value * 0.9 }, uAlpha: { value: 0 }, uColor: { value: new Color(...rgb(o.axisColor || '#cfd6ff')) } }))
     const ax = new Points(ag, am); ax.frustumCulled = false
-    g.add(ax)
+    g.add(ax); axU = am.uniforms
   }
   let now = 0, played = -100, want = 0, step = 0
   const at = (k) => steps[Math.max(0, Math.min(steps.length - 1, k))]
@@ -1365,6 +1369,8 @@ function buildHistogram(o, ctx) {
   const off = listen(o.name, request)
   mat.addEventListener('dispose', off)
   if (state.has(o.name)) { step = state.get(o.name); want = at(step) }
+  const axisWant = () => (step > 0 ? AXIS : 0)
+  if (axU) axU.uAlpha.value = axisWant()
   const count = o.count ?? total
   const api = {
     arm() { armed = true; armT = now; if (now - played < 1.5) hold() },
@@ -1372,11 +1378,15 @@ function buildHistogram(o, ctx) {
     value: () => Math.round(count * Math.min(1, Math.max(0, shown(now - u.uFall.value)))),
     busy: () => armed || waiting(o.name)
       || (u.uTo.value > u.uFrom.value && now < u.uT0.value + u.uDur.value + u.uFall.value)
-      || (u.uMarkT.value < 1e8 && now < u.uMarkT.value + (riseU ? 6.5 : 2.4)),
+      || (u.uMarkT.value < 1e8 && now < u.uMarkT.value + (riseU ? 6.5 : 2.4))
+      || (!!axU && Math.abs(axU.uAlpha.value - axisWant()) > 0.01),
   }
   return {
     group: g, labels: [], api, frameScale: u.uPixelRatio,
-    update(t) { tick(t); now = t; u.uTime.value = t; if (armed && now - armT > 6) arrive() },
+    update(t) {
+      tick(t); now = t; u.uTime.value = t; if (armed && now - armT > 6) arrive()
+      if (axU) { const a = axU.uAlpha.value, w = axisWant(); axU.uAlpha.value = Math.abs(w - a) < 0.005 ? w : a + (w - a) * 0.06 }
+    },
     dispose: off,
   }
 }
@@ -1385,7 +1395,7 @@ function buildHistogram(o, ctx) {
 //   { type: figures, name, pos, items: [{ src, at: [x, y, z], w?: 2.6 }], arrive?: 1.6 (s after
 //     its step until a figure shows), stagger?: 0.12, opacity?: 0.85 }
 // Figures floating in the world, each a plot made from open data (a picture on a plane
-// that turns to face the camera), drawn additively so its dark ground is the world's
+// kept parallel to the screen, so the lens does not shear one at the frame's edge), drawn additively so its dark ground is the world's
 // black. Step k shows the first k (each as its stream gets there: `arrive` s, one after
 // another by `stagger`); 0 lets them fade. They stand at the ends of a `streams` object's
 // streams, `at` the same points.
@@ -1394,13 +1404,18 @@ function buildFigures(o, ctx) {
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
   const base = (import.meta.env?.BASE_URL || '/').replace(/\/$/, '')
   const url = (src) => (ctx.asset ? ctx.asset(src) : String(src).startsWith('/') ? base + src : src)
-  const loader = new TextureLoader()
+  const loader = new TextureLoader(), pq = new Quaternion(), cq = new Quaternion()
   const items = (o.items || []).map((it, i) => {
     const mat = new MeshBasicMaterial({ transparent: true, opacity: 0, blending: AdditiveBlending, depthWrite: false, depthTest: false, color: 0xffffff })
     const mesh = new Mesh(new PlaneGeometry(1, 1), mat)
     const w = it.w ?? o.w ?? 2.6
     mesh.scale.set(w, w * 0.625, 1)
     mesh.position.set(it.at[0], it.at[1], it.at[2]); mesh.visible = false
+    // turned as the camera is, just before it is drawn (the camera's turn is not passed to update)
+    mesh.onBeforeRender = (r, s, camera) => {
+      mesh.parent.getWorldQuaternion(pq).invert().multiply(camera.getWorldQuaternion(cq))
+      mesh.quaternion.copy(pq); mesh.updateMatrixWorld()
+    }
     loader.load(url(it.src), (tex) => {
       tex.colorSpace = SRGBColorSpace; tex.anisotropy = ctx.anisotropy || 4
       mat.map = tex; mat.needsUpdate = true
@@ -1421,18 +1436,16 @@ function buildFigures(o, ctx) {
   }
   const off = listen(o.name, go)
   if (step) queueMicrotask(() => go(step))
-  const tw = new Vector3()
   const busy = () => waiting(o.name) || items.some((it) => Math.abs((it.at >= 0 && now >= it.at ? 1 : 0) - it.vis) > 0.01)
   return {
     group: g, labels: [], api: { busy },
-    update(t, camPos) {
+    update(t) {
       tick(t); now = t
       for (const it of items) {
         const want = it.at >= 0 && t >= it.at ? 1 : 0
         it.vis += (want - it.vis) * 0.06
         it.mat.opacity = peak * it.vis
         it.mesh.visible = it.vis > 0.01
-        if (it.mesh.visible && camPos) { it.mesh.getWorldPosition(tw); it.mesh.lookAt(camPos) }
       }
     },
     dispose: off,

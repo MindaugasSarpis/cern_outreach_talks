@@ -313,7 +313,7 @@ passed one exabyte in December 2025 (home.cern), mostly on about 60 000 tapes.
 (~0.4 min)
 -->
 ---
-space: { at: [20, 5.5, -3], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }
+space: { at: [20, 1.3, -0.5], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }
 ---
 
 <Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0, sun: 20, figs: 20 }" />
