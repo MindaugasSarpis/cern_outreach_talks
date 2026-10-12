@@ -244,7 +244,7 @@ space: { at: [12.5, 1.4, 5.0], dist: 13.8, yaw: 73, pitch: 7.5, dim: 0.15 }
 
 <p class="caption">Atverta 2023 m.</p>
 
-<p class="who"><span>Mindaugas Šarpis</span> · VU atvirojo mokslo apdovanojimas, 2025</p>
+<p class="who"><span>Mindaugas Šarpis</span>VU atvirojo mokslo apdovanojimas, 2025</p>
 
 </div>
 
