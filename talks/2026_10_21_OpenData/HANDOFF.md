@@ -23,6 +23,52 @@ https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_21_OpenData/
 (the old 2026_10_00 address is gone). The videos release keeps its storage name,
 videos-2026-10-00-opendata.
 
+## Status (2026-10-12, evening): r3, the owner's second rework
+
+The owner's r3 list (2026-10-12) and the deck that answers it. The slide map
+and the builders are in the talk's CLAUDE.md, "The deck now (r3)".
+
+- The way in:
+  - CERN from above (slide 2), pushing into the ring.
+  - The tunnel (3), pushing into the pipe.
+  - One real CMS crossing in 4π (4): the owner chose "Real CMS event, 4π",
+    CMS Open Data record 300, run 195099, event 137440354, 290 tracks. The
+    camera is in focus from the first frame (the owner: "it was blurry until
+    the last frame").
+  - Then the LHCb clip (5).
+  - The CMS option is the shared module's `"event": "cms"`. It went to main on
+    its own first (2852775, Pages run 38275806569), so Innoday could take it up.
+- The cover (slide 1): the owner, via the Scheduler, 12 Oct: "open data and
+  innoday need cover slide after all". It shows the date, the title and the
+  name line, as on Innoday's, over the collider dimmed.
+- The space of data (6–10): the tape-vault photograph is gone. In its place,
+  the `dataspace` builder's web of grain filaments behind the piles (the
+  owner: "maybe some abstract space of data?").
+- The 800 TB slide (7): a small line, the owner's name and „VU atvirojo mokslo
+  apdovanojimas, 2025“ (the owner chose "Small line on screen").
+  - The Sakyti says he was responsible for the Run 1 release („buvau
+    atsakingas“). The owner asked for "led", but no source says led: VU and
+    LRT say he prepared and published it. Change it to „vadovavau“ only on the
+    owner's word.
+- The sun of plots (11): 3D, turning, with empty places for what comes next.
+  The selection service and Z → μμ are not said (the owner).
+- Vilnius (12): FAIR in VU's Lithuanian, reproducible analyses, master's and
+  bachelor's theses. „O vietos naujiems darbams dar yra.“
+  - No master's thesis on LHCb open data is public yet; the theses line is on
+    the owner's word.
+  - The 3D fan with empty clusters (the owner: "a few more floating clusters
+    so we explain this is extendable") is on wip/od-vilnius, to follow as its
+    own deploy.
+- Cut: the course slide (D⁰ histogram) and the finds slide (76 of 86). The
+  owner: "don't need it", "also don't need slide 13".
+- „Ačiū“ (14): the faces run round a beam of gold grains. The beam parts round
+  each face, and bumps throw grains out (the owner: "interact with some
+  particle effects").
+- Lint: 0 errors, 4 TEXT warnings, on the owner's exceptions: the cover, the
+  800 TB line, Dominykas and „Ačiū“. The notes run 6.1 min.
+- Branches: the lanes (wip/od-*) and feat/lhc-opening-cms are local only, as
+  the owner's rule in this session's window had it.
+
 ## Status (2026-10-12): the owner's rework, deployed
 
 - Deployed 2026-10-12 under the standing rule: commit f9d018a on main, Pages
@@ -450,8 +496,11 @@ grains), built on wip/everyday and squashed onto feat/opendata-talk:
 
 - The figures' Lithuanian for η: „Pseudorapidumas η“ (dimuon-3) and the
   tracks group's wording are marked [PATIKSLINTI] in their meta.json.
-- The VU open-science award 2025 („Atvirojo mokslo poveikis“) is in the crux
-  slide's notes only. Show it on screen?
+- „Buvau atsakingas“ or „vadovavau“ for the Run 1 release (slide 7's Sakyti)?
+  No public source says led.
+- The award rule asks for work from the last two years. Run 1 went public in
+  December 2023, and the nomination is in 2026. Does the nomination rest on
+  that release, or on the later work?
 - „Atverta 2023 m.“ on the 800 TB sphere is the one caption that is a
   statement, not a name (lint TEXT warning). Keep it?
 
@@ -461,8 +510,6 @@ grains), built on wip/everyday and squashed onto feat/opendata-talk:
 - Which award is it, and on what date? (The facts bank has VU's open science
   award: group nominations allowed, winners honoured in International Open
   Access Week, late October.)
-- Was N. E. Eimutis's Z → μμ work (Open Readings, April 2024) a thesis? Until
-  that is known, the notes say not to call Dominykas's thesis the first.
 - Dominykas's official thesis title, defence date, data and any result.
 - The opening 3D clip is a flat-shaded CAD render beside photographs. Keep it
   or replace it?

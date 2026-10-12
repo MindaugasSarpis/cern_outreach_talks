@@ -1,4 +1,4 @@
-# Opening LHCb's data (talks/2026_10_00_OpenData)
+# Opening LHCb's data (talks/2026_10_21_OpenData)
 
 The notes for this talk: Claude Code reads this file when it works in the
 talk's directory, and the root CLAUDE.md holds what every talk shares. Keep it
@@ -12,6 +12,40 @@ a CMS crossing instead, flying out to every side: CMS Open Data record 300, run
 195099, event 137440354, a 2012 Higgs candidate, 290 of its tracks drawn
 (`<LhcOpening :count="290" />`). The owner chose the CMS event for this talk
 (2026-10-12); the module landed on main first, so Innoday could take it up.
+
+## The deck now (r3, 2026-10-12)
+
+Fourteen slides (HANDOFF.md has the history and the owner's open questions):
+
+1. Cover: the date, „Atveriame LHCb duomenis“ and the name line, over the
+   collider dimmed at `wide` (the owner, 12 Oct, via the Scheduler: a cover after
+   all, an exception like „Ačiū“). The CERN clip buffers behind it.
+2. CERN from above (`cern_overview_short.mp4`); it pushes on into the ring.
+3. The LHC tunnel (`<LhcOpening part="tunnel" />`); it pushes on into the pipe.
+4. The CMS crossing in 4π (see above), the camera on its own `path`.
+5. LHCb, the 3D clip (`lhcb.mp4`), at `wide`.
+6. to 10. The piles in the space of data: 1 TB, 800 TB (with the owner's name and
+   VU's 2025 open-science award in `.readout .who`), 4 PB, 100 PB, 1 300 000 TB.
+11. The sun of plots: who uses the open data.
+12. Vilnius: what the group does with it (FAIR, theses, the masterclass).
+13. Dominykas: his decays fall into m(J/ψ p) and rise into the pentaquark.
+14. „Ačiū“: the group's ring of faces, a beam of gold grains running through it.
+
+Talk-owned builders, all registered from `setup/main.ts`:
+- `setup/grains.js`: `lineup`, `streams`, `floor`, `portraits`, `collision`
+  and `histogram` (described below).
+- `setup/dataspace.js`: `dataspace`, the web of filaments behind the piles on 6
+  to 10. `setup/weave.js` weaves it, pure and seeded.
+- `setup/sun.js`: `sun`, the rays out to the plots and to the empty places on 11.
+- `setup/ring.js` and `setup/beam.js`: the „Ačiū“ ring's motion and its beam.
+
+`stage:check` takes `--types lineup,streams,floor,portraits,collision,
+lhc-collision,histogram,dataspace,sun`. `setup/dataspace.check.mjs` runs on
+every build (`vite.config.ts`): a pose that puts the web through the lens fails
+the build and names what to move. Gone in r3: the `figures` and `backdrop` (tape
+vault) builders, the course slide and the finds (76 of 86) slide. The notes
+below are from r1 and r2: the piles' design still holds, but their slide
+numbers, the finds slide and the vault are history.
 
 ## Notes moved from the root CLAUDE.md (2026-10-08)
 
