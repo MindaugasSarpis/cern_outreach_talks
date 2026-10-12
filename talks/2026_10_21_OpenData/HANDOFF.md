@@ -46,6 +46,11 @@ and the builders are in the talk's CLAUDE.md, "The deck now (r3)".
   failed). `talk ready` had passed on 27e9837 with nothing skipped. Innoday and
   Užsikrauk karjerai went out in the same run: both answer 200, pass their live
   checks (31 and 15 slides), and their live bundles carry the new sound.
+- 13 Oct: "transitions were like driving sounds" (the owner, after that deploy).
+  The stage's own voices are off in this deck's headmatter: the flight whoosh,
+  the clip's rising tone and the hum (`stage.sound: { hum: false, flight: false,
+  clip: false }`). The collision's sound and the clips' audio stay. This deck
+  only: Innoday and Užsikrauk karjerai keep theirs unless the owner says so.
 
 - The way in:
   - CERN from above (slide 2), pushing into the ring.
