@@ -58,6 +58,9 @@ function listen(name, fn) {
   window.addEventListener(BUS, h)
   return () => window.removeEventListener(BUS, h)
 }
+// for the forms kept in files of their own (setup/dataspace.js): the same steps and clock
+export { listen, tick, waiting }
+export const stepOf = (name) => state.get(name)
 
 const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
