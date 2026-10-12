@@ -48,13 +48,18 @@ info: |
   The talk: 21 October 2026.
 layout: cover
 space:
-  at: opening
-  dim: 1
-  ambient: 0
+  at: wide
+  dim: 0.25
   hum: false
 ---
 
 <Grains :set="{ vault: 0, team: 0 }" />
+
+# 2026 m. spalio 21 d.
+
+# Atveriame <span class="nt">LHCb</span> duomenis
+
+<div class="mt-md">Dr. Mindaugas Šarpis · <span class="nt">LHCb</span> Vilnius · Vilniaus universitetas</div>
 
 <!--
 Message: this talk is about the work we were nominated for, opening LHCb's data.
@@ -64,8 +69,12 @@ universiteto komandai CERN LHCb eksperimente. Mus nominavo už darbą su
 atviraisiais duomenimis.
 Pradėkime nuo CERN.“
 
-The standby: black, while the CERN clip buffers behind it. → starts the
-opening; that key is also the gesture browsers ask for before any sound.
+The cover (the owner, 12 Oct, via the Scheduler: OpenData and Innoday get a
+cover after all; an exception to the no-titles rule, like „Ačiū“): the date,
+the title and the name line, as on Innoday's, over the collider dimmed
+(`wide`, the pose the LHCb clip returns to). The CERN clip buffers behind it.
+→ starts the opening, the world going dark as the clip gathers; that key is
+also the gesture browsers ask for before any sound.
 
 (~0.3 min)
 -->
