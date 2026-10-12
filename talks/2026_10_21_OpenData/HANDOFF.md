@@ -28,6 +28,11 @@ videos-2026-10-00-opendata.
 The owner's r3 list (2026-10-12) and the deck that answers it. The slide map
 and the builders are in the talk's CLAUDE.md, "The deck now (r3)".
 
+- Deployed 2026-10-12 under the standing rule, with the cover and without the
+  Vilnius sun: 3fe3545 on main, Pages run 38288574537 (success). The URL
+  answers 200, and `talk deploy`'s live check passed (14 slides, none failed).
+  `talk ready` had passed on 3fe3545 with nothing skipped.
+
 - The way in:
   - CERN from above (slide 2), pushing into the ring.
   - The tunnel (3), pushing into the pipe.
@@ -56,9 +61,11 @@ and the builders are in the talk's CLAUDE.md, "The deck now (r3)".
   bachelor's theses. „O vietos naujiems darbams dar yra.“
   - No master's thesis on LHCb open data is public yet; the theses line is on
     the owner's word.
-  - The 3D fan with empty clusters (the owner: "a few more floating clusters
-    so we explain this is extendable") is on wip/od-vilnius, to follow as its
-    own deploy.
+  - The fan is a `sun` of its own: nine named clusters and four empty places
+    turning round the pile in 3D (the owner: "a few more floating clusters so
+    we explain this is extendable"). Built on wip/od-vilnius and merged after
+    the cover's deploy. The names read at 184–212 of 255 in 4K: brighter
+    needs a glow on the letters or a deck-wide `vignette`/`exposure` change.
 - Cut: the course slide (D⁰ histogram) and the finds slide (76 of 86). The
   owner: "don't need it", "also don't need slide 13".
 - „Ačiū“ (14): the faces run round a beam of gold grains. The beam parts round

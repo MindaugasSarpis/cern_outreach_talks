@@ -27,7 +27,9 @@ Fourteen slides (HANDOFF.md has the history and the owner's open questions):
 6. to 10. The piles in the space of data: 1 TB, 800 TB (with the owner's name and
    VU's 2025 open-science award in `.readout .who`), 4 PB, 100 PB, 1 300 000 TB.
 11. The sun of plots: who uses the open data.
-12. Vilnius: what the group does with it (FAIR, theses, the masterclass).
+12. Vilnius: what the group does with it, a second `sun` (`vilnius`): nine named
+    clusters (FAIR, reproducible analyses, theses, the masterclass, …) and four
+    empty places, turning in 3D round the pile, one step (`vilnius: 1`).
 13. Dominykas: his decays fall into m(J/ψ p) and rise into the pentaquark.
 14. „Ačiū“: the group's ring of faces, a beam of gold grains running through it.
 
@@ -36,7 +38,13 @@ Talk-owned builders, all registered from `setup/main.ts`:
   and `histogram` (described below).
 - `setup/dataspace.js`: `dataspace`, the web of filaments behind the piles on 6
   to 10. `setup/weave.js` weaves it, pure and seeded.
-- `setup/sun.js`: `sun`, the rays out to the plots and to the empty places on 11.
+- `setup/sun.js`: `sun`, the rays out to the plots and to the empty places on 11,
+  and to the named clusters on 12 (items with a `label`). Slide 12's layout and
+  pose were searched so every name reads while the sun turns, out of the
+  vignette and the role box: `tools/sun_layout/` (layout.py, the model;
+  anneal.py, the search; report.py; export.py, into space.json and the pose;
+  batch.sh, many seeds in the render slot). Moving slide 12's pose or changing
+  a name's words means searching again.
 - `setup/ring.js` and `setup/beam.js`: the „Ačiū“ ring's motion and its beam.
 
 `stage:check` takes `--types lineup,streams,floor,portraits,collision,
