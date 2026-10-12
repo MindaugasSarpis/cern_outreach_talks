@@ -7,10 +7,17 @@
 // progress along it. Each track's helix is built from its own pT, η, φ and charge at
 // its reference point (where it passes closest to the beam, beside its vertex), as
 // the file describes it and as its checks rebuilt it (the helix meets the last hit
-// within 4.5 mm, the median), and drawn as far as the electromagnetic calorimeter's
-// front (aCal in the file). A track too slow to get there (a looper, pT under about
-// 0.74 GeV) curls inside the tracker; the tracker saw at most half a turn of each,
-// and it is drawn on round one full turn, fading after the last hit.
+// within 4.5 mm, the median). From the first hit to the last it is measured; past
+// the last it is the drawing's guess, in a field that weakens towards the tracker's
+// ends (the helices miss by up to 11.5 cm there). The tracker ends short of the
+// electromagnetic calorimeter (ρ 1.1 against 1.29 m, |z| 2.8 against 3.18 m), and a
+// last hit is a median metre of path short of it (nine in ten more than half a
+// metre): a track is drawn on at full strength for 0.6 m past its last hit, as
+// event displays carry a track to the calorimeter, which takes the fast ones there
+// (aCal in the file); past that it fades over a third of a metre, as the tracker
+// lost it. So the slow ones, whose helix would curl on for metres, or never get
+// there (under about 0.74 GeV: a looper), show only what was measured and a little
+// more, and none is drawn past one full turn.
 //
 // Outside the solenoid the field turns round (in the return yoke, about 2 T the
 // other way) and the helix no longer holds. A muon follows iSpy's propagated points
@@ -24,7 +31,9 @@
 // long as its energy says, the way event displays draw towers.
 
 const K = 0.2998 * 3.8;                              // m of radius per GeV of pT in 3.8 T
-const LOOP = 2 * Math.PI;                           // a looper is drawn to one full turn
+const LOOP = 2 * Math.PI;                           // no track is drawn past one full turn (or its last hit)
+const REACH = 0.6;                                  // m of path past the last hit drawn at full strength
+const FADE = 0.35;                                  // m over which it fades after that
 const RUN_ON = 1.0;                                 // m a muon is drawn past where it was last seen
 
 const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
@@ -92,15 +101,16 @@ export function cmsPaths(ev, { step = 0.01, calo = ['EB', 'EE', 'HB', 'HE', 'HO'
     const [, q, pt, eta, phi, x0, y0, z0, pv, , , , aEnd, aCal, tag] = r;
     const at = helix({ q, pt, eta, phi, x0, y0, z0 });
     const perRad = (pt / K) * Math.cosh(eta);       // m of path per radian turned
-    const aMax = aCal ?? Math.max(aEnd, LOOP);
+    // to the calorimeter, or one turn, or until it has faded out (a fiftieth)
+    let aMax = Math.min(aCal ?? Infinity, Math.max(aEnd, LOOP));
+    if (tag !== 1) aMax = Math.min(aMax, aEnd + (REACH + 4 * FADE) / perRad);
     const n = Math.max(2, Math.ceil(aMax * perRad / step));
     const pts = [], seen = [];
     for (let k = 0; k <= n; k++) {
-      const a = aMax * k / n;
+      const a = aMax * k / n, past = (a - aEnd) * perRad - REACH;
       pts.push(at(a));
-      // a looper fades out after the tracker last saw it; every other track is seen to
-      // the calorimeter (its last hit is a few centimetres short of it)
-      seen.push(aCal == null && a > aEnd ? Math.exp(-(a - aEnd) / 1.6) : 1);
+      // a muon is measured on through the muon system: it never fades here
+      seen.push(past > 0 && tag !== 1 ? Math.exp(-past / FADE) : 1);
     }
     // the vertex it came from (the file's, or the nearest along the beam)
     let v = pv;

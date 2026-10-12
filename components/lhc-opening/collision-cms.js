@@ -19,8 +19,9 @@
 // of about two pixels at 900 rows (at most 1.35× that when close, a little smaller
 // far off), its edge one pixel wide; trails are lines of such grains, dense near
 // the vertex, where the camera stands close in the freeze, sparser outward, where
-// by then it has pulled back. Heads are brighter, not bigger, and a calorimeter's
-// deposit is a thin spike.
+// by then it has pulled back (the slide's path keeps it off them, and whatever comes
+// within a metre of the lens fades). Heads are brighter, not bigger, and a
+// calorimeter's deposit is a thin spike.
 //
 // The event loads on its own (`load`, a dynamic import: a talk that keeps LHCb's
 // event never fetches it); until it is in, the form says it is busy.
@@ -121,6 +122,10 @@ void main() {
   if (a <= 0.002) { off_(); return; }
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   if (k < 2.5) a *= smoothstep(0.3, 1.4, -mv.z);
+  // nothing lit draws right at the lens: its grains are spaced for the distance the
+  // shot keeps (a metre and a half in the freeze, more after), and closer they part
+  // into beads
+  else if (k > 3.5) a *= smoothstep(0.5, 1.1, -mv.z);
   // a spike seen end on piles its grains onto one spot, which blooms: dim it there
   if (k > 5.5) a *= 1.0 - 0.75 * pow(abs(dot(normalize(mat3(modelViewMatrix) * aOff + vec3(1e-5)), normalize(mv.xyz))), 6.0);
   gl_Position = projectionMatrix * mv;
@@ -173,9 +178,10 @@ export function buildCmsCollision(o, ctx, bus, load) {
     const { pvs, tracks, deposits } = cmsPaths(ev, { calo: o.calo });
     const pvW = pvs.map((v) => W(v.at));
     // grains along a path, a gap apart: fine near the vertex, where the camera stands
-    // close in the freeze, wider out where it has pulled back by the time they light,
+    // close in the freeze, wider out where it has pulled back by the time they light
+    // (by the time a trail is two metres out, the camera stands five from the vertex),
     // so a trail reads as one unbroken line at every distance it is seen from
-    const gap = (s, k = 1) => k * (0.0025 + 0.003 * Math.min(s / S, 3)) * S / f;
+    const gap = (s, k = 1) => k * (0.0025 + 0.003 * Math.min(s / S, 2)) * S / f;
     const grainsAlong = (L, k) => { let n = 0; for (let s = 0; s < L; s += gap(s, k)) n++; return n; };
     for (const t of tracks) {
       t.P = t.pts.map(W);
@@ -259,7 +265,7 @@ export function buildCmsCollision(o, ctx, bus, load) {
       const reach = reachOf(d), ecal = d.kind[0] === 'E';
       for (let i = 0; i < m; i++) {
         const t = (i + rnd()) / m * L, x = (rnd() - 0.5) * wide, y = (rnd() - 0.5) * wide;
-        put(ecal ? KIND.ecal : KIND.hcal, at, [0, 1, 2].map((c) => dir[c] * t + e1[c] * x + e2[c] * y), reach, t / L, ecal ? 0.85 : 0.65);
+        put(ecal ? KIND.ecal : KIND.hcal, at, [0, 1, 2].map((c) => dir[c] * t + e1[c] * x + e2[c] * y), reach, t / L, ecal ? 0.85 : 0.8);
       }
       lastStop = Math.max(lastStop, reach);
     }

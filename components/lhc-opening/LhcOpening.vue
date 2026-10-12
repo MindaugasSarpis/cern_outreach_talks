@@ -62,9 +62,11 @@ const c = computed(() => ({ ...captions, ...collisionCaptions({ tev: props.tev, 
 .lhc-unit, .lhc-name { font-size: 22px; font-weight: 500; letter-spacing: 0.04em; color: #9cc4ff; margin-left: 0.4em; }
 .lhc-name { margin: 0 0.6em 0 0; font-size: 24px; letter-spacing: 0.08em; }
 .lhc-tunnel { opacity: 0; animation: lhc-in 1.2s ease 1.6s forwards; }
-.lhc-collision .lhc-line { position: absolute; left: 0; bottom: 0; white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity 0.9s ease, transform 0.9s ease; }
-.lhc-collision .lhc-line.on { opacity: 1; transform: none; }
+/* the two lines share one spot: the one going goes quickly, the one coming waits for
+   it, so a number never stands on the other's (at the fly-out's best moment) */
+.lhc-collision .lhc-line { position: absolute; left: 0; bottom: 0; white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease; }
+.lhc-collision .lhc-line.on { opacity: 1; transform: none; transition: opacity 0.9s ease 0.35s, transform 0.9s ease 0.35s; }
 .lhc-collision.printing .lhc-line { position: static; transition: none; }
 @keyframes lhc-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .lhc-tunnel { animation: none; opacity: 1; } .lhc-collision .lhc-line { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .lhc-tunnel { animation: none; opacity: 1; } .lhc-collision .lhc-line, .lhc-collision .lhc-line.on { transition: none; } }
 </style>

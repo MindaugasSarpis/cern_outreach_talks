@@ -42,7 +42,9 @@ all sides" and chose "a real CMS event, 4π").
    each of its 19 collisions along the beam, and the debris flies out to every
    side, 290 tracks curling on their helices in CMS's 3.8 T solenoid out to the
    calorimeters, whose cells light all round (the ECAL warm, the HCAL light
-   blue), the two muons running on out through the muon chambers.
+   blue), the two muons running on out through the muon chambers. The camera
+   pulls back with the burst and turns to the side of the beam, where it
+   settles balanced (below, "Adopting it").
 3. **The deck's LHCb clip** (OpenData: `lhcb.mp4`).
 
 **Captions** (the owner: "And the captions?"; a number and the word that names
@@ -52,7 +54,8 @@ event's good tracks, the noun in the case its number takes). White numbers,
 light-blue words, low on the left; printed, the collision's two show together.
 A talk that draws the CMS event gives its numbers on the slide,
 `<LhcOpening name="opening" :count="290" />` (`:tev` too, if it differs from
-8): „8 TeV“ and „290 dalelių“.
+8): „8 TeV“ and „290 dalelių“. The two lines share one spot, so they hand over
+rather than cross-fade: the one going fades in 0.3 s, the one coming waits 0.35 s.
 
 **Sharp grains** (the CMS drawing; the owner on the LHCb one: "the collision
 should be more in focus, it was blurry until the last frame"). LHCb's drawing
@@ -67,7 +70,12 @@ draws hard grains (full to the edge, the edge one pixel wide) of 1.8 px at 900
 rows, at most 1.35× that when close (1.5–2.4 px through the shot); trails are
 lines of them, dense near the vertex where the camera stands close, sparser
 outward where it has pulled back; a head is brighter, not larger; a deposit is
-a thin spike, not a cloud: 0.4–0.9 million fragments a frame.
+a thin spike, not a cloud: 0.4–0.9 million fragments a frame. Grains spaced for
+a distance part into beads when seen from much closer, so the shot keeps its
+camera off them (a metre and a half from the vertex in the freeze; three metres
+or more from anything lit once the debris is past the tracker, five or more by
+the time the endcaps light) and the drawing fades whatever comes within a metre
+of the lens.
 
 ## The event
 
@@ -104,10 +112,19 @@ of the drawn tracks come from the Higgs candidate's.
 Drawn: the first `nGood` = 290 of its 523 tracks (≥ 8 hits, χ²/ndof ≤ 5, ≤ 1 cm
 from the beam line; the four leptons pass it), each a helix in 3.8 T along the
 beam from its own pT, η, φ and charge (the file's own checks: the helix meets
-its last hit within 4.5 mm, the median) out to the ECAL's front (ρ = 1.29 m or
-|z| = 3.18 m); the 40 that curl inside the tracker for one turn, fading after
-their last hit. The muons go on along iSpy's propagated points, a cubic to the
-muon system's own track where those stop short, and a metre on. The
+its last hit within 4.5 mm, the median). Measured: from the first hit to the
+last. Extrapolated: the rest. The tracker ends short of the ECAL (ρ 1.1 against
+1.29 m, |z| 2.8 against 3.18 m): a track's last hit is a median 1.0 m of path
+short of where its helix meets the ECAL's front (nine in ten more than half a
+metre), so a track is drawn at full strength 0.6 m past its last hit (as event
+displays carry a track to the calorimeter), then fades over 0.35 m, and stops at
+the ECAL's front, after one full turn, or once faded out, whichever comes first:
+85 of the 248 that reach the ECAL (the muons aside) get there at full strength,
+122 at half or more; the slow ones (the 40 that never reach it,
+and 39 more that would turn more than once on the way) show what the tracker
+measured and a little more, not metres of guessed curl. The muons, measured on
+through the muon system, never fade: they go on along iSpy's propagated points,
+a cubic to the muon system's own track where those stop short, and a metre on. The
 calorimeter hits (EB ≥ 0.25 GeV, EE ≥ 1, HB ≥ 0.5, HE and HO ≥ 1; 859 cells,
 the forward HF left out: 5.6 TeV of mostly pile-up 11–13 m down the beam) are
 spikes from each cell's front along the cell, √E long (0.12 m per √GeV in the
@@ -136,10 +153,10 @@ its checks are in the OpenData talk's cache (`~/talks/.cache/opendata/r3/cms/`).
    `cern_footage_2022_013_001_1080p_lhc.mp4` entry: the name is the raw's on
    gdrive), then `videos:sync`, `encode`, `frames` (posters need the v0.7.0+
    CLI), `publish`.
-5. The slides (OpenData's deck.md, slides 1–3): a black standby (`dim: 1,
-   ambient: 0, hum: false`), the tunnel (`<VideoPlayer … advance-on-end
-   exit="push" exit-at="0.45,0.53" />` and `<LhcOpening part="tunnel" />`),
-   and the collision:
+5. The slides (OpenData's deck.md, slides 1, 3 and 4; its slide 2 is CERN
+   from above): a black standby (`dim: 1, ambient: 0, hum: false`), the
+   tunnel (`<VideoPlayer … advance-on-end exit="push" exit-at="0.45,0.53" />`
+   and `<LhcOpening part="tunnel" />`), and the collision:
 
        space:
          at: opening
@@ -161,13 +178,21 @@ its checks are in the OpenData talk's cache (`~/talks/.cache/opendata/r3/cms/`).
    crossing is timed for these `rate` keys (`approach: 3.32` engine-seconds
    puts it where the world is nearly still); change one, re-time the other.
 
-   The CMS event (OpenData's slide 3): `"event": "cms"` on the object, the
+   The CMS event (OpenData's slide 4): `"event": "cms"` on the object, the
    slide's own numbers on `<LhcOpening>`, and a shot of its own. The run-in and
    the crossing keep the keys above (and so the sound's timing); the fly-out is
    slower, since CMS is the size of a house where LHCb's drawing ran 10 units
-   down the beam, and the camera stands close in the freeze and pulls back
-   with the debris, turning round the vertex a little off the beam, so the
-   curls across the beam and the spread along it both show:
+   down the beam. The camera stands close in the freeze, near the beam's line,
+   where the burst is a round flower of curls, and pulls back with the debris;
+   once the flower is full (the heads at the tracker's edge) it turns round to
+   the side of the beam, and is there before the endcaps light. In perspective
+   only two places see CMS evenly: on the beam's line or square to it; anywhere
+   between, one end is nearer and looms (an earlier path that held 45° off the
+   beam, 5 m along it, framed the near endcap's fan and splashes large across
+   half the screen and squashed the far one). So it settles square to the beam
+   (yaw 2), 12 m off and lifted 26°: the barrel's tracks in the middle, both
+   endcaps' splashes either side, the same size. The barrel muon runs on out of
+   the frame at the top (its last chamber is 6.3 m out):
 
        rate: [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.6, 1.0], [8.0, 1.0], [9.0, 1.8], [11, 1.8], [12, 1]]
        cameraRate: 1
@@ -175,10 +200,11 @@ its checks are in the OpenData talk's cache (`~/talks/.cache/opendata/r3/cms/`).
          - [0, { at: [0, -400, 0], dist: 4.2, yaw: 18, pitch: 5 }]
          - [2.6, { at: [0, -400, 0], dist: 2.4, yaw: 32, pitch: 8 }]
          - [5.6, { at: [0, -400, 0], dist: 1.5, yaw: 70, pitch: 14 }]
-         - [6.6, { at: [0, -400, 0], dist: 3.2, yaw: 66, pitch: 15 }]
-         - [8.0, { at: [0, -400, 0], dist: 5.6, yaw: 60, pitch: 16 }]
-         - [9.5, { at: [0, -400, 0], dist: 8.0, yaw: 54, pitch: 18 }]
-         - [11, { at: [0, -400, 0], dist: 7.8, yaw: 46, pitch: 18 }]
+         - [6.5, { at: [0, -400, 0], dist: 3.3, yaw: 58, pitch: 17 }]
+         - [7.3, { at: [0, -400, 0], dist: 5.6, yaw: 26, pitch: 20 }]
+         - [8.3, { at: [0, -400, 0], dist: 8.8, yaw: 9, pitch: 24 }]
+         - [9.8, { at: [0, -400, 0], dist: 11.2, yaw: 4, pitch: 26 }]
+         - [11.5, { at: [0, -400, 0], dist: 12, yaw: 2, pitch: 26 }]
 
        <LhcOpening name="opening" :count="290" />
 
