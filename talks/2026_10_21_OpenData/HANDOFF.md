@@ -8,7 +8,7 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 „adresuoti“.
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos v0.8.0, for both addons.
+Toolkit pin: slidev-videos v0.8.1, for both addons.
 
 **Deploys (owner, 2026-10-09: "Deploy now, and always").** The standing rule
 holds for this talk: it deploys without asking once `talk ready` passes with
@@ -32,6 +32,18 @@ videos-2026-10-00-opendata.
   answers 200, the old 2026_10_00 one 404), the shared LHC opening on
   v0.8.0 with its captions (see the 2026-10-11 decision), the tunnel cut on
   the talk's release. First live version for the owner's review.
+- Redeployed 2026-10-11 under the standing rule: commit 182a5c6 on main,
+  Pages run 38090574213 (success); live check passed (15 slides, nothing
+  failed); `talk ready` passed on 182a5c6 with nothing skipped (lint: the two
+  TEXT warnings of the owner's exception). In it: the opening's heads faint
+  in the freeze (no blot), printed pages keep their stills (the scrim held at
+  0.05 in print until v0.8.1), the big numbers in the font's own figures,
+  and the thesis slide's text and „Ačiū“ back on the owner's word.
+- Redeployed 2026-10-11 under the standing rule: commit d50898a on main,
+  Pages run 38092713877 (success); live check passed (15 slides, nothing
+  failed); `talk ready` passed on d50898a with nothing skipped. In it:
+  slidev-videos v0.8.1 (print takes each page's own dim), the talk's scrim
+  workaround dropped.
 - Next: the owner's feedback on the opening; then od-story-everyday
   (prototype slides 6 and 9 first), with placeholders for the owner's
   numbers and photos.
@@ -122,6 +134,10 @@ videos-2026-10-00-opendata.
 
 ## Decisions
 
+- 2026-10-11. The owner: "Dominykas slide should have text and the last one as
+  well." The thesis slide has its kicker („Bakalauro darbas, VU, 2026“), his
+  name and its line back, and the close its „Ačiū“, as before the title strip
+  (the house rule's exception for these two, on the owner's word).
 - 2026-10-11. The shared LHC opening (owner, via the Scheduler: "start with
   the real video of LHC, then go into it, make everything black and show
   really exciting collision with slow down speed up effect, many particles,

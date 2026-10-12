@@ -98,20 +98,20 @@ Everything is grains; no solid shapes, no labels.
   Licence CC BY-NC 3.0 IGO: the on-slide credit says it was reprojected,
   smoothed and recoloured (required). The scripts are not in the repo; the
   parameters are in the speaker notes and this file.
-- Toolkit: slidev-videos v0.7.0 (both addons; stills at each slide's last click, which is click 0 here: the deck has no clicks; v0.6.8: the engine's grains sized to the frame; `strands` registered `enterable: true`; print shows every animation at its end state; every pixel clamped finite before bloom: the funnel's additive core overflowed the half-float target to Inf → NaN → black on iOS). Device switches for a phone: `?stage-debug`, `?stage-post=off`, `?stage-targets=half`, `?stage-tier=0..3`. A lite mode for phones (fewer, smaller grains in the talk's forms, no takeover overlay) is parked on `wip/innoday-lite`, unused unless the iPhone still struggles: place groups, `humAt: all`,
+- Toolkit: slidev-videos v0.8.1 (both addons; v0.8.0's settling that stretches with load, shots that never cache a failed frame, per-slide `hum: false` and `space.ambient`, unused here; v0.8.1 prints each page with its own dim: v0.8.0 gave every page slide 1's, which printed this deck's worlds at about half their stills; v0.7.0: stills at each slide's last click, which is click 0 here: the deck has no clicks; v0.6.8: the engine's grains sized to the frame; `strands` registered `enterable: true`; print shows every animation at its end state; every pixel clamped finite before bloom: the funnel's additive core overflowed the half-float target to Inf → NaN → black on iOS). Device switches for a phone: `?stage-debug`, `?stage-post=off`, `?stage-targets=half`, `?stage-tier=0..3`. A lite mode for phones (fewer, smaller grains in the talk's forms, no takeover overlay) is parked on `wip/innoday-lite`, unused unless the iPhone still struggles: place groups, `humAt: all`,
   `?stage-debug`, quality tiers (a phone starts at 2; desktop and the headless
   recorder at 0, `pages:check` prints it), lighter photo places, the context-
   loss fixes, stills and posters for print (v0.5.4: correct per page).
 
 ## Status
 
-2026-10-10: **complete, stripped to pictures and numbers.** Deployed f02d412
-(no cover, no section slides, inventions named, numbers named, licence credits
-on the last slide, the opener waits for the first press; v0.7.0) —
+2026-10-11: **complete, at its real date.** Deployed 8a67c84 (the strip of
+10 Oct, the dir renamed to 2026_10_23; v0.7.0) —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
-Pages run 38084549720 (green), URL 200; `ready` passed with nothing skipped and
-the live walk went 26/26. Open for the owner: the closing pose and the CERN CC
-credits (Decisions, "Taken overnight"); the iPhone retest of 9 Oct.
+Pages run 38086927761 (green), URL 200, the old 2026_10_00 address 404; `ready`
+passed with nothing skipped and the live walk went 26/26. Open for the owner:
+the closing pose and the CERN CC credits (Decisions, "Taken overnight"); the
+iPhone retest of 9 Oct.
 
 ## Decisions
 

@@ -48,8 +48,8 @@ https://github.com/MindaugasSarpis/slidev-videos).
 | `2026_07_18_Yaga` | Yaga crash course (Lithuanian); 4K, 16:9 |
 | `2026_09_10_WorldOfParticles` | World of Particles opening lecture: ParticleHero and 32 clips |
 | `2026_09_00_Startertalk` | "Pentaquarks at LHCb", a 30-minute seminar in the hadron space |
-| `2026_10_00_Innoday` | Innoday (Lithuanian), a business audience; the stage |
-| `2026_10_00_OpenData` | "Opening LHCb's data", a 6½-minute award talk; the stage |
+| `2026_10_23_Innoday` | Innoday (Lithuanian), a business audience; the stage |
+| `2026_10_21_OpenData` | "Opening LHCb's data", a 6½-minute award talk; the stage |
 | `2026_10_26_UzsikraukKarjerai` | „Vadovėlio gale atsakymo nėra“, a Lithuanian TV talk; the stage |
 
 A date of `09_00` or `10_00` is a placeholder: once the date is known, rename

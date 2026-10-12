@@ -472,6 +472,12 @@ space: { at: [10.4, -43.4, 24], dist: 12.5, yaw: 0, pitch: 5, dim: 0.1 }
 
 <div class="big"><StageCount for="peak" :to="16407" lang="lt" /><span class="unit">skilimai</span></div>
 
+<p class="kicker">Bakalauro darbas, VU, 2026</p>
+
+<p class="name">Dominykas Stonkus</p>
+
+<p class="line">Atviruosiuose 2012 m. <span class="nt">LHCb</span> duomenyse jis rado pakilimą ten pat, kur LHCb 2015 m. atrado pentakvarkus.</p>
+
 </div>
 
 <!-- facts: lhcb-pentaquark-2015 -->
@@ -516,6 +522,8 @@ space: { at: [53, 2.8, 160], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 ---
 
 <Grains :set="{ team: 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, course: 0, d0: 0, peak: 0 }" />
+
+<div class="thanks">Ačiū</div>
 
 <!--
 Message: this is the work we were nominated for, and the people who did it.
