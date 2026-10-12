@@ -807,13 +807,14 @@ function buildFloor(o) {
 // With `motion` (its fields in setup/ring.js) the people are bodies on a ring
 // through their `at`s: they run round it, push each other away and bump, and
 // where two meet a few gold grains fly out of the contact on tracks that wind
-// in, the way a collision throws out particles in a magnetic field (`sparks`
-// scales how many; 0, none). With `beam` (its fields in setup/beam.js) a fine line
-// of gold grains runs round through them, parting round every face and closing
-// behind it; a bump throws the beam's grains near it out, and they drift back. The
-// beam is injected once the camera has landed: a head runs round the ring and lays
-// it. The motion starts over at the homes each time they gather. Without it each
-// stays at its `at`.
+// in, the way a collision throws out particles in a magnetic field, and pass
+// behind the faces (`sparks` scales how many; 0, none). With `beam` (its fields
+// in setup/beam.js) a fine line of gold grains runs round through them, parting
+// round every face and closing behind it; a bump throws the beam's grains near it
+// out, and they drift back, and the grains caught where two faces touch are lost
+// and come back in the line. The beam is injected once the camera has landed: a
+// head runs round the ring and lays it. The motion starts over at the homes each
+// time they gather. Without it each stays at its `at`.
 const PORTRAIT_VERT = /* glsl */ `
 attribute float aSeed, aR;
 attribute vec3 aCol;
@@ -851,13 +852,16 @@ void main() {
 }`
 
 // the grains thrown out where two portraits meet: a pool reused round and round. Each
-// is drawn as a short trail of TRAIL points along its track
+// is drawn as a short trail of TRAIL points along its track. uFaces: the m faces as they
+// are seen (x, y, the photograph's radius); uSeen: the picture plane they are seen in
+// (the title's x, y, and the camera's distance; 0: none)
 const TRAIL = 6
-const SPARK_VERT = /* glsl */ `
+const sparkVert = (m) => /* glsl */ `
 attribute vec3 aVel;
 attribute vec2 aDrift;
 attribute float aT0, aLife, aSeed, aSpin, aDrag, aTrail;
 uniform float uSize, uAlpha;
+uniform vec3 uFaces[${m}], uSeen;
 ${PLACE}
 void main() {
   float age = uTime - aT0 - aTrail * 0.035;
@@ -875,10 +879,16 @@ void main() {
   }
   // and the whole burst goes on with the two faces it came from, at their mean velocity
   vec3 p = position + vec3(aVel.x * q.x - aVel.y * q.y + aDrift.x * age, aVel.x * q.y + aVel.y * q.x + aDrift.y * age, aVel.z * (1.0 - exp(-aDrag * age)) / aDrag);
-  place(p, uSize * (0.6 + 0.6 * aSeed) * mix(0.6, 1.0, tail), uAlpha * f * f * tail, mix(vec3(1.0, 0.62, 0.22), vec3(1.0, 0.92, 0.75), f * tail), aSeed);
+  // a track that winds over a photograph passes behind it: it fades out over the face and
+  // in again beyond it, so the burst shows in the gap and round the pair, never on a face.
+  // Worked where it is seen, as the ring works its bumps
+  vec2 s = uSeen.xy + (p.xy - uSeen.xy) * (uSeen.z > 0.0 ? uSeen.z / max(uSeen.z - p.z, 1.0) : 1.0);
+  float shown = 1.0;
+  for (int j = 0; j < ${m}; j++) shown *= smoothstep(0.75, 0.97, length(s - uFaces[j].xy) / uFaces[j].z);
+  place(p, uSize * (0.6 + 0.6 * aSeed) * mix(0.6, 1.0, tail), uAlpha * f * f * tail * shown, mix(vec3(1.0, 0.62, 0.22), vec3(1.0, 0.92, 0.75), f * tail), aSeed);
 }`
 
-function makeSparks(N, seed, pr) {
+function makeSparks(N, seed, pr, ring) {
   const V = N * TRAIL
   const pos = new Float32Array(V * 3), vel = new Float32Array(V * 3), drift = new Float32Array(V * 2), t0 = new Float32Array(V).fill(-1e6)
   const life = new Float32Array(V).fill(1), sd = new Float32Array(V), spin = new Float32Array(V), drag = new Float32Array(V).fill(1)
@@ -887,11 +897,13 @@ function makeSparks(N, seed, pr) {
   const names = { position: [pos, 3], aVel: [vel, 3], aDrift: [drift, 2], aT0: [t0, 1], aLife: [life, 1], aSeed: [sd, 1], aSpin: [spin, 1], aDrag: [drag, 1] }
   for (const [name, [arr, k]] of Object.entries(names)) geo.setAttribute(name, new BufferAttribute(arr, k).setUsage(DynamicDrawUsage))
   geo.setAttribute('aTrail', new BufferAttribute(trail, 1))
-  const mat = material(SPARK_VERT, { uPixelRatio: pr, uSize: { value: 1.9 }, uAlpha: { value: 1.3 } })
+  const faces = Array.from({ length: ring.n }, () => new Vector3(0, 0, 1))
+  const mat = material(sparkVert(ring.n), { uPixelRatio: pr, uSize: { value: 1.9 }, uAlpha: { value: 1.3 },
+    uFaces: { value: faces }, uSeen: { value: new Vector3(ring.title.x, ring.title.y, ring.view === Infinity ? 0 : ring.view) } })
   const points = new Points(geo, mat); points.frustumCulled = false
   let k = 0, rnd = mulberry32(seed), dirty = false
   return {
-    points, mat,
+    points, mat, faces,
     reset() { rnd = mulberry32(seed); t0.fill(-1e6); k = 0; dirty = true },
     burst(h, gain, cm = [0, 0]) {
       // sideways out of the contact, into the gap between the two faces both ways, a
@@ -997,7 +1009,8 @@ function buildPortraits(o, ctx) {
   })
 
   const ring = o.motion && people.length > 1 ? makeRing(homes, { radius: size / 2 * 0.9, ...o.motion }) : null
-  const sparks = ring && o.sparks !== 0 ? makeSparks(600, (o.motion.seed ?? 7) + 1, pr) : null
+  const sparks = ring && o.sparks !== 0 ? makeSparks(600, (o.motion.seed ?? 7) + 1, pr, ring) : null
+  const photo = size / 2 / (o.motion?.radius ?? size / 2 * 0.9)   // a photograph's radius, of its body's
   if (sparks) { sparks.points.renderOrder = 1; g.add(sparks.points) }   // over the faces: the transparent sort would go by a key frozen at the group's origin
   // the beam: as many grains as the device's budget allows, up to the asked-for count
   const beam = ring && o.beam ? makeBeam(ring, { ...o.beam, grains: Math.min(o.beam.grains ?? 4000, (ctx.budget ?? 300000) / 40) }) : null
@@ -1040,10 +1053,10 @@ function buildPortraits(o, ctx) {
   // with onEnter nothing else would gather them, so the first frame does
   let late = !!(o.onEnter && step)
   // busy (v0.7) while they gather (1.7 s), the ring's drive ramps in (3.3 s) and the beam is
-  // injected, while they break up (1.6 s), a name still fades or a step for later is to
-  // come: the ring itself runs on as long as it is seen
+  // injected (its settle, and its head's flare dying), while they break up (1.6 s), a name
+  // still fades or a step for later is to come: the ring itself runs on as long as it is seen
   let labelsMoving = false
-  const settled = beam ? Math.max(3.3, (o.beam.inject ?? 3.4) + (o.beam.lap ?? 3.2) + 0.8) : ring ? 3.3 : 1.7
+  const settled = beam ? Math.max(3.3, beam.settle + 0.8) : ring ? 3.3 : 1.7
   const busy = () => labelsMoving || waiting(o.name) || (showT.value >= 0 && (hideT.value >= 0 || now - showT.value < settled))
   // onEnter: they gather the moment their slide opens, during the flight, rather than on
   // arrival. The hook stays, answering at once: the engine announces a station as
@@ -1068,6 +1081,7 @@ function buildPortraits(o, ctx) {
       if (ring && showT.value >= 0) {
         ring.advance(t, hit, beam ? (st, h) => beam.step(st, h) : null)
         moveNodes(); sparks?.flush()
+        if (sparks) { const v = ring.seen; sparks.faces.forEach((f, j) => f.set(v.x[j], v.y[j], v.r[j] * photo)) }
         if (beam) {
           const a = beamPts.geometry.attributes
           beam.write(a.position.array, a.aGlow.array, t)

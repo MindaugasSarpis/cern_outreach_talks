@@ -30,6 +30,7 @@
 //                                  as two meet (x, y, z where, sx, sy where it is seen);
 //                                  onStep(t, h) after every step, for what moves with them (beam.js)
 //   ring.seen                      { x, y, r, vx, vy }: the bodies as they are seen, live
+//   ring.dir                       which way they run: -1 clockwise on screen, 1 the other way
 
 const H = 1 / 120   // the step, s
 
@@ -199,6 +200,6 @@ export function makeRing(homes, o = {}) {
   }
 
   reset(0)
-  return { n, x: px, y: py, z: pz, a, seen: { x, y, r: rad, vx, vy }, reset, advance, view: D, get t() { return t0 + steps * H },
+  return { n, x: px, y: py, z: pz, a, seen: { x, y, r: rad, vx, vy }, reset, advance, view: D, dir: o.dir ?? -1, get t() { return t0 + steps * H },
     ring: { cx, cy, rx, ry }, title: { x: tc[0], y: tc[1], w: box[0], h: box[1] } }
 }
