@@ -140,8 +140,8 @@ void main() {
   gl_FragColor = vec4(pow(max(vColor * a, vec3(1e-6)), vec3(2.2)), 1.0);
 }`;
 
-const gauss = (rnd) => { let s = 0; for (let i = 0; i < 4; i++) s += rnd(); return (s - 2) / 0.577 / 2; };
-function mulberry32(a) {
+export const gauss = (rnd) => { let s = 0; for (let i = 0; i < 4; i++) s += rnd(); return (s - 2) / 0.577 / 2; };
+export function mulberry32(a) {
   return () => {
     a |= 0; a = (a + 0x6d2b79f5) | 0;
     let t = Math.imul(a ^ (a >>> 15), 1 | a);
@@ -149,7 +149,7 @@ function mulberry32(a) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-const lin = (hex) => new Color(hex).convertLinearToSRGB();
+export const lin = (hex) => new Color(hex).convertLinearToSRGB();
 
 export function buildLhcCollision(o, ctx, bus) {
   const rnd = mulberry32(o.seed ?? 20121201);
@@ -265,25 +265,35 @@ export function buildLhcCollision(o, ctx, bus) {
   const lastStop = Math.max(0, ...tracks.map((t) => t.endS), ...deposits.map((d) => Math.hypot(...W(d.x, d.y, d.z)))) / vT;
   const settleAfter = lastStop + 2.5;
 
+  const run = collisionRun(o, ctx, bus, uni, approach, () => settleAfter);
+  mat.addEventListener('dispose', run.dispose);
+  return { group: g, labels: [], api: { busy: run.busy }, frameScale: uni.uPixelRatio, update: run.update, dispose: run.dispose };
+}
+
+// The run every collision shares, on its uniforms uTime, uStart, uTc, uHide and uTail:
+// step 1 starts it (the run-in, the crossing `approach` engine-s later), step 0 lets
+// it fade; the crossing and the fly-out (the world running again after it) are said
+// on the bus, for the sound and the captions. settle(): engine-s from the crossing
+// until the last particle has stopped and its splash has faded.
+export function collisionRun(o, ctx, bus, uni, approach, settle) {
   let now = 0, crossedHeard = false, flewHeard = false, heardRate = 1;
   const go = (k) => {
     if (k) {
       uni.uStart.value = now; uni.uTc.value = now + approach; uni.uHide.value = -1; crossedHeard = false; flewHeard = false;
-      bus.emit('start', { name: o.name, at: now, cross: now + approach, settle: now + approach + settleAfter });
+      bus.emit('start', { name: o.name, at: now, cross: now + approach, settle: now + approach + settle() });
     } else if (uni.uStart.value >= 0 && uni.uHide.value < 0) uni.uHide.value = now;
   };
-  const off2 = bus.listen(o.name, go);
-  mat.addEventListener('dispose', off2);
+  const off = bus.listen(o.name, go);
   if (bus.state.has(o.name)) queueMicrotask(() => go(bus.state.get(o.name)));
 
   const busy = () => {
     const s = uni.uStart.value;
     if (s < 0) return false;
     if (uni.uHide.value >= 0) return now - uni.uHide.value < 1.7;
-    return now - uni.uTc.value < settleAfter;
+    return now - uni.uTc.value < settle();
   };
   return {
-    group: g, labels: [], api: { busy }, frameScale: uni.uPixelRatio,
+    busy,
     update(t) {
       now = t; uni.uTime.value = t;
       const rate = ctx.rate ? ctx.rate() : 1;
@@ -295,6 +305,6 @@ export function buildLhcCollision(o, ctx, bus) {
       // the fly-out: the world running again after the crossing (at once, with no rate)
       if (crossedHeard && !flewHeard && uni.uHide.value < 0 && rate > 0.6) { flewHeard = true; bus.emit('flyout', { name: o.name, at: t }); }
     },
-    dispose: off2,
+    dispose: off,
   };
 }

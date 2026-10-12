@@ -8,7 +8,7 @@ docs/unslop-lt.md (origin/feat/unslop); never „kolaborantai“, no „įgalint
 „adresuoti“.
 
 The design notes are in the repo `CLAUDE.md`, under "Open data talk".
-Toolkit pin: slidev-videos v0.8.0, for both addons.
+Toolkit pin: slidev-videos v0.8.1, for both addons.
 
 **Deploys (owner, 2026-10-09: "Deploy now, and always").** The standing rule
 holds for this talk: it deploys without asking once `talk ready` passes with
@@ -23,6 +23,46 @@ https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_21_OpenData/
 (the old 2026_10_00 address is gone). The videos release keeps its storage name,
 videos-2026-10-00-opendata.
 
+## Status (2026-10-12): the owner's rework
+
+The owner's list of 2026-10-11 (captions, no title slides; the vault behind
+the spheres; the users slide as a sun; the Vilnius slide as the crux; the
+coordinator role; Dominykas's histogram filled with Užsikrauk karjerai's
+grains), built on wip/everyday and squashed onto feat/opendata-talk:
+
+- Cut: the Z → μμ event slide (its analysis is named on the crux slide).
+- Slides 5–9, the scale: each sphere has its caption (1 TB „Dešimtys milijonų
+  susidūrimų“, 800 TB „Atverta 2023 m.“, 4 000 TB „Atvirieji LHCb duomenys“,
+  100 000 TB „Visi LHCb duomenys“, 1 300 000 TB „CERN mokslo duomenys“), over
+  the CERN tape vault (`backdrop` objects `vault`, photo
+  public/figures/bg/tape-vault.jpg with its depth map; `vault: 1` in the
+  slides' Grains sets).
+- Slide 9: 1 300 000 TB, not the 2 000 000 TB of the owner's first ask: no
+  source gives 2 EB (the only CERN-site „2 exabytes“ is root.cern's ROOT files
+  worldwide); the owner chose the sourced 1.30 EB (2026-10-12): CERN Annual
+  Progress Report 2025, p.17, physics data from all CERN experiments on tape
+  (fact `cern-physics-data-tape-1p3eb`). Thirteen copies of LHCb's pile merge
+  into one; the pile's `grain: 8` keeps it light.
+- Slide 10, „Naudotis gali kiekvienas“: twenty streams leave the gold pile to
+  every side and end at twenty plots made for the talk from two public files
+  (records 401 and 24506): masses with fits, lifetimes, the beam spot, the
+  magnet, the calorimeter. No request count on screen (the notes keep „more
+  than 30“, CHEP 2026). The figures' sources and fit checks:
+  ~/talks/.cache/opendata/phase1/figures/ (not in the repo); each was
+  reviewed by a physicist agent, nine re-made after review (2026-10-12) on a
+  pure-black ground (the figures blend additively).
+- Slide 11, the crux: eleven streams to what we do with open data, named in a
+  word or two; the portrait and „LHCb atvirųjų duomenų koordinatorius“
+  (from 1 August 2026). The course by its full name, „Geriausios tyrimų ir
+  duomenų analizės praktikos iš CERN“, and „Meistriškumo pamoka“.
+- Slide 14, Dominykas: his 16 407 decays fall as grains into his m(J/ψ p),
+  the peak's bins light, and the grains rise into the pentaquark (the
+  `histogram` builder, ported from Užsikrauk karjerai with `from`, `count`,
+  `rise`).
+- Notes trimmed to 6.5 min (lint's limit 6.8): the coordinator role and Adam
+  Morris are said once, on the crux slide; the 2025 CP result is an
+  „if time allows“.
+
 ## Status (2026-10-11): deployed on v0.8.0 with the shared LHC opening, at 2026_10_21_OpenData
 
 - Redeployed 2026-10-11 under the standing rule: commit dc6e463 on main,
@@ -32,6 +72,18 @@ videos-2026-10-00-opendata.
   answers 200, the old 2026_10_00 one 404), the shared LHC opening on
   v0.8.0 with its captions (see the 2026-10-11 decision), the tunnel cut on
   the talk's release. First live version for the owner's review.
+- Redeployed 2026-10-11 under the standing rule: commit 182a5c6 on main,
+  Pages run 38090574213 (success); live check passed (15 slides, nothing
+  failed); `talk ready` passed on 182a5c6 with nothing skipped (lint: the two
+  TEXT warnings of the owner's exception). In it: the opening's heads faint
+  in the freeze (no blot), printed pages keep their stills (the scrim held at
+  0.05 in print until v0.8.1), the big numbers in the font's own figures,
+  and the thesis slide's text and „Ačiū“ back on the owner's word.
+- Redeployed 2026-10-11 under the standing rule: commit d50898a on main,
+  Pages run 38092713877 (success); live check passed (15 slides, nothing
+  failed); `talk ready` passed on d50898a with nothing skipped. In it:
+  slidev-videos v0.8.1 (print takes each page's own dim), the talk's scrim
+  workaround dropped.
 - Next: the owner's feedback on the opening; then od-story-everyday
   (prototype slides 6 and 9 first), with placeholders for the owner's
   numbers and photos.
@@ -389,6 +441,13 @@ videos-2026-10-00-opendata.
   field of view.
 
 ## Owner questions
+
+- The figures' Lithuanian for η: „Pseudorapidumas η“ (dimuon-3) and the
+  tracks group's wording are marked [PATIKSLINTI] in their meta.json.
+- The VU open-science award 2025 („Atvirojo mokslo poveikis“) is in the crux
+  slide's notes only. Show it on screen?
+- „Atverta 2023 m.“ on the 800 TB sphere is the one caption that is a
+  statement, not a name (lint TEXT warning). Keep it?
 
 - Slide 11's and Dominykas's plots keep their published English axis labels
   and legend (accepted by the owner via the Scheduler).

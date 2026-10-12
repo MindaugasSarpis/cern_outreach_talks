@@ -1,23 +1,39 @@
 {
   "version": 1,
   "clips": {
-    "cern_footage_2022_042_001.mp4": {
-      "file": "cern_footage_2022_042_001.mp4.jpg",
+    "cern_footage_2022_013_001_1080p_lhc.mp4": {
+      "file": "cern_footage_2022_013_001_1080p_lhc.mp4.jpg",
       "tile": [
         320,
         180
       ],
       "cols": 8,
-      "count": 15,
+      "count": 10,
       "interval": 4.0,
       "size": [
         1920,
         1080
       ],
-      "duration": 56.12,
-      "poster": "cern_footage_2022_042_001.mp4.poster.jpg",
-      "lit": 24.0,
-      "poster_at": "0:24"
+      "duration": 39.52,
+      "poster": "cern_footage_2022_013_001_1080p_lhc.mp4.poster.jpg",
+      "lit": 0.0
+    },
+    "cern_footage_2025_014_002.mp4": {
+      "file": "cern_footage_2025_014_002.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 5,
+      "count": 5,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 18.04,
+      "poster": "cern_footage_2025_014_002.mp4.poster.jpg",
+      "lit": 0.0
     },
     "cern_overview_short.mp4": {
       "file": "cern_overview_short.mp4.jpg",
@@ -36,38 +52,39 @@
       "poster": "cern_overview_short.mp4.poster.jpg",
       "lit": 0.0
     },
-    "vu_ff_unzoom.mp4": {
-      "file": "vu_ff_unzoom.mp4.jpg",
+    "lhcb.mp4": {
+      "file": "lhcb.mp4.jpg",
       "tile": [
         320,
         180
       ],
       "cols": 8,
-      "count": 8,
+      "count": 12,
       "interval": 4.0,
       "size": [
         1920,
         1080
       ],
-      "duration": 30.067,
-      "poster": "vu_ff_unzoom.mp4.poster.jpg",
-      "lit": 0.0
+      "duration": 48.0,
+      "poster": "lhcb.mp4.poster.jpg",
+      "lit": 24.0,
+      "poster_at": "0:24"
     },
-    "vu_ff_zoom_galaxy.mp4": {
-      "file": "vu_ff_zoom_galaxy.mp4.jpg",
+    "vu_zoom_web.mp4": {
+      "file": "vu_zoom_web.mp4.jpg",
       "tile": [
         320,
         180
       ],
       "cols": 8,
-      "count": 64,
-      "interval": 4.156,
+      "count": 42,
+      "interval": 4.0,
       "size": [
         1920,
         1080
       ],
-      "duration": 266.0,
-      "poster": "vu_ff_zoom_galaxy.mp4.poster.jpg",
+      "duration": 167.4,
+      "poster": "vu_zoom_web.mp4.poster.jpg",
       "lit": 0.0
     }
   }

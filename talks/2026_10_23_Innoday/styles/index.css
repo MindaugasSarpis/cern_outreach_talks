@@ -1,7 +1,8 @@
 /* Innoday — the talk's own type over the stage kit (slidev-addon-stage
    styles/index.css). Since 2026-10-10 the slides carry no words, only a few
-   numbers (owner: he narrates); the rules for headlines, kickers, captions and
-   credits below are unused until words come back. Text is white, with one light-blue accent (--in-accent)
+   numbers (owner: he narrates); his 12 Oct list brings back the title, three
+   section breaks and „Ačiū“. Rules for headlines, kickers and credits below
+   are partly unused. Text is white, with one light-blue accent (--in-accent)
    for kickers and the rare emphasis: no gold text (owner, 2026-10-09: gold
    letters read as AI design). Gold stays only in the world's grains (strands,
    the KT seed, the FCC ring). Sizes are px against Slidev's 980-wide canvas. */
@@ -361,3 +362,10 @@ html[data-stage] .hero .invention {
   background: rgba(4, 6, 16, 0.62); padding: 6px 14px; border-radius: 4px;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
+
+/* „Ačiū“ over the slow collision (owner, 12 Oct): the title holds against the
+   grains, and the licence credits keep their tiny bottom-left line (the kit
+   sets a statement's .src static, under the title) */
+html[data-stage] .slidev-layout.statement h1 { text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75); }
+html[data-stage] .slidev-layout.statement .src.credits { position: absolute; left: 56px; bottom: 24px; margin: 0; text-align: left; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9); }
+

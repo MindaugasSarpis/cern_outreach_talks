@@ -279,3 +279,12 @@ licence = "CERN terms (non-commercial)"
 credit = "Image: Daniel Dominguez/CERN"
 verified_on = "2026-10-07"
 px = [2400, 1680]
+
+[[photo]]
+subject = "The LHCb collaboration week group photo: several hundred members in front of the LHCb detector under the LHCb banner, 17 June 2022"
+file = "cern-photo-202206-112-6.jpg"
+source_url = "https://cds.cern.ch/images/CERN-PHOTO-202206-112-6"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: Piotr Traczyk/CERN"
+verified_on = "2026-10-12"
+px = [1440, 960]
