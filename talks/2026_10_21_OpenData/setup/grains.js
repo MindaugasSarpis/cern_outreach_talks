@@ -1,10 +1,9 @@
 import {
   Group, Points, Mesh, SphereGeometry, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4, Matrix4, Euler,
-  LinearMipmapLinearFilter, DynamicDrawUsage, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColorSpace, Quaternion,
+  LinearMipmapLinearFilter, DynamicDrawUsage,
 } from 'three'
 import { makeRing, mulberry32 } from './ring.js'
-// the engine's photo relief (not in the addon's exports yet: by its file, the same module the engine loads)
-import { createPhotoPlace } from '../node_modules/slidev-addon-stage/stage/photo-place.js'
+import { makeBeam } from './beam.js'
 
 // a label sprite from the engine, mipmapped: drawn far smaller than its canvas, it aliased into dither
 function smooth(l) {
@@ -31,10 +30,12 @@ function smooth(l) {
 // A step for later (`setGrainsLater`, <Grains :later>) runs on the world's clock,
 // as the motion it waits for does: a slow GPU or a headless tool stretches both.
 // Every form's update moves that clock on, and a step still to come keeps its
-// form busy (api.busy), so a still is never taken before it lands.
+// form busy (api.busy), so a still is never taken before it lands. The sun of
+// plots (setup/sun.js) is driven the same way: it takes the steps, the clock and
+// the grains' drawing from here.
 
 const BUS = 'opendata:grains'
-const state = new Map()
+export const state = new Map()
 
 export function setGrains(name, step) {
   if (state.get(name) === step) return
@@ -48,16 +49,18 @@ export function setGrainsLater(name, step, s) {
   pending.add(p)
   return () => pending.delete(p)
 }
-function tick(t) {
+export function tick(t) {
   clock = t
   for (const p of pending) if (t >= p.at) { pending.delete(p); setGrains(p.name, p.step) }
 }
-const waiting = (name) => [...pending].some((p) => p.name === name)
-function listen(name, fn) {
+export const waiting = (name) => [...pending].some((p) => p.name === name)
+export function listen(name, fn) {
   const h = (e) => { if (e.detail?.name === name) fn(e.detail.step) }
   window.addEventListener(BUS, h)
   return () => window.removeEventListener(BUS, h)
 }
+// for the talk's forms kept in files of their own (setup/dataspace.js): a name's last step
+export const stepOf = (name) => state.get(name)
 
 const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
@@ -69,7 +72,7 @@ const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random();
 // pixels it covered several times as much on a phone's small slide band, and the
 // additive piles washed out to white). The lineup's spheres and the portraits'
 // faces size from the viewport (uViewH) already.
-const PLACE = /* glsl */ `
+export const PLACE = /* glsl */ `
 uniform float uTime, uPixelRatio;
 varying vec3 vColor; varying float vAlpha;
 void place(vec3 p, float size, float alpha, vec3 color, float seed) {
@@ -91,7 +94,7 @@ void main() {
   gl_FragColor = vec4(pow(max(vColor * a, vec3(1e-6)), vec3(2.2)), 1.0);
 }`
 
-function material(vertexShader, uniforms) {
+export function material(vertexShader, uniforms) {
   return new ShaderMaterial({
     vertexShader, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
     uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) }, ...uniforms },
@@ -796,7 +799,8 @@ function buildFloor(o) {
 // ---- portraits ----------------------------------------------------------------------
 //   { type: portraits, name, pos, size?: 2.4, res?: 120, gain?: 1, labelH?: 0.026,
 //     people: [{ src: '/figures/people/x.jpg', name, at: [x, y, z] }, …],
-//     motion?: { speed, charge, dashBy, view, title, keepOut, frame, seed, … }, sparks?: 1 }
+//     motion?: { speed, charge, dashBy, view, title, keepOut, frame, seed, … }, sparks?: 1,
+//     beam?: { grains, speed, width, spread, halo, bunches, … } }
 // Each photograph is a round disc of grains, one grain per pixel of a res × res
 // sampling, in the photo's own colours, with a little relief by brightness.
 // Step 1 gathers them (the middle of each face first, the edge last) out of
@@ -804,9 +808,15 @@ function buildFloor(o) {
 // size on screen. The engine's arrival (and `c`) gathers them again.
 // With `motion` (its fields in setup/ring.js) the people are bodies on a ring
 // through their `at`s: they run round it, push each other away and bump, and
-// where two meet a few gold grains fly out of the contact, the way a collision
-// throws out particles (`sparks` scales how many; 0, none). The motion starts
-// over at the homes each time they gather. Without it each stays at its `at`.
+// where two meet a few gold grains fly out of the contact on tracks that wind
+// in, the way a collision throws out particles in a magnetic field, and pass
+// behind the faces (`sparks` scales how many; 0, none). With `beam` (its fields
+// in setup/beam.js) a fine line of gold grains runs round through them, parting
+// round every face and closing behind it; a bump throws the beam's grains near it
+// out, and they drift back, and the grains caught where two faces touch are lost
+// and come back in the line. The beam is injected once the camera has landed: a
+// head runs round the ring and lays it. The motion starts over at the homes each
+// time they gather. Without it each stays at its `at`.
 const PORTRAIT_VERT = /* glsl */ `
 attribute float aSeed, aR;
 attribute vec3 aCol;
@@ -843,44 +853,78 @@ void main() {
   gl_FragColor = vec4(vCol * uGain, a);
 }`
 
-// the grains thrown out where two portraits meet: a pool reused round and round
-const SPARK_VERT = /* glsl */ `
+// the grains thrown out where two portraits meet: a pool reused round and round. Each
+// is drawn as a short trail of TRAIL points along its track. uFaces: the m faces as they
+// are seen (x, y, the photograph's radius); uSeen: the picture plane they are seen in
+// (the title's x, y, and the camera's distance; 0: none)
+const TRAIL = 6
+const sparkVert = (m) => /* glsl */ `
 attribute vec3 aVel;
-attribute float aT0, aLife, aSeed;
+attribute vec2 aDrift;
+attribute float aT0, aLife, aSeed, aSpin, aDrag, aTrail;
 uniform float uSize, uAlpha;
+uniform vec3 uFaces[${m}], uSeen;
 ${PLACE}
 void main() {
-  float age = uTime - aT0;
+  float age = uTime - aT0 - aTrail * 0.035;
   if (age < 0.0 || age > aLife) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vAlpha = 0.0; return; }
-  float f = 1.0 - age / aLife;
-  vec3 p = position + aVel * (1.0 - exp(-2.5 * age)) / 2.5;   // they slow as they go
-  place(p, uSize * (0.6 + 0.8 * aSeed), uAlpha * f * f, mix(vec3(1.0, 0.62, 0.22), vec3(1.0, 0.92, 0.75), f * aSeed), aSeed);
+  float f = 1.0 - age / aLife, tail = 1.0 - aTrail / ${TRAIL}.0;
+  // a charged grain in a field along the line of sight, slowing as it goes (its speed
+  // falls as e^(−aDrag t)) and turning the tighter the slower it goes (at aSpin e^(aDrag t)):
+  // it leaves the contact almost straight and winds in, as the tracks in a bubble
+  // chamber do. Its path, summed in steps (the turn at each is exact)
+  vec2 q = vec2(0.0);
+  float dt = age / 16.0;
+  for (int k = 0; k < 16; k++) {
+    float tm = (float(k) + 0.5) * dt, turn = aSpin * (exp(aDrag * tm) - 1.0) / aDrag;
+    q += exp(-aDrag * tm) * vec2(cos(turn), sin(turn)) * dt;
+  }
+  // and the whole burst goes on with the two faces it came from, at their mean velocity
+  vec3 p = position + vec3(aVel.x * q.x - aVel.y * q.y + aDrift.x * age, aVel.x * q.y + aVel.y * q.x + aDrift.y * age, aVel.z * (1.0 - exp(-aDrag * age)) / aDrag);
+  // a track that winds over a photograph passes behind it: it fades out over the face and
+  // in again beyond it, so the burst shows in the gap and round the pair, never on a face.
+  // Worked where it is seen, as the ring works its bumps
+  vec2 s = uSeen.xy + (p.xy - uSeen.xy) * (uSeen.z > 0.0 ? uSeen.z / max(uSeen.z - p.z, 1.0) : 1.0);
+  float shown = 1.0;
+  for (int j = 0; j < ${m}; j++) shown *= smoothstep(0.75, 0.97, length(s - uFaces[j].xy) / uFaces[j].z);
+  place(p, uSize * (0.6 + 0.6 * aSeed) * mix(0.6, 1.0, tail), uAlpha * f * f * tail * shown, mix(vec3(1.0, 0.62, 0.22), vec3(1.0, 0.92, 0.75), f * tail), aSeed);
 }`
 
-function makeSparks(N, seed, pr) {
-  const pos = new Float32Array(N * 3), vel = new Float32Array(N * 3), t0 = new Float32Array(N).fill(-1e6)
-  const life = new Float32Array(N).fill(1), sd = new Float32Array(N)
+function makeSparks(N, seed, pr, ring) {
+  const V = N * TRAIL
+  const pos = new Float32Array(V * 3), vel = new Float32Array(V * 3), drift = new Float32Array(V * 2), t0 = new Float32Array(V).fill(-1e6)
+  const life = new Float32Array(V).fill(1), sd = new Float32Array(V), spin = new Float32Array(V), drag = new Float32Array(V).fill(1)
+  const trail = Float32Array.from({ length: V }, (_, v) => v % TRAIL)
   const geo = new BufferGeometry()
-  const names = { position: [pos, 3], aVel: [vel, 3], aT0: [t0, 1], aLife: [life, 1], aSeed: [sd, 1] }
+  const names = { position: [pos, 3], aVel: [vel, 3], aDrift: [drift, 2], aT0: [t0, 1], aLife: [life, 1], aSeed: [sd, 1], aSpin: [spin, 1], aDrag: [drag, 1] }
   for (const [name, [arr, k]] of Object.entries(names)) geo.setAttribute(name, new BufferAttribute(arr, k).setUsage(DynamicDrawUsage))
-  const mat = material(SPARK_VERT, { uPixelRatio: pr, uSize: { value: 1.8 }, uAlpha: { value: 0.9 } })
+  geo.setAttribute('aTrail', new BufferAttribute(trail, 1))
+  const faces = Array.from({ length: ring.n }, () => new Vector3(0, 0, 1))
+  const mat = material(sparkVert(ring.n), { uPixelRatio: pr, uSize: { value: 1.9 }, uAlpha: { value: 1.3 },
+    uFaces: { value: faces }, uSeen: { value: new Vector3(ring.title.x, ring.title.y, ring.view === Infinity ? 0 : ring.view) } })
   const points = new Points(geo, mat); points.frustumCulled = false
   let k = 0, rnd = mulberry32(seed), dirty = false
   return {
-    points, mat,
+    points, mat, faces,
     reset() { rnd = mulberry32(seed); t0.fill(-1e6); k = 0; dirty = true },
-    burst(h, gain) {
+    burst(h, gain, cm = [0, 0]) {
       // sideways out of the contact, into the gap between the two faces both ways, a
-      // little in and out of the plane; a harder bump throws more of them, faster. They
-      // have to clear the faces' soft rims (about 0.74 along the gap) to be seen at all:
-      // gold added over a photograph's light background does not show
-      const m = Math.round(Math.min(64, 14 + 60 * h.v) * gain)
+      // little in and out of the plane; a harder bump throws more of them, faster. Half
+      // turn one way and half the other, as opposite charges do. They leave nearly
+      // straight, so they clear the gap before they wind in: gold added over a
+      // photograph's light background does not show
+      const m = Math.round(Math.min(36, 4 + 36 * h.v) * gain)
       for (let c = 0; c < m; c++, k = (k + 1) % N) {
-        const side = rnd() < 0.5 ? -1 : 1, sp = (1.2 + 2.6 * rnd()) * (0.6 + h.v)
-        const across = (rnd() - 0.5) * 0.7, out = (rnd() - 0.5) * 1.0
-        vel[k * 3] = (h.tx * side + h.nx * across) * sp; vel[k * 3 + 1] = (h.ty * side + h.ny * across) * sp; vel[k * 3 + 2] = out * sp
-        pos[k * 3] = h.x; pos[k * 3 + 1] = h.y; pos[k * 3 + 2] = h.z + 0.1
-        t0[k] = h.t; life[k] = 0.7 + 0.7 * rnd(); sd[k] = rnd()
+        const side = rnd() < 0.5 ? -1 : 1, sp = (1.4 + 2.2 * rnd()) * (0.5 + h.v)
+        const across = (rnd() - 0.5) * 0.5, out = (rnd() - 0.5) * 0.6
+        const w = (rnd() < 0.5 ? -1 : 1) * (0.5 + 1.1 * rnd()), g = 1 + 0.6 * rnd()
+        const vx = (h.tx * side + h.nx * across) * sp, vy = (h.ty * side + h.ny * across) * sp, vz = out * sp
+        const L = 1.4 + 1.0 * rnd(), seed = rnd()
+        for (let q = k * TRAIL; q < (k + 1) * TRAIL; q++) {
+          vel[q * 3] = vx; vel[q * 3 + 1] = vy; vel[q * 3 + 2] = vz; drift[q * 2] = cm[0]; drift[q * 2 + 1] = cm[1]
+          pos[q * 3] = h.x; pos[q * 3 + 1] = h.y; pos[q * 3 + 2] = h.z + 0.1
+          t0[q] = h.t; life[q] = L; sd[q] = seed; spin[q] = w; drag[q] = g
+        }
       }
       dirty = true
     },
@@ -891,6 +935,20 @@ function makeSparks(N, seed, pr) {
     },
   }
 }
+
+// the beam's grains, where beam.js puts them; they show and go with the faces
+const BEAM_VERT = /* glsl */ `
+attribute float aSeed, aGlow;
+uniform float uSize, uAlpha, uShowT, uHideT;
+${PLACE}
+void main() {
+  float on = uShowT < 0.0 ? 0.0 : uHideT < 0.0 ? 1.0 : 1.0 - smoothstep(0.0, 1.0, uTime - uHideT);
+  float a = uAlpha * aGlow * on;
+  if (a <= 0.003) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vAlpha = 0.0; return; }
+  // gold, paler where it glows: the injection's head, a grain thrown out
+  vec3 color = mix(vec3(1.0, 0.62, 0.22), vec3(1.0, 0.9, 0.7), min(1.0, 0.5 * (aGlow - 1.0)) + 0.2 * hash(aSeed * 7.0));
+  place(position, uSize * (0.7 + 0.6 * hash(aSeed * 13.0)), a, color, aSeed);
+}`
 
 function buildPortraits(o, ctx) {
   const size = o.size ?? 2.4, res = Math.round(o.res ?? 120)
@@ -953,15 +1011,35 @@ function buildPortraits(o, ctx) {
   })
 
   const ring = o.motion && people.length > 1 ? makeRing(homes, { radius: size / 2 * 0.9, ...o.motion }) : null
-  const sparks = ring && o.sparks !== 0 ? makeSparks(1200, (o.motion.seed ?? 7) + 1, pr) : null
+  const sparks = ring && o.sparks !== 0 ? makeSparks(600, (o.motion.seed ?? 7) + 1, pr, ring) : null
+  const photo = size / 2 / (o.motion?.radius ?? size / 2 * 0.9)   // a photograph's radius, of its body's
   if (sparks) { sparks.points.renderOrder = 1; g.add(sparks.points) }   // over the faces: the transparent sort would go by a key frozen at the group's origin
+  // the beam: as many grains as the device's budget allows, up to the asked-for count
+  const beam = ring && o.beam ? makeBeam(ring, { ...o.beam, grains: Math.min(o.beam.grains ?? 4000, (ctx.budget ?? 300000) / 40) }) : null
+  let beamPts = null
+  if (beam) {
+    const bgeo = new BufferGeometry()
+    bgeo.setAttribute('position', new BufferAttribute(new Float32Array(beam.n * 3), 3).setUsage(DynamicDrawUsage))
+    bgeo.setAttribute('aGlow', new BufferAttribute(new Float32Array(beam.n), 1).setUsage(DynamicDrawUsage))
+    bgeo.setAttribute('aSeed', new BufferAttribute(Float32Array.from({ length: beam.n }, (_, i) => (i * 0.618034) % 1), 1))
+    beamPts = new Points(bgeo, material(BEAM_VERT, { uPixelRatio: pr, uSize: { value: o.beam.size ?? 1.3 }, uAlpha: { value: o.beam.alpha ?? 0.95 },
+      uShowT: showT, uHideT: hideT }))
+    beamPts.frustumCulled = false; beamPts.renderOrder = 1
+    g.add(beamPts)
+  }
   const moveNodes = () => {
     for (let i = 0; i < nodes.length; i++) { nodes[i].position.set(ring.x[i], ring.y[i], ring.z[i]); nodes[i].rotation.z = ring.a[i] }
+  }
+  // a bump: the sparks, going on with the pair's mean velocity, and the beam's grains near it thrown out
+  const hit = (h) => {
+    const v = ring.seen
+    sparks?.burst(h, o.sparks ?? 1, [(v.vx[h.i] + v.vx[h.j]) / 2, (v.vy[h.i] + v.vy[h.j]) / 2])
+    beam?.kick(h)
   }
   // they gather: the motion starts over from the homes
   const show = (t) => {
     showT.value = t; hideT.value = -1
-    if (ring) { ring.reset(t); sparks?.reset(); moveNodes() }
+    if (ring) { ring.reset(t); sparks?.reset(); beam?.reset(t); moveNodes() }
   }
 
   let now = 0, step = state.has(o.name) ? state.get(o.name) : 0, armed = false, armedAt = 0
@@ -976,11 +1054,12 @@ function buildPortraits(o, ctx) {
   // their slide opened before the world was built (a reload, or a link straight to it):
   // with onEnter nothing else would gather them, so the first frame does
   let late = !!(o.onEnter && step)
-  // busy (v0.7) while they gather (1.7 s) and the ring's drive ramps in (3.3 s), while they
-  // break up (1.6 s), a name still fades or a step for later is to come: the ring itself
-  // runs on as long as it is seen
+  // busy (v0.7) while they gather (1.7 s), the ring's drive ramps in (3.3 s) and the beam is
+  // injected (its settle, and its head's flare dying), while they break up (1.6 s), a name
+  // still fades or a step for later is to come: the ring itself runs on as long as it is seen
   let labelsMoving = false
-  const busy = () => labelsMoving || waiting(o.name) || (showT.value >= 0 && (hideT.value >= 0 || now - showT.value < (ring ? 3.3 : 1.7)))
+  const settled = beam ? Math.max(3.3, beam.settle + 0.8) : ring ? 3.3 : 1.7
+  const busy = () => labelsMoving || waiting(o.name) || (showT.value >= 0 && (hideT.value >= 0 || now - showT.value < settled))
   // onEnter: they gather the moment their slide opens, during the flight, rather than on
   // arrival. The hook stays, answering at once: the engine announces a station as
   // assembled only through its builders' hooks, and the cover's title waits on that
@@ -994,7 +1073,7 @@ function buildPortraits(o, ctx) {
     busy,
   }
   return {
-    group: g, labels: [], api, frameScale: pr,   // the sparks' size (the faces size from uViewH)
+    group: g, labels: [], api, frameScale: pr,   // the sparks' and the beam's size (the faces size from uViewH)
     update(t) {
       tick(t)
       now = t; uni.uTime.value = t
@@ -1002,10 +1081,17 @@ function buildPortraits(o, ctx) {
       if (armed && t - armedAt > 6) { armed = false; go(step) }
       if (hideT.value >= 0 && t - hideT.value > 1.6) { showT.value = -1; hideT.value = -1 }
       if (ring && showT.value >= 0) {
-        ring.advance(t, sparks ? (h) => sparks.burst(h, o.sparks ?? 1) : null)
+        ring.advance(t, hit, beam ? (st, h) => beam.step(st, h) : null)
         moveNodes(); sparks?.flush()
+        if (sparks) { const v = ring.seen; sparks.faces.forEach((f, j) => f.set(v.x[j], v.y[j], v.r[j] * photo)) }
+        if (beam) {
+          const a = beamPts.geometry.attributes
+          beam.write(a.position.array, a.aGlow.array, t)
+          a.position.needsUpdate = true; a.aGlow.needsUpdate = true
+        }
       }
       if (sparks) sparks.mat.uniforms.uTime.value = t
+      if (beamPts) beamPts.material.uniforms.uTime.value = t
       const on = showT.value >= 0 && hideT.value < 0 && t - showT.value > 1.2
       labelsMoving = false
       for (const l of labels) {
@@ -1391,100 +1477,6 @@ function buildHistogram(o, ctx) {
   }
 }
 
-// ---- figures ------------------------------------------------------------------------
-//   { type: figures, name, pos, items: [{ src, at: [x, y, z], w?: 2.6 }], arrive?: 1.6 (s after
-//     its step until a figure shows), stagger?: 0.12, opacity?: 0.85 }
-// Figures floating in the world, each a plot made from open data (a picture on a plane
-// kept parallel to the screen, so the lens does not shear one at the frame's edge), drawn additively so its dark ground is the world's
-// black. Step k shows the first k (each as its stream gets there: `arrive` s, one after
-// another by `stagger`); 0 lets them fade. They stand at the ends of a `streams` object's
-// streams, `at` the same points.
-function buildFigures(o, ctx) {
-  const g = new Group()
-  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
-  const base = (import.meta.env?.BASE_URL || '/').replace(/\/$/, '')
-  const url = (src) => (ctx.asset ? ctx.asset(src) : String(src).startsWith('/') ? base + src : src)
-  const loader = new TextureLoader(), pq = new Quaternion(), cq = new Quaternion()
-  const items = (o.items || []).map((it, i) => {
-    const mat = new MeshBasicMaterial({ transparent: true, opacity: 0, blending: AdditiveBlending, depthWrite: false, depthTest: false, color: 0xffffff })
-    const mesh = new Mesh(new PlaneGeometry(1, 1), mat)
-    const w = it.w ?? o.w ?? 2.6
-    mesh.scale.set(w, w * 0.625, 1)
-    mesh.position.set(it.at[0], it.at[1], it.at[2]); mesh.visible = false
-    // turned as the camera is, just before it is drawn (the camera's turn is not passed to update)
-    mesh.onBeforeRender = (r, s, camera) => {
-      mesh.parent.getWorldQuaternion(pq).invert().multiply(camera.getWorldQuaternion(cq))
-      mesh.quaternion.copy(pq); mesh.updateMatrixWorld()
-    }
-    loader.load(url(it.src), (tex) => {
-      tex.colorSpace = SRGBColorSpace; tex.anisotropy = ctx.anisotropy || 4
-      mat.map = tex; mat.needsUpdate = true
-      const im = tex.image; if (im && im.width) mesh.scale.set(w, w * im.height / im.width, 1)
-    }, undefined, () => console.warn('stage: figure failed', it.src))
-    g.add(mesh)
-    return { mesh, mat, i, want: 0, vis: 0, at: -1 }
-  })
-  const arrive = o.arrive ?? 1.6, stagger = o.stagger ?? 0.12, peak = o.opacity ?? 0.85
-  let now = 0, step = state.has(o.name) ? state.get(o.name) : 0
-  const go = (k) => {
-    step = k
-    for (const it of items) {
-      const on = it.i < k
-      if (on && it.at < 0) it.at = now + arrive + stagger * it.i
-      if (!on) it.at = -1
-    }
-  }
-  const off = listen(o.name, go)
-  if (step) queueMicrotask(() => go(step))
-  const busy = () => waiting(o.name) || items.some((it) => Math.abs((it.at >= 0 && now >= it.at ? 1 : 0) - it.vis) > 0.01)
-  return {
-    group: g, labels: [], api: { busy },
-    update(t) {
-      tick(t); now = t
-      for (const it of items) {
-        const want = it.at >= 0 && t >= it.at ? 1 : 0
-        it.vis += (want - it.vis) * 0.06
-        it.mat.opacity = peak * it.vis
-        it.mesh.visible = it.vis > 0.01
-      }
-    },
-    dispose: off,
-  }
-}
-
-// ---- backdrop -----------------------------------------------------------------------
-//   { type: backdrop, name, pos, src, depth?: <src>.depth.png, yaw?: 0, width?: 300,
-//     cols?: 600 (half on a phone), relief?: 0.25, dim?: 0.6 }
-// A photograph standing far off in the world as a relief of grains (the engine's photo
-// place, without a slide of its own: nothing flies to it or flattens it), behind a scene
-// that would otherwise stand in empty black. Step 1 fades it in over a few seconds, 0 out.
-function buildBackdrop(o, ctx) {
-  const g = new Group()   // at the station's origin: the relief stands at o.pos itself
-  const base = (import.meta.env?.BASE_URL || '/').replace(/\/$/, '')
-  const url = (src) => (ctx.asset ? ctx.asset(src) : String(src).startsWith('/') ? base + src : src)
-  const load = (src) => new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = url(src) })
-  const cols = Math.round((o.cols ?? 600) * ((ctx.tier ?? 0) >= 2 ? 0.5 : 1))
-  let handle = null, failed = false, vis = 0
-  let want = state.has(o.name) && state.get(o.name) ? 1 : 0
-  Promise.all([load(o.src), load(o.depth || String(o.src).replace(/\.[^.\/]+$/, '.depth.png'))]).then(([image, depth]) => {
-    handle = createPhotoPlace({ image, depth, pos: o.pos || [0, 0, 0], yaw: o.yaw ?? 0, width: o.width ?? 300, cols, relief: o.relief ?? 0.25 })
-    handle.set({ dim: o.dim ?? 0.6, opacity: vis })
-    g.add(handle.object)
-  }).catch(() => { failed = true; console.warn('stage: backdrop failed', o.src) })
-  const off = listen(o.name, (k) => { want = k ? 1 : 0 })
-  const busy = () => waiting(o.name) || (!failed && want > 0 && !handle) || Math.abs(want - vis) > 0.01
-  return {
-    group: g, labels: [], api: { busy },
-    update(t) {
-      tick(t)
-      vis += (want - vis) * 0.04
-      if (handle) handle.set({ opacity: vis })
-      g.visible = vis > 0.005
-    },
-    dispose() { off(); handle?.dispose() },
-  }
-}
-
 export function installGrains(registerBuilder) {
   registerBuilder('lineup', buildLineup, { fields: ['pos', 'name', 'balls'] })
   registerBuilder('streams', buildStreams, { fields: ['pos', 'name', 'from', 'to'] })
@@ -1492,6 +1484,4 @@ export function installGrains(registerBuilder) {
   registerBuilder('portraits', buildPortraits, { fields: ['pos', 'name', 'people'] })
   registerBuilder('collision', buildCollision, { fields: ['pos', 'name', 'tracks'] })
   registerBuilder('histogram', buildHistogram, { fields: ['pos', 'name'] })
-  registerBuilder('figures', buildFigures, { fields: ['pos', 'name', 'items'] })
-  registerBuilder('backdrop', buildBackdrop, { fields: ['pos', 'name', 'src'] })
 }

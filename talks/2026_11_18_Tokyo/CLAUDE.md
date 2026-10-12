@@ -36,6 +36,9 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 - Branch `talk/tokyo`, worktree `.claude/worktrees/tokyo` (`pnpm talk open tokyo`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/
+- 2026-10-11: v0.8.1 deployed: commit 8bd087b, Pages run 38090919117
+  (success), URL 200, the live walk passed all 12 slides. Stills 01–12 in
+  `public/stills` for print and the fallback.
 - 2026-10-11: title slide deployed: commit dc6691d, Pages run 38088298046
   (success), URL 200, the live walk passed all 12 slides. Open: affiliations
   under the names, the project's dates, funders and the Nagoya meeting (the
