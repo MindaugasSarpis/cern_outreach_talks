@@ -24,51 +24,69 @@ physicists needed a machine nobody could buy; each of its limits had to be
 broken; the solutions left CERN as things in daily use; the next machine (FCC)
 brings the next round, and Lithuanian firms can solve it.
 
-- **Prologue.** No cover: the deck opens on the zoom-out from the VU Faculty
-  of Physics to our galaxy (clip, advance-on-end) → the takeover (its last frame becomes the world's grains) →
-  the history of the Universe as a funnel of grains, seen from outside → the
-  camera flies back down it to the CMB (380 000 metų, Planck map) → the
-  question „Iš ko visa tai sudaryta?“ (spoken) over the oldest light.
-- **I · Mašina.** CERN aerial clip, LHCb animation (media run), then LHCb's
-  4 TB/s at grain level on the ring, whose curve becomes the tunnel's (the one
-  match cut), and the LHC's limits on the tunnel photo.
-- **II · Sprendimai.** The ring with six strands of grains, each from the part
-  that forced an invention to the invention's photo standing at its end
-  (StagePhoto place mode): control room → touchscreen; information → the web
-  (1989 proposal, 1993 public domain); detectors → PET, colour X-ray, Timepix
-  round the Moon; beams → hadron therapy; the timing system → White Rabbit (Frankfurt
-  exchange); magnets → the superconducting line (tested with Airbus). The
-  speaker names the part during the flight.
-- **III · Privačiam sektoriui.** How technology leaves CERN (700+), what suppliers gain
-  (+14 %), the next machine (FCC: its ring in grains round the LHC at true
-  scale, its strands ending empty), Lithuania (associate, full-membership bid),
-  the bookend clip (the zoom-out reversed, back to Saulėtekis), one Lithuanian
-  firm (Light Conversion: PHAROS chosen in CERN's 2021 tender for CLEAR), what a
-  firm can do (613 mln. CHF a year; register, write to the liaison officer),
-  the pentaquark (thanks spoken; the licence credits in tiny print).
+- **Opening.** The title (owner, 12 Oct: back), then the zoom-out from
+  Saulėtekis to the cosmic web (the owner's SpaceEngine edit, `vu_zoom_web.mp4`,
+  advance-on-end) → the takeover (its last frame, the web, becomes the world's
+  grains) → the history of the Universe as a funnel of grains, seen from outside
+  (Big Bang, CMB, dark ages, a band of hot proto-galaxies, then colder, sparser
+  galaxies) → the dive back to the CMB (380 000 metų) → pulled back: the
+  question „Iš ko visa tai sudaryta?“ (spoken). The low hum only on the funnel
+  and the dive.
+- **The machine and LHCb.** CERN overview clip → the LHC tunnel in motion with
+  its four numbers (pushes on into) → one collision in grains (shared
+  components/lhc-opening; the LHCb crossing stands in for the owner's CMS 4π
+  pick) → the LHCb 3D animation with its music (`lhcb.mp4`) → LHCb in numbers
+  over the collaboration photo (4 TB/s, ~1 900 narių, 112 institutų, 28 šalys)
+  → LHCb's results floating as eight figure sheets, „875 straipsniai“.
+- **„O kur tai pritaikoma?“** (section). The ring with six strands of grains,
+  each from the part that forced an invention to the invention's photo at its
+  end (StagePhoto place mode), each named with its year and machine:
+  touchscreen (1972, SPS), the web (1989, LEP), the first server (1990, LEP),
+  PET (1977), colour X-ray (2018, LHC), Timepix (2006, LHC), hadron therapy
+  (1996–2000, PIMMS), White Rabbit (2008, LHC), superconducting lines (2014,
+  HL-LHC). The speaker names each problem.
+- **„O kaip komercializuoti?“** (section). 700+ sutarčių, 613 mln. CHF,
+  +14 % apyvartos, the FCC (CERN's 2025 map clip).
+- **„Lietuvos istorija CERN“** (section). Lithuania (associate, full-membership
+  bid), Light Conversion (PHAROS chosen in CERN's 2021 tender for CLEAR),
+  „Ačiū“ over a slow collision filling the screen (the licence credits in tiny
+  print).
 
 ## World
 
-Everything is grains; no solid shapes, no labels.
+Everything is grains; no solid shapes, no labels (LHCb's result figures are
+lit `page` sheets in the world).
 
 - Stations (`public/data/space.json`): `hero` (the pentaquark: cover, close),
   `collider` (the LHC ring; carries `strands`), `cosmos`, `web`, `kt` (the gold
   seed and loop: Part III), `funnel` (the history of the Universe, at
-  [30, 40, −110], its axis along −z behind the takeover's galaxy).
+  [30, 40, −110], its axis along −z behind the takeover's frame), `results`
+  (eight `page` sheets of LHCb result figures, public/figures/lhcb/, at
+  [60, −30, 50]), and far below everything the shared collision twice:
+  `collision` ([0, −400, 0], object `opening`, OpenData's options) and
+  `thanks` ([0, −480, 0], object `thanks`: `light 1.2`, `approach 2.5`,
+  `sound: false`, the slow close).
 - Talk-owned builders (`setup/`, registered in `main.ts`; `stage:check
-  --types strands,funnel`): `strands.js` (grains from ring parts to products,
-  in groups: `inventions`, Part II's, on from the touchscreen and off from
-  700+; `fcc`, a second object on the collider station with its own `ring` of
-  grains at 7 × 90.7/26.7 = 23.8 and six strands ending empty, on slide 25 only;
-  `<Strands :on group>`), `funnel.js` (wall rings and
-  lines, the Big Bang, the CMB disk coloured from `public/figures/cmb_wmap.png`,
-  dark ages, first stars, galaxies).
+  --types strands,funnel,lhc-collision`): `strands.js` (grains from ring parts
+  to products, in groups: `inventions`, Part II's, on from the „O kur tai
+  pritaikoma?“ section and off from „O kaip komercializuoti?“; `fcc`, a second
+  object on the collider station with its own `ring` of grains, unused since
+  the FCC became a clip; `<Strands :on group>`), `funnel.js` (wall rings and
+  lines, the Big Bang, the CMB disk, then along the axis (owner, 12 Oct): grey
+  empty dark ages, first light, a dense band of hot blue-white proto-galaxies
+  (`dawn 0.32`, `peak 0.37`), then galaxies that grow, cool to dim red and
+  spread apart toward the mouth (`thin 0.11`, `rest 0.05`); 181 544 grains).
+  The shared collision: `components/lhc-opening` (`installOpening` in
+  `main.ts`; `<LhcOpening name="opening" />` on the collision slide, the talk's
+  `<CollisionStart name="thanks" />` on „Ačiū“, without the captions). Never
+  edit that module here: OpenData's and Užsikrauk karjerai's live openings use
+  its defaults; tune through the objects' options.
 - Part II photos are StagePhoto places with depth maps
   (`public/figures/*.depth.png`, `slidev-videos depth`, committed), relief
   0.25–0.35, `flight: 1.6`, condense 0.8 s; text is up 2.6–3.8 s after the
   click. The 1989 page and the tunnel stay screen StagePhotos (not full bleed).
 - The takeover (`setup/WebTakeover.vue`, `takeover.js`): the opener's last
-  frame (`public/figures/opener_last.jpg`, our galaxy) as 280 000 grains, gain
+  frame (`public/figures/opener_last.jpg`, the cosmic web since 12 Oct) as 280 000 grains, gain
   1.3, saturation 1.35; the dissolving copy has its own WebGL context only
   for the 3 s dissolve (released after it, a new canvas each time: a second
   context held all talk long raises the odds of a context loss on iPhone); opener and takeover share the pose [30, 40, −70],
@@ -77,10 +95,16 @@ Everything is grains; no solid shapes, no labels.
   (`palette.bg #000103`, density 0.6, dustGain 1.45, nebula 0.12, vignette
   0.42); 2400 px photographs; MedAustron is a Lanczos 2× upscale, nothing
   invented.
-- Clips: `vu_ff_zoom_galaxy.mp4` (talk-owned, 4:26), `vu_ff_unzoom.mp4`
-  (talk-owned bookend, 0:30, made by reversing the opener; do not `--prune`
-  `vu_ff_zoom.mp4`, its source), library `cern_overview_short.mp4`,
-  `cern_footage_2022_042_001.mp4`.
+- Clips: talk-owned `vu_zoom_web.mp4` (the opener: the owner's SpaceEngine
+  edit spaceengine/vm_zoom.mp4 cut before its crossfade into the CMB, ending
+  held on the cosmic web, a 3 s audio fade) and
+  `cern_footage_2022_013_001_1080p_lhc.mp4` (the tunnel, 3:00–3:39.5 of
+  CERN-FOOTAGE-2022-013-001, pushing on into the collision); library
+  `cern_overview_short.mp4`, `lhcb.mp4` (the 3D animation with music: the same
+  picture as CERN-FOOTAGE-2022-042-001, whose own audio is digital silence),
+  `cern_footage_2025_014_002.mp4` (the 2025 FCC map). Retired 12 Oct, kept on
+  the release: `vu_ff_zoom_galaxy.mp4`, `vu_ff_unzoom.mp4`. Publish only with
+  `--only <talk-owned names>`: the manifest lists `lhcb.mp4` for its poster.
 - Phones (owner's iPhone, 9 Oct, after the black was fixed): slides 4–5 washed
   out white. The talk's grains were sized in raw pixels like the engine's, so
   on a ~220 px slide band they covered ~4× more of the frame and the dense
@@ -105,17 +129,41 @@ Everything is grains; no solid shapes, no labels.
 
 ## Status
 
-2026-10-11: **complete, at its real date.** Deployed 8a67c84 (the strip of
-10 Oct, the dir renamed to 2026_10_23; v0.7.0) —
+2026-10-11: **complete, at its real date, on toolkit v0.8.1.** Deployed 77180c1
+(df749b1 + main 99ac5d4) —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
-Pages run 38086927761 (green), URL 200, the old 2026_10_00 address 404; `ready`
-passed with nothing skipped and the live walk went 26/26. Open for the owner:
-the closing pose and the CERN CC credits (Decisions, "Taken overnight"); the
+Pages run 38092070008 (green), URL 200; `ready` passed with nothing skipped and
+the live walk went 26/26. For a PDF, `pnpm talk export innoday --format pdf --
+--wait 12000` (the default 4 s wait printed "Loading slide…", play icons and
+fallback fonts on this render node; reported to Tools). Open for the owner: the
+closing pose and the CERN CC credits (Decisions, "Taken overnight"); the
 iPhone retest of 9 Oct.
 
 ## Decisions
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
+
+- The owner's restructure list (12 Oct), which the deck now follows: the title
+  slide back; the zoom-out ending on the cosmic web, whose last frame becomes
+  the funnel; the funnel as Big Bang → CMB → no stars → hot dense
+  proto-galaxies → colder, darker, galaxies far apart; the low hum only while
+  zooming into the funnel (`hum: false` on every other slide, `humAt: all`);
+  CERN overview; the LHC tunnel as a moving clip with slide 9's numbers; a
+  collision from the OpenData talk (he picked the CMS 4π event, 12 Oct; until
+  it is on main the shared LHCb crossing stands in, on both spots); the LHCb
+  video with sound; LHCb factoids over a collaboration photo; LHCb results
+  floating with the paper count; three section breaks („O kur tai
+  pritaikoma?“ — his "So what are the applications", in the deck's Lithuanian
+  — „O kaip komercializuoti?“, „Lietuvos istorija CERN“); each invention's
+  caption with its year invented and the machine it served; 613 mln. CHF right
+  after 700+; the FCC as an overview clip; the reverse zoom dropped; „Ačiū“
+  over a slow collision filling the screen. These supersede the 10 Oct "no
+  cover / no sections / no words" for those slides (lint's TEXT warns on them,
+  expected).
+- The LHCb clip's sound is the owner's own edit `lhcb.mp4` (owner: "should be on
+  gdrive"): its music is the drive's untagged `Sunshine Adagio in D Minor.mp3`,
+  probably John Murphy's commercial film score (2007); seven other decks
+  already play it on the public site. Flagged to the owner, not cleared.
 
 - Wording (review of 8 Oct): never „kolaborantai“ (collaborators with
   occupiers) but „kolaboracijos nariai“; the +14 % is against comparable firms;
@@ -141,21 +189,22 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   tiny print"; CERN's material needs none): the Planck map, the 1989 proposal
   photo, the MARS image and the three CERN photos under CC licences. The photos
   have no dark text ground any more (`.hero::after` off).
-- No cover (owner, 10 Oct: "I will start with the second slide - the video"):
-  the deck opens on the zoom-out. `setup/OpenerStart.vue` shows its first frame
+- The opener's first press (10 Oct, while there was no cover; the title is back
+  since 12 Oct, so this only guards a deck opened at slide 2):
+  `setup/OpenerStart.vue` shows its first frame
   (the poster) at once while the clip buffers, holds the clip at 0, and turns
   the first press (→, space, PageDown, ↓, p, click) into play-with-sound
   instead of a step: Chrome pauses a clip unmuted before any press, so the
   first → used to skip it. The slide says `layout: default` (Slidev gives a
   first slide the cover layout, whose box held the clip at 0 px).
 - Taken overnight on 10 Oct (owner asleep, "complete everything"; the
-  recommended option, for the morning): the closing pentaquark keeps the
-  `wide` pose though it sits right, where „Ačiū“ left room (centre it?); the
-  three CERN photos under CC licences stay in the credits (drop them if
-  CERN-user covers them?); presenting through /presenter, click the audience
-  window once before the first press (its notes say so).
+  recommended option, for the morning): the three CERN photos under CC
+  licences stay in the credits (drop them if CERN-user covers them?);
+  presenting through /presenter, click the audience window once before the
+  first press (the title's notes say so). (The closing pentaquark question is
+  gone: the close is „Ačiū“ over a collision since 12 Oct.)
 - No slogans, no rhetorical openers in the notes either.
-- Part II is "Sprendimai" (solutions); the speaker names each problem.
+- Part II opens with „O kur tai pritaikoma?“; the speaker names each problem.
 - The accelerator is „greitintuvas“, never „mašina“ (a CERN-English calque);
   White Rabbit „suderina laikrodžius“; the liaison is an Inovacijų agentūros
   „specialistė“, not „pareigūnė“ (Scheduler's audit, 9 Oct).
@@ -163,27 +212,32 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   palette from the Planck 2018 map (`cmb_wmap.png`); the Big Bang flare fades
   when the camera looks down the axis, and the disk dims with the viewing angle
   so overlapping grains keep their colours.
-- Match cuts: only ring → tunnel; ring → CERN aerial and loop → FCC were weak.
+- Match cuts: none since 12 Oct (the tunnel is a clip; the 4 TB/s ring slide
+  went into the LHCb numbers slide). Ring → CERN aerial and loop → FCC were weak.
 - Part II's photo places are one group, `group="inventions"`: the touchscreen
   slide says `places: { inventions: true }`, 700+ `false`, so they are hidden
-  in the prologue, Part I and Part III (v0.5.2). Part I keeps its wide poses:
-  4 TB/s and the tunnel look along the ring at pitch 22. (On v0.5.1 those poses had to look down at
-  pitch 40 to keep the photos above the frame.)
+  in the prologue, Part I and Part III (v0.5.2).
 - Data → White Rabbit (2012, Frankfurt exchange), the thing that left CERN;
   the grid figures are in the notes. The photo's credit („© CERN (KT
   ataskaita, 2024)“) is taken from the KT report page; the photographer is
   not named there.
-- Part II's years stay off the slides (with layout A gone, 10 Oct): the strands
-  keep their ring order, so the years run out of order and read as a broken
-  timeline.
+- Part II's captions: name · year invented · machine served (owner, 12 Oct: "a
+  few more bits of info on each caption (year invented), collider it
+  served"), e.g. „Jutiklinis ekranas · 1972 · SPS“. The year is when CERN
+  invented or first made it (touchscreen 1972 = Stumpe's proposal, not the
+  1973 prototype; White Rabbit 2008 = the project's start, first used 2012);
+  PET carries no machine (none applies), hadron therapy carries PIMMS (CERN's
+  design, not a collider). Each year is in the facts bank.
 - No gold text (owner, 9 Oct: "gold letters are all over the internet now
   because everyone uses AI as a designer"): headlines and numbers white, one
   light-blue accent (`--in-accent: #9cc4ff`) for kickers, units and the rare
   emphasis. Gold stays only in the world's grains (strands, the KT seed, the
   FCC ring), which read as warm light beside the blue.
-- Slide 25 is the FCC in grains, not the map photo (owner, 9 Oct): the number
-  counts 27 → 91 km; the strands carry no labels.
-- Slide 28, Light Conversion (owner's pick, 9 Oct), stands in the world until
+- The FCC is CERN's 2025 map clip `cern_footage_2025_014_002.mp4` (owner,
+  12 Oct: "FCC overview video, not this animation"): the 90.7 km ring draws
+  itself round Geneva beside the LHC. The grain ring (`fcc` strands) stays in
+  space.json, unused.
+- Light Conversion (owner's pick, 9 Oct; slide 30 since 12 Oct) stands in the world until
   the firm gives a photo with permission; then it becomes a StagePhoto at that
   pose. Its line is the owner's: „Light Conversion“ lazeris PHAROS 2021 m. buvo
   pasirinktas CERN greitintuvui CLEAR. Never "dabar" (2026 use unconfirmed).
