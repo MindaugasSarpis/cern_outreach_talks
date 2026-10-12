@@ -8,15 +8,18 @@
 // rule): at the crossing the collision's energy, as the debris flies out the count
 // of its particles (the event's tracks). <LhcOpening part="tunnel" /> on the tunnel
 // clip's slide names the machine: LHC, 27 km. Printed, both of the collision's
-// show at once.
+// show at once. The numbers are LHCb's event's; a talk that draws another gives
+// its own: <LhcOpening name="opening" :tev="8" :count="290" /> (CMS's).
 import { ref, computed, onBeforeUnmount } from 'vue'
 import { onSlideEnter, onSlideLeave, useNav } from '@slidev/client'
 import { bus } from './bus.js'
-import { captions } from './captions.js'
+import { captions, collisionCaptions } from './captions.js'
 
 const props = defineProps({
   name: { type: String, default: 'opening' },
   part: { type: String, default: 'collision' },   // 'collision' | 'tunnel'
+  tev: { type: Number, default: undefined },       // the collision's energy
+  count: { type: Number, default: undefined },     // the particles drawn
 })
 const { isPrintMode } = useNav()
 const printing = computed(() => !!isPrintMode.value)
@@ -35,7 +38,7 @@ onSlideLeave(() => {
   if (props.part !== 'collision') return
   bus.set(props.name, 0); bus.emit('stop', { name: props.name })
 })
-const c = captions
+const c = computed(() => ({ ...captions, ...collisionCaptions({ tev: props.tev, count: props.count }) }))
 </script>
 
 <template>
@@ -59,9 +62,11 @@ const c = captions
 .lhc-unit, .lhc-name { font-size: 22px; font-weight: 500; letter-spacing: 0.04em; color: #9cc4ff; margin-left: 0.4em; }
 .lhc-name { margin: 0 0.6em 0 0; font-size: 24px; letter-spacing: 0.08em; }
 .lhc-tunnel { opacity: 0; animation: lhc-in 1.2s ease 1.6s forwards; }
-.lhc-collision .lhc-line { position: absolute; left: 0; bottom: 0; white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity 0.9s ease, transform 0.9s ease; }
-.lhc-collision .lhc-line.on { opacity: 1; transform: none; }
+/* the two lines share one spot: the one going goes quickly, the one coming waits for
+   it, so a number never stands on the other's (at the fly-out's best moment) */
+.lhc-collision .lhc-line { position: absolute; left: 0; bottom: 0; white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease; }
+.lhc-collision .lhc-line.on { opacity: 1; transform: none; transition: opacity 0.9s ease 0.35s, transform 0.9s ease 0.35s; }
 .lhc-collision.printing .lhc-line { position: static; transition: none; }
 @keyframes lhc-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .lhc-tunnel { animation: none; opacity: 1; } .lhc-collision .lhc-line { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .lhc-tunnel { animation: none; opacity: 1; } .lhc-collision .lhc-line, .lhc-collision .lhc-line.on { transition: none; } }
 </style>
