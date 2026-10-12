@@ -154,8 +154,9 @@ each charged particle curling on its own helix in CMS's 3.8 T magnet, its energy
 lighting the calorimeters' cells all round, the two muons running on out through
 the muon chambers. The camera pulls back with it and turns to the side of the
 beam, so it settles balanced: the tracks in the middle, both ends' splashes
-either side. A low swell, a thump at the crossing, the boom as it flies apart:
-quiet enough to talk over. → for the LHCb clip.
+either side. A low swell, a thump at the crossing, then the drone fades as it
+flies apart, quiet enough to talk over; on a laptop's speakers it is near silent.
+No boom (owner, 12 Oct: "no weird driving sound"). → for the LHCb clip.
 
 Nothing needs saying here. If the room should hear that the event is CMS's (an
 LHCb talk), half a line over the fly-out: „Taip atrodo vienas tikras

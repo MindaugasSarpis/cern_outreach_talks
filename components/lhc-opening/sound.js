@@ -6,14 +6,14 @@
 //                 run-in and a little sharp as they near;
 //   the crossing  a soft deep thump (60 → 30 Hz), and the swell drops to a held,
 //                 lower drone while the world stands nearly still;
-//   the fly-out   the boom as the debris runs out (a sine falling 110 → 28 Hz with
-//                 a burst of low noise, a little saturated, so a laptop's speakers,
-//                 which reproduce little under ~150 Hz, still carry it as its
-//                 harmonics), then a rumble that dies away over six seconds.
+//   the fly-out   the drone lets go as the debris runs out, fading over four
+//                 seconds at the pitch it holds. No boom: the falling, saturated
+//                 sine it had (110 → 28 Hz, with a burst of low noise) read on a
+//                 laptop's speakers as a car driving away (owner, 12 Oct 2026).
 //
-// It follows the world's clock rate (the engine's `rate` event, or the rate the
-// builder reports): slowed, the drone sinks; at speed it rises. Peaks stay near
-// -16 dBFS through a compressor, low enough to talk over.
+// While the world stands nearly still the drone follows its clock rate (the
+// engine's `rate` event, or the rate the builder reports): slowed, it sinks; as
+// the world speeds up, it rises. A compressor keeps it low enough to talk over.
 //
 // Audio comes from the stage (`ctx.audio()`: its context once a key or click has
 // unlocked it, and its master gain), so the presenter window stays silent. With
@@ -43,12 +43,6 @@ function brown(ac, secs) {
   for (let i = 0; i < n; i++) { last = (last + 0.02 * (Math.random() * 2 - 1)) / 1.02; d[i] = last * 3.5; }
   const src = ac.createBufferSource(); src.buffer = buf; src.loop = true;
   return src;
-}
-function saturator(ac, k = 2.5) {
-  const ws = ac.createWaveShaper(), n = 1024, c = new Float32Array(n);
-  for (let i = 0; i < n; i++) { const x = (i / (n - 1)) * 2 - 1; c[i] = Math.tanh(k * x) / Math.tanh(k); }
-  ws.curve = c; ws.oversample = '2x';
-  return ws;
 }
 
 export function openingSound(ctx, bus, o = {}) {
@@ -89,7 +83,7 @@ export function openingSound(ctx, bus, o = {}) {
     oct.frequency.setValueAtTime(72, t); oct.frequency.linearRampToValueAtTime(84, t + 2.6);
     for (const n of [sub, oct, noise]) n.start(t);
     nodes.push(sub, oct, octG, noise, lp, noiseG, swell);
-    run = { ac, master, comp, nodes, sub, oct, swell, lp, crossed: false, boomed: false, rate: 1 };
+    run = { ac, master, comp, nodes, sub, oct, swell, lp, crossed: false, flown: false, rate: 1 };
   }
 
   function cross() {
@@ -109,35 +103,25 @@ export function openingSound(ctx, bus, o = {}) {
     run.swell.gain.cancelScheduledValues(t); run.swell.gain.setValueAtTime(Math.max(0.0001, run.swell.gain.value), t); run.swell.gain.setTargetAtTime(0.45, t, 0.4);
   }
 
-  function boom() {
-    if (!run || run.boomed) return;
-    run.boomed = true;
-    const { ac, comp, nodes } = run, t = ac.currentTime;
-    const sat = saturator(ac, 2.2); sat.connect(comp);
-    const sw = ac.createOscillator(); sw.type = 'sine';
-    sw.frequency.setValueAtTime(110, t); sw.frequency.exponentialRampToValueAtTime(28, t + 0.9);
-    const swG = ac.createGain(); swG.gain.setValueAtTime(0.0001, t); swG.gain.exponentialRampToValueAtTime(1.0, t + 0.015); swG.gain.exponentialRampToValueAtTime(0.0001, t + 3.2);
-    sw.connect(swG).connect(sat); sw.start(t); sw.stop(t + 3.3);
-    const nb = brown(ac, 3), nbF = ac.createBiquadFilter(); nbF.type = 'lowpass';
-    nbF.frequency.setValueAtTime(420, t); nbF.frequency.exponentialRampToValueAtTime(70, t + 2.0);
-    const nbG = ac.createGain(); nbG.gain.setValueAtTime(0.0001, t); nbG.gain.exponentialRampToValueAtTime(0.9, t + 0.02); nbG.gain.exponentialRampToValueAtTime(0.0001, t + 2.6);
-    nb.connect(nbF).connect(nbG).connect(sat); nb.start(t); nb.stop(t + 2.7);
-    // the rumble's tail: the held drone lets go over six seconds
+  // the fly-out: the drone lets go over four seconds, its pitch held where it is
+  function flyout() {
+    if (!run || run.flown) return;
+    run.flown = true;
+    const t = run.ac.currentTime;
+    for (const p of [run.sub.frequency, run.oct.frequency, run.lp.frequency]) { p.cancelScheduledValues(t); p.setValueAtTime(p.value, t); }
     run.swell.gain.cancelScheduledValues(t); run.swell.gain.setValueAtTime(Math.max(0.0001, run.swell.gain.value), t);
-    run.swell.gain.linearRampToValueAtTime(0.55, t + 0.4); run.swell.gain.exponentialRampToValueAtTime(0.0001, t + 6.5);
-    run.sub.frequency.setTargetAtTime(34, t, 0.6);
-    nodes.push(sat, sw, swG, nb, nbF, nbG);
+    run.swell.gain.exponentialRampToValueAtTime(0.0001, t + 4);
     const r = run;
-    setTimeout(() => { if (run === r) stop(0.5); }, 7000);
+    setTimeout(() => { if (run === r) stop(0.5); }, 4500);
   }
 
   // the world's clock rate: the drone follows it, and a speed-up after the crossing
-  // is the fly-out (with no rate in the engine, the boom follows the crossing)
+  // is the fly-out (with no rate in the engine, the fly-out follows the crossing)
   function rate(r) {
     if (!run) return;
     const t = run.ac.currentTime;
-    if (run.crossed && !run.boomed) {
-      if (r > 0.6 && run.rate <= 0.6) boom();
+    if (run.crossed && !run.flown) {
+      if (r > 0.6 && run.rate <= 0.6) flyout();
       else run.sub.frequency.setTargetAtTime(31 * (0.8 + 0.2 * Math.min(1, r)), t, 0.2);
     }
     run.rate = r;
@@ -148,7 +132,7 @@ export function openingSound(ctx, bus, o = {}) {
   bus.on('cross', (d) => {
     if (d.name !== name) return;
     cross();
-    if (!ctx.rate) setTimeout(boom, 150);
+    if (!ctx.rate) setTimeout(flyout, 150);
   });
   bus.on('rate', (d) => { if (d.name === name) rate(d.rate); });
   bus.on('stop', (d) => { if (d.name === name) stop(1.0); });

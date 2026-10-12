@@ -35,6 +35,12 @@ and the builders are in the talk's CLAUDE.md, "The deck now (r3)".
 - Deployed 2026-10-12 with the Vilnius sun: 9bae6d9 on main, Pages run
   38296136915 (success). The URL answers 200, and the live check passed (14
   slides, none failed). `talk ready` had passed on 9bae6d9 with nothing skipped.
+- 12 Oct, late: the collision's boom is gone (the owner: "no weird driving
+  sound"; to Innoday, "the driving away sound"). It was the fly-out's
+  saturated sine falling 110 → 28 Hz, which on a laptop read as a car pulling
+  away; now the drone fades at its own pitch. The change is in the shared
+  components/lhc-opening/sound.js, so Innoday and Užsikrauk karjerai change
+  with it (the Scheduler: drop it for everyone).
 
 - The way in:
   - CERN from above (slide 2), pushing into the ring.

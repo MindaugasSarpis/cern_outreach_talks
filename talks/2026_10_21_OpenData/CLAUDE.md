@@ -13,6 +13,13 @@ a CMS crossing instead, flying out to every side: CMS Open Data record 300, run
 (`<LhcOpening :count="290" />`). The owner chose the CMS event for this talk
 (2026-10-12); the module landed on main first, so Innoday could take it up.
 
+Its sound (`sound.js`): a low swell under the run-in, a thump at the crossing,
+a held drone that fades at its own pitch as the debris flies out. The fly-out's
+boom (a saturated sine falling 110 → 28 Hz) went on 12 Oct for all three talks:
+the owner heard it as "weird driving sound" here and "the driving away sound" in
+Innoday. On a laptop's speakers the collision is now near silent. The stage's
+flight whoosh is the next suspect if the owner still hears one (`stage.sound`).
+
 ## The deck now (r3, 2026-10-12)
 
 Fourteen slides (HANDOFF.md has the history and the owner's open questions):
