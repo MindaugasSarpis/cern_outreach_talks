@@ -519,12 +519,22 @@
      "to": [
       {
        "pos": [
+        -6.2,
+        4.6,
+        9.0
+       ],
+       "lift": 0.22,
+       "label": "Run 1 atvėrimas",
+       "side": "left"
+      },
+      {
+       "pos": [
         -5.8,
         7.0,
         9.0
        ],
        "lift": 0.22,
-       "label": "Run 1 atvėrimas",
+       "label": "FAIR",
        "side": "left"
       },
       {
@@ -534,7 +544,7 @@
         9.0
        ],
        "lift": 0.22,
-       "label": "Atrankos paslauga",
+       "label": "Analizės atkartojamumas",
        "side": "left"
       },
       {
@@ -544,7 +554,7 @@
         9.0
        ],
        "lift": 0.22,
-       "label": "Z → μμ analizė",
+       "label": "Magistro ir\nbakalauro darbai",
        "side": "left"
       },
       {
@@ -554,17 +564,7 @@
         9.0
        ],
        "lift": 0.22,
-       "label": "Bakalauro darbas"
-      },
-      {
-       "pos": [
-        -6.2,
-        4.6,
-        9.0
-       ],
-       "lift": 0.22,
-       "label": "Analizių atkuriamumas",
-       "side": "left"
+       "label": "Geriausios tyrimų\nir duomenų analizės\npraktikos iš CERN"
       },
       {
        "pos": [
@@ -573,7 +573,7 @@
         9.0
        ],
        "lift": 0.22,
-       "label": "Geriausios tyrimų\nir duomenų analizės\npraktikos iš CERN"
+       "label": "Meistriškumo pamoka"
       },
       {
        "pos": [
@@ -582,7 +582,7 @@
         9.0
        ],
        "lift": 0.22,
-       "label": "Meistriškumo pamoka"
+       "label": "CBC 2023"
       },
       {
        "pos": [
@@ -591,22 +591,13 @@
         9.0
        ],
        "lift": 0.22,
-       "label": "CBC 2023"
+       "label": "LHCP 2024"
       },
       {
        "pos": [
         5.8,
         2.8,
         9.2
-       ],
-       "lift": 0.22,
-       "label": "LHCP 2024"
-      },
-      {
-       "pos": [
-        5.2,
-        1.1,
-        9.4
        ],
        "lift": 0.22,
        "label": "LNFK 2025"

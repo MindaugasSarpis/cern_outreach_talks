@@ -60,12 +60,34 @@ Message: this talk is about the work we were nominated for, opening LHCb's data.
 Sakyti: „Esu Mindaugas Šarpis, vadovauju LHCb Vilnius grupei – Vilniaus
 universiteto komandai CERN LHCb eksperimente. Mus nominavo už darbą su
 atviraisiais duomenimis.
-Pradėkime nuo detektoriaus.“
+Pradėkime nuo CERN.“
 
-The standby: black, while the LHC tunnel clip buffers behind it. → starts the
+The standby: black, while the CERN clip buffers behind it. → starts the
 opening; that key is also the gesture browsers ask for before any sound.
 
 (~0.3 min)
+-->
+
+---
+space: { at: opening, dim: 1, ambient: 0, hum: false }
+---
+
+<!-- The way in: CERN from above, the library clip cern_overview_short.mp4 (11 s, no sound): from the Earth down to Geneva, then the LHC ring drawn over the fields with its four experiments named. It moves on by itself at its end, the camera pushing on into the ring (its right side, 0.72, 0.45 of the last frame), where the tunnel follows. -->
+<VideoPlayer src="cern_overview_short.mp4" advance-on-end exit="push" exit-at="0.72,0.45" />
+
+<!--
+Message: this is CERN, and its ring is the LHC.
+
+Sakyti: „Tai CERN prie Ženevos. Po šiais laukais, apie 100 metrų gylyje,
+yra 27 kilometrų žiedas – Didysis hadronų greitintuvas, LHC. Jame veikia
+keturi dideli eksperimentai, vienas jų – LHCb.“
+
+Let it run; at its end the camera pushes on into the ring and the tunnel clip
+takes over (→ earlier).
+
+Šaltiniai: home.cern, „The Large Hadron Collider“ (27 km ring).
+
+(~0.2 min)
 -->
 
 ---
@@ -312,8 +334,7 @@ Motion: thirteen piles the size of LHCb's stand behind it and merge into one.
 Sakyti: „O visų CERN eksperimentų fizikos duomenų CERN jau saugo 1,3 milijono
 terabaitų, arba 1,3 eksabaito – trylika tokių krūvų kaip LHCb. Tokia
 nešiojamųjų kompiuterių krūva būtų 26 kilometrų aukščio, beveik triskart
-aukštesnė už Everestą. Šie duomenys saugomi magnetinėse juostose, tokiose
-saugyklose kaip ši.“
+aukštesnė už Everestą. Šie duomenys saugomi magnetinėse juostose.“
 
 Scale, worked out: a laptop about 2 cm thick holding 1 TB; 1,3 × 10⁶ × 2 cm =
 26 km (Everest 8,85 km); LHCb's 100 PB = 10⁵ laptops = 2 km. Why the merged
@@ -368,7 +389,7 @@ Morris (co-author of the service's paper) is said on the next slide.
 space: { at: [20, 5.2, 6], dist: 22, yaw: 0, pitch: 3, dim: 0.05 }
 ---
 
-<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 10, dominykas: 0, team: 0, sun: 0, figs: 0 }" />
+<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 9, dominykas: 0, team: 0, sun: 0, figs: 0 }" />
 
 <div class="role">
 <img class="portrait" src="/figures/people/mindaugas-sarpis.jpg" alt="Mindaugas Šarpis" />
@@ -378,32 +399,28 @@ space: { at: [20, 5.2, 6], dist: 22, yaw: 0, pitch: 3, dim: 0.05 }
 </div>
 </div>
 
-<!-- facts: lhcb-open-data-coordinator-2026, lhcb-run1-release-sarpis, lhcb-ntupling-service-4pb, ntuple-wizard-paper-2023 -->
+<!-- facts: lhcb-open-data-coordinator-2026, lhcb-collaboration-2026, chep2024-sarpis-reproducibility, stonkus-bsc-2026, lhcb-masterclass-vilnius-2026, cbc2023-lhcb-open-data-poster, lhcp2024-lhc-open-data-talk, lnfk46-lhcb-vilnius-open-data -->
 
 <!--
-Message: open data is what we do, every day: we opened it, we serve it, we
-research with it, we teach with it, we present it; and I now coordinate it for
-the whole LHCb experiment.
+Message: open data is what we do, every day: we opened it, we work by FAIR
+and make analyses repeatable, students write their theses on it, we teach with
+it, we present it; and I now coordinate it for the whole LHCb experiment.
 
-Motion: eleven streams leave the gold pile, one to each thing we do with open
-data, named in a word or two: the data (Run 1 opened, the selection service),
-research (the Z → μμ analysis, a bachelor's thesis, reproducible analyses),
-teaching (the course, the masterclass), where we presented it (Riga, Boston,
-Kaunas). Bottom left: the role. (The VU open-science award 2025 is in the
-details, off the screen until the owner says: see HANDOFF.)
+Motion: nine streams leave the gold pile, one to each thing we do with open
+data, named in a word or two: Run 1 opened, FAIR, repeatable analyses, master's
+and bachelor's theses, the course, the masterclass, where we presented it (Riga,
+Boston, Kaunas). Bottom left: the role. (The owner, 2026-10-12: FAIR, analysis
+reproducibility and the theses in; the selection service and the Z → μμ
+analysis out.)
 
 Sakyti: „Atvirieji duomenys – mūsų kasdienybė. Nuo šių metų rugpjūčio 1 d.
 esu viso LHCb eksperimento analizių išsaugojimo ir atvirųjų duomenų
-koordinatorius: eksperimente dalyvauja 120 institucijų ir beveik 2 000
-mokslininkų.
-Pirmąjį visą Run 1 rinkinį paskelbti parengiau dar Bonoje. Adamas Morrisas, nuo
-2025 m. rugsėjo dirbantis mūsų grupėje, – vienas iš straipsnio apie LHCb
-duomenų atrankos paslaugą autorių; nuo vasario ši paslauga atvira visiems ir
-iki gegužės sulaukė daugiau nei 30 užklausų.
-2024 m. Open Readings konferencijoje pristatėme Z bozono tyrimą su LHCb
-atviraisiais duomenimis – vieną pirmųjų LHCb atvirųjų duomenų analizių.
-Dominykas Stonkus bakalauro darbe su atviraisiais duomenimis atkartojo
-pentakvarkų analizės bruožus – apie tai netrukus.
+koordinatorius; LHCb – beveik 2 000 mokslininkų.
+Dirbame pagal FAIR principus: duomenys turi būti randami, prieinami, sąveikūs
+ir tinkami naudoti pakartotinai. Analizes rašome taip, kad kiekvieną jų
+žingsnį, nuo duomenų iki rezultato, būtų galima atkartoti.
+Su atviraisiais duomenimis studentai rašo magistro ir bakalauro darbus – vieną
+jų netrukus pamatysite.
 Kurse „Geriausios tyrimų ir duomenų analizės praktikos iš CERN“ studentai
 dirba su tikru LHCb atvirųjų duomenų failu. Vilniuje jau dvejus metus
 rengiame LHCb meistriškumo pamokas: 2025 m. kovą ir 2026 m. vasarį mokiniai
@@ -421,15 +438,16 @@ Details, if asked:
   first 200 TB on 9 December 2022. Prepared in Bonn, as the University of
   Bonn's commitment to LHCb, with CERN IT (thesis, ch. 6). CERN's release pages
   do not name individuals.
-- The service: arXiv:2504.00610 (11 authors, Morris among them, then at
-  CERN); released February 2026; „> 30 requests since Feb release“ (P. Nogga
-  et al., CHEP 2026, 25 May 2026, slide 11). Say co-author, not builder.
-- Z → μμ: Open Readings 2024 book of abstracts, p. 75 (N. E. Eimutis, M.
-  Ambrozas, M. Šarpis): „one of the initial analyses of LHCb data posted on
-  the Open Data portal“. The sources do not call the authors students.
-- The thesis: D. Stonkus, VU, 2026; 38,3 TB of open data filtered.
-- Reproducibility: CHEP 2024, 22 October 2024: modular analyses under a
-  workflow manager (Snakemake), FAIR; the pentaquark search as the example.
+- FAIR and reproducibility: CHEP 2024, 22 October 2024: modular analyses under
+  a workflow manager (Snakemake), for reproducibility and preservation under
+  the FAIR principles; the pentaquark search as the example.
+- The theses: D. Stonkus, BSc, VU, 2026 (38,3 TB of open data filtered; the
+  next slide).
+- Not said on this slide (the owner, 2026-10-12), only if asked: the selection
+  service (arXiv:2504.00610, 11 authors, A. Morris among them; released
+  February 2026; „> 30 requests since Feb release“, P. Nogga et al., CHEP 2026,
+  slide 11; say co-author, not builder) and the Z → μμ analysis (Open Readings
+  2024, p. 75: N. E. Eimutis, M. Ambrozas, M. Šarpis).
 - The course: VU Faculty of Physics, autumn 2026, 16 lectures; from seminar 5
   the students work on CERN Open Data record 401 (91 583 D⁰ → K⁻π⁺
   candidates).
