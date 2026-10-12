@@ -54,7 +54,11 @@ since the opening replaced the cavern photograph, so no credit is on screen.
 
 ## Status
 
-- 2026-10-11 (latest): **deployed 99ac5d4** under the owner's standing deploy
+- 2026-10-12 (latest): **deployed e507bf7** under the standing rule ("Deploy
+  all"): the notes commit fb01b22 and main 3fe3545 (OpenData, Innoday's CMS
+  swap, Tokyo's notes); the deck is unchanged. `talk ready` passed with nothing
+  skipped, Pages run 38289206455 green, URL 200. The morning list is still open.
+- 2026-10-11: **deployed 99ac5d4** under the owner's standing deploy
   rule: slidev-videos v0.8.1 (print reads each page's own dim, so the talk's print
   workaround is gone), OpenData's bloom fix in the shared opening (main 8bd087b),
   and still 03 retaken for it. `talk ready` passed with nothing skipped. Pages
