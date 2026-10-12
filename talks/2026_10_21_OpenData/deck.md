@@ -326,7 +326,7 @@ space: { at: [20, 5.5, -3], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }
 Message: anyone can use the open data.
 
 Motion: twenty streams leave the gold pile to every side, like a sun, and each
-ends at a plot made from LHCb's open data with its fit: the masses of π⁰, D⁰,
+ends at a plot made from LHCb's open data, most with a fit: the masses of π⁰, D⁰,
 J/ψ, K⁰S and Λ, the D⁰ and K⁰S lifetimes, the magnet's field from the bend of
 the tracks, the beam spot and the luminous region, spectra and multiplicities.
 Every one of them was made for this talk from two public files: CERN Open Data
