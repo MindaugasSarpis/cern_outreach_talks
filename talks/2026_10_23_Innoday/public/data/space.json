@@ -628,7 +628,8 @@
             0,
             0,
             0
-          ]
+          ],
+          "event": "cms"
         }
       ]
     },
@@ -661,7 +662,8 @@
           ],
           "light": 1.2,
           "approach": 2.5,
-          "sound": false
+          "sound": false,
+          "event": "cms"
         }
       ]
     },

@@ -34,8 +34,8 @@ brings the next round, and Lithuanian firms can solve it.
   and the dive.
 - **The machine and LHCb.** CERN overview clip → the LHC tunnel in motion with
   its four numbers (pushes on into) → one collision in grains (shared
-  components/lhc-opening; the LHCb crossing stands in for the owner's CMS 4π
-  pick) → the LHCb 3D animation with its music (`lhcb.mp4`) → LHCb in numbers
+  components/lhc-opening; the owner's CMS 4π pick, a 2012 Higgs candidate,
+  `"event": "cms"`) → the LHCb 3D animation with its music (`lhcb.mp4`) → LHCb in numbers
   over the collaboration photo (4 TB/s, ~1 900 narių, 112 institutų, 28 šalys)
   → LHCb's results floating as eight figure sheets, „875 straipsniai“.
 - **„O kur tai pritaikoma?“** (section). The ring with six strands of grains,
@@ -129,15 +129,15 @@ lit `page` sheets in the world).
 
 ## Status
 
-2026-10-11: **complete, at its real date, on toolkit v0.8.1.** Deployed 77180c1
-(df749b1 + main 99ac5d4) —
+2026-10-12: **the owner's restructure is live.** Deployed d9f3abb (v0.8.1) —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
-Pages run 38092070008 (green), URL 200; `ready` passed with nothing skipped and
-the live walk went 26/26. For a PDF, `pnpm talk export innoday --format pdf --
---wait 12000` (the default 4 s wait printed "Loading slide…", play icons and
-fallback fonts on this render node; reported to Tools). Open for the owner: the
-closing pose and the CERN CC credits (Decisions, "Taken overnight"); the
-iPhone retest of 9 Oct.
+Pages run 38272139749 (green), URL 200, live walk 31/31; `ready` passed with
+nothing skipped. Published before it, with `--only`: vu_zoom_web.mp4 and
+cern_footage_2022_013_001_1080p_lhc.mp4. Open for the owner: lhcb.mp4's music
+(probably a commercial film score), vm_zoom's music and the NCSA web's
+licence, the CERN CC credits, the CMS 4π swap when OpenData lands, the paper
+count on 22 Oct, the iPhone retest. For a PDF: `pnpm talk export innoday
+--format pdf -- --wait 12000`.
 
 ## Decisions
 
@@ -149,8 +149,9 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   proto-galaxies → colder, darker, galaxies far apart; the low hum only while
   zooming into the funnel (`hum: false` on every other slide, `humAt: all`);
   CERN overview; the LHC tunnel as a moving clip with slide 9's numbers; a
-  collision from the OpenData talk (he picked the CMS 4π event, 12 Oct; until
-  it is on main the shared LHCb crossing stands in, on both spots); the LHCb
+  collision from the OpenData talk (he picked the CMS 4π event, 12 Oct: CMS
+  Open Data record 300, `"event": "cms"` on both objects since the module
+  reached main, OpenData's camera path on slide 9, a slower, closer one on „Ačiū“); the LHCb
   video with sound; LHCb factoids over a collaboration photo; LHCb results
   floating with the paper count; three section breaks („O kur tai
   pritaikoma?“ — his "So what are the applications", in the deck's Lithuanian

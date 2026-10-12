@@ -190,25 +190,30 @@ space:
   at: collision
   dim: 0
   ambient: 0
-  hum: false
-  rate: [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.4, 2.2], [8.5, 1]]
+  rate: [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.6, 1.0], [8.0, 1.0], [9.0, 1.8], [11, 1.8], [12, 1]]
   cameraRate: 1
   path:
-    - [0, { at: [0, -400, 0], dist: 3.4, yaw: 28, pitch: 4 }]
-    - [2.6, { at: [0, -400, 0], dist: 2.3, yaw: 16, pitch: 6 }]
-    - [5.6, { at: [0, -400, 0], dist: 2.0, yaw: -24, pitch: 13 }]
-    - [7.8, { at: [2.4, -400, 0], dist: 6.0, yaw: -30, pitch: 12 }]
-    - [10.5, { at: [3.4, -400, 0], dist: 8.4, yaw: -32, pitch: 13 }]
+    - [0, { at: [0, -400, 0], dist: 4.2, yaw: 18, pitch: 5 }]
+    - [2.6, { at: [0, -400, 0], dist: 2.4, yaw: 32, pitch: 8 }]
+    - [5.6, { at: [0, -400, 0], dist: 1.5, yaw: 70, pitch: 14 }]
+    - [6.5, { at: [0, -400, 0], dist: 3.3, yaw: 58, pitch: 17 }]
+    - [7.3, { at: [0, -400, 0], dist: 5.6, yaw: 26, pitch: 20 }]
+    - [8.3, { at: [0, -400, 0], dist: 8.8, yaw: 9, pitch: 24 }]
+    - [9.8, { at: [0, -400, 0], dist: 11.2, yaw: 4, pitch: 26 }]
+    - [11.5, { at: [0, -400, 0], dist: 12, yaw: 2, pitch: 26 }]
+  hum: false
 ---
 
-<LhcOpening name="opening" />
+<LhcOpening name="opening" :count="290" />
+
+<!-- facts: cms-195099-137440354-record-300, cms-195099-8tev, cms-195099-290-drawn-tracks, cms-solenoid-3p8-tesla -->
 
 <!--
-Kalbėtojui. Vienas tikras susidūrimas (bendras modulis components/lhc-opening, kaip OpenData ir „Užsikrauk karjerai“ kalbose). Du protonų paketai atlekia iš abiejų vamzdžio galų, susiduria, pasaulis beveik sustoja, kamera apsuka ratą, tada nuolaužos išlekia. Ekrane: „8 TeV“ (susidūrimo energija) ir „237 dalelės“ (įvykio dalelių pėdsakai).
-Savininkas (2026 10 12) pasirinko CMS 4π susidūrimą; kol jis dar ruošiamas OpenData kalbai, čia rodomas LHCb 2012 m. susidūrimas. Kai CMS įvykis bus pagrindinėje šakoje, pakeisti abu (šį ir paskutinį) ir šias pastabas.
+Kalbėtojui. Vienas tikras susidūrimas (bendras modulis components/lhc-opening, kaip OpenData ir „Užsikrauk karjerai“ kalbose). Du protonų paketai atlekia iš abiejų vamzdžio galų, susiduria, pasaulis beveik sustoja, kamera apsuka ratą, tada nuolaužos išlekia. Ekrane: „8 TeV“ (susidūrimo energija) ir „290 dalelių“ (nupiešti įvykio pėdsakai).
+Savininko pasirinktas (2026 10 12) CMS 4π susidūrimas: 2012 m. Higso bozono kandidatas, visomis kryptimis aplink 3,8 T solenoidą.
 Sakyti: „Taip atrodo vienas susidūrimas. Tokių kas sekundę — pusantro milijardo.“
-Faktai: įvykis — CERN atvirųjų duomenų įrašas 24506 (LHCb 2012, 8 TeV), paleidimas 133488, 2012 12 01; 237 geri pėdsakai iš dviejų pirminių viršūnių, 153 ECAL klasteriai.
-Šaltiniai: opendata.cern.ch (įrašas 24506); components/lhc-opening/README.md.
+Faktai: įvykis — CERN atvirųjų duomenų įrašas 300 (CMS 2012, 8 TeV, CC0), paleidimas 195099, įvykis 137440354, Higso bozono kandidatas; nupiešta 290 pėdsakų.
+Šaltiniai: opendata.cern.ch (įrašas 300); components/lhc-opening/README.md.
 (~0,3 min)
 -->
 
@@ -635,12 +640,13 @@ space:
   dim: 0
   ambient: 0
   hum: false
-  rate: [[0, 0.8], [2.0, 0.6]]
+  rate: [[0, 0.7], [2.4, 0.5]]
   cameraRate: 1
-  path:
-    - [0, { at: [0, -480, 0], dist: 2.2, yaw: -55, pitch: 6 }]
-    - [8, { at: [2.4, -480, 0], dist: 3.4, yaw: -78, pitch: 8 }]
-    - [20, { at: [3.2, -480, 0], dist: 3.9, yaw: -86, pitch: 6 }]   # close: the debris fills the frame
+  path:   # the CMS event flies out to every side: in close, then back and square to the beam
+    - [0, { at: [0, -480, 0], dist: 4.2, yaw: 18, pitch: 5 }]
+    - [6, { at: [0, -480, 0], dist: 3.0, yaw: 40, pitch: 10 }]
+    - [14, { at: [0, -480, 0], dist: 5.2, yaw: 14, pitch: 18 }]
+    - [26, { at: [0, -480, 0], dist: 6.4, yaw: 4, pitch: 20 }]   # the debris fills the frame
 ---
 
 <CollisionStart name="thanks" />
@@ -650,7 +656,7 @@ space:
 <div class="src credits">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas) · 1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0 · Riešo vaizdas: MARS Bioimaging Ltd · B. Stumpe: S. E. Bennett / CERN, CC BY 4.0 · NeXT serveris: P. Loïez / CERN, CC BY-SA 4.0 · LHCb rezultatų grafikai: © CERN LHCb kolaboracijos naudai, CC BY 4.0 (apkarpyti) · Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF)</div>
 
 <!--
-Kalbėtojui. „Ačiū“ ant lėtai besiskleidžiančio susidūrimo per visą ekraną (savininkas, 2026 10 12). Susidūrimas prasideda, kai skaidrė atsiveria, ir lieka išsisklaidęs per klausimus; be garso.
+Kalbėtojui. „Ačiū“ ant lėtai besiskleidžiančio susidūrimo per visą ekraną (savininkas, 2026 10 12). Susidūrimas (CMS 2012 m. Higso bozono kandidatas) prasideda, kai skaidrė atsiveria, ir lieka išsisklaidęs per klausimus; be garso.
 Apačioje smulkiu šriftu — licencijų reikalaujamos nuorodos (savininkas, 2026 10 10; CERN medžiagai jų nereikia).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
