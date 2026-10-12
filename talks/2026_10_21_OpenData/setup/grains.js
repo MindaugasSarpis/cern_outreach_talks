@@ -31,10 +31,12 @@ function smooth(l) {
 // A step for later (`setGrainsLater`, <Grains :later>) runs on the world's clock,
 // as the motion it waits for does: a slow GPU or a headless tool stretches both.
 // Every form's update moves that clock on, and a step still to come keeps its
-// form busy (api.busy), so a still is never taken before it lands.
+// form busy (api.busy), so a still is never taken before it lands. The sun of
+// plots (setup/sun.js) is driven the same way: it takes the steps, the clock and
+// the grains' drawing from here.
 
 const BUS = 'opendata:grains'
-const state = new Map()
+export const state = new Map()
 
 export function setGrains(name, step) {
   if (state.get(name) === step) return
@@ -48,12 +50,12 @@ export function setGrainsLater(name, step, s) {
   pending.add(p)
   return () => pending.delete(p)
 }
-function tick(t) {
+export function tick(t) {
   clock = t
   for (const p of pending) if (t >= p.at) { pending.delete(p); setGrains(p.name, p.step) }
 }
-const waiting = (name) => [...pending].some((p) => p.name === name)
-function listen(name, fn) {
+export const waiting = (name) => [...pending].some((p) => p.name === name)
+export function listen(name, fn) {
   const h = (e) => { if (e.detail?.name === name) fn(e.detail.step) }
   window.addEventListener(BUS, h)
   return () => window.removeEventListener(BUS, h)
@@ -69,7 +71,7 @@ const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random();
 // pixels it covered several times as much on a phone's small slide band, and the
 // additive piles washed out to white). The lineup's spheres and the portraits'
 // faces size from the viewport (uViewH) already.
-const PLACE = /* glsl */ `
+export const PLACE = /* glsl */ `
 uniform float uTime, uPixelRatio;
 varying vec3 vColor; varying float vAlpha;
 void place(vec3 p, float size, float alpha, vec3 color, float seed) {
@@ -91,7 +93,7 @@ void main() {
   gl_FragColor = vec4(pow(max(vColor * a, vec3(1e-6)), vec3(2.2)), 1.0);
 }`
 
-function material(vertexShader, uniforms) {
+export function material(vertexShader, uniforms) {
   return new ShaderMaterial({
     vertexShader, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
     uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) }, ...uniforms },

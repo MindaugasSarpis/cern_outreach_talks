@@ -277,7 +277,7 @@ data per year“); LHCb, arXiv:2504.00610 (atvirųjų duomenų politika).
 space: { at: [-7, 11, -27], dist: 78, yaw: -2, pitch: 5, sway: 4, flight: 5, dim: 0.15 }
 ---
 
-<Grains :set="{ vault: 1, scale: [0, 1, 2, 3, 4], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
+<Grains :set="{ vault: 1, scale: [0, 1, 2, 3, 4], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0, sun: 0 }" />
 
 <div class="readout steel last">
 
@@ -313,10 +313,10 @@ passed one exabyte in December 2025 (home.cern), mostly on about 60 000 tapes.
 (~0.4 min)
 -->
 ---
-space: { at: [20, 1.3, -0.5], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }
+space: { at: [20, 0.1, 0], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }
 ---
 
-<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0, sun: 20, figs: 20 }" />
+<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0, sun: 1 }" />
 
 <div class="readout"><p class="caption sun-caption">Naudotis gali kiekvienas</p></div>
 
@@ -353,7 +353,7 @@ Morris (co-author of the service's paper) is said on the next slide.
 space: { at: [20, 5.2, 6], dist: 22, yaw: 0, pitch: 3, dim: 0.05 }
 ---
 
-<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 10, dominykas: 0, team: 0, sun: 0, figs: 0 }" />
+<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 10, dominykas: 0, team: 0, sun: 0 }" />
 
 <div class="role">
 <img class="portrait" src="/figures/people/mindaugas-sarpis.jpg" alt="Mindaugas Šarpis" />
@@ -515,7 +515,7 @@ The slide is opaque, as the next one: two plots in a row, LHCb's and then a stud
 space: { at: [10.0, -44.5, 24], dist: 12.5, yaw: 0, pitch: 3, dim: 0.05 }
 ---
 
-<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 1, team: 0, course: 0, d0: 0, peak: 1 }" />
+<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 1, team: 0, course: 0, d0: 0, peak: 1, sun: 0 }" />
 
 <div class="thesis-slide world">
 <div class="thesis-who">
@@ -573,7 +573,7 @@ epublications.vu.lt/object/elaba:308118793/308118793.pdf (open access); LHCb, PR
 space: { at: [53, 2.8, 160], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 ---
 
-<Grains :set="{ vault: 0, team: 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, course: 0, d0: 0, peak: 0 }" />
+<Grains :set="{ vault: 0, team: 1, collision: 0, world: 0, vilnius: 0, dominykas: 0, course: 0, d0: 0, peak: 0, sun: 0 }" />
 
 <div class="thanks">Ačiū</div>
 
