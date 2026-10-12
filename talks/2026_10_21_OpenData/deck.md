@@ -313,7 +313,7 @@ passed one exabyte in December 2025 (home.cern), mostly on about 60 000 tapes.
 (~0.4 min)
 -->
 ---
-space: { at: [20, 0.1, 0], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }
+space: { at: [20, -0.3, 0], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }
 ---
 
 <Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0, sun: 1 }" />
@@ -325,8 +325,11 @@ space: { at: [20, 0.1, 0], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }
 <!--
 Message: anyone can use the open data.
 
-Motion: twenty streams leave the gold pile to every side, like a sun, and each
-ends at a plot made from LHCb's open data, most with a fit: the masses of π⁰, D⁰,
+Motion: a sun turns slowly round the gold pile, in front of it and behind:
+rays of grains leave the pile to every side, twenty of them ending at plots made
+from LHCb's open data (the grains land on each plot's curves), and six at empty
+places, clouds of gold waiting: room for the next uses. The plots, most with a
+fit: the masses of π⁰, D⁰,
 J/ψ, K⁰S and Λ, the D⁰ and K⁰S lifetimes, the magnet's field from the bend of
 the tracks, the beam spot and the luminous region, spectra and multiplicities.
 Every one of them was made for this talk from two public files: CERN Open Data
@@ -443,7 +446,7 @@ Indico 1489482 ir 1648092; CBC 2023 (Indico 1288731); LHCP 2024 (Indico
 space: { at: [23.0, 1.0, 11.0], dist: 6.8, yaw: 0, pitch: 6, dim: 0.1 }
 ---
 
-<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0, course: 1, d0: 1 }" />
+<Grains :set="{ vault: 0, scale: [1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0, course: 1, d0: 1, sun: 0 }" />
 
 <div class="readout">
 
@@ -476,7 +479,7 @@ at 1864.5 MeV, σ 7.7 MeV.
 space: { at: [11.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, dim: 1 }
 ---
 
-<Grains :set="{ vault: 0, scale: [0, 1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0, course: 0, d0: 0 }" />
+<Grains :set="{ vault: 0, scale: [0, 1, 2], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0, course: 0, d0: 0, sun: 0 }" />
 
 <div class="finds">
 <div class="finds-text">

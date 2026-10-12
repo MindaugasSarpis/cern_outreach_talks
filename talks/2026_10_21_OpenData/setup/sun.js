@@ -7,9 +7,10 @@ import { state, listen, tick, waiting, material, PLACE } from './grains.js'
 
 // ---- sun ----------------------------------------------------------------------------
 //   { type: sun, name, pos, items: [{ src?, at: [x, y, z] }, …], squash?: [sx, sy, sz, sy below],
-//     axis?: [0, 1, 0], turn?: 72 (s a turn), w?: 6, pileR?: 1.9, after?: 2.4, travel?: 2.4, delay?: 0.3,
-//     stagger?: 0.12, lag?: 0.15, back?: 0.4, keepOut?: [x0, x1, y0, y1], opacity?: 0.95, color?, alpha?,
-//     size?, grains?: 700 a ray, cloud?: 1000 a place, shed?: 90 each, shedFor?: 3.5, seed?: 5 }
+//     axis?: [0, 1, 0], turn?: 72 (s a turn), w?: 6, pileR?: 1.9, piles?: [[x, y, z, r], …], after?: 0.5,
+//     travel?: 1.7, delay?: 0.2, stagger?: 0.06, lag?: 0.15, back?: 0.4, keepOut?: [x0, x1, y0, y1],
+//     opacity?: 0.95, color?, alpha?, size?, grains?: 700 a ray, cloud?: 1000 a place, shed?: 90 each,
+//     shedFor?: 3.5, seed?: 5 }
 // Who uses the open data, as a sun round the gold pile: rays of grains leave it to
 // every side in 3D, each ending at a plot made from the open data (an item with a
 // `src`) or at an empty place (an item without one): a cloud of grains the size of a
@@ -24,7 +25,11 @@ import { state, listen, tick, waiting, material, PLACE } from './grains.js'
 // worked out on a unit sphere and stretched to the ellipsoid. The plots stay upright
 // and face the camera; those behind the pile dim to `back` and the pile hides them
 // where it covers them (they are depth tested; the piles write their depth). Where two
-// still cross on the screen, the one behind steps back, so the one in front reads.
+// still cross on the screen, the one behind steps back almost to nothing, so the one in
+// front reads; and one passing in front of a pile (`piles`, from the sun's middle, with
+// their radii: the 4 PB pile by default) steps back to a fifth, so the gold stays the
+// sun's middle. The layout (`at`, `axis`, `squash`) was searched so that this seldom
+// happens while the slide is up.
 //
 // Grains run out along each ray from the pile, the ray bowed back against the turn
 // like a jet from a turning sprinkler; the last stretch fans out over the plot, and
@@ -36,9 +41,10 @@ import { state, listen, tick, waiting, material, PLACE } from './grains.js'
 //
 // Step 1: the rays grow out of the pile one after another, round the sun from the
 // top, and each plot shows as its first grains land; the turn starts at the layout
-// above. When the camera flies in to the store, the piles gather there again first,
-// and the rays set out `after` seconds after it lands. Step 0: everything fades
-// within 1.2 s. Taken back while fading, it comes back from where it is, still turning.
+// above. When the camera flies in to the store, the piles gather there again, and the
+// rays set out `after` seconds after it lands, out of the gathering gold. Step 0:
+// everything fades within 1.2 s. Taken back while fading, it comes back from where it
+// is, still turning; `c` leaves a sun that stands as it is.
 const MAXI = 32
 const SUN_VERT = /* glsl */ `
 attribute float aSeed, aKind, aDelay, aEmpty, aIdx;  // 0 a grain on its ray, 1 a grain of an empty place, 2 one shed as it turns; its item
@@ -121,7 +127,7 @@ function buildSun(o, ctx) {
   const axis = new Vector3(...(o.axis || [0, 1, 0])).normalize()
   const omega = (2 * Math.PI) / (o.turn ?? 72)
   const w = o.w ?? 6, pileR = o.pileR ?? 1.9
-  const travel = o.travel ?? 2.4, flare = o.flare ?? 0.5, shedL = o.shedFor ?? 3.5
+  const travel = o.travel ?? 1.7, flare = o.flare ?? 0.5, shedL = o.shedFor ?? 3.5
   const keep = o.keepOut || [-2, -2, -2, -2]
   const rnd = mulberry32(o.seed ?? 5)
   const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += rnd(); return (s - 2) / 1.2 }
@@ -139,7 +145,7 @@ function buildSun(o, ctx) {
     return ang(a) - ang(b)
   })
   const delay = new Array(items.length)
-  order.forEach((i, r) => { delay[i] = (o.delay ?? 0.3) + (o.stagger ?? 0.12) * r })
+  order.forEach((i, r) => { delay[i] = (o.delay ?? 0.2) + (o.stagger ?? 0.06) * r })
   const settles = Math.max(0, ...delay) + travel + 1.2
 
   // the grains: as many as the device's budget allows
@@ -204,13 +210,26 @@ function buildSun(o, ctx) {
 
   // Once a frame, before the first of its parts is drawn: the camera's right, up and the
   // way to it in the sun's own frame (the plots face it, the clouds and spots lie in its
-  // picture plane, what is far from it dims), and where each plot and place stands on
-  // the screen. One covered by a nearer one steps back (its veil), so the one in front
-  // reads; a plot over the caption fades down.
+  // picture plane, what is far from it dims), and where each plot, place and pile stands
+  // on the screen. One covered by a nearer one steps back (its veil), so the one in front
+  // reads; one in front of a pile steps back, so the gold does; a plot over the caption
+  // fades down.
   const u = mat.uniforms
   const gq = new Quaternion(), cq = new Quaternion(), cp = new Vector3(), c0 = new Vector3(), c1 = new Vector3()
   const box = items.map(() => ({ x: 0, y: 0, hx: 0, hy: 0, z: 0, on: false, keep: 0 }))
-  const veil = u.uVeil.value
+  // a pile as the square of its disc's area (its middle from the sun's, and its radius)
+  const piles = (o.piles || [[0, 0, 0, pileR]]).map(([x, y, z, r]) => ({ at: new Vector3(x, y, z), r, x: 0, y: 0, z: 0, hx: 0, hy: 0 }))
+  const capt = { x: (keep[0] + keep[1]) / 2, y: (keep[2] + keep[3]) / 2, hx: (keep[1] - keep[0]) / 2, hy: (keep[3] - keep[2]) / 2 }
+  // the share of rectangle a (on the screen: its middle and half sizes) that b covers
+  const cross = (a, b) => Math.max(0, Math.min(a.x + a.hx, b.x + b.hx) - Math.max(a.x - a.hx, b.x - b.hx))
+    * Math.max(0, Math.min(a.y + a.hy, b.y + b.hy) - Math.max(a.y - a.hy, b.y - b.hy)) / Math.max(4 * a.hx * a.hy, 1e-6)
+  // a point of the sun's frame, `hw` and `hh` to the camera's right and up from it, on the screen
+  const onScreen = (b, at, hw, hh, camera) => {
+    c1.copy(at).addScaledVector(u.uRight.value, hw).addScaledVector(u.uUp.value, hh)
+    c0.copy(at).applyMatrix4(g.matrixWorld).project(camera); c1.applyMatrix4(g.matrixWorld).project(camera)
+    b.x = c0.x; b.y = c0.y; b.z = c0.z; b.hx = Math.abs(c1.x - c0.x); b.hy = Math.abs(c1.y - c0.y)
+  }
+  const veil = u.uVeil.value, stand = new Vector3()
   let seen = -1, veilT = 0
   const arrange = (renderer, camera) => {
     const frame = renderer.info.render.frame
@@ -221,31 +240,26 @@ function buildSun(o, ctx) {
     u.uUp.value.set(0, 1, 0).applyQuaternion(gq)
     g.worldToLocal(camera.getWorldPosition(cp))
     u.uView.value.copy(cp).normalize()
-    // each one's middle and a corner, projected: it faces the camera, so it stands on the
-    // screen as a rectangle (a place: the size of its cloud)
+    for (const pl of piles) onScreen(pl, pl.at, 0.886 * pl.r, 0.886 * pl.r, camera)
+    // each one faces the camera, so it stands on the screen as a rectangle (a place: the
+    // size of its cloud)
     items.forEach((it, i) => {
       const b = box[i], p = plotOf[i]
       b.on = p ? p.grow > 0.05 : u.uSince.value - delay[i] - travel > 0.4
       if (!b.on) return
-      const hw = p ? p.mesh.scale.x / 2 : 0.36 * w, hh = p ? p.mesh.scale.y / 2 : 0.36 * h
-      standAt(ends[i], u.uAng.value, c0)
-      c1.copy(c0).addScaledVector(u.uRight.value, hw).addScaledVector(u.uUp.value, hh)
-      c0.applyMatrix4(g.matrixWorld).project(camera); c1.applyMatrix4(g.matrixWorld).project(camera)
-      b.x = c0.x; b.y = c0.y; b.z = c0.z; b.hx = Math.abs(c1.x - c0.x); b.hy = Math.abs(c1.y - c0.y)
-      const ox = Math.max(0, Math.min(b.x + b.hx, keep[1]) - Math.max(b.x - b.hx, keep[0]))
-      const oy = Math.max(0, Math.min(b.y + b.hy, keep[3]) - Math.max(b.y - b.hy, keep[2]))
-      b.keep = (ox * oy) / Math.max(4 * b.hx * b.hy, 1e-6)
+      onScreen(b, standAt(ends[i], u.uAng.value, stand), p ? p.mesh.scale.x / 2 : 0.36 * w, p ? p.mesh.scale.y / 2 : 0.36 * h, camera)
+      b.keep = cross(b, capt)
     })
     // the veils ease on the engine clock (a still taken after the world ran undrawn lands on them)
     const k = 1 - Math.exp(-Math.max(0, now - veilT) / 0.3); veilT = now
     box.forEach((b, i) => {
-      let covered = 0
-      if (b.on) for (const c of box) {
-        if (c === b || !c.on || c.z >= b.z) continue
-        covered += Math.max(0, Math.min(b.x + b.hx, c.x + c.hx) - Math.max(b.x - b.hx, c.x - c.hx))
-          * Math.max(0, Math.min(b.y + b.hy, c.y + c.hy) - Math.max(b.y - b.hy, c.y - c.hy)) / Math.max(4 * b.hx * b.hy, 1e-6)
+      let covered = 0, onPile = 0
+      if (b.on) {
+        for (const c of box) if (c !== b && c.on && c.z < b.z) covered += cross(b, c)
+        for (const pl of piles) if (pl.z > b.z) onPile += cross(b, pl)
       }
-      veil[i] += (1 - 0.7 * smooth(0.05, 0.45, covered) - veil[i]) * k
+      const want = Math.min(1 - 0.9 * smooth(0.03, 0.25, covered), 1 - 0.78 * smooth(0.02, 0.08, onPile))
+      veil[i] += (want - veil[i]) * k
     })
     for (const p of plots) {
       p.mesh.quaternion.copy(gq); p.mesh.updateMatrixWorld()
@@ -330,13 +344,16 @@ function buildSun(o, ctx) {
     // the camera sets out for the store: a sun set going on this slide's step a moment
     // ago waits for the arrival instead
     arm() { done(); armed = true; armedAt = now; if (t0 >= 0 && hideT < 0 && now - t0 < 0.5) t0 = -1 },
-    // the arrival (and `c`): the piles gather again there first, so the rays set out `after`
-    // seconds later, out of a pile that stands. The station counts as built once the
+    // the arrival: the piles gather again there, and the rays set out `after` seconds
+    // later, out of the gathering gold. `c` (the arrival again) leaves a sun that stands,
+    // and one fading comes back from where it is. The station counts as built once the
     // plots stand (what waits on it, a recording's settle among them, waits for them)
     assemble(t, onDone) {
       now = t; armed = false
       if (onDone) doneCbs.push(onDone)
-      if (step) start(t + (o.after ?? 2.4)); else if (t0 >= 0 && hideT < 0) hideT = t
+      if (!step) { if (t0 >= 0 && hideT < 0) hideT = t }
+      else if (t0 < 0) start(t + (o.after ?? 0.5))
+      else hideT = -1
     },
   }
   return {
@@ -361,7 +378,7 @@ function buildSun(o, ctx) {
         p.grow = ease((t - t0 - delay[p.i] - travel + 0.2) / 1.0)
         const s = 0.8 + 0.2 * p.grow
         p.mesh.scale.set(w * s, w * p.aspect * s, 1)
-        p.mesh.visible = p.grow > 0.001 && level > 0
+        p.mesh.visible = p.grow > 0.001 && level > 0 && !!p.pm.map   // never a blank white plane before its picture
       }
     },
     dispose() { offL(); for (const p of plots) p.pm.map?.dispose() },

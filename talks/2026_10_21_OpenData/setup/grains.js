@@ -1,6 +1,6 @@
 import {
   Group, Points, Mesh, SphereGeometry, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4, Matrix4, Euler,
-  LinearMipmapLinearFilter, DynamicDrawUsage, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColorSpace, Quaternion,
+  LinearMipmapLinearFilter, DynamicDrawUsage,
 } from 'three'
 import { makeRing, mulberry32 } from './ring.js'
 // the engine's photo relief (not in the addon's exports yet: by its file, the same module the engine loads)
@@ -1393,67 +1393,6 @@ function buildHistogram(o, ctx) {
   }
 }
 
-// ---- figures ------------------------------------------------------------------------
-//   { type: figures, name, pos, items: [{ src, at: [x, y, z], w?: 2.6 }], arrive?: 1.6 (s after
-//     its step until a figure shows), stagger?: 0.12, opacity?: 0.85 }
-// Figures floating in the world, each a plot made from open data (a picture on a plane
-// kept parallel to the screen, so the lens does not shear one at the frame's edge), drawn additively so its dark ground is the world's
-// black. Step k shows the first k (each as its stream gets there: `arrive` s, one after
-// another by `stagger`); 0 lets them fade. They stand at the ends of a `streams` object's
-// streams, `at` the same points.
-function buildFigures(o, ctx) {
-  const g = new Group()
-  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
-  const base = (import.meta.env?.BASE_URL || '/').replace(/\/$/, '')
-  const url = (src) => (ctx.asset ? ctx.asset(src) : String(src).startsWith('/') ? base + src : src)
-  const loader = new TextureLoader(), pq = new Quaternion(), cq = new Quaternion()
-  const items = (o.items || []).map((it, i) => {
-    const mat = new MeshBasicMaterial({ transparent: true, opacity: 0, blending: AdditiveBlending, depthWrite: false, depthTest: false, color: 0xffffff })
-    const mesh = new Mesh(new PlaneGeometry(1, 1), mat)
-    const w = it.w ?? o.w ?? 2.6
-    mesh.scale.set(w, w * 0.625, 1)
-    mesh.position.set(it.at[0], it.at[1], it.at[2]); mesh.visible = false
-    // turned as the camera is, just before it is drawn (the camera's turn is not passed to update)
-    mesh.onBeforeRender = (r, s, camera) => {
-      mesh.parent.getWorldQuaternion(pq).invert().multiply(camera.getWorldQuaternion(cq))
-      mesh.quaternion.copy(pq); mesh.updateMatrixWorld()
-    }
-    loader.load(url(it.src), (tex) => {
-      tex.colorSpace = SRGBColorSpace; tex.anisotropy = ctx.anisotropy || 4
-      mat.map = tex; mat.needsUpdate = true
-      const im = tex.image; if (im && im.width) mesh.scale.set(w, w * im.height / im.width, 1)
-    }, undefined, () => console.warn('stage: figure failed', it.src))
-    g.add(mesh)
-    return { mesh, mat, i, want: 0, vis: 0, at: -1 }
-  })
-  const arrive = o.arrive ?? 1.6, stagger = o.stagger ?? 0.12, peak = o.opacity ?? 0.85
-  let now = 0, step = state.has(o.name) ? state.get(o.name) : 0
-  const go = (k) => {
-    step = k
-    for (const it of items) {
-      const on = it.i < k
-      if (on && it.at < 0) it.at = now + arrive + stagger * it.i
-      if (!on) it.at = -1
-    }
-  }
-  const off = listen(o.name, go)
-  if (step) queueMicrotask(() => go(step))
-  const busy = () => waiting(o.name) || items.some((it) => Math.abs((it.at >= 0 && now >= it.at ? 1 : 0) - it.vis) > 0.01)
-  return {
-    group: g, labels: [], api: { busy },
-    update(t) {
-      tick(t); now = t
-      for (const it of items) {
-        const want = it.at >= 0 && t >= it.at ? 1 : 0
-        it.vis += (want - it.vis) * 0.06
-        it.mat.opacity = peak * it.vis
-        it.mesh.visible = it.vis > 0.01
-      }
-    },
-    dispose: off,
-  }
-}
-
 // ---- backdrop -----------------------------------------------------------------------
 //   { type: backdrop, name, pos, src, depth?: <src>.depth.png, yaw?: 0, width?: 300,
 //     cols?: 600 (half on a phone), relief?: 0.25, dim?: 0.6 }
@@ -1494,6 +1433,5 @@ export function installGrains(registerBuilder) {
   registerBuilder('portraits', buildPortraits, { fields: ['pos', 'name', 'people'] })
   registerBuilder('collision', buildCollision, { fields: ['pos', 'name', 'tracks'] })
   registerBuilder('histogram', buildHistogram, { fields: ['pos', 'name'] })
-  registerBuilder('figures', buildFigures, { fields: ['pos', 'name', 'items'] })
   registerBuilder('backdrop', buildBackdrop, { fields: ['pos', 'name', 'src'] })
 }
