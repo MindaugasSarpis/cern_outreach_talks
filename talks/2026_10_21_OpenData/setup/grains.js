@@ -1,8 +1,10 @@
 import {
   Group, Points, Mesh, SphereGeometry, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4, Matrix4, Euler,
-  LinearMipmapLinearFilter, DynamicDrawUsage,
+  LinearMipmapLinearFilter, DynamicDrawUsage, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColorSpace,
 } from 'three'
 import { makeRing, mulberry32 } from './ring.js'
+// the engine's photo relief (not in the addon's exports yet: by its file, the same module the engine loads)
+import { createPhotoPlace } from '../node_modules/slidev-addon-stage/stage/photo-place.js'
 
 // a label sprite from the engine, mipmapped: drawn far smaller than its canvas, it aliased into dither
 function smooth(l) {
@@ -201,16 +203,17 @@ uniform float uMerge[${MAXB}];
 uniform vec3 uFromColor[${MAXB}];
 uniform float uMergeAt;
 uniform float uTime, uGrow, uReach, uRad, uViewH, uMaxPt, uShell;
+uniform float uGs[${MAXB}];          // a pile's grain scale: each sphere stands for grain spheres, cbrt(grain) times as wide
 uniform float uShowT[${MAXB}];
 uniform float uHideT[${MAXB}];
 uniform float uR[${MAXB}];
 uniform vec3 uCenter[${MAXB}];
 uniform vec3 uColor[${MAXB}];
 uniform vec3 uLight;
-varying vec3 vColor; varying vec3 vCv; varying float vShade; varying float vPx; varying vec3 vOut; varying float vF;
+varying vec3 vColor; varying vec3 vCv; varying float vShade; varying float vPx; varying vec3 vOut; varying float vF; varying float vRad;
 float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
 float ease(float x) { x = clamp(x, 0.0, 1.0); return x * x * x * (x * (x * 6.0 - 15.0) + 10.0); }
-void off_() { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vCv = vec3(0.0); vShade = 0.0; vPx = 1.0; vOut = vec3(0.0, 1.0, 0.0); vF = 0.0; }
+void off_() { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vCv = vec3(0.0); vShade = 0.0; vPx = 1.0; vOut = vec3(0.0, 1.0, 0.0); vF = 0.0; vRad = 0.0; }
 void main() {
   int b = int(aBall + 0.5);
   float st = uShowT[b], ht = uHideT[b];
@@ -231,7 +234,8 @@ void main() {
   // side are never drawn (without this, ~80 hidden spheres under each visible pixel).
   // The skin is 10 units deep: at 6, about one sight line in ten passed between
   // the spheres to the black behind, and the steel pile showed pinholes
-  if (f >= 1.0 && ht < 0.0 && (r < uR[b] - uShell || facingS < -0.3)) { off_(); return; }
+  float gs = uGs[b];
+  if (f >= 1.0 && ht < 0.0 && (r < uR[b] - uShell * gs || facingS < -0.3)) { off_(); return; }
   vec3 side = normalize(cross(dir, vec3(0.0, 1.0, 0.0)) + 1e-4);
   // adrift: out along its own direction, well beyond the pile, swirling in as it comes
   float reach = (uReach + uR[b]) * (0.8 + 1.4 * hash(aSeed * 91.0));
@@ -252,7 +256,8 @@ void main() {
   gl_Position = projectionMatrix * mv;
   // a sphere of radius uRad at this depth, in pixels of the target being drawn; a
   // standing sphere under 8 px is drawn a little larger, so the thin skin stays closed
-  float px = uRad * projectionMatrix[1][1] * uViewH / max(-mv.z, 1e-3);
+  vRad = uRad * gs;
+  float px = vRad * projectionMatrix[1][1] * uViewH / max(-mv.z, 1e-3);
   float grow = f >= 1.0 ? mix(2.4, 1.0, smoothstep(2.0, 8.0, px)) : 1.0;
   gl_PointSize = clamp(px * grow, 1.0, min(uMaxPt, 0.2 * uViewH));
   vPx = px;
@@ -282,8 +287,7 @@ vec3 heap(vec3 N, vec3 V, vec3 F0) {
 }`
 const LINEUP_FRAG = /* glsl */ `
 uniform mat4 projectionMatrix;
-uniform float uRad;
-varying vec3 vColor; varying vec3 vCv; varying float vShade; varying float vPx; varying vec3 vOut; varying float vF;
+varying vec3 vColor; varying vec3 vCv; varying float vShade; varying float vPx; varying vec3 vOut; varying float vF; varying float vRad;
 ${METAL}
 ${HEAP}
 void main() {
@@ -305,7 +309,7 @@ void main() {
   float nz = sqrt(1.0 - r2);
   vec3 nV = q.x * xV + q.y * yV + nz * fV;
   // the sphere's own surface depth, so neighbours and flyers cut each other right
-  vec4 clip = projectionMatrix * vec4(vCv + nV * uRad, 1.0);
+  vec4 clip = projectionMatrix * vec4(vCv + nV * vRad, 1.0);
   gl_FragDepth = clip.z / clip.w * 0.5 + 0.5;
   vec3 vW = fV * mat3(viewMatrix);
   vec3 nW = nV * mat3(viewMatrix);
@@ -364,10 +368,16 @@ void main() { gl_FragColor = vec4(metalHard(normalize(vNW), normalize(cameraPosi
 function buildLineup(o, ctx) {
   const { makeLabel } = ctx.helpers
   const unit = o.unit ?? 0.1, s = Math.SQRT2 * unit, rad = 0.9 * unit
-  const balls = (o.balls || []).slice(0, MAXB).map((x) => ({ ...x, n: Math.max(1, Math.round(x.n || 1)) }))
+  // a ball's `grain` (default 1): each drawn sphere stands for that many, cbrt(grain) times
+  // as wide, so a pile of millions keeps its true size with a fraction of the points (seen
+  // from afar its spheres are far under a pixel, and the pile is shaded as one satin ball)
+  const balls = (o.balls || []).slice(0, MAXB).map((x) => {
+    const n = Math.max(1, Math.round(x.n || 1)), grain = Math.max(1, x.grain || 1)
+    return { ...x, n, pts: Math.max(1, Math.round(n / grain)), gs: Math.cbrt(grain) }
+  })
   const NB = balls.length
-  const lat = fccShells(Math.max(...balls.map((x) => x.n)))
-  const R = balls.map(({ n }) => { const j = (n - 1) * 3; return Math.hypot(lat[j], lat[j + 1], lat[j + 2]) * s + unit })
+  const lat = fccShells(Math.max(...balls.map((x) => x.pts)))
+  const R = balls.map(({ pts, gs }) => { const j = (pts - 1) * 3; return (Math.hypot(lat[j], lat[j + 1], lat[j + 2]) * s + unit) * gs })
   // side by side along x, ball `anchor` at the origin
   const gaps = o.gaps || [], A = Math.min(Math.max(0, o.anchor ?? 0), NB - 1), cx = new Array(NB).fill(0)
   for (let b = A + 1; b < NB; b++) cx[b] = cx[b - 1] + R[b - 1] + (gaps[b - 1] ?? 2) + R[b]
@@ -397,7 +407,7 @@ function buildLineup(o, ctx) {
 
   // the piles: one point per sphere, pile after pile
   const piles = balls.map((x, b) => b).filter((b) => balls[b].n > 1)
-  const total = piles.reduce((acc, b) => acc + balls[b].n, 0)
+  const total = piles.reduce((acc, b) => acc + balls[b].pts, 0)
   const pos = new Float32Array(total * 3), seed = new Float32Array(total), rank = new Float32Array(total), which = new Float32Array(total)
   const end = new Array(NB).fill(0)
   const TILT = new Matrix4().makeRotationFromEuler(new Euler(0.37, 0.61, 0.23)), tv = new Vector3()
@@ -405,9 +415,9 @@ function buildLineup(o, ctx) {
   for (const b of piles) {
     // a pile of thousands is jittered more, so its rows do not beat against the pixel
     // grid; the lattice is turned once, so no row of it points at a camera
-    const n = balls[b].n, jit = unit * Math.min(0.24, 0.12 + 0.05 * Math.max(0, Math.log10(n / 800)))
+    const n = balls[b].pts, gs = balls[b].gs, jit = unit * gs * Math.min(0.24, 0.12 + 0.05 * Math.max(0, Math.log10(n / 800)))
     for (let j = 0; j < n; j++, q++) {
-      tv.set(lat[j * 3], lat[j * 3 + 1], lat[j * 3 + 2]).multiplyScalar(s).applyMatrix4(TILT)
+      tv.set(lat[j * 3], lat[j * 3 + 1], lat[j * 3 + 2]).multiplyScalar(s * gs).applyMatrix4(TILT)
       pos[q * 3] = C[b][0] + tv.x + gauss() * jit
       pos[q * 3 + 1] = C[b][1] + tv.y + gauss() * jit
       pos[q * 3 + 2] = C[b][2] + tv.z + gauss() * jit
@@ -422,12 +432,12 @@ function buildLineup(o, ctx) {
   {
     let q0 = 0
     for (const b of piles) {
-      const m = balls[b].merge, n = balls[b].n
+      const m = balls[b].merge, n = balls[b].pts, gs = balls[b].gs
       if (m && Array.isArray(m.copiesAt) && m.copiesAt.length) {
         const N = m.copiesAt.length
         for (let j = 0; j < n; j++) {
           const k = j % N, i = Math.floor(j / N), cc = m.copiesAt[k]
-          tv.set(lat[i * 3], lat[i * 3 + 1], lat[i * 3 + 2]).multiplyScalar(s).applyMatrix4(TILT)
+          tv.set(lat[i * 3], lat[i * 3 + 1], lat[i * 3 + 2]).multiplyScalar(s * gs).applyMatrix4(TILT)
           const q = q0 + j
           fromPos[q * 3] = cc[0] + tv.x; fromPos[q * 3 + 1] = cc[1] + tv.y; fromPos[q * 3 + 2] = cc[2] + tv.z
           const l = tv.length() || 1
@@ -454,6 +464,7 @@ function buildLineup(o, ctx) {
       uViewH: { value: 1080 }, uMaxPt: { value: 256 }, uShell: { value: 10 * unit },
       uShowT: { value: showT }, uHideT: { value: hideT },
       uR: { value: pad(R, () => 0) },
+      uGs: { value: pad(balls.map((x) => x.gs), () => 1) },
       uCenter: { value: pad(C.map((c) => new Vector3(c[0], c[1], c[2])), () => new Vector3()) },
       uColor: { value: pad(balls.map((x) => new Color(x.color || ctx.palette.accent)), () => new Color()) },
       uMerge: { value: pad(balls.map((x) => (x.merge ? 1 : 0)), () => 0) },
@@ -569,7 +580,7 @@ function buildLineup(o, ctx) {
 //     speed?: 0.11 (laps a second), color?, spread?: 0.08 }
 // Step k shows the first k streams; a stream that starts gathers its end
 // cluster over two seconds while its first grains are on the way.
-const MAXS = 12
+const MAXS = 24
 const STREAMS_VERT = /* glsl */ `
 attribute float aSeed, aIdx, aKind;   // stream index; 0 a grain on the way, 1 a grain of the end cluster
 attribute vec3 aEnd, aCtl, aOff;
@@ -658,14 +669,20 @@ function buildStreams(o, ctx) {
   const makeLabels = () => {
     to.forEach((d, i) => {
       if (!d.label) return
-      const l = smooth(ctx.helpers.makeLabel(d.label, { px: 64, weight: 500, color: '#d4dcea', worldH: o.labelH ?? 0.042, letterSpacing: 0.06, upper: false }))
-      l.material.sizeAttenuation = false; l.material.opacity = 0
-      const e = d.pos || [0, 0, 0]
-      // beside its own cloud, to the right, so a column of labels reads against a column of clouds
-      l.center.set(0, 0.5)
-      l.position.set(e[0] + (o.nodeRadius ?? 0.45) * 1.6, e[1], e[2])
-      l.userData.vis = 0; l.userData.i = i
-      g.add(l); labels.push(l)
+      // a label of more lines (`\n`) is a stack of sprites, centred on the end, a line apart on screen
+      const lines = String(d.label).split('\n')
+      lines.forEach((text, k) => {
+        const l = smooth(ctx.helpers.makeLabel(text, { px: 64, weight: 500, color: '#d4dcea', worldH: o.labelH ?? 0.042, letterSpacing: 0.06, upper: false }))
+        l.material.sizeAttenuation = false; l.material.opacity = 0
+        const e = d.pos || [0, 0, 0]
+        // beside its own cloud, to the right (or `side: 'left'`, to the left), so a column of
+        // labels reads against a column of clouds
+        const left = d.side === 'left'
+        l.center.set(left ? 1 : 0, 0.5 + 1.15 * (k - (lines.length - 1) / 2))   // a sprite's centre.y > 0.5 lifts it: line 0 on top
+        l.position.set(e[0] + (left ? -1 : 1) * (o.nodeRadius ?? 0.45) * 1.6, e[1], e[2])
+        l.userData.vis = 0; l.userData.i = i
+        g.add(l); labels.push(l)
+      })
     })
   }
   if (to.some((d) => d.label)) {
@@ -1115,110 +1132,343 @@ function buildCollision(o) {
 }
 
 // ---- histogram ----------------------------------------------------------------------
-//   { type: histogram, name, pos, bins: [counts…], width?: 4, height?: 2.4, depth?: 0.25,
-//     from?: [x, y, z] (where the grains come from, relative to the object: a stream's end),
-//     fill?: 6 (engine-s until the last sets out), fly?: 1.4, per?: candidates a grain
-//     (default: one each, or as many as the device's budget asks), count?: the number its
-//     counter reaches (default: the bins' sum; e.g. a file's candidates, some outside the
-//     drawn window), color?, base?: true }
-// Real candidates stacking into their histogram, a grain each: they leave `from` in
-// random order, as data arrives, fly in on arcs and settle in their bin, the k-th to
-// land in a bin on the k-th place up its column, so the shape grows out of the noise as
-// the count does. A faint baseline of grains carries the bins. Step 1 fills it (every
-// visit from empty), 0 lets the grains fly apart. api.value() is the count landed so
-// far (for a counter that runs with it), api.busy while it fills or flies apart.
+//   { type: histogram, name, pos, bins: [counts…], lo?, bin? (the data's units, for marks),
+//     width?: 24, height?: 10, depth?: (a bin's width), max?: (tallest bin), unit?: 1 (entries
+//     per grain; default: as the device's budget allows), steps?: [0, 1], fill?: 20 (s for the
+//     whole set), fall?: 1.1, curve?: 1 (>1: the first entries come faster), size?, alpha?,
+//     color?, hot?, axis?: true, marks?: [[lo, hi], …], markStep?: 1, back?: 0.55 (how far the
+//     unmarked bins step back once the marks light),
+//     from?: [x, y, z] (the grains come from there, a stream's end, instead of from above),
+//     count?: (the number a counter shows when full), rise?: [x, y, z] (after the marks light,
+//     grains rise out of the marked peak and gather there: the peak becomes what it shows) }
+// A measured distribution building up entry by entry (Užsikrauk karjerai's animation, its
+// `histogram`): each grain is one entry dropping into its bin in a random order, so the
+// shape grows the way the data came in, fast at first and slower as it fills; each lands
+// with a short warm glow. Once full the marked bins (a peak) brighten while the rest steps
+// back, a tick of grains rises over each, and with `rise` grains lift out of the peak into
+// what it is. A step's share is reached at a constant pace; going back shows it at once.
+// Arrival from elsewhere (or `c`) refills from nothing. api.value() is the count landed so
+// far, for a <StageCount for="name">.
 const HIST_VERT = /* glsl */ `
-attribute float aSeed, aT, aBase;   // aT: when it sets out (engine-s into the fill); aBase 1: the baseline
 attribute vec3 aEnd;
-uniform vec3 uFrom;
-uniform float uStart, uHide, uFly, uSize, uAlpha;
-uniform vec3 uColor, uWhite;
+attribute float aRank, aSeed, aMark;
+uniform float uFrom, uTo, uT0, uDur, uFall, uTop, uSize, uAlpha, uCurve, uMarkT, uUseSrc, uBack;
+uniform vec3 uColor, uHot, uSrc;
+${PLACE}
+void hide() { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vAlpha = 0.0; vColor = vec3(0.0); }
+void main() {
+  float span = uTo - uFrom;
+  float land;
+  if (aRank < min(uFrom, uTo)) land = -1e6;
+  else if (span <= 0.0 || aRank >= uTo) { hide(); return; }
+  else land = uT0 + pow((aRank - uFrom) / span, uCurve) * uDur;
+  float k = (uTime - land) / uFall + 1.0;      // 0 on release, 1 on landing
+  if (k < 0.0) { hide(); return; }
+  vec3 p = aEnd;
+  float glow = 0.0;
+  if (k < 1.0) {
+    if (uUseSrc > 0.5) {
+      // from the stream's end, on an arc into its bin
+      float f = k * k * (3.0 - 2.0 * k);
+      vec3 mid = mix(uSrc, aEnd, 0.5) + vec3(0.0, 0.25 * length(aEnd - uSrc) * (0.6 + 0.8 * hash(aSeed * 3.0)), 0.0);
+      p = mix(mix(uSrc, mid, f), mix(mid, aEnd, f), f);
+    } else {
+      p.y = mix(uTop + 2.0 * hash(aSeed * 3.0), aEnd.y, k * k);
+      p.x += 0.15 * (1.0 - k) * (hash(aSeed * 5.0) - 0.5);
+    }
+  } else glow = exp(-(k - 1.0) * uFall * 3.0);
+  float m = clamp((uTime - uMarkT) / 1.6, 0.0, 1.0);
+  m = m * m * (3.0 - 2.0 * m);
+  vec3 color = mix(uColor, uHot, clamp(0.8 * glow + 0.3 * m * aMark, 0.0, 1.0));
+  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow) * (1.0 - uBack * m * (1.0 - aMark));
+  float size = uSize * (0.85 + 0.3 * hash(aSeed * 11.0)) * (1.0 + 0.5 * glow);
+  place(p, size, alpha, color, aSeed);
+}`
+// a short upright tick of grains over a marked peak, once the fill is complete
+const HTICK_VERT = /* glsl */ `
+attribute float aSeed;
+uniform float uSize, uAlpha, uMarkT;
+uniform vec3 uColor;
 ${PLACE}
 void main() {
-  float hide = uHide < 0.0 ? 0.0 : smoothstep(0.0, 1.2, uTime - uHide);
-  if (uStart < 0.0 || hide >= 1.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vAlpha = 0.0; vColor = vec3(0.0); return; }
-  if (aBase > 0.5) {
-    float a = 0.22 * smoothstep(0.0, 0.8, uTime - uStart) * (1.0 - hide);
-    place(aEnd, uSize * 0.7, a, mix(uColor, uWhite, 0.5), aSeed);
-    return;
-  }
-  float u = (uTime - uStart - aT) / uFly;            // 0 → 1 along its flight
-  if (u < 0.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vAlpha = 0.0; vColor = vec3(0.0); return; }
-  float f = ease(u), landed = step(1.0, u);
-  float span = length(aEnd - uFrom);
-  vec3 mid = mix(uFrom, aEnd, 0.5) + vec3(0.0, span * (0.18 + 0.2 * hash(aSeed * 3.0)), 0.0)
-           + (vec3(hash(aSeed * 13.0), 0.0, hash(aSeed * 17.0)) - 0.5) * span * 0.25;
-  vec3 p = mix(mix(uFrom, mid, f), mix(mid, aEnd, f), f);
-  p += (vec3(hash(aSeed * 5.0), hash(aSeed * 7.0), hash(aSeed * 9.0)) - 0.5) * 4.0 * hide;
-  float a = uAlpha * mix(0.9, 0.55, landed) * (1.0 - hide);
-  vec3 col = mix(uColor, uWhite, 0.45 * (1.0 - landed) + 0.2 * hash(aSeed * 11.0));
-  place(p, uSize * mix(1.15, 0.8, landed), a, col, aSeed);
+  float m = clamp((uTime - uMarkT - aSeed * 0.5) / 1.2, 0.0, 1.0);
+  if (m <= 0.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vAlpha = 0.0; vColor = vec3(0.0); return; }
+  place(position + vec3(0.0, 0.6 * (1.0 - m), 0.0), uSize * (0.8 + 0.4 * hash(aSeed * 7.0)), uAlpha * m * m, uColor, aSeed);
 }`
-
+const HAXIS_VERT = /* glsl */ `
+attribute float aSeed;
+uniform float uSize, uAlpha;
+uniform vec3 uColor;
+${PLACE}
+void main() { place(position, uSize * (0.8 + 0.4 * hash(aSeed * 7.0)), uAlpha, uColor, aSeed); }`
+// the peak becoming what it shows: grains leave the tops of the marked bins, spiral up and
+// gather at `rise`, brightening as they arrive, and stay there as a soft glow
+const HRISE_VERT = /* glsl */ `
+attribute float aSeed;
+attribute vec3 aDir;
+uniform float uSize, uAlpha, uRiseT;
+uniform vec3 uColor, uHot, uRise;
+${PLACE}
+void main() {
+  float u = (uTime - uRiseT - aSeed * 1.4) / 2.4;
+  if (u <= 0.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vAlpha = 0.0; vColor = vec3(0.0); return; }
+  float f = ease(u);
+  vec3 a = position, b = uRise + aDir * 0.35;
+  float h = length(b - a);
+  float turn = (1.0 - f) * 5.0 * (hash(aSeed * 3.0) - 0.5);
+  vec3 side = vec3(cos(turn), 0.0, sin(turn)) * 0.25 * h * sin(3.14159 * f);
+  vec3 mid = mix(a, b, 0.5) + vec3(0.0, 0.15 * h, 0.0);
+  vec3 p = mix(mix(a, mid, f), mix(mid, b, f), f) + side;
+  float alpha = uAlpha * (0.4 + 0.6 * f) * (u > 1.0 ? 0.7 : 1.0);
+  place(p, uSize * (0.9 + 0.5 * f), alpha, mix(uColor, uHot, f), aSeed);
+}`
 function buildHistogram(o, ctx) {
-  const bins = (o.bins || []).map((v) => Math.max(0, Math.round(v)))
-  const total = bins.reduce((a, b) => a + b, 0)
+  const g = new Group()
+  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  const counts = (o.bins || o.counts || []).map((v) => Math.max(0, Math.round(v)))
+  const nb = counts.length, W = o.width ?? 24, H = o.height ?? 10
+  const total = counts.reduce((a, b) => a + b, 0)
   const budget = ctx.budget ?? 300000
-  const per = o.per ?? Math.max(1, Math.ceil(total / Math.min(budget * 0.4, 120000)))
-  const nb = bins.length, W = o.width ?? 4, H = o.height ?? 2.4, D = o.depth ?? 0.25
-  const fill = o.fill ?? 6, fly = o.fly ?? 1.4
-  const counts = bins.map((c) => Math.round(c / per))
-  const N = counts.reduce((a, b) => a + b, 0)
-  const maxC = Math.max(1, ...counts)
-  const nBase = o.base === false ? 0 : 240
-  const rnd = mulberry32(o.seed ?? 401)
-  // the order they arrive in: random, as candidates come out of a file
-  const order = []
-  counts.forEach((c, b) => { for (let k = 0; k < c; k++) order.push(b) })
-  for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]] }
-  const M = N + nBase
-  const end = new Float32Array(M * 3), seed = new Float32Array(M), tA = new Float32Array(M), base = new Float32Array(M)
-  const level = new Array(nb).fill(0)
-  for (let i = 0; i < N; i++) {
-    const b = order[i], k = level[b]++
-    end[i * 3] = -W / 2 + (b + 0.12 + 0.76 * rnd()) / nb * W
-    end[i * 3 + 1] = (k + rnd()) / maxC * H
-    end[i * 3 + 2] = (rnd() - 0.5) * D
-    seed[i] = rnd(); tA[i] = fill * i / Math.max(1, N)
+  const unitN = o.unit ?? Math.max(1, Math.ceil(total / Math.min(budget * 0.4, 120000)))
+  const steps = o.steps || [0, 1]
+  const src = o.from || [0, 0, 0]
+  const mat = material(HIST_VERT, {
+    uFrom: { value: 0 }, uTo: { value: 0 }, uT0: { value: 0 }, uDur: { value: 1 }, uFall: { value: o.fall ?? 1.1 },
+    uTop: { value: H * 1.25 }, uSize: { value: o.size ?? (unitN > 1 ? 0.55 : 0.45) }, uAlpha: { value: o.alpha ?? 0.35 },
+    uCurve: { value: o.curve ?? 1 }, uMarkT: { value: 1e9 }, uUseSrc: { value: o.from ? 1 : 0 }, uBack: { value: o.back ?? 0.55 },
+    uSrc: { value: new Vector3(src[0], src[1], src[2]) },
+    uColor: { value: new Color(...rgb(o.color || '#ffc05a')) }, uHot: { value: new Color(...rgb(o.hot || '#fff4dc')) },
+  })
+  const u = mat.uniforms
+  const bw = W / Math.max(1, nb), D = o.depth ?? bw
+  // marks: [[lo, hi], …] in the data's units (o.lo, o.bin): the bins to light once filled
+  const marked = new Uint8Array(nb)
+  for (const [a, b] of o.marks || []) for (let i = 0; i < nb; i++) {
+    const c = (o.lo ?? 0) + (i + 0.5) * (o.bin ?? 1)
+    if (c >= a && c <= b) marked[i] = 1
   }
-  for (let i = 0; i < nBase; i++) {
-    const n = N + i
-    end[n * 3] = -W / 2 + (i + rnd()) / nBase * W; end[n * 3 + 1] = -0.03; end[n * 3 + 2] = (rnd() - 0.5) * D * 0.5
-    seed[n] = rnd(); base[n] = 1
+  const per = counts.map((c) => Math.round(c / unitN))
+  const N = per.reduce((a, b) => a + b, 0)
+  const max = (o.max ?? Math.max(1, ...counts)) / unitN
+  const rnd = mulberry32(o.seed ?? 2015)
+  const ranks = new Float32Array(N); for (let i = 0; i < N; i++) ranks[i] = rnd()
+  const end = new Float32Array(N * 3), rank = new Float32Array(N), seed = new Float32Array(N), mark = new Float32Array(N)
+  let n = 0
+  const tops = []                                 // the marked bins' tops, where the rise starts
+  for (let b = 0; b < nb; b++) {
+    // lower in the column, earlier in: the column grows from the bottom
+    const rs = Array.from(ranks.subarray(n, n + per[b])).sort((x, y) => x - y)
+    for (let j = 0; j < per[b]; j++, n++) {
+      const x = -W / 2 + (b + 0.15 + 0.7 * rnd()) * bw
+      const y = (j + 0.5) / max * H
+      end.set([x, y, (rnd() - 0.5) * D], n * 3); rank[n] = rs[j]; seed[n] = rnd(); mark[n] = marked[b]
+    }
+    if (marked[b]) tops.push([-W / 2 + (b + 0.5) * bw, per[b] / max * H])
   }
   const geo = new BufferGeometry()
-  geo.setAttribute('position', new BufferAttribute(new Float32Array(M * 3), 3))   // placed in the shader
-  for (const [k, a, sz] of [['aEnd', end, 3], ['aSeed', seed, 1], ['aT', tA, 1], ['aBase', base, 1]]) geo.setAttribute(k, new BufferAttribute(a, sz))
-  const from = o.from || [-W, H, 0]
-  const mat = material(HIST_VERT, {
-    uFrom: { value: new Vector3(from[0], from[1], from[2]) }, uStart: { value: -1 }, uHide: { value: -1 },
-    uFly: { value: fly }, uSize: { value: o.size ?? (per > 1 ? 0.55 : 0.4) }, uAlpha: { value: o.alpha ?? 0.6 },
-    uColor: { value: new Color(o.color || ctx.palette.accent).convertLinearToSRGB() }, uWhite: { value: new Color(1, 0.97, 0.9) },
-  })
+  geo.setAttribute('position', new BufferAttribute(new Float32Array(N * 3), 3))
+  geo.setAttribute('aEnd', new BufferAttribute(end, 3))
+  geo.setAttribute('aRank', new BufferAttribute(rank, 1))
+  geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
+  geo.setAttribute('aMark', new BufferAttribute(mark, 1))
   const pts = new Points(geo, mat); pts.frustumCulled = false
-  const g = new Group(); g.add(pts)
+  g.add(pts)
+  const share = (m) => { m.uniforms.uTime = u.uTime; m.uniforms.uPixelRatio = u.uPixelRatio; return m }
+  if (o.marks && o.lo != null) {
+    // one tick per mark, over its tallest bin
+    const T = 160, tp = [], ts = []
+    for (const [a, b] of o.marks) {
+      let best = -1
+      for (let i = 0; i < nb; i++) { const c = o.lo + (i + 0.5) * o.bin; if (c >= a && c <= b && (best < 0 || counts[i] > counts[best])) best = i }
+      if (best < 0) continue
+      const x = -W / 2 + (best + 0.5) * bw, y0 = counts[best] / unitN / max * H + 0.06 * H
+      for (let i = 0; i < T; i++) { tp.push(x + (rnd() - 0.5) * 0.006 * W, y0 + 0.19 * H * i / (T - 1), 0); ts.push(rnd()) }
+    }
+    const tg = new BufferGeometry()
+    tg.setAttribute('position', new BufferAttribute(new Float32Array(tp), 3)); tg.setAttribute('aSeed', new BufferAttribute(new Float32Array(ts), 1))
+    const tm = share(material(HTICK_VERT, { uSize: { value: u.uSize.value * 1.3 }, uAlpha: { value: 0.55 }, uColor: { value: new Color(...rgb(o.hot || '#fff4dc')) } }))
+    tm.uniforms.uMarkT = u.uMarkT
+    const tk = new Points(tg, tm); tk.frustumCulled = false
+    g.add(tk)
+  }
+  // the rise: grains lift out of the marked peak into what it shows
+  let riseU = null
+  if (o.rise && tops.length) {
+    const R = Math.round(Math.min(o.riseGrains ?? 2400, Math.max(300, (ctx.budget ?? 300000) / 120)))
+    const rp = new Float32Array(R * 3), rd = new Float32Array(R * 3), rs = new Float32Array(R)
+    for (let i = 0; i < R; i++) {
+      const [x, y] = tops[Math.floor(rnd() * tops.length)]
+      rp.set([x + (rnd() - 0.5) * bw, y * (0.55 + 0.45 * rnd()), (rnd() - 0.5) * D], i * 3)
+      const z = 2 * rnd() - 1, ph = rnd() * Math.PI * 2, q = Math.sqrt(1 - z * z), r = Math.cbrt(rnd())
+      rd.set([q * Math.cos(ph) * r, z * r, q * Math.sin(ph) * r], i * 3); rs[i] = rnd()
+    }
+    const rg = new BufferGeometry()
+    rg.setAttribute('position', new BufferAttribute(rp, 3)); rg.setAttribute('aDir', new BufferAttribute(rd, 3)); rg.setAttribute('aSeed', new BufferAttribute(rs, 1))
+    const rm = share(material(HRISE_VERT, {
+      uSize: { value: u.uSize.value * 1.4 }, uAlpha: { value: 0.75 }, uRiseT: { value: 1e9 },
+      uRise: { value: new Vector3(...o.rise) }, uColor: { value: u.uColor.value.clone() }, uHot: { value: new Color(...rgb(o.hot || '#fff4dc')) },
+    }))
+    riseU = rm.uniforms
+    const rk = new Points(rg, rm); rk.frustumCulled = false
+    g.add(rk)
+  }
+  if (o.axis !== false) {
+    const A = 900, ap = new Float32Array(A * 3), as = new Float32Array(A)
+    for (let i = 0; i < A; i++) { ap.set([-W / 2 - 0.012 * W + (W * 1.024) * i / (A - 1), -0.012 * H, 0], i * 3); as[i] = rnd() }
+    const ag = new BufferGeometry()
+    ag.setAttribute('position', new BufferAttribute(ap, 3)); ag.setAttribute('aSeed', new BufferAttribute(as, 1))
+    const am = share(material(HAXIS_VERT, { uSize: { value: u.uSize.value * 0.9 }, uAlpha: { value: 0.5 }, uColor: { value: new Color(...rgb(o.axisColor || '#cfd6ff')) } }))
+    const ax = new Points(ag, am); ax.frustumCulled = false
+    g.add(ax)
+  }
+  let now = 0, played = -100, want = 0, step = 0
+  const at = (k) => steps[Math.max(0, Math.min(steps.length - 1, k))]
+  const marksOn = (to) => !!o.marks && to >= 1 && step >= (o.markStep ?? 1)
+  // the share released by now (landed: `fall` later)
+  const shown = (t = now) => {
+    const x = Math.min(Math.max((t - u.uT0.value) / Math.max(u.uDur.value, 0.01), 0), 1)
+    return u.uFrom.value + (u.uTo.value - u.uFrom.value) * Math.pow(x, 1 / u.uCurve.value)
+  }
+  const setRise = () => { if (riseU) riseU.uRiseT.value = u.uMarkT.value < 1e8 ? u.uMarkT.value + 1.4 : 1e9 }
+  const fill = (from, to, delay = 0.6) => {
+    u.uFrom.value = from; u.uTo.value = to; u.uT0.value = now + delay
+    u.uDur.value = Math.max((to - from) * (o.fill ?? 20), 0.01); played = now
+    u.uMarkT.value = marksOn(to) ? u.uT0.value + u.uDur.value + u.uFall.value + 0.6 : 1e9
+    setRise()
+  }
+  const go = (k, { instant = false } = {}) => {
+    step = k
+    const to = at(k)
+    want = to
+    const cur = shown()
+    if (instant || to <= cur) {
+      const lit = u.uMarkT.value < 1e8
+      u.uFrom.value = to; u.uTo.value = to; u.uT0.value = now - 100; u.uDur.value = 0.01
+      u.uMarkT.value = !marksOn(to) ? 1e9 : instant ? now - 100 : lit ? u.uMarkT.value : now + 0.2
+      setRise()
+      return
+    }
+    fill(cur, to)
+  }
+  let armed = false, armT = 0
+  const hold = () => { u.uFrom.value = 0; u.uTo.value = 0; u.uT0.value = now - 100; u.uDur.value = 0.01; u.uMarkT.value = 1e9; setRise() }
+  const request = (k) => {
+    if (!armed) return go(k)
+    step = k; want = at(k)
+    hold()
+  }
+  const arrive = () => {
+    const was = armed; armed = false
+    if (want <= 0) return
+    if (was) { if (u.uTo.value < want) fill(0, want, 0.3) } else if (now - played > 5) fill(0, want, 0.3)
+  }
+  const off = listen(o.name, request)
+  mat.addEventListener('dispose', off)
+  if (state.has(o.name)) { step = state.get(o.name); want = at(step) }
+  const count = o.count ?? total
+  const api = {
+    arm() { armed = true; armT = now; if (now - played < 1.5) hold() },
+    assemble(t, onDone) { now = t; arrive(); onDone?.() },
+    value: () => Math.round(count * Math.min(1, Math.max(0, shown(now - u.uFall.value)))),
+    busy: () => armed || waiting(o.name)
+      || (u.uTo.value > u.uFrom.value && now < u.uT0.value + u.uDur.value + u.uFall.value)
+      || (u.uMarkT.value < 1e8 && now < u.uMarkT.value + (riseU ? 6.5 : 2.4)),
+  }
+  return {
+    group: g, labels: [], api, frameScale: u.uPixelRatio,
+    update(t) { tick(t); now = t; u.uTime.value = t; if (armed && now - armT > 6) arrive() },
+    dispose: off,
+  }
+}
+
+// ---- figures ------------------------------------------------------------------------
+//   { type: figures, name, pos, items: [{ src, at: [x, y, z], w?: 2.6 }], arrive?: 1.6 (s after
+//     its step until a figure shows), stagger?: 0.12, opacity?: 0.85 }
+// Figures floating in the world, each a plot made from open data (a picture on a plane
+// that turns to face the camera), drawn additively so its dark ground is the world's
+// black. Step k shows the first k (each as its stream gets there: `arrive` s, one after
+// another by `stagger`); 0 lets them fade. They stand at the ends of a `streams` object's
+// streams, `at` the same points.
+function buildFigures(o, ctx) {
+  const g = new Group()
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
-  let now = 0
-  const u = mat.uniforms
+  const base = (import.meta.env?.BASE_URL || '/').replace(/\/$/, '')
+  const url = (src) => (ctx.asset ? ctx.asset(src) : String(src).startsWith('/') ? base + src : src)
+  const loader = new TextureLoader()
+  const items = (o.items || []).map((it, i) => {
+    const mat = new MeshBasicMaterial({ transparent: true, opacity: 0, blending: AdditiveBlending, depthWrite: false, depthTest: false, color: 0xffffff })
+    const mesh = new Mesh(new PlaneGeometry(1, 1), mat)
+    const w = it.w ?? o.w ?? 2.6
+    mesh.scale.set(w, w * 0.625, 1)
+    mesh.position.set(it.at[0], it.at[1], it.at[2]); mesh.visible = false
+    loader.load(url(it.src), (tex) => {
+      tex.colorSpace = SRGBColorSpace; tex.anisotropy = ctx.anisotropy || 4
+      mat.map = tex; mat.needsUpdate = true
+      const im = tex.image; if (im && im.width) mesh.scale.set(w, w * im.height / im.width, 1)
+    }, undefined, () => console.warn('stage: figure failed', it.src))
+    g.add(mesh)
+    return { mesh, mat, i, want: 0, vis: 0, at: -1 }
+  })
+  const arrive = o.arrive ?? 1.6, stagger = o.stagger ?? 0.12, peak = o.opacity ?? 0.85
+  let now = 0, step = state.has(o.name) ? state.get(o.name) : 0
   const go = (k) => {
-    if (k) { u.uStart.value = now; u.uHide.value = -1 }
-    else if (u.uStart.value >= 0 && u.uHide.value < 0) u.uHide.value = now
+    step = k
+    for (const it of items) {
+      const on = it.i < k
+      if (on && it.at < 0) it.at = now + arrive + stagger * it.i
+      if (!on) it.at = -1
+    }
   }
   const off = listen(o.name, go)
-  mat.addEventListener('dispose', off)
-  if (state.has(o.name)) queueMicrotask(() => go(state.get(o.name)))
-  // how many have landed: the k-th sets out at fill·k/N and lands fly later
-  const landed = () => {
-    if (u.uStart.value < 0 || u.uHide.value >= 0) return 0
-    const t = now - u.uStart.value - fly
-    if (t < 0) return 0
-    const shown = o.count ?? total
-    return t >= fill ? shown : Math.min(shown, Math.round(shown * Math.floor(t / fill * N) / Math.max(1, N)))
-  }
-  const busy = () => waiting(o.name) || (u.uStart.value >= 0 && (u.uHide.value >= 0 ? now - u.uHide.value < 1.3 : now - u.uStart.value < fill + fly + 0.1))
+  if (step) queueMicrotask(() => go(step))
+  const tw = new Vector3()
+  const busy = () => waiting(o.name) || items.some((it) => Math.abs((it.at >= 0 && now >= it.at ? 1 : 0) - it.vis) > 0.01)
   return {
-    group: g, labels: [], api: { busy, value: landed }, frameScale: mat.uniforms.uPixelRatio,
-    update(t) { tick(t); now = t; mat.uniforms.uTime.value = t },
+    group: g, labels: [], api: { busy },
+    update(t, camPos) {
+      tick(t); now = t
+      for (const it of items) {
+        const want = it.at >= 0 && t >= it.at ? 1 : 0
+        it.vis += (want - it.vis) * 0.06
+        it.mat.opacity = peak * it.vis
+        it.mesh.visible = it.vis > 0.01
+        if (it.mesh.visible && camPos) { it.mesh.getWorldPosition(tw); it.mesh.lookAt(camPos) }
+      }
+    },
+    dispose: off,
+  }
+}
+
+// ---- backdrop -----------------------------------------------------------------------
+//   { type: backdrop, name, pos, src, depth?: <src>.depth.png, yaw?: 0, width?: 300,
+//     cols?: 600 (half on a phone), relief?: 0.25, dim?: 0.6 }
+// A photograph standing far off in the world as a relief of grains (the engine's photo
+// place, without a slide of its own: nothing flies to it or flattens it), behind a scene
+// that would otherwise stand in empty black. Step 1 fades it in over a few seconds, 0 out.
+function buildBackdrop(o, ctx) {
+  const g = new Group()   // at the station's origin: the relief stands at o.pos itself
+  const base = (import.meta.env?.BASE_URL || '/').replace(/\/$/, '')
+  const url = (src) => (ctx.asset ? ctx.asset(src) : String(src).startsWith('/') ? base + src : src)
+  const load = (src) => new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = url(src) })
+  const cols = Math.round((o.cols ?? 600) * ((ctx.tier ?? 0) >= 2 ? 0.5 : 1))
+  let handle = null, failed = false, vis = 0
+  let want = state.has(o.name) && state.get(o.name) ? 1 : 0
+  Promise.all([load(o.src), load(o.depth || String(o.src).replace(/\.[^.\/]+$/, '.depth.png'))]).then(([image, depth]) => {
+    handle = createPhotoPlace({ image, depth, pos: o.pos || [0, 0, 0], yaw: o.yaw ?? 0, width: o.width ?? 300, cols, relief: o.relief ?? 0.25 })
+    handle.set({ dim: o.dim ?? 0.6, opacity: vis })
+    g.add(handle.object)
+  }).catch(() => { failed = true; console.warn('stage: backdrop failed', o.src) })
+  const off = listen(o.name, (k) => { want = k ? 1 : 0 })
+  const busy = () => waiting(o.name) || (!failed && want > 0 && !handle) || Math.abs(want - vis) > 0.01
+  return {
+    group: g, labels: [], api: { busy },
+    update(t) {
+      tick(t)
+      vis += (want - vis) * 0.04
+      if (handle) handle.set({ opacity: vis })
+      g.visible = vis > 0.005
+    },
+    dispose() { off(); handle?.dispose() },
   }
 }
 
@@ -1228,5 +1478,7 @@ export function installGrains(registerBuilder) {
   registerBuilder('floor', buildFloor, { fields: ['pos'], enterable: true })
   registerBuilder('portraits', buildPortraits, { fields: ['pos', 'name', 'people'] })
   registerBuilder('collision', buildCollision, { fields: ['pos', 'name', 'tracks'] })
-  registerBuilder('histogram', buildHistogram, { fields: ['pos', 'name', 'bins'] })
+  registerBuilder('histogram', buildHistogram, { fields: ['pos', 'name'] })
+  registerBuilder('figures', buildFigures, { fields: ['pos', 'name', 'items'] })
+  registerBuilder('backdrop', buildBackdrop, { fields: ['pos', 'name', 'src'] })
 }
