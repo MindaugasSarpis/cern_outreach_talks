@@ -17,6 +17,7 @@ stage:
   space: data/space.json
   palette: { base: blue, bg: '#04040c', accent: '#5b6fd6', dust: '#5b4fd6', dustBright: '#ebe6ff', nebula: '#3a2a9e', nebulaAlt: '#0f6e86', sky: '#9a8cff', fill: '#c9b8ff', highlight: '#fff0d0', dim: '#a39dc0' }
   options: { dustSize: 2.2, reach: 22, nebula: 0.4 }
+  sound: { flight: false, clip: false }
 title: Vadovėlio gale atsakymo nėra
 duration: 12min
 sources: notes

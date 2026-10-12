@@ -243,6 +243,13 @@ since the opening replaced the cavern photograph, so no credit is on screen.
 
 ## Decisions
 
+- 2026-10-13 — No transition sounds. The owner, to OpenData after the boom
+  went: "transitions were like driving sounds". The stage block has
+  `sound: { flight: false, clip: false }`: no whoosh on a camera flight, no
+  rising tone as a dust clip condenses (OpenData and Innoday did the same).
+  The sounds that stay are the hum (slides 1 and 3 have `hum: false` anyway),
+  the tunnel clip's own audio, the LHCb reel's music, and the opening's swell,
+  thump and drone through `ctx.audio()`.
 - 2026-10-11 — The shared LHC opening (components/lhc-opening/, built by
   OpenData; the owner: "start with the real video of LHC, then go into it, make
   everything black and show really exciting collision ... then we go to 3d lhcb
