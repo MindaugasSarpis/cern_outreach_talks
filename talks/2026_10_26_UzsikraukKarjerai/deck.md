@@ -90,8 +90,8 @@ the beam pipe and cross; the world nearly stops at the crossing while the camera
 keeps moving round it, then runs on fast as the debris flies out: 237 particles
 bending in LHCb's magnet, stopping in the calorimeter in splashes of energy, the
 muons running on. „8 TeV“ at the crossing, „237 dalelės“ as it flies apart. A
-low swell, a thump at the crossing, the boom as it flies apart: quiet enough to
-talk over. → for the LHCb clip.
+low swell, a thump at the crossing, a low drone that fades over four seconds as
+it flies apart: quiet enough to talk over. → for the LHCb clip.
 
 The event: one real crossing from LHCb's 2012 open data (CERN Open Data record
 24506, run 133488), the same as OpenData's; components/lhc-opening/README.md
