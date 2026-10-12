@@ -54,7 +54,13 @@ since the opening replaced the cavern photograph, so no credit is on screen.
 
 ## Status
 
-- 2026-10-12 (latest): **deployed e507bf7** under the standing rule ("Deploy
+- 2026-10-13 (latest): **deployed c14d350** under the standing rule: the
+  stage's flight whoosh and clip tone off (b7e1cce), slide 3's notes after the
+  opening's fly-out fix (73da04c, lhc-opening 27e9837), and main 51b0021.
+  `talk ready` passed with nothing skipped, Pages run 38316339426 green, URL
+  200, live bundle carries `sound:{flight:!1,clip:!1}`. Sound not heard (headless):
+  the owner's listen is the check. The morning list is still open.
+- 2026-10-12: **deployed e507bf7** under the standing rule ("Deploy
   all"): the notes commit fb01b22 and main 3fe3545 (OpenData, Innoday's CMS
   swap, Tokyo's notes); the deck is unchanged. `talk ready` passed with nothing
   skipped, Pages run 38289206455 green, URL 200. The morning list is still open.
