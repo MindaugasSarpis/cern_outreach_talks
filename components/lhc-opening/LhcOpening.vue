@@ -8,15 +8,18 @@
 // rule): at the crossing the collision's energy, as the debris flies out the count
 // of its particles (the event's tracks). <LhcOpening part="tunnel" /> on the tunnel
 // clip's slide names the machine: LHC, 27 km. Printed, both of the collision's
-// show at once.
+// show at once. The numbers are LHCb's event's; a talk that draws another gives
+// its own: <LhcOpening name="opening" :tev="8" :count="290" /> (CMS's).
 import { ref, computed, onBeforeUnmount } from 'vue'
 import { onSlideEnter, onSlideLeave, useNav } from '@slidev/client'
 import { bus } from './bus.js'
-import { captions } from './captions.js'
+import { captions, collisionCaptions } from './captions.js'
 
 const props = defineProps({
   name: { type: String, default: 'opening' },
   part: { type: String, default: 'collision' },   // 'collision' | 'tunnel'
+  tev: { type: Number, default: undefined },       // the collision's energy
+  count: { type: Number, default: undefined },     // the particles drawn
 })
 const { isPrintMode } = useNav()
 const printing = computed(() => !!isPrintMode.value)
@@ -35,7 +38,7 @@ onSlideLeave(() => {
   if (props.part !== 'collision') return
   bus.set(props.name, 0); bus.emit('stop', { name: props.name })
 })
-const c = captions
+const c = computed(() => ({ ...captions, ...collisionCaptions({ tev: props.tev, count: props.count }) }))
 </script>
 
 <template>

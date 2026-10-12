@@ -4,11 +4,19 @@ A talk's first minute, shared by the decks that start with it (OpenData first,
 Užsikrauk karjerai next): the real LHC tunnel → on into the beam pipe → black →
 one real collision in slow motion → the deck's own LHCb clip. No text.
 
+The collision is LHCb's by default; `"event": "cms"` on the object draws a CMS
+crossing instead, whose debris flies out to every side (OpenData's, from 12
+October 2026: the owner asked for a collision "better resolved and symmetric to
+all sides" and chose "a real CMS event, 4π").
+
 | piece | file |
 | --- | --- |
 | the collision, a stage builder `lhc-collision` | `collision.js` |
 | the event's particle paths (LHCb's states, its magnet) | `event.js` |
 | the event: one real 2012 LHCb crossing, from CERN open data | `event.json` |
+| `"event": "cms"`: the CMS drawing, sharp grains in 4π | `collision-cms.js` |
+| its paths (helices in CMS's solenoid, the muons, the cells) | `cms.js` |
+| its event: one real 2012 CMS crossing, from CERN open data | `event-cms.json` |
 | the sound, synthesised (no files) | `sound.js` |
 | `<LhcOpening name="opening" />`, the slide's trigger and captions | `LhcOpening.vue` |
 | the captions' words, in Lithuanian | `captions.js` |
@@ -29,6 +37,12 @@ one real collision in slow motion → the deck's own LHCb clip. No text.
    237 reconstructed tracks bending in LHCb's dipole, splashes of energy in the
    ECAL (153 real clusters) and HCAL, the muons running on through the muon
    stations. A low swell, a thump at the crossing, the boom on the fly-out.
+
+   With `"event": "cms"` the same run draws the CMS crossing: the flash lights
+   each of its 19 collisions along the beam, and the debris flies out to every
+   side, 290 tracks curling on their helices in CMS's 3.8 T solenoid out to the
+   calorimeters, whose cells light all round (the ECAL warm, the HCAL light
+   blue), the two muons running on out through the muon chambers.
 3. **The deck's LHCb clip** (OpenData: `lhcb.mp4`).
 
 **Captions** (the owner: "And the captions?"; a number and the word that names
@@ -36,6 +50,24 @@ it, nothing more): over the tunnel „LHC 27 km“; at the crossing „8 TeV“ 
 2012 event's collision energy); as the debris flies out „237 dalelės“ (the
 event's good tracks, the noun in the case its number takes). White numbers,
 light-blue words, low on the left; printed, the collision's two show together.
+A talk that draws the CMS event gives its numbers on the slide,
+`<LhcOpening name="opening" :count="290" />` (`:tev` too, if it differs from
+8): „8 TeV“ and „290 dalelių“.
+
+**Sharp grains** (the CMS drawing; the owner on the LHCb one: "the collision
+should be more in focus, it was blurry until the last frame"). LHCb's drawing
+sizes a grain by perspective (72 / depth) with a soft sprite, and its camera
+stands 2–3.4 units from the vertex for most of the shot: a track's grain is
+7–10 px across at 900 rows (a tenth of them 15–21 px, a head up to 1.8× more),
+a soft blob, and only the last pull-back (8.4 units) brings them to 5 px. They
+also cost 13–17 million fragments a frame at 900 rows, 2.6× that on a 4K
+canvas, enough to slow a laptop under the engine's 40 fps guard, which then
+drops the resolution to 0.7 and 0.5 and never raises it. `collision-cms.js`
+draws hard grains (full to the edge, the edge one pixel wide) of 1.8 px at 900
+rows, at most 1.35× that when close (1.5–2.4 px through the shot); trails are
+lines of them, dense near the vertex where the camera stands close, sparser
+outward where it has pulled back; a head is brighter, not larger; a deposit is
+a thin spike, not a cloud: 0.4–0.9 million fragments a frame.
 
 ## The event
 
@@ -55,6 +87,34 @@ the full record (event-full.json) are in the OpenData talk's cache
 The drawing stretches distances across the beam 2.4× (as LHCb's event displays
 do: its tracks run within a few degrees of the beam), and runs every particle at
 one speed (all of them near light speed).
+
+### The CMS event (`"event": "cms"`)
+
+`event-cms.json` is `Events/Run_195099/Event_137440354` of `4lepton.ig`, CERN
+Open Data record 300 (CMS, "Higgs candidate events for use in education and
+outreach", DOI 10.7483/OPENDATA.CMS.N9MJ.QEEC, CC0): 2012, √s = 8 TeV
+(Run2012B), full reconstruction (RECO, CMSSW 5_3); run 195099, lumi section 115
+(in the 8 TeV validated-runs list, record 1002), event 137440354, 27 May 2012,
+23:35:47 UTC. A Higgs → ZZ → 2e2μ candidate: the four leptons' mass 127.05 GeV
+(record 300's 4lepton.csv: 127.047752639), Z → μμ at 75.8 GeV, Z* → ee at 29.3
+GeV; the open-data H → 4ℓ example (record 5200) selects the same event. The
+bunch crossing holds 19 reconstructed collisions (z from −7.7 to +8.9 cm); 27
+of the drawn tracks come from the Higgs candidate's.
+
+Drawn: the first `nGood` = 290 of its 523 tracks (≥ 8 hits, χ²/ndof ≤ 5, ≤ 1 cm
+from the beam line; the four leptons pass it), each a helix in 3.8 T along the
+beam from its own pT, η, φ and charge (the file's own checks: the helix meets
+its last hit within 4.5 mm, the median) out to the ECAL's front (ρ = 1.29 m or
+|z| = 3.18 m); the 40 that curl inside the tracker for one turn, fading after
+their last hit. The muons go on along iSpy's propagated points, a cubic to the
+muon system's own track where those stop short, and a metre on. The
+calorimeter hits (EB ≥ 0.25 GeV, EE ≥ 1, HB ≥ 0.5, HE and HO ≥ 1; 859 cells,
+the forward HF left out: 5.6 TeV of mostly pile-up 11–13 m down the beam) are
+spikes from each cell's front along the cell, √E long (0.12 m per √GeV in the
+ECAL, 0.2 in the HCAL). One unit is one metre (`scale`), nothing stretched; CMS's
+beam runs along the world's x, where the bunches run, and the frame is turned,
+not mirrored, so every curl keeps its hand. The extraction (stdlib Python) and
+its checks are in the OpenData talk's cache (`~/talks/.cache/opendata/r3/cms/`).
 
 ## Adopting it in a talk
 
@@ -101,6 +161,27 @@ one speed (all of them near light speed).
    crossing is timed for these `rate` keys (`approach: 3.32` engine-seconds
    puts it where the world is nearly still); change one, re-time the other.
 
+   The CMS event (OpenData's slide 3): `"event": "cms"` on the object, the
+   slide's own numbers on `<LhcOpening>`, and a shot of its own. The run-in and
+   the crossing keep the keys above (and so the sound's timing); the fly-out is
+   slower, since CMS is the size of a house where LHCb's drawing ran 10 units
+   down the beam, and the camera stands close in the freeze and pulls back
+   with the debris, turning round the vertex a little off the beam, so the
+   curls across the beam and the spread along it both show:
+
+       rate: [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.6, 1.0], [8.0, 1.0], [9.0, 1.8], [11, 1.8], [12, 1]]
+       cameraRate: 1
+       path:
+         - [0, { at: [0, -400, 0], dist: 4.2, yaw: 18, pitch: 5 }]
+         - [2.6, { at: [0, -400, 0], dist: 2.4, yaw: 32, pitch: 8 }]
+         - [5.6, { at: [0, -400, 0], dist: 1.5, yaw: 70, pitch: 14 }]
+         - [6.6, { at: [0, -400, 0], dist: 3.2, yaw: 66, pitch: 15 }]
+         - [8.0, { at: [0, -400, 0], dist: 5.6, yaw: 60, pitch: 16 }]
+         - [9.5, { at: [0, -400, 0], dist: 8.0, yaw: 54, pitch: 18 }]
+         - [11, { at: [0, -400, 0], dist: 7.8, yaw: 46, pitch: 18 }]
+
+       <LhcOpening name="opening" :count="290" />
+
 ## Options (the object in space.json)
 
 `approach` (3.32), `bunch` (8 units/s), `light` (5.5 units/s, the debris),
@@ -109,3 +190,12 @@ one speed (all of them near light speed).
 `splashTone`, `bunchColor`, `seed`, `sound: false`, `level` (0.32, the sound's
 gain into the stage's output). The grain count follows `ctx.budget` (300k on a
 desktop, 60k on a phone).
+
+With `"event": "cms"`: `approach` (3.32), `bunch` (8), `light` (1.6 units/s),
+`scale` (1 unit per metre, the same every way), `pipe` (26), `pipeR` (0.05),
+`grain` (1.8 px at 900 rows), `flash` (0.012, one collision's flash core),
+`calo` (`["EB", "EE", "HB", "HE", "HO"]`; add `"HF"` for the forward
+calorimeter), `tone` (the tracks), `muonTone`, `ecalTone`, `hcalTone` (light
+blue), `bunchColor`, `seed`, and the sound's `sound`, `level`. At the desktop
+tier it draws about 200k grains (106k and 41k at the lower two), each one to
+two pixels.

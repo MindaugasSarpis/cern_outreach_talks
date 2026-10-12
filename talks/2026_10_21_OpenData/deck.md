@@ -92,29 +92,44 @@ space:
   dim: 0
   ambient: 0
   hum: false
-  rate: [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.4, 2.2], [8.5, 1]]
+  rate: [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.6, 1.0], [8.0, 1.0], [9.0, 1.8], [11, 1.8], [12, 1]]
   cameraRate: 1
   path:
-    - [0, { at: [0, -400, 0], dist: 3.4, yaw: 28, pitch: 4 }]
-    - [2.6, { at: [0, -400, 0], dist: 2.3, yaw: 16, pitch: 6 }]
-    - [5.6, { at: [0, -400, 0], dist: 2.0, yaw: -24, pitch: 13 }]
-    - [7.8, { at: [2.4, -400, 0], dist: 6.0, yaw: -30, pitch: 12 }]
-    - [10.5, { at: [3.4, -400, 0], dist: 8.4, yaw: -32, pitch: 13 }]
+    - [0, { at: [0, -400, 0], dist: 4.2, yaw: 18, pitch: 5 }]
+    - [2.6, { at: [0, -400, 0], dist: 2.4, yaw: 32, pitch: 8 }]
+    - [5.6, { at: [0, -400, 0], dist: 1.5, yaw: 70, pitch: 14 }]
+    - [6.6, { at: [0, -400, 0], dist: 3.2, yaw: 66, pitch: 15 }]
+    - [8.0, { at: [0, -400, 0], dist: 5.6, yaw: 60, pitch: 16 }]
+    - [9.5, { at: [0, -400, 0], dist: 8.0, yaw: 54, pitch: 18 }]
+    - [11, { at: [0, -400, 0], dist: 7.8, yaw: 46, pitch: 18 }]
 ---
 
-<LhcOpening name="opening" />
+<LhcOpening name="opening" :count="290" />
 
 <!--
 One real collision in the black: two bunches of protons run in along the beam
-pipe, cross, and the world nearly stops at the crossing while the camera keeps
-moving round it; then it runs on fast as the debris flies out, hundreds of
-particles bending in LHCb's magnet, stopping in the calorimeter in splashes of
-energy, the muons running on. A low swell, a thump at the crossing, the boom as
-it flies apart: quiet enough to talk over. → for the LHCb clip.
+pipe, cross, every collision in the crossing flashes, and the world nearly stops
+while the camera keeps moving round it; then the debris flies out to every side,
+each charged particle curling on its own helix in CMS's 3.8 T magnet, its energy
+lighting the calorimeters' cells all round, the two muons running on out through
+the muon chambers. A low swell, a thump at the crossing, the boom as it flies
+apart: quiet enough to talk over. → for the LHCb clip.
 
-The event: one real crossing from LHCb's 2012 open data (CERN Open Data record
-24506), drawn from its reconstructed tracks; components/lhc-opening/event.json
-has its provenance.
+On screen: „8 TeV“, the collision energy (2012: two 4 TeV beams), and „290
+dalelių“, the tracks drawn: the charged particles CMS reconstructed that pass the
+display's quality cut. It is one bunch crossing with 19 proton–proton collisions
+in it; only 27 of the 290 come from the Higgs candidate's own collision.
+
+The event: CMS, run 195099, lumi section 115, event 137440354, recorded 27 May
+2012 at 23:35:47 UTC, √s = 8 TeV. A Higgs-boson candidate (H → ZZ → 2e2μ, the
+four leptons' mass 127 GeV) that CMS released for education: CERN Open Data
+record 300 (DOI 10.7483/OPENDATA.CMS.N9MJ.QEEC, CC0), file 4lepton.ig; the
+open-data H → 4ℓ example (record 5200) picks the same event. A CMS event, not an
+LHCb one, because CMS surrounds the collision and its debris flies out to every
+side (the owner's choice). Drawn from its own reconstruction: each track's helix
+from its momentum, direction and charge, the calorimeter hits in their cells,
+the muons along their chambers. components/lhc-opening/event-cms.json has its
+provenance.
 
 (~0.2 min)
 -->
