@@ -191,7 +191,7 @@ space: { at: [12.5, 1.4, 5.0], dist: 13.8, yaw: 73, pitch: 7.5, dim: 0.15 }
 
 </div>
 
-<!-- facts: lhcb-open-data-first-release-2022, lhcb-run1-volume-sources-differ, lhcb-run1-release-sarpis, sarpis-phd-bonn-2023, lhcb-open-data-coordinator-2026 -->
+<!-- facts: lhcb-open-data-first-release-2022, lhcb-run1-volume-sources-differ, lhcb-run1-release-sarpis, sarpis-phd-bonn-2023 -->
 
 <!--
 Message: in 2023 all of LHCb's first run became public, and I prepared it.
@@ -199,15 +199,16 @@ Message: in 2023 all of LHCb's first run became public, and I prepared it.
 Sakyti: „Pirmą kartą didelę dalį duomenų, 200 terabaitų, LHCb
 paskelbė 2022 m. gruodį. 2023 m. gruodį viešai paskelbti visi 2011–2012 m. protonų
 susidūrimų duomenys, apie 800 terabaitų. Šį rinkinį paskelbti parengiau
-aš, tuo metu rašydamas disertaciją Bonoje. Darbas, kartu su pasiruošimu, truko beveik dvejus metus:
-šimtus tūkstančių failų reikėjo nukopijuoti į atskirą saugyklą ir patikrinti. Nuo šių metų rugpjūčio esu viso LHCb eksperimento analizių
-išsaugojimo ir atvirųjų duomenų koordinatorius.“
+aš, tuo metu rašydamas disertaciją Bonoje. Darbas truko beveik dvejus metus:
+šimtus tūkstančių failų reikėjo nukopijuoti į atskirą saugyklą ir patikrinti.“
+
+(The coordinator role is said on the Vilnius slide.)
 
 Šaltiniai: opendata.cern.ch, „LHCb releases entire Run 1 dataset“ (2023-12-20);
 VU Fizikos fakulteto naujienos; M. Šarpis, PhD thesis, University of Bonn
-(2023); VU naujienos (2026-07-30).
+(2023).
 
-(~0.5 min)
+(~0.4 min)
 -->
 
 ---
@@ -273,43 +274,44 @@ data per year“); LHCb, arXiv:2504.00610 (atvirųjų duomenų politika).
 -->
 
 ---
-space: { at: [6, 12, -32], dist: 84, yaw: -2, pitch: 5, sway: 4, flight: 5, dim: 0.15 }
+space: { at: [-7, 11, -27], dist: 78, yaw: -2, pitch: 5, sway: 4, flight: 5, dim: 0.15 }
 ---
 
 <Grains :set="{ vault: 1, scale: [0, 1, 2, 3, 4], 'scale:labels': 0, collision: 0, world: 0, vilnius: 0, dominykas: 0, team: 0 }" />
 
 <div class="readout steel last">
 
-<div class="big"><Count name="lhc" :from="0" :to="2000000" :delay="5200" :ms="900" /><span class="unit">TB</span></div>
+<div class="big"><Count name="lhc" :from="0" :to="1300000" :delay="5200" :ms="900" /><span class="unit">TB</span></div>
 
 <p class="caption">CERN mokslo duomenys</p>
 
 </div>
 
-<!-- facts: cern-exabyte, cern-second-500pb-run3 -->
+<!-- facts: cern-physics-data-tape-1p3eb, cern-exabyte -->
 
 <!--
-Message: the whole LHC has stored ten times as much again.
+Message: CERN keeps thirteen times as much again.
 
-Sakyti: „O visų LHC eksperimentų duomenų 2025 m. gruodį jau buvo sukaupta
-eksabaitas – milijonas terabaitų, maždaug dešimt kartų daugiau nei LHCb. Tokia
-nešiojamųjų kompiuterių krūva būtų dvidešimties kilometrų aukščio, daugiau nei
-dukart aukštesnė už Everestą. Didžioji šių duomenų dalis įrašyta į maždaug
-60 tūkstančių magnetinių juostų.“
+Motion: thirteen piles the size of LHCb's stand behind it and merge into one.
 
-Scale, worked out: a laptop about 2 cm thick holding 1 TB; 10⁶ × 2 cm = 20 km
-(Everest 8,85 km); LHCb's 100 PB = 10⁵ laptops = 2 km. Why the piles on screen
-look only about twice as wide: volume grows as width cubed, so ten times the
-spheres is 10^(1/3) ≈ 2,15 times the width. (If a terabyte were a 1 cm marble,
-close-packed, the exabyte would be a heap only 1,1 m across, which is why the
-talk uses the stack of laptops.)
+Sakyti: „O visų CERN eksperimentų fizikos duomenų CERN jau saugo 1,3 milijono
+terabaitų, arba 1,3 eksabaito – trylika tokių krūvų kaip LHCb. Tokia
+nešiojamųjų kompiuterių krūva būtų 26 kilometrų aukščio, beveik triskart
+aukštesnė už Everestą. Šie duomenys saugomi magnetinėse juostose, tokiose
+saugyklose kaip ši.“
 
-Šaltiniai: home.cern, „CERN hits one exabyte of stored experimental data from
-the LHC“ (2025-12-17).
+Scale, worked out: a laptop about 2 cm thick holding 1 TB; 1,3 × 10⁶ × 2 cm =
+26 km (Everest 8,85 km); LHCb's 100 PB = 10⁵ laptops = 2 km. Why the merged
+pile looks only about twice as wide as LHCb's: volume grows as width cubed, so
+thirteen times the spheres is 13^(1/3) ≈ 2,35 times the width. The LHC alone
+passed one exabyte in December 2025 (home.cern), mostly on about 60 000 tapes.
+
+Šaltiniai: CERN Annual Progress Report 2025 (CERN/3980/Rev, 2026-06-10), p. 17
+(„Total physics data on Tape … Amount of data stored: 1.30 EB“); home.cern,
+„CERN hits one exabyte of stored experimental data from the LHC“ (2025-12-17).
 
 (~0.4 min)
 -->
-
 ---
 space: { at: [20, 5.5, -3], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }
 ---
@@ -335,17 +337,16 @@ Sakyti: „Atviruosius duomenis naudotis gali kiekvienas. Visų keturių
 petabaitų siųstis nereikia: nurodai, kokio skilimo nori, ir LHCb duomenų
 atrankos paslauga parenka tau reikalingus susidūrimus. Šiuos grafikus
 padarėme patys iš dviejų viešų failų. Rugsėjį du Browno universiteto fizikai
-paskelbė tyrimą, atliktą su LHCb atviraisiais duomenimis. Vienas iš
-straipsnio apie šią paslaugą autorių, Adamas Morrisas, dabar dirba LHCb Vilnius
-grupėje.“
+paskelbė tyrimą, atliktą su LHCb atviraisiais duomenimis.“
 
 Background, if asked: more than 30 requests to the Ntupling Service between its
 February release and 25 May 2026 (P. Nogga et al., CHEP 2026, slide 11); the
-DPHEP Global Report 2026 counted about twenty, mostly from theorists.
+DPHEP Global Report 2026 counted about twenty, mostly from theorists. Adam
+Morris (co-author of the service's paper) is said on the next slide.
 
 Šaltiniai: DPHEP Global Report 2026; arXiv:2609.09275; arXiv:2302.14235.
 
-(~0.5 min)
+(~0.4 min)
 -->
 
 ---
@@ -451,21 +452,24 @@ space: { at: [23.0, 1.0, 11.0], dist: 6.8, yaw: 0, pitch: 6, dim: 0.1 }
 </div>
 
 <!--
-PROTOTYPE (od-story-everyday, slide 6): the course. A stream leaves the gold
-pile for the course, and the course file's D⁰ → K⁻π⁺ candidates stack into
-their mass histogram, one grain each, in the order they come out of the file:
-the D⁰ peak grows out of the background as the count runs to 91 583. (The
-photo of the course room comes when the owner sends it.)
+Message: the course's students work on this very file.
 
-Gist (section G): every student in the course „Geriausios tyrimų ir duomenų
-analizės praktikos iš CERN“ works on the same open LHCb file, 92 thousand
-candidates.
+Motion: a stream leaves the gold pile for the course, and the course file's
+D⁰ → K⁻π⁺ candidates stack into their mass histogram, one grain each, in the
+order they come out of the file: the D⁰ peak grows out of the background as the
+count runs to 91 583. (The photo of the course room comes when the owner sends
+it.)
+
+Sakyti: „Štai tas kurso failas. Kiekvienas grūdelis – vienas D⁰ mezono
+kandidatas, ir iš fono išauga D⁰ smailė.“
 
 The file: CERN Open Data record 401 (MasterclassData.root, DecayTree, D0_MM):
 91 583 candidates; drawn 90 120 of them in 1816–1914 MeV, 56 bins; the peak
 at 1864.5 MeV, σ 7.7 MeV.
 
-(~0.5 min)
+Šaltiniai: CERN Open Data record 401; VU kurso užduočių sąsiuvinis.
+
+(~0.3 min)
 -->
 
 ---
@@ -492,9 +496,11 @@ Sakyti: „Šiuose duomenyse LHCb randa naujų dalelių. LHC eksperimentai atrad
 86 naujus hadronus – iš kvarkų sudarytas daleles. 76 iš jų rado LHCb. 2015 m. LHCb atrado
 pentakvarkus, penkių kvarkų daleles, numatytas dar 1964 m. Dešinėje – 2019 m.
 matavimas su devynis kartus didesniu duomenų kiekiu, kuriame matyti
-trys siauros smailės. O 2025 m. LHCb pirmą kartą
-pamatė, kad materija ir antimaterija barionuose – protono ir neutrono šeimoje –
-elgiasi skirtingai.“
+trys siauros smailės.“
+
+If time allows: in 2025 LHCb saw for the first time that matter and antimatter
+behave differently in baryons, the proton's and neutron's family (Nature 643
+(2025) 1223).
 
 The slide is opaque, as the next one: two plots in a row, LHCb's and then a student's.
 
@@ -502,7 +508,7 @@ The slide is opaque, as the next one: two plots in a row, LHCb's and then a stud
 įrašas 2026-09-21); LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001
 (grafikas); LHCb, Nature 643 (2025) 1223.
 
-(~0.6 min)
+(~0.45 min)
 -->
 
 ---
