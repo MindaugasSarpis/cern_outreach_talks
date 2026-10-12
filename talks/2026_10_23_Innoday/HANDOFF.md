@@ -504,4 +504,7 @@ workflows; agent reports in the session scratchpad):
   ~/talks/.cache/innoday/retired-clips/ (vu_ff_unzoom's raw exists only there).
 - Flagged to the owner: lhcb.mp4's music (probably a commercial film score),
   vm_zoom's music and the NCSA web's licence (unverified), the CERN CC credits.
+- Deployed d9f3abb, Pages run 38272139749 (green), URL 200, live walk 31/31;
+  the two new clips published first with `--only` (sizes match the encodes,
+  both serve 206 from the release).
 
