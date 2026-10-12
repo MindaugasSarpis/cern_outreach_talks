@@ -6,20 +6,26 @@ import Strands from './Strands.vue'
 import AfterFlight from './AfterFlight.vue'
 import WebTakeover from './WebTakeover.vue'
 import OpenerStart from './OpenerStart.vue'
+import CollisionStart from './CollisionStart.vue'
+import { installOpening } from '../components/lhc-opening/index.js'
 
 // <Count> counts a slide's big number up as the slide arrives; <WebTakeover>
 // turns the opener's last frame into the world's grains; <OpenerStart> holds
-// the opener, the deck's first slide, on its first frame until the first
-// press; `strands` (the talk's own world form) joins the engine's registry
-// before the stage boots.
+// the opener on its first frame until the first press when the deck is opened
+// at it (the title slide's press is the gesture otherwise); `strands` (the talk's own world form) joins the engine's registry
+// before the stage boots. The shared LHC collision (components/lhc-opening, as
+// in OpenData and Užsikrauk karjerai) registers `lhc-collision` and
+// <LhcOpening>; <CollisionStart> starts one on „Ačiū“ without its captions.
 // (A plain function: Slidev's defineAppSetup is the identity, and
 // @slidev/types is not a dependency of the talk.)
 export default ({ app }) => {
   installStrands(registerBuilder)
   installFunnel(registerBuilder)
+  installOpening({ app, registerBuilder })
   app.component('Count', Count)
   app.component('Strands', Strands)
   app.component('AfterFlight', AfterFlight)
   app.component('WebTakeover', WebTakeover)
   app.component('OpenerStart', OpenerStart)
+  app.component('CollisionStart', CollisionStart)
 }

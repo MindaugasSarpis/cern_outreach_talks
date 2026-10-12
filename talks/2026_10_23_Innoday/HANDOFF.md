@@ -470,3 +470,38 @@ workaround held, then v0.8.1 fixed it and the workaround went. Rasterised PDFs
 export's 4 s wait was marginal here (twice "Loading slide…" or play icons and
 fallback fonts); `-- --wait 12000` gave a whole PDF. Stills reshot on v0.8.0
 and v0.8.1.
+
+## The owner's restructure (2026-10-12)
+
+The owner's list in this window, built the same day (research and build by
+workflows; agent reports in the session scratchpad):
+- Title back (the old cover, `at: wide`); the opener is now `vu_zoom_web.mp4`,
+  the owner's SpaceEngine edit spaceengine/vm_zoom.mp4 cut at 167.4 s, before
+  its crossfade into the CMB (2:47, ends held on the cosmic web, a 3 s audio
+  fade; NCSA AVL "Cosmic Bubble Bath" is the web). The takeover frame is that
+  web. The slide-2 move is a one-key `path` (no flight whoosh over the clip).
+- Funnel: dark ages empty, a dense hot band of proto-galaxies, then galaxies
+  that grow, cool and spread to the mouth (funnel.js: dawn 0.32, peak 0.37,
+  thin 0.11, rest 0.05, sparks 1200; 181 544 grains). Hum only on the funnel
+  and the dive (`hum: false` on every other slide).
+- Part I: CERN overview → the LHC tunnel clip (3:00–3:39.5 of
+  CERN-FOOTAGE-2022-013-001, talk-owned, its four numbers over it, `exit="push"`
+  into) → the shared collision (components/lhc-opening, LHCb 2012 crossing as a
+  stand-in for the owner's CMS 4π pick) → `lhcb.mp4` (the same 3D animation
+  with music; the raw CERN-FOOTAGE-2022-042-001's audio is all zeros) → LHCb
+  numbers over the 2022 collaboration photo → eight LHCb result figures as
+  `page` sheets with „875 straipsniai“.
+- Sections „O kur tai pritaikoma?“, „O kaip komercializuoti?“, „Lietuvos
+  istorija CERN“; captions name · year · machine; 613 mln. CHF after 700+; the
+  FCC as the 2025 map clip; the reverse zoom dropped; „Ačiū“ over a slow,
+  close collision (`thanks`), credits in tiny print.
+- New facts: lhcb-papers-2026-10, lhcb-collaboration-sep-2026,
+  lhcb-readout-32tbps-spc-2026, internet-intl-bandwidth-2022,
+  lhcb-figure-2026-010-hadrons, gave-timepix-2006, gave-white-rabbit-2008,
+  hllhc-mgb2-line-2014. New photo record CERN-PHOTO-202206-112-6.
+- Clips to publish at deploy (only these): vu_zoom_web.mp4,
+  cern_footage_2022_013_001_1080p_lhc.mp4. Retired local copies moved to
+  ~/talks/.cache/innoday/retired-clips/ (vu_ff_unzoom's raw exists only there).
+- Flagged to the owner: lhcb.mp4's music (probably a commercial film score),
+  vm_zoom's music and the NCSA web's licence (unverified), the CERN CC credits.
+
