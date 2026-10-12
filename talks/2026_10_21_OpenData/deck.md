@@ -20,7 +20,7 @@ videos:
 stage:
   space: data/space.json
   palette: { base: blue, bg: '#000206' }   # a true black ground: the blue palette's navy read as haze
-  sound: true
+  sound: { hum: false, flight: false, clip: false }   # no transition sounds (owner, 13 Oct: "transitions were like driving sounds"); the collision's own sound and the clips' audio still play
   options: { reach: 30, nebula: 0.12, dustGain: 1.0, exposure: 1.1, vignette: 0.7, grain: 0.012, aberration: 0, bloom: 0.42 }   # reach: the 1 EB pose stands far back (27 from the store); the rest: deep, crisp, not hazy
 title: Atveriame LHCb duomenis
 info: |
