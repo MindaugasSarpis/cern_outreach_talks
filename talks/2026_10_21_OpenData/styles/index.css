@@ -175,6 +175,12 @@ html[data-stage] .thesis-who .portrait { width: 100%; max-width: 165px; aspect-r
 html[data-stage] .thesis-who .kicker { color: var(--od-accent); margin: 0 0 6px; white-space: nowrap; }
 html[data-stage] .thesis-who .name { font-size: 22px; font-weight: 600; color: var(--stage-fg); margin: 0 0 18px; }
 html[data-stage] .thesis-who .line { font-size: 22px; font-weight: 500; line-height: 1.25; color: #fff; margin: 0; text-wrap: balance; }
+/* the thesis slide in the world: the text column over the dark, his histogram filling in
+   the world on the right (Užsikrauk karjerai's animation), its count under it */
+html[data-stage] .thesis-slide.world { background: none; }
+html[data-stage] .thesis-slide.world .thesis-who { align-self: center; }
+html[data-stage] .thesis-count { position: absolute; right: 64px; bottom: 44px; font-size: 64px; font-weight: 700; letter-spacing: -0.01em; color: #fff; text-shadow: 0 0 28px rgba(0, 0, 0, 0.6); white-space: nowrap; }
+html[data-stage] .thesis-count .unit { font-size: 0.38em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--od-accent); }
 html[data-stage] .thesis-plot { position: relative; padding-top: 90px; animation: stage-card-in 1s var(--stage-ease) 0.3s both; }
 html[data-stage] .thesis-plot img { width: 100%; display: block; filter: invert(1) hue-rotate(180deg) brightness(1.05) contrast(1.05); mix-blend-mode: screen; }
 /* the pentaquark gathers above the peak: the overlay reaches 30 % above the plot */
@@ -200,3 +206,13 @@ html[data-stage] .finds .line, html[data-stage] .chips li, html[data-stage] .poi
 @media (prefers-reduced-motion: reduce), print {
   html[data-stage] .slidev-layout, html[data-stage] .slidev-layout * { animation: none !important; }
 }
+
+/* a naming caption under or in place of a number: a few words, light blue, never a sentence */
+html[data-stage] .readout .caption { font-size: 30px; font-weight: 500; letter-spacing: 0.02em; color: var(--od-accent); margin: 0; text-shadow: var(--od-shadow); }
+html[data-stage] .readout .sun-caption { font-size: 40px; white-space: nowrap; }
+
+/* the crux slide: the role, bottom left: a portrait, the name, the role as a caption */
+html[data-stage] .role { position: absolute; left: 56px; bottom: 48px; display: flex; align-items: center; gap: 20px; animation: stage-rise 0.9s var(--stage-ease) 1.2s both; }
+html[data-stage] .role .portrait { width: 96px; height: 96px; object-fit: cover; border-radius: 50%; box-shadow: 0 0 0 2px rgba(156, 196, 255, 0.5), 0 8px 30px rgba(0, 0, 0, 0.6); }
+html[data-stage] .role .name { font-size: 30px; font-weight: 600; color: #fff; margin: 0 0 4px; text-shadow: var(--od-shadow); }
+html[data-stage] .role .caption { font-size: 24px; font-weight: 500; letter-spacing: 0.02em; color: var(--od-accent); margin: 0; text-shadow: var(--od-shadow); }
