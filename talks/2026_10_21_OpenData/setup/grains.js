@@ -1,6 +1,6 @@
 import {
   Group, Points, Mesh, SphereGeometry, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3, Vector4, Matrix4, Euler,
-  LinearMipmapLinearFilter, DynamicDrawUsage, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColorSpace, Quaternion,
+  LinearMipmapLinearFilter, DynamicDrawUsage,
 } from 'three'
 import { makeRing, mulberry32 } from './ring.js'
 
@@ -29,10 +29,12 @@ function smooth(l) {
 // A step for later (`setGrainsLater`, <Grains :later>) runs on the world's clock,
 // as the motion it waits for does: a slow GPU or a headless tool stretches both.
 // Every form's update moves that clock on, and a step still to come keeps its
-// form busy (api.busy), so a still is never taken before it lands.
+// form busy (api.busy), so a still is never taken before it lands. The sun of
+// plots (setup/sun.js) is driven the same way: it takes the steps, the clock and
+// the grains' drawing from here.
 
 const BUS = 'opendata:grains'
-const state = new Map()
+export const state = new Map()
 
 export function setGrains(name, step) {
   if (state.get(name) === step) return
@@ -46,12 +48,12 @@ export function setGrainsLater(name, step, s) {
   pending.add(p)
   return () => pending.delete(p)
 }
-function tick(t) {
+export function tick(t) {
   clock = t
   for (const p of pending) if (t >= p.at) { pending.delete(p); setGrains(p.name, p.step) }
 }
-const waiting = (name) => [...pending].some((p) => p.name === name)
-function listen(name, fn) {
+export const waiting = (name) => [...pending].some((p) => p.name === name)
+export function listen(name, fn) {
   const h = (e) => { if (e.detail?.name === name) fn(e.detail.step) }
   window.addEventListener(BUS, h)
   return () => window.removeEventListener(BUS, h)
@@ -70,7 +72,7 @@ const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random();
 // pixels it covered several times as much on a phone's small slide band, and the
 // additive piles washed out to white). The lineup's spheres and the portraits'
 // faces size from the viewport (uViewH) already.
-const PLACE = /* glsl */ `
+export const PLACE = /* glsl */ `
 uniform float uTime, uPixelRatio;
 varying vec3 vColor; varying float vAlpha;
 void place(vec3 p, float size, float alpha, vec3 color, float seed) {
@@ -92,7 +94,7 @@ void main() {
   gl_FragColor = vec4(pow(max(vColor * a, vec3(1e-6)), vec3(2.2)), 1.0);
 }`
 
-function material(vertexShader, uniforms) {
+export function material(vertexShader, uniforms) {
   return new ShaderMaterial({
     vertexShader, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
     uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(devicePixelRatio || 1, 2) }, ...uniforms },
@@ -1392,67 +1394,6 @@ function buildHistogram(o, ctx) {
   }
 }
 
-// ---- figures ------------------------------------------------------------------------
-//   { type: figures, name, pos, items: [{ src, at: [x, y, z], w?: 2.6 }], arrive?: 1.6 (s after
-//     its step until a figure shows), stagger?: 0.12, opacity?: 0.85 }
-// Figures floating in the world, each a plot made from open data (a picture on a plane
-// kept parallel to the screen, so the lens does not shear one at the frame's edge), drawn additively so its dark ground is the world's
-// black. Step k shows the first k (each as its stream gets there: `arrive` s, one after
-// another by `stagger`); 0 lets them fade. They stand at the ends of a `streams` object's
-// streams, `at` the same points.
-function buildFigures(o, ctx) {
-  const g = new Group()
-  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
-  const base = (import.meta.env?.BASE_URL || '/').replace(/\/$/, '')
-  const url = (src) => (ctx.asset ? ctx.asset(src) : String(src).startsWith('/') ? base + src : src)
-  const loader = new TextureLoader(), pq = new Quaternion(), cq = new Quaternion()
-  const items = (o.items || []).map((it, i) => {
-    const mat = new MeshBasicMaterial({ transparent: true, opacity: 0, blending: AdditiveBlending, depthWrite: false, depthTest: false, color: 0xffffff })
-    const mesh = new Mesh(new PlaneGeometry(1, 1), mat)
-    const w = it.w ?? o.w ?? 2.6
-    mesh.scale.set(w, w * 0.625, 1)
-    mesh.position.set(it.at[0], it.at[1], it.at[2]); mesh.visible = false
-    // turned as the camera is, just before it is drawn (the camera's turn is not passed to update)
-    mesh.onBeforeRender = (r, s, camera) => {
-      mesh.parent.getWorldQuaternion(pq).invert().multiply(camera.getWorldQuaternion(cq))
-      mesh.quaternion.copy(pq); mesh.updateMatrixWorld()
-    }
-    loader.load(url(it.src), (tex) => {
-      tex.colorSpace = SRGBColorSpace; tex.anisotropy = ctx.anisotropy || 4
-      mat.map = tex; mat.needsUpdate = true
-      const im = tex.image; if (im && im.width) mesh.scale.set(w, w * im.height / im.width, 1)
-    }, undefined, () => console.warn('stage: figure failed', it.src))
-    g.add(mesh)
-    return { mesh, mat, i, want: 0, vis: 0, at: -1 }
-  })
-  const arrive = o.arrive ?? 1.6, stagger = o.stagger ?? 0.12, peak = o.opacity ?? 0.85
-  let now = 0, step = state.has(o.name) ? state.get(o.name) : 0
-  const go = (k) => {
-    step = k
-    for (const it of items) {
-      const on = it.i < k
-      if (on && it.at < 0) it.at = now + arrive + stagger * it.i
-      if (!on) it.at = -1
-    }
-  }
-  const off = listen(o.name, go)
-  if (step) queueMicrotask(() => go(step))
-  const busy = () => waiting(o.name) || items.some((it) => Math.abs((it.at >= 0 && now >= it.at ? 1 : 0) - it.vis) > 0.01)
-  return {
-    group: g, labels: [], api: { busy },
-    update(t) {
-      tick(t); now = t
-      for (const it of items) {
-        const want = it.at >= 0 && t >= it.at ? 1 : 0
-        it.vis += (want - it.vis) * 0.06
-        it.mat.opacity = peak * it.vis
-        it.mesh.visible = it.vis > 0.01
-      }
-    },
-    dispose: off,
-  }
-}
-
 export function installGrains(registerBuilder) {
   registerBuilder('lineup', buildLineup, { fields: ['pos', 'name', 'balls'] })
   registerBuilder('streams', buildStreams, { fields: ['pos', 'name', 'from', 'to'] })
@@ -1460,5 +1401,4 @@ export function installGrains(registerBuilder) {
   registerBuilder('portraits', buildPortraits, { fields: ['pos', 'name', 'people'] })
   registerBuilder('collision', buildCollision, { fields: ['pos', 'name', 'tracks'] })
   registerBuilder('histogram', buildHistogram, { fields: ['pos', 'name'] })
-  registerBuilder('figures', buildFigures, { fields: ['pos', 'name', 'items'] })
 }
