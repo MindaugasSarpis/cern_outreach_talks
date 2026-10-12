@@ -2305,6 +2305,7 @@
     {
      "type": "lhc-collision",
      "name": "opening",
+     "event": "cms",
      "pos": [
       0,
       0,
