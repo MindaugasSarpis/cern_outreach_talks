@@ -34,8 +34,8 @@ brings the next round, and Lithuanian firms can solve it.
   and the dive.
 - **The machine and LHCb.** CERN overview clip → the LHC tunnel in motion with
   its four numbers (pushes on into) → one collision in grains (shared
-  components/lhc-opening; the LHCb crossing stands in for the owner's CMS 4π
-  pick) → the LHCb 3D animation with its music (`lhcb.mp4`) → LHCb in numbers
+  components/lhc-opening; the owner's CMS 4π pick, a 2012 Higgs candidate,
+  `"event": "cms"`) → the LHCb 3D animation with its music (`lhcb.mp4`) → LHCb in numbers
   over the collaboration photo (4 TB/s, ~1 900 narių, 112 institutų, 28 šalys)
   → LHCb's results floating as eight figure sheets, „875 straipsniai“.
 - **„O kur tai pritaikoma?“** (section). The ring with six strands of grains,
@@ -149,8 +149,9 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   proto-galaxies → colder, darker, galaxies far apart; the low hum only while
   zooming into the funnel (`hum: false` on every other slide, `humAt: all`);
   CERN overview; the LHC tunnel as a moving clip with slide 9's numbers; a
-  collision from the OpenData talk (he picked the CMS 4π event, 12 Oct; until
-  it is on main the shared LHCb crossing stands in, on both spots); the LHCb
+  collision from the OpenData talk (he picked the CMS 4π event, 12 Oct: CMS
+  Open Data record 300, `"event": "cms"` on both objects since the module
+  reached main, OpenData's camera path on slide 9, a slower, closer one on „Ačiū“); the LHCb
   video with sound; LHCb factoids over a collaboration photo; LHCb results
   floating with the paper count; three section breaks („O kur tai
   pritaikoma?“ — his "So what are the applications", in the deck's Lithuanian
