@@ -466,7 +466,7 @@ rengiame LHCb meistriškumo pamokas: 2025 m. kovą ir 2026 m. vasarį mokiniai
 ir studentai patys matavo D⁰ mezono gyvavimo trukmę su tikrais LHCb
 duomenimis.
 Atviruosius duomenis pristatėme Rygoje, Bostone – LHC eksperimentų vardu –
-ir Kaune.“
+ir Kaune. O vietos naujiems darbams dar yra.“
 
 Details, if asked:
 - The role: LHCb Analysis Preservation and Open Data Coordinator, from 1 August
