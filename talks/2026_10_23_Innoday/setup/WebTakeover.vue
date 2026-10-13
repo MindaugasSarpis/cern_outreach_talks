@@ -194,21 +194,30 @@ onSlideLeave(() => {
   if (p) p.material.uniforms.uReveal.value = 1
 })
 onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); run++; cancelAnimationFrame(raf); releaseGl() })
-// The step from here to the next slide plays the prologue: the web's grains make
-// the funnel. Any other arrival elsewhere finds the funnel whole. The grains are
-// drawn only here and while they fly; elsewhere they would be 280 000 points
-// nobody sees but every frame draws. Hidden, not removed, so going back finds them.
+// The funnel does not exist before the web's grains make it (owner, 13 Oct: not
+// floating on the cover): hidden on every slide before this one, hidden here (takeOver),
+// made on the step from here to the next slide (the prologue), whole on any other
+// arrival after it. The live slide drives it; a window without one (the presenter's)
+// lets its own instances do the hiding and showing. The grains are drawn only here and
+// while they fly; elsewhere they would be 280 000 points nobody sees but every frame
+// draws. Hidden, not removed, so going back finds them.
 let last = nav.currentSlideNo?.value
+onMounted(() => { if (live.value) funnelSeq.drivers++ })
+onUnmounted(() => { if (live.value) funnelSeq.drivers-- })
 watch(() => nav.currentSlideNo?.value, (n) => {
   const prev = last; last = n
   const at = $page?.value ?? $page
+  funnelSeq.at = at
   const p = stage()?.h.scene.getObjectByName('takeover-web')
-  if (live.value && n !== at) {
-    if (n === at + 1 && prev === at && p) { prepare(p); funnelSeq.play(p.userData.targets ? p : null) }
-    else funnelSeq.show()
+  if (live.value || !funnelSeq.drivers) {
+    if (n < at) funnelSeq.hide()
+    else if (n > at) {
+      if (live.value && n === at + 1 && prev === at && p) { prepare(p); funnelSeq.play(p.userData.targets ? p : null) }
+      else funnelSeq.show()
+    }
   }
   if (p) p.visible = n === at || (n === at + 1 && funnelSeq.web === p)
-})
+}, { immediate: true })
 </script>
 
 <template>

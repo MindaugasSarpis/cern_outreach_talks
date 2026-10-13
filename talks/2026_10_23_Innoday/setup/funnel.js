@@ -368,20 +368,28 @@ function buildFunnel(o, ctx) {
 // the takeover's camera looks down the funnel's axis, so the middle of its picture
 // becomes the Big Bang, then the CMB disk, then the bell out to the mouth. Then the
 // funnel's own grains resolve in their place, and last its mesh (the rings, the
-// lines, the floor) comes in under them. <WebTakeover> hides the funnel while the
-// web stands and plays this on that step; every other arrival finds the funnel
-// whole (`show`). It runs on the world's clock (update(t)), so it keeps time with
+// lines, the floor) comes in under them. <WebTakeover> hides the funnel on every
+// slide up to the web's and plays this on that step; every other arrival after it
+// finds the funnel whole (`show`). It runs on the world's clock (update(t)), so it keeps time with
 // the flight on a slow device, and is `busy` while it plays, so the headless shots
 // wait for its end. (One funnel in the world: the controller is the module's.)
 // (the grains' funnel stands a moment before the funnel's own grains take over)
 const STEPS = { morph: [0, 4.4], body: [4.8, 6.6], fade: [5.0, 6.8], mesh: [6.4, 8.0] }
 const lin = ([a, b], x) => Math.min(1, Math.max(0, (x - a) / (b - a)))
 export const funnelSeq = {
-  mode: 'shown', t0: null, skip: 0, web: null, parts: null,
+  mode: 'hidden', t0: null, skip: 0, web: null, parts: null,
+  // the takeover's slide (WebTakeover sets it; 3 until it mounts) and how many live
+  // WebTakeovers drive this window
+  at: 3, drivers: 0,
   get busy() { return this.mode === 'playing' },
   // a new world (the first boot, or a rebuild after a lost WebGL context) never holds the
-  // web's grains: it starts with the funnel whole, whatever the old world was playing
-  attach(parts) { this.parts = parts; this.show() },
+  // web's grains: it starts with the funnel whole if the deck stands past the takeover,
+  // hidden before it (owner, 13 Oct: the funnel must not float on the cover)
+  attach(parts) {
+    this.parts = parts
+    const n = Number((/^#\/(?:presenter\/)?(\d+)/.exec(globalThis.location?.hash || '') || [])[1] || 1)
+    if (n > this.at) this.show(); else this.hide()
+  },
   detach(parts) { if (this.parts === parts) this.parts = null },
   hide() { this.mode = 'hidden'; this.web = null; this.apply(0) },
   show() { if (this.web) this.web.visible = false; this.mode = 'shown'; this.web = null; this.apply(0) },

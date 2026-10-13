@@ -98,8 +98,11 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 - The prologue (owner, 13 Oct: the web "should transition to the funnel by
   arranging particles such that they make up the funnel (and then it gets more
   resolved, as it is now)… And then the mesh appears underneath"):
-  `funnelSeq` in `setup/funnel.js`, driven by `<WebTakeover>`. The funnel is
-  hidden while the web stands (slide 3); the step 3 → 4 plays it on the
+  `funnelSeq` in `setup/funnel.js`, driven by `<WebTakeover>`. The funnel does
+  not exist before the web makes it (owner, 13 Oct: "don't like that it's
+  floating in the cover slide … needs to be created from cosmic web
+  particles"): hidden on slides 1–3 (a new world reads the hash: hidden up to
+  the takeover's slide); the step 3 → 4 plays it on the
   world's clock: the web's 280 000 grains fly into the funnel's shape over
   4.4 s (the takeover's camera looks down the funnel's axis, so the picture's
   middle becomes the Big Bang, then the CMB disk, then the bell out to the
@@ -158,6 +161,10 @@ Deployed 2adf086 (v0.8.1) —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
 Pages run 38277433372 (green), URL 200, live walk 31/31; `ready` passed with
 nothing skipped. (The restructure itself went out as d9f3abb, run 38272139749.)
+Coming from the owner (13 Oct): a new opener clip that starts at NFTMC
+instead of the VU Business School and ends on the same frame (the takeover's
+`opener_last.jpg` stays; re-run `pnpm takeover:frame` to confirm, then encode,
+`videos:frames`, publish `--only` the new name, and change slide 2's notes).
 Open for the owner: lhcb.mp4's music (probably a commercial film score),
 vm_zoom's music and the NCSA web's licence, the CERN CC credits, the paper
 count on 22 Oct, the iPhone retest. For a PDF: `pnpm talk export innoday
