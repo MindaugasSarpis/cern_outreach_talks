@@ -645,7 +645,7 @@ space: { at: kt, dist: 18, yaw: 150, pitch: 10, dim: 0, hum: false }
 <!-- facts: lhcb-week-vilnius -->
 
 <!--
-Kalbėtojui. Atidarymo diskusija „Lithuania's AI Factory: Connecting Science, Industry and Global Research Infrastructures“. Iš kairės: moderatorė prof. Saulė Mačiukaitė-Žvinienė, tada (pagal skaidrės sąrašą) Gautier Hamel de Monchenault (CERN), Tim Gershon (LHCb), prof. Povilas Treigys, švietimo, mokslo ir sporto viceministrė Regina Valutytė (balta striukė, antra iš dešinės), Benediktas Girdvainis (Ekonomikos ir inovacijų ministerija) [PATIKSLINTI: sėdėjimo tvarka nustatyta tik pagal tai, kad scenoje dvi moterys].
+Kalbėtojui. Atidarymo diskusija „Lithuania's AI Factory: Connecting Science, Industry and Global Research Infrastructures“. Dalyviai (pagal programą ir skaidrę, ne sėdėjimo tvarka): moderatorė prof. Saulė Mačiukaitė-Žvinienė, Gautier Hamel de Monchenault (CERN), Tim Gershon (LHCb), prof. Povilas Treigys, švietimo, mokslo ir sporto viceministrė Regina Valutytė, Benediktas Girdvainis (Ekonomikos ir inovacijų ministerija). Scenoje dvi moterys: moderatorė (kairėje, su užrašais) ir, matyt, viceministrė (balta striukė) [PATIKSLINTI: kas kur sėdi].
 Sakyti: „Atidaryme apie Lietuvos dirbtinio intelekto gamyklą kalbėjosi CERN ir LHCb fizikai, švietimo, mokslo ir sporto viceministrė ir Ekonomikos ir inovacijų ministerijos atstovas: mokslas ir valstybė prie vieno stalo.“
 Vaizdas: savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius / Opening_Ceremony, LHCB-172 [PATIKSLINTI: nuotraukos autorius kreditui].
 Šaltiniai: LHCb savaitės programa (Drive, LHCb_Week_Vilnius_2026_programa); nuotraukos LHCB-170, LHCB-174 (skaidrė su dalyvių sąrašu).
@@ -658,11 +658,12 @@ space: { at: kt, dist: 18, yaw: 165, pitch: 10, dim: 0, hum: false }
 
 <StagePhoto src="figures/lt_lhcb_week_hall.jpg" arrive="camera" alt="Pilna VU Gyvybės mokslų centro auditorija LHCb savaitės atidaryme, dalyviai su LHCb savaitės juostelėmis" focus="50% 50%" />
 
-<!-- facts: lhcb-week-vilnius -->
+<!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources -->
 
 <!--
 Kalbėtojui. Auditorija LHCb savaitės atidaryme.
-Sakyti: „Į Vilnių atvyko apie du šimtai fizikų iš viso pasaulio, dar keli šimtai jungėsi nuotoliu. Savaitę jie aptarinėjo LHCb rezultatus, detektorių ir jo ateitį — Lietuvoje.“
+Sakyti: „Į Vilnių atvyko apie du šimtus fizikų iš viso pasaulio, dar daugiau jungėsi nuotoliu. Savaitę jie aptarinėjo LHCb rezultatus, detektorių ir jo ateitį — Lietuvoje.“
+Faktai: dalyvių skaičiai — prognozės (VU: ~200 gyvai, ~600 iš viso; LRT: 200 gyvai); po renginio viešo skaičiaus nėra, todėl tik „apie du šimtus“.
 Vaizdas: nuotr. Tomas Laurinavičius / VU (vu.lt/en/all-news/cern-lh-cb-experiment-conference-starts-at-vu-for-the-first-time-in-lithuania, 2026 09 14).
 Šaltiniai: vu.lt (2026 09 08 ir 09 14); lrt.lt (2026 09 14).
 (~0,3 min)

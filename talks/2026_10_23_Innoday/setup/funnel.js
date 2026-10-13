@@ -379,7 +379,9 @@ const lin = ([a, b], x) => Math.min(1, Math.max(0, (x - a) / (b - a)))
 export const funnelSeq = {
   mode: 'shown', t0: null, skip: 0, web: null, parts: null,
   get busy() { return this.mode === 'playing' },
-  attach(parts) { this.parts = parts; this.apply(0) },
+  // a new world (the first boot, or a rebuild after a lost WebGL context) never holds the
+  // web's grains: it starts with the funnel whole, whatever the old world was playing
+  attach(parts) { this.parts = parts; this.show() },
   detach(parts) { if (this.parts === parts) this.parts = null },
   hide() { this.mode = 'hidden'; this.web = null; this.apply(0) },
   show() { if (this.web) this.web.visible = false; this.mode = 'shown'; this.web = null; this.apply(0) },
@@ -388,7 +390,7 @@ export const funnelSeq = {
   play(web) { this.mode = 'playing'; this.t0 = null; this.web = web || null; this.skip = web ? 0 : STEPS.body[0] - 0.3; this.apply(this.skip) },
   step(t) {
     if (this.mode !== 'playing') return
-    if (this.t0 === null) this.t0 = t
+    if (this.t0 === null || t < this.t0) this.t0 = t   // a new world's clock starts again at 0
     const e = t - this.t0 + this.skip
     this.apply(e)
     if (e >= STEPS.mesh[1]) this.show()

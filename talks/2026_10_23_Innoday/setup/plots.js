@@ -1,4 +1,4 @@
-import { Group, Mesh, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColorSpace, AdditiveBlending, DoubleSide } from 'three'
+import { Group, Mesh, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColorSpace, AdditiveBlending } from 'three'
 
 // LHCb's result plots on slide 12, the way OpenData draws its plots (its
 // setup/sun.js; owner, 13 Oct: "papers should be more resolved, a really nice
@@ -19,7 +19,7 @@ import { Group, Mesh, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColor
 function buildPlot(o, ctx) {
   const g = new Group()
   const h = o.height ?? 2.4, peak = o.opacity ?? 0.95, fade = o.fade ?? 0.8
-  const mat = new MeshBasicMaterial({ transparent: true, opacity: 0, blending: AdditiveBlending, depthWrite: false, depthTest: true, side: DoubleSide, color: 0xffffff })
+  const mat = new MeshBasicMaterial({ transparent: true, opacity: 0, blending: AdditiveBlending, depthWrite: false, depthTest: true, color: 0xffffff })   // front side only: every other slide sees the cards from behind
   const mesh = new Mesh(new PlaneGeometry(1, 1), mat)
   mesh.visible = false   // never a blank white plane before its picture
   mesh.rotation.y = ((o.yaw || 0) * Math.PI) / 180

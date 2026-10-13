@@ -177,7 +177,13 @@ function prepare(pts) {
 }
 
 onSlideEnter(() => { if (live.value) takeOver() })
-onMounted(() => { if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver() })
+// a new world (the stage rebuilds after a lost WebGL context) has no grains of the web: on
+// this slide, take over again
+const onRebuilt = () => { if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver() }
+onMounted(() => {
+  window.addEventListener('slidev-stage:rebuilt', onRebuilt)
+  if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver()
+})
 onSlideLeave(() => {
   // (the still stays hidden: shown again as the slide fades out, it stood over the grains
   // as they left; the next arrival shows it before anything else)
@@ -187,7 +193,7 @@ onSlideLeave(() => {
   const p = stage()?.h.scene.getObjectByName('takeover-web')
   if (p) p.material.uniforms.uReveal.value = 1
 })
-onUnmounted(() => { run++; cancelAnimationFrame(raf); releaseGl() })
+onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); run++; cancelAnimationFrame(raf); releaseGl() })
 // The step from here to the next slide plays the prologue: the web's grains make
 // the funnel. Any other arrival elsewhere finds the funnel whole. The grains are
 // drawn only here and while they fly; elsewhere they would be 280 000 points

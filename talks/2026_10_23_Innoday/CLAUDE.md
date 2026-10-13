@@ -110,7 +110,11 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
   floor from under the funnel) comes in last (6.4–8.0 s). Every other arrival
   finds the funnel whole. `busy` while it plays (the shots and stills wait);
   the caption „13,8 mlrd. metų“ at 6.8 s. The grains' targets are worked out
-  once per picture, after the dissolve (histograms, no sort).
+  once per picture, after the dissolve (histograms, no sort). A rebuilt world
+  (after a lost WebGL context) starts with the funnel whole, and on slide 3 the
+  takeover runs again (`slidev-stage:rebuilt`). The web's grains draw without
+  a depth test (the fading CMB disk writes depth and cut off the Big Bang
+  knot); the plots are front-side only (every other slide sees their backs).
 - Look (owner, 8 Oct: "more striking, photorealistic"): black ground
   (`palette.bg #000103`, density 0.6, dustGain 1.45, nebula 0.12, vignette
   0.42); 2400 px photographs; MedAustron is a Lanczos 2× upscale, nothing

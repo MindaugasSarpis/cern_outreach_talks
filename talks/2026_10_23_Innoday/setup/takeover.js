@@ -137,7 +137,9 @@ export function makeGrains(s, { size = 0.5, gain = 1.25, swirl = 0.9, dense = 0.
       uMorph: { value: 0 }, uFade: { value: 1 }, uSwirl: { value: swirl }, uDense: { value: dense },
       uAxisO: { value: new Vector3() }, uAxisD: { value: new Vector3(0, 0, 1) },
     },
-    transparent: true, depthWrite: false, blending: AdditiveBlending,
+    // additive and order-free, like the funnel's grains: no depth test, so the CMB disk fading in
+    // (it writes depth) does not cut off the grains of the Big Bang knot behind it
+    transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
   })
   const pts = new Points(geo, mat)
   pts.frustumCulled = false
