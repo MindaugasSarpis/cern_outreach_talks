@@ -11,7 +11,9 @@ The round-by-round log (what each round changed, recordings, deploys) is
 „Nuo Vilniaus iki visatos pakraščių ir atgal prie novatoriškų mokslo pasiekimų
 pritaikymo privačiame sektoriuje“, Innoday 2026, in Lithuanian, for an
 innovation-day audience (business, policy). Venue, 16:9 projector. Slot about
-25 min or more (owner, 2026-10-08); the deck runs ≈ 23 min with the clips.
+25 min or more (owner, 2026-10-08); the deck runs ≈ 23 min by the notes'
+timings (`talk lint`, 13 Oct), the 4:13 NFTMC opener included (1:26 longer
+than the one before).
 Date: 23 October 2026 (owner, 11 Oct). The dir and the Pages address carry it
 since 11 Oct (owner: "Change web addresses as well, I don't share this with
 anyone"); the videos release tag keeps `videos-2026-10-00-innoday` (a storage
@@ -25,8 +27,8 @@ broken; the solutions left CERN as things in daily use; the next machine (FCC)
 brings the next round, and Lithuanian firms can solve it.
 
 - **Opening.** The title (owner, 12 Oct: back), then the zoom-out from
-  Saulėtekis to the cosmic web (the owner's SpaceEngine edit, `vu_zoom_web.mp4`,
-  advance-on-end) → the takeover (its last frame, the web, becomes the world's
+  NFTMC in Saulėtekis to the cosmic web (the owner's SpaceEngine edit,
+  `nftmc_zoom_web.mp4`, advance-on-end) → the takeover (its last frame, the web, becomes the world's
   grains) → the web's grains fly into a funnel, which resolves into the history
   of the Universe as a funnel of grains, its mesh coming in last, seen from outside
   (Big Bang, CMB, dark ages, a band of hot proto-galaxies, then colder, sparser
@@ -48,7 +50,9 @@ brings the next round, and Lithuanian firms can solve it.
   HL-LHC). The speaker names each problem.
 - **„O kaip komercializuoti?“** (section). 700+ sutarčių, 613 mln. CHF,
   +14 % apyvartos, the FCC (CERN's 2025 map clip).
-- **„Lietuvos istorija CERN“** (section). Photos only (owner, 13 Oct), from
+- **„Lietuvos istorija CERN“** (no section slide since 13 Oct: owner, "don't
+  need the 'Lietuvos istorija' cover slide"; the camera flies from the FCC
+  clip straight to the first photo). Photos only (owner, 13 Oct), from
   the LHCb Week in Vilnius (14–18 Sept 2026): the rector under the „LHCb WEEK
   VILNIUS“ screens, the President's video greeting on both screens, the
   opening panel with the vice-minister, the full hall; the membership facts
@@ -122,15 +126,17 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
   (`palette.bg #000103`, density 0.6, dustGain 1.45, nebula 0.12, vignette
   0.42); 2400 px photographs; MedAustron is a Lanczos 2× upscale, nothing
   invented.
-- Clips: talk-owned `vu_zoom_web.mp4` (the opener: the owner's SpaceEngine
-  edit spaceengine/vm_zoom.mp4 cut before its crossfade into the CMB, ending
-  held on the cosmic web, a 3 s audio fade) and
+- Clips: talk-owned `nftmc_zoom_web.mp4` (the opener since 13 Oct: the owner's
+  SpaceEngine edit spaceengine/nftmc_zoom.mp4, from NFTMC, cut at 253.45 s on
+  the frame `opener_last.jpg` was taken from (the source runs on past it and
+  holds a later frame; manifest notes), a 3 s audio fade) and
   `cern_footage_2022_013_001_1080p_lhc.mp4` (the tunnel, 3:00–3:39.5 of
   CERN-FOOTAGE-2022-013-001, pushing on into the collision); library
   `cern_overview_short.mp4`, `lhcb.mp4` (the 3D animation with music: the same
   picture as CERN-FOOTAGE-2022-042-001, whose own audio is digital silence),
-  `cern_footage_2025_014_002.mp4` (the 2025 FCC map). Retired 12 Oct, kept on
-  the release: `vu_ff_zoom_galaxy.mp4`, `vu_ff_unzoom.mp4`. Publish only with
+  `cern_footage_2025_014_002.mp4` (the 2025 FCC map). Retired, kept on
+  the release: `vu_ff_zoom_galaxy.mp4`, `vu_ff_unzoom.mp4` (12 Oct),
+  `vu_zoom_web.mp4` (the VU Business School opener, 13 Oct). Publish only with
   `--only <talk-owned names>`: the manifest lists `lhcb.mp4` for its poster.
 - Phones (owner's iPhone, 9 Oct, after the black was fixed): slides 4–5 washed
   out white. The talk's grains were sized in raw pixels like the engine's, so
@@ -186,7 +192,8 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   video with sound; LHCb factoids over a collaboration photo; LHCb results
   floating with the paper count; three section breaks („O kur tai
   pritaikoma?“ — his "So what are the applications", in the deck's Lithuanian
-  — „O kaip komercializuoti?“, „Lietuvos istorija CERN“); each invention's
+  — „O kaip komercializuoti?“, „Lietuvos istorija CERN“, the last dropped
+  13 Oct); each invention's
   caption with its year invented and the machine it served; 613 mln. CHF right
   after 700+; the FCC as an overview clip; the reverse zoom dropped; „Ačiū“
   over a slow collision filling the screen. These supersede the 10 Oct "no
@@ -202,7 +209,14 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   cards were moved until none overlaps another, leaves the frame or touches
   the count anywhere along the slide's path (± the sway); keep that when moving
   one. The credit says „apkarpyti, perspalvinti“ (CC BY 4.0 asks that changes
-  be indicated).
+  be indicated). The CP-violation figure is its left panel only, Λb⁰ (owner,
+  13 Oct: "repeated": the Λb⁰ and anti-Λb⁰ panels look alike); a narrower card
+  inside the old one's footprint, so the layout holds.
+- A stale tab reloads itself (owner, 13 Oct: „Failed to fetch this slide“ on
+  slide 29): Pages keeps only the latest build, so a tab opened before a deploy
+  asks for chunks that are gone. `setup/main.ts` reloads once on Vite's
+  `vite:preloadError`, on the same slide; a second failure within 30 s shows.
+  At the venue, still reload the deck before starting (or use `pnpm venue`).
 - „Lietuvos istorija CERN“ is photos only (owner, 13 Oct: "just have some
   pictures about LHCb visits from the ministers and LHCb week"): four from the
   LHCb Week's opening in Vilnius, StagePhotos at `kt`, the camera turning a

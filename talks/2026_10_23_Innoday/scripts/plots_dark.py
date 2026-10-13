@@ -8,7 +8,7 @@ its hue kept (HLS L' = 1 - L: c' = c + 1 - max - min), the ground pushed to
 pure black, white ink set at OpenData's #e8ecf4 (under the bloom's threshold:
 lines stay sharp), a saturated colour too dark on black lifted toward white,
 hairlines thickened (3x3 max: on screen a plot is drawn some 2-3x smaller than
-its pixels), then saved 1280 wide as JPEG.
+its pixels), then saved at most 1280 wide as JPEG.
 
     python3 scripts/plots_dark.py            # every public/figures/lhcb/res_*.png
     python3 scripts/plots_dark.py res_rk.png # one
@@ -42,7 +42,8 @@ def dark(src: Path, out: Path) -> tuple[int, int]:
     inv = inv + (1 - inv) * a
     inv *= INK
     img = Image.fromarray((inv * 255 + 0.5).astype(np.uint8)).filter(ImageFilter.MaxFilter(3))
-    img = img.resize((WIDTH, round(img.height * WIDTH / img.width)), Image.LANCZOS)
+    if img.width > WIDTH:   # never up: a one-panel crop (res_cpv_baryons, 680 px) keeps its own pixels
+        img = img.resize((WIDTH, round(img.height * WIDTH / img.width)), Image.LANCZOS)
     img.save(out, quality=90)
     return img.size
 

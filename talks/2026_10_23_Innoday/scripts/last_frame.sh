@@ -5,7 +5,7 @@
 # The clip must end on its picture (no fade to black): the takeover starts
 # from exactly this frame.
 set -euo pipefail
-clip="${1:-public/videos/vu_ff_zoom.mp4}"
+clip="${1:-public/videos/nftmc_zoom_web.mp4}"
 out="public/figures/opener_last.jpg"
 [ -f "$clip" ] || { echo "no clip at $clip (pnpm videos:pull first)"; exit 1; }
 ffmpeg -v error -y -sseof -0.08 -i "$clip" -update 1 -frames:v 1 -q:v 2 "$out"

@@ -30,8 +30,8 @@ info: |
   made of, physicists needed a machine nobody could buy; each of its limits had
   to be broken, and the solutions left the laboratory as things in daily use;
   the next machine is being designed now, and Lithuanian firms can solve its
-  problems. Title; the zoom-out from the VU Faculty of Physics, whose last frame
-  becomes the world's grains (<WebTakeover>); the history of the Universe as a
+  problems. Title; the zoom-out from NFTMC in Saulėtekis to the cosmic web, whose last
+  frame becomes the world's grains (<WebTakeover>); the history of the Universe as a
   funnel of grains (Big Bang, CMB, dark ages, hot proto-galaxies, then colder
   and sparser); the flight back to the CMB. CERN, the LHC tunnel with its
   numbers, one collision (components/lhc-opening), the LHCb animation with its
@@ -39,8 +39,9 @@ info: |
   „O kur tai pritaikoma?“: the ring with a strand from each part to what it
   gave, each photo at its strand's end, named with its year and machine.
   „O kaip komercializuoti?“: contracts, procurement, suppliers, the FCC.
-  „Lietuvos istorija CERN“: photos of the LHCb Week in Vilnius (the rector,
-  the President's video greeting, the panel with the vice-minister, the hall). „Ačiū“ over a slow
+  Lithuania and CERN, with no section slide: photos of the LHCb Week in Vilnius
+  (the rector, the President's video greeting, the panel with the
+  vice-minister, the hall). „Ačiū“ over a slow
   collision. The owner's 12 Oct list brings back the title, the section breaks
   and „Ačiū“; the other slides carry pictures, named numbers and the
   inventions' names; the notes carry what is said. Keys on a video slide:
@@ -67,15 +68,17 @@ Sakyti: „Laba diena. Esu Mindaugas Šarpis, vadovauju Vilniaus universiteto gr
 space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0, hum: false }   # a cut to the takeover's pose: the next slide stands exactly here
 ---
 
-<OpenerStart poster="video-frames/vu_zoom_web.mp4.poster.jpg" />
+<OpenerStart poster="video-frames/nftmc_zoom_web.mp4.poster.jpg" />
 
-<VideoPlayer src="vu_zoom_web.mp4" transition="fade" advance-on-end />
+<VideoPlayer src="nftmc_zoom_web.mp4" transition="fade" advance-on-end />
+
+<!-- facts: nftmc-opened-2016 -->
 
 <!--
 Kalbėtojui. Klipas prasideda pats, kai skaidrė atsiveria. (Jei skaidrės atidaromos tiesiai šioje skaidrėje, rodomas pirmasis kadras, o pirmas paspaudimas paleidžia klipą su garsu, ne pereina toliau.)
-Nutolinimas nuo Saulėtekio (VU Verslo mokykla, Google Earth) iki kosminio tinklo: Vilnius, Žemė, Saulė, Paukščių Takas, mūsų galaktika iš šalies, ~20 s beveik juodos tarpgalaktinės erdvės, tada kosminis tinklas (savininko SpaceEngine montažas, nukirptas prieš perėjimą į foninę spinduliuotę; muzika užgęsta per paskutines 3 s). Galima tylėti arba trumpai įvardyti etapus. Kosminis tinklas — NCSA Advanced Visualization Lab vizualizacija („Cosmic Bubble Bath“, pirmųjų ~1,2 mlrd. metų simuliacija).
+Nutolinimas nuo NFTMC (Nacionalinis fizinių ir technologijos mokslų centras Saulėtekio slėnyje, atidarytas 2016 m.; Google Earth) iki kosminio tinklo: Saulėtekis, Vilnius, Lietuva, Žemė (~0:30), Saulė ir Paukščių Takas (~1:00), skrydis per mūsų galaktiką ir iš jos (~2:20), mūsų galaktika iš šalies (~3:10), ~20 s beveik juodos tarpgalaktinės erdvės, tada kosminis tinklas (~3:47) (savininko SpaceEngine montažas, nukirptas ties kadru, nuo kurio prasideda kita skaidrė; muzika užgęsta per paskutines 3 s). Galima tylėti arba trumpai įvardyti etapus. Kosminis tinklas — NCSA Advanced Visualization Lab vizualizacija („Cosmic Bubble Bath“, pirmųjų ~1,2 mlrd. metų simuliacija).
 Spausti nereikia: klipui pasibaigus, skaidrės pačios pereina į kitą, kuri prasideda nuo to paties paskutinio kadro ir paverčia jį pasaulio grūdeliais. Paspaudus klipo metu, pereinama anksčiau (tada klipo pabaiga nieko nebedaro). Savaime pereinama tik auditorijos lange, ne /presenter.
-(klipas 2:47, su savo muzika; ~2,8 min)
+(klipas 4:13, su savo muzika; ~4,2 min)
 -->
 
 ---
@@ -87,7 +90,7 @@ space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0, dim: 0, hum: fa
 <!--
 Kalbėtojui. Skaidrė prasideda nuo paskutinio klipo kadro, todėl perėjimo nesimato. Po pusės sekundės tamsa tolygiai pereina į pasaulio foną, o šviesios vietos subyra į grūdelius. Kiekvienas grūdelis stovi savo pikselio regėjimo linijoje, todėl, kol kamera nejuda, grūdeliai sudaro tą patį vaizdą; kitoje skaidrėje jie susibėga į piltuvą.
 Sakyti (kol byra): „Visata didžiausiu mastu: galaktikų gijos ir tuštumos tarp jų. Kiekvienas šio vaizdo taškas dabar atsiskiria ir pakimba erdvėje.“
-Techniškai: kadras — public/figures/opener_last.jpg, išsitrauktas komanda pnpm takeover:frame public/videos/vu_zoom_web.mp4 (paskutinis klipo kadras — kosminis tinklas).
+Techniškai: kadras — public/figures/opener_last.jpg, išsitrauktas komanda pnpm takeover:frame public/videos/nftmc_zoom_web.mp4 (paskutinis klipo kadras — kosminis tinklas).
 (~0,3 min)
 -->
 
@@ -278,7 +281,7 @@ space:
 <!-- facts: lhcb-papers-2026-10, lhcb-figure-2026-010-hadrons -->
 
 <!--
-Kalbėtojui. Kamera lėtai plaukia tarp LHCb rezultatų grafikų iš paskelbtų straipsnių (CC BY 4.0, apkarpyti, perspalvinti): pentakvarkai Pc(4312), Pc(4440), Pc(4457) (PRL 122, 2019), CP pažeidimas barionuose (Nature 643, 2025; smailių aukščių skirtumas grafike nėra tas 2,45 % — taip nesakyti), Bs⁰ osciliacijos (Nature Physics 18, 2022), Tcc⁺ tetrakvarkas (Nature Physics 18, 2022), Ωcc⁺ (arXiv:2609.21921, 2026), Bs⁰→μ⁺μ⁻ (PRL 118, 2017), R(K) ir R(K*) ant Standartinio modelio linijos (PRD 108, 2023) ir LHCb-FIGURE-2026-010: 76 LHCb atrasti hadronai.
+Kalbėtojui. Kamera lėtai plaukia tarp LHCb rezultatų grafikų iš paskelbtų straipsnių (CC BY 4.0, apkarpyti, perspalvinti): pentakvarkai Pc(4312), Pc(4440), Pc(4457) (PRL 122, 2019), CP pažeidimas barionuose (Nature 643, 2025; rodoma tik Λb⁰ pusė: antibarionų pusė atrodė kaip pakartota, todėl nukirpta (savininkas, 2026 10 13); smailės aukštis nėra tas 2,45 % skirtumas — taip nesakyti), Bs⁰ osciliacijos (Nature Physics 18, 2022), Tcc⁺ tetrakvarkas (Nature Physics 18, 2022), Ωcc⁺ (arXiv:2609.21921, 2026), Bs⁰→μ⁺μ⁻ (PRL 118, 2017), R(K) ir R(K*) ant Standartinio modelio linijos (PRD 108, 2023) ir LHCb-FIGURE-2026-010: 76 LHCb atrasti hadronai.
 Sakyti: „Ką mes randame? Iki šiol LHCb paskelbė 875 mokslinius straipsnius. Tarp jų — penkių kvarkų dalelės, pentakvarkai, kuriuos atradome 2015 m., ir pernai pirmą kartą pamatytas materijos ir antimaterijos skirtumas barionuose. Iš viso LHCb atrado 76 naujas daleles — daugiau nei bet kuris kitas eksperimentas.“
 Skaičių prieš kalbą patikrinti (2026 10 22) LHCb viešųjų rezultatų sąraše ir pataisyti, jei pasikeitė.
 Šaltiniai: LHCb viešieji rezultatai (lhcbproject.web.cern.ch/Publications, LHCb Glance), INSPIRE (875: 860 su žurnalo nuoroda ir 15 recenzuojami, 2026 10 12); grafikai — LHCb kolaboracija, CC BY 4.0, apkarpyti ir perspalvinti (šviesūs ant juodo, kaip OpenData kalboje).
@@ -589,20 +592,6 @@ Faktai: FCC galimybių studija (2025 03 31): 90,7 km, vidutinis gylis ~200 m, 
 -->
 
 ---
-layout: section
-hideInToc: true
-space: { at: kt, dist: 18, yaw: 120, pitch: 12, dim: 0.3, hum: false }   # the Lithuania photo's own pose: no flight between them
----
-
-<div class="sub">Lietuvos istorija CERN</div>
-
-<!--
-Kalbėtojui. Dalies pertrauka (savininkas, 2026 10 12).
-Sakyti: „O dabar — apie Lietuvą ir CERN.“
-(~0,1 min)
--->
-
----
 space: { at: kt, dist: 18, yaw: 120, pitch: 12, dim: 0, hum: false }
 ---
 
@@ -611,8 +600,8 @@ space: { at: kt, dist: 18, yaw: 120, pitch: 12, dim: 0, hum: false }
 <!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources, cern-lithuania -->
 
 <!--
-Kalbėtojui. „Lietuvos istorija CERN“ — tik nuotraukos (savininkas, 2026 10 13: „just have some pictures about LHCb visits from the ministers and LHCb week“). LHCb savaitės Vilniuje atidarymas, 2026 m. rugsėjo 14 d., VU Gyvybės mokslų centras; kalba rektorius R. Petrauskas.
-Sakyti: „Lietuva yra asocijuotoji CERN narė nuo 2018 m., pirmoji iš Baltijos šalių: lietuviai gali dirbti CERN, o mūsų įmonės — dalyvauti jo pirkimuose. Šių metų rugsėjį Vilniaus universitete pirmą kartą Lietuvoje vyko LHCb savaitė — viso LHCb eksperimento susitikimas. Tai didžiausias dalelių fizikų susitikimas Lietuvos istorijoje.“
+Kalbėtojui. „Lietuvos istorija CERN“ — tik nuotraukos (savininkas, 2026 10 13: „just have some pictures about LHCb visits from the ministers and LHCb week“), be dalies pertraukos skaidrės (savininkas, 2026 10 13: „don't need the Lietuvos istorija cover slide“); kamera atskrenda čia tiesiai nuo FCC. LHCb savaitės Vilniuje atidarymas, 2026 m. rugsėjo 14 d., VU Gyvybės mokslų centras; kalba rektorius R. Petrauskas.
+Sakyti: „O dabar — apie Lietuvą ir CERN. Lietuva yra asocijuotoji CERN narė nuo 2018 m., pirmoji iš Baltijos šalių: lietuviai gali dirbti CERN, o mūsų įmonės — dalyvauti jo pirkimuose. Šių metų rugsėjį Vilniaus universitete pirmą kartą Lietuvoje vyko LHCb savaitė — viso LHCb eksperimento susitikimas. Tai didžiausias dalelių fizikų susitikimas Lietuvos istorijoje.“
 Faktai: 121-oji LHCb savaitė, 2026 09 14–18, pirmoji Lietuvoje. Dalyvių skaičiai — prognozės ir nesutampa (VU: ~200 gyvai, iš viso ~600; grupės puslapis: 300 gyvai ir 300 nuotoliu, 128 institutai iš 28 šalių); po renginio skaičiaus viešai nėra — skaičiaus nesakyti tiksliau nei „apie du šimtus“. LRT antraštė: „didžiausias dalelių fizikų susitikimas Lietuvos istorijoje“. Asocijuotoji narė nuo 2018 01 08 (susitarimas pasirašytas 2017 06 27 Vilniuje); įnašas 2026 m. — 1 000 000 CHF.
 Vaizdas: savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius / Opening_Ceremony, LHCB-47; autorius aplanke nenurodytas (greičiausiai VU fotografas), kreditas „VU nuotr.“ — kol savininkas nepatikslins.
 Šaltiniai: lrt.lt/naujienos/mokslas-ir-it/11/3052140; indico.cern.ch/event/1696594; lhcb-vilnius.web.cern.ch; home.cern/lithuania-becomes-associate-member-state-cern.
