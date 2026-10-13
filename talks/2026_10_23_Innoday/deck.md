@@ -685,7 +685,7 @@ Kalbėtojui. „Ačiū“ ant lėtai besiskleidžiančio susidūrimo per visą e
 Apačioje smulkiu šriftu — licencijų reikalaujamos nuorodos (savininkas, 2026 10 10; CERN medžiagai jų nereikia).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
-Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė: kalba ~17,5 min; klipai — įžanginis 4:26, grįžimas („…ir atgal“) 0:30, CERN iš oro 0:11 ir LHCb animacija 0:56 (kalbama per juos); iš viso apie 22 min. Paslėpta skaidrė po šios (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
+Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaidrių pastabų laikus, 2026 10 13): iš viso apie 23 min; klipai — įžanginis 4:13, CERN iš oro 0:11, LHC tunelis 0:40, LHCb animacija 0:48 ir FCC žemėlapis 0:18 (per paskutinius keturis kalbama). Paslėpta skaidrė po šios (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
 (~0,4 min)
 -->
 
