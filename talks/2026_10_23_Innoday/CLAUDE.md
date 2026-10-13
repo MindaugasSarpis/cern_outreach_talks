@@ -164,11 +164,13 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 2026-10-13: **the NFTMC opener** (the owner's new SpaceEngine edit, cut on the
 takeover's frame), slide 12's CP plot as one panel, no „Lietuvos istorija
-CERN“ section slide (32 slides), and a stale tab reloads itself; `ready`
-passed with nothing skipped (a85cbd8; the deploy's commit and Pages run go in
-the next change). Before it: 9d5f7e2 (the prologue from the web's grains, the
-plots, the LHCb Week photos), Pages run 38391635790, live walk 33/33 —
-https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/.
+CERN“ section slide (32 slides), and a stale page reloads itself while it
+loads. Deployed 8688ebf —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
+Pages run 38464557033 (green), URL 200, live walk 32/32; `ready` passed with
+nothing skipped. Before it: 9d5f7e2 (the prologue from the web's grains, the
+plots, the LHCb Week photos), run 38391635790. The opener's Google Earth
+attribution is in its footage (manifest notes).
 Open for the owner: whether the LHCb Week photos from the Drive may stay in
 the public repo and their credit („VU nuotr.“), any minister photos at LHCb,
 lhcb.mp4's music (probably a commercial film score), the opener's music and
