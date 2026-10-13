@@ -19,7 +19,7 @@ stage:
   # (15, 26, 51); this one shows as near-black with a trace of blue
   palette: { base: blue, bg: '#000103' }
   plugins: [hadron]
-  sound: { hum: true, flight: true, clip: true }
+  sound: { hum: true, flight: false, clip: false }   # no flight whoosh, no clip rise: they read as driving sounds (owner, 12-13 Oct: "don't use the driving away sound")
   humAt: all   # but every slide except the funnel's two flights says space.hum: false (owner, 12 Oct: the hum only while zooming into the funnel)
   # deeper than the blue palette's own look: a black ground (fewer, dimmer dust
   # grains, little nebula, a firmer vignette), no film grain, no fringes
