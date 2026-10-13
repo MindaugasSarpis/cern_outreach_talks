@@ -1,14 +1,17 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
-import { sampleFrame, placeAlongRays, makeGrains, setPositions } from './takeover.js'
+import { sampleFrame, placeAlongRays, makeGrains, setPositions, setTargets } from './takeover.js'
+import { funnelSeq } from './funnel.js'
 
 // <WebTakeover src="figures/opener_last.jpg" />, on the slide after the opener.
 // The opener ends on the cosmic web; this slide opens on that same last frame,
 // so nothing changes when the clip goes. Under it the world is already made of
 // the frame's grains, each on its pixel's line of sight from the camera, so
 // the picture can dissolve into them: the voids first, the filaments last. The
-// next slide moves the camera and the picture turns out to have depth.
+// next slide moves the camera and the grains fly into the funnel (funnel.js
+// funnelSeq): the funnel is hidden while the web stands here, and the step from
+// here to the next slide plays the prologue.
 // Printed, in the overview and without the world it is the still frame.
 const props = defineProps({
   src: { type: String, default: 'figures/opener_last.jpg' },
@@ -87,8 +90,11 @@ async function takeOver() {
   sample ||= sampleFrame(image, { n: props.grains, gamma: props.gamma })
   let pts = s.h.scene.getObjectByName('takeover-web')
   if (!pts) { pts = makeGrains(sample, { size: props.size, gain: props.gain }); s.h.scene.add(pts) }
-  pts.material.uniforms.uReveal.value = 0
+  const u0 = pts.material.uniforms
+  u0.uReveal.value = 0; u0.uMorph.value = 0; u0.uFade.value = 1; pts.visible = true
   setPositions(pts, placeAlongRays(sample, s.camera, box.value, s.canvas.getBoundingClientRect(), { near: props.near, far: props.far }))
+  // under the copy: the web stands alone until its grains make the funnel
+  funnelSeq.hide()
   still.value = false
   await new Promise((r) => setTimeout(r, props.hold))
   if (id !== run) return
@@ -99,7 +105,7 @@ async function takeOver() {
     drawCopy(-0.1 + 1.25 * u)
     pts.material.uniforms.uReveal.value = Math.min(1, u * 1.3)
     if (u < 1) raf = requestAnimationFrame(step)
-    else { stopGl(); releaseGl() }
+    else { stopGl(); releaseGl(); prepare(pts) }
   }
   raf = requestAnimationFrame(step)
 }
@@ -162,25 +168,40 @@ function drawCopy(t) {
 function stopGl() { if (overlay.value) overlay.value.style.opacity = '0' }
 function releaseGl() { gl?.getExtension('WEBGL_lose_context')?.loseContext(); gl = null; gen.value++ }
 
+// where the grains go in the funnel: worked out once, while the web stands (or at the
+// step, if it comes before the dissolve ends)
+function prepare(pts) {
+  if (!pts || pts.userData.targets || !sample) return
+  const tg = funnelSeq.targets(sample.uv, sample.n, box.value.width / Math.max(1, box.value.height))
+  if (tg) setTargets(pts, tg)
+}
+
 onSlideEnter(() => { if (live.value) takeOver() })
 onMounted(() => { if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver() })
 onSlideLeave(() => {
-  const id = ++run; cancelAnimationFrame(raf); stopGl(); still.value = true
+  // (the still stays hidden: shown again as the slide fades out, it stood over the grains
+  // as they left; the next arrival shows it before anything else)
+  const id = ++run; cancelAnimationFrame(raf); stopGl()
   setTimeout(() => { if (id === run) releaseGl() }, 400)   // after the copy's fade
   // left before the dissolve finished: the world keeps its grains, whole
   const p = stage()?.h.scene.getObjectByName('takeover-web')
   if (p) p.material.uniforms.uReveal.value = 1
 })
 onUnmounted(() => { run++; cancelAnimationFrame(raf); releaseGl() })
-// the frame's grains are the prologue's (this slide and the three after it: the
-// funnel, the CMB, the question); elsewhere they would be 280 000 points nobody
-// sees but every frame draws. Hidden, not removed, so going back finds them.
-const PROLOGUE = 3
+// The step from here to the next slide plays the prologue: the web's grains make
+// the funnel. Any other arrival elsewhere finds the funnel whole. The grains are
+// drawn only here and while they fly; elsewhere they would be 280 000 points
+// nobody sees but every frame draws. Hidden, not removed, so going back finds them.
+let last = nav.currentSlideNo?.value
 watch(() => nav.currentSlideNo?.value, (n) => {
-  const p = stage()?.h.scene.getObjectByName('takeover-web')
-  if (!p) return
+  const prev = last; last = n
   const at = $page?.value ?? $page
-  p.visible = n >= at && n <= at + PROLOGUE
+  const p = stage()?.h.scene.getObjectByName('takeover-web')
+  if (live.value && n !== at) {
+    if (n === at + 1 && prev === at && p) { prepare(p); funnelSeq.play(p.userData.targets ? p : null) }
+    else funnelSeq.show()
+  }
+  if (p) p.visible = n === at || (n === at + 1 && funnelSeq.web === p)
 })
 </script>
 

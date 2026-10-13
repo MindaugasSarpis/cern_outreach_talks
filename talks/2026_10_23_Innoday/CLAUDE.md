@@ -27,7 +27,8 @@ brings the next round, and Lithuanian firms can solve it.
 - **Opening.** The title (owner, 12 Oct: back), then the zoom-out from
   Saulėtekis to the cosmic web (the owner's SpaceEngine edit, `vu_zoom_web.mp4`,
   advance-on-end) → the takeover (its last frame, the web, becomes the world's
-  grains) → the history of the Universe as a funnel of grains, seen from outside
+  grains) → the web's grains fly into a funnel, which resolves into the history
+  of the Universe as a funnel of grains, its mesh coming in last, seen from outside
   (Big Bang, CMB, dark ages, a band of hot proto-galaxies, then colder, sparser
   galaxies) → the dive back to the CMB (380 000 metų) → pulled back: the
   question „Iš ko visa tai sudaryta?“ (spoken). The low hum only on the funnel
@@ -55,19 +56,19 @@ brings the next round, and Lithuanian firms can solve it.
 ## World
 
 Everything is grains; no solid shapes, no labels (LHCb's result figures are
-lit `page` sheets in the world).
+`plot`s: light-on-black pictures on unlit additive planes, as OpenData's).
 
 - Stations (`public/data/space.json`): `hero` (the pentaquark: cover, close),
   `collider` (the LHC ring; carries `strands`), `cosmos`, `web`, `kt` (the gold
   seed and loop: Part III), `funnel` (the history of the Universe, at
   [30, 40, −110], its axis along −z behind the takeover's frame), `results`
-  (eight `page` sheets of LHCb result figures, public/figures/lhcb/, at
+  (eight `plot`s of LHCb result figures, public/figures/lhcb/res_*.jpg, at
   [60, −30, 50]), and far below everything the shared collision twice:
   `collision` ([0, −400, 0], object `opening`, OpenData's options) and
   `thanks` ([0, −480, 0], object `thanks`: `light 1.2`, `approach 2.5`,
   `sound: false`, the slow close).
 - Talk-owned builders (`setup/`, registered in `main.ts`; `stage:check
-  --types strands,funnel,lhc-collision`): `strands.js` (grains from ring parts
+  --types strands,funnel,lhc-collision,plot`): `plots.js` (`plot`, slide 12), `strands.js` (grains from ring parts
   to products, in groups: `inventions`, Part II's, on from the „O kur tai
   pritaikoma?“ section and off from „O kaip komercializuoti?“; `fcc`, a second
   object on the collider station with its own `ring` of grains, unused since
@@ -91,6 +92,22 @@ lit `page` sheets in the world).
   for the 3 s dissolve (released after it, a new canvas each time: a second
   context held all talk long raises the odds of a context loss on iPhone); opener and takeover share the pose [30, 40, −70],
   dist 18, yaw 0, pitch 0, sway 0; the clip uses `transition="fade"`.
+- The prologue (owner, 13 Oct: the web "should transition to the funnel by
+  arranging particles such that they make up the funnel (and then it gets more
+  resolved, as it is now)… And then the mesh appears underneath"):
+  `funnelSeq` in `setup/funnel.js`, driven by `<WebTakeover>`. The funnel is
+  hidden while the web stands (slide 3); the step 3 → 4 plays it on the
+  world's clock: the web's 280 000 grains fly into the funnel's shape over
+  4.4 s (the takeover's camera looks down the funnel's axis, so the picture's
+  middle becomes the Big Bang, then the CMB disk, then the bell out to the
+  mouth; each grain keeps its angle round the middle, evened out by rank, and
+  turns a little round the axis on the way), the grain funnel stands a moment,
+  the funnel's own grains and the CMB picture resolve over it (4.8–6.6 s) as
+  the web's fade, and the mesh (the rings and lines from the CMB end, the
+  floor from under the funnel) comes in last (6.4–8.0 s). Every other arrival
+  finds the funnel whole. `busy` while it plays (the shots and stills wait);
+  the caption „13,8 mlrd. metų“ at 6.8 s. The grains' targets are worked out
+  once per picture, after the dissolve (histograms, no sort).
 - Look (owner, 8 Oct: "more striking, photorealistic"): black ground
   (`palette.bg #000103`, density 0.6, dustGain 1.45, nebula 0.12, vignette
   0.42); 2400 px photographs; MedAustron is a Lanczos 2× upscale, nothing
@@ -161,6 +178,17 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   over a slow collision filling the screen. These supersede the 10 Oct "no
   cover / no sections / no words" for those slides (lint's TEXT warns on them,
   expected).
+- The prologue and the plots (owner, 13 Oct): the web's grains make the funnel
+  before it resolves and its mesh comes in (World, "The prologue"); slide 12's
+  plots are drawn as OpenData draws its plots ("a really nice way of this was
+  in opendata talk"): `scripts/plots_dark.py` turns each figure's lightness
+  over (hue kept, black ground, ink at #e8ecf4 under the bloom threshold,
+  saturated colours lifted, hairlines thickened, 1280 wide), `setup/plots.js`
+  draws it unlit and additive. Additive lines tangle where cards cross, so the
+  cards were moved until none overlaps another, leaves the frame or touches
+  the count anywhere along the slide's path (± the sway); keep that when moving
+  one. The credit says „apkarpyti, perspalvinti“ (CC BY 4.0 asks that changes
+  be indicated).
 - No driving sounds (owner, 12 Oct: "don't use the 'driving away sound', sounds
   funny"; to OpenData, 13 Oct: "transitions were like driving sounds"): the
   collision's falling boom is gone from components/lhc-opening (27e9837, for

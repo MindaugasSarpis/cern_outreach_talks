@@ -69,8 +69,8 @@ const HEAT = [[0.30, [0.62, 0.78, 1]], [0.40, [0.86, 0.93, 1]], [0.52, [1, 0.95,
 const HAZE = [[0.30, [0.55, 0.66, 1]], [0.5, [0.55, 0.45, 0.95]], [1, [0.36, 0.32, 0.46]]]
 
 const VERT = /* glsl */ `
-attribute vec3 aColor; attribute float aSize, aSeed, aTw, aAlpha, aFlare, aDisk;
-uniform float uTime, uSize, uAlpha, uFlare, uDisk;
+attribute vec3 aColor; attribute float aSize, aSeed, aTw, aAlpha, aFlare, aDisk, aLay, aKey;
+uniform float uTime, uSize, uAlpha, uFlare, uDisk, uBody, uMesh;
 varying vec3 vColor; varying float vAlpha;
 ${POINT_GLSL}
 void main() {
@@ -80,7 +80,12 @@ void main() {
   // sized to the frame (setup/view.js), capped, fading out within a unit of the camera (the camera flies through)
   float ps = uView * uSize * aSize * tw * (72.0 / max(-mv.z, 0.1));
   gl_PointSize = pointSize(ps, 48.0);
-  vColor = aColor; vAlpha = uAlpha * aAlpha * tw * coverage(ps) * smoothstep(0.25, 1.0, -mv.z) * mix(1.0, uFlare, aFlare) * mix(1.0, uDisk, aDisk);
+  // the prologue (funnelSeq below): the body resolves as a whole; the mesh (aLay 1) comes
+  // in along its key, the wireframe from the CMB end to the mouth, the floor from under
+  // the funnel outward
+  float shown = aLay < 0.5 ? uBody : smoothstep(aKey * 0.8, aKey * 0.8 + 0.2, uMesh);
+  if (shown < 0.001) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 0.0; }   // not yet: off the frame, nothing to fill
+  vColor = aColor; vAlpha = uAlpha * aAlpha * tw * coverage(ps) * smoothstep(0.25, 1.0, -mv.z) * mix(1.0, uFlare, aFlare) * mix(1.0, uDisk, aDisk) * shown;
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;
@@ -104,11 +109,12 @@ function buildFunnel(o, ctx) {
   const R = (s) => radius(s, L, neck, mouth)
   // point: [s, a, b, r, g, b, size, twinkle, alpha, kind]; kind 1 = CMB disk
   const pts = []
-  let flare = 0
-  const add = (s, a, b, c, size = 1, tw = 0.2, al = 1, kind = 0) => pts.push([s, a, b, c[0], c[1], c[2], size, tw, al, kind, flare])
+  let flare = 0, mesh = 0
+  const add = (s, a, b, c, size = 1, tw = 0.2, al = 1, kind = 0) => pts.push([s, a, b, c[0], c[1], c[2], size, tw, al, kind, flare, mesh])
   const W = [1, 1, 1], ICE = [0.78, 0.88, 1]
 
   // the wireframe: rings and lines as dense lines of fine white grains
+  mesh = 1
   const rings = o.rings ?? 15, lines = o.lines ?? 16
   for (let k = 0; k < rings; k++) {
     const s = L * (k / (rings - 1)), r = R(s), n = Math.round(2 * Math.PI * r / 0.035)
@@ -118,6 +124,7 @@ function buildFunnel(o, ctx) {
     const t = (k / lines) * Math.PI * 2, n = Math.round(L / 0.035)
     for (let i = 0; i <= n; i++) { const s = L * (i / n), r = R(s); add(s, r * Math.cos(t), r * Math.sin(t), W, 1.05, 0.03, 1) }
   }
+  mesh = 0
   // the inflation neck: a faint flaring sheath from the flare to the disk
   for (let i = 0; i < 1600; i++) {
     const s = -1.3 * hash(i * 1.9), t = hash(i * 3.7) * Math.PI * 2, r = R(s)
@@ -225,21 +232,27 @@ function buildFunnel(o, ctx) {
   }
   // the floor: a faint perspective grid below the funnel
   const floorFirst = pts.length
+  mesh = 1
   if (o.floor !== false) {
     const y = -(mouth + 1.2), x0 = -8, x1 = L + 10, z0 = -18, z1 = 18, step = 2
     for (let x = x0; x <= x1; x += step) for (let i = 0; i <= 500; i++) add(x, y, z0 + (z1 - z0) * i / 500, [0.5, 0.6, 0.9], 1.3, 0.02, 0.9)
     for (let z = z0; z <= z1; z += step) for (let i = 0; i <= 700; i++) add(x0 + (x1 - x0) * i / 700, y, z, [0.5, 0.6, 0.9], 1.3, 0.02, 0.9)
   }
+  mesh = 0
 
   // into world space along the axis
   const N = pts.length, pos = new Float32Array(N * 3), color = new Float32Array(N * 3)
   const size = new Float32Array(N), seed = new Float32Array(N), tw = new Float32Array(N), al = new Float32Array(N), fl = new Float32Array(N), dk = new Float32Array(N)
+  const lay = new Float32Array(N), key = new Float32Array(N)
   const axis = o.axis || 'z+'
   // (s, a, b) → world: a is up (y) for the floor to lie flat; b runs across
   const place = (s, a, b) => axis === 'z-' ? [b, a, -s] : axis === 'z+' ? [b, a, s] : axis === 'x-' ? [-s, a, b] : [s, a, b]
   pts.forEach((p, i) => {
     pos.set(place(p[0], p[1], p[2]), i * 3); color.set([p[3], p[4], p[5]], i * 3)
     size[i] = p[6]; tw[i] = p[7]; al[i] = p[8]; fl[i] = p[10]; dk[i] = p[9] === 1 ? 1 : 0; seed[i] = hash(i * 0.731)
+    // the mesh's key: where it comes in, the wireframe by s (CMB end first), the floor by
+    // its distance from under the funnel's middle
+    lay[i] = p[11]; key[i] = !p[11] ? 0 : i < floorFirst ? Math.min(1, Math.max(0, p[0] / L)) : Math.min(1, Math.hypot(p[0] - 0.45 * L, p[2]) / 30)
   })
   const geo = new BufferGeometry()
   geo.setAttribute('position', new BufferAttribute(pos, 3))
@@ -247,9 +260,10 @@ function buildFunnel(o, ctx) {
   geo.setAttribute('aColor', colAttr); geo.setAttribute('aSize', new BufferAttribute(size, 1))
   geo.setAttribute('aSeed', new BufferAttribute(seed, 1)); geo.setAttribute('aTw', new BufferAttribute(tw, 1))
   geo.setAttribute('aAlpha', new BufferAttribute(al, 1)); geo.setAttribute('aFlare', new BufferAttribute(fl, 1)); geo.setAttribute('aDisk', new BufferAttribute(dk, 1))
+  geo.setAttribute('aLay', new BufferAttribute(lay, 1)); geo.setAttribute('aKey', new BufferAttribute(key, 1))
   const mat = new ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
-    uniforms: { uTime: { value: 0 }, uView: { value: 1 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.6 }, uFlare: { value: 1 }, uDisk: { value: 1 } },
+    uniforms: { uTime: { value: 0 }, uView: { value: 1 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.6 }, uFlare: { value: 1 }, uDisk: { value: 1 }, uBody: { value: 1 }, uMesh: { value: 1 } },
   })
   const points = new Points(geo, mat); points.frustumCulled = false
   const g = new Group(); g.add(points)
@@ -283,12 +297,15 @@ function buildFunnel(o, ctx) {
   // equal-area, l = 0 up, l = 90° right as seen from the mouth). Drawn opaque, so
   // nothing adds up toward white on a small screen. `cmbDisk`: the image (a
   // square, the disk inscribed; `cmbDiskSmall` for touch devices); `cmbTint`:
-  // its brightness (0–1).
+  // its brightness (0–1). Transparent only so the prologue can fade it in
+  // (funnelSeq); drawn first of the transparent things, it covers what lies
+  // behind it as the opaque disk did.
   let alive = true, diskTex = null, diskUp = false
   const r0d = R(0) * 0.985
-  const diskMat = new MeshBasicMaterial({ color: new Color().setScalar(o.cmbTint ?? 0.85), side: DoubleSide })
+  const diskMat = new MeshBasicMaterial({ color: new Color().setScalar(o.cmbTint ?? 0.85), side: DoubleSide, transparent: true })
   const disk = new Mesh(new CircleGeometry(r0d, 192), diskMat)
-  disk.visible = false
+  disk.visible = false; disk.renderOrder = -1
+  const parts = { mat, diskMat, disk, diskReady: false, diskPx: null, group: g, geom: { L, R, place, bb: -2.6, dawn: o.dawn ?? 0.32, r0: r0d } }
   if (o.cmbDisk && axis === 'z+') {
     // the circle faces +z (the mouth); its u runs with world x (b, right), v with world y (a, up)
     disk.position.set(0, 0, 0.02)
@@ -300,7 +317,14 @@ function buildFunnel(o, ctx) {
     new TextureLoader().load(`${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`, (tex) => {
       if (!alive) { tex.dispose(); return }
       tex.colorSpace = SRGBColorSpace; tex.anisotropy = ctx?.anisotropy || 1
-      diskMat.map = tex; diskMat.needsUpdate = true; diskTex = tex; disk.visible = true
+      diskMat.map = tex; diskMat.needsUpdate = true; diskTex = tex
+      parts.diskReady = true; disk.visible = diskMat.opacity > 0.002
+      // the map's colours for the web's grains that land on the disk (funnelSeq.targets)
+      try {
+        const c = document.createElement('canvas'); c.width = c.height = 128
+        const x2 = c.getContext('2d', { willReadFrequently: true }); x2.drawImage(tex.image, 0, 0, 128, 128)
+        parts.diskPx = x2.getImageData(0, 0, 128, 128).data
+      } catch {}
     })
   }
 
@@ -327,13 +351,137 @@ function buildFunnel(o, ctx) {
     colAttr.needsUpdate = true
   }
   if (capN) img.src = `${import.meta.env.BASE_URL}${(o.cmb || 'figures/cmb_wmap.png').replace(/^\//, '')}`
-  void floorFirst
 
+  funnelSeq.attach(parts)
   return {
     group: g, labels: [],
-    update(t) { mat.uniforms.uTime.value = t },
-    dispose() { alive = false; geo.dispose(); mat.dispose(); disk.geometry.dispose(); diskMat.dispose(); diskTex?.dispose() },
+    // busy while the prologue plays: the headless shots and stills wait for its end
+    api: { busy: () => funnelSeq.busy },
+    update(t) { mat.uniforms.uTime.value = t; funnelSeq.step(t) },
+    dispose() { alive = false; funnelSeq.detach(parts); geo.dispose(); mat.dispose(); disk.geometry.dispose(); diskMat.dispose(); diskTex?.dispose() },
   }
+}
+
+// ---- the prologue: the web's grains become the funnel (owner, 13 Oct) -----------
+// On the step from the takeover (slide 3) to the funnel's side view (slide 4) the
+// cosmic web's grains fly into the funnel's shape, the middle of the picture first:
+// the takeover's camera looks down the funnel's axis, so the middle of its picture
+// becomes the Big Bang, then the CMB disk, then the bell out to the mouth. Then the
+// funnel's own grains resolve in their place, and last its mesh (the rings, the
+// lines, the floor) comes in under them. <WebTakeover> hides the funnel while the
+// web stands and plays this on that step; every other arrival finds the funnel
+// whole (`show`). It runs on the world's clock (update(t)), so it keeps time with
+// the flight on a slow device, and is `busy` while it plays, so the headless shots
+// wait for its end. (One funnel in the world: the controller is the module's.)
+// (the grains' funnel stands a moment before the funnel's own grains take over)
+const STEPS = { morph: [0, 4.4], body: [4.8, 6.6], fade: [5.0, 6.8], mesh: [6.4, 8.0] }
+const lin = ([a, b], x) => Math.min(1, Math.max(0, (x - a) / (b - a)))
+export const funnelSeq = {
+  mode: 'shown', t0: null, skip: 0, web: null, parts: null,
+  get busy() { return this.mode === 'playing' },
+  attach(parts) { this.parts = parts; this.apply(0) },
+  detach(parts) { if (this.parts === parts) this.parts = null },
+  hide() { this.mode = 'hidden'; this.web = null; this.apply(0) },
+  show() { if (this.web) this.web.visible = false; this.mode = 'shown'; this.web = null; this.apply(0) },
+  // `web`: the takeover's grains, their targets set (takeover.js setTargets); without
+  // them the funnel only resolves and its mesh comes in
+  play(web) { this.mode = 'playing'; this.t0 = null; this.web = web || null; this.skip = web ? 0 : STEPS.body[0] - 0.3; this.apply(this.skip) },
+  step(t) {
+    if (this.mode !== 'playing') return
+    if (this.t0 === null) this.t0 = t
+    const e = t - this.t0 + this.skip
+    this.apply(e)
+    if (e >= STEPS.mesh[1]) this.show()
+  },
+  apply(e) {
+    const v = this.mode === 'hidden' ? { morph: 0, body: 0, fade: 1, mesh: 0 }
+      : this.mode === 'shown' ? { morph: 1, body: 1, fade: 0, mesh: 1 }
+      : { morph: lin(STEPS.morph, e), body: sstep(STEPS.body[0], STEPS.body[1], e), fade: 1 - sstep(STEPS.fade[0], STEPS.fade[1], e), mesh: lin(STEPS.mesh, e) }
+    const p = this.parts
+    if (p) {
+      p.mat.uniforms.uBody.value = v.body; p.mat.uniforms.uMesh.value = v.mesh
+      p.diskMat.opacity = v.body; p.disk.visible = p.diskReady && v.body > 0.002
+    }
+    const w = this.web?.material.uniforms
+    if (w) { w.uMorph.value = v.morph; w.uFade.value = v.fade }
+  },
+  // Where each of the web's grains lands. `uv`: its place in the takeover's picture
+  // (0–1, y down), `aspect` the picture's width over height. The nearer the middle,
+  // the earlier in the history it lands; its angle round the middle is kept, evened
+  // out so that the bell is covered all round. Both go by rank (histograms, O(n)),
+  // so neighbours in the picture stay neighbours in the funnel and no paths cross.
+  // → world positions, colours (0–255), each grain's order (0 first, 1 last) and
+  // the funnel's axis in the world (origin, unit direction).
+  targets(uv, n, aspect) {
+    const p = this.parts
+    if (!p) return null
+    const { L, R, place, bb, dawn, r0 } = p.geom
+    const rho = new Float32Array(n), th = new Float32Array(n)
+    let rmax = 1e-6
+    for (let k = 0; k < n; k++) {
+      const x = (uv[k * 2] - 0.5) * aspect, y = 0.5 - uv[k * 2 + 1]
+      rho[k] = Math.hypot(x, y); th[k] = Math.atan2(y, x); if (rho[k] > rmax) rmax = rho[k]
+    }
+    const q = rank(rho, n, 0, rmax * 1.0001, 8192)
+    // the angle, evened out within bands of equal count
+    const BANDS = 48, TB = 720, cnt = new Uint32Array(BANDS * TB), tot = new Uint32Array(BANDS)
+    const bandOf = (k) => Math.min(BANDS - 1, Math.floor(q[k] * BANDS))
+    const tpos = (k) => ((th[k] + Math.PI) / (2 * Math.PI)) * TB
+    for (let k = 0; k < n; k++) cnt[bandOf(k) * TB + Math.min(TB - 1, Math.floor(tpos(k)))]++
+    const cum = new Uint32Array(BANDS * TB)
+    for (let b = 0; b < BANDS; b++) { let acc = 0; for (let i = 0; i < TB; i++) { cum[b * TB + i] = acc; acc += cnt[b * TB + i] } tot[b] = acc }
+    // along the bell: by its wall's area, more where the first galaxies crowd
+    const along = sampler((t) => R(t * L) * (1 + 0.8 * sstep(dawn - 0.02, dawn + 0.06, t) * Math.exp(-Math.max(0, t - dawn - 0.06) / 0.25)))
+    const QB = 0.02, QN = 0.04, QD = 0.15
+    p.group.updateWorldMatrix(true, false)
+    const m = p.group.matrixWorld
+    const pos = new Float32Array(n * 3), col = new Uint8Array(n * 3), order = new Float32Array(n)
+    const v = new Vector3(), px = p.diskPx
+    for (let k = 0; k < n; k++) {
+      const b0 = bandOf(k), tp = tpos(k), ti = Math.min(TB - 1, Math.floor(tp)), j = b0 * TB + ti
+      const ang = -Math.PI + 2 * Math.PI * (cum[j] + (tp - ti) * cnt[j]) / Math.max(1, tot[b0])
+      const qk = q[k]
+      let s, r, c, a, bx
+      if (qk < QB) {            // the Big Bang: a small bright knot
+        const rr = 0.6 * Math.abs(gauss(k * 1.31)), t = hash(k * 2.3) * Math.PI * 2, u = hash(k * 4.1) * 2 - 1
+        s = bb + rr * u * 0.6; a = rr * Math.sqrt(1 - u * u) * Math.sin(t); bx = rr * Math.sqrt(1 - u * u) * Math.cos(t); c = [0.86, 0.93, 1]
+      } else {
+        if (qk < QN) { s = -1.3 * (1 - (qk - QB) / (QN - QB)); r = R(s); c = [0.78, 0.88, 1] }
+        else if (qk < QD) {     // the CMB disk, filled from its middle out, in the map's colours
+          s = 0.04; r = r0 * 0.99 * Math.sqrt((qk - QN) / (QD - QN)); c = [0.5, 0.7, 0.9]
+        } else {
+          const t = along(Math.min(0.9999, (qk - QD) / (1 - QD)))
+          s = Math.max(0.4, t * L)
+          if (hash(k * 3.77) < 0.6) { r = R(s) * (0.97 + 0.03 * hash(k * 5.1)); c = [0.8, 0.88, 1] }   // the wall
+          else { r = R(s) * 0.9 * Math.sqrt(hash(k * 6.3)); c = t < dawn ? [0.36, 0.34, 0.42] : ramp(HEAT, t) }
+        }
+        a = r * Math.sin(ang); bx = r * Math.cos(ang)
+        if (qk >= QN && qk < QD && px) {
+          const ix = Math.min(127, Math.max(0, Math.floor((bx / r0 + 1) * 64))), iy = Math.min(127, Math.max(0, Math.floor((1 - (a / r0 + 1) / 2) * 128)))
+          const o = (iy * 128 + ix) * 4, rr = px[o] / 255, gg = px[o + 1] / 255, bl = px[o + 2] / 255, mm = (rr + gg + bl) / 3
+          c = [mm + (rr - mm) * 1.4, mm + (gg - mm) * 1.4, mm + (bl - mm) * 1.4]
+        }
+      }
+      v.fromArray(place(s, a, bx)).applyMatrix4(m)
+      pos[k * 3] = v.x; pos[k * 3 + 1] = v.y; pos[k * 3 + 2] = v.z
+      for (let i = 0; i < 3; i++) col[k * 3 + i] = Math.round(255 * Math.min(1, Math.max(0, c[i])))
+      order[k] = qk
+    }
+    const O = new Vector3().fromArray(place(0, 0, 0)).applyMatrix4(m)
+    const D = new Vector3().fromArray(place(1, 0, 0)).applyMatrix4(m).sub(O).normalize()
+    return { pos, col, order, axisO: O, axisD: D }
+  },
+}
+// each value's rank among them, 0–1, from a histogram of `bins` over [lo, hi),
+// linear within a bin
+function rank(val, n, lo, hi, bins) {
+  const cnt = new Uint32Array(bins), cum = new Uint32Array(bins), w = (hi - lo) / bins
+  const at = (x) => Math.min(bins - 1, Math.max(0, Math.floor((x - lo) / w)))
+  for (let k = 0; k < n; k++) cnt[at(val[k])]++
+  for (let i = 0, acc = 0; i < bins; i++) { cum[i] = acc; acc += cnt[i] }
+  const out = new Float32Array(n)
+  for (let k = 0; k < n; k++) { const i = at(val[k]), f = (val[k] - lo) / w - i; out[k] = (cum[i] + Math.min(1, Math.max(0, f)) * cnt[i]) / n }
+  return out
 }
 
 export function installFunnel(registerBuilder) {
