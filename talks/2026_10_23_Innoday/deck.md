@@ -39,7 +39,8 @@ info: |
   „O kur tai pritaikoma?“: the ring with a strand from each part to what it
   gave, each photo at its strand's end, named with its year and machine.
   „O kaip komercializuoti?“: contracts, procurement, suppliers, the FCC.
-  „Lietuvos istorija CERN“: Lithuania, Light Conversion. „Ačiū“ over a slow
+  „Lietuvos istorija CERN“: photos of the LHCb Week in Vilnius (the rector,
+  the President's video greeting, the panel with the vice-minister, the hall). „Ačiū“ over a slow
   collision. The owner's 12 Oct list brings back the title, the section breaks
   and „Ačiū“; the other slides carry pictures, named numbers and the
   inventions' names; the notes carry what is said. Keys on a video slide:
@@ -605,32 +606,66 @@ Sakyti: „O dabar — apie Lietuvą ir CERN.“
 space: { at: kt, dist: 18, yaw: 120, pitch: 12, dim: 0, hum: false }
 ---
 
-<StagePhoto src="figures/hero_lt.jpg" arrive="camera" alt="Prezidentas Gitanas Nausėda spaudžia ranką CERN generaliniam direktoriui Markui Thomsonui, už jų CERN, Lietuvos ir ES vėliavos" focus="50% 30%" />
+<StagePhoto src="figures/lt_lhcb_week.jpg" arrive="camera" alt="LHCb savaitės Vilniuje atidarymas: Vilniaus universiteto rektorius Rimvydas Petrauskas kalba prie tribūnos, virš jo du ekranai „LHCb WEEK VILNIUS“" focus="50% 40%" />
 
-<!-- facts: cern-lithuania, lt-full-decision, lt-nauseda-visit -->
+<!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources, cern-lithuania -->
 
 <!--
-Kalbėtojui.
-Sakyti: „Lietuva yra asocijuotoji CERN narė nuo 2018 m. sausio, pirmoji iš Baltijos šalių. Todėl lietuviai gali dirbti CERN, o Lietuvos įmonės — dalyvauti jo pirkimuose. Lietuvos mokslininkai dirba CMS ir LHCb eksperimentuose. Šių metų sausį Prezidentas lankėsi CERN, nuotraukoje — su generaliniu direktoriumi Marku Thomsonu. Rugpjūčio 21 d. Ministras Pirmininkas nusprendė oficialiai kreiptis dėl visateisės narystės, ir CERN patvirtino, kad procedūra pradėta. Estija visateise nare tapo 2024 m.“
-Faktai: susitarimas pasirašytas 2017 06 27 Vilniuje, įsigaliojo 2018 01 08. Lietuvos įnašas 2026 m. — 1 000 000 CHF (~0,08 % biudžeto); visateisė narystė, LRT vertinimu, kainuotų apie 4 mln. eurų per metus (žurnalistų, ne CERN skaičius). CERN Grey Book (2026 10 07): Lietuva dalyvauja 7 eksperimentuose ir MTEP kolaboracijose — CMS (35 dalyviai, nuo 2007 m.), LHCb (15), DRD3 (11) ir kt. 2026 01 19 tą pačią dieną CERN pasirašė ketinimų memorandumus su „Ekspla“, „Ostaralab“ ir „Sargasas“.
-Vaizdas: Prezidento G. Nausėdos vizitas CERN, 2026 m. sausio 19 d.; nuotr. Marina Cavazza / CERN.
-Šaltiniai: home.cern/lithuania-becomes-associate-member-state-cern; lrv.lt (2026 08 26); lrt.lt/en (2026 09 20, Hamel de Monchenault: „The membership procedure has already started“); home.cern/presidential-visits-cern-0; greybook.cern.ch.
-(~0,8 min)
+Kalbėtojui. „Lietuvos istorija CERN“ — tik nuotraukos (savininkas, 2026 10 13: „just have some pictures about LHCb visits from the ministers and LHCb week“). LHCb savaitės Vilniuje atidarymas, 2026 m. rugsėjo 14 d., VU Gyvybės mokslų centras; kalba rektorius R. Petrauskas.
+Sakyti: „Lietuva yra asocijuotoji CERN narė nuo 2018 m., pirmoji iš Baltijos šalių: lietuviai gali dirbti CERN, o mūsų įmonės — dalyvauti jo pirkimuose. Šių metų rugsėjį Vilniaus universitete pirmą kartą Lietuvoje vyko LHCb savaitė — viso LHCb eksperimento susitikimas. Tai didžiausias dalelių fizikų susitikimas Lietuvos istorijoje.“
+Faktai: 121-oji LHCb savaitė, 2026 09 14–18, pirmoji Lietuvoje. Dalyvių skaičiai — prognozės ir nesutampa (VU: ~200 gyvai, iš viso ~600; grupės puslapis: 300 gyvai ir 300 nuotoliu, 128 institutai iš 28 šalių); po renginio skaičiaus viešai nėra — skaičiaus nesakyti tiksliau nei „apie du šimtus“. LRT antraštė: „didžiausias dalelių fizikų susitikimas Lietuvos istorijoje“. Asocijuotoji narė nuo 2018 01 08 (susitarimas pasirašytas 2017 06 27 Vilniuje); įnašas 2026 m. — 1 000 000 CHF.
+Vaizdas: savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius / Opening_Ceremony, LHCB-47 [PATIKSLINTI: nuotraukos autorius kreditui].
+Šaltiniai: lrt.lt/naujienos/mokslas-ir-it/11/3052140; indico.cern.ch/event/1696594; lhcb-vilnius.web.cern.ch; home.cern/lithuania-becomes-associate-member-state-cern.
+(~0,5 min)
 -->
 
 ---
-space: { at: [118.5, -1.6, 0], dist: 12, yaw: -18, pitch: 18, dim: 0.35, hum: false }   # one Lithuanian firm; a StagePhoto stands here once the firm sends a photo
+space: { at: kt, dist: 18, yaw: 135, pitch: 11, dim: 0, hum: false }
 ---
 
-<!-- facts: lt-lightcon, light-conversion-vu-spinoff -->
+<StagePhoto src="figures/lt_lhcb_week_president.jpg" arrive="camera" alt="LHCb savaitės atidarymas: Prezidentas Gitanas Nausėda sveikina dalyvius vaizdo įrašu abiejuose salės ekranuose, tarp Lietuvos vėliavos ir Vyčio vėliavos" focus="50% 30%" />
+
+<!-- facts: lhcb-week-vilnius, lt-full-decision, lt-member-interest-cern-visit-2026-09 -->
 
 <!--
-Kalbėtojui. Viena Lietuvos įmonė, kuri jau laimėjo CERN konkursą — prieš kvietimą veikti.
-Sakyti: „Vienas pavyzdys. „Light Conversion“ 1994 m. atsiskyrė nuo Vilniaus universiteto. 2021 m. ji laimėjo atvirą CERN konkursą: jos lazeris PHAROS buvo pasirinktas CERN greitintuvui CLEAR — jis išmuša elektronus, iš kurių greitintuve formuojamas pluoštas. Šiandien įmonė turi daugiau nei 800 darbuotojų ir pasaulyje įdiegusi daugiau nei 10 000 savo sistemų.“
-Faktai: konkursas — 2021 m. birželis (atitiko specifikaciją, pasiūlė geresnę kainą); PHAROS su ultravioletine harmonika — CLEAR fotoinžektoriaus lazeris. CERN skaidrė (M. Martinez Calderon, SY-STI-LP, 2022 10 06): „Light Conversion PHAROS system already installed and tested at CLEAR laser-lab“. Ar jis tebeveikia 2026 m., nepatvirtinta — nesakyti „dabar“.
-Vaizdas: kol kas pasaulis (auksinis žinių perdavimo branduolys). Kai įmonė atsiųs nuotrauką su leidimu, ji stovės čia kaip StagePhoto.
-Šaltiniai: lightcon.com/news/pharos-will-generate-electron-beams-for-linear-electron-accelerator-at-cern-laboratory/; indico.cern.ch/event/1203308 (Run2c UV beamline, AWAKE); lightcon.com/about-us/.
-(~0,5 min)
+Kalbėtojui. LHCb savaitės atidarymas: Prezidentas G. Nausėda, savaitės globėjas, sveikina dalyvius vaizdo įrašu (LRT: sveikino nuotoliu).
+Sakyti: „Savaitę globojo Prezidentas — jis pasveikino fizikus iš ekrano. Rugpjūčio 21 d. Ministras Pirmininkas nusprendė oficialiai kreiptis dėl visateisės narystės CERN, o CERN patvirtino, kad procedūra jau pradėta.“
+Faktai: premjero sprendimas — 2026 08 21, oficialus laiškas CERN vadovybei paskelbtas 08 26; rugsėjo 4 d. Lietuvos nuolatinis atstovas Ženevoje ambasadorius R. Paulauskas lankėsi CERN dėl Lietuvos išreikšto noro tapti visateise nare (CERN nuotraukų įrašas CERN-PHOTO-202609-233, 2026 09 04). Visateisė narystė panaikintų asocijuotajai narei taikomas lubas (darbuotojams ir sutartims). Estija visateise nare tapo 2024 m. Ministrų vizitų būtent į LHCb CERN nuotraukų archyve nerasta (valstybės vizitai — į CMS ir LHC tunelį; 2026 01 19 Prezidentas — CMS urve) [PATIKSLINTI: kurie ministrų vizitai į LHCb turėti omenyje].
+Vaizdas: savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius / Opening_Ceremony, LHCB-59 [PATIKSLINTI: nuotraukos autorius kreditui].
+Šaltiniai: lrt.lt/naujienos/mokslas-ir-it/11/3052140; lrv.lt (2026 08 26); lrt.lt/en (2026 09 20, Hamel de Monchenault: „The membership procedure has already started“).
+(~0,4 min)
+-->
+
+---
+space: { at: kt, dist: 18, yaw: 150, pitch: 10, dim: 0, hum: false }
+---
+
+<StagePhoto src="figures/lt_lhcb_week_panel.jpg" arrive="camera" alt="LHCb savaitės atidarymo diskusija apie Lietuvos dirbtinio intelekto gamyklą: šeši dalyviai scenoje prie LHCb WEEK VILNIUS kubų" focus="50% 35%" />
+
+<!-- facts: lhcb-week-vilnius -->
+
+<!--
+Kalbėtojui. Atidarymo diskusija „Lithuania's AI Factory: Connecting Science, Industry and Global Research Infrastructures“. Iš kairės: moderatorė prof. Saulė Mačiukaitė-Žvinienė, tada (pagal skaidrės sąrašą) Gautier Hamel de Monchenault (CERN), Tim Gershon (LHCb), prof. Povilas Treigys, švietimo, mokslo ir sporto viceministrė Regina Valutytė (balta striukė, antra iš dešinės), Benediktas Girdvainis (Ekonomikos ir inovacijų ministerija) [PATIKSLINTI: sėdėjimo tvarka nustatyta tik pagal tai, kad scenoje dvi moterys].
+Sakyti: „Atidaryme apie Lietuvos dirbtinio intelekto gamyklą kalbėjosi CERN ir LHCb fizikai, švietimo, mokslo ir sporto viceministrė ir Ekonomikos ir inovacijų ministerijos atstovas: mokslas ir valstybė prie vieno stalo.“
+Vaizdas: savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius / Opening_Ceremony, LHCB-172 [PATIKSLINTI: nuotraukos autorius kreditui].
+Šaltiniai: LHCb savaitės programa (Drive, LHCb_Week_Vilnius_2026_programa); nuotraukos LHCB-170, LHCB-174 (skaidrė su dalyvių sąrašu).
+(~0,3 min)
+-->
+
+---
+space: { at: kt, dist: 18, yaw: 165, pitch: 10, dim: 0, hum: false }
+---
+
+<StagePhoto src="figures/lt_lhcb_week_hall.jpg" arrive="camera" alt="Pilna VU Gyvybės mokslų centro auditorija LHCb savaitės atidaryme, dalyviai su LHCb savaitės juostelėmis" focus="50% 50%" />
+
+<!-- facts: lhcb-week-vilnius -->
+
+<!--
+Kalbėtojui. Auditorija LHCb savaitės atidaryme.
+Sakyti: „Į Vilnių atvyko apie du šimtai fizikų iš viso pasaulio, dar keli šimtai jungėsi nuotoliu. Savaitę jie aptarinėjo LHCb rezultatus, detektorių ir jo ateitį — Lietuvoje.“
+Vaizdas: nuotr. Tomas Laurinavičius / VU (vu.lt/en/all-news/cern-lh-cb-experiment-conference-starts-at-vu-for-the-first-time-in-lithuania, 2026 09 14).
+Šaltiniai: vu.lt (2026 09 08 ir 09 14); lrt.lt (2026 09 14).
+(~0,3 min)
 -->
 
 ---
@@ -653,7 +688,7 @@ space:
 
 # Ačiū
 
-<div class="src credits">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas) · 1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0 · Riešo vaizdas: MARS Bioimaging Ltd · B. Stumpe: S. E. Bennett / CERN, CC BY 4.0 · NeXT serveris: P. Loïez / CERN, CC BY-SA 4.0 · LHCb rezultatų grafikai: © CERN LHCb kolaboracijos naudai, CC BY 4.0 (apkarpyti, perspalvinti) · Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF)</div>
+<div class="src credits">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas) · 1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0 · Riešo vaizdas: MARS Bioimaging Ltd · B. Stumpe: S. E. Bennett / CERN, CC BY 4.0 · NeXT serveris: P. Loïez / CERN, CC BY-SA 4.0 · LHCb rezultatų grafikai: © CERN LHCb kolaboracijos naudai, CC BY 4.0 (apkarpyti, perspalvinti) · LHCb savaitė Vilniuje: VU nuotr. (salė — T. Laurinavičius) · Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF)</div>
 
 <!--
 Kalbėtojui. „Ačiū“ ant lėtai besiskleidžiančio susidūrimo per visą ekraną (savininkas, 2026 10 12). Susidūrimas (CMS 2012 m. Higso bozono kandidatas) prasideda, kai skaidrė atsiveria, ir lieka išsisklaidęs per klausimus; be garso.

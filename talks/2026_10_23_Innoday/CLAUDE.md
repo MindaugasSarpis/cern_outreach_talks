@@ -48,8 +48,11 @@ brings the next round, and Lithuanian firms can solve it.
   HL-LHC). The speaker names each problem.
 - **„O kaip komercializuoti?“** (section). 700+ sutarčių, 613 mln. CHF,
   +14 % apyvartos, the FCC (CERN's 2025 map clip).
-- **„Lietuvos istorija CERN“** (section). Lithuania (associate, full-membership
-  bid), Light Conversion (PHAROS chosen in CERN's 2021 tender for CLEAR),
+- **„Lietuvos istorija CERN“** (section). Photos only (owner, 13 Oct), from
+  the LHCb Week in Vilnius (14–18 Sept 2026): the rector under the „LHCb WEEK
+  VILNIUS“ screens, the President's video greeting on both screens, the
+  opening panel with the vice-minister, the full hall; the membership facts
+  (associate since 2018, the full-membership bid) are in their notes;
   „Ačiū“ over a slow collision filling the screen (the licence credits in tiny
   print).
 
@@ -189,6 +192,19 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   the count anywhere along the slide's path (± the sway); keep that when moving
   one. The credit says „apkarpyti, perspalvinti“ (CC BY 4.0 asks that changes
   be indicated).
+- „Lietuvos istorija CERN“ is photos only (owner, 13 Oct: "just have some
+  pictures about LHCb visits from the ministers and LHCb week"): four from the
+  LHCb Week's opening in Vilnius, StagePhotos at `kt`, the camera turning a
+  little between them. CERN's photo archive has no Lithuanian minister at LHCb
+  (the state visits went to CMS and the LHC tunnel), so the officials are the
+  President's video greeting (he was the week's patron) and vice-minister
+  Valutytė on the opening panel; ask the owner for any other minister photos.
+  The President-at-CERN photo (`hero_lt.jpg`, CMS, kept in figures/) and the
+  Light Conversion slide left the deck (the firm stays in the notes of „O kaip
+  komercializuoti?“). Sources: the owner's Drive
+  `2026-09-14_LHCb_Week_Vilnius/Opening_Ceremony` (LHCB-47, -59, -172; the
+  photographer is not recorded, probably VU's) and VU's press photo P1197849
+  (T. Laurinavičius / VU); the credit „VU nuotr.“ waits for the owner's word.
 - No driving sounds (owner, 12 Oct: "don't use the 'driving away sound', sounds
   funny"; to OpenData, 13 Oct: "transitions were like driving sounds"): the
   collision's falling boom is gone from components/lhc-opening (27e9837, for
