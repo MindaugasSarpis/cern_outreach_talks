@@ -76,13 +76,26 @@ export function placeAlongRays(s, camera, rect, view, { near = 14, far = 46, rel
 
 // ---- drawing: grains of light, of a piece with the world's forms --------------
 const VERT = /* glsl */ `
-attribute vec3 aColor;
-attribute float aSize, aSeed;
-uniform float uTime, uReveal, uGain;
+attribute vec3 aColor, aTarget, aTcol;
+attribute float aSize, aSeed, aOrder;
+uniform float uTime, uReveal, uGain, uMorph, uFade, uSwirl, uDense;
+uniform vec3 uAxisO, uAxisD;
 varying vec3 vColor; varying float vAlpha;
 ${POINT_GLSL}
 void main() {
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  // the prologue (setup/funnel.js funnelSeq): each grain flies to its place in the
+  // funnel, the middle of the picture first, turning a little round the funnel's axis
+  // on the way, and takes on the colour of where it lands
+  vec3 p = position; vec3 col = aColor; float k = 0.0;
+  if (uMorph > 0.0) {
+    k = clamp((uMorph - 0.45 * aOrder - 0.05 * aSeed) / 0.5, 0.0, 1.0);
+    k = k * k * (3.0 - 2.0 * k);
+    p = mix(position, aTarget, k);
+    vec3 o = p - uAxisO; float ang = uSwirl * sin(3.14159 * k);
+    p = uAxisO + o * cos(ang) + cross(uAxisD, o) * sin(ang) + uAxisD * dot(uAxisD, o) * (1.0 - cos(ang));
+    col = mix(aColor, aTcol, smoothstep(0.3, 1.0, k));
+  }
+  vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 0.78 + 0.22 * sin(uTime * (0.8 + aSeed * 1.9) + aSeed * 40.0);
   // each grain lights at its own moment while the picture lets go of it
@@ -91,8 +104,10 @@ void main() {
   // through the cloud must not fill the screen
   float ps = uView * aSize * (72.0 / max(-mv.z, 0.1));
   gl_PointSize = pointSize(ps, 48.0);
-  vColor = aColor * uGain;
-  vAlpha = r * tw * coverage(ps) * smoothstep(0.25, 1.0, -mv.z);
+  vColor = col * uGain;
+  // gathered into the funnel the grains crowd a smaller part of the frame: uDense keeps
+  // its light near the web's; uFade hands over to the funnel's own grains
+  vAlpha = r * tw * coverage(ps) * smoothstep(0.25, 1.0, -mv.z) * uFade * mix(1.0, uDense, k);
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;
@@ -102,7 +117,7 @@ void main() {
   gl_FragColor = vec4(pow(vColor * a, vec3(2.2)), 1.0);
 }`
 
-export function makeGrains(s, { size = 0.5, gain = 1.25 } = {}) {
+export function makeGrains(s, { size = 0.5, gain = 1.25, swirl = 0.9, dense = 0.55 } = {}) {
   const geo = new BufferGeometry()
   geo.setAttribute('position', new BufferAttribute(new Float32Array(s.n * 3), 3))
   geo.setAttribute('aColor', new BufferAttribute(s.col, 3))
@@ -111,10 +126,20 @@ export function makeGrains(s, { size = 0.5, gain = 1.25 } = {}) {
   for (let k = 0; k < s.n; k++) { sd[k] = rnd(); sz[k] = size * (0.6 + 0.8 * rnd()) * (0.8 + 0.6 * s.lum[k]) }
   geo.setAttribute('aSize', new BufferAttribute(sz, 1))
   geo.setAttribute('aSeed', new BufferAttribute(sd, 1))
+  // where each grain goes in the funnel (setTargets), its colour there and its turn
+  geo.setAttribute('aTarget', new BufferAttribute(new Float32Array(s.n * 3), 3))
+  geo.setAttribute('aTcol', new BufferAttribute(new Uint8Array(s.n * 3), 3, true))
+  geo.setAttribute('aOrder', new BufferAttribute(new Float32Array(s.n), 1))
   const mat = new ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG,
-    uniforms: { uTime: { value: 0 }, uReveal: { value: 0 }, uView: { value: 1 }, uGain: { value: gain } },
-    transparent: true, depthWrite: false, blending: AdditiveBlending,
+    uniforms: {
+      uTime: { value: 0 }, uReveal: { value: 0 }, uView: { value: 1 }, uGain: { value: gain },
+      uMorph: { value: 0 }, uFade: { value: 1 }, uSwirl: { value: swirl }, uDense: { value: dense },
+      uAxisO: { value: new Vector3() }, uAxisD: { value: new Vector3(0, 0, 1) },
+    },
+    // additive and order-free, like the funnel's grains: no depth test, so the CMB disk fading in
+    // (it writes depth) does not cut off the grains of the Big Bang knot behind it
+    transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
   })
   const pts = new Points(geo, mat)
   pts.frustumCulled = false
@@ -123,6 +148,14 @@ export function makeGrains(s, { size = 0.5, gain = 1.25 } = {}) {
   // the twinkle's clock and the frame's size, every frame (the frame-rate guard changes the buffer)
   pts.onBeforeRender = (r) => { mat.uniforms.uTime.value = (performance.now() - t0) / 1000; mat.uniforms.uView.value = viewScale(r) }
   return pts
+}
+
+// the funnel's places for the grains (funnelSeq.targets), once per picture
+export function setTargets(pts, tg) {
+  const g = pts.geometry
+  for (const [name, arr] of [['aTarget', tg.pos], ['aTcol', tg.col], ['aOrder', tg.order]]) { const a = g.getAttribute(name); a.array.set(arr); a.needsUpdate = true }
+  pts.material.uniforms.uAxisO.value.copy(tg.axisO); pts.material.uniforms.uAxisD.value.copy(tg.axisD)
+  pts.userData.targets = true
 }
 
 export function setPositions(pts, pos) {

@@ -8,7 +8,7 @@
 
 [defaults]
 # release_tag comes from videos.toml (videos-2026-10-00-innoday).
-max_size_mb = 320   # vu_zoom_web (2:47 at 6.6 Mbit/s) 138 MB; 320 was set for vu_ff_zoom_galaxy (4:26, 305 MB), no longer in the deck
+max_size_mb = 320   # nftmc_zoom_web (4:13; vu_zoom_web's 2:47 was 138 MB at 6.6 Mbit/s); 320 was set for vu_ff_zoom_galaxy (4:26, 305 MB), no longer in the deck
 
 # vu_ff_zoom.mp4 (the whole 4:42 zoom-out, 253 MB) is the source of the cut
 # below. The deck no longer plays it, so it is not listed; its asset stays on
@@ -31,33 +31,45 @@ max_size_mb = 320   # vu_zoom_web (2:47 at 6.6 Mbit/s) 138 MB; 320 was set for v
 # ~/talks/.cache/innoday/unzoom/make.sh (5 s segments reversed and joined in
 # reverse order); the raw is that output, not on gdrive.
 
+# vu_zoom_web.mp4 (high-motion): no longer in the deck (13 Oct); its asset stays
+# on the release. Its notes: the opener from 12 to 13 Oct, the owner's
+# SpaceEngine edit spaceengine/vm_zoom.mp4 (4:11) cut at 167.4 s, before its
+# crossfade into the CMB, with a 3 s audio fade-out; it started over the VU
+# Business School roof in Saulėtekis and ended on the frame the takeover starts
+# from (public/figures/opener_last.jpg).
+
 # Fetch raws one at a time, never with a plain `videos:sync`: it is an rclone
-# sync of every name listed here, so it would DELETE vu_zoom_web.mp4's raw (cut
-# here, not on gdrive released/) and fetch lhcb.mp4's 112 MiB raw, which nothing
-# here encodes. A raw on released/: rclone copyto
+# sync of every name listed here, so it would DELETE nftmc_zoom_web.mp4's raw
+# (cut here, not on gdrive released/) and fetch lhcb.mp4's 112 MiB raw, which
+# nothing here encodes. A raw on released/: rclone copyto
 # gdrive:work/outreach/resources/videos/released/<name> ../../videos/raw/<name>
-# --checksum. vu_zoom_web.mp4's: copy its source the same way (its notes) and
+# --checksum. nftmc_zoom_web.mp4's: copy its source the same way (its notes) and
 # cut it again with the command there.
 [[videos]]
-name    = "vu_zoom_web.mp4"
+name    = "nftmc_zoom_web.mp4"
 profile = "high-motion"
 used_in = ["deck"]
 notes   = """\
-The opener (owner, 12 Oct: "Then we move to video of zooming out. It will end \
-with cosmic web"): the owner's SpaceEngine edit spaceengine/vm_zoom.mp4 \
-(gdrive:work/outreach/resources/videos/spaceengine/, 4:11, 1080p60 HEVC) cut at \
-167.4 s, before its crossfade into the CMB (first mixed frame 167.567 s), with \
-a 3 s audio fade-out. It starts over Saulėtekis (the VU Business School roof, \
-Google Earth) and ends held on the cosmic web (the NCSA AVL 'Cosmic Bubble \
-Bath' visualisation) for the takeover (public/figures/opener_last.jpg, pnpm \
-takeover:frame). 126-145 s is near-black flight between the galaxies. The raw \
-is that cut, 60 fps kept (at the 8 Mbit/s ceiling 30 fps was no sharper), made \
-by: ffmpeg -i vm_zoom.mp4 -t 167.4 -map 0:v:0 -map 0:a:0 -map_metadata -1 \
--write_tmcd 0 -c:v libx264 -preset slow -crf 14 -profile:v high -pix_fmt \
-yuv420p -af afade=t=out:st=164.4:d=3 -c:a aac -b:a 256k -movflags +faststart \
-vu_zoom_web.mp4 (in pnpm talk render). Not on gdrive \
-released/, so a plain videos:sync would delete it: fetch raws with rclone \
-copyto, as the comment above says."""
+The opener (owner, 13 Oct: "the last frame will be the same, the beginning \
+will be not from business school but nftmc"): the owner's SpaceEngine edit \
+spaceengine/nftmc_zoom.mp4 (gdrive:work/outreach/resources/videos/spaceengine/, \
+4:27.6, 1080p60 HEVC, a Resolve render) cut at 253.45 s, with a 3 s audio \
+fade-out. It starts over NFTMC in Saulėtekis (Google Earth: its attribution \
+is in the footage, the "Google Earth" logo on every Earth frame and the \
+imagery providers where theirs is shown, "Landsat / Copernicus" ~0:20, \
+"Airbus, CNES / Airbus, Maxar Technologies" ~0:26) and ends on the \
+cosmic web (the NCSA AVL 'Cosmic Bubble Bath' visualisation) at the frame the \
+takeover starts from: 253.40-253.43 s matches public/figures/opener_last.jpg \
+(the old opener's last frame) best, normalised correlation 0.996 (its \
+neighbours 0.995, falling off either side). After it the source runs on: the \
+web keeps evolving, hazier and brighter, to ~259.5 s, then holds that frame to \
+the end; both are cut. ~205-225 s is near-black flight between the galaxies. \
+The raw is that cut, 60 fps kept, made by: ffmpeg -i nftmc_zoom.mp4 -t 253.45 \
+-map 0:v:0 -map 0:a:0 -map_metadata -1 -write_tmcd 0 -c:v libx264 -preset slow \
+-crf 14 -profile:v high -pix_fmt yuv420p -af afade=t=out:st=250.45:d=3 -c:a \
+aac -b:a 256k -movflags +faststart nftmc_zoom_web.mp4 (in pnpm talk render). \
+Not on gdrive released/, so a plain videos:sync would delete it: fetch raws \
+with rclone copyto, as the comment above says."""
 
 [[videos]]
 name     = "cern_footage_2022_013_001_1080p_lhc.mp4"
