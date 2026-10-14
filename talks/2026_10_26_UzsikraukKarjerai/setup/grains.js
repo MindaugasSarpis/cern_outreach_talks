@@ -814,7 +814,8 @@ function buildQuintet(o, ctx) {
 //     width?: 24, height?: 10, max?: (tallest bin), unit?: 1 (entries per grain),
 //     steps?: [0, 1] (the share of entries shown at each step), fill?: 20 (s for the whole set),
 //     fall?: 1.1 (s a grain takes to drop), size?: 1, alpha?: 0.35, color?, axis?: true,
-//     curve?: 1 (>1: the first entries drop faster, the last slower), marks?: [[lo, hi], …] }
+//     curve?: 1 (>1: the first entries drop faster, the last slower), marks?: [[lo, hi], …],
+//     tickSize?, tickAlpha? (the ticks over the marks; default size × 1,3 and 0,55) }
 // A measured distribution building up entry by entry: each grain is one
 // entry (one candidate) dropping into its bin in a random order, so the
 // shape grows the way the data came in. A step's share is reached at a
@@ -923,7 +924,7 @@ function buildHistogram(o, ctx) {
       }
       const tg = new BufferGeometry()
       tg.setAttribute('position', new BufferAttribute(new Float32Array(tp), 3)); tg.setAttribute('aSeed', new BufferAttribute(new Float32Array(ts), 1))
-      const tm = material(TICK_VERT, { uSize: { value: (o.size ?? 1) * 1.3 }, uAlpha: { value: 0.55 }, uColor: { value: new Color(...rgb(o.hot || '#fff4dc')) } })
+      const tm = material(TICK_VERT, { uSize: { value: o.tickSize ?? (o.size ?? 1) * 1.3 }, uAlpha: { value: o.tickAlpha ?? 0.55 }, uColor: { value: new Color(...rgb(o.hot || '#fff4dc')) } })
       tm.uniforms.uTime = u.uTime; tm.uniforms.uPixelRatio = u.uPixelRatio; tm.uniforms.uMarkT = u.uMarkT
       const tk = new Points(tg, tm); tk.frustumCulled = false
       g.add(tk)
@@ -966,6 +967,12 @@ function buildHistogram(o, ctx) {
       u.uFrom.value = to; u.uTo.value = to; u.uT0.value = now - 100; u.uDur.value = 0.01
       // marks switched on with the set already full fade in now; switched off, they go at once
       u.uMarkT.value = !marksOn(to) ? 1e9 : instant ? now - 100 : lit ? u.uMarkT.value : now + 0.2
+      return
+    }
+    // the same share already filling (a click that only adds the marks, before the fill
+    // has ended): let the fill run on, and light the marks when it ends
+    if (to === u.uTo.value && u.uTo.value > u.uFrom.value) {
+      u.uMarkT.value = marksOn(to) ? u.uT0.value + u.uDur.value + u.uFall.value + 0.6 : 1e9
       return
     }
     fill(cur, to)

@@ -11,9 +11,12 @@ const props = defineProps({
   set: { type: Object, default: () => ({}) },
   clicks: { type: Object, default: () => ({}) },
 })
-const { $clicks } = useSlideContext()
+const { $clicks, $renderContext } = useSlideContext()
 const active = useIsSlideActive()
 const apply = () => {
+  // only the live slide steers the world: the overview grid and the previews render
+  // their copies with every click done, which would light slide 10's peaks early
+  if (!['slide', 'presenter'].includes($renderContext?.value)) return
   const steps = { ...props.set }
   for (const [at, part] of Object.entries(props.clicks)) if ($clicks.value >= Number(at)) Object.assign(steps, part)
   for (const [name, step] of Object.entries(steps)) setGrains(name, step)

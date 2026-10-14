@@ -182,7 +182,7 @@
     0
    ],
    "look": {
-    "dist": 16,
+    "dist": 18,
     "yaw": 0,
     "pitch": 3,
     "sway": 0.4,
@@ -221,6 +221,8 @@
       1,
       1
      ],
+     "tickSize": 2.2,
+     "tickAlpha": 0.35,
      "markStep": 2
     },
     {
@@ -306,7 +308,7 @@
      "type": "histogram",
      "name": "jx",
      "pos": [
-      -14.4,
+      -16.0,
       0,
       0
      ],
@@ -376,62 +378,32 @@
    "pulse": 7,
    "objects": [
     {
-     "type": "constellation",
+     "type": "quintet",
+     "name": "pq2",
      "pos": [
       0,
       0,
       0
      ],
-     "radius": 3.12,
-     "nodeRadius": 0.62,
-     "haze": "#ffcf73",
-     "coreSize": 11,
-     "coreAlpha": 0.7,
-     "nodes": [
+     "radius": 2.4,
+     "size": 1.5,
+     "alpha": 0.6,
+     "steps": [
       {
-       "pos": [
-        1.377,
-        1.015,
-        0.362
-       ],
-       "color": "#ffc05a",
-       "core": "#fff3d6"
+       "hold": 0,
+       "light": 0.25
       },
       {
-       "pos": [
-        0.507,
-        -1.74,
-        -1.015
-       ],
-       "color": "#ffd88a",
-       "core": "#ffffff"
+       "hold": 0.55,
+       "light": 0.4
       },
       {
-       "pos": [
-        1.667,
-        -0.362,
-        -1.377
-       ],
-       "color": "#ffd88a",
-       "core": "#fff0d0"
+       "hold": 0,
+       "light": 0.12
       },
       {
-       "pos": [
-        -1.015,
-        1.45,
-        -1.16
-       ],
-       "color": "#ffe3a8",
-       "core": "#ffffff"
-      },
-      {
-       "pos": [
-        -1.45,
-        -0.652,
-        0.725
-       ],
-       "color": "#ffd27a",
-       "core": "#ffe8c8"
+       "hold": 1,
+       "light": 0.55
       }
      ]
     },
@@ -540,7 +512,9 @@
      "curve": 1.8,
      "alpha": 0.95,
      "size": 0.7,
-     "count": 16407,
+     "riseGrains": 600,
+     "hot": "#ffcf70",
+     "count": 16400,
      "rise": [
       -0.69,
       7.2,

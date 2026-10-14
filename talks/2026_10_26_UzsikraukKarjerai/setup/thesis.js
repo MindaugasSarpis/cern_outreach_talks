@@ -7,8 +7,8 @@ import { state, listen, tick, waiting, material, PLACE } from './grains.js'
 // as `peakhist`, so this talk's own `histogram` (th1, th2, jp, jx: bins from
 // `src` files) keeps its name. Its local hide() is gone: this talk's PLACE
 // defines one (the same body). The bins come inline in space.json (the
-// `peak` object); they sum to 16 398, and `count: 16407` (the thesis's
-// N_sig) is what <StageCount for="peak"> counts to.
+// `peak` object); they sum to 16 398, and `count: 16400` (the thesis's
+// N_sig, 16 406,6 ± 161,7, rounded as its error allows) is what <StageCount for="peak"> counts to.
 
 const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 

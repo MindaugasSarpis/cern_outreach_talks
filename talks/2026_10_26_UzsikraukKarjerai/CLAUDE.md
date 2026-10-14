@@ -52,7 +52,7 @@ and name line) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
 | 11 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp` at the same scale |
 | 12 | Vilnius, CERN | the route across Europe |
 | 13 | Vilnius, CERN | the map close on Vilnius and the arcs to CERN: the working day |
-| 14 | portrait, „Bakalauro darbas, VU, 2026“, „Dominykas Stonkus“, „16 407 skilimai“ | OpenData's thesis slide at `thesis`: his m(J/ψ p) fills, a pentaquark rises from the peak |
+| 14 | portrait, „Dominykas Stonkus“, „16 400 skilimų“ | OpenData's thesis slide at `thesis`: his m(J/ψ p) fills, grains rise from the peak into the cover's five-quark form (`pq2`) |
 | 15 | — | the camera draws back from his plot, dimmed: three things to do this school year (said) |
 | 16 | — | the five-quark form, held: the question (said) |
 | 17 | „Ačiū“ | OpenData's close at `team`: the LHCb Vilnius group's 15 portraits of grains running round a gold beam |
@@ -282,9 +282,14 @@ and name line) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
     „290 dalelių“; the notes say it is CMS's. Undo: drop `"event": "cms"` from
     the `opening` object and restore 2bc8262's slide 3 keys and count.
   - **Dominykas** (slide 14): OpenData's thesis slide (portrait, the thesis and
-    his name, his m(J/ψ p) filling, a pentaquark rising from the peak,
-    „16 407 skilimai“), without OpenData's sentence (fewer words; the thesis is
-    a `.caption`). New lines for 15-year-olds instead of the award jury's: the
+    his name, his m(J/ψ p) filling, grains rising from the peak,
+    „16 400 skilimų“: the fit's 16 406,6 ± 161,7 rounded as its error allows,
+    where OpenData shows 16 407), without OpenData's sentence and kicker (fewer words; the visual review
+    found the kicker at 12,5 px, unreadable on a stream; „apgynė bakalauro
+    darbą“ is said). The grains from his peak gather into this talk's own
+    five-quark form (a second quintet, `pq2`, as on the cover) instead of
+    OpenData's constellation bubble, which read as a different symbol and burned
+    white; the rise is softer (600 grains, warm). New lines for 15-year-olds instead of the award jury's: the
     same public data the speaker prepared, the bump in the same place, and the
     thesis's own caveat (a qualitative check, never "observed"). New fact
     `stonkus-bsc-2026-yield`, read from the thesis (Fig. 14: N_sig =
