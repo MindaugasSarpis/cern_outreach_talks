@@ -59,6 +59,17 @@ and name line) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-15 (latest): **the 15 Oct round, built and reviewed** (the owner:
+  "Open data and innoday talks are really good, take elements from them and
+  finish this one off"; Decisions, 2026-10-15). 17 slides, about 9,3 min by the
+  notes (the brief: 10–15; the speaker's own stories are where more would go).
+  Checked: `talk lint --release` 0 errors (2 TEXT warnings, the cover and
+  „Ačiū“, on purpose); `talk check` ok; shots of all 17 in order, settled, no
+  page or HTTP errors; the cover's fly-in clear of long tasks (a trace); the
+  `talk-review` workflow on db8e2ab (facts, copy, unslop, perf, state) and two
+  rounds of visual review, all applied or answered in `notes/review.md`;
+  stills 01–17 retaken (10 at its click); the PDF export (17 pages) checked on
+  a rasterised sheet. Open for the owner: the list under Figures.
 - 2026-10-13 (latest): **deployed c14d350** under the standing rule: the
   stage's flight whoosh and clip tone off (b7e1cce), slide 3's notes after the
   opening's fly-out fix (73da04c, lhc-opening 27e9837), and main 51b0021.
