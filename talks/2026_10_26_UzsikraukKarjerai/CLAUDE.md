@@ -59,7 +59,10 @@ and name line) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
 
 ## Status
 
-- 2026-10-15 (latest): **the 15 Oct round, built and reviewed** (the owner:
+- 2026-10-15 (latest): **deployed 3948c6b** under the standing rule: the 15 Oct
+  round below. `talk ready` passed with nothing skipped; Pages run 38649918760
+  green; the live walk passed 17 of 17 (none failed or retried); URL 200.
+- 2026-10-15: **the 15 Oct round, built and reviewed** (the owner:
   "Open data and innoday talks are really good, take elements from them and
   finish this one off"; Decisions, 2026-10-15). 17 slides, about 9,3 min by the
   notes (the brief: 10–15; the speaker's own stories are where more would go).
