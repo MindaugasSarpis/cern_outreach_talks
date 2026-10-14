@@ -163,7 +163,8 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 ## Status
 
 2026-10-14: the funnel's hum lasts ~3 s on slides 4-5 (`<ShortHum>`), not
-the whole slide.
+the whole slide. Deployed 92c6cbb — Pages run 38548170841 (green), URL 200,
+live walk 32/32; `ready` passed with nothing skipped.
 
 2026-10-13: **the NFTMC opener** (the owner's new SpaceEngine edit, cut on the
 takeover's frame), slide 12's CP plot as one panel, no „Lietuvos istorija
