@@ -33,8 +33,8 @@ brings the next round, and Lithuanian firms can solve it.
   of the Universe as a funnel of grains, its mesh coming in last, seen from outside
   (Big Bang, CMB, dark ages, a band of hot proto-galaxies, then colder, sparser
   galaxies) → the dive back to the CMB (380 000 metų) → pulled back: the
-  question „Iš ko visa tai sudaryta?“ (spoken). The low hum only on the funnel
-  and the dive.
+  question „Iš ko visa tai sudaryta?“ (spoken). The low hum only as the funnel
+  and the dive begin, ~3 s each (`<ShortHum>`).
 - **The machine and LHCb.** CERN overview clip → the LHC tunnel in motion with
   its four numbers (pushes on into) → one collision in grains (shared
   components/lhc-opening; the owner's CMS 4π pick, a 2012 Higgs candidate,
@@ -162,6 +162,9 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-14: the funnel's hum lasts ~3 s on slides 4-5 (`<ShortHum>`), not
+the whole slide.
+
 2026-10-13: **the NFTMC opener** (the owner's new SpaceEngine edit, cut on the
 takeover's frame), slide 12's CP plot as one panel, no „Lietuvos istorija
 CERN“ section slide (32 slides), and a stale page reloads itself while it
@@ -186,7 +189,10 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   slide back; the zoom-out ending on the cosmic web, whose last frame becomes
   the funnel; the funnel as Big Bang → CMB → no stars → hot dense
   proto-galaxies → colder, darker, galaxies far apart; the low hum only while
-  zooming into the funnel (`hum: false` on every other slide, `humAt: all`);
+  zooming into the funnel (`hum: false` on every other slide, `humAt: all`;
+  14 Oct, "only 2-3s": `<ShortHum>` on slides 4-5 stops it 1.5 s after it
+  starts, so it swells and fades in ~3 s; it watches the hum, so a restart by
+  the stage, the tab back in view or audio unlocked there, is cut too);
   CERN overview; the LHC tunnel as a moving clip with slide 9's numbers; a
   collision from the OpenData talk (he picked the CMS 4π event, 12 Oct: CMS
   Open Data record 300, `"event": "cms"` on both objects since the module
@@ -240,7 +246,7 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   collision's falling boom is gone from components/lhc-opening (27e9837, for
   every talk), and the stage's flight whoosh and clip rise are off here
   (`stage.sound: { hum: true, flight: false, clip: false }`). What still
-  sounds: the funnel hum (slides 4-5), the collision's swell, thump and drone
+  sounds: the funnel hum (slides 4-5, ~3 s each), the collision's swell, thump and drone
   (slide 9; sub-bass, barely there on laptop speakers), the clips' own audio.
 - The LHCb clip's sound is the owner's own edit `lhcb.mp4` (owner: "should be on
   gdrive"): its music is the drive's untagged `Sunshine Adagio in D Minor.mp3`,
