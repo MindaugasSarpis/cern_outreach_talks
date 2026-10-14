@@ -3,6 +3,7 @@ import {
   Mesh, MeshBasicMaterial, CircleGeometry, TextureLoader, SRGBColorSpace, Color, DoubleSide,
 } from 'three'
 import { POINT_GLSL, viewScale } from './view.js'
+import { disk as diskLatch } from './afterCover.js'
 
 // Innoday's opening form, on the engine's stage (slidev-addon-stage):
 //
@@ -276,10 +277,12 @@ function buildFunnel(o, ctx) {
   const along = (v) => axis === 'z-' ? -v.z : axis === 'z+' ? v.z : axis === 'x-' ? -v.x : v.x
   const across = (v) => axis === 'z-' || axis === 'z+' ? Math.hypot(v.x, v.y) : Math.hypot(v.y, v.z)
   points.onBeforeRender = (r, scene, camera) => {
-    // the CMB picture goes to the GPU as soon as it has loaded (on the cover, while the
-    // deck is idle), not on the frame that first shows it: a 2048² upload with its
-    // mipmaps stalled the arrival at slide 4 (seconds on a software renderer)
-    if (diskTex && !diskUp) { r.initTexture(diskTex); diskUp = true }
+    // the CMB picture goes to the GPU before the frame that first shows it (a 2048²
+    // upload with its mipmaps stalled the arrival at slide 4, seconds on a software
+    // renderer), but not on the cover, where it stalled the pentaquark's fly-in
+    // (owner, 14 Oct): under the opener (warmDisk, once the cover is behind)
+    rend = r
+    if (diskTex && !diskUp && diskLatch.on.value) warmDisk()
     mat.uniforms.uView.value = viewScale(r)
     g.worldToLocal(cam.copy(camera.position))
     const sAx = along(cam), off = across(cam)
@@ -300,7 +303,25 @@ function buildFunnel(o, ctx) {
   // its brightness (0–1). Transparent only so the prologue can fade it in
   // (funnelSeq); drawn first of the transparent things, it covers what lies
   // behind it as the opaque disk did.
-  let alive = true, diskTex = null, diskUp = false
+  let alive = true, diskTex = null, diskUp = false, rend = null
+  // the picture's decode (a 128² read of it, the colours for the web's grains that
+  // land on the disk: funnelSeq.targets) and its upload, once the cover is behind
+  // (afterCover.js, the `disk` latch): under the opener the world rests, so
+  // nothing stalls on screen. Called from the load, the latch and every frame
+  // (until it is up).
+  function warmDisk() {
+    if (!alive || !diskTex || diskUp || !diskLatch.on.value) return
+    if (!parts.diskPx) {
+      try {
+        const c = document.createElement('canvas'); c.width = c.height = 128
+        const x2 = c.getContext('2d', { willReadFrequently: true }); x2.drawImage(diskTex.image, 0, 0, 128, 128)
+        parts.diskPx = x2.getImageData(0, 0, 128, 128).data
+      } catch {}
+    }
+    if (!rend) return   // the world has not drawn a frame yet: its next one does this
+    try { rend.initTexture(diskTex) } catch {}
+    diskUp = true
+  }
   const r0d = R(0) * 0.985
   const diskMat = new MeshBasicMaterial({ color: new Color().setScalar(o.cmbTint ?? 0.85), side: DoubleSide, transparent: true })
   const disk = new Mesh(new CircleGeometry(r0d, 192), diskMat)
@@ -319,12 +340,7 @@ function buildFunnel(o, ctx) {
       tex.colorSpace = SRGBColorSpace; tex.anisotropy = ctx?.anisotropy || 1
       diskMat.map = tex; diskMat.needsUpdate = true; diskTex = tex
       parts.diskReady = true; disk.visible = diskMat.opacity > 0.002
-      // the map's colours for the web's grains that land on the disk (funnelSeq.targets)
-      try {
-        const c = document.createElement('canvas'); c.width = c.height = 128
-        const x2 = c.getContext('2d', { willReadFrequently: true }); x2.drawImage(tex.image, 0, 0, 128, 128)
-        parts.diskPx = x2.getImageData(0, 0, 128, 128).data
-      } catch {}
+      warmDisk()
     })
   }
 
@@ -353,12 +369,13 @@ function buildFunnel(o, ctx) {
   if (capN) img.src = `${import.meta.env.BASE_URL}${(o.cmb || 'figures/cmb_wmap.png').replace(/^\//, '')}`
 
   funnelSeq.attach(parts)
+  const offLatch = diskLatch.when(warmDisk)   // a rebuilt world lets go of this one's
   return {
     group: g, labels: [],
     // busy while the prologue plays: the headless shots and stills wait for its end
     api: { busy: () => funnelSeq.busy },
     update(t) { mat.uniforms.uTime.value = t; funnelSeq.step(t) },
-    dispose() { alive = false; funnelSeq.detach(parts); geo.dispose(); mat.dispose(); disk.geometry.dispose(); diskMat.dispose(); diskTex?.dispose() },
+    dispose() { alive = false; offLatch(); rend = null; funnelSeq.detach(parts); geo.dispose(); mat.dispose(); disk.geometry.dispose(); diskMat.dispose(); diskTex?.dispose() },
   }
 }
 

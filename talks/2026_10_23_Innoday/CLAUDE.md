@@ -162,6 +162,9 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-14 (later): the cover's fly-in no longer stalls (`<AfterCover>`, the
+CMS event in the bundle, the CMB disk warmed under the opener; Decisions).
+
 2026-10-14: the funnel's hum lasts ~3 s on slides 4-5 (`<ShortHum>`), not
 the whole slide. Deployed 92c6cbb — Pages run 38548170841 (green), URL 200,
 live walk 32/32; `ready` passed with nothing skipped.
@@ -229,6 +232,29 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   first 20 s, on the same slide, at most once a minute; a later failure shows
   the slide's error as before (never a reload mid-talk: review of a85cbd8).
   At the venue, still reload the deck before starting (or use `pnpm venue`).
+- The cover's fly-in runs clear of the main thread (owner, 14 Oct: "slight lag
+  on cover slide animation"). The pentaquark flies in over 3 s from ~0.6 s
+  after the world's boot, on a clock a long task freezes. A trace of the cover
+  found, inside that window: lhc-opening's two CMS fills when its dynamic
+  import arrived (~0.25 + 0.3 s), the 8 photo places building when Slidev's
+  3 s preload mounted their slides (8 synchronous photo decodes, ~0.5 s), and
+  the funnel's CMB disk decode and 2048² upload. Now `setup/main.ts` imports
+  event-cms.json, so both fills run in the boot (lhc-opening unchanged; Vite
+  warns the dynamic import stays in the entry chunk, expected); two one-way
+  latches in `setup/afterCover.js` flip 1.2 s after a clip covers the screen
+  and still does (the opener; going back to the cover first cancels it):
+  `places` mounts the place StagePhotos (`<AfterCover>`), `disk` lets
+  funnel.js's `warmDisk` decode and upload the CMB picture, both under the
+  clip. Fallbacks for an opener that failed or was skipped: `disk` on the step
+  to slide 3 (it opens on a held still frame), `places` under the next clip
+  (7, 8, 10) or on the step to slide 12; a page opened past slide 1 flips both.
+  A rehearsal jump from the cover straight to a place slide (`g 14`) builds the
+  place on arrival, so the camera turns to it late (once). Review of the change
+  (3 lenses) found no defect in the CMS import; its four low findings are fixed
+  or noted here. After it: nothing ≥ 30 ms on the cover's main thread after the
+  boot but Slidev's own ~40 ms mount of every slide at 3 s (headless trace).
+  If it still stutters on the venue machine, press `c` on the cover once the
+  page has settled (replays the assembly).
 - „Lietuvos istorija CERN“ is photos only (owner, 13 Oct: "just have some
   pictures about LHCb visits from the ministers and LHCb week"): four from the
   LHCb Week's opening in Vilnius, StagePhotos at `kt`, the camera turning a

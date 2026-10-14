@@ -316,9 +316,11 @@ space: { at: stumpe, dim: 0, flight: 1.6, hum: false }   # place mode: the photo
 
 <Strands />
 
+<AfterCover>
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%">
 <p class="caption invention">Jutiklinis ekranas · 1972 · SPS</p>
 </StagePhoto>
+</AfterCover>
 
 <!-- facts: gave-touch-stumpe-1972, gave-touch-sps-1976, gave-touch-design-80um, gave-touch-johnson-1965 -->
 
@@ -357,9 +359,11 @@ space: { at: next, dim: 0, flight: 1.6, hum: false }   # place mode: the photo s
 
 <Strands />
 
+<AfterCover>
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%">
 <p class="caption invention">Žiniatinklio serveris · 1990 · LEP</p>
 </StagePhoto>
+</AfterCover>
 
 <!-- facts: gave-www-next-server, gave-www-public-domain-1993, gave-www-sites-2026, gave-www-users-2025 -->
 
@@ -379,9 +383,11 @@ space: { at: pet, dim: 0, flight: 1.6, hum: false }   # place mode: the photo st
 
 <Strands />
 
+<AfterCover>
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
 <p class="caption invention">PET tomografija · 1977</p>
 </StagePhoto>
+</AfterCover>
 
 <!-- facts: ktbest-pet-1977, gave-pet-mouse-1977 -->
 
@@ -401,9 +407,11 @@ space: { at: mars, dim: 0, flight: 1.6, hum: false }   # place mode: the photo s
 
 <Strands />
 
+<AfterCover>
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="mars" :relief="0.25" :at="[16.6, 2.5, 13.51]" :size="3" :yaw="-150" src="figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%">
 <p class="caption invention">Spalvotas rentgenas · 2018 · LHC</p>
 </StagePhoto>
+</AfterCover>
 
 <!-- facts: ktbest-mars-fda-2026, ktbest-medipix-licences -->
 
@@ -423,9 +431,11 @@ space: { at: artemis, dim: 0, flight: 1.6, hum: false }   # place mode: the phot
 
 <Strands />
 
+<AfterCover>
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
 <p class="caption invention">Timepix lustai · 2006 · LHC</p>
 </StagePhoto>
+</AfterCover>
 
 <!-- facts: gave-timepix-artemis, ktbest-advacam, gave-timepix-2006 -->
 
@@ -444,9 +454,11 @@ space: { at: hadron, dim: 0, flight: 1.6, hum: false }   # place mode: the photo
 
 <Strands />
 
+<AfterCover>
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
 <p class="caption invention">Hadronų terapija · 1996–2000 · PIMMS</p>
 </StagePhoto>
+</AfterCover>
 
 <!-- facts: ktbest-hadron-9000, gave-hadron-pimms -->
 
@@ -466,9 +478,11 @@ space: { at: whiterabbit, dim: 0, flight: 1.6, hum: false }   # place mode: the 
 
 <Strands />
 
+<AfterCover>
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim">
 <p class="caption invention">White Rabbit · 2008 · LHC</p>
 </StagePhoto>
+</AfterCover>
 
 <!-- facts: gave-white-rabbit, ktbest-whiterabbit-boerse, ktnews-wr-quantum, gave-white-rabbit-2008 -->
 
@@ -489,9 +503,11 @@ space: { at: cold, dim: 0, flight: 1.6, hum: false }   # place mode: the photo s
 
 <Strands />
 
+<AfterCover>
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%">
 <p class="caption invention">Superlaidžios linijos · 2014 · HL-LHC</p>
 </StagePhoto>
+</AfterCover>
 
 <!-- facts: ktnews-airbus-samba, ktnews-cipea, hllhc-mgb2-line-2014 -->
 
