@@ -164,6 +164,9 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 2026-10-14 (later): the cover's fly-in no longer stalls (`<AfterCover>`, the
 CMS event in the bundle, the CMB disk warmed under the opener; Decisions).
+Deployed de00cca — Pages run 38560873241 (green), URL 200, live walk 32/32;
+`ready` passed with nothing skipped. Waiting on the owner: the VU yard laser
+photo for a slide before „Ačiū“ (owner, 14 Oct; which file?).
 
 2026-10-14: the funnel's hum lasts ~3 s on slides 4-5 (`<ShortHum>`), not
 the whole slide. Deployed 92c6cbb — Pages run 38548170841 (green), URL 200,
