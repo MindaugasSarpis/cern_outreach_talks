@@ -38,6 +38,11 @@ html[data-stage] .src {
 html[data-stage] .slidev-layout.cover { padding-left: var(--kk-x) !important; padding-top: 0 !important; justify-content: flex-start; padding-top: 118px !important; }
 html[data-stage] .slidev-layout.cover h1:first-of-type { font-size: 20px !important; letter-spacing: 0.14em !important; }
 html[data-stage] .slidev-layout.cover h1:nth-of-type(2) { font-size: 78px !important; line-height: 0.98 !important; max-width: 11ch; }
+/* the cover since 15 Oct (OpenData's and Innoday's): the title alone, no kicker above it */
+html[data-stage] .slidev-layout.cover h1:only-of-type { font-size: 78px !important; line-height: 0.98 !important; letter-spacing: -0.01em !important; text-transform: none !important; max-width: 11ch; }
+html[data-stage] .slidev-layout.cover h1 { text-wrap: balance; }
+/* mixed-case names in uppercased kit text (LHCb, not LHCB) */
+html[data-stage] .nt { text-transform: none !important; }
 html[data-stage] .slidev-layout.cover h2 {
   font-size: 30px !important; font-weight: 500 !important; letter-spacing: 0 !important; text-transform: none !important;
   color: var(--stage-fg) !important; opacity: 0.92; line-height: 1.2 !important; max-width: 24ch;
@@ -202,3 +207,16 @@ html[data-stage] .photo-caption {
 
 /* --- PDF export: the kit (v0.6.6) holds every animation at its end state on print pages,
    so a line that rises in late (the map's city names at 8,5 s) prints. */
+
+/* ---- taken from OpenData (15 Oct): the thesis slide and the close.
+   Dominykas: his portrait, the thesis and his name on the left; his histogram fills in
+   the world to the right, the count low on the right (OpenData styles/index.css 170-183) */
+html[data-stage] .thesis-slide { position: absolute; inset: 0; display: grid; grid-template-columns: 0.62fr 1.38fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
+html[data-stage] .thesis-who { align-self: center; animation: stage-rise 0.85s var(--stage-ease) 0.15s both; }
+html[data-stage] .thesis-who .portrait { width: 100%; max-width: 165px; aspect-ratio: 4 / 5; border-radius: 6px; object-fit: cover; object-position: 50% 30%; display: block; margin: 0 0 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); }
+html[data-stage] .thesis-who .kicker { color: var(--kk-kick); margin: 0 0 6px; white-space: nowrap; text-shadow: var(--kk-shadow); }
+html[data-stage] .thesis-who .name { font-size: 22px; font-weight: 600; color: var(--stage-fg); margin: 0 0 18px; text-shadow: var(--kk-shadow); }
+html[data-stage] .thesis-count { position: absolute; right: 64px; bottom: 44px; font-size: 64px; font-weight: 700; letter-spacing: -0.01em; color: #fff; text-shadow: 0 0 28px rgba(0, 0, 0, 0.6); white-space: nowrap; }
+html[data-stage] .thesis-count .unit { font-size: 0.38em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--kk-kick); }
+/* „Ačiū“ in the middle of the group's ring (OpenData styles/index.css 76) */
+html[data-stage] .thanks { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 96px; font-weight: 700; letter-spacing: -0.03em; color: #fff; text-shadow: 0 4px 40px rgba(0, 0, 0, 0.7); animation: stage-rise 0.9s var(--stage-ease) 0.4s both; }

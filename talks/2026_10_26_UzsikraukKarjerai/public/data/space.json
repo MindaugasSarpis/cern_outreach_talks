@@ -209,7 +209,19 @@
      "alpha": 0.95,
      "fill": 7,
      "fall": 0.9,
-     "color": "#ffc05a"
+     "color": "#ffc05a",
+     "marks": [
+      [
+       1.54,
+       1.55
+      ]
+     ],
+     "steps": [
+      0,
+      1,
+      1
+     ],
+     "markStep": 2
     },
     {
      "type": "histogram",
@@ -337,7 +349,401 @@
       0,
       0,
       0
+     ],
+     "event": "cms"
+    }
+   ]
+  },
+  {
+   "id": "thesis",
+   "pos": [
+    900,
+    0,
+    0
+   ],
+   "look": {
+    "target": [
+     -2.2,
+     -0.6,
+     1.6
+    ],
+    "dist": 10,
+    "yaw": 38,
+    "pitch": 24,
+    "sway": 4
+   },
+   "gather": 1.2,
+   "pulse": 7,
+   "objects": [
+    {
+     "type": "constellation",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "radius": 3.12,
+     "nodeRadius": 0.62,
+     "haze": "#ffcf73",
+     "coreSize": 11,
+     "coreAlpha": 0.7,
+     "nodes": [
+      {
+       "pos": [
+        1.377,
+        1.015,
+        0.362
+       ],
+       "color": "#ffc05a",
+       "core": "#fff3d6"
+      },
+      {
+       "pos": [
+        0.507,
+        -1.74,
+        -1.015
+       ],
+       "color": "#ffd88a",
+       "core": "#ffffff"
+      },
+      {
+       "pos": [
+        1.667,
+        -0.362,
+        -1.377
+       ],
+       "color": "#ffd88a",
+       "core": "#fff0d0"
+      },
+      {
+       "pos": [
+        -1.015,
+        1.45,
+        -1.16
+       ],
+       "color": "#ffe3a8",
+       "core": "#ffffff"
+      },
+      {
+       "pos": [
+        -1.45,
+        -0.652,
+        0.725
+       ],
+       "color": "#ffd27a",
+       "core": "#ffe8c8"
+      }
      ]
+    },
+    {
+     "type": "peakhist",
+     "name": "peak",
+     "bins": [
+      0,
+      0,
+      13,
+      32,
+      55,
+      65,
+      90,
+      91,
+      99,
+      155,
+      112,
+      135,
+      126,
+      163,
+      185,
+      184,
+      193,
+      233,
+      230,
+      286,
+      264,
+      283,
+      331,
+      284,
+      352,
+      395,
+      360,
+      370,
+      412,
+      479,
+      453,
+      422,
+      421,
+      407,
+      375,
+      396,
+      297,
+      314,
+      326,
+      279,
+      302,
+      273,
+      298,
+      323,
+      345,
+      290,
+      283,
+      325,
+      278,
+      316,
+      313,
+      272,
+      292,
+      282,
+      302,
+      227,
+      190,
+      224,
+      182,
+      178,
+      156,
+      162,
+      134,
+      113,
+      101,
+      119,
+      83,
+      91,
+      66,
+      58,
+      60,
+      42,
+      40,
+      7,
+      4,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "seed": 118793,
+     "pos": [
+      0.69,
+      -7.2,
+      0
+     ],
+     "width": 8,
+     "height": 4,
+     "lo": 4000,
+     "bin": 15,
+     "marks": [
+      [
+       4400,
+       4500
+      ]
+     ],
+     "fill": 12,
+     "curve": 1.8,
+     "alpha": 0.95,
+     "size": 0.7,
+     "count": 16407,
+     "rise": [
+      -0.69,
+      7.2,
+      0
+     ],
+     "back": 0.3
+    }
+   ]
+  },
+  {
+   "id": "team",
+   "pos": [
+    300,
+    0,
+    0
+   ],
+   "look": {
+    "target": [
+     33,
+     2.8,
+     0
+    ],
+    "dist": 27,
+    "yaw": 0,
+    "pitch": 3,
+    "sway": 4
+   },
+   "gather": 0.3,
+   "objects": [
+    {
+     "type": "portraits",
+     "name": "team",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "size": 3.4,
+     "res": 120,
+     "labelH": 0.03,
+     "people": [
+      {
+       "name": "Mindaugas Šarpis",
+       "src": "/figures/people/mindaugas-sarpis.jpg",
+       "at": [
+        33.0,
+        10.0,
+        -1.49
+       ]
+      },
+      {
+       "name": "Ramūnas Aleksiejūnas",
+       "src": "/figures/people/ramunas-aleksiejunas.jpg",
+       "at": [
+        25.76,
+        9.38,
+        0.51
+       ]
+      },
+      {
+       "name": "Oleg Kravcov",
+       "src": "/figures/people/oleg-kravcov.jpg",
+       "at": [
+        19.77,
+        7.62,
+        1.8
+       ]
+      },
+      {
+       "name": "Adam Morris",
+       "src": "/figures/people/adam-morris.jpg",
+       "at": [
+        16.07,
+        5.02,
+        0.6
+       ]
+      },
+      {
+       "name": "Augustas Vaitkevičius",
+       "src": "/figures/people/augustas-vaitkevicius.jpg",
+       "at": [
+        15.3,
+        2.05,
+        -1.43
+       ]
+      },
+      {
+       "name": "Rūta Racz",
+       "src": "/figures/people/ruta-racz.jpg",
+       "at": [
+        17.58,
+        -0.8,
+        -1.49
+       ]
+      },
+      {
+       "name": "Šarūnas Jacevičius",
+       "src": "/figures/people/sarunas-jacevicius.jpg",
+       "at": [
+        22.54,
+        -3.02,
+        0.51
+       ]
+      },
+      {
+       "name": "Margarita Biveinytė",
+       "src": "/figures/people/margarita-biveinyte.jpg",
+       "at": [
+        29.3,
+        -4.24,
+        1.8
+       ]
+      },
+      {
+       "name": "Sophia Pennuttis",
+       "src": "/figures/people/sophia-pennuttis.jpg",
+       "at": [
+        36.7,
+        -4.24,
+        0.6
+       ]
+      },
+      {
+       "name": "Mikas Paulius Iršėnas",
+       "src": "/figures/people/mikas-paulius-irsenas.jpg",
+       "at": [
+        43.46,
+        -3.02,
+        -1.43
+       ]
+      },
+      {
+       "name": "Neilas Beniušis",
+       "src": "/figures/people/neilas-beniusis.jpg",
+       "at": [
+        48.42,
+        -0.8,
+        -1.49
+       ]
+      },
+      {
+       "name": "Karolina German",
+       "src": "/figures/people/karolina-german.jpg",
+       "at": [
+        50.7,
+        2.05,
+        0.51
+       ]
+      },
+      {
+       "name": "Eliza Holvoet",
+       "src": "/figures/people/eliza-holvoet.jpg",
+       "at": [
+        49.93,
+        5.02,
+        1.8
+       ]
+      },
+      {
+       "name": "Meda Paulavičiūtė",
+       "src": "/figures/people/meda-paulaviciute.jpg",
+       "at": [
+        46.23,
+        7.62,
+        0.6
+       ]
+      },
+      {
+       "name": "Dominykas Stonkus",
+       "src": "/figures/people/dominykas-stonkus.jpg",
+       "at": [
+        40.24,
+        9.38,
+        -1.43
+       ]
+      }
+     ],
+     "onEnter": true,
+     "labels": false,
+     "motion": {
+      "speed": 0.9,
+      "charge": 6,
+      "dashBy": 2,
+      "view": 27,
+      "title": [
+       33,
+       2.8
+      ],
+      "keepOut": [
+       4.8,
+       2.2
+      ],
+      "frame": [
+       19.8,
+       11.0
+      ],
+      "seed": 7
+     },
+     "beam": {
+      "grains": 4000,
+      "speed": 1.6,
+      "seed": 11
+     }
     }
    ]
   }

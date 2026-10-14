@@ -1,6 +1,15 @@
 import {
   Group, Points, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3,
+  LinearMipmapLinearFilter,
 } from 'three'
+
+// a label sprite from the engine, mipmapped: drawn far smaller than its canvas, it aliased
+// into dither (OpenData's; the ported portraits take it for their names)
+export function smooth(l) {
+  const t = l.material.map
+  if (t) { t.generateMipmaps = true; t.minFilter = LinearMipmapLinearFilter; t.anisotropy = 4; t.needsUpdate = true }
+  return l
+}
 
 // This talk's own forms of grains, drawn the way the engine draws its galaxy
 // and collider (slidev-addon-stage, stage/forms.js): points of light, added
@@ -31,19 +40,40 @@ import {
 // when its slide becomes the current one). The last step of every name is
 // kept, so a form built after the call still starts right.
 
+//
+// One bus for every form of the talk, including the ones ported from OpenData
+// (setup/team.js, setup/thesis.js), which take the steps, the clock and the
+// grains' drawing from here. A step for later (`setGrainsLater`) runs on the
+// world's clock, as the motion it waits for does: every ported form's update
+// moves that clock on (tick), and a step still to come keeps its form busy.
+
 const BUS = 'karjera:grains'
-const state = new Map()
+export const state = new Map()
 
 export function setGrains(name, step) {
   if (state.get(name) === step) return
   state.set(name, step)
   window.dispatchEvent(new CustomEvent(BUS, { detail: { name, step } }))
 }
-function listen(name, fn) {
+let clock = 0
+const pending = new Set()
+export function setGrainsLater(name, step, s) {
+  const p = { name, step, at: clock + s }
+  pending.add(p)
+  return () => pending.delete(p)
+}
+export function tick(t) {
+  clock = t
+  for (const p of pending) if (t >= p.at) { pending.delete(p); setGrains(p.name, p.step) }
+}
+export const waiting = (name) => [...pending].some((p) => p.name === name)
+export function listen(name, fn) {
   const h = (e) => { if (e.detail?.name === name) fn(e.detail.step) }
   window.addEventListener(BUS, h)
   return () => window.removeEventListener(BUS, h)
 }
+// a name's last step, for the forms kept in files of their own
+export const stepOf = (name) => state.get(name)
 
 const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
@@ -53,7 +83,7 @@ const unit = () => {
 }
 
 // A grain's twinkle, size from distance, and the engine's linear-light point.
-const PLACE = /* glsl */ `
+export const PLACE = /* glsl */ `
 uniform float uTime, uPixelRatio;
 varying vec3 vColor; varying float vAlpha;
 void place(vec3 p, float size, float alpha, vec3 color, float seed) {
@@ -79,7 +109,7 @@ void main() {
   gl_FragColor = vec4(pow(vColor * a, vec3(2.2)), 1.0);
 }`
 
-function material(vertexShader, uniforms) {
+export function material(vertexShader, uniforms) {
   return new ShaderMaterial({
     vertexShader, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
     // uPixelRatio carries the frame scale (the buffer's height / 900; each builder returns it as
