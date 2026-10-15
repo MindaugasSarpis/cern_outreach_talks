@@ -70,21 +70,21 @@
       "lit": 24.0,
       "poster_at": "0:24"
     },
-    "vu_zoom_web.mp4": {
-      "file": "vu_zoom_web.mp4.jpg",
+    "nftmc_zoom_web.mp4": {
+      "file": "nftmc_zoom_web.mp4.jpg",
       "tile": [
         320,
         180
       ],
       "cols": 8,
-      "count": 42,
-      "interval": 4.0,
+      "count": 64,
+      "interval": 3.96,
       "size": [
         1920,
         1080
       ],
-      "duration": 167.4,
-      "poster": "vu_zoom_web.mp4.poster.jpg",
+      "duration": 253.45,
+      "poster": "nftmc_zoom_web.mp4.poster.jpg",
       "lit": 0.0
     }
   }

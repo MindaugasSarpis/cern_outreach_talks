@@ -687,98 +687,90 @@
       },
       "objects": [
         {
-          "type": "page",
-          "src": "/figures/lhcb/res_pentaquarks.png",
+          "type": "plot",
+          "src": "/figures/lhcb/res_pentaquarks.jpg",
           "pos": [
             -6.5,
             1.6,
             -1.5
           ],
-          "width": 2.5,
           "height": 2.4,
           "yaw": 14
         },
         {
-          "type": "page",
-          "src": "/figures/lhcb/res_cpv_baryons.png",
+          "type": "plot",
+          "src": "/figures/lhcb/res_cpv_baryons.jpg",
           "pos": [
-            -1.0,
-            2.9,
+            -1.68,
+            2.92,
             -3.0
           ],
-          "width": 5.35,
           "height": 2.4,
           "yaw": 4
         },
         {
-          "type": "page",
-          "src": "/figures/lhcb/res_bs_oscillation.png",
+          "type": "plot",
+          "src": "/figures/lhcb/res_bs_oscillation.jpg",
           "pos": [
-            -3.8,
-            -1.6,
+            -3.88,
+            -4.49,
             0.8
           ],
-          "width": 3.67,
           "height": 2.4,
           "yaw": 10
         },
         {
-          "type": "page",
-          "src": "/figures/lhcb/res_tcc.png",
+          "type": "plot",
+          "src": "/figures/lhcb/res_tcc.jpg",
           "pos": [
-            3.2,
-            1.4,
+            2.9,
+            1.75,
             -0.5
           ],
-          "width": 2.93,
           "height": 2.4,
           "yaw": -6
         },
         {
-          "type": "page",
-          "src": "/figures/lhcb/res_omegacc.png",
+          "type": "plot",
+          "src": "/figures/lhcb/res_omegacc.jpg",
           "pos": [
-            6.8,
+            6.83,
             -0.8,
             -2.2
           ],
-          "width": 3.17,
           "height": 2.4,
           "yaw": -14
         },
         {
-          "type": "page",
-          "src": "/figures/lhcb/res_bsmumu.png",
+          "type": "plot",
+          "src": "/figures/lhcb/res_bsmumu.jpg",
           "pos": [
-            0.6,
-            -2.7,
+            0.55,
+            -2.03,
             -1.2
           ],
-          "width": 3.89,
           "height": 2.4,
           "yaw": 2
         },
         {
-          "type": "page",
-          "src": "/figures/lhcb/res_rk.png",
+          "type": "plot",
+          "src": "/figures/lhcb/res_rk.jpg",
           "pos": [
-            9.0,
-            2.6,
+            8.51,
+            2.56,
             -4.5
           ],
-          "width": 3.19,
           "height": 2.4,
           "yaw": -18
         },
         {
-          "type": "page",
-          "src": "/figures/lhcb/res_hadrons.png",
+          "type": "plot",
+          "src": "/figures/lhcb/res_hadrons.jpg",
           "pos": [
-            -9.0,
-            -2.4,
+            -6.97,
+            -2.35,
             -4.0
           ],
-          "width": 4.75,
           "height": 2.4,
           "yaw": 18
         }
