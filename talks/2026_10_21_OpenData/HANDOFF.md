@@ -51,6 +51,13 @@ and the builders are in the talk's CLAUDE.md, "The deck now (r3)".
   the clip's rising tone and the hum (`stage.sound: { hum: false, flight: false,
   clip: false }`). The collision's sound and the clips' audio stay. This deck
   only: Innoday and Užsikrauk karjerai keep theirs unless the owner says so.
+- Deployed 2026-10-13 without the transition sounds: c83bbb1 on main, Pages run
+  38314910714 (success). The URL answers 200, the live check passed (14 slides,
+  none failed), and the live bundle carries `sound:{hum:!1,flight:!1,clip:!1}`.
+  `talk ready` had passed on c83bbb1 with nothing skipped.
+- 13 Oct: the owner, "This talk is really nice and now complete". The deployed
+  c83bbb1 is the talk. The questions below are still open; the slides keep
+  their wording until the owner answers them.
 
 - The way in:
   - CERN from above (slide 2), pushing into the ring.
