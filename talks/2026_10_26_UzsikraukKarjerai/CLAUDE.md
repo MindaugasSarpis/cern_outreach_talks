@@ -50,8 +50,8 @@ and name line) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
 | 9 | — (photo) | LHCb Run 3 event display, StagePhoto: how a collision becomes a dot |
 | 10 | — (one click) | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks at the click |
 | 11 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp` at the same scale |
-| 12 | Vilnius, CERN | the route across Europe |
-| 13 | Vilnius, CERN | the map close on Vilnius and the arcs to CERN: the working day |
+| 12 | Vilnius, CERN; „Glazgas“ (click 1); „Heidelbergas“, „Bona“ (click 3) | the route across Europe, leg by leg as the stops are told (4 clicks); the open-data job at Bonn |
+| 13 | Vilnius, CERN | the map close on Vilnius and the arc to CERN: all of it can now be done in Lithuania; the working day |
 | 14 | portrait, „Dominykas Stonkus“, „16 400 skilimų“ | OpenData's thesis slide at `thesis`: his m(J/ψ p) fills, grains rise from the peak into the cover's five-quark form (`pq2`) |
 | 15 | — | the camera draws back from his plot, dimmed: three things to do this school year (said) |
 | 16 | — | the five-quark form, held: the question (said) |
@@ -267,6 +267,37 @@ and name line) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
   a3001a1 and 71fb6f1 before it, all rejected by the owner.
 
 ## Decisions
+
+- 2026-10-15 — The owner's answers, relayed by the Scheduler in its window
+  (the owner's words quoted):
+  - "Cms opening": slide 4's CMS collision stays.
+  - "No dates for masterclass": slide 15's spoken line drops the two past
+    dates and „jau dvejus metus“; the dates stay in its sources line only.
+    Undo: 3948c6b's slide 15 notes.
+  - "Length - up to 15min": nothing padded; about 9,7 min by the notes.
+  - "Show my path around europe, then stress all of this can now be done in
+    Lithuania". Slide 12: the route draws leg by leg with the told stops (4
+    clicks: Glasgow, home, Heidelberg and Bonn, home), and „Glazgas“,
+    „Heidelbergas“ and „Bona“ are back on screen (gone since 10 Oct's fewer
+    words), each fading in as the trail reaches it (`.city.step`,
+    `--step-delay`). The open-data job (100 000+ files, about a petabyte,
+    1,5 years) moves from slide 13 to Bonn, where it was done. Slide 13 opens
+    with „Visa tai dabar galima padaryti Lietuvoje“ and the bank's facts behind
+    it: CERN associate membership since 2018 (Lithuanians may apply for CERN
+    jobs), VU in LHCb since 2024, a group mostly of students up to PhD, the
+    first VU doctoral student on LHCb searching for pentaquarks (unnamed: the
+    group's consent question is still open), 13 VU students at CERN this
+    summer, a record. The 20–40 flights line went: it worked against the
+    point (and came from an automatic transcript). Undo: 3948c6b's slides 12–13
+    and `.city.step` in styles/index.css.
+  - "No need for small print at all" (to Innoday): the Scheduler is asking
+    whether it covers every talk's credits; this talk's are unchanged until
+    it says.
+- 2026-10-15 — The tunnel caption's shade (slide 3, `.lhc-tunnel::before` in
+  styles/index.css) stays this talk's own. The owner said yes to it for
+  OpenData, which copies the rule; components/lhc-opening is untouched. After
+  26 Oct the lhc-opening lift folds the shade into the module and drops both
+  copies (the Scheduler).
 
 - 2026-10-15 — "Open data and innoday talks are really good, take elements from
   them and finish this one off" (the owner, in this talk's window; AFK
@@ -611,18 +642,19 @@ have (the AFK default is built and deployed; each has an undo under Decisions):
    Innoday): keep?
 2. The group's 15 portraits (slide 17) and Dominykas's portrait and thesis
    (slide 14): does their permission, given for OpenData, cover this stream?
-3. The CMS collision on slide 4 rather than LHCb's own 2012 event: keep?
+3. ~~The CMS collision on slide 4: keep?~~ Answered 15 Oct: "Cms opening".
 4. Licences for the Delfi stream: the tunnel clip (CERN-FOOTAGE-2022-013-001)
    and the event display (slide 9) are CERN material marked for educational,
    non-commercial use (the owner, 10 Oct: "it's cern license, I'm CERN user").
-5. Their own moments for the working day (slide 13), and a re-listen of the
-   transcript lines there („Į CERN su savo grupe važiuojame tik ypatingomis
-   progomis“, „dvidešimt–keturiasdešimt skrydžių“) and on slide 12 (the
-   Glasgow job, „dirbau su lazeriais“).
-6. Before filming (26 Oct): the BL4S 2027 deadline day (beamlineforschools.cern)
-   and whether VU has announced the 2027 masterclass.
-7. Length: about 10 minutes by the notes (the brief: 10–15); the speaker's own
-   stories are where more time would go.
+5. ~~Their own moments for the working day~~ (answered 15 Oct: "Show my path
+   around europe, then stress all of this can now be done in Lithuania";
+   slides 12–13). Still: a re-listen of the transcript lines on slide 13
+   („Į CERN su savo grupe važiuojame tik ypatingomis progomis“) and on
+   slide 12 (the Glasgow job, „dirbau su lazeriais“).
+6. Before filming (26 Oct): the BL4S 2027 deadline day (beamlineforschools.cern).
+   The masterclass has no dates (answered 15 Oct: "No dates for masterclass").
+7. ~~Length~~ Answered 15 Oct: "Length - up to 15min". About 9,7 min by the
+   notes; nothing padded.
 8. The root CLAUDE.md talk table calls this "a Lithuanian TV talk"; the owner
    said on 8 Oct it is a private online event. Change the row to "a Lithuanian
    online talk for schools"?

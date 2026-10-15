@@ -151,7 +151,10 @@ html[data-stage] .city {
 html[data-stage] .city.r { translate: -100% 0; text-align: right; }   /* `translate`, not `transform`: the rise-in animation holds transform: none */
 html[data-stage] .city.late { animation-delay: 8.5s; }   /* after the flight in (up to 4.5 s) and the map gathering (3.6 s); the route starts drawing then */
 html[data-stage] .city.home { color: var(--stage-fg); }
-@media (prefers-reduced-motion: reduce), print { html[data-stage] .city { animation: none !important; } }
+/* slide 12: a stop's name comes up at its click, once the trail has drawn to it (--step-delay) */
+html[data-stage] .city.step { animation: none; transition: opacity 0.8s var(--stage-ease) var(--step-delay, 2s); }
+html[data-stage] .city.step.slidev-vclick-hidden { opacity: 0 !important; transition-delay: 0s; }
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .city { animation: none !important; transition: none !important; } }
 
 /* --- labels under slide 9's two plots (positions projected from its pose), centred on each */
 html[data-stage] .heap {
