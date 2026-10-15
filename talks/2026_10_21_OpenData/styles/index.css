@@ -220,3 +220,9 @@ html[data-stage] .role { position: absolute; left: 56px; bottom: 48px; display: 
 html[data-stage] .role .portrait { width: 96px; height: 96px; object-fit: cover; border-radius: 50%; box-shadow: 0 0 0 2px rgba(156, 196, 255, 0.5), 0 8px 30px rgba(0, 0, 0, 0.6); }
 html[data-stage] .role .name { font-size: 30px; font-weight: 600; color: #fff; margin: 0 0 4px; text-shadow: var(--od-shadow); }
 html[data-stage] .role .caption { font-size: 24px; font-weight: 500; letter-spacing: 0.02em; color: var(--od-accent); margin: 0; text-shadow: var(--od-shadow); }
+
+/* the shared opening's „LHC 27 km“ (slide 3) sits low left on the tunnel's pale wall: a soft shade from
+   the slide's lower-left corner behind it, read as the tunnel's own shadow (owner, 15 Oct, "OpenData - yes").
+   Užsikrauk karjerai's rule (its styles/index.css 228), copied so the two decks match; components/lhc-opening
+   stays as it is until it takes the shade itself, after 26 Oct, and both copies go */
+html[data-stage] .lhc-tunnel::before { content: ''; position: absolute; inset: auto auto -44px -56px; width: 760px; height: 420px; z-index: -1; background: radial-gradient(ellipse 100% 100% at 0% 100%, rgba(0, 2, 6, 0.8) 0%, rgba(0, 2, 6, 0.55) 35%, rgba(0, 2, 6, 0.2) 60%, rgba(0, 2, 6, 0) 80%); }
