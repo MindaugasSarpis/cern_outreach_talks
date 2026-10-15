@@ -59,7 +59,14 @@ and name line) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
 
 ## Status
 
-- 2026-10-15 (latest): **deployed 3948c6b** under the standing rule: the 15 Oct
+- 2026-10-15 (latest): **deployed eb6a6a3** under the standing rule (the
+  Scheduler gave main): the owner's answers (Decisions, 2026-10-15): the path
+  round Europe told leg by leg (slide 12), the dive to Vilnius with Lithuania's
+  outline (13), the masterclass without dates (15); main 7f89f2f merged.
+  `talk ready` passed with nothing skipped; Pages run 38777285383 green; the
+  live walk passed 17 of 17 (none failed or retried); URL 200. Open for the
+  owner: the list under Figures (1, 2, 4, 5's re-listen, 6's BL4S day, 8).
+- 2026-10-15: **deployed 3948c6b** under the standing rule: the 15 Oct
   round below. `talk ready` passed with nothing skipped; Pages run 38649918760
   green; the live walk passed 17 of 17 (none failed or retried); URL 200.
 - 2026-10-15: **the 15 Oct round, built and reviewed** (the owner:
