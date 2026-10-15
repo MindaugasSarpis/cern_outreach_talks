@@ -640,12 +640,14 @@ function buildGhost(o, ctx) {
 
 // ---- map ----------------------------------------------------------------------------
 //   { type: map, src: 'data/europe.json', pos, scale?: 1, color?, border?: '#…', size?: 1,
-//     alpha?: 0.5, borderAlpha?: 0.18, lift?: 0 }
+//     alpha?: 0.5, borderAlpha?: 0.18, lift?: 0, name? }
 // A coastline drawn in grains on the ground plane (y = 0): the points of
 // `coast` and `borders` in the file are x, z pairs, one unit a degree of
 // latitude (scripts/make_europe.py, from Natural Earth 1:50m). Born scattered
 // in the dust; condenses on arrival (`c` again). No names, no fills: the
-// shape alone says where we are.
+// shape alone says where we are. A named map shows only from step 1 (step 0
+// hides it); each change eases over about two seconds (Lithuania's outline,
+// scripts/make_lithuania.py, comes up on slide 13).
 const MAP_VERT = /* glsl */ `
 attribute vec3 aScatter;
 attribute float aSeed, aKind;   // 0 coast, 1 border
@@ -695,12 +697,27 @@ function buildMap(o, ctx) {
     arm() { u.uForm.value = 0; t0 = -1 },
     assemble(t, onDone) { t0 = t; u.uForm.value = 0; done = onDone || null },
   }
+  const A = o.alpha ?? 0.5, B = o.borderAlpha ?? 0.18
+  let want = 1, shown = 1, last = -1, off = null
+  if (o.name) {
+    want = shown = (state.get(o.name) ?? 0) > 0 ? 1 : 0
+    off = listen(o.name, (k) => { want = k > 0 ? 1 : 0 })
+    mat.addEventListener('dispose', off)
+    u.uAlpha.value = A * shown; u.uBorderAlpha.value = B * shown
+  }
   return {
     group: g, labels: [], api, frameScale: u.uPixelRatio,
     update(t) {
       u.uTime.value = t
       if (t0 >= 0) { const x = Math.min((t - t0) / 3.6, 1); u.uForm.value = x; if (x >= 1) { t0 = -1; const cb = done; done = null; cb?.() } }
+      if (o.name && shown !== want) {
+        const dt = last < 0 ? 0 : Math.min(t - last, 0.1)
+        shown = want > shown ? Math.min(want, shown + dt / 2) : Math.max(want, shown - dt / 1.2)
+        u.uAlpha.value = A * shown; u.uBorderAlpha.value = B * shown
+      }
+      last = t
     },
+    dispose: off ?? undefined,
   }
 }
 

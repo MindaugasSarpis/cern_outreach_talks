@@ -41,7 +41,7 @@ layout: cover
 space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 0, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 0, jx: 0, peak: 0, team: 0, lietuva: 0 }" />
 
 # Vadovėlio gale atsakymo nėra
 
@@ -154,7 +154,7 @@ The line is said over the clip; its 39 s are counted from the manifest.
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0, jx: 0, peak: 0, team: 0, lietuva: 0 }" />
 
 <!--
 II. KAIP NUSPRĘSTI
@@ -172,7 +172,7 @@ Mes dirbame su klausimais, į kuriuos dar niekas neatsakė. Tokį darbą dabar i
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 2, th2: 0, jp: 0, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 2, th2: 0, jp: 0, jx: 0, peak: 0, team: 0, lietuva: 0 }" />
 
 <!-- facts: theta-plus-2003-false-alarm, pentaquark-idea-1964 -->
 
@@ -191,7 +191,7 @@ If asked: tiksliau – keturi kvarkai ir vienas antikvarkas (Θ⁺: uudds̄; LHC
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0, peak: 0, team: 0, lietuva: 0 }" />
 
 <!-- facts: theta-plus-2003-false-alarm -->
 
@@ -208,7 +208,7 @@ Vėliau kiti eksperimentai, surinkę daug daugiau duomenų, pakartojo matavimą.
 space: { at: lhcb, dim: 0 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0, peak: 0, team: 0, lietuva: 0 }" />
 
 <StagePhoto src="figures/photos/lhcb-event-run3.jpg" alt="Vienas protonų susidūrimas atnaujintame LHCb detektoriuje, 2022 m.: dalelių pėdsakai sklinda per detektorių" focus="35% 50%" />
 
@@ -230,7 +230,7 @@ space: { at: lhcb, dim: 0.05 }
 clicks: 1
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1, jx: 0, peak: 0, team: 0 }" :clicks="{ 1: { jp: 2 } }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1, jx: 0, peak: 0, team: 0, lietuva: 0 }" :clicks="{ 1: { jp: 2 } }" />
 
 <!-- facts: lhcb-pentaquark-2015, lhcb-pentaquark-2019 -->
 
@@ -250,7 +250,7 @@ Data: LHCb, PRL 122, 222001 (2019), HEPData ins1728691 Table 2 (m(Kp) > 1,9 GeV)
 space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 2, jx: 1, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 2, jx: 1, peak: 0, team: 0, lietuva: 0 }" />
 
 <div class="heap" style="left: 557px; top: 404px"><span class="n">27&nbsp;292&nbsp;taškai</span></div>
 <div class="heap" style="left: 116px; top: 404px"><span class="n">140&nbsp;taškų</span></div>
@@ -274,7 +274,7 @@ space: { at: whole, sway: 0, dim: 0.05 }
 clicks: 4
 ---
 
-<Grains :set="{ pq: 3, route: 1, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 4 }, 3: { route: 6 }, 4: { route: 7 } }" />
+<Grains :set="{ pq: 3, route: 1, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 0, lietuva: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 4 }, 3: { route: 6 }, 4: { route: 7 } }" />
 
 <div class="city late caption" style="left: 734px; top: 149px">Vilnius</div>
 <div class="city late caption" style="left: 360px; top: 452px">CERN</div>
@@ -307,19 +307,18 @@ Optional, the organisers' point („you don't need to know now what you will be�
 -->
 
 ---
-space: { at: [1205.6, 0.25, -0.7], dist: 24, yaw: 0, pitch: 60, sway: 0.5, dim: 0.2 }
+space: { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62, sway: 0.3, dim: 0.2 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 0, lietuva: 1 }" />
 
-<div class="city caption" style="left: 744px; top: 128px">Vilnius</div>
-<div class="city caption" style="left: 232px; top: 428px">CERN</div>
+<div class="city caption" style="left: 718px; top: 230px">Vilnius</div>
 
 <!-- facts: cern-lithuania, lhcb-vilnius-joined, lhcb-vilnius-students, lhcb-vilnius-racz, lhcb-open-data-coordinator-2026 -->
 
 <!--
 Message: all of what that road took abroad can now be done in Lithuania (the owner, 15 Oct: "then stress all of this can now be done in Lithuania").
-Picture: the camera comes down from the whole of Europe to Vilnius (upper right), with the arc to CERN (lower left); both named.
+Picture: the camera dives from slide 12's whole of Europe down to Vilnius, and Lithuania's outline comes up in light blue round it (`lietuva`, Natural Earth); the route's arcs leave Vilnius westward out of frame. Only Vilnius is named.
 Words: the working-day lines 3–4 are from the draft the owner approved on 2026-10-09 (through the Scheduler), from the speaker's own public words; line 3 comes from an automatic transcript. The travel line (20–40 flights a year) is gone: it worked against this slide's point. The open-data job moved to slide 12, to Bonn, where it was done.
 
 Visa tai dabar galima padaryti Lietuvoje. Nuo 2018 metų Lietuva yra asocijuotoji CERN narė, todėl Lietuvos piliečiai gali kandidatuoti į darbo vietas CERN. Nuo 2024 metų Vilniaus universitetas dalyvauja LHCb eksperimente. Didžioji dalis mūsų grupės – studentai, nuo bakalauro studijų iki doktorantūros. Pirmoji VU doktorantė LHCb eksperimente ieško pentakvarkų. O šią vasarą CERN praktiką atliko trylika VU studentų – daugiausia iki šiol.
@@ -334,7 +333,7 @@ Pats dažniausiai dirbu Vilniaus universitete. Į CERN su savo grupe važiuojame
 space: { at: [898, -3.4, 0], dist: 16, yaw: 0, pitch: 3, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, pq2: 3, team: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, pq2: 3, team: 0, lietuva: 0 }" />
 
 <div class="thesis-slide world">
 <div class="thesis-who">
@@ -368,7 +367,7 @@ The figure, if asked: Λb⁰ → J/ψ p K⁻; a single-Gaussian fit to the Λb�
 space: { at: [898, -3.4, 0], dist: 20, yaw: 0, pitch: 3, sway: 0.5, dim: 0.35 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, pq2: 3, team: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, pq2: 3, team: 0, lietuva: 0 }" />
 
 <!-- facts: lhcb-masterclass-vilnius-2026, bl4s-2027-call, stonkus-bsc-2026 -->
 
@@ -388,7 +387,7 @@ Check before filming (26 Oct): the BL4S deadline day (still „XX March 2027“ 
 space: { at: quarks, dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.35 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, team: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, team: 0, lietuva: 0 }" />
 
 <!--
 Message: one task for this week.
@@ -404,7 +403,7 @@ Ir viena užduotis šiai savaitei. Kai sutiksi žmogų, kurio darbas tau atrodo 
 space: { at: [333, 2.8, 0], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 1 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 1, lietuva: 0 }" />
 
 <div class="thanks">Ačiū</div>
 

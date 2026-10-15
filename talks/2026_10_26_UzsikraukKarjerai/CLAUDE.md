@@ -290,6 +290,12 @@ and name line) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
     summer, a record. The 20–40 flights line went: it worked against the
     point (and came from an automatic transcript). Undo: 3948c6b's slides 12–13
     and `.city.step` in styles/index.css.
+    The picture follows the point: slide 13's camera dives from Europe to
+    Vilnius (dist 15, about 2,4 times closer; the CERN label is out of frame
+    and gone), and Lithuania's outline fades in round it, light blue (a
+    second `map`, `lietuva`, from Natural Earth 1:50m admin 0 via
+    scripts/make_lithuania.py; a named map shows from step 1, hidden on
+    every other slide). Undo: drop the `lietuva` object and the steps.
   - "No need for small print at all" (to Innoday): the Scheduler is asking
     whether it covers every talk's credits; this talk's are unchanged until
     it says.
