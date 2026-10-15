@@ -24,6 +24,12 @@ false, clip: false }`): no whoosh on a flight, no rising tone as a clip gathers,
 no hum (owner, 13 Oct: "transitions were like driving sounds"). Sound stays on,
 so the collision's swell, thump and drone (`ctx.audio()`) and the clips play.
 
+„LHC 27 km“ on the tunnel (slide 3) has a soft shade from the slide's lower-left
+corner behind it (`.lhc-tunnel::before`, the last rule in styles/index.css;
+owner, 15 Oct). It is Užsikrauk karjerai's rule, copied byte for byte so the two
+decks match. When the module takes the shade (its lift after 26 Oct), drop this
+copy.
+
 ## The deck now (r3, 2026-10-12)
 
 Fourteen slides (HANDOFF.md has the history and the owner's open questions):

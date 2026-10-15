@@ -58,6 +58,16 @@ and the builders are in the talk's CLAUDE.md, "The deck now (r3)".
 - 13 Oct: the owner, "This talk is really nice and now complete". The deployed
   c83bbb1 is the talk. The questions below are still open; the slides keep
   their wording until the owner answers them.
+- 15 Oct: „LHC 27 km“ (slide 3) sits on a soft shade from the lower-left corner,
+  so it reads on the tunnel's pale wall (the owner to the Scheduler: "OpenData -
+  yes"). It is Užsikrauk karjerai's rule (3948c6b), copied byte for byte into
+  styles/index.css; components/lhc-opening is untouched, and its lift after
+  26 Oct folds the shade into the module and drops both copies. Against the
+  wall round the caption: white 2.7 → 9.5:1, #9cc4ff 1.5 → 5.3:1.
+- Deployed 2026-10-15 with the shade: 7f89f2f on main, Pages run 38773017861
+  (success). The URL answers 200, the live check passed (14 slides, none
+  failed), and the live CSS carries the rule. `talk ready` had passed on
+  7f89f2f with nothing skipped.
 
 - The way in:
   - CERN from above (slide 2), pushing into the ring.
