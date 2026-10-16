@@ -59,7 +59,13 @@ line (its title gone, 16 Oct) and „Ačiū“ (lint: 2 TEXT warnings, on purpos
 
 ## Status
 
-- 2026-10-15 (latest): **deployed eb6a6a3** under the standing rule (the
+- 2026-10-16 (latest): **deployed 9bf3b0d** under the standing rule (the
+  Scheduler gave main): no title (Decisions, 2026-10-16); the cover keeps the
+  name line. `talk ready` passed with nothing skipped; Pages run 38877499226
+  green; the live walk passed 17 of 17 (none failed or retried); URL 200, the
+  tab „Užsikrauk karjerai“. Open for the owner: Figures 2, 4, 5's re-listen,
+  6's BL4S day, 8.
+- 2026-10-15: **deployed eb6a6a3** under the standing rule (the
   Scheduler gave main): the owner's answers (Decisions, 2026-10-15): the path
   round Europe told leg by leg (slide 12), the dive to Vilnius with Lithuania's
   outline (13), the masterclass without dates (15); main 7f89f2f merged.
