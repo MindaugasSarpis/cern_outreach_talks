@@ -43,14 +43,14 @@ html[data-stage] .slidev-layout.cover h1:only-of-type { font-size: 78px !importa
 html[data-stage] .slidev-layout.cover h1 { text-wrap: balance; color: #fff !important; }
 html[data-stage] .slidev-layout.cover h1:first-of-type:only-of-type { color: #fff !important; }   /* over the stage's accent rule for a cover's first h1 (a kicker) */
 /* the name line: readable on a stream (22 px), in sentence case so „Dr.“ stays „Dr.“, light, not the palette's dim lavender */
-html[data-stage] .slidev-layout.cover .mt-md { font-size: 22px !important; letter-spacing: 0.04em !important; text-transform: none !important; color: #eef1ff !important; line-height: 1.35; }
+html[data-stage] .slidev-layout.cover .mt-md { font-size: 30px !important; letter-spacing: 0.04em !important; text-transform: none !important; color: #eef1ff !important; line-height: 1.35; }
 /* mixed-case names in uppercased kit text (LHCb, not LHCB) */
 html[data-stage] .nt { text-transform: none !important; }
 html[data-stage] .slidev-layout.cover h2 {
   font-size: 30px !important; font-weight: 500 !important; letter-spacing: 0 !important; text-transform: none !important;
   color: var(--stage-fg) !important; opacity: 0.92; line-height: 1.2 !important; max-width: 24ch;
 }
-html[data-stage] .slidev-layout.cover .mt-md { font-size: 18px; letter-spacing: 0.1em; margin-top: 22px; }
+html[data-stage] .slidev-layout.cover .mt-md { margin-top: 106px; }   /* no title above it (16 Oct): the line level with the form, not in a title's slot */
 
 /* --- a line spoken into the world: a kicker, one big sentence, maybe one more line.
    Anchored to the floor of the text area, left (or right) of the frame. */

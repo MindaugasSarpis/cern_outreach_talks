@@ -19,13 +19,13 @@ stage:
   palette: { base: blue, bg: '#000206', accent: '#5b6fd6', dust: '#5b4fd6', dustBright: '#ebe6ff', nebula: '#3a2a9e', nebulaAlt: '#0f6e86', sky: '#9a8cff', fill: '#c9b8ff', highlight: '#fff0d0', dim: '#a39dc0' }   # a true black ground, as OpenData's
   sound: { hum: false, flight: false, clip: false }   # no hum and no transition sounds (owner, 13–14 Oct: "transitions were like driving sounds", "only 2-3s"); the clips' audio and the collision's own sound still play
   options: { dustSize: 2.2, reach: 22, nebula: 0.12, grain: 0.012, aberration: 0, vignette: 0.7, bloom: 0.42 }   # OpenData's look: deep, crisp, not hazy
-title: Vadovėlio gale atsakymo nėra
+title: Užsikrauk karjerai
 duration: 12min
 sources: notes
 info: |
   „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement): a Lithuanian
   talk for grades 9–12, delivered online on 27 Oct 2026. About 10 minutes,
-  17 slides. A cover (title and name over the five-quark form gathering),
+  17 slides. A cover (the speaker's name over the five-quark form gathering),
   then the LHC opening it shares with OpenData and Innoday
   (components/lhc-opening/: CERN from above, the real tunnel, into the beam
   pipe, one real 2012 CMS collision in slow motion, the 3D LHCb clip). The
@@ -43,18 +43,16 @@ space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
 
 <Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 0, jx: 0, peak: 0, team: 0, lietuva: 0 }" />
 
-# Vadovėlio gale atsakymo nėra
-
 <div class="mt-md">Dr. Mindaugas Šarpis · <span class="nt">LHCb</span>&nbsp;Vilnius<br>Vilniaus universitetas</div>
 
 <!--
-I. VADOVĖLIO GALE ATSAKYMO NĖRA
-Message: who is speaking, and the talk's picture: in my work there is no answer at the back of the book.
-Picture: the cover, as OpenData's and Innoday's (the owner, 15 Oct: "take elements from them"): the title and the name line, over the five-quark form gathering out of the dust (`quarks`). The overview clip buffers behind it. → starts the opening; that key is also the gesture browsers ask for before any sound.
+I. PRADŽIA
+Message: who is speaking, and the particle this story is about.
+Picture: the cover, as OpenData's and Innoday's (the owner, 15 Oct: "take elements from them"), without a title (the owner, 16 Oct: "Don't call it 'vadovelio gale atsakymo nera' don't need that"): the name line over the five-quark form gathering out of the dust (`quarks`). The overview clip buffers behind it. → starts the opening; that key is also the gesture browsers ask for before any sound.
 
-Laba diena. Esu Mindaugas Šarpis, dalelių fizikas Vilniaus universitete. Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Mano darbe tokio vadovėlio nėra. Ekrane iš dulkių susirenka dalelė, apie kurią bus šis pasakojimas. Bet pradėkime nuo CERN.
+Laba diena. Esu Mindaugas Šarpis, dalelių fizikas Vilniaus universitete. Ekrane iš dulkių susirenka dalelė, apie kurią bus šis pasakojimas. Bet pradėkime nuo CERN.
 
-(~0.4 min)
+(~0.3 min)
 -->
 
 ---

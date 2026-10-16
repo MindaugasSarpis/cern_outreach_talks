@@ -1,4 +1,4 @@
-# Užsikrauk karjerai — „Vadovėlio gale atsakymo nėra“
+# Užsikrauk karjerai
 
 ## Brief
 
@@ -34,12 +34,12 @@ thesis slide and close around it.
 Pictures and numbers (owner, 2026-10-10): no titles, kickers, statements or
 section slides; the speaker narrates from the notes. A number carries the word
 that names it; a thing shown may carry its name (the map's cities, Dominykas's
-thesis). Exceptions taken from OpenData and Innoday on 15 Oct: the cover (title
-and name line) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
+thesis). Exceptions taken from OpenData and Innoday on 15 Oct: the cover's name
+line (its title gone, 16 Oct) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
 
 | # | Screen | Picture |
 |---|---|---|
-| 1 | „Vadovėlio gale atsakymo nėra“, „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks` behind the title; → starts the opening |
+| 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks` behind the title; → starts the opening |
 | 2 | — (clip) | CERN from above (library `cern_overview_short.mp4`, 11 s), pushing into the ring; the LHC line spoken |
 | 3 | „LHC 27 km“ | the shared opening: the real tunnel (18 s cut), on into the beam pipe (`exit="push"`) |
 | 4 | „8 TeV“, then „290 dalelių“ | the shared opening: one real 2012 CMS crossing in 4π (`"event": "cms"`, OpenData's `rate`/`path` keys) |
@@ -274,6 +274,18 @@ and name line) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
   a3001a1 and 71fb6f1 before it, all rejected by the owner.
 
 ## Decisions
+
+- 2026-10-16 — No title (the owner to the Scheduler: "Don't call it
+  'vadovelio gale atsakymo nera' don't need that"). Gone: the cover's h1, the
+  headmatter `title` (now „Užsikrauk karjerai“, the tab's name), the
+  package.json description, credits.txt's heading, this file's heading, and
+  slide 1's textbook framing („Mokykloje … vadovėlio gale. Mano darbe tokio
+  vadovėlio nėra.“), its section mark (now „I. PRADŽIA“) and Message. Kept, on
+  the Scheduler's reading: the cover's name line over the five-quark form (the
+  owner asked for the cover on 15 Oct), now 30 px as the cover's only text;
+  the greeting and „Bet pradėkime nuo CERN.“ notes/outline-v5.md stays as
+  history. Not touched: the root CLAUDE.md row (the owner's word is needed)
+  and tests/test_talk_copy.py (Tools'). Undo: c538633's deck.md slide 1.
 
 - 2026-10-15 — The owner's answers, relayed by the Scheduler in its window
   (the owner's words quoted):
@@ -651,8 +663,9 @@ and name line) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
 The owner's list after the 15 Oct round, each a yes/no or a fact only they
 have (the AFK default is built and deployed; each has an undo under Decisions):
 
-1. The cover with the title and the name line (taken from OpenData and
-   Innoday): keep?
+1. ~~The cover's title~~ Answered 16 Oct: "Don't call it 'vadovelio gale
+   atsakymo nera' don't need that". The name line stays (the Scheduler's
+   reading); say if the cover should go too.
 2. The group's 15 portraits (slide 17) and Dominykas's portrait and thesis
    (slide 14): does their permission, given for OpenData, cover this stream?
 3. ~~The CMS collision on slide 4: keep?~~ Answered 15 Oct: "Cms opening".
