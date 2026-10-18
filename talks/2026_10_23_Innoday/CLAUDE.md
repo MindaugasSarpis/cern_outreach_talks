@@ -186,7 +186,11 @@ the public repo and their credit („VU nuotr.“), any minister photos at LHCb,
 lhcb.mp4's music (probably a commercial film score), the opener's music and
 the NCSA web's licence, the CERN CC credits, the paper count on 22 Oct, the
 iPhone retest. For a PDF: `pnpm talk export innoday --format pdf -- --wait
-12000`.
+12000`. For the offline zip, until the env's slidev-videos is past v0.4 (not
+before 26 Oct): `VITE_VIDEOS_LOCAL_FIRST=1 pnpm venue` in the talk dir. The
+old CLI's venue runs `pnpm build:portable` without it (847244e fixes that),
+and the zip's player would then try GitHub over the venue's Wi-Fi before its
+own copies; the variable reaches the build through the environment.
 
 ## Decisions
 
