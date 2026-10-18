@@ -4,7 +4,7 @@ The notes for this talk. Sessions read this file first, then the root
 CLAUDE.md. Keep it current: Status after each deploy, Decisions as the owner
 makes them, Figures as they are checked. The repo is public: private context
 (mail, contacts, drafts the owner shared) goes to
-~/.local/share/outreach_talks/briefs/2026-00-00-mastertalk.md, never here.
+~/.local/share/outreach_talks/briefs/mastertalk.md, never here.
 
 ## Brief
 
@@ -36,15 +36,15 @@ language; takeaway; what is off limits.
 - Branch `talk/mastertalk`, worktree `.claude/worktrees/mastertalk` (`pnpm talk open mastertalk`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_00_00_MasterTalk/
 - Scaffold committed 18 Oct; `pnpm talk check` ok. Blocked on the Brief
-  questions; next, a storyboard for the owner (stations, numbers, facts, media).
+  questions. Storyboard draft 1 (`notes/storyboard.md`, 18 Oct) is with the
+  owner; nothing is built until it is approved.
 - Not deployed yet. `pnpm talk deploy` records each deploy in
   `.git/talk-status/mastertalk.json`; `pnpm talk status` shows it.
 
 ## Arc
 
-One line per slide: what it shows, what is said, how long.
-
-1. Cover:
+The timeline is in `notes/storyboard.md` (14 stations, 30 min default); this
+section takes the slide list once the owner approves it.
 
 ## Figures
 
