@@ -785,6 +785,33 @@ have (the AFK default is built and deployed; each has an undo under Decisions):
 9. The close (18 Oct): „Ačiū“ over the cover's five-quark form stands in for
    the faces ring until the owner says (the Scheduler asked); and the web's
    place after the cover.
+10. The blueprint's research (talk-research-gaps run wf_753cedc2-696, 18 Oct;
+   18 facts filed, 3 unverified). For the speaker:
+   - The laptop stack: a 1 TB laptop of today is about 1,1 cm thick, so
+     100 000 of them stack to about 1,1 km; say „daugiau nei kilometro“, not
+     „dviejų kilometrų“ (the live deck's slide 17 still says two; fixed in the
+     rebuild). `laptop-stack-over-1km-worked`.
+   - „Būtent šiuose duomenyse 2015 metais iškilo pentakvarko smailė“: the
+     release holds the same 2011–2012 collisions, not the analysts' own files;
+     it is the 2015 peak (2019 used Run 1 and Run 2). The release is about
+     800 TB (other sources: 900 TB, over 1 PB).
+   - LEPS 2003: 36 events in the peak region over about 17 of background,
+     so about 19 above it; 4,6σ is their own figure. „2008 metais fizikai
+     jau rašė, kad tos dalelės nėra“ is the PDG review (C. G. Wohl, 2008).
+   - The Ωc⁰ plot is all candidates, background included; the three quarks
+     of a proton are its valence quarks; a real particle's mass comes out
+     „beveik ta pati“ (the peak has a width).
+   - „Kaip trijų aukštų namas“ is our arithmetic (10 m at about 3 m a storey);
+     no CERN page compares LHCb with storeys.
+   - 100 PB is LHCb's figure from March 2025, a lower bound: „daugiau nei“.
+   - The masterclass: held 6 March 2025 and 26 February 2026; no 2027 date
+     was public on 18 Oct (no dates are said anyway).
+   - Not found in any public text, so the owner's own word is needed: wanting
+     to be an Egyptologist until 12, the first CERN visit in 11th grade, the
+     laser job back in Lithuania, the manager's job in Glasgow, and the whole
+     group's move to Bonn in the pandemic. Confirmed by INSPIRE: Glasgow
+     2011–2015 (undergraduate), the PhD in Heidelberg 2019–2020 and Bonn
+     2020–2023.
 
 ## The world (current, 2026-10-08)
 
