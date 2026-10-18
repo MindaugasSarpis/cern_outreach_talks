@@ -65,7 +65,18 @@ on purpose).
 
 ## Status
 
-- 2026-10-18 (latest): **deployed a60d0fa** under the standing rule (the
+- 2026-10-18 (latest): **flow overhaul, blueprint written, not built.** The
+  owner, in this window, on the deployed 20-slide deck: "This one still lacks
+  coherence, now I can build some story telling around it ... but need a much
+  better flow. And oriented at highschool students". The saved workflow
+  `talk-blueprint` (run wf_acba6022-08d, head fe956c2; three spines:
+  one-question, the-particle, student-path; four judges: a 15-year-old, a
+  documentary editor, an LHCb physicist, a physics teacher) wrote
+  `notes/blueprint.md`: one question („Kaip sužinoti, kad radai tai, ko dar
+  niekas nematė?“) carried by the cover's particle, 20 slides, about 11,5 min.
+  The deck is unchanged until the owner says yes; 21 research gaps listed in
+  the blueprint. The deployed state below is still what is live.
+- 2026-10-18: **deployed a60d0fa** under the standing rule (the
   Scheduler gave main): the owner's four 18 Oct changes (Decisions,
   2026-10-18): Innoday's web and funnel (2–3), the event display gone, LHCb's
   Ωc⁰ peaks (9–10), OpenData's open data and the masterclass (15–19), „Ačiū“
@@ -300,6 +311,16 @@ on purpose).
   a3001a1 and 71fb6f1 before it, all rejected by the owner.
 
 ## Decisions
+
+- 2026-10-18 — Flow overhaul for high-school viewers (the owner, in this
+  window: "need a much better flow. And oriented at highschool students"):
+  `notes/blueprint.md` (talk-blueprint run wf_acba6022-08d). The spine
+  question is asked on the cover, answered in the same words on the
+  two-plots slide and through the particle at the close; every slide's notes
+  end with a spoken bridge into the next picture. Tally 224 (one-question),
+  216 (the-particle), 213 (student-path); the editor merged one-question with
+  grafts from the other two. Its own decisions are logged in the blueprint.
+  Held for the owner's yes before any deck change.
 
 - 2026-10-18 — The owner's four changes (to the Scheduler, relayed 18 Oct;
   "Up to 15 min"; copied from the other branches, which are unchanged):
