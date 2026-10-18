@@ -22,7 +22,7 @@ stage:
   palette: { base: blue, bg: '#000206' }   # a true black ground: the blue palette's navy read as haze
   sound: { hum: false, flight: false, clip: false }   # no transition sounds (owner, 13 Oct: "transitions were like driving sounds"); the collision's own sound and the clips' audio still play
   options: { reach: 30, nebula: 0.12, dustGain: 1.0, exposure: 1.1, vignette: 0.7, grain: 0.012, aberration: 0, bloom: 0.42 }   # reach: the 1 EB pose stands far back (27 from the store); the rest: deep, crisp, not hazy
-title: Atveriame LHCb duomenis
+title: 'CERN LHCb: atvirieji duomenys'
 info: |
   In Lithuanian. LHCb Vilnius, nominated for an open data award: a 6½-minute
   talk told inside one world of grains (slidev-addon-stage, blue palette,
@@ -48,16 +48,24 @@ info: |
   The talk: 21 October 2026.
 layout: cover
 space:
-  at: wide
-  dim: 0.25
+  at: [0.85, -400.27, -4.09]
+  dist: 10.5
+  yaw: -110
+  pitch: 66
+  sway: 3
+  dim: 0
+  ambient: 0
   hum: false
+  rate: [[0, 3], [1.0, 3], [1.3, 0.12], [1.8, 0.12], [2.3, 2.2], [5.5, 2.2], [6.8, 0.25]]
+  cameraRate: 1
 ---
 
 <Grains :set="{ vault: 0, team: 0 }" />
+<CoverCollision />
 
 # 2026 m. spalio 21 d.
 
-# Atveriame <span class="nt">LHCb</span> duomenis
+# CERN <span class="nt">LHCb</span>: atvirieji duomenys
 
 <div class="mt-md">Dr. Mindaugas Šarpis · <span class="nt">LHCb</span> Vilnius<br>Vilniaus universitetas</div>
 
@@ -70,10 +78,19 @@ atviraisiais duomenimis.
 Pradėkime nuo CERN.“
 
 The cover (the owner, 12 Oct, via the Scheduler: OpenData and Innoday get a
-cover after all; an exception to the no-titles rule, like „Ačiū“): the date,
-the title and the name line, as on Innoday's, over the collider dimmed
-(`wide`, the pose the LHCb clip returns to). The CERN clip buffers behind it.
-→ starts the opening, the world going dark as the clip gathers; that key is
+cover after all; an exception to the no-titles rule, like „Ačiū“; 18 Oct:
+"more impressive (maybe the full size cms collision)", and the title „CERN
+LHCb: atvirieji duomenys“): the date, the title and the name line over slide
+4's CMS crossing at full size, the `cover` lhc-collision at the opening station
+(silent, `sound: false`; slide 4 keeps its own run, its sound and its numbers).
+Each time the cover opens it runs again: the bunches rush in, flash, and the
+debris blooms out in about five seconds; then it holds, barely moving, while
+the camera sways. The pose (judged against two others, 18 Oct) looks down on it
+from high on the beam's −x side, so the burst fills the right half and both
+muons fly away from the text; every letter keeps more than 100 px of black
+round it, sway included. The cover's grains are a little heavier than slide
+4's (`grain: 2.7`, for a projector). The CERN clip buffers behind it.
+→ starts the opening, the collision fading as the clip gathers; that key is
 also the gesture browsers ask for before any sound.
 
 (~0.3 min)

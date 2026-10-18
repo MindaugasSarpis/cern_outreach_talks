@@ -6,6 +6,7 @@ import { installOpening } from '../components/lhc-opening/index.js'
 import Grains from './Grains.vue'
 import Count from './Count.vue'
 import PeakRise from './PeakRise.vue'
+import CoverCollision from './CoverCollision.vue'
 
 // The talk's own forms (piles of terabyte spheres, streams to the people who
 // use them) join the engine's registry before the stage boots, and <Grains> lets
@@ -19,4 +20,5 @@ export default ({ app }) => {
   app.component('Grains', Grains)
   app.component('Count', Count)
   app.component('PeakRise', PeakRise)
+  app.component('CoverCollision', CoverCollision)   // the cover's silent CMS crossing
 }
