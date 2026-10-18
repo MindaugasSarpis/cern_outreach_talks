@@ -65,7 +65,21 @@ on purpose).
 
 ## Status
 
-- 2026-10-16 (latest): **deployed 9bf3b0d** under the standing rule (the
+- 2026-10-18 (latest): **deployed a60d0fa** under the standing rule (the
+  Scheduler gave main): the owner's four 18 Oct changes (Decisions,
+  2026-10-18): Innoday's web and funnel (2–3), the event display gone, LHCb's
+  Ωc⁰ peaks (9–10), OpenData's open data and the masterclass (15–19), „Ačiū“
+  beside the five-quark form (20); main 6e51eaf merged; stills 01–20 retaken.
+  20 slides, about 9,9 min. `talk ready` passed with nothing skipped (the
+  build's walk 20 of 20); Pages run 39120492250 green; the live walk passed 20
+  of 20 (1 retried, none failed, no lost context); URL 200, the tab
+  „Užsikrauk karjerai“. Shown to the owner: a contact sheet of the new slides.
+  Open for the owner: Figures 4 (the tunnel clip; Planck's NC licence and the
+  NCSA web, which the Scheduler passes on), 5's re-listen, 8, 9 (the close,
+  the web's place). Weak, left: slide 2's settled grains read as a soft haze
+  (Innoday's takeover, unchanged); „800 TB“ twice on 15; two of 18's plots
+  cross on the left for a moment.
+- 2026-10-16: **deployed 9bf3b0d** under the standing rule (the
   Scheduler gave main): no title (Decisions, 2026-10-16); the cover keeps the
   name line. `talk ready` passed with nothing skipped; Pages run 38877499226
   green; the live walk passed 17 of 17 (none failed or retried); URL 200, the
