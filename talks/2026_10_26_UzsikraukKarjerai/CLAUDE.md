@@ -24,42 +24,54 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (sixth version, 15 Oct: the owner's "take elements from OpenData and Innoday and finish this one off": 17 slides, about 10 min)
+## Story (seventh version, 18 Oct: the owner's four changes through the Scheduler: 20 slides, about 10 min)
 
 Approved outline: `notes/outline-v5.md` with its two change sections
 (owner, 2026-10-08). The viewer sits in the physicist's seat. The 15 Oct round
-(Decisions, 2026-10-15) adds OpenData's and Innoday's cover, way in, collision,
-thesis slide and close around it.
+(Decisions, 2026-10-15) added OpenData's and Innoday's cover, way in and
+collision; the 18 Oct round (Decisions, 2026-10-18) adds Innoday's cosmic web
+and funnel after the cover, swaps the 2003/2008 illustration for LHCb's Ωc⁰
+peaks, drops the event display and replaces the end with OpenData's open data.
 
 Pictures and numbers (owner, 2026-10-10): no titles, kickers, statements or
 section slides; the speaker narrates from the notes. A number carries the word
-that names it; a thing shown may carry its name (the map's cities, Dominykas's
-thesis). Exceptions taken from OpenData and Innoday on 15 Oct: the cover's name
-line (its title gone, 16 Oct) and „Ačiū“ (lint: 2 TEXT warnings, on purpose).
+that names it; a thing shown may carry its name (the map's cities, the sun's
+two clusters). Exceptions taken from OpenData and Innoday on 15 Oct: the
+cover's name line (its title gone, 16 Oct) and „Ačiū“ (lint: 2 TEXT warnings,
+on purpose).
 
 | # | Screen | Picture |
 |---|---|---|
-| 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks` behind the title; → starts the opening |
-| 2 | — (clip) | CERN from above (library `cern_overview_short.mp4`, 11 s), pushing into the ring; the LHC line spoken |
-| 3 | „LHC 27 km“ | the shared opening: the real tunnel (18 s cut), on into the beam pipe (`exit="push"`) |
-| 4 | „8 TeV“, then „290 dalelių“ | the shared opening: one real 2012 CMS crossing in 4π (`"event": "cms"`, OpenData's `rate`/`path` keys) |
-| 5 | — (clip) | `lhcb.mp4`, the LHCb detector in 3D (39 s); the LHCb line near its end |
-| 6 | — | `th1` fills: 140 dots, a chance bump at 1,54 GeV (illustration) |
-| 7 | — | same; the bump's bin lights (`th1` step 2) |
-| 8 | — | `th2` fills: 3 500 dots, smooth (illustration) |
-| 9 | — (photo) | LHCb Run 3 event display, StagePhoto: how a collision becomes a dot |
-| 10 | — (one click) | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks at the click |
-| 11 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp` at the same scale |
-| 12 | Vilnius, CERN; „Glazgas“ (click 1); „Heidelbergas“, „Bona“ (click 3) | the route across Europe, leg by leg as the stops are told (4 clicks); the open-data job at Bonn |
-| 13 | Vilnius, CERN | the map close on Vilnius and the arc to CERN: all of it can now be done in Lithuania; the working day |
-| 14 | portrait, „Dominykas Stonkus“, „16 400 skilimų“ | OpenData's thesis slide at `thesis`: his m(J/ψ p) fills, grains rise from the peak into the cover's five-quark form (`pq2`) |
-| 15 | — | the camera draws back from his plot, dimmed: three things to do this school year (said) |
-| 16 | — | the five-quark form, held: the question (said) |
-| 17 | „Ačiū“ | OpenData's close at `team`: the LHCb Vilnius group's 15 portraits of grains running round a gold beam |
+| 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks`; → to the web |
+| 2 | — | Innoday's cosmic web, a still (`opener_last.jpg`) that dissolves into grains in place (`<WebTakeover>`) |
+| 3 | „13,8 mlrd. metų“ | the web's grains fly into Innoday's funnel of the Universe's history (`funnel` at `funnel`, the CMB disk from Planck); the bridge to CERN said |
+| 4 | — (clip) | CERN from above (library `cern_overview_short.mp4`, 11 s), pushing into the ring; the LHC line spoken |
+| 5 | „LHC 27 km“ | the shared opening: the real tunnel (18 s cut), on into the beam pipe (`exit="push"`) |
+| 6 | „8 TeV“, then „290 dalelių“ | the shared opening: one real 2012 CMS crossing in 4π |
+| 7 | — (clip) | `lhcb.mp4`, the LHCb detector in 3D (39 s); the LHCb line near its end |
+| 8 | — | `th1` fills: 140 dots, a chance bump at 1,54 GeV (illustration): is it a particle? |
+| 9 | — | `oc` fills: LHCb's Ωc⁰ → Ξc⁺K⁻ spectrum at `omegac`, five narrow peaks |
+| 10 | — | same; ticks over the five peaks (`oc` step 2): five new particles, three quarks each |
+| 11 | — (one click) | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks at the click |
+| 12 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp` at the same scale; 5σ, and the 2003 false alarm told |
+| 13 | Vilnius, CERN; „Glazgas“ (click 1); „Heidelbergas“, „Bona“ (click 3) | the route across Europe, leg by leg (4 clicks); the open-data job at Bonn |
+| 14 | Vilnius | the dive to Vilnius, Lithuania's outline: all of it can now be done in Lithuania |
+| 15 | „1 TB“, „800 TB“ | OpenData's piles at `store` (x 2600): the Run 1 data prepared in Bonn |
+| 16 | „4000 TB“, „Atvirieji LHCb duomenys“ | the gold pile of 4 PB |
+| 17 | „100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue 100 PB behind the gold |
+| 18 | — | OpenData's sun of plots: anyone can use the open data (said, not shown); Dominykas said |
+| 19 | „Meistriškumo pamoka“, „Magistro ir bakalauro darbai“ | OpenData's second sun, two named clusters and empty places: the masterclass, theses, room for you |
+| 20 | „Ačiū“ | the five-quark form of the cover (pending the owner's word on a close) |
 
 ## Status
 
-- 2026-10-15 (latest): **deployed eb6a6a3** under the standing rule (the
+- 2026-10-16 (latest): **deployed 9bf3b0d** under the standing rule (the
+  Scheduler gave main): no title (Decisions, 2026-10-16); the cover keeps the
+  name line. `talk ready` passed with nothing skipped; Pages run 38877499226
+  green; the live walk passed 17 of 17 (none failed or retried); URL 200, the
+  tab „Užsikrauk karjerai“. Open for the owner: Figures 2, 4, 5's re-listen,
+  6's BL4S day, 8.
+- 2026-10-15: **deployed eb6a6a3** under the standing rule (the
   Scheduler gave main): the owner's answers (Decisions, 2026-10-15): the path
   round Europe told leg by leg (slide 12), the dive to Vilnius with Lithuania's
   outline (13), the masterclass without dates (15); main 7f89f2f merged.
@@ -274,6 +286,53 @@ line (its title gone, 16 Oct) and „Ačiū“ (lint: 2 TEXT warnings, on purpos
   a3001a1 and 71fb6f1 before it, all rejected by the owner.
 
 ## Decisions
+
+- 2026-10-18 — The owner's four changes (to the Scheduler, relayed 18 Oct;
+  "Up to 15 min"; copied from the other branches, which are unchanged):
+  1. "take the still cosmic web from the innoday, and compy the funnel as well":
+     slides 2–3, after the cover, before CERN from above (the Scheduler's
+     reading; it asked the owner about the web's place). From feat/innoday-cern
+     d80ea9a: `public/figures/opener_last.jpg` (the still), `cmb_disk.jpg`,
+     `cmb_disk_1024.jpg`, `cmb_wmap.png`, `setup/takeover.js`,
+     `WebTakeover.vue`, `funnel.js` (its `at` 2 here), `view.js`,
+     `AfterFlight.vue`, and `afterCover.js` cut to its `disk` latch (flipped by
+     <WebTakeover> in the still's 0,45 s hold: no clip before it here). The
+     funnel station is Innoday's, at [30, 40, −110], with Innoday's poses. No
+     hum (this talk's). Slide 3's words: Innoday's „13,8 mlrd. metų“ and its
+     bridge to CERN (Innoday's slide 6). The cover's last line now „Bet
+     pradėkime nuo visos Visatos.“ Provenance: credits.txt (the Planck map's
+     CC BY-NC 3.0 IGO; the NCSA web).
+  2. "slide 9 not needed": the LHCb event display is gone (its licence
+     question with it); `lhcb-event-run3.jpg` removed.
+  3. "slide 7-8 just show such histogram with omega c resonances, nicely
+     resolved": slides 9–10 fill `oc` at a new station `omegac` (x 1650)
+     with LHCb's m(Ξc⁺K⁻), then tick its five narrow peaks. The data: PRL 118 (2017) 182001, Fig. 2 (no HEPData record; CDS's figure macros sit behind a bot check): the vector figure's 1 MeV bin contents read from its drawing commands (integers within 0,001; the error bars √N), summed to 2 MeV (equal to the paper's Fig. 3 bin for bin), 2960–3300 MeV, 59 453 candidates, `unit: 2`; ticks over the five peaks' tallest bins. Facts `lhcb-omegac-*`, `omegac-quark-content`, `kaon-quark-content` added (research run, 18 Oct). The 2003
+     LEPS claim moved into slide 12's words (two sentences), where the 4,6σ
+     needs it; slide 11 now introduces the pentaquark (1964). `th2` removed.
+  4. "Slides 14- the end, we need to replace. Show something about open data,
+     and masterclass. That everyone can use this.": slides 15–19 from
+     OpenData's slides 7–9, 11 and 12 (feat/opendata-talk 1e52d06): its data
+     world (`floor`, `lineup` `scale`, `dataspace` `vault`, `sun` `sun` and
+     `vilnius`) as station `store` at x 2600 (OpenData's x 20; every pose
+     shifted +2580), its 1,3 EB pile left out (not shown; 1,3 M spheres
+     saved), three `clear` capsules added for this talk's flights. Code:
+     `setup/piles.js` (OpenData's `lineup` and `floor`), `dataspace.js`,
+     `weave.js`, `sun.js`, on this talk's bus; 19 of its 20 plots in
+     `public/figures/opendata/` (calo-3, a bright filled map that outshone
+     the piles, is an empty place here); both suns without OpenData's
+     caption box (`keepOut`); the second sun's names at `labelH` 0,048
+     (the 18 px floor). Shots review: 15's pose from the front (the 1 TB
+     sphere in frame), 20's „Ačiū“ beside the form, 3's age on a soft shade,
+     9–10 framed with the lower third clear. Slide 18 has no caption („Naudotis gali
+     kiekvienas“ is said, the Scheduler's reading); slide 19 keeps two of the
+     nine names („Meistriškumo pamoka“, „Magistro ir bakalauro darbai“), the
+     rest empty places, at OpenData's searched positions; no masterclass
+     dates. Dominykas is said on slide 18 (his slide went with 14). Gone: the
+     thesis slide, the three-things slide (BL4S with it), the question for the
+     week and the faces ring (`team.js`, `thesis.js`, `beam.js`, the 15
+     portraits). Slide 20 is „Ačiū“ over the cover's five-quark form until the
+     owner says (the Scheduler asked about a closing „Ačiū“).
+  Undo: git revert of the round's commit.
 
 - 2026-10-16 — No title (the owner to the Scheduler: "Don't call it
   'vadovelio gale atsakymo nera' don't need that"). Gone: the cover's h1, the
@@ -660,30 +719,37 @@ line (its title gone, 16 Oct) and „Ačiū“ (lint: 2 TEXT warnings, on purpos
 
 ## Figures and open items (for the speaker)
 
-The owner's list after the 15 Oct round, each a yes/no or a fact only they
+The owner's list after the 15 and 18 Oct rounds, each a yes/no or a fact only they
 have (the AFK default is built and deployed; each has an undo under Decisions):
 
 1. ~~The cover's title~~ Answered 16 Oct: "Don't call it 'vadovelio gale
    atsakymo nera' don't need that". The name line stays (the Scheduler's
    reading); say if the cover should go too.
-2. The group's 15 portraits (slide 17) and Dominykas's portrait and thesis
-   (slide 14): does their permission, given for OpenData, cover this stream?
+2. ~~The group's 15 portraits and Dominykas's portrait~~ Gone with slides
+   14–17 (18 Oct). Dominykas's thesis is said on slide 18, not shown.
 3. ~~The CMS collision on slide 4: keep?~~ Answered 15 Oct: "Cms opening".
 4. Licences for the Delfi stream: the tunnel clip (CERN-FOOTAGE-2022-013-001)
-   and the event display (slide 9) are CERN material marked for educational,
-   non-commercial use (the owner, 10 Oct: "it's cern license, I'm CERN user").
+   is CERN material marked for educational, non-commercial use (the owner,
+   10 Oct: "it's cern license, I'm CERN user"); the event display went with
+   slide 9 (18 Oct). New with Innoday's web and funnel (18 Oct): the Planck
+   CMB map is CC BY-NC 3.0 IGO (non-commercial; the event is co-organised by
+   Delfi), and the cosmic web still is NCSA's („Cosmic Bubble Bath“), whose
+   licence is open in Innoday too.
 5. ~~Their own moments for the working day~~ (answered 15 Oct: "Show my path
    around europe, then stress all of this can now be done in Lithuania";
    slides 12–13). Still: a re-listen of the transcript lines on slide 13
    („Į CERN su savo grupe važiuojame tik ypatingomis progomis“) and on
    slide 12 (the Glasgow job, „dirbau su lazeriais“).
-6. Before filming (26 Oct): the BL4S 2027 deadline day (beamlineforschools.cern).
-   The masterclass has no dates (answered 15 Oct: "No dates for masterclass").
+6. ~~The BL4S 2027 deadline day~~ BL4S went with slide 15 (18 Oct). The
+   masterclass has no dates (answered 15 Oct: "No dates for masterclass").
 7. ~~Length~~ Answered 15 Oct: "Length - up to 15min". About 9,7 min by the
    notes; nothing padded.
 8. The root CLAUDE.md talk table calls this "a Lithuanian TV talk"; the owner
    said on 8 Oct it is a private online event. Change the row to "a Lithuanian
    online talk for schools"?
+9. The close (18 Oct): „Ačiū“ over the cover's five-quark form stands in for
+   the faces ring until the owner says (the Scheduler asked); and the web's
+   place after the cover.
 
 ## The world (current, 2026-10-08)
 

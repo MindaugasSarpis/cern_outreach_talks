@@ -1,10 +1,15 @@
 import { registerBuilder } from 'slidev-addon-stage'
 import { installGrains } from './grains.js'
-import { installThesis } from './thesis.js'
-import { installTeam, armTeam } from './team.js'
+import { installPiles } from './piles.js'
+import { installDataspace } from './dataspace.js'
+import { installSun } from './sun.js'
+import { installFunnel } from './funnel.js'
+import { armAfterCover } from './afterCover.js'
 import { installOpening } from '../components/lhc-opening/index.js'
 import Grains from './Grains.vue'
 import Count from './Count.vue'
+import WebTakeover from './WebTakeover.vue'
+import AfterFlight from './AfterFlight.vue'
 // The CMS event's data in the deck's own bundle (as Innoday's main.ts): lhc-opening
 // loads it with a dynamic import, so the collision's cloud was filled when that
 // chunk arrived, a few seconds in, in the middle of the cover's fly-in (0.25-0.3 s
@@ -36,20 +41,30 @@ function reloadOnStaleChunk() {
 
 // The talk's own forms (matter and antimatter, a life's path, streams that
 // bring it together, the plots) join the engine's registry before the stage
-// boots, and <Grains> lets a slide set them. From OpenData, on the same bus:
-// `peakhist` (Dominykas's thesis plot with the rise, setup/thesis.js) and
-// `portraits` (the group's ring of faces round a gold beam, setup/team.js,
-// whose pictures wait for armTeam's latch: the cover's fly-in stays clear).
+// boots, and <Grains> lets a slide set them. From OpenData (owner, 18 Oct: "Show
+// something about open data, and masterclass"), on the same bus: `lineup` and
+// `floor` (the piles of terabytes, setup/piles.js), `dataspace` (the space of data
+// behind them) and `sun` (rays of grains from the gold pile to plots made from the
+// open data, or to named clusters).
+// From Innoday (owner, 18 Oct): `funnel`, the history of the Universe in grains
+// (setup/funnel.js), which the cosmic web's grains make on the step from slide 2
+// (<WebTakeover>, setup/takeover.js); its CMB picture waits for afterCover.js's
+// latch, so the cover's fly-in stays clear; <AfterFlight> shows its number once
+// the flight has landed.
 // (A plain function: Slidev's defineAppSetup is the identity, and
 // @slidev/types is not a dependency of the talk.)
 export default ({ app, router }) => {
   reloadOnStaleChunk()
-  armTeam(router)
+  armAfterCover(router)
   ;(globalThis as any).__karjeraCmsEvent = EVENT_CMS
   installGrains(registerBuilder)
-  installThesis(registerBuilder)
-  installTeam(registerBuilder)
+  installPiles(registerBuilder)
+  installDataspace(registerBuilder)
+  installSun(registerBuilder)
+  installFunnel(registerBuilder)
   installOpening({ app, registerBuilder })   // the shared LHC opening: its collision, sound and <LhcOpening>
   app.component('Grains', Grains)
   app.component('Count', Count)
+  app.component('WebTakeover', WebTakeover)
+  app.component('AfterFlight', AfterFlight)
 }
