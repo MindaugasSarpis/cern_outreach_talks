@@ -1,4 +1,4 @@
-„Vadovėlio gale atsakymo nėra“ — clips, photographs and figures
+„Užsikrauk karjerai“ — clips, photographs and figures
 
 Video (this talk's release videos-2026-10-26-uzsikraukkarjerai, and the slidev-videos library; the shared LHC opening)
 - CERN from above (slide 2): the library clip cern_overview_short.mp4 (slidev-videos videos-shared, 11 s), as OpenData uses it. CERN.
@@ -17,4 +17,4 @@ Data
 - Slide 14: D. Stonkus, „Pentakvarkų atradimas iš naujo naudojant LHCb atviruosius duomenis“, bachelor thesis, Vilnius University, 2026 (open access, epublications.vu.lt/object/elaba:308118793): the m(J/ψ p) of Fig. 17 (sideband-subtracted, 80 bins of 15 MeV), digitised, as in OpenData; from 2012 LHCb open data.
 
 Map
-- Coastlines and borders: Natural Earth 1:50m, public domain.
+- Coastlines and borders: Natural Earth 1:50m, public domain. Lithuania's outline (slide 13): Natural Earth 1:50m admin 0 countries (v5.1.2), public domain.

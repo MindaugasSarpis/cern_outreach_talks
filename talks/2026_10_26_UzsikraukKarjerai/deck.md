@@ -19,13 +19,13 @@ stage:
   palette: { base: blue, bg: '#000206', accent: '#5b6fd6', dust: '#5b4fd6', dustBright: '#ebe6ff', nebula: '#3a2a9e', nebulaAlt: '#0f6e86', sky: '#9a8cff', fill: '#c9b8ff', highlight: '#fff0d0', dim: '#a39dc0' }   # a true black ground, as OpenData's
   sound: { hum: false, flight: false, clip: false }   # no hum and no transition sounds (owner, 13–14 Oct: "transitions were like driving sounds", "only 2-3s"); the clips' audio and the collision's own sound still play
   options: { dustSize: 2.2, reach: 22, nebula: 0.12, grain: 0.012, aberration: 0, vignette: 0.7, bloom: 0.42 }   # OpenData's look: deep, crisp, not hazy
-title: Vadovėlio gale atsakymo nėra
+title: Užsikrauk karjerai
 duration: 12min
 sources: notes
 info: |
   „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement): a Lithuanian
   talk for grades 9–12, delivered online on 27 Oct 2026. About 10 minutes,
-  17 slides. A cover (title and name over the five-quark form gathering),
+  17 slides. A cover (the speaker's name over the five-quark form gathering),
   then the LHC opening it shares with OpenData and Innoday
   (components/lhc-opening/: CERN from above, the real tunnel, into the beam
   pipe, one real 2012 CMS collision in slow motion, the 3D LHCb clip). The
@@ -41,20 +41,18 @@ layout: cover
 space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 0, jx: 0, peak: 0, team: 0 }" />
-
-# Vadovėlio gale atsakymo nėra
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 0, jx: 0, peak: 0, team: 0, lietuva: 0 }" />
 
 <div class="mt-md">Dr. Mindaugas Šarpis · <span class="nt">LHCb</span>&nbsp;Vilnius<br>Vilniaus universitetas</div>
 
 <!--
-I. VADOVĖLIO GALE ATSAKYMO NĖRA
-Message: who is speaking, and the talk's picture: in my work there is no answer at the back of the book.
-Picture: the cover, as OpenData's and Innoday's (the owner, 15 Oct: "take elements from them"): the title and the name line, over the five-quark form gathering out of the dust (`quarks`). The overview clip buffers behind it. → starts the opening; that key is also the gesture browsers ask for before any sound.
+I. PRADŽIA
+Message: who is speaking, and the particle this story is about.
+Picture: the cover, as OpenData's and Innoday's (the owner, 15 Oct: "take elements from them"), without a title (the owner, 16 Oct: "Don't call it 'vadovelio gale atsakymo nera' don't need that"): the name line over the five-quark form gathering out of the dust (`quarks`). The overview clip buffers behind it. → starts the opening; that key is also the gesture browsers ask for before any sound.
 
-Laba diena. Esu Mindaugas Šarpis, dalelių fizikas Vilniaus universitete. Mokykloje, kai nežinai atsakymo, gali pasižiūrėti vadovėlio gale. Mano darbe tokio vadovėlio nėra. Ekrane iš dulkių susirenka dalelė, apie kurią bus šis pasakojimas. Bet pradėkime nuo CERN.
+Laba diena. Esu Mindaugas Šarpis, dalelių fizikas Vilniaus universitete. Ekrane iš dulkių susirenka dalelė, apie kurią bus šis pasakojimas. Bet pradėkime nuo CERN.
 
-(~0.4 min)
+(~0.3 min)
 -->
 
 ---
@@ -154,7 +152,7 @@ The line is said over the clip; its 39 s are counted from the manifest.
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 1, th2: 0, jp: 0, jx: 0, peak: 0, team: 0, lietuva: 0 }" />
 
 <!--
 II. KAIP NUSPRĘSTI
@@ -172,7 +170,7 @@ Mes dirbame su klausimais, į kuriuos dar niekas neatsakė. Tokį darbą dabar i
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 2, th2: 0, jp: 0, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 2, th2: 0, jp: 0, jx: 0, peak: 0, team: 0, lietuva: 0 }" />
 
 <!-- facts: theta-plus-2003-false-alarm, pentaquark-idea-1964 -->
 
@@ -191,7 +189,7 @@ If asked: tiksliau – keturi kvarkai ir vienas antikvarkas (Θ⁺: uudds̄; LHC
 space: { at: trial, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0, peak: 0, team: 0, lietuva: 0 }" />
 
 <!-- facts: theta-plus-2003-false-alarm -->
 
@@ -208,7 +206,7 @@ Vėliau kiti eksperimentai, surinkę daug daugiau duomenų, pakartojo matavimą.
 space: { at: lhcb, dim: 0 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 1, jp: 0, jx: 0, peak: 0, team: 0, lietuva: 0 }" />
 
 <StagePhoto src="figures/photos/lhcb-event-run3.jpg" alt="Vienas protonų susidūrimas atnaujintame LHCb detektoriuje, 2022 m.: dalelių pėdsakai sklinda per detektorių" focus="35% 50%" />
 
@@ -230,7 +228,7 @@ space: { at: lhcb, dim: 0.05 }
 clicks: 1
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1, jx: 0, peak: 0, team: 0 }" :clicks="{ 1: { jp: 2 } }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 1, jx: 0, peak: 0, team: 0, lietuva: 0 }" :clicks="{ 1: { jp: 2 } }" />
 
 <!-- facts: lhcb-pentaquark-2015, lhcb-pentaquark-2019 -->
 
@@ -250,7 +248,7 @@ Data: LHCb, PRL 122, 222001 (2019), HEPData ins1728691 Table 2 (m(Kp) > 1,9 GeV)
 space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 2, jx: 1, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: -1, th1: 0, th2: 0, jp: 2, jx: 1, peak: 0, team: 0, lietuva: 0 }" />
 
 <div class="heap" style="left: 557px; top: 404px"><span class="n">27&nbsp;292&nbsp;taškai</span></div>
 <div class="heap" style="left: 116px; top: 404px"><span class="n">140&nbsp;taškų</span></div>
@@ -271,53 +269,69 @@ Background, if asked: LEPS's own peak was 19 events over a background of 17 (19/
 
 ---
 space: { at: whole, sway: 0, dim: 0.05 }
+clicks: 4
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: 1, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 0, lietuva: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 4 }, 3: { route: 6 }, 4: { route: 7 } }" />
 
-<div class="city late caption" style="left: 730px; top: 152px">Vilnius</div>
-<div class="city late caption" style="left: 414px; top: 374px">CERN</div>
+<div class="city late caption" style="left: 734px; top: 149px">Vilnius</div>
+<div class="city late caption" style="left: 360px; top: 452px">CERN</div>
+<div v-click="1" class="city step caption" style="left: 280px; top: 152px; --step-delay: 3.4s">Glazgas</div>
+<div v-click="3" class="city step caption" style="left: 470px; top: 357px; --step-delay: 2.2s">Heidelbergas</div>
+<div v-click="3" class="city r step caption" style="left: 394px; top: 250px; --step-delay: 3.6s">Bona</div>
+
+<!-- facts: sarpis-phd-bonn-2023, lhcb-run1-release-sarpis, sarpis-interview-run1-1-5-years, lhcb-run1-volume-sources-differ -->
 
 <!--
 III. KELIAS
-Message: my own road into LHCb was not planned either.
-Picture: the trail draws across Europe: Vilnius → CERN → Vilnius → Glasgow → Vilnius → Heidelberg → Bonn → Vilnius. Only Vilnius and CERN are named on screen; Glasgow, Heidelberg and Bonn are the speaker's to tell or skip.
+Message: my own road into LHCb was not planned either, and it went round Europe.
+Picture: the trail draws across Europe leg by leg as the stops are told (the owner, 15 Oct: "Show my path around europe"): Vilnius → CERN on arrival, then Glasgow (click 1), home (2), Heidelberg and Bonn (3), home to Vilnius (4). Each city's name comes up as the trail reaches it.
 
-Į LHCb aš patekau ne tiesiu keliu. Iki dvylikos metų norėjau būti egiptologu. Vienuoliktoje klasėje pirmą kartą nuvažiavau į CERN. Studijavau Glazge ir ten dirbau vadybininku, kad turėčiau iš ko gyventi. Parvykęs į Lietuvą dirbau su lazeriais. Į dalelių fiziką grįžau per doktorantūrą. Ją pradėjau Heidelberge, o pandemijos metais visa mūsų grupė persikėlė į Boną. Dabar Vilniaus universitete kartu su kolegomis kuriame LHCb grupę.
+Į LHCb aš patekau ne tiesiu keliu. Iki dvylikos metų norėjau būti egiptologu. Vienuoliktoje klasėje pirmą kartą nuvažiavau į CERN.
+→ spausk
+Studijavau Glazge ir ten dirbau vadybininku, kad turėčiau iš ko gyventi.
+→ spausk
+Parvykęs į Lietuvą dirbau su lazeriais.
+→ spausk
+Į dalelių fiziką grįžau per doktorantūrą. Ją pradėjau Heidelberge, o pandemijos metais visa mūsų grupė persikėlė į Boną. Ten man teko paruošti LHCb duomenis viešam naudojimui: daugiau nei šimtą tūkstančių failų, iš viso beveik petabaitą. Net su tam parašytomis programomis tai užtruko apie pusantrų metų.
+→ spausk
+Dabar Vilniaus universitete kartu su kolegomis kuriame LHCb grupę.
 
 Optional, the organisers' point („you don't need to know now what you will be“), in your own words if it is true for you: nothing here is said for you.
 
-(~0.5 min)
+Šaltiniai: LRT KLASIKA „Šviesi ateitis“, LRT.lt, 2024-05-20; „Tapk geresniu“, 2026-09-14 (automatinis įrašo tekstas); M. Šarpio tinklaraštis, 2024-01-15 („LHCb Run I data is released“); VU biblioteka, interviu, 2026-03-05.
+
+(~0.8 min)
 -->
 
 ---
-space: { at: [1205.6, 0.25, -0.7], dist: 24, yaw: 0, pitch: 60, sway: 0.5, dim: 0.2 }
+space: { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62, sway: 0.3, dim: 0.2 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 0, lietuva: 1 }" />
 
-<div class="city caption" style="left: 744px; top: 128px">Vilnius</div>
-<div class="city caption" style="left: 232px; top: 428px">CERN</div>
+<div class="city caption" style="left: 718px; top: 230px">Vilnius</div>
 
-<!-- facts: lhcb-run1-release-sarpis, sarpis-phd-bonn-2023, sarpis-interview-run1-1-5-years, lhcb-run1-volume-sources-differ, lhcb-open-data-coordinator-2026 -->
+<!-- facts: cern-lithuania, lhcb-vilnius-joined, lhcb-vilnius-students, lhcb-vilnius-racz, lhcb-open-data-coordinator-2026 -->
 
 <!--
-Message: what the work is like: mostly at a desk in Vilnius, results reachable from anywhere, a lot of travel, and long careful jobs such as preparing LHCb's open data, which I now coordinate.
-Picture: the camera comes down from the whole map to Vilnius (upper right) and the arcs to CERN (lower left), both named.
-Words: lines 1–4 are the draft the owner approved on 2026-10-09 (through the Scheduler), built from the speaker's own public words. Line 2 comes from an automatic transcript and is kept as the draft wrote it. The open-data numbers follow the VU Library interview of 5 March 2026 (15 Oct: „daugiau nei šimtą tūkstančių“, „apie pusantrų metų“; „beveik petabaitą“ holds under both VU's 1 PB and CERN's 800 TB).
+Message: all of what that road took abroad can now be done in Lithuania (the owner, 15 Oct: "then stress all of this can now be done in Lithuania").
+Picture: the camera dives from slide 12's whole of Europe down to Vilnius, and Lithuania's outline comes up in light blue round it (`lietuva`, Natural Earth); the route's arcs leave Vilnius westward out of frame. Only Vilnius is named.
+Words: the working-day lines 3–4 are from the draft the owner approved on 2026-10-09 (through the Scheduler), from the speaker's own public words; line 3 comes from an automatic transcript. The travel line (20–40 flights a year) is gone: it worked against this slide's point. The open-data job moved to slide 12, to Bonn, where it was done.
 
-Dabar dažniausiai dirbu Vilniaus universitete. Į CERN su savo grupe važiuojame tik ypatingomis progomis. Detektorius renka duomenis, prie jo dirba inžinieriai, o rezultatus aš galiu gauti iš bet kurios pasaulio vietos. Bet keliauti tenka daug. Mūsų srityje nuo dvidešimties iki keturiasdešimties skrydžių per metus nėra retenybė. Doktorantūros metais Bonoje man teko paruošti LHCb duomenis viešam naudojimui. Daugiau nei šimtą tūkstančių failų, iš viso beveik petabaitą, reikėjo surasti, patikrinti, nukopijuoti ir aprašyti. Net su tam parašytomis programomis tai užtruko apie pusantrų metų. Nuo šių metų rugpjūčio esu LHCb atvirųjų duomenų koordinatorius.
+Visa tai dabar galima padaryti Lietuvoje. Nuo 2018 metų Lietuva yra asocijuotoji CERN narė, todėl Lietuvos piliečiai gali kandidatuoti į darbo vietas CERN. Nuo 2024 metų Vilniaus universitetas dalyvauja LHCb eksperimente. Didžioji dalis mūsų grupės – studentai, nuo bakalauro studijų iki doktorantūros. Pirmoji VU doktorantė LHCb eksperimente ieško pentakvarkų. O šią vasarą CERN praktiką atliko trylika VU studentų – daugiausia iki šiol.
+Pats dažniausiai dirbu Vilniaus universitete. Į CERN su savo grupe važiuojame tik ypatingomis progomis. Detektorius renka duomenis, prie jo dirba inžinieriai, o rezultatus galiu gauti iš bet kurios pasaulio vietos. Nuo šių metų rugpjūčio esu LHCb atvirųjų duomenų koordinatorius.
 
-Šaltiniai: LRT KLASIKA „Šviesi ateitis“, LRT.lt, 2024-05-20; „Tapk geresniu“, 2026-09-14 (automatinis įrašo tekstas); M. Šarpio tinklaraštis, 2024-01-08 („Hello from RAL“) ir 2024-01-15 („LHCb Run I data is released“); VU biblioteka, interviu, 2026-03-05; VU, 2026-07-30.
+Šaltiniai: home.cern, 2018-01-08 (asocijuotoji narė); VU FF, 2024-09-02 (VU priimtas į LHCb); VU, 2026-08-20 (grupė ir 13 vasaros studentų); VU, R. Racz (pirmoji VU doktorantė LHCb); LRT KLASIKA „Šviesi ateitis“, LRT.lt, 2024-05-20; „Tapk geresniu“, 2026-09-14 (automatinis įrašo tekstas); VU, 2026-07-30 (koordinatorius).
 
-(~0.8 min)
+(~0.9 min)
 -->
 
 ---
 space: { at: [898, -3.4, 0], dist: 16, yaw: 0, pitch: 3, dim: 0.05 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, pq2: 3, team: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, pq2: 3, team: 0, lietuva: 0 }" />
 
 <div class="thesis-slide world">
 <div class="thesis-who">
@@ -351,16 +365,16 @@ The figure, if asked: Λb⁰ → J/ψ p K⁻; a single-Gaussian fit to the Λb�
 space: { at: [898, -3.4, 0], dist: 20, yaw: 0, pitch: 3, sway: 0.5, dim: 0.35 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, pq2: 3, team: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, pq2: 3, team: 0, lietuva: 0 }" />
 
 <!-- facts: lhcb-masterclass-vilnius-2026, bl4s-2027-call, stonkus-bsc-2026 -->
 
 <!--
 Message: three real things a student can do this year; the first steps of the road Dominykas took.
 Picture: the same frontal view of Dominykas's plot and its five-quark form, one step back and dimmed; no text.
-Check before filming (26 Oct): the BL4S deadline day (still „XX March 2027“ on 15 Oct) and whether VU has announced the 2027 masterclass.
+Check before filming (26 Oct): the BL4S deadline day (still „XX March 2027“ on 15 Oct). The masterclass is told without dates (the owner, 15 Oct: "No dates for masterclass").
 
-Štai ką gali padaryti jau šiais mokslo metais. Vilniaus universitete jau dvejus metus vyksta LHCb meistriškumo pamokos: 2025 metais kovą, 2026 metais vasarį. Mokiniai ten vieną dieną analizuoja tikrus LHCb duomenis. CERN kasmet rengia konkursą „Beamline for Schools“. Bent penkių mokinių komanda, dažniausiai nuo šešiolikos iki devyniolikos metų, kartu su mokytoju ar kitu suaugusiu vadovu pasiūlo eksperimentą. Paraiškas galima teikti nuo gruodžio, terminas – kovą. Laimėtojai savo eksperimentą atlieka prie tikro greitintuvo. Ir LHCb duomenis nemokamai gali atsisiųsti kiekvienas iš opendata.cern.ch – tuos pačius, su kuriais dirbo Dominykas.
+Štai ką gali padaryti jau šiais mokslo metais. Vilniaus universitete vyksta LHCb meistriškumo pamokos: mokiniai ten vieną dieną analizuoja tikrus LHCb duomenis. CERN kasmet rengia konkursą „Beamline for Schools“. Bent penkių mokinių komanda, dažniausiai nuo šešiolikos iki devyniolikos metų, kartu su mokytoju ar kitu suaugusiu vadovu pasiūlo eksperimentą. Paraiškas galima teikti nuo gruodžio, terminas – kovą. Laimėtojai savo eksperimentą atlieka prie tikro greitintuvo. Ir LHCb duomenis nemokamai gali atsisiųsti kiekvienas iš opendata.cern.ch – tuos pačius, su kuriais dirbo Dominykas.
 
 Šaltiniai: VU FF, LHCb meistriškumo pamokos, 2025-03-06 ir 2026-02-26 (indico.cern.ch/event/1648092); beamlineforschools.cern (2027 m. sąlygos).
 
@@ -371,7 +385,7 @@ Check before filming (26 Oct): the BL4S deadline day (still „XX March 2027“ 
 space: { at: quarks, dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.35 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, team: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 1, team: 0, lietuva: 0 }" />
 
 <!--
 Message: one task for this week.
@@ -387,7 +401,7 @@ Ir viena užduotis šiai savaitei. Kai sutiksi žmogų, kurio darbas tau atrodo 
 space: { at: [333, 2.8, 0], dist: 27, yaw: 0, pitch: 3, dim: 0.2 }
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 1 }" />
+<Grains :set="{ pq: 3, route: 7, th1: 0, th2: 0, jp: 2, jx: 0, peak: 0, team: 1, lietuva: 0 }" />
 
 <div class="thanks">Ačiū</div>
 

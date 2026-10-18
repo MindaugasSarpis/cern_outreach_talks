@@ -103,6 +103,20 @@
      "border": "#7f74e0"
     },
     {
+     "type": "map",
+     "name": "lietuva",
+     "src": "data/lithuania.json",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "scale": 1.6,
+     "alpha": 0.9,
+     "size": 3.4,
+     "color": "#9fd0ff"
+    },
+    {
      "type": "path",
      "name": "route",
      "pos": [
