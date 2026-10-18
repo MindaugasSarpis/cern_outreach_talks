@@ -40,9 +40,10 @@ storyboard).
 - 18 Oct: storyboard draft 2 approved (`notes/storyboard.md`). Stations 0–3
   built (the peak out of focus, the dive, the beam pipe, the crossing) with
   the clock; lint 0/0, `pnpm talk check` ok. The collision is still the
-  shared opening's LHCb event (record 24506) until the talk's own Λb⁰ event
-  is extracted (a background run, in ~/talks/.cache/opendata/mastertalk-event/).
-  Next: shots review of 0–3, then the event, then stations 4–5.
+  talk's own Λb⁰ candidate event (record 28040, run 124143, event 39463039).
+  Review round 1 fixed (53b5b5d). Next: a live run of stations 2→3 (the
+  crossing inside the freeze), then stations 4–5, then the Blender hero shots
+  (after 26 Oct, with the Scheduler's slot).
 - Not deployed yet. `pnpm talk deploy` records each deploy in
   `.git/talk-status/mastertalk.json`; `pnpm talk status` shows it.
 
@@ -97,6 +98,14 @@ The owner's decisions, dated, newest last.
 - 2026-10-18: the event is "something like Innoday": a business and policy
   audience; 25 min and a 16:9 projector assumed from Innoday.
 - 2026-10-18: storyboard draft 2 approved; English (owner: "Approved, English").
+- 2026-10-18: the collision is an anti-Λb⁰ → J/ψ p̄ K⁺ candidate from the 2012
+  DIMUON stream (record 28040, CC0), chosen by our own selection; station 3
+  shows its 65 particles in place of "5 collisions" (it has one collision).
+  Undo: setup/data/event-lb.json and the `event` in setup/main.ts.
+- 2026-10-18: hero shots in the look of CERN's B⁰ → K*μμ film (the owner:
+  "geant rendering as in that lhcb thanks video", "Might have been geant +
+  blender"): Phoenix's LHCb.glb (DD4hep, GPL-3.0 + Apache-2.0) → Blender
+  Cycles on CPU. Proposed, not started; renders after 26 Oct.
 
 ## Verify
 

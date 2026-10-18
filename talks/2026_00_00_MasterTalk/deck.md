@@ -163,30 +163,40 @@ space:
 <Clock :keys="[[0, -25], [1.5, 0], [5.8, 0], [8.5, 63]]" unit="ns" />
 
 <div class="nums" style="--d1: 10.5s; --d2: 11.7s">
-  <p><b>5</b><span>collisions</span></p>
+  <p><b>65</b><span>particles</span></p>
   <p><b>30 000 000</b><span>crossings/s</span></p>
 </div>
 
-<!-- facts: lhcb-trigger-5tbs-10gbs, lhcb-hlt1-30mhz, lhcb-muon-m5-18p8m -->
+<!-- facts: lhcb-hlt1-30mhz, lhcb-muon-m5-18p8m -->
 
 <!--
-Message: in one crossing about five pairs of protons collide, thirty million
-times a second.
+Message: this is our collision: 65 particles fly out of it, and crossings
+like it happen thirty million times a second.
 
-Say: "Here they cross. The world almost stops, so we can look: in one
-crossing, about five pairs of protons collide at once. And then the debris
-flies out, through the whole detector. The fastest of it reaches the far
+Say: "Here they cross. The world almost stops, so we can look. This is a
+real collision, recorded by LHCb on 29 July 2012. Sixty-five particles fly
+out of it, through the whole detector. Four of them matter to us, and we
+will follow them. The fastest of it reaches the far
 end, nearly 19 metres away, in 63 nanoseconds. This happens thirty million times
 every second."
 
 Bullet time at the crossing (rate 0.03, the camera orbiting on its own
 clock), then the fly-out. The clock runs from −25 ns to 0 at the crossing,
 holds in the freeze, and counts to 63 ns as the debris reaches the last muon
-station (18.8 m, light time). Today's drawing is the shared opening's LHCb
-event (record 24506); it becomes the talk's own Λb⁰ event once extracted.
+station (18.8 m, light time).
 
-Sources: LHCb, arXiv:2412.05041 (about 5 collisions per crossing, 30 MHz of
-non-empty crossings); LHCb Starterkit, Run 3 data flow (30 MHz); X. Cid
+The event: CERN Open Data record 28040 (LHCb 2012, 8 TeV, magnet down,
+DIMUON stream, CC0), run 124143, event 39463039, 29 July 2012, 03:10:40 UTC;
+one collision, 92 reconstructed tracks, 65 of them good (ghost probability
+≤ 0.4; the number on screen, as the opening counts). It holds an anti-Λb⁰ →
+J/ψ(μ⁺μ⁻) p̄ K⁺ candidate (our own selection on the stripping's detached J/ψ:
+m(J/ψ p̄ K⁺) 5628 MeV, m(J/ψ p̄) 4437.5 MeV, a 3.6 mm flight). A candidate,
+not a certain Λb⁰: about half of the candidates in its mass window are
+random combinations. In 2012 a crossing held fewer collisions than today
+(Run 3: about five).
+
+Sources: CERN Open Data record 28040 (the event); LHCb Starterkit, Run 3
+data flow (30 MHz of non-empty crossings); X. Cid
 Vidal for LHCb, arXiv:1005.2585 (M5 at 18.8 m; kept in Upgrade I,
 arXiv:2305.10515).
 
