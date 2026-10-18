@@ -88,6 +88,11 @@ and the builders are in the talk's CLAUDE.md, "The deck now (r3)".
   cover's): the bright core round the vertex, and the near endcap's light-blue
   band at the bottom right; the burst runs off the top and bottom edges
   (`dist: 11.5` would keep it whole, if the owner wants).
+- Deployed 2026-10-18 with the new cover: 6e51eaf on main, Pages run
+  39119202529 (success). The URL answers 200 with the title „CERN LHCb:
+  atvirieji duomenys“, the live check passed (14 slides, none failed), and the
+  live space.json, bundle and still carry the cover's collision. `talk ready`
+  had passed on 6e51eaf with nothing skipped.
 
 - The way in:
   - CERN from above (slide 2), pushing into the ring.
