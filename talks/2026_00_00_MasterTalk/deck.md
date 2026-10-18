@@ -15,56 +15,178 @@ videos:
   dust: '#5b93ff'
 stage:
   space: data/space.json
-  palette: blue
+  palette: { base: blue, bg: '#000206' }   # a true black ground, as OpenData's
+  sound: { hum: false, flight: false, clip: false }   # no hum, no transition sounds (house rule); the collision's own sound plays
+  options: { reach: 30, nebula: 0.12, exposure: 1.1, vignette: 0.7, grain: 0.012, aberration: 0, bloom: 0.42 }
 title: MasterTalk
+info: |
+  One collision, one shot: a keynote told as one continuous camera move. One
+  real LHCb collision is followed through the detector, the trigger and the
+  data flow to the single entry it becomes in a mass plot; the talk opens on
+  the 2019 pentaquark spectrum out of focus and closes on it sharp. The
+  storyboard is notes/storyboard.md (approved 18 Oct 2026).
 lang: en                  # slides and notes; `pnpm talk lint` reads it
 htmlAttrs:
   lang: en
-# duration: 20min           # the slot; ask the owner
+duration: 25min
+sources: notes
 layout: cover
 space:
-  at: wide
+  at: [0, 4.2, 0]
+  dist: 19
+  yaw: 0
+  pitch: 3
+  sway: 0.6
+  dim: 0
+  ambient: 0.35
 ---
 
-# MasterTalk
+<Grains :set="{ jp: 1 }" />
+<Clock off />
 
-# MasterTalk
-
-## A subtitle
-
-<div class="mt-md">Name · Affiliation</div>
+<!-- Station 0, the peak (storyboard 0:00–0:45). -->
 
 <!--
-Speaker: the hero station builds itself behind the title; `c` replays it.
+Message: this picture is where the talk ends; for now it means nothing.
+
+Say: "This is a picture from LHCb, the experiment I work on at CERN. By the
+end of this talk you will be able to read it. Right now it is a blur, and
+that is fine: we will find out what one point in it is."
+
+The 2019 m(J/ψ p) spectrum (HEPData ins1728691, Table 2, the bins Užsikrauk
+karjerai uses), its grains spread out of focus (`focus` 1), no axis, no
+peaks lit. The grains fall into place as the slide opens.
+
+(~0.75 min)
 -->
 
 ---
-layout: section
-space: { at: first, dim: 0.2 }
+space:
+  at: [1.0, 7.85, 0]
+  dist: 0.8
+  yaw: 6
+  pitch: 1
+  dim: 0
+  ambient: [[0, 0.35], [3, 0.15], [6, 0]]
+  path:
+    - [0, { at: [0, 4.2, 0], dist: 19, yaw: 0, pitch: 3 }]
+    - [3.5, { at: [1.0, 7.3, 0], dist: 5, yaw: 4, pitch: 2 }]
+    - [6.5, { at: [1.0, 7.85, 0], dist: 0.8, yaw: 6, pitch: 1 }]
 ---
 
-# A section in the world
+<Grains :set="{ jp: 1 }" />
+<Clock off />
+
+<!-- Station 1, the dive (0:45–1:15): into one bin, until one grain fills the frame; black. -->
+
+<!--
+Message: every point in this picture is one collision; we follow one of them.
+
+Say: "Each grain here is one collision, one moment inside the detector. Let's
+take one of them and follow it from the beginning."
+
+The camera dives into the top of the bin at 4440 MeV, the grains part as it
+passes, and the world goes black (ambient to 0). The join to the next slide
+sits in that black. To come: the grain unfolds backwards into its tracks
+(storyboard), once the talk's own event is extracted.
+
+(~0.5 min)
+-->
 
 ---
-space: { at: [14, 3, -14], dist: 16, yaw: -30, pitch: 10 }
+space:
+  at: [0, -400, 0]
+  dist: 3.4
+  yaw: 28
+  pitch: 4
+  dim: 0
+  ambient: 0
+  hum: false
+  rate: [[0, 1.4], [1.2, 1.4], [2.0, 0]]
+  cameraRate: 1
+  path:
+    - [0, { at: [0, -400, 0], dist: 5, yaw: 40, pitch: 5 }]
+    - [4, { at: [0, -400, 0], dist: 3.4, yaw: 28, pitch: 4 }]
 ---
 
-<!-- a library clip, inherited by name; no h1 on a video slide.
-     After adding clips: pnpm videos:frames, and commit public/video-frames/ -->
-<VideoPlayer src="cern_overview_short.mp4" />
+<Crossing name="crossing" start />
+<Clock :from="-25" unit="ns" />
 
----
-space: { at: first, dim: 0.6 }
----
-
-# A content slide
-
-<div class="card">
-
-## Cards float
-
-The world steps back behind a content slide (`dim: 0.6`).
-
+<div class="nums" style="--d1: 4.5s; --d2: 5.7s; --d3: 6.9s">
+  <p><b>25</b><span>ns</span></p>
+  <p><b>2 500</b><span>bunches</span></p>
+  <p><b>160 000 000 000</b><span>protons</span></p>
 </div>
 
-<div class="src">Source line</div>
+<!-- facts: cern-lhc-collisions, lhc-bunch-milky-way -->
+
+<!--
+Message: protons travel in bunches, and the bunches meet every 25 ns.
+
+Say: "We start inside the beam pipe of the LHC. The protons travel in
+bunches: about 2 500 of them in each beam, and up to 160 billion protons in
+each bunch. Two bunches meet in the middle of LHCb every 25 nanoseconds.
+The clock in the corner is our time: 25 nanoseconds before the crossing."
+
+The two bunches run in from both ends of the pipe and stop (rate 0) with
+about a third of the pipe still between them; the camera settles beside the
+beam line, and the three numbers come up while it holds.
+
+Sources: home.cern, "The Large Hadron Collider" (about 2 500 bunches per beam,
+up to 1.6×10¹¹ protons per bunch, 25 ns apart).
+
+(~1.75 min)
+-->
+
+---
+space:
+  at: [3.4, -400, 0]
+  dist: 8.4
+  yaw: -32
+  pitch: 13
+  dim: 0
+  ambient: 0
+  hum: false
+  rate: [[0, 0.9], [1.0, 0.9], [1.5, 0.03], [5, 0.03], [5.8, 2.2], [8.5, 1]]
+  cameraRate: 1
+  path:
+    - [0, { at: [0, -400, 0], dist: 3.4, yaw: 28, pitch: 4 }]
+    - [1.5, { at: [0, -400, 0], dist: 2.3, yaw: 16, pitch: 6 }]
+    - [5, { at: [0, -400, 0], dist: 2.0, yaw: -24, pitch: 13 }]
+    - [7.5, { at: [2.4, -400, 0], dist: 6.0, yaw: -30, pitch: 12 }]
+    - [10, { at: [3.4, -400, 0], dist: 8.4, yaw: -32, pitch: 13 }]
+---
+
+<Crossing name="crossing" />
+<Clock :keys="[[0, -25], [1.5, 0], [5.8, 0], [8.5, 63]]" unit="ns" />
+
+<div class="nums" style="--d1: 10.5s; --d2: 11.7s">
+  <p><b>5</b><span>collisions</span></p>
+  <p><b>30 000 000</b><span>per second</span></p>
+</div>
+
+<!-- facts: lhcb-trigger-5tbs-10gbs, lhcb-hlt1-30mhz, lhcb-muon-m5-18p8m -->
+
+<!--
+Message: in one crossing about five pairs of protons collide, thirty million
+times a second.
+
+Say: "Here they cross. The world almost stops, so we can look: in one
+crossing, about five pairs of protons collide at once. And then the debris
+flies out, through the whole detector. The fastest of it reaches the far
+end, nearly 19 metres away, in 63 nanoseconds. This happens thirty million times
+every second."
+
+Bullet time at the crossing (rate 0.03, the camera orbiting on its own
+clock), then the fly-out. The clock runs from −25 ns to 0 at the crossing,
+holds in the freeze, and counts to 63 ns as the debris reaches the last muon
+station (18.8 m, light time). Today's drawing is the shared opening's LHCb
+event (record 24506); it becomes the talk's own Λb⁰ event once extracted.
+
+Sources: LHCb, arXiv:2412.05041 (about 5 collisions per crossing, 30 MHz of
+non-empty crossings); LHCb Starterkit, Run 3 data flow (30 MHz); X. Cid
+Vidal for LHCb, arXiv:1005.2585 (M5 at 18.8 m; kept in Upgrade I,
+arXiv:2305.10515).
+
+(~1.75 min)
+-->

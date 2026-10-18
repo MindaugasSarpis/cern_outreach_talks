@@ -38,10 +38,10 @@ all stay.
 | 1 | 0:45–1:15 | **The dive** into one bin; the grain unfolds backwards into its tracks and the beam pipe; black | nothing | runs back to 0 | — |
 | 2 | 1:15–3:00 | **The beam pipe** (the opening's push) | 25 ns · 2 500 bunches · 160 000 000 000 protons | −25 ns, counting up | cern-lhc-collisions, lhc-bunch-milky-way |
 | 3 | 3:00–4:45 | **The crossing**: ours among its neighbours | 5 collisions · 30 000 000 per second | 0 ns | lhcb-trigger-5tbs-10gbs, lhcb-hlt1-30mhz |
-| 4 | 4:45–7:15 | **The detector**: the VELO round the pipe, the magnet, the SciFi; RICH, the calorimeters and the muon stations at their real z | 5.1 mm · 11 000 km | 1 ns → 64 ns at the last muon station [CHECK z = 19.2 m; 19.2 m ÷ c] | lhcb-velo-distance, lhcb-scifi |
-| 5 | 7:15–9:00 | **The readout**: hits become bytes | 4 TB/s · 3 % | µs [CHECK the readout latency] | lhcb-run3-readout-4tbs, internet-intl-bandwidth-2022 |
-| 6 | 9:00–11:00 | **HLT1, cut one** | 200 GPUs · 30 MHz → 1 MHz | ms [CHECK HLT1's time per event] | lhcb-allen-gpu, lhcb-run3-hlt1-1mhz-out |
-| 7 | 11:00–13:00 | **The buffer and HLT2, cut two** (the same gesture) | 30 PB · 10 GB/s · 1 byte in 500 | hours → days | lhcb-trigger-5tbs-10gbs, lhcb-upgrade1-trigger |
+| 4 | 4:45–7:15 | **The detector**: the VELO round the pipe, the magnet, the SciFi; RICH, the calorimeters and the muon stations at their real z | 5.1 mm · 11 000 km | 1 ns → 63 ns at the last muon station (18.8 m) | lhcb-velo-distance, lhcb-scifi, lhcb-muon-m5-18p8m |
+| 5 | 7:15–9:00 | **The readout**: hits become bytes | 4 TB/s · 3 % | runs on (µs → s), no rung read | lhcb-run3-readout-4tbs, internet-intl-bandwidth-2022 |
+| 6 | 9:00–11:00 | **HLT1, cut one** | 500 GPUs · 30 MHz → 1 MHz | runs on, no rung read | lhcb-hlt1-500-cards-89khz, lhcb-run3-hlt1-1mhz-out |
+| 7 | 11:00–13:00 | **The buffer and HLT2, cut two** (the same gesture) | 30 PB · 10 GB/s · 1 byte in 500 | hours → days | lhcb-trigger-5tbs-10gbs, lhcb-upgrade1-trigger, lhcb-buffer-80-hours |
 | 8 | 13:00–15:30 | **The data centre, the grid, the open data**, and Vilnius's hands on it | 1 EB · 42 countries · 100 000 files | turns to years: 2012 → 2023 (the full Run 1 release) | cern-exabyte, cern-wlcg, lhcb-open-data, lhcb-run1-release-sarpis, sarpis-interview-run1-1-5-years |
 | 9 | 15:30–18:00 | **Cut three, the analysis**: 16 400 Λb⁰ are left; ours lands as one entry in the Λb⁰ mass peak | 16 400 · its own mass in MeV | 2026: stops at 14 years and fades as the dot lands | stonkus-bsc-2026-yield |
 | 10 | 18:00–21:00 | **The peak, now sharp**: station 0's frame, in focus, with axes | 246 000 · 7.3σ | — | lhcb-pentaquark-2019-yield, lhcb-pentaquark-2019 |
@@ -52,7 +52,11 @@ all stay.
 frame and grows only when it jumps a rung. It stops when the camera stops,
 and it is gone after the dot lands. Its first rungs (ns) are physics and hold
 for any year. The µs, ms and hours rungs are today's machine (Run 3), like
-the route's numbers. The years are this event's own: recorded in 2012,
+the route's numbers. No public source gives a latency for the readout or
+HLT1 (LHCb: both are asynchronous, "no latency requirements"; buffers hold
+O(20) s), so through stations 5 and 6 the clock runs on without stopping on
+a value; it stops only on sourced rungs (63 ns, hours to days, the years).
+The years are this event's own: recorded in 2012,
 released in 2023, in a thesis in 2026. The notes say this once.
 
 Every station can be jumped to directly, and `rate: 0` pauses the move.
