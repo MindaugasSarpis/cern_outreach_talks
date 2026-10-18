@@ -37,7 +37,10 @@ Slidev counts it (hidden slides are not counted).
                           `sources: notes`).
                           One finding per slide. Talks dated before
                           2026-10 (delivered) are skipped; headmatter
-                          `onscreen: words` opts a deck out, `onscreen: numbers` in
+                          `onscreen: words` opts a deck out, `onscreen: numbers` in;
+                          the same key in a slide's frontmatter rules that slide
+                          (an owner-granted title or „Ačiū“): `onscreen: words`
+                          drops its TEXT, NUMBER-BARE still runs
   NUMBER-BARE    warning  (the same decks) a number with neither a unit nor a name
                           beside it: '140 taškų', '20 užklausų', or a `.unit` /
                           `.name` element
@@ -243,8 +246,9 @@ class Lint:
             self.check_headings(s, screen)
             self.check_slop(s, text)
             self.check_words_and_sources(s, text)
-            if self.numbers_only:
-                self.check_numbers(s, self.numbers_text(s))
+            own = str(s.frontmatter.get("onscreen") or "").strip().lower()
+            if self.numbers_only or own == "numbers":
+                self.check_numbers(s, self.numbers_text(s), words_ok=own == "words")
             self.check_inline_sizes(s)
             self.check_marks(s, n_visible)
             self.check_facts(s, bank)
@@ -396,7 +400,7 @@ class Lint:
             text = text[:a] + re.sub(r"\S", " ", text[a:b]) + text[b:]
         return text
 
-    def check_numbers(self, s: td.Slide, text: str):
+    def check_numbers(self, s: td.Slide, text: str, words_ok: bool = False):
         words, bare = [], []
         toks = list(re.finditer(r"\S+", text))
         named = any(el.classes & {"unit", "name"} for el in td.elements(s.body))
@@ -427,7 +431,7 @@ class Lint:
                 continue
             words.append((m.start(), tok))
             i += 1
-        if words:
+        if words and not words_ok:
             shown = " ".join(w for _, w in words[:6]) + (" …" if len(words) > 6 else "")
             self.at(s, words[0][0], "TEXT", "warning",
                     f"{len(words)} word(s) on screen that are not numbers: {shown!r} (pictures and numbers "

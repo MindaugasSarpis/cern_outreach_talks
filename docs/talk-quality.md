@@ -182,6 +182,9 @@ for CERN's material. A number may stand, with a short unit (13,6 TeV,
 sources. `pnpm talk lint` flags the rest (TEXT); a review or audit checks
 "pictures and numbers only" before anything below. Rules 1–3 and 8–9 apply
 to the delivered decks (dated before 2026-10), which are left as they are.
+Only the owner grants words back, slide by slide (a title slide, a section
+break, „Ačiū“). Record each grant in that slide's frontmatter with
+`onscreen: words`, so lint drops its TEXT; NUMBER-BARE still runs there.
 
 From the Startertalk blueprint's style rules, generalised.
 

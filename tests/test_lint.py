@@ -320,6 +320,32 @@ theme: ../../theme
         self.assertEqual(codes(self.lint_at("2026_11_01_New", self.DECK.format(extra="onscreen: words\n")), "TEXT"), [])
         self.assertEqual(len(codes(self.lint_at("2026_09_10_Old", self.DECK.format(extra="onscreen: numbers\n")), "TEXT")), 2)
 
+    def test_a_slide_of_its_own(self):
+        """An owner-granted title or „Ačiū“ keeps its words: `onscreen: words` in the slide's frontmatter."""
+        deck = """---
+theme: ../../theme
+---
+
+<div class="big">13,6 TeV</div>
+
+---
+onscreen: words
+---
+
+# The detector
+
+<div>20</div>
+
+---
+
+# Ačiū
+"""
+        l = self.lint_at("2026_11_01_New", deck)
+        self.assertEqual([f.slide for f in codes(l, "TEXT")], [3])            # only the granted slide keeps words
+        self.assertEqual([f.slide for f in codes(l, "NUMBER-BARE")], [2])     # its numbers still need a name
+        opted_in = deck.replace("onscreen: words", "onscreen: numbers")
+        self.assertEqual([f.slide for f in codes(self.lint_at("2026_09_10_Old", opted_in), "TEXT")], [2])
+
 
 class Map(unittest.TestCase):
     def test_rows(self):

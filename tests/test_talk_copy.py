@@ -26,7 +26,7 @@ Spoken: "I lead the group."
 space: { at: origin, dim: 0 }
 ---
 
-<div class="say"><p class="big huge">Vadovėlio gale<br>atsakymo nėra</p></div>
+<div class="say"><p class="big huge">Duomenys<br>visiems</p></div>
 <div class="photo-credit">Foto: CERN</div>
 <VideoPlayer src="clip.mp4" caption="The &amp; tunnel" />
 
@@ -68,7 +68,7 @@ class TalkCopy(unittest.TestCase):
     def test_slides_titles_and_surfaces(self):
         p = talk_copy.packet(self.talk, None)
         self.assertEqual([s["slide"] for s in p["slides"]], [1, 2, 3])    # the hidden slide drops out
-        self.assertEqual(p["titles"][:2], ["Opening LHCb's data", "Vadovėlio gale atsakymo nėra"])
+        self.assertEqual(p["titles"][:2], ["Opening LHCb's data", "Duomenys visiems"])
         self.assertIn('I lead the group.', p["slides"][0]["notes"])
         s2 = p["slides"][1]
         self.assertEqual(s2["notes"], "")                                 # a facts comment is never the notes
