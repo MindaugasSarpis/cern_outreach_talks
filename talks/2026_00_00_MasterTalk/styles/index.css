@@ -20,9 +20,9 @@ html[data-stage] .nums p:nth-child(3) { animation-delay: var(--d3, 4.4s); }
   transition: opacity 1.2s ease; transform-origin: left bottom;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
 }
-.master-clock.on { opacity: 0.85; }
-.master-clock .n { font-size: 2.1vh; font-weight: 600; font-variant-numeric: tabular-nums; }
-.master-clock .u { font-size: 1.6vh; font-weight: 500; color: #9cc4ff; margin-left: 0.4em; letter-spacing: 0.04em; }
+.master-clock.on { opacity: 1; }
+.master-clock .n { font-size: 3.4vh; font-weight: 600; font-variant-numeric: tabular-nums; }
+.master-clock .u { font-size: 2.6vh; font-weight: 500; color: #9cc4ff; margin-left: 0.4em; letter-spacing: 0.04em; }
 .master-clock.jump { animation: clock-jump 1.6s ease; }
 @keyframes clock-jump { 0% { transform: scale(1); } 25% { transform: scale(1.8); } 100% { transform: scale(1); } }
 @media print { .master-clock { display: none; } }

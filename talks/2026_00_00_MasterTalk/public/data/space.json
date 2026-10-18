@@ -3,24 +3,103 @@
   "stations": [
     {
       "id": "peak",
-      "pos": [0, 0, 0],
-      "look": { "target": [0, 4.2, 0], "dist": 19, "yaw": 0, "pitch": 3, "sway": 1 },
+      "pos": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "target": [
+          0,
+          4.2,
+          0
+        ],
+        "dist": 19,
+        "yaw": 0,
+        "pitch": 3,
+        "sway": 1
+      },
       "objects": [
         {
-          "type": "histogram", "name": "jp", "pos": [0, 0, 0], "src": "data/jpsip-2019.json",
-          "width": 22, "height": 8.5, "size": 1.7, "alpha": 0.62, "fill": 6, "fall": 1.0,
-          "color": "#9cc4ff", "hot": "#ffffff", "axisColor": "#cfd6ff", "curve": 1.8,
-          "marks": [[4306, 4318], [4434, 4446], [4451, 4463]],
-          "steps": [0, 1, 1], "markStep": 2, "focus": [1, 1, 0], "spread": 1.4
+          "type": "histogram",
+          "name": "jp",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "src": "data/jpsip-2019.json",
+          "width": 22,
+          "height": 8.5,
+          "size": 2.7,
+          "alpha": 1.0,
+          "fill": 6,
+          "fall": 1.0,
+          "color": "#8fb6ff",
+          "hot": "#ffffff",
+          "axisColor": "#cfd6ff",
+          "curve": 1.8,
+          "marks": [
+            [
+              4306,
+              4318
+            ],
+            [
+              4434,
+              4446
+            ],
+            [
+              4451,
+              4463
+            ]
+          ],
+          "steps": [
+            0,
+            1,
+            1
+          ],
+          "markStep": 2,
+          "focus": [
+            0.55,
+            0.55,
+            0
+          ],
+          "spread": 1.1
         }
       ]
     },
     {
       "id": "opening",
-      "pos": [0, -400, 0],
-      "look": { "target": [0, -400, 0], "dist": 6, "yaw": 60, "pitch": 6, "sway": 0 },
+      "pos": [
+        0,
+        -400,
+        0
+      ],
+      "look": {
+        "target": [
+          0,
+          -400,
+          0
+        ],
+        "dist": 6,
+        "yaw": 60,
+        "pitch": 6,
+        "sway": 0
+      },
       "objects": [
-        { "type": "lhc-collision", "name": "crossing", "pos": [0, 0, 0] }
+        {
+          "type": "lhc-collision",
+          "name": "crossing",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "tone": "#9cc4ff",
+          "muonTone": "#cfe2ff",
+          "splashTone": "#5b93ff",
+          "bunchColor": "#cfe6ff"
+        }
       ]
     }
   ]

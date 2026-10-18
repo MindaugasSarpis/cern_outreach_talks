@@ -129,8 +129,8 @@ void main() {
   // the peaks keep their light and warm slightly; the rest steps back (brightening a dense
   // additive column only burns it white under the bloom, a flash)
   vec3 color = mix(uColor, uHot, clamp(0.8 * glow + 0.3 * m * aMark, 0.0, 1.0));
-  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow) * (1.0 - 0.55 * m * (1.0 - aMark)) / (1.0 + 4.0 * uBlur);
-  float size = uSize * (0.85 + 0.3 * hash(aSeed * 11.0)) * (1.0 + 0.5 * glow) * (1.0 + 3.0 * uBlur);
+  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow) * (1.0 - 0.55 * m * (1.0 - aMark)) / (1.0 + 2.0 * uBlur);
+  float size = uSize * (0.85 + 0.3 * hash(aSeed * 11.0)) * (1.0 + 0.5 * glow) * (1.0 + 2.0 * uBlur);
   place(p, size, alpha, color, aSeed);
 }`
 // a short upright tick of grains over a marked peak, shown once the fill is complete

@@ -38,7 +38,7 @@ space:
   pitch: 3
   sway: 0.6
   dim: 0
-  ambient: 0.35
+  ambient: 0.15
 ---
 
 <Grains :set="{ jp: 1 }" />
@@ -55,7 +55,8 @@ that is fine: we will find out what one point in it is."
 
 The 2019 m(J/ψ p) spectrum (HEPData ins1728691, Table 2, the bins Užsikrauk
 karjerai uses), its grains spread out of focus (`focus` 1), no axis, no
-peaks lit. The grains fall into place as the slide opens.
+peaks lit, but the bins' steps and the narrow spike still show through
+(`focus` 0.55). The grains fall into place as the slide opens.
 
 (~0.75 min)
 -->
@@ -67,7 +68,7 @@ space:
   yaw: 6
   pitch: 1
   dim: 0
-  ambient: [[0, 0.35], [3, 0.15], [6, 0]]
+  ambient: [[0, 0.15], [6, 0]]
   path:
     - [0, { at: [0, 4.2, 0], dist: 19, yaw: 0, pitch: 3 }]
     - [3.5, { at: [1.0, 7.3, 0], dist: 5, yaw: 4, pitch: 2 }]
@@ -95,18 +96,18 @@ sits in that black. To come: the grain unfolds backwards into its tracks
 
 ---
 space:
-  at: [0, -400, 0]
-  dist: 3.4
-  yaw: 28
+  at: [0, -400.55, 0]
+  dist: 5.5
+  yaw: 0
   pitch: 4
   dim: 0
   ambient: 0
   hum: false
-  rate: [[0, 1.4], [1.2, 1.4], [2.0, 0]]
+  rate: [[0, 1.4], [1.78, 1.4], [2.58, 0]]
   cameraRate: 1
   path:
-    - [0, { at: [0, -400, 0], dist: 5, yaw: 40, pitch: 5 }]
-    - [4, { at: [0, -400, 0], dist: 3.4, yaw: 28, pitch: 4 }]
+    - [0, { at: [0, -400, 0], dist: 7, yaw: 40, pitch: 5 }]
+    - [4, { at: [0, -400.55, 0], dist: 5.5, yaw: 0, pitch: 4 }]
 ---
 
 <Crossing name="crossing" start />
@@ -128,9 +129,10 @@ bunches: about 2 500 of them in each beam, and up to 160 billion protons in
 each bunch. Two bunches meet in the middle of LHCb every 25 nanoseconds.
 The clock in the corner is our time: 25 nanoseconds before the crossing."
 
-The two bunches run in from both ends of the pipe and stop (rate 0) with
-about a third of the pipe still between them; the camera settles beside the
-beam line, and the three numbers come up while it holds.
+The two bunches run in from both ends of the pipe and stop (rate 0) about
+10 m apart, a little before they meet; the camera settles square to the beam
+line, the pipe across the frame, and the three numbers come up while it
+holds.
 
 Sources: home.cern, "The Large Hadron Collider" (about 2 500 bunches per beam,
 up to 1.6×10¹¹ protons per bunch, 25 ns apart).
@@ -140,21 +142,21 @@ up to 1.6×10¹¹ protons per bunch, 25 ns apart).
 
 ---
 space:
-  at: [3.4, -400, 0]
+  at: [3.4, -400.9, 0]
   dist: 8.4
   yaw: -32
   pitch: 13
   dim: 0
   ambient: 0
   hum: false
-  rate: [[0, 0.9], [1.0, 0.9], [1.5, 0.03], [5, 0.03], [5.8, 2.2], [8.5, 1]]
+  rate: [[0, 0.35], [0.7, 0.35], [1.5, 0.03], [5, 0.03], [5.8, 2.2], [8.5, 1]]
   cameraRate: 1
   path:
-    - [0, { at: [0, -400, 0], dist: 3.4, yaw: 28, pitch: 4 }]
+    - [0, { at: [0, -400.55, 0], dist: 5.5, yaw: 0, pitch: 4 }]
     - [1.5, { at: [0, -400, 0], dist: 2.3, yaw: 16, pitch: 6 }]
     - [5, { at: [0, -400, 0], dist: 2.0, yaw: -24, pitch: 13 }]
-    - [7.5, { at: [2.4, -400, 0], dist: 6.0, yaw: -30, pitch: 12 }]
-    - [10, { at: [3.4, -400, 0], dist: 8.4, yaw: -32, pitch: 13 }]
+    - [7.5, { at: [2.4, -400.6, 0], dist: 6.0, yaw: -30, pitch: 12 }]
+    - [10, { at: [3.4, -400.9, 0], dist: 8.4, yaw: -32, pitch: 13 }]
 ---
 
 <Crossing name="crossing" />
@@ -162,7 +164,7 @@ space:
 
 <div class="nums" style="--d1: 10.5s; --d2: 11.7s">
   <p><b>5</b><span>collisions</span></p>
-  <p><b>30 000 000</b><span>per second</span></p>
+  <p><b>30 000 000</b><span>crossings/s</span></p>
 </div>
 
 <!-- facts: lhcb-trigger-5tbs-10gbs, lhcb-hlt1-30mhz, lhcb-muon-m5-18p8m -->
