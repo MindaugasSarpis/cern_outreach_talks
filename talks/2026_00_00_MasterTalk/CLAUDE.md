@@ -14,7 +14,7 @@ makes them, Figures as they are checked. The repo is public: private context
 - Venue and screen: a venue with a 16:9 projector, as Innoday (assumed)
 - Audience: business and policy, no physics background, as Innoday; a
   keynote, so no audience participation (owner, 18 Oct)
-- Language: English for slides and notes (`lang: en`); not yet confirmed
+- Language: English for slides, notes and the talk (owner, 18 Oct)
 - Look: slidev-addon-stage, blue palette (scaffold default)
 - Idea ("one collision, one shot", owner took it 18 Oct): the whole talk is
   one continuous camera move with no cuts. It follows one real collision
@@ -30,16 +30,16 @@ makes them, Figures as they are checked. The repo is public: private context
   dust; timing set to a recorded rehearsal; every station reachable by a jump.
 - Private brief: ~/.local/share/outreach_talks/briefs/mastertalk.md
 
-Open questions (asked 18 Oct): language (Innoday was Lithuanian); takeaway;
-what is off limits; storyboard approval.
+Open questions: the takeaway; what is off limits (defaults in the
+storyboard).
 
 ## Status
 
 - Branch `talk/mastertalk`, worktree `.claude/worktrees/mastertalk` (`pnpm talk open mastertalk`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_00_00_MasterTalk/
 - Scaffold committed 18 Oct; `pnpm talk check` ok. Blocked on the Brief
-  questions. Storyboard draft 2 (`notes/storyboard.md`, 18 Oct: clock on, Innoday-like, 25 min) is with the
-  owner; nothing is built until it is approved.
+  questions. Storyboard draft 2 (`notes/storyboard.md`, 18 Oct: clock on, Innoday-like, 25 min) approved 18 Oct;
+  building stations 0–3.
 - Not deployed yet. `pnpm talk deploy` records each deploy in
   `.git/talk-status/mastertalk.json`; `pnpm talk status` shows it.
 
@@ -72,6 +72,7 @@ The owner's decisions, dated, newest last.
   screen").
 - 2026-10-18: the event is "something like Innoday": a business and policy
   audience; 25 min and a 16:9 projector assumed from Innoday.
+- 2026-10-18: storyboard draft 2 approved; English (owner: "Approved, English").
 
 ## Verify
 
