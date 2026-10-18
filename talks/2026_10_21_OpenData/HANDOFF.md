@@ -545,6 +545,14 @@ grains), built on wip/everyday and squashed onto feat/opendata-talk:
 
 ## Open
 
+- The offline venue zip: build it as `VITE_VIDEOS_LOCAL_FIRST=1 pnpm venue`
+  until after 26 Oct (the Scheduler, 18 Oct). The env's slidev-videos is
+  0.4.0 (its checkout at v0.4.0-1-gb7e160f, checked 18 Oct); the fix that
+  sets the variable itself, 847244e, is on its feat branches only, and this
+  talk's `build:portable` does not set it, so a plain `pnpm venue` zip's
+  player would try the GitHub releases over the venue's Wi-Fi before its own
+  copies. `talk ready` is unaffected (it only dry-runs the venue step).
+
 - The pinned shots tool (`talk ready`'s shots) waits a fixed 4.2 s of real
   time per slide; on SwiftShader the engine clock runs far slower, so its
   slide 13 catches the flight in (no ring yet, or the ring off centre). The
