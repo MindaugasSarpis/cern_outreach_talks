@@ -214,18 +214,35 @@ html[data-stage] .photo-caption {
 /* --- PDF export: the kit (v0.6.6) holds every animation at its end state on print pages,
    so a line that rises in late (the map's city names at 8,5 s) prints. */
 
-/* ---- taken from OpenData (15 Oct): the thesis slide and the close.
-   Dominykas: his portrait, the thesis and his name on the left; his histogram fills in
-   the world to the right, the count low on the right (OpenData styles/index.css 170-183) */
-html[data-stage] .thesis-slide { position: absolute; inset: 0; display: grid; grid-template-columns: 0.62fr 1.38fr; align-items: center; gap: 30px; padding: 40px 48px 40px 56px; }
-html[data-stage] .thesis-who { align-self: center; animation: stage-rise 0.85s var(--stage-ease) 0.15s both; }
-html[data-stage] .thesis-who .portrait { width: 100%; max-width: 165px; aspect-ratio: 4 / 5; border-radius: 6px; object-fit: cover; object-position: 50% 30%; display: block; margin: 0 0 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); filter: brightness(0.82) contrast(1.06); }   /* the photo's overcast sky would read as a white slab */
-html[data-stage] .thesis-who .kicker { color: var(--kk-kick); margin: 0 0 6px; white-space: nowrap; text-shadow: var(--kk-shadow); }
-html[data-stage] .thesis-who .name { font-size: 22px; font-weight: 600; color: var(--stage-fg); margin: 0 0 18px; text-shadow: var(--kk-shadow); }
-html[data-stage] .thesis-count { position: absolute; right: 64px; bottom: 44px; font-size: 64px; font-weight: 700; letter-spacing: -0.01em; color: #fff; text-shadow: 0 0 28px rgba(0, 0, 0, 0.6); white-space: nowrap; }
-html[data-stage] .thesis-count .unit { font-size: 0.38em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--kk-kick); }
-/* „Ačiū“ in the middle of the group's ring (OpenData styles/index.css 76) */
+/* ---- the close, taken from OpenData (15 Oct; OpenData styles/index.css 76): „Ačiū“ in the middle */
 html[data-stage] .thanks { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 96px; font-weight: 700; letter-spacing: -0.03em; color: #fff; text-shadow: 0 4px 40px rgba(0, 0, 0, 0.7); animation: stage-rise 0.9s var(--stage-ease) 0.4s both; }
+/* beside the five-quark form, not on it: the form turns in the right half (slide 20's pose), the word is centred in the left 576 px, level with it */
+html[data-stage] .thanks.beside { inset: 0 auto 0 0; width: 576px; }
 /* the shared opening's „LHC 27 km“ sits low left on the tunnel's near-white wall: a soft shade
    from the slide's lower-left corner behind it (read as the tunnel's own shadow, not a badge), in this talk only (components/lhc-opening is shared; the fix there is the module's) */
 html[data-stage] .lhc-tunnel::before { content: ''; position: absolute; inset: auto auto -44px -56px; width: 760px; height: 420px; z-index: -1; background: radial-gradient(ellipse 100% 100% at 0% 100%, rgba(0, 2, 6, 0.8) 0%, rgba(0, 2, 6, 0.55) 35%, rgba(0, 2, 6, 0.2) 60%, rgba(0, 2, 6, 0) 80%); }
+
+/* ---- from Innoday (18 Oct): the funnel's age, low on the left once the funnel stands (<AfterFlight>) */
+html[data-stage] .age { position: absolute; z-index: 0; left: var(--kk-x); bottom: var(--kk-floor); font-size: 26px; font-weight: 500; letter-spacing: 0.02em; color: var(--kk-blue-hi); text-shadow: var(--kk-shadow); white-space: nowrap; }
+/* the age stands on the funnel's floor grid: a soft shade behind it (read as shadow, not a badge, as the tunnel's), so no grid line crosses „mlrd. metų“ */
+html[data-stage] .age::before { content: ''; position: absolute; inset: -60px -120px -60px -72px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0, 2, 6, 0.74) 0%, rgba(0, 2, 6, 0.52) 45%, rgba(0, 2, 6, 0.18) 75%, rgba(0, 2, 6, 0) 100%); }   /* the ellipse fits its box, so it fades out before any edge */
+html[data-stage] .age .n { font-size: 56px; font-weight: 700; letter-spacing: -0.01em; color: #fff; margin-right: 0.25em; }
+
+/* ---- from OpenData (18 Oct): the readout of the piles, a counted number and a naming caption, low on the left */
+html[data-stage] .readout {
+  position: absolute; left: var(--kk-x); bottom: 74px; max-width: 46%;
+  color: var(--stage-fg);
+  animation: stage-rise 0.8s var(--stage-ease) 0.2s both;
+}
+html[data-stage] .readout p { margin: 0; }
+html[data-stage] .readout .big {
+  font-size: 104px; font-weight: 700; letter-spacing: -0.01em; line-height: 0.92;
+  margin: 0 0 18px; white-space: nowrap; font-variant-numeric: normal;
+  color: #fff; text-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
+}
+html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--kk-blue-hi); }
+html[data-stage] .readout .caption { font-size: 30px; font-weight: 500; letter-spacing: 0.02em; color: var(--kk-blue-hi); text-shadow: var(--kk-shadow); }
+html[data-stage] .readout.blue, html[data-stage] .readout.steel { max-width: 50%; }
+html[data-stage] .readout.late { animation-delay: 2.6s; }
+html[data-stage] .readout.last { animation-delay: 5.2s; }   /* after copies of the smaller pile merge into the larger */
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .readout { animation: none !important; } }
