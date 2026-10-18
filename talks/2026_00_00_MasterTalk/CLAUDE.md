@@ -37,9 +37,12 @@ storyboard).
 
 - Branch `talk/mastertalk`, worktree `.claude/worktrees/mastertalk` (`pnpm talk open mastertalk`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_00_00_MasterTalk/
-- Scaffold committed 18 Oct; `pnpm talk check` ok. Blocked on the Brief
-  questions. Storyboard draft 2 (`notes/storyboard.md`, 18 Oct: clock on, Innoday-like, 25 min) approved 18 Oct;
-  building stations 0–3.
+- 18 Oct: storyboard draft 2 approved (`notes/storyboard.md`). Stations 0–3
+  built (the peak out of focus, the dive, the beam pipe, the crossing) with
+  the clock; lint 0/0, `pnpm talk check` ok. The collision is still the
+  shared opening's LHCb event (record 24506) until the talk's own Λb⁰ event
+  is extracted (a background run, in ~/talks/.cache/opendata/mastertalk-event/).
+  Next: shots review of 0–3, then the event, then stations 4–5.
 - Not deployed yet. `pnpm talk deploy` records each deploy in
   `.git/talk-status/mastertalk.json`; `pnpm talk status` shows it.
 
@@ -56,11 +59,32 @@ Every number on a slide, with its source. Search the facts bank first
 
 | Value | Claim | Source (URL) | Accessed | Fact id | OK / CHECK |
 | ----- | ----- | ------------ | -------- | ------- | ---------- |
+| 25 ns · 2 500 · 160 000 000 000 | bunch spacing, bunches per beam, protons per bunch | home.cern LHC page | 2026-10 | cern-lhc-collisions, lhc-bunch-milky-way | OK |
+| 5 · 30 000 000 per second | collisions per crossing; non-empty crossings | arXiv:2412.05041; Starterkit | 2026-10 | lhcb-trigger-5tbs-10gbs, lhcb-hlt1-30mhz | OK |
+| 63 ns (clock) | light time to M5 at 18.8 m | arXiv:1005.2585 | 2026-10-18 | lhcb-muon-m5-18p8m | OK |
+| 246 000 | Λb⁰ decays in the 2019 analysis | arXiv:1904.03947 | 2026-10-18 | lhcb-pentaquark-2019-yield | OK |
+| 1 MHz | HLT1 output | arXiv:2408.03881 | 2026-10-18 | lhcb-run3-hlt1-1mhz-out | OK |
+| 500 GPUs | HLT1 cards | arXiv:2606.14480 | 2026-10-18 | lhcb-hlt1-500-cards-89khz | OK |
+| 80 hours | buffer capacity at 1 MHz (a capacity, not a wait) | arXiv:2305.10515 | 2026-10-18 | lhcb-buffer-80-hours | OK |
+| open-data volume (station 8) | which figure: 800 TB, 1 PB or 4 PB | lhcb-run1-volume-sources-differ | | | CHECK |
+| 2019 bins licence | HEPData ins1728691 Table 2 | hepdata.net | | | CHECK (expected CC0) |
 
 ## Talk-owned code
 
 Files of this talk's own (setup/, styles/, vite.config.ts) and what each does.
 A piece a second talk needs moves to the shared kit instead of being copied.
+
+- `setup/grains.js`: `histogram`, copied from Užsikrauk karjerai (18 Oct)
+  with a `focus` per step (blur 1 → 0: the open and the close, one object).
+  Move it to components/ after 26 Oct, so both talks share one copy.
+- `setup/clock.js`, `setup/Clock.vue`: the running clock, one element outside
+  the slides; `<Clock :keys="[[s, value], …]" unit="ns" />` or `<Clock off />`.
+- `setup/Crossing.vue`: starts or continues the shared `lhc-collision` run
+  without `<LhcOpening>`'s Lithuanian captions.
+- `setup/Grains.vue`: Užsikrauk's, sets a form's step on slide enter.
+- `styles/index.css`: `.nums` (numbers low left, white with light-blue
+  words, staggered by `--d1…--d3`) and the clock.
+- `package.json`: `stage:check --types lhc-collision` (the shared builder).
 
 ## Decisions
 
