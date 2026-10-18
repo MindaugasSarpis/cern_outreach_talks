@@ -8,10 +8,12 @@ makes them, Figures as they are checked. The repo is public: private context
 
 ## Brief
 
-- Event: a keynote seminar, reusable; no event named yet (owner, 18 Oct)
-- Date and slot: 2026-00-00 (placeholder), slot not set
-- Venue and screen: not set; 16:9 until told
-- Audience: not set; keynote, so no audience participation (owner, 18 Oct)
+- Event: a keynote seminar "something like Innoday" (owner, 18 Oct): an
+  innovation or business day; no event named yet
+- Date and slot: 2026-00-00 (placeholder); about 25 min, as Innoday (assumed)
+- Venue and screen: a venue with a 16:9 projector, as Innoday (assumed)
+- Audience: business and policy, no physics background, as Innoday; a
+  keynote, so no audience participation (owner, 18 Oct)
 - Language: English for slides and notes (`lang: en`); not yet confirmed
 - Look: slidev-addon-stage, blue palette (scaffold default)
 - Idea ("one collision, one shot", owner took it 18 Oct): the whole talk is
@@ -28,22 +30,22 @@ makes them, Figures as they are checked. The repo is public: private context
   dust; timing set to a recorded rehearsal; every station reachable by a jump.
 - Private brief: ~/.local/share/outreach_talks/briefs/mastertalk.md
 
-Open questions (asked 18 Oct): event, date, venue and screen; audience; slot;
-language; takeaway; what is off limits.
+Open questions (asked 18 Oct): language (Innoday was Lithuanian); takeaway;
+what is off limits; storyboard approval.
 
 ## Status
 
 - Branch `talk/mastertalk`, worktree `.claude/worktrees/mastertalk` (`pnpm talk open mastertalk`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_00_00_MasterTalk/
 - Scaffold committed 18 Oct; `pnpm talk check` ok. Blocked on the Brief
-  questions. Storyboard draft 1 (`notes/storyboard.md`, 18 Oct) is with the
+  questions. Storyboard draft 2 (`notes/storyboard.md`, 18 Oct: clock on, Innoday-like, 25 min) is with the
   owner; nothing is built until it is approved.
 - Not deployed yet. `pnpm talk deploy` records each deploy in
   `.git/talk-status/mastertalk.json`; `pnpm talk status` shows it.
 
 ## Arc
 
-The timeline is in `notes/storyboard.md` (14 stations, 30 min default); this
+The timeline is in `notes/storyboard.md` (12 stations, 25 min); this
 section takes the slide list once the owner approves it.
 
 ## Figures
@@ -66,6 +68,10 @@ The owner's decisions, dated, newest last.
 
 - 2026-10-18: name MasterTalk; the pitch "one collision, one shot"; no audience
   participation in a keynote.
+- 2026-10-18: the running clock (mt-clock) goes on screen (owner: "Clock on
+  screen").
+- 2026-10-18: the event is "something like Innoday": a business and policy
+  audience; 25 min and a 16:9 projector assumed from Innoday.
 
 ## Verify
 
