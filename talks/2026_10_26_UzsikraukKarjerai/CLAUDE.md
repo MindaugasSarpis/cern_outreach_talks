@@ -70,7 +70,33 @@ purpose).
 
 ## Status
 
-- 2026-10-18 (latest): **flow overhaul, blueprint written, not built.** The
+- 2026-10-20 (latest): **deployed 71a7834** under the standing rule (the
+  Scheduler gave main): the deck rebuilt from blueprint v2 (Decisions,
+  2026-10-20; the owner, 20 Oct: "Taking elements from innoday and open data
+  set up a good story telling for highschool students with some personal
+  touches about me, my career path. Finish to completion"). 19 slides, 10,2
+  min by the notes (9,9 scripted in the blueprint; about 11,5–12 delivered,
+  12–13 with the three owner slots on slide 12). Lint 0 errors, 5 warnings
+  on purpose (the cover's name line, „Ačiū“, the three optional slots).
+  Two shots reviews by subagents (the stills, then the click frames 8, 9, 10
+  and 12) and their fixes (bd04a84, 3761e82, 3c7c655): type for a stream
+  (counts 36 px, city names 34, captions and unit words 36), the Ωc count
+  under its plot from 6 s, the second sun's names on two lines, the toy's
+  tick brighter, the dive at dim 0.3. Main 897b30c merged (71a7834).
+  `talk ready` passed with nothing skipped and was stamped (log
+  uzsikraukkarjerai-ready-71a78347a772-20261020-022254); Pages run
+  39341651529 green; the live walk passed 19 of 19 (slide 3 retried once,
+  none failed, no lost context); URL 200. The venue zip built as
+  `VITE_VIDEOS_LOCAL_FIRST=1 pnpm venue` (the Scheduler, 20 Oct: the env's
+  CLI is v0.4): `2026_10_26_UzsikraukKarjerai-venue.zip`, 35,4 MB, three
+  clips local. 13 facts filed (two worked, 11 from talk-research-gaps
+  wf_c44c35d0-786). Open for the owner: the three slots on 12 (Figures 10),
+  the web still's provenance and the Planck licence (Figures 4, 11), the
+  close (9), the root CLAUDE.md row (8); left as built on their call: the sun
+  of 19 plots at dist 36 (busy on a small screen), the 800 pile beside the
+  4 000 pile on 15, the cover's name line at 30 px, „Heidelbergas“ crossed by
+  a trail leg on 12.
+- 2026-10-18: **flow overhaul, blueprint v1 written, not built** (superseded by v2, 20 Oct). The
   owner, in this window, on the deployed 20-slide deck: "This one still lacks
   coherence, now I can build some story telling around it ... but need a much
   better flow. And oriented at highschool students". The saved workflow
@@ -824,8 +850,7 @@ have (the AFK default is built and deployed; each has an undo under Decisions):
    18 facts filed, 3 unverified). For the speaker:
    - The laptop stack: a 1 TB laptop of today is about 1,1 cm thick, so
      100 000 of them stack to about 1,1 km; say „daugiau nei kilometro“, not
-     „dviejų kilometrų“ (the live deck's slide 17 still says two; fixed in the
-     rebuild). `laptop-stack-over-1km-worked`.
+     „dviejų kilometrų“ (fixed in the 20 Oct rebuild, slide 16). `laptop-stack-over-1km-worked`.
    - „Būtent šiuose duomenyse 2015 metais iškilo pentakvarko smailė“: the
      release holds the same 2011–2012 collisions, not the analysts' own files;
      it is the 2015 peak (2019 used Run 1 and Run 2). The release is about
