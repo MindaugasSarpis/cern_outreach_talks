@@ -176,6 +176,9 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 to LHCb in grains, 34 the credits page; 34 slides, 23,6 min. The cover's
 pentaquark reads as five quarks (Decisions). A five-lens review with each
 finding verified; its confirmed findings are fixed. Print stills retaken.
+Deployed 8be6a41 — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/
+— Pages run 39333964525 (green), URL 200, live walk 34/34; `ready` passed
+with nothing skipped.
 Open for the owner: the CAD file never came (the model follows the drawing),
 whether the notes may say more about Vilnius's LIS work, the three CERN
 credits on the credits page.
