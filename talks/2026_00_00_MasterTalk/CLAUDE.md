@@ -73,7 +73,16 @@ storyboard).
   (grains.js's own); the event through `installLhcb({ event })`; the bus is
   `slidev-stage:steps` (`setStep`, `stepOf`, `onStep`, `setStepLater`) and
   `<Grains>` becomes `<StageSteps :set :clicks>`, so stream, grid, spark and
-  histogram move onto that bus in the pilot.
+  histogram move onto that bus in the pilot. Agreed the same day: `import
+  { setStep, stepOf, onStep, stepper } from 'slidev-addon-stage'` for
+  talk-owned builders (README); `setStepLater(name, k, s)` is grains.js's
+  setGrainsLater/tick with the tick in the engine (world time: a frozen world
+  holds it; returns a cancel function; `stepWaiting(name)`); `<StageSteps>`
+  applies only in the `slide` and `presenter` contexts; a missing or
+  mismatched geometry asset fails the build naming the asset, the sha and
+  the cache dir, only for decks whose space.json uses `src: lhcb` or
+  `lhcb-dense`; stage-data/ rides in build:portable. Nothing more to do
+  until the Scheduler says v0.9.0 is tagged.
 
 ## Arc
 
