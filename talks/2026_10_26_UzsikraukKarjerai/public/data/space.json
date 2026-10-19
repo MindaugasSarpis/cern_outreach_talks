@@ -236,7 +236,7 @@
       1
      ],
      "tickSize": 2.2,
-     "tickAlpha": 0.35,
+     "tickAlpha": 0.55,
      "markStep": 2
     }
    ]
@@ -277,7 +277,7 @@
      "tickAlpha": 0.4,
      "fill": 20,
      "fall": 1.0,
-     "color": "#ffcf70",
+     "color": "#9fd0ff",
      "hot": "#ffffff",
      "curve": 1.8,
      "marks": [
@@ -514,7 +514,6 @@
       {
        "n": 800,
        "color": "#ffcf73",
-       "label": "800 TB",
        "at": [
         -2.6,
         1.14,
@@ -572,7 +571,7 @@
        ]
       }
      ],
-     "labelH": 0.05,
+     "labelH": 0.1,
      "mergeAt": 2.4
     },
     {
@@ -1106,7 +1105,7 @@
      "cluster": 1100,
      "shed": 110,
      "pulse": 0.3,
-     "labelH": 0.048,
+     "labelH": 0.07,
      "items": [
       {
        "at": [
@@ -1130,7 +1129,7 @@
        ]
       },
       {
-       "label": "Magistro ir\nbakalauro darbai",
+       "label": "Bakalauro\ndarbai",
        "at": [
         -6.59,
         5.27,
@@ -1145,7 +1144,7 @@
        ]
       },
       {
-       "label": "Meistriškumo pamoka",
+       "label": "Meistriškumo\npamoka",
        "at": [
         10.34,
         2.43,
