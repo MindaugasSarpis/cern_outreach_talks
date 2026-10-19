@@ -44,8 +44,9 @@ storyboard).
   Review round 1 fixed (53b5b5d). Next: a live run of stations 2→3 (the
   crossing inside the freeze), then stations 4–5, then the Blender hero shots
   (after 26 Oct, with the Scheduler's slot).
-- Not deployed yet. `pnpm talk deploy` records each deploy in
-  `.git/talk-status/mastertalk.json`; `pnpm talk status` shows it.
+- 19 Oct: deployed 6f1880a (stations 0–3; Pages run 39205522850, green; the
+  live deck walked clean). Slide 3's camera now stops at 5 s, so the shot tool
+  reads the freeze as settled. `pnpm talk status` shows each deploy.
 
 ## Arc
 
