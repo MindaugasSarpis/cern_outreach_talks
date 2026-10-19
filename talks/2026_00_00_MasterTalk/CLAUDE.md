@@ -130,6 +130,11 @@ The owner's decisions, dated, newest last.
   station (owner: "I just see 4 slides now, the second slide is dark, need the
   full story"). All 12 stations drafted the same day; the dive now ends on a
   white dot (our collision) in its bin instead of fading to black early.
+- 2026-10-20: this talk, and every incarnation of it, is the showcase: it
+  "should present CERN and LHCb in a very cool way, gaining inspiration and
+  lifting off of all of the other talks in storytelling, visuals, effects,
+  impact" (owner). When a move works in another talk, consider bringing it
+  here; the house rules still hold.
 
 ## Verify
 
