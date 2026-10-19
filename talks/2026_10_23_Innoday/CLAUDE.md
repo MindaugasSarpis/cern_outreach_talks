@@ -175,7 +175,9 @@ now) are built (Decisions, "The close at eye level"): five visual review rounds,
 four-lens code review with each finding verified, its confirmed findings fixed;
 the music's two files measured (-15,9 and -14,1 LUFS, the arrival at the cut's
 67–70 s) and its flow tested headless (forward, back, a direct open, the overview).
-Stills 31–34 retaken. Not yet deployed at this entry.
+Stills 31–34 retaken. Deployed 897b30c — Pages run 39339958890 (green), URL 200,
+live walk 34/34, the music files served; `ready` passed with nothing skipped.
+Nobody has listened to the music in a session: the owner hears it first.
 
 2026-10-20: the new ending is built (Decisions, "The new ending"; owner, 20 Oct:
 "Deploy"): slide 32 the light injection clip `lis_flag.mp4` (rendered at
