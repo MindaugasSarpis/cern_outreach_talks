@@ -177,7 +177,9 @@ the music's two files measured (-15,9 and -14,1 LUFS, the arrival at the cut's
 67–70 s) and its flow tested headless (forward, back, a direct open, the overview).
 Stills 31–34 retaken. Then (the owner: LHCb looked 3 m high and squashed) true
 proportions on „Ačiū“ and the end side on from the middle at the owner's eye level
-(Decisions); three more visual rounds. Deployed 897b30c — Pages run 39339958890 (green), URL 200,
+(Decisions); three more visual rounds, deployed dafb7eb — Pages run 39342886481
+(green), URL 200, live walk 34/34; `ready` passed with nothing skipped. Before it:
+897b30c — Pages run 39339958890 (green), URL 200,
 live walk 34/34, the music files served; `ready` passed with nothing skipped.
 Nobody has listened to the music in a session: the owner hears it first.
 
@@ -219,11 +221,8 @@ the public repo and their credit („VU nuotr.“), any minister photos at LHCb,
 lhcb.mp4's music (probably a commercial film score), the opener's music and
 the NCSA web's licence, the CERN CC credits, the paper count on 22 Oct, the
 iPhone retest. For a PDF: `pnpm talk export innoday --format pdf -- --wait
-12000`. For the offline zip, until the env's slidev-videos is past v0.4 (not
-before 26 Oct): `VITE_VIDEOS_LOCAL_FIRST=1 pnpm venue` in the talk dir. The
-old CLI's venue runs `pnpm build:portable` without it (847244e fixes that),
-and the zip's player would then try GitHub over the venue's Wi-Fi before its
-own copies; the variable reaches the build through the environment.
+12000`. For the offline zip: `pnpm venue` in the talk dir (the env's slidev-videos is
+v0.8.1 since 20 Oct and builds the zip local-first itself).
 
 ## Decisions
 
