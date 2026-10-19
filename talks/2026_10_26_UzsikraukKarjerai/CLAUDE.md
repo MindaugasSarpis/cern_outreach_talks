@@ -24,44 +24,49 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (seventh version, 18 Oct: the owner's four changes through the Scheduler: 20 slides, about 10 min)
+## Story (eighth version, 20 Oct: blueprint v2, the flow reworked for a 10–15 min talk: 19 slides, about 10 min)
 
-Approved outline: `notes/outline-v5.md` with its two change sections
-(owner, 2026-10-08). The viewer sits in the physicist's seat. The 15 Oct round
-(Decisions, 2026-10-15) added OpenData's and Innoday's cover, way in and
-collision; the 18 Oct round (Decisions, 2026-10-18) adds Innoday's cosmic web
-and funnel after the cover, swaps the 2003/2008 illustration for LHCb's Ωc⁰
-peaks, drops the event display and replaces the end with OpenData's open data.
+The blueprint: `notes/blueprint.md` (v2, 20 Oct; v1 of 18 Oct is at
+f840ac0). One dot: a particle of five quarks took 51 years to find, so how do
+you know you have found something nobody has seen? The viewer sees how, dot by
+dot, and judges twice (a 140-dot bump that fools them, as physicists were fooled
+in 2003; LHCb's 2015 peak, which held); the rule is said once, in the cover's
+words. Then the dots are handed on through the speaker's road (Glasgow,
+Heidelberg, Bonn: the pentaquark search and the open-data release), the group in
+Vilnius, OpenData's piles, a VU student's check of the bump and the masterclass.
+Elements from Innoday (the web, the funnel) and OpenData (the way in, the LHCb
+clip, the piles, the suns) as built on 18 Oct; the owner's career path as a
+thread, scripted only from the facts bank, with three optional owner slots on
+the road slide. The old outline: `notes/outline-v5.md`.
 
 Pictures and numbers (owner, 2026-10-10): no titles, kickers, statements or
 section slides; the speaker narrates from the notes. A number carries the word
 that names it; a thing shown may carry its name (the map's cities, the sun's
-two clusters). Exceptions taken from OpenData and Innoday on 15 Oct: the
-cover's name line (its title gone, 16 Oct) and „Ačiū“ (lint: 2 TEXT warnings,
-on purpose).
+two clusters, the piles' two captions). Exceptions taken from OpenData and
+Innoday on 15 Oct: the cover's name line and „Ačiū“ (lint: TEXT warnings, on
+purpose).
 
 | # | Screen | Picture |
 |---|---|---|
-| 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks`; → to the web |
-| 2 | — | Innoday's cosmic web, a still (`opener_last.jpg`) that dissolves into grains in place (`<WebTakeover>`) |
-| 3 | „13,8 mlrd. metų“ | the web's grains fly into Innoday's funnel of the Universe's history (`funnel` at `funnel`, the CMB disk from Planck); the bridge to CERN said |
-| 4 | — (clip) | CERN from above (library `cern_overview_short.mp4`, 11 s), pushing into the ring; the LHC line spoken |
-| 5 | „LHC 27 km“ | the shared opening: the real tunnel (18 s cut), on into the beam pipe (`exit="push"`) |
-| 6 | „8 TeV“, then „290 dalelių“ | the shared opening: one real 2012 CMS crossing in 4π |
-| 7 | — (clip) | `lhcb.mp4`, the LHCb detector in 3D (39 s); the LHCb line near its end |
-| 8 | — | `th1` fills: 140 dots, a chance bump at 1,54 GeV (illustration): is it a particle? |
-| 9 | — | `oc` fills: LHCb's Ωc⁰ → Ξc⁺K⁻ spectrum at `omegac`, five narrow peaks |
-| 10 | — | same; ticks over the five peaks (`oc` step 2): five new particles, three quarks each |
-| 11 | — (one click) | `jp`: LHCb's real 2019 m(J/ψ p) bins fill; ticks over the three peaks at the click |
-| 12 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp` at the same scale; 5σ, and the 2003 false alarm told |
-| 13 | Vilnius, CERN; „Glazgas“ (click 1); „Heidelbergas“, „Bona“ (click 3) | the route across Europe, leg by leg (4 clicks); the open-data job at Bonn |
-| 14 | Vilnius | the dive to Vilnius, Lithuania's outline: all of it can now be done in Lithuania |
-| 15 | „1 TB“, „800 TB“ | OpenData's piles at `store` (x 2600): the Run 1 data prepared in Bonn |
-| 16 | „4000 TB“, „Atvirieji LHCb duomenys“ | the gold pile of 4 PB |
-| 17 | „100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue 100 PB behind the gold |
-| 18 | — | OpenData's sun of plots: anyone can use the open data (said, not shown); Dominykas said |
-| 19 | „Meistriškumo pamoka“, „Magistro ir bakalauro darbai“ | OpenData's second sun, two named clusters and empty places: the masterclass, theses, room for you |
-| 20 | „Ačiū“ | the five-quark form of the cover (pending the owner's word on a close) |
+| 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks`; the question and the promise |
+| 2 | — | Innoday's cosmic web, a still that dissolves into grains in place (`<WebTakeover>`); no words |
+| 3 | „13,8 mlrd. metų“ | the grains fly into Innoday's funnel; atoms → three quarks → five, a pentakvarkas |
+| 4 | — (clip) | CERN from above (`cern_overview_short.mp4`, 11 s), pushing into the ring |
+| 5 | „LHC 27 km“ | the real tunnel (18 s cut); collision energy becomes new particles |
+| 6 | „290 dalelių“ („8 TeV“ hidden by the talk's CSS) | one real 2012 CMS crossing in 4π |
+| 7 | — (clip) | `lhcb.mp4` (39 s); a mass from the fragments; one mass, one dot |
+| 8 | — (one click) | `th1` fills, 140 dots; the viewer judges; the tick at the click; chance, and 2003 |
+| 9 | „59 453 masės“ (one click) | `oc` fills in light blue; ticks over the five peaks at the click |
+| 10 | — (one click) | `jp` fills; the viewer judges LHCb's 2015 peak; three peaks at the click |
+| 11 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp` at one scale; the rule; the answer |
+| 12 | Vilnius, CERN; „Glazgas“ (click 1); „Heidelbergas“, „Bona“ (click 3) | the route (4 clicks): the bank's road, three optional owner slots |
+| 13 | Vilnius | the dive to Vilnius, Lithuania's outline; the group; the coordinator line as the bridge |
+| 14 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared; the peak rose in them |
+| 15 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile of 4 PB |
+| 16 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops |
+| 17 | — | OpenData's sun of plots; Dominykas's check |
+| 18 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; empty places; the advice |
+| 19 | „Ačiū“ | the five-quark form gathers again (the close is the default until the owner says) |
 
 ## Status
 
@@ -311,6 +316,36 @@ on purpose).
   a3001a1 and 71fb6f1 before it, all rejected by the owner.
 
 ## Decisions
+
+- 2026-10-20 — Blueprint v2 built (the owner, 20 Oct, on v1: "This will
+  need to be reworked a bit…"; asked what is off: "10-15min talk"; then:
+  "Taking elements from innoday and open data set up a good story telling
+  for highschool students with some personal touches about me, my career
+  path. Finish to completion"). Reading taken, not asked again: the talk
+  must fit 10–15 min as delivered (speech runs 15–25 % over a script on
+  camera), so v2 is 9,9 min scripted at 115 words a minute with clips,
+  fills, flights and pauses counted, about 11,5–12 delivered, 12–13 with the
+  slots; the Innoday and OpenData elements stay as built; the career path is
+  a thread (the road's bridge „Pentakvarkų ieškojau ir aš“, Bonn, Vilnius,
+  the 800 TB as the speaker's own work, Dominykas, the masterclass) scripted
+  only from the bank; the five unverified personal lines (Egyptologist until
+  12, CERN in 11th grade, the Glasgow job, the lasers, the pandemic move) are
+  three optional owner slots on slide 12 in the lint's optional-mark form,
+  outside the scripted time, stating nothing. Workflow wf_f555b9e0-58b (four
+  diagnoses, three reworks: tight-spine 132, one-dot 134, who-does-this 133;
+  three judges; editor; three verifiers; fixer); base one-dot with grafts.
+  Changes from the deployed deck: 20 → 19 slides (deployed 10 folded into 9
+  as a click; v1's new slide 11 never built), clicks on 8 and 9, `oc` light
+  blue (#9fd0ff) so gold means the pentaquark family, „59 453 masės“ under
+  the Ωc plot (`<AfterFlight :delay="25">`), „8 TeV“ hidden by talk CSS, the
+  800 pile's world label removed (the readout says it once), „>“ before
+  100 000 TB, the cluster „Bakalauro darbai“, „daugiau nei kilometro“ for
+  the laptop stack, 2003 told on 8 right after the viewer's own „Ne“, the
+  viewer asked twice, every slide ending on a spoken bridge. Two worked
+  facts filed from in-repo sources (theta-toy-140-entries,
+  opendata-sun-plots-from-records); the six public gaps went to
+  talk-research-gaps (wf_c44c35d0-786). Undo: `git revert` the build
+  commit; v1 is f840ac0, the 18 Oct deck a60d0fa.
 
 - 2026-10-18 — Flow overhaul for high-school viewers (the owner, in this
   window: "need a much better flow. And oriented at highschool students"):
@@ -812,6 +847,27 @@ have (the AFK default is built and deployed; each has an undo under Decisions):
      group's move to Bonn in the pandemic. Confirmed by INSPIRE: Glasgow
      2011–2015 (undergraduate), the PhD in Heidelberg 2019–2020 and Bonn
      2020–2023.
+
+11. The gap research for blueprint v2 (talk-research-gaps wf_c44c35d0-786,
+   20 Oct; 11 facts filed, none unverified). In the script now, with their
+   facts: the nucleus rung on 3 (home.cern), the decay sentence on 6
+   (cms.cern: most particles are unstable and transform rapidly; the detector
+   measures the stable ones) and „atsitiktiniai kauburiai išsilygina“ on 9
+   (√N against N; Lyons, CERN Courier 2023); the CMB line is under If asked
+   on 3 (ESA: the oldest light, about 380 000 years). Open for the speaker:
+   - The cosmic web still (slide 2): no public NCSA AVL or NSF page titled
+     „Cosmic Bubble Bath“ exists (checked 20 Oct); NASA SVS 10663 is the
+     closest NCSA AVL piece and asks for a „NASA/GSFC and NCSA AVL“ credit.
+     Name where the SpaceEngine edit's web imagery came from, so the credit
+     and the stream licence can be settled.
+   - The Planck map (slide 3): ESA Standard Licence on the esa.int image page,
+     CC BY-NC 3.0 IGO on the sci.esa.int copies; whether a stream Delfi
+     co-organises counts as non-commercial is yours (Figures 4).
+   - The masterclass (slide 18): no 2026–27 LHCb date was public on 20 Oct
+     (IPPOG's schedule appears from late November; physicsmasterclasses.org
+     answered 500), so the script says „jau vyko“; VU's yearly masterclasses
+     are the CMS ones, never „kasmet“ of the LHCb one. If you know a date
+     first-hand, it goes in the private brief, not the bank.
 
 ## The world (current, 2026-10-08)
 

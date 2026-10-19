@@ -246,3 +246,12 @@ html[data-stage] .readout.blue, html[data-stage] .readout.steel { max-width: 50%
 html[data-stage] .readout.late { animation-delay: 2.6s; }
 html[data-stage] .readout.last { animation-delay: 5.2s; }   /* after copies of the smaller pile merge into the larger */
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .readout { animation: none !important; } }
+
+/* ---- 20 Oct (blueprint v2): this talk's own rules over the shared opening and OpenData's readout */
+/* slide 6: the collision's energy line („8 TeV“, a unit grade 9–12 viewers do not know) hidden for this talk; its
+   count line („290 dalelių“) stays. components/lhc-opening is untouched. */
+html[data-stage] .lhc-collision .lhc-line:first-child { display: none !important; }
+/* slide 16: the lower-bound sign before the counted total (LHCb's 100 PB is its March 2025 figure) */
+html[data-stage] .readout .gt { font-size: 0.72em; font-weight: 600; margin-right: 0.12em; vertical-align: 0.08em; }
+/* slide 9: the count under the Ωc plot, after its fill (inside <AfterFlight>) */
+html[data-stage] .heap.late { animation-delay: 0.2s; }

@@ -277,7 +277,7 @@
      "tickAlpha": 0.4,
      "fill": 20,
      "fall": 1.0,
-     "color": "#ffcf70",
+     "color": "#9fd0ff",
      "hot": "#ffffff",
      "curve": 1.8,
      "marks": [
@@ -514,7 +514,6 @@
       {
        "n": 800,
        "color": "#ffcf73",
-       "label": "800 TB",
        "at": [
         -2.6,
         1.14,
@@ -1130,7 +1129,7 @@
        ]
       },
       {
-       "label": "Magistro ir\nbakalauro darbai",
+       "label": "Bakalauro darbai",
        "at": [
         -6.59,
         5.27,
