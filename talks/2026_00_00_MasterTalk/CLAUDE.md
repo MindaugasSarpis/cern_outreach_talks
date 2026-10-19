@@ -51,6 +51,18 @@ storyboard).
   39309896624, green; the live deck walked clean). Open: part colours on the
   detector, the route behind the pull-back, slide 9's clicks unseen, the dot
   on slide 10 to check live, the 2→3 join.
+- 20 Oct: Tools lifts the detector form (`setup/route.js`, `setup/grains.js`,
+  `setup/Grains.vue`, `hero/bake_grains.py`, `hero/build_scene.py`,
+  `public/data/lhcb-grains.bin` with its NOTICE), reconciled with Innoday's
+  eye-level version, into slidev-addon-stage v0.9.0, reading
+  origin/talk/mastertalk with "Talk-owned code" below as its guide (keep it
+  current); nothing to change here meanwhile, its questions come through the
+  Scheduler. This talk pilots the release: once the Scheduler says v0.9.0 is
+  tagged, `pnpm talk pin mastertalk v0.9.0`, drop the copies for the kit's
+  builder, `pnpm talk ready mastertalk`, ask the Scheduler for main. The
+  cluster's editable slidev-videos CLI moves 0.4.0 → 0.8.1 the same day; the
+  19 Oct deploy's videos:check, preflight and venue ran clean before it (the
+  baseline), so any change in a videos:* command goes to the Scheduler.
 
 ## Arc
 
@@ -81,18 +93,41 @@ Files of this talk's own (setup/, styles/, vite.config.ts) and what each does.
 A piece a second talk needs moves to the shared kit instead of being copied.
 
 - `setup/grains.js`: `histogram`, copied from Užsikrauk karjerai (18 Oct)
-  with a `focus` per step (blur 1 → 0: the open and the close, one object).
-  Move it to components/ after 26 Oct, so both talks share one copy.
+  with a `focus` per step (blur 1 → 0: the open and the close, one object),
+  and the step bus every form here answers to (`setGrains`, `listen`, `state`
+  on `master:grains`). Move it to components/ after 26 Oct, so both talks
+  share one copy.
 - `setup/clock.js`, `setup/Clock.vue`: the running clock, one element outside
   the slides; `<Clock :keys="[[s, value], …]" unit="ns" />` or `<Clock off />`.
 - `setup/Crossing.vue`: starts or continues the shared `lhc-collision` run
   without `<LhcOpening>`'s Lithuanian captions.
-- `setup/Grains.vue`: Užsikrauk's, sets a form's step on slide enter.
-- `setup/route.js`: stations 4–11's forms: `detector` (LHCb's Run 3 geometry
-  as grains, `public/data/lhcb-grains.bin`, baked by `hero/bake_grains.py`;
-  lights behind a front, then its hits leave as data), `stream` (packets
-  through two trigger gates, ours white), `grid` (store, 42 sites, the thread
-  to Vilnius), `spark` (the one dot). Steps through `<Grains>`.
+- `setup/Grains.vue`: Užsikrauk's, sets each named form's step on slide enter
+  and per click (`:clicks`); the same file sits in OpenData and Užsikrauk,
+  three copies for one of the kit's.
+- `setup/route.js`: stations 4–11's forms, registered by
+  `installRoute(registerBuilder, { event })`, all in lhc-collision's frame
+  (W(x, y, z) = [z·S, y·S·T, x·S·T], S 0.5 units/m, T 2.4 across the beam):
+  `detector` (LHCb's Run 3 geometry as grains from `src`
+  `public/data/lhcb-grains.bin`; `sweep` s, `alpha`, `size`, `color`, `hot`,
+  `out` [x, y, z] where the hits leave to, `hitR` 0.035 m, `hitMin` 0.1 m from
+  the beam; steps: 0 hidden, 1 lit behind a front running out from the
+  collision, 2 the hits (grains within `hitR` of the event's tracks, binned
+  every 5 cm along z) turn white and fly to `out` every 3.4 s, the rest dimmed;
+  the record's 4th field, the part index, is unused so far: part colours are
+  the next step), `stream` (packets through two trigger gates, ours white),
+  `grid` (store, 42 sites, the thread to Vilnius), `spark` (the one dot).
+  Steps through `<Grains>`.
+- `hero/bake_grains.py`: bakes the .bin from Phoenix's LHCb.glb:
+  `blender -b --factory-startup --python hero/bake_grains.py -- <glb>
+  public/data/lhcb-grains.bin`. 93 000 grains in ten parts (velo, pipe, rich1,
+  ut, magnet, scifi, rich2, ecal, hcal, muon), a fixed budget each spread by
+  area over the meshes under the exact ancestor names in `PARTS` (the names
+  are the .glb's, suffixes included); seeded, the same file each run.
+- `public/data/lhcb-grains.bin` (744 KB) and `lhcb-grains.NOTICE.txt`:
+  little-endian Int16 `[x, y, z, part]` in mm, LHCb's frame (z along the
+  beam, y up). The notice (DD4hep GPL-3.0, Phoenix Apache-2.0; the derived
+  file GPL-3.0) travels beside the .bin wherever it goes, and the last
+  slide's tiny credit names both.
 - `styles/index.css`: `.nums` (numbers low left, white with light-blue
   words, staggered by `--d1…--d3`) and the clock.
 - `package.json`: `stage:check --types lhc-collision` (the shared builder).
@@ -100,7 +135,9 @@ A piece a second talk needs moves to the shared kit instead of being copied.
   Blender 4.5): Phoenix's LHCb.glb plus the event's tracks, grown to `--t` ns
   by light time; shots `crossing` and `side`. The .glb stays outside git
   (~/talks/.cache/opendata/mastertalk-geometry/), renders in
-  ~/talks/.cache/mastertalk-hero/.
+  ~/talks/.cache/mastertalk-hero/. Blender 4.5's glTF importer leaves every
+  collection but one excluded; the script re-includes them all after the
+  import. Coordinates: Blender (X, Y, Z) mm = LHCb (x, −z, y).
 
 ## Decisions
 
