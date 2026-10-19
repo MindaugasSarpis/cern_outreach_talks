@@ -162,6 +162,12 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-19: a new ending in the works (owner: "need a much stronger finishing
+aspect"; Decisions, "The new ending"). Done: the credits left „Ačiū“ for a
+page of their own after it (33 slides). Waiting on the owner: the LIS CAD
+file (being fetched; it stays out of git, under ~/talks/.cache/), Vilnius's
+part in the LIS in a sentence. Not deployed.
+
 2026-10-14 (later): the cover's fly-in no longer stalls (`<AfterCover>`, the
 CMS event in the bundle, the CMB disk warmed under the opener; Decisions).
 Deployed de00cca — Pages run 38560873241 (green), URL 200, live walk 32/32;
@@ -196,6 +202,26 @@ own copies; the variable reaches the build through the environment.
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
+- The new ending (owner, 19 Oct, via the Scheduler: "need a much stronger
+  finishing aspect. Can we show photorealistic 3D rendering of SciFi light
+  injection system, then "laser" inscribe Lithuanian flag on it and then
+  position it in a 3D LHCb CAD (maybe as pointcloud)"; the plan went to the
+  owner in this window the same day). After the hall photo: a silent Blender
+  clip (Cycles, photorealistic) of the SciFi light injection system, a laser
+  engraving the Lithuanian flag on the LIS cold box (owner: "LIS coldbox with
+  the flag"); its last frame becomes grains that fly to the part's place in
+  LHCb's Run 3 geometry as grains (MasterTalk's lhcb-grains, GPL-3.0 notice
+  kept); „Ačiū“ over LHCb with an LHCb collision inside it (owner: "LHCb
+  collision within lhcb"), replacing the CMS event there (slide 9 keeps
+  its). Fallback if the render isn't right by 22 Oct: the part and the flag
+  in grains, live. The CAD stays out of git (public repo and Pages): only
+  renders and stills are committed.
+- Credits (owner, 19 Oct: "We don't need credits at the last slide"; of the
+  two options offered, "B"): the Planck map and Sailko's 1989 photo stay, and
+  the licence credits moved from „Ačiū“ to a page after it that is never
+  shown in the room (`class: credits-page`, one per line, readable); it
+  stays in the web deck and the PDF. The other option was replacing those
+  two images (WMAP, CERN's own scan) so nothing needs a credit.
 - The owner's restructure list (12 Oct), which the deck now follows: the title
   slide back; the zoom-out ending on the cosmic web, whose last frame becomes
   the funnel; the funnel as Big Bang → CMB → no stars → hot dense

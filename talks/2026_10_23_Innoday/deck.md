@@ -698,15 +698,33 @@ space:
 
 # Ačiū
 
-<div class="src credits">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas) · 1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0 · Riešo vaizdas: MARS Bioimaging Ltd · B. Stumpe: S. E. Bennett / CERN, CC BY 4.0 · NeXT serveris: P. Loïez / CERN, CC BY-SA 4.0 · LHCb rezultatų grafikai: © CERN LHCb kolaboracijos naudai, CC BY 4.0 (apkarpyti, perspalvinti) · LHCb savaitė Vilniuje: VU nuotr. (salė — T. Laurinavičius) · Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF)</div>
 
 <!--
 Kalbėtojui. „Ačiū“ ant lėtai besiskleidžiančio susidūrimo per visą ekraną (savininkas, 2026 10 12). Susidūrimas (CMS 2012 m. Higso bozono kandidatas) prasideda, kai skaidrė atsiveria, ir lieka išsisklaidęs per klausimus; be garso.
-Apačioje smulkiu šriftu — licencijų reikalaujamos nuorodos (savininkas, 2026 10 10; CERN medžiagai jų nereikia).
+Nuorodų ekrane nėra: licencijų reikalaujamos nuorodos — kitame puslapyje, kurio nerodyti (savininkas, 2026 10 19: „We don't need credits at the last slide“).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
 Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaidrių pastabų laikus, 2026 10 13): iš viso apie 23 min; klipai — įžanginis 4:13, CERN iš oro 0:11, LHC tunelis 0:40, LHCb animacija 0:48 ir FCC žemėlapis 0:18 (per paskutinius keturis kalbama). Paslėpta skaidrė po šios (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
 (~0,4 min)
+-->
+
+---
+class: credits-page
+space: { at: thanks, dist: 6.4, yaw: 4, pitch: 20, dim: 0.7, ambient: 0, hum: false }
+---
+
+<div class="src credits credits-list">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas)<br>
+1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0<br>
+Riešo vaizdas: MARS Bioimaging Ltd<br>
+B. Stumpe: S. E. Bennett / CERN, CC BY 4.0<br>
+NeXT serveris: P. Loïez / CERN, CC BY-SA 4.0<br>
+LHCb rezultatų grafikai: © CERN LHCb kolaboracijos naudai, CC BY 4.0 (apkarpyti, perspalvinti)<br>
+LHCb savaitė Vilniuje: VU nuotr. (salė — T. Laurinavičius)<br>
+Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF)</div>
+
+<!--
+Kalbėtojui. Šio puslapio nerodyti: po „Ačiū“ nebespausti. Jis — licencijų reikalaujamoms nuorodoms (savininkas, 2026 10 19: „We don't need credits at the last slide“; pasirinkta „B“ — paveikslai lieka, nuorodos kitame puslapyje); lieka žiniatinklio versijoje ir PDF. Planck žemėlapiui (CC BY-NC 3.0 IGO) ir Sailko nuotraukai (CC BY 3.0) jų reikia; CERN medžiagai — ne.
+(~0 min)
 -->
 
 ---

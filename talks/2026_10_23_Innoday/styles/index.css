@@ -369,3 +369,11 @@ html[data-stage] .hero .invention {
 html[data-stage] .slidev-layout.statement h1 { text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75); }
 html[data-stage] .slidev-layout.statement .src.credits { position: absolute; left: 56px; bottom: 24px; margin: 0; text-align: left; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9); }
 
+/* the credits a licence asks for, on their own page after „Ačiū“ that is never
+   shown in the room (owner, 19 Oct: "We don't need credits at the last slide";
+   "B"): readable in the web deck and the PDF, one per line, on a dimmed world */
+html[data-stage] .credits-page .src.credits-list {
+  position: absolute; left: 56px; bottom: 48px; margin: 0; max-width: 80%;
+  font-size: 14px; line-height: 1.7; opacity: 0.8; text-align: left;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}
