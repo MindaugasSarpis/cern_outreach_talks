@@ -683,7 +683,7 @@ Vaizdas: nuotr. Tomas Laurinavičius / VU (vu.lt/en/all-news/cern-lh-cb-experime
 space: { at: [3.975, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim: 0, hum: false }
 ---
 
-<VideoPlayer src="lis_flag.mp4" muted :controls="false" />
+<VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
 <Grains :set="{ det: 0 }" />
 
 <!-- facts: lhcb-scifi, lhcb-scifi-channels, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
@@ -721,7 +721,7 @@ Kalbėtojui. Klipo paskutinis kadras (vėliava ant šaltosios dėžės) virsta g
 Nuorodų ekrane nėra: licencijų reikalaujamos nuorodos — kitame puslapyje, kurio nerodyti (savininkas, 2026 10 19: „We don't need credits at the last slide“).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
-Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaidrių pastabų laikus, 2026 10 13): iš viso apie 23 min; klipai — įžanginis 4:13, CERN iš oro 0:11, LHC tunelis 0:40, LHCb animacija 0:48 ir FCC žemėlapis 0:18 (per paskutinius keturis kalbama). Paslėpta skaidrė po šios (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
+Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaidrių pastabų laikus, 2026 10 20): iš viso apie 23,5 min; klipai — įžanginis 4:13, CERN iš oro 0:11, LHC tunelis 0:40, LHCb animacija 0:48, FCC žemėlapis 0:18 ir šviesos įvedimo sistema 0:10 (per paskutinius penkis kalbama). Po šios — nuorodų puslapis (nerodyti), po jo paslėpta skaidrė (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
 (~0,4 min)
 -->
 

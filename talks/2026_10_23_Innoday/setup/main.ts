@@ -38,11 +38,11 @@ import EVENT_CMS from '../components/lhc-opening/event-cms.json'
 // 12's result plots, light on black, unlit and additive, as OpenData draws its
 // plots). The shared LHC collision (components/lhc-opening, as
 // in OpenData and Užsikrauk karjerai) registers `lhc-collision` and
-// <LhcOpening>; <CollisionStart> starts one on „Ačiū“ without its captions,
-// LHCb's own event there, inside LHCb's geometry as grains (`detector`,
-// setup/detector.js, from MasterTalk; <Grains> sets its step); <LisTakeover>
-// turns the light injection clip's last frame into grains at the cold box's
-// place in it (setup/lisGrains.js).
+// <LhcOpening>; on „Ačiū“ <LisTakeover> starts LHCb's own event inside LHCb's
+// geometry as grains (`detector`, setup/detector.js, from MasterTalk; <Grains>
+// sets its step), after turning the light injection clip's last frame into
+// grains at the cold box's place in it (setup/lisGrains.js). <CollisionStart>
+// (a collision started by its slide) is no longer used there since 19 Oct.
 // (A plain function: Slidev's defineAppSetup is the identity, and
 // @slidev/types is not a dependency of the talk.)
 //

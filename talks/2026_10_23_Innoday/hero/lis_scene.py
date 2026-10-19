@@ -7,8 +7,9 @@ Run inside Blender (4.5 LTS), headless, through the render slot:
 
   pnpm run -s talk render -- ~/talks/.cache/blender/blender-4.5.14-linux-x64/blender \\
       -b --factory-startup --python talks/2026_10_23_Innoday/hero/lis_scene.py -- \\
-      --out /tmp/lis/frame_ [--frames 1-250 | --still 120,200,250] [--samples 128] \\
-      [--res 1920x1080] [--depth /tmp/lis/] [--meta lis.json] [--save scene.blend]
+      --out /tmp/lis/frame_ [--frames 1-250 | --still 120,200,250] [--samples 160] \\
+      [--res 1920x1080] [--meta talks/2026_10_23_Innoday/setup/data/lis.json \\
+      --depth talks/2026_10_23_Innoday/public/figures/lis_last.depth.png] [--save scene.blend]
 
 Until the owner's CAD arrives, the module end is drawn here after the SciFi
 drawing the owner sent on 19 Oct ("Can use this for now to mimic the Light
@@ -21,9 +22,10 @@ the CAD: kept under ~/talks/.cache/, never in git (the repo and Pages are
 public); only renders are committed.
 
 The flag is on the third cold-box block's top face (--block). --meta writes the
-camera of the last frame (position, aim, vertical fov) as JSON and --depth that
-frame's depth as EXR, so the stage can take the last frame over as grains in
-depth at the same view.
+camera of the last frame (its origin, right, up and forward, the aim, the flag's
+corners in the frame) as JSON and --depth (a PNG file; by default beside the
+JSON) that frame's depth, 16 bits in red and green, so the stage can take the
+last frame over as grains in depth at the same view.
 
 The scene is built in the module's own frame, in metres: x across the module
 (the cold box's length), y along the fibres (into the module; the cold box at
@@ -229,7 +231,8 @@ def engraved(m0, face, t0, t1, cool, centre):
     rmix.inputs['B'].default_value = 0.85
     L(done, rmix.inputs['Factor'])
     L(rmix.outputs['Result'], b.inputs['Roughness'])
-    # the raster's lines in relief, a hair deep
+    # the raster's lines in relief, a hair deep (on the flag's block this relief stands in for
+    # the bead-blast bump the other blocks have; the clip was rendered so)
     lines = op('MULTIPLY', done, op('SINE', op('MULTIPLY', v, ROWS * 2 * math.pi)))
     bump = nt.nodes.new('ShaderNodeBump')
     bump.inputs['Strength'].default_value = 0.08
@@ -469,7 +472,7 @@ def light(name, kind, loc, aim, energy, color=(1, 1, 1), size=1.0, size_y=None):
     o = bpy.data.objects.new(name, d)
     bpy.context.collection.objects.link(o)
     o.location = loc
-    # a light's -Z toward its aim, its Y along the module's -y (up, once stood up)
+    # a light's -Z toward its aim (to_track_quat turns its Y toward the module's +z, out of the face)
     o.rotation_euler = (Vector(aim) - Vector(loc)).to_track_quat('-Z', 'Y').to_euler()
     return o
 
@@ -641,8 +644,8 @@ def render_setup(sc, a):
     g = nt.nodes.new('CompositorNodeGlare')
     g.glare_type = 'FOG_GLOW'
     g.quality = 'HIGH'
-    g.threshold = 6.0
-    g.size = 6
+    # (Blender 4.5 takes the glare's threshold and size as sockets: the node's own defaults
+    # apply, a glow above 1.0, which is how the clip was rendered and judged)
     nt.links.new(rl.outputs['Image'], g.inputs['Image'])
     nt.links.new(g.outputs['Image'], comp.inputs['Image'])
 

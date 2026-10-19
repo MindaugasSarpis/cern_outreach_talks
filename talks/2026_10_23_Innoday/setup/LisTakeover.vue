@@ -5,21 +5,26 @@ import { Vector3 } from 'three'
 import { sampleFrame } from './takeover.js'
 import { placeInDepth, loadDepth, makeLisGrains, scaleLaw } from './lisGrains.js'
 import { setGrains } from './detector.js'
+import { places } from './afterCover.js'
 import { bus } from '../components/lhc-opening/bus.js'
 import META from './data/lis.json'
 
-// <LisTakeover />, on „Ačiū“, the slide after the light injection clip. It opens on
-// the clip's last frame, the flag on the cold box, so nothing changes when the clip
-// goes; under it the frame is already grains, each where its surface is in depth, at
-// the cold box's place on a SciFi module of LHCb (lisGrains.js). The still fades
-// into them, and the slide's path pulls the camera back out of the module end to
-// the whole detector while the grains shrink to a mark; the detector lights up
-// behind them (det: 1), then LHCb's collision in it (the `lhc-collision` named
-// `collision`) and the slot (the word), each when the camera has come that far out,
-// not on a timer: on a slow machine the world's clock runs behind the wall's.
-// The slide's path[0] is the clip camera's view (hero/lis_pose.py prints it
-// from lis.json, the anchor and d0). Printed, in the overview and without the
-// world it is the still frame.
+// <LisTakeover><h1>Ačiū</h1></LisTakeover>, on „Ačiū“, the slide after the light
+// injection clip. It opens on the clip's last frame, the flag on the cold box, so
+// nothing changes when the clip goes; under it the frame is already grains, each
+// where its surface is in depth, at the cold box's place on a SciFi module of LHCb
+// (lisGrains.js). The still fades into them, and the slide's path pulls the camera
+// back out of the module end to the whole detector while the grains shrink to a
+// mark; the detector lights up behind them (det: 1), then LHCb's collision in it
+// (the `lhc-collision` named `collision`) and the slot (the word), each when the
+// camera has come that far out, not on a timer: on a slow machine the world's clock
+// runs behind the wall's. The slide's path[0] is the clip camera's view
+// (hero/lis_pose.py prints it from lis.json, the anchor and d0).
+// Without a running world (reduced motion, no WebGL, a lost context, a boot slower
+// than 8 s) the still stays and the word shows over it; printed, in the overview and
+// the presenter's previews it is the still and the word. A step on to the next page
+// (the credits) leaves the close running; that page opened directly shows the flag's
+// mark at once. Nothing loads before the cover is behind (afterCover.js).
 const props = defineProps({
   src: { type: String, default: 'figures/lis_last.jpg' },
   depth: { type: String, default: 'figures/lis_last.depth.png' },
@@ -27,25 +32,28 @@ const props = defineProps({
   d0: { type: Number, default: 2.4 },      // the camera's start distance from the flag, stage units (path[0])
   sEnd: { type: Number, default: 2.5 },    // stage units a metre at the path's last key (the detector's own: 1.2 across)
   sFlag: { type: Number, default: 9 },     // … and the flag's, so it stays a mark (~0.4 units: about 20 px)
-  grains: { type: Number, default: 160000 },
+  grains: { type: Number, default: 160000 },   // at tier 0; fewer on a lower tier
   hold: { type: Number, default: 400 },    // ms of still before the fade
   fade: { type: Number, default: 1400 },   // ms
   collision: { type: String, default: 'thanks' },
   detAt: { type: Number, default: 3.2 },   // the camera this far from the flag (units): the detector lights up
   colAt: { type: Number, default: 13 },    // … LHCb's collision starts in it
   wordAfter: { type: Number, default: 1.2 },   // s after the camera has stopped: the word
+  wordBy: { type: Number, default: 22 },   // s: the word shows by then whatever the world does
 })
 const { $renderContext, $page, $frontmatter } = useSlideContext()
 const nav = useNav()
 const base = import.meta.env.BASE_URL
 const url = (p) => (p.startsWith('/') || /^https?:/.test(p)) ? p : base + p
 const live = computed(() => $renderContext?.value === 'slide')
+const page = () => $page?.value ?? $page
 const still = ref(true)
 const fading = ref(false)
 const word = ref(false)
 
-let sample = null, placed = null, run = 0, timers = [], watcher = 0
-const ready = typeof Image === 'undefined' ? Promise.resolve(null) : (async () => {
+// the frame and its depth, fetched once, by the live slide only, once the cover is behind
+let loading = null
+const load = () => (loading ||= new Promise((resolve) => places.when(resolve)).then(async () => {
   try {
     const img = new Image()
     img.src = url(props.src)
@@ -53,16 +61,18 @@ const ready = typeof Image === 'undefined' ? Promise.resolve(null) : (async () =
     const depth = await loadDepth(url(props.depth), META)
     return { img, depth }
   } catch (e) { console.warn('LisTakeover:', e); return null }
-})()
+}))
 
 function stage() {
   const rootEl = document.querySelector('.stage')
+  if (rootEl?.dataset.stageFallback) return null   // the static ground: no world to take over
   const canvas = rootEl?.querySelector('canvas')
   const api = rootEl?.__space, h = canvas?.__space
   const camera = h?.composer?.passes?.[0]?.camera
   if (!api || !h?.scene || !camera) return null
   return { api, h, camera }
 }
+let run = 0, timers = [], watcher = 0
 async function waitStage(id) {
   for (let i = 0; i < 80; i++) {
     const s = stage()
@@ -87,22 +97,25 @@ function endOfPath() {
 }
 const law = scaleLaw({ s0, d0: props.d0, sEnd: props.sEnd, dEnd: endOfPath().distanceTo(A) })
 
-async function takeOver() {
-  const id = ++run
-  clear()
-  still.value = true; fading.value = false; word.value = false
-  setGrains('det', 0)
-  const s = await waitStage(id)
-  const got = await ready
-  if (id !== run || !s || !got || !live.value) return
-  // the dim metal around the flag (under ~30 of 255) gives no grains: it read as static
-  sample ||= sampleFrame(got.img, { n: props.grains, gamma: 1.15, floor: 0.12, sat: 1.15 })
-  placed ||= placeInDepth(sample, got.depth, META)
+// the grains, made once per tier (a rebuilt world comes back a tier lower): fewer on a
+// lower tier, each a little larger so the picture keeps its light
+const SHARE = [1, 0.7, 0.4, 0.25]
+let made = null
+function grains(s, got) {
+  const tier = s.h.tier ?? 0
+  if (!made || made.tier !== tier) {
+    const k = SHARE[Math.min(SHARE.length - 1, tier)]
+    // the dim metal around the flag (under ~30 of 255) gives no grains: it read as static
+    const sample = sampleFrame(got.img, { n: Math.round(props.grains * k), gamma: 1.15, floor: 0.12, sat: 1.15 })
+    made = { tier, sample, placed: placeInDepth(sample, got.depth, META), size: 0.07 / Math.sqrt(k) }
+  }
   let pts = s.h.scene.getObjectByName('lis-grains')
-  if (!pts) { pts = makeLisGrains(sample, placed, { s0 }); s.h.scene.add(pts) }
-  const u = pts.material.uniforms
-  u.uAnchor.value.copy(A); u.uScale.value = s0; u.uReveal.value = 0; u.uFade.value = 1
-  pts.visible = true
+  if (pts && pts.userData.tier !== tier) { s.h.scene.remove(pts); pts.geometry.dispose(); pts.material.dispose(); pts = null }
+  if (!pts) {
+    pts = makeLisGrains(made.sample, made.placed, { s0, size: made.size })
+    pts.userData.tier = tier
+    s.h.scene.add(pts)
+  }
   // the form follows the camera every frame: its scale from the camera's distance
   pts.userData.scale = (cam, un) => {
     const sc = law(cam.position.distanceTo(A))
@@ -110,6 +123,27 @@ async function takeOver() {
     un.uScaleFlag.value = Math.max(sc, props.sFlag)
     un.uRest.value = Math.min(1, Math.max(0, (sc - props.sFlag * 0.5) / (props.sFlag * 1.2)))
   }
+  pts.material.uniforms.uAnchor.value.copy(A)
+  return pts
+}
+const stopCollision = () => { bus.set(props.collision, 0); bus.emit('stop', { name: props.collision }) }
+
+async function takeOver() {
+  const id = ++run
+  clear()
+  still.value = true; fading.value = false; word.value = false
+  setGrains('det', 0)
+  stopCollision()   // a rebuilt world must not replay a kept step at once
+  later(props.wordBy * 1000, () => { if (id === run) word.value = true })
+  const s = await waitStage(id)
+  const got = s ? await load() : null
+  if (id !== run || !live.value) return
+  // no world, or nothing to show: the still stays, with the word over it
+  if (!s || !got) { word.value = true; return }
+  const pts = grains(s, got)
+  const u = pts.material.uniforms
+  u.uReveal.value = 0; u.uFade.value = 1
+  pts.visible = true
   later(props.hold, () => {
     if (id !== run) return
     fading.value = true
@@ -135,23 +169,47 @@ async function takeOver() {
   }, 100)
 }
 
+// the next page (the credits) opened directly, a reload or `g`: the close as it ends
+async function showEnd() {
+  const id = ++run
+  const s = await waitStage(id)
+  const got = s ? await load() : null
+  if (id !== run || !s || !got || nav.currentSlideNo?.value !== page() + 1) return
+  const pts = grains(s, got)
+  pts.material.uniforms.uReveal.value = 1
+  pts.visible = true
+}
+
 onSlideEnter(() => { if (live.value) takeOver() })
 onSlideLeave(() => {
-  run++; clear(); still.value = true; fading.value = false; word.value = false
-  bus.set(props.collision, 0); bus.emit('stop', { name: props.collision })
+  if (!live.value) return
+  run++; clear()
+  // the still is left as it is (shown again here, it would stand over the world as the
+  // slide fades out); a leave before the fade ended leaves the grains whole
+  const p = stage()?.h.scene.getObjectByName('lis-grains')
+  if (p) p.material.uniforms.uReveal.value = 1
+  // on to the credits the close keeps running; anywhere else the collision stops
+  if (nav.currentSlideNo?.value !== page() + 1) stopCollision()
 })
-const onRebuilt = () => { if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver() }
+const onRebuilt = () => {
+  if (!live.value) return
+  const n = nav.currentSlideNo?.value
+  made = null
+  if (n === page()) takeOver()
+  else if (n === page() + 1) showEnd()
+}
 onMounted(() => {
   window.addEventListener('slidev-stage:rebuilt', onRebuilt)
   // opened at this slide (a reload, or the deck started here): no slide-enter comes
-  if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver()
+  if (live.value && nav.currentSlideNo?.value === page()) takeOver()
 })
 onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); run++; clear() })
 // the grains are drawn here and on the credits page after it, hidden everywhere else
 watch(() => nav.currentSlideNo?.value, (n) => {
-  const at = $page?.value ?? $page
+  if (!live.value) return
   const p = stage()?.h.scene.getObjectByName('lis-grains')
-  if (p && (live.value || n !== at)) p.visible = n === at || n === at + 1
+  if (p) p.visible = n === page() || n === page() + 1
+  else if (n === page() + 1) showEnd()
 }, { immediate: true })
 </script>
 
@@ -160,7 +218,7 @@ watch(() => nav.currentSlideNo?.value, (n) => {
     <img v-if="still" class="lis-still" :class="{ fading }" :src="url(src)" :style="{ transitionDuration: fade + 'ms' }"
       alt="Šviesos įvedimo sistema SciFi modulio gale; ant šaltosios dėžės išgraviruota Lietuvos vėliava" />
   </div>
-  <div class="lis-word" :class="{ on: word || !live }"><slot /></div>
+  <div class="lis-word" :class="{ on: word || !live || nav.isPrintMode?.value }"><slot /></div>
 </template>
 
 <style>
@@ -170,4 +228,5 @@ watch(() => nav.currentSlideNo?.value, (n) => {
 html.print .lis-takeover .lis-still { opacity: 1; }
 .lis-word { opacity: 0; transition: opacity 0.8s ease; }
 .lis-word.on, html.print .lis-word { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .lis-word { opacity: 1; transition: none; } }
 </style>

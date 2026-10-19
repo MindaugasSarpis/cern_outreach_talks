@@ -7,9 +7,15 @@
 // LHCb's DD4hep geometry, GPL-3.0, (c) CERN for the benefit of the LHCb
 // Collaboration, through HSF Phoenix's glTF, Apache-2.0). Move both to the shared
 // components/ once those talks are delivered, rather than keeping copies.
-// The steps come from <Grains :set="{ det: 1 }" /> (setup/Grains.vue).
+// The steps come from <Grains :set="{ det: 1 }" /> (setup/Grains.vue). Changed here: the
+// grains are fetched and built once the cover is behind (afterCover.js's `places`
+// latch; the build is a long task, and at boot it fell in the cover's fly-in), thinned
+// to the stage's grain budget on a lower tier, the form hidden while it is not shown,
+// and its grains smaller and fading sooner near the camera (Innoday's close pulls back
+// past it).
 import { BufferGeometry, BufferAttribute, Points, Group, ShaderMaterial, AdditiveBlending, Color, Vector3 } from 'three'
 import { trajectories } from '../components/lhc-opening/event.js'
+import { places } from './afterCover.js'
 
 const BUS = 'innoday:grains'
 export const state = new Map()
@@ -131,7 +137,9 @@ function buildDetector(o, ctx) {
   })
   const u = mat.uniforms
   const build = (buf, ev) => {
-    const raw = new Int16Array(buf), n = raw.length / 4
+    // on a lower tier (a phone) every k-th grain: the stage's budget for one form
+    const all = new Int16Array(buf), k = Math.max(1, Math.ceil(300000 / (ctx.budget || 300000)))
+    const raw = k === 1 ? all : all.filter((_, j) => ((j >> 2) % k) === 0), n = raw.length / 4
     // the event's paths, binned every 5 cm along the beam: a grain is a hit when a track passes within hitR of it
     const bins = new Map(), R = o.hitR ?? 0.035
     if (ev) for (const t of trajectories(ev).tracks) for (const p of t.pts) {
@@ -154,8 +162,11 @@ function buildDetector(o, ctx) {
     g.add(points(geometry(n, { position: pos, aX: [ax, 1], aHit: [hit, 1], aSeed: [seed, 1] }), mat))
     g.userData.hits = hits
   }
-  fetch(ctx.asset('/' + String(o.src || 'data/lhcb-grains.bin').replace(/^\//, ''))).then((r) => r.arrayBuffer())
-    .then((buf) => build(buf, EVENT)).catch((e) => console.warn('stage: detector grains failed', o.src, e))
+  let alive = true
+  const offLatch = places.when(() => {
+    fetch(ctx.asset('/' + String(o.src || 'data/lhcb-grains.bin').replace(/^\//, ''))).then((r) => r.arrayBuffer())
+      .then((buf) => { if (alive) build(buf, EVENT) }).catch((e) => console.warn('stage: detector grains failed', o.src, e))
+  })
   const s = stepper(o.name)
   let now = 0
   const apply = () => {
@@ -173,8 +184,9 @@ function buildDetector(o, ctx) {
       now = t; u.uTime.value = t
       if (s.fresh) { s.fresh = false; apply() }
       if (s.step <= 0 && u.uHideT.value < 1e8 && t - u.uHideT.value > 1.3) u.uShowT.value = 1e9
+      g.visible = u.uShowT.value < 1e8   // hidden, it costs nothing on the other slides
     },
-    dispose: s.off,
+    dispose() { alive = false; offLatch(); s.off() },
   }
 }
 

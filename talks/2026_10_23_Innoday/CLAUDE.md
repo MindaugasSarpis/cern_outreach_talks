@@ -57,8 +57,11 @@ brings the next round, and Lithuanian firms can solve it.
   VILNIUS“ screens, the President's video greeting on both screens, the
   opening panel with the vice-minister, the full hall; the membership facts
   (associate since 2018, the full-membership bid) are in their notes;
-  „Ačiū“ over a slow collision filling the screen (the licence credits in tiny
-  print).
+  then (19 Oct) the light injection clip, a SciFi module's end where a laser
+  writes the flag on the cold box, whose last frame becomes grains at its place
+  in LHCb, the camera pulling back to the whole detector in grains and LHCb's
+  own collision in it, „Ačiū“ (Decisions, "The new ending"); the licence
+  credits on a page after it, never shown in the room.
 
 ## World
 
@@ -72,10 +75,13 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
   (eight `plot`s of LHCb result figures, public/figures/lhcb/res_*.jpg, at
   [60, −30, 50]), and far below everything the shared collision twice:
   `collision` ([0, −400, 0], object `opening`, OpenData's options) and
-  `thanks` ([0, −480, 0], object `thanks`: `light 1.2`, `approach 2.5`,
-  `sound: false`, the slow close).
+  `thanks` ([0, −480, 0]: object `thanks`, LHCb's own event since 19 Oct,
+  `light 2.6`, `approach 2.5`, `pipe 3`, `sound: false`, the deck's blues; and
+  `det`, a `detector`: LHCb's Run 3 geometry as 93 000 grains, `alpha 0.95`,
+  `size 1.9`).
 - Talk-owned builders (`setup/`, registered in `main.ts`; `stage:check
-  --types strands,funnel,lhc-collision,plot`): `plots.js` (`plot`, slide 12), `strands.js` (grains from ring parts
+  --types detector,funnel,lhc-collision,plot,strands`): `detector.js`
+  (`detector`, the close's LHCb, from MasterTalk), `plots.js` (`plot`, slide 12), `strands.js` (grains from ring parts
   to products, in groups: `inventions`, Part II's, on from the „O kur tai
   pritaikoma?“ section and off from „O kaip komercializuoti?“; `fcc`, a second
   object on the collider station with its own `ring` of grains, unused since
@@ -85,8 +91,9 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
   (`dawn 0.32`, `peak 0.37`), then galaxies that grow, cool to dim red and
   spread apart toward the mouth (`thin 0.11`, `rest 0.05`); 181 544 grains).
   The shared collision: `components/lhc-opening` (`installOpening` in
-  `main.ts`; `<LhcOpening name="opening" />` on the collision slide, the talk's
-  `<CollisionStart name="thanks" />` on „Ačiū“, without the captions). Never
+  `main.ts`; `<LhcOpening name="opening" />` on the collision slide;
+  `<LisTakeover>` starts `thanks` on „Ačiū“ through the module's bus, without the
+  captions; the talk's `<CollisionStart>` is unused since 19 Oct). Never
   edit that module here: OpenData's and Užsikrauk karjerai's live openings use
   its defaults; tune through the objects' options.
 - Part II photos are StagePhoto places with depth maps
@@ -353,9 +360,11 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   moved to the next slide: `places: { inventions: true }` on the touchscreen,
   `false` and the strands off on 700+; their notes open those slides.
   Each removed credit and source is in its slide's notes. The credits a licence
-  asks for stand in tiny print on the last slide (owner: "Credit on last slide
-  tiny print"; CERN's material needs none): the Planck map, the 1989 proposal
-  photo, the MARS image and the three CERN photos under CC licences. The photos
+  asks for stood in tiny print on the last slide (owner: "Credit on last slide
+  tiny print"; CERN's material needs none) until 19 Oct; since then they are on
+  a page of their own after „Ačiū“ (Decisions, "Credits"): the Planck map, the
+  1989 proposal photo, the MARS image and the three CERN photos under CC
+  licences. The photos
   have no dark text ground any more (`.hero::after` off).
 - The opener's first press (10 Oct, while there was no cover; the title is back
   since 12 Oct, so this only guards a deck opened at slide 2):
@@ -440,11 +449,10 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 - The light injection system (facts lhcb-scifi-lis, -lis-vcsel, -channels,
   -layout, -modules-area, -z-position, lhcb-vilnius-scifi-lis; 19 Oct): at
   each module end, two LIS boards (6-layer PCBs, two GBLD drivers and two
-  670 nm VCSELs each), a 28 cm flex to the Master Board, and per mat an
-  aluminium light injection bar holding a fibre whose last 13 cm are scratched;
-  each SiPM channel sees 1-5 photoelectrons, to set the PACIFIC's thresholds
-  (1,5, 2,5, 4,5 p.e.). 524 288 channels. The 2014 TDR planned an LED. The
-  board count (512 boards, 1024 VCSELs) is arithmetic, unverified: don't say
+  670 nm VCSELs each), and per mat an aluminium light injection bar holding a
+  fibre whose last 13 cm are scratched; each SiPM channel sees 1-5
+  photoelectrons, to set the PACIFIC's thresholds (1,5, 2,5, 4,5 p.e.).
+  524 288 channels. The board count (512 boards, 1024 VCSELs) is arithmetic, unverified: don't say
   it. Vilnius: only the group's own agenda (3 Oct 2024) lists „SciFi + Light
   Injection System“ among its service tasks; say no more than that the
   group's service work includes the SciFi and its LIS, unless the owner
