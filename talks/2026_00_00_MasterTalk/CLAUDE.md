@@ -47,6 +47,10 @@ storyboard).
 - 19 Oct: deployed 6f1880a (stations 0–3; Pages run 39205522850, green; the
   live deck walked clean). Slide 3's camera now stops at 5 s, so the shot tool
   reads the freeze as settled. `pnpm talk status` shows each deploy.
+- 19 Oct: deployed f77fbc5, the whole story rough (all 12 stations; Pages run
+  39309896624, green; the live deck walked clean). Open: part colours on the
+  detector, the route behind the pull-back, slide 9's clicks unseen, the dot
+  on slide 10 to check live, the 2→3 join.
 
 ## Arc
 
