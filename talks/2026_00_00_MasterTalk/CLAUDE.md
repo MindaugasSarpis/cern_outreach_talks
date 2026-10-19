@@ -113,8 +113,15 @@ A piece a second talk needs moves to the shared kit instead of being copied.
   the beam; steps: 0 hidden, 1 lit behind a front running out from the
   collision, 2 the hits (grains within `hitR` of the event's tracks, binned
   every 5 cm along z) turn white and fly to `out` every 3.4 s, the rest dimmed;
-  the record's 4th field, the part index, is unused so far: part colours are
-  the next step), `stream` (packets through two trigger gates, ours white),
+  the record's 4th field, the part index, is unused so far: the colours by
+  part go into the kit's builder for v0.9.0, this talk pilots them; the
+  intent, white and light blue only, neighbours along the beam set apart, the
+  trackers brightest and the magnet a frame rather than a mass: 0 velo
+  #e6efff, 1 pipe #5b93ff, 2 rich1 #7fa9ff, 3 ut #cfe2ff, 4 magnet #5b93ff at
+  the lowest alpha, 5 scifi #dce9ff, 6 rich2 #7fa9ff, 7 ecal #b8d2ff, 8 hcal
+  #8fb6ff, 9 muon #cfe2ff (the collision's own muon tone, whose tracks end
+  there); hits stay `hot` white whatever the part), `stream` (packets through
+  two trigger gates, ours white),
   `grid` (store, 42 sites, the thread to Vilnius), `spark` (the one dot).
   Steps through `<Grains>`.
 - `hero/bake_grains.py`: bakes the .bin from Phoenix's LHCb.glb:
