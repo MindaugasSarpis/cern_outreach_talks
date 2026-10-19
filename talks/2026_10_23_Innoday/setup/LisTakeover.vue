@@ -31,8 +31,9 @@ const props = defineProps({
   anchor: { type: Array, default: () => [3.975, -476.94, 0.96] },   // the flag's place: LHCb (0.8, 2.55, 7.95) m
   d0: { type: Number, default: 2.4 },      // the camera's start distance from the flag, stage units (path[0])
   sEnd: { type: Number, default: 2.5 },    // stage units a metre at the path's last key (the detector's own: 1.2 across)
-  sFlag: { type: Number, default: 9 },     // … and the flag's, so it stays a mark (~0.4 units: about 20 px)
+  sFlag: { type: Number, default: 20 },    // … and the flag's, so it stays a mark (~0.9 units: about 40 px)
   grains: { type: Number, default: 160000 },   // at tier 0; fewer on a lower tier
+  gain: { type: Number, default: 0.92 },   // the grains' light: the stripes at the still's colours
   hold: { type: Number, default: 400 },    // ms of still before the fade
   fade: { type: Number, default: 1400 },   // ms
   collision: { type: String, default: 'thanks' },
@@ -105,14 +106,18 @@ function grains(s, got) {
   const tier = s.h.tier ?? 0
   if (!made || made.tier !== tier) {
     const k = SHARE[Math.min(SHARE.length - 1, tier)]
-    // the dim metal around the flag (under ~30 of 255) gives no grains: it read as static
-    const sample = sampleFrame(got.img, { n: Math.round(props.grains * k), gamma: 1.15, floor: 0.12, sat: 1.15 })
+    // the grains add up to the frame's own colours: weighed by each pixel's brightest
+    // channel, each grain its pixel's full hue, density ~ max^1.2 (the stage's finish
+    // turns density d into about d^1.85 of light: measured on the flag's stripes, 20 Oct;
+    // weighed by luminance, the red and green came out a third to a fifth of the
+    // yellow). The near-black (under 15 of 255) gives none
+    const sample = sampleFrame(got.img, { n: Math.round(props.grains * k), gamma: 1.2, floor: 0.06, sat: 1.0, weight: 'max', norm: 1 })
     made = { tier, sample, placed: placeInDepth(sample, got.depth, META), size: 0.07 / Math.sqrt(k) }
   }
   let pts = s.h.scene.getObjectByName('lis-grains')
   if (pts && pts.userData.tier !== tier) { s.h.scene.remove(pts); pts.geometry.dispose(); pts.material.dispose(); pts = null }
   if (!pts) {
-    pts = makeLisGrains(made.sample, made.placed, { s0, size: made.size })
+    pts = makeLisGrains(made.sample, made.placed, { s0, size: made.size, gain: props.gain })
     pts.userData.tier = tier
     s.h.scene.add(pts)
   }
@@ -227,6 +232,8 @@ watch(() => nav.currentSlideNo?.value, (n) => {
 .lis-takeover .lis-still.fading { opacity: 0; }
 html.print .lis-takeover .lis-still { opacity: 1; }
 .lis-word { opacity: 0; transition: opacity 0.8s ease; }
+/* a soft dark ground under the word, so it never sits on the detector's grains */
+.lis-word h1::before { content: ''; position: absolute; z-index: -1; left: 50%; top: 50%; width: 15em; height: 3.6em; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(0, 1, 3, 0.75), rgba(0, 1, 3, 0)); pointer-events: none; }
 .lis-word.on, html.print .lis-word { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .lis-word { opacity: 1; transition: none; } }
 </style>

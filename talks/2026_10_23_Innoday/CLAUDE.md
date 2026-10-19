@@ -169,11 +169,16 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
-2026-10-19: a new ending in the works (owner: "need a much stronger finishing
-aspect"; Decisions, "The new ending"). Done: the credits left „Ačiū“ for a
-page of their own after it (33 slides). Waiting on the owner: the LIS CAD
-file (being fetched; it stays out of git, under ~/talks/.cache/), Vilnius's
-part in the LIS in a sentence. Not deployed.
+2026-10-20: the new ending is built (Decisions, "The new ending"; owner, 20 Oct:
+"Deploy"): slide 32 the light injection clip `lis_flag.mp4` (rendered at
+1080p, 160 samples, 250 frames in 57 min on gluon; on the release with
+`--only`, 1.6 MB, PSNR 48 dB against the raw), 33 „Ačiū“ with the hand-over
+to LHCb in grains, 34 the credits page; 34 slides, 23,6 min. The cover's
+pentaquark reads as five quarks (Decisions). A five-lens review with each
+finding verified; its confirmed findings are fixed. Print stills retaken.
+Open for the owner: the CAD file never came (the model follows the drawing),
+whether the notes may say more about Vilnius's LIS work, the three CERN
+credits on the credits page.
 
 2026-10-14 (later): the cover's fly-in no longer stalls (`<AfterCover>`, the
 CMS event in the bundle, the CMB disk warmed under the opener; Decisions).
@@ -240,9 +245,28 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   (owner: "LHCb collision within lhcb"; replacing the CMS event there, slide 9
   keeps its) and „Ačiū“ fades in, each when the camera has come that far, not
   on timers (on a slow machine the world's clock runs behind the wall's).
-  Fallback had the render not been right by 22 Oct: the part and the flag in
-  grains, live. The CAD, when it comes, stays out of git (public repo and
+  The grains reproduce the frame's colours: density ~ each pixel's brightest
+  channel^1.2, each grain its pixel's full hue, gain 0.92 (the stage's finish
+  turns density d into about d^1.85 of light; weighed by luminance the red and
+  green came out a third to a fifth of the yellow), and a grain under two
+  pixels gives 0.3·ps² of light (drawn at the 1 px floor it lit its pixel at
+  full strength, and the shrunken flag added up to white). Measured at 1280×720:
+  the still (254,191,26) (10,112,72) (197,43,46), the grains a second later
+  (225,197,84) (75,106,65) (162,39,38). At the end the flag's grains hold 20
+  units a metre (~20 px) and the detector's grains make way round it on screen
+  (`hole` on `det`): the whole detector's glow still tints it toward cream,
+  teal and magenta. Fallback had the render not been right by 22 Oct: the part
+  and the flag in grains, live. The CAD, when it comes, stays out of git (public repo and
   Pages): only renders and stills are committed.
+- The cover's pentaquark reads as five quarks (owner, 20 Oct: "the pentaquark
+  (far too many quarks and some orbits)"): headless frames showed five nodes, but
+  each a loose sparkle of grains with a weak core, pairs drifting together on
+  their orbits, and the flowing strings and the shell's rim reading as orbit
+  lines. The hero object now has tight quarks (`quarkRadius 0.42`, was 0.72),
+  small sharp cores (`coreSize 6`, was 15: a core is one sprite sized by
+  distance, and larger ones read as out-of-focus discs that grew and shrank as
+  the quark orbited), slow orbits (`speed 0.15`, so the five keep apart) and a
+  dim haze (`haze #1c2c4c`), which also dims the strings to a faint binding. The addon is unchanged; undo by dropping those keys in space.json.
 - Credits (owner, 19 Oct: "We don't need credits at the last slide"; of the
   two options offered, "B"): the Planck map and Sailko's 1989 photo stay, and
   the licence credits moved from „Ačiū“ to a page after it that is never

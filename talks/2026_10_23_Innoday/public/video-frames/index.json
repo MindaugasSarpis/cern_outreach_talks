@@ -70,6 +70,24 @@
       "lit": 24.0,
       "poster_at": "0:24"
     },
+    "lis_flag.mp4": {
+      "file": "lis_flag.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 3,
+      "count": 3,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 10.0,
+      "poster": "lis_flag.mp4.poster.jpg",
+      "lit": 9.96,
+      "poster_at": "0:09.96"
+    },
     "nftmc_zoom_web.mp4": {
       "file": "nftmc_zoom_web.mp4.jpg",
       "tile": [

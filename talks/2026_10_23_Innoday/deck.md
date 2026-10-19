@@ -41,8 +41,10 @@ info: |
   „O kaip komercializuoti?“: contracts, procurement, suppliers, the FCC.
   Lithuania and CERN, with no section slide: photos of the LHCb Week in Vilnius
   (the rector, the President's video greeting, the panel with the
-  vice-minister, the hall). „Ačiū“ over a slow
-  collision. The owner's 12 Oct list brings back the title, the section breaks
+  vice-minister, the hall). The close: a laser writes the Lithuanian flag on a
+  SciFi module's light injection cold box (a Blender clip), whose last frame
+  becomes grains at its place in LHCb; „Ačiū“ over LHCb in grains with its own
+  collision; the licence credits on a page after it. The owner's 12 Oct list brings back the title, the section breaks
   and „Ačiū“; the other slides carry pictures, named numbers and the
   inventions' names; the notes carry what is said. Keys on a video slide:
   p play/pause, + / - volume; `c` builds what stands where the camera is.

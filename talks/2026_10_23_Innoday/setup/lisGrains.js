@@ -87,7 +87,11 @@ void main() {
   float ps = uView * aSize * (72.0 / max(-mv.z, 0.05)) * (sc / uS0);
   gl_PointSize = pointSize(ps, 6.0);
   vColor = aColor * uGain;
-  vAlpha = aKeep * r * tw * coverage(ps) * smoothstep(0.05, 0.4, -mv.z) * uFade * aEdge * (aFlag > 0.5 ? 1.0 : uRest);
+  // a sprite of two pixels or more spreads its light over its soft disc (about 0.3 of its
+  // square); one drawn at the 1 px floor lights its pixel at full strength, so under two
+  // pixels the light comes down to the same 0.3·ps², or the shrunken flag adds up to white
+  float cov = ps < 1.0 ? 0.3 * ps * ps : mix(0.3, 1.0, clamp(ps - 1.0, 0.0, 1.0));
+  vAlpha = aKeep * r * tw * cov * smoothstep(0.05, 0.4, -mv.z) * uFade * aEdge * (aFlag > 0.5 ? 1.0 : uRest);
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;

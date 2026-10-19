@@ -13,7 +13,7 @@
 // to the stage's grain budget on a lower tier, the form hidden while it is not shown,
 // and its grains smaller and fading sooner near the camera (Innoday's close pulls back
 // past it).
-import { BufferGeometry, BufferAttribute, Points, Group, ShaderMaterial, AdditiveBlending, Color, Vector3 } from 'three'
+import { BufferGeometry, BufferAttribute, Points, Group, ShaderMaterial, AdditiveBlending, Color, Vector3, Vector4 } from 'three'
 import { trajectories } from '../components/lhc-opening/event.js'
 import { places } from './afterCover.js'
 
@@ -94,6 +94,7 @@ const DET_VERT = PLACE + /* glsl */ `
 attribute float aX, aHit, aSeed;
 uniform float uShowT, uHideT, uSweep, uLen, uHitT, uSize, uAlpha;
 uniform vec3 uOut, uColor, uHot;
+uniform vec4 uHole;   // Innoday: a small disc on screen round this point (object space; w: radius, of the half-height) is left clear
 void main() {
   if (uShowT > 1e8) { hide(); return; }
   float since = uTime - uShowT;
@@ -122,6 +123,13 @@ void main() {
       a *= mix(1.0, 0.5, smoothstep(0.0, 1.6, h));
     }
   }
+  if (uHole.w > 0.0) {
+    // the close's flag mark sits in front of all the station's grains along its line of
+    // sight; added on, their blue washed its colours out: they make way round it
+    vec4 hc = projectionMatrix * modelViewMatrix * vec4(uHole.xyz, 1.0), gc = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+    vec2 dn = (gc.xy / gc.w - hc.xy / hc.w) * vec2(projectionMatrix[1][1] / projectionMatrix[0][0], 1.0);
+    a *= smoothstep(uHole.w * 0.55, uHole.w, length(dn));
+  }
   place(p, size, a * fade, col, aSeed);
 }`
 
@@ -134,6 +142,7 @@ function buildDetector(o, ctx) {
     uHitT: { value: 1e9 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.16 },
     uOut: { value: new Vector3(...(o.out || [14, 0, 0])) },
     uColor: { value: new Color(...rgb(o.color || '#5b93ff')) }, uHot: { value: new Color(...rgb(o.hot || '#ffffff')) },
+    uHole: { value: new Vector4(...(o.hole || [0, 0, 0, 0])) },
   })
   const u = mat.uniforms
   const build = (buf, ev) => {

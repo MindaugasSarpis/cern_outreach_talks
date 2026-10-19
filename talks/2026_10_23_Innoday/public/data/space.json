@@ -44,7 +44,7 @@
             0
           ],
           "radius": 3.1,
-          "quarkRadius": 0.72,
+          "quarkRadius": 0.42,
           "quarks": [
             {
               "flavour": "c",
@@ -86,7 +86,11 @@
                 0.6
               ]
             }
-          ]
+          ],
+          "coreSize": 6,
+          "coreAlpha": 1.0,
+          "speed": 0.15,
+          "haze": "#1c2c4c"
         }
       ]
     },
@@ -687,6 +691,12 @@
             16,
             0,
             0
+          ],
+          "hole": [
+            3.975,
+            3.06,
+            0.96,
+            0.1
           ]
         }
       ]
