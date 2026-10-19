@@ -571,7 +571,7 @@
        ]
       }
      ],
-     "labelH": 0.05,
+     "labelH": 0.1,
      "mergeAt": 2.4
     },
     {
@@ -1105,7 +1105,7 @@
      "cluster": 1100,
      "shed": 110,
      "pulse": 0.3,
-     "labelH": 0.048,
+     "labelH": 0.075,
      "items": [
       {
        "at": [
