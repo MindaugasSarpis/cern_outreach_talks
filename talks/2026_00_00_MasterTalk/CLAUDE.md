@@ -63,6 +63,17 @@ storyboard).
   cluster's editable slidev-videos CLI moves 0.4.0 → 0.8.1 the same day; the
   19 Oct deploy's videos:check, preflight and venue ran clean before it (the
   baseline), so any change in a videos:* command goes to the Scheduler.
+  Checked the same day under 0.8.1: the same results, check 1.4 s.
+- 20 Oct, v0.9.0's design (Tools, through the Scheduler), for the pilot:
+  `src: 'lhcb'` (this bake) or `'lhcb-dense'` (Innoday's 446 400), fetched
+  sha256-pinned from a `geometry-lhcb` release into
+  ~/.cache/slidev-addon-stage/ and emitted under stage-data/ with the NOTICE,
+  so `public/data/lhcb-grains.*` go; `parts: 'lhcb'` gives the palette above,
+  no `parts` keeps one `color`; `near` defaults 48 px / 1.5–5 units
+  (grains.js's own); the event through `installLhcb({ event })`; the bus is
+  `slidev-stage:steps` (`setStep`, `stepOf`, `onStep`, `setStepLater`) and
+  `<Grains>` becomes `<StageSteps :set :clicks>`, so stream, grid, spark and
+  histogram move onto that bus in the pilot.
 
 ## Arc
 
