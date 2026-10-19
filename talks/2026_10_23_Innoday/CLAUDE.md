@@ -175,7 +175,9 @@ now) are built (Decisions, "The close at eye level"): five visual review rounds,
 four-lens code review with each finding verified, its confirmed findings fixed;
 the music's two files measured (-15,9 and -14,1 LUFS, the arrival at the cut's
 67–70 s) and its flow tested headless (forward, back, a direct open, the overview).
-Stills 31–34 retaken. Deployed 897b30c — Pages run 39339958890 (green), URL 200,
+Stills 31–34 retaken. Then (the owner: LHCb looked 3 m high and squashed) true
+proportions on „Ačiū“ and the end side on from the middle at the owner's eye level
+(Decisions); three more visual rounds. Deployed 897b30c — Pages run 39339958890 (green), URL 200,
 live walk 34/34, the music files served; `ready` passed with nothing skipped.
 Nobody has listened to the music in a session: the owner hears it first.
 
@@ -276,17 +278,26 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   filling thr screen, show lhcb logo and Lithuanian flag besides in 3d space"; "Point
   cloud can somehow be more solid - as well as the flag"; "Will need some crazy
   inspirational soundtrack for the last theee slides spanning - maybe scott buckley").
-  „Ačiū“'s path holds the whole detector 3 s (10–13 s), then comes down by 19 s to eye
-  level (1,7 m above a floor at the muon stations' foot, y = -5,6 m in LHCb's frame),
-  upstream and to the side, 12° up: LHCb stands on a faint grain floor grid with black
-  above it, on grain cradles (`supports`: the magnet, SciFi, RICH2 and calorimeters do
-  not reach the floor in the geometry), a 1,8 m person in light grains at its near foot
-  at true scale for that depth. Then the LHCb logo (the collaboration's own, its marks
+  Then (owner, 20 Oct: "lhcb seems 3m high from this angle, or the person is huge, we
+  want to look at it side on from the middle. From where that person stands. It can be
+  me, 183cm in height"; "Lhcb really looks horizontally squished") „Ačiū“ draws LHCb and
+  its collision in true proportions (1,2 units a metre every way: `scale 1.2, stretch 1`
+  on `det` and `thanks`; the event-display convention, 0,5 along the beam and 2,4×
+  across, which the rest of the deck and MasterTalk keep, made it look squashed), the
+  cold box's anchor at (9.54, -476.94, 0.96). The path holds the whole detector in a
+  3/4 view 3 s (10–13 s), then comes down by 19 s to the owner's eye level (1,71 m of
+  his 1,83 m, above a floor at the muon stations' foot, y = -5,6 m in LHCb's frame),
+  side on from the detector's middle, 16,5 m from the beam, 15° up: the 10 m wall from
+  the floor to its top with black above (6,8 m back, where the earlier figure stood, it
+  pressed against the near faces). No figure: the viewer is the person. LHCb stands on
+  a faint grain floor grid, on grain legs (`supports`, legs and foot rails: the magnet,
+  SciFi, RICH2 and calorimeters do not reach the floor in the geometry). Then the LHCb logo (the collaboration's own, its marks
   only, `figures/lhcb_logo_grains.png`) and the Lithuanian flag (waving, its yellow
   given as #FFC800: at the frame's top the finish dulled #FDB913) gather side by side
   over the dark upstream space (`emblem`, setup/emblems.js, drawn last with normal
-  blending: added on, the detector's blue tinted them); the collision fades and the
-  small flag at the module goes; then the word. Every pose was searched against the
+  blending: added on, the detector's blue tinted them), in the dark above the detector;
+  the collision fades and the small flag at the module goes (its clearing in the
+  detector a soft 25 % dimming, not a hole); then the word. Every pose was searched against the
   geometry's projection. LHCb re-baked with 4,8× the grains (446 400, hero/bake_grains.py
   `k`) at lower alpha, the VELO (its grains packed round the vertex) and the beam pipe
   dimmed; the hand-over picture has 320 000 grains. The music: Scott Buckley's

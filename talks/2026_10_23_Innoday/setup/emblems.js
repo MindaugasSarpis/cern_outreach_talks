@@ -7,12 +7,13 @@
 //   { type: emblem, name, pos, width?: 4, yaw?: 0 (degrees), pitch?: 0,
 //     flag?: 'lt' | src?: 'figures/lhcb_logo_grains.png', mode?: 'alpha' (the image's own
 //     alpha marks its grains and its colours are theirs), grains?: 26000, size?: 1.2, alpha?: 0.85,
-//     wave?: 0 (units: the flag's flutter), keep?: 0.25 (an image pixel's darkness-or-colour
+//     wave?: 0 (units: the flag's flutter), scrim?: 0 (a soft dark ground behind it, its
+//     strength: over the detector's grains it keeps the emblem legible), keep?: 0.25 (an image pixel's darkness-or-colour
 //     to become a grain), tint?: { '#rrggbb': '#rrggbb' } (an image colour shown as another) }
 // Steps from <Grains> or setGrains(name, k): 1 gathers it (2.6 s), 0 lets it fade; `of`
 // follows another name's steps instead (the person beside LHCb: the detector's).
 // Also a person for scale: { type: emblem, src: 'figures/person_grains.png', mode: alpha, of: det }
-import { BufferGeometry, BufferAttribute, Points, Group, Color, NormalBlending, AdditiveBlending, ShaderMaterial } from 'three'
+import { BufferGeometry, BufferAttribute, Points, Group, Color, NormalBlending, AdditiveBlending, ShaderMaterial, Mesh, PlaneGeometry, MeshBasicMaterial, CanvasTexture } from 'three'
 import { PLACE, listen, state, material as materialOf } from './detector.js'
 import { places } from './afterCover.js'
 
@@ -20,6 +21,7 @@ import { places } from './afterCover.js'
 // (the yellow given as #FFC800: the frame's vignette and the finish's top end dulled
 // #FDB913 to a mustard there; measured 20 Oct)
 const LT = ['#FFC800', '#006A44', '#C1272D'].map((h) => new Color(h))
+LT[0].multiplyScalar(1.05)   // and lifted a little more (in display values; the finish brings it down to about #FDB913)
 
 const VERT = PLACE + /* glsl */ `
 attribute vec3 aStart, aColor;
@@ -130,6 +132,18 @@ function buildEmblem(o, ctx) {
     },
   })
   const u = mat.uniforms
+  // the soft dark ground behind it, drawn just before its grains
+  let scrim = null
+  if (o.scrim > 0) {
+    const c = document.createElement('canvas'); c.width = c.height = 128
+    const x = c.getContext('2d'), gr = x.createRadialGradient(64, 64, 8, 64, 64, 64)
+    gr.addColorStop(0, 'rgba(0,1,3,1)'); gr.addColorStop(0.6, 'rgba(0,1,3,0.85)'); gr.addColorStop(1, 'rgba(0,1,3,0)')
+    x.fillStyle = gr; x.fillRect(0, 0, 128, 128)
+    const h = o.src ? w * 0.75 : w * 3 / 5
+    scrim = new Mesh(new PlaneGeometry(w * 1.7, h * 2.0), new MeshBasicMaterial({ map: new CanvasTexture(c), transparent: true, opacity: 0, depthTest: false, depthWrite: false }))
+    scrim.position.z = -0.05; scrim.renderOrder = 19
+    g.add(scrim)
+  }
   let alive = true
   const make = (d) => {
     if (!alive) return
@@ -173,6 +187,11 @@ function buildEmblem(o, ctx) {
       now = t; u.uTime.value = t
       if (fresh) { fresh = false; apply() }
       if (u.uHide.value < 1e8 && t - u.uHide.value > 1.1) { u.uT0.value = 1e9; u.uHide.value = 1e9 }
+      if (scrim) {
+        const on = u.uT0.value > 1e8 ? 0 : Math.min(1, (t - u.uT0.value) / u.uDur.value)
+        const off = u.uHide.value > 1e8 ? 1 : Math.max(0, 1 - (t - u.uHide.value))
+        scrim.material.opacity = o.scrim * on * off
+      }
       if (warm > 0) warm--
       g.visible = u.uT0.value < 1e8 || warm > 0   // a few frames drawn hidden first (innoday:prewarm): upload and compile ahead
     },
@@ -249,8 +268,11 @@ function buildSupports(o, ctx) {
   const segs = []
   for (const [x0, x1, zh, yb] of parts) {
     for (const x of [x0, x1]) for (const z of [-zh, zh]) segs.push([[x, fl, z], [x, yb, z]])   // legs
-    for (const z of [-zh, zh]) segs.push([[x0, yb, z], [x1, yb, z]], [[x0, fl, z], [x1, fl, z]])   // rails, top and foot
-    segs.push([[x0, yb, -zh], [x0, yb, zh]], [[x1, yb, -zh], [x1, yb, zh]])   // cross-beams
+    for (const z of [-zh, zh]) segs.push([[x0, fl, z], [x1, fl, z]])   // foot rails
+    if (o.frame !== 'legs') {   // the full cradle: top rails and cross-beams too (in true proportions they read as crates)
+      for (const z of [-zh, zh]) segs.push([[x0, yb, z], [x1, yb, z]])
+      segs.push([[x0, yb, -zh], [x0, yb, zh]], [[x1, yb, -zh], [x1, yb, zh]])
+    }
   }
   const len = segs.map(([a, b]) => Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2])), total = len.reduce((s, l) => s + l, 0)
   const pos = new Float32Array(n * 3), seed = new Float32Array(n), fall = new Float32Array(n)

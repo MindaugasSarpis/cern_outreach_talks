@@ -32,7 +32,7 @@ import META from './data/lis.json'
 const props = defineProps({
   src: { type: String, default: 'figures/lis_last.jpg' },
   depth: { type: String, default: 'figures/lis_last.depth.png' },
-  anchor: { type: Array, default: () => [3.975, -476.94, 0.96] },   // the flag's place: LHCb (0.8, 2.55, 7.95) m
+  anchor: { type: Array, default: () => [9.54, -476.94, 0.96] },   // the flag's place: LHCb (0.8, 2.55, 7.95) m at 1,2 units a metre (true proportions)
   d0: { type: Number, default: 2.4 },      // the camera's start distance from the flag, stage units (path[0])
   sEnd: { type: Number, default: 2.5 },    // stage units a metre at the path's last key (the detector's own: 1.2 across)
   sFlag: { type: Number, default: 20 },    // … and the flag's, so it stays a mark (~0.9 units: about 40 px)
