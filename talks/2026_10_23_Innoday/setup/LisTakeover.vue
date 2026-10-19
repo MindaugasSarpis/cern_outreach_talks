@@ -25,17 +25,17 @@ const props = defineProps({
   depth: { type: String, default: 'figures/lis_last.depth.png' },
   anchor: { type: Array, default: () => [3.975, -476.94, 0.96] },   // the flag's place: LHCb (0.8, 2.55, 7.95) m
   d0: { type: Number, default: 2.4 },      // the camera's start distance from the flag, stage units (path[0])
-  end: { type: Array, default: () => [-11.9, -472.4, 12.9] },        // the camera at the path's last key
-  sEnd: { type: Number, default: 2.5 },    // stage units a metre at the last key (the detector's own: 1.2 across)
+  sEnd: { type: Number, default: 2.5 },    // stage units a metre at the path's last key (the detector's own: 1.2 across)
+  sFlag: { type: Number, default: 9 },     // … and the flag's, so it stays a mark (~0.4 units: about 20 px)
   grains: { type: Number, default: 160000 },
   hold: { type: Number, default: 400 },    // ms of still before the fade
   fade: { type: Number, default: 1400 },   // ms
   collision: { type: String, default: 'thanks' },
-  detAt: { type: Number, default: 6 },     // the camera this far from the flag (units): the detector lights up
+  detAt: { type: Number, default: 3.2 },   // the camera this far from the flag (units): the detector lights up
   colAt: { type: Number, default: 13 },    // … LHCb's collision starts in it
   wordAfter: { type: Number, default: 1.2 },   // s after the camera has stopped: the word
 })
-const { $renderContext, $page } = useSlideContext()
+const { $renderContext, $page, $frontmatter } = useSlideContext()
 const nav = useNav()
 const base = import.meta.env.BASE_URL
 const url = (p) => (p.startsWith('/') || /^https?:/.test(p)) ? p : base + p
@@ -76,7 +76,16 @@ const clear = () => { timers.forEach(clearTimeout); timers = []; clearInterval(w
 
 const A = new Vector3(...props.anchor)
 const s0 = props.d0 / META.flagDist
-const law = scaleLaw({ s0, d0: props.d0, sEnd: props.sEnd, dEnd: new Vector3(...props.end).distanceTo(A) })
+// where the camera stands at the path's last key (the stage's pose: at + dist·(sin yaw cos
+// pitch, sin pitch, cos yaw cos pitch)), for the scale law's end
+function endOfPath() {
+  const sp = $frontmatter?.value?.space ?? $frontmatter?.space
+  const k = sp?.path?.[sp.path.length - 1]?.[1]
+  if (!k || !Array.isArray(k.at)) return new Vector3(-3.7, -474.3, 18.6)
+  const r = Math.PI / 180, y = (k.yaw ?? 0) * r, p = (k.pitch ?? 0) * r, d = k.dist ?? 20
+  return new Vector3(k.at[0] + d * Math.sin(y) * Math.cos(p), k.at[1] + d * Math.sin(p), k.at[2] + d * Math.cos(y) * Math.cos(p))
+}
+const law = scaleLaw({ s0, d0: props.d0, sEnd: props.sEnd, dEnd: endOfPath().distanceTo(A) })
 
 async function takeOver() {
   const id = ++run
@@ -86,7 +95,8 @@ async function takeOver() {
   const s = await waitStage(id)
   const got = await ready
   if (id !== run || !s || !got || !live.value) return
-  sample ||= sampleFrame(got.img, { n: props.grains, gamma: 1.15, floor: 0.06, sat: 1.15 })
+  // the dim metal around the flag (under ~30 of 255) gives no grains: it read as static
+  sample ||= sampleFrame(got.img, { n: props.grains, gamma: 1.15, floor: 0.12, sat: 1.15 })
   placed ||= placeInDepth(sample, got.depth, META)
   let pts = s.h.scene.getObjectByName('lis-grains')
   if (!pts) { pts = makeLisGrains(sample, placed, { s0 }); s.h.scene.add(pts) }
@@ -94,7 +104,12 @@ async function takeOver() {
   u.uAnchor.value.copy(A); u.uScale.value = s0; u.uReveal.value = 0; u.uFade.value = 1
   pts.visible = true
   // the form follows the camera every frame: its scale from the camera's distance
-  pts.userData.scale = (cam) => law(cam.position.distanceTo(A))
+  pts.userData.scale = (cam, un) => {
+    const sc = law(cam.position.distanceTo(A))
+    un.uScale.value = sc
+    un.uScaleFlag.value = Math.max(sc, props.sFlag)
+    un.uRest.value = Math.min(1, Math.max(0, (sc - props.sFlag * 0.5) / (props.sFlag * 1.2)))
+  }
   later(props.hold, () => {
     if (id !== run) return
     fading.value = true
@@ -126,7 +141,11 @@ onSlideLeave(() => {
   bus.set(props.collision, 0); bus.emit('stop', { name: props.collision })
 })
 const onRebuilt = () => { if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver() }
-onMounted(() => window.addEventListener('slidev-stage:rebuilt', onRebuilt))
+onMounted(() => {
+  window.addEventListener('slidev-stage:rebuilt', onRebuilt)
+  // opened at this slide (a reload, or the deck started here): no slide-enter comes
+  if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver()
+})
 onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); run++; clear() })
 // the grains are drawn here and on the credits page after it, hidden everywhere else
 watch(() => nav.currentSlideNo?.value, (n) => {

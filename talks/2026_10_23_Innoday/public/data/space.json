@@ -666,7 +666,8 @@
           "tone": "#9cc4ff",
           "muonTone": "#cfe2ff",
           "splashTone": "#5b93ff",
-          "bunchColor": "#cfe6ff"
+          "bunchColor": "#cfe6ff",
+          "pipe": 3
         },
         {
           "type": "detector",
@@ -678,8 +679,8 @@
           ],
           "src": "data/lhcb-grains.bin",
           "sweep": 3.5,
-          "alpha": 0.75,
-          "size": 1.6,
+          "alpha": 0.95,
+          "size": 1.9,
           "color": "#6fa4ff",
           "hot": "#ffffff",
           "out": [

@@ -35,9 +35,9 @@ void place(vec3 p, float size, float alpha, vec3 color, float seed) {
   float tw = 0.86 + 0.14 * sin(uTime * (0.6 + seed * 1.2) + seed * 40.0);   // a slow, shallow twinkle: a stream encoder smears fast sparkle
   // capped, and faded out within a few units of the camera: a flight that passes through a
   // scattered form must not fill the frame with huge additive sprites (a flash, and a fill-rate spike)
-  gl_PointSize = min(uPixelRatio * size * tw * (72.0 / max(-mv.z, 0.1)), 48.0 * uPixelRatio);
+  gl_PointSize = min(uPixelRatio * size * tw * (72.0 / max(-mv.z, 0.1)), 10.0 * uPixelRatio);   // (MasterTalk: 48; Innoday's camera pulls back past it)
   vColor = color;
-  vAlpha = alpha * tw * smoothstep(1.5, 5.0, -mv.z);
+  vAlpha = alpha * tw * smoothstep(2.5, 7.0, -mv.z);
 }
 void hide() { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vAlpha = 0.0; }
 float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }

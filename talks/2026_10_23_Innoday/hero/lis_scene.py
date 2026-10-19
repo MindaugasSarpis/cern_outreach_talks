@@ -45,9 +45,9 @@ from mathutils import Vector
 FPS = 25
 # the Lithuanian flag, top to bottom (#FDB913, #006A44, #C1272D), in linear light
 FLAG = [(0.982, 0.470, 0.007, 1.0), (0.0, 0.144, 0.058, 1.0), (0.533, 0.020, 0.026, 1.0)]
-# the marks' own faint glow at rest, per stripe: the flag's hues, brighter, so the view
-# transform keeps them saturated and the flag is the brightest thing in the last frame
-GLOW = [(1.0, 0.55, 0.0, 1.0), (0.0, 0.55, 0.20, 1.0), (1.0, 0.02, 0.03, 1.0)]
+# the marks' own glow at rest, in the flag's colours: most of their light, so they come out
+# near the official colours and the flag is the brightest thing in the last frame
+GLOW = FLAG
 # the timeline, in frames at 25 fps: drift in over the boards, engrave the flag, cool, hold
 T_ENGRAVE = (55, 190)      # 2.2-7.6 s: the laser writes the flag line by line, top to bottom
 T_COOL = 45                # a mark cools from white heat to its colour in about 1.8 s
@@ -132,8 +132,8 @@ def mats():
     M['slot'] = pbr('slot', (0.03, 0.03, 0.032), 0.8, 0.4)
     M['copper'] = pbr('copper', (0.80, 0.40, 0.22), 1.0, 0.36)
     M['rail'] = grain(pbr('peek', (0.62, 0.58, 0.50), 0.0, 0.48, **{'Subsurface Weight': 0.15}), 900, 0.42, 0.55)
-    M['kapton'] = pbr('kapton', (0.62, 0.25, 0.045), 0.0, 0.18, **{'Coat Weight': 0.6, 'Coat Roughness': 0.08,
-                                                                    'Transmission Weight': 0.15})
+    M['kapton'] = pbr('kapton', (0.50, 0.20, 0.04), 0.0, 0.32, **{'Coat Weight': 0.2, 'Coat Roughness': 0.25,
+                                                                   'Transmission Weight': 0.15})
     M['stiff'] = pbr('fr4', (0.70, 0.60, 0.40), 0.0, 0.55)
     M['pcb'] = pbr('soldermask', (0.008, 0.055, 0.03), 0.0, 0.3, **{'Coat Weight': 0.7, 'Coat Roughness': 0.12})
     M['gold'] = pbr('gold', (1.0, 0.77, 0.34), 1.0, 0.22)
@@ -201,7 +201,9 @@ def engraved(m0, face, t0, t1, cool, centre):
     fc.driver.expression = 'frame'
     since = op('SUBTRACT', frame.outputs[0], when)
     done = op('MULTIPLY', op('GREATER_THAN', since, 0.0), inside)
-    heat = op('MULTIPLY', done, op('EXPONENT', op('DIVIDE', op('MULTIPLY', since, -1.0), cool / 3.0)))
+    # the heat cools from a time that runs smoothly down the flag, not line by line (no bands)
+    since_s = op('MAXIMUM', op('SUBTRACT', frame.outputs[0], op('ADD', t0, op('MULTIPLY', v, t1 - t0))), 0.0)
+    heat = op('MULTIPLY', done, op('EXPONENT', op('DIVIDE', op('MULTIPLY', since_s, -1.0), cool / 3.0)))
     ramp = nt.nodes.new('ShaderNodeValToRGB')
     ramp.color_ramp.interpolation = 'CONSTANT'
     els = ramp.color_ramp.elements
@@ -224,7 +226,7 @@ def engraved(m0, face, t0, t1, cool, centre):
         L(rough, rmix.inputs['A'])
     else:
         rmix.inputs['A'].default_value = 0.36
-    rmix.inputs['B'].default_value = 0.7
+    rmix.inputs['B'].default_value = 0.85
     L(done, rmix.inputs['Factor'])
     L(rmix.outputs['Result'], b.inputs['Roughness'])
     # the raster's lines in relief, a hair deep
@@ -252,7 +254,17 @@ def engraved(m0, face, t0, t1, cool, centre):
     L(glow.outputs['Color'], emc.inputs['A'])
     L(hot.outputs['Color'], emc.inputs['B'])
     L(emc.outputs['Result'], b.inputs['Emission Color'])
-    L(op('ADD', op('MULTIPLY', hot_k, 14.0), op('MULTIPLY', done, 0.9)), b.inputs['Emission Strength'])
+    # per stripe, so that with the light the marks get they come out at the flag's colours
+    gk = nt.nodes.new('ShaderNodeValToRGB')
+    gk.color_ramp.interpolation = 'CONSTANT'
+    gke = gk.color_ramp.elements
+    gke[0].position, gke[0].color = 0.0, (0.53, 0.53, 0.53, 1)
+    gke[1].position, gke[1].color = 1 / 3, (0.58, 0.58, 0.58, 1)
+    gke.new(2 / 3).color = (0.53, 0.53, 0.53, 1)
+    L(v, gk.inputs['Fac'])
+    L(op('ADD', op('MULTIPLY', hot_k, 14.0), op('MULTIPLY', done, gk.outputs['Color'])), b.inputs['Emission Strength'])
+    # the oxide barely reflects: no white sheen over the colours
+    L(op('SUBTRACT', 0.5, op('MULTIPLY', done, 0.42)), b.inputs['Specular IOR Level'])
     return m
 
 
@@ -472,12 +484,12 @@ def studio(sc, flag):
     # front, where the metal faces reflect it toward the camera (their sheen); a raking
     # light from above along the face; a cool rim (the deck's light blue) from the side;
     # almost no fill
-    light('soft', 'AREA', (fx + 0.38, -0.22, 0.24), (fx, 0.02, 0.0), 6.0, (1.0, 0.97, 0.93), 0.5, 0.18)
-    light('rake', 'AREA', (fx - 0.10, -0.40, 0.035), (fx, 0.10, 0.0), 2.2, (1.0, 0.95, 0.88), 0.3, 0.05)
-    light('rim', 'AREA', (fx - 0.45, -0.05, 0.08), (fx, 0.0, 0.01), 2.2, (0.61, 0.77, 1.0), 0.4, 0.12)
+    light('soft', 'AREA', (fx + 0.38, -0.22, 0.24), (fx, 0.02, 0.0), 3.0, (1.0, 0.97, 0.93), 0.5, 0.18)
+    light('rake', 'AREA', (fx - 0.10, -0.40, 0.035), (fx, 0.10, 0.0), 1.0, (1.0, 0.95, 0.88), 0.3, 0.05)
+    light('rim', 'AREA', (fx - 0.45, -0.05, 0.08), (fx, 0.0, 0.01), 0.5, (0.61, 0.77, 1.0), 0.4, 0.12)
     light('fill', 'AREA', (fx - 0.5, 0.35, 0.40), (fx, 0.0, 0.0), 0.15, (1.0, 0.88, 0.75), 0.5, 0.5)
     # one large, dim panel in front: a soft gradient in the satin metal, so it reads as metal
-    light('panel', 'AREA', (fx - 0.15, 0.25, 0.55), (fx, -0.02, 0.0), 1.2, (0.95, 0.97, 1.0), 1.2, 1.2)
+    light('panel', 'AREA', (fx, 0.30, 0.60), (fx, -0.02, 0.0), 0.3, (0.95, 0.97, 1.0), 1.8, 1.8)
 
 
 def camera(sc, flag):
@@ -586,11 +598,11 @@ def sparks(spot, t0, t1):
     s = ps.settings
     s.count = 900
     s.frame_start, s.frame_end = t0, t1
-    s.lifetime, s.lifetime_random = 4, 0.5
+    s.lifetime, s.lifetime_random = 3, 0.5
     s.emit_from = 'VERT'
     s.normal_factor = 0.0
-    s.object_align_factor = (0, 0, 0.35)
-    s.factor_random = 0.22
+    s.object_align_factor = (0, 0.0, 0.16)
+    s.factor_random = 0.14
     s.effector_weights.gravity = 1.0
     s.render_type = 'OBJECT'
     s.instance_object = g
@@ -612,8 +624,10 @@ def render_setup(sc, a):
     sc.render.resolution_percentage = 100
     sc.render.use_motion_blur = True
     sc.render.motion_blur_shutter = 0.5
-    # the neutral product-render transform: it keeps the flag's hues where AgX greys them
-    sc.view_settings.view_transform = 'Khronos PBR Neutral'
+    # no tone curve: the flag's official colours come out as they are (AgX greyed them, and
+    # Khronos PBR Neutral rolled the yellow, at the top of the range, toward white); the set
+    # is dark, and what clips (the spot, the sparks) is meant to be white hot
+    sc.view_settings.view_transform = 'Standard'
     sc.view_settings.look = 'None'
     sc.view_settings.exposure = a.exposure
     sc.render.image_settings.file_format = 'PNG'
@@ -690,7 +704,15 @@ def handover(sc, cam, aim, face, meta, depth):
     png = b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', W, H, 8, 2, 0, 0, 0)) + chunk(b'IDAT', raw) + chunk(b'IEND', b'')
     open(depth, 'wb').write(png)
     rel = lambda v: to_stage(v - flag)
-    json.dump({'origin': rel(O), 'right': to_stage(R), 'up': to_stage(U), 'forward': to_stage(F),
+    # the flag's corners in the last frame (uv, v down): the stage keeps those grains as the mark
+    from bpy_extras.object_utils import world_to_camera_view
+    cx, cy, w = face
+    h = w * 3 / 5
+    quad = []
+    for (x, y) in ((cx - w / 2, cy - h / 2), (cx + w / 2, cy - h / 2), (cx + w / 2, cy + h / 2), (cx - w / 2, cy + h / 2)):
+        q = world_to_camera_view(sc, cam, root.matrix_world @ Vector((x, y, BOX_Z)))
+        quad.append([q.x, 1 - q.y])
+    json.dump({'origin': rel(O), 'flagUV': quad, 'right': to_stage(R), 'up': to_stage(U), 'forward': to_stage(F),
                'aim': rel(aim.matrix_world.translation), 'flagDist': (O - flag).length,
                'vfov': VFOV, 'aspect': aspect, 'depth': {'w': W, 'h': H, 'near': z0, 'far': z1, 'zero': 'no hit'},
                'frame': T_END, 'fps': FPS},
@@ -729,6 +751,12 @@ def main():
             sc.render.filepath = f'{a.out}{want:04d}.png'
             bpy.ops.render.render(write_still=True)
     elif a.frames:
+        # the sparks' simulation baked from frame 1, so a range that starts later (the render
+        # split over several jobs) has the same sparks as one run through
+        try:
+            bpy.ops.ptcache.bake_all(bake=True)
+        except Exception as e:
+            print('lis_scene: bake failed, simulating on the way:', e)
         f0, f1 = (int(x) for x in a.frames.split('-'))
         sc.frame_start, sc.frame_end = f0, f1
         bpy.ops.render.render(animation=True)

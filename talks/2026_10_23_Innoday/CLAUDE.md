@@ -206,16 +206,36 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   finishing aspect. Can we show photorealistic 3D rendering of SciFi light
   injection system, then "laser" inscribe Lithuanian flag on it and then
   position it in a 3D LHCb CAD (maybe as pointcloud)"; the plan went to the
-  owner in this window the same day). After the hall photo: a silent Blender
-  clip (Cycles, photorealistic) of the SciFi light injection system, a laser
-  engraving the Lithuanian flag on the LIS cold box (owner: "LIS coldbox with
-  the flag"); its last frame becomes grains that fly to the part's place in
-  LHCb's Run 3 geometry as grains (MasterTalk's lhcb-grains, GPL-3.0 notice
-  kept); „Ačiū“ over LHCb with an LHCb collision inside it (owner: "LHCb
-  collision within lhcb"), replacing the CMS event there (slide 9 keeps
-  its). Fallback if the render isn't right by 22 Oct: the part and the flag
-  in grains, live. The CAD stays out of git (public repo and Pages): only
-  renders and stills are committed.
+  owner in this window the same day). Slide 32: `lis_flag.mp4`, 10 s, silent,
+  played once: a SciFi module's end standing as in LHCb (the readout end up),
+  modelled in `hero/lis_scene.py` after the drawing the owner sent ("Can use
+  this for now to mimic the Light Injection system pcb": the cold box's four
+  blocks, numbered 4, two LIS boards, 3, with their connectors, fibres and
+  flex, the mats, the Kapton flex cables), the camera from the module end in
+  to block 3, where a laser writes the flag line by line from the top (owner:
+  "LIS coldbox with the flag"), the marks white-hot cooling to the flag's
+  official colours (#FDB913, #006A44, #C1272D; the Standard view transform:
+  AgX and Khronos Neutral greyed them; each stripe's glow tuned against the
+  lights so the render measures within ~5 of those). No visible beam (a
+  marking laser's is infrared); the spot and sparks show it. The lens's
+  vertical field is the stage's 50°, and the script writes the last frame's
+  depth (a ray cast per pixel, 480×270, 16 bits in a PNG's red and green) and
+  camera (`setup/data/lis.json`, with the flag's corners). Slide 33 („Ačiū“):
+  `<LisTakeover>` opens on that last frame (`figures/lis_last.jpg`) and fades
+  it into grains placed in depth along the same view at the cold box's place
+  on a T1 module's top end in LHCb (anchor [3.975, -476.94, 0.96]: LHCb
+  (0.8, 2.55, 7.95) m), `hero/lis_pose.py` giving path[0]; the path holds 2 s,
+  then pulls back to a 3/4 side view of the whole detector (MasterTalk's
+  lhcb-grains, `setup/detector.js`, GPL-3.0 notice kept) while the picture
+  shrinks faster than it recedes; the flag's own grains stop shrinking at
+  9 units a metre, so it stays a ~20 px mark at the module, and the rest of
+  the picture fades. The detector lights up, LHCb's own event collides in it
+  (owner: "LHCb collision within lhcb"; replacing the CMS event there, slide 9
+  keeps its) and „Ačiū“ fades in, each when the camera has come that far, not
+  on timers (on a slow machine the world's clock runs behind the wall's).
+  Fallback had the render not been right by 22 Oct: the part and the flag in
+  grains, live. The CAD, when it comes, stays out of git (public repo and
+  Pages): only renders and stills are committed.
 - Credits (owner, 19 Oct: "We don't need credits at the last slide"; of the
   two options offered, "B"): the Planck map and Sailko's 1989 photo stay, and
   the licence credits moved from „Ačiū“ to a page after it that is never

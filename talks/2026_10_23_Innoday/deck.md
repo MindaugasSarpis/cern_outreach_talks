@@ -710,7 +710,7 @@ space:
     - [0, { at: [3.975, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
     - [2.0, { at: [3.975, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
     - [5.5, { at: [4.0, -477.6, 0.8], dist: 7, yaw: -80, pitch: -6 }]
-    - [10, { at: [4.6, -479.2, 0], dist: 22, yaw: -52, pitch: 18 }]
+    - [10, { at: [4.6, -479.4, 0], dist: 21, yaw: -24, pitch: 14 }]
 ---
 
 <LisTakeover><h1>Ačiū</h1></LisTakeover>
@@ -727,7 +727,7 @@ Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaid
 
 ---
 class: credits-page
-space: { at: [4.6, -479.2, 0], dist: 22, yaw: -52, pitch: 18, dim: 0.7, ambient: 0, hum: false }
+space: { at: [4.6, -479.4, 0], dist: 21, yaw: -24, pitch: 14, dim: 0.7, ambient: 0, hum: false }
 ---
 
 <Grains :set="{ det: 1 }" />
