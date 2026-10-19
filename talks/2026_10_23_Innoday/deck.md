@@ -680,6 +680,23 @@ Vaizdas: nuotr. Tomas Laurinavičius / VU (vu.lt/en/all-news/cern-lh-cb-experime
 -->
 
 ---
+space: { at: [3.975, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim: 0, hum: false }
+---
+
+<VideoPlayer src="lis_flag.mp4" muted :controls="false" />
+<Grains :set="{ det: 0 }" />
+
+<!-- facts: lhcb-scifi, lhcb-scifi-channels, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
+
+<!--
+Kalbėtojui. SciFi sekiklio modulio galas su šviesos įvedimo sistema: dvi šviesos įvedimo plokštelės su lazeriniais diodais ir skaidulomis, šalia — šaltoji dėžė, ant kurios lazeris išgraviruoja Lietuvos vėliavą (savininkas, 2026 10 19). Vaizdas sukurtas Blender programa pagal SciFi brėžinį, ne nuotrauka. Klipas 10 s, be garso; paskutinis kadras lieka, kol paspaudžiama toliau, o tada virsta grūdeliais ir kamera atsitraukia į visą LHCb.
+Sakyti: „LHCb sekiklyje — daugiau nei 11 000 km scintiliacinių skaidulų ir 524 288 kanalai, kurie registruoja jose kilusią šviesą. Kad visi kanalai būtų sukalibruoti, kiekvieno modulio gale įrengta šviesos įvedimo sistema: lazeriniai diodai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupės darbai LHCb kolaboracijai apima ir šį sekiklį, ir šią sistemą.“
+Faktai: VCSEL lazeriai (670 nm), po du vienoje plokštelėje; kiekvienas SiPM kanalas pamato nuo vieno iki penkių fotoelektronų, pagal tai nustatomi PACIFIC lusto slenksčiai. Kiek iš viso plokštelių, nesakyti (viešai nepaskelbta). Apie Vilnių — ne daugiau, nei parašyta (grupės 2024 10 03 susitikimo darbotvarkė).
+Šaltiniai: LHCb Upgrade I, JINST 19 (2024) P05065, 6.5.7 sk.; D. Berninghoff, daktaro disertacija, Heidelbergo universitetas, 2022, 4.5 sk.; indico.cern.ch/event/1461467.
+(~0,4 min)
+-->
+
+---
 layout: statement
 class: thanks-lhcb
 space:
@@ -689,19 +706,18 @@ space:
   hum: false
   rate: [[0, 0.7], [2.4, 0.5]]
   cameraRate: 1
-  path:   # LHCb's event inside LHCb (owner, 19 Oct): from the vertex back to the whole detector, as MasterTalk frames it
-    - [0, { at: [3.4, -480.9, 0], dist: 8.4, yaw: -40, pitch: 14 }]
-    - [7, { at: [4.6, -479.2, 0], dist: 22, yaw: -52, pitch: 18 }]
+  path:   # out of the module's end (the clip's last view, hero/lis_pose.py) to T1, then the whole detector
+    - [0, { at: [3.975, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
+    - [2.0, { at: [3.975, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
+    - [5.5, { at: [4.0, -477.6, 0.8], dist: 7, yaw: -80, pitch: -6 }]
+    - [10, { at: [4.6, -479.2, 0], dist: 22, yaw: -52, pitch: 18 }]
 ---
 
-<CollisionStart name="thanks" />
-<Grains :set="{ det: 1 }" />
-
-# Ačiū
+<LisTakeover><h1>Ačiū</h1></LisTakeover>
 
 
 <!--
-Kalbėtojui. „Ačiū“ ant lėtai besiskleidžiančio susidūrimo per visą ekraną (savininkas, 2026 10 12). Susidūrimas (CMS 2012 m. Higso bozono kandidatas) prasideda, kai skaidrė atsiveria, ir lieka išsisklaidęs per klausimus; be garso.
+Kalbėtojui. Klipo paskutinis kadras (vėliava ant šaltosios dėžės) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių, sudarytą iš grūdelių pagal tikrąją jo geometriją; vėliava lieka ženklu ten, kur stovi SciFi modulis (savininkas, 2026 10 19: „position it in a 3D LHCb CAD (maybe as pointcloud)“). Tada detektorius įsižiebia, jame įvyksta tikras LHCb susidūrimas (savininkas: „LHCb collision within lhcb“), ir pasirodo „Ačiū“; viskas lieka per klausimus; be garso.
 Nuorodų ekrane nėra: licencijų reikalaujamos nuorodos — kitame puslapyje, kurio nerodyti (savininkas, 2026 10 19: „We don't need credits at the last slide“).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.

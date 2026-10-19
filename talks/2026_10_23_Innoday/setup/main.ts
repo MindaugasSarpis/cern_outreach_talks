@@ -14,6 +14,7 @@ import { armAfterCover } from './afterCover.js'
 import { installOpening } from '../components/lhc-opening/index.js'
 import { installDetector } from './detector.js'
 import Grains from './Grains.vue'
+import LisTakeover from './LisTakeover.vue'
 // the LHCb event the shared collision draws by default (lhc-opening's own): the
 // close's detector marks the grains its tracks pass through
 import EVENT_LB from '../components/lhc-opening/event.json'
@@ -39,7 +40,9 @@ import EVENT_CMS from '../components/lhc-opening/event-cms.json'
 // in OpenData and Užsikrauk karjerai) registers `lhc-collision` and
 // <LhcOpening>; <CollisionStart> starts one on „Ačiū“ without its captions,
 // LHCb's own event there, inside LHCb's geometry as grains (`detector`,
-// setup/detector.js, from MasterTalk; <Grains> sets its step).
+// setup/detector.js, from MasterTalk; <Grains> sets its step); <LisTakeover>
+// turns the light injection clip's last frame into grains at the cold box's
+// place in it (setup/lisGrains.js).
 // (A plain function: Slidev's defineAppSetup is the identity, and
 // @slidev/types is not a dependency of the talk.)
 //
@@ -85,4 +88,5 @@ export default ({ app, router }) => {
   app.component('ShortHum', ShortHum)
   app.component('AfterCover', AfterCover)
   app.component('Grains', Grains)
+  app.component('LisTakeover', LisTakeover)
 }
