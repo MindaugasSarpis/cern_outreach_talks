@@ -683,8 +683,8 @@
           ],
           "src": "data/lhcb-grains.bin",
           "sweep": 3.5,
-          "alpha": 0.95,
-          "size": 1.9,
+          "alpha": 0.42,
+          "size": 1.5,
           "color": "#6fa4ff",
           "hot": "#ffffff",
           "out": [
@@ -697,6 +697,118 @@
             3.06,
             0.96,
             0.1
+          ]
+        },
+        {
+          "type": "floor",
+          "name": "floor",
+          "of": "det",
+          "pos": [
+            2,
+            -6.72,
+            2
+          ],
+          "step": 2,
+          "grains": 30000,
+          "alpha": 0.9,
+          "color": "#7f9fd8",
+          "area": [
+            34,
+            30
+          ],
+          "size": 1.4
+        },
+        {
+          "type": "emblem",
+          "name": "lhcbLogo",
+          "pos": [
+            -3.96,
+            1.32,
+            -2.01
+          ],
+          "width": 2.79,
+          "yaw": -55,
+          "pitch": 12,
+          "src": "figures/lhcb_logo_grains.png",
+          "mode": "alpha",
+          "grains": 80000,
+          "size": 1.35,
+          "alpha": 1.0
+        },
+        {
+          "type": "emblem",
+          "name": "ltFlag",
+          "pos": [
+            -2.36,
+            1.75,
+            0.55
+          ],
+          "width": 2.88,
+          "yaw": -40,
+          "pitch": 12,
+          "flag": "lt",
+          "wave": 0.09,
+          "grains": 60000,
+          "size": 1.45,
+          "alpha": 1.0
+        },
+        {
+          "type": "emblem",
+          "name": "person",
+          "of": "det",
+          "pos": [
+            8.5,
+            -5.64,
+            8.2
+          ],
+          "width": 0.65,
+          "yaw": -55,
+          "src": "figures/person_grains.png",
+          "mode": "alpha",
+          "grains": 6000,
+          "size": 1.25,
+          "alpha": 0.6,
+          "dur": 3.5
+        },
+        {
+          "type": "supports",
+          "name": "cradles",
+          "of": "det",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "floor": -6.72,
+          "grains": 18000,
+          "alpha": 0.55,
+          "size": 1.2,
+          "color": "#6fa4ff",
+          "parts": [
+            [
+              1.45,
+              3.75,
+              4.0,
+              -3.61
+            ],
+            [
+              3.95,
+              4.65,
+              3.6,
+              -2.92
+            ],
+            [
+              4.8,
+              5.85,
+              5.4,
+              -4.48
+            ],
+            [
+              6.3,
+              7.5,
+              4.6,
+              -4.1
+            ]
           ]
         }
       ]

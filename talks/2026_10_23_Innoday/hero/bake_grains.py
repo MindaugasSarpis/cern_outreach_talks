@@ -1,7 +1,10 @@
 """LHCb's real geometry as grains (copied from MasterTalk, talk/mastertalk ee3e2b8, as it was: its
 station 4, setup/route.js; here Innoday's close, setup/detector.js, `detector`).
 
-  blender -b --factory-startup --python hero/bake_grains.py -- LHCb_light-draco.glb public/data/lhcb-grains.bin
+  blender -b --factory-startup --python hero/bake_grains.py -- LHCb_light-draco.glb public/data/lhcb-grains.bin [k]
+
+k multiplies every part's budget (Innoday, 20 Oct: 4.8, about 450 000 grains, so the
+surfaces read solid: owner, "Point cloud can somehow be more solid"; MasterTalk's is 1).
 
 Samples points over the surfaces of each sub-detector of HSF Phoenix's LHCb.glb
 (LHCb's DD4hep geometry, GPL-3.0, (c) CERN for the benefit of the LHCb
@@ -54,7 +57,9 @@ def tri_samples(o, mats):
 
 
 def main():
-    glb, dst = sys.argv[-2], sys.argv[-1]
+    args = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[-2:]
+    glb, dst = args[0], args[1]
+    k = float(args[2]) if len(args) > 2 else 1.0
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=glb)
     rnd = random.Random(7)
@@ -67,6 +72,7 @@ def main():
             tris[p] += tri_samples(o, None)
     recs = bytearray()
     for i, (name, _, n) in enumerate(PARTS):
+        n = round(n * k)
         T = tris[i]
         total = sum(t[3] for t in T)
         if not T or total <= 0:

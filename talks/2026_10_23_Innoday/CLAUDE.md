@@ -261,6 +261,31 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   teal and magenta. Fallback had the render not been right by 22 Oct: the part
   and the flag in grains, live. The CAD, when it comes, stays out of git (public repo and
   Pages): only renders and stills are committed.
+- The close at eye level, and its music (owner, 20 Oct: "Looks amazing, we just want
+  to see the huge scale of lhcb, maybe then go to first person view at eye level lhcb
+  filling thr screen, show lhcb logo and Lithuanian flag besides in 3d space"; "Point
+  cloud can somehow be more solid - as well as the flag"; "Will need some crazy
+  inspirational soundtrack for the last theee slides spanning - maybe scott buckley").
+  „Ačiū“'s path holds the whole detector 3 s (10–13 s), then comes down by 19 s to eye
+  level (1,7 m above a floor at the muon stations' foot, y = -5,6 m in LHCb's frame),
+  upstream and to the side, 12° up: LHCb stands on a faint grain floor grid with black
+  above it, on grain cradles (`supports`: the magnet, SciFi, RICH2 and calorimeters do
+  not reach the floor in the geometry), a 1,8 m person in light grains at its near foot
+  at true scale for that depth. Then the LHCb logo (the collaboration's own, its marks
+  only, `figures/lhcb_logo_grains.png`) and the Lithuanian flag (waving, its yellow
+  given as #FFC800: at the frame's top the finish dulled #FDB913) gather side by side
+  over the dark upstream space (`emblem`, setup/emblems.js, drawn last with normal
+  blending: added on, the detector's blue tinted them); the collision fades and the
+  small flag at the module goes; then the word. Every pose was searched against the
+  geometry's projection. LHCb re-baked with 4,8× the grains (446 400, hero/bake_grains.py
+  `k`) at lower alpha, the VELO (its grains packed round the vertex) and the beam pipe
+  dimmed; the hand-over picture has 320 000 grains. The music: Scott Buckley's
+  „Starfire“ (CC BY 4.0), picked from six of his tracks by measured loudness: one
+  arrival after a steep build (track 1:37). `<Soundtrack>` on slides 31–34: it starts
+  low (0,3) under the speech on the hall photo, cross-fades on „Ačiū“ to the cut's 49 s
+  if still before it, so the arrival lands on the eye-level view, plays full (0,9),
+  fades out with the cut (2:10–2:22 of the track), and fades if the deck goes back
+  before 31; only the audience's window plays it. Credited on the credits page.
 - The cover's pentaquark reads as five quarks (owner, 20 Oct: "the pentaquark
   (far too many quarks and some orbits)"): headless frames showed five nodes, but
   each a loose sparkle of grains with a weak core, pairs drifting together on
@@ -473,6 +498,13 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
 ## Figures and open items (for the speaker)
 
+- The close's LHCb logo is the collaboration's own (lhcb.web.cern.ch/speakersbureau/material,
+  `lhcb-logo-300dpi.tif`): its marks only, recoloured for a black ground
+  (`figures/lhcb_logo_grains.png`; CERN's material, no credit). The music:
+  Scott Buckley, „Starfire“ (scottbuckley.com.au/library/starfire), CC BY 4.0,
+  credited on the credits page; only an excerpt (0:30–2:25) is in the deck
+  (`public/audio/starfire_close.m4a`, -16 LUFS). Nobody has listened to it in
+  this session: check once that 1:25–1:40 has no whoosh or riser.
 - The light injection system (facts lhcb-scifi-lis, -lis-vcsel, -channels,
   -layout, -modules-area, -z-position, lhcb-vilnius-scifi-lis; 19 Oct): at
   each module end, two LIS boards (6-layer PCBs, two GBLD drivers and two

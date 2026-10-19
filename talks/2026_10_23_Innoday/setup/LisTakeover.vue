@@ -16,9 +16,13 @@ import META from './data/lis.json'
 // (lisGrains.js). The still fades into them, and the slide's path pulls the camera
 // back out of the module end to the whole detector while the grains shrink to a
 // mark; the detector lights up behind them (det: 1), then LHCb's collision in it
-// (the `lhc-collision` named `collision`) and the slot (the word), each when the
-// camera has come that far out, not on a timer: on a slow machine the world's clock
-// runs behind the wall's. The slide's path[0] is the clip camera's view
+// (the `lhc-collision` named `collision`); the camera holds on the whole detector,
+// then comes down to eye level on the cavern floor (owner, 20 Oct: "see the huge
+// scale of lhcb, maybe then go to first person view at eye level lhcb filling the
+// screen, show lhcb logo and Lithuanian flag besides in 3d space"), where the two
+// emblems gather (`emblems`, setup/emblems.js) and then the slot (the word): each
+// when the camera has come that far, not on a timer (on a slow machine the world's
+// clock runs behind the wall's). The slide's path[0] is the clip camera's view
 // (hero/lis_pose.py prints it from lis.json, the anchor and d0).
 // Without a running world (reduced motion, no WebGL, a lost context, a boot slower
 // than 8 s) the still stays and the word shows over it; printed, in the overview and
@@ -32,14 +36,15 @@ const props = defineProps({
   d0: { type: Number, default: 2.4 },      // the camera's start distance from the flag, stage units (path[0])
   sEnd: { type: Number, default: 2.5 },    // stage units a metre at the path's last key (the detector's own: 1.2 across)
   sFlag: { type: Number, default: 20 },    // … and the flag's, so it stays a mark (~0.9 units: about 40 px)
-  grains: { type: Number, default: 160000 },   // at tier 0; fewer on a lower tier
+  grains: { type: Number, default: 320000 },   // at tier 0; fewer on a lower tier (owner, 20 Oct: "more solid")
   gain: { type: Number, default: 0.92 },   // the grains' light: the stripes at the still's colours
   hold: { type: Number, default: 400 },    // ms of still before the fade
   fade: { type: Number, default: 1400 },   // ms
   collision: { type: String, default: 'thanks' },
   detAt: { type: Number, default: 3.2 },   // the camera this far from the flag (units): the detector lights up
   colAt: { type: Number, default: 13 },    // … LHCb's collision starts in it
-  wordAfter: { type: Number, default: 1.2 },   // s after the camera has stopped: the word
+  emblems: { type: Array, default: () => ['lhcbLogo', 'ltFlag'] },   // gathered when the camera has stopped
+  wordAfter: { type: Number, default: 3.2 },   // s after the camera has stopped: the word (the emblems gather in 2.6)
   wordBy: { type: Number, default: 22 },   // s: the word shows by then whatever the world does
 })
 const { $renderContext, $page, $frontmatter } = useSlideContext()
@@ -87,16 +92,20 @@ const clear = () => { timers.forEach(clearTimeout); timers = []; clearInterval(w
 
 const A = new Vector3(...props.anchor)
 const s0 = props.d0 / META.flagDist
-// where the camera stands at the path's last key (the stage's pose: at + dist·(sin yaw cos
-// pitch, sin pitch, cos yaw cos pitch)), for the scale law's end
-function endOfPath() {
+// the farthest the slide's path takes the camera from the flag (the stage's pose: at +
+// dist·(sin yaw cos pitch, sin pitch, cos yaw cos pitch)): the scale law's end
+function farthest() {
   const sp = $frontmatter?.value?.space ?? $frontmatter?.space
-  const k = sp?.path?.[sp.path.length - 1]?.[1]
-  if (!k || !Array.isArray(k.at)) return new Vector3(-3.7, -474.3, 18.6)
-  const r = Math.PI / 180, y = (k.yaw ?? 0) * r, p = (k.pitch ?? 0) * r, d = k.dist ?? 20
-  return new Vector3(k.at[0] + d * Math.sin(y) * Math.cos(p), k.at[1] + d * Math.sin(p), k.at[2] + d * Math.cos(y) * Math.cos(p))
+  let far = 0
+  for (const [, k] of sp?.path || []) {
+    if (!k || !Array.isArray(k.at)) continue
+    const r = Math.PI / 180, y = (k.yaw ?? 0) * r, p = (k.pitch ?? 0) * r, d = k.dist ?? 20
+    far = Math.max(far, new Vector3(k.at[0] + d * Math.sin(y) * Math.cos(p), k.at[1] + d * Math.sin(p), k.at[2] + d * Math.cos(y) * Math.cos(p)).distanceTo(A))
+  }
+  return far || 22
 }
-const law = scaleLaw({ s0, d0: props.d0, sEnd: props.sEnd, dEnd: endOfPath().distanceTo(A) })
+const law = scaleLaw({ s0, d0: props.d0, sEnd: props.sEnd, dEnd: farthest() })
+const emblems = (k) => props.emblems.forEach((n) => setGrains(n, k))
 
 // the grains, made once per tier (a rebuilt world comes back a tier lower): fewer on a
 // lower tier, each a little larger so the picture keeps its light
@@ -112,7 +121,7 @@ function grains(s, got) {
     // weighed by luminance, the red and green came out a third to a fifth of the
     // yellow). The near-black (under 15 of 255) gives none
     const sample = sampleFrame(got.img, { n: Math.round(props.grains * k), gamma: 1.2, floor: 0.06, sat: 1.0, weight: 'max', norm: 1 })
-    made = { tier, sample, placed: placeInDepth(sample, got.depth, META), size: 0.07 / Math.sqrt(k) }
+    made = { tier, sample, placed: placeInDepth(sample, got.depth, META), size: 0.06 / Math.sqrt(k) }
   }
   let pts = s.h.scene.getObjectByName('lis-grains')
   if (pts && pts.userData.tier !== tier) { s.h.scene.remove(pts); pts.geometry.dispose(); pts.material.dispose(); pts = null }
@@ -131,13 +140,18 @@ function grains(s, got) {
   pts.material.uniforms.uAnchor.value.copy(A)
   return pts
 }
+// the detector's clearing round the flag's mark (space.json `hole` on `det`): reset on arrival
+const HOLE = 0.1
+const s0Hole = () => stage()?.h.scene.getObjectByName('detector:det')?.children[0]?.material.uniforms.uHole
 const stopCollision = () => { bus.set(props.collision, 0); bus.emit('stop', { name: props.collision }) }
 
 async function takeOver() {
   const id = ++run
   clear()
   still.value = true; fading.value = false; word.value = false
-  setGrains('det', 0)
+  setGrains('det', 0); emblems(0)
+  const hole = s0Hole()
+  if (hole) hole.value.w = HOLE
   stopCollision()   // a rebuilt world must not replay a kept step at once
   later(props.wordBy * 1000, () => { if (id === run) word.value = true })
   const s = await waitStage(id)
@@ -162,14 +176,31 @@ async function takeOver() {
     }
     requestAnimationFrame(step)
   })
-  // the detector, the collision and the word follow the camera out
+  // the detector, the collision, the emblems and the word follow the camera
   let det = false, col = false, stopped = -1
   watcher = setInterval(() => {
     if (id !== run) return
     const d = s.camera.position.distanceTo(A)
     if (!det && d > props.detAt) { det = true; setGrains('det', 1) }
     if (!col && d > props.colAt) { col = true; bus.set(props.collision, 1) }
-    if (col && stopped < 0 && !s.api.flying) stopped = performance.now()
+    if (col && stopped < 0 && !s.api.flying) {
+      stopped = performance.now(); emblems(1)
+      // the emblems take over: the collision's glow fades (it washed the logo out) and the
+      // small flag at the module goes (two flags read as a duplicate)
+      bus.set(props.collision, 0)
+      const t0 = performance.now(), u = pts.material.uniforms
+      // the detector's clearing round the mark closes with it
+      const hole = s.h.scene.getObjectByName('detector:det')?.children[0]?.material.uniforms.uHole
+      const r0 = hole?.value.w ?? 0
+      const out = (now) => {
+        if (id !== run) return
+        const k = Math.min(1, (now - t0) / 1500)
+        u.uFade.value = 1 - k
+        if (hole) hole.value.w = r0 * (1 - k)
+        if (k < 1) requestAnimationFrame(out)
+      }
+      requestAnimationFrame(out)
+    }
     if (stopped >= 0 && performance.now() - stopped > props.wordAfter * 1000) { word.value = true; clearInterval(watcher); watcher = 0 }
   }, 100)
 }
@@ -193,8 +224,9 @@ onSlideLeave(() => {
   // slide fades out); a leave before the fade ended leaves the grains whole
   const p = stage()?.h.scene.getObjectByName('lis-grains')
   if (p) p.material.uniforms.uReveal.value = 1
-  // on to the credits the close keeps running; anywhere else the collision stops
-  if (nav.currentSlideNo?.value !== page() + 1) stopCollision()
+  // on to the credits the close keeps running; anywhere else the collision stops and the
+  // emblems go
+  if (nav.currentSlideNo?.value !== page() + 1) { stopCollision(); emblems(0) }
 })
 const onRebuilt = () => {
   if (!live.value) return

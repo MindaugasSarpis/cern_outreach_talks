@@ -668,12 +668,13 @@ space: { at: kt, dist: 18, yaw: 165, pitch: 10, dim: 0, hum: false }
 ---
 
 <Grains :set="{ det: 0 }" />
+<Soundtrack :level="0.3" start />
 <StagePhoto src="figures/lt_lhcb_week_hall.jpg" arrive="camera" alt="Pilna VU Gyvybės mokslų centro auditorija LHCb savaitės atidaryme, dalyviai su LHCb savaitės juostelėmis" focus="50% 50%" />
 
 <!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources -->
 
 <!--
-Kalbėtojui. Auditorija LHCb savaitės atidaryme.
+Kalbėtojui. Auditorija LHCb savaitės atidaryme. Nuo šios skaidrės tyliai groja muzika (Scott Buckley, „Starfire“, CC BY 4.0; savininkas, 2026 10 20: „crazy inspirational soundtrack for the last three slides“), per kalbą tyliau; „Ačiū“ skaidrėje ji sustiprėja ir pasiekia kulminaciją, kai kamera nusileidžia į žmogaus akių aukštį.
 Sakyti: „Į Vilnių atvyko apie du šimtus fizikų iš viso pasaulio, dar daugiau jungėsi nuotoliu. Savaitę jie aptarinėjo LHCb rezultatus, detektorių ir jo ateitį — Lietuvoje.“
 Faktai: dalyvių skaičiai — prognozės (VU: ~200 gyvai, ~600 iš viso; LRT: 200 gyvai); po renginio viešo skaičiaus nėra, todėl tik „apie du šimtus“.
 Vaizdas: nuotr. Tomas Laurinavičius / VU (vu.lt/en/all-news/cern-lh-cb-experiment-conference-starts-at-vu-for-the-first-time-in-lithuania, 2026 09 14).
@@ -687,6 +688,7 @@ space: { at: [3.975, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, di
 
 <VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
 <Grains :set="{ det: 0 }" />
+<Soundtrack :level="0.3" />
 
 <!-- facts: lhcb-scifi, lhcb-scifi-channels, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
 
@@ -712,14 +714,18 @@ space:
     - [0, { at: [3.975, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
     - [2.0, { at: [3.975, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
     - [5.5, { at: [4.0, -477.6, 0.8], dist: 7, yaw: -80, pitch: -6 }]
-    - [10, { at: [4.6, -479.4, 0], dist: 21, yaw: -24, pitch: 14 }]
+    - [10, { at: [4.6, -479.4, 0], dist: 21, yaw: -24, pitch: 14 }]   # the whole detector: its scale
+    - [13, { at: [4.6, -479.4, 0], dist: 21, yaw: -24, pitch: 14 }]
+    - [19, { at: [5.68, -480.94, 0.23], dist: 18, yaw: -55, pitch: -12 }]   # eye level on the cavern floor (1,7 m): LHCb standing on it, a person at its foot
 ---
 
 <LisTakeover><h1>Ačiū</h1></LisTakeover>
+<Soundtrack :level="0.9" :resync="49" />
 
+<!-- facts: lhcb-detector-size -->
 
 <!--
-Kalbėtojui. Klipo paskutinis kadras (vėliava ant šaltosios dėžės) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių, sudarytą iš grūdelių pagal tikrąją jo geometriją; vėliava lieka ženklu ten, kur stovi SciFi modulis (savininkas, 2026 10 19: „position it in a 3D LHCb CAD (maybe as pointcloud)“). Tada detektorius įsižiebia, jame įvyksta tikras LHCb susidūrimas (savininkas: „LHCb collision within lhcb“), ir pasirodo „Ačiū“; viskas lieka per klausimus; be garso.
+Kalbėtojui. Klipo paskutinis kadras (vėliava ant šaltosios dėžės) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių, sudarytą iš grūdelių pagal tikrąją jo geometriją; vėliava lieka ženklu ten, kur stovi SciFi modulis (savininkas, 2026 10 19: „position it in a 3D LHCb CAD (maybe as pointcloud)“). Tada detektorius įsižiebia, jame įvyksta tikras LHCb susidūrimas (savininkas: „LHCb collision within lhcb“); kamera kelias sekundes laiko visą detektorių, tada nusileidžia į žmogaus akių aukštį (1,7 m) ant ertmės grindų: LHCb stovi visu 10 m aukščiu, šalia — žmogaus siluetas mastui (savininkas, 2026 10 20: „see the huge scale of lhcb … first person view at eye level“). Tada kairėje susirenka LHCb logotipas ir Lietuvos vėliava, ir pasirodo „Ačiū“; viskas lieka per klausimus. Muzika pasiekia kulminaciją akių aukštyje ir po minutės pati nutyla.
 Nuorodų ekrane nėra: licencijų reikalaujamos nuorodos — kitame puslapyje, kurio nerodyti (savininkas, 2026 10 19: „We don't need credits at the last slide“).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
@@ -729,10 +735,11 @@ Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaid
 
 ---
 class: credits-page
-space: { at: [4.6, -479.4, 0], dist: 21, yaw: -24, pitch: 14, dim: 0.7, ambient: 0, hum: false }
+space: { at: [5.68, -480.94, 0.23], dist: 18, yaw: -55, pitch: -12, dim: 0.7, ambient: 0, hum: false }
 ---
 
-<Grains :set="{ det: 1 }" />
+<Grains :set="{ det: 1, lhcbLogo: 1, ltFlag: 1 }" />
+<Soundtrack :level="0.9" />
 <div class="src credits credits-list">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas)<br>
 1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0<br>
 Riešo vaizdas: MARS Bioimaging Ltd<br>
@@ -740,7 +747,8 @@ B. Stumpe: S. E. Bennett / CERN, CC BY 4.0<br>
 NeXT serveris: P. Loïez / CERN, CC BY-SA 4.0<br>
 LHCb rezultatų grafikai: © CERN LHCb kolaboracijos naudai, CC BY 4.0 (apkarpyti, perspalvinti)<br>
 LHCb savaitė Vilniuje: VU nuotr. (salė — T. Laurinavičius)<br>
-Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF)</div>
+Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF)<br>
+Muzika: Scott Buckley, „Starfire“ (scottbuckley.com.au), CC BY 4.0</div>
 
 <!--
 Kalbėtojui. Šio puslapio nerodyti: po „Ačiū“ nebespausti. Jis — licencijų reikalaujamoms nuorodoms (savininkas, 2026 10 19: „We don't need credits at the last slide“; pasirinkta „B“ — paveikslai lieka, nuorodos kitame puslapyje); lieka žiniatinklio versijoje ir PDF. Planck žemėlapiui (CC BY-NC 3.0 IGO) ir Sailko nuotraukai (CC BY 3.0) jų reikia; CERN medžiagai — ne.

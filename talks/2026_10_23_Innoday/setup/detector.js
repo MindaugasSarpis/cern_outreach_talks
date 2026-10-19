@@ -91,7 +91,7 @@ function stepper(name, initial = 0) {
 //     out?: [x, y, z] (where the hits leave to, in the object's frame), hitR?: 0.035 (m),
 //     hitMin?: 0.1 (m from the beam: grains nearer it are never hits) }
 const DET_VERT = PLACE + /* glsl */ `
-attribute float aX, aHit, aSeed;
+attribute float aX, aHit, aSeed, aPart;
 uniform float uShowT, uHideT, uSweep, uLen, uHitT, uSize, uAlpha;
 uniform vec3 uOut, uColor, uHot;
 uniform vec4 uHole;   // Innoday: a small disc on screen round this point (object space; w: radius, of the half-height) is left clear
@@ -104,7 +104,7 @@ void main() {
   float flash = passed * exp(-max(d, 0.0) * 0.9);
   float fade = uHideT > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.2, uTime - uHideT);
   vec3 p = position, col = mix(uColor, uHot, 0.6 * flash);
-  float a = uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.5 * flash;
+  float a = (uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.5 * flash) * (aPart == 1.0 ? 0.22 : (aPart == 0.0 ? 0.25 : 1.0));   // the beam pipe (part 1) read as a stick when lit, and the VELO (0), its grains packed round the vertex, as a white-hot blob: both dimmed
   float size = uSize;
   if (uHitT < 1e8) {
     float h = uTime - uHitT;
@@ -134,7 +134,7 @@ void main() {
 }`
 
 function buildDetector(o, ctx) {
-  const g = new Group(); g.position.set(...at3(o.pos))
+  const g = new Group(); g.position.set(...at3(o.pos)); g.name = 'detector:' + (o.name || '')
   const S = o.scale ?? 0.5, T = o.stretch ?? 2.4
   const W = (x, y, z) => [z * S, y * S * T, x * S * T]   // LHCb metres -> world, as the collision draws it
   const mat = material(DET_VERT, {
@@ -154,11 +154,11 @@ function buildDetector(o, ctx) {
     if (ev) for (const t of trajectories(ev).tracks) for (const p of t.pts) {
       const k = Math.round(p[2] / 0.05); if (!bins.has(k)) bins.set(k, []); bins.get(k).push(p[0], p[1])
     }
-    const pos = new Float32Array(n * 3), ax = new Float32Array(n), hit = new Float32Array(n), seed = new Float32Array(n)
+    const pos = new Float32Array(n * 3), ax = new Float32Array(n), hit = new Float32Array(n), seed = new Float32Array(n), part = new Float32Array(n)
     let hits = 0
     for (let i = 0; i < n; i++) {
       const x = raw[i * 4] / 1000, y = raw[i * 4 + 1] / 1000, z = raw[i * 4 + 2] / 1000
-      pos.set(W(x, y, z), i * 3); ax[i] = z * S; seed[i] = Math.random()
+      pos.set(W(x, y, z), i * 3); ax[i] = z * S; seed[i] = Math.random(); part[i] = raw[i * 4 + 3]
       const r = R + 0.004 * Math.max(z, 0)
       // not the beam pipe and the VELO's inner edge, where every track meets: those grains
       // would all count, and leave as one white bar along the axis
@@ -168,7 +168,7 @@ function buildDetector(o, ctx) {
         for (let j = 0; j < b.length; j += 2) if ((b[j] - x) ** 2 + (b[j + 1] - y) ** 2 < r * r) { hit[i] = 1; hits++; break }
       }
     }
-    g.add(points(geometry(n, { position: pos, aX: [ax, 1], aHit: [hit, 1], aSeed: [seed, 1] }), mat))
+    g.add(points(geometry(n, { position: pos, aX: [ax, 1], aHit: [hit, 1], aSeed: [seed, 1], aPart: [part, 1] }), mat))
     g.userData.hits = hits
   }
   let alive = true

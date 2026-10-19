@@ -13,8 +13,10 @@ import AfterCover from './AfterCover.vue'
 import { armAfterCover } from './afterCover.js'
 import { installOpening } from '../components/lhc-opening/index.js'
 import { installDetector } from './detector.js'
+import { installEmblems } from './emblems.js'
 import Grains from './Grains.vue'
 import LisTakeover from './LisTakeover.vue'
+import Soundtrack from './Soundtrack.vue'
 // the LHCb event the shared collision draws by default (lhc-opening's own): the
 // close's detector marks the grains its tracks pass through
 import EVENT_LB from '../components/lhc-opening/event.json'
@@ -79,6 +81,7 @@ export default ({ app, router }) => {
   installPlots(registerBuilder)
   installOpening({ app, registerBuilder })
   installDetector(registerBuilder, { event: EVENT_LB })
+  installEmblems(registerBuilder)   // the close's LHCb logo and Lithuanian flag in grains (setup/emblems.js)
   app.component('Count', Count)
   app.component('Strands', Strands)
   app.component('AfterFlight', AfterFlight)
@@ -89,4 +92,5 @@ export default ({ app, router }) => {
   app.component('AfterCover', AfterCover)
   app.component('Grains', Grains)
   app.component('LisTakeover', LisTakeover)
+  app.component('Soundtrack', Soundtrack)   // the close's music across its slides
 }
