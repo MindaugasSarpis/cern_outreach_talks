@@ -84,6 +84,11 @@ A piece a second talk needs moves to the shared kit instead of being copied.
 - `setup/Crossing.vue`: starts or continues the shared `lhc-collision` run
   without `<LhcOpening>`'s Lithuanian captions.
 - `setup/Grains.vue`: Užsikrauk's, sets a form's step on slide enter.
+- `setup/route.js`: stations 4–11's forms: `detector` (LHCb's Run 3 geometry
+  as grains, `public/data/lhcb-grains.bin`, baked by `hero/bake_grains.py`;
+  lights behind a front, then its hits leave as data), `stream` (packets
+  through two trigger gates, ours white), `grid` (store, 42 sites, the thread
+  to Vilnius), `spark` (the one dot). Steps through `<Grains>`.
 - `styles/index.css`: `.nums` (numbers low left, white with light-blue
   words, staggered by `--d1…--d3`) and the clock.
 - `package.json`: `stage:check --types lhc-collision` (the shared builder).
@@ -116,6 +121,11 @@ The owner's decisions, dated, newest last.
   Test stills now (short drafts through `pnpm talk render`); the full shots'
   renders after 26 Oct with the Scheduler's slot. Blender 4.5.14 LTS lives in
   ~/talks/.cache/blender (outside the toolkit); the scene is `hero/build_scene.py`.
+- 2026-10-19: "the one for the future": no deadline, to be reworked many
+  times; the whole story goes into the deck now, rough, rather than station by
+  station (owner: "I just see 4 slides now, the second slide is dark, need the
+  full story"). All 12 stations drafted the same day; the dive now ends on a
+  white dot (our collision) in its bin instead of fading to black early.
 
 ## Verify
 

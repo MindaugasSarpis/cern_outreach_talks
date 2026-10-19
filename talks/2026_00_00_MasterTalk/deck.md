@@ -41,7 +41,7 @@ space:
   ambient: 0.15
 ---
 
-<Grains :set="{ jp: 1 }" />
+<Grains :set="{ jp: 1, dot: 1, det: 0, data: 0, grid: 0 }" />
 <Clock off />
 
 <!-- Station 0, the peak (storyboard 0:00–0:45). -->
@@ -63,19 +63,19 @@ peaks lit, but the bins' steps and the narrow spike still show through
 
 ---
 space:
-  at: [1.0, 7.85, 0]
-  dist: 0.8
+  at: [0.754, 7.17, 0]
+  dist: 4
   yaw: 6
   pitch: 1
   dim: 0
-  ambient: [[0, 0.15], [6, 0]]
+  ambient: [[0, 0.15], [6, 0.12], [7.5, 0]]
   path:
     - [0, { at: [0, 4.2, 0], dist: 19, yaw: 0, pitch: 3 }]
-    - [3.5, { at: [1.0, 7.3, 0], dist: 5, yaw: 4, pitch: 2 }]
-    - [6.5, { at: [1.0, 7.85, 0], dist: 0.8, yaw: 6, pitch: 1 }]
+    - [3.5, { at: [0.754, 6.9, 0], dist: 5, yaw: 4, pitch: 2 }]
+    - [7, { at: [0.754, 7.17, 0], dist: 4, yaw: 6, pitch: 1 }]
 ---
 
-<Grains :set="{ jp: 1 }" />
+<Grains :set="{ jp: 1, dot: 1, det: 0, data: 0, grid: 0 }" />
 <Clock off />
 
 <!-- Station 1, the dive (0:45–1:15): into one bin, until one grain fills the frame; black. -->
@@ -86,10 +86,12 @@ Message: every point in this picture is one collision; we follow one of them.
 Say: "Each grain here is one collision, one moment inside the detector. Let's
 take one of them and follow it from the beginning."
 
-The camera dives into the top of the bin at 4440 MeV, the grains part as it
-passes, and the world goes black (ambient to 0). The join to the next slide
-sits in that black. To come: the grain unfolds backwards into its tracks
-(storyboard), once the talk's own event is extracted.
+The camera dives into the top of the bin at 4440 MeV, toward the one white
+grain there (`dot`, the talk's own collision: m(J/ψ p̄) 4437.5 MeV), and
+stops 4 units from it: the white dot stands among its bin's blue grains, so it
+reads as one of them. The ambient world goes black; the join to the next slide
+is the fade. To come: the grain unfolds backwards
+into its tracks (storyboard).
 
 (~0.5 min)
 -->
@@ -111,6 +113,7 @@ space:
 ---
 
 <Crossing name="crossing" start />
+<Grains :set="{ dot: 0, det: 0, data: 0, grid: 0 }" />
 <Clock :from="-25" unit="ns" />
 
 <div class="nums" style="--d1: 4.5s; --d2: 5.7s; --d3: 6.9s">
@@ -160,6 +163,7 @@ space:
 ---
 
 <Crossing name="crossing" />
+<Grains :set="{ dot: 0, det: 0, data: 0, grid: 0 }" />
 <Clock :keys="[[0, -25], [1.5, 0], [5.8, 0], [8.5, 63]]" unit="ns" />
 
 <div class="nums" style="--d1: 10.5s; --d2: 11.7s">
@@ -201,4 +205,386 @@ Vidal for LHCb, arXiv:1005.2585 (M5 at 18.8 m; kept in Upgrade I,
 arXiv:2305.10515).
 
 (~1.75 min)
+-->
+
+---
+space:
+  at: [4.0, -400.8, 0]
+  dist: 19
+  yaw: -20
+  pitch: 12
+  dim: 0
+  ambient: 0
+  hum: false
+  path:
+    - [0, { at: [3.4, -400.9, 0], dist: 8.4, yaw: -32, pitch: 13 }]
+    - [7, { at: [4.0, -400.8, 0], dist: 19, yaw: -20, pitch: 12 }]
+---
+
+<Crossing name="crossing" />
+<Grains :set="{ dot: 0, det: 1, data: 0, grid: 0 }" />
+<Clock :from="63" unit="ns" />
+
+<div class="nums" style="--d1: 7.5s; --d2: 8.7s">
+  <p><b>5.1</b><span>mm</span></p>
+  <p><b>11 000</b><span>km of fibre</span></p>
+</div>
+
+<!-- facts: lhcb-velo-distance, lhcb-scifi, lhcb-muon-m5-18p8m -->
+
+<!--
+Station 4, the detector (storyboard 4:45–7:15).
+
+Message: the particles have crossed a whole detector in 63 nanoseconds, and
+every layer of it measured them.
+
+Say: "In those 63 nanoseconds our particles crossed LHCb, all twenty metres
+of it. First the VELO: silicon sensors just 5.1 millimetres from the beams,
+which see where each particle was born. Then the magnet, which bends them so
+we can weigh them, and the tracker behind it, built from more than 11 000
+kilometres of plastic fibre. Then the calorimeters stop most of them, and only
+the muons reach the last walls, nineteen metres out."
+
+The detector is LHCb's real Run 3 geometry (public/data/lhcb-grains.bin,
+baked from HSF Phoenix's LHCb.glb, from LHCb's DD4hep description), drawn
+stretched across the beam as the event is (2.4×, as LHCb's event displays
+do). It lights up behind a front that runs from the vertex to the last muon
+station. The clock holds at 63 ns, the light time to M5.
+
+Sources: LHCb VELO Upgrade (5.1 mm, lhcb-velo-distance); LHCb SciFi (over
+11 000 km of fibre, lhcb-scifi); X. Cid Vidal for LHCb, arXiv:1005.2585 (M5
+at 18.8 m).
+
+(~2.5 min)
+-->
+
+---
+space:
+  at: [12, -402, 0]
+  dist: 17
+  yaw: -42
+  pitch: 10
+  dim: 0
+  ambient: 0
+  hum: false
+  path:
+    - [0, { at: [4.0, -400.8, 0], dist: 19, yaw: -20, pitch: 12 }]
+    - [3, { at: [5.5, -400, 0], dist: 17, yaw: -24, pitch: 11 }]
+    - [9, { at: [12, -402, 0], dist: 17, yaw: -42, pitch: 10 }]
+---
+
+<Crossing name="crossing" />
+<Grains :set="{ dot: 0, det: 2, data: 1, grid: 0 }" />
+<Clock :from="1" :to="900" :run="105" unit="µs" />
+
+<div class="nums" style="--d1: 9.5s; --d2: 10.7s">
+  <p><b>4</b><span>TB/s</span></p>
+  <p><b>3 %</b><span>of the internet</span></p>
+</div>
+
+<!-- facts: lhcb-run3-readout-4tbs, internet-intl-bandwidth-2022 -->
+
+<!--
+Station 5, the readout (7:15–9:00): hits become bytes.
+
+Message: every crossing is read out whole, and that is a flood of data.
+
+Say: "Every place a particle touched is now a number. LHCb reads out the
+whole detector for every crossing, thirty million times a second: about four
+terabytes every second. That is about three percent of all the internet
+traffic that crosses the world's borders, from one experiment."
+
+The grains our tracks passed through (its hits) turn white, the rest of the
+detector dims, and the hits leave downstream; the stream of crossings starts.
+The clock runs on in µs without stopping on a value: no public source gives
+the readout's latency (storyboard, "The clock").
+
+Sources: arXiv:2105.04031 (4 TB/s average in Run 3); TeleGeography 2022
+(997 Tbps of international bandwidth: 4 TB/s is 32 Tbps, about 3 %).
+
+(~1.75 min)
+-->
+
+---
+space:
+  at: [30, -401.5, 0]
+  dist: 10
+  yaw: -35
+  pitch: 8
+  dim: 0
+  ambient: 0
+  hum: false
+  path:
+    - [0, { at: [12, -402, 0], dist: 17, yaw: -42, pitch: 10 }]
+    - [4, { at: [30, -401.5, 0], dist: 10, yaw: -35, pitch: 8 }]
+---
+
+<Grains :set="{ dot: 0, det: 0, data: 2, grid: 0 }" />
+<Clock :from="1" :to="900" :run="120" unit="ms" />
+
+<div class="nums" style="--d1: 5.5s; --d2: 6.7s">
+  <p><b>500</b><span>GPUs</span></p>
+  <p><b>30 → 1</b><span>MHz</span></p>
+</div>
+
+<!-- facts: lhcb-hlt1-500-cards-89khz, lhcb-run3-hlt1-1mhz-out, lhcb-hlt1-30mhz -->
+
+<!--
+Station 6, HLT1, cut one (9:00–11:00).
+
+Message: the first cut keeps one crossing in thirty, and ours survives.
+
+Say: "Nobody can store that. So the first filter runs on about five hundred
+graphics cards, the same chips as in a gaming PC, and looks at every crossing
+in real time. Of thirty million a second, it keeps about one million. Ours is
+one of them."
+
+The trigger's gesture, the first of three: at the gate the crossings burst
+into dust, about one in thirty passes, and ours (the white packet) stays lit
+just past it. The clock runs on in ms without stopping on a value.
+
+Sources: arXiv:2606.14480 (about 500 GPU cards in HLT1); arXiv:2408.03881
+(HLT1 output about 1 MHz); LHCb Starterkit (30 MHz of non-empty crossings).
+
+(~2 min)
+-->
+
+---
+space:
+  at: [56.5, -401.5, 0]
+  dist: 17
+  yaw: -40
+  pitch: 12
+  dim: 0
+  ambient: 0
+  hum: false
+  path:
+    - [0, { at: [30, -401.5, 0], dist: 10, yaw: -35, pitch: 8 }]
+    - [5, { at: [56.5, -401.5, 0], dist: 17, yaw: -40, pitch: 12 }]
+---
+
+<Grains :set="{ dot: 0, det: 0, data: 3, grid: 0 }" />
+<Clock :from="1" :to="48" :run="110" unit="h" />
+
+<div class="nums" style="--d1: 6s; --d2: 7.2s; --d3: 8.4s">
+  <p><b>30</b><span>PB</span></p>
+  <p><b>10</b><span>GB/s</span></p>
+  <p><b>1 in 500</b><span>bytes kept</span></p>
+</div>
+
+<!-- facts: lhcb-trigger-5tbs-10gbs, lhcb-buffer-80-hours, lhcb-upgrade1-trigger -->
+
+<!--
+Station 7, the buffer and HLT2, cut two (11:00–13:00): the same gesture.
+
+Message: the survivors wait on disk while the detector is calibrated, then a
+second, slower cut decides; one byte in five hundred is kept.
+
+Say: "What survives waits in a buffer of thirty petabytes of disk, for hours,
+sometimes days, while we calibrate the detector precisely. Then the second
+filter looks at each crossing in full detail. In the end LHCb writes about ten
+gigabytes a second to storage: of every five hundred bytes the detector
+produced, one is kept. Ours, again, is that one."
+
+The disc round the lane is the disk buffer; the second gate is the same
+gesture as the first. The clock turns to hours: the final decision comes
+hours to days later (the buffer could hold about 80 hours at 1 MHz: a
+capacity, not a wait).
+
+Sources: arXiv:2412.05041 (30 PB buffer, 10 GB/s to storage, one byte in
+500; hours to days); arXiv:2305.10515 (80 hours at 1 MHz).
+
+(~2 min)
+-->
+
+---
+clicks: 2
+space:
+  at: [118, -404.5, 0]
+  dist: 30
+  yaw: -30
+  pitch: 18
+  dim: 0
+  ambient: 0.06
+  hum: false
+  path:
+    - [0, { at: [56.5, -401.5, 0], dist: 17, yaw: -40, pitch: 12 }]
+    - [3.5, { at: [95, -400, 0], dist: 12, yaw: -36, pitch: 12 }]
+    - [8, { at: [118, -404.5, 0], dist: 30, yaw: -30, pitch: 18 }]
+---
+
+<Grains :set="{ dot: 0, det: 0, data: 4, grid: 1 }" :clicks="{ 1: { grid: 2 }, 2: { grid: 3 } }" />
+<Clock :keys="[[0, 0], [25, 11]]" unit="years" />
+
+<div class="nums" style="--d1: 8.5s; --d2: 0.4s; --d3: 0.4s">
+  <p><b>1</b><span>EB</span></p>
+  <p v-click="1"><b>42</b><span>countries</span></p>
+  <p v-click="2"><b>100 000</b><span>files</span></p>
+</div>
+
+<!-- facts: cern-exabyte, cern-wlcg, lhcb-open-data, lhcb-run1-release-sarpis, sarpis-interview-run1-1-5-years, lhcb-run1-volume-sources-differ -->
+
+<!--
+Station 8, the data centre, the grid and the open data (13:00–15:30).
+
+Message: the kept data are stored for decades, shared across the world, and
+then opened to everyone; Vilnius did that last step.
+
+Say: "The data that survive go to CERN's data centre. In December last year
+CERN passed one exabyte of stored data, a million terabytes, mostly on
+magnetic tape. [click] From there they go out to the computing grid: more than
+170 sites in 42 countries share the work. [click] And then, years later, the
+data are opened to anyone. Our collision was recorded in 2012. Here in
+Vilnius we prepared LHCb's whole Run 1 data for release: more than a hundred
+thousand files, found, checked and copied one by one, a year and a half of
+work. In December 2023 it went public, and our collision with it."
+
+The store gathers as the stream ends in it; click 1: the 42 sites and their
+threads; click 2: the thread to Vilnius turns white. The clock turns to years:
+recorded 2012, released 2023 (11 years). "1 EB" is all of CERN's stored LHC
+data, not LHCb's alone. The open-data volume differs by source (800 TB
+official, over 1 PB with everything, 100 000+ files): the screen shows the
+files.
+
+Sources: home.cern, December 2025 (one exabyte); WLCG (170 sites, 42
+countries); Vilnius University (Run 1 release: over 100 000 files);
+VU Library interview, 5 March 2026 (a year and a half).
+
+(~2.5 min)
+-->
+
+---
+space:
+  at: [-6.4, 4.44, 0]
+  dist: 23
+  yaw: 0
+  pitch: 2
+  dim: 0
+  ambient: [[0, 0], [3, 0.15]]
+---
+
+<Grains :set="{ jp: 1, dot: 2, det: 0, data: 0, grid: 3 }" />
+<Clock :keys="[[0, 11], [6, 14]]" unit="years" />
+
+<div class="nums" style="--d1: 6.5s; --d2: 7.7s">
+  <p><b>16 400</b><span>Λb⁰</span></p>
+  <p><b>4 437.5</b><span>MeV</span></p>
+</div>
+
+<!-- facts: stonkus-bsc-2026-yield -->
+
+<!--
+Station 9, cut three, the analysis (15:30–18:00).
+
+Message: a student in Vilnius ran the last cut on the open data, and our
+collision is one dot in his plot.
+
+Say: "This year Dominykas Stonkus, a student in our group, made the last cut
+himself, on the open data, for his bachelor thesis. Out of all those
+collisions he kept about 16 400 in which a Λb⁰ particle decayed the way we
+want. Each of them becomes one dot. Ours lands here, at 4437 and a half MeV.
+Fourteen years after it happened."
+
+The dot falls into its bin of the spectrum (still out of focus). The clock
+counts 11 → 14 years (2012 → 2026) and stops as the dot lands.
+
+Caveats, said once if asked: the plot on screen is the 2019 spectrum (246 000
+Λb⁰, next slide), the thesis's 16 400 are from 2012 open data alone. Our
+collision is a candidate from our own selection, like the thesis's (not yet
+matched against its list: run 124143, event 39463039), and about half the
+candidates at its mass are random combinations. To come: the thesis's own
+Λb⁰ mass peak, with the dot landing in it (needs the thesis's data and the
+author's agreement).
+
+Sources: D. Stonkus, VU bachelor thesis 2026 (N_sig = 16 406.6 ± 161.7);
+CERN Open Data record 28040 (the event: m(J/ψ p̄) = 4437.5 MeV).
+
+(~2.5 min)
+-->
+
+---
+space:
+  at: [-6.4, 4.44, 0]
+  dist: 23
+  yaw: 0
+  pitch: 2
+  dim: 0
+  ambient: 0.15
+---
+
+<Grains :set="{ jp: 2, dot: 1, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<div class="nums" style="--d1: 7s; --d2: 8.2s">
+  <p><b>246 000</b><span>Λb⁰</span></p>
+  <p><b>7.3</b><span>σ</span></p>
+</div>
+
+<!-- facts: lhcb-pentaquark-2019-yield, lhcb-pentaquark-2019 -->
+
+<!--
+Station 10, the peak, now sharp (18:00–21:00): station 0's frame, in focus.
+
+Message: now you can read the picture we started with: a new particle, a
+pentaquark, found in a quarter of a million collisions like ours.
+
+Say: "Now look again at the picture we started with. Every dot is one
+collision like ours, 246 000 of them. Where the dots pile up higher than they
+should, nature made something: a particle of five quarks, a pentaquark. The
+narrow peak on the left was found in 2019 at 7.3 sigma: the chance that it is
+a fluke is less than one in a trillion. And our dot sits right in the middle
+of the other two."
+
+The same object and the same frame as station 9 (the plot right of the
+numbers): the grains pull into focus, the axis lights,
+and the three peaks get their ticks (Pc(4312), Pc(4440), Pc(4457)); the white
+dot stays in its bin by Pc(4440).
+
+Sources: LHCb, arXiv:1904.03947 (246 000 Λb⁰ → J/ψ p K⁻; Pc(4312)⁺ at 7.3σ);
+HEPData ins1728691 (the spectrum's bins).
+
+(~3 min)
+-->
+
+---
+space:
+  at: [0, 4.2, 0]
+  dist: 52
+  yaw: 18
+  pitch: 10
+  dim: 0
+  ambient: [[0, 0.15], [8, 0.45]]
+  path:
+    - [0, { at: [-6.4, 4.44, 0], dist: 23, yaw: 0, pitch: 2 }]
+    - [14, { at: [0, 4.2, 0], dist: 52, yaw: 18, pitch: 10 }]
+---
+
+<Grains :set="{ jp: 2, dot: 1, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<div class="credits credit">
+  LHCb geometry: LHCb Collaboration, DD4hep (GPL-3.0), via HSF Phoenix (Apache-2.0) ·
+  the collision: CERN Open Data, LHCb 2012 (CC0) · the spectrum: LHCb, HEPData ins1728691
+</div>
+
+<!--
+Station 11, the pull-back (21:00–23:30).
+
+Message: one collision, followed for fourteen years and through three
+countries' worth of machines, ends as one dot in a discovery, and the last
+steps were taken here, in Vilnius.
+
+Say: "So that is the life of one collision. Twenty-five nanoseconds before
+it, two bunches of protons. Sixty-three nanoseconds after it, a whole detector
+lit. Then three cuts, a million terabytes, forty-two countries, and fourteen
+years later one dot in a plot that a student made here in Vilnius, from data
+anyone can download. Thank you."
+
+The camera pulls back from the plot, the world comes up round it. To come:
+the whole route behind (the detector, the stream, the grid), and faces from
+the group if they agree (storyboard, "For the owner to judge").
+
+Sources: those of stations 2–10 (the numbers said here are theirs).
+
+(~2.5 min)
 -->

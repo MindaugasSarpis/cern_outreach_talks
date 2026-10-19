@@ -1,5 +1,6 @@
 import { registerBuilder } from 'slidev-addon-stage'
 import { installGrains } from './grains.js'
+import { installRoute } from './route.js'
 import { installOpening } from '../components/lhc-opening/index.js'
 import Grains from './Grains.vue'
 import Clock from './Clock.vue'
@@ -22,6 +23,7 @@ import EVENT_LB from './data/event-lb.json'
 export default ({ app }) => {
   installGrains(registerBuilder)
   installOpening({ app, registerBuilder, event: EVENT_LB })
+  installRoute(registerBuilder, { event: EVENT_LB })   // the detector, the data's route, the grid, the dot (setup/route.js)
   app.component('Grains', Grains)
   app.component('Clock', Clock)
   app.component('Crossing', Crossing)
