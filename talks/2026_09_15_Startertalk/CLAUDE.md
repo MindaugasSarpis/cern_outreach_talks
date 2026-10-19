@@ -1,4 +1,4 @@
-# Pentaquarks at LHCb (talks/2026_09_00_Startertalk)
+# Pentaquarks at LHCb (talks/2026_09_15_Startertalk)
 
 The notes for this talk: Claude Code reads this file when it works in the
 talk's directory, and the root CLAUDE.md holds what every talk shares. Keep it
@@ -8,7 +8,7 @@ current (Status, Decisions, Figures). The repo is public: nothing private here.
 
 From the root's list of current talks:
 
-- `talks/2026_09_00_Startertalk/` — "Pentaquarks at LHCb", a 30-minute
+- `talks/2026_09_15_Startertalk/` — "Pentaquarks at LHCb", a 30-minute
   technical physics seminar. Date not fixed yet: `09_00` is a placeholder —
   rename the dir, its `videos.toml` release_tag and the deck's `videos.release` once known
   (no talk-owned clips, so no release to rename).
