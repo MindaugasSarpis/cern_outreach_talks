@@ -40,7 +40,9 @@ Slidev counts it (hidden slides are not counted).
                           `onscreen: words` opts a deck out, `onscreen: numbers` in;
                           the same key in a slide's frontmatter rules that slide
                           (an owner-granted title or „Ačiū“): `onscreen: words`
-                          drops its TEXT, NUMBER-BARE still runs
+                          drops its TEXT, NUMBER-BARE still runs. The cover
+                          (slide 1, or `layout: cover`) keeps its title (the
+                          owner, 2026-10-20: covers are fine; slogans are not)
   NUMBER-BARE    warning  (the same decks) a number with neither a unit nor a name
                           beside it: '140 taškų', '20 užklausų', or a `.unit` /
                           `.name` element
@@ -248,7 +250,7 @@ class Lint:
             self.check_words_and_sources(s, text)
             own = str(s.frontmatter.get("onscreen") or "").strip().lower()
             if self.numbers_only or own == "numbers":
-                self.check_numbers(s, self.numbers_text(s), words_ok=own == "words")
+                self.check_numbers(s, self.numbers_text(s), words_ok=own == "words" or (s.layout == "cover" and own != "numbers"))
             self.check_inline_sizes(s)
             self.check_marks(s, n_visible)
             self.check_facts(s, bank)

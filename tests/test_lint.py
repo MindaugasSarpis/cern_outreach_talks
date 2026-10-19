@@ -274,9 +274,10 @@ Sources: CERN.
         l = self.lint_at("2026_11_01_New", self.DECK.format(extra=""))
         self.assertTrue(l.numbers_only)
         found = codes(l, "TEXT")
-        self.assertEqual([f.slide for f in found], [1, 3])          # the title; the credit
-        self.assertIn("'The detector'", found[0].message)
-        self.assertIn("'Photo CERN'", found[1].message)
+        self.assertEqual([f.slide for f in found], [3])             # the credit; the cover keeps its title
+        self.assertIn("'Photo CERN'", found[0].message)
+        plain = self.DECK.format(extra="layout: default\n")              # a first slide that is no cover
+        self.assertIn(1, [f.slide for f in codes(self.lint_at("2026_11_01_New", plain), "TEXT")])
         self.assertEqual(l.sources, "notes")
         self.assertEqual(codes(l, "NO-SRC"), [])
 
@@ -285,10 +286,10 @@ Sources: CERN.
             '<div class="big"><Count :to="800" /><span class="unit">TB</span> <Count :to="4" /> PB</div>\n'
             '<div class="credits">Photo: J. Doe, CC BY 4.0</div>')
         l = self.lint_at("2026_11_01_New", deck)
-        self.assertEqual([f.slide for f in codes(l, "TEXT")], [1])       # the last slide: units and its credits pass
-        moved = deck.replace("# The detector", '<div class="credits">Photo: J. Doe</div>')
+        self.assertEqual([f.slide for f in codes(l, "TEXT")], [])        # the last slide: units and its credits pass
+        moved = deck.replace("<div>12 639 · 95 % · 3 mln.</div>", '<div class="credits">Photo: J. Doe</div>')
         found = codes(self.lint_at("2026_11_01_New", moved), "TEXT")
-        self.assertEqual([f.slide for f in found], [1])                 # credits on any other slide are text
+        self.assertEqual([f.slide for f in found], [2])                 # credits on any other slide are text
         self.assertIn("'Photo J Doe'", found[0].message)
 
     def test_named_numbers_captions_and_bare_numbers(self):
