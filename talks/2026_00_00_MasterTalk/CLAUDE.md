@@ -87,6 +87,11 @@ A piece a second talk needs moves to the shared kit instead of being copied.
 - `styles/index.css`: `.nums` (numbers low left, white with light-blue
   words, staggered by `--d1…--d3`) and the clock.
 - `package.json`: `stage:check --types lhc-collision` (the shared builder).
+- `hero/build_scene.py`: the hero shots' Blender scene (run headless in
+  Blender 4.5): Phoenix's LHCb.glb plus the event's tracks, grown to `--t` ns
+  by light time; shots `crossing` and `side`. The .glb stays outside git
+  (~/talks/.cache/opendata/mastertalk-geometry/), renders in
+  ~/talks/.cache/mastertalk-hero/.
 
 ## Decisions
 
@@ -107,6 +112,10 @@ The owner's decisions, dated, newest last.
   "geant rendering as in that lhcb thanks video", "Might have been geant +
   blender"): Phoenix's LHCb.glb (DD4hep, GPL-3.0 + Apache-2.0) → Blender
   Cycles on CPU. Proposed, not started; renders after 26 Oct.
+- 2026-10-19: go-ahead for the Blender hero shots; "numbers are ok" (owner).
+  Test stills now (short drafts through `pnpm talk render`); the full shots'
+  renders after 26 Oct with the Scheduler's slot. Blender 4.5.14 LTS lives in
+  ~/talks/.cache/blender (outside the toolkit); the scene is `hero/build_scene.py`.
 
 ## Verify
 
