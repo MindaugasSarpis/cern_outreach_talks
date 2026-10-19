@@ -104,7 +104,7 @@ space:
   ambient: 0
   hum: false
   rate: [[0, 1.4], [1.78, 1.4], [2.58, 0]]
-  cameraRate: 1
+  cameraRate: [[0, 1], [4.5, 1], [5, 0]]   # the camera stops once its path has landed: world and camera still, the hold the numbers are read in
   path:
     - [0, { at: [0, -400, 0], dist: 7, yaw: 40, pitch: 5 }]
     - [4, { at: [0, -400.55, 0], dist: 5.5, yaw: 0, pitch: 4 }]
