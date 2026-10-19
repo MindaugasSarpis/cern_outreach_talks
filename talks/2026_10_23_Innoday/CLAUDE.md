@@ -417,6 +417,19 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
 ## Figures and open items (for the speaker)
 
+- The light injection system (facts lhcb-scifi-lis, -lis-vcsel, -channels,
+  -layout, -modules-area, -z-position, lhcb-vilnius-scifi-lis; 19 Oct): at
+  each module end, two LIS boards (6-layer PCBs, two GBLD drivers and two
+  670 nm VCSELs each), a 28 cm flex to the Master Board, and per mat an
+  aluminium light injection bar holding a fibre whose last 13 cm are scratched;
+  each SiPM channel sees 1-5 photoelectrons, to set the PACIFIC's thresholds
+  (1,5, 2,5, 4,5 p.e.). 524 288 channels. The 2014 TDR planned an LED. The
+  board count (512 boards, 1024 VCSELs) is arithmetic, unverified: don't say
+  it. Vilnius: only the group's own agenda (3 Oct 2024) lists „SciFi + Light
+  Injection System“ among its service tasks; say no more than that the
+  group's service work includes the SciFi and its LIS, unless the owner
+  confirms more. Area: about 320 m² (CERN Courier 2021; 340 and 360 m² are
+  older figures). Stations at about 8-9,3 m from the collision (2014 TDR).
 - The MARS wrist image is © MARS Bioimaging (CERN KT hosts it); ask MARS
   before any non-educational use.
 - On the venue laptop, read the stage's frame-rate guard at the close

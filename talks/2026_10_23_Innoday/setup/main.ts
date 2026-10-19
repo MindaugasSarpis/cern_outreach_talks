@@ -12,9 +12,14 @@ import ShortHum from './ShortHum.vue'
 import AfterCover from './AfterCover.vue'
 import { armAfterCover } from './afterCover.js'
 import { installOpening } from '../components/lhc-opening/index.js'
+import { installDetector } from './detector.js'
+import Grains from './Grains.vue'
+// the LHCb event the shared collision draws by default (lhc-opening's own): the
+// close's detector marks the grains its tracks pass through
+import EVENT_LB from '../components/lhc-opening/event.json'
 // The CMS event's data in the deck's own bundle: lhc-opening loads it with a
-// dynamic import, so its two collision clouds (stations collision and thanks)
-// were filled when that chunk arrived, ~2.7-3.3 s in, in the middle of the
+// dynamic import, so its collision cloud (station collision; „Ačiū“ had one
+// too until 19 Oct) was filled when that chunk arrived, ~2.7-3.3 s in, in the middle of the
 // cover's fly-in (0.25-0.3 s of main thread each in a trace). Imported here, its
 // import resolves at once and both fills run in the world's boot, before the
 // fly-in starts (owner, 14 Oct: "slight lag on cover slide animation").
@@ -32,7 +37,9 @@ import EVENT_CMS from '../components/lhc-opening/event-cms.json'
 // 12's result plots, light on black, unlit and additive, as OpenData draws its
 // plots). The shared LHC collision (components/lhc-opening, as
 // in OpenData and Užsikrauk karjerai) registers `lhc-collision` and
-// <LhcOpening>; <CollisionStart> starts one on „Ačiū“ without its captions.
+// <LhcOpening>; <CollisionStart> starts one on „Ačiū“ without its captions,
+// LHCb's own event there, inside LHCb's geometry as grains (`detector`,
+// setup/detector.js, from MasterTalk; <Grains> sets its step).
 // (A plain function: Slidev's defineAppSetup is the identity, and
 // @slidev/types is not a dependency of the talk.)
 //
@@ -68,6 +75,7 @@ export default ({ app, router }) => {
   installFunnel(registerBuilder)
   installPlots(registerBuilder)
   installOpening({ app, registerBuilder })
+  installDetector(registerBuilder, { event: EVENT_LB })
   app.component('Count', Count)
   app.component('Strands', Strands)
   app.component('AfterFlight', AfterFlight)
@@ -76,4 +84,5 @@ export default ({ app, router }) => {
   app.component('CollisionStart', CollisionStart)
   app.component('ShortHum', ShortHum)
   app.component('AfterCover', AfterCover)
+  app.component('Grains', Grains)
 }

@@ -377,3 +377,7 @@ html[data-stage] .credits-page .src.credits-list {
   font-size: 14px; line-height: 1.7; opacity: 0.8; text-align: left;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
 }
+
+/* „Ačiū“ over LHCb (owner, 19 Oct: "LHCb collision within lhcb"): the word below the
+   detector, clear of the tracks */
+html[data-stage] .slidev-layout.statement.thanks-lhcb h1 { position: absolute; left: 0; right: 0; bottom: 8%; margin: 0; text-align: center; }

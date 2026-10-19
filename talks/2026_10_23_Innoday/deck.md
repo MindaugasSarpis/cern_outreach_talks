@@ -665,6 +665,7 @@ Vaizdas: savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius / Opening_Ceremon
 space: { at: kt, dist: 18, yaw: 165, pitch: 10, dim: 0, hum: false }
 ---
 
+<Grains :set="{ det: 0 }" />
 <StagePhoto src="figures/lt_lhcb_week_hall.jpg" arrive="camera" alt="Pilna VU Gyvybės mokslų centro auditorija LHCb savaitės atidaryme, dalyviai su LHCb savaitės juostelėmis" focus="50% 50%" />
 
 <!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources -->
@@ -680,6 +681,7 @@ Vaizdas: nuotr. Tomas Laurinavičius / VU (vu.lt/en/all-news/cern-lh-cb-experime
 
 ---
 layout: statement
+class: thanks-lhcb
 space:
   at: thanks
   dim: 0
@@ -687,14 +689,13 @@ space:
   hum: false
   rate: [[0, 0.7], [2.4, 0.5]]
   cameraRate: 1
-  path:   # the CMS event flies out to every side: in close, then back and square to the beam
-    - [0, { at: [0, -480, 0], dist: 4.2, yaw: 18, pitch: 5 }]
-    - [6, { at: [0, -480, 0], dist: 3.0, yaw: 40, pitch: 10 }]
-    - [14, { at: [0, -480, 0], dist: 5.2, yaw: 14, pitch: 18 }]
-    - [26, { at: [0, -480, 0], dist: 6.4, yaw: 4, pitch: 20 }]   # the debris fills the frame
+  path:   # LHCb's event inside LHCb (owner, 19 Oct): from the vertex back to the whole detector, as MasterTalk frames it
+    - [0, { at: [3.4, -480.9, 0], dist: 8.4, yaw: -40, pitch: 14 }]
+    - [7, { at: [4.6, -479.2, 0], dist: 22, yaw: -52, pitch: 18 }]
 ---
 
 <CollisionStart name="thanks" />
+<Grains :set="{ det: 1 }" />
 
 # Ačiū
 
@@ -710,9 +711,10 @@ Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaid
 
 ---
 class: credits-page
-space: { at: thanks, dist: 6.4, yaw: 4, pitch: 20, dim: 0.7, ambient: 0, hum: false }
+space: { at: [4.6, -479.2, 0], dist: 22, yaw: -52, pitch: 18, dim: 0.7, ambient: 0, hum: false }
 ---
 
+<Grains :set="{ det: 1 }" />
 <div class="src credits credits-list">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas)<br>
 1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0<br>
 Riešo vaizdas: MARS Bioimaging Ltd<br>
