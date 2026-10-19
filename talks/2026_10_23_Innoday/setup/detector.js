@@ -104,7 +104,7 @@ void main() {
   float flash = passed * exp(-max(d, 0.0) * 0.9);
   float fade = uHideT > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.2, uTime - uHideT);
   vec3 p = position, col = mix(uColor, uHot, 0.6 * flash);
-  float a = (uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.5 * flash) * (aPart == 1.0 ? 0.22 : (aPart == 0.0 ? 0.25 : 1.0));   // the beam pipe (part 1) read as a stick when lit, and the VELO (0), its grains packed round the vertex, as a white-hot blob: both dimmed
+  float a = (uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.5 * flash) * (aPart == 1.0 ? 0.0 : (aPart == 0.0 ? 0.25 : (aPart >= 7.0 ? 2.0 : 1.0)));   // the beam pipe (part 1) read as a stick when lit, then as a stray dash: not drawn; the VELO (0), its grains packed round the vertex, read as a white-hot blob: dimmed; the calorimeters and muon stations (7-9), spread over the widest walls, read as haze: doubled
   float size = uSize;
   if (uHitT < 1e8) {
     float h = uTime - uHitT;
@@ -128,7 +128,7 @@ void main() {
     // sight; added on, their blue washed its colours out: they make way round it
     vec4 hc = projectionMatrix * modelViewMatrix * vec4(uHole.xyz, 1.0), gc = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
     vec2 dn = (gc.xy / gc.w - hc.xy / hc.w) * vec2(projectionMatrix[1][1] / projectionMatrix[0][0], 1.0);
-    a *= smoothstep(uHole.w * 0.55, uHole.w, length(dn));
+    a *= mix(0.25, 1.0, smoothstep(uHole.w * 0.2, uHole.w, length(dn)));   // a soft dimming round it, not a hole
   }
   place(p, size, a * fade, col, aSeed);
 }`
