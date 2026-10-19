@@ -146,8 +146,9 @@ function buildDetector(o, ctx) {
   })
   const u = mat.uniforms
   const build = (buf, ev) => {
-    // on a lower tier (a phone) every k-th grain: the stage's budget for one form
-    const all = new Int16Array(buf), k = Math.max(1, Math.ceil(300000 / (ctx.budget || 300000)))
+    // on a lower tier (a phone) every k-th grain, to the stage's budget for one form; all of
+    // them at tier 0 (the file has 446 400 since the re-bake)
+    const all = new Int16Array(buf), k = (ctx.tier ?? 0) === 0 ? 1 : Math.max(1, Math.ceil(all.length / 4 / (ctx.budget || 300000)))
     const raw = k === 1 ? all : all.filter((_, j) => ((j >> 2) % k) === 0), n = raw.length / 4
     // the event's paths, binned every 5 cm along the beam: a grain is a hit when a track passes within hitR of it
     const bins = new Map(), R = o.hitR ?? 0.035
@@ -171,7 +172,9 @@ function buildDetector(o, ctx) {
     g.add(points(geometry(n, { position: pos, aX: [ax, 1], aHit: [hit, 1], aSeed: [seed, 1], aPart: [part, 1] }), mat))
     g.userData.hits = hits
   }
-  let alive = true
+  let alive = true, warm = 0
+  const onWarm = () => { warm = 3 }
+  addEventListener('innoday:prewarm', onWarm)
   const offLatch = places.when(() => {
     fetch(ctx.asset('/' + String(o.src || 'data/lhcb-grains.bin').replace(/^\//, ''))).then((r) => r.arrayBuffer())
       .then((buf) => { if (alive) build(buf, EVENT) }).catch((e) => console.warn('stage: detector grains failed', o.src, e))
@@ -193,9 +196,10 @@ function buildDetector(o, ctx) {
       now = t; u.uTime.value = t
       if (s.fresh) { s.fresh = false; apply() }
       if (s.step <= 0 && u.uHideT.value < 1e8 && t - u.uHideT.value > 1.3) u.uShowT.value = 1e9
-      g.visible = u.uShowT.value < 1e8   // hidden, it costs nothing on the other slides
+      if (warm > 0) warm--
+      g.visible = u.uShowT.value < 1e8 || warm > 0   // hidden, it costs nothing on the other slides
     },
-    dispose() { alive = false; offLatch(); s.off() },
+    dispose() { alive = false; offLatch(); s.off(); removeEventListener('innoday:prewarm', onWarm) },
   }
 }
 

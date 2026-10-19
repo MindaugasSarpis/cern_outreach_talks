@@ -169,6 +169,14 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-20 (later): the owner's notes on the deployed close ("Looks amazing" — the
+eye-level view, the logo and the flag, more solid grains, the soundtrack, no CAD for
+now) are built (Decisions, "The close at eye level"): five visual review rounds, a
+four-lens code review with each finding verified, its confirmed findings fixed;
+the music's two files measured (-15,9 and -14,1 LUFS, the arrival at the cut's
+67–70 s) and its flow tested headless (forward, back, a direct open, the overview).
+Stills 31–34 retaken. Not yet deployed at this entry.
+
 2026-10-20: the new ending is built (Decisions, "The new ending"; owner, 20 Oct:
 "Deploy"): slide 32 the light injection clip `lis_flag.mp4` (rendered at
 1080p, 160 samples, 250 frames in 57 min on gluon; on the release with
@@ -281,11 +289,15 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   `k`) at lower alpha, the VELO (its grains packed round the vertex) and the beam pipe
   dimmed; the hand-over picture has 320 000 grains. The music: Scott Buckley's
   „Starfire“ (CC BY 4.0), picked from six of his tracks by measured loudness: one
-  arrival after a steep build (track 1:37). `<Soundtrack>` on slides 31–34: it starts
-  low (0,3) under the speech on the hall photo, cross-fades on „Ačiū“ to the cut's 49 s
-  if still before it, so the arrival lands on the eye-level view, plays full (0,9),
-  fades out with the cut (2:10–2:22 of the track), and fades if the deck goes back
-  before 31; only the audience's window plays it. Credited on the credits page.
+  arrival after a steep build (track 1:37). `<Soundtrack>` on slides 31–34, two files
+  from the same master at the same gain (the track's 0:30–2:25 and 1:19–2:25; a seek
+  fails on a server without byte ranges, the venue zip's python http.server): it
+  starts low (0,3) under the speech on the hall photo on a forward arrival,
+  cross-fades on „Ačiū“ to the second file while the first is still before its 49 s,
+  so the arrival lands on the eye-level view, plays full (0,9), fades out with the cut
+  (2:10–2:22 of the track), and fades if the deck goes back before 31; „Ačiū“ opened
+  directly starts the second file; levels through Web Audio gain (iOS ignores an
+  element's volume); only the audience's window plays it. Credited on the credits page.
 - The cover's pentaquark reads as five quarks (owner, 20 Oct: "the pentaquark
   (far too many quarks and some orbits)"): headless frames showed five nodes, but
   each a loose sparkle of grains with a weak core, pairs drifting together on

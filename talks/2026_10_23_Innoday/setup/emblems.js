@@ -14,6 +14,7 @@
 // Also a person for scale: { type: emblem, src: 'figures/person_grains.png', mode: alpha, of: det }
 import { BufferGeometry, BufferAttribute, Points, Group, Color, NormalBlending, AdditiveBlending, ShaderMaterial } from 'three'
 import { PLACE, listen, state, material as materialOf } from './detector.js'
+import { places } from './afterCover.js'
 
 // the Lithuanian flag, top to bottom (#FDB913, #006A44, #C1272D)
 // (the yellow given as #FFC800: the frame's vignette and the finish's top end dulled
@@ -149,8 +150,15 @@ function buildEmblem(o, ctx) {
     pts.renderOrder = 20   // after the detector's grains and the collision: laid over them
     g.add(pts)
   }
-  if (o.flag === 'lt') make(flagGrains(n, w))
-  else if (o.src) imageGrains(ctx.asset('/' + String(o.src).replace(/^\//, '')), n, w, o).then(make).catch((e) => console.warn('stage: emblem failed', o.src, e))
+  // built once the cover is behind (afterCover.js): sampled at the world's boot, it fell in
+  // the cover's fly-in
+  const offLatch = places.when(() => {
+    if (o.flag === 'lt') make(flagGrains(n, w))
+    else if (o.src) imageGrains(ctx.asset('/' + String(o.src).replace(/^\//, '')), n, w, o).then(make).catch((e) => console.warn('stage: emblem failed', o.src, e))
+  })
+  let warm = 0
+  const onWarm = () => { warm = 3 }
+  addEventListener('innoday:prewarm', onWarm)
   const key = o.of || o.name
   let now = 0, step = state.get(key) ?? 0, fresh = state.has(key)
   const off = listen(key, (k) => { step = k; fresh = true })
@@ -165,9 +173,10 @@ function buildEmblem(o, ctx) {
       now = t; u.uTime.value = t
       if (fresh) { fresh = false; apply() }
       if (u.uHide.value < 1e8 && t - u.uHide.value > 1.1) { u.uT0.value = 1e9; u.uHide.value = 1e9 }
-      g.visible = u.uT0.value < 1e8
+      if (warm > 0) warm--
+      g.visible = u.uT0.value < 1e8 || warm > 0   // a few frames drawn hidden first (innoday:prewarm): upload and compile ahead
     },
-    dispose() { alive = false; off() },
+    dispose() { alive = false; offLatch(); off(); removeEventListener('innoday:prewarm', onWarm) },
   }
 }
 

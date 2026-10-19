@@ -45,7 +45,7 @@ const props = defineProps({
   colAt: { type: Number, default: 13 },    // … LHCb's collision starts in it
   emblems: { type: Array, default: () => ['lhcbLogo', 'ltFlag'] },   // gathered when the camera has stopped
   wordAfter: { type: Number, default: 3.2 },   // s after the camera has stopped: the word (the emblems gather in 2.6)
-  wordBy: { type: Number, default: 22 },   // s: the word shows by then whatever the world does
+  wordBy: { type: Number, default: 34 },   // s: the word shows by then whatever the world does (the path ends at 19 s, the word ~3 s later)
 })
 const { $renderContext, $page, $frontmatter } = useSlideContext()
 const nav = useNav()
@@ -153,6 +153,9 @@ async function takeOver() {
   const hole = s0Hole()
   if (hole) hole.value.w = HOLE
   stopCollision()   // a rebuilt world must not replay a kept step at once
+  // the detector, the floor, the cradles and the emblems drawn hidden for a few frames
+  // behind the still: their buffers upload and programs compile now, not mid pull-back
+  dispatchEvent(new Event('innoday:prewarm'))
   later(props.wordBy * 1000, () => { if (id === run) word.value = true })
   const s = await waitStage(id)
   const got = s ? await load() : null
@@ -162,7 +165,7 @@ async function takeOver() {
   const pts = grains(s, got)
   const u = pts.material.uniforms
   u.uReveal.value = 0; u.uFade.value = 1
-  pts.visible = true
+  pts.visible = true; pts.userData.gone = false
   later(props.hold, () => {
     if (id !== run) return
     fading.value = true
@@ -198,6 +201,7 @@ async function takeOver() {
         u.uFade.value = 1 - k
         if (hole) hole.value.w = r0 * (1 - k)
         if (k < 1) requestAnimationFrame(out)
+        else { pts.visible = false; pts.userData.gone = true }   // faded: no longer drawn at all
       }
       requestAnimationFrame(out)
     }
@@ -205,15 +209,21 @@ async function takeOver() {
   }, 100)
 }
 
+// the close as it ends: the module's picture and its mark gone, the clearing closed, the
+// collision let go, the emblems up (the credits page sets them too)
+function endState(s, pts) {
+  if (pts) { pts.material.uniforms.uFade.value = 0; pts.visible = false; pts.userData.gone = true }
+  const hole = s?.h.scene.getObjectByName('detector:det')?.children[0]?.material.uniforms.uHole
+  if (hole) hole.value.w = 0
+  bus.set(props.collision, 0)
+  emblems(1)
+}
 // the next page (the credits) opened directly, a reload or `g`: the close as it ends
 async function showEnd() {
   const id = ++run
   const s = await waitStage(id)
-  const got = s ? await load() : null
-  if (id !== run || !s || !got || nav.currentSlideNo?.value !== page() + 1) return
-  const pts = grains(s, got)
-  pts.material.uniforms.uReveal.value = 1
-  pts.visible = true
+  if (id !== run || !s || nav.currentSlideNo?.value !== page() + 1) return
+  endState(s, s.h.scene.getObjectByName('lis-grains'))
 }
 
 onSlideEnter(() => { if (live.value) takeOver() })
@@ -224,9 +234,10 @@ onSlideLeave(() => {
   // slide fades out); a leave before the fade ended leaves the grains whole
   const p = stage()?.h.scene.getObjectByName('lis-grains')
   if (p) p.material.uniforms.uReveal.value = 1
-  // on to the credits the close keeps running; anywhere else the collision stops and the
-  // emblems go
-  if (nav.currentSlideNo?.value !== page() + 1) { stopCollision(); emblems(0) }
+  // on to the credits the close goes to its end (a press before the stop skips ahead);
+  // anywhere else the collision stops and the emblems go
+  if (nav.currentSlideNo?.value === page() + 1) endState(stage(), p)
+  else { stopCollision(); emblems(0) }
 })
 const onRebuilt = () => {
   if (!live.value) return
@@ -245,8 +256,8 @@ onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt
 watch(() => nav.currentSlideNo?.value, (n) => {
   if (!live.value) return
   const p = stage()?.h.scene.getObjectByName('lis-grains')
-  if (p) p.visible = n === page() || n === page() + 1
-  else if (n === page() + 1) showEnd()
+  if (p) p.visible = n === page() && !p.userData.gone
+  if (n === page() + 1 && (!p || !p.userData.gone)) showEnd()
 }, { immediate: true })
 </script>
 

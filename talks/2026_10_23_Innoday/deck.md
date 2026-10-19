@@ -667,7 +667,7 @@ Vaizdas: savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius / Opening_Ceremon
 space: { at: kt, dist: 18, yaw: 165, pitch: 10, dim: 0, hum: false }
 ---
 
-<Grains :set="{ det: 0 }" />
+<Grains :set="{ det: 0, lhcbLogo: 0, ltFlag: 0 }" />
 <Soundtrack :level="0.3" start />
 <StagePhoto src="figures/lt_lhcb_week_hall.jpg" arrive="camera" alt="Pilna VU Gyvybės mokslų centro auditorija LHCb savaitės atidaryme, dalyviai su LHCb savaitės juostelėmis" focus="50% 50%" />
 
@@ -687,7 +687,7 @@ space: { at: [3.975, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, di
 ---
 
 <VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
-<Grains :set="{ det: 0 }" />
+<Grains :set="{ det: 0, lhcbLogo: 0, ltFlag: 0 }" />
 <Soundtrack :level="0.3" />
 
 <!-- facts: lhcb-scifi, lhcb-scifi-channels, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
@@ -720,7 +720,7 @@ space:
 ---
 
 <LisTakeover><h1>Ačiū</h1></LisTakeover>
-<Soundtrack :level="0.9" :resync="49" />
+<Soundtrack :level="0.9" resync />
 
 <!-- facts: lhcb-detector-size -->
 
