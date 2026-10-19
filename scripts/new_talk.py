@@ -34,7 +34,7 @@ NAME_RE = re.compile(r"^\d{4}_\d{2}_\d{2}_\w+$")
 # One ref for both addons: they are released together from one repo.
 # `pnpm talk bump-toolkit vX.Y.Z` rewrites this line, env.yaml's pip entry and
 # the talks' pins together.
-ADDONS_REF = "v0.4.0"
+ADDONS_REF = "v0.8.1"
 ADDONS_REPO = "github:MindaugasSarpis/slidev-videos"
 REPO = "MindaugasSarpis/cern_outreach_talks"
 PALETTES = {"classic": "#7dd3fc", "blue": "#5b93ff", "ember": "#ffb168"}   # name -> accent (the dust of a clip in flight)
