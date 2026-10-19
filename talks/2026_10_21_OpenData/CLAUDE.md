@@ -24,13 +24,27 @@ false, clip: false }`): no whoosh on a flight, no rising tone as a clip gathers,
 no hum (owner, 13 Oct: "transitions were like driving sounds"). Sound stays on,
 so the collision's swell, thump and drone (`ctx.audio()`) and the clips play.
 
+„LHC 27 km“ on the tunnel (slide 3) has a soft shade from the slide's lower-left
+corner behind it (`.lhc-tunnel::before`, the last rule in styles/index.css;
+owner, 15 Oct). It is Užsikrauk karjerai's rule, copied byte for byte so the two
+decks match. When the module takes the shade (its lift after 26 Oct), drop this
+copy.
+
 ## The deck now (r3, 2026-10-12)
 
 Fourteen slides (HANDOFF.md has the history and the owner's open questions):
 
-1. Cover: the date, „Atveriame LHCb duomenis“ and the name line, over the
-   collider dimmed at `wide` (the owner, 12 Oct, via the Scheduler: a cover after
-   all, an exception like „Ačiū“). The CERN clip buffers behind it.
+1. Cover: the date, „CERN LHCb: atvirieji duomenys“ (the owner's words, 18 Oct)
+   and the name line, over the CMS crossing at full size (the owner, 18 Oct:
+   "more impressive (maybe the full size cms collision)"; a cover at all since
+   12 Oct, an exception like „Ačiū“). It is the `cover` lhc-collision at the
+   opening station, silent (`sound: false`), `grain: 2.7`, started by
+   `setup/CoverCollision.vue`: the run plays fast (the cover's `rate` keys), then
+   holds, the camera swaying ±3° from high on the beam's −x side (`at: [0.85,
+   -400.27, -4.09]`, dist 10.5, yaw −110, pitch 66), judged against end-on and
+   three-quarter views; both muons fly away from the text. Two slides in a row
+   with the same run's name would race (the old slide's leave stops the new
+   one's start), so it lives on the cover alone. The CERN clip buffers behind it.
 2. CERN from above (`cern_overview_short.mp4`); it pushes on into the ring.
 3. The LHC tunnel (`<LhcOpening part="tunnel" />`); it pushes on into the pipe.
 4. The CMS crossing in 4π (see above), the camera on its own `path`.

@@ -1,0 +1,120 @@
+{
+ "what": "anti-Lambda_b0 -> J/psi(-> mu+ mu-) anti-p K+ candidate (charge conjugate)",
+ "selection": "Offline selection on the DIMUON full DST (not a stripping output): J/psi from FullDSTDiMuonJpsi2MuMuDetachedLine, |m(mumu)-3096.9| < 50 MeV; p and K: Long tracks, ghost_prob < 0.4, track chi2/ndf < 3, pT > 250 MeV, pT(p)+pT(K) > 900 MeV, IP chi2 > 9 to every PV (diagonal errors); p: p > 10 GeV, CombDLLp > 10, CombDLLp - CombDLLk > 3; K: p > 2 GeV, CombDLLk > 0; four-track straight-line vertex fit chi2/ndf < 10 (ndf 5, diagonal state errors); DIRA > 0.999 to the PV of smallest Lb IP; decay time > 0.3 ps; m(J/psi p K) with the J/psi mass substituted (m(mumupK) - m(mumu) + 3096.9) in 5450-5800 MeV. Chosen: closest to 5619.6 among clean candidates, single PV.",
+ "file": "00041836_00036071_1.dimuon.dst",
+ "entry": 36026,
+ "run": 124143,
+ "event": 39463039,
+ "gps_time_us": 1343531440710208,
+ "gps_time_utc": "2012-07-29T03:10:40.710208+00:00",
+ "n_pvs": 1,
+ "tracks": {
+  "mu_a": 3,
+  "mu_b": 15,
+  "proton": 12,
+  "kaon": 10
+ },
+ "track_roles": {
+  "3": "mu",
+  "15": "mu",
+  "12": "pbar",
+  "10": "K+"
+ },
+ "proton_charge": -1,
+ "masses_MeV": {
+  "m_JpsipK_jpsi_mass_substituted": 5627.8,
+  "m_mumupK_raw": 5644.5,
+  "m_mumu": 3113.6,
+  "m_Jpsip": 4437.5,
+  "m_pK": 2293.2,
+  "m_JpsiK": 4172.1,
+  "pdg_Lb": 5619.6,
+  "pdg_Jpsi": 3096.9,
+  "reflection_checks": {
+   "p_as_K_(Bs->JpsiKK)": 5467.0,
+   "p_as_K_K_as_pi_(B0->JpsiKpi)": 5338.3,
+   "p_as_pi_(B0->JpsipiK)": 5410.2
+  },
+  "note": "m(J/psi p) and m(J/psi K) use the J/psi four-vector with the PDG mass; no full kinematic (DecayTreeFitter) refit."
+ },
+ "m_Jpsip_in_2019_spectrum": {
+  "range_MeV": [
+   4000,
+   5200
+  ],
+  "bins": 80,
+  "bin_width_MeV": 15,
+  "bin_index": 29,
+  "bin_MeV": [
+   4435,
+   4450
+  ],
+  "nearest_pentaquark": 4440
+ },
+ "pv": {
+  "index": 0,
+  "xyz_mm": [
+   0.672,
+   0.107,
+   26.939
+  ]
+ },
+ "decay_vertex": {
+  "xyz_mm": [
+   0.224,
+   0.554,
+   30.487
+  ],
+  "chi2ndf": 1.21,
+  "ndf": 5
+ },
+ "flight": {
+  "distance_mm": 3.604,
+  "decay_time_ps": 1.31,
+  "dira": 0.9999914058858094,
+  "Lb_ip_mm": 0.0149,
+  "p_Lb_MeV": 51554,
+  "pt_Lb_MeV": 9062
+ },
+ "hadrons": {
+  "p_MeV": [
+   18805,
+   8349
+  ],
+  "pt_MeV": [
+   3905,
+   1320
+  ],
+  "ipchi2": [
+   58.8,
+   139.9
+  ],
+  "order": [
+   "proton",
+   "kaon"
+  ],
+  "pid_proton": {
+   "DLLe": -8.842,
+   "DLLmu": 0.806,
+   "DLLk": 12.363,
+   "DLLp": 28.251,
+   "NNe": 0.0,
+   "NNpi": 0.025,
+   "NNk": 0.114,
+   "NNp": 0.881,
+   "NNghost": 0.011
+  },
+  "pid_kaon": {
+   "DLLe": -5.559,
+   "DLLmu": 0.591,
+   "DLLk": 23.768,
+   "DLLp": 21.167,
+   "NNe": 0.0,
+   "NNpi": 0.025,
+   "NNk": 0.711,
+   "NNp": 0.28,
+   "NNghost": 0.003
+  },
+  "pid_note": "DLL* = combined PID log-likelihood relative to pion (ProtoParticle extra info 600-604). NN* = ProbNN read from keys 700-705: plausible values, but the key mapping is not independently validated."
+ }
+}

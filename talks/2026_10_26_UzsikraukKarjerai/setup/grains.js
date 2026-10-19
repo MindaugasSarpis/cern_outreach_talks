@@ -1,6 +1,15 @@
 import {
   Group, Points, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3,
+  LinearMipmapLinearFilter,
 } from 'three'
+
+// a label sprite from the engine, mipmapped: drawn far smaller than its canvas, it aliased
+// into dither (OpenData's; the ported portraits take it for their names)
+export function smooth(l) {
+  const t = l.material.map
+  if (t) { t.generateMipmaps = true; t.minFilter = LinearMipmapLinearFilter; t.anisotropy = 4; t.needsUpdate = true }
+  return l
+}
 
 // This talk's own forms of grains, drawn the way the engine draws its galaxy
 // and collider (slidev-addon-stage, stage/forms.js): points of light, added
@@ -31,19 +40,40 @@ import {
 // when its slide becomes the current one). The last step of every name is
 // kept, so a form built after the call still starts right.
 
+//
+// One bus for every form of the talk, including the ones ported from OpenData
+// (setup/team.js, setup/thesis.js), which take the steps, the clock and the
+// grains' drawing from here. A step for later (`setGrainsLater`) runs on the
+// world's clock, as the motion it waits for does: every ported form's update
+// moves that clock on (tick), and a step still to come keeps its form busy.
+
 const BUS = 'karjera:grains'
-const state = new Map()
+export const state = new Map()
 
 export function setGrains(name, step) {
   if (state.get(name) === step) return
   state.set(name, step)
   window.dispatchEvent(new CustomEvent(BUS, { detail: { name, step } }))
 }
-function listen(name, fn) {
+let clock = 0
+const pending = new Set()
+export function setGrainsLater(name, step, s) {
+  const p = { name, step, at: clock + s }
+  pending.add(p)
+  return () => pending.delete(p)
+}
+export function tick(t) {
+  clock = t
+  for (const p of pending) if (t >= p.at) { pending.delete(p); setGrains(p.name, p.step) }
+}
+export const waiting = (name) => [...pending].some((p) => p.name === name)
+export function listen(name, fn) {
   const h = (e) => { if (e.detail?.name === name) fn(e.detail.step) }
   window.addEventListener(BUS, h)
   return () => window.removeEventListener(BUS, h)
 }
+// a name's last step, for the forms kept in files of their own
+export const stepOf = (name) => state.get(name)
 
 const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
@@ -53,7 +83,7 @@ const unit = () => {
 }
 
 // A grain's twinkle, size from distance, and the engine's linear-light point.
-const PLACE = /* glsl */ `
+export const PLACE = /* glsl */ `
 uniform float uTime, uPixelRatio;
 varying vec3 vColor; varying float vAlpha;
 void place(vec3 p, float size, float alpha, vec3 color, float seed) {
@@ -79,7 +109,7 @@ void main() {
   gl_FragColor = vec4(pow(vColor * a, vec3(2.2)), 1.0);
 }`
 
-function material(vertexShader, uniforms) {
+export function material(vertexShader, uniforms) {
   return new ShaderMaterial({
     vertexShader, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
     // uPixelRatio carries the frame scale (the buffer's height / 900; each builder returns it as
@@ -610,12 +640,14 @@ function buildGhost(o, ctx) {
 
 // ---- map ----------------------------------------------------------------------------
 //   { type: map, src: 'data/europe.json', pos, scale?: 1, color?, border?: '#…', size?: 1,
-//     alpha?: 0.5, borderAlpha?: 0.18, lift?: 0 }
+//     alpha?: 0.5, borderAlpha?: 0.18, lift?: 0, name? }
 // A coastline drawn in grains on the ground plane (y = 0): the points of
 // `coast` and `borders` in the file are x, z pairs, one unit a degree of
 // latitude (scripts/make_europe.py, from Natural Earth 1:50m). Born scattered
 // in the dust; condenses on arrival (`c` again). No names, no fills: the
-// shape alone says where we are.
+// shape alone says where we are. A named map shows only from step 1 (step 0
+// hides it); each change eases over about two seconds (Lithuania's outline,
+// scripts/make_lithuania.py, comes up on slide 13).
 const MAP_VERT = /* glsl */ `
 attribute vec3 aScatter;
 attribute float aSeed, aKind;   // 0 coast, 1 border
@@ -665,12 +697,27 @@ function buildMap(o, ctx) {
     arm() { u.uForm.value = 0; t0 = -1 },
     assemble(t, onDone) { t0 = t; u.uForm.value = 0; done = onDone || null },
   }
+  const A = o.alpha ?? 0.5, B = o.borderAlpha ?? 0.18
+  let want = 1, shown = 1, last = -1, off = null
+  if (o.name) {
+    want = shown = (state.get(o.name) ?? 0) > 0 ? 1 : 0
+    off = listen(o.name, (k) => { want = k > 0 ? 1 : 0 })
+    mat.addEventListener('dispose', off)
+    u.uAlpha.value = A * shown; u.uBorderAlpha.value = B * shown
+  }
   return {
     group: g, labels: [], api, frameScale: u.uPixelRatio,
     update(t) {
       u.uTime.value = t
       if (t0 >= 0) { const x = Math.min((t - t0) / 3.6, 1); u.uForm.value = x; if (x >= 1) { t0 = -1; const cb = done; done = null; cb?.() } }
+      if (o.name && shown !== want) {
+        const dt = last < 0 ? 0 : Math.min(t - last, 0.1)
+        shown = want > shown ? Math.min(want, shown + dt / 2) : Math.max(want, shown - dt / 1.2)
+        u.uAlpha.value = A * shown; u.uBorderAlpha.value = B * shown
+      }
+      last = t
     },
+    dispose: off ?? undefined,
   }
 }
 
@@ -784,7 +831,8 @@ function buildQuintet(o, ctx) {
 //     width?: 24, height?: 10, max?: (tallest bin), unit?: 1 (entries per grain),
 //     steps?: [0, 1] (the share of entries shown at each step), fill?: 20 (s for the whole set),
 //     fall?: 1.1 (s a grain takes to drop), size?: 1, alpha?: 0.35, color?, axis?: true,
-//     curve?: 1 (>1: the first entries drop faster, the last slower), marks?: [[lo, hi], …] }
+//     curve?: 1 (>1: the first entries drop faster, the last slower), marks?: [[lo, hi], …],
+//     tickSize?, tickAlpha? (the ticks over the marks; default size × 1,3 and 0,55) }
 // A measured distribution building up entry by entry: each grain is one
 // entry (one candidate) dropping into its bin in a random order, so the
 // shape grows the way the data came in. A step's share is reached at a
@@ -893,7 +941,7 @@ function buildHistogram(o, ctx) {
       }
       const tg = new BufferGeometry()
       tg.setAttribute('position', new BufferAttribute(new Float32Array(tp), 3)); tg.setAttribute('aSeed', new BufferAttribute(new Float32Array(ts), 1))
-      const tm = material(TICK_VERT, { uSize: { value: (o.size ?? 1) * 1.3 }, uAlpha: { value: 0.55 }, uColor: { value: new Color(...rgb(o.hot || '#fff4dc')) } })
+      const tm = material(TICK_VERT, { uSize: { value: o.tickSize ?? (o.size ?? 1) * 1.3 }, uAlpha: { value: o.tickAlpha ?? 0.55 }, uColor: { value: new Color(...rgb(o.hot || '#fff4dc')) } })
       tm.uniforms.uTime = u.uTime; tm.uniforms.uPixelRatio = u.uPixelRatio; tm.uniforms.uMarkT = u.uMarkT
       const tk = new Points(tg, tm); tk.frustumCulled = false
       g.add(tk)
@@ -936,6 +984,12 @@ function buildHistogram(o, ctx) {
       u.uFrom.value = to; u.uTo.value = to; u.uT0.value = now - 100; u.uDur.value = 0.01
       // marks switched on with the set already full fade in now; switched off, they go at once
       u.uMarkT.value = !marksOn(to) ? 1e9 : instant ? now - 100 : lit ? u.uMarkT.value : now + 0.2
+      return
+    }
+    // the same share already filling (a click that only adds the marks, before the fill
+    // has ended): let the fill run on, and light the marks when it ends
+    if (to === u.uTo.value && u.uTo.value > u.uFrom.value) {
+      u.uMarkT.value = marksOn(to) ? u.uT0.value + u.uDur.value + u.uFall.value + 0.6 : 1e9
       return
     }
     fill(cur, to)

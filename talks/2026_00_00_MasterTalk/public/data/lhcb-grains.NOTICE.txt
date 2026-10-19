@@ -1,0 +1,9 @@
+lhcb-grains.bin: points sampled from the surfaces of LHCb's Run 3 detector geometry
+(hero/bake_grains.py in this talk; Int16 [x, y, z, part] in mm, LHCb's frame).
+
+Source geometry: LHCb's DD4hep detector description, https://gitlab.cern.ch/lhcb/Detector
+  (c) Copyright CERN for the benefit of the LHCb Collaboration.
+  Licensed under the GNU General Public License, version 3: https://www.gnu.org/licenses/gpl-3.0.html
+Converted to glTF (LHCb.glb) by the HSF Phoenix project, https://github.com/HSF/phoenix
+  Licensed under the Apache License, version 2.0: https://www.apache.org/licenses/LICENSE-2.0
+This derived file is distributed under the GPL-3.0, with these notices kept.

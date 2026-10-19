@@ -1,7 +1,7 @@
 {
   "name": "talk-2026-10-26-uzsikraukkarjerai",
   "private": true,
-  "description": "Vadovėlio gale atsakymo nėra · Užsikrauk karjerai · 2026-10-26",
+  "description": "Užsikrauk karjerai · 2026-10-26",
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",
@@ -16,7 +16,7 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check . --types path,streams,pairs,ghost,map,quintet,histogram,lhc-collision",
+    "stage:check": "slidev-stage-check . --types path,streams,pairs,ghost,map,quintet,histogram,lhc-collision,peakhist,portraits",
     "stage:shots": "slidev-stage-shots dist shots",
     "stage:safe": "slidev-stage-safe dist --broadcast",
     "stage:record": "slidev-stage-record dist record"

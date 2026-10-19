@@ -2341,6 +2341,18 @@
       0,
       0
      ]
+    },
+    {
+     "type": "lhc-collision",
+     "name": "cover",
+     "event": "cms",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "sound": false,
+     "grain": 2.7
     }
    ]
   }

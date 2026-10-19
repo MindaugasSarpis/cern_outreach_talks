@@ -1,6 +1,7 @@
 # Open data talk: handoff
 
-**Language: Lithuanian** (owner, 2026-10-08). Title „Atveriame LHCb duomenis“.
+**Language: Lithuanian** (owner, 2026-10-08). Title „CERN LHCb: atvirieji
+duomenys“ (owner, 2026-10-18; „Atveriame LHCb duomenis“ before).
 Slides, labels and the spoken script (`Sakyti:`) are in Lithuanian; stage
 directions and these notes are in English. `lang: lt` in the headmatter; the
 lint runs in Lithuanian mode. Copy rules: lt-copy (origin/feat/talk-skills),
@@ -51,6 +52,42 @@ and the builders are in the talk's CLAUDE.md, "The deck now (r3)".
   the clip's rising tone and the hum (`stage.sound: { hum: false, flight: false,
   clip: false }`). The collision's sound and the clips' audio stay. This deck
   only: Innoday and Užsikrauk karjerai keep theirs unless the owner says so.
+- Deployed 2026-10-13 without the transition sounds: c83bbb1 on main, Pages run
+  38314910714 (success). The URL answers 200, the live check passed (14 slides,
+  none failed), and the live bundle carries `sound:{hum:!1,flight:!1,clip:!1}`.
+  `talk ready` had passed on c83bbb1 with nothing skipped.
+- 13 Oct: the owner, "This talk is really nice and now complete". The deployed
+  c83bbb1 is the talk. The questions below are still open; the slides keep
+  their wording until the owner answers them.
+- 15 Oct: „LHC 27 km“ (slide 3) sits on a soft shade from the lower-left corner,
+  so it reads on the tunnel's pale wall (the owner to the Scheduler: "OpenData -
+  yes"). It is Užsikrauk karjerai's rule (3948c6b), copied byte for byte into
+  styles/index.css; components/lhc-opening is untouched, and its lift after
+  26 Oct folds the shade into the module and drops both copies. Against the
+  wall round the caption: white 2.7 → 9.5:1, #9cc4ff 1.5 → 5.3:1.
+- Deployed 2026-10-15 with the shade: 7f89f2f on main, Pages run 38773017861
+  (success). The URL answers 200, the live check passed (14 slides, none
+  failed), and the live CSS carries the rule. `talk ready` had passed on
+  7f89f2f with nothing skipped.
+- 18 Oct: the cover, the owner: "Can we make the cover slide more impressive
+  (maybe the full size cms collision) and say “CERN LHCb: atvirieji duomenys”".
+  The title is the owner's words (the headmatter's `title` too). Behind it, slide
+  4's CMS crossing at full size: a second, silent `lhc-collision` (`cover`,
+  `sound: false`, `grain: 2.7`) at the opening station, started by
+  setup/CoverCollision.vue; the cover's `rate` keys run it fast (the debris out
+  in about five seconds), then hold it while the camera sways. Three framings
+  (end on at the right, three-quarter, end on behind the title) went to three
+  judges (three-quarter first, end on second, behind the title last: "too
+  busy"); a framing agent then found the pose (`at: [0.85, -400.27, -4.09]`,
+  dist 10.5, yaw −110, pitch 66: from high on the beam's −x side, so both muons
+  fly away from the text), which two fresh judges preferred (8.2 and 8 against
+  7 and 6). Measured on the real build: no lit pixel within 108 px of a letter
+  in the bloom, 117 px in the hold (sway included); the flash never whitens the
+  frame (under 1 % near white); slides 2–4 unchanged. The cover's still
+  (public/stills/01.jpg) is new. Left as they are (the shared module's, not the
+  cover's): the bright core round the vertex, and the near endcap's light-blue
+  band at the bottom right; the burst runs off the top and bottom edges
+  (`dist: 11.5` would keep it whole, if the owner wants).
 
 - The way in:
   - CERN from above (slide 2), pushing into the ring.

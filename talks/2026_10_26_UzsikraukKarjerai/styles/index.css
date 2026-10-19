@@ -38,11 +38,19 @@ html[data-stage] .src {
 html[data-stage] .slidev-layout.cover { padding-left: var(--kk-x) !important; padding-top: 0 !important; justify-content: flex-start; padding-top: 118px !important; }
 html[data-stage] .slidev-layout.cover h1:first-of-type { font-size: 20px !important; letter-spacing: 0.14em !important; }
 html[data-stage] .slidev-layout.cover h1:nth-of-type(2) { font-size: 78px !important; line-height: 0.98 !important; max-width: 11ch; }
+/* the cover since 15 Oct (OpenData's and Innoday's): the title alone, no kicker above it */
+html[data-stage] .slidev-layout.cover h1:only-of-type { font-size: 78px !important; line-height: 0.98 !important; letter-spacing: -0.01em !important; text-transform: none !important; max-width: 11ch; }
+html[data-stage] .slidev-layout.cover h1 { text-wrap: balance; color: #fff !important; }
+html[data-stage] .slidev-layout.cover h1:first-of-type:only-of-type { color: #fff !important; }   /* over the stage's accent rule for a cover's first h1 (a kicker) */
+/* the name line: readable on a stream (22 px), in sentence case so „Dr.“ stays „Dr.“, light, not the palette's dim lavender */
+html[data-stage] .slidev-layout.cover .mt-md { font-size: 30px !important; letter-spacing: 0.04em !important; text-transform: none !important; color: #eef1ff !important; line-height: 1.35; }
+/* mixed-case names in uppercased kit text (LHCb, not LHCB) */
+html[data-stage] .nt { text-transform: none !important; }
 html[data-stage] .slidev-layout.cover h2 {
   font-size: 30px !important; font-weight: 500 !important; letter-spacing: 0 !important; text-transform: none !important;
   color: var(--stage-fg) !important; opacity: 0.92; line-height: 1.2 !important; max-width: 24ch;
 }
-html[data-stage] .slidev-layout.cover .mt-md { font-size: 18px; letter-spacing: 0.1em; margin-top: 22px; }
+html[data-stage] .slidev-layout.cover .mt-md { margin-top: 106px; }   /* no title above it (16 Oct): the line level with the form, not in a title's slot */
 
 /* --- a line spoken into the world: a kicker, one big sentence, maybe one more line.
    Anchored to the floor of the text area, left (or right) of the frame. */
@@ -143,7 +151,10 @@ html[data-stage] .city {
 html[data-stage] .city.r { translate: -100% 0; text-align: right; }   /* `translate`, not `transform`: the rise-in animation holds transform: none */
 html[data-stage] .city.late { animation-delay: 8.5s; }   /* after the flight in (up to 4.5 s) and the map gathering (3.6 s); the route starts drawing then */
 html[data-stage] .city.home { color: var(--stage-fg); }
-@media (prefers-reduced-motion: reduce), print { html[data-stage] .city { animation: none !important; } }
+/* slide 12: a stop's name comes up at its click, once the trail has drawn to it (--step-delay) */
+html[data-stage] .city.step { animation: none; transition: opacity 0.8s var(--stage-ease) var(--step-delay, 2s); }
+html[data-stage] .city.step.slidev-vclick-hidden { opacity: 0 !important; transition-delay: 0s; }
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .city { animation: none !important; transition: none !important; } }
 
 /* --- labels under slide 9's two plots (positions projected from its pose), centred on each */
 html[data-stage] .heap {
@@ -202,3 +213,36 @@ html[data-stage] .photo-caption {
 
 /* --- PDF export: the kit (v0.6.6) holds every animation at its end state on print pages,
    so a line that rises in late (the map's city names at 8,5 s) prints. */
+
+/* ---- the close, taken from OpenData (15 Oct; OpenData styles/index.css 76): „Ačiū“ in the middle */
+html[data-stage] .thanks { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 96px; font-weight: 700; letter-spacing: -0.03em; color: #fff; text-shadow: 0 4px 40px rgba(0, 0, 0, 0.7); animation: stage-rise 0.9s var(--stage-ease) 0.4s both; }
+/* beside the five-quark form, not on it: the form turns in the right half (slide 20's pose), the word is centred in the left 576 px, level with it */
+html[data-stage] .thanks.beside { inset: 0 auto 0 0; width: 576px; }
+/* the shared opening's „LHC 27 km“ sits low left on the tunnel's near-white wall: a soft shade
+   from the slide's lower-left corner behind it (read as the tunnel's own shadow, not a badge), in this talk only (components/lhc-opening is shared; the fix there is the module's) */
+html[data-stage] .lhc-tunnel::before { content: ''; position: absolute; inset: auto auto -44px -56px; width: 760px; height: 420px; z-index: -1; background: radial-gradient(ellipse 100% 100% at 0% 100%, rgba(0, 2, 6, 0.8) 0%, rgba(0, 2, 6, 0.55) 35%, rgba(0, 2, 6, 0.2) 60%, rgba(0, 2, 6, 0) 80%); }
+
+/* ---- from Innoday (18 Oct): the funnel's age, low on the left once the funnel stands (<AfterFlight>) */
+html[data-stage] .age { position: absolute; z-index: 0; left: var(--kk-x); bottom: var(--kk-floor); font-size: 26px; font-weight: 500; letter-spacing: 0.02em; color: var(--kk-blue-hi); text-shadow: var(--kk-shadow); white-space: nowrap; }
+/* the age stands on the funnel's floor grid: a soft shade behind it (read as shadow, not a badge, as the tunnel's), so no grid line crosses „mlrd. metų“ */
+html[data-stage] .age::before { content: ''; position: absolute; inset: -60px -120px -60px -72px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0, 2, 6, 0.74) 0%, rgba(0, 2, 6, 0.52) 45%, rgba(0, 2, 6, 0.18) 75%, rgba(0, 2, 6, 0) 100%); }   /* the ellipse fits its box, so it fades out before any edge */
+html[data-stage] .age .n { font-size: 56px; font-weight: 700; letter-spacing: -0.01em; color: #fff; margin-right: 0.25em; }
+
+/* ---- from OpenData (18 Oct): the readout of the piles, a counted number and a naming caption, low on the left */
+html[data-stage] .readout {
+  position: absolute; left: var(--kk-x); bottom: 74px; max-width: 46%;
+  color: var(--stage-fg);
+  animation: stage-rise 0.8s var(--stage-ease) 0.2s both;
+}
+html[data-stage] .readout p { margin: 0; }
+html[data-stage] .readout .big {
+  font-size: 104px; font-weight: 700; letter-spacing: -0.01em; line-height: 0.92;
+  margin: 0 0 18px; white-space: nowrap; font-variant-numeric: normal;
+  color: #fff; text-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
+}
+html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--kk-blue-hi); }
+html[data-stage] .readout .caption { font-size: 30px; font-weight: 500; letter-spacing: 0.02em; color: var(--kk-blue-hi); text-shadow: var(--kk-shadow); }
+html[data-stage] .readout.blue, html[data-stage] .readout.steel { max-width: 50%; }
+html[data-stage] .readout.late { animation-delay: 2.6s; }
+html[data-stage] .readout.last { animation-delay: 5.2s; }   /* after copies of the smaller pile merge into the larger */
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .readout { animation: none !important; } }
