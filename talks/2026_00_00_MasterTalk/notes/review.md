@@ -21,10 +21,18 @@ visual-quality items, the first two open before the change.
    #8fb6ff: the colours by part arrive only at the vertex end. Fix: (i) a
    per-part alpha for the VELO (~0.08) or a smaller VELO budget in the bake —
    the kit's, via the Scheduler; meanwhile `alpha` 0.32 → 0.2 and `bloom`
-   0.42 → 0.25 shrink the halo, not the block; (ii) check the plugin's
-   part-index → palette mapping for parts 5–9 and whether far grains (25–30
-   units at dist 19, `reach: 30`) are tinted; test with an explicit ten-colour
-   `parts` array and `reach` 60; re-shoot slide 5.
+   0.42 → 0.25 shrink the halo, not the block; (ii) the pale parts: explained
+   by Tools (20 Oct), no test needed. The mapping is right (ids 0–9 match the
+   bake's PARTS, each part's z range checks out) and nothing tints by
+   distance; the shared grain shader (GRAIN_FRAG) outputs pow(color·alpha,
+   2.2) on a colour three.js has already linearised, so the gamma is applied
+   twice and pale colours come out saturated (#cfe2ff → 0.65, #b8d2ff → 0.80,
+   #8fb6ff → 0.94, #5b93ff → 0.99); at the vertex overlapping grains add up
+   to white, which is why the palette seems to arrive there. Every talk's
+   frames depend on it, so the fix comes as an opt-in option in v0.9.x, with
+   the VELO's per-part alpha (also opt-in), the stage-data log line and the
+   sheet rebuilt by `shots --changed`. Pin the next tag and turn the option
+   on, then re-shoot slide 5.
 2. **The dot, slides 1, 10, 11** (meaning, medium). A 4–5 px speck: on slide 1
    a 4×4 px grey spot (luminance 0.78) among 57 brighter plot blobs, so the
    opening does not show "one white dot"; on 10 it is landed on the Pc(4440)

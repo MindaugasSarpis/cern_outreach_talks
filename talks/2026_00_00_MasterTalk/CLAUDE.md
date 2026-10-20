@@ -94,7 +94,11 @@ storyboard).
   carries both, built offline from the warm cache. The pilot is done; the
   shots' review is `notes/review.md` (ship; mediums: the VELO block and the
   pale downstream parts not on screen, both for Tools; the dot's size; the
-  store's dimness; the clock unit under the floor).
+  store's dimness; the clock unit under the floor). Tools' answer the same
+  day: the pale parts are the shared grain shader's double gamma (pale
+  colours come out saturated), fixed as an opt-in option in v0.9.x along
+  with the VELO's per-part alpha, a stage-data log line and the sheet under
+  `shots --changed`; nothing to test here until that tag.
 
 ## Arc
 
