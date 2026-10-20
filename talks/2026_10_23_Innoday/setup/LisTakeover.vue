@@ -145,7 +145,10 @@ function grains(s, got) {
 }
 // the detector's clearing round the flag's mark (space.json `hole` on `det`): reset on arrival
 const HOLE = 0.1
-const s0Hole = () => stage()?.h.scene.getObjectByName('detector:det')?.children[0]?.material.uniforms.uHole
+// (the grains' material: with `mesh` the group also holds the surfaces, and with `grains:
+// false` no grains at all)
+const holeOf = (scene) => scene?.getObjectByName('detector:det')?.children.find((c) => c.material?.uniforms?.uHole)?.material.uniforms.uHole
+const s0Hole = () => holeOf(stage()?.h.scene)
 const stopCollision = () => { bus.set(props.collision, 0); bus.emit('stop', { name: props.collision }) }
 
 async function takeOver() {
@@ -201,7 +204,7 @@ async function takeOver() {
       bus.set(props.collision, 0)
       const t0 = performance.now(), u = pts.material.uniforms
       // the detector's clearing round the mark closes with it
-      const hole = s.h.scene.getObjectByName('detector:det')?.children[0]?.material.uniforms.uHole
+      const hole = holeOf(s.h.scene)
       const r0 = hole?.value.w ?? 0
       const out = (now) => {
         if (id !== run) return
@@ -221,7 +224,7 @@ async function takeOver() {
 // collision let go, the emblems up (the credits page sets them too)
 function endState(s, pts) {
   if (pts) { pts.material.uniforms.uFade.value = 0; pts.visible = false; pts.userData.gone = true }
-  const hole = s?.h.scene.getObjectByName('detector:det')?.children[0]?.material.uniforms.uHole
+  const hole = holeOf(s?.h.scene)
   if (hole) hole.value.w = 0
   bus.set(props.collision, 0)
   emblems(1)

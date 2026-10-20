@@ -703,7 +703,15 @@
           "scale": 1.2,
           "stretch": 1.0,
           "pulse": "thanks",
-          "light": 4.0
+          "light": 4.0,
+          "shape": "data/lhcb-grains.shape.bin",
+          "light3": [-0.35, 0.75, 0.55],
+          "shade": 0.45,
+          "edgeGain": 0.8,
+          "cascade": { "after": 7, "rate": 0.28, "speed": 12 },
+          "mesh": "data/lhcb-mesh.glb",
+          "meshLook": { "face": 0.003, "rim": 0.04, "lines": 0.08, "angle": 25, "gain": [0.4, 0, 0.5, 1, 1, 0.08, 0.5, 1, 1, 0.6], "lineGain": [0.4, 0, 0.6, 1.5, 4, 0.15, 0.6, 1.2, 1.2, 0.6] },
+          "grains": false
         },
         {
           "type": "floor",
