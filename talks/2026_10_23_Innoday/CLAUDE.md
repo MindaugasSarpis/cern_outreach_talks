@@ -179,6 +179,15 @@ readout end (57 min on gluon) and republished with --only, the hand-over's ancho
 the lower cold box. Stills 31–34 retaken. Deployed 650ec63 — Pages run 39354968379
 (green), URL 200, live walk 34/34; `ready` passed with nothing skipped (the head
 merges main's bb030e7, MasterTalk's v0.9.0 pilot; this deck stays on v0.8.1).
+For the talk on 23 Oct, a fresh session needs: the live deck is the whole talk
+(reload it once before starting; `pnpm venue` in the talk dir for the offline zip,
+its clips come from the release); open for the owner: listen to the close's music
+once (nobody has), whether the LIS notes may say more about Vilnius's work than the
+one public source (the group's 3 Oct 2024 agenda), and whether the three CERN-owned
+image credits stay on the credits page. The clip's raw (videos/raw/lis_flag.mp4) and
+its 250 Blender frames (~/talks/.cache/innoday-lis/frames_bottom) live only on
+gluon; the web encode is on the release and the scene re-renders from
+hero/lis_scene.py --end bottom (57 min on 120 cores).
 
 2026-10-20 (later): the owner's notes on the deployed close ("Looks amazing" — the
 eye-level view, the logo and the flag, more solid grains, the soundtrack, no CAD for
