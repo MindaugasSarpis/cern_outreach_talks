@@ -304,12 +304,13 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   like standing up close (entire detector) then slowly panning out, showing this
   person for scale") the path comes down from the cold box by 16 s to the owner's eye
   level (1,71 m of his 1,83 m, above a floor at the muon stations' foot, y = -5,6 m in
-  LHCb's frame), side on, 16 m from the beam and centred on the whole detector (the
-  camera at x 13,51, found by projecting the geometry: both ends inside ±0,86 of the
-  width, the muon wall's top at 0,86, the floor at its foot at -0,95; the grains'
-  sprites and bloom add about 0,04 at the sides and 0,08 at the top, so at 15 m they
-  spilled past the edges and at 18 m the side margins were 10 %), 14° up: the entire
-  detector fills the 16:9 frame; holds 3 s; then dollies straight back along
+  LHCb's frame), side on, 18 m from the beam and centred on the whole detector (the
+  camera at x 13.50, found by projecting the geometry: both ends inside ±0,76 of the
+  width, the muon wall's top at 0,83; the grains' sprites and bloom add a few percent
+  at the sides and about 0,08 at the muon tops, so at 15 and 16 m they spilled past
+  the top edge, at 17 m they grazed it, and only 18 m leaves a clean margin above
+  with the figure's feet off the bottom edge), 13° up: the entire detector fills the
+  16:9 frame, 10 % of it black at each side; holds 3 s; then dollies straight back along
   the same line to 28 m over 12 s (19–31 s), 8° up, where LHCb spans about half the
   width and a 1,83 m person in grains (`emblem` of `det`, figures/person_grains.png)
   stands at the muon wall's near foot, 9 % of the frame high against the detector's
