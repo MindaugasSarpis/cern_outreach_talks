@@ -13,3 +13,8 @@ WorldOfParticles = "2026_09_10_World_of_Particles"
 Yaga = "2026_07_18_Yaga"
 Sceptics = "2026_05_11_Skeptikai"
 editAI = "2026_04_28_EditAi"
+
+# A renamed talk's old directory = its new one: the old address sends the
+# browser on, its #/N slide kept (the index step writes a small page there).
+[redirects]
+2026_09_00_Startertalk = "2026_09_15_Startertalk"
