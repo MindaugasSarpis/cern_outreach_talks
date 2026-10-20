@@ -70,6 +70,23 @@
       "lit": 24.0,
       "poster_at": "0:24"
     },
+    "lhcb_week_aftermovie.mp4": {
+      "file": "lhcb_week_aftermovie.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 37,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 147.9,
+      "poster": "lhcb_week_aftermovie.mp4.poster.jpg",
+      "lit": 0.0
+    },
     "lis_flag.mp4": {
       "file": "lis_flag.mp4.jpg",
       "tile": [

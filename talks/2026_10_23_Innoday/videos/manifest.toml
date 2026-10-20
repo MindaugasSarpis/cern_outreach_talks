@@ -115,3 +115,18 @@ arrives; the frames were joined with ffmpeg (H.264, 25 fps); the raw is \
 that output, not on gdrive. Its last frame is public/figures/lis_last.jpg, \
 which <LisTakeover> on „Ačiū“ turns into grains in depth \
 (lis_last.depth.png, setup/data/lis.json)."""
+
+[[videos]]
+name    = "lhcb_week_aftermovie.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = """\
+„Lietuvos istorija CERN“ (owner, 20 Oct: "show a video from the LHCb Week \
+instead of the four photos"; "Don't worry about photos show the entire \
+aftermovie"): the LHCb Week Vilnius aftermovie, whole (2:28, its own music), \
+film by Nebula Moments (Rimantas Unkevičius). Source: the owner's Drive, \
+2026-09-14_LHCb_Week_Vilnius/CERN Aftermovie_4K_HQ_final.mp4 (3840x2160 25p \
+H.264 47 Mbit/s, AAC stereo, -15.3 LUFS; uploaded 20 Oct), copied into the raw \
+bank under this name; not on gdrive released/. 0:25 the full hall at the \
+opening, 0:26 the President's greeting on both screens, 0:28 the lectern, \
+0:30-0:31 the panel: what the four photos showed."""
