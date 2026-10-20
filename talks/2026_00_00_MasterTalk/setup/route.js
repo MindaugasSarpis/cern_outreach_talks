@@ -1,15 +1,11 @@
 // The MasterTalk's route (stations 4–11 of notes/storyboard.md): what the one
 // collision passes through after the crossing, as grains. The steps come from
-// <Grains :set="{ name: k }" /> (setup/grains.js's bus), the clock from the world.
+// <StageSteps :set="{ name: k }" /> (the kit's step bus), the clock from the world.
+// The detector itself is the kit's since v0.9.0 (plugins: [lhcb]; src: lhcb and
+// parts: lhcb in space.json), lit along the event's tracks that setup/main.ts
+// hands it; it was this file's until 20 Oct 2026.
 //
-//   detector  LHCb's real geometry (public/data/lhcb-grains.bin, baked from HSF
-//             Phoenix's LHCb.glb by hero/bake_grains.py), drawn the way the
-//             opening draws the event: 0.5 units a metre along the beam (world
-//             +x), 2.4× that across it. Step 1: it lights up behind a front
-//             running from the vertex to the last muon station. Step 2: the
-//             readout: the grains the event's own tracks pass through (its hits)
-//             turn white, the rest dims, and the hits leave downstream, to `out`.
-//   stream    the data leaving the detector: packets of grains (crossings)
+//   stream   the data leaving the detector: packets of grains (crossings)
 //             running along x through the trigger's gates; at each active gate
 //             all but `keep` of the packets crossing it burst into dust. One
 //             packet, ours, is white and moves by steps (`ours`, its x per step).
@@ -18,8 +14,8 @@
 //   spark     the one collision as one dot: a white point with a soft glow, at
 //             a place per step (`steps`: null hides it; { at, from?, glide? }).
 import { BufferGeometry, BufferAttribute, Points, Group, Color, Vector3 } from 'three'
-import { material, PLACE, listen, state } from './grains.js'
-import { trajectories } from '../components/lhc-opening/event.js'
+import { material, PLACE } from './grains.js'
+import { stepper } from 'slidev-addon-stage'   // the step bus, which <StageSteps> sets from the slides
 
 const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
@@ -33,113 +29,6 @@ function geometry(n, attrs) {
   for (const [k, [arr, size]] of Object.entries(attrs)) if (k !== 'position') geo.setAttribute(k, new BufferAttribute(arr, size))
   return geo
 }
-// a form's step and the world time it was set: steps change on slide enter, the
-// form reads the time on its next frame
-function stepper(name, initial = 0) {
-  const s = { step: state.get(name) ?? initial, prev: initial, at: -1e9, fresh: state.has(name) }
-  s.off = listen(name, (k) => { s.prev = s.step; s.step = k; s.fresh = true })
-  return s
-}
-
-// ---- detector -------------------------------------------------------------------------
-//   { type: detector, name, pos, src: 'data/lhcb-grains.bin', scale?: 0.5, stretch?: 2.4,
-//     sweep?: 3.5 (s for the front to cross it), size?: 1, alpha?: 0.16, color?, hot?,
-//     out?: [x, y, z] (where the hits leave to, in the object's frame), hitR?: 0.035 (m),
-//     hitMin?: 0.1 (m from the beam: grains nearer it are never hits) }
-const DET_VERT = PLACE + /* glsl */ `
-attribute float aX, aHit, aSeed;
-uniform float uShowT, uHideT, uSweep, uLen, uHitT, uSize, uAlpha;
-uniform vec3 uOut, uColor, uHot;
-void main() {
-  if (uShowT > 1e8) { hide(); return; }
-  float since = uTime - uShowT;
-  float front = since / uSweep * uLen;
-  float d = front - aX;
-  float passed = smoothstep(-0.4, 0.0, d);
-  float flash = passed * exp(-max(d, 0.0) * 0.9);
-  float fade = uHideT > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.2, uTime - uHideT);
-  vec3 p = position, col = mix(uColor, uHot, 0.6 * flash);
-  float a = uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.5 * flash;
-  float size = uSize;
-  if (uHitT < 1e8) {
-    float h = uTime - uHitT;
-    if (aHit > 0.5) {
-      float lit = smoothstep(0.0, 0.8, h);
-      col = mix(col, uHot, lit); a = mix(a, 0.7, lit); size *= 1.0 + 0.3 * lit;
-      // each hit leaves after the others ahead of it: the front ones first; then again, every
-      // 3.4 s (the next crossing's hits), so the readout stays a flow from the detector into the stream
-      float hh = h - 2.2 - (1.0 - aX / uLen) * 1.2 - aSeed * 0.8;
-      float go = hh < 0.0 ? 0.0 : ease(mod(hh, 3.4) / 2.6);
-      vec3 c1 = vec3(max(position.x, uOut.x * 0.7), position.y * 0.6, position.z * 0.6);
-      vec3 q = mix(mix(position, c1, go), mix(c1, uOut, go), go);
-      p = q;
-      a *= (1.0 - 0.4 * smoothstep(0.0, 0.3, go)) * (1.0 - smoothstep(0.88, 1.0, go));   // in flight a hit is a fainter grain
-    } else {
-      a *= mix(1.0, 0.5, smoothstep(0.0, 1.6, h));
-    }
-  }
-  place(p, size, a * fade, col, aSeed);
-}`
-
-function buildDetector(o, ctx) {
-  const g = new Group(); g.position.set(...at3(o.pos))
-  const S = o.scale ?? 0.5, T = o.stretch ?? 2.4
-  const W = (x, y, z) => [z * S, y * S * T, x * S * T]   // LHCb metres -> world, as the collision draws it
-  const mat = material(DET_VERT, {
-    uShowT: { value: 1e9 }, uHideT: { value: 1e9 }, uSweep: { value: o.sweep ?? 3.5 }, uLen: { value: 19.5 * S },
-    uHitT: { value: 1e9 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.16 },
-    uOut: { value: new Vector3(...(o.out || [14, 0, 0])) },
-    uColor: { value: new Color(...rgb(o.color || '#5b93ff')) }, uHot: { value: new Color(...rgb(o.hot || '#ffffff')) },
-  })
-  const u = mat.uniforms
-  const build = (buf, ev) => {
-    const raw = new Int16Array(buf), n = raw.length / 4
-    // the event's paths, binned every 5 cm along the beam: a grain is a hit when a track passes within hitR of it
-    const bins = new Map(), R = o.hitR ?? 0.035
-    if (ev) for (const t of trajectories(ev).tracks) for (const p of t.pts) {
-      const k = Math.round(p[2] / 0.05); if (!bins.has(k)) bins.set(k, []); bins.get(k).push(p[0], p[1])
-    }
-    const pos = new Float32Array(n * 3), ax = new Float32Array(n), hit = new Float32Array(n), seed = new Float32Array(n)
-    let hits = 0
-    for (let i = 0; i < n; i++) {
-      const x = raw[i * 4] / 1000, y = raw[i * 4 + 1] / 1000, z = raw[i * 4 + 2] / 1000
-      pos.set(W(x, y, z), i * 3); ax[i] = z * S; seed[i] = Math.random()
-      const r = R + 0.004 * Math.max(z, 0)
-      // not the beam pipe and the VELO's inner edge, where every track meets: those grains
-      // would all count, and leave as one white bar along the axis
-      if (Math.hypot(x, y) < (o.hitMin ?? 0.1)) continue
-      for (let dk = -1; dk <= 1 && !hit[i]; dk++) {
-        const b = bins.get(Math.round(z / 0.05) + dk); if (!b) continue
-        for (let j = 0; j < b.length; j += 2) if ((b[j] - x) ** 2 + (b[j + 1] - y) ** 2 < r * r) { hit[i] = 1; hits++; break }
-      }
-    }
-    g.add(points(geometry(n, { position: pos, aX: [ax, 1], aHit: [hit, 1], aSeed: [seed, 1] }), mat))
-    g.userData.hits = hits
-  }
-  fetch(ctx.asset('/' + String(o.src || 'data/lhcb-grains.bin').replace(/^\//, ''))).then((r) => r.arrayBuffer())
-    .then((buf) => build(buf, EVENT)).catch((e) => console.warn('stage: detector grains failed', o.src, e))
-  const s = stepper(o.name)
-  let now = 0
-  const apply = () => {
-    const k = s.step
-    if (k <= 0) { if (u.uShowT.value < 1e8 && u.uHideT.value > 1e8) u.uHideT.value = now; if (now - u.uHideT.value > 1.3) u.uShowT.value = 1e9; u.uHitT.value = 1e9; return }
-    // arriving at a later step directly (a jump) shows the detector whole at once
-    if (u.uShowT.value > 1e8 || u.uHideT.value < 1e8) u.uShowT.value = k === 1 && s.prev === 0 ? now : now - 100
-    u.uHideT.value = 1e9
-    if (k >= 2) { if (u.uHitT.value > 1e8) u.uHitT.value = s.prev === 1 ? now : now - 100 } else u.uHitT.value = 1e9
-  }
-  return {
-    group: g, labels: [], frameScale: u.uPixelRatio,
-    api: { busy: () => (u.uShowT.value < 1e8 && now - u.uShowT.value < u.uSweep.value + 1) || (u.uHitT.value < 1e8 && now - u.uHitT.value < 7.5) },
-    update(t) {
-      now = t; u.uTime.value = t
-      if (s.fresh) { s.fresh = false; apply() }
-      if (s.step <= 0 && u.uHideT.value < 1e8 && t - u.uHideT.value > 1.3) u.uShowT.value = 1e9
-    },
-    dispose: s.off,
-  }
-}
-
 // ---- stream ----------------------------------------------------------------------------
 //   { type: stream, name, pos, from: x, to: x (along the object's x), gates: [x, …], keep?: [share, …],
 //     packets?: 320, grains?: 22, speed?: 7 (units/s), lane?: 1.1 (radius), ours: [x per step],
@@ -442,10 +331,7 @@ function buildSpark(o, ctx) {
   }
 }
 
-let EVENT = null
-export function installRoute(registerBuilder, { event } = {}) {
-  EVENT = event || null
-  registerBuilder('detector', buildDetector, { fields: ['pos', 'name'] })
+export function installRoute(registerBuilder) {
   registerBuilder('stream', buildStream, { fields: ['pos', 'name', 'from', 'to'] })
   registerBuilder('grid', buildGrid, { fields: ['pos', 'name'] })
   registerBuilder('spark', buildSpark, { fields: ['pos', 'name'] })

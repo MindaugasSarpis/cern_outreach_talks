@@ -7,35 +7,9 @@ import {
   Group, Points, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color, Vector3,
   LinearMipmapLinearFilter,
 } from 'three'
+import { onStep, stepOf } from 'slidev-addon-stage'   // the step bus, which <StageSteps> sets from the slides
 
 
-const BUS = 'master:grains'
-export const state = new Map()
-
-export function setGrains(name, step) {
-  if (state.get(name) === step) return
-  state.set(name, step)
-  window.dispatchEvent(new CustomEvent(BUS, { detail: { name, step } }))
-}
-let clock = 0
-const pending = new Set()
-export function setGrainsLater(name, step, s) {
-  const p = { name, step, at: clock + s }
-  pending.add(p)
-  return () => pending.delete(p)
-}
-export function tick(t) {
-  clock = t
-  for (const p of pending) if (t >= p.at) { pending.delete(p); setGrains(p.name, p.step) }
-}
-export const waiting = (name) => [...pending].some((p) => p.name === name)
-export function listen(name, fn) {
-  const h = (e) => { if (e.detail?.name === name) fn(e.detail.step) }
-  window.addEventListener(BUS, h)
-  return () => window.removeEventListener(BUS, h)
-}
-// a name's last step, for the forms kept in files of their own
-export const stepOf = (name) => state.get(name)
 
 const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
@@ -228,7 +202,7 @@ function buildHistogram(o, ctx) {
     .catch(() => console.warn('stage: histogram data failed', o.src))
   let now = 0, played = -100, share = 0, step = 0
   const focusOf = (k) => (o.focus ? o.focus[Math.max(0, Math.min(o.focus.length - 1, k))] : 0)
-  let blur = focusOf(state.get(o.name) ?? 0), lastT = 0
+  let blur = focusOf(stepOf(o.name) ?? 0), lastT = 0
   u.uBlur.value = blur
   const at = (k) => steps[Math.max(0, Math.min(steps.length - 1, k))]
   // the marked peaks light once the set is full and the step has reached `markStep`
@@ -279,11 +253,11 @@ function buildHistogram(o, ctx) {
     if (share <= 0) return
     if (was) { if (u.uTo.value < share) fill(0, share, 0.3) } else if (now - played > 5) fill(0, share, 0.3)
   }
-  const off = listen(o.name, request)
+  const off = onStep(o.name, request)
   mat.addEventListener('dispose', off)
   // a step set before the build is kept, but the set stays hidden until the station's first
   // assembly fills it (a reload on a plot slide: no full plot flashing before the fill)
-  if (state.has(o.name)) { step = state.get(o.name); share = at(step) }
+  if (stepOf(o.name) !== undefined) { step = stepOf(o.name); share = at(step) }
   const api = {
     arm() { armed = true; armT = now; if (now - played < 1.5) hold() },
     assemble(t, onDone) { now = t; arrive(); onDone?.() },

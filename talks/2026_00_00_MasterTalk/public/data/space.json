@@ -141,7 +141,8 @@
             0,
             0
           ],
-          "src": "data/lhcb-grains.bin",
+          "src": "lhcb",
+          "parts": "lhcb",
           "sweep": 3.5,
           "alpha": 0.32,
           "size": 1.3,

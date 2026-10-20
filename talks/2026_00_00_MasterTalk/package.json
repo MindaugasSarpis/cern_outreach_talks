@@ -16,13 +16,13 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check . --types lhc-collision,detector,stream,grid,spark"
+    "stage:check": "slidev-stage-check . --types lhc-collision,stream,grid,spark"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2"
   },
   "devDependencies": {
-    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.8.1",
-    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#v0.8.1&path:/packages/stage"
+    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.9.0",
+    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#v0.9.0&path:/packages/stage"
   }
 }
