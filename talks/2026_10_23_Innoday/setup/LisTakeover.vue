@@ -16,13 +16,14 @@ import META from './data/lis.json'
 // (lisGrains.js). The still fades into them, and the slide's path pulls the camera
 // back out of the module end to the whole detector while the grains shrink to a
 // mark; the detector lights up behind them (det: 1), then LHCb's collision in it
-// (the `lhc-collision` named `collision`); the camera holds on the whole detector,
-// then comes down to eye level on the cavern floor (owner, 20 Oct: "see the huge
-// scale of lhcb, maybe then go to first person view at eye level lhcb filling the
-// screen, show lhcb logo and Lithuanian flag besides in 3d space"), where the two
-// emblems gather (`emblems`, setup/emblems.js) and then the slot (the word): each
-// when the camera has come that far, not on a timer (on a slow machine the world's
-// clock runs behind the wall's). The slide's path[0] is the clip camera's view
+// (the `lhc-collision` named `collision`) while the camera comes down to eye level on
+// the cavern floor (owner, 20 Oct: "see the huge scale of lhcb, maybe then go to first
+// person view at eye level lhcb filling the screen, show lhcb logo and Lithuanian flag
+// besides in 3d space"); the bunches cross as it lands, and the debris runs through the
+// stations while it lingers there (owner: "don't need to rush to zoom out"); on the
+// slow dolly back the two emblems gather (`emblems`, setup/emblems.js), and the slot
+// (the word) shows when the camera stops: each when the camera has come that far, not
+// on a timer (on a slow machine the world's clock runs behind the wall's). The slide's path[0] is the clip camera's view
 // (hero/lis_pose.py prints it from lis.json, the anchor and d0).
 // Without a running world (reduced motion, no WebGL, a lost context, a boot slower
 // than 8 s) the still stays and the word shows over it; printed, in the overview and
@@ -42,10 +43,12 @@ const props = defineProps({
   fade: { type: Number, default: 1400 },   // ms
   collision: { type: String, default: 'thanks' },
   detAt: { type: Number, default: 3.2 },   // the camera this far from the flag (units): the detector lights up
-  colAt: { type: Number, default: 13 },    // … LHCb's collision starts in it
-  emblems: { type: Array, default: () => ['lhcbLogo', 'ltFlag'] },   // gathered when the camera has stopped
-  wordAfter: { type: Number, default: 3.2 },   // s after the camera has stopped: the word (the emblems gather in 2.6)
-  wordBy: { type: Number, default: 46 },   // s: the word shows by then whatever the world does (the path ends at 31 s, the word ~6 s later)
+  colAt: { type: Number, default: 16.0 },  // … LHCb's collision starts in it (12,6 s on the path; the bunches cross 5 s later, `approach` 2.5 at the slide's rate 0.5: as the camera lands at eye level, on the music's arrival, 17-19 s)
+  freeze: { type: Array, default: () => [[0, 0.5], [0.25, 0.15], [0.8, 0.15], [1.6, 0.6]] },   // the world's rate from the crossing (17,5 s): slow while the flash lights, then the debris bursts out (~19 s, still in the music's peak; at 0.08 for 1,8 s the burst came at 21 s)
+  embAt: { type: Number, default: 26 },    // … the emblems gather, on the dolly back (38,5 s: whole by the music's second climax, 42-44 s)
+  emblems: { type: Array, default: () => ['lhcbLogo', 'ltFlag'] },
+  wordAfter: { type: Number, default: 0.6 },   // s after the camera has stopped (48 s): the word
+  wordBy: { type: Number, default: 62 },   // s: the word shows by then whatever the world does
 })
 const { $renderContext, $page, $frontmatter } = useSlideContext()
 const nav = useNav()
@@ -78,7 +81,7 @@ function stage() {
   if (!api || !h?.scene || !camera) return null
   return { api, h, camera }
 }
-let run = 0, timers = [], watcher = 0
+let run = 0, timers = [], watcher = 0, offCross = null
 async function waitStage(id) {
   for (let i = 0; i < 80; i++) {
     const s = stage()
@@ -88,7 +91,7 @@ async function waitStage(id) {
   return null
 }
 const later = (ms, fn) => timers.push(setTimeout(fn, ms))
-const clear = () => { timers.forEach(clearTimeout); timers = []; clearInterval(watcher); watcher = 0 }
+const clear = () => { timers.forEach(clearTimeout); timers = []; clearInterval(watcher); watcher = 0; offCross?.(); offCross = null }
 
 const A = new Vector3(...props.anchor)
 const s0 = props.d0 / META.flagDist
@@ -179,15 +182,20 @@ async function takeOver() {
     }
     requestAnimationFrame(step)
   })
+  // the world slows almost to a stop as the bunches cross, from the crossing itself (keyed to
+  // the slide's clock, a trigger a few tenths late moved the crossing seconds deeper into the
+  // slow stretch); the camera keeps its own pace
+  offCross = bus.on('cross', (e) => { if (e.name === props.collision && id === run) s.api.setRate(props.freeze, { camera: 1 }) })
   // the detector, the collision, the emblems and the word follow the camera
-  let det = false, col = false, stopped = -1
+  let det = false, col = false, emb = false, stopped = -1
   watcher = setInterval(() => {
     if (id !== run) return
     const d = s.camera.position.distanceTo(A)
     if (!det && d > props.detAt) { det = true; setGrains('det', 1) }
     if (!col && d > props.colAt) { col = true; bus.set(props.collision, 1) }
-    if (col && stopped < 0 && !s.api.flying) {
-      stopped = performance.now(); emblems(1)
+    if (col && stopped < 0 && !s.api.flying) stopped = performance.now()
+    if (col && !emb && (d > props.embAt || stopped >= 0)) {
+      emb = true; emblems(1)
       // the emblems take over: the collision's glow fades (it washed the logo out) and the
       // small flag at the module goes (two flags read as a duplicate)
       bus.set(props.collision, 0)
@@ -205,7 +213,7 @@ async function takeOver() {
       }
       requestAnimationFrame(out)
     }
-    if (stopped >= 0 && performance.now() - stopped > props.wordAfter * 1000) { word.value = true; clearInterval(watcher); watcher = 0 }
+    if (emb && stopped >= 0 && performance.now() - stopped > props.wordAfter * 1000) { word.value = true; clearInterval(watcher); watcher = 0 }
   }, 100)
 }
 

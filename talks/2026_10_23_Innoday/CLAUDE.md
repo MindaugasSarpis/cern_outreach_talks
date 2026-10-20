@@ -169,6 +169,20 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-20 (late): three items from the owner via the Scheduler. (1) The stripe on
+„Ačiū“ ("lhcb logo has a weird vertical stripe") was in figures/lhcb_logo_grains.png:
+column 0 opaque from the mirror axis down, and the axis's hairline lit across rows
+325–330; both cleared (letters, reflection and the red slash kept), still 33 retaken.
+(2) "Make it even more spectacular? don't need to rush to zoom out": built (Decisions,
+"The slower, bigger close"), checked on four headless recordings of slide 33; a review
+copy with the music went to the owner. Not deployed: the owner reviews first.
+(3) The LHCb Week video for „Lietuvos istorija CERN“ is the aftermovie (owner's
+correction; not the President's greeting): „CERN Aftermovie_4K_HQ_final.mp4“ (2:28,
+4K25, its own music at -15,3 LUFS; film by Nebula Moments, R. Unkevičius), uploaded to
+the LHCb Week Drive folder on 20 Oct, now in the raw bank; the cut is proposed to the
+owner, not built. Open for the owner: the cut, its audio against Starfire, and the
+credit and permission for the film (the photos' „VU nuotr.“ question still open too).
+
 2026-10-20 (night): the owner's notes on the eye-level close ("lhcb seems 3m high",
 "horizontally squished", "chopped in half ... full 16x9 frame filling view ... then
 slowly panning out, showing this person for scale", "do the Lithuanian flag at the
@@ -310,8 +324,9 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   at the sides and about 0,08 at the muon tops, so at 15 and 16 m they spilled past
   the top edge, at 17 m they grazed it, and only 18 m leaves a clean margin above
   with the figure's feet off the bottom edge), 13° up: the entire detector fills the
-  16:9 frame, 10 % of it black at each side; holds 3 s; then dollies straight back along
-  the same line to 28 m over 12 s (19–31 s), 8° up, where LHCb spans about half the
+  16:9 frame, 10 % of it black at each side; lingers there (since the slower close
+  below: from 17,5 to 31 s, drifting 5° round to side on); then dollies straight back along
+  the same line to 28 m (31–48 s, slow at both ends), 8° up, where LHCb spans about half the
   width and a 1,83 m person in grains (`emblem` of `det`, figures/person_grains.png)
   stands at the muon wall's near foot, 9 % of the frame high against the detector's
   ~45 % (in the close view it is at the bottom right, 26 % high). Earlier tries, for
@@ -340,6 +355,30 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   (2:10–2:22 of the track), and fades if the deck goes back before 31; „Ačiū“ opened
   directly starts the second file; levels through Web Audio gain (iOS ignores an
   element's volume); only the audience's window plays it. Credited on the credits page.
+- The slower, bigger close (owner, 20 Oct, via the Scheduler: "In general, the ending
+  looks good, but can we make it even more spectacular? don't need to rush to zoom out").
+  Everything above stays; „Ačiū“ now runs 48 s to the word (was ~34) and is sequenced to
+  the music's second file (its loudness measured per second: the build 9–17 s, the
+  arrival 17–19 s at -10,6 LUFS momentary, a dip at 33–35, the second, larger climax at
+  42–44 at -10,4, the fade from 51). The path is written by `hero/close_path.py` (keys
+  every 1,5 s: the stage runs each segment at a constant pace, so a slow landing and an
+  easing dolly need dense keys): out of the module as before, the crane down and round
+  slowing to a drift as it lands at eye level at 17,5 s; the drift 5° round to side on
+  until 31 s; the dolly back to 28 m from 31 to 48 s, slow at both ends. LHCb's collision
+  starts at 12,6 s (camera 16 units from the flag) so its bunches cross on the landing
+  and the music's arrival; on the collision's `cross` event `<LisTakeover>` slows the
+  world to 0,15 for a second (the flash blooms; at 0,08, keyed to the slide's clock, the
+  crossing drifted seconds late and the flash took three seconds to bloom), then runs it
+  at 0,6. The debris then crosses the detector in ~10 s while the camera lingers: each
+  station flares as the debris front reaches it (`pulse: thanks`, `light 4.0` on `det`,
+  setup/detector.js; the flare capped for the calorimeters and muon walls, which at
+  their doubled weight flared to a white slab) and the grains its tracks pass through
+  (the hits) light and stay lit, weighted like their part (the VELO's at a quarter: at
+  full strength they stayed a white blob at the vertex). The emblems gather on the dolly
+  (camera 26 units out, 38,5 s), whole by the second climax; the collision and the small
+  flag at the module fade with them, as before; „Ačiū“ 0,6 s after the camera stops
+  (~48,6 s); `wordBy` 62 s. Checked on headless recordings of slide 33 (llvmpipe,
+  1280×720, three rounds).
 - The cover's pentaquark reads as five quarks (owner, 20 Oct: "the pentaquark
   (far too many quarks and some orbits)"): headless frames showed five nodes, but
   each a loose sparkle of grains with a weak core, pairs drifting together on

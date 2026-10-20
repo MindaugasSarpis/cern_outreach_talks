@@ -16,6 +16,7 @@
 import { BufferGeometry, BufferAttribute, Points, Group, ShaderMaterial, AdditiveBlending, Color, Vector3, Vector4 } from 'three'
 import { trajectories } from '../components/lhc-opening/event.js'
 import { places } from './afterCover.js'
+import { bus } from '../components/lhc-opening/bus.js'
 
 const BUS = 'innoday:grains'
 export const state = new Map()
@@ -89,11 +90,17 @@ function stepper(name, initial = 0) {
 //   { type: detector, name, pos, src: 'data/lhcb-grains.bin', scale?: 0.5, stretch?: 2.4,
 //     sweep?: 3.5 (s for the front to cross it), size?: 1, alpha?: 0.16, color?, hot?,
 //     out?: [x, y, z] (where the hits leave to, in the object's frame), hitR?: 0.035 (m),
-//     hitMin?: 0.1 (m from the beam: grains nearer it are never hits) }
+//     hitMin?: 0.1 (m from the beam: grains nearer it are never hits),
+//     pulse?: a collision's name, light?: 5.5 (its `light`) }
+// With `pulse` (Innoday's close, owner 20 Oct: "make it even more spectacular"), that
+// collision's crossing sends a front down the detector at its debris's speed: each station
+// flares as the debris reaches it, and the grains its tracks pass through (the hits) light
+// and stay lit, without leaving; they fade when the collision is let go.
 const DET_VERT = PLACE + /* glsl */ `
 attribute float aX, aHit, aSeed, aPart;
 uniform float uShowT, uHideT, uSweep, uLen, uHitT, uSize, uAlpha;
 uniform vec3 uOut, uColor, uHot;
+uniform float uCrossT, uCrossHide, uLight;
 uniform vec4 uHole;   // Innoday: a small disc on screen round this point (object space; w: radius, of the half-height) is left clear
 void main() {
   if (uShowT > 1e8) { hide(); return; }
@@ -104,7 +111,8 @@ void main() {
   float flash = passed * exp(-max(d, 0.0) * 0.9);
   float fade = uHideT > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.2, uTime - uHideT);
   vec3 p = position, col = mix(uColor, uHot, 0.6 * flash);
-  float a = (uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.5 * flash) * (aPart == 1.0 ? 0.0 : (aPart == 0.0 ? 0.25 : (aPart >= 7.0 ? 2.0 : 1.0)));   // the beam pipe (part 1) read as a stick when lit, then as a stray dash: not drawn; the VELO (0), its grains packed round the vertex, read as a white-hot blob: dimmed; the calorimeters and muon stations (7-9), spread over the widest walls, read as haze: doubled
+  float w = aPart == 1.0 ? 0.0 : (aPart == 0.0 ? 0.25 : (aPart >= 7.0 ? 2.0 : 1.0));
+  float a = (uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.5 * flash) * w;   // the beam pipe (part 1) read as a stick when lit, then as a stray dash: not drawn; the VELO (0), its grains packed round the vertex, read as a white-hot blob: dimmed; the calorimeters and muon stations (7-9), spread over the widest walls, read as haze: doubled
   float size = uSize;
   if (uHitT < 1e8) {
     float h = uTime - uHitT;
@@ -121,6 +129,22 @@ void main() {
       a *= (1.0 - 0.4 * smoothstep(0.0, 0.3, go)) * (1.0 - smoothstep(0.88, 1.0, go));   // in flight a hit is a fainter grain
     } else {
       a *= mix(1.0, 0.5, smoothstep(0.0, 1.6, h));
+    }
+  }
+  if (uCrossT < 1e8) {
+    // the collision's debris front, this far past the grain (units along the beam)
+    float dd = (uTime - uCrossT) * uLight - aX;
+    float reached = smoothstep(-0.3, 0.0, dd) * (uCrossHide > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.6, uTime - uCrossHide));
+    float flare = reached * exp(-max(dd, 0.0) * 0.45);
+    // (the calorimeters' and muon stations' doubled weight capped: at full weight their walls
+    // flared to a white slab)
+    col = mix(col, uHot, 0.35 * flare);
+    a += 0.16 * flare * min(w, 1.2);
+    if (aHit > 0.5) {
+      // lit by its part's weight too: the VELO's hits, packed round the vertex, lit at full
+      // strength stayed a white-hot blob there to the end
+      float lit = reached * (0.4 + 0.6 * exp(-max(dd, 0.0) * 0.12)) * min(w, 1.0);
+      col = mix(col, uHot, lit); a = mix(a, 0.75, lit); size *= 1.0 + 0.3 * lit;
     }
   }
   if (uHole.w > 0.0) {
@@ -143,6 +167,7 @@ function buildDetector(o, ctx) {
     uOut: { value: new Vector3(...(o.out || [14, 0, 0])) },
     uColor: { value: new Color(...rgb(o.color || '#5b93ff')) }, uHot: { value: new Color(...rgb(o.hot || '#ffffff')) },
     uHole: { value: new Vector4(...(o.hole || [0, 0, 0, 0])) },
+    uCrossT: { value: 1e9 }, uCrossHide: { value: 1e9 }, uLight: { value: o.light ?? 5.5 },
   })
   const u = mat.uniforms
   const build = (buf, ev) => {
@@ -181,6 +206,11 @@ function buildDetector(o, ctx) {
   })
   const s = stepper(o.name)
   let now = 0
+  // the named collision's crossing (world time, from its start) and its letting go
+  const offPulse = o.pulse ? [
+    bus.on('start', (e) => { if (e.name === o.pulse) { u.uCrossT.value = e.cross; u.uCrossHide.value = 1e9 } }),
+    bus.listen(o.pulse, (k) => { if (!k && u.uCrossT.value < 1e8 && u.uCrossHide.value > 1e8) u.uCrossHide.value = now }),
+  ] : []
   const apply = () => {
     const k = s.step
     if (k <= 0) { if (u.uShowT.value < 1e8 && u.uHideT.value > 1e8) u.uHideT.value = now; if (now - u.uHideT.value > 1.3) u.uShowT.value = 1e9; u.uHitT.value = 1e9; return }
@@ -199,7 +229,7 @@ function buildDetector(o, ctx) {
       if (warm > 0) warm--
       g.visible = u.uShowT.value < 1e8 || warm > 0   // hidden, it costs nothing on the other slides
     },
-    dispose() { alive = false; offLatch(); s.off(); removeEventListener('innoday:prewarm', onWarm) },
+    dispose() { alive = false; offLatch(); s.off(); offPulse.forEach((f) => f()); removeEventListener('innoday:prewarm', onWarm) },
   }
 }
 

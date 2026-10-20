@@ -701,7 +701,9 @@
             0.05
           ],
           "scale": 1.2,
-          "stretch": 1.0
+          "stretch": 1.0,
+          "pulse": "thanks",
+          "light": 4.0
         },
         {
           "type": "floor",

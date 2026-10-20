@@ -708,15 +708,41 @@ space:
   dim: 0
   ambient: 0
   hum: false
-  rate: [[0, 0.7], [2.4, 0.5]]
+  rate: [[0, 0.7], [2.4, 0.5]]   # LisTakeover slows it almost to a stop as the bunches cross (~18 s), then runs it on at 0.6
   cameraRate: 1
-  path:   # out of the module's end (the clip's last view, hero/lis_pose.py) to T1, then the whole detector
-    - [0, { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
-    - [2.0, { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
-    - [5.5, { at: [9.6, -482.0, 0.8], dist: 7, yaw: -80, pitch: 4 }]
-    - [16, { at: [13.50, -479.81, 0.55], dist: 21.6, yaw: 0, pitch: -13 }]   # up close at the owner's eye level (1,71 m of his 1,83 m), side on, 18 m from the beam: the entire detector fills the frame, both ends in view
-    - [19, { at: [13.50, -479.81, 0.55], dist: 21.6, yaw: 0, pitch: -13 }]
-    - [31, { at: [13.69, -479.99, 0.33], dist: 33.60, yaw: 0, pitch: -8 }]   # the slow pull-back along the same line to 28 m, still at eye level: the whole of it, a person at its foot
+  path:   # hero/close_path.py --step 1.5: out of the module's end, the crane down to eye level (17,5 s), the drift round to side on (31 s), the slow dolly back to 28 m (48 s)
+    - [0, { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]
+    - [2, { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]
+    - [5.5, { at: [9.6, -482, 0.8], dist: 7, yaw: -80, pitch: 4 }]
+    - [7, { at: [10.138, -481.698, 0.766], dist: 9.013, yaw: -69.661, pitch: 1.657 }]
+    - [8.5, { at: [10.747, -481.356, 0.726], dist: 11.293, yaw: -57.945, pitch: -0.999 }]
+    - [10, { at: [11.385, -480.998, 0.686], dist: 13.681, yaw: -45.679, pitch: -3.779 }]
+    - [11.5, { at: [12.008, -480.648, 0.646], dist: 16.016, yaw: -33.687, pitch: -6.498 }]
+    - [13, { at: [12.575, -480.33, 0.609], dist: 18.135, yaw: -22.798, pitch: -8.966 }]
+    - [14.5, { at: [13.041, -480.068, 0.579], dist: 19.88, yaw: -13.836, pitch: -10.997 }]
+    - [16, { at: [13.363, -479.887, 0.559], dist: 21.088, yaw: -7.628, pitch: -12.404 }]
+    - [17.5, { at: [13.5, -479.81, 0.55], dist: 21.6, yaw: -5, pitch: -13 }]
+    - [19, { at: [13.5, -479.81, 0.55], dist: 21.6, yaw: -4.39, pitch: -13 }]
+    - [20.5, { at: [13.5, -479.81, 0.55], dist: 21.6, yaw: -3.697, pitch: -13 }]
+    - [22, { at: [13.5, -479.81, 0.55], dist: 21.6, yaw: -2.963, pitch: -13 }]
+    - [23.5, { at: [13.5, -479.81, 0.55], dist: 21.6, yaw: -2.229, pitch: -13 }]
+    - [25, { at: [13.5, -479.81, 0.55], dist: 21.6, yaw: -1.536, pitch: -13 }]
+    - [26.5, { at: [13.5, -479.81, 0.55], dist: 21.6, yaw: -0.926, pitch: -13 }]
+    - [28, { at: [13.5, -479.81, 0.55], dist: 21.6, yaw: -0.439, pitch: -13 }]
+    - [29.5, { at: [13.5, -479.81, 0.55], dist: 21.6, yaw: -0.117, pitch: -13 }]
+    - [31, { at: [13.5, -479.81, 0.55], dist: 21.6, yaw: 0, pitch: -13 }]
+    - [32.5, { at: [13.504, -479.814, 0.545], dist: 21.864, yaw: 0, pitch: -12.89 }]
+    - [34, { at: [13.516, -479.825, 0.532], dist: 22.589, yaw: 0, pitch: -12.588 }]
+    - [35.5, { at: [13.533, -479.841, 0.512], dist: 23.677, yaw: 0, pitch: -12.134 }]
+    - [37, { at: [13.554, -479.861, 0.487], dist: 25.029, yaw: 0, pitch: -11.571 }]
+    - [38.5, { at: [13.578, -479.884, 0.459], dist: 26.546, yaw: 0, pitch: -10.939 }]
+    - [40, { at: [13.603, -479.908, 0.43], dist: 28.129, yaw: 0, pitch: -10.28 }]
+    - [41.5, { at: [13.628, -479.931, 0.402], dist: 29.679, yaw: 0, pitch: -9.634 }]
+    - [43, { at: [13.65, -479.952, 0.376], dist: 31.096, yaw: 0, pitch: -9.043 }]
+    - [44.5, { at: [13.669, -479.97, 0.354], dist: 32.283, yaw: 0, pitch: -8.549 }]
+    - [46, { at: [13.683, -479.983, 0.338], dist: 33.141, yaw: 0, pitch: -8.191 }]
+    - [47.5, { at: [13.69, -479.99, 0.331], dist: 33.569, yaw: 0, pitch: -8.013 }]
+    - [48, { at: [13.69, -479.99, 0.33], dist: 33.6, yaw: 0, pitch: -8 }]
 ---
 
 <LisTakeover><h1>Ačiū</h1></LisTakeover>
@@ -725,7 +751,7 @@ space:
 <!-- facts: lhcb-detector-size -->
 
 <!--
-Kalbėtojui. Klipo paskutinis kadras (vėliava ant apatinės šaltosios dėžės, SciFi apačioje) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių, sudarytą iš grūdelių pagal tikrąją jo geometriją; vėliava lieka ženklu ten, kur stovi SciFi modulis (savininkas, 2026 10 19: „position it in a 3D LHCb CAD (maybe as pointcloud)“). Tada detektorius įsižiebia, jame įvyksta tikras LHCb susidūrimas (savininkas: „LHCb collision within lhcb“); kamera nusileidžia ant ertmės grindų prieš detektorių, 18 m nuo pluošto, kalbėtojo akių aukštyje (1,71 m, ūgis 1,83 m): visas LHCb tikrosiomis proporcijomis užpildo ekraną nuo grindų iki viršaus, abu galai matomi; tada kamera lėtai traukiasi ta pačia linija iki 28 m, ir prie detektoriaus kojos stovi 1,83 m žmogus mastui (savininkas, 2026 10 20: „see the huge scale of lhcb … first person view at eye level“; „look at it side on from the middle. From where that person stands. It can be me, 183cm in height“). Tada virš detektoriaus greta susirenka LHCb logotipas ir Lietuvos vėliava, ir pasirodo „Ačiū“; viskas lieka per klausimus. Muzika pasiekia kulminaciją akių aukštyje ir po minutės pati nutyla.
+Kalbėtojui. Klipo paskutinis kadras (vėliava ant apatinės šaltosios dėžės, SciFi apačioje) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių, sudarytą iš grūdelių pagal tikrąją jo geometriją; vėliava lieka ženklu ten, kur stovi SciFi modulis (savininkas, 2026 10 19: „position it in a 3D LHCb CAD (maybe as pointcloud)“). Tada detektorius įsižiebia, o kamera nusileidžia ant ertmės grindų prieš detektorių, 18 m nuo pluošto, kalbėtojo akių aukštyje (1,71 m, ūgis 1,83 m): visas LHCb tikrosiomis proporcijomis užpildo ekraną nuo grindų iki viršaus, abu galai matomi. Kamerai nusileidus, kartu su muzikos kulminacija (~18 s), jame susikerta tikro LHCb susidūrimo protonų paketai (savininkas: „LHCb collision within lhcb“): laikas beveik sustoja, tada susidūrime gimusios dalelės lekia per detektorių, kiekviena jo dalis sušvinta, kai jos ją pasiekia, o grūdeliai, pro kuriuos praėjo dalelės, lieka šviesti. Kamera neskuba (savininkas, 2026 10 20: „don't need to rush to zoom out“): apie 13 s ji lėtai sukasi į vaizdą iš šono, tada lėtai traukiasi ta pačia linija iki 28 m, ir prie detektoriaus kojos stovi 1,83 m žmogus mastui (savininkas, 2026 10 20: „see the huge scale of lhcb … first person view at eye level“; „look at it side on from the middle. From where that person stands. It can be me, 183cm in height“). Traukiantis, su antra muzikos kulminacija (~42 s), virš detektoriaus greta susirenka LHCb logotipas ir Lietuvos vėliava; kamerai sustojus (~48 s) pasirodo „Ačiū“; viskas lieka per klausimus. Muzika po minutės pati nutyla.
 Nuorodų ekrane nėra: licencijų reikalaujamos nuorodos — kitame puslapyje, kurio nerodyti (savininkas, 2026 10 19: „We don't need credits at the last slide“).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
