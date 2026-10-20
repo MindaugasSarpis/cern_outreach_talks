@@ -15,6 +15,7 @@ videos:
   dust: '#5b93ff'
 stage:
   space: data/space.json
+  plugins: [lhcb]           # LHCb's Run 3 geometry as grains (the detector), fetched from the kit's geometry-lhcb release
   palette: { base: blue, bg: '#000206' }   # a true black ground, as OpenData's
   sound: { hum: false, flight: false, clip: false }   # no hum, no transition sounds (house rule); the collision's own sound plays
   options: { reach: 30, nebula: 0.12, exposure: 1.1, vignette: 0.7, grain: 0.012, aberration: 0, bloom: 0.42 }
@@ -41,7 +42,7 @@ space:
   ambient: 0.15
 ---
 
-<Grains :set="{ jp: 1, dot: 1, det: 0, data: 0, grid: 0 }" />
+<StageSteps :set="{ jp: 1, dot: 1, det: 0, data: 0, grid: 0 }" />
 <Clock off />
 
 <!-- Station 0, the peak (storyboard 0:00–0:45). -->
@@ -75,7 +76,7 @@ space:
     - [7, { at: [0.754, 7.17, 0], dist: 4, yaw: 6, pitch: 1 }]
 ---
 
-<Grains :set="{ jp: 1, dot: 1, det: 0, data: 0, grid: 0 }" />
+<StageSteps :set="{ jp: 1, dot: 1, det: 0, data: 0, grid: 0 }" />
 <Clock off />
 
 <!-- Station 1, the dive (0:45–1:15): into one bin, until one grain fills the frame; black. -->
@@ -113,7 +114,7 @@ space:
 ---
 
 <Crossing name="crossing" start />
-<Grains :set="{ dot: 0, det: 0, data: 0, grid: 0 }" />
+<StageSteps :set="{ dot: 0, det: 0, data: 0, grid: 0 }" />
 <Clock :from="-25" unit="ns" />
 
 <div class="nums" style="--d1: 4.5s; --d2: 5.7s; --d3: 6.9s">
@@ -163,7 +164,7 @@ space:
 ---
 
 <Crossing name="crossing" />
-<Grains :set="{ dot: 0, det: 0, data: 0, grid: 0 }" />
+<StageSteps :set="{ dot: 0, det: 0, data: 0, grid: 0 }" />
 <Clock :keys="[[0, -25], [1.5, 0], [5.8, 0], [8.5, 63]]" unit="ns" />
 
 <div class="nums" style="--d1: 10.5s; --d2: 11.7s">
@@ -222,7 +223,7 @@ space:
 ---
 
 <Crossing name="crossing" />
-<Grains :set="{ dot: 0, det: 1, data: 0, grid: 0 }" />
+<StageSteps :set="{ dot: 0, det: 1, data: 0, grid: 0 }" />
 <Clock :from="63" unit="ns" />
 
 <div class="nums" style="--d1: 7.5s; --d2: 8.7s">
@@ -245,8 +246,9 @@ we can weigh them, and the tracker behind it, built from more than 11 000
 kilometres of plastic fibre. Then the calorimeters stop most of them, and only
 the muons reach the last walls, nineteen metres out."
 
-The detector is LHCb's real Run 3 geometry (public/data/lhcb-grains.bin,
-baked from HSF Phoenix's LHCb.glb, from LHCb's DD4hep description), drawn
+The detector is LHCb's real Run 3 geometry (the kit's lhcb plugin, `src:
+lhcb`: grains baked from HSF Phoenix's LHCb.glb, from LHCb's DD4hep
+description, fetched from slidev-videos' geometry-lhcb release), drawn
 stretched across the beam as the event is (2.4×, as LHCb's event displays
 do). It lights up behind a front that runs from the vertex to the last muon
 station. The clock holds at 63 ns, the light time to M5.
@@ -274,7 +276,7 @@ space:
 ---
 
 <Crossing name="crossing" />
-<Grains :set="{ dot: 0, det: 2, data: 1, grid: 0 }" />
+<StageSteps :set="{ dot: 0, det: 2, data: 1, grid: 0 }" />
 <Clock :from="1" :to="900" :run="105" unit="µs" />
 
 <div class="nums" style="--d1: 9.5s; --d2: 10.7s">
@@ -319,7 +321,7 @@ space:
     - [4, { at: [30, -401.5, 0], dist: 10, yaw: -35, pitch: 8 }]
 ---
 
-<Grains :set="{ dot: 0, det: 0, data: 2, grid: 0 }" />
+<StageSteps :set="{ dot: 0, det: 0, data: 2, grid: 0 }" />
 <Clock :from="1" :to="900" :run="120" unit="ms" />
 
 <div class="nums" style="--d1: 5.5s; --d2: 6.7s">
@@ -363,7 +365,7 @@ space:
     - [5, { at: [56.5, -401.5, 0], dist: 17, yaw: -40, pitch: 12 }]
 ---
 
-<Grains :set="{ dot: 0, det: 0, data: 3, grid: 0 }" />
+<StageSteps :set="{ dot: 0, det: 0, data: 3, grid: 0 }" />
 <Clock :from="1" :to="48" :run="110" unit="h" />
 
 <div class="nums" style="--d1: 6s; --d2: 7.2s; --d3: 8.4s">
@@ -413,7 +415,7 @@ space:
     - [8, { at: [118, -404.5, 0], dist: 30, yaw: -30, pitch: 18 }]
 ---
 
-<Grains :set="{ dot: 0, det: 0, data: 4, grid: 1 }" :clicks="{ 1: { grid: 2 }, 2: { grid: 3 } }" />
+<StageSteps :set="{ dot: 0, det: 0, data: 4, grid: 1 }" :clicks="{ 1: { grid: 2 }, 2: { grid: 3 } }" />
 <Clock :keys="[[0, 0], [25, 11]]" unit="years" />
 
 <div class="nums" style="--d1: 8.5s; --d2: 0.4s; --d3: 0.4s">
@@ -463,7 +465,7 @@ space:
   ambient: [[0, 0], [3, 0.15]]
 ---
 
-<Grains :set="{ jp: 1, dot: 2, det: 0, data: 0, grid: 3 }" />
+<StageSteps :set="{ jp: 1, dot: 2, det: 0, data: 0, grid: 3 }" />
 <Clock :keys="[[0, 11], [6, 14]]" unit="years" />
 
 <div class="nums" style="--d1: 6.5s; --d2: 7.7s">
@@ -512,7 +514,7 @@ space:
   ambient: 0.15
 ---
 
-<Grains :set="{ jp: 2, dot: 1, det: 0, data: 0, grid: 0 }" />
+<StageSteps :set="{ jp: 2, dot: 1, det: 0, data: 0, grid: 0 }" />
 <Clock off />
 
 <div class="nums" style="--d1: 7s; --d2: 8.2s">
@@ -559,7 +561,7 @@ space:
     - [14, { at: [0, 4.2, 0], dist: 52, yaw: 18, pitch: 10 }]
 ---
 
-<Grains :set="{ jp: 2, dot: 1, det: 0, data: 0, grid: 0 }" />
+<StageSteps :set="{ jp: 2, dot: 1, det: 0, data: 0, grid: 0 }" />
 <Clock off />
 
 <div class="credits credit">

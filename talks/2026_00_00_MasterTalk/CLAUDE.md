@@ -81,8 +81,14 @@ storyboard).
   applies only in the `slide` and `presenter` contexts; a missing or
   mismatched geometry asset fails the build naming the asset, the sha and
   the cache dir, only for decks whose space.json uses `src: lhcb` or
-  `lhcb-dense`; stage-data/ rides in build:portable. Nothing more to do
-  until the Scheduler says v0.9.0 is tagged.
+  `lhcb-dense`; stage-data/ rides in build:portable.
+- 20 Oct: v0.9.0 tagged (toolkit main 8ecddb8); the pilot: both addons pinned
+  v0.9.0, the deck on the kit's lhcb plugin (`plugins: [lhcb]`, `src: lhcb`,
+  `parts: lhcb`, `setLhcbTracks`), its steps bus and `<StageSteps>`; the
+  talk's detector, bus, Grains.vue, geometry files and hero/ scripts dropped.
+  Lint 0/0, check ok (the build fetched the geometry into stage-data/).
+  Ready, then the Scheduler's main, then the deploy: this is the first real
+  test of the Pages workflow and of `pnpm venue` with the geometry fetch.
 
 ## Arc
 
@@ -113,54 +119,47 @@ Files of this talk's own (setup/, styles/, vite.config.ts) and what each does.
 A piece a second talk needs moves to the shared kit instead of being copied.
 
 - `setup/grains.js`: `histogram`, copied from Užsikrauk karjerai (18 Oct)
-  with a `focus` per step (blur 1 → 0: the open and the close, one object),
-  and the step bus every form here answers to (`setGrains`, `listen`, `state`
-  on `master:grains`). Move it to components/ after 26 Oct, so both talks
+  with a `focus` per step (blur 1 → 0: the open and the close, one object);
+  its steps come from the kit's bus (`onStep`, `stepOf` from
+  `slidev-addon-stage`). Move it to components/ after 26 Oct, so both talks
   share one copy.
 - `setup/clock.js`, `setup/Clock.vue`: the running clock, one element outside
   the slides; `<Clock :keys="[[s, value], …]" unit="ns" />` or `<Clock off />`.
 - `setup/Crossing.vue`: starts or continues the shared `lhc-collision` run
   without `<LhcOpening>`'s Lithuanian captions.
-- `setup/Grains.vue`: Užsikrauk's, sets each named form's step on slide enter
-  and per click (`:clicks`); the same file sits in OpenData and Užsikrauk,
-  three copies for one of the kit's.
-- `setup/route.js`: stations 4–11's forms, registered by
-  `installRoute(registerBuilder, { event })`, all in lhc-collision's frame
+- `<StageSteps :set :clicks>` (the kit's, v0.9.0) sets each named form's step
+  on slide enter and per click; it replaced this talk's `setup/Grains.vue` on
+  20 Oct.
+- `setup/route.js`: stations 5–11's forms, registered by
+  `installRoute(registerBuilder)`, all in lhc-collision's frame
   (W(x, y, z) = [z·S, y·S·T, x·S·T], S 0.5 units/m, T 2.4 across the beam):
-  `detector` (LHCb's Run 3 geometry as grains from `src`
-  `public/data/lhcb-grains.bin`; `sweep` s, `alpha`, `size`, `color`, `hot`,
-  `out` [x, y, z] where the hits leave to, `hitR` 0.035 m, `hitMin` 0.1 m from
-  the beam; steps: 0 hidden, 1 lit behind a front running out from the
-  collision, 2 the hits (grains within `hitR` of the event's tracks, binned
-  every 5 cm along z) turn white and fly to `out` every 3.4 s, the rest dimmed;
-  the record's 4th field, the part index, is unused so far: the colours by
-  part go into the kit's builder for v0.9.0, this talk pilots them; the
-  intent, white and light blue only, neighbours along the beam set apart, the
-  trackers brightest and the magnet a frame rather than a mass: 0 velo
-  #e6efff, 1 pipe #5b93ff, 2 rich1 #7fa9ff, 3 ut #cfe2ff, 4 magnet #5b93ff at
-  the lowest alpha, 5 scifi #dce9ff, 6 rich2 #7fa9ff, 7 ecal #b8d2ff, 8 hcal
-  #8fb6ff, 9 muon #cfe2ff (the collision's own muon tone, whose tracks end
-  there); hits stay `hot` white whatever the part), `stream` (packets through
-  two trigger gates, ours white),
-  `grid` (store, 42 sites, the thread to Vilnius), `spark` (the one dot).
-  Steps through `<Grains>`.
-- `hero/bake_grains.py`: bakes the .bin from Phoenix's LHCb.glb:
-  `blender -b --factory-startup --python hero/bake_grains.py -- <glb>
-  public/data/lhcb-grains.bin`. 93 000 grains in ten parts (velo, pipe, rich1,
-  ut, magnet, scifi, rich2, ecal, hcal, muon), a fixed budget each spread by
-  area over the meshes under the exact ancestor names in `PARTS` (the names
-  are the .glb's, suffixes included); seeded, the same file each run.
-- `public/data/lhcb-grains.bin` (744 KB) and `lhcb-grains.NOTICE.txt`:
-  little-endian Int16 `[x, y, z, part]` in mm, LHCb's frame (z along the
-  beam, y up). The notice (DD4hep GPL-3.0, Phoenix Apache-2.0; the derived
-  file GPL-3.0) travels beside the .bin wherever it goes, and the last
-  slide's tiny credit names both.
+  `stream` (packets through two trigger gates, ours white), `grid` (store, 42
+  sites, the thread to Vilnius), `spark` (the one dot); their steps from the
+  kit's `stepper(name)`.
+- The detector (station 4) is the kit's since v0.9.0 (20 Oct): `plugins:
+  [lhcb]` in the deck's `stage:` block; `src: lhcb` (93 000 grains) and
+  `parts: lhcb` in space.json, with this talk's `sweep`, `alpha` 0.32, `size`
+  1.3 and `out`; its hits from `setLhcbTracks(trajectories(event).tracks.map(t
+  => t.pts))` in setup/main.ts. The build fetches the geometry sha256-pinned
+  from slidev-videos' geometry-lhcb release (cache ~/.cache/slidev-addon-stage;
+  a failed fetch fails the build) and writes it to stage-data/ with its
+  NOTICE (DD4hep GPL-3.0, Phoenix Apache-2.0); dev serves it from the cache;
+  the last slide keeps the tiny credit. `parts: lhcb` is this talk's palette,
+  white and light blue only, neighbours along the beam set apart, the
+  trackers brightest and the magnet a frame: 0 velo #e6efff, 1 pipe #5b93ff,
+  2 rich1 #7fa9ff, 3 ut #cfe2ff, 4 magnet #5b93ff at the lowest alpha, 5
+  scifi #dce9ff, 6 rich2 #7fa9ff, 7 ecal #b8d2ff, 8 hcal #8fb6ff, 9 muon
+  #cfe2ff (the collision's own muon tone); hits stay `hot` white.
 - `styles/index.css`: `.nums` (numbers low left, white with light-blue
   words, staggered by `--d1…--d3`) and the clock.
-- `package.json`: `stage:check --types lhc-collision` (the shared builder).
-- `hero/build_scene.py`: the hero shots' Blender scene (run headless in
-  Blender 4.5): Phoenix's LHCb.glb plus the event's tracks, grown to `--t` ns
-  by light time; shots `crossing` and `side`. The .glb stays outside git
+- `package.json`: both addons pinned v0.9.0; `stage:check --types
+  lhc-collision,stream,grid,spark` (the shared builder and this talk's).
+- The bake and the hero shots' Blender scene are the kit's
+  `tools/lhcb/bake_grains.py` and `tools/lhcb/build_scene.py` (slidev-videos
+  v0.9.0): this talk's `hero/` copies until 20 Oct, lifted unchanged but for a
+  budget multiplier `k` on the bake; run headless in Blender 4.5
+  (~/talks/.cache/blender), shots `crossing` and `side`, the event's tracks
+  grown to `--t` ns by light time. The .glb stays outside git
   (~/talks/.cache/opendata/mastertalk-geometry/), renders in
   ~/talks/.cache/mastertalk-hero/. Blender 4.5's glTF importer leaves every
   collection but one excluded; the script re-includes them all after the
