@@ -169,6 +169,15 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-20 (night): the owner's notes on the eye-level close ("lhcb seems 3m high",
+"horizontally squished", "chopped in half ... full 16x9 frame filling view ... then
+slowly panning out, showing this person for scale", "do the Lithuanian flag at the
+bottom of scifi") are built (Decisions, "The close at eye level"): true proportions,
+the close-up 16 m back with the whole detector in frame, the pull-back to 28 m with
+the person at the muon wall's foot, the clip re-rendered with the module's lower
+readout end (57 min on gluon) and republished with --only, the hand-over's anchor at
+the lower cold box. Stills 31–34 retaken. Not yet deployed at this entry.
+
 2026-10-20 (later): the owner's notes on the deployed close ("Looks amazing" — the
 eye-level view, the logo and the flag, more solid grains, the soundtrack, no CAD for
 now) are built (Decisions, "The close at eye level"): five visual review rounds, a
@@ -283,18 +292,38 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   its collision in true proportions (1,2 units a metre every way: `scale 1.2, stretch 1`
   on `det` and `thanks`; the event-display convention, 0,5 along the beam and 2,4×
   across, which the rest of the deck and MasterTalk keep, made it look squashed), the
-  cold box's anchor at (9.54, -476.94, 0.96). The path holds the whole detector in a
-  3/4 view 3 s (10–13 s), then comes down by 19 s to the owner's eye level (1,71 m of
-  his 1,83 m, above a floor at the muon stations' foot, y = -5,6 m in LHCb's frame),
-  side on from the detector's middle, 16,5 m from the beam, 15° up: the 10 m wall from
-  the floor to its top with black above (6,8 m back, where the earlier figure stood, it
-  pressed against the near faces). No figure: the viewer is the person. LHCb stands on
-  a faint grain floor grid, on grain legs (`supports`, legs and foot rails: the magnet,
-  SciFi, RICH2 and calorimeters do not reach the floor in the geometry). Then the LHCb logo (the collaboration's own, its marks
+  cold box's anchor at (9.54, -476.94, 0.96), then (owner, 20 Oct: "So do the Lithuanian
+  flag at the bottom of scifi", confirmed as the engraved one) the module's LOWER
+  readout end: `hero/lis_scene.py --end bottom` turns the module a half turn about the
+  view axis through the flag (the cold box below the mats, the flex cables hanging
+  down; the camera and lights keep their place relative to the flag, the
+  establishing shot centred on the module; the flag's v flipped so yellow stays on
+  top), the anchor at (9.54, -483.06, 0.96): LHCb (0.8, -2.55, 7.95) m, 3 m above the
+  floor, near eye level. Then (owner: "You only show lhcb up to
+  scifi, it's chopped in half need a full 16x9 frame filling view of how it would look
+  like standing up close (entire detector) then slowly panning out, showing this
+  person for scale") the path comes down from the cold box by 16 s to the owner's eye
+  level (1,71 m of his 1,83 m, above a floor at the muon stations' foot, y = -5,6 m in
+  LHCb's frame), side on, 16 m from the beam and centred on the whole detector (the
+  camera at x 13,51, found by projecting the geometry: both ends inside ±0,86 of the
+  width, the muon wall's top at 0,86, the floor at its foot at -0,95; the grains'
+  sprites and bloom add about 0,04 at the sides and 0,08 at the top, so at 15 m they
+  spilled past the edges and at 18 m the side margins were 10 %), 14° up: the entire
+  detector fills the 16:9 frame; holds 3 s; then dollies straight back along
+  the same line to 28 m over 12 s (19–31 s), 8° up, where LHCb spans about half the
+  width and a 1,83 m person in grains (`emblem` of `det`, figures/person_grains.png)
+  stands at the muon wall's near foot, 9 % of the frame high against the detector's
+  ~45 % (in the close view it is at the bottom right, 26 % high). Earlier tries, for
+  the record: a side view from the detector's middle 16,5 m back (the calorimeters
+  and muon stations ran off the right edge: "up to scifi"), 6,8 m back (pressed
+  against the near faces), and a 3/4 hold. LHCb stands on a faint grain floor grid,
+  on grain legs (`supports`, legs and foot rails: the magnet, SciFi, RICH2 and
+  calorimeters do not reach the floor in the geometry). Then the LHCb logo (the collaboration's own, its marks
   only, `figures/lhcb_logo_grains.png`) and the Lithuanian flag (waving, its yellow
   given as #FFC800: at the frame's top the finish dulled #FDB913) gather side by side
   over the dark upstream space (`emblem`, setup/emblems.js, drawn last with normal
-  blending: added on, the detector's blue tinted them), in the dark above the detector;
+  blending: added on, the detector's blue tinted them), in the dark above the detector
+  in the wide view;
   the collision fades and the small flag at the module goes (its clearing in the
   detector a soft 25 % dimming, not a hole); then the word. Every pose was searched against the
   geometry's projection. LHCb re-baked with 4,8× the grains (446 400, hero/bake_grains.py

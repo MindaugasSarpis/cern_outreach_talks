@@ -683,7 +683,7 @@ Vaizdas: nuotr. Tomas Laurinavičius / VU (vu.lt/en/all-news/cern-lh-cb-experime
 -->
 
 ---
-space: { at: [9.54, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim: 0, hum: false }
+space: { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim: 0, hum: false }
 ---
 
 <VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
@@ -693,7 +693,7 @@ space: { at: [9.54, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim
 <!-- facts: lhcb-scifi, lhcb-scifi-channels, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
 
 <!--
-Kalbėtojui. SciFi sekiklio modulio galas su šviesos įvedimo sistema: dvi šviesos įvedimo plokštelės su lazeriniais diodais ir skaidulomis, šalia — šaltoji dėžė, ant kurios lazeris išgraviruoja Lietuvos vėliavą (savininkas, 2026 10 19). Vaizdas sukurtas Blender programa pagal SciFi brėžinį, ne nuotrauka. Klipas 10 s, be garso; paskutinis kadras lieka, kol paspaudžiama toliau, o tada virsta grūdeliais ir kamera atsitraukia į visą LHCb.
+Kalbėtojui. SciFi sekiklio modulio galas su šviesos įvedimo sistema: dvi šviesos įvedimo plokštelės su lazeriniais diodais ir skaidulomis, šalia — apatinio modulio galo šaltoji dėžė (savininkas, 2026 10 20: „do the Lithuanian flag at the bottom of scifi“), ant kurios lazeris išgraviruoja Lietuvos vėliavą (savininkas, 2026 10 19). Vaizdas sukurtas Blender programa pagal SciFi brėžinį, ne nuotrauka. Klipas 10 s, be garso; paskutinis kadras lieka, kol paspaudžiama toliau, o tada virsta grūdeliais ir kamera atsitraukia į visą LHCb.
 Sakyti: „LHCb sekiklyje — daugiau nei 11 000 km scintiliacinių skaidulų ir 524 288 kanalai, kurie registruoja jose kilusią šviesą. Kad visi kanalai būtų sukalibruoti, kiekvieno modulio gale įrengta šviesos įvedimo sistema: lazeriniai diodai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupės darbai LHCb kolaboracijai apima ir šį sekiklį, ir šią sistemą.“
 Faktai: VCSEL lazeriai (670 nm), po du vienoje plokštelėje; kiekvienas SiPM kanalas pamato nuo vieno iki penkių fotoelektronų, pagal tai nustatomi PACIFIC lusto slenksčiai. Kiek iš viso plokštelių, nesakyti (viešai nepaskelbta). Apie Vilnių — ne daugiau, nei parašyta (grupės 2024 10 03 susitikimo darbotvarkė).
 Šaltiniai: LHCb Upgrade I, JINST 19 (2024) P05065, 6.5.7 sk.; D. Berninghoff, daktaro disertacija, Heidelbergo universitetas, 2022, 4.5 sk.; indico.cern.ch/event/1461467.
@@ -711,12 +711,12 @@ space:
   rate: [[0, 0.7], [2.4, 0.5]]
   cameraRate: 1
   path:   # out of the module's end (the clip's last view, hero/lis_pose.py) to T1, then the whole detector
-    - [0, { at: [9.54, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
-    - [2.0, { at: [9.54, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
-    - [5.5, { at: [9.6, -477.6, 0.8], dist: 7, yaw: -80, pitch: -6 }]
-    - [10, { at: [12.6, -479.6, 0], dist: 24, yaw: -30, pitch: 12 }]   # the whole detector, in its true proportions: its scale
-    - [13, { at: [12.6, -479.6, 0], dist: 24, yaw: -30, pitch: 12 }]
-    - [19, { at: [12, -479.54, 0.67], dist: 19.8, yaw: 0, pitch: -15 }]   # side on from its middle, 16,5 m from the beam, at the owner's eye level (1,71 m of his 1,83 m), looking up 15°: the 10 m wall from the floor to its top
+    - [0, { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
+    - [2.0, { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
+    - [5.5, { at: [9.6, -482.0, 0.8], dist: 7, yaw: -80, pitch: 4 }]
+    - [16, { at: [13.51, -480.02, 0.57], dist: 19.2, yaw: 0, pitch: -14 }]   # up close at the owner's eye level (1,71 m of his 1,83 m), side on, 16 m from the beam: the entire detector fills the frame, both ends in view
+    - [19, { at: [13.51, -480.02, 0.57], dist: 19.2, yaw: 0, pitch: -14 }]
+    - [31, { at: [13.69, -479.99, 0.33], dist: 33.60, yaw: 0, pitch: -8 }]   # the slow pull-back along the same line to 28 m, still at eye level: the whole of it, a person at its foot
 ---
 
 <LisTakeover><h1>Ačiū</h1></LisTakeover>
@@ -725,7 +725,7 @@ space:
 <!-- facts: lhcb-detector-size -->
 
 <!--
-Kalbėtojui. Klipo paskutinis kadras (vėliava ant šaltosios dėžės) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių, sudarytą iš grūdelių pagal tikrąją jo geometriją; vėliava lieka ženklu ten, kur stovi SciFi modulis (savininkas, 2026 10 19: „position it in a 3D LHCb CAD (maybe as pointcloud)“). Tada detektorius įsižiebia, jame įvyksta tikras LHCb susidūrimas (savininkas: „LHCb collision within lhcb“); kamera kelias sekundes laiko visą detektorių tikrosiomis proporcijomis, tada nusileidžia ant ertmės grindų prieš jo vidurį, 16,5 m nuo pluošto, kalbėtojo akių aukštyje (1,71 m, ūgis 1,83 m) ir žiūri iš šono aukštyn: LHCb stovi visu 10 m aukščiu nuo grindų iki viršaus (savininkas, 2026 10 20: „see the huge scale of lhcb … first person view at eye level“; „look at it side on from the middle. From where that person stands. It can be me, 183cm in height“). Tada viršuje greta susirenka LHCb logotipas ir Lietuvos vėliava, ir pasirodo „Ačiū“; viskas lieka per klausimus. Muzika pasiekia kulminaciją akių aukštyje ir po minutės pati nutyla.
+Kalbėtojui. Klipo paskutinis kadras (vėliava ant apatinės šaltosios dėžės, SciFi apačioje) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių, sudarytą iš grūdelių pagal tikrąją jo geometriją; vėliava lieka ženklu ten, kur stovi SciFi modulis (savininkas, 2026 10 19: „position it in a 3D LHCb CAD (maybe as pointcloud)“). Tada detektorius įsižiebia, jame įvyksta tikras LHCb susidūrimas (savininkas: „LHCb collision within lhcb“); kamera nusileidžia ant ertmės grindų prieš detektorių, 16 m nuo pluošto, kalbėtojo akių aukštyje (1,71 m, ūgis 1,83 m): visas LHCb tikrosiomis proporcijomis užpildo ekraną nuo grindų iki viršaus, abu galai matomi; tada kamera lėtai traukiasi ta pačia linija iki 28 m, ir prie detektoriaus kojos stovi 1,83 m žmogus mastui (savininkas, 2026 10 20: „see the huge scale of lhcb … first person view at eye level“; „look at it side on from the middle. From where that person stands. It can be me, 183cm in height“). Tada virš detektoriaus greta susirenka LHCb logotipas ir Lietuvos vėliava, ir pasirodo „Ačiū“; viskas lieka per klausimus. Muzika pasiekia kulminaciją akių aukštyje ir po minutės pati nutyla.
 Nuorodų ekrane nėra: licencijų reikalaujamos nuorodos — kitame puslapyje, kurio nerodyti (savininkas, 2026 10 19: „We don't need credits at the last slide“).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
@@ -735,7 +735,7 @@ Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaid
 
 ---
 class: credits-page
-space: { at: [12, -479.54, 0.67], dist: 19.8, yaw: 0, pitch: -15, dim: 0.7, ambient: 0, hum: false }
+space: { at: [13.69, -479.99, 0.33], dist: 33.60, yaw: 0, pitch: -8, dim: 0.7, ambient: 0, hum: false }
 ---
 
 <Grains :set="{ det: 1, lhcbLogo: 1, ltFlag: 1 }" />

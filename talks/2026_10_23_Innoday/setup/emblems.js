@@ -150,8 +150,9 @@ function buildEmblem(o, ctx) {
     const geo = new BufferGeometry()
     const start = new Float32Array(n * 3), seed = new Float32Array(n)
     for (let i = 0; i < n; i++) {
-      // scattered in the dust around where it will hang, up to a couple of widths out
-      start.set([d.home[i * 3] * 2.2 + gauss() * w * 0.8, d.home[i * 3 + 1] * 2.2 + gauss() * w * 0.6, gauss() * w * 0.9], i * 3)
+      // scattered a little around where it will hang (a wide scatter read as a firework
+      // raining into the detector below)
+      start.set([d.home[i * 3] * 1.3 + gauss() * w * 0.3, d.home[i * 3 + 1] * 1.3 + gauss() * w * 0.2, gauss() * w * 0.35], i * 3)
       seed[i] = Math.random()
     }
     geo.setAttribute('position', new BufferAttribute(d.home, 3))

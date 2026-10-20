@@ -106,9 +106,10 @@ used_in = ["deck"]
 notes   = """\
 The close (owner, 19 Oct: "photorealistic 3D rendering of SciFi light \
 injection system, then "laser" inscribe Lithuanian flag on it"; "LIS coldbox \
-with the flag"): a SciFi module's end with its light injection system, the \
-laser writing the flag on the cold box, 10 s, silent, played once (not \
-looped: the profile only drops the audio). Rendered by hero/lis_scene.py \
+with the flag"; 20 Oct: "do the Lithuanian flag at the bottom of scifi"): a \
+SciFi module's lower readout end with its light injection system, the laser \
+writing the flag on the cold box, 10 s, silent, played once (not looped: the \
+profile only drops the audio). Rendered by hero/lis_scene.py --end bottom \
 (Blender 4.5 LTS, Cycles) after the owner's SciFi drawing until the CAD \
 arrives; the frames were joined with ffmpeg (H.264, 25 fps); the raw is \
 that output, not on gdrive. Its last frame is public/figures/lis_last.jpg, \

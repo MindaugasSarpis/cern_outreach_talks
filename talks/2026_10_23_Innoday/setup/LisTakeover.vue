@@ -32,7 +32,7 @@ import META from './data/lis.json'
 const props = defineProps({
   src: { type: String, default: 'figures/lis_last.jpg' },
   depth: { type: String, default: 'figures/lis_last.depth.png' },
-  anchor: { type: Array, default: () => [9.54, -476.94, 0.96] },   // the flag's place: LHCb (0.8, 2.55, 7.95) m at 1,2 units a metre (true proportions)
+  anchor: { type: Array, default: () => [9.54, -483.06, 0.96] },   // the flag's place: the lower cold box, LHCb (0.8, -2.55, 7.95) m at 1,2 units a metre (true proportions)
   d0: { type: Number, default: 2.4 },      // the camera's start distance from the flag, stage units (path[0])
   sEnd: { type: Number, default: 2.5 },    // stage units a metre at the path's last key (the detector's own: 1.2 across)
   sFlag: { type: Number, default: 20 },    // … and the flag's, so it stays a mark (~0.9 units: about 40 px)
@@ -45,7 +45,7 @@ const props = defineProps({
   colAt: { type: Number, default: 13 },    // … LHCb's collision starts in it
   emblems: { type: Array, default: () => ['lhcbLogo', 'ltFlag'] },   // gathered when the camera has stopped
   wordAfter: { type: Number, default: 3.2 },   // s after the camera has stopped: the word (the emblems gather in 2.6)
-  wordBy: { type: Number, default: 34 },   // s: the word shows by then whatever the world does (the path ends at 19 s, the word ~3 s later)
+  wordBy: { type: Number, default: 46 },   // s: the word shows by then whatever the world does (the path ends at 31 s, the word ~6 s later)
 })
 const { $renderContext, $page, $frontmatter } = useSlideContext()
 const nav = useNav()

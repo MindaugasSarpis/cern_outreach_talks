@@ -30,8 +30,12 @@ last frame over as grains in depth at the same view.
 The scene is built in the module's own frame, in metres: x across the module
 (the cold box's length), y along the fibres (into the module; the cold box at
 y < 0), z out of the mats' face. A root turns it upright as it stands in LHCb:
-the readout end at the top (Blender +Z is the module's -y), the face toward the
-camera (-Y). So the camera's up is the world's up, as in the stage, and the
+the face toward the camera (-Y) and, --end top, the readout end at the top
+(Blender +Z is the module's -y) or, --end bottom (owner, 20 Oct: "do the
+Lithuanian flag at the bottom of scifi"), the lower readout end at the bottom
+(Blender +Z is the module's +y: the cold box below the mats, the flex cables
+hanging down). The camera and the lights keep their place in the room either
+way, and the flag reads yellow on top either way. So the camera's up is the world's up, as in the stage, and the
 lens's vertical field is the stage's 50 degrees: the last frame, with --meta's
 depth (--depth: a ray per pixel at 480x270, as 16-bit depth in a PNG's red and
 green), becomes grains in depth at the stage's own view.
@@ -64,8 +68,22 @@ STEP_Y = -0.050                # the strip's inner edge
 FLAG_W = 0.044                 # the flag: 44 mm by 26.4 mm, on block 3
 FLAG_C = (-0.027,)             # its centre's y on the block, 10 mm clear of the copper and the strip
 VFOV = 50.0                    # the stage's vertical field of view (slidev-addon-stage, space.js)
-# the module's frame -> Blender: x -> -X, y -> -Z (down the module), z -> -Y (toward the camera)
-UPRIGHT = ((-1, 0, 0), (0, 0, -1), (0, -1, 0))
+# the module's frame -> Blender, z -> -Y (toward the camera) either way:
+#   top     x -> -X, y -> -Z (the end up)
+#   bottom  x -> +X, y -> +Z (the end down): the top turned 180 degrees about the view axis
+UPRIGHT = { 'top': ((-1, 0, 0), (0, 0, -1), (0, -1, 0)), 'bottom': ((1, 0, 0), (0, 0, -1), (0, 1, 0)) }
+END = 'top'
+FLAG_XY = (0.0, 0.0)
+# a point of the room (the camera, a light) given in the top end's module frame, in the
+# module frame of the chosen end: the same place in the room relative to the flag once the
+# root has turned the module (a half turn about the view axis through the flag)
+def room(p, about='flag'):
+    fx, fy = FLAG_XY
+    if END != 'bottom':
+        return tuple(p)
+    # `about: 'module'`: the same place in the room relative to the module's middle instead
+    # (the establishing shot, centred on the module, not on the flag off its middle)
+    return ((2 * fx if about == 'flag' else 0.0) - p[0], 2 * fy - p[1], p[2])
 
 
 def args():
@@ -77,6 +95,7 @@ def args():
     a.add_argument('--samples', type=int, default=128)
     a.add_argument('--res', default='1920x1080')
     a.add_argument('--block', type=int, default=2, help='which cold-box block carries the flag (0-3)')
+    a.add_argument('--end', default='top', choices=('top', 'bottom'), help='which readout end of the module')
     a.add_argument('--exposure', type=float, default=0.0)
     a.add_argument('--depth', help='a PNG: the last frame\'s depth (with --meta)')
     a.add_argument('--meta')
@@ -184,10 +203,12 @@ def engraved(m0, face, t0, t1, cool, centre):
                 L(v, n.inputs[i])
         return n.outputs[0]
 
-    # u, v in the flag (0..1; v = 0 along the top stripe's top edge: the -y side, the
-    # module's end, which is up as it stands)
+    # u, v in the flag (0..1; v = 0 along the top stripe's top edge, which is up in the
+    # room: the -y side at the top end, the +y side at the bottom end)
     u = op('DIVIDE', op('SUBTRACT', xyz.outputs['X'], cx - w / 2), w)
     v = op('DIVIDE', op('SUBTRACT', xyz.outputs['Y'], cy - h / 2), h)
+    if END == 'bottom':
+        v = op('SUBTRACT', 1.0, v)
     on_top = op('GREATER_THAN', xyz.outputs['Z'], BOX_Z - 0.0005)
     inside = op('MULTIPLY', on_top, op('MULTIPLY',
                 op('MULTIPLY', op('GREATER_THAN', u, 0.0), op('LESS_THAN', u, 1.0)),
@@ -453,7 +474,7 @@ def upright():
     from mathutils import Matrix
     root = bpy.data.objects.new('upright', None)
     bpy.context.collection.objects.link(root)
-    root.matrix_world = Matrix(UPRIGHT).to_4x4()
+    root.matrix_world = Matrix(UPRIGHT[END]).to_4x4()
     for o in bpy.data.objects:
         if o is not root and o.parent is None:
             o.parent = root
@@ -471,6 +492,7 @@ def light(name, kind, loc, aim, energy, color=(1, 1, 1), size=1.0, size_y=None):
         d.size, d.size_y = size, size_y or size / 4
     o = bpy.data.objects.new(name, d)
     bpy.context.collection.objects.link(o)
+    loc, aim = room(loc), room(aim)
     o.location = loc
     # a light's -Z toward its aim (to_track_quat turns its Y toward the module's +z, out of the face)
     o.rotation_euler = (Vector(aim) - Vector(loc)).to_track_quat('-Z', 'Y').to_euler()
@@ -487,7 +509,7 @@ def studio(sc, flag):
     # front, where the metal faces reflect it toward the camera (their sheen); a raking
     # light from above along the face; a cool rim (the deck's light blue) from the side;
     # almost no fill
-    light('soft', 'AREA', (fx + 0.38, -0.22, 0.24), (fx, 0.02, 0.0), 3.0, (1.0, 0.97, 0.93), 0.5, 0.18)
+    light('soft', 'AREA', (fx + 0.38, -0.22, 0.24), (fx, 0.02, 0.0), 2.4, (1.0, 0.97, 0.93), 0.5, 0.18)
     light('rake', 'AREA', (fx - 0.10, -0.40, 0.035), (fx, 0.10, 0.0), 1.0, (1.0, 0.95, 0.88), 0.3, 0.05)
     light('rim', 'AREA', (fx - 0.45, -0.05, 0.08), (fx, 0.0, 0.01), 0.5, (0.61, 0.77, 1.0), 0.4, 0.12)
     light('fill', 'AREA', (fx - 0.5, 0.35, 0.40), (fx, 0.0, 0.0), 0.15, (1.0, 0.88, 0.75), 0.5, 0.5)
@@ -521,9 +543,10 @@ def camera(sc, flag):
             (T_ENGRAVE[1] + 15, (fx, 0.020, 0.070), (fx, fy + 0.004, BOX_Z)),
             (T_END - 15, (fx, 0.029, 0.093), (fx, fy + 0.012, BOX_Z)),
             (T_END, (fx, 0.029, 0.093), (fx, fy + 0.012, BOX_Z))]
-    for f, p, a in keys:
-        o.location = p
-        aim.location = a
+    for i, (f, p, a) in enumerate(keys):
+        about = 'module' if i < 2 else 'flag'   # the first two keys frame the module's end, the rest the flag
+        o.location = room(p, about)
+        aim.location = room(a, about)
         o.keyframe_insert('location', frame=f)
         aim.keyframe_insert('location', frame=f)
     for ob in (o, aim):
@@ -577,7 +600,8 @@ def laser(face, t0, t1):
         a = p - k
         uu = a if k % 2 == 0 else 1 - a
         vv = (k + 0.5) / ROWS
-        x, y = cx - w / 2 + uu * w, cy - h / 2 + vv * h
+        x = cx - w / 2 + uu * w
+        y = cy + h / 2 - vv * h if END == 'bottom' else cy - h / 2 + vv * h   # the top line first, in the room
         spot.location = (x, y, BOX_Z + 0.0002)
         spot.keyframe_insert('location', frame=f)
         for o in (spot, plo):
@@ -715,7 +739,7 @@ def handover(sc, cam, aim, face, meta, depth):
     for (x, y) in ((cx - w / 2, cy - h / 2), (cx + w / 2, cy - h / 2), (cx + w / 2, cy + h / 2), (cx - w / 2, cy + h / 2)):
         q = world_to_camera_view(sc, cam, root.matrix_world @ Vector((x, y, BOX_Z)))
         quad.append([q.x, 1 - q.y])
-    json.dump({'origin': rel(O), 'flagUV': quad, 'right': to_stage(R), 'up': to_stage(U), 'forward': to_stage(F),
+    json.dump({'origin': rel(O), 'flagUV': quad, 'end': END, 'right': to_stage(R), 'up': to_stage(U), 'forward': to_stage(F),
                'aim': rel(aim.matrix_world.translation), 'flagDist': (O - flag).length,
                'vfov': VFOV, 'aspect': aspect, 'depth': {'w': W, 'h': H, 'near': z0, 'far': z1, 'zero': 'no hit'},
                'frame': T_END, 'fps': FPS},
@@ -723,11 +747,15 @@ def handover(sc, cam, aim, face, meta, depth):
 
 
 def main():
+    global END
     a = args()
+    END = a.end
     sc = reset()
     M = mats()
     xs = [X0 + i * (MAT_W + GAP) for i in range(4)]
     face = (xs[a.block] + MAT_W / 2, FLAG_C[0], FLAG_W)
+    global FLAG_XY
+    FLAG_XY = (face[0], face[1])
     if a.model:
         raise SystemExit('lis_scene: --model is for the owner\'s CAD, once it is here (not wired yet)')
     parts = module_end(M, a.block)

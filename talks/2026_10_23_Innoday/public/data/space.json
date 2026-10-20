@@ -696,7 +696,7 @@
           ],
           "hole": [
             9.54,
-            3.06,
+            -3.06,
             0.96,
             0.05
           ],
@@ -708,17 +708,17 @@
           "name": "floor",
           "of": "det",
           "pos": [
-            12,
+            13,
             -6.72,
-            0
+            12
           ],
           "step": 2,
-          "grains": 36000,
+          "grains": 44000,
           "alpha": 0.9,
           "color": "#7f9fd8",
           "area": [
-            46,
-            34
+            52,
+            64
           ],
           "size": 1.4
         },
@@ -726,13 +726,13 @@
           "type": "emblem",
           "name": "lhcbLogo",
           "pos": [
-            7.19,
-            1.16,
-            11.01
+            4.78,
+            11.49,
+            1.94
           ],
-          "width": 2.16,
+          "width": 8.36,
           "yaw": 0,
-          "pitch": 15,
+          "pitch": 8,
           "src": "figures/lhcb_logo_grains.png",
           "mode": "alpha",
           "grains": 80000,
@@ -744,13 +744,13 @@
           "type": "emblem",
           "name": "ltFlag",
           "pos": [
-            10.18,
-            1.16,
-            11.01
+            18.15,
+            11.49,
+            1.94
           ],
-          "width": 2.32,
-          "yaw": 12,
-          "pitch": 15,
+          "width": 8.91,
+          "yaw": 10,
+          "pitch": 8,
           "flag": "lt",
           "wave": 0.09,
           "grains": 60000,
@@ -799,6 +799,24 @@
             ]
           ],
           "frame": "legs"
+        },
+        {
+          "type": "emblem",
+          "name": "person",
+          "of": "det",
+          "pos": [
+            19.8,
+            -5.62,
+            7.92
+          ],
+          "width": 0.66,
+          "yaw": 0,
+          "src": "figures/person_grains.png",
+          "mode": "alpha",
+          "grains": 9000,
+          "size": 1.1,
+          "alpha": 0.75,
+          "dur": 3.5
         }
       ]
     },
