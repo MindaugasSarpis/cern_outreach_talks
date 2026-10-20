@@ -3,14 +3,14 @@
 Startertalk's world, and the engine `slidev-addon-stage` was packaged from;
 new talks use the package (`docs/authoring.md`, "The stage"). In the notes
 below, `public/data/`, `deck.md` and `scripts/` are
-`talks/2026_09_00_Startertalk/`'s; that talk's own parts (its records, deck
+`talks/2026_09_15_Startertalk/`'s; that talk's own parts (its records, deck
 CSS, data components and how to verify it) are in its CLAUDE.md.
 
 ## Notes moved from the root CLAUDE.md (2026-10-08)
 
 ### Hadron space (Startertalk)
 
-`talks/2026_09_00_Startertalk/` is told inside one persistent 3D scene: a
+`talks/2026_09_15_Startertalk/` is told inside one persistent 3D scene: a
 path of seven built scenes (stations) in the WoP landing's ambient particle
 field, a uniform bright ground pulled only faintly toward the active station
 (a station may set `gather`, and `pulse: <s>` shoves the dust outward that

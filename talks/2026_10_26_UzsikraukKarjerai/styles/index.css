@@ -145,7 +145,7 @@ html[data-stage] .scrim-left {
 
 /* --- city names on the map (positions projected from the `whole` pose, which has no sway) */
 html[data-stage] .city {
-  position: absolute; font-size: 28px; font-weight: 600; letter-spacing: 0.01em; color: #eef1ff;
+  position: absolute; font-size: 34px; font-weight: 600; letter-spacing: 0.01em; color: #eef1ff;   /* 28 px until 20 Oct */
   text-shadow: var(--kk-shadow); white-space: nowrap; animation: stage-rise 0.8s var(--stage-ease) 1.6s both;
 }
 html[data-stage] .city.r { translate: -100% 0; text-align: right; }   /* `translate`, not `transform`: the rise-in animation holds transform: none */
@@ -158,10 +158,10 @@ html[data-stage] .city.step.slidev-vclick-hidden { opacity: 0 !important; transi
 
 /* --- labels under slide 9's two plots (positions projected from its pose), centred on each */
 html[data-stage] .heap {
-  position: absolute; translate: -50% 0; font-size: 24px; font-weight: 600; color: #eef1ff;
+  position: absolute; translate: -50% 0; font-size: 30px; font-weight: 600; color: #eef1ff;
   text-shadow: var(--kk-shadow); white-space: nowrap; text-align: center; line-height: 1.25; animation: stage-rise 0.8s var(--stage-ease) 2.2s both;
 }
-html[data-stage] .heap .n { font-size: 20px; font-weight: 500; }
+html[data-stage] .heap .n { font-size: 36px; font-weight: 500; }   /* 20 px until 20 Oct: a stream is watched on laptops and phones; the broadcast floor is 37 canvas px */
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .heap { animation: none !important; } }
 
 /* --- the title card */
@@ -223,7 +223,7 @@ html[data-stage] .thanks.beside { inset: 0 auto 0 0; width: 576px; }
 html[data-stage] .lhc-tunnel::before { content: ''; position: absolute; inset: auto auto -44px -56px; width: 760px; height: 420px; z-index: -1; background: radial-gradient(ellipse 100% 100% at 0% 100%, rgba(0, 2, 6, 0.8) 0%, rgba(0, 2, 6, 0.55) 35%, rgba(0, 2, 6, 0.2) 60%, rgba(0, 2, 6, 0) 80%); }
 
 /* ---- from Innoday (18 Oct): the funnel's age, low on the left once the funnel stands (<AfterFlight>) */
-html[data-stage] .age { position: absolute; z-index: 0; left: var(--kk-x); bottom: var(--kk-floor); font-size: 26px; font-weight: 500; letter-spacing: 0.02em; color: var(--kk-blue-hi); text-shadow: var(--kk-shadow); white-space: nowrap; }
+html[data-stage] .age { position: absolute; z-index: 0; left: var(--kk-x); bottom: var(--kk-floor); font-size: 36px; font-weight: 500; letter-spacing: 0.02em; color: var(--kk-blue-hi); text-shadow: var(--kk-shadow); white-space: nowrap; }
 /* the age stands on the funnel's floor grid: a soft shade behind it (read as shadow, not a badge, as the tunnel's), so no grid line crosses „mlrd. metų“ */
 html[data-stage] .age::before { content: ''; position: absolute; inset: -60px -120px -60px -72px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0, 2, 6, 0.74) 0%, rgba(0, 2, 6, 0.52) 45%, rgba(0, 2, 6, 0.18) 75%, rgba(0, 2, 6, 0) 100%); }   /* the ellipse fits its box, so it fades out before any edge */
 html[data-stage] .age .n { font-size: 56px; font-weight: 700; letter-spacing: -0.01em; color: #fff; margin-right: 0.25em; }
@@ -241,8 +241,19 @@ html[data-stage] .readout .big {
   color: #fff; text-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
 }
 html[data-stage] .readout .unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0.02em; margin-left: 0.3em; color: var(--kk-blue-hi); }
-html[data-stage] .readout .caption { font-size: 30px; font-weight: 500; letter-spacing: 0.02em; color: var(--kk-blue-hi); text-shadow: var(--kk-shadow); }
+html[data-stage] .readout .caption { font-size: 36px; font-weight: 500; letter-spacing: 0.02em; color: var(--kk-blue-hi); text-shadow: var(--kk-shadow); }
 html[data-stage] .readout.blue, html[data-stage] .readout.steel { max-width: 50%; }
 html[data-stage] .readout.late { animation-delay: 2.6s; }
 html[data-stage] .readout.last { animation-delay: 5.2s; }   /* after copies of the smaller pile merge into the larger */
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .readout { animation: none !important; } }
+
+/* ---- 20 Oct (blueprint v2): this talk's own rules over the shared opening and OpenData's readout */
+/* slide 6: the collision's energy line („8 TeV“, a unit grade 9–12 viewers do not know) hidden for this talk; its
+   count line („290 dalelių“) stays. components/lhc-opening is untouched. */
+html[data-stage] .lhc-collision .lhc-line:first-child { display: none !important; }
+/* slide 16: the lower-bound sign before the counted total (LHCb's 100 PB is its March 2025 figure) */
+html[data-stage] .readout .gt { font-size: 0.72em; font-weight: 600; margin-right: 0.12em; vertical-align: 0.08em; }
+/* slide 9: the count under the Ωc plot, after its fill (inside <AfterFlight>) */
+html[data-stage] .heap.late { animation-delay: 0.2s; }
+/* slides 5–6: the shared opening's unit words („km“, „dalelių“) are 22 px in the component; 30 px here for the stream (the numbers are 56 px) */
+html[data-stage] .lhc-cap .lhc-unit, html[data-stage] .lhc-cap .lhc-name { font-size: 36px; }

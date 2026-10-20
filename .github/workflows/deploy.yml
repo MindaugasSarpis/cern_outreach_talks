@@ -216,6 +216,25 @@ jobs:
                   "a{color:var(--link);font-weight:700;font-size:1.08rem;text-decoration:none;overflow-wrap:anywhere}a:hover{text-decoration:underline}</style>"
                   "<h1>Paskaitos ir pranešimai</h1><ul>" + "".join(items) + "</ul>")
           pathlib.Path("site/index.html").write_text(page + "\n")
+          # a renamed talk's old address ([redirects] old dir = new dir) sends the browser on to
+          # the new one, its #/N slide kept; never indexed, and never over a talk that is built
+          import json
+          redirects = tomllib.loads(f.read_text()).get("redirects", {}) if f.is_file() else {}
+          for old, new in redirects.items():
+              if not re.fullmatch(r"\w+", old) or not re.fullmatch(r"\w+", str(new)):
+                  print(f"::warning::redirect {old!r} = {new!r} is not two directory names; skipped"); continue
+              if (pathlib.Path("site") / old).exists() or not (pathlib.Path("site") / new / "index.html").is_file():
+                  print(f"::warning::redirect {old} -> {new} skipped (the old one is built, or the new one is not)"); continue
+              to = f"../{new}/"
+              (pathlib.Path("site") / old).mkdir()
+              (pathlib.Path("site") / old / "index.html").write_text(
+                  "<!doctype html><html><meta charset=utf-8><meta name=robots content=noindex>"
+                  f"<link rel=canonical href='{html.escape(to)}'>"
+                  f"<meta http-equiv=refresh content='0; url={html.escape(to)}'>"
+                  f"<title>{html.escape(new)}</title>"
+                  f"<script>location.replace({json.dumps(to)} + location.search + location.hash)</script>"
+                  f"<p><a href='{html.escape(to)}'>{html.escape(new)}</a></p>\n")
+              print(f"redirect {old}/ -> {new}/")
           EOF
           rm -rf site/.talk-status
 

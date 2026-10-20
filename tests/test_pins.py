@@ -3,14 +3,19 @@ scaffolder's ADDONS_REF move together, and only to release tags."""
 from __future__ import annotations
 
 import json
+import re
+from pathlib import Path
 
 import pytest
 
 from conftest import SHA, seed_tree, sh, talk
 
+# where the scaffolder pins today: a talk pinned there is one --active moves
+SCAFFOLD_REF = re.search(r'ADDONS_REF = "([^"]+)"', (Path(__file__).parents[1] / "scripts" / "new_talk.py").read_text()).group(1)
+
 TALKS = {
     "2099_10_00_Stage": (SHA, True),          # upcoming, on the stage: --active
-    "2099_11_05_Plain": ("v0.4.0", False),    # upcoming, pinned where the scaffolder is: --active
+    "2099_11_05_Plain": (SCAFFOLD_REF, False),    # upcoming, pinned where the scaffolder is: --active
     "2099_12_01_Older": ("v0.3.3", False),    # upcoming, but on an older toolkit on purpose
     "2020_01_01_PastStage": (SHA, True),      # delivered: never --active
 }

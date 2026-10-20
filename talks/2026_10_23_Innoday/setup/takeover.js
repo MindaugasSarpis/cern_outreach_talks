@@ -9,8 +9,12 @@ import { POINT_GLSL, viewScale } from './view.js'
 
 // ---- sampling: the frame → grains (screen uv, colour) -------------------------
 // Grains fall where the frame is bright (probability ~ luminance^gamma), so the
-// filaments and knots carry the picture and the voids stay empty.
-export function sampleFrame(img, { n = 140000, w = 960, h = 540, gamma = 1.7, floor = 0.035, sat = 1.35, seed = 1 } = {}) {
+// filaments and knots carry the picture and the voids stay empty. `weight: 'max'`
+// weighs a pixel by its brightest channel instead, and `norm` sets how far a grain's
+// colour is its pixel's hue at full strength (1: all of it): with 'max', gamma 2.2
+// and norm 1 the grains add up to the frame's own linear light, saturated reds and
+// greens included (the close's takeover, LisTakeover; the web's keeps the defaults).
+export function sampleFrame(img, { n = 140000, w = 960, h = 540, gamma = 1.7, floor = 0.035, sat = 1.35, seed = 1, weight = 'lum', norm = 0.55 } = {}) {
   const c = document.createElement('canvas')
   c.width = w; c.height = h
   const g = c.getContext('2d', { willReadFrequently: true })
@@ -21,7 +25,8 @@ export function sampleFrame(img, { n = 140000, w = 960, h = 540, gamma = 1.7, fl
   const cdf = new Float64Array(w * h)
   let acc = 0
   for (let i = 0; i < w * h; i++) {
-    const l = (0.2126 * px[i * 4] + 0.7152 * px[i * 4 + 1] + 0.0722 * px[i * 4 + 2]) / 255
+    const l = weight === 'max' ? Math.max(px[i * 4], px[i * 4 + 1], px[i * 4 + 2]) / 255
+      : (0.2126 * px[i * 4] + 0.7152 * px[i * 4 + 1] + 0.0722 * px[i * 4 + 2]) / 255
     acc += l > floor ? Math.pow(l - floor, gamma) : 0
     cdf[i] = acc
   }
@@ -39,7 +44,7 @@ export function sampleFrame(img, { n = 140000, w = 960, h = 540, gamma = 1.7, fl
     const l0 = 0.2126 * r0 + 0.7152 * g0 + 0.0722 * b0
     const r = clamp01(l0 + (r0 - l0) * sat), gg = clamp01(l0 + (g0 - l0) * sat), b = clamp01(l0 + (b0 - l0) * sat)
     // the grain carries the pixel's hue; the density of grains carries its brightness
-    const m = Math.max(r, gg, b, 1e-3), k2 = 0.55
+    const m = Math.max(r, gg, b, 1e-3), k2 = norm
     col[k * 3] = r * (1 - k2) + (r / m) * k2
     col[k * 3 + 1] = gg * (1 - k2) + (gg / m) * k2
     col[k * 3 + 2] = b * (1 - k2) + (b / m) * k2

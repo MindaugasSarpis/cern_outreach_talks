@@ -44,7 +44,7 @@
             0
           ],
           "radius": 3.1,
-          "quarkRadius": 0.72,
+          "quarkRadius": 0.42,
           "quarks": [
             {
               "flavour": "c",
@@ -86,7 +86,11 @@
                 0.6
               ]
             }
-          ]
+          ],
+          "coreSize": 6,
+          "coreAlpha": 1.0,
+          "speed": 0.15,
+          "haze": "#1c2c4c"
         }
       ]
     },
@@ -660,10 +664,141 @@
             0,
             0
           ],
-          "light": 1.2,
+          "light": 4.0,
           "approach": 2.5,
           "sound": false,
-          "event": "cms"
+          "tone": "#9cc4ff",
+          "muonTone": "#cfe2ff",
+          "splashTone": "#5b93ff",
+          "bunchColor": "#cfe6ff",
+          "pipe": 1.2,
+          "scale": 1.2,
+          "stretch": 1.0
+        },
+        {
+          "type": "detector",
+          "name": "det",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "src": "data/lhcb-grains.bin",
+          "sweep": 3.5,
+          "alpha": 0.5,
+          "size": 1.5,
+          "color": "#6fa4ff",
+          "hot": "#ffffff",
+          "out": [
+            16,
+            0,
+            0
+          ],
+          "hole": [
+            9.54,
+            3.06,
+            0.96,
+            0.05
+          ],
+          "scale": 1.2,
+          "stretch": 1.0
+        },
+        {
+          "type": "floor",
+          "name": "floor",
+          "of": "det",
+          "pos": [
+            12,
+            -6.72,
+            0
+          ],
+          "step": 2,
+          "grains": 36000,
+          "alpha": 0.9,
+          "color": "#7f9fd8",
+          "area": [
+            46,
+            34
+          ],
+          "size": 1.4
+        },
+        {
+          "type": "emblem",
+          "name": "lhcbLogo",
+          "pos": [
+            7.19,
+            1.16,
+            11.01
+          ],
+          "width": 2.16,
+          "yaw": 0,
+          "pitch": 15,
+          "src": "figures/lhcb_logo_grains.png",
+          "mode": "alpha",
+          "grains": 80000,
+          "size": 1.35,
+          "alpha": 1.0,
+          "scrim": 0.7
+        },
+        {
+          "type": "emblem",
+          "name": "ltFlag",
+          "pos": [
+            10.18,
+            1.16,
+            11.01
+          ],
+          "width": 2.32,
+          "yaw": 12,
+          "pitch": 15,
+          "flag": "lt",
+          "wave": 0.09,
+          "grains": 60000,
+          "size": 1.45,
+          "alpha": 1.0,
+          "scrim": 0.7
+        },
+        {
+          "type": "supports",
+          "name": "cradles",
+          "of": "det",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "floor": -6.72,
+          "grains": 18000,
+          "alpha": 0.3,
+          "size": 1.2,
+          "color": "#6fa4ff",
+          "parts": [
+            [
+              3.32,
+              9.12,
+              4.0,
+              -3.61
+            ],
+            [
+              9.36,
+              11.32,
+              3.6,
+              -2.92
+            ],
+            [
+              11.44,
+              14.16,
+              5.4,
+              -4.48
+            ],
+            [
+              15.02,
+              18.07,
+              4.6,
+              -4.1
+            ]
+          ],
+          "frame": "legs"
         }
       ]
     },

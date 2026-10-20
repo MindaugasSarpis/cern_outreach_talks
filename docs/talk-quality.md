@@ -175,13 +175,20 @@ Two things the pipeline does not do:
 
 **Pictures and numbers only** (the owner, 2026-10-10; talks dated 2026-10 on).
 No titles, kickers, statements, captions, labels, bylines or credit lines on
-screen, the cover included. Credits a licence asks for go in tiny print in a
+screen except the cover's title (below). Credits a licence asks for go in tiny print in a
 `.credits` block on the last slide ("Credit on last slide tiny print"); none
 for CERN's material. A number may stand, with a short unit (13,6 TeV,
 12 639, 95 %). What the slide would have said goes into the notes, with its
 sources. `pnpm talk lint` flags the rest (TEXT); a review or audit checks
 "pictures and numbers only" before anything below. Rules 1–3 and 8–9 apply
 to the delivered decks (dated before 2026-10), which are left as they are.
+The cover is the exception: it keeps a plain title (the owner, 2026-10-20:
+"Cover slides are good, I had issues with ai sloppy marketing like titles
+and slogans out of nowhere"). Lint leaves the cover's words alone; SLOP-*
+still reads them, and a review still checks it is a title, not a slogan.
+Beyond the cover, only the owner grants words back, slide by slide (a section
+break, „Ačiū“). Record each grant in that slide's frontmatter with
+`onscreen: words`, so lint drops its TEXT; NUMBER-BARE still runs there.
 
 From the Startertalk blueprint's style rules, generalised.
 

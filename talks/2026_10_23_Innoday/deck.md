@@ -41,8 +41,10 @@ info: |
   „O kaip komercializuoti?“: contracts, procurement, suppliers, the FCC.
   Lithuania and CERN, with no section slide: photos of the LHCb Week in Vilnius
   (the rector, the President's video greeting, the panel with the
-  vice-minister, the hall). „Ačiū“ over a slow
-  collision. The owner's 12 Oct list brings back the title, the section breaks
+  vice-minister, the hall). The close: a laser writes the Lithuanian flag on a
+  SciFi module's light injection cold box (a Blender clip), whose last frame
+  becomes grains at its place in LHCb; „Ačiū“ over LHCb in grains with its own
+  collision; the licence credits on a page after it. The owner's 12 Oct list brings back the title, the section breaks
   and „Ačiū“; the other slides carry pictures, named numbers and the
   inventions' names; the notes carry what is said. Keys on a video slide:
   p play/pause, + / - volume; `c` builds what stands where the camera is.
@@ -665,12 +667,14 @@ Vaizdas: savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius / Opening_Ceremon
 space: { at: kt, dist: 18, yaw: 165, pitch: 10, dim: 0, hum: false }
 ---
 
+<Grains :set="{ det: 0, lhcbLogo: 0, ltFlag: 0 }" />
+<Soundtrack :level="0.3" start />
 <StagePhoto src="figures/lt_lhcb_week_hall.jpg" arrive="camera" alt="Pilna VU Gyvybės mokslų centro auditorija LHCb savaitės atidaryme, dalyviai su LHCb savaitės juostelėmis" focus="50% 50%" />
 
 <!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources -->
 
 <!--
-Kalbėtojui. Auditorija LHCb savaitės atidaryme.
+Kalbėtojui. Auditorija LHCb savaitės atidaryme. Nuo šios skaidrės tyliai groja muzika (Scott Buckley, „Starfire“, CC BY 4.0; savininkas, 2026 10 20: „crazy inspirational soundtrack for the last three slides“), per kalbą tyliau; „Ačiū“ skaidrėje ji sustiprėja ir pasiekia kulminaciją, kai kamera nusileidžia į žmogaus akių aukštį.
 Sakyti: „Į Vilnių atvyko apie du šimtus fizikų iš viso pasaulio, dar daugiau jungėsi nuotoliu. Savaitę jie aptarinėjo LHCb rezultatus, detektorių ir jo ateitį — Lietuvoje.“
 Faktai: dalyvių skaičiai — prognozės (VU: ~200 gyvai, ~600 iš viso; LRT: 200 gyvai); po renginio viešo skaičiaus nėra, todėl tik „apie du šimtus“.
 Vaizdas: nuotr. Tomas Laurinavičius / VU (vu.lt/en/all-news/cern-lh-cb-experiment-conference-starts-at-vu-for-the-first-time-in-lithuania, 2026 09 14).
@@ -679,7 +683,26 @@ Vaizdas: nuotr. Tomas Laurinavičius / VU (vu.lt/en/all-news/cern-lh-cb-experime
 -->
 
 ---
+space: { at: [9.54, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim: 0, hum: false }
+---
+
+<VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
+<Grains :set="{ det: 0, lhcbLogo: 0, ltFlag: 0 }" />
+<Soundtrack :level="0.3" />
+
+<!-- facts: lhcb-scifi, lhcb-scifi-channels, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
+
+<!--
+Kalbėtojui. SciFi sekiklio modulio galas su šviesos įvedimo sistema: dvi šviesos įvedimo plokštelės su lazeriniais diodais ir skaidulomis, šalia — šaltoji dėžė, ant kurios lazeris išgraviruoja Lietuvos vėliavą (savininkas, 2026 10 19). Vaizdas sukurtas Blender programa pagal SciFi brėžinį, ne nuotrauka. Klipas 10 s, be garso; paskutinis kadras lieka, kol paspaudžiama toliau, o tada virsta grūdeliais ir kamera atsitraukia į visą LHCb.
+Sakyti: „LHCb sekiklyje — daugiau nei 11 000 km scintiliacinių skaidulų ir 524 288 kanalai, kurie registruoja jose kilusią šviesą. Kad visi kanalai būtų sukalibruoti, kiekvieno modulio gale įrengta šviesos įvedimo sistema: lazeriniai diodai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupės darbai LHCb kolaboracijai apima ir šį sekiklį, ir šią sistemą.“
+Faktai: VCSEL lazeriai (670 nm), po du vienoje plokštelėje; kiekvienas SiPM kanalas pamato nuo vieno iki penkių fotoelektronų, pagal tai nustatomi PACIFIC lusto slenksčiai. Kiek iš viso plokštelių, nesakyti (viešai nepaskelbta). Apie Vilnių — ne daugiau, nei parašyta (grupės 2024 10 03 susitikimo darbotvarkė).
+Šaltiniai: LHCb Upgrade I, JINST 19 (2024) P05065, 6.5.7 sk.; D. Berninghoff, daktaro disertacija, Heidelbergo universitetas, 2022, 4.5 sk.; indico.cern.ch/event/1461467.
+(~0,4 min)
+-->
+
+---
 layout: statement
+class: thanks-lhcb
 space:
   at: thanks
   dim: 0
@@ -687,26 +710,49 @@ space:
   hum: false
   rate: [[0, 0.7], [2.4, 0.5]]
   cameraRate: 1
-  path:   # the CMS event flies out to every side: in close, then back and square to the beam
-    - [0, { at: [0, -480, 0], dist: 4.2, yaw: 18, pitch: 5 }]
-    - [6, { at: [0, -480, 0], dist: 3.0, yaw: 40, pitch: 10 }]
-    - [14, { at: [0, -480, 0], dist: 5.2, yaw: 14, pitch: 18 }]
-    - [26, { at: [0, -480, 0], dist: 6.4, yaw: 4, pitch: 20 }]   # the debris fills the frame
+  path:   # out of the module's end (the clip's last view, hero/lis_pose.py) to T1, then the whole detector
+    - [0, { at: [9.54, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
+    - [2.0, { at: [9.54, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
+    - [5.5, { at: [9.6, -477.6, 0.8], dist: 7, yaw: -80, pitch: -6 }]
+    - [10, { at: [12.6, -479.6, 0], dist: 24, yaw: -30, pitch: 12 }]   # the whole detector, in its true proportions: its scale
+    - [13, { at: [12.6, -479.6, 0], dist: 24, yaw: -30, pitch: 12 }]
+    - [19, { at: [12, -479.54, 0.67], dist: 19.8, yaw: 0, pitch: -15 }]   # side on from its middle, 16,5 m from the beam, at the owner's eye level (1,71 m of his 1,83 m), looking up 15°: the 10 m wall from the floor to its top
 ---
 
-<CollisionStart name="thanks" />
+<LisTakeover><h1>Ačiū</h1></LisTakeover>
+<Soundtrack :level="0.9" resync />
 
-# Ačiū
-
-<div class="src credits">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas) · 1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0 · Riešo vaizdas: MARS Bioimaging Ltd · B. Stumpe: S. E. Bennett / CERN, CC BY 4.0 · NeXT serveris: P. Loïez / CERN, CC BY-SA 4.0 · LHCb rezultatų grafikai: © CERN LHCb kolaboracijos naudai, CC BY 4.0 (apkarpyti, perspalvinti) · LHCb savaitė Vilniuje: VU nuotr. (salė — T. Laurinavičius) · Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF)</div>
+<!-- facts: lhcb-detector-size -->
 
 <!--
-Kalbėtojui. „Ačiū“ ant lėtai besiskleidžiančio susidūrimo per visą ekraną (savininkas, 2026 10 12). Susidūrimas (CMS 2012 m. Higso bozono kandidatas) prasideda, kai skaidrė atsiveria, ir lieka išsisklaidęs per klausimus; be garso.
-Apačioje smulkiu šriftu — licencijų reikalaujamos nuorodos (savininkas, 2026 10 10; CERN medžiagai jų nereikia).
+Kalbėtojui. Klipo paskutinis kadras (vėliava ant šaltosios dėžės) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių, sudarytą iš grūdelių pagal tikrąją jo geometriją; vėliava lieka ženklu ten, kur stovi SciFi modulis (savininkas, 2026 10 19: „position it in a 3D LHCb CAD (maybe as pointcloud)“). Tada detektorius įsižiebia, jame įvyksta tikras LHCb susidūrimas (savininkas: „LHCb collision within lhcb“); kamera kelias sekundes laiko visą detektorių tikrosiomis proporcijomis, tada nusileidžia ant ertmės grindų prieš jo vidurį, 16,5 m nuo pluošto, kalbėtojo akių aukštyje (1,71 m, ūgis 1,83 m) ir žiūri iš šono aukštyn: LHCb stovi visu 10 m aukščiu nuo grindų iki viršaus (savininkas, 2026 10 20: „see the huge scale of lhcb … first person view at eye level“; „look at it side on from the middle. From where that person stands. It can be me, 183cm in height“). Tada viršuje greta susirenka LHCb logotipas ir Lietuvos vėliava, ir pasirodo „Ačiū“; viskas lieka per klausimus. Muzika pasiekia kulminaciją akių aukštyje ir po minutės pati nutyla.
+Nuorodų ekrane nėra: licencijų reikalaujamos nuorodos — kitame puslapyje, kurio nerodyti (savininkas, 2026 10 19: „We don't need credits at the last slide“).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
-Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaidrių pastabų laikus, 2026 10 13): iš viso apie 23 min; klipai — įžanginis 4:13, CERN iš oro 0:11, LHC tunelis 0:40, LHCb animacija 0:48 ir FCC žemėlapis 0:18 (per paskutinius keturis kalbama). Paslėpta skaidrė po šios (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
+Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaidrių pastabų laikus, 2026 10 20): iš viso apie 23,5 min; klipai — įžanginis 4:13, CERN iš oro 0:11, LHC tunelis 0:40, LHCb animacija 0:48, FCC žemėlapis 0:18 ir šviesos įvedimo sistema 0:10 (per paskutinius penkis kalbama). Po šios — nuorodų puslapis (nerodyti), po jo paslėpta skaidrė (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
 (~0,4 min)
+-->
+
+---
+class: credits-page
+space: { at: [12, -479.54, 0.67], dist: 19.8, yaw: 0, pitch: -15, dim: 0.7, ambient: 0, hum: false }
+---
+
+<Grains :set="{ det: 1, lhcbLogo: 1, ltFlag: 1 }" />
+<Soundtrack :level="0.9" />
+<div class="src credits credits-list">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas)<br>
+1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0<br>
+Riešo vaizdas: MARS Bioimaging Ltd<br>
+B. Stumpe: S. E. Bennett / CERN, CC BY 4.0<br>
+NeXT serveris: P. Loïez / CERN, CC BY-SA 4.0<br>
+LHCb rezultatų grafikai: © CERN LHCb kolaboracijos naudai, CC BY 4.0 (apkarpyti, perspalvinti)<br>
+LHCb savaitė Vilniuje: VU nuotr. (salė — T. Laurinavičius)<br>
+Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF)<br>
+Muzika: Scott Buckley, „Starfire“ (scottbuckley.com.au), CC BY 4.0</div>
+
+<!--
+Kalbėtojui. Šio puslapio nerodyti: po „Ačiū“ nebespausti. Jis — licencijų reikalaujamoms nuorodoms (savininkas, 2026 10 19: „We don't need credits at the last slide“; pasirinkta „B“ — paveikslai lieka, nuorodos kitame puslapyje); lieka žiniatinklio versijoje ir PDF. Planck žemėlapiui (CC BY-NC 3.0 IGO) ir Sailko nuotraukai (CC BY 3.0) jų reikia; CERN medžiagai — ne.
+(~0 min)
 -->
 
 ---
