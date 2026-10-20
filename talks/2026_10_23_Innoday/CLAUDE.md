@@ -52,11 +52,10 @@ brings the next round, and Lithuanian firms can solve it.
   +14 % apyvartos, the FCC (CERN's 2025 map clip).
 - **„Lietuvos istorija CERN“** (no section slide since 13 Oct: owner, "don't
   need the 'Lietuvos istorija' cover slide"; the camera flies from the FCC
-  clip straight to the first photo). Photos only (owner, 13 Oct), from
-  the LHCb Week in Vilnius (14–18 Sept 2026): the rector under the „LHCb WEEK
-  VILNIUS“ screens, the President's video greeting on both screens, the
-  opening panel with the vice-minister, the full hall; the membership facts
-  (associate since 2018, the full-membership bid) are in their notes;
+  clip straight to it). Since 20 Oct the whole LHCb Week Vilnius aftermovie
+  (owner: "Don't worry about photos show the entire aftermovie"; 2:28, its own
+  music, nothing said over it; the Lithuania lines before or after it), in
+  place of the four photos; the membership facts are in its notes;
   then (19 Oct) the light injection clip, a SciFi module's end where a laser
   writes the flag on the cold box, whose last frame becomes grains at its place
   in LHCb, the camera pulling back to the whole detector in grains and LHCb's
@@ -177,7 +176,8 @@ column 0 opaque from the mirror axis down, and the axis's hairline lit across ro
 "The slower, bigger close"), checked on four headless recordings of slide 33; a review
 copy with the music went to the owner. Not deployed: the owner reviews first.
 (3) The LHCb Week video for „Lietuvos istorija CERN“ is the aftermovie (owner's
-correction; not the President's greeting): „CERN Aftermovie_4K_HQ_final.mp4“ (2:28,
+correction; not the President's greeting; then "show the entire aftermovie": built,
+ee790f1, published with --only; Decisions): „CERN Aftermovie_4K_HQ_final.mp4“ (2:28,
 4K25, its own music at -15,3 LUFS; film by Nebula Moments, R. Unkevičius), uploaded to
 the LHCb Week Drive folder on 20 Oct, now in the raw bank; the cut is proposed to the
 owner, not built. Open for the owner: the cut, its audio against Starfire, and the
@@ -460,7 +460,16 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   boot but Slidev's own ~40 ms mount of every slide at 3 s (headless trace).
   If it still stutters on the venue machine, press `c` on the cover once the
   page has settled (replays the assembly).
-- „Lietuvos istorija CERN“ is photos only (owner, 13 Oct: "just have some
+- „Lietuvos istorija CERN“ is the LHCb Week aftermovie since 20 Oct (owner: "show a
+  video from the LHCb Week instead of the four photos"; "Don't worry about photos show the
+  entire aftermovie"): `lhcb_week_aftermovie.mp4`, the whole film (2:28, high-motion,
+  1080p, 123 MB, its own music at -16 LUFS; on the release with `--only`), film by
+  Nebula Moments (R. Unkevičius), credited on the credits page; its 0:25–0:31 holds
+  what the four photos showed. Starfire now starts on the light injection clip
+  (slide 30), so it is still before its 49 s on „Ačiū“. The four photos' notes,
+  facts and sources are merged into the film slide's. The talk times at 25,0 min. The
+  photo decision below is kept for the record (the figures stay in the repo).
+- (Superseded 20 Oct) „Lietuvos istorija CERN“ is photos only (owner, 13 Oct: "just have some
   pictures about LHCb visits from the ministers and LHCb week"): four from the
   LHCb Week's opening in Vilnius, StagePhotos at `kt`, the camera turning a
   little between them. CERN's photo archive has no Lithuanian minister at LHCb
