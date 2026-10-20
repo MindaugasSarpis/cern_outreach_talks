@@ -70,7 +70,21 @@ purpose).
 
 ## Status
 
-- 2026-10-20 (latest): **deployed 71a7834** under the standing rule (the
+- 2026-10-20 (leaving this cluster, for a fresh start elsewhere): the branch
+  `feat/uzsikrauk-karjerai` is pushed (490ae50 and this note); the deployed
+  deck is 71a7834 (below). `wip/uzk-day` (a working-day slide, Vilnius and
+  CERN labelled, from the pre-blueprint deck) and `wip/uzk-r2` (slide 9
+  notes with LEPS's own numbers and the 5-sigma comparison) are both merged
+  into the feat branch already and now on GitHub too (the owner's rule:
+  every branch, wip included). Machine-local and gitignored, to rebuild on
+  the new machine: the venue zip (`pnpm venue` in the talk dir once the
+  clips are local, `pnpm videos:pull`; the CLI v0.8.1 sets local-first
+  itself, the `VITE_VIDEOS_LOCAL_FIRST=1` prefix is no longer needed),
+  `shots/` (`pnpm talk review uzsikrauk`) and `dist-portable/`. The session
+  status line (`$OUTREACH_STATE/status.md`) does not travel either. Nothing
+  is in progress: the next edits wait on the owner (the open items in the
+  entry below).
+- 2026-10-20: **deployed 71a7834** under the standing rule (the
   Scheduler gave main): the deck rebuilt from blueprint v2 (Decisions,
   2026-10-20; the owner, 20 Oct: "Taking elements from innoday and open data
   set up a good story telling for highschool students with some personal
