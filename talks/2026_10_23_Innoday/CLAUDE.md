@@ -168,6 +168,20 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-20 (night, deployed): the owner's three items and his detector choices are live
+(Decisions: "The slower, bigger close", the aftermovie, "LHCb on „Ačiū“ is a 3D model").
+Deployed 404f3a7 — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/
+— Pages run 39485774569 (green), URL 200, the live walk passed; `ready` passed with nothing
+skipped. 31 slides, 25,0 min. The aftermovie's credit on the credits page: „LHCb savaitės
+Vilniuje filmas: Nebula Moments (R. Unkevičius)“. Rights: asked whether the organisers and
+Nebula Moments agree to the film on the public release and Pages, and about its music's
+licence, the owner answered "Don't worry about photos show the entire aftermovie" and then
+"Deploy"; no separate permission was recorded. The photos' „VU nuotr.“ question no longer
+applies to the deck (they left it). This worktree needs `pnpm videos:pull -- --include-shared`
+and lhcb.mp4 fetched from the shared release (`gh release download videos-shared --repo
+MindaugasSarpis/slidev-videos -p lhcb.mp4`) before `talk check` passes; the aftermovie's
+raw is also hard-linked into the main checkout's raw bank.
+
 2026-10-20 (late): three items from the owner via the Scheduler. (1) The stripe on
 „Ačiū“ ("lhcb logo has a weird vertical stripe") was in figures/lhcb_logo_grains.png:
 column 0 opaque from the mirror axis down, and the axis's hairline lit across rows
