@@ -176,7 +176,9 @@ bottom of scifi") are built (Decisions, "The close at eye level"): true proporti
 the close-up 16 m back with the whole detector in frame, the pull-back to 28 m with
 the person at the muon wall's foot, the clip re-rendered with the module's lower
 readout end (57 min on gluon) and republished with --only, the hand-over's anchor at
-the lower cold box. Stills 31–34 retaken. Not yet deployed at this entry.
+the lower cold box. Stills 31–34 retaken. Deployed 650ec63 — Pages run 39354968379
+(green), URL 200, live walk 34/34; `ready` passed with nothing skipped (the head
+merges main's bb030e7, MasterTalk's v0.9.0 pilot; this deck stays on v0.8.1).
 
 2026-10-20 (later): the owner's notes on the deployed close ("Looks amazing" — the
 eye-level view, the logo and the flag, more solid grains, the soundtrack, no CAD for
