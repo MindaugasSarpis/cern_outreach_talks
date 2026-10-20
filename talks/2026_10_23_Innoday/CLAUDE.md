@@ -379,6 +379,27 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   flag at the module fade with them, as before; „Ačiū“ 0,6 s after the camera stops
   (~48,6 s); `wordBy` 62 s. Checked on headless recordings of slide 33 (llvmpipe,
   1280×720, three rounds).
+- LHCb on „Ačiū“ is a 3D model, not grains (owner, 20 Oct: "improve the 3d detector at
+  the end"; of four offers he took a sharper, more solid form and "40 million collisions a
+  second", tried colour by sub-detector and dropped it, "The blue one i like better";
+  "Doesn't have to be point cloud if that looks better"; of two blue versions recorded,
+  A sharper grains and B the model, "B"). `det` draws `mesh: data/lhcb-mesh.glb`
+  (hero/export_mesh.py, Blender 4.5.14 LTS; the source .glb is Phoenix's LHCb.glb.zip, kept
+  in ~/.cache/outreach_talks/, out of git) with `grains: false`: per part a decimated
+  surface, faint faces, a rim glow by the view angle and the feature edges as lines, all
+  in the detector's blue, added on; per-part gains (`meshLook.gain`, `lineGain`) because
+  SciFi's stacked mats and the muon walls' tiles summed to white. The same front reveals
+  it, and the debris flare and the crossings light it. The person for scale is in the same
+  file, a 3D figure in the same light (Blender's Human Base Meshes v1.4.1, CC0,
+  `GEO-body_male_realistic` as authored, 1,83 m, facing the camera at the muon wall's
+  foot), replacing the flat grain cut-out ("the person is weird…"). The crossings after the
+  event (`cascade` on `det`, from 7 world-s after the crossing, ~30 s): fronts down the
+  detector from 0,35 a second, faster and faster, merging into a steady glow by the second
+  climax; no distinct flare more than about twice a second, and the glow does not flicker
+  (the broadcast flash rule). Variant A stays one switch away: drop `mesh` and `grains:
+  false` (the grains were re-baked the same day, 3,8× on faces and 0,3 more along feature
+  edges, with each grain's normal in lhcb-grains.shape.bin, and look good: lit faces,
+  crisp edges; hero/bake_grains.py reproduced the old bake byte for byte first).
 - The cover's pentaquark reads as five quarks (owner, 20 Oct: "the pentaquark
   (far too many quarks and some orbits)"): headless frames showed five nodes, but
   each a loose sparkle of grains with a weak core, pairs drifting together on

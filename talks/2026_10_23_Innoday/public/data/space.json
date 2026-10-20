@@ -809,24 +809,6 @@
             ]
           ],
           "frame": "legs"
-        },
-        {
-          "type": "emblem",
-          "name": "person",
-          "of": "det",
-          "pos": [
-            19.8,
-            -5.62,
-            7.92
-          ],
-          "width": 0.66,
-          "yaw": 0,
-          "src": "figures/person_grains.png",
-          "mode": "alpha",
-          "grains": 9000,
-          "size": 1.1,
-          "alpha": 0.75,
-          "dur": 3.5
         }
       ]
     },

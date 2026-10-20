@@ -2,7 +2,15 @@
 sub-detector one decimated object named after its part, no Draco (the deck loads it with
 three's GLTFLoader alone).
 
-  blender -b --factory-startup --python hero/export_mesh.py -- LHCb_light-draco.glb public/data/lhcb-mesh.glb
+  blender -b --factory-startup --python hero/export_mesh.py -- LHCb_light-draco.glb public/data/lhcb-mesh.glb \
+      [human_base_meshes_bundle.blend]
+
+With the third path, a person for scale is added as the object `person` (owner, 20 Oct:
+"It can be me, 183cm in height"; the flat cut-out in grains looked "weird" beside the
+model): Blender's Human Base Meshes bundle v1.4.1 (CC0, blender.org/download/demo-files),
+`GEO-body_male_realistic`, scaled to 1,83 m, turned to face the close's camera (LHCb's +x)
+and standing on the floor at the muon wall's near foot, LHCb (6.6, -5.6, 16.5) m, where
+the grain figure stood.
 
 Owner, 20 Oct: "Doesn't have to be point cloud if that looks better". The parts and their
 objects are hero/bake_grains.py's (the beam pipe left out: it is not drawn); RATIO keeps
@@ -18,7 +26,32 @@ import bpy
 sys.path.insert(0, __file__.rsplit('/', 1)[0])
 from bake_grains import PARTS, part_of  # noqa: E402  (bake_grains runs main() only as a script)
 
+PERSON = {'object': 'GEO-body_male_realistic', 'height': 1830.0, 'feet': (6600.0, -5600.0, 16500.0)}   # mm, LHCb's frame
 RATIO = {'velo': 0.08, 'rich1': 0.3, 'scifi': 0.35, 'muon': 0.35}
+
+
+def person(blend, coll):
+    import math
+    from mathutils import Matrix, Vector
+    with bpy.data.libraries.load(blend) as (src, dst):
+        dst.objects = [PERSON['object']]
+    o = dst.objects[0]
+    coll.objects.link(o)
+    me = o.data.copy()   # the base mesh as authored: its subdivision left off (677 000 faces with it)
+    me.transform(o.matrix_world)
+    zs = [v.co.z for v in me.vertices]
+    h = max(zs) - min(zs)
+    xs, ys = [v.co.x for v in me.vertices], [v.co.y for v in me.vertices]
+    c = Vector(((max(xs) + min(xs)) / 2, (max(ys) + min(ys)) / 2, min(zs)))
+    f = PERSON['feet']
+    # LHCb (x, y, z) is Blender (X, -Z, Y)… i.e. x = X, y = Z, z = -Y; turned to face +X (the camera)
+    M = (Matrix.Translation(Vector((f[0], -f[2], f[1]))) @ Matrix.Rotation(math.radians(90), 4, 'Z')
+         @ Matrix.Scale(PERSON['height'] / h, 4) @ Matrix.Translation(-c))
+    me.transform(M)
+    p = bpy.data.objects.new('person', me)
+    coll.objects.link(p)
+    print('person', len(me.polygons), 'faces, from', round(h, 3), 'high')
+    return p
 
 
 def main():
@@ -61,6 +94,8 @@ def main():
             j.data = dec
         keep.append(j)
         print(name, len(j.data.polygons), 'faces')
+    if len(args) > 2:
+        keep.append(person(args[2], out))
     for o in list(bpy.data.objects):
         if o not in keep:
             bpy.data.objects.remove(o, do_unlink=True)

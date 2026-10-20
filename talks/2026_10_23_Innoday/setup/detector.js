@@ -97,7 +97,8 @@ function stepper(name, initial = 0) {
 //     light3?: [x, y, z] (the light the normals face), shade?: 0.45 (a face edge-on to it),
 //     edgeGain?: 0.8, cascade?: { after: 7 (world-s after the crossing), rate: 0.28, speed: 12 },
 //     mesh?: 'data/lhcb-mesh.glb' (hero/export_mesh.py: each part a mesh named after it),
-//     meshLook?: { face: 0.03, rim: 0.5, lines: 0.35, angle: 25, gain?: [× 10], lineGain?: [× 10] }, grains?: true }
+//     meshLook?: { face: 0.03, rim: 0.5, lines: 0.35, angle: 25, gain?: [× 10], lineGain?: [× 10],
+//     person?: { color, face, rim, lines, angle } }, grains?: true }
 // With `mesh` (owner, 20 Oct: "Doesn't have to be point cloud if that looks better") the
 // parts are also drawn as surfaces: faint faces, their silhouettes glowing (a rim by the
 // view angle) and their feature edges as fine lines, each part in its colour, added on as
@@ -309,16 +310,21 @@ function buildDetector(o, ctx) {
     const m = S / 1000
     root.matrixAutoUpdate = false
     root.matrix.set(0, 0, m, 0, 0, m * T, 0, 0, m * T, 0, 0, 0, 0, 0, 0, 1)
+    // the person for scale (hero/export_mesh.py's `person`): its own colour and gains, and every
+    // fold of the body as a line (`personAngle`), a figure in the same light as the machine
+    const P = { color: '#d6e8ff', face: 0.02, rim: 0.3, lines: 0.085, angle: 12, ...(L.person || {}) }
     const mk = (part, line) => {
+      const person = part === 'person'
       const mat = new ShaderMaterial({
         vertexShader: MESH_VERT, fragmentShader: MESH_FRAG, transparent: true, depthWrite: false, depthTest: false,
         blending: AdditiveBlending, side: DoubleSide,
         uniforms: {
           uTime: u.uTime, uShowT: u.uShowT, uHideT: u.uHideT, uSweep: u.uSweep, uLen: u.uLen, uHot: u.uHot,
           uCrossT: u.uCrossT, uCrossHide: u.uCrossHide, uLight: u.uLight, uCascT: u.uCascT, uCascR: u.uCascR, uCascV: u.uCascV,
-          uScale: { value: S / 1000 }, uCol: { value: u.uParts.value[part] },
+          uScale: { value: S / 1000 }, uCol: { value: person ? new Color(...rgb(P.color)) : u.uParts.value[part] },
           // each part's own gain (`gain`, the parts' order): SciFi's stacked mats and the muon walls' tiles add up
-          uFace: { value: L.face * (L.gain?.[part] ?? 1) }, uRim: { value: L.rim * (L.gain?.[part] ?? 1) }, uLine: { value: line ? L.lines * (L.lineGain?.[part] ?? L.gain?.[part] ?? 1) : 0 },
+          uFace: { value: person ? P.face : L.face * (L.gain?.[part] ?? 1) }, uRim: { value: person ? P.rim : L.rim * (L.gain?.[part] ?? 1) },
+          uLine: { value: !line ? 0 : person ? P.lines : L.lines * (L.lineGain?.[part] ?? L.gain?.[part] ?? 1) },
         },
       })
       meshMats.push(mat)
@@ -326,10 +332,11 @@ function buildDetector(o, ctx) {
     }
     gltf.scene.traverse((ob) => {
       if (!ob.isMesh) return
-      const part = names.indexOf(ob.name.replace(/[._]\d+$/, ''))
-      if (part < 0) return
+      const name = ob.name.replace(/[._]\d+$/, ''), part = name === 'person' ? 'person' : names.indexOf(name)
+      if (part === -1) return
       ob.geometry.applyMatrix4(ob.matrixWorld)
-      const face = new Mesh(ob.geometry, mk(part, false)), line = new LineSegments(new EdgesGeometry(ob.geometry, L.angle), mk(part, true))
+      const face = new Mesh(ob.geometry, mk(part, false))
+      const line = new LineSegments(new EdgesGeometry(ob.geometry, part === 'person' ? P.angle : L.angle), mk(part, true))
       for (const x of [face, line]) { x.frustumCulled = false; x.renderOrder = 1; root.add(x) }
     })
     g.add(root)
