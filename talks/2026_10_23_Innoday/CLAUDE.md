@@ -392,7 +392,9 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   standing rule for every talk). `advance-on-end` is off the opener (slide 2) and the
   tunnel (slide 8): each holds its last frame until the owner presses →, and the tunnel's
   push into the collision runs on that press. Never add `advance-on-end` (or
-  `videos.advanceOnEnd`) to a clip unless the owner asks for that clip by name. The
+  `videos.advanceOnEnd`) to a clip unless the owner asks for that clip by name. He did for the
+  opener (21 Oct: "Slide 2-3 auto move on"): slide 2 has `advance-on-end` again; the tunnel
+  (slide 8) still waits for his press. The
   trigger: OpenData "seemed like the slides autoclick" on a machine in the stills fallback.
 - The new ending (owner, 19 Oct, via the Scheduler: "need a much stronger
   finishing aspect. Can we show photorealistic 3D rendering of SciFi light

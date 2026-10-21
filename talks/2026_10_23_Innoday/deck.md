@@ -78,14 +78,14 @@ space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0
 
 <OpenerStart poster="video-frames/nftmc_zoom_web.mp4.poster.jpg" />
 
-<VideoPlayer src="nftmc_zoom_web.mp4" transition="fade" />
+<VideoPlayer src="nftmc_zoom_web.mp4" transition="fade" advance-on-end />
 
 <!-- facts: nftmc-opened-2016 -->
 
 <!--
 Kalbėtojui. Klipas prasideda pats, kai skaidrė atsiveria. (Jei skaidrės atidaromos tiesiai šioje skaidrėje, rodomas pirmasis kadras, o pirmas paspaudimas paleidžia klipą su garsu, ne pereina toliau.)
 Nutolinimas nuo NFTMC (Nacionalinis fizinių ir technologijos mokslų centras Saulėtekio slėnyje, atidarytas 2016 m.; Google Earth) iki kosminio tinklo: Saulėtekis, Vilnius, Lietuva, Žemė (~0:30), Saulė ir Paukščių Takas (~1:00), skrydis per mūsų galaktiką ir iš jos (~2:20), mūsų galaktika iš šalies (~3:10), ~20 s beveik juodos tarpgalaktinės erdvės, tada kosminis tinklas (~3:47) (savininko SpaceEngine montažas, nukirptas ties kadru, nuo kurio prasideda kita skaidrė; muzika užgęsta per paskutines 3 s). Galima tylėti arba trumpai įvardyti etapus. Kosminis tinklas — NCSA Advanced Visualization Lab vizualizacija („Cosmic Bubble Bath“, pirmųjų ~1,2 mlrd. metų simuliacija).
-Klipui pasibaigus (po 4:13, kai pasirodo kosminis tinklas ir muzika nutyla), ekrane lieka paskutinis jo kadras, kol paspausite → (pultelio „pirmyn“, tarpas ar PageDown): kita skaidrė prasideda nuo to paties kadro ir paverčia jį pasaulio grūdeliais. Paspaudus klipo metu, pereinama anksčiau, bet perėjimas nebebus sklandus. Pačios skaidrės toliau nepereina.
+Spausti nereikia: klipui pasibaigus (po 4:13, kai pasirodo kosminis tinklas ir muzika nutyla), skaidrės pačios pereina į kitą (savininkas, 2026 10 21: „Slide 2-3 auto move on“), kuri prasideda nuo to paties kadro ir paverčia jį pasaulio grūdeliais. Paspaudus klipo metu, pereinama anksčiau, bet perėjimas nebebus sklandus. Savaime pereinama tik auditorijos lange, ne /presenter.
 (klipas 4:13, su savo muzika; ~4,2 min)
 -->
 
