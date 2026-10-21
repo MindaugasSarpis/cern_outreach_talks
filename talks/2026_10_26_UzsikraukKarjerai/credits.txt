@@ -12,12 +12,18 @@ Pictures (from Innoday, feat/innoday-cern d80ea9a)
 - The funnel's form follows NASA/WMAP's "timeline of the universe" figure (drawn anew in grains, no part of the image used).
 
 Data
-- Slide 9: LHCb collaboration, Phys. Rev. Lett. 118, 182001 (2017), arXiv:1703.04639, CC BY 4.0: the m(Ξc⁺K⁻) of Fig. 2 (3.3 fb⁻¹), its 1 MeV bin contents read from the vector figure (LHCb-PAPER-2017-002/Fig2.pdf) and summed to 2 MeV (they equal the paper's Fig. 3 bins), 2960–3300 MeV, 59 453 candidates, drawn one grain per two candidates.
-- LHCb collaboration, Phys. Rev. Lett. 122, 222001 (2019): the m(J/ψ p) bins drawn on slides 10 and 11, from HEPData ins1728691, Table 2 (doi:10.17182/hepdata.89271.v1/t2).
-- Slide 8 and the left plot of slide 11: an illustration generated for this talk (no measured data; public/data/theta-toy.json).
+- Slide 10: LHCb collaboration, Phys. Rev. Lett. 118, 182001 (2017), arXiv:1703.04639, CC BY 4.0: the m(Ξc⁺K⁻) of Fig. 2 (3.3 fb⁻¹), its 1 MeV bin contents read from the vector figure (LHCb-PAPER-2017-002/Fig2.pdf) and summed to 2 MeV (they equal the paper's Fig. 3 bins), 2960–3300 MeV, 59 453 candidates, drawn one grain per two candidates.
+- LHCb collaboration, Phys. Rev. Lett. 122, 222001 (2019): the m(J/ψ p) bins drawn on slides 11 and 12, from HEPData ins1728691, Table 2 (doi:10.17182/hepdata.89271.v1/t2).
+- Slide 9 (both of its plots) and the left plot of slide 12: illustrations generated for this talk (no measured data; public/data/theta-toy.json).
 - Slide 6, the collision: one real CMS crossing from CERN Open Data record 300 (CC0), run 195099, event 137440354 (27 May 2012, 8 TeV, a Higgs boson candidate); its provenance is in components/lhc-opening/README.md. The energy line is hidden in this talk (styles/index.css).
-- Slide 17, the sun of plots: made by LHCb Vilnius for OpenData from two public LHCb files, CERN Open Data records 401 and 24506 (public/figures/opendata/, copied from talks/2026_10_21_OpenData).
-- Slides 14–16, the piles: drawn for OpenData; the volumes are in each slide's notes.
+- Slide 20, the sun of plots: made by LHCb Vilnius for OpenData from two public LHCb files, CERN Open Data records 401 and 24506 (public/figures/opendata/, copied from talks/2026_10_21_OpenData).
+- Slides 16–18, the piles: drawn for OpenData; the volumes are in each slide's notes.
 
 Map
-- Coastlines and borders: Natural Earth 1:50m, public domain. Lithuania's outline (slide 13): Natural Earth 1:50m admin 0 countries (v5.1.2), public domain.
+- Coastlines and borders: Natural Earth 1:50m, public domain. Lithuania's outline (slide 14): Natural Earth 1:50m admin 0 countries (v5.1.2), public domain.
+
+Added 21 Oct (the 15-minute round)
+- Slide 8, LHCb as a 3D model: public/data/lhcb-mesh.glb, from LHCb's DD4hep detector description (© CERN for the benefit of the LHCb Collaboration, GPL-3.0) through HSF Phoenix's glTF (Apache-2.0), decimated by Innoday's hero/export_mesh.py; the person for scale from Blender's Human Base Meshes (CC0). Notice kept in public/data/lhcb-mesh.NOTICE.txt. Its collision: LHCb's own 2012 event from CERN Open Data (run 133488, event 2028034058), as components/lhc-opening/README.md gives it.
+- Slide 15: lis_flag.mp4 (the slidev-videos library), a Blender render for Innoday after the SciFi drawing; no photograph; the Lithuanian flag on the cold box is Innoday's own touch.
+- Slide 19: CERN-FOOTAGE-2022-013-006, the CERN data centre and its tape robot (CERN; the owner, 10 Oct: "it's cern license, I'm CERN user").
+

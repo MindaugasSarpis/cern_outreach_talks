@@ -6,6 +6,11 @@ import { installSun } from './sun.js'
 import { installFunnel } from './funnel.js'
 import { armAfterCover } from './afterCover.js'
 import { installOpening } from '../components/lhc-opening/index.js'
+import { installDetector } from './detector.js'
+import { installCavern } from './cavern.js'
+import InsideLhcb from './InsideLhcb.vue'
+// LHCb's own 2012 event, the shared collision's default: slide 8's detector (setup/detector.js)
+import EVENT_LB from '../components/lhc-opening/event.json'
 import Grains from './Grains.vue'
 import Count from './Count.vue'
 import WebTakeover from './WebTakeover.vue'
@@ -51,6 +56,10 @@ function reloadOnStaleChunk() {
 // (<WebTakeover>, setup/takeover.js); its CMB picture waits for afterCover.js's
 // latch, so the cover's fly-in stays clear; <AfterFlight> shows its number once
 // the flight has landed.
+// From Innoday (owner, 21 Oct: "Build" the 15-min proposal): `detector`, LHCb's
+// model with the 1,83 m person (setup/detector.js), its `cavern-floor` and `supports`
+// (setup/cavern.js), and <InsideLhcb>, which starts LHCb's own collision in it once the
+// camera has come down to the cavern floor (slide 8).
 // (A plain function: Slidev's defineAppSetup is the identity, and
 // @slidev/types is not a dependency of the talk.)
 export default ({ app, router }) => {
@@ -63,8 +72,11 @@ export default ({ app, router }) => {
   installSun(registerBuilder)
   installFunnel(registerBuilder)
   installOpening({ app, registerBuilder })   // the shared LHC opening: its collision, sound and <LhcOpening>
+  installDetector(registerBuilder, { event: EVENT_LB })
+  installCavern(registerBuilder)
   app.component('Grains', Grains)
   app.component('Count', Count)
   app.component('WebTakeover', WebTakeover)
   app.component('AfterFlight', AfterFlight)
+  app.component('InsideLhcb', InsideLhcb)
 }

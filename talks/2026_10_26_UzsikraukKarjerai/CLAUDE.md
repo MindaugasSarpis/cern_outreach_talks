@@ -54,52 +54,65 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (eighth version, 20 Oct: blueprint v2, the flow reworked for a 10–15 min talk: 19 slides, about 10 min)
+## Story (ninth version, 21 Oct: the 15-minute round on blueprint v2: 22 slides, 12,9 min scripted, about 15 delivered)
 
-The blueprint: `notes/blueprint.md` (v2, 20 Oct; v1 of 18 Oct is at
-f840ac0). One dot: a particle of five quarks took 51 years to find, so how do
-you know you have found something nobody has seen? The viewer sees how, dot by
-dot, and judges twice (a 140-dot bump that fools them, as physicists were fooled
-in 2003; LHCb's 2015 peak, which held); the rule is said once, in the cover's
-words. Then the dots are handed on through the speaker's road (Glasgow,
-Heidelberg, Bonn: the pentaquark search and the open-data release), the group in
-Vilnius, OpenData's piles, a VU student's check of the bump and the masterclass.
-Elements from Innoday (the web, the funnel) and OpenData (the way in, the LHCb
-clip, the piles, the suns) as built on 18 Oct; the owner's career path as a
-thread, scripted only from the facts bank, with three optional owner slots on
-the road slide. The old outline: `notes/outline-v5.md`.
+The owner, 21 Oct: "15 min we can cover quite a lot of content … more
+visuals", then "Build" on the proposal in this window. Blueprint v2
+(`notes/blueprint.md`, 20 Oct) stays the spine: one dot, a particle of five
+quarks that took 51 years to find, and how you know you have found something
+nobody has seen; the viewer judges twice; the rule said once; then the dots are
+handed on through the speaker's road, the group in Vilnius, the open data and
+the masterclass. The round deepens three places: what happens 100 m down
+(inside LHCb, new 8), how chance bumps drown in more data (9's second click),
+and what the Vilnius group does (its part of the detector, new 15; where the
+data live, new 19); the blueprint's "If there is room" lines are now spoken.
+The owner's three slots on 13 stay optional (+0,75 min delivered).
 
 Pictures and numbers (owner, 2026-10-10): no titles, kickers, statements or
 section slides; the speaker narrates from the notes. A number carries the word
-that names it; a thing shown may carry its name (the map's cities, the sun's
-two clusters, the piles' two captions). Exceptions taken from OpenData and
-Innoday on 15 Oct: the cover's name line and „Ačiū“ (lint: TEXT warnings, on
+that names it; a thing shown may carry its name. Exceptions from OpenData and
+Innoday on 15 Oct: the cover's name line and „Ačiū“ (lint TEXT warnings, on
 purpose).
 
-| # | Screen | Picture |
-|---|---|---|
-| 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks`; the question and the promise |
-| 2 | — | Innoday's cosmic web, a still that dissolves into grains in place (`<WebTakeover>`); no words |
-| 3 | „13,8 mlrd. metų“ | the grains fly into Innoday's funnel; atoms → three quarks → five, a pentakvarkas |
-| 4 | — (clip) | CERN from above (`cern_overview_short.mp4`, 11 s), pushing into the ring |
-| 5 | „LHC 27 km“ | the real tunnel (18 s cut); collision energy becomes new particles |
-| 6 | „290 dalelių“ („8 TeV“ hidden by the talk's CSS) | one real 2012 CMS crossing in 4π |
-| 7 | — (clip) | `lhcb.mp4` (39 s); a mass from the fragments; one mass, one dot |
-| 8 | — (one click) | `th1` fills, 140 dots; the viewer judges; the tick at the click; chance, and 2003 |
-| 9 | „59 453 masės“ (one click) | `oc` fills in light blue; ticks over the five peaks at the click |
-| 10 | — (one click) | `jp` fills; the viewer judges LHCb's 2015 peak; three peaks at the click |
-| 11 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp` at one scale; the rule; the answer |
-| 12 | Vilnius, CERN; „Glazgas“ (click 1); „Heidelbergas“, „Bona“ (click 3) | the route (4 clicks): the bank's road, three optional owner slots |
-| 13 | Vilnius | the dive to Vilnius, Lithuania's outline; the group; the coordinator line as the bridge |
-| 14 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared; the peak rose in them |
-| 15 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile of 4 PB |
-| 16 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops |
-| 17 | — | OpenData's sun of plots; Dominykas's check |
-| 18 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; empty places; the advice |
-| 19 | „Ačiū“ | the five-quark form gathers again (the close is the default until the owner says) |
+| # | Screen | Picture | min |
+|---|---|---|---|
+| 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks` | 0,6 |
+| 2 | — | Innoday's cosmic web, a still that dissolves into grains (`<WebTakeover>`); one spoken line | 0,2 |
+| 3 | „13,8 mlrd. metų“ | Innoday's funnel; atoms → three quarks → five | 0,6 |
+| 4 | — (clip) | CERN from above (`cern_overview_short.mp4`, 11 s) | 0,19 |
+| 5 | „LHC 27 km“ | the real tunnel (18 s cut) | 0,3 |
+| 6 | „290 dalelių“ | one real 2012 CMS crossing in 4π; „užfiksavo CMS“ spoken | 0,55 |
+| 7 | — (clip) | `lhcb.mp4` (39 s): LHCb, its people | 0,65 |
+| 8 | „100 m“, then „40 mln. per sekundę“ | **new**: inside LHCb, the 3D model beside a 1,83 m person (Innoday's), the camera craned down to the cavern floor; LHCb's own 2012 collision in it; the 40 MHz glow; one mass, one dot (`<InsideLhcb>`, station `cavern`) | 1,0 |
+| 9 | — (two clicks) | `th1` fills, 140 dots; the viewer judges; the tick; **new**: click 2, `th2` 3 500 random dots, the bump gone; 2003 | 1,65 |
+| 10 | „59 453 masės“ (one click) | `oc`, five peaks; „paskelbė visas penkias“ spoken | 0,75 |
+| 11 | — (one click) | `jp`, the 2015 peak judged; three peaks | 0,8 |
+| 12 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp`; the rule; the answer (4 s held) | 0,7 |
+| 13 | Vilnius, CERN; „Glazgas“; „Heidelbergas“, „Bona“ | the route (4 clicks), three optional owner slots | 0,6 |
+| 14 | Vilnius | the dive to Vilnius; the group | 0,55 |
+| 15 | — (clip) | **new**: `lis_flag.mp4` (10 s, a render): a SciFi module's end, its light injection; the group's part; the coordinator bridge | 0,4 |
+| 16 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared | 0,6 |
+| 17 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile | 0,3 |
+| 18 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops | 0,45 |
+| 19 | — (clip) | **new**: the CERN data centre's tape robot (`cern_footage_2022_013_006.mp4`; the cut is Friday's TODO) | 0,3 |
+| 20 | — | OpenData's sun of plots; Dominykas's check; the Brown preprint | 0,6 |
+| 21 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; the masterclass files line; the advice | 0,7 |
+| 22 | „Ačiū“ | the five-quark form gathers again | 0,45 |
 
 ## Status
 
+- 2026-10-21 (latest): **the 15-minute round built on the branch, not
+  rendered, not deployed** (the owner: "Build"). 22 slides, 12,9 min by the
+  notes (lint: 0 errors; the open TODO on 19 and the three optional slots are
+  the warnings), so about 15 delivered with the slots. `talk check` ok
+  (videos, stage, build). Not yet seen in a browser: no shots or recordings
+  while Innoday holds the render lock (until its Thursday redeploy). Friday,
+  in one batch: pin v0.8.2; a frame sheet of `cern_footage_2022_013_006.mp4`
+  to cut the tape-robot shot (19's TODO: manifest trim, encode, publish);
+  shots of all 22 (8's crane, collision and glow at their seconds; 9's second
+  click; 15 and 19 clips), a review; `talk safe`; `talk record --plates` at
+  1080p50; the stills PDF; `pnpm venue`; the Keynote/PowerPoint copy of the
+  per-slide MP4s; `talk ready`; the deploy when the Scheduler gives main.
 - 2026-10-21 (latest): **live is the 20 Oct rebuild, not a60d0fa.** It went
   out with main's Pages run 39485774569 at 404f3a7 (Innoday's deploy, green,
   20 Oct 19:42 UTC), which builds every talk and contains 292181d…3c7c655.
@@ -359,6 +372,38 @@ purpose).
 
 ## Decisions
 
+- 2026-10-21 — The 15-minute round (the owner, in this window: "Build", to the
+  proposal of the same day; his photos for the road and the Keynote copy were
+  not answered, so: no photos, the slots stay spoken; the Keynote/PowerPoint
+  copy is made on Friday with the recordings). Built:
+  - **8, inside LHCb** (new): Innoday's model of LHCb's Run 3 geometry with the
+    1,83 m person (main 404f3a7: `setup/detector.js` → this talk's, on its grain
+    bus and `disk` latch, grains file not fetched; its floor and cradles from
+    `emblems.js` → `setup/cavern.js`, `floor` renamed `cavern-floor`, since
+    OpenData's `floor` is this talk's); station `cavern` at [1000, −480, 0] with
+    Innoday's `thanks` objects (collision `inside`, LHCb's own 2012 event, the
+    default of components/lhc-opening); `<InsideLhcb>` starts it once the
+    camera has craned down (y < −482), and freezes the world at the crossing
+    as Innoday's; the 40 MHz glow is the detector's `cascade`. „100 m“ counts up
+    during the crane (the title's depth, `lhcb-100m-below-ground`), then „40 mln.
+    per sekundę“ on the dolly back. The mass lines moved here from 7, which now
+    lets the reel's music run. No magnet line: the outreach page did not answer.
+  - **9, click 2** (new): `th2`, the 3 500-dot sample of the same random
+    spectrum (theta-toy.json's `large`, back from before 18 Oct), fills where
+    `th1` was and lights the tick over the same column: the bump is gone. 10's
+    smoothing sentence now says only what real particles do (no repeat).
+  - **15, the group's part** (new): the library clip `lis_flag.mp4` (Innoday's
+    10 s render, the flag Innoday's touch, both said in the script); the
+    coordinator bridge moved here from 14. Not a real photograph: my proposal
+    called it real footage, corrected the same day.
+  - **19, the data centre** (new): `cern_footage_2022_013_006.mp4` whole until
+    Friday's cut (TODO mark, so `lint --release` stops a deploy without it);
+    about 60 000 tapes, over a million terabytes (`cern-exabyte`).
+  - Spoken now (the blueprint's "If there is room"): 2's web line, 6's CMS line,
+    10's five-at-once and the four confirmed, 20's Brown preprint, 21's first
+    LHCb files for masterclasses; held silences of 4 s on 12, 3 s on 22.
+  - `duration: 15min`, the `info` block, slide references renumbered.
+  Undo: `git revert` the round's commit; the 20 Oct deck is 3c7c655.
 - 2026-10-21 — No `advance-on-end` on any clip unless the owner asks for that
   clip by name (his standing rule, 21 Oct, after OpenData's "autoclick";
   through the Scheduler). Stripped from slides 4 (`cern_overview_short.mp4`),
