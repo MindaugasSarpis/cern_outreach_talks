@@ -179,6 +179,33 @@ the package.
   pulls the plates with the clips. A clip slide has no plate: the clip ends
   and waits for the press, so no `advance-on-end` unless the owner asks for
   that clip by name (lint `ADVANCE`).
+- **The PPTX** (every stage talk from Innoday on): the deck as a PowerPoint,
+  one video per slide and click that starts on entry and holds its last
+  frame, the notes in the Notes pane; no editable variant. In order: the
+  env's `slidev-videos` with the `pptx` subcommand (`talk pptx` asks `pptx
+  --help` first and refuses) → `<PptxButton />` on the cover, after the
+  byline (the scaffold has it; it renders nothing until `videos/pptx.json`
+  is there, and never in the presenter view, print, export or a tool's
+  browser: `navigator.webdriver`, `window.__rec`, `window.__shots`) →
+  `pnpm talk pptx <t>` (the render slot: `slidev-videos pull
+  --include-shared`, so no clip slide records without its clip; the takes
+  at 1080p50, an 8 s hold, every click, `--max` the longest clip + 60 s
+  (120 s at least, 600 s when a clip's length is unknown) into
+  `$TALK_TMP/talk-<slug>/pptx/rec`, kept while `rec/take.json`'s content
+  fingerprint and recorder args match, `--rerecord` to record again, `--
+  --slides N-M` for some slides, the recorder's flags after `--`; then
+  `slidev-videos pptx rec --deck deck.md --out <talk>.pptx` and `gh release
+  upload <tag> <talk>.pptx --clobber` onto the talk's videos release;
+  `--dry-run` prints the plan, `--no-publish` builds only) → commit
+  `videos/pptx.json` (`fingerprint`, `asset`, `repo`, `tag`, `url`,
+  `bytes`, `slides`, `segments`, `deck_slides`, `skipped`, `fps`, `hold`,
+  `max`, `cap`, `cli`, `recorded_at`) → `pnpm talk ready` (the pptx step:
+  the asset on the release at that size, the take current by content,
+  under 1.5 GB; warnings unless `--strict-pptx`, `--skip pptx` leaves it
+  out) → `pnpm talk deploy` (the site index's "PPTX · size" link comes
+  from the committed file). `$TALK_TMP` does not survive a reboot: the
+  release keeps the asset and `pptx.json` the fingerprint, and a stale take
+  records again.
 - Both addons and the CLI are pinned to slidev-videos `v0.4.0`: the talk's
   `package.json`, `scripts/new_talk.py` (`ADDONS_REF`) and env.yaml's pip
   entry move together on a release. The `frames` subcommand is new in 0.4.0;

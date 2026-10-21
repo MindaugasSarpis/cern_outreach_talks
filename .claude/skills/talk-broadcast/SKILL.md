@@ -79,6 +79,7 @@ pnpm talk build <t>                # into /tmp/talk-<slug>/site
 pnpm talk record <t> --slides 2-2  # from v0.6: one slide first, to time it
 pnpm talk record <t> --plate       # per-slide NN.mp4 at 1080p50 with a hold, NN-plate.mp4 without text, index.json
 pnpm talk record <t> --plates      # the stage's fallback plates: the world alone per non-clip slide, 1080p25, a 20 s hold, --max 120
+pnpm talk pptx <t>                 # the deck as a PPTX: a take per slide and click at 1080p50, onto the videos release
 ```
 
 `--plates` (plural) is not the broadcaster's plate set: it records what the
@@ -92,6 +93,17 @@ the recorder's `--max`, and within 40 MB a plate, 600 MB a deck: warnings (a
 re-record takes an hour), `--strict-plates` to fail. The recorder and the
 `slidev-videos` CLI must be the release with the live fallback, else `record
 --plates` refuses. The recipe in full: `docs/authoring.md`, "The stage".
+
+`pnpm talk pptx <t>` is the PPTX the site and the cover's `<PptxButton />`
+offer (every stage talk from Innoday on): it pulls the clips with
+`--include-shared`, records the takes at 1080p50 with an 8 s hold and every
+click (`--max` past the longest clip) unless the take in
+`$TALK_TMP/talk-<slug>/pptx/rec` is current, builds one autoplaying video per
+slide and click with the notes (`slidev-videos pptx`), uploads `<talk>.pptx`
+to the talk's videos release and writes `videos/pptx.json`: commit it. About
+half an hour for a 10-minute deck on this machine's GPU; `--dry-run` first.
+The takes are silent, so a clip's sound is not in the PPTX. A click segment
+is its own PPTX slide, so PowerPoint counts more slides than the deck.
 
 `slidev-stage-record` steps the engine on a fixed clock, so frames are exact.
 Its speed depends on the renderer headless Chromium gets on the machine:
@@ -115,6 +127,8 @@ never in the main loop.
 - per-slide MP4s and text-free plates, the stills PDF with the spoken cue
   line under each still, the source clips;
 - `credits.txt` with every clip and photo, its licence and credit line;
+- the PPTX: its release link from `videos/pptx.json` (`url`), the same file
+  the site index and the cover button offer;
 - on the day: laptop at 50 Hz, sound off, a clicker, a USB stick with the
   MP4s.
 
