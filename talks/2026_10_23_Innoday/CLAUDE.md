@@ -184,12 +184,17 @@ Starfire are at -16 LUFS). (3) Clicker: forward and back; the first press on the
 opener and unlocks sound (opened cold on slide 2, the first press starts the clip). (4) With
 /presenter, click the audience window once first. (5) The offline zip on a USB stick
 (`pnpm venue`, rebuilt after the bump). (6) At the close, the frame-rate guard (below).
-Thursday plan (from the release's relay, T): T+0 merge origin/main, `pnpm talk pin v0.8.2`,
+Timeline (Scheduler, 21 Oct: the calendar has the talk inside a 09:00–14:00 block on Thu 23 Oct, so
+everything lands on Wed 22 Oct, deploy and the USB zip included; Thursday morning is only a last live
+walk before he leaves). Paper count refreshed on 22 Oct. Cut-off Wed 19:00: without v0.8.2 by then,
+the clip change and the review fixes he approved deploy alone under the standing rule and the fallback
+is dropped for this talk (the Scheduler gives main at 19:00 either way). The adoption, from the
+release's relay on Wednesday (T): T+0 merge origin/main, `pnpm talk pin v0.8.2`,
 commit; T+5 `stage.motion: floor`, check, lint; T+10 `pnpm talk record --plates` (~15 min on the
 GPU, render-lock priority); T+25 `videos:publish --only <plates>`; T+35 force the fallbacks
 (reduced motion, no WebGL) and walk 2→3, 8→9, 9, 28, 30; T+45 `talk ready` (plates step); T+55
-deploy under the standing rule; T+65 the venue zip rebuilt, hand-off. About 75 min. With no release
-by 09:00, the clip change deploys alone (Scheduler's go).
+deploy under the standing rule; T+65 the venue zip rebuilt and onto the USB stick, hand-off. About
+75 min.
 
 2026-10-21 (later): the owner, via the Scheduler: "Can we not mark clips to advance, in
 innoday as well.... I will specifically ask if it's needed". `advance-on-end` removed
