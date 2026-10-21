@@ -158,7 +158,9 @@ its checks are in the OpenData talk's cache (`~/talks/.cache/opendata/r3/cms/`).
 5. The slides (OpenData's deck.md, slides 1, 3 and 4; its slide 2 is CERN
    from above): a black standby (`dim: 1, ambient: 0, hum: false`), the
    tunnel (`<VideoPlayer … advance-on-end exit="push" exit-at="0.45,0.53" />`
-   and `<LhcOpening part="tunnel" />`), and the collision:
+   and `<LhcOpening part="tunnel" />`; `advance-on-end` only when the owner
+   asks for it on this clip by name, else the tunnel holds its last frame for
+   the press: root CLAUDE.md, 2026-10-21), and the collision:
 
        space:
          at: opening

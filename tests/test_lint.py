@@ -191,6 +191,30 @@ class CleanFixture(unittest.TestCase):
             with redirect_stdout(io.StringIO()):
                 self.assertEqual(talk_lint.main([str(talk), "--release", "--facts", str(BANK)]), 1)
 
+    def test_advance_on_end_is_the_owners_call(self):
+        # a clip ends and waits for the press unless the owner asked for that clip by name (2026-10-21,
+        # after a clip clicked a deck on without WebGL); `:advance-on-end="false"` and a comment are not it
+        self.assertEqual(codes(lint(EN), "ADVANCE"), [])
+        with tempfile.TemporaryDirectory() as d:
+            talk = Path(d) / "en_talk"
+            shutil.copytree(EN, talk)
+            deck = (talk / "deck.md").read_text(encoding="utf-8")
+            deck = deck.replace('<VideoPlayer src="zoom.mp4" />',
+                                '<VideoPlayer src="zoom.mp4" advance-on-end exit="push" />')
+            deck = deck.replace('<VideoPlayer src="loop.mp4" loop muted />',
+                                '<VideoPlayer src="loop.mp4" loop muted :advance-on-end="false" />\n'
+                                '<!-- <VideoPlayer src="old.mp4" advance-on-end /> -->\n'
+                                '<VideoPlayer\n  src="tour.mp4"\n  advanceOnEnd\n/>')
+            (talk / "deck.md").write_text(deck, encoding="utf-8")
+            l = lint(talk)
+            found = codes(l, "ADVANCE")
+            self.assertEqual([(f.slide, f.line, f.severity) for f in found], [(3, 57, "warning"), (4, 67, "warning")])
+            self.assertEqual(found[0].message, "advance-on-end on 'zoom.mp4' (the owner asks for it by name, "
+                             "2026-10-21; a clip ends and waits for the press otherwise)")
+            self.assertIn("'tour.mp4'", found[1].message)
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(talk_lint.main([str(talk), "--release", "--facts", str(BANK)]), 0)   # a warning, not a gate
+
     def test_usage_errors(self):
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
             self.assertEqual(talk_lint.main([]), 2)

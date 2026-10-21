@@ -13,7 +13,7 @@ was compacted.
 ## 1. Deterministic checks first
 
 ```bash
-pnpm talk lint <t>             # language, slop, words, type floor, sources, timing, fact ids
+pnpm talk lint <t>             # language, slop, words, type floor, sources, timing, fact ids, advance-on-end
 pnpm -s talk review <t> --json # check + build into /tmp/talk-<slug>/site + shots --changed --sheet
 ```
 
@@ -25,6 +25,19 @@ contact sheet is `sheet.png` in the shots directory. If shots are slow, probe
 first: `pnpm talk shots <t> --probe --slides <n>` reports frames per second
 and engine seconds per wall second; below 0.5 the deck has a fill-rate
 problem, not a waiting problem.
+
+Before the venue, `pnpm talk ready <t>`: lint --release, check, shots, pages,
+preflight, venue --dry-run and, for a stage talk with `videos/plates.json`,
+the plates step: each plate of the take is on the talk's videos release (a
+local-only plate is not in a Pages build: the step prints the publish line)
+or at least local, the take is current (the talk's content), no plate was
+cut off unsettled at the recorder's `--max` (the warning names the
+`-- --max N` to re-record with) and the sizes are within 40 MB a plate,
+600 MB a deck. A miss is a warning, since a re-record takes an hour;
+`--strict-plates` makes it fail; without `plates.json` the step is "skipped:
+no plates". Stale or missing plates:
+`pnpm talk record <t> --plates` (the render slot), then the `pnpm
+videos:publish --only …` line it prints, in the talk (`talk-broadcast` §5).
 
 Renders share the machine with other sessions. `pnpm talk shots`, `review`,
 `ready`, `record` and `safe` queue for the render slot themselves; any other
