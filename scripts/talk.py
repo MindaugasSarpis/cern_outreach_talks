@@ -1308,6 +1308,14 @@ def lock_step(root: Path) -> dict:
     return res
 
 
+def cmd_lock(repo: Repo, a, extra) -> tuple[int, dict]:
+    """The lockfile check alone: deploy.yml's plan job runs it before any build."""
+    res = lock_step(repo.here)
+    if res["ok"]:
+        OUT.say("pnpm-lock.yaml: every tarball keeps its subpath")
+    return (0 if res["ok"] else 1), res
+
+
 def do_check(repo: Repo, talk: str, pages: bool = False) -> tuple[int, dict]:
     d = repo.here / "talks" / talk
     env = tool_env()
@@ -3187,6 +3195,7 @@ def build_parser() -> argparse.ArgumentParser:
     verb("dev", "pnpm dev in the talk (more args after --)")
     sp = verb("build", "build into $TALK_TMP/talk-<slug>/site")
     sp.add_argument("--pages", action="store_true", help="the Pages base /<repo>/<talk>/ instead of /")
+    verb("lock", "pnpm-lock.yaml: every tarball keeps its #path: subpath (deploy.yml runs it)", talk=False)
     sp = verb("check", "the lockfile's subpaths, videos:check, stage:check, build")
     sp.add_argument("--pages", action="store_true")
     sp = verb("shots", "slidev-stage-shots of the build into talks/<t>/shots/")
@@ -3266,7 +3275,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 VERBS = {
     "new": cmd_new, "open": cmd_open, "list": cmd_list, "status": cmd_status, "dev": cmd_dev,
-    "build": cmd_build, "check": cmd_check, "shots": cmd_shots, "review": cmd_review,
+    "build": cmd_build, "lock": cmd_lock, "check": cmd_check, "shots": cmd_shots, "review": cmd_review,
     "lint": cmd_delegate, "facts": cmd_delegate, "map": cmd_delegate, "ready": cmd_ready,
     "record": cmd_stage, "safe": cmd_stage, "pptx": cmd_pptx, "export": cmd_export, "deploy": cmd_deploy, "doctor": cmd_doctor, "bump-toolkit": cmd_bump,
     "render": cmd_render, "pin": cmd_pin, "session": cmd_session, "sessions": cmd_sessions, "config": cmd_config,

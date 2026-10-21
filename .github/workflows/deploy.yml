@@ -37,6 +37,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      # a pnpm reinstall once dropped `path: /packages/stage` from older toolkit
+      # tarballs and every stage talk installed the wrong package (e3a23df)
+      - name: The lockfile keeps every tarball's subpath
+        run: python3 scripts/talk.py lock
+
       - id: talks
         name: Pick the talks to build
         env:

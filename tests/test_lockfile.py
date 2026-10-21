@@ -95,3 +95,37 @@ def test_snapshots_and_importers_are_not_read_as_packages():
 def test_the_repo_lockfile_keeps_every_subpath():
     path = ROOT / "pnpm-lock.yaml"
     assert talk_cli.lock_subpath_problems(path.read_text(encoding="utf-8")) == []
+
+
+# ---- the command and the workflow
+
+from conftest import talk  # noqa: E402
+
+GOOD = f"""lockfileVersion: '9.0'
+
+packages:
+
+  slidev-addon-stage@{URL}{B}#path:/packages/stage:
+    resolution: {{integrity: sha512-b, path: /packages/stage, tarball: {URL}{B}}}
+    version: 0.5.2
+"""
+
+
+def test_talk_lock_names_a_block_that_lost_its_subpath(repo, env):
+    (repo / "pnpm-lock.yaml").write_text(lock(BAD_STAGE, GOOD_VIDEOS))
+    code, obj, err = talk(repo, "lock", env=env)
+    assert code == 1 and obj["ok"] is False
+    assert [p["missing"] for p in obj["problems"]] == ["path: /packages/stage"]
+    assert "pnpm-lock.yaml:" in err and "git checkout origin/main -- pnpm-lock.yaml" in err
+    (repo / "pnpm-lock.yaml").write_text(GOOD)
+    code, obj, _ = talk(repo, "lock", env=env)
+    assert code == 0 and obj["ok"] is True and obj["problems"] == []
+
+
+def test_the_deploy_workflow_checks_the_lockfile_before_any_build():
+    wf = (ROOT / ".github" / "workflows" / "deploy.yml").read_text()
+    plan, rest = wf.split("\n  build:\n", 1)
+    assert "python3 scripts/talk.py lock" in plan        # in the plan job, which every build needs
+    assert "python3 scripts/talk.py lock" not in rest
+    assert plan.index("python3 scripts/talk.py lock") < plan.index("id: talks")
+    assert "needs: plan" in rest.split("\n  assemble:\n", 1)[0]
