@@ -20,13 +20,19 @@
 - The organisers' ask: real stories over conference talks; you don't need to
   know now what you will be; notice what interests you and dig; what working
   on questions with no textbook answer is like.
-- Delivery (owner, 2026-10-08, replaces the earlier broadcast brief): **a
-  private event delivered online, not TV.** No TV safe area, logo corners,
-  `safe` check, Delfi questions, per-slide MP4s for a broadcaster or a
-  2.5 Mbit/s gate. Keep: type readable on a laptop or a classroom
-  projector showing a stream, and no ultra-fine dust that video
-  compression smears. The normal stage look is allowed again. No sources
-  on slides and no reference lists required; facts must still be true.
+- Delivery (owner, 21 Oct, through the Scheduler: "15min talk, will be
+  recorded in a studio with good quality"): **a studio recording of good
+  quality**, filmed at Delfi on 26 Oct and streamed to classrooms on 27 Oct.
+  The broadcast path in full (skill talk-broadcast): `broadcast: true` in the
+  headmatter, so `talk ready` runs the safe-area check; per-slide MP4s and
+  text-free plates at the studio's frame and rate (`talk record --plates`,
+  Friday on v0.8.2); the stills PDF with cue lines, `credits.txt`, the source
+  clips; the venue zip (`pnpm venue`) as the fallback copy. Open with the
+  owner (asked 21 Oct): the frame and rate (1080p50 or 2160p), how the deck is
+  fed (a screen capture of the laptop or files), and the rest of the
+  broadcaster's list. The 8 Oct "not TV" meant no broadcast channel; it
+  replaced the earlier TV brief and is itself replaced by this. Kept from
+  then: the stage look, no sources on slides; facts must still be true.
 - Owner's steers: "doesn't have to be my life story"; the first version was
   rejected for too many slides, AI-sounding lines and a broken story; the
   second for incoherent flow and washed-out visuals ("more striking but not
@@ -822,18 +828,10 @@ purpose).
 
 ## Figures and open items (for the speaker)
 
-0. (21 Oct) TV or online? The Brief says a private online event since 8 Oct
-   (no safe area, no per-slide MP4s); the Scheduler's 21 Oct brief says the
-   broadcast skill, the safe area and per-slide MP4s "as before". Asked in the
-   15-min proposal; the per-slide MP4s are planned for Friday either way.
-   Until the owner answers (the Scheduler, 21 Oct): "not TV" meant no
-   broadcast channel; the deck is still recorded in the Delfi studio, so
-   prepare as a studio recording: the safe-area check and per-slide MP4s on
-   Friday.
-
-The owner's list after the 15 and 18 Oct rounds, each a yes/no or a fact only they
-have (the AFK default is built and deployed; each has an undo under Decisions):
-
+0. ~~TV or online?~~ Answered 21 Oct: "15min talk, will be recorded in a
+   studio with good quality" (Brief, Delivery). Still open: the studio's
+   frame and rate, how the deck is fed, who advances, sound, their logo and
+   supers corners, a flash check.
 1. ~~The cover's title~~ Answered 16 Oct: "Don't call it 'vadovelio gale
    atsakymo nera' don't need that". The name line stays (the Scheduler's
    reading); say if the cover should go too.

@@ -21,6 +21,7 @@ stage:
   options: { dustSize: 2.2, reach: 22, nebula: 0.12, grain: 0.012, aberration: 0, vignette: 0.7, bloom: 0.42 }   # OpenData's look: deep, crisp, not hazy
 title: Kas vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po žeme
 duration: 10min
+broadcast: true            # a studio recording (owner, 21 Oct): talk ready runs the safe-area check, talk record the broadcast rules
 sources: notes
 info: |
   „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement): a Lithuanian
