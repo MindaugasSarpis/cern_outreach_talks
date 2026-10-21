@@ -792,37 +792,56 @@ def upcoming(talk: str, today: dt.date | None = None) -> bool:
 SKIP_DIRS = {"node_modules", "dist", "dist-portable", "shots", ".scratch", ".wf", ".git"}
 
 
-def fingerprint(root: Path, talk: str, skip=None) -> str:
-    """What a build depends on, by path, size and mtime: the talk, theme, components, lockfile.
-    `skip(relative path)` leaves files out."""
-    h = hashlib.sha1()
+def talk_files(root: Path, talk: str, skip=None):
+    """The files a build reads, as (path relative to root, path), in a fixed order: the talk, theme
+    and components trees (the talk's components symlink is not followed), then the root lockfile and
+    package.json. `skip(relative path)` leaves files out."""
     for base in (root / "talks" / talk, root / "theme", root / "components"):
-        for dirpath, dirnames, filenames in os.walk(base):      # the talk's components symlink is not followed
+        for dirpath, dirnames, filenames in os.walk(base):
             dirnames[:] = sorted(d for d in dirnames if d not in SKIP_DIRS)
             for f in sorted(filenames):
                 p = Path(dirpath) / f
                 rel = p.relative_to(root)
-                if skip and skip(rel):
-                    continue
-                try:
-                    st = p.lstat()
-                except OSError:
-                    continue
-                h.update(f"{rel}\0{st.st_size}\0{st.st_mtime_ns}\n".encode())
+                if not (skip and skip(rel)):
+                    yield rel, p
     for f in ("pnpm-lock.yaml", "package.json"):
+        yield Path(f), root / f
+
+
+def fingerprint(root: Path, talk: str, skip=None) -> str:
+    """What a build depends on, by path, size and mtime (the build cache: the same machine and
+    checkout, so a touch is as good as a change and no file is read)."""
+    h = hashlib.sha1()
+    for rel, p in talk_files(root, talk, skip):
         try:
-            st = (root / f).stat()
-            h.update(f"{f}\0{st.st_size}\0{st.st_mtime_ns}\n".encode())
+            st = p.lstat() if len(rel.parts) > 1 else p.stat()
         except OSError:
-            pass
+            continue
+        h.update(f"{rel}\0{st.st_size}\0{st.st_mtime_ns}\n".encode())
     return h.hexdigest()
 
 
 def plates_fingerprint(root: Path, talk: str) -> str:
-    """fingerprint() less what `record --plates` writes itself (the plates, plates.json, the
-    manifest): what the plates show, so a take stays current until the talk changes."""
+    """What the plates show, by path, size and content: a take is committed, and must stay current
+    in another checkout, after a merge or a pull, where every mtime is new and no byte is. Left out:
+    public/videos* (the clips, which no plate shows, and the plates themselves) and what `record
+    --plates` writes (plates.json, the manifest). The stills stay in: a plate drifts over its own."""
     own = {Path("talks", talk, "videos", "plates.json"), Path("talks", talk, "videos", "manifest.toml")}
-    return fingerprint(root, talk, skip=lambda rel: rel in own or bool(PLATE_RE.match(rel.name)))
+    public = ("talks", talk, "public")
+
+    def skip(rel: Path) -> bool:
+        return (rel in own or bool(PLATE_RE.match(rel.name))
+                or (rel.parts[:3] == public and len(rel.parts) > 4 and rel.parts[3].startswith("videos")))
+    h = hashlib.sha1()
+    for rel, p in talk_files(root, talk, skip):
+        try:
+            with open(p, "rb") as f:
+                digest = hashlib.file_digest(f, "sha1").hexdigest()
+                size = os.fstat(f.fileno()).st_size
+        except OSError:
+            continue
+        h.update(f"{rel}\0{size}\0{digest}\n".encode())
+    return h.hexdigest()
 
 
 def build_dir(talk: str) -> Path:
@@ -1666,38 +1685,57 @@ def plate_name(no: int) -> str:
     return f"{int(no):02d}-plate.mp4"
 
 
+def plate_no(name: str) -> int:
+    return int(PLATE_RE.match(name).group(1))
+
+
+def plates_in(d: Path) -> list[str]:
+    """The NN-plate.mp4 in a directory, by slide number (lexical order would put 100 before 11)."""
+    return sorted((p.name for p in d.glob("*-plate.mp4") if PLATE_RE.match(p.name)), key=plate_no)
+
+
 def plates_step(repo: Repo, talk: str, strict: bool = False) -> dict:
-    """ready's plates step: every plate of the take in videos/plates.json is local or on the talk's
-    videos release, the take is current (the talk's fingerprint), the sizes are within budget. Each
-    miss is a warning (a re-record takes an hour); --strict-plates makes them fail the step."""
+    """ready's plates step: every plate of the take in videos/plates.json is on the talk's videos
+    release (a Pages build has no public/videos: a plate that is only local is not there, and the
+    stage shows the living still) or at least local, the take is current (the talk's fingerprint),
+    the sizes are within budget. Each miss is a warning (a re-record takes an hour); --strict-plates
+    makes them fail the step."""
     d = repo.here / "talks" / talk
     pj = d / "videos" / "plates.json"
     if not pj.exists():
         return step("plates", None, d, skip="no plates")
-    OUT.say("-- plates (each local or on the release, the take current, within budget)")
+    OUT.say("-- plates (each on the release or local, the take current, within budget)")
     take = read_json(pj)
-    if not take.get("slides"):
-        return {"name": "plates", "ok": False, "error": "videos/plates.json is unreadable or lists no slides"}
-    names = [plate_name(n) for n in take["slides"]]
+    slides = take.get("slides") if isinstance(take.get("slides"), list) else []
+    names = [plate_name(n) for n in slides if isinstance(n, int)]
+    warnings: list[str] = []
+    if not names:       # a merge's conflict markers, a hand edit: a warning like the rest, the file state named
+        warnings.append("videos/plates.json is unreadable or lists no slides (a merge conflict, a hand edit?): "
+                        f"restore it from the last take, or pnpm talk record {wt_slug(talk)} --plates")
     dest = d / "public" / "videos"
     local = {n: (dest / n).stat().st_size for n in names if (dest / n).is_file()}
-    warnings: list[str] = []
     released: dict[str, int] = {}
+    unpublished: list[str] = []
     missing = [n for n in names if n not in local]
-    if missing:
-        repo_name, tag = videos_release(repo.here, d)
-        assets = release_assets(repo_name, tag, d)
-        if assets is None:
-            warnings.append(f"{len(missing)} plate(s) not local, and release {tag} could not be listed (gh)")
-        else:
-            released = {n: assets[n] for n in missing if n in assets}
-            warnings += [f"{n}: not local, not on release {tag} (pnpm talk record {wt_slug(talk)} --plates, then publish)"
-                         for n in missing if n not in assets]
-    stale = take.get("fingerprint") != plates_fingerprint(repo.here, talk)
+    repo_name, tag = videos_release(repo.here, d)
+    assets = release_assets(repo_name, tag, d) if names else {}
+    if assets is None and missing:
+        warnings.append(f"{len(missing)} plate(s) not local, and release {tag} could not be listed (gh)")
+    elif assets is None:
+        warnings.append(f"release {tag} could not be listed (gh): whether the {len(local)} local plate(s) are on it is unknown")
+    else:
+        released = {n: assets[n] for n in missing if n in assets}
+        unpublished = [n for n in names if n in local and n not in assets]
+        for n in names:
+            if n in unpublished:
+                warnings.append(f"{n}: local only, not on release {tag} (pnpm videos:publish --only {n})")
+            elif n in missing and n not in assets:
+                warnings.append(f"{n}: not local, not on release {tag} (pnpm talk record {wt_slug(talk)} --plates, then publish)")
+    stale = bool(names) and take.get("fingerprint") != plates_fingerprint(repo.here, talk)
     if stale:
         warnings.append(f"stale: the talk changed since the plates were recorded (pnpm talk record {wt_slug(talk)} --plates)")
     recorded = take.get("bytes") if isinstance(take.get("bytes"), dict) else {}
-    sizes = {n: local.get(n) or released.get(n) or int(recorded.get(n) or 0) for n in names}
+    sizes = {n: local[n] if n in local else released[n] if n in released else int(recorded.get(n) or 0) for n in names}
     warnings += [f"{n}: {sizes[n] / MB:.1f} MB, over the {PLATE_MB} MB a plate may take" for n in names if sizes[n] > PLATE_MB * MB]
     total = sum(sizes.values())
     if total > PLATES_MB * MB:
@@ -1707,6 +1745,9 @@ def plates_step(repo: Repo, talk: str, strict: bool = False) -> dict:
     ok = not (strict and warnings)
     res = {"name": "plates", "ok": ok, "slides": len(names), "local": len(local), "released": len(released),
            "stale": stale, "bytes": sizes, "warnings": warnings}
+    if unpublished:
+        res["publish"] = f"pnpm videos:publish --only {' '.join(unpublished)}"
+        OUT.say(f"   to put the local plates on the release, in talks/{talk}: {res['publish']}")
     if not ok:
         res["error"] = f"{len(warnings)} warning{'s' if len(warnings) != 1 else ''} (--strict-plates)"
     return res
@@ -1849,7 +1890,7 @@ def plates_block(names: list[str], fps, hold) -> str:
     """The manifest's [[videos]] entries for the plates, between markers write_plates_block replaces."""
     lines = [PLATES_BEGIN]
     for n in names:
-        no = int(PLATE_RE.match(n).group(1))
+        no = plate_no(n)
         lines += ["", "[[videos]]", f'name      = "{n}"', 'profile   = "remux"', f'used_in   = ["slide {no}"]',
                   "generated = true",
                   f'notes     = "the world of slide {no} alone, recorded by slidev-stage-record at 1080p{fps} with a '
@@ -1868,18 +1909,53 @@ def write_plates_block(manifest: Path, names: list[str], fps, hold) -> None:
     manifest.write_text(text, encoding="utf-8")
 
 
+def videos_cli_knows_generated(env: dict) -> str:
+    """The slidev-videos on PATH (the env's editable install, the one every session and ready's
+    videos:check run) must know `generated = true` manifest entries, or it reports the plates block
+    UNUSED MANIFEST and fails ready and deploy. Asked on a scratch project with one such entry: a CLI
+    that knows them answers `check --json` with a `generated` list. The CLI's path, or a UsageError."""
+    sv = which("slidev-videos", env)
+    if not sv:
+        raise UsageError("slidev-videos is not installed (the env's editable CLI, SLIDEV_VIDEOS_DIR): the plates reach "
+                         "the release and the venue zip through its publish and pull")
+    with tempfile.TemporaryDirectory(prefix="talk-plates-probe-") as tmp:
+        scratch = Path(tmp)
+        (scratch / "videos.toml").write_text('[defaults]\nrelease_tag = "videos-probe"\n', encoding="utf-8")
+        (scratch / "public" / "videos").mkdir(parents=True)
+        (scratch / "public" / "videos" / "03-plate.mp4").touch()         # local, so no release is asked
+        write_plates_block(scratch / "videos" / "manifest.toml", ["03-plate.mp4"], PLATE_FPS, PLATE_HOLD)
+        try:
+            r = run([sv, "check", "--json", "--project", scratch], cwd=scratch, env=env, capture=True, quiet=True, timeout=60)
+            answer = json.loads(r.stdout)
+        except (subprocess.TimeoutExpired, ValueError):
+            answer = None
+    if not (isinstance(answer, dict) and isinstance(answer.get("generated"), list)):
+        raise UsageError(f"the slidev-videos on PATH ({sv}) does not know generated manifest entries: its check "
+                         "would fail ready and deploy on the plates block. Install the toolkit release that carries "
+                         "the live fallback in the env's editable checkout (SLIDEV_VIDEOS_DIR) first", cli=sv)
+    return sv
+
+
 def record_plates(repo: Repo, talk: str, a, extra: list) -> tuple[int, dict]:
     """record --plates: the world alone for every non-clip slide (the recorder's --plate-only, at
     1080p25 with a 20 s hold unless the args after -- say otherwise) into $TALK_TMP/talk-<slug>/plates,
     copied to public/videos/NN-plate.mp4 (gitignored; local first in dev and the venue build, else the
     talk's videos release). videos/plates.json records the take for ready; the manifest's plates block
     carries the files through videos:publish, pull, venue and preflight. A take without --slides
-    replaces the last one, plates of slides that are gone included."""
+    replaces the last one, plates of slides that are gone included; a take with --slides adds its
+    plates to those in public/videos/, which both files then list in full (the recorder's out dir
+    holds this take alone, and $TALK_TMP does not survive a reboot)."""
     d = repo.here / "talks" / talk
+    b = stage_bin("record", d)
+    if b and not supports(b, "--plate-only"):
+        raise UsageError(f"this slidev-stage-record has no --plate-only ({b}): pin the talk to the release that carries "
+                         f"the live fallback (pnpm talk pin {wt_slug(talk)} <tag>), or SLIDEV_STAGE_BIN")
+    videos_cli_knows_generated(tool_env())
     out = (invocation_dir() / a.out).resolve() if a.out else build_dir(talk) / "plates"
     given = {x.split("=")[0] for x in extra}
     args = [] if "--plate-only" in given else ["--plate-only"]
-    for flag, default in (("--fps", PLATE_FPS), ("--hold", PLATE_HOLD)):
+    # --clicks none: the stage plays NN-plate.mp4 alone, never the recorder's NN-cK-plate.mp4 of a click
+    for flag, default in (("--fps", PLATE_FPS), ("--hold", PLATE_HOLD), ("--clicks", "none")):
         if flag not in given:
             args += [flag, str(default)]
     full = "--slides" not in given
@@ -1891,30 +1967,31 @@ def record_plates(repo: Repo, talk: str, a, extra: list) -> tuple[int, dict]:
     data["out"] = str(out)
     if code:
         return code, data
-    names = sorted(p.name for p in out.glob("*-plate.mp4") if PLATE_RE.match(p.name))
-    if not names:
+    taken = plates_in(out)
+    if not taken:
         data["error"] = f"the recorder wrote no NN-plate.mp4 into {out}"
         OUT.say(f"error: {data['error']}")
         return 1, data
     dest = d / "public" / "videos"
     dest.mkdir(parents=True, exist_ok=True)
-    for n in names:
+    for n in taken:
         shutil.copy2(out / n, dest / n)
     if full:
-        for p in dest.glob("*-plate.mp4"):
-            if PLATE_RE.match(p.name) and p.name not in names:
-                p.unlink()
+        for n in plates_in(dest):
+            if n not in taken:
+                (dest / n).unlink()
+    names = plates_in(dest)         # what the talk has now: this take, and the earlier plates a partial take keeps
     fps, hold = number(flag_value(extra, "--fps"), PLATE_FPS), number(flag_value(extra, "--hold"), PLATE_HOLD)
     take = {"fingerprint": plates_fingerprint(repo.here, talk), "fps": fps, "hold": hold,
-            "slides": [int(PLATE_RE.match(n).group(1)) for n in names], "bytes": {n: (dest / n).stat().st_size for n in names}}
+            "slides": [plate_no(n) for n in names], "bytes": {n: (dest / n).stat().st_size for n in names}}
     (d / "videos").mkdir(exist_ok=True)
     (d / "videos" / "plates.json").write_text(json.dumps(take, indent=2) + "\n", encoding="utf-8")
     write_plates_block(d / "videos" / "manifest.toml", names, fps, hold)
-    publish = f"pnpm videos:publish --only {' '.join(names)}"
-    data.update(plates=names, copied=str(dest), fps=fps, hold=hold, publish=publish,
+    publish = f"pnpm videos:publish --only {' '.join(taken)}"
+    data.update(plates=names, taken=taken, copied=str(dest), fps=fps, hold=hold, publish=publish,
                 bytes=sum(take["bytes"].values()))
-    OUT.say(f"{len(names)} plate(s), {data['bytes'] / MB:.1f} MB, in {dest}; videos/plates.json and the manifest's "
-            f"plates block written (commit them). To put them on the release, in talks/{talk}:")
+    OUT.say(f"{len(taken)} plate(s) recorded, {len(names)} in {dest} ({data['bytes'] / MB:.1f} MB); videos/plates.json "
+            f"and the manifest's plates block written (commit them). To put this take on the release, in talks/{talk}:")
     OUT.show(f"{'publish':<14} {publish}")
     return 0, data
 
