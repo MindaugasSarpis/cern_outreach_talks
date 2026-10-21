@@ -91,6 +91,17 @@ async function waitStage(id) {
   return null
 }
 const later = (ms, fn) => timers.push(setTimeout(fn, ms))
+// v0.8.2's plate layer (html[data-stage-layer="plate"], set with the `slidev-stage:fallback`
+// event): no world, but this slide's recorded plate plays under it, its first seconds this
+// still turning to grains. The still fades as it does over the world, and the word comes when
+// the plate's camera stops (the path's last key + wordAfter, on the wall clock: cameraRate 1).
+// Under the `living` and `still` layers (no plate) the still stays, with the word. Older
+// stages never set the attribute.
+const plated = () => document.documentElement.dataset.stageLayer === 'plate'
+function pathEnd() {
+  const sp = $frontmatter?.value?.space ?? $frontmatter?.space
+  return Math.max(0, ...(sp?.path || []).map(([t]) => Number(t) || 0))
+}
 const clear = () => { timers.forEach(clearTimeout); timers = []; clearInterval(watcher); watcher = 0; offCross?.(); offCross = null }
 
 const A = new Vector3(...props.anchor)
@@ -163,6 +174,12 @@ async function takeOver() {
   // behind the still: their buffers upload and programs compile now, not mid pull-back
   dispatchEvent(new Event('innoday:prewarm'))
   later(props.wordBy * 1000, () => { if (id === run) word.value = true })
+  if (plated()) {
+    later(props.hold, () => { if (id === run) fading.value = true })
+    later(props.hold + props.fade, () => { if (id === run) still.value = false })
+    later((pathEnd() + props.wordAfter) * 1000, () => { if (id === run) word.value = true })
+    return
+  }
   const s = await waitStage(id)
   const got = s ? await load() : null
   if (id !== run || !live.value) return
@@ -250,6 +267,8 @@ onSlideLeave(() => {
   if (nav.currentSlideNo?.value === page() + 1) endState(stage(), p)
   else { stopCollision(); emblems(0) }
 })
+// the plate layer can come after the slide's arrival (the stage decides its fallback late)
+const onFallback = () => { if (live.value && plated() && nav.currentSlideNo?.value === page()) takeOver() }
 const onRebuilt = () => {
   if (!live.value) return
   const n = nav.currentSlideNo?.value
@@ -259,10 +278,11 @@ const onRebuilt = () => {
 }
 onMounted(() => {
   window.addEventListener('slidev-stage:rebuilt', onRebuilt)
+  window.addEventListener('slidev-stage:fallback', onFallback)
   // opened at this slide (a reload, or the deck started here): no slide-enter comes
   if (live.value && nav.currentSlideNo?.value === page()) takeOver()
 })
-onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); run++; clear() })
+onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); window.removeEventListener('slidev-stage:fallback', onFallback); run++; clear() })
 // the grains are drawn here and on the credits page after it, hidden everywhere else
 watch(() => nav.currentSlideNo?.value, (n) => {
   if (!live.value) return

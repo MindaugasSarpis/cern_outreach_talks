@@ -30,6 +30,7 @@ const url = computed(() => (props.src.startsWith('/') || /^https?:/.test(props.s
 const live = computed(() => $renderContext?.value === 'slide')
 const root = ref(null)
 const still = ref(true)          // the still frame shows until the world can take over
+const fading = ref(false)        // … or until the plate does (below)
 const overlay = ref(null)        // the dissolving copy, fixed over the slide
 const box = ref({ left: 0, top: 0, width: 0, height: 0 })
 
@@ -67,9 +68,16 @@ async function waitStage(id) {
   return null
 }
 
+// v0.8.2's plate layer (html[data-stage-layer="plate"], set with the `slidev-stage:fallback`
+// event): no world, but this slide's recorded plate plays under it, from this same frame
+// dissolving into grains: the still goes at once, as it does under the world's copy. Under the
+// `living` and `still` layers (no plate) it stays. Older stages never set the attribute.
+const plated = () => document.documentElement.dataset.stageLayer === 'plate'
+
 async function takeOver() {
   const id = ++run
-  still.value = true
+  still.value = true; fading.value = false
+  if (plated()) { requestAnimationFrame(() => { if (id === run) fading.value = true }); return }
   const s = await waitStage(id)
   const image = await ready
   if (id !== run || !s || !image || !live.value) return
@@ -180,8 +188,11 @@ onSlideEnter(() => { if (live.value) takeOver() })
 // a new world (the stage rebuilds after a lost WebGL context) has no grains of the web: on
 // this slide, take over again
 const onRebuilt = () => { if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver() }
+// the plate layer can come after the slide's arrival (the stage decides its fallback late)
+const onFallback = () => { if (plated()) onRebuilt() }
 onMounted(() => {
   window.addEventListener('slidev-stage:rebuilt', onRebuilt)
+  window.addEventListener('slidev-stage:fallback', onFallback)
   if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver()
 })
 onSlideLeave(() => {
@@ -193,7 +204,7 @@ onSlideLeave(() => {
   const p = stage()?.h.scene.getObjectByName('takeover-web')
   if (p) p.material.uniforms.uReveal.value = 1
 })
-onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); run++; cancelAnimationFrame(raf); releaseGl() })
+onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); window.removeEventListener('slidev-stage:fallback', onFallback); run++; cancelAnimationFrame(raf); releaseGl() })
 // The funnel does not exist before the web's grains make it (owner, 13 Oct: not
 // floating on the cover): hidden on every slide before this one, hidden here (takeOver),
 // made on the step from here to the next slide (the prologue), whole on any other
@@ -222,7 +233,7 @@ watch(() => nav.currentSlideNo?.value, (n) => {
 
 <template>
   <div ref="root" class="web-takeover">
-    <img v-if="still" class="takeover-still" :src="url" alt="Paskutinis įžanginio vaizdo klipo kadras" />
+    <img v-if="still" class="takeover-still" :class="{ fading }" :src="url" alt="Paskutinis įžanginio vaizdo klipo kadras" />
     <Teleport to="body">
       <canvas v-if="live" :key="gen" ref="overlay" class="takeover-copy" aria-hidden="true"
         :style="{ left: box.left + 'px', top: box.top + 'px', width: box.width + 'px', height: box.height + 'px' }"></canvas>
@@ -232,6 +243,8 @@ watch(() => nav.currentSlideNo?.value, (n) => {
 
 <style>
 .web-takeover { position: absolute; inset: 0; pointer-events: none; }
-.web-takeover .takeover-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.web-takeover .takeover-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
+.web-takeover .takeover-still.fading { opacity: 0; }
+html.print .web-takeover .takeover-still { opacity: 1; }
 .takeover-copy { position: fixed; z-index: 40; pointer-events: none; opacity: 0; transition: opacity 0.35s ease; }
 </style>
