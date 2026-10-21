@@ -106,13 +106,23 @@ used_in = ["deck"]
 notes   = """\
 The close (owner, 19 Oct: "photorealistic 3D rendering of SciFi light \
 injection system, then "laser" inscribe Lithuanian flag on it"; "LIS coldbox \
-with the flag"; 20 Oct: "do the Lithuanian flag at the bottom of scifi"): a \
-SciFi module's lower readout end with its light injection system, the laser \
-writing the flag on the cold box, 10 s, silent, played once (not looped: the \
-profile only drops the audio). Rendered by hero/lis_scene.py --end bottom \
-(Blender 4.5 LTS, Cycles) after the owner's SciFi drawing until the CAD \
-arrives; the frames were joined with ffmpeg (H.264, 25 fps); the raw is \
-that output, not on gdrive. Its last frame is public/figures/lis_last.jpg, \
+with the flag"; 20 Oct: "do the Lithuanian flag at the bottom of scifi"; \
+21 Oct: "show the full SciFi module panning slowly (a long scifi sheet) and \
+then on the bottom I indicate the light injection system"): 20 s (500 frames \
+at 25 fps), silent, played once (not looped: the profile only drops the \
+audio). 0-7.2 s the whole SciFi module (2 x 2.4 m of fibre mats, both readout \
+ends) seen from below its lower end on a 70-degree lens, the camera panning \
+slowly down it and in to the lower readout end (lens to 50 degrees); 6.6-10 s \
+it holds there while the two light injection boards get a soft light-blue \
+(#9cc4ff) outline glow, no text (one fade in and out, nothing flashing); \
+10-20 s the 19-20 Oct clip unchanged: in to the cold box, the laser writing \
+the flag (12.2-17.6 s), the same last frame. Rendered by hero/lis_scene.py \
+--end bottom (Blender 4.5 LTS, Cycles, 160 samples, CUDA on the RTX 5080; \
+21 Oct) after the owner's SciFi drawing until the CAD arrives; the frames \
+were joined with ffmpeg (H.264 CRF 12, 25 fps); the raw is that output, \
+not on gdrive. Its last frame is public/figures/lis_last.jpg (the new \
+render's frame 500 is the 10 s clip's frame 250: PSNR 64 dB between the \
+two renders, 46.5 dB against the JPEG; the web encode, 3.3 MB, 42.5 dB), \
 which <LisTakeover> on „Ačiū“ turns into grains in depth \
 (lis_last.depth.png, setup/data/lis.json)."""
 

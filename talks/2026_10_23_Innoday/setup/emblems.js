@@ -9,11 +9,18 @@
 //     alpha marks its grains and its colours are theirs), grains?: 26000, size?: 1.2, alpha?: 0.85,
 //     wave?: 0 (units: the flag's flutter), scrim?: 0 (a soft dark ground behind it, its
 //     strength: over the detector's grains it keeps the emblem legible), keep?: 0.25 (an image pixel's darkness-or-colour
-//     to become a grain), tint?: { '#rrggbb': '#rrggbb' } (an image colour shown as another) }
+//     to become a grain), tint?: { '#rrggbb': '#rrggbb' } (an image colour shown as another),
+//     reflect?: [v, gain] (an image's mirrored reflection from v of its height down: dimmed),
+//     far?: { screen: [x, y], depth, width, pos, yaw, pitch, scrim? } (where it rides to over the
+//     close's pull-out to the ring, `zoom.b` of the `ring` object: across the screen, from where
+//     its place over the detector is seen to `screen` in the last frame (x, y from -1 to 1),
+//     `depth` units from the camera, turning to face it, so it never leaves the frame; its
+//     grains grow with it, so they keep their size on screen. `pos`, `yaw`, `pitch`: the same
+//     place in the world, used without a camera) }
 // Steps from <Grains> or setGrains(name, k): 1 gathers it (2.6 s), 0 lets it fade; `of`
 // follows another name's steps instead (the person beside LHCb: the detector's).
 // Also a person for scale: { type: emblem, src: 'figures/person_grains.png', mode: alpha, of: det }
-import { BufferGeometry, BufferAttribute, Points, Group, Color, NormalBlending, AdditiveBlending, ShaderMaterial, Mesh, PlaneGeometry, MeshBasicMaterial, CanvasTexture } from 'three'
+import { BufferGeometry, BufferAttribute, Points, Group, Color, NormalBlending, AdditiveBlending, ShaderMaterial, Mesh, PlaneGeometry, MeshBasicMaterial, CanvasTexture, Vector3 } from 'three'
 import { PLACE, listen, state, material as materialOf } from './detector.js'
 import { places } from './afterCover.js'
 
@@ -110,17 +117,29 @@ async function imageGrains(url, n, w, o) {
     let best = null, bd = 0.12
     for (const [a, b] of tints) { const d = Math.hypot(col.r - a.r, col.g - a.g, col.b - a.b); if (d < bd) { bd = d; best = b } }
     if (best) col = best
+    // the logo's mirrored reflection, below `reflect[0]` of the height, fading from
+    // reflect[1] of the letters' light (at full strength it read as a second, upside-down logo)
+    if (o.reflect && v > o.reflect[0]) col.multiplyScalar((o.reflect[1] ?? 0.35) * Math.max(0, 1 - (v - o.reflect[0]) / (1 - o.reflect[0])) ** 1.5)
     out.col.set([col.r, col.g, col.b], k * 3)
     out.u[k] = u
   }
   return out
 }
 
+// the stage's camera (its canvas's handle), for the emblems' ride over the ring's pull-out
+let camRef = null, camCanvas = null
+function cameraOf() {
+  if (!camCanvas?.isConnected) { camCanvas = document.querySelector('.stage canvas'); camRef = null }
+  return (camRef ||= camCanvas?.__space?.composer?.passes?.[0]?.camera || null)
+}
+const vn = new Vector3(), fwd = new Vector3()
+
 function buildEmblem(o, ctx) {
   const g = new Group()
   const P = o.pos || [0, 0, 0]
   g.position.set(P[0] || 0, P[1] || 0, P[2] || 0)
   g.rotation.set((o.pitch || 0) * Math.PI / 180, (o.yaw || 0) * Math.PI / 180, 0, 'YXZ')
+  if (o.far) g.userData.travel = true   // the ring's zoom moves it, never shrinks it
   const w = o.width ?? 4, n = Math.round((o.grains ?? 26000) * Math.min(1, (ctx.budget || 300000) / 300000) ** 0.5)
   const mat = new ShaderMaterial({
     // `blend: 'add'` adds the grains on as the world's are (the person: light among the grains)
@@ -193,6 +212,37 @@ function buildEmblem(o, ctx) {
         const off = u.uHide.value > 1e8 ? 1 : Math.max(0, 1 - (t - u.uHide.value))
         scrim.material.opacity = o.scrim * on * off
       }
+      if (o.far) {
+        // ride from its place over the detector to its place over the ring, in the camera's
+        // view: its place on screen, its depth and its size on screen each go from what the
+        // one would show to what the other will (a straight line in the world took it out
+        // of the top of the frame as the camera rose)
+        const b = zoom.b, e = b * b * b * (b * (b * 6 - 15) + 10), F = o.far, lp = (a, c) => a + (c - a) * e
+        const fp = F.pos || P, fw = F.width ?? w
+        let sc = lp(1, fw / w)
+        g.position.set(lp(P[0] || 0, fp[0]), lp(P[1] || 0, fp[1]), lp(P[2] || 0, fp[2]))
+        g.rotation.set(lp(o.pitch || 0, F.pitch ?? o.pitch ?? 0) * Math.PI / 180, lp(o.yaw || 0, F.yaw ?? o.yaw ?? 0) * Math.PI / 180, 0, 'YXZ')
+        const cam = b > 0 && F.screen && g.parent ? cameraOf() : null
+        if (cam) {
+          // F.screen: its middle's place in the last frame (x, y from -1 to 1), F.depth: its
+          // distance there; facing the camera (parallel to the frame) by the end
+          const base = g.parent.position
+          vn.set(P[0] || 0, P[1] || 0, P[2] || 0).add(base).applyMatrix4(cam.matrixWorldInverse)
+          const zn = -vn.z, zf = F.depth ?? 110, th = Math.tan(cam.fov * Math.PI / 360)
+          if (zn > 0.5) {
+            const z = Math.exp(lp(Math.log(zn), Math.log(zf)))
+            const x = lp(vn.x / zn, F.screen[0] * th * cam.aspect), y = lp(vn.y / zn, F.screen[1] * th)
+            g.position.set(x * z, y * z, -z).applyMatrix4(cam.matrixWorld).sub(base)
+            sc = Math.exp(lp(Math.log(w / zn), Math.log(fw / zf))) * z / w
+            fwd.set(0, 0, -1).transformDirection(cam.matrixWorld)
+            const facePitch = -Math.asin(-fwd.y) * 180 / Math.PI, faceYaw = Math.atan2(-fwd.x, -fwd.z) * 180 / Math.PI
+            g.rotation.set(lp(o.pitch || 0, facePitch) * Math.PI / 180, lp(o.yaw || 0, faceYaw) * Math.PI / 180, 0, 'YXZ')
+          }
+        }
+        g.scale.setScalar(sc)
+        u.uSize.value = (o.size ?? 1.2) * sc
+        if (scrim && F.scrim != null) scrim.material.opacity *= lp(1, F.scrim / (o.scrim || 1))
+      }
       if (warm > 0) warm--
       g.visible = u.uT0.value < 1e8 || warm > 0   // a few frames drawn hidden first (innoday:prewarm): upload and compile ahead
     },
@@ -206,12 +256,13 @@ function buildEmblem(o, ctx) {
 //   { type: floor, name, of?: 'det', pos, area?: [32, 28], step?: 2, grains?: 18000, size?: 1.4, color?, alpha?: 0.9 }
 const FLOOR_VERT = PLACE + /* glsl */ `
 attribute float aSeed, aFall;
-uniform float uShowT, uAlpha, uSize;
+uniform float uShowT, uAlpha, uSize, uDim;
 uniform vec3 uColor;
 void main() {
   if (uShowT > 1e8) { hide(); return; }
   float a = uAlpha * smoothstep(0.0, 2.0, uTime - uShowT) * aFall * (0.6 + 0.4 * hash(aSeed * 7.0));
-  place(position, uSize, a, uColor, aSeed);
+  cover = 1.0;
+  place(position, uSize, a * uDim, uColor, aSeed);
 }`
 function buildFloor(o, ctx) {
   const g = new Group()
@@ -239,7 +290,7 @@ function buildFloor(o, ctx) {
   geo.setAttribute('position', new BufferAttribute(pos, 3))
   geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
   geo.setAttribute('aFall', new BufferAttribute(fall, 1))
-  const mat = materialOf(FLOOR_VERT, { uShowT: { value: 1e9 }, uAlpha: { value: o.alpha ?? 0.9 }, uSize: { value: o.size ?? 1.4 }, uColor: { value: new Color(o.color || '#7f9fd8') } })
+  const mat = materialOf(FLOOR_VERT, { uShowT: { value: 1e9 }, uDim: { value: 1 }, uAlpha: { value: o.alpha ?? 0.9 }, uSize: { value: o.size ?? 1.4 }, uColor: { value: new Color(o.color || '#7f9fd8') } })
   const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts)
   const u = mat.uniforms, of = o.of || 'det'
   let now = 0, step0 = state.get(of) ?? 0, fresh = true
@@ -288,7 +339,7 @@ function buildSupports(o, ctx) {
   geo.setAttribute('position', new BufferAttribute(pos, 3))
   geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
   geo.setAttribute('aFall', new BufferAttribute(fall, 1))
-  const mat = materialOf(FLOOR_VERT, { uShowT: { value: 1e9 }, uAlpha: { value: o.alpha ?? 0.6 }, uSize: { value: o.size ?? 1.2 }, uColor: { value: new Color(o.color || '#6fa4ff') } })
+  const mat = materialOf(FLOOR_VERT, { uShowT: { value: 1e9 }, uDim: { value: 1 }, uAlpha: { value: o.alpha ?? 0.6 }, uSize: { value: o.size ?? 1.2 }, uColor: { value: new Color(o.color || '#6fa4ff') } })
   const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts)
   const u = mat.uniforms, of = o.of || 'det'
   let now = 0, step0 = state.get(of) ?? 0, fresh = true
@@ -305,7 +356,120 @@ function buildSupports(o, ctx) {
   }
 }
 
+// `ring`: the LHC round LHCb for the close's last seconds (owner, 21 Oct: "can show the
+// accelerator as well, so this doesn't look isolated, it's a part of huge infrastructure.
+// Maybe panning out at the very last second to full accelerator and then ačiū appears").
+// A ring of grains through `pos` (the vertex: Point 8), tangent to the beam (x) there, its
+// centre `radius` away along z (`side`: -1, LHCb's -x: LHCb's x points out of the ring),
+// streaming slowly both ways, and a bright mark at Point 8. Not at true scale (27 km against
+// LHCb's 21 m would put the ring past the stage's far plane): a scale cross-fade instead. As
+// the camera goes from `near` to `far` units from Point 8 (the slide's pull-out), the
+// station's other objects shrink toward it (to `shrink` of their size) and fade (to `dimTo`),
+// the ring and the mark fade in, and emblems with `far` ride to their place over the ring
+// (`zoom.b`, 0 → 1 in log distance). Shown with the detector (`of`: 'det'); off, everything
+// is as it was.
+//   { type: ring, name, of?: 'det', pos: [0, 0, 0], radius?: 110, side?: -1, near?: 52, far?: 180,
+//     shrink?: 0.3, dimTo?: 0.06, grains?: 36000, size?: 4.5, alpha?: 0.55, color?, speed?: 0.012,
+//     width?: 0.3, halo?: 0.25 (the share of grains in a glow round the beam), haloWidth?: 3,
+//     mark?: { grains: 400, size: 5, radius: 0.7, alpha: 0.5, color } }
+export const zoom = { b: 0, k: 1 }
+const RING_VERT = PLACE + /* glsl */ `
+attribute vec4 aRing;   // angle, radial offset, height, direction (+1 / -1)
+attribute float aSeed, aMark;
+uniform float uShow, uMark, uAlpha, uSize, uR, uSide, uSpeed, uMarkSize;
+uniform vec3 uColor, uMarkColor;
+void main() {
+  if (uShow <= 0.001 && uMark <= 0.001) { hide(); return; }
+  vec3 p; float a, size; vec3 col;
+  if (aMark > 0.5) {
+    p = aRing.xyz; size = uMarkSize * (0.6 + 0.8 * aSeed); a = uMark * (0.5 + 0.5 * aSeed); col = uMarkColor;
+  } else {
+    float ang = aRing.x + aRing.w * uSpeed * uTime * (0.7 + 0.6 * aSeed);
+    float r = uR + aRing.y;
+    // angle 0 is Point 8 (pos), the ring's centre at (0, 0, uSide·uR)
+    p = vec3(r * sin(ang), aRing.z, uSide * (uR - r * cos(ang)));
+    size = uSize * (0.7 + 0.6 * aSeed); a = uShow * uAlpha * (0.45 + 0.55 * hash(aSeed * 13.0)); col = uColor;
+  }
+  cover = 1.0;
+  place(p, size, a, col, aSeed);
+}`
+function buildRing(o, ctx) {
+  const g = new Group()
+  const P = o.pos || [0, 0, 0]
+  g.position.set(P[0] || 0, P[1] || 0, P[2] || 0)
+  g.userData.travel = true   // never shrunk itself
+  const R = o.radius ?? 110, n = Math.round((o.grains ?? 36000) * Math.min(1, (ctx.budget || 300000) / 300000) ** 0.5)
+  const mk = o.mark || {}, nm = mk.grains ?? 400, N = n + nm
+  const ring = new Float32Array(N * 4), seed = new Float32Array(N), mark = new Float32Array(N)
+  for (let i = 0; i < n; i++) {
+    // a thin beam: most grains on the line, a few in a faint halo round it
+    const halo = Math.random() < (o.halo ?? 0.25)
+    const s = halo ? (o.haloWidth ?? 3) : (o.width ?? 0.3)
+    ring.set([Math.random() * Math.PI * 2, gauss() * s, gauss() * s, Math.random() < 0.5 ? 1 : -1], i * 4)
+    seed[i] = halo ? Math.random() * 0.3 : Math.random()
+  }
+  const mr = mk.radius ?? 0.7
+  for (let i = n; i < N; i++) {
+    ring.set([gauss() * mr, gauss() * mr, gauss() * mr, 0], i * 4)
+    seed[i] = Math.random(); mark[i] = 1
+  }
+  const geo = new BufferGeometry()
+  geo.setAttribute('position', new BufferAttribute(new Float32Array(N * 3), 3))
+  geo.setAttribute('aRing', new BufferAttribute(ring, 4))
+  geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
+  geo.setAttribute('aMark', new BufferAttribute(mark, 1))
+  const mat = materialOf(RING_VERT, {
+    uShow: { value: 0 }, uMark: { value: 0 }, uAlpha: { value: o.alpha ?? 0.55 }, uSize: { value: o.size ?? 4.5 },
+    uR: { value: R }, uSide: { value: o.side ?? -1 }, uSpeed: { value: o.speed ?? 0.012 },
+    uMarkSize: { value: mk.size ?? 5 }, uColor: { value: new Color(o.color || '#9cc4ff') }, uMarkColor: { value: new Color(mk.color || '#ffffff') },
+  })
+  mat.uniforms.uMark.value = 0
+  const markAlpha = mk.alpha ?? 0.5
+  const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts)
+  const u = mat.uniforms, of = o.of || 'det'
+  const near = o.near ?? 52, far = o.far ?? 180, shrink = o.shrink ?? 0.3, dimTo = o.dimTo ?? 0.06
+  let step0 = state.get(of) ?? 0, last = -1, warm = 0
+  const off = listen(of, (k) => { step0 = k })
+  const onWarm = () => { warm = 3 }   // drawn (hidden) a few frames on arrival: compiled and uploaded ahead
+  addEventListener('innoday:prewarm', onWarm)
+  const v = new Vector3(), here = new Vector3()
+  const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t) }
+  // the station's other objects, scaled about Point 8 and faded
+  const apply = (par, k, m) => {
+    for (const c of par.children) {
+      if (c === g || c.userData.travel) continue
+      const z = (c.userData.zoom0 ||= { p: c.position.clone(), s: c.scale.x })
+      c.position.copy(z.p).sub(here).multiplyScalar(k).add(here)
+      c.scale.setScalar(z.s * k)
+      c.traverse((x) => { const un = x.material?.uniforms; if (un?.uDim) un.uDim.value = m })
+    }
+  }
+  return {
+    group: g, labels: [], frameScale: u.uPixelRatio,
+    api: { busy: () => false },
+    update(t, camPos) {
+      u.uTime.value = t
+      const par = g.parent
+      if (!par) return
+      here.copy(g.position)
+      let b = 0
+      if (step0 > 0 && camPos) {
+        v.copy(here).add(par.position)
+        b = Math.min(1, Math.max(0, Math.log(Math.max(camPos.distanceTo(v), 1e-3) / near) / Math.log(far / near)))
+      }
+      zoom.b = b; zoom.k = Math.pow(shrink, b)
+      u.uShow.value = smooth(0.08, 0.55, b)
+      u.uMark.value = markAlpha * smooth(0.3, 0.8, b)
+      if (warm > 0) warm--
+      g.visible = b > 0 || warm > 0
+      if (b !== last) { apply(par, zoom.k, 1 - (1 - dimTo) * smooth(0.15, 0.9, b)); last = b }
+    },
+    dispose() { off(); removeEventListener('innoday:prewarm', onWarm); zoom.b = 0; zoom.k = 1 },
+  }
+}
+
 export function installEmblems(registerBuilder) {
+  registerBuilder('ring', buildRing, { fields: ['pos', 'name'] })
   registerBuilder('supports', buildSupports, { fields: ['name', 'parts'] })
   registerBuilder('emblem', buildEmblem, { fields: ['pos', 'name'] })
   registerBuilder('floor', buildFloor, { fields: ['pos', 'name'] })

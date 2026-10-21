@@ -11,12 +11,17 @@ import CollisionStart from './CollisionStart.vue'
 import ShortHum from './ShortHum.vue'
 import AfterCover from './AfterCover.vue'
 import { armAfterCover } from './afterCover.js'
+// the cover's slow, silent CMS loop (owner, 21 Oct): `cover-collision` and <CoverCollision>
+import { installCoverCollision } from './coverCollision.js'
+import CoverCollision from './CoverCollision.vue'
 import { installOpening } from '../components/lhc-opening/index.js'
 import { installDetector } from './detector.js'
 import { installEmblems } from './emblems.js'
+import { installEurope } from './europe.js'
 import Grains from './Grains.vue'
 import LisTakeover from './LisTakeover.vue'
 import Soundtrack from './Soundtrack.vue'
+import ClipEnd from './ClipEnd.vue'
 // the LHCb event the shared collision draws by default (lhc-opening's own): the
 // close's detector marks the grains its tracks pass through
 import EVENT_LB from '../components/lhc-opening/event.json'
@@ -80,8 +85,10 @@ export default ({ app, router }) => {
   installFunnel(registerBuilder)
   installPlots(registerBuilder)
   installOpening({ app, registerBuilder })
+  installCoverCollision(registerBuilder)   // the cover's loop (setup/coverCollision.js)
   installDetector(registerBuilder, { event: EVENT_LB })
   installEmblems(registerBuilder)   // the close's LHCb logo and Lithuanian flag in grains (setup/emblems.js)
+  installEurope(registerBuilder)   // Part III's map: CERN's threads out to the member states, Lithuania lit (setup/europe.js)
   app.component('Count', Count)
   app.component('Strands', Strands)
   app.component('AfterFlight', AfterFlight)
@@ -90,7 +97,9 @@ export default ({ app, router }) => {
   app.component('CollisionStart', CollisionStart)
   app.component('ShortHum', ShortHum)
   app.component('AfterCover', AfterCover)
+  app.component('CoverCollision', CoverCollision)
   app.component('Grains', Grains)
   app.component('LisTakeover', LisTakeover)
   app.component('Soundtrack', Soundtrack)   // the close's music across its slides
+  app.component('ClipEnd', ClipEnd)   // words over a clip's held last frame (slide 27)
 }
