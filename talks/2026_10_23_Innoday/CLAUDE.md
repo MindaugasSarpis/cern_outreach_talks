@@ -168,6 +168,15 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-21 (night, deployed): the owner wrote "Publish". lis_flag.mp4 (20 s) published
+with --only; `ready` passed with nothing skipped; deployed 3da294a —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ — Pages run
+39645262547 (green), URL 200, the live walk passed. Live: the round below (the close as
+grains to the LHC ring, the CMS cover, the funnel's eras, Europe for Part III, slide 27's
+question, the 20 s light-injection clip, the music at 0,6). The new raw is hard-linked into
+the main checkout's raw bank. Wednesday: the paper count (878 on INSPIRE on 21 Oct), the
+owner's notes if any, then v0.8.2 (pin, plates, ready, redeploy) and the venue zip.
+
 2026-10-21 (night): the round below is built, committed (c1a826e, 7667e69) and pushed on
 talk/innoday, not deployed; the owner has the close's review MP4 (53 s, with the music), the
 new 20 s light-injection clip and stills of the cover, the funnel and Part III. Not yet
