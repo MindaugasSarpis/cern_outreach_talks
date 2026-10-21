@@ -22,6 +22,7 @@ import Grains from './Grains.vue'
 import LisTakeover from './LisTakeover.vue'
 import Soundtrack from './Soundtrack.vue'
 import ClipEnd from './ClipEnd.vue'
+import Drone from './Drone.vue'
 // the LHCb event the shared collision draws by default (lhc-opening's own): the
 // close's detector marks the grains its tracks pass through
 import EVENT_LB from '../components/lhc-opening/event.json'
@@ -102,4 +103,5 @@ export default ({ app, router }) => {
   app.component('LisTakeover', LisTakeover)
   app.component('Soundtrack', Soundtrack)   // the close's music across its slides
   app.component('ClipEnd', ClipEnd)   // words over a clip's held last frame (slide 27)
+  app.component('Drone', Drone)   // a synthesised deep hum under a slide (slide 27)
 }
