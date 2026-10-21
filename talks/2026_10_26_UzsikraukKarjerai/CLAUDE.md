@@ -43,7 +43,10 @@
   in order: the live URL; the venue zip on the MacBook (local HTTP); with
   v0.8.2 either one falls back to recorded plates where the world cannot run;
   the per-slide 1080p50 MP4s as the last copy (a Keynote/PowerPoint file of
-  them plays on any machine, if he wants it).
+  them plays on any machine, if he wants it). The order is the Scheduler's
+  approved plan (21 Oct). v0.8.2 adds `RUN_ME.command` (macOS) and
+  `RUN_ME.bat` (Windows) to the venue zip: python3's http.server where it
+  exists, else what to install; a bundled server binary is put to the owner.
 - Owner's steers: "doesn't have to be my life story"; the first version was
   rejected for too many slides, AI-sounding lines and a broken story; the
   second for incoherent flow and washed-out visuals ("more striking but not
