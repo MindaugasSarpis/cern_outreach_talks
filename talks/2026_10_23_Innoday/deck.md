@@ -249,7 +249,7 @@ space:
 <!--
 Kalbėtojui. Vienas tikras susidūrimas (bendras modulis components/lhc-opening, kaip OpenData ir „Užsikrauk karjerai“ kalbose). Du protonų paketai atlekia iš abiejų vamzdžio galų, susiduria, pasaulis beveik sustoja, kamera apsuka ratą, tada nuolaužos išlekia. Ekrane: „8 TeV“ (susidūrimo energija) ir „290 dalelių“ (nupiešti įvykio pėdsakai).
 Savininko pasirinktas (2026 10 12) CMS 4π susidūrimas: 2012 m. Higso bozono kandidatas, visomis kryptimis aplink 3,8 T solenoidą.
-Sakyti: „Taip atrodo vienas susidūrimas. Tokių kas sekundę — pusantro milijardo.“
+Sakyti: „Tą patį susidūrimą matėte už manęs pačioje pradžioje. Taip jis atrodo iš arti. Tokių kas sekundę — pusantro milijardo.“
 Faktai: įvykis — CERN atvirųjų duomenų įrašas 300 (CMS 2012, 8 TeV, CC0), paleidimas 195099, įvykis 137440354, Higso bozono kandidatas; nupiešta 290 pėdsakų.
 Šaltiniai: opendata.cern.ch (įrašas 300); components/lhc-opening/README.md.
 (~0,3 min)
@@ -329,7 +329,7 @@ places: { inventions: true }   # Part II's photos stand in the world from here (
 <div class="sub">O kur tai pritaikoma?</div>
 
 <!--
-Kalbėtojui. Dalies pertrauka (savininkas, 2026 10 12). Pasaulyje — greitintuvo žiedas ir iš jo išeinančios gijos. Šešios tekančių grūdelių gijos veda nuo greitintuvo dalių prie to, kas iš jų atsirado; kiekviena šios dalies skaidrė prasideda problema ir baigiasi tuo, kas iš jos išėjo į pasaulį. Tvarka: kas yra jūsų kišenėje, kas padeda gydytojams ir astronautams, kas vyksta pramonėje šiandien.
+Kalbėtojui. Dalies pertrauka (savininkas, 2026 10 12). Pasaulyje — greitintuvo žiedas ir iš jo išeinančios gijos. Šešios tekančių grūdelių gijos veda nuo greitintuvo dalių prie to, kas iš jų atsirado; jų galuose jau stovi šios dalies nuotraukos (pirmoji — jutiklinis ekranas), apie kurias kalbėsite; kiekviena šios dalies skaidrė prasideda problema ir baigiasi tuo, kas iš jos išėjo į pasaulį. Tvarka: kas yra jūsų kišenėje, kas padeda gydytojams ir astronautams, kas vyksta pramonėje šiandien.
 Sakyti: „Šešios problemos: kaip valdyti greitintuvą, kaip tvarkyti informaciją, kaip pamatyti dalelę, kaip nukreipti pluoštą, kaip suderinti laikrodžius ir kaip atšaldyti. Iš kiekvienos atsirado kas nors, kas šiandien naudojama už CERN ribų. Pradėsiu nuo jutiklinio ekrano, kurį turite savo telefone.“
 (Jutiklinio ekrano nevadinti CERN išradimu: CERN buvo vienas pirmųjų, ne pirmasis.)
 (~0,4 min)
@@ -342,7 +342,7 @@ space: { at: stumpe, dim: 0, flight: 1.6, hum: false }   # place mode: the photo
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="dim">
 <p class="caption invention">Jutiklinis ekranas · 1972 · SPS</p>
 </StagePhoto>
 </AfterCover>
@@ -365,7 +365,7 @@ space: { at: [25.0, 2.5, 0.0], dist: 9, yaw: -90, pitch: 30, dim: 0, flight: 1.6
 
 <Strands />
 
-<StagePhoto src="figures/hero_proposal.jpg" arrive="camera" :dust-ms="[800, 600]" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%">
+<StagePhoto src="figures/hero_proposal.jpg" arrive="camera" :dust-ms="[800, 600]" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" class="dim page">
 <p class="caption invention">Pasaulinis žiniatinklis · 1989 · LEP</p>
 </StagePhoto>
 
@@ -385,7 +385,7 @@ space: { at: next, dim: 0, flight: 1.6, hum: false }   # place mode: the photo s
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="dim">
 <p class="caption invention">Žiniatinklio serveris · 1990 · LEP</p>
 </StagePhoto>
 </AfterCover>
@@ -409,7 +409,7 @@ space: { at: pet, dim: 0, flight: 1.6, hum: false }   # place mode: the photo st
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%" class="dim">
 <p class="caption invention">PET tomografija · 1977</p>
 </StagePhoto>
 </AfterCover>
@@ -480,7 +480,7 @@ space: { at: hadron, dim: 0, flight: 1.6, hum: false }   # place mode: the photo
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%" class="dim">
 <p class="caption invention">Hadronų terapija · 1996–2000 · PIMMS</p>
 </StagePhoto>
 </AfterCover>

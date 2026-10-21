@@ -36,7 +36,7 @@ html[data-stage] .kicker { color: var(--in-accent); }
 
 /* --- stats: a row of big numbers with a line under each, low across the slide */
 html[data-stage] .stats {
-  position: absolute; left: 56px; right: 56px; bottom: 74px;
+  position: absolute; left: 56px; right: 56px; bottom: 112px;   /* 74 px until 21 Oct: clear of the room's heads */
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
 }
 html[data-stage] .stats.three { grid-template-columns: repeat(3, 1fr); }
@@ -324,13 +324,20 @@ html[data-stage] .kicker { font-size: 18px; }
 html[data-stage] .slidev-layout.section h1:not(:only-child) { font-size: 18px !important; }
 /* the cover's subtitle and byline readable from the back of the room */
 html[data-stage] .slidev-layout.cover h2 { font-size: 20px !important; }
-html[data-stage] .slidev-layout.cover .mt-md { font-size: 16px !important; }
+html[data-stage] .slidev-layout.cover .mt-md { font-size: 18px !important; }
+html[data-stage] .slidev-layout.cover h1:first-of-type { font-size: 18px !important; }   /* „Innoday 2026“: the type floor */
 /* a kicker on a busy photograph gets a ground of its own */
 html[data-stage] .hero.deep .kicker { background: rgba(4, 6, 16, 0.55); padding: 2px 6px; border-radius: 3px; display: inline-block; }
 /* the 1989 page: the credit stays on the dark side */
 html[data-stage] .hero.page .credit { max-width: 36%; }
 /* a bright, white photograph graded down so the text side reads */
 html[data-stage] .hero.dim > img { filter: brightness(0.78) contrast(1.06) saturate(1.04); }
+/* review, 21 Oct: the near-white photos (the 1989 page, the NeXT, MedAustron, Stumpe, the PET
+   room) glared on a projector; the page darker still; the same in print, where html[data-stage]
+   is not set */
+html[data-stage] .hero.dim.page > img { filter: brightness(0.6) contrast(1.06); }
+html.print .hero.dim > img, .print-slide-container .hero.dim > img { filter: brightness(0.78) contrast(1.06) saturate(1.04); }
+html.print .hero.dim.page > img, .print-slide-container .hero.dim.page > img { filter: brightness(0.6) contrast(1.06); }
 
 /* a world caption at the top left, where a wide form fills the lower frame (the funnel) */
 html[data-stage] .world-caption.top { top: 52px !important; bottom: auto !important; }
@@ -367,9 +374,9 @@ html[data-stage] .src.credits { font-size: 10px; opacity: 0.55; max-width: 92%; 
 /* an invention's name, the one caption a Part II photo carries (owner, 2026-10-10:
    "inventions in innoday can have a short caption"): bottom left, on its own ground */
 html[data-stage] .hero .invention {
-  position: absolute; z-index: 2; left: 56px; bottom: 52px; margin: 0; opacity: 1;
+  position: absolute; z-index: 2; left: 56px; bottom: 96px; margin: 0; opacity: 1;   /* 52 px until 21 Oct: heads in a flat room cover the lowest tenth */
   font-size: 30px; font-weight: 600; line-height: 1.15; letter-spacing: 0; color: #fff;
-  background: rgba(4, 6, 16, 0.62); padding: 6px 14px; border-radius: 4px;
+  background: rgba(4, 6, 16, 0.78); padding: 6px 14px; border-radius: 4px;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
 
