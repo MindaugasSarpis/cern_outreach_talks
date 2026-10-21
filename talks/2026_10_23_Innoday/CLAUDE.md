@@ -168,6 +168,25 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-21: the owner asked (via the Scheduler) to renew the talk for the toolkit's
+non-static fallback, now being released by Tools: a floor tier of the world where the browser lacks only a
+feature or asks for reduced motion, per-slide MP4 plates where the world cannot run, and
+a GPU-free "living still" under both. The trigger was OpenData's "it seemed like the
+slides autoclick" on a Windows machine that had fallen back to the stills. No renders
+until the release is on GitHub. Audit (no changes yet): the deck moves on by itself only
+through `advance-on-end` on two clips, the opener (slide 2 → 3, the web takeover) and the
+tunnel (slide 8 → 9, the collision); `VideoPlayer`'s `onEnded` calls `next()` whatever
+the stage's state, so in the fallback each clip still ends and moves on, onto a still
+whose flight never comes. Everything else is visual only: `AfterFlight` (a 2,4 s fade),
+`LisTakeover` (rate and emblem timers, `wordBy`), `ShortHum` and `Soundtrack` (audio),
+`OpenerStart` (takes the first press on a cold open; never advances). The talk's
+`<Grains>` has no `later`. Slide 9's "8 TeV" and "290 dalelių" (components/lhc-opening)
+appear only on the world's `cross` and `flyout` events, so in the fallback they never
+show (OpenData's collision slide is the same). The plan once the release is out, all before 23 Oct: `pnpm talk pin
+<vX.Y.Z>` from the worktree root, `pnpm talk check`, `pnpm talk record --plate` for
+every slide (render lock), the fallbacks forced and walked (slides 2→3, 8→9, 9, 30),
+`talk ready`, deploy under the standing rule.
+
 2026-10-20 (night, deployed): the owner's three items and his detector choices are live
 (Decisions: "The slower, bigger close", the aftermovie, "LHCb on „Ačiū“ is a 3D model").
 Deployed 404f3a7 — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/
