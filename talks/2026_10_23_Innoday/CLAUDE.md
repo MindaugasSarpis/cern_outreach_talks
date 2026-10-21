@@ -168,6 +168,29 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-21 (review): owner, via the Scheduler: "Innoday is next, so focus on that, carefully
+review." Review of fe3fb1a in notes/review.md (checks, sound levels, 12 visual findings for the
+owner, none applied). Applied: the press notes on slides 2 and 8, the film's notes (it plays at full
+level from 0:03; say the Lithuania lines on the FCC slide or over its held last frame), the stale
+`places` Decisions. Open for the owner: which visual findings to fix; the paper count (878 on
+INSPIRE today, 875 on slide 12; refresh on 22 Oct); the talk's start time on 23 Oct (not in the
+calendar); the earlier open items below (the CAD never came; the three CERN CC credits; the
+iPhone retest; the film's rights).
+Venue checklist (23 Oct): (1) on the venue PC open the URL with `?stage-debug` first: a
+`data-stage-fallback` reason means no world (after Thursday's bump the plates play; before it the
+stills; either way both clips wait for the press); then reload without it at slide 1. (2) Sound:
+the PC's audio to the hall; set the hall gain once on the opener's first seconds (every clip and
+Starfire are at -16 LUFS). (3) Clicker: forward and back; the first press on the title goes to the
+opener and unlocks sound (opened cold on slide 2, the first press starts the clip). (4) With
+/presenter, click the audience window once first. (5) The offline zip on a USB stick
+(`pnpm venue`, rebuilt after the bump). (6) At the close, the frame-rate guard (below).
+Thursday plan (from the release's relay, T): T+0 merge origin/main, `pnpm talk pin v0.8.2`,
+commit; T+5 `stage.motion: floor`, check, lint; T+10 `pnpm talk record --plates` (~15 min on the
+GPU, render-lock priority); T+25 `videos:publish --only <plates>`; T+35 force the fallbacks
+(reduced motion, no WebGL) and walk 2→3, 8→9, 9, 28, 30; T+45 `talk ready` (plates step); T+55
+deploy under the standing rule; T+65 the venue zip rebuilt, hand-off. About 75 min. With no release
+by 09:00, the clip change deploys alone (Scheduler's go).
+
 2026-10-21 (later): the owner, via the Scheduler: "Can we not mark clips to advance, in
 innoday as well.... I will specifically ask if it's needed". `advance-on-end` removed
 from slides 2 and 8, notes say the press is his (Decisions, "No clip moves on by
@@ -580,7 +603,10 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   700+ sutarčių, +14 % apyvartos, 91 km, 613 mln. CHF). `talk lint`'s TEXT
   still flags those (expected until Tools' fix). The section slides' switches
   moved to the next slide: `places: { inventions: true }` on the touchscreen,
-  `false` and the strands off on 700+; their notes open those slides.
+  `false` and the strands off on 700+; their notes open those slides. (Since the
+  12 Oct restructure brought the section slides back, the switches are on them:
+  `true` on „O kur tai pritaikoma?“ (13), `false` and `<Strands :on="false" />`
+  on „O kaip komercializuoti?“ (23); review, 21 Oct.)
   Each removed credit and source is in its slide's notes. The credits a licence
   asks for stood in tiny print on the last slide (owner: "Credit on last slide
   tiny print"; CERN's material needs none) until 19 Oct; since then they are on
@@ -613,9 +639,10 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   so overlapping grains keep their colours.
 - Match cuts: none since 12 Oct (the tunnel is a clip; the 4 TB/s ring slide
   went into the LHCb numbers slide). Ring → CERN aerial and loop → FCC were weak.
-- Part II's photo places are one group, `group="inventions"`: the touchscreen
-  slide says `places: { inventions: true }`, 700+ `false`, so they are hidden
-  in the prologue, Part I and Part III (v0.5.2).
+- Part II's photo places are one group, `group="inventions"`: the section
+  slide 13 says `places: { inventions: true }`, slide 23 `false` (since 12 Oct;
+  first the touchscreen and 700+), so they are hidden in the prologue, Part I and
+  Part III (v0.5.2).
 - Data → White Rabbit (2012, Frankfurt exchange), the thing that left CERN;
   the grid figures are in the notes. The photo's credit („© CERN (KT
   ataskaita, 2024)“) is taken from the KT report page; the photographer is
