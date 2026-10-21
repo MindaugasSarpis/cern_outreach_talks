@@ -34,7 +34,15 @@ export function placeInDepth(s, depth, meta) {
     const x = (2 * u - 1) * t * a * z, y = (1 - 2 * v) * t * z
     for (let c = 0; c < 3; c++) pos[k * 3 + c] = O[c] + R[c] * x + U[c] * y + F[c] * z
   }
-  return { pos, keep, flag, edge }
+  // the flag's middle, and the clip camera's frame its grains were placed in: as the camera
+  // pulls back they turn to face it (makeLisGrains), so the flag reads yellow on top, never
+  // mirrored or edge-on (owner, 21 Oct: "with lithuanian flag maintaining the orientation
+  // correctly"; a side view looks along the flag's own width: edge-on, a sliver)
+  const fc = [0, 0, 0]
+  let nf = 0
+  for (let k = 0; k < s.n; k++) if (flag[k] && keep[k]) { nf++; for (let c = 0; c < 3; c++) fc[c] += pos[k * 3 + c] }
+  if (nf) for (let c = 0; c < 3; c++) fc[c] /= nf
+  return { pos, keep, flag, edge, fc, frame: [R, U, F] }
 }
 function inside(q, x, y) {
   let c = false
@@ -69,14 +77,26 @@ const VERT = /* glsl */ `
 attribute vec3 aColor;
 attribute float aSize, aSeed, aKeep, aFlag, aEdge;
 uniform float uTime, uReveal, uGain, uScale, uScaleFlag, uS0, uFade, uRest;
-uniform vec3 uAnchor;
+uniform vec3 uAnchor, uFC, uFR, uFU, uFF;
 varying vec3 vColor; varying float vAlpha;
 ${POINT_GLSL}
 void main() {
   // the flag's grains keep a larger scale at the end, so the flag stays a mark the room can
   // see where the module stands; the rest of the module's picture fades as it shrinks
   float sc = aFlag > 0.5 ? uScaleFlag : uScale;
-  vec3 p = uAnchor + position * sc;
+  vec3 q = position;
+  if (aFlag > 0.5) {
+    // the flag turns to face the camera as the module's picture goes (by the time the scale
+    // has halved): each grain keeps its place across, up and in depth as the clip's camera
+    // saw it, now along the stage camera's right, up and forward
+    float turn = smoothstep(0.0, 1.0, (uS0 - uScale) / (0.5 * uS0));
+    vec3 d = position - uFC;
+    vec3 cr = vec3(viewMatrix[0][0], viewMatrix[1][0], viewMatrix[2][0]);
+    vec3 cu = vec3(viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1]);
+    vec3 cf = -vec3(viewMatrix[0][2], viewMatrix[1][2], viewMatrix[2][2]);
+    q = mix(position, uFC + dot(d, uFR) * cr + dot(d, uFU) * cu + dot(d, uFF) * cf, turn);
+  }
+  vec3 p = uAnchor + q * sc;
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 0.85 + 0.15 * sin(uTime * (0.8 + aSeed * 1.9) + aSeed * 40.0);
@@ -122,6 +142,10 @@ export function makeLisGrains(s, placed, { size = 0.07, gain = 1.25, s0 = 18 } =
       uTime: { value: 0 }, uReveal: { value: 0 }, uView: { value: 1 }, uGain: { value: gain },
       uScale: { value: s0 }, uScaleFlag: { value: s0 }, uS0: { value: s0 }, uFade: { value: 1 }, uRest: { value: 1 },
       uAnchor: { value: new Vector3() },
+      uFC: { value: new Vector3(...(placed.fc || [0, 0, 0])) },
+      uFR: { value: new Vector3(...(placed.frame?.[0] || [1, 0, 0])) },
+      uFU: { value: new Vector3(...(placed.frame?.[1] || [0, 1, 0])) },
+      uFF: { value: new Vector3(...(placed.frame?.[2] || [0, 0, -1])) },
     },
     transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
   })

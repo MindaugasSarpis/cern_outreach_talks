@@ -168,6 +168,18 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-21 (evening, in progress, not committed): the owner's new round, all approved in this
+window: „Ačiū“'s music 0,9 → 0,6 (done); the close back to grains with the person as 3D grains
+(part 10, bake_grains.py; done, unreviewed) and a new path "to really reveal the vast scale",
+ending in a pull-out to the full LHC ring ("can show the accelerator as well, so this doesn't look
+isolated … panning out at the very last second to full accelerator and then ačiū appears"); the
+light-injection clip ~20 s (the whole module, a pan down, the boards glowing, the same last frame;
+publish --only lis_flag.mp4 after); the cover a slow silent looping CMS collision; slides 4–6 the
+funnel as the Universe's history, brighter, no floor grid; Part III a Europe map in grains
+(CERN → member states, Lithuania lit) for the "weird" sphere; slide 27 „O kokį vaidmenį atliks
+Lietuva?“ at the clip's end (done). Order: these → the owner's review MP4 of the close tonight →
+his yes Wednesday morning → v0.8.2 adoption → plates → ready → deploy → venue zip, by Wed evening.
+
 2026-10-21 (review): owner, via the Scheduler: "Innoday is next, so focus on that, carefully
 review." Review of fe3fb1a in notes/review.md (checks, sound levels, 12 visual findings for the
 owner, none applied). Applied: the press notes on slides 2 and 8, the film's notes (it plays at full
@@ -324,6 +336,43 @@ v0.8.1 since 20 Oct and builds the zip local-first itself).
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
+- The 21 Oct round (owner, in this window; each answered by him):
+  - „Ačiū“'s music at 0,6, not 0,9 ("Sound on the aciu slide is a bit too loud"): its peaks
+    now sit at the film's level (−16 LUFS), not 3 dB over it. The credits page matches.
+  - The close is a point cloud again ("let's get back to point cloud"; supersedes "LHCb on
+    „Ačiū“ is a 3D model"): the blue grains with their edges and lit faces, the person as
+    3D grains (part 10 of lhcb-grains.bin, hero/bake_grains.py's sixth argument, the same
+    body and place as the hologram person; its own colour, never lit by the collision).
+    hero/export_mesh.py and lhcb-mesh.glb stay, unused.
+  - The close reveals the scale ("we want to really reveal the vast scale of it") and ends
+    on the LHC ("can show the accelerator as well, so this doesn't look isolated, it's a
+    part of huge infrastructure. Maybe panning out at the very last second to full
+    accelerator and then ačiū appears"): eye level 7,6 m from the person, a walk upstream,
+    the pull-back to the whole detector, then a scale cross-fade into the ring (`ring`
+    object `lhcRing`, emblems.js; not at true scale), Point 8 marked, „Ačiū“ inside the
+    ring at 49 s (hero/close_path.py). The flag's grains turn to face the camera
+    (lisGrains.js): side on, the cold box's flag was seen edge-on.
+  - The light-injection clip is ~20 s: the whole SciFi module, a slow pan down, the boards'
+    blue outline glow while he names them (no text), the engraving, today's last frame
+    ("show the full SciFi module panning slowly … on the bottom I indicate the light
+    injection system"; chose "Re-rendered clip" and "Glow outline, no text").
+  - The cover is the real CMS collision (record 300, the 2012 Higgs candidate), filling the
+    frame, slow, silent, looping (~23 s a round) ("Cover slide can be more substantial, say
+    the cms collision full frame slowly"; chose "Slow loop"). The pentaquark is gone
+    (setup/coverCollision.js, CoverCollision.vue; the `hero` station).
+  - Slides 3–6, the funnel as the Universe's history, its eras in their own colours (white-hot
+    Big Bang, orange CMB ring, red-black dark ages, blue-white first stars and cyan bubbles,
+    the bright galaxies band, today's red galaxies on violet filaments), ~220 000 grains, no
+    floor grid ("no grid on the bottom so it doesn't exist in some other space"; chose
+    "Read as the Universe's history", "Brighter, richer look"). `floor: true` brings it back.
+  - Part III's world is a Europe map in grains (setup/europe.js, public/data/europe.json from
+    Natural Earth 1:50m v5.1.2, public domain; hero/europe_map.py converts it): CERN lit on
+    23, threads to the 25 Member States on 24, to the associates too and Lithuania lit on 25,
+    a steady glow on 26 (owner on the old seed and shells: "this is a weird one..."; chose
+    "Europe map: CERN → Lithuania"). The thread ends are a picture of flow, not data.
+  - Slide 27: „O kokį vaidmenį atliks Lietuva?“ fades in as the FCC clip ends, over its held
+    last frame (setup/ClipEnd.vue; owner: "At the end of slide 27 text appears "o kokią rolę
+    turės Lietuva?"" — written with „vaidmuo“, the standard word; his own wording on request).
 - No clip moves on by itself (owner, 21 Oct, via the Scheduler: "Can we not mark
   clips to advance, in innoday as well.... I will specifically ask if it's needed"; a
   standing rule for every talk). `advance-on-end` is off the opener (slide 2) and the

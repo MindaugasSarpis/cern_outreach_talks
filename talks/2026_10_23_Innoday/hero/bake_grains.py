@@ -1,7 +1,7 @@
 """LHCb's real geometry as grains (copied from MasterTalk, talk/mastertalk ee3e2b8, as it was: its
 station 4, setup/route.js; here Innoday's close, setup/detector.js, `detector`).
 
-  blender -b --factory-startup --python hero/bake_grains.py -- LHCb_light-draco.glb public/data/lhcb-grains.bin [k] [edges shape.bin]
+  blender -b --factory-startup --python hero/bake_grains.py -- LHCb_light-draco.glb public/data/lhcb-grains.bin [k] [edges shape.bin] [human.blend]
 
 k multiplies every part's budget (Innoday, 20 Oct: 4.8, about 450 000 grains, so the
 surfaces read solid: owner, "Point cloud can somehow be more solid"; MasterTalk's is 1).
@@ -11,6 +11,10 @@ meeting at more than 30 degrees, or a rim), and the shape file gets 4 bytes a gr
 the .bin's order: the grain's face normal in LHCb's frame (x, y, z: round(127 n) + 128)
 and 255 for an edge grain, 0 for a face grain (setup/detector.js `shape`). Blender 4.5
 LTS and the .glb live outside git (~/.cache/outreach_talks/; Phoenix's LHCb.glb.zip).
+With a sixth path (Blender's Human Base Meshes bundle v1.4.1, CC0), a person for scale
+follows the parts as part 10, `person` (owner, 21 Oct: "let's get back to point cloud";
+the hologram person of hero/export_mesh.py, same body and place, as grains: PERSON_GRAINS
+over its surface and `edges` × that along its folds).
 
 Samples points over the surfaces of each sub-detector of HSF Phoenix's LHCb.glb
 (LHCb's DD4hep geometry, GPL-3.0, (c) CERN for the benefit of the LHCb
@@ -24,6 +28,7 @@ import sys
 
 import bpy
 
+PERSON_GRAINS = 9000
 # part: (name, the exact names of its ancestors in the .glb, grains)
 PARTS = [
     ('velo', ('lvVP_2.002', 'lvVP_2.006', 'lvVP_2.005', 'lvVP_2.009'), 14000),
@@ -151,11 +156,62 @@ def main():
                 recs += struct.pack('<4h', round(q.x), round(q.z), round(-q.y), i)
                 shape += nbytes(nrm, 255)
             print(name, len(E), 'feature edges', ne, 'edge grains')
+    if len(args) > 5:
+        recs, shape = person_grains(args[5], rnd, ek, recs, shape, nbytes)
     open(dst, 'wb').write(recs)
     print('wrote', dst, len(recs), 'bytes')
     if shape_dst:
         open(shape_dst, 'wb').write(shape)
         print('wrote', shape_dst, len(shape), 'bytes')
+
+
+def person_grains(blend, rnd, ek, recs, shape, nbytes):
+    """The person (hero/export_mesh.py's PERSON, the same transform) as part 10."""
+    import bisect
+    import math
+    from mathutils import Matrix, Vector
+    P = {'object': 'GEO-body_male_realistic', 'height': 1830.0, 'feet': (6600.0, -5600.0, 16500.0)}
+    with bpy.data.libraries.load(blend) as (src, dst):
+        dst.objects = [P['object']]
+    o = dst.objects[0]
+    me = o.data.copy()
+    me.transform(o.matrix_world)
+    zs = [v.co.z for v in me.vertices]
+    xs, ys = [v.co.x for v in me.vertices], [v.co.y for v in me.vertices]
+    h = max(zs) - min(zs)
+    c = Vector(((max(xs) + min(xs)) / 2, (max(ys) + min(ys)) / 2, min(zs)))
+    f = P['feet']
+    me.transform(Matrix.Translation(Vector((f[0], -f[2], f[1]))) @ Matrix.Rotation(math.radians(90), 4, 'Z')
+                 @ Matrix.Scale(P['height'] / h, 4) @ Matrix.Translation(-c))
+    ob = bpy.data.objects.new('person', me)
+    bpy.context.scene.collection.objects.link(ob)
+    T = tri_samples(ob, None)
+    cum, s = [], 0.0
+    for t in T:
+        s += t[3]
+        cum.append(s)
+    for _ in range(PERSON_GRAINS):
+        a, b, c3, _ar, nrm = T[min(bisect.bisect_left(cum, rnd.random() * s), len(T) - 1)]
+        u, w = rnd.random(), rnd.random()
+        if u + w > 1:
+            u, w = 1 - u, 1 - w
+        q = a + (b - a) * u + (c3 - a) * w
+        recs += struct.pack('<4h', round(q.x), round(q.z), round(-q.y), 10)
+        shape += nbytes(nrm, 0)
+    E = edge_samples(ob, angle=40.0)
+    ne = round(PERSON_GRAINS * ek) if E else 0
+    if ne:
+        ecum, es = [], 0.0
+        for e in E:
+            es += e[2]
+            ecum.append(es)
+        for _ in range(ne):
+            a, b, _L, nrm = E[min(bisect.bisect_left(ecum, rnd.random() * es), len(E) - 1)]
+            q = a + (b - a) * rnd.random()
+            recs += struct.pack('<4h', round(q.x), round(q.z), round(-q.y), 10)
+            shape += nbytes(nrm, 255)
+    print('person', len(T), 'triangles,', round(h, 3), 'high:', PERSON_GRAINS, '+', ne, 'grains')
+    return recs, shape
 
 
 if __name__ == '__main__':

@@ -36,15 +36,19 @@ export function listen(name, fn) {
 export const PLACE = /* glsl */ `
 uniform float uTime, uPixelRatio;
 varying vec3 vColor; varying float vAlpha;
+float cover = 0.0;   // 1: a grain under a pixel gives its share of light (set before place())
 void place(vec3 p, float size, float alpha, vec3 color, float seed) {
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 0.86 + 0.14 * sin(uTime * (0.6 + seed * 1.2) + seed * 40.0);   // a slow, shallow twinkle: a stream encoder smears fast sparkle
   // capped, and faded out within a few units of the camera: a flight that passes through a
   // scattered form must not fill the frame with huge additive sprites (a flash, and a fill-rate spike)
-  gl_PointSize = min(uPixelRatio * size * tw * (72.0 / max(-mv.z, 0.1)), 10.0 * uPixelRatio);   // (MasterTalk: 48; Innoday's camera pulls back past it)
+  float ps = min(uPixelRatio * size * tw * (72.0 / max(-mv.z, 0.1)), 10.0 * uPixelRatio);   // (MasterTalk: 48; Innoday's camera pulls back past it)
+  gl_PointSize = max(ps, 1.0);
   vColor = color;
-  vAlpha = alpha * tw * smoothstep(2.5, 7.0, -mv.z);
+  // with cover = 1, a grain under a pixel gives its share of light (drawn at the 1 px floor at
+  // full strength, the close's pull-out to the ring piled the whole detector into a white blob)
+  vAlpha = alpha * tw * smoothstep(2.5, 7.0, -mv.z) * mix(1.0, min(1.0, ps * ps), cover);
 }
 void hide() { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vAlpha = 0.0; }
 float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
@@ -121,10 +125,11 @@ function stepper(name, initial = 0) {
 const DET_VERT = PLACE + /* glsl */ `
 attribute float aX, aHit, aSeed, aPart;
 attribute vec4 aShape;
-uniform float uShowT, uHideT, uSweep, uLen, uHitT, uSize, uAlpha;
+uniform float uShowT, uHideT, uSweep, uLen, uHitT, uSize, uAlpha, uDim;
 uniform vec3 uOut, uColor, uHot;
 uniform float uCrossT, uCrossHide, uLight;
-uniform vec3 uParts[10], uLight3;
+uniform vec3 uParts[10], uLight3, uPersonCol;
+uniform float uPersonGain;
 uniform float uShade, uEdgeGain, uCascT, uCascR, uCascV, uUseParts;
 uniform vec4 uHole;   // Innoday: a small disc on screen round this point (object space; w: radius, of the half-height) is left clear
 void main() {
@@ -135,17 +140,21 @@ void main() {
   float passed = smoothstep(-0.4, 0.0, d);
   float flash = passed * exp(-max(d, 0.0) * 0.9);
   float fade = uHideT > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.2, uTime - uHideT);
-  vec3 base = uUseParts > 0.5 ? uParts[int(aPart + 0.5)] : uColor;
+  // part 10: the person for scale (hero/bake_grains.py), in its own colour, never lit by the collision
+  bool person = aPart > 9.5;
+  vec3 base = person ? uPersonCol : (uUseParts > 0.5 ? uParts[int(aPart + 0.5)] : uColor);
   vec3 p = position, col = mix(base, uHot, 0.6 * flash);
   float w = aPart == 1.0 ? 0.0 : (aPart == 0.0 ? 0.25 : (aPart >= 7.0 ? 1.4 : 1.0));   // (calorimeters and muon walls: 2.0 before their edges were drawn)
-  float a = (uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.5 * flash) * w;
+  float a = (uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.5 * flash) * (person ? uPersonGain * (1.0 - 0.6 * aShape.w) : w);
+  if (person) w = 0.0;
   // the face's light and the edges (aShape: the normal in LHCb's frame, its x, y, z → the
   // world's z, y, x as the positions; w: 1 on a feature edge)
   vec3 nrm = aShape.zyx * 2.0 - 1.0;
   float edge = aShape.w;
   if (dot(nrm, nrm) > 0.25) {
     float lit = abs(dot(normalize(nrm), uLight3));
-    a *= mix(uShade, 1.0, lit) * (1.0 + uEdgeGain * edge);
+    // (the person's folds not brighter: its edge grains bunch at the hands and feet, which glowed as knobs)
+    a *= mix(uShade, 1.0, lit) * (1.0 + uEdgeGain * edge * (person ? 0.0 : 1.0));
     col *= mix(0.8, 1.05, lit);
   }   // the beam pipe (part 1) read as a stick when lit, then as a stray dash: not drawn; the VELO (0), its grains packed round the vertex, read as a white-hot blob: dimmed; the calorimeters and muon stations (7-9), spread over the widest walls, read as haze: doubled
   float size = uSize * (1.0 - 0.25 * edge);
@@ -203,7 +212,8 @@ void main() {
     vec2 dn = (gc.xy / gc.w - hc.xy / hc.w) * vec2(projectionMatrix[1][1] / projectionMatrix[0][0], 1.0);
     a *= mix(0.25, 1.0, smoothstep(uHole.w * 0.2, uHole.w, length(dn)));   // a soft dimming round it, not a hole
   }
-  place(p, size, a * fade, col, aSeed);
+  cover = 1.0;
+  place(p, size, a * fade * uDim, col, aSeed);   // uDim: the ring's pull-out (emblems.js)
 }`
 
 // the mesh: one material per part (its colour), faces and lines alike; vX the grain's aX
@@ -261,7 +271,8 @@ function buildDetector(o, ctx) {
     uParts: { value: (o.parts || []).concat(Array(10).fill(o.color || '#5b93ff')).slice(0, 10).map((h) => new Color(...rgb(h))) },
     uUseParts: { value: o.parts ? 1 : 0 },
     uLight3: { value: new Vector3(...(o.light3 || [-0.35, 0.75, 0.55])).normalize() },
-    uShade: { value: o.shade ?? 0.45 }, uEdgeGain: { value: o.edgeGain ?? 0.8 },
+    uPersonCol: { value: new Color(...rgb(o.person?.color || '#d6e8ff')) }, uPersonGain: { value: o.person?.gain ?? 1.0 },
+    uDim: { value: 1 }, uShade: { value: o.shade ?? 0.45 }, uEdgeGain: { value: o.edgeGain ?? 0.8 },
     uCascT: { value: 1e9 }, uCascR: { value: o.cascade?.rate ?? 0.28 }, uCascV: { value: o.cascade?.speed ?? 12 },
   })
   const u = mat.uniforms
@@ -283,6 +294,7 @@ function buildDetector(o, ctx) {
     for (let i = 0; i < n; i++) {
       const x = raw[i * 4] / 1000, y = raw[i * 4 + 1] / 1000, z = raw[i * 4 + 2] / 1000
       pos.set(W(x, y, z), i * 3); ax[i] = z * S; seed[i] = Math.random(); part[i] = raw[i * 4 + 3]
+      if (part[i] > 9.5) continue   // the person: never a hit
       const r = R + 0.004 * Math.max(z, 0)
       // not the beam pipe and the VELO's inner edge, where every track meets: those grains
       // would all count, and leave as one white bar along the axis
