@@ -73,11 +73,39 @@ async function waitStage(id) {
 // dissolving into grains: the still goes at once, as it does under the world's copy. Under the
 // `living` and `still` layers (no plate) it stays. Older stages never set the attribute.
 const plated = () => document.documentElement.dataset.stageLayer === 'plate'
+// … and only once the plate shows (html[data-stage-plate]: loading | playing | paused | held |
+// none): a still faded over a plate still loading is a black gap. Resolves 'playing', 'held'
+// (a back-step or a jump: the plate's settled last frame), 'none' (the layer is not, or no
+// longer, a plate: e.g. `living` when the plate cannot be fetched) or null (left). Looked at
+// two frames after the arrival, so the previous slide's plate state is not read as this one's.
+function untilPlate(id) {
+  return new Promise((resolve) => {
+    const html = document.documentElement
+    let mo = null
+    const done = (v) => { mo?.disconnect(); mo = null; resolve(v) }
+    const check = () => {
+      if (id !== run) return done(null)
+      if (html.dataset.stageLayer !== 'plate') return done('none')
+      const st = html.dataset.stagePlate
+      if (st === 'playing' || st === 'held') done(st)
+    }
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (id !== run) return done(null)
+      mo = new MutationObserver(check)
+      mo.observe(html, { attributes: true, attributeFilter: ['data-stage-layer', 'data-stage-plate'] })
+      check()
+    }))
+  })
+}
 
 async function takeOver() {
   const id = ++run
   still.value = true; fading.value = false
-  if (plated()) { requestAnimationFrame(() => { if (id === run) fading.value = true }); return }
+  if (plated()) {
+    const st = await untilPlate(id)
+    if (id === run && st && st !== 'none') fading.value = true
+    return
+  }
   const s = await waitStage(id)
   const image = await ready
   if (id !== run || !s || !image || !live.value) return
