@@ -30,7 +30,11 @@ const printing = ref(false)
 
 onMounted(() => {
   automated.value = !!(navigator.webdriver || window.__rec || window.__shots)
-  printing.value = /[?&]print\b/.test(location.search) || document.documentElement.classList.contains('print')
+  // the print and export pages, and ?print (the hash router keeps both after the #; print.vue marks
+  // <html> only after this mounts, so its class is not enough)
+  const where = location.pathname + location.search + location.hash
+  printing.value = /[?&]print\b/.test(where) || /\/(print|export)(\/|\?|$)/.test(where)
+    || document.documentElement.classList.contains('print')
 })
 
 const url = computed(() => props.href || (meta && typeof meta.url === 'string' ? meta.url : ''))

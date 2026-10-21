@@ -36,7 +36,7 @@ def test_the_button_reads_pptx_json_and_hides_where_it_must():
     src = BUTTON.read_text()
     assert "import.meta.glob('/videos/pptx.json', { eager: true, import: 'default' })" in src
     for guard in ("$renderContext.value === 'slide'", "isPrintMode", "navigator.webdriver", "window.__rec", "window.__shots",
-                  "@media print"):
+                  "@media print", "location.hash"):
         assert guard in src, guard
     assert re.search(r"<a\b[^>]*\bclass=\"pptx-button\"[^>]*\bdownload\b", src, re.S)
     assert re.search(r"v-if=\"show\"", src)
