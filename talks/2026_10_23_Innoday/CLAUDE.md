@@ -351,6 +351,9 @@ v0.8.1 since 20 Oct and builds the zip local-first itself).
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
 - The 21 Oct round (owner, in this window; each answered by him):
+  - The music goes on after „Ačiū“ ("sountrack has to continue"): both Starfire files now run
+    to the track's own end (src 0:30–5:41, tail 1:19–5:41, 311 s and 262 s, the master from
+    scottbuckley.com.au at −0,5 dB as before), about four minutes under the questions.
   - „Ačiū“'s music at 0,6, not 0,9 ("Sound on the aciu slide is a bit too loud"): its peaks
     now sit at the film's level (−16 LUFS), not 3 dB over it. The credits page matches.
   - The close is a point cloud again ("let's get back to point cloud"; supersedes "LHCb on
@@ -774,7 +777,7 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   `lhcb-logo-300dpi.tif`): its marks only, recoloured for a black ground
   (`figures/lhcb_logo_grains.png`; CERN's material, no credit). The music:
   Scott Buckley, „Starfire“ (scottbuckley.com.au/library/starfire), CC BY 4.0,
-  credited on the credits page; only an excerpt (0:30–2:25) is in the deck
+  credited on the credits page; the track from 0:30 to its end is in the deck
   (`public/audio/starfire_close.m4a`, -16 LUFS). Nobody has listened to it in
   this session: check once that 1:25–1:40 has no whoosh or riser.
 - The light injection system (facts lhcb-scifi-lis, -lis-vcsel, -channels,
