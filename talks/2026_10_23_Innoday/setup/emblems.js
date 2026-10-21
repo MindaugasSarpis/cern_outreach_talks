@@ -380,7 +380,7 @@ function buildSupports(o, ctx) {
 //     map?: { km: 4.243 (the LHC's radius), p8: -55.7 (Point 8's bearing from the centre, degrees
 //       from east), rings: [{ c: [x, y], r, grains, size, alpha, color, dash? }],
 //       lines: [{ pts: [[x, y], …], grains, size, alpha, color }] } }
-export const zoom = { b: 0, k: 1 }
+export const zoom = { b: 0, k: 1, at: new Vector3() }   // at: Point 8 in the world (what shrinks, shrinks toward it)
 const RING_VERT = PLACE + /* glsl */ `
 attribute vec4 aRing;   // a beam grain: angle, radial offset, height, direction (+1 / -1); else its place and its light
 attribute vec3 aCol;
@@ -492,6 +492,7 @@ function buildRing(o, ctx) {
       const par = g.parent
       if (!par) return
       here.copy(g.position)
+      zoom.at.copy(here).add(par.position)
       let b = 0
       if (step0 > 0 && camPos) {
         v.copy(here).add(par.position)

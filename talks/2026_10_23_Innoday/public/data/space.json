@@ -605,24 +605,6 @@
           "far": { "screen": [0, 0.77], "depth": 110, "pos": [-5.25, 55.97, 57.0], "width": 21.89, "yaw": -90, "pitch": -40, "scrim": 0.25 }
         },
         {
-          "type": "emblem",
-          "name": "ltFlag",
-          "pos": [
-            12.8,
-            -4.6,
-            5.6
-          ],
-          "width": 2.88,
-          "yaw": 0,
-          "pitch": 0,
-          "flag": "lt",
-          "wave": 0.02,
-          "grains": 24000,
-          "size": 1.0,
-          "alpha": 1.0,
-          "scrim": 0.5
-        },
-        {
           "type": "supports",
           "name": "cradles",
           "of": "det",

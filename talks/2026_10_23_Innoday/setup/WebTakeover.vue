@@ -178,8 +178,10 @@ async function takeOver() {
   // it comes in as the camera leaves the frame's viewpoint (seen from there the picture
   // stays the picture), and goes as the web's grains fly into the funnel
   const P0 = s.camera.position.clone(), D0 = s.camera.getWorldDirection(new Vector3()), dir = new Vector3()
-  console.warn('WT-DEBUG placed', P0.toArray().map((v) => v.toFixed(1)).join(','), (s.h.tier ?? 0), g.cosmos.n)
-  pts.userData.frame = (r, camera) => {
+  let seen = -1
+  pts.userData.frame = cos.userData.frame = (r, camera) => {
+    if (r.info.render.frame === seen) return
+    seen = r.info.render.frame
     const a = camera.position.distanceTo(P0) / 6 + Math.acos(Math.min(1, Math.max(-1, camera.getWorldDirection(dir).dot(D0)))) / 0.15
     const x = Math.min(1, a), cu = cos.material.uniforms
     cu.uAway.value = x * x * (3 - 2 * x) * Math.min(1, u0.uReveal.value)
@@ -187,7 +189,6 @@ async function takeOver() {
     const m = Math.min(1, u0.uMorph.value / 0.3)
     cu.uFade.value = 1 - m * m * (3 - 2 * m)
     diskCheck(pts, funnelSeq.parts)
-    if (!pts.userData.dbg || performance.now() - pts.userData.dbg > 5000) { pts.userData.dbg = performance.now(); console.warn('WT-DEBUG frame', camera.position.toArray().map((v) => v.toFixed(1)).join(','), cu.uAway.value.toFixed(2), u0.uReveal.value.toFixed(2), cos.visible, pts.visible) }
   }
   // under the copy: the web stands alone until its grains make the funnel
   funnelSeq.hide()

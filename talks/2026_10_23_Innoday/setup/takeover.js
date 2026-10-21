@@ -399,7 +399,12 @@ export function makeCosmos(c, matrix, { gain = 1.3, size = 1 } = {}) {
   pts.frustumCulled = false
   pts.name = 'takeover-cosmos'
   const t0 = performance.now()
-  pts.onBeforeRender = (r) => { mat.uniforms.uTime.value = (performance.now() - t0) / 1000; mat.uniforms.uView.value = viewScale(r) }
+  // (userData.frame: the takeover's per-frame state, run by whichever of the two draws first:
+  // the headless tools draw only the settled frame, and the cosmos may draw before its parent)
+  pts.onBeforeRender = (r, scene, camera) => {
+    mat.uniforms.uTime.value = (performance.now() - t0) / 1000; mat.uniforms.uView.value = viewScale(r)
+    pts.userData.frame?.(r, camera)
+  }
   return pts
 }
 
