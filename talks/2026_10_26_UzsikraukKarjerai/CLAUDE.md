@@ -33,6 +33,17 @@
   broadcaster's list. The 8 Oct "not TV" meant no broadcast channel; it
   replaced the earlier TV brief and is itself replaced by this. Kept from
   then: the stage look, no sources on slides; facts must still be true.
+- The studio (the owner, 21 Oct, in this window): **1080p50**; the deck runs
+  on his MacBook and must also be available online (he will try the local
+  copy first) and wants a package that plays anywhere; shown **on a screen
+  behind him** (the camera films the screen, so no direct feed is known);
+  **he clicks**; the laptop's sound **goes into the mixer** (the clips at
+  −16 LUFS, the opening's swell, thump and drone, the tunnel at 0,5);
+  probably **no on-screen logo** of theirs (he is not sure). Ways to run it,
+  in order: the live URL; the venue zip on the MacBook (local HTTP); with
+  v0.8.2 either one falls back to recorded plates where the world cannot run;
+  the per-slide 1080p50 MP4s as the last copy (a Keynote/PowerPoint file of
+  them plays on any machine, if he wants it).
 - Owner's steers: "doesn't have to be my life story"; the first version was
   rejected for too many slides, AI-sounding lines and a broken story; the
   second for incoherent flow and washed-out visuals ("more striking but not
@@ -829,9 +840,11 @@ purpose).
 ## Figures and open items (for the speaker)
 
 0. ~~TV or online?~~ Answered 21 Oct: "15min talk, will be recorded in a
-   studio with good quality" (Brief, Delivery). Still open: the studio's
-   frame and rate, how the deck is fed, who advances, sound, their logo and
-   supers corners, a flash check.
+   studio with good quality" (Brief, Delivery); the studio's answers are in
+   the Brief (1080p50, a screen behind him, he clicks, sound to the mixer,
+   probably no logo). Still open: where he stands against the screen (what
+   his body hides), whether Delfi runs a flash check, the Keynote/PowerPoint
+   copy.
 1. ~~The cover's title~~ Answered 16 Oct: "Don't call it 'vadovelio gale
    atsakymo nera' don't need that". The name line stays (the Scheduler's
    reading); say if the cover should go too.
