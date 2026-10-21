@@ -47,8 +47,10 @@ const props = defineProps({
   freeze: { type: Array, default: () => [[0, 0.5], [0.25, 0.15], [0.8, 0.15], [1.6, 0.6]] },   // the world's rate from the crossing (17,5 s): slow while the flash lights, then the debris bursts out (~19 s, still in the music's peak; at 0.08 for 1,8 s the burst came at 21 s)
   embAt: { type: Number, default: 34 },    // … the emblems gather, on the pull-back (38,5 s: whole by the music's second climax, 42-44 s; the camera is never this far before)
   dEnd: { type: Number, default: 33 },     // the camera's distance from the flag where the picture's scale law ends (the whole detector; the path goes on to the ring)
-  wordTop: { type: String, default: '45.5%' },   // the word's middle once the world has run: inside the ring (the still and print keep it low)
+  wordTop: { type: String, default: '42.5%' },   // the word's middle once the world has run: inside the FCC's ring (the still and print keep it low)
   emblems: { type: Array, default: () => ['lhcbLogo', 'ltFlag'] },
+  early: { type: Array, default: () => ['ltFlag'] },   // … of those, the ones that come at `flagAt` instead: the flag at its true size on the detector's side (owner, 21 Oct: "the lithuanian flag needs to point the direction of lhcb and be smaller (so becomes real scale to the detector)")
+  flagAt: { type: Number, default: 16.5 },   // … the camera this far from the flag's anchor (~13 s, coming down to eye level; whole before the bunches cross): the flag gathers low on RICH2's side, and the small one at the module goes
   wordAfter: { type: Number, default: 0.6 },   // s after the camera has stopped (48 s): the word
   wordBy: { type: Number, default: 62 },   // s: the word shows by then whatever the world does
 })
@@ -240,31 +242,40 @@ async function takeOver() {
   // slow stretch); the camera keeps its own pace
   offCross = bus.on('cross', (e) => { if (e.name === props.collision && id === run) s.api.setRate(props.freeze, { camera: 1 }) })
   // the detector, the collision, the emblems and the word follow the camera
-  let det = false, col = false, emb = false, stopped = -1
+  let det = false, col = false, emb = false, flg = false, marked = false, stopped = -1
+  // the small flag at the module goes (two flags read as a duplicate), and the detector's
+  // clearing round it closes with it
+  const markOut = () => {
+    if (marked) return
+    marked = true
+    const t0 = performance.now(), u = pts.material.uniforms
+    const hole = holeOf(s.h.scene)
+    const r0 = hole?.value.w ?? 0
+    const out = (now) => {
+      if (id !== run) return
+      const k = Math.min(1, (now - t0) / 1500)
+      u.uFade.value = 1 - k
+      if (hole) hole.value.w = r0 * (1 - k)
+      if (k < 1) requestAnimationFrame(out)
+      else { pts.visible = false; pts.userData.gone = true }   // faded: no longer drawn at all
+    }
+    requestAnimationFrame(out)
+  }
   watcher = setInterval(() => {
     if (id !== run) return
     const d = s.camera.position.distanceTo(A)
     if (!det && d > props.detAt) { det = true; setGrains('det', 1) }
     if (!col && d > props.colAt) { col = true; bus.set(props.collision, 1) }
     if (col && stopped < 0 && !s.api.flying) stopped = performance.now()
+    if (col && !flg && (d > props.flagAt || stopped >= 0)) {
+      flg = true; props.early.forEach((n) => setGrains(n, 1))
+      if (props.early.length) markOut()
+    }
     if (col && !emb && (d > props.embAt || stopped >= 0)) {
-      emb = true; emblems(1)
-      // the emblems take over: the collision's glow fades (it washed the logo out) and the
-      // small flag at the module goes (two flags read as a duplicate)
+      emb = true; props.emblems.filter((n) => !props.early.includes(n)).forEach((n) => setGrains(n, 1))
+      // the logo takes over: the collision's glow fades (it washed the logo out)
       bus.set(props.collision, 0)
-      const t0 = performance.now(), u = pts.material.uniforms
-      // the detector's clearing round the mark closes with it
-      const hole = holeOf(s.h.scene)
-      const r0 = hole?.value.w ?? 0
-      const out = (now) => {
-        if (id !== run) return
-        const k = Math.min(1, (now - t0) / 1500)
-        u.uFade.value = 1 - k
-        if (hole) hole.value.w = r0 * (1 - k)
-        if (k < 1) requestAnimationFrame(out)
-        else { pts.visible = false; pts.userData.gone = true }   // faded: no longer drawn at all
-      }
-      requestAnimationFrame(out)
+      markOut()
     }
     if (emb && stopped >= 0 && performance.now() - stopped > props.wordAfter * 1000) { word.value = true; clearInterval(watcher); watcher = 0 }
   }, 100)

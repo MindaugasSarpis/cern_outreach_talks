@@ -356,78 +356,118 @@ function buildSupports(o, ctx) {
   }
 }
 
-// `ring`: the LHC round LHCb for the close's last seconds (owner, 21 Oct: "can show the
-// accelerator as well, so this doesn't look isolated, it's a part of huge infrastructure.
-// Maybe panning out at the very last second to full accelerator and then ačiū appears").
-// A ring of grains through `pos` (the vertex: Point 8), tangent to the beam (x) there, its
-// centre `radius` away along z (`side`: -1, LHCb's -x: LHCb's x points out of the ring),
-// streaming slowly both ways, and a bright mark at Point 8. Not at true scale (27 km against
-// LHCb's 21 m would put the ring past the stage's far plane): a scale cross-fade instead. As
-// the camera goes from `near` to `far` units from Point 8 (the slide's pull-out), the
-// station's other objects shrink toward it (to `shrink` of their size) and fade (to `dimTo`),
-// the ring and the mark fade in, and emblems with `far` ride to their place over the ring
+// `ring`: the accelerator complex round LHCb for the close's last seconds (owner, 21 Oct: "can
+// show the accelerator as well, so this doesn't look isolated, it's a part of huge
+// infrastructure. Maybe panning out at the very last second to full accelerator and then ačiū
+// appears"; then "still want to see LHC, FCC, and 2 beams circulating"; "So the full
+// accelerator complex (much like slide 27)"). The LHC as a ring through `pos` (the vertex:
+// Point 8), tangent to the beam (x) there, its centre `radius` away along z (`side`: -1, LHCb's
+// -x), with its two beams going round it both ways in trains (light blue and white), a bright
+// mark at Point 8, and the rest of the complex in true proportion from a map (`map`: km east
+// and north of the LHC's centre, turned by `rot` degrees so Point 8's bearing, `p8`, falls on
+// the vertex): `rings` (the SPS, the PS, the FCC; `dash` for a proposed one) and `lines` (the
+// transfer lines, a lake's shores), all still grains. Not at true scale against LHCb (27 km
+// against its 21 m would put the ring past the stage's far plane): a scale cross-fade. As the
+// camera goes from `near` to `far` units from Point 8 (the slide's pull-out), the station's
+// other objects shrink toward it (to `shrink` of their size) and fade (to `dimTo`), the
+// complex and the mark fade in, and emblems with `far` ride to their place in the last frame
 // (`zoom.b`, 0 → 1 in log distance). Shown with the detector (`of`: 'det'); off, everything
 // is as it was.
-//   { type: ring, name, of?: 'det', pos: [0, 0, 0], radius?: 110, side?: -1, near?: 52, far?: 180,
-//     shrink?: 0.3, dimTo?: 0.06, grains?: 36000, size?: 4.5, alpha?: 0.55, color?, speed?: 0.012,
-//     width?: 0.3, halo?: 0.25 (the share of grains in a glow round the beam), haloWidth?: 3,
-//     mark?: { grains: 400, size: 5, radius: 0.7, alpha: 0.5, color } }
+//   { type: ring, name, of?: 'det', pos: [0, 0, 0], radius?: 20, side?: -1, near?: 52, far?: 180,
+//     shrink?: 0.05, dimTo?: 0.2, grains?: 40000, size?: 4, alpha?: 0.8, colors?: ['#9cc4ff', '#ffffff'],
+//     lap?: 12 (s a beam takes round), trains?: 18, bunch?: 0.35, width?: 0.3, gap?: 0.3 (between the beams),
+//     mark?: { grains: 600, size: 8, radius: 1.0, alpha: 0.6, color },
+//     map?: { km: 4.243 (the LHC's radius), p8: -55.7 (Point 8's bearing from the centre, degrees
+//       from east), rings: [{ c: [x, y], r, grains, size, alpha, color, dash? }],
+//       lines: [{ pts: [[x, y], …], grains, size, alpha, color }] } }
 export const zoom = { b: 0, k: 1 }
 const RING_VERT = PLACE + /* glsl */ `
-attribute vec4 aRing;   // angle, radial offset, height, direction (+1 / -1)
-attribute float aSeed, aMark;
-uniform float uShow, uMark, uAlpha, uSize, uR, uSide, uSpeed, uMarkSize;
-uniform vec3 uColor, uMarkColor;
+attribute vec4 aRing;   // a beam grain: angle, radial offset, height, direction (+1 / -1); else its place and its light
+attribute vec3 aCol;
+attribute float aSeed, aKind;   // 0 a beam, 1 the mark, 2 the complex's still grains
+uniform float uShow, uMark, uAlpha, uSize, uR, uSide, uSpeed;
 void main() {
   if (uShow <= 0.001 && uMark <= 0.001) { hide(); return; }
-  vec3 p; float a, size; vec3 col;
-  if (aMark > 0.5) {
-    p = aRing.xyz; size = uMarkSize * (0.6 + 0.8 * aSeed); a = uMark * (0.5 + 0.5 * aSeed); col = uMarkColor;
+  vec3 p; float a, size;
+  if (aKind > 1.5) {
+    p = aRing.xyz; size = uSize * (0.7 + 0.6 * aSeed); a = uShow * aRing.w * (0.6 + 0.4 * hash(aSeed * 7.0));
+  } else if (aKind > 0.5) {
+    p = aRing.xyz; size = uSize * 1.8 * (0.6 + 0.8 * aSeed); a = uMark * (0.5 + 0.5 * aSeed);
   } else {
-    float ang = aRing.x + aRing.w * uSpeed * uTime * (0.7 + 0.6 * aSeed);
+    float ang = aRing.x + aRing.w * uSpeed * uTime;
     float r = uR + aRing.y;
     // angle 0 is Point 8 (pos), the ring's centre at (0, 0, uSide·uR)
     p = vec3(r * sin(ang), aRing.z, uSide * (uR - r * cos(ang)));
-    size = uSize * (0.7 + 0.6 * aSeed); a = uShow * uAlpha * (0.45 + 0.55 * hash(aSeed * 13.0)); col = uColor;
+    size = uSize * (0.7 + 0.6 * aSeed); a = uShow * uAlpha * (0.45 + 0.55 * hash(aSeed * 13.0));
   }
   cover = 1.0;
-  place(p, size, a, col, aSeed);
+  place(p, size, a, aCol, aSeed);
 }`
 function buildRing(o, ctx) {
   const g = new Group()
   const P = o.pos || [0, 0, 0]
   g.position.set(P[0] || 0, P[1] || 0, P[2] || 0)
   g.userData.travel = true   // never shrunk itself
-  const R = o.radius ?? 110, n = Math.round((o.grains ?? 36000) * Math.min(1, (ctx.budget || 300000) / 300000) ** 0.5)
-  const mk = o.mark || {}, nm = mk.grains ?? 400, N = n + nm
-  const ring = new Float32Array(N * 4), seed = new Float32Array(N), mark = new Float32Array(N)
-  for (let i = 0; i < n; i++) {
-    // a thin beam: most grains on the line, a few in a faint halo round it
-    const halo = Math.random() < (o.halo ?? 0.25)
-    const s = halo ? (o.haloWidth ?? 3) : (o.width ?? 0.3)
-    ring.set([Math.random() * Math.PI * 2, gauss() * s, gauss() * s, Math.random() < 0.5 ? 1 : -1], i * 4)
-    seed[i] = halo ? Math.random() * 0.3 : Math.random()
+  const R = o.radius ?? 20, side = o.side ?? -1, thin = Math.min(1, (ctx.budget || 300000) / 300000) ** 0.5
+  const recs = []   // [x, y, z, w, kind, r, g, b]
+  // the LHC's two beams: trains of grains (most of them) and a faint stream between
+  const cols = (o.colors || ['#9cc4ff', '#ffffff']).map((h) => new Color(h))
+  const nb = Math.round((o.grains ?? 40000) * thin), trains = o.trains ?? 18, gap = o.gap ?? 0.3, wd = o.width ?? 0.3
+  for (let i = 0; i < nb; i++) {
+    const beam = i % 2, dir = beam ? -1 : 1, c = cols[beam]
+    const t = Math.floor(Math.random() * trains)
+    // a share of the grains in trains (`bunch`), the rest an even stream: the trains show the beams going round
+    const ang = Math.random() < (o.bunch ?? 0.35) ? (t + 0.5 + gauss() * 0.12) / trains * Math.PI * 2 : Math.random() * Math.PI * 2
+    recs.push([ang, (beam ? -gap : gap) / 2 + gauss() * wd * 0.5, gauss() * wd * 0.5, dir, 0, c.r, c.g, c.b])
   }
-  const mr = mk.radius ?? 0.7
-  for (let i = n; i < N; i++) {
-    ring.set([gauss() * mr, gauss() * mr, gauss() * mr, 0], i * 4)
-    seed[i] = Math.random(); mark[i] = 1
+  // the mark at Point 8
+  const mk = o.mark || {}, mc = new Color(mk.color || '#ffffff'), mr = mk.radius ?? 1.0
+  for (let i = 0; i < (mk.grains ?? 600); i++) recs.push([gauss() * mr, gauss() * mr, gauss() * mr, 1, 1, mc.r, mc.g, mc.b])
+  // the complex, from the map: km east and north of the LHC's centre → the ring's frame
+  const M = o.map || {}, u = R / (M.km ?? 4.243), rot = ((M.p8 ?? -55.7) * -1) * Math.PI / 180
+  const at = (x, y) => {
+    const X = x * Math.cos(rot) - y * Math.sin(rot), Y = x * Math.sin(rot) + y * Math.cos(rot)
+    return [Y * u, 0, side * (R - X * u)]   // east (after the turn) → toward Point 8; north → +x
   }
+  for (const r of M.rings || []) {
+    const n = Math.round((r.grains ?? 6000) * thin), c = new Color(r.color || '#9cc4ff'), dash = r.dash || 0
+    for (let i = 0; i < n; i++) {
+      let t = Math.random()
+      if (dash) t = (Math.floor(t * dash) + Math.random() * 0.55) / dash   // a proposed ring: dashed
+      const a = t * Math.PI * 2, rr = r.r + gauss() * (r.width ?? 0.04)
+      const p = at(r.c[0] + rr * Math.cos(a), r.c[1] + rr * Math.sin(a))
+      recs.push([p[0], gauss() * 0.15, p[2], r.alpha ?? 0.5, 2, c.r, c.g, c.b])
+    }
+  }
+  for (const l of M.lines || []) {
+    const seg = [], n = Math.round((l.grains ?? 1500) * thin), c = new Color(l.color || '#9cc4ff')
+    let total = 0
+    for (let j = 1; j < l.pts.length; j++) { const d = Math.hypot(l.pts[j][0] - l.pts[j - 1][0], l.pts[j][1] - l.pts[j - 1][1]); seg.push(d); total += d }
+    for (let i = 0; i < n; i++) {
+      let s = Math.random() * total, j = 0
+      while (j < seg.length - 1 && s > seg[j]) { s -= seg[j]; j++ }
+      const k = seg[j] ? s / seg[j] : 0, A = l.pts[j], B = l.pts[j + 1]
+      const p = at(A[0] + (B[0] - A[0]) * k + gauss() * (l.width ?? 0.03), A[1] + (B[1] - A[1]) * k + gauss() * (l.width ?? 0.03))
+      recs.push([p[0], gauss() * 0.1, p[2], l.alpha ?? 0.4, 2, c.r, c.g, c.b])
+    }
+  }
+  const N = recs.length
+  const ring = new Float32Array(N * 4), col = new Float32Array(N * 3), seed = new Float32Array(N), kind = new Float32Array(N)
+  recs.forEach((r, i) => { ring.set(r.slice(0, 4), i * 4); kind[i] = r[4]; col.set(r.slice(5, 8), i * 3); seed[i] = Math.random() })
   const geo = new BufferGeometry()
   geo.setAttribute('position', new BufferAttribute(new Float32Array(N * 3), 3))
   geo.setAttribute('aRing', new BufferAttribute(ring, 4))
+  geo.setAttribute('aCol', new BufferAttribute(col, 3))
   geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
-  geo.setAttribute('aMark', new BufferAttribute(mark, 1))
+  geo.setAttribute('aKind', new BufferAttribute(kind, 1))
   const mat = materialOf(RING_VERT, {
-    uShow: { value: 0 }, uMark: { value: 0 }, uAlpha: { value: o.alpha ?? 0.55 }, uSize: { value: o.size ?? 4.5 },
-    uR: { value: R }, uSide: { value: o.side ?? -1 }, uSpeed: { value: o.speed ?? 0.012 },
-    uMarkSize: { value: mk.size ?? 5 }, uColor: { value: new Color(o.color || '#9cc4ff') }, uMarkColor: { value: new Color(mk.color || '#ffffff') },
+    uShow: { value: 0 }, uMark: { value: 0 }, uAlpha: { value: o.alpha ?? 0.8 }, uSize: { value: o.size ?? 4 },
+    uR: { value: R }, uSide: { value: side }, uSpeed: { value: Math.PI * 2 / (o.lap ?? 12) },
   })
-  mat.uniforms.uMark.value = 0
-  const markAlpha = mk.alpha ?? 0.5
+  const markAlpha = mk.alpha ?? 0.6
   const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts)
-  const u = mat.uniforms, of = o.of || 'det'
-  const near = o.near ?? 52, far = o.far ?? 180, shrink = o.shrink ?? 0.3, dimTo = o.dimTo ?? 0.06
+  const un = mat.uniforms, of = o.of || 'det'
+  const near = o.near ?? 52, far = o.far ?? 180, shrink = o.shrink ?? 0.05, dimTo = o.dimTo ?? 0.2
   let step0 = state.get(of) ?? 0, last = -1, warm = 0
   const off = listen(of, (k) => { step0 = k })
   const onWarm = () => { warm = 3 }   // drawn (hidden) a few frames on arrival: compiled and uploaded ahead
@@ -441,14 +481,14 @@ function buildRing(o, ctx) {
       const z = (c.userData.zoom0 ||= { p: c.position.clone(), s: c.scale.x })
       c.position.copy(z.p).sub(here).multiplyScalar(k).add(here)
       c.scale.setScalar(z.s * k)
-      c.traverse((x) => { const un = x.material?.uniforms; if (un?.uDim) un.uDim.value = m })
+      c.traverse((x) => { const uu = x.material?.uniforms; if (uu?.uDim) uu.uDim.value = m })
     }
   }
   return {
-    group: g, labels: [], frameScale: u.uPixelRatio,
+    group: g, labels: [], frameScale: un.uPixelRatio,
     api: { busy: () => false },
     update(t, camPos) {
-      u.uTime.value = t
+      un.uTime.value = t
       const par = g.parent
       if (!par) return
       here.copy(g.position)
@@ -458,8 +498,8 @@ function buildRing(o, ctx) {
         b = Math.min(1, Math.max(0, Math.log(Math.max(camPos.distanceTo(v), 1e-3) / near) / Math.log(far / near)))
       }
       zoom.b = b; zoom.k = Math.pow(shrink, b)
-      u.uShow.value = smooth(0.08, 0.55, b)
-      u.uMark.value = markAlpha * smooth(0.3, 0.8, b)
+      un.uShow.value = smooth(0.08, 0.55, b)
+      un.uMark.value = markAlpha * smooth(0.3, 0.8, b)
       if (warm > 0) warm--
       g.visible = b > 0 || warm > 0
       if (b !== last) { apply(par, zoom.k, 1 - (1 - dimTo) * smooth(0.15, 0.9, b)); last = b }

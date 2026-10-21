@@ -23,25 +23,26 @@ Then it all goes into the main detector geometry"), 20 s at 25 fps: the whole
 module standing as in LHCb, seen from below its lower end and in front, the sheet
 rising into the dark (0-0.5 s, a wide 70 degree lens); the camera pans slowly down
 it and in, the lens narrowing to the stage's 50 degrees, slowing onto the lower
-readout end (0.5-7.2 s); it holds there while the two light injection boards get a
-soft light-blue outline glow (6.6-10 s, no text: the speaker names them); then, as
-the 10 s clip before it, in to the cold box's third block where the laser writes
-the flag (12.2-17.6 s) and a hold on the same last frame (frames 251-500 are that
-clip's 1-250, the first key moved a little up the module). --short renders that
+readout end (0.5-7.2 s); it holds there while the cold box, which holds the light
+injection system (owner, 21 Oct: "The light injection system is within this black
+coldbox, no need for blue cables"), gets a soft light-blue outline glow (6.6-10 s, no
+text: the speaker names it); then, as the 10 s clip before it, in to the cold box's
+third block where the laser writes the flag (12.2-17.6 s) and a hold on the last
+frame (frames 251-500 follow that clip's camera, frames 1-250). --short renders the
 10 s clip alone; --end top has no pan (the 19 Oct clip).
 
 Until the owner's CAD arrives, the module is drawn here after the SciFi
 drawing the owner sent on 19 Oct ("Can use this for now to mimic the Light
 Injection system pcb"): four fibre mats side by side, the cold box over the mats'
 ends (four blocks, numbered 4 in the drawing) with a copper strip along it, the
-clip rail and the SiPMs' Kapton flex cables leaving over the edge, and two light
-injection boards (3) on the mats, each with two optical connectors, its flex
-strip and the fibres that feed it. The mats run the module's real length (facts
+clip rail and the SiPMs' Kapton flex cables leaving over the edge. The light
+injection system (the drawing's boards, 3) is inside the cold box since 21 Oct: the
+boards, their flex strips and the blue fibres that fed them on the mats are gone. The mats run the module's real length (facts
 lhcb-scifi-layout, -modules-area: modules about 52 cm wide and almost 5 m long,
 eight mats about 2.4 m long and 13 cm wide, four from each readout end to the
 mirrors near the beam plane): 2.4 m from each end to a mirror strip across the
 middle, and the other readout end, the same end turned a half turn about the
-face's normal (its cold box, flex cables and two boards; no side wall). --model
+face's normal (its cold box and flex cables; no side wall). --model
 swaps in a mesh (glTF, STL, OBJ) of the CAD: kept under ~/.cache/outreach_talks/,
 never in git (the repo and Pages are public); only renders are committed.
 
@@ -80,14 +81,14 @@ FLAG = [(0.982, 0.470, 0.007, 1.0), (0.0, 0.144, 0.058, 1.0), (0.533, 0.020, 0.0
 GLOW = FLAG
 # the timeline, in frames at 25 fps: the whole module and the pan down it (PRE frames; none
 # with --short or --end top), then drift in over the boards, engrave the flag, cool, hold
-PRE = 250                  # 10 s: the whole module, the pan down it, the hold with the boards' glow
+PRE = 250                  # 10 s: the whole module, the pan down it, the hold with the cold box's glow
 T_ENGRAVE = (55, 190)      # +2.2-7.6 s: the laser writes the flag line by line, top to bottom
 T_COOL = 45                # a mark cools from white heat to its colour in about 1.8 s
 T_END = 250                # +10 s; the last 0.6 s hold still for the stage to take over
 ROWS = 60                  # raster lines over the flag's height
 # the pan (frames from the clip's start): it leaves the opening view at START and lands at HOLD
 START, HOLD = 13, 180
-# the boards' outline glow: fades in, holds, fades out (frames); no flashing
+# the cold box's outline glow: fades in, holds, fades out (frames); no flashing
 GLOW_T = (165, 183, 232, 250)
 GLOW_K = 10.0              # its emission strength at full (the light blue below; the glare spreads it)
 LIGHT_BLUE = (0.337, 0.552, 1.0)   # #9cc4ff, the deck's accent, in linear light
@@ -485,29 +486,9 @@ def module_end(M, flag_block, far=False):
     # the side wall of the readout box, on the right (the near end's only, as it was drawn)
     if not far:
         box('wall', xs[3] + MAT_W + 0.006, xs[3] + MAT_W + 0.012, BOX_Y[0] - 0.02, 1.4, -0.022, 0.11, M['wall'], 0.0008)
-    # two light injection boards on the mats, each with two optical connectors facing the
-    # cold box, its flex strip running along the fibres, and its fibres
-    parts['lis'] = ((xs[0] + 0.55 * MAT_W, 0.205), (xs[2] + 0.80 * MAT_W, 0.075))
-    for n, (bx, by) in enumerate(parts['lis']):
-        box(f'lisflex{n}', bx - 0.006, bx + 0.006, by + 0.006, by + 0.135, 0.0, 0.0004, M['lisflex'], 0)
-        box(f'lisT{n}', bx - 0.022, bx + 0.022, by + 0.128, by + 0.140, 0.0, 0.0004, M['lisflex'], 0)
-        box(f'lis{n}', bx - 0.013, bx + 0.013, by - 0.011, by + 0.012, 0.0006, 0.0022, M['pcb'], 0.0003)
-        for (cx, cy, w) in ((-0.004, 0.004, 0.0045), (0.005, 0.003, 0.0035), (0.0, -0.004, 0.003)):
-            box('ic', bx + cx - w / 2, bx + cx + w / 2, by + cy - w / 2, by + cy + w / 2, 0.0022, 0.0031, M['chip'], 0.0002)
-        for k in range(10):
-            px, py = bx - 0.010 + (k % 5) * 0.005, by + (0.0095 if k < 5 else -0.0095)
-            box('cap', px - 0.0005, px + 0.0005, py - 0.00025, py + 0.00025, 0.0022, 0.0027, M['cap'], 0.00005)
-        box('pads', bx - 0.012, bx + 0.012, by + 0.0105, by + 0.0115, 0.0022, 0.00225, M['gold'], 0)
-        for s in (-1, 1):
-            cx = bx + s * 0.0055
-            cyl('ferrule', (cx, by - 0.016, 0.0040), (0, 1, 0), 0.0021, 0.010, M['steel'])
-            cyl('nut', (cx, by - 0.0115, 0.0040), (0, 1, 0), 0.0029, 0.002, M['steel'], 6)
-            cyl('boot', (cx, by - 0.025, 0.0040), (0, 1, 0), 0.0016, 0.008, M['boot'])
-            # the fibre: toward the cold box, then along it to the module's edge
-            ey = 0.030 + 0.005 * (n * 2 + (s + 1) / 2)
-            tube(f'fibre{n}', [(cx, by - 0.029, 0.004), (cx, by - 0.05, 0.0028), (cx - 0.02, ey + 0.01, 0.0026),
-                               (cx - 0.07, ey, 0.0026), (X0 - 0.03, ey - 0.002, 0.003), (X0 - 0.12, ey + 0.02, -0.01), (X0 - 0.40, ey + 0.10, -0.03)],
-                 0.0011, M['fibre'])
+    # the light injection system (its boards, VCSELs and the light bars that feed the mats)
+    # sits inside the cold box (owner, 21 Oct: "The light injection system is within this
+    # black coldbox, no need for blue cables"): nothing of it is drawn outside
     return parts
 
 
@@ -527,29 +508,33 @@ def far_end(M):
     box('mirrors', X0, -X0, Y_MID - 0.0013, Y_MID + 0.0013, -0.0016, 0.0002, M['steel'], 0.0002)
 
 
-def outline_glow(boards):
-    """A soft light-blue outline round each light injection board and its connectors, on the
-    mats (owner, 21 Oct: "on the bottom I indicate the light injection system"; no text). It
-    fades in, holds about 3 s and fades out (GLOW_T): one slow pulse, nothing that flashes."""
+def outline_glow():
+    """A soft light-blue outline round the cold box, which holds the light injection system
+    (owner, 21 Oct: "on the bottom I indicate the light injection system"; "The light
+    injection system is within this black coldbox"; no text): a line just outside its
+    outer top edge (over the raised strip), its ends and its inner edge (past the copper).
+    It fades in, holds about 3 s and fades out (GLOW_T): one slow pulse, nothing that flashes."""
     m = emitter('outline', LIGHT_BLUE, 0.0)
     s = m.node_tree.nodes['Emission'].inputs['Strength']
     for f, k in zip(GLOW_T, (0.0, GLOW_K, GLOW_K, 0.0)):
         s.default_value = k
         s.keyframe_insert('default_value', frame=f)
-    for n, (bx, by) in enumerate(boards):
-        # the board (bx +-13 mm, by -11..+12 mm) and its connectors' boots (to by - 29 mm)
-        x0, x1, y0, y1, r = bx - 0.0175, bx + 0.0175, by - 0.034, by + 0.0165, 0.005
-        pts = []
-        for (cx, cy, a0) in ((x1 - r, y1 - r, 0), (x0 + r, y1 - r, 90), (x0 + r, y0 + r, 180), (x1 - r, y0 + r, 270)):
-            for i in range(7):
-                a = math.radians(a0 + 90 * i / 6)
-                pts.append((cx + r * math.cos(a), cy + r * math.sin(a), 0.0012))
+    x0, x1 = X0 - 0.0015, -X0 + 0.0015
+    yo, yi, r = BOX_Y[0] - 0.0008, BOX_Y[1] + 0.0034, 0.004
+    zt, zi = STEP_Z + 0.0006, BOX_Z + 0.0009     # over the strip outside, over the box inside
+    pts = []
+    for (cx, cy, a0) in ((x1 - r, yi - r, 0), (x0 + r, yi - r, 90), (x0 + r, yo + r, 180), (x1 - r, yo + r, 270)):
+        for i in range(7):
+            a = math.radians(a0 + 90 * i / 6)
+            x, y = cx + r * math.cos(a), cy + r * math.sin(a)
+            pts.append((x, y, zt + (zi - zt) * (y - yo) / (yi - yo)))
+    for n, ring in enumerate((pts,)):
         cu = bpy.data.curves.new(f'outline{n}', 'CURVE')
         cu.dimensions = '3D'
-        cu.bevel_depth, cu.bevel_resolution = 0.0006, 4
+        cu.bevel_depth, cu.bevel_resolution = 0.0007, 4
         sp = cu.splines.new('POLY')
-        sp.points.add(len(pts) - 1)
-        for p, q in zip(sp.points, pts):
+        sp.points.add(len(ring) - 1)
+        for p, q in zip(sp.points, ring):
             p.co = (*q, 1.0)
         sp.use_cyclic_u = True
         o = bpy.data.objects.new(f'outline{n}', cu)
@@ -557,8 +542,7 @@ def outline_glow(boards):
         o.data.materials.append(m)
         # it lights nothing round it: only its own glow shows (and the glare's halo)
         o.visible_diffuse = o.visible_glossy = o.visible_transmission = o.visible_shadow = False
-        # and is gone outside its glow (unlit it would be a dark ring; the last frame and its
-        # depth are the 10 s clip's)
+        # and is gone outside its glow (unlit it would be a dark ring in the last frame)
         for f, hide in ((1, True), (GLOW_T[0], False), (GLOW_T[3] + 1, True)):
             o.hide_render = hide
             o.keyframe_insert('hide_render', frame=f)
@@ -666,9 +650,9 @@ def camera(sc, flag):
     t.target, t.track_axis, t.up_axis = aim, 'TRACK_NEGATIVE_Z', 'UP_Y'
     d.dof.focus_object = aim
     fx, fy = flag[0], flag[1]
-    # the module's end as the drawing shows it (all four blocks, the flex cables, both
-    # boards), in to the third block as the laser starts, close on the flag while it
-    # writes, then back a little so the board below shares the last frame
+    # the module's end as the drawing shows it (all four blocks, the flex cables), in to
+    # the third block as the laser starts, close on the flag while it writes, then back a
+    # little (the 19 Oct clip's camera; the last frame's pose is the stage's hand-over)
     keys = [(PRE + 1, (fx - 0.16, 0.30, 0.44), (fx - 0.10, 0.03, 0.0)),
             (T_ENGRAVE[0] - 5, (fx - 0.03, 0.12, 0.16), (fx, fy + 0.01, BOX_Z)),
             (T_ENGRAVE[0] + 60, (fx, 0.022, 0.072), (fx, fy + 0.004, BOX_Z)),
@@ -677,10 +661,10 @@ def camera(sc, flag):
             (T_END, (fx, 0.029, 0.093), (fx, fy + 0.012, BOX_Z))]
     pan = {}
     if PRE:
-        # the pan lands where the 10 s clip opened, looking 45 mm further up the module (the
-        # boards sit inside the frame for their glow), and holds there until frame PRE
+        # the pan lands where the 10 s clip opened (the cold box and its glow in frame) and
+        # holds there until frame PRE
         land = room(keys[0][1], 'module')
-        look = tuple(v + d_ for v, d_ in zip(room(keys[0][2], 'module'), (0.0, 0.045, 0.0)))
+        look = room(keys[0][2], 'module')
         for f in range(1, HOLD + 1):
             pan[f] = pan_pose(f, land, look)
         pan[PRE] = (land, look, VFOV)
@@ -960,7 +944,7 @@ def main():
     parts = module_end(M, a.block)
     far_end(M)
     if PRE:
-        outline_glow(parts['lis'])
+        outline_glow()
         long_lights()
     blk = parts[f'block{a.block}']
     blk.data.materials.clear()

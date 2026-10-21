@@ -2,6 +2,8 @@ import { registerBuilder } from 'slidev-addon-stage'
 import { installStrands } from './strands.js'
 import { installFunnel } from './funnel.js'
 import { installPlots } from './plots.js'
+// slide 12's sun of LHCb's results (setup/sun.js, from OpenData's): `sun`
+import { installSun } from './sun.js'
 import Count from './Count.vue'
 import Strands from './Strands.vue'
 import AfterFlight from './AfterFlight.vue'
@@ -22,6 +24,9 @@ import Grains from './Grains.vue'
 import LisTakeover from './LisTakeover.vue'
 import Soundtrack from './Soundtrack.vue'
 import ClipEnd from './ClipEnd.vue'
+// slide 11: the collaboration photo → its grains → a globe of LHCb's institutes (setup/globe.js)
+import { installGlobe } from './globe.js'
+import CollabGlobe from './CollabGlobe.vue'
 import Drone from './Drone.vue'
 // the LHCb event the shared collision draws by default (lhc-opening's own): the
 // close's detector marks the grains its tracks pass through
@@ -85,6 +90,7 @@ export default ({ app, router }) => {
   installStrands(registerBuilder)
   installFunnel(registerBuilder)
   installPlots(registerBuilder)
+  installSun(registerBuilder)
   installOpening({ app, registerBuilder })
   installCoverCollision(registerBuilder)   // the cover's loop (setup/coverCollision.js)
   installDetector(registerBuilder, { event: EVENT_LB })
@@ -103,5 +109,7 @@ export default ({ app, router }) => {
   app.component('LisTakeover', LisTakeover)
   app.component('Soundtrack', Soundtrack)   // the close's music across its slides
   app.component('ClipEnd', ClipEnd)   // words over a clip's held last frame (slide 27)
+  installGlobe(registerBuilder)   // slide 11's globe of institutes (setup/globe.js)
+  app.component('CollabGlobe', CollabGlobe)
   app.component('Drone', Drone)   // a synthesised deep hum under a slide (slide 27)
 }

@@ -113,16 +113,19 @@ at 25 fps), silent, played once (not looped: the profile only drops the \
 audio). 0-7.2 s the whole SciFi module (2 x 2.4 m of fibre mats, both readout \
 ends) seen from below its lower end on a 70-degree lens, the camera panning \
 slowly down it and in to the lower readout end (lens to 50 degrees); 6.6-10 s \
-it holds there while the two light injection boards get a soft light-blue \
-(#9cc4ff) outline glow, no text (one fade in and out, nothing flashing); \
-10-20 s the 19-20 Oct clip unchanged: in to the cold box, the laser writing \
-the flag (12.2-17.6 s), the same last frame. Rendered by hero/lis_scene.py \
+it holds there while the cold box, which holds the light injection system \
+(owner, 21 Oct: "The light injection system is within this black coldbox, \
+no need for blue cables": no boards, flex strips or blue fibres on the mats \
+any more), gets a soft light-blue (#9cc4ff) outline glow, no text (one fade \
+in and out, nothing flashing); 10-20 s the 19-20 Oct clip's camera: in to \
+the cold box, the laser writing the flag (12.2-17.6 s), the same last view. \
+Rendered by hero/lis_scene.py \
 --end bottom (Blender 4.5 LTS, Cycles, 160 samples, CUDA on the RTX 5080; \
 21 Oct) after the owner's SciFi drawing until the CAD arrives; the frames \
 were joined with ffmpeg (H.264 CRF 12, 25 fps); the raw is that output, \
-not on gdrive. Its last frame is public/figures/lis_last.jpg (the new \
-render's frame 500 is the 10 s clip's frame 250: PSNR 64 dB between the \
-two renders, 46.5 dB against the JPEG; the web encode, 3.3 MB, 42.5 dB), \
+not on gdrive. Its last frame is public/figures/lis_last.jpg (frame 500 \
+of this render, regenerated with its depth and lis.json from the same camera \
+on 21 Oct: only the blue fibres at the frame's top are gone), \
 which <LisTakeover> on „Ačiū“ turns into grains in depth \
 (lis_last.depth.png, setup/data/lis.json)."""
 

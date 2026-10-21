@@ -90,16 +90,34 @@ Spausti nereikia: klipui pasibaigus (po 4:13, kai pasirodo kosminis tinklas ir m
 -->
 
 ---
-space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0, dim: 0, hum: false }
+space:
+  dim: 0
+  sway: 0
+  hum: false
+  cameraRate: [[0, 0], [4, 0], [6, 1]]   # the camera stands still for the dissolve (WebTakeover restarts this when it places the grains), then eases into the path
+  path:   # owner, 21 Oct: "rotate, fly through this point cloud universe"; the frame's knot stands at [30.6, 40.8, -86]
+    - [0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]          # the opener's own pose: the frame is the picture
+    - [8, { at: [30.6, 40.8, -86], dist: 40, yaw: 30, pitch: 10 }]    # a slow turn round the knot: the strands stand in depth
+    - [15, { at: [30.6, 40.8, -86], dist: 30, yaw: 70, pitch: 4 }]    # side on to the frame's web
+    - [22, { at: [10, 36, -112], dist: 34.5, yaw: 60.5, pitch: 2.5 }] # in past the knot
+    - [29, { at: [-10, 38, -128], dist: 25.2, yaw: 61.4, pitch: -6.8 }] # through the web behind it
+    - [36, { at: [30.6, 40.8, -86], dist: 34.2, yaw: -107.1, pitch: 5.4 }] # turned back to the knot from the far side
+    - [46, { at: [30.6, 40.8, -86], dist: 54.9, yaw: -9, pitch: 5.4 }]   # out in front: the whole web, looking down the funnel's axis again
+    - [72, { at: [30.6, 40.8, -86], dist: 50.3, yaw: -5.2, pitch: 4.2 }] # a slow drift until the press
 ---
 
 <WebTakeover />
 
+<!-- facts: cosmic-web-simulation-filaments-voids -->
+
 <!--
-Kalbėtojui. Skaidrė prasideda nuo paskutinio klipo kadro, todėl perėjimo nesimato. Po pusės sekundės tamsa tolygiai pereina į pasaulio foną, o šviesios vietos subyra į grūdelius. Kiekvienas grūdelis stovi savo pikselio regėjimo linijoje, todėl, kol kamera nejuda, grūdeliai sudaro tą patį vaizdą; kitoje skaidrėje jie susibėga į piltuvą ir nusidažo jo erų spalvomis.
+Kalbėtojui. Skaidrė atsiveria pati, kai baigiasi klipas, ir prasideda nuo paskutinio jo kadro, todėl perėjimo nesimato. Po pusės sekundės tamsa tolygiai pereina į pasaulio foną, o šviesios vietos subyra į grūdelius (iki ~4 s). Kiekvienas grūdelis stovi savo pikselio regėjimo linijoje, todėl iš čia jie sudaro tą patį vaizdą; gylis parinktas taip, kad gijos, išeinančios iš ryškaus mazgo vidury, ir erdvėje liktų gijomis — vienos artyn, kitos tolyn.
+Tada kamera skrenda pati (savininkas, 2026 10 21): ~6–14 s lėtai apsuka aplink mazgą, gijos atsiskiria gyliu, o aplink iš tamsos išnyra visas kosminis tinklas tomis pačiomis spalvomis — gijos, spiečiai, tuštumos tarp jų ir oranžinės dujų sankaupos; ~21 s tinklas matomas iš šono; ~28 s kamera praskrenda pro mazgą; ~35 s skrenda per tinklą už jo; ~42 s atsigręžia į mazgą iš kitos pusės; ~52 s atsitraukia priešais visą tinklą ir iki ~78 s dar labai lėtai slenka, tada stovi. Tinklas aplink kadrą sugeneruotas: jis rodo kosminio tinklo pavidalą, ne tikrą dangaus žemėlapį.
+Spausti →, kai būsite pasiruošę (galima ir skrydžio viduryje): kitoje skaidrėje kadro grūdeliai susibėga į piltuvą ir nusidažo jo erų spalvomis, o aplinkinis tinklas užgęsta.
 Sakyti (kol byra): „Visata didžiausiu mastu: galaktikų gijos ir tuštumos tarp jų. Kiekvienas šio vaizdo taškas dabar atsiskiria ir pakimba erdvėje.“
-Techniškai: kadras — public/figures/opener_last.jpg, išsitrauktas komanda pnpm takeover:frame public/videos/nftmc_zoom_web.mp4 (paskutinis klipo kadras — kosminis tinklas).
-(~0,3 min)
+Sakyti (kol skrendame): „Didžiausiu mastu medžiaga išsidėsčiusi gijomis, o tarp jų — beveik tuščios erdvės. Gijos susieina į mazgus, kur galaktikų tankiausia. Toks yra Visatos audinys.“
+Techniškai: kadras — public/figures/opener_last.jpg, išsitrauktas komanda pnpm takeover:frame public/videos/nftmc_zoom_web.mp4 (paskutinis klipo kadras — kosminis tinklas). Kameros kelias — šios skaidrės space.path; grūdeliai ir tinklas aplink — setup/takeover.js (placeWeb, buildCosmos).
+(~1 min)
 -->
 
 ---
@@ -253,39 +271,34 @@ Faktai: LHCb sveria 5 600 t, 21 × 10 × 13 m, 100 m po žeme; artimiausias 
 -->
 
 ---
-space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 22, dim: 0, hum: false }
+space: { at: [56.7, -80, 20], dist: 13, yaw: 0, pitch: 0, sway: 0, dim: 0, hum: false }   # the globe of institutes (station collab) right of the middle, the numbers on the dark left
 ---
 
-<StagePhoto src="figures/lhcb_collaboration.jpg" alt="LHCb kolaboracija LHCb urve po LHCb ženklu, 2022 m. birželio kolaboracijos savaitė" class="frame" />
-
-<div class="stats top">
-<div class="stat"><div class="n">4<small>TB/s</small></div></div>
-<div class="stat"><div class="n">~1 900<small>narių</small></div></div>
-<div class="stat"><div class="n">112<small>institutų</small></div></div>
-<div class="stat"><div class="n">28<small>šalys</small></div></div>
+<CollabGlobe src="figures/lhcb_collaboration.jpg">
+<div class="globe-stats">
+<div class="gs"><span class="n"><Count :to="4" :ms="1200" :delay="0" /></span><span class="u">TB/s</span></div>
+<div class="gs"><span class="n">~<Count :to="1900" :ms="1800" :delay="150" /></span><span class="u">narių</span></div>
+<div class="gs"><span class="n"><Count :to="112" :ms="1800" :delay="300" /></span><span class="u">institutų</span></div>
+<div class="gs"><span class="n"><Count :to="28" :ms="1600" :delay="450" /></span><span class="u">šalys</span></div>
 </div>
+</CollabGlobe>
 
 <!-- facts: lhcb-upgrade1-trigger, lhcb-allen-gpu, lhcb-collaboration-sep-2026, lhcb-readout-32tbps-spc-2026 -->
 
 <!--
-Kalbėtojui. LHCb skaičiais, ant kolaboracijos nuotraukos (CERN-PHOTO-202206-112-6, 2022 m. birželio 17 d. kolaboracijos savaitė, LHCb urve). Ekrane: 4 TB/s, ~1 900 narių, 112 institutų, 28 šalys (LHCb ataskaita CERN Mokslo politikos komitetui, 2026 09 22: 1 891 narys).
+Kalbėtojui. Pirmiausia visu ekranu kolaboracijos nuotrauka (CERN-PHOTO-202206-112-6, 2022 m. birželio 17 d. kolaboracijos savaitė, LHCb urve), apie 2 s. Tada ji subyra į šviesos grūdelius, kaip įžangos paskutinis kadras, ir per kelias sekundes jie suskrenda į lėtai besisukantį Žemės gaublį: pakrantės — blyškūs grūdeliai, LHCb institutų miestai — ryškūs taškai, Vilniaus taškas šiek tiek ryškesnis (be užrašų). Gaublys sukasi kaip Žemė: Europa slenka į dešinę, iš kairės ateina Amerika. Kairėje, tamsoje, suskaičiuoja skaičiai. Ekrane: 4 TB/s, ~1 900 narių, 112 institutų, 28 šalys (LHCb ataskaita CERN Mokslo politikos komitetui, 2026 09 22: 1 891 narys).
 Sakyti (pirmiausia): „Mus — beveik du tūkstančiai žmonių iš 112 institutų 28 šalyse.“
 Sakyti: „Šiandien mūsų eksperimento problema yra duomenų kiekis. LHCb detektorius kas sekundę pagamina apie 4 terabaitus. Tiek užrašyti neįmanoma, todėl reikia iš karto nuspręsti, ką pasilikti. Nuo 2022 m. tai daro vaizdo plokštės su tais pačiais lustais kaip žaidimų kompiuteriuose. LHCb — pirmasis eksperimentas, kurio visa pirmoji atrankos pakopa veikia vaizdo plokštėse. Į diską patenka maždaug vienas baitas iš keturių šimtų.“
 Faktai: GPU — NVIDIA RTX A5000 (profesionali žaidimų lusto versija); vietų ~500, bazinei HLT1 reikia ~200; antroji pakopa — >3 000 serverių; į diską ~10 GB/s.
 Šaltiniai: LHCb, JINST 19 (2024) P05065; CERN EP Newsletter (2020); T. Gershon, LHCb ataskaita CERN SPC, 2026 09 22 (32 Tb/s = 4 TB/s; tai apie 3 % pasaulio tarptautinio interneto pralaidumo, 997 Tb/s 2022 m., TeleGeography).
+Gaublys: pakrantės ir sausuma — Natural Earth 1:50 mln. ir 1:110 mln. (viešasis domenas). Institutai — CERN Greybook LHCb komandų sąrašas (greybook.cern.ch, 2026 10 21): 111 institutų 92 miestuose 28 šalyse (CERN — Šveicarijoje); kiekvienas taškas — instituto miestas (Natural Earth 1:10 mln. gyvenvietės; 15 mažesnių miestelių — OpenStreetMap). LHCb skaičiuoja 112 institutų, Greybook sąraše jų 111 (vieno nėra); ekrane — LHCb skaičius.
 Vaizdas: CERN-PHOTO-202206-112-6, nuotr. Piotr Traczyk / CERN (CERN sąlygos).
 Jei klausia apie atviruosius duomenis: visus 2011–2012 m. LHCb duomenis (800 TB) viešam naudojimui parengiau. Nuo 2023 m. gruodžio juos gali parsisiųsti bet kas, o nuo 2026 m. kovo per internetinę paslaugą galima gauti ir antrojo etapo duomenis, iš viso daugiau nei 4 PB.
 (~0,7 min)
 -->
 
 ---
-space:
-  at: [60, -30, 50]
-  dim: 0
-  hum: false
-  path:   # a slow drift over the middle of the cards (results station, space.json)
-    - [0, { at: [58.4, -31.4, 49], dist: 15, yaw: 9, pitch: 5 }]
-    - [24, { at: [61.2, -31.8, 49], dist: 13, yaw: -7, pitch: 2 }]   # aimed low: the cards ride above the count
+space: { at: [60, -30, 50], dist: 26, yaw: 0, pitch: 11, sway: 1.5, dim: 0, hum: false }   # the sun of results (results station, setup/sun.js): the pose its layout was searched for; pitch 11 keeps the cosmos station's galaxy above the frame
 ---
 
 <div class="readout right">
@@ -297,7 +310,7 @@ space:
 <!-- facts: lhcb-papers-2026-10, lhcb-figure-2026-010-hadrons -->
 
 <!--
-Kalbėtojui. Kamera lėtai plaukia tarp LHCb rezultatų grafikų iš paskelbtų straipsnių (CC BY 4.0, apkarpyti, perspalvinti): pentakvarkai Pc(4312), Pc(4440), Pc(4457) (PRL 122, 2019), CP pažeidimas barionuose (Nature 643, 2025; rodoma tik Λb⁰ pusė: antibarionų pusė atrodė kaip pakartota, todėl nukirpta (savininkas, 2026 10 13); smailės aukštis nėra tas 2,45 % skirtumas — taip nesakyti), Bs⁰ osciliacijos (Nature Physics 18, 2022), Tcc⁺ tetrakvarkas (Nature Physics 18, 2022), Ωcc⁺ (arXiv:2609.21921, 2026), Bs⁰→μ⁺μ⁻ (PRL 118, 2017), R(K) ir R(K*) ant Standartinio modelio linijos (PRD 108, 2023) ir LHCb-FIGURE-2026-010: 76 LHCb atrasti hadronai.
+Kalbėtojui. LHCb rezultatai kaip saulė (savininkas, 2026 10 21: kaip OpenData kalboje): kamerai atskridus, viduryje susitelkia šviesus grūdelių branduolys — LHCb darbas, — ir iš jo į visas puses vienas po kito išbėga grūdelių spinduliai. Kiekvienas baigiasi rezultato grafiku iš paskelbto straipsnio; grūdeliai nusileidžia ant grafiko linijų ir trumpai sužiba. Visa saulė lėtai sukasi (vienas apsisukimas per 2,5 min): grafikai skrieja aplink branduolį, visada stati ir atsukti į salę, viršuje arčiau ir didesni, apačioje toliau, mažesni ir blankesni; kas priartėja prie skaičiaus, prigęsta. Grafikai (CC BY 4.0, apkarpyti, perspalvinti): pentakvarkai Pc(4312), Pc(4440), Pc(4457) (PRL 122, 2019), CP pažeidimas barionuose (Nature 643, 2025; rodoma tik Λb⁰ pusė: antibarionų pusė atrodė kaip pakartota, todėl nukirpta (savininkas, 2026 10 13); smailės aukštis nėra tas 2,45 % skirtumas — taip nesakyti), Bs⁰ osciliacijos (Nature Physics 18, 2022), Tcc⁺ tetrakvarkas (Nature Physics 18, 2022), Ωcc⁺ (arXiv:2609.21921, 2026), Bs⁰→μ⁺μ⁻ (PRL 118, 2017), R(K) ir R(K*) ant Standartinio modelio linijos (PRD 108, 2023) ir LHCb-FIGURE-2026-010: 76 LHCb atrasti hadronai.
 Sakyti: „Ką mes randame? Iki šiol LHCb paskelbė 875 mokslinius straipsnius. Tarp jų — penkių kvarkų dalelės, pentakvarkai, kuriuos atradome 2015 m., ir pernai pirmą kartą pamatytas materijos ir antimaterijos skirtumas barionuose. Iš viso LHCb atrado 76 naujas daleles — daugiau nei bet kuris kitas eksperimentas.“
 Skaičių prieš kalbą patikrinti (2026 10 22) LHCb viešųjų rezultatų sąraše ir pataisyti, jei pasikeitė.
 Šaltiniai: LHCb viešieji rezultatai (lhcbproject.web.cern.ch/Publications, LHCb Glance), INSPIRE (875: 860 su žurnalo nuoroda ir 15 recenzuojami, 2026 10 12); grafikai — LHCb kolaboracija, CC BY 4.0, apkarpyti ir perspalvinti (šviesūs ant juodo, kaip OpenData kalboje).
@@ -659,8 +672,8 @@ space: { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim
 <!-- facts: lhcb-scifi, lhcb-scifi-layout, lhcb-scifi-channels, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
 
 <!--
-Kalbėtojui. Visas SciFi sekiklio modulis, stovintis kaip LHCb: beveik 5 m ilgio ir apie 52 cm pločio scintiliacinių skaidulų kilimėlių lakštas (savininkas, 2026 10 21: „show the full SciFi module panning slowly (a long scifi sheet) and then on the bottom I indicate the light injection system“). Klipas 20 s, be garso: 0–7 s kamera iš apačios rodo visą modulį ir lėtai leidžiasi juo žemyn iki apatinio galo; 7–10 s ji stovi, o dvi šviesos įvedimo plokštelės su lazeriniais diodais ir skaidulomis apsibrėžia švelniai šviečiančiu šviesiai mėlynu kontūru (nuo 6,6 iki 10 s, be užrašų) — tada, ties ~7 s, jas ir įvardykite; 10–12 s kamera priartėja prie apatinio modulio galo šaltosios dėžės (savininkas, 2026 10 20: „do the Lithuanian flag at the bottom of scifi“), 12–17,5 s lazeris ant jos išgraviruoja Lietuvos vėliavą (savininkas, 2026 10 19), paskui vėliava atvėsta iki savo spalvų, kamera šiek tiek atsitraukia ir nuo 19,4 s stovi. Vaizdas sukurtas Blender programa pagal SciFi brėžinį, ne nuotrauka. Paskutinis kadras lieka, kol paspaudžiama toliau, o tada virsta grūdeliais ir kamera atsitraukia į visą LHCb.
-Sakyti (per modulį, 0–7 s): „LHCb sekiklyje — daugiau nei 11 000 km scintiliacinių skaidulų ir 524 288 kanalai, kurie registruoja jose kilusią šviesą.“ Kai plokštelės nušvinta (~7 s): „Kad visi kanalai būtų sukalibruoti, kiekvieno modulio gale įrengta šviesos įvedimo sistema: lazeriniai diodai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupės darbai LHCb kolaboracijai apima ir šį sekiklį, ir šią sistemą.“
+Kalbėtojui. Visas SciFi sekiklio modulis, stovintis kaip LHCb: beveik 5 m ilgio ir apie 52 cm pločio scintiliacinių skaidulų kilimėlių lakštas (savininkas, 2026 10 21: „show the full SciFi module panning slowly (a long scifi sheet) and then on the bottom I indicate the light injection system“). Klipas 20 s, be garso: 0–7 s kamera iš apačios rodo visą modulį ir lėtai leidžiasi juo žemyn iki apatinio galo; 7–10 s ji stovi, o apatinio galo šaltoji dėžė, kurios viduje yra šviesos įvedimo sistema (plokštelės su lazeriniais diodais; savininkas, 2026 10 21: „The light injection system is within this black coldbox, no need for blue cables“), apsibrėžia švelniai šviečiančiu šviesiai mėlynu kontūru (nuo 6,6 iki 10 s, be užrašų) — tada, ties ~7 s, ją ir įvardykite; 10–12 s kamera priartėja prie apatinio modulio galo šaltosios dėžės (savininkas, 2026 10 20: „do the Lithuanian flag at the bottom of scifi“), 12–17,5 s lazeris ant jos išgraviruoja Lietuvos vėliavą (savininkas, 2026 10 19), paskui vėliava atvėsta iki savo spalvų, kamera šiek tiek atsitraukia ir nuo 19,4 s stovi. Vaizdas sukurtas Blender programa pagal SciFi brėžinį, ne nuotrauka. Paskutinis kadras lieka, kol paspaudžiama toliau, o tada virsta grūdeliais ir kamera atsitraukia į visą LHCb.
+Sakyti (per modulį, 0–7 s): „LHCb sekiklyje — daugiau nei 11 000 km scintiliacinių skaidulų ir 524 288 kanalai, kurie registruoja jose kilusią šviesą.“ Kai šaltoji dėžė nušvinta (~7 s): „Kad visi kanalai būtų sukalibruoti, kiekvieno modulio gale įrengta šviesos įvedimo sistema: lazeriniai diodai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupės darbai LHCb kolaboracijai apima ir šį sekiklį, ir šią sistemą.“
 Faktai: VCSEL lazeriai (670 nm), po du vienoje plokštelėje; kiekvienas SiPM kanalas pamato nuo vieno iki penkių fotoelektronų, pagal tai nustatomi PACIFIC lusto slenksčiai. Kiek iš viso plokštelių, nesakyti (viešai nepaskelbta). Apie Vilnių — ne daugiau, nei parašyta (grupės 2024 10 03 susitikimo darbotvarkė).
 Šaltiniai: LHCb Upgrade I, JINST 19 (2024) P05065, 6.5.7 sk.; D. Berninghoff, daktaro disertacija, Heidelbergo universitetas, 2022, 4.5 sk.; indico.cern.ch/event/1461467.
 (~0,4 min)
@@ -676,7 +689,7 @@ space:
   hum: false
   rate: [[0, 0.7], [2.4, 0.5]]   # LisTakeover slows it almost to a stop as the bunches cross (~18 s), then runs it on at 0.6
   cameraRate: 1
-  path:   # hero/close_path.py: out of the module's end, the crane down to eye level in front of the person (17,5 s), the walk upstream along it (29 s), the pull-back to the whole detector (43,5 s), the pull-out to the LHC ring (48,4 s)
+  path:   # hero/close_path.py: out of the module's end, the crane down to eye level in front of the person (17,5 s), the walk upstream along it (29 s), the pull-back to the whole detector (43,5 s), the pull-out to the accelerator complex (48,4 s)
     - [0, { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]
     - [2, { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]
     - [5.5, { at: [9.6, -482, 0.8], dist: 7, yaw: -80, pitch: 4 }]
@@ -706,29 +719,29 @@ space:
     - [41.5, { at: [11.6, -477.803, 0], dist: 42.412, yaw: 2.959, pitch: -4.03 }]
     - [43, { at: [11.526, -477.205, 0], dist: 46.601, yaw: 0.757, pitch: -2.807 }]
     - [43.5, { at: [11.5, -477, 0], dist: 48.042, yaw: 0, pitch: -2.386 }]
-    - [43.85, { at: [11.373, -477.033, -0.974], dist: 50.166, yaw: 0, pitch: -1.3 }]
-    - [44.2, { at: [11.124, -477.098, -2.879], dist: 54.323, yaw: 0, pitch: 0.699 }]
-    - [44.55, { at: [10.747, -477.197, -5.765], dist: 60.616, yaw: 0, pitch: 3.451 }]
-    - [44.9, { at: [10.229, -477.332, -9.727], dist: 69.26, yaw: 0, pitch: 6.798 }]
-    - [45.25, { at: [9.554, -477.508, -14.89], dist: 80.521, yaw: 0, pitch: 10.581 }]
-    - [45.6, { at: [8.708, -477.728, -21.367], dist: 94.651, yaw: 0, pitch: 14.64 }]
-    - [45.95, { at: [7.681, -477.996, -29.222], dist: 111.784, yaw: 0, pitch: 18.817 }]
-    - [46.3, { at: [6.482, -478.309, -38.398], dist: 131.801, yaw: 0, pitch: 22.952 }]
-    - [46.65, { at: [5.142, -478.659, -48.652], dist: 154.169, yaw: 0, pitch: 26.888 }]
-    - [47, { at: [3.728, -479.027, -59.472], dist: 177.771, yaw: 0, pitch: 30.464 }]
-    - [47.35, { at: [2.348, -479.387, -70.03], dist: 200.801, yaw: 0, pitch: 33.523 }]
-    - [47.7, { at: [1.152, -479.7, -79.188], dist: 220.779, yaw: 0, pitch: 35.904 }]
-    - [48.05, { at: [0.312, -479.919, -85.614], dist: 234.795, yaw: 0, pitch: 37.45 }]
-    - [48.4, { at: [0, -480, -88], dist: 240, yaw: 0, pitch: 38 }]
+    - [43.85, { at: [11.332, -477.044, 0.835], dist: 49.536, yaw: -2.421, pitch: -1.246 }]
+    - [44.2, { at: [11.008, -477.128, 2.44], dist: 52.407, yaw: -6.875, pitch: 0.852 }]
+    - [44.55, { at: [10.531, -477.253, 4.804], dist: 56.635, yaw: -13.008, pitch: 3.74 }]
+    - [44.9, { at: [9.899, -477.418, 7.937], dist: 62.239, yaw: -20.466, pitch: 7.253 }]
+    - [45.25, { at: [9.109, -477.624, 11.853], dist: 69.243, yaw: -28.896, pitch: 11.223 }]
+    - [45.6, { at: [8.162, -477.871, 16.546], dist: 77.638, yaw: -37.942, pitch: 15.483 }]
+    - [45.95, { at: [7.067, -478.156, 21.97], dist: 87.341, yaw: -47.25, pitch: 19.867 }]
+    - [46.3, { at: [5.849, -478.474, 28.008], dist: 98.142, yaw: -56.466, pitch: 24.207 }]
+    - [46.65, { at: [4.55, -478.813, 34.447], dist: 109.658, yaw: -65.237, pitch: 28.338 }]
+    - [47, { at: [3.238, -479.155, 40.95], dist: 121.291, yaw: -73.207, pitch: 32.091 }]
+    - [47.35, { at: [2.006, -479.477, 47.056], dist: 132.213, yaw: -80.023, pitch: 35.301 }]
+    - [47.7, { at: [0.971, -479.747, 52.189], dist: 141.394, yaw: -85.329, pitch: 37.8 }]
+    - [48.05, { at: [0.261, -479.932, 55.709], dist: 147.69, yaw: -88.773, pitch: 39.422 }]
+    - [48.4, { at: [0, -480, 57], dist: 150, yaw: -90, pitch: 40 }]
 ---
 
 <LisTakeover><h1>Ačiū</h1></LisTakeover>
 <Soundtrack :level="0.6" resync />
 
-<!-- facts: lhcb-detector-size, lhcb-hlt1-30mhz, lhcb-trigger-5tbs-10gbs -->
+<!-- facts: lhcb-detector-size, lhcb-hlt1-30mhz, lhcb-trigger-5tbs-10gbs, cern-lhc-size-cost, cern-fcc-study -->
 
 <!--
-Kalbėtojui. Klipo paskutinis kadras (vėliava ant apatinės šaltosios dėžės, SciFi apačioje) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių — taškų debesį pagal tikrąją geometriją (savininkas, 2026 10 21: „let's get back to point cloud“); vėliava lieka ženklu ten, kur stovi SciFi modulis, visą laiką atsisukusi į žiūrovus, geltona juosta viršuje (savininkas, 2026 10 21: „with lithuanian flag maintaining the orientation correctly“). Kamera nusileidžia ant ertmės grindų prie miuonų sienos, kalbėtojo akių aukštyje (1,71 m, ūgis 1,83 m), 7,6 m priešais žmogų mastui (1,83 m, toks pat taškų debesis): miuonų siena iškyla virš kadro, o detektorius tolsta visais savo 21 m iki susidūrimo taško kairėje (savininkas, 2026 10 20: „see the huge scale of lhcb … first person view at eye level“; „look at it side on from the middle. From where that person stands. It can be me, 183cm in height“; 2026 10 21: „we want to really reveal the vast scale of it“). Kamerai nusileidus, kartu su muzikos kulminacija (~18 s), tame taške susikerta tikro LHCb susidūrimo protonų paketai (savininkas: „LHCb collision within lhcb“): laikas beveik sustoja, tada susidūrime gimusios dalelės lekia per detektorių link žiūrovų, ir kiekviena jo dalis sušvinta, kai jos ją pasiekia. Kamera lėtai eina išilgai detektoriaus (~18–29 s), tada ilgai ir lėtai traukiasi ir kyla, kol matyti visas detektorius ir mažytis žmogus prie jo kojos (~43 s) (savininkas, 2026 10 20: „don't need to rush to zoom out“). Tuo metu (~30 s) susidūrimai kartojasi vis dažniau, kol jų blyksniai susilieja ir detektorius ima švytėti tolygiai (savininkas, 2026 10 20: „40 million collisions a second“): ryšuliai LHCb susikerta 40 mln. kartų per sekundę, ir visas detektorius nuskaitomas kiekvieną kartą. Su antra muzikos kulminacija (~42 s) virš detektoriaus greta susirenka LHCb logotipas ir Lietuvos vėliava. Tada (~44–48 s) kamera traukiasi toliau ir kyla: LHCb susitraukia į tašką, aplink jį išnyra visas LHC žiedas, o logotipas ir vėliava pakyla virš žiedo (savininkas, 2026 10 21: „can show the accelerator as well, so this doesn't look isolated, it's a part of huge infrastructure“); kamerai sustojus virš žiedo (~48 s), žiedo viduryje pasirodo „Ačiū“, o LHCb vieta žiede (8-asis taškas) pažymėta šviesiu tašku. Žiedas nupieštas ne tikru masteliu (jo ilgis 27 km, o LHCb — 21 m): jis rodo, kur LHCb stovi. Viskas lieka per klausimus. Muzika po minutės pati nutyla.
+Kalbėtojui. Klipo paskutinis kadras (vėliava ant apatinės šaltosios dėžės, SciFi apačioje) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių — taškų debesį pagal tikrąją geometriją (savininkas, 2026 10 21: „let's get back to point cloud“); vėliava lieka ženklu ten, kur stovi SciFi modulis, visą laiką atsisukusi į žiūrovus, geltona juosta viršuje (savininkas, 2026 10 21: „with lithuanian flag maintaining the orientation correctly“). Kamerai leidžiantis (~13 s), ją pakeičia tikro dydžio Lietuvos vėliava (2,4 × 1,44 m) apačioje ant RICH2 šono, išilgai detektoriaus (savininkas, 2026 10 21: „the lithuanian flag needs to point the direction of lhcb and be smaller (so becomes real scale to the detector)“). Kamera nusileidžia ant ertmės grindų prie miuonų sienos, kalbėtojo akių aukštyje (1,71 m, ūgis 1,83 m), 7,6 m priešais žmogų mastui (1,83 m, toks pat taškų debesis): miuonų siena iškyla virš kadro, o detektorius tolsta visais savo 21 m iki susidūrimo taško kairėje (savininkas, 2026 10 20: „see the huge scale of lhcb … first person view at eye level“; „look at it side on from the middle. From where that person stands. It can be me, 183cm in height“; 2026 10 21: „we want to really reveal the vast scale of it“). Kamerai nusileidus, kartu su muzikos kulminacija (~18 s), tame taške susikerta tikro LHCb susidūrimo protonų paketai (savininkas: „LHCb collision within lhcb“): laikas beveik sustoja, tada susidūrime gimusios dalelės lekia per detektorių link žiūrovų, ir kiekviena jo dalis sušvinta, kai jos ją pasiekia. Kamera lėtai eina išilgai detektoriaus (~18–29 s), tada ilgai ir lėtai traukiasi ir kyla, kol matyti visas detektorius ir mažytis žmogus prie jo kojos (~43 s) (savininkas, 2026 10 20: „don't need to rush to zoom out“). Tuo metu (~30 s) susidūrimai kartojasi vis dažniau, kol jų blyksniai susilieja ir detektorius ima švytėti tolygiai (savininkas, 2026 10 20: „40 million collisions a second“): ryšuliai LHCb susikerta 40 mln. kartų per sekundę, ir visas detektorius nuskaitomas kiekvieną kartą. Su antra muzikos kulminacija (~42 s) virš detektoriaus susirenka LHCb logotipas. Tada (~44–48 s) kamera traukiasi toliau, kyla ir pasisuka: LHCb kartu su vėliava susitraukia į tašką, ir aplink jį išnyra visas CERN greitintuvų kompleksas tikrosiomis tarpusavio proporcijomis, išdėstytas apytiksliai kaip FCC žemėlapyje (27 skaidrė): LHC žiedas (26,7 km) su dviem priešpriešiais skriejančiais pluoštais (žydru ir baltu), jo viduje SPS (beveik 7 km), šalia PS ir pernešimo linijos į LHC, punktyru — siūlomas FCC žiedas (90,7 km); logotipas pakyla į kadro viršų (savininkas, 2026 10 21: „can show the accelerator as well, so this doesn't look isolated, it's a part of huge infrastructure“; „still want to see LHC, FCC, and 2 beams circulating“; „So the full accelerator complex (much like slide 27)“). Kamerai sustojus (~48 s), FCC žiedo viduryje pasirodo „Ačiū“, o LHCb vieta LHC žiede (8-asis taškas) pažymėta šviesiu tašku. Pavadinimų ekrane nėra: žiedus įvardyti žodžiu (kairėje mažesnis — LHC, dešinėje didysis punktyrinis — FCC). LHCb ir kompleksas nupiešti skirtingu masteliu (LHCb ilgis 21 m): kompleksas rodo, kur LHCb stovi. Pluoštai sukasi tol, kol vyksta klausimai. Viskas lieka per klausimus. Muzika po minutės pati nutyla.
 Nuorodų ekrane nėra: licencijų reikalaujamos nuorodos — kitame puslapyje, kurio nerodyti (savininkas, 2026 10 19: „We don't need credits at the last slide“).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Faktai (jei paklaus apie švytėjimą): ryšuliai LHCb susikerta 40 MHz dažniu; 3-iajame etape vidutiniškai 30 mln. kartų per sekundę susikirtime būna susidūrimų, ir LHCb nuskaito visą detektorių kiekvieną kartą — apie 5 TB/s į programinį trigerį, saugoti lieka apie 10 GB/s (maždaug vienas baitas iš 500).
@@ -739,7 +752,7 @@ Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaid
 
 ---
 class: credits-page
-space: { at: [0, -480, -88], dist: 240, yaw: 0, pitch: 38, dim: 0.7, ambient: 0, hum: false }   # the close's last view: the LHC ring from above
+space: { at: [0, -480, 57], dist: 150, yaw: -90, pitch: 40, dim: 0.7, ambient: 0, hum: false }   # the close's last view: the accelerator complex from above
 ---
 
 <Grains :set="{ det: 1, lhcbLogo: 1, ltFlag: 1 }" />

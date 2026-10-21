@@ -1,8 +1,10 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
-import { sampleFrame, placeAlongRays, makeGrains, setPositions, setTargets } from './takeover.js'
+import { Vector3 } from 'three'
+import { sampleFrame, placeWeb, buildCosmos, makeGrains, makeCosmos, setPositions, setTargets, diskCheck } from './takeover.js'
 import { funnelSeq } from './funnel.js'
+import { disk as diskLatch } from './afterCover.js'
 
 // <WebTakeover src="figures/opener_last.jpg" />, on the slide after the opener.
 // The opener ends on the cosmic web; this slide opens on that same last frame,
@@ -12,15 +14,24 @@ import { funnelSeq } from './funnel.js'
 // next slide moves the camera and the grains fly into the funnel (funnel.js
 // funnelSeq): the funnel is hidden while the web stands here, and the step from
 // here to the next slide plays the prologue.
+// After the dissolve (owner, 21 Oct: "rotate, fly through this point cloud universe … and
+// then I will manually switch to the funnel") the slide's own `path` turns the camera and
+// flies it through the web: the frame's grains stand in depth as a node of the cosmic web
+// (takeover.js placeWeb), and a procedural web in the frame's colours (buildCosmos) fills
+// the space round it, coming in as the camera leaves the frame's viewpoint. Its
+// `cameraRate` holds the camera still for the dissolve.
 // Printed, in the overview and without the world it is the still frame.
 const props = defineProps({
   src: { type: String, default: 'figures/opener_last.jpg' },
-  grains: { type: Number, default: 280000 },   // a frame lit all over (a galaxy disk) needs the density
-  near: { type: Number, default: 14 },
-  far: { type: Number, default: 46 },
+  grains: { type: Number, default: 360000 },   // at tier 0; fewer on a lower tier (a phone)
+  cosmos: { type: Number, default: 380000 },   // the web round the frame, at tier 0
+  cosmosGain: { type: Number, default: 1.65 },  // its grains, seen from 20–100 units, need more light than the frame's
+  cosmosSize: { type: Number, default: 1.3 },
+  near: { type: Number, default: 12 },
+  far: { type: Number, default: 56 },
   ms: { type: Number, default: 3200 },     // the dissolve
   hold: { type: Number, default: 450 },    // the still frame before it starts
-  size: { type: Number, default: 0.45 },
+  size: { type: Number, default: 0.4 },     // finer than the 0.45 of 280 000: the same light, crisper strands
   gain: { type: Number, default: 1.3 },    // grains add up; 140k grains at 0.85 left a lit-all-over frame at a fifth of its light
   gamma: { type: Number, default: 1.0 },   // density ~ brightness^gamma
 })
@@ -34,7 +45,7 @@ const fading = ref(false)        // … or until the plate does (below)
 const overlay = ref(null)        // the dissolving copy, fixed over the slide
 const box = ref({ left: 0, top: 0, width: 0, height: 0 })
 
-let img = null, sample = null, raf = 0, run = 0, gl = null
+let img = null, raf = 0, run = 0, gl = null
 // the copy's WebGL context lives only while it dissolves: a second context beside the
 // world's the rest of the talk raises the odds of a context loss on a phone. A released
 // context cannot be had again from the same canvas, so each takeover gets a new one.
@@ -57,6 +68,30 @@ function stage() {
   return { api, h, camera, canvas }
 }
 const frame = () => new Promise((r) => requestAnimationFrame(() => r()))
+
+// The grains, made once per tier (a rebuilt world comes back a tier lower): fewer on a lower
+// tier, each a little larger so the picture keeps its light. The frame sampled at full
+// resolution (the strands' own width); the cosmos is built in the takeover camera's frame.
+// Both are worked out under the opener when they can be (the `disk` latch: the clip covers
+// the screen and the world rests), so the step to this slide does not wait on them.
+const SHARE = [1, 0.7, 0.4, 0.25]
+let made = null
+function grainsFor(tier, image) {
+  if (made && made.tier === tier) return made
+  const k = SHARE[Math.min(SHARE.length - 1, tier)]
+  const sample = sampleFrame(image, { n: Math.round(props.grains * k), gamma: props.gamma, w: 1920, h: 1080 })
+  const cosmos = buildCosmos(sample, { n: Math.round(props.cosmos * k) })
+  made = { tier, sample, cosmos, size: props.size / Math.sqrt(k) }
+  return made
+}
+let offWarm = null
+function warm() {
+  ready.then((image) => {
+    if (!image || made) return
+    const go = () => { if (!made) grainsFor(stage()?.h.tier ?? 0, image) }
+    if (typeof requestIdleCallback === 'function') requestIdleCallback(go, { timeout: 4000 }); else setTimeout(go, 500)
+  })
+}
 
 // the world mounts with the deck and may not be up yet (a reload on this slide)
 async function waitStage(id) {
@@ -122,13 +157,38 @@ async function takeOver() {
   if (sp) s.api.setPose(sp, { immediate: true })
   await frame(); await frame()
   if (id !== run) return
-  // the grains: made once, placed again on every arrival from the camera as it is now
-  sample ||= sampleFrame(image, { n: props.grains, gamma: props.gamma })
+  // the grains: made once per tier, placed again on every arrival from the camera as it is now
+  const g = grainsFor(s.h.tier ?? 0, image)
   let pts = s.h.scene.getObjectByName('takeover-web')
-  if (!pts) { pts = makeGrains(sample, { size: props.size, gain: props.gain }); s.h.scene.add(pts) }
+  if (pts && pts.userData.tier !== g.tier) {
+    s.h.scene.remove(pts)
+    pts.traverse((o) => { o.geometry?.dispose(); o.material?.dispose() })
+    pts = null
+  }
+  if (!pts) { pts = makeGrains(g.sample, { size: g.size, gain: props.gain }); pts.userData.tier = g.tier; s.h.scene.add(pts) }
   const u0 = pts.material.uniforms
   u0.uReveal.value = 0; u0.uMorph.value = 0; u0.uFade.value = 1; pts.visible = true
-  setPositions(pts, placeAlongRays(sample, s.camera, box.value, s.canvas.getBoundingClientRect(), { near: props.near, far: props.far }))
+  const placed = placeWeb(g.sample, s.camera, box.value, s.canvas.getBoundingClientRect(), { near: props.near, far: props.far })
+  setPositions(pts, placed.pos, placed.depth)
+  // the cosmos round it, in the world from this same camera; a child of the web's grains
+  const old = pts.getObjectByName('takeover-cosmos')
+  if (old) { pts.remove(old); old.geometry.dispose(); old.material.dispose() }
+  const cos = makeCosmos(g.cosmos, s.camera.matrixWorld, { gain: props.cosmosGain, size: props.cosmosSize * g.size / props.size })
+  pts.add(cos)
+  // it comes in as the camera leaves the frame's viewpoint (seen from there the picture
+  // stays the picture), and goes as the web's grains fly into the funnel
+  const P0 = s.camera.position.clone(), D0 = s.camera.getWorldDirection(new Vector3()), dir = new Vector3()
+  console.warn('WT-DEBUG placed', P0.toArray().map((v) => v.toFixed(1)).join(','), (s.h.tier ?? 0), g.cosmos.n)
+  pts.userData.frame = (r, camera) => {
+    const a = camera.position.distanceTo(P0) / 6 + Math.acos(Math.min(1, Math.max(-1, camera.getWorldDirection(dir).dot(D0)))) / 0.15
+    const x = Math.min(1, a), cu = cos.material.uniforms
+    cu.uAway.value = x * x * (3 - 2 * x) * Math.min(1, u0.uReveal.value)
+    u0.uAway.value = x * x * (3 - 2 * x)
+    const m = Math.min(1, u0.uMorph.value / 0.3)
+    cu.uFade.value = 1 - m * m * (3 - 2 * m)
+    diskCheck(pts, funnelSeq.parts)
+    if (!pts.userData.dbg || performance.now() - pts.userData.dbg > 5000) { pts.userData.dbg = performance.now(); console.warn('WT-DEBUG frame', camera.position.toArray().map((v) => v.toFixed(1)).join(','), cu.uAway.value.toFixed(2), u0.uReveal.value.toFixed(2), cos.visible, pts.visible) }
+  }
   // under the copy: the web stands alone until its grains make the funnel
   funnelSeq.hide()
   still.value = false
@@ -207,7 +267,8 @@ function releaseGl() { gl?.getExtension('WEBGL_lose_context')?.loseContext(); gl
 // where the grains go in the funnel: worked out once, while the web stands (or at the
 // step, if it comes before the dissolve ends)
 function prepare(pts) {
-  if (!pts || pts.userData.targets || !sample) return
+  const sample = made?.sample
+  if (!pts || pts.userData.targets || !sample || pts.userData.tier !== made.tier) return
   const tg = funnelSeq.targets(sample.uv, sample.n, box.value.width / Math.max(1, box.value.height))
   if (tg) setTargets(pts, tg)
 }
@@ -219,6 +280,7 @@ const onRebuilt = () => { if (live.value && nav.currentSlideNo?.value === ($page
 // the plate layer can come after the slide's arrival (the stage decides its fallback late)
 const onFallback = () => { if (plated()) onRebuilt() }
 onMounted(() => {
+  if (live.value) offWarm = diskLatch.when(warm)
   window.addEventListener('slidev-stage:rebuilt', onRebuilt)
   window.addEventListener('slidev-stage:fallback', onFallback)
   if (live.value && nav.currentSlideNo?.value === ($page?.value ?? $page)) takeOver()
@@ -232,14 +294,15 @@ onSlideLeave(() => {
   const p = stage()?.h.scene.getObjectByName('takeover-web')
   if (p) p.material.uniforms.uReveal.value = 1
 })
-onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); window.removeEventListener('slidev-stage:fallback', onFallback); run++; cancelAnimationFrame(raf); releaseGl() })
+onUnmounted(() => { offWarm?.(); window.removeEventListener('slidev-stage:rebuilt', onRebuilt); window.removeEventListener('slidev-stage:fallback', onFallback); run++; cancelAnimationFrame(raf); releaseGl() })
 // The funnel does not exist before the web's grains make it (owner, 13 Oct: not
 // floating on the cover): hidden on every slide before this one, hidden here (takeOver),
 // made on the step from here to the next slide (the prologue), whole on any other
 // arrival after it. The live slide drives it; a window without one (the presenter's)
 // lets its own instances do the hiding and showing. The grains are drawn only here and
-// while they fly; elsewhere they would be 280 000 points nobody sees but every frame
-// draws. Hidden, not removed, so going back finds them.
+// while they fly; elsewhere they would be 360 000 points (and the cosmos round them, a
+// child of theirs) nobody sees but every frame draws. Hidden, not removed, so going back
+// finds them.
 let last = nav.currentSlideNo?.value
 onMounted(() => { if (live.value) funnelSeq.drivers++ })
 onUnmounted(() => { if (live.value) funnelSeq.drivers-- })
