@@ -1249,10 +1249,15 @@ def test_deploy_walks_the_live_deck_once_more_before_it_fails(tmp_path, monkeypa
 # ---------------------------------------------------------------- plates: the recorded worlds the live fallback plays
 
 TALK = "2026_10_00_OpenData"
-# node <slidev-stage-record> <site> <out> args...: what talk passed, and a plate per slide ($REC_PLATES, else 03 and 04)
-FAKE_RECORDER = ('echo "$*" > "$REC_ARGS_OUT"\nout="$3"\nmkdir -p "$out"\n'
-                 'for n in ${REC_PLATES:-03 04}; do printf "plate $n" > "$out/$n-plate.mp4"; done\n'
-                 'echo "{}" > "$out/index.json"\necho "2 file(s)"\n')
+# node <slidev-stage-record> <site> <out> args...: what talk passed, and a plate per slide ($REC_PLATES, else 03 and 04).
+# index.json as the recorder writes it: a segment per plate, settled at 12.5 s, or cut off unsettled at --max
+# for the slides $REC_CAPPED names; $REC_INDEX=plain: the empty index of a recorder before the settle report
+FAKE_RECORDER = ('echo "$*" > "$REC_ARGS_OUT"\nout="$3"\nmkdir -p "$out"\nsegs=""\n'
+                 'for n in ${REC_PLATES:-03 04}; do printf "plate $n" > "$out/$n-plate.mp4"\n'
+                 '  case " ${REC_CAPPED:-} " in *" $n "*) s=\'"settle": null, "capped": true\';; *) s=\'"settle": 12.5, "capped": false\';; esac\n'
+                 '  segs="$segs${segs:+, }{\\"slide\\": ${n#0}, \\"clicks\\": 0, \\"file\\": null, \\"plate\\": \\"$n-plate.mp4\\", $s}"\ndone\n'
+                 'if [ "${REC_INDEX:-segments}" = plain ]; then echo "{}" > "$out/index.json"\n'
+                 'else echo "{\\"segments\\": [$segs]}" > "$out/index.json"; fi\necho "2 file(s)"\n')
 
 
 # the stage's recorder of the release with the live fallback: supports() reads the flags off the file
@@ -1290,7 +1295,7 @@ def test_record_plates_records_the_world_alone_and_copies_the_plates_in(repo, re
     assert code == 0, err
     site, out = tmp_path / "tmp" / "talk-opendata" / "site", tmp_path / "tmp" / "talk-opendata" / "plates"
     assert (tmp_path / "rec.args").read_text().split()[1:] == [str(site), str(out), "--plate-only", "--fps", "25", "--hold", "20",
-                                                               "--clicks", "none"]     # the stage plays NN-plate.mp4 alone, never a click's
+                                                               "--max", "120", "--clicks", "none"]   # a close settles late; never a click's plate
     probe = (tmp_path / "sv.args").read_text().split()         # the CLI was asked, on a scratch project, before anything ran
     assert probe[:3] == ["check", "--json", "--project"] and not Path(probe[3]).exists() and probe[3] != str(talkdir)
     assert (talkdir / "public" / "videos" / "03-plate.mp4").read_text() == "plate 03"
@@ -1298,7 +1303,8 @@ def test_record_plates_records_the_world_alone_and_copies_the_plates_in(repo, re
     assert not (talkdir / "public" / "videos" / "09-plate.mp4").exists()            # a full take replaces them all
     plates = json.loads((talkdir / "videos" / "plates.json").read_text())
     assert plates == {"fingerprint": talk_cli.plates_fingerprint(repo, TALK), "fps": 25, "hold": 20,
-                      "slides": [3, 4], "bytes": {"03-plate.mp4": 8, "04-plate.mp4": 8}}
+                      "slides": [3, 4], "bytes": {"03-plate.mp4": 8, "04-plate.mp4": 8},
+                      "settle": {"03-plate.mp4": 12.5, "04-plate.mp4": 12.5}, "capped": {"03-plate.mp4": False, "04-plate.mp4": False}}
     assert obj["publish"] == "pnpm videos:publish --only 03-plate.mp4 04-plate.mp4" and obj["publish"] in err
     assert obj["plates"] == ["03-plate.mp4", "04-plate.mp4"] and obj["out"] == str(out)
     manifest = (talkdir / "videos" / "manifest.toml").read_text()
@@ -1314,10 +1320,10 @@ def test_record_plates_records_the_world_alone_and_copies_the_plates_in(repo, re
 
 def test_record_plates_lets_the_recorders_own_flags_through(repo, recorder, tmp_path):
     code, obj, err = talk(repo, "record", "opendata", "--plates", "--no-build", "--out", str(tmp_path / "take"),
-                          "--", "--hold", "8", "--fps=50", "--slides", "3-4", "--clicks", "all", env=recorder)
+                          "--", "--hold", "8", "--fps=50", "--slides", "3-4", "--clicks", "all", "--max", "90", env=recorder)
     assert code == 0, err
     args = (tmp_path / "rec.args").read_text().split()
-    assert args[2:] == [str(tmp_path / "take"), "--plate-only", "--hold", "8", "--fps=50", "--slides", "3-4", "--clicks", "all"]
+    assert args[2:] == [str(tmp_path / "take"), "--plate-only", "--hold", "8", "--fps=50", "--slides", "3-4", "--clicks", "all", "--max", "90"]
     plates = json.loads((repo / "talks" / TALK / "videos" / "plates.json").read_text())
     assert (plates["fps"], plates["hold"], plates["slides"]) == (50, 8, [3, 4])
     # without --plates the verb is what it was: the recorder on shots/record, no plate flags
@@ -1351,17 +1357,30 @@ def test_record_plates_partial_take_keeps_the_earlier_plates(repo, recorder, tmp
     assert code == 0, err
     # a reboot emptied $TALK_TMP, one slide changed: a one-slide take into a fresh out dir must not
     # shrink plates.json and the manifest block to that slide (pull, venue and the publish line go by them)
-    env = {**recorder, "REC_PLATES": "05"}
+    env = {**recorder, "REC_PLATES": "05", "REC_CAPPED": "05"}       # and this one the recorder cut off at its --max
     code, obj, err = talk(repo, "record", "opendata", "--plates", "--no-build", "--out", str(tmp_path / "take2"),
                           "--", "--slides", "5-5", env=env)
     assert code == 0, err
     assert sorted(p.name for p in (talkdir / "public" / "videos").glob("*-plate.mp4")) == ["03-plate.mp4", "04-plate.mp4", "05-plate.mp4"]
     plates = json.loads((talkdir / "videos" / "plates.json").read_text())
     assert plates["slides"] == [3, 4, 5] and plates["bytes"] == {f"{n:02d}-plate.mp4": 8 for n in (3, 4, 5)}
+    # the earlier plates keep what their take's index said; this take's entry comes from the new index
+    assert plates["settle"] == {"03-plate.mp4": 12.5, "04-plate.mp4": 12.5, "05-plate.mp4": None}
+    assert plates["capped"] == {"03-plate.mp4": False, "04-plate.mp4": False, "05-plate.mp4": True}
+    assert obj["capped"] == ["05-plate.mp4"] and "05-plate.mp4: cut off unsettled" in err
     entries = tomllib.loads((talkdir / "videos" / "manifest.toml").read_text())["videos"]
     assert [e["name"] for e in entries] == ["03-plate.mp4", "04-plate.mp4", "05-plate.mp4"]
     assert obj["plates"] == ["03-plate.mp4", "04-plate.mp4", "05-plate.mp4"] and obj["taken"] == ["05-plate.mp4"]
     assert obj["publish"] == "pnpm videos:publish --only 05-plate.mp4" and obj["bytes"] == 24
+
+
+def test_record_plates_takes_a_recorder_without_a_settle_report(repo, recorder, tmp_path):
+    # an index.json with no segments (an older recorder): nothing known about the settle, nothing capped
+    code, obj, err = talk(repo, "record", "opendata", "--plates", "--no-build", env={**recorder, "REC_INDEX": "plain"})
+    assert code == 0, err
+    plates = json.loads((repo / "talks" / TALK / "videos" / "plates.json").read_text())
+    assert plates["settle"] == {"03-plate.mp4": None, "04-plate.mp4": None}
+    assert plates["capped"] == {"03-plate.mp4": False, "04-plate.mp4": False} and obj["capped"] == []
 
 
 def plates_json(wt, slides, **over):
@@ -1502,13 +1521,33 @@ def test_ready_keeps_the_plates_current_when_only_mtimes_changed(od_worktree, co
 def test_ready_warns_on_a_plate_or_a_deck_over_budget(od_worktree, counted, tmp_path):
     env, _ = counted
     talkdir = plates_json(od_worktree, list(range(3, 34)))             # 31 plates (sparse files: no bytes written)
-    local_plates(talkdir, 3, size=16 * 1024 * 1024)
-    local_plates(talkdir, *range(4, 34), size=15 * 1024 * 1024)
+    local_plates(talkdir, 3, size=41 * 1024 * 1024)
+    local_plates(talkdir, *range(4, 34), size=19 * 1024 * 1024)
     env, _ = gh_listing(tmp_path, env, *(f"{n:02d}-plate.mp4" for n in range(3, 34)))
     code, step, _ = ready_plates(od_worktree, env)
     assert code == 0 and step["stale"] is False
-    assert step["warnings"] == ["03-plate.mp4: 16.0 MB, over the 15 MB a plate may take",
-                                "466.0 MB of plates, over the 450 MB a deck may take"]
+    assert step["warnings"] == ["03-plate.mp4: 41.0 MB, over the 40 MB a plate may take",
+                                "611.0 MB of plates, over the 600 MB a deck may take"]
+
+
+def test_ready_warns_on_a_plate_the_recorder_cut_off_unsettled(od_worktree, counted, tmp_path):
+    # the close of a deck can take 50 s to settle: at the recorder's --max it stops, the plate ends mid-flight
+    env, _ = counted
+    talkdir = plates_json(od_worktree, [3, 30], settle={"03-plate.mp4": 12.5, "30-plate.mp4": None},
+                          capped={"03-plate.mp4": False, "30-plate.mp4": True})
+    local_plates(talkdir, 3, 30)
+    env, _ = gh_listing(tmp_path, env, "03-plate.mp4", "30-plate.mp4")
+    code, step, err = ready_plates(od_worktree, env)
+    assert code == 0, err
+    assert step["ok"] is True and step["capped"] == ["30-plate.mp4"]
+    assert step["warnings"] == ["30-plate.mp4: cut off unsettled at the recorder's --max "
+                                "(re-record: pnpm talk record opendata --plates -- --max N)"]
+    code, step, _ = ready_plates(od_worktree, env, "--strict-plates")
+    assert code == 1 and step["ok"] is False and step["error"] == "1 warning (--strict-plates)"
+    # a take from before the settle report: nothing known, nothing warned
+    plates_json(od_worktree, [3, 30])
+    code, step, _ = ready_plates(od_worktree, env, "--strict-plates")
+    assert code == 0 and step["warnings"] == [] and step["capped"] == []
 
 
 def test_ready_warns_on_an_unreadable_plates_json(od_worktree, counted):

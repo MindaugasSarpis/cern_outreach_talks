@@ -30,10 +30,12 @@ Before the venue, `pnpm talk ready <t>`: lint --release, check, shots, pages,
 preflight, venue --dry-run and, for a stage talk with `videos/plates.json`,
 the plates step: each plate of the take is on the talk's videos release (a
 local-only plate is not in a Pages build: the step prints the publish line)
-or at least local, the take is current (the talk's content) and the sizes
-are within 15 MB a plate, 450 MB a deck. A miss is a warning, since a
-re-record takes an hour; `--strict-plates` makes it fail; without
-`plates.json` the step is "skipped: no plates". Stale or missing plates:
+or at least local, the take is current (the talk's content), no plate was
+cut off unsettled at the recorder's `--max` (the warning names the
+`-- --max N` to re-record with) and the sizes are within 40 MB a plate,
+600 MB a deck. A miss is a warning, since a re-record takes an hour;
+`--strict-plates` makes it fail; without `plates.json` the step is "skipped:
+no plates". Stale or missing plates:
 `pnpm talk record <t> --plates` (the render slot), then the `pnpm
 videos:publish --only …` line it prints, in the talk (`talk-broadcast` §5).
 

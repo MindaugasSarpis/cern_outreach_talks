@@ -22,7 +22,7 @@
   ready NAME      before the venue: lint --release, check, shots, videos:preflight,
                   venue --dry-run, the plates (and the safe-area check for a broadcast talk)
   record NAME     slidev-stage-record of the build: one MP4 per slide; --plates: the
-                  world alone for every non-clip slide (1080p25, a 20 s hold) into
+                  world alone for every non-clip slide (1080p25, a 20 s hold, 120 s at most) into
                   public/videos/NN-plate.mp4, videos/plates.json and the manifest's
                   plates block, for the stage to play where WebGL is missing
   export NAME     slidev export (PDF; --format png|pptx) in the render slot, with
@@ -98,11 +98,13 @@ PIN_RE = re.compile(r'("slidev-addon-(?:videos|stage)"\s*:\s*"github:MindaugasSa
 ENV_PIN_RE = re.compile(r"(slidev-videos @ git\+https://github\.com/MindaugasSarpis/slidev-videos@)([^\"'\s]+)")
 REF_RE = re.compile(r'^(ADDONS_REF\s*=\s*")([^"]+)(")', re.M)
 TYPE_RE = re.compile(r"registerBuilder\(\s*['\"]([\w:-]+)['\"]")
-# The plates `record --plates` makes: the recorder's NN-plate.mp4 at 1080p25 with a 20 s hold
-# (slow drift, ~2 Mbit/s: 5 to 12 MB each), in public/videos/ and on the talk's videos release,
-# which the stage plays where WebGL is missing. ready's budget for one plate and for a deck's.
-PLATE_FPS, PLATE_HOLD = 25, 20
-PLATE_MB, PLATES_MB = 15, 450
+# The plates `record --plates` makes: the recorder's NN-plate.mp4 at 1080p25 with a 20 s hold, up to
+# 120 s a plate (a deck's close can take 50 s to settle; the recorder's own --max 40 cut it off mid-flight),
+# in public/videos/ and on the talk's videos release, which the stage plays where WebGL is missing.
+# ready's budget for one plate and for a deck's: with the toolkit's plate encoder about 5 to 8 MB a
+# 25 s plate, 25 to 35 MB a close that settles late.
+PLATE_FPS, PLATE_HOLD, PLATE_MAX = 25, 20, 120
+PLATE_MB, PLATES_MB = 40, 600
 MB = 1024 * 1024
 PLATE_RE = re.compile(r"^(\d{2,})-plate\.mp4$")
 PLATES_BEGIN = "# >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost"
@@ -1694,12 +1696,18 @@ def plates_in(d: Path) -> list[str]:
     return sorted((p.name for p in d.glob("*-plate.mp4") if PLATE_RE.match(p.name)), key=plate_no)
 
 
+def capped_warning(talk: str, name: str) -> str:
+    """The recorder stopped this plate at its --max before the slide settled: it ends mid-flight."""
+    return (f"{name}: cut off unsettled at the recorder's --max "
+            f"(re-record: pnpm talk record {wt_slug(talk)} --plates -- --max N)")
+
+
 def plates_step(repo: Repo, talk: str, strict: bool = False) -> dict:
     """ready's plates step: every plate of the take in videos/plates.json is on the talk's videos
     release (a Pages build has no public/videos: a plate that is only local is not there, and the
     stage shows the living still) or at least local, the take is current (the talk's fingerprint),
-    the sizes are within budget. Each miss is a warning (a re-record takes an hour); --strict-plates
-    makes them fail the step."""
+    no plate was cut off unsettled at the recorder's --max, the sizes are within budget. Each miss
+    is a warning (a re-record takes an hour); --strict-plates makes them fail the step."""
     d = repo.here / "talks" / talk
     pj = d / "videos" / "plates.json"
     if not pj.exists():
@@ -1734,6 +1742,9 @@ def plates_step(repo: Repo, talk: str, strict: bool = False) -> dict:
     stale = bool(names) and take.get("fingerprint") != plates_fingerprint(repo.here, talk)
     if stale:
         warnings.append(f"stale: the talk changed since the plates were recorded (pnpm talk record {wt_slug(talk)} --plates)")
+    capped = take.get("capped") if isinstance(take.get("capped"), dict) else {}
+    cut = [n for n in names if capped.get(n) is True]       # a take before the settle report says nothing: no warning
+    warnings += [capped_warning(talk, n) for n in cut]
     recorded = take.get("bytes") if isinstance(take.get("bytes"), dict) else {}
     sizes = {n: local[n] if n in local else released[n] if n in released else int(recorded.get(n) or 0) for n in names}
     warnings += [f"{n}: {sizes[n] / MB:.1f} MB, over the {PLATE_MB} MB a plate may take" for n in names if sizes[n] > PLATE_MB * MB]
@@ -1744,7 +1755,7 @@ def plates_step(repo: Repo, talk: str, strict: bool = False) -> dict:
         OUT.say(f"   warning: {w}")
     ok = not (strict and warnings)
     res = {"name": "plates", "ok": ok, "slides": len(names), "local": len(local), "released": len(released),
-           "stale": stale, "bytes": sizes, "warnings": warnings}
+           "stale": stale, "capped": cut, "bytes": sizes, "warnings": warnings}
     if unpublished:
         res["publish"] = f"pnpm videos:publish --only {' '.join(unpublished)}"
         OUT.say(f"   to put the local plates on the release, in talks/{talk}: {res['publish']}")
@@ -1936,11 +1947,29 @@ def videos_cli_knows_generated(env: dict) -> str:
     return sv
 
 
+def plate_report(out: Path, names: list[str]) -> dict[str, tuple[int | float | None, bool]]:
+    """Per plate of a take, when the slide settled (seconds; None if it never did) and whether the
+    recorder stopped at its --max first, from the recorder's index.json (a segment per file, the
+    plate named in `plate`). No index, or one without the report (an older recorder): unknown."""
+    index = read_json(out / "index.json")
+    segments = index.get("segments") if isinstance(index, dict) and isinstance(index.get("segments"), list) else []
+    seen = {s["plate"]: s for s in segments if isinstance(s, dict) and isinstance(s.get("plate"), str)}
+    report = {}
+    for n in names:
+        settle = seen[n].get("settle") if n in seen else None
+        report[n] = (settle if isinstance(settle, (int, float)) and not isinstance(settle, bool) else None,
+                     n in seen and seen[n].get("capped") is True)
+    return report
+
+
 def record_plates(repo: Repo, talk: str, a, extra: list) -> tuple[int, dict]:
     """record --plates: the world alone for every non-clip slide (the recorder's --plate-only, at
-    1080p25 with a 20 s hold unless the args after -- say otherwise) into $TALK_TMP/talk-<slug>/plates,
-    copied to public/videos/NN-plate.mp4 (gitignored; local first in dev and the venue build, else the
-    talk's videos release). videos/plates.json records the take for ready; the manifest's plates block
+    1080p25 with a 20 s hold and 120 s at most, unless the args after -- say otherwise: a deck's close
+    can take 50 s to settle, and the recorder's own --max 40 cut it off mid-flight) into
+    $TALK_TMP/talk-<slug>/plates, copied to public/videos/NN-plate.mp4 (gitignored; local first in dev
+    and the venue build, else the talk's videos release). videos/plates.json records the take for ready
+    (per plate its bytes, when it settled and whether --max cut it off, from the recorder's index.json;
+    a plate cut off is warned here and in ready's plates step); the manifest's plates block
     carries the files through videos:publish, pull, venue and preflight. A take without --slides
     replaces the last one, plates of slides that are gone included; a take with --slides adds its
     plates to those in public/videos/, which both files then list in full (the recorder's out dir
@@ -1955,7 +1984,7 @@ def record_plates(repo: Repo, talk: str, a, extra: list) -> tuple[int, dict]:
     given = {x.split("=")[0] for x in extra}
     args = [] if "--plate-only" in given else ["--plate-only"]
     # --clicks none: the stage plays NN-plate.mp4 alone, never the recorder's NN-cK-plate.mp4 of a click
-    for flag, default in (("--fps", PLATE_FPS), ("--hold", PLATE_HOLD), ("--clicks", "none")):
+    for flag, default in (("--fps", PLATE_FPS), ("--hold", PLATE_HOLD), ("--max", PLATE_MAX), ("--clicks", "none")):
         if flag not in given:
             args += [flag, str(default)]
     full = "--slides" not in given
@@ -1982,14 +2011,24 @@ def record_plates(repo: Repo, talk: str, a, extra: list) -> tuple[int, dict]:
                 (dest / n).unlink()
     names = plates_in(dest)         # what the talk has now: this take, and the earlier plates a partial take keeps
     fps, hold = number(flag_value(extra, "--fps"), PLATE_FPS), number(flag_value(extra, "--hold"), PLATE_HOLD)
+    report = plate_report(out, taken)                                   # this take's settle, per plate
+    last = read_json(d / "videos" / "plates.json")                     # a partial take keeps the earlier plates' entries
+    last_settle = last.get("settle") if isinstance(last, dict) and isinstance(last.get("settle"), dict) else {}
+    last_capped = last.get("capped") if isinstance(last, dict) and isinstance(last.get("capped"), dict) else {}
+    settle = {n: report[n][0] if n in taken else last_settle.get(n) for n in names}
+    capped = {n: report[n][1] if n in taken else last_capped.get(n) is True for n in names}
     take = {"fingerprint": plates_fingerprint(repo.here, talk), "fps": fps, "hold": hold,
-            "slides": [plate_no(n) for n in names], "bytes": {n: (dest / n).stat().st_size for n in names}}
+            "slides": [plate_no(n) for n in names], "bytes": {n: (dest / n).stat().st_size for n in names},
+            "settle": settle, "capped": capped}
     (d / "videos").mkdir(exist_ok=True)
     (d / "videos" / "plates.json").write_text(json.dumps(take, indent=2) + "\n", encoding="utf-8")
     write_plates_block(d / "videos" / "manifest.toml", names, fps, hold)
     publish = f"pnpm videos:publish --only {' '.join(taken)}"
+    cut = [n for n in names if capped[n]]
+    for n in cut:
+        OUT.say(f"warning: {capped_warning(talk, n)}")
     data.update(plates=names, taken=taken, copied=str(dest), fps=fps, hold=hold, publish=publish,
-                bytes=sum(take["bytes"].values()))
+                bytes=sum(take["bytes"].values()), capped=cut)
     OUT.say(f"{len(taken)} plate(s) recorded, {len(names)} in {dest} ({data['bytes'] / MB:.1f} MB); videos/plates.json "
             f"and the manifest's plates block written (commit them). To put this take on the release, in talks/{talk}:")
     OUT.show(f"{'publish':<14} {publish}")
@@ -2793,7 +2832,8 @@ def build_parser() -> argparse.ArgumentParser:
     sp = verb("ready", "lint --release, check, shots, pages, videos:preflight, venue --dry-run, the plates")
     sp.add_argument("--skip", action="append", metavar="STEP", help="lint, check, shots, pages, preflight, venue, plates, safe")
     sp.add_argument("--safe", action="store_true", help="run the safe-area check even if the talk is not marked broadcast")
-    sp.add_argument("--strict-plates", action="store_true", help="a stale, missing or oversized plate fails ready (default: a warning)")
+    sp.add_argument("--strict-plates", action="store_true",
+                    help="a stale, missing, oversized or unsettled (cut off at --max) plate fails ready (default: a warning)")
     for name, what in (("record", "slidev-stage-record: one MP4 per slide"), ("safe", "slidev-stage-safe: the TV safe area")):
         sp = verb(name, what)
         sp.add_argument("--no-build", action="store_true")
@@ -2801,8 +2841,8 @@ def build_parser() -> argparse.ArgumentParser:
         if name == "record":
             sp.add_argument("--out")
             sp.add_argument("--plates", action="store_true",
-                            help="the world alone for every non-clip slide (--plate-only --fps 25 --hold 20; more after --) "
-                                 "into public/videos/, videos/plates.json and the manifest's plates block")
+                            help="the world alone for every non-clip slide (--plate-only --fps 25 --hold 20 --max 120, each "
+                                 "unless given after --) into public/videos/, videos/plates.json and the manifest's plates block")
     sp = verb("export", "slidev export in the render slot, --wait-until load --wait 4000 (more slidev args after --)")
     sp.add_argument("--format", choices=("pdf", "png", "pptx"))
     sp.add_argument("--out", help="the file (default $TALK_TMP/talk-<slug>/<slug>.<format>)")

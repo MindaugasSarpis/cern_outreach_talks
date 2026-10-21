@@ -259,10 +259,12 @@ A stage talk also carries **plates**: the world alone for every non-clip
 slide, which the stage plays where WebGL is missing (a venue PC), over the
 committed still; without a plate the still drifts on its own. `pnpm talk
 record <name> --plates` (the render slot; about an hour on a CPU renderer)
-records them at 1080p25 with a 20 s hold into `$TALK_TMP/talk-<slug>/plates`,
-copies `NN-plate.mp4` into `public/videos/` (gitignored), writes
-`videos/plates.json` and a `# >>> plates … # <<< plates` block of
-`generated = true` entries in `videos/manifest.toml`, and prints the
+records them at 1080p25 with a 20 s hold and `--max 120` (a deck's close can
+take 50 s to settle, and the recorder's own 40 s cut it off mid-flight; the
+recorder's flags after `--` override these) into
+`$TALK_TMP/talk-<slug>/plates`, copies `NN-plate.mp4` into `public/videos/`
+(gitignored), writes `videos/plates.json` and a `# >>> plates … # <<< plates`
+block of `generated = true` entries in `videos/manifest.toml`, and prints the
 `pnpm videos:publish --only …` line to run in the talk. Commit `plates.json`
 and the manifest; the clips' `pull`, `venue` and `preflight` carry the plates
 along (the `slidev-videos` on the machine must know `generated` entries: the
@@ -270,9 +272,11 @@ release with the live fallback, installed as the env's editable CLI; `record
 --plates` refuses otherwise). `pnpm talk ready` then lists the release and
 checks each plate is on it (a plate that is only local is not in a Pages
 build: the publish line again), or at least local, that the take is current
-(the talk's content) and the sizes are within 15 MB a plate and 450 MB a
-deck: warnings, since a re-record takes an hour; `--strict-plates` makes them
-fail; without `plates.json` the step is "skipped: no plates".
+(the talk's content), that no plate was cut off unsettled at the recorder's
+`--max` (the warning names the `-- --max N` to re-record with) and that the
+sizes are within 40 MB a plate and 600 MB a deck: warnings, since a
+re-record takes an hour; `--strict-plates` makes them fail; without
+`plates.json` the step is "skipped: no plates".
 
 ## After the talk
 

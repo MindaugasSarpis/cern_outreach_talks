@@ -163,18 +163,22 @@ the package.
   first and refuses) → `pnpm talk pin <t> <tag>` (the same release, for the
   addons) → `stage.motion: floor` in the headmatter → `pnpm talk record <t>
   --plates` (the render slot, about an hour on a CPU renderer; 1080p25, a
-  20 s hold, no click segments; writes `videos/plates.json` and the manifest
-  block, commit both; `-- --slides N-M` re-records those slides and keeps
-  the rest) → `pnpm videos:publish --only <the plates it prints>` → `pnpm
-  talk ready` (the plates step lists the release: each plate on it, or local
-  only (a Pages build has no `public/videos/`, so not published means the
-  living still), or missing; the take current by content, so another
-  checkout or a pull does not make it stale; within 15 MB a plate and 450 MB
-  a deck; warnings unless `--strict-plates`, an unreadable `plates.json`
-  included) → `pnpm talk deploy`. The venue zip (`pnpm venue`) pulls the
-  plates with the clips. A clip slide has no
-  plate: the clip ends and waits for the press, so no `advance-on-end`
-  unless the owner asks for that clip by name (lint `ADVANCE`).
+  20 s hold, `--max 120` since a deck's close can take 50 s to settle, no
+  click segments, each flag overridden by the recorder's own after `--`;
+  writes `videos/plates.json` with each plate's bytes, settle time and
+  whether `--max` cut it off, and the manifest block, commit both;
+  `-- --slides N-M` re-records those slides and keeps the rest, `-- --max N`
+  for a plate it reports cut off) → `pnpm videos:publish --only <the plates
+  it prints>` → `pnpm talk ready` (the plates step lists the release: each
+  plate on it, or local only (a Pages build has no `public/videos/`, so not
+  published means the living still), or missing; the take current by
+  content, so another checkout or a pull does not make it stale; no plate
+  cut off unsettled at the recorder's `--max`; within 40 MB a plate and
+  600 MB a deck; warnings unless `--strict-plates`, an unreadable
+  `plates.json` included) → `pnpm talk deploy`. The venue zip (`pnpm venue`)
+  pulls the plates with the clips. A clip slide has no plate: the clip ends
+  and waits for the press, so no `advance-on-end` unless the owner asks for
+  that clip by name (lint `ADVANCE`).
 - Both addons and the CLI are pinned to slidev-videos `v0.4.0`: the talk's
   `package.json`, `scripts/new_talk.py` (`ADDONS_REF`) and env.yaml's pip
   entry move together on a release. The `frames` subcommand is new in 0.4.0;
