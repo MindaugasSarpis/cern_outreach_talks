@@ -138,7 +138,7 @@ space: { at: [30, 39, -119], dist: 25, yaw: -72, pitch: 13, dim: 0, flight: 3.5 
 <!-- facts: universe-age-planck-2018, cmb-formed-380000-years-esa, cosmic-web-simulation-filaments-voids -->
 
 <!--
-Kalbėtojui. Kosminio tinklo grūdeliai susibėga į piltuvą (savininkas, 2026 10 13): pirmiausia vaizdo vidurys tampa Didžiuoju sprogimu ir foninės spinduliuotės skydu, tada grūdeliai išsidėsto piltuvu iki plačiojo galo; tada piltuvas išryškėja savo erų spalvomis, o paskiausiai atsiranda jo žiedai ir linijos. Grindų tinklelio po piltuvu nebėra: piltuvas kabo tamsoje (savininkas, 2026 10 21). Kamera tuo metu apsuka ir parodo piltuvą iš šono: Visatos istorija iš grūdelių, nuo Didžiojo sprogimo (siauroji dalis, kairėje) iki šiandienos (platusis galas, arčiau mūsų). Kiekviena era atpažįstama iš savo spalvos — iš to, kas ją užpildo, ir kokia to temperatūra (savininkas, 2026 10 21). Iš kairės į dešinę: (1) Didysis sprogimas — mažas, ryškus baltas taškas kairėje, šiek tiek prieš piltuvo kaklelį (savininkas, 2026 10 21: ne didelis neryškus švytėjimas). (2) Kaklelis — karšta plazma, švyti nuo baltos iki oranžinės, kol atvėsta. (3) Foninė spinduliuotė — Planck žemėlapio skydas su oranžiškai baltu žiedu: šviesa, kuri išsilaisvino Visatai atvėsus iki maždaug 3000 K. (4) Tamsieji amžiai — ta šviesa ant piltuvo sienelės blėsta iš oranžinės į tamsiai raudoną ir užgęsta; viduje tik keli blankūs dujų grūdeliai, žvaigždžių nėra. (5) Kosminė aušra — pirmosios žvaigždės, melsvai baltos kibirkštys, kiekviena žydrame dujų burbule, kurį ji įšvietė; toliau burbulai didėja ir susilieja. (6) Galaktikos — ryškiausia juosta: baltai gelsvos galaktikos, daug spiralinių, tarp jų švytinčios dujos, tankiausios piltuvo viduryje. (7) Šiandiena — platusis galas: retesnės, senesnės, rausvesnės galaktikos išsirikiavusios violetinėmis gijomis, tarp jų tuštumos — tas pats kosminis tinklas, kuriuo baigėsi įžanginis klipas; galas platėja vis greičiau (spartėjantis plėtimasis). Kiekvienas žiedas nusidažęs savo eros spalva. Žemas ūžesys skamba tik šios ir kitos skaidrės pradžioje, apie 3 s (savininkas, 2026 10 14). Skaičius pasirodo, kai piltuvas išryškėja (~7 s). Kitoje skaidrėje kamera įskrenda į piltuvą.
+Kalbėtojui. Parodyti: ryškus taškas kairėje nuo disko — Didysis sprogimas. Kosminio tinklo grūdeliai susibėga į piltuvą (savininkas, 2026 10 13): pirmiausia vaizdo vidurys tampa Didžiuoju sprogimu ir foninės spinduliuotės skydu, tada grūdeliai išsidėsto piltuvu iki plačiojo galo; tada piltuvas išryškėja savo erų spalvomis, o paskiausiai atsiranda jo žiedai ir linijos. Grindų tinklelio po piltuvu nebėra: piltuvas kabo tamsoje (savininkas, 2026 10 21). Kamera tuo metu apsuka ir parodo piltuvą iš šono: Visatos istorija iš grūdelių, nuo Didžiojo sprogimo (siauroji dalis, kairėje) iki šiandienos (platusis galas, arčiau mūsų). Kiekviena era atpažįstama iš savo spalvos — iš to, kas ją užpildo, ir kokia to temperatūra (savininkas, 2026 10 21). Iš kairės į dešinę: (1) Didysis sprogimas — mažas, ryškus baltas taškas kairėje, šiek tiek prieš piltuvo kaklelį (savininkas, 2026 10 21: ne didelis neryškus švytėjimas). (2) Kaklelis — karšta plazma, švyti nuo baltos iki oranžinės, kol atvėsta. (3) Foninė spinduliuotė — Planck žemėlapio skydas su oranžiškai baltu žiedu: šviesa, kuri išsilaisvino Visatai atvėsus iki maždaug 3000 K. (4) Tamsieji amžiai — ta šviesa ant piltuvo sienelės blėsta iš oranžinės į tamsiai raudoną ir užgęsta; viduje tik keli blankūs dujų grūdeliai, žvaigždžių nėra. (5) Kosminė aušra — pirmosios žvaigždės, melsvai baltos kibirkštys, kiekviena žydrame dujų burbule, kurį ji įšvietė; toliau burbulai didėja ir susilieja. (6) Galaktikos — ryškiausia juosta: baltai gelsvos galaktikos, daug spiralinių, tarp jų švytinčios dujos, tankiausios piltuvo viduryje. (7) Šiandiena — platusis galas: retesnės, senesnės, rausvesnės galaktikos išsirikiavusios violetinėmis gijomis, tarp jų tuštumos — tas pats kosminis tinklas, kuriuo baigėsi įžanginis klipas; galas platėja vis greičiau (spartėjantis plėtimasis). Kiekvienas žiedas nusidažęs savo eros spalva. Žemas ūžesys skamba tik šios ir kitos skaidrės pradžioje, apie 3 s (savininkas, 2026 10 14). Skaičius pasirodo, kai piltuvas išryškėja (~7 s). Kitoje skaidrėje kamera įskrenda į piltuvą.
 Sakyti: „Šis piltuvas yra Visatos istorija: siaurasis galas — Didysis sprogimas prieš 13,8 mlrd. metų, platusis — šiandien. Iš kairės: karšta plazma, seniausia šviesa, tamsieji amžiai be žvaigždžių, pirmosios žvaigždės, galaktikos ir šiandienos galaktikų tinklas. Visata plečiasi, o maždaug pastaruosius šešis milijardus metų — vis greičiau.“
 Faktai: Visatos amžius 13,787 ± 0,020 mlrd. m. (Planck 2018, A&A 641, A6); spartėjantis plėtimasis — 1998 m. atradimas (2011 m. Nobelio premija); plėtimasis spartėja maždaug pastaruosius 6 mlrd. metų (z ≈ 0,6), tamsioji energija vyrauja maždaug pastaruosius 3,5 mlrd. metų (z ≈ 0,3) (Planck 2018, ΛCDM).
 Šaltiniai: Planck 2018 results VI (A&A 641, A6).
@@ -146,7 +146,7 @@ Faktai: Visatos amžius 13,787 ± 0,020 mlrd. m. (Planck 2018, A&A 641, A6); spa
 -->
 
 ---
-space: { at: [30, 40, -136], dist: 7.5, yaw: 0, pitch: 0, dim: 0.1, flight: 5 }   # in at the mouth and back down the funnel, past the galaxies, the first stars and the dark ages, to the CMB disk
+space: { at: [30, 40, -136], dist: 9.5, yaw: 0, pitch: 0, dim: 0.1, flight: 5 }   # in at the mouth and back down the funnel, past the galaxies, the first stars and the dark ages, to the CMB disk
 ---
 
 <ShortHum />
@@ -170,7 +170,7 @@ Faktai: foninės spinduliuotės temperatūra 2,725 K; skirtumai žemėlapyje ~±
 -->
 
 ---
-space: { at: [28.6, 40, -135.5], dist: 8.2, yaw: 26, pitch: 8, dim: 0.3, hum: false }   # turned from the CMB disk, still in the dark ages (nothing hot near the camera): the disk to the right, the dark ages' fading wall to the left; the question stands over the oldest light
+space: { at: [28.6, 40, -135.5], dist: 11, yaw: 26, pitch: 8, dim: 0.3, hum: false }   # turned from the CMB disk, still in the dark ages (nothing hot near the camera): the disk to the right, the dark ages' fading wall to the left; the question stands over the oldest light
 ---
 
 <!--
@@ -458,7 +458,7 @@ space: { at: artemis, dim: 0, flight: 1.6, hum: false }   # place mode: the phot
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%" class="dim">
 <p class="caption invention">Timepix lustai · 2006 · LHC</p>
 </StagePhoto>
 </AfterCover>
@@ -505,7 +505,7 @@ space: { at: whiterabbit, dim: 0, flight: 1.6, hum: false }   # place mode: the 
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim darker">
 <p class="caption invention">White Rabbit · 2008 · LHC</p>
 </StagePhoto>
 </AfterCover>
@@ -530,7 +530,7 @@ space: { at: cold, dim: 0, flight: 1.6, hum: false }   # place mode: the photo s
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="dim">
 <p class="caption invention">Superlaidžios linijos · 2014 · HL-LHC</p>
 </StagePhoto>
 </AfterCover>

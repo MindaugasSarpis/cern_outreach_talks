@@ -298,7 +298,7 @@ html[data-stage] .payoff .big {
   white-space: nowrap; font-variant-numeric: tabular-nums;
   color: #fff; filter: drop-shadow(0 2px 18px rgba(0, 0, 0, 0.6));
 }
-html[data-stage] .payoff .big .unit { font-size: 0.34em; letter-spacing: -0.01em; margin-left: 0.18em; }
+html[data-stage] .payoff .big .unit { font-size: 0.34em; letter-spacing: -0.01em; margin-left: 0.18em; color: var(--in-accent); }
 html[data-stage] .payoff h1 { font-size: 44px !important; line-height: 1.08 !important; margin: 0 0 14px !important; max-width: 20ch; text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7); animation: none !important; }
 html[data-stage] .payoff p:not(.kicker) { font-size: 24px; line-height: 1.38; margin: 0; max-width: 34ch; opacity: 0.95; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7); }
 
@@ -336,6 +336,11 @@ html[data-stage] .hero.dim > img { filter: brightness(0.78) contrast(1.06) satur
    room) glared on a projector; the page darker still; the same in print, where html[data-stage]
    is not set */
 html[data-stage] .hero.dim.page > img { filter: brightness(0.6) contrast(1.06); }
+html[data-stage] .hero.dim.darker > img, html.print .hero.dim.darker > img, .print-slide-container .hero.dim.darker > img { filter: brightness(0.62) contrast(1.06); }   /* White Rabbit: a white device on a white table */
+/* the collision's captions („8 TeV“, „290 dalelių“; components/lhc-opening) clear of the room's heads, as Part II's */
+html[data-stage] .lhc-cap { bottom: 96px !important; }
+/* the cover's subtitle and byline over the looping collision's tracks */
+html[data-stage] .slidev-layout.cover h2, html[data-stage] .slidev-layout.cover .mt-md { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 14px rgba(0, 0, 0, 0.85) !important; }
 html.print .hero.dim > img, .print-slide-container .hero.dim > img { filter: brightness(0.78) contrast(1.06) saturate(1.04); }
 html.print .hero.dim.page > img, .print-slide-container .hero.dim.page > img { filter: brightness(0.6) contrast(1.06); }
 

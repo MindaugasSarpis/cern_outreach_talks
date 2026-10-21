@@ -267,7 +267,7 @@ function buildSun(o, ctx) {
         for (const c of box) if (c !== b && c.on && c.z < b.z) covered += cross(b, c)
         onCore = cross(b, core)
       }
-      const want = Math.min(1 - 0.9 * smooth(0.03, 0.25, covered), 1 - 0.78 * smooth(0.02, 0.08, onCore))
+      const want = Math.min(1 - 0.9 * smooth(0.0, 0.12, covered), 1 - 0.78 * smooth(0.02, 0.08, onCore))
       veil[i] += (want - veil[i]) * k
     })
     for (const p of plots) {
