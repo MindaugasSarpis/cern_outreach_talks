@@ -144,6 +144,28 @@ the package.
 - **Check and look.** `pnpm stage:check`; `pnpm build --base / && pnpm
   stage:shots` photographs every slide into `shots/` (needs
   `playwright-chromium` in the workspace).
+- **Where the world cannot run** (no WebGL2, no float render targets, a
+  context lost for good, a plugin or data load that failed) the stage plays
+  a recorded plate of the slide, the world alone, over the slide's committed
+  still; without a plate the still itself drifts and breathes (the living
+  still); under `prefers-reduced-motion` the world runs with its motion
+  floored when the headmatter says `stage.motion: floor` (talks set it; the
+  library default `respect` holds the still). `stage.plates: false` turns
+  plates off. Plates are `NN-plate.mp4` on the talk's videos release,
+  pulled local-first into `public/videos/` (gitignored) like the clips, as
+  `generated = true` entries the manifest's `# >>> plates` block lists; the
+  stills in `public/stills/` stay committed as each plate's poster and the
+  no-network floor. Adopting it, in order: `pnpm talk pin <t> <tag>` (the
+  release that carries it) → `stage.motion: floor` in the headmatter →
+  `pnpm talk record <t> --plates` (the render slot, about an hour on a CPU
+  renderer; 1080p25, a 20 s hold; writes `videos/plates.json` and the
+  manifest block, commit both) → `pnpm videos:publish --only <the plates it
+  prints>` → `pnpm talk ready` (the plates step: each local or on the
+  release, the take current, within 15 MB a plate and 450 MB a deck;
+  warnings unless `--strict-plates`) → `pnpm talk deploy`. The venue zip
+  (`pnpm venue`) pulls the plates with the clips. A clip slide has no
+  plate: the clip ends and waits for the press, so no `advance-on-end`
+  unless the owner asks for that clip by name (lint `ADVANCE`).
 - Both addons and the CLI are pinned to slidev-videos `v0.4.0`: the talk's
   `package.json`, `scripts/new_talk.py` (`ADDONS_REF`) and env.yaml's pip
   entry move together on a release. The `frames` subcommand is new in 0.4.0;
@@ -245,6 +267,9 @@ wants a `.src` line; a deck that keeps its sources in the notes says
 Open marks are `[CHECK…]`, `[PATIKSLINTI…]` (a question for the owner),
 `[ASR…]` (a quote from an automatic transcript, not re-listened yet) and
 `[TODO…]`, anywhere below the headmatter: warnings, errors with `--release`.
+`advance-on-end` on a `<VideoPlayer>` is a warning (`ADVANCE`): a clip ends
+and waits for the press unless the owner asked for that clip by name
+(2026-10-21); `:advance-on-end="false"` is not flagged.
 A question the talk can go without says so right after the mark,
 `[CHECK, optional: …]` or `[PATIKSLINTI, neprivaloma: …]`, and stays a
 warning with `--release` (`CHECK-OPTIONAL`) in the notes or another
