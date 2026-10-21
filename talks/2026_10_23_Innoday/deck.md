@@ -304,17 +304,17 @@ space: { at: [60, -30, 50], dist: 26, yaw: 0, pitch: 11, sway: 1.5, dim: 0, hum:
 
 <div class="readout right">
 
-<div class="big"><Count :from="0" :to="875" :ms="2200" /><span class="unit">straipsniai</span></div>
+<div class="big"><Count :from="0" :to="878" :ms="2200" /><span class="unit">straipsniai</span></div>
 
 </div>
 
-<!-- facts: lhcb-papers-2026-10, lhcb-figure-2026-010-hadrons -->
+<!-- facts: lhcb-papers-2026-10-22, lhcb-figure-2026-010-hadrons -->
 
 <!--
 Kalbėtojui. LHCb rezultatai kaip saulė (savininkas, 2026 10 21: kaip OpenData kalboje): kamerai atskridus, viduryje susitelkia šviesus grūdelių branduolys — LHCb darbas, — ir iš jo į visas puses vienas po kito išbėga grūdelių spinduliai. Kiekvienas baigiasi rezultato grafiku iš paskelbto straipsnio; grūdeliai nusileidžia ant grafiko linijų ir trumpai sužiba. Visa saulė lėtai sukasi (vienas apsisukimas per 2,5 min): grafikai skrieja aplink branduolį, visada stati ir atsukti į salę, viršuje arčiau ir didesni, apačioje toliau, mažesni ir blankesni; kas priartėja prie skaičiaus, prigęsta. Grafikai (CC BY 4.0, apkarpyti, perspalvinti): pentakvarkai Pc(4312), Pc(4440), Pc(4457) (PRL 122, 2019), CP pažeidimas barionuose (Nature 643, 2025; rodoma tik Λb⁰ pusė: antibarionų pusė atrodė kaip pakartota, todėl nukirpta (savininkas, 2026 10 13); smailės aukštis nėra tas 2,45 % skirtumas — taip nesakyti), Bs⁰ osciliacijos (Nature Physics 18, 2022), Tcc⁺ tetrakvarkas (Nature Physics 18, 2022), Ωcc⁺ (arXiv:2609.21921, 2026), Bs⁰→μ⁺μ⁻ (PRL 118, 2017), R(K) ir R(K*) ant Standartinio modelio linijos (PRD 108, 2023) ir LHCb-FIGURE-2026-010: 76 LHCb atrasti hadronai.
-Sakyti: „Ką mes randame? Iki šiol LHCb paskelbė 875 mokslinius straipsnius. Tarp jų — penkių kvarkų dalelės, pentakvarkai, kuriuos atradome 2015 m., ir pernai pirmą kartą pamatytas materijos ir antimaterijos skirtumas barionuose. Iš viso LHCb atrado 76 naujas daleles — daugiau nei bet kuris kitas eksperimentas.“
+Sakyti: „Ką mes randame? Iki šiol LHCb paskelbė 878 mokslinius straipsnius. Tarp jų — penkių kvarkų dalelės, pentakvarkai, kuriuos atradome 2015 m., ir pernai pirmą kartą pamatytas materijos ir antimaterijos skirtumas barionuose. Iš viso LHCb atrado 76 naujas daleles — daugiau nei bet kuris kitas eksperimentas.“
 Skaičių prieš kalbą patikrinti (2026 10 22) LHCb viešųjų rezultatų sąraše ir pataisyti, jei pasikeitė.
-Šaltiniai: LHCb viešieji rezultatai (lhcbproject.web.cern.ch/Publications, LHCb Glance), INSPIRE (875: 860 su žurnalo nuoroda ir 15 recenzuojami, 2026 10 12); grafikai — LHCb kolaboracija, CC BY 4.0, apkarpyti ir perspalvinti (šviesūs ant juodo, kaip OpenData kalboje).
+Šaltiniai: LHCb viešieji rezultatai (lhcbproject.web.cern.ch/Publications, LHCb Glance), INSPIRE (878, 2026 10 22; 2026 10 12 buvo 875: 860 su žurnalo nuoroda ir 15 recenzuojami); grafikai — LHCb kolaboracija, CC BY 4.0, apkarpyti ir perspalvinti (šviesūs ant juodo, kaip OpenData kalboje).
 (~0,7 min)
 -->
 

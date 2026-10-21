@@ -168,6 +168,20 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-22 (00:10, deployed overnight; the owner asleep: "Continue working, I'm going to sleep.
+Implement all said improvements"): v0.8.2 adopted (merged origin/main and origin/chore/live-fallback,
+`pnpm talk pin … v0.8.2`, `stage.motion: floor`), 24 plates recorded (`talk record --plates`) and
+published with --only with the cold-box lis_flag.mp4; the forced no-webgl2 walk passed (2→3 onto a
+playing plate, 8 waits for the press, 30's still fades and „Ačiū“ by ~50 s); `ready` passed with
+nothing skipped (one plates warning: 03-plate.mp4 45 MB, over the 40 MB budget: the ~80 s flight).
+Deployed 5c93455 — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
+Pages run 39675192178: Innoday's build and deploy jobs green, URL 200, the live walk 31/31; the run
+as a whole red because UzsikraukKarjerai, OpenData and MasterTalk no longer build ("Failed to resolve
+entry for package slidev-addon-stage", after the merged LhcOpening.vue; their live pages still 200;
+reported to the Scheduler). Since: the paper count 878 (INSPIRE, 22 Oct; fact lhcb-papers-2026-10-22).
+Open for the owner (morning): his notes on the three review MP4s (the close, slide 3, slide 29),
+the 21 Oct visual round; slide 11 was the recommended option, taken without his answer.
+
 2026-10-21 (night, deployed): the owner wrote "Publish". lis_flag.mp4 (20 s) published
 with --only; `ready` passed with nothing skipped; deployed 3da294a —
 https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ — Pages run
