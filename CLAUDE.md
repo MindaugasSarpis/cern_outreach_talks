@@ -126,7 +126,7 @@ and skill.
 | `check`, `shots`, `review` | videos:check, stage:check, build; shots into `shots/`; check, then shots of changed slides |
 | `lint`, `map`, `facts …` | the deck lint; the slide map; the facts bank (`search`, `show`, `add`, `check`) |
 | `ready`, `deploy` | before the venue (lint --release, check, shots, preflight); deploy, when asked |
-| `record`, `safe` | broadcast talks: one MP4 per slide; the TV safe area |
+| `record`, `safe` | MP4s per slide, or `--plates`; the TV safe area |
 | `render -- CMD` | the render slot: srun, condor_run, or the machine's render lock |
 | `pin [NAME] REF`, `bump-toolkit` | one talk's two addon pins; all pins, env.yaml and the scaffolder |
 | `session`, `sessions` | Claude in a window of the tmux session `talks`; the windows, status lines |
