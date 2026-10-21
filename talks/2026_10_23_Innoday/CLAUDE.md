@@ -388,6 +388,35 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
     23, threads to the 25 Member States on 24, to the associates too and Lithuania lit on 25,
     a steady glow on 26 (owner on the old seed and shells: "this is a weird one..."; chose
     "Europe map: CERN → Lithuania"). The thread ends are a picture of flow, not data.
+  - Slide 3 flies through the web ("Slide 2-3 auto move on, and also rotate, fly through this
+    point cloud universe, can be more substantial, busy, better resolved, and then I will
+    manually switch to the funnel"): the opener advances by itself (his named exception); the
+    frame's 360 000 grains are given coherent depth round the picture's knot (takeover.js
+    placeWeb) and ~380 000 generated web grains (buildCosmos: clusters, bowed filaments, gas
+    clumps, in the frame's colours) fade in as the camera leaves the clip's pose; a ~52 s turn
+    and flight, then a drift; he presses → into the funnel at any moment. The web is the
+    cosmic web's form, not a map (notes say so). Lower `cosmos` first on a weak PC.
+  - The Big Bang is a small bright point beside the CMB disk, off the neck ("don't like this
+    fuzzy big bang should be a bit displaced, and point-like but bright"; funnel.js `bigBang`
+    −5,8); grains behind the disk are dropped (funnel and web shaders); the funnel shows on any
+    arrival (funnelSeq.sync), not only after slide 3.
+  - Slide 11, the collaboration photo dissolves onto a turning globe of LHCb's institutes ("Slide
+    11 is a bit of a step back from the first few very cool slides"; offered three options, no
+    answer: the recommended one, taken overnight): CERN Greybook's 111 LHCb teams in 28
+    countries at 92 city points (hero/lhcb_institutes_greybook.json, hero/globe_map.py; Natural
+    Earth, 15 OpenStreetMap coordinates credited); the screen says LHCb's 112; Vilnius brighter.
+    setup/globe.js, CollabGlobe.vue, the `collab` station.
+  - Slide 12, a sun of LHCb's results after OpenData's ("Slide 12 can be more dynamic, there is
+    a similar cool slide in open data talks"): a blue-white core, rays to the eight plots, which
+    turn in 3D (setup/sun.js, adapted from OpenData's; the `plot` builder kept, unused).
+  - Slide 8's tunnel starts at 5 % volume ("start 8 slide at 5% audio"); slide 27 has a
+    synthesised low hum, swelling under the question ("deep cool hum sounds"; setup/Drone.vue,
+    about −29 LUFS).
+  - Taken overnight (owner: "Implement all said improvements"), from the 21 Oct review: the
+    near-white photos dimmed (15 with a darker page filter, 14, 16, 17, 20; print too), Part II's
+    captions at bottom 96 px on a 0,78 ground and the stats at 112 px (clear of a flat room's
+    heads), the cover's small type at 18 px, slide 9's notes tie its collision to the cover's,
+    slide 13's notes name the photos at the strands' ends.
   - Slide 27: „O kokį vaidmenį atliks Lietuva?“ fades in as the FCC clip ends, over its held
     last frame (setup/ClipEnd.vue; owner: "At the end of slide 27 text appears "o kokią rolę
     turės Lietuva?"" — written with „vaidmuo“, the standard word; his own wording on request).
