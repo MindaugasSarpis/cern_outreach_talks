@@ -72,14 +72,14 @@ space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0
 
 <OpenerStart poster="video-frames/nftmc_zoom_web.mp4.poster.jpg" />
 
-<VideoPlayer src="nftmc_zoom_web.mp4" transition="fade" advance-on-end />
+<VideoPlayer src="nftmc_zoom_web.mp4" transition="fade" />
 
 <!-- facts: nftmc-opened-2016 -->
 
 <!--
 Kalbėtojui. Klipas prasideda pats, kai skaidrė atsiveria. (Jei skaidrės atidaromos tiesiai šioje skaidrėje, rodomas pirmasis kadras, o pirmas paspaudimas paleidžia klipą su garsu, ne pereina toliau.)
 Nutolinimas nuo NFTMC (Nacionalinis fizinių ir technologijos mokslų centras Saulėtekio slėnyje, atidarytas 2016 m.; Google Earth) iki kosminio tinklo: Saulėtekis, Vilnius, Lietuva, Žemė (~0:30), Saulė ir Paukščių Takas (~1:00), skrydis per mūsų galaktiką ir iš jos (~2:20), mūsų galaktika iš šalies (~3:10), ~20 s beveik juodos tarpgalaktinės erdvės, tada kosminis tinklas (~3:47) (savininko SpaceEngine montažas, nukirptas ties kadru, nuo kurio prasideda kita skaidrė; muzika užgęsta per paskutines 3 s). Galima tylėti arba trumpai įvardyti etapus. Kosminis tinklas — NCSA Advanced Visualization Lab vizualizacija („Cosmic Bubble Bath“, pirmųjų ~1,2 mlrd. metų simuliacija).
-Spausti nereikia: klipui pasibaigus, skaidrės pačios pereina į kitą, kuri prasideda nuo to paties paskutinio kadro ir paverčia jį pasaulio grūdeliais. Paspaudus klipo metu, pereinama anksčiau (tada klipo pabaiga nieko nebedaro). Savaime pereinama tik auditorijos lange, ne /presenter.
+Klipui pasibaigus, ekrane lieka paskutinis jo kadras, kol paspausite →: kita skaidrė prasideda nuo to paties kadro ir paverčia jį pasaulio grūdeliais. Paspaudus klipo metu, pereinama anksčiau. Pačios skaidrės toliau nepereina.
 (klipas 4:13, su savo muzika; ~4,2 min)
 -->
 
@@ -171,7 +171,7 @@ Faktai: konvencija pasirašyta 1953 m., CERN oficialiai įsteigtas 1954 m. rug
 space: { at: collision, dim: 1, ambient: 0, hum: false }   # black under the clip; its push lands in the collision's dark
 ---
 
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" advance-on-end :volume="0.5" exit="push" exit-at="0.45,0.53" />
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.5" exit="push" exit-at="0.45,0.53" />
 
 <AfterFlight :delay="2.4">
 <div class="stats">
@@ -185,7 +185,7 @@ space: { at: collision, dim: 1, ambient: 0, hum: false }   # black under the cli
 <!-- facts: cern-lhc-size-cost, cern-lhc-cold, cern-lhc-speed, cern-lhc-collisions -->
 
 <!--
-Kalbėtojui. Kelionė LHC tuneliu (CERN-FOOTAGE-2022-013-001, 3:00–3:39,5), skaičiai virš jos. Klipui pasibaigus, kamera įlekia į tolį, kur dingsta magnetų eilė, ir prasideda susidūrimas (savaime, tik auditorijos lange). Šie skaičiai — II dalies problemos.
+Kalbėtojui. Kelionė LHC tuneliu (CERN-FOOTAGE-2022-013-001, 3:00–3:39,5), skaičiai virš jos. Klipui pasibaigus, ekrane lieka paskutinis jo kadras, kol paspausite →: tada kamera įlekia į tolį, kur dingsta magnetų eilė, ir prasideda susidūrimas. Šie skaičiai — II dalies problemos.
 Sakyti: „Kad sužinotume, iš ko sudarytas pasaulis, greitintuvas turėjo būti toks. Jo žiedas yra 27 km ilgio ir 100 m po žeme. 1 232 superlaidūs magnetai atšaldomi iki minus 271 laipsnio Celsijaus, šalčiau nei erdvė tarp galaktikų. Protonai skrieja tik 2,85 m/s lėčiau už šviesą ir per sekundę apskrieja žiedą 11 245 kartus, o susidūrimų per tą pačią sekundę įvyksta apie pusantro milijardo, ir kiekvieną reikia pamatyti. Vaizdo plokštes galima nusipirkti parduotuvėje, o daugelio kitų dalykų niekas negamino, todėl juos teko sukurti. Su tokiomis problemomis per penkiasdešimt metų susidurta ir kuriant ankstesnius CERN greitintuvus.“
 Svarbu: nuo 2026 06 29 LHC neveikia — prasidėjo trečioji ilgoji techninė pertrauka (LS3), todėl skaičiai — darbo metu (3-iasis darbo etapas: 6,8 TeV, 99,99999905 % šviesos greičio). Dažnai cituojamas „99,9999991 %“ atitinka projektinę 7 TeV energiją. Kosminis fonas — 2,7 K.
 Faktai: 9 593 magnetai; vakuumas vamzdyje ~10⁻¹³ bar; pluošte sukaupta energija iki 490 MJ.

@@ -28,7 +28,7 @@ brings the next round, and Lithuanian firms can solve it.
 
 - **Opening.** The title (owner, 12 Oct: back), then the zoom-out from
   NFTMC in Saulėtekis to the cosmic web (the owner's SpaceEngine edit,
-  `nftmc_zoom_web.mp4`, advance-on-end) → the takeover (its last frame, the web, becomes the world's
+  `nftmc_zoom_web.mp4`; it waits for the press at its end) → the takeover (its last frame, the web, becomes the world's
   grains) → the web's grains fly into a funnel, which resolves into the history
   of the Universe as a funnel of grains, its mesh coming in last, seen from outside
   (Big Bang, CMB, dark ages, a band of hot proto-galaxies, then colder, sparser
@@ -168,6 +168,13 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-21 (later): the owner, via the Scheduler: "Can we not mark clips to advance, in
+innoday as well.... I will specifically ask if it's needed". `advance-on-end` removed
+from slides 2 and 8, notes say the press is his (Decisions, "No clip moves on by
+itself"). Not deployed: Thursday morning's redeploy with the fallback carries it; if the
+toolkit release has not been relayed by Thu 23 Oct 09:00, this change deploys alone under
+the standing rule (`ready` with nothing skipped; the Scheduler gives main then).
+
 2026-10-21: the owner asked (via the Scheduler) to renew the talk for the toolkit's
 non-static fallback, now being released by Tools: a floor tier of the world where the browser lacks only a
 feature or asks for reduced motion, per-slide MP4 plates where the world cannot run, and
@@ -284,6 +291,13 @@ v0.8.1 since 20 Oct and builds the zip local-first itself).
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
+- No clip moves on by itself (owner, 21 Oct, via the Scheduler: "Can we not mark
+  clips to advance, in innoday as well.... I will specifically ask if it's needed"; a
+  standing rule for every talk). `advance-on-end` is off the opener (slide 2) and the
+  tunnel (slide 8): each holds its last frame until the owner presses →, and the tunnel's
+  push into the collision runs on that press. Never add `advance-on-end` (or
+  `videos.advanceOnEnd`) to a clip unless the owner asks for that clip by name. The
+  trigger: OpenData "seemed like the slides autoclick" on a machine in the stills fallback.
 - The new ending (owner, 19 Oct, via the Scheduler: "need a much stronger
   finishing aspect. Can we show photorealistic 3D rendering of SciFi light
   injection system, then "laser" inscribe Lithuanian flag on it and then
