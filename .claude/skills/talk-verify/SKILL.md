@@ -28,13 +28,14 @@ problem, not a waiting problem.
 
 Before the venue, `pnpm talk ready <t>`: lint --release, check, shots, pages,
 preflight, venue --dry-run and, for a stage talk with `videos/plates.json`,
-the plates step: each plate of the take is local or on the talk's videos
-release, the take is current (the talk's fingerprint) and the sizes are
-within 15 MB a plate, 450 MB a deck. A miss is a warning, since a re-record
-takes an hour; `--strict-plates` makes it fail; without `plates.json` the step
-is "skipped: no plates". Stale or missing plates: `pnpm talk record <t>
---plates` (the render slot), then the `pnpm videos:publish --only …` line it
-prints, in the talk (`talk-broadcast` §5).
+the plates step: each plate of the take is on the talk's videos release (a
+local-only plate is not in a Pages build: the step prints the publish line)
+or at least local, the take is current (the talk's content) and the sizes
+are within 15 MB a plate, 450 MB a deck. A miss is a warning, since a
+re-record takes an hour; `--strict-plates` makes it fail; without
+`plates.json` the step is "skipped: no plates". Stale or missing plates:
+`pnpm talk record <t> --plates` (the render slot), then the `pnpm
+videos:publish --only …` line it prints, in the talk (`talk-broadcast` §5).
 
 Renders share the machine with other sessions. `pnpm talk shots`, `review`,
 `ready`, `record` and `safe` queue for the render slot themselves; any other

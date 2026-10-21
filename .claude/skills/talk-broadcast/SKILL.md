@@ -86,9 +86,11 @@ stage plays where WebGL is missing, into `public/videos/NN-plate.mp4`
 (gitignored), writes `videos/plates.json` and the manifest's `# >>> plates`
 block of `generated = true` entries, and prints the `pnpm videos:publish
 --only …` line to run in the talk. Commit `plates.json` and the manifest.
-`pnpm talk ready` checks each plate is local or on the release, the take
-current and within 15 MB a plate, 450 MB a deck: warnings (a re-record takes
-an hour), `--strict-plates` to fail. The recipe in full: `docs/authoring.md`,
+`pnpm talk ready` checks each plate is on the release (or at least local: it
+prints the publish line), the take current and within 15 MB a plate, 450 MB
+a deck: warnings (a re-record takes an hour), `--strict-plates` to fail. The
+recorder and the `slidev-videos` CLI must be the release with the live
+fallback, else `record --plates` refuses. The recipe in full: `docs/authoring.md`,
 "The stage".
 
 `slidev-stage-record` steps the engine on a fixed clock, so frames are exact.

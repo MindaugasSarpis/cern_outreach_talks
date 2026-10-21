@@ -265,11 +265,14 @@ copies `NN-plate.mp4` into `public/videos/` (gitignored), writes
 `generated = true` entries in `videos/manifest.toml`, and prints the
 `pnpm videos:publish --only …` line to run in the talk. Commit `plates.json`
 and the manifest; the clips' `pull`, `venue` and `preflight` carry the plates
-along. `pnpm talk ready` then checks each plate is local or on the release,
-the take is current (the talk's fingerprint) and the sizes are within 15 MB a
-plate and 450 MB a deck: warnings, since a re-record takes an hour;
-`--strict-plates` makes them fail; without `plates.json` the step is
-"skipped: no plates".
+along (the `slidev-videos` on the machine must know `generated` entries: the
+release with the live fallback, installed as the env's editable CLI; `record
+--plates` refuses otherwise). `pnpm talk ready` then lists the release and
+checks each plate is on it (a plate that is only local is not in a Pages
+build: the publish line again), or at least local, that the take is current
+(the talk's content) and the sizes are within 15 MB a plate and 450 MB a
+deck: warnings, since a re-record takes an hour; `--strict-plates` makes them
+fail; without `plates.json` the step is "skipped: no plates".
 
 ## After the talk
 
