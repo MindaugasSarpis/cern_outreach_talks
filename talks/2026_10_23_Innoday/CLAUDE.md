@@ -369,8 +369,9 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
     object `lhcRing`, emblems.js; not at true scale), Point 8 marked, „Ačiū“ inside the
     ring at 49 s (hero/close_path.py). The flag's grains turn to face the camera
     (lisGrains.js): side on, the cold box's flag was seen edge-on.
-  - The light-injection clip is ~20 s: the whole SciFi module, a slow pan down, the boards'
-    blue outline glow while he names them (no text), the engraving, today's last frame
+  - The light-injection clip is ~20 s: the whole SciFi module, a slow pan down, the cold box's
+    blue outline glow while he names the system (no text; owner: "The light injection system is
+    within this black coldbox, no need for blue cables": no boards or fibres on the mats), the engraving, today's last frame
     ("show the full SciFi module panning slowly … on the bottom I indicate the light
     injection system"; chose "Re-rendered clip" and "Glow outline, no text").
   - The cover is the real CMS collision (record 300, the 2012 Higgs candidate), filling the
