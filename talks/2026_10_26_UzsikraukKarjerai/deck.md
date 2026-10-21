@@ -82,7 +82,7 @@ Maždaug taip atrodo Visata didžiausiu mastu – galaktikų gijos ir tuštumos 
 [leisk vaizdui subyrėti į grūdelius, maždaug 3,5 s] → spausk
 
 The line is in the script since 21 Oct (the 15-minute round; the web is a cosmological simulation's visualisation, cosmic-web-simulation-filaments-voids); hold the slide for it.
-The picture: the last frame of the owner's SpaceEngine edit for Innoday (public/figures/opener_last.jpg), the cosmic web of NCSA's Advanced Visualization Lab („Cosmic Bubble Bath“, NSF), as Innoday credits it; no public page of that title was found on 20 Oct (NASA SVS 10663 is the closest NCSA AVL piece), so the still's own source is the owner's to name for the credit. If the NCSA or Planck licence is refused for the Delfi stream, cut slides 2 and 3: the cover flies straight to CERN and slide 3's quark ladder is said on slide 6 over the debris.
+The picture: the last frame of the owner's SpaceEngine edit for Innoday (public/figures/opener_last.jpg), the cosmic web of NCSA's Advanced Visualization Lab („Cosmic Bubble Bath“, NSF), as Innoday credits it; no public page of that title was found on 20 Oct (NASA SVS 10663 is the closest NCSA AVL piece), so the still's own source is the owner's to name for the credit. If the NCSA or Planck licence is refused for the Delfi stream, cut slides 2 and 3: the cover flies straight to CERN and slide 3's quark ladder is said on slide 7 over the debris.
 
 (~0.2 min)
 -->
@@ -146,14 +146,36 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 
 <!--
 Message: when the accelerator runs, protons at almost the speed of light collide over a billion times a second, and the collision energy becomes new particles.
-Picture: the real LHC tunnel, 100 m under the border, the magnets on the right; „LHC 27 km“ low on the left. Let it run, then → at its end: the camera goes on into the beam pipe (no auto-advance). Its sound is the tunnel's own ventilation hum. 26 words take about 14 s, 17 s at a slow delivery, inside the 18 s; the last line as the push into the pipe begins.
+Picture: the real LHC tunnel, 100 m under the border, the magnets on the right; „LHC 27 km“ low on the left. Let it run, then → at its end: the camera goes on into the beam pipe (no auto-advance). Its sound is the tunnel's own ventilation hum. 26 words take about 14 s, 17 s at a slow delivery, inside the 18 s; the last sentence as the push into the pipe begins (into the magnet, slide 6, since 21 Oct).
 
 Kai greitintuvas veikia, protonai jame skrieja beveik šviesos greičiu ir susiduria daugiau nei milijardą kartų per sekundę. Susidūrimo energija virsta naujomis dalelėmis.
-Štai vienas toks susidūrimas.
 
 Tense for 26–27 Oct: the LHC has been in Long Shutdown 3 since 29 June 2026: „Kai greitintuvas veikia“, never present-tense data taking. If asked: „Dabar jis sustabdytas atnaujinimui, vėl veiks nuo 2028 metų.“
 
 Source: CERN-FOOTAGE-2022-013-001 (CERN). The line is said over the clip; its 18 s are counted from the manifest.
+-->
+
+---
+space: { at: opening, dim: 1, ambient: 0, hum: false }
+---
+
+<!-- 21 Oct (the owner: "can show magnet video from CERN"; "A, ok"): the LHC dipole, CERN-VIDEO-2019-050-008, its first 10,8 s (videos/manifest.toml): a cutaway of the blue cryostat into the two copper-lined beam pipes; its small English/French labels („LHC Dipole“, „Beam pipes“) kept, the owner's "ok". Silent. It lands where the tunnel's push went in; → moves on (no auto-advance). -->
+<VideoPlayer src="cern_video_2019_050_008.mp4" muted :controls="false" />
+
+<!-- facts: lhc-two-beam-pipes-opposite, cern-lhc-magnets, cern-lhc-cold, gave-cryo-lhc, lhc-ls3-restart-2028 -->
+
+<!--
+Message: inside the ring two beams fly in opposite directions in two pipes; 1 232 superconducting magnets bend them round, and when the accelerator runs they are cooled to −271 °C, colder than outer space.
+Picture: CERN's animation of an LHC dipole magnet: the blue cryostat cut open, then the camera turns to face its two beam pipes (10,8 s, silent). Under speech: 33 words take about 17 s, so say the first sentence over the clip and finish over its last frame, then →.
+
+Žiede protonai skrieja dviem vamzdžiais, priešingomis kryptimis. Aplink žiedą juos lenkia tūkstantis du šimtai trisdešimt du superlaidieji magnetai. Kai greitintuvas veikia, jie atšaldomi iki minus dviejų šimtų septyniasdešimt vieno laipsnio – šalčiau nei kosmose.
+Štai vienas susidūrimas.
+
+Tense for 26–27 Oct: the LHC is warm in Long Shutdown 3 (since 29 June 2026), so „kai greitintuvas veikia“; if asked: „Dabar jis atnaujinamas, vėl veiks nuo 2028 metų.“ „superlaidieji magnetai“: the 1 232 are the main dipoles, 15 m long; the LHC has 9 593 magnets in all. −271,3 °C is 1,9 K; outer space is 2,7 K.
+
+Šaltiniai: home.cern, „The Large Hadron Collider“; CERN-VIDEO-2019-050-008 (CERN).
+
+(~0.3 min)
 -->
 
 ---
@@ -188,7 +210,7 @@ Picture: one real collision in the black, OpenData's and Innoday's. Two bunches 
 Šį susidūrimą 2012 metais užfiksavo CMS – kitas to paties greitintuvo detektorius.
 O dabar – LHCb, detektorius, prie kurio dirbu aš.
 
-The decay sentence follows cms.cern's own wording (most particles produced are unstable and transform rapidly; the detector measures the stable ones), so „skeveldros“ on slide 8 is heard a second time; the mass is taught on slides 8 and 9. No acronym in speech. If asked: CMS, one of the four LHC detectors, recorded it on 27 May 2012; 19 proton pairs collided in this crossing; the picture draws the 290 clearest tracks (not a number CMS reports); 8 TeV is the collision energy.
+The decay sentence follows cms.cern's own wording (most particles produced are unstable and transform rapidly; the detector measures the stable ones), so „skeveldros“ on slide 9 is heard a second time; the mass is taught on slides 9 and 10. No acronym in speech. If asked: CMS, one of the four LHC detectors, recorded it on 27 May 2012; 19 proton pairs collided in this crossing; the picture draws the 290 clearest tracks (not a number CMS reports); 8 TeV is the collision energy.
 
 The event: CMS Open Data record 300 (CC0), run 195099, event 137440354, a Higgs boson candidate. Provenance: components/lhc-opening/README.md.
 
@@ -209,7 +231,7 @@ Picture: the LHCb detector in 3D, with music. Start about 3 s in; about 30 words
 Tai LHCb. Jis dešimties metrų aukščio – kaip trijų aukštų namas. Čia dirba beveik du tūkstančiai žmonių iš viso pasaulio, tarp jų ir mūsų grupė iš Vilniaus universiteto. Aš – vienas iš jų.
 [leisk muzikai skambėti iki klipo pabaigos] → spausk
 
-„beveik du tūkstančiai“: 1 891 members in September 2026; never „daugiau nei“. „kaip trijų aukštų namas“ is our arithmetic (10 m at about 3 m a storey). The particle that split is named before its fragments, so „skeveldros“ has a referent when heard. „Same mass every time“ is said on slide 9 while the dots fall. If asked: 5 600 tonnes, 21 m long; VU joined LHCb in September 2024.
+„beveik du tūkstančiai“: 1 891 members in September 2026; never „daugiau nei“. „kaip trijų aukštų namas“ is our arithmetic (10 m at about 3 m a storey). The particle that split is named before its fragments, so „skeveldros“ has a referent when heard. „Same mass every time“ is said on slide 10 while the dots fall. If asked: 5 600 tonnes, 21 m long; VU joined LHCb in September 2024.
 
 The line is said over the clip; its 39 s are counted from the manifest.
 -->
@@ -268,7 +290,7 @@ clicks: 2
 <!--
 Message: we work on questions nobody has answered, so you try: each dot falls into a column by its mass; a real particle keeps landing in one column and a bump rises; chance can make a bump too. Is this one a new particle? No: a computer made it from random numbers. With 25 times more of the same random dots the bump is gone (seen, not only told: 21 Oct). In 2003 real physicists were fooled the same way, and more data wiped the bump out.
 Picture: a small gold plot fills dot by dot into its columns (140 dots, 7 s); at the first click a tick lights over the one column that stands out (`th1` step 2). At the second the gold dots go and 3 500 pale dots of the same random spectrum fill the same frame (`th2`, 12 s), smooth: the tick comes back over the same column once it is full, and nothing stands there. The first two sentences are said over the flight (4,5 s), the column sentences over the fill.
-Note: both plots are illustrations, not measured data: two random samples from one smooth spectrum with no particle in it; in the 140 chance made the bump, the 3 500 are smooth (public/data/theta-toy.json, seeds inside). Say „sudėliojo kompiuteris“, never „tikri duomenys“. Each plot fills its frame to its own tallest column, so the two are not at one scale (that is slide 12).
+Note: both plots are illustrations, not measured data: two random samples from one smooth spectrum with no particle in it; in the 140 chance made the bump, the 3 500 are smooth (public/data/theta-toy.json, seeds inside). Say „sudėliojo kompiuteris“, never „tikri duomenys“. Each plot fills its frame to its own tallest column, so the two are not at one scale (that is slide 13).
 
 Mes dirbame su klausimais, į kuriuos dar niekas neatsakė. Tokį darbą dabar išbandysi ir tu. Kiekvienas taškas krenta į stulpelį pagal masę. Kairėje – lengvesnės, dešinėje – sunkesnės. Lyg surikiuotum visus savo mokyklos mokinius pagal ūgį. Jei dalelė tikra, jos masė kaskart išeina beveik ta pati, ir taškai krenta į tą patį stulpelį. Taip iškyla kauburys. Bet kauburį gali sukurti ir atsitiktinumas – kaip kauliukas, kuris kelis kartus iš eilės išmeta šešetą.
 → spausk
@@ -362,7 +384,7 @@ space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 
 
 <!--
 Message: at one scale, your 140 dots are a thin strip beside LHCb's more than 27 000. Physicists call a discovery only a peak that chance alone would make less than once in 3,5 million times, rarer than eight sixes in a row. LHCb's peaks passed that bar; that is how physicists know they have found something nobody has seen.
-Picture: the camera draws back to two plots at the same scale, one grain per entry and the same height per entry. Left, the 140-dot plot of slide 9 as a thin strip (an illustration, not LEPS's data); right, LHCb's 27 292 candidates with their three marked peaks. Under them, their counts. The last line is said as the camera flies to Europe (4,5 s).
+Picture: the camera draws back to two plots at the same scale, one grain per entry and the same height per entry. Left, the 140-dot plot of slide 10 as a thin strip (an illustration, not LEPS's data); right, LHCb's 27 292 candidates with their three marked peaks. Under them, their counts. The last line is said as the camera flies to Europe (4,5 s).
 
 Abu grafikai tuo pačiu masteliu. Kairėje – tavo šimtas keturiasdešimt taškų. Dešinėje – daugiau nei dvidešimt septyni tūkstančiai. Atradimu fizikai vadina tik tokią smailę, kurią vien atsitiktinumas sukurtų rečiau nei kartą iš trijų su puse milijono. Tai rečiau, nei kauliukas aštuonis kartus iš eilės išmestų šešetą. LHCb smailės šią ribą peržengė. Taip fizikai ir sužino, kad rado tai, ko dar niekas nematė.
 [pauzė 4 s]
@@ -426,7 +448,7 @@ space: { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62, sway: 0.3, dim: 
 <!-- facts: cern-lithuania, lhcb-vilnius-students, lhcb-vilnius-work, lhcb-vilnius-racz, lhcb-open-data-coordinator-2026, lhcb-run1-release-sarpis-lrt-2025 -->
 
 <!--
-Message: all of it can now be done from Lithuania (the owner, 15 Oct: "then stress all of this can now be done in Lithuania"): a CERN associate member; a group of mostly students, on the detector, on software, or searching for particles; the first VU doctoral student on LHCb also searches for pentaquarks; 13 VU students at CERN this summer, a record. The coordinator line moved to slide 15 (21 Oct), after the group's own part of the detector.
+Message: all of it can now be done from Lithuania (the owner, 15 Oct: "then stress all of this can now be done in Lithuania"): a CERN associate member; a group of mostly students, on the detector, on software, or searching for particles; the first VU doctoral student on LHCb also searches for pentaquarks; 13 VU students at CERN this summer, a record. The coordinator line moved to slide 16 (21 Oct), after the group's own part of the detector.
 Picture: the camera dives from the whole of Europe down to Vilnius, and Lithuania's outline comes up in light blue round it (`lietuva`, Natural Earth); the route's arcs leave Vilnius westward out of frame. Only Vilnius is named. The last line is said as the clip condenses.
 
 Lietuva – asocijuotoji CERN narė, todėl lietuviai gali pretenduoti į darbą CERN. Didžioji mūsų grupės dalis – studentai. Vieni dirba su detektoriumi, kiti – su programomis, treti ieško naujų dalelių. Pirmoji VU doktorantė LHCb eksperimente irgi ieško pentakvarkų. O šią vasarą praktiką CERN atliko trylika VU studentų – daugiausia iki šiol.
@@ -562,7 +584,7 @@ Picture: real footage of the CERN data centre, the tape robot moving along its s
 Visi CERN eksperimentų duomenys saugomi CERN duomenų centre – daugiausia magnetinėse juostose. Jų ten apie šešiasdešimt tūkstančių, o duomenų – daugiau nei milijonas terabaitų. Juostas iš lentynų paima robotas.
 O štai ką su atviraisiais duomenimis padarė vienas mūsų studentas.
 
-„daugiau nei milijonas terabaitų“: CERN passed one exabyte of stored LHC data in December 2025, mostly on about 60 000 tapes (home.cern); never „vien LHCb“ (LHCb's is the 100 000 TB of slide 18). „Juostas … paima robotas“ says what the footage shows; check it on the cut (TODO above). If asked: CERN says this is about a tenth of what it will need over the next ten years.
+„daugiau nei milijonas terabaitų“: CERN passed one exabyte of stored LHC data in December 2025, mostly on about 60 000 tapes (home.cern); never „vien LHCb“ (LHCb's is the 100 000 TB of slide 19). „Juostas … paima robotas“ says what the footage shows; check it on the cut (TODO above). If asked: CERN says this is about a tenth of what it will need over the next ten years.
 
 Šaltiniai: home.cern, 2025-12 („one exabyte“); CERN Annual Progress Report 2025, p. 17; CERN-FOOTAGE-2022-013-006 (CERN).
 

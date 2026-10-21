@@ -1,4 +1,4 @@
-// The cavern round LHCb on slide 8: its floor as a faint grid of grains and the cradles
+// The cavern round LHCb on slide 9: its floor as a faint grid of grains and the cradles
 // the sub-detectors stand on, both shown with the detector (step name `of`: 'det').
 // Copied on 21 Oct 2026 from Innoday (main 404f3a7, setup/emblems.js `floor` and
 // `supports`, unchanged); `floor` is registered here as `cavern-floor`, since this

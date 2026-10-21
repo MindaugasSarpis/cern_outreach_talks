@@ -1,5 +1,5 @@
 // LHCb's real Run 3 geometry as a 3D model, with LHCb's own 2012 collision of the shared
-// components/lhc-opening running through it: slide 8, inside LHCb, 100 m down (owner, 21
+// components/lhc-opening running through it: slide 9, inside LHCb, 100 m down (owner, 21
 // Oct: "Build" the 15-min proposal). Copied on 21 Oct 2026 from Innoday (main 404f3a7,
 // setup/detector.js, its „Ačiū“: the model the owner chose there on 20 Oct, "B", with the
 // 1,83 m person for scale and the 40 MHz crossings), which copied it from MasterTalk.

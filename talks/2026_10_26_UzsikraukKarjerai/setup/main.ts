@@ -59,7 +59,7 @@ function reloadOnStaleChunk() {
 // From Innoday (owner, 21 Oct: "Build" the 15-min proposal): `detector`, LHCb's
 // model with the 1,83 m person (setup/detector.js), its `cavern-floor` and `supports`
 // (setup/cavern.js), and <InsideLhcb>, which starts LHCb's own collision in it once the
-// camera has come down to the cavern floor (slide 8).
+// camera has come down to the cavern floor (slide 9).
 // (A plain function: Slidev's defineAppSetup is the identity, and
 // @slidev/types is not a dependency of the talk.)
 export default ({ app, router }) => {

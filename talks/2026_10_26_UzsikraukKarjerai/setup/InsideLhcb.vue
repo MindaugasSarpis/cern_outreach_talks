@@ -4,7 +4,7 @@ import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/cli
 import { setGrains } from './grains.js'
 import { bus } from '../components/lhc-opening/bus.js'
 
-// <InsideLhcb />, slide 8: LHCb 100 m down, after its clip. Innoday's „Ačiū“ cut to what
+// <InsideLhcb />, slide 9: LHCb 100 m down, after its clip. Innoday's „Ačiū“ cut to what
 // this talk needs (its <LisTakeover> without the light injection still and the emblems):
 // on arrival the detector's model comes in with its floor and cradles (`det`: 1), while the
 // slide's path cranes the camera down from above to the cavern floor, eye level beside the

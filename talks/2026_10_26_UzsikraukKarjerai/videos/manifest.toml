@@ -40,3 +40,17 @@ right; on its last frame the magnet string vanishes at (0.45, 0.53), where the c
 into the beam pipe. Named as its raw on gdrive (released/cern_footage_2022_013_001_1080p_lhc.mp4) \
 so videos:sync finds it. Its sound is the tunnel's own ventilation hum, kept at the source's \
 level (loudnorm off)."""
+
+[[videos]]
+name    = "cern_video_2019_050_008.mp4"
+profile = "standard"
+used_in = ["deck"]
+trim    = ["0:00", "0:10.8"]
+notes   = """\
+The LHC dipole (owner, 21 Oct: "can show magnet video from CERN"; cut A, "A, ok"): \
+CERN-VIDEO-2019-050-008, its first 10,8 s (it dissolves into the next scene at 11 s), a cutaway of an LHC dipole magnet into its two \
+beam pipes (its small English/French labels kept, the owner's "ok"); the rest of the \
+film is the beam vacuum. Silent (no audio stream; two data tracks dropped). Same name as \
+the library clip (full length), so this talk's release wins the chain. Raw: the Drive \
+clip folder's cern_video_2019_050_008_1080ph265.mp4 (HEVC, 72 MB), copied into the raw \
+bank under this name."""

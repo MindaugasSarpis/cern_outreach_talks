@@ -151,7 +151,7 @@ html[data-stage] .city {
 html[data-stage] .city.r { translate: -100% 0; text-align: right; }   /* `translate`, not `transform`: the rise-in animation holds transform: none */
 html[data-stage] .city.late { animation-delay: 8.5s; }   /* after the flight in (up to 4.5 s) and the map gathering (3.6 s); the route starts drawing then */
 html[data-stage] .city.home { color: var(--stage-fg); }
-/* slide 13: a stop's name comes up at its click, once the trail has drawn to it (--step-delay) */
+/* slide 14: a stop's name comes up at its click, once the trail has drawn to it (--step-delay) */
 html[data-stage] .city.step { animation: none; transition: opacity 0.8s var(--stage-ease) var(--step-delay, 2s); }
 html[data-stage] .city.step.slidev-vclick-hidden { opacity: 0 !important; transition-delay: 0s; }
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .city { animation: none !important; transition: none !important; } }
@@ -248,17 +248,17 @@ html[data-stage] .readout.last { animation-delay: 5.2s; }   /* after copies of t
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .readout { animation: none !important; } }
 
 /* ---- 20 Oct (blueprint v2): this talk's own rules over the shared opening and OpenData's readout */
-/* slide 6: the collision's energy line („8 TeV“, a unit grade 9–12 viewers do not know) hidden for this talk; its
+/* slide 7: the collision's energy line („8 TeV“, a unit grade 9–12 viewers do not know) hidden for this talk; its
    count line („290 dalelių“) stays. components/lhc-opening is untouched. */
 html[data-stage] .lhc-collision .lhc-line:first-child { display: none !important; }
-/* slide 18: the lower-bound sign before the counted total (LHCb's 100 PB is its March 2025 figure) */
+/* slide 19: the lower-bound sign before the counted total (LHCb's 100 PB is its March 2025 figure) */
 html[data-stage] .readout .gt { font-size: 0.72em; font-weight: 600; margin-right: 0.12em; vertical-align: 0.08em; }
-/* slide 10: the count under the Ωc plot, after its fill (inside <AfterFlight>) */
+/* slide 11: the count under the Ωc plot, after its fill (inside <AfterFlight>) */
 html[data-stage] .heap.late { animation-delay: 0.2s; }
-/* slides 5–6: the shared opening's unit words („km“, „dalelių“) are 22 px in the component; 30 px here for the stream (the numbers are 56 px) */
+/* slides 5 and 7: the shared opening's unit words („km“, „dalelių“) are 22 px in the component; 30 px here for the stream (the numbers are 56 px) */
 html[data-stage] .lhc-cap .lhc-unit, html[data-stage] .lhc-cap .lhc-name { font-size: 36px; }
 
-/* ---- 21 Oct (15 min): slide 8, inside LHCb. „100 m“ counts up as the camera cranes down, and goes before
+/* ---- 21 Oct (15 min): slide 9, inside LHCb. „100 m“ counts up as the camera cranes down, and goes before
    the glow's „40 mln. per sekundę“ comes (the dolly back): one readout at a time, in the same place */
 @keyframes kk-out { from { opacity: 1; } to { opacity: 0; } }
 html[data-stage] .readout.depth { animation: stage-rise 0.8s var(--stage-ease) 2s both, kk-out 1s ease 18s forwards; }
