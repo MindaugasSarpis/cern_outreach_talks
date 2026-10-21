@@ -2315,7 +2315,7 @@ def cmd_pptx(repo: Repo, a, extra) -> tuple[int, dict]:
           "segments": len(segments), "deck_slides": len({s.get("slide") for s in segments}),
           "skipped": report.get("skipped") if isinstance(report.get("skipped"), list) else [],
           "fps": number(flag_value(took, "--fps"), PPTX_FPS), "hold": number(flag_value(took, "--hold"), PPTX_HOLD),
-          "max": number(flag_value(took, "--max"), take.get("max")), "cap": a.cap or profile.get("cap") or PPTX_CAP,
+          "max": number(flag_value(took, "--max"), take.get("max")), "cap": a.cap or report.get("cap") or profile.get("cap") or PPTX_CAP,
           "cli": (ver.stdout.strip().splitlines() or [None])[-1] if ver.returncode == 0 else None,
           "recorded_at": take.get("recorded_at")}
     pj_path.parent.mkdir(exist_ok=True)
