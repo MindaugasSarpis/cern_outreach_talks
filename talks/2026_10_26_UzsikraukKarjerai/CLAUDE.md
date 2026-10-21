@@ -826,6 +826,10 @@ purpose).
    (no safe area, no per-slide MP4s); the Scheduler's 21 Oct brief says the
    broadcast skill, the safe area and per-slide MP4s "as before". Asked in the
    15-min proposal; the per-slide MP4s are planned for Friday either way.
+   Until the owner answers (the Scheduler, 21 Oct): "not TV" meant no
+   broadcast channel; the deck is still recorded in the Delfi studio, so
+   prepare as a studio recording: the safe-area check and per-slide MP4s on
+   Friday.
 
 The owner's list after the 15 and 18 Oct rounds, each a yes/no or a fact only they
 have (the AFK default is built and deployed; each has an undo under Decisions):
