@@ -168,6 +168,16 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-22 (00:45, deployed): the fresh-eyes review of all 31 slides found nothing high; its fixes
+are in (White Rabbit darker, 19 and 22 dimmed, „8 TeV“/„290 dalelių“ at bottom 96 px, slides 5–6
+further back, the units light blue, the cover's lines shadowed, the sun's cards stepping back at a
+touch, slide 4's notes point at the Big Bang); the plates re-recorded and published (--only, 8
+changed); the Scheduler's lockfile fix merged (path keys of the v0.8.1/v0.9.0 tarballs). `ready`
+passed with nothing skipped (plates: 03-plate 45 MB over budget; "stale" only because the merged
+lockfile entered the fingerprint, no file the talk builds from changed). Deployed 8e44020 —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ — Pages run 39680747326
+green, URL 200, the live walk 31/31. The venue zip rebuilt from it.
+
 2026-10-22 (00:10, deployed overnight; the owner asleep: "Continue working, I'm going to sleep.
 Implement all said improvements"): v0.8.2 adopted (merged origin/main and origin/chore/live-fallback,
 `pnpm talk pin … v0.8.2`, `stage.motion: floor`), 24 plates recorded (`talk record --plates`) and
