@@ -807,6 +807,42 @@ def test_pin_runs_only_in_the_talks_own_worktree(repo, od_worktree, env):
     assert (od_worktree / "talks" / "2026_10_00_Innoday" / "package.json").read_bytes() == before
 
 
+# a pnpm-lock.yaml block of the stage tarball without its subpath, as pnpm 10.33 rewrote it (e3a23df)
+LOCK_NO_SUBPATH = """lockfileVersion: '9.0'
+
+packages:
+
+  slidev-addon-stage@https://codeload.github.com/MindaugasSarpis/slidev-videos/tar.gz/8ecddb80f92b287a2d9b9496d91858168e913180#path:/packages/stage:
+    resolution: {integrity: sha512-x, tarball: https://codeload.github.com/MindaugasSarpis/slidev-videos/tar.gz/8ecddb80f92b287a2d9b9496d91858168e913180}
+    version: 0.6.0
+"""
+
+
+def test_pin_fails_when_the_install_drops_a_tarballs_subpath(od_worktree, env, tmp_path):
+    b = tmp_path / "bin"
+    (tmp_path / "lock.yaml").write_text(LOCK_NO_SUBPATH)
+    fake_bin(b, "pnpm", f'cp "{tmp_path / "lock.yaml"}" pnpm-lock.yaml\n')
+    code, obj, err = talk(od_worktree, "pin", "v0.6.0", cwd=od_worktree, env=path_with(b, env))
+    assert code == 1 and obj["installed"] is True
+    assert obj["lockfile"]["ok"] is False
+    assert [p["missing"] for p in obj["lockfile"]["problems"]] == ["path: /packages/stage"]
+    assert "pnpm-lock.yaml" in obj["error"] and "path: /packages/stage" in obj["error"]
+
+
+def test_check_reads_the_lockfile_first(repo, env, tmp_path):
+    installed_tree(repo)
+    (repo / "pnpm-lock.yaml").write_text(LOCK_NO_SUBPATH)
+    b = tmp_path / "bin"
+    fake_bin(b, "pnpm", "exit 0\n")
+    fake_bin(b, "slidev-videos", "exit 0\n")
+    code, obj, err = talk(repo, "check", "opendata", env=path_with(b, env))
+    assert code == 1
+    first = obj["steps"][0]
+    assert first["name"] == "lockfile" and first["ok"] is False
+    assert first["problems"][0]["package"].endswith("#path:/packages/stage")
+    assert "path: /packages/stage" in err
+
+
 # ---------------------------------------------------------------- session and sessions, with a fake tmux
 
 FAKE_TMUX = """import json, os, sys

@@ -1262,11 +1262,57 @@ def stage_types(d: Path) -> list[str]:
     return sorted(types)
 
 
+# pnpm-lock.yaml's `packages:` block of a tarball with a subpath
+# (`…#path:/packages/stage`) keeps `path:` in its resolution. A pnpm 10.33 reinstall
+# (Innoday's v0.8.2 pin) rewrote the older toolkit tarballs without it: three talks
+# installed the slidev-videos root as slidev-addon-stage and failed to build on Pages
+# (fixed on main, e3a23df). A missing `gitHosted` alone is sound: 10.33 writes new
+# blocks without it, and they build.
+LOCK_KEY_RE = re.compile(r"^  '?([^\s'][^']*?)'?:\s*$")
+LOCK_FIX = "take main's (git checkout origin/main -- pnpm-lock.yaml), pnpm install, and check again"
+
+
+def lock_subpath_problems(text: str) -> list[dict]:
+    """Every block in `packages:` keyed `…#path:P` whose resolution lacks `path: P`:
+    [{package, missing, line}], in the file's order."""
+    problems: list[dict] = []
+    section, key = None, None
+    for n, line in enumerate(text.splitlines(), 1):
+        if line and not line[0].isspace():
+            section, key = line.rstrip().rstrip(":"), None
+            continue
+        if section != "packages":
+            continue
+        m = LOCK_KEY_RE.match(line)
+        if m:
+            key = m.group(1)
+            continue
+        if key and line.startswith("    resolution:"):
+            want = "path: " + key.split("#path:", 1)[1] if "#path:" in key else ""
+            if want and not re.search(r"[{,]\s*" + re.escape(want) + r"\s*[,}]", line.split(":", 1)[1]):
+                problems.append({"package": key, "missing": want, "line": n})
+            key = None
+    return problems
+
+
+def lock_step(root: Path) -> dict:
+    """The lockfile check as a step of check (so review and ready) and of pin."""
+    lock = root / "pnpm-lock.yaml"
+    probs = lock_subpath_problems(lock.read_text(encoding="utf-8")) if lock.is_file() else []
+    res = {"name": "lockfile", "ok": not probs, "problems": probs}
+    for p in probs:
+        OUT.say(f"error: pnpm-lock.yaml:{p['line']}: {p['package']} lacks `{p['missing']}` in its resolution")
+    if probs:
+        res["fix"] = LOCK_FIX
+        OUT.say(f"fix: {LOCK_FIX}")
+    return res
+
+
 def do_check(repo: Repo, talk: str, pages: bool = False) -> tuple[int, dict]:
     d = repo.here / "talks" / talk
     env = tool_env()
     info = talk_info(repo.here, talk)
-    steps = []
+    steps = [lock_step(repo.here)]
     sv = which("slidev-videos", env)
     if (d / "videos.toml").exists():
         steps.append(step("videos:check", [sv or "slidev-videos", "check"], d, env))
@@ -2859,6 +2905,14 @@ def cmd_pin(repo: Repo, a, extra) -> tuple[int, dict]:
             data["error"] = "pnpm install failed; the pins are written (fix it and run pnpm install again)"
             OUT.say(f"error: {data['error']}")
             return 1, data
+        # pnpm may rewrite other talks' tarball blocks as it reinstalls (e3a23df)
+        data["lockfile"] = lock_step(repo.here)
+        if not data["lockfile"]["ok"]:
+            missing = sorted({p["missing"] for p in data["lockfile"]["problems"]})
+            data["error"] = (f"pnpm install rewrote pnpm-lock.yaml: {len(data['lockfile']['problems'])} tarball block(s) "
+                             f"lack {', '.join(missing)}; commit nothing and {LOCK_FIX}")
+            OUT.say(f"error: {data['error']}")
+            return 1, data
     OUT.say(f"next: pnpm talk review {wt_slug(talk)}, then commit talks/{talk}/package.json and pnpm-lock.yaml")
     return 0, data
 
@@ -3133,7 +3187,7 @@ def build_parser() -> argparse.ArgumentParser:
     verb("dev", "pnpm dev in the talk (more args after --)")
     sp = verb("build", "build into $TALK_TMP/talk-<slug>/site")
     sp.add_argument("--pages", action="store_true", help="the Pages base /<repo>/<talk>/ instead of /")
-    sp = verb("check", "videos:check, stage:check, build")
+    sp = verb("check", "the lockfile's subpaths, videos:check, stage:check, build")
     sp.add_argument("--pages", action="store_true")
     sp = verb("shots", "slidev-stage-shots of the build into talks/<t>/shots/")
     sp.add_argument("--slides")
