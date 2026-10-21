@@ -6,7 +6,17 @@
   Achievement, for grades 9–12 (LJA lists 8–12).
 - Filmed in the Delfi studio, Vilnius, on 26 Oct 2026, 16:00–18:00, with no
   audience; streamed to classrooms on 27 Oct 2026 at 12:00.
-- Lithuanian, 10–15 minutes (this deck: about 10).
+- Title (the owner, 21 Oct, through the Scheduler; his capitalisation): „Kas
+  vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po žeme“. No
+  title slide (16 Oct): it is the deck's `title:` (the tab) and goes to Delfi
+  with the notes. Hedge for the speaker: CERN is the world's largest
+  *particle physics* laboratory (`cern-largest-particle-physics-lab`; no
+  source ranks it among all science labs), and 100 m is LHCb's depth and the
+  LHC tunnel's (`lhcb-100m-below-ground`, `lhc-geneva-27km-100m-four-experiments`).
+  In speech: „didžiausia pasaulyje dalelių fizikos laboratorija“.
+- Lithuanian, **15 minutes** (the owner, 21 Oct: "school students oriented, so
+  more visuals, but 15 min we can cover quite a lot of content"; until then
+  10–15, and the 20 Oct deck is about 10).
 - The organisers' ask: real stories over conference talks; you don't need to
   know now what you will be; notice what interests you and dig; what working
   on questions with no textbook answer is like.
@@ -70,6 +80,18 @@ purpose).
 
 ## Status
 
+- 2026-10-21 (latest): **live is the 20 Oct rebuild, not a60d0fa.** It went
+  out with main's Pages run 39485774569 at 404f3a7 (Innoday's deploy, green,
+  20 Oct 19:42 UTC), which builds every talk and contains 292181d…3c7c655.
+  Checked 21 Oct: URL 200, tab „Užsikrauk karjerai“, the live bundle carries
+  the rebuild's „59 453“ and „Bakalauro darbai“ and not the 18 Oct
+  „Magistro ir bakalauro darbai“. This talk's own `talk ready` was not run on
+  the rebuild (no ready or deploy record on this machine), so it is live
+  unverified by a walk. On the branch since: `advance-on-end` stripped from
+  the three clips (Decisions, 2026-10-21), the owner's title in the headmatter
+  and Brief, two facts filed. Next: the owner's answer to the 15-min proposal
+  (in this window), then build content; renders wait for Innoday's Thursday
+  redeploy; Friday: pin v0.8.2, stills, `talk record --plates`, `talk ready`.
 - 2026-10-18 (latest): **flow overhaul, blueprint written, not built.** The
   owner, in this window, on the deployed 20-slide deck: "This one still lacks
   coherence, now I can build some story telling around it ... but need a much
@@ -317,6 +339,17 @@ purpose).
 
 ## Decisions
 
+- 2026-10-21 — No `advance-on-end` on any clip unless the owner asks for that
+  clip by name (his standing rule, 21 Oct, after OpenData's "autoclick";
+  through the Scheduler). Stripped from slides 4 (`cern_overview_short.mp4`),
+  5 (the tunnel) and 7 (`lhcb.mp4`); the notes now say → at the clip's end
+  (a clip holds its last frame; the push exits still run on the speaker's →).
+  `slidev-stage-record` drives the deck itself, so the recordings are
+  unchanged. Undo: none wanted; ask the owner per clip.
+- 2026-10-21 — The title back in the headmatter: `title:` is the owner's
+  „Kas vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po
+  žeme“ (the 16 Oct „Užsikrauk karjerai“ tab name replaced); still no title
+  slide or h1. Kept his capital „Pasaulyje“ as given.
 - 2026-10-20 — Blueprint v2 built (the owner, 20 Oct, on v1: "This will
   need to be reworked a bit…"; asked what is off: "10-15min talk"; then:
   "Taking elements from innoday and open data set up a good story telling
@@ -788,6 +821,11 @@ purpose).
   commercial. The grain galaxy station is gone (the Hubble photo replaces it).
 
 ## Figures and open items (for the speaker)
+
+0. (21 Oct) TV or online? The Brief says a private online event since 8 Oct
+   (no safe area, no per-slide MP4s); the Scheduler's 21 Oct brief says the
+   broadcast skill, the safe area and per-slide MP4s "as before". Asked in the
+   15-min proposal; the per-slide MP4s are planned for Friday either way.
 
 The owner's list after the 15 and 18 Oct rounds, each a yes/no or a fact only they
 have (the AFK default is built and deployed; each has an undo under Decisions):

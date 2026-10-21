@@ -19,7 +19,7 @@ stage:
   palette: { base: blue, bg: '#000206', accent: '#5b6fd6', dust: '#5b4fd6', dustBright: '#ebe6ff', nebula: '#3a2a9e', nebulaAlt: '#0f6e86', sky: '#9a8cff', fill: '#c9b8ff', highlight: '#fff0d0', dim: '#a39dc0' }   # a true black ground, as OpenData's
   sound: { hum: false, flight: false, clip: false }   # no hum and no transition sounds (owner, 13–14 Oct: "transitions were like driving sounds", "only 2-3s"); the clips' audio and the collision's own sound still play
   options: { dustSize: 2.2, reach: 22, nebula: 0.12, grain: 0.012, aberration: 0, vignette: 0.7, bloom: 0.42 }   # OpenData's look: deep, crisp, not hazy
-title: Užsikrauk karjerai
+title: Kas vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po žeme
 duration: 10min
 sources: notes
 info: |
@@ -114,14 +114,14 @@ If asked: strictly a pentaquark is four quarks and one antiquark; the three quar
 space: { at: opening, dim: 1, ambient: 0, hum: false }
 ---
 
-<!-- The way in, as OpenData's: CERN from above, the library clip cern_overview_short.mp4 (11 s, no sound): from the Earth down to Geneva, then the LHC ring drawn over the fields with its four experiments named. It moves on by itself at its end, the camera pushing on into the ring (its right side, 0.72, 0.45 of the last frame), where the tunnel follows. -->
-<VideoPlayer src="cern_overview_short.mp4" advance-on-end exit="push" exit-at="0.72,0.45" />
+<!-- The way in, as OpenData's: CERN from above, the library clip cern_overview_short.mp4 (11 s, no sound): from the Earth down to Geneva, then the LHC ring drawn over the fields with its four experiments named. At the speaker's → after its end, the camera pushes on into the ring (its right side, 0.72, 0.45 of the last frame), where the tunnel follows. -->
+<VideoPlayer src="cern_overview_short.mp4" exit="push" exit-at="0.72,0.45" />
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments -->
 
 <!--
 Message: this is CERN near Geneva; 100 m under its fields runs the 27 km ring.
-Picture: CERN from above (11 s), the LHC ring drawn over the fields, its four experiments named; at its end the camera pushes on into the ring, where the tunnel follows (→ earlier). 16 words take about 8 s, 10 s at a slow delivery, inside the 11 s.
+Picture: CERN from above (11 s), the LHC ring drawn over the fields, its four experiments named; at → after its end (it holds its last frame; no auto-advance) the camera pushes on into the ring, where the tunnel follows. 16 words take about 8 s, 10 s at a slow delivery, inside the 11 s.
 
 Tai CERN, laboratorija prie Ženevos. Po šiais laukais, šimto metrų gylyje, – dvidešimt septynių kilometrų greitintuvo žiedas.
 
@@ -136,8 +136,8 @@ The line is said over the clip; its 11 s are counted from the clip.
 space: { at: opening, dim: 1, ambient: 0, hum: false }
 ---
 
-<!-- The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, an 18 s cut (videos/manifest.toml). It moves on by itself at its end, into the beam pipe. -->
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" advance-on-end :volume="0.5" exit="push" exit-at="0.45,0.53" />
+<!-- The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, an 18 s cut (videos/manifest.toml). At the speaker's → after its end, it pushes on into the beam pipe. -->
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.5" exit="push" exit-at="0.45,0.53" />
 
 <LhcOpening part="tunnel" />
 
@@ -145,7 +145,7 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 
 <!--
 Message: when the accelerator runs, protons at almost the speed of light collide over a billion times a second, and the collision energy becomes new particles.
-Picture: the real LHC tunnel, 100 m under the border, the magnets on the right; „LHC 27 km“ low on the left. Let it run: at its end the camera goes on into the beam pipe (it moves on by itself; → earlier). Its sound is the tunnel's own ventilation hum. 26 words take about 14 s, 17 s at a slow delivery, inside the 18 s; the last line as the push into the pipe begins.
+Picture: the real LHC tunnel, 100 m under the border, the magnets on the right; „LHC 27 km“ low on the left. Let it run, then → at its end: the camera goes on into the beam pipe (no auto-advance). Its sound is the tunnel's own ventilation hum. 26 words take about 14 s, 17 s at a slow delivery, inside the 18 s; the last line as the push into the pipe begins.
 
 Kai greitintuvas veikia, protonai jame skrieja beveik šviesos greičiu ir susiduria daugiau nei milijardą kartų per sekundę. Susidūrimo energija virsta naujomis dalelėmis.
 Štai vienas toks susidūrimas.
@@ -195,14 +195,14 @@ The event: CMS Open Data record 300 (CC0), run 195099, event 137440354, a Higgs 
 
 ---
 
-<!-- The shared opening's LHCb reel: the detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release. It condenses out of the dust and moves on by itself when it ends. -->
-<VideoPlayer src="lhcb.mp4" advance-on-end />
+<!-- The shared opening's LHCb reel: the detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release. It condenses out of the dust; the speaker's → moves on. -->
+<VideoPlayer src="lhcb.mp4" />
 
 <!-- facts: lhcb-detector-size, lhcb-three-storey-worked, lhcb-collaboration-sep-2026, lhcb-vilnius-joined, particle-decay-reconstructed-mass, particles-decay-detector-sees-products -->
 
 <!--
 Message: this is LHCb, three storeys high; almost two thousand people work on it, our Vilnius group among them, and I am one of them. From the fragments the detector measures we compute the mass of the particle that broke apart. One computed mass is one dot.
-Picture: the LHCb detector in 3D, with music. Start about 3 s in; about 50 words take 26 s, 33 s at a slow delivery, so they end before the clip does (39 s). Then let the music run; the last line lands as the clip ends (it ends by itself; → moves on earlier).
+Picture: the LHCb detector in 3D, with music. Start about 3 s in; about 50 words take 26 s, 33 s at a slow delivery, so they end before the clip does (39 s). Then let the music run; the last line lands as the clip ends, then → (no auto-advance).
 
 Tai LHCb. Jis dešimties metrų aukščio – kaip trijų aukštų namas. Čia dirba beveik du tūkstančiai žmonių iš viso pasaulio, tarp jų ir mūsų grupė iš Vilniaus universiteto. Aš – vienas iš jų.
 [pauzė]
