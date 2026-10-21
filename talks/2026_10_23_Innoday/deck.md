@@ -181,7 +181,7 @@ Faktai: konvencija pasirašyta 1953 m., CERN oficialiai įsteigtas 1954 m. rug
 space: { at: collision, dim: 1, ambient: 0, hum: false }   # black under the clip; its push lands in the collision's dark
 ---
 
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.5" exit="push" exit-at="0.45,0.53" />
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.05" exit="push" exit-at="0.45,0.53" />
 
 <AfterFlight :delay="2.4">
 <div class="stats">
