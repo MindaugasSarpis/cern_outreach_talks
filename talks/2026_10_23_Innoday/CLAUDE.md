@@ -168,8 +168,13 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
-2026-10-21 (evening, in progress, not committed): the owner's new round, all approved in this
-window: „Ačiū“'s music 0,9 → 0,6 (done); the close back to grains with the person as 3D grains
+2026-10-21 (night): the round below is built, committed (c1a826e, 7667e69) and pushed on
+talk/innoday, not deployed; the owner has the close's review MP4 (53 s, with the music), the
+new 20 s light-injection clip and stills of the cover, the funnel and Part III. Not yet
+published: lis_flag.mp4 (the release still holds the 10 s clip; `videos:publish --only
+lis_flag.mp4` with the deploy, after his yes). The new raw is in this worktree's
+videos/raw only. Next: his yes or notes Wednesday morning, the paper count, then v0.8.2.
+The owner's new round, all approved in this window: „Ačiū“'s music 0,9 → 0,6 (done); the close back to grains with the person as 3D grains
 (part 10, bake_grains.py; done, unreviewed) and a new path "to really reveal the vast scale",
 ending in a pull-out to the full LHC ring ("can show the accelerator as well, so this doesn't look
 isolated … panning out at the very last second to full accelerator and then ačiū appears"); the
