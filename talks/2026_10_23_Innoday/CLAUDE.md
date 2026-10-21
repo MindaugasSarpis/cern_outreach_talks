@@ -192,12 +192,12 @@ is dropped for this talk (the Scheduler gives main at 19:00 either way). The ado
 release's relay on Wednesday (T): T+0 merge origin/main, `pnpm talk pin v0.8.2`,
 commit; T+5 `stage.motion: floor`, check, lint; T+10 `pnpm talk record --plates` (~15 min on the
 GPU, render-lock priority); T+25 `videos:publish --only <plates>`; T+35 force the fallbacks
-(reduced motion, no WebGL) and walk 2→3, 8→9, 9, 28, 30, and test the takeovers on the plate
+(reduced motion, no WebGL) and walk 2→3, 8→9, 9→10→9 (a back-step onto a held plate), 28, 30, and test the takeovers on the plate
 layer under `--force no-webgl2` (prepared 21 Oct: on html[data-stage-layer="plate"], once
 html[data-stage-plate] is `playing`, WebTakeover's still goes at once and LisTakeover's fades after
 `hold`, with „Ačiū“ at the path's end + 0,6 s; `held` (a back-step or jump) shows the end at once;
-`living` keeps the photo and the word; inert on v0.8.1, which never sets the attributes; check that
-the previous slide's plate state is not read on arrival); T+45 `talk ready` (plates step); T+55
+`living` keeps the photo and the word; inert on v0.8.1, which never sets the attributes; the Scheduler
+read StagePlate: the state is this slide's within ~50 ms of the route, so the observer stays); T+45 `talk ready` (plates step); T+55
 deploy under the standing rule; T+65 the venue zip rebuilt and onto the USB stick, hand-off. About
 75 min.
 
