@@ -168,6 +168,12 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-22 (21:15, deployed): 4bc29fa (Pages run 39827057266, green, URL 200, live walk clean).
+Slide 30's close now flies in to NFTMC over the dive's last 10 s and, under „Ačiū“, very slowly
+zooms out again (close_home.mp4, 111.6 s). The venue zip is rebuilt from 88f60de (the same deck;
+4bc29fa adds only venue.json), 899 061 992 bytes; the landing page shows "ZIP · 857 MB". Open as
+below.
+
 2026-10-22 (20:50, deployed): efba698 (Pages run 39824423357, green, URL 200, live walk clean;
 `ready` passed on it, nothing skipped). Live: slide 30 is close_home.mp4, the close re-recorded at
 4K with the whole LHCb logo and the flight home (the complex gone as the clouds appear, a 14 s
