@@ -1,3 +1,79 @@
+# Review before the filming (22 Oct 2026)
+
+Reviewed f647983 (origin/main merged into the branch; the talk's files as deployed in acc0993). Notes fixes in
+0787501. The owner, through the Scheduler: a careful review of the deployed deck as it will be filmed (Delfi,
+26 Oct, 1080p50, the slides on a screen behind him, he clicks). Findings go to him first; nothing he sees on
+screen changes until he says which.
+
+## Checks run
+
+| Check | Result |
+| ---- | ---- |
+| `talk ready` (f647983) | passed, nothing skipped: lint --release, check, shots (23), pages, preflight, venue --dry-run, plates, safe; pptx skipped (no PPTX, owner) |
+| `talk lint` | 0 errors, 4 warnings (three optional slots on 14, „Ačiū“) |
+| `talk facts check` | 0 errors; the 85 facts the deck cites: 76 confirmed, 9 corrected, all checked since 7 Oct |
+| `talk safe` (TV safe box, 37 px floor) | ok; WebGL labels are not measured: slide 22's two names are about 36 canvas px |
+| live walk (pages_check, the Pages URL) | 23/23, nothing failed |
+| shots, every click of 3, 9–14, 17, 22 | no overflow, no page errors; „13,8 mlrd. metų“ (3) and „100 m“ (9) appear after the settle, not shot |
+| clips wait for the press | slides 4, 5, 6, 8, 16, 20: still on their slide 5 s after `ended`, WebGL on and with WebGL and WebGL2 disabled in Chromium (fallback `no-webgl2`); the live URL in the fallback too |
+| timing (120 words/min) | 12:26 scripted without the slots; 15–25 % over on camera (20 Oct) → about 14:15–15:15, with the three slots about 15:00–16:00 |
+
+## Sound (EBU R128)
+
+The LHCb reel (slide 8, level 1): −16,0 LUFS integrated, short-term −18,7 to −12,9 (loudest about 23 s in, after
+the planned speech), sample peak −2,2 dBFS. The tunnel (slide 5, level 0,5): −18,0 LUFS in the file, about −24
+heard, a hum under speech; peak −6,2 dBFS. Slides 4, 6, 16, 20: no audio track. The collision's swell, thump and
+drone on slide 9 are synthesised (30–60 Hz, compressed), so no file to measure: check them at Delfi's sound check
+(a broadcast high-pass may take them out).
+
+## Fallback
+
+The stills under the plates were from 18 Oct (the 20-slide deck): 15 and 19 showed other slides' worlds, 21–23 had
+none (404). Re-rendered for all 23 slides (`slidev-stage-shots --stills`). Each clip slide's plate is requested
+and 404s (no plate for a clip slide): console noise only.
+
+## Visual findings (for the owner; none applied)
+
+1. Slide 20, the tape robot: the slot stripes moiré on camera and block at stream bitrate; the robot ~10 % of the frame (high). Fix: drop it (also a timing cut).
+2. Slide 10, click 2: the marked column turns bright white under the gold tick and the 3 500 dots dim to haze, so „Kauburio nebeliko“ looks like a peak (high, meaning). Fix: click 2 `th2: 1` (no mark); `th2` size 1.955 → 2.6, alpha 0.85 → 0.95.
+3. The lower third: every readout sits at y 61–74 % (`--kk-floor` 150 px); a speaker in front of the screen hides it if he stands left or centre (high if so). Fix: `--kk-floor` 240 px, or he stands screen-right.
+4. Slide 9: „mln. per sekundę“ across the wireframe and beam glow; the wireframe and floor grid moiré (medium). Fix: the glow readout top-left, unit 0,4 em.
+5. Slide 3: mesh rings, floor grid, grains and bloom stack; the age lands on the grid (medium). Fix: the age top-left; the floor grid at half brightness.
+6. Slide 22: the two WebGL names ~36 px, soft; their dots look like the gold clouds (medium). Fix: `labelH` 0,1 → 0,11; a pointing sentence in the notes.
+7. Slide 1: „LHCb Vilnius“ touches the five-quark form (medium). Fix: the name line on three lines.
+8. Slide 15: the route head's bloom washes out Vilnius (medium). Fix: dim 0,3 → 0,4.
+9. Slides 17–19: the blue filament web means nothing; „1 TB“ labels a 12 px sphere (medium). Fix: `vault: 0`; a pointing sentence.
+10. Slide 14: the route's head glow touches CERN (click 0), Glazgas, Bona and Vilnius as it arrives (low–medium). Fix: four label nudges.
+11. Slide 11: the five ticks thin at `tickAlpha` 0,4 (low). Fix: 0,7, `tickSize` 3.
+12. Slide 5: „LHC“ light blue on the tunnel's grey (low). Fix: white.
+13. Slides 18–19: „Atvirieji LHCb duomenys“ wraps; „4000 TB“ without a space; „Visi“ a word that is not a name (low).
+14. Slide 2: a grey-blue haze at a third of the frame (low). Keep it short.
+15. Slide 13: the 140-dot strip may vanish on the stream (low; its smallness is the point). Notes pointer.
+
+## Applied (notes only, 0787501)
+
+- 4: the hedge spoken: „Tai CERN prie Ženevos – didžiausia pasaulyje dalelių fizikos laboratorija.“ (`cern-largest-particle-physics-lab` cited).
+- 6–7: one bunch crossing, not one collision („Štai kaip jie susiduria.“, „tikras dviejų protonų paketų susidūrimas“); CMS „vienas iš keturių didžiųjų šio greitintuvo detektorių“.
+- 8: „Šiame eksperimente dirba …“ (members, not people at the detector).
+- 9: „Kai greitintuvas veikia, …“ (LS3 since 29 June); „skrieja pro … užfiksuoja“.
+- 16: the light injection calibrates the light sensors, not the fibres; „Mūsų grupė dirba ir prie …“.
+- 17: the repeat „Šiais metais atverta dar daugiau.“ cut (18 says it).
+- 20: LHC experiments' data, not all CERN's; „Juostų ten …“.
+- 22: „Jos laukia tavęs.“ cut (a slogan).
+- 1, 3, 6, 10, 19: smaller wording fixes.
+
+## Timing cuts (proposed, least loss first)
+
+1. Slide 8: → about 3 s after „Aš – vienas iš jų.“, not at the reel's end (−18 s, no edit).
+2. Slide 20 whole (−19,5 s); 19's bridge „O saugomi jie štai kur.“ → „O štai ką su atviraisiais duomenimis padarė vienas mūsų studentas.“
+3. Slide 21: the Brown preprint sentence (−7 s).
+4. Slide 22: „Beje, pirmieji vieši LHCb failai …“ (−5 s).
+5. Slide 10: „Iš šimto keturiasdešimties taškų tikros dalelės nuo atsitiktinumo neatskirsi.“ (−4 s).
+6. Slide 18 whole (−16,5 s; medium loss).
+1–5 save about 54 s: delivered with the slots, about 14:00–15:00.
+
+---
+
 # Review of the 15 Oct round
 
 - HEAD reviewed: db8e2abd9fadefb4cb0c83519ca1c7e60e2c8ccd (snapshot the same; the tree was clean).
