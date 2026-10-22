@@ -24,7 +24,9 @@ stage:
   motion: floor   # a venue PC's reduced-motion setting is the venue's, not the audience's choice (v0.8.2; Scheduler, 21 Oct)
   # deeper than the blue palette's own look: a black ground (fewer, dimmer dust
   # grains, little nebula, a firmer vignette), no film grain, no fringes
-  options: { nebula: 0.12, grain: 0.012, aberration: 0, bloom: 0.55, density: 0.6, dustGain: 1.45, vignette: 0.42 }
+  # the drawing buffer at most 1920 wide: a projector's 1080p in full, a Retina laptop's 2560 px
+  # screen drawn at a little over half the pixels (owner, 22 Oct: "the very last frame is laggy even in zip")
+  options: { nebula: 0.12, grain: 0.012, aberration: 0, bloom: 0.55, density: 0.6, dustGain: 1.45, vignette: 0.42, maxBufferWidth: 1920 }
 title: Nuo Vilniaus iki visatos pakraščių ir atgal prie novatoriškų mokslo pasiekimų pritaikymo privačiame sektoriuje
 info: |
   Innoday 2026, 23 October, in Lithuanian. One story: to see what the world is
@@ -63,7 +65,6 @@ space: { at: wide, dim: 0, ambient: 0.35, hum: false }   # wide: the hero statio
 
 <div class="mt-md">Dr. Mindaugas Šarpis · <span class="nc">LHCb</span> Vilnius · Vilniaus universitetas</div>
 
-<a class="zip-button" href="https://github.com/MindaugasSarpis/cern_outreach_talks/releases/download/videos-2026-10-00-innoday/2026_10_23_Innoday-venue.zip" download title="Visa prezentacija be interneto: išarchyvuoti, RUN_ME.txt">ZIP</a>
 
 <!-- facts: cms-195099-137440354-record-300, cms-195099-8tev, cms-195099-m4l-127-gev, cms-195099-290-drawn-tracks, cms-195099-523-tracks -->
 
@@ -666,7 +667,7 @@ Vaizdas: LHCb savaitės filmas, Nebula Moments (Rimantas Unkevičius), 2:28; sav
 -->
 
 ---
-space: { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim: 0, hum: false }
+space: { at: [9.54, -482.702, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim: 0, hum: false }
 ---
 
 <VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
@@ -694,8 +695,8 @@ space:
   rate: [[0, 0.7], [2.4, 0.5]]   # LisTakeover slows it almost to a stop as the bunches cross (~18 s), then runs it on at 0.6
   cameraRate: 1
   path:   # hero/close_path.py: out of the module's end, down to eye level side on, LHCb filling the frame (17,5 s), a slow drift back as the collisions merge into the glow (36 s), then without a pause, slowly, out to the accelerator complex (57 s; owner, 22 Oct: "first zoom out untill you reach the eye level, so lhcb is full frame side to side, then slowly move out until the beams run at full speed, only then zoom out to lhc fcc")
-    - [0, { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]
-    - [2, { at: [9.54, -483.362, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]
+    - [0, { at: [9.54, -482.702, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]
+    - [2, { at: [9.54, -482.702, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]
     - [5.5, { at: [9.6, -482, 0.8], dist: 7, yaw: -80, pitch: 4 }]
     - [7, { at: [10, -481.89, 0.69], dist: 8.359, yaw: -68.972, pitch: 1.811 }]
     - [8.5, { at: [10.453, -481.765, 0.565], dist: 9.9, yaw: -56.475, pitch: -0.669 }]

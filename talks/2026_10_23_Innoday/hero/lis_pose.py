@@ -2,7 +2,7 @@
 frontmatter: the clip slide's `space` and path[0] on „Ačiū“ (setup/LisTakeover.vue).
 
   python3 talks/2026_10_23_Innoday/hero/lis_pose.py talks/2026_10_23_Innoday/setup/data/lis.json \\
-      [--anchor 9.54,-483.06,0.96] [--d0 2.4]
+      [--anchor 9.54,-482.40,0.96] [--d0 2.4]
 
 The clip's camera stood META.flagDist metres from the flag; the stage's stands d0
 units from the anchor (the flag's place in LHCb) on the same line, so the grains
@@ -15,7 +15,7 @@ import math
 
 a = argparse.ArgumentParser()
 a.add_argument('meta')
-a.add_argument('--anchor', default='9.54,-483.06,0.96')
+a.add_argument('--anchor', default='9.54,-482.40,0.96')
 a.add_argument('--d0', type=float, default=2.4)
 x = a.parse_args()
 m = json.load(open(x.meta))

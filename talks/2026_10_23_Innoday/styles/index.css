@@ -435,13 +435,3 @@ html[data-stage] .globe-stats .u { font-size: 24px; font-weight: 500; margin-lef
 .innoday-sound-badge { position: fixed; right: 18px; bottom: 18px; z-index: 1000; padding: 4px 12px; border-radius: 999px; background: rgba(0, 1, 3, 0.72); color: #e8ecf4; font: 600 16px/1.4 system-ui, sans-serif; opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
 .innoday-sound-badge.on { opacity: 1; }
 html.print .innoday-sound-badge { display: none; }
-
-/* the cover's ZIP: the venue zip (pnpm venue) on the talk's release (owner, 22 Oct: "I don't see
-   zip / pptx download buttons"; then "Drop the powerpoint option"); styled as components/PptxButton.vue;
-   only on the slide itself, never on the plates (they hide .slidev-layout) or in print */
-.slidev-layout .zip-button { position: absolute; right: 1rem; bottom: 1rem; z-index: 10; padding: 0.25rem 0.6rem;
-  border: 1px solid currentColor; border-radius: 0.3rem; color: inherit; font-size: 0.55rem; font-weight: 600;
-  letter-spacing: 0.12em; line-height: 1; text-transform: uppercase; text-decoration: none; opacity: 0.55; transition: opacity 0.2s; }
-.slidev-layout .zip-button:hover, .slidev-layout .zip-button:focus-visible { opacity: 1; }
-html.print .zip-button, .slidev-presenter .zip-button { display: none !important; }
-@media print { .zip-button { display: none !important; } }

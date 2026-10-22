@@ -34,7 +34,7 @@ import META from './data/lis.json'
 const props = defineProps({
   src: { type: String, default: 'figures/lis_last.jpg' },
   depth: { type: String, default: 'figures/lis_last.depth.png' },
-  anchor: { type: Array, default: () => [9.54, -483.06, 0.96] },   // the flag's place: the lower cold box, LHCb (0.8, -2.55, 7.95) m at 1,2 units a metre (true proportions)
+  anchor: { type: Array, default: () => [9.54, -482.40, 0.96] },   // the flag's place: in the SciFi's lower end, LHCb (0.8, -2.00, 7.95) m at 1,2 units a metre (the cold box's true -2,55 m is 0,11 m under the cloud's lowest SciFi grain: it landed under the cloud, not in it; owner, 22 Oct: "should land with the point cloud not under it")
   d0: { type: Number, default: 2.4 },      // the camera's start distance from the flag, stage units (path[0])
   sEnd: { type: Number, default: 1.2 },    // stage units a metre at the end of the scale law: the detector's own (owner, 21 Oct: the flag on its mat "moves to a position where scifi is. and reduces in size accordingly (because it's far away)")
   grains: { type: Number, default: 320000 },   // at tier 0; fewer on a lower tier (owner, 20 Oct: "more solid")
