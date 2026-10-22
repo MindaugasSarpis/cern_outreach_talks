@@ -102,6 +102,30 @@ purpose).
 
 ## Status
 
+- 2026-10-22 (latest): **on v0.8.2, every label inside the broadcast safe
+  box; plates recording; the deploy follows `talk ready`** (the owner, in this
+  window: "Deploy"; the Scheduler gave the render lock and main for v0.8.2,
+  the PptxButton and `talk pptx` in a second round once v0.8.3 is tagged).
+  On the branch: origin/main merged (8e44020); pinned v0.8.2 (the lockfile's
+  v0.8.1/v0.9.0 entries of other talks keep `path: /packages/stage`, restored
+  by hand from main's after the pin dropped them); `stage.motion: floor`;
+  `lis_flag.mp4` made talk-owned (the library's 10 s copy as-is, on this
+  talk's release: the env's CLI, 0.8.3, predates v0.9.0's registry and failed
+  `videos:check` on it). First shots of all 23 and a review by a subagent;
+  `talk safe` found 19 problems (the left edge at 72 px, readouts and labels
+  below y 408, type at 30–36 px), all fixed (Decisions, 22 Oct): `talk safe`
+  0 problems, lint 0 errors. Plates: 17 (every non-clip slide; 1080p25,
+  20 s hold) recorded at 6eda07d in 16 min, 180,7 MB (6,2–20,6 MB each),
+  published to the talk's release with --only. Not shot: the late text of 3 and 11 (judged from
+  geometry), 14's click states (checked by `talk safe`), 9's crane and
+  collision in motion. Left as they are, for the owner: 21's sun of plots is
+  unreadable in detail by design; 6's clip carries a small burned-in
+  „CERN Control Centre“ inset with an accelerator map, top right (cut A, its
+  English labels approved); 20's robot is small in the frame at the start.
+  Open owner questions (they do not block): the road (Bonn → Manchester and
+  Vilnius in order or together, which Irish city, whether the trail starts in
+  Vilnius, years or roles); drop 20 if long; where he stands; Delfi's flash
+  check.
 - 2026-10-21 (latest): **the 15-minute round built on the branch, not
   rendered, not deployed** (the owner: "Build"; then the dipole magnet as
   slide 6, encoded and published). 23 slides, 13,6 min by the
@@ -374,6 +398,24 @@ purpose).
 
 ## Decisions
 
+- 2026-10-22 — The broadcast safe box (x 98–882, y 55–408 of the 980 canvas,
+  37 px type floor; `talk safe` for a talk marked `broadcast`): the text
+  area's edge `--kk-x` 72 → 104 px and floor `--kk-floor` 84 → 150 px, the
+  readouts and the shared opening's caption on it; names, units and the cover
+  line at 38 px. Labels projected from a pose re-projected after a reframe:
+  11 (drawn back, dist 23), 13 (dist 26), 14 (the `whole` pose moved 5,5
+  south: `[1201, 0, 2.5]`, dist 36, pitch 60; `whole` itself is unused now),
+  17 (the 1 TB sphere left of x 800, its label 0.12), 19 (13 west, the 100 PB
+  sphere clear of the readout), 22 (the sun's names at labelH 0.1, the camera
+  back to dist 37,5, and the sun turns at 300 s instead of 100, its items
+  started 219 s along their orbit: at the old turn no pose keeps
+  „Meistriškumo pamoka“ in the box; the sun is about 20 % smaller and slower).
+  Soft shades behind 9's readouts (they stand on the detector's wireframe now)
+  and a larger one behind 5's caption. Undo: the commit 6eda07d and 13c0b43.
+- 2026-10-22 — `lis_flag.mp4` talk-owned: the library's 10 s copy, byte for
+  byte, on this talk's release, so `videos:check` passes on any CLI and the
+  clip no longer depends on the library chain. Innoday's 20 s cut stays
+  Innoday's.
 - 2026-10-22 — The tape library cut (slide 20's TODO, cleared): from a frame
   sheet, CERN-FOOTAGE-2022-013-006's last shot, 1:48–2:02 (14 s): the tape
   library's aisle, the robot's carriage running down it. Silent (`silent-loop`;
@@ -897,8 +939,9 @@ purpose).
   with no nebula there are few gradients left; check a test encode at
   2.5 Mbit/s before the filming. Undo: drop the `options` overrides.
 - 2026-10-08 — City names on the map are HTML labels at positions projected
-  from the `whole` pose (target europe + [1, 0, −3], dist 36, yaw 0, pitch
-  60, sway 0). If that pose changes, recompute them.
+  from the slide's pose (until 22 Oct the `whole` pose, target europe +
+  [1, 0, −3]; since then `[1201, 0, 2.5]`, dist 36, yaw 0, pitch 60, sway 0,
+  in the slide's frontmatter). If that pose changes, recompute them.
 
 - 2026-10-08 — Real photographs where the story names something real: the
   LHCb cavern (Rosa Menkman, CC BY 2.0), Gell-Mann (Joi Ito, CC BY 2.5),
