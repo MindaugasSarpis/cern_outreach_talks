@@ -168,15 +168,14 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
-2026-10-22 (17:40, committed, not deployed: GitHub Actions degraded, Karjera's run queued; the
-Scheduler holds main). Deployed and live: 9f3a868 (Pages run 39789658656, green, URL 200, walk
-clean). Since then on the branch: slide 30 is the recorded close (close.mp4, on the release);
-the SciFi module lands in the cloud's SciFi; the logo without its baked-in reflection; the close
-lighter; the drawing buffer at most 1920 wide; no PowerPoint (owner: "Drop the powerpoint
-option"); the landing page's ZIP from videos/venue.json (the zip from 9e3cac8 on the release,
-778 410 467 bytes, URL 200). The owner has the zip's path for his laptop. Next: `ready` and
-`deploy` on the Scheduler's go. Open: plates 30–31 stale (slide 30 is a clip now; 31 the credits,
-never shown); the Mac's lag untested here.
+2026-10-22 (19:00, deployed): 4744b0d (origin/main merged at acc0993; Pages run 39808661599,
+green, URL 200, live walk clean). Live: slide 30 is the recorded close (close.mp4), faded in so
+the world rests under it (a cut clip never rested it: the M2 Mac's lag, owner "MacPro M2 can't
+quite handle the final slide"); slide 31 the clip's last frame as a still (CloseStill); the SciFi
+module lands in the cloud's SciFi; the logo without its reflection; the buffer at most 1920 wide;
+no PowerPoint. The landing page shows "ZIP · 742 MB"; the zip on the release is rebuilt from
+4744b0d (778 514 435 bytes). Open: the owner to retry the final slide on the M2; plates 30–31
+stale (30 a clip, 31 a still; neither drawn live); the toolkit's cut clip told to the Scheduler.
 
 2026-10-22 (00:45, deployed): the fresh-eyes review of all 31 slides found nothing high; its fixes
 are in (White Rabbit darker, 19 and 22 dimmed, „8 TeV“/„290 dalelių“ at bottom 96 px, slides 5–6
