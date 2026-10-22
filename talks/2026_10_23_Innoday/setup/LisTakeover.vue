@@ -43,14 +43,24 @@ const props = defineProps({
   fade: { type: Number, default: 1400 },   // ms
   collision: { type: String, default: 'thanks' },
   detAt: { type: Number, default: 3.2 },   // the camera this far from the flag (units): the detector lights up
-  colAt: { type: Number, default: 15.6 },  // … LHCb's collision starts in it (12,6 s on the path, hero/close_path.py --probe; the bunches cross 5 s later, `approach` 2.5 at the slide's rate 0.5: as the camera lands at eye level, on the music's arrival, 17-19 s)
+  colAt: { type: Number, default: 12.6 },  // … LHCb's collision starts in it (12,6 s on the path; 15,6 before the side-on landing, 22 Oct, hero/close_path.py --probe; the bunches cross 5 s later, `approach` 2.5 at the slide's rate 0.5: as the camera lands at eye level, on the music's arrival, 17-19 s)
   freeze: { type: Array, default: () => [[0, 0.5], [0.25, 0.15], [0.8, 0.15], [1.6, 0.6]] },   // the world's rate from the crossing (17,5 s): slow while the flash lights, then the debris bursts out (~19 s, still in the music's peak; at 0.08 for 1,8 s the burst came at 21 s)
   embAt: { type: Number, default: 34 },    // … the emblems gather, on the pull-back (38,5 s: whole by the music's second climax, 42-44 s; the camera is never this far before)
   dEnd: { type: Number, default: 19 },     // the camera's distance from the flag where the picture reaches true scale (~15 s, coming down to eye level; the walk never comes nearer than 19,6)
   wordTop: { type: String, default: '42.5%' },   // the word's middle once the world has run: inside the FCC's ring (the still and print keep it low)
-  emblems: { type: Array, default: () => ['lhcbLogo'] },
+  emblems: { type: Array, default: () => ['lhcbLogo', 'ltMap'] },   // ltMap: the flag from the SciFi's place out to LHCb's point on the map (owner, 22 Oct: "Still need lithuanian flag on 30")
   wordAfter: { type: Number, default: 0.6 },   // s after the camera has stopped (48 s): the word
   wordBy: { type: Number, default: 62 },   // s: the word shows by then whatever the world does
+  // the word out of a collision (owner, 22 Oct: "aciu should appear out of particle collision now
+  // it's a bit flat"; "Also Lithuanian flag should appear with aciu"): where the world runs, the
+  // `lhc-collision` named `bang` (a CMS crossing in the middle of the FCC's ring) starts as the
+  // camera stops, and on its crossing the word and the flag (`words`: emblems with `burst`)
+  // gather out of it; the collision lets go after `bangFor` ms. The slot's word is then hidden
+  // (the plate has the world's). Without the world or its plate, the slot's word as before.
+  bang: { type: String, default: 'aciuCol' },
+  words: { type: Array, default: () => ['aciu', 'ltAciu'] },
+  bangFor: { type: Number, default: 5000 },
+  gatherAfter: { type: Number, default: 900 },   // ms from the crossing: the word gathers
 })
 const { $renderContext, $page, $frontmatter } = useSlideContext()
 const nav = useNav()
@@ -62,6 +72,7 @@ const still = ref(true)
 const fading = ref(false)
 const word = ref(false)
 const high = ref(false)   // the word in the ring (the world or its plate ran to the end), not low over the still
+const grained = ref(false)   // the world (or its plate) draws the word: the slot's is hidden
 
 // the frame and its depth, fetched once, by the live slide only, once the cover is behind
 let loading = null
@@ -129,7 +140,20 @@ function pathEnd() {
   const sp = $frontmatter?.value?.space ?? $frontmatter?.space
   return Math.max(0, ...(sp?.path || []).map(([t]) => Number(t) || 0))
 }
-const clear = () => { timers.forEach(clearTimeout); timers = []; clearInterval(watcher); watcher = 0; offCross?.(); offCross = null }
+const clear = () => { timers.forEach(clearTimeout); timers = []; clearInterval(watcher); watcher = 0; offCross?.(); offCross = null; offBang?.(); offBang = null }
+let offBang = null
+const words = (k) => props.words.forEach((n) => setGrains(n, k))
+const stopBang = () => { bus.set(props.bang, 0); bus.emit('stop', { name: props.bang }) }
+// the collision in the ring, and the word and the flag out of it on its crossing (or a little
+// later, if the crossing never comes)
+function bang(id) {
+  grained.value = true
+  let out = false
+  const gather = () => { if (out || id !== run) return; out = true; words(1); later(props.bangFor, () => { if (id === run) bus.set(props.bang, 0) }) }
+  offBang = bus.on('cross', (e) => { if (e.name === props.bang) later(props.gatherAfter, gather) })   // the tracks fly out first
+  bus.set(props.bang, 1)
+  later(5000, gather)
+}
 
 const A = new Vector3(...props.anchor)
 const s0 = props.d0 / META.flagDist
@@ -201,8 +225,8 @@ const stopCollision = () => { bus.set(props.collision, 0); bus.emit('stop', { na
 async function takeOver() {
   const id = ++run
   clear()
-  still.value = true; fading.value = false; word.value = false; high.value = false
-  setGrains('det', 0); emblems(0)
+  still.value = true; fading.value = false; word.value = false; high.value = false; grained.value = false
+  setGrains('det', 0); emblems(0); words(0); stopBang()
   const hole = s0Hole()
   if (hole) hole.value.w = HOLE
   stopCollision()   // a rebuilt world must not replay a kept step at once
@@ -215,6 +239,7 @@ async function takeOver() {
     if (id !== run) return
     if (st === 'none') { word.value = true; return }   // no plate after all: the still and the word
     high.value = true
+    grained.value = true   // the plate holds the world's word and flag
     if (st === 'held') { still.value = false; word.value = true; return }   // the close as it ended
     later(props.hold, () => { if (id === run) fading.value = true })
     later(props.hold + props.fade, () => { if (id === run) still.value = false })
@@ -261,7 +286,7 @@ async function takeOver() {
       // the logo takes over: the collision's glow fades (it washed the logo out)
       bus.set(props.collision, 0)
     }
-    if (emb && stopped >= 0 && performance.now() - stopped > props.wordAfter * 1000) { word.value = true; clearInterval(watcher); watcher = 0 }
+    if (emb && stopped >= 0 && performance.now() - stopped > props.wordAfter * 1000) { word.value = true; clearInterval(watcher); watcher = 0; bang(id) }
   }, 100)
 }
 
@@ -273,6 +298,7 @@ function endState(s, pts) {
   if (hole) hole.value.w = 0
   bus.set(props.collision, 0)
   emblems(1)
+  bus.set(props.bang, 0); words(1); grained.value = true
 }
 // the next page (the credits) opened directly, a reload or `g`: the close as it ends
 async function showEnd() {
@@ -293,7 +319,7 @@ onSlideLeave(() => {
   // on to the credits the close goes to its end (a press before the stop skips ahead);
   // anywhere else the collision stops and the emblems go
   if (nav.currentSlideNo?.value === page() + 1) endState(stage(), p)
-  else { stopCollision(); emblems(0) }
+  else { stopCollision(); emblems(0); stopBang(); words(0) }
 })
 // the plate layer can come after the slide's arrival (the stage decides its fallback late)
 const onFallback = () => { if (live.value && plated() && nav.currentSlideNo?.value === page()) takeOver() }
@@ -325,7 +351,7 @@ watch(() => nav.currentSlideNo?.value, (n) => {
     <img v-if="still" class="lis-still" :class="{ fading }" :src="url(src)" :style="{ transitionDuration: fade + 'ms' }"
       alt="Šviesos įvedimo sistema SciFi modulio gale; ant šaltosios dėžės išgraviruota Lietuvos vėliava" />
   </div>
-  <div class="lis-word" :class="{ on: word || !live || nav.isPrintMode?.value, high: high && live && !nav.isPrintMode?.value }" :style="{ '--lis-word-top': wordTop }"><slot /></div>
+  <div class="lis-word" :class="{ on: word || !live || nav.isPrintMode?.value, high: high && live && !nav.isPrintMode?.value, grained: grained && live && !nav.isPrintMode?.value }" :style="{ '--lis-word-top': wordTop }"><slot /></div>
 </template>
 
 <style>
@@ -337,6 +363,7 @@ html.print .lis-takeover .lis-still { opacity: 1; }
 /* a soft dark ground under the word, so it never sits on the detector's grains */
 .lis-word h1::before { content: ''; position: absolute; z-index: -1; left: 50%; top: 50%; width: 15em; height: 3.6em; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(0, 1, 3, 0.75), rgba(0, 1, 3, 0)); pointer-events: none; }
 .lis-word.on, html.print .lis-word { opacity: 1; }
+.lis-word.grained { opacity: 0 !important; }
 /* the world's close ends on the LHC ring from above: the word sits inside it */
 html[data-stage] .slidev-layout.statement.thanks-lhcb .lis-word.high h1 { top: var(--lis-word-top, 45%); bottom: auto; transform: translateY(-50%); }
 @media (prefers-reduced-motion: reduce) { .lis-word { opacity: 1; transition: none; } }

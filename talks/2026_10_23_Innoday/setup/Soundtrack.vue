@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, onUnmounted, watch } from 'vue'
 import { onSlideEnter, useSlideContext, useNav } from '@slidev/client'
+import { soundLevel, onSoundLevel } from './soundLevel.js'
 
 // <Soundtrack :level="0.3" start />, on each of the close's slides (owner, 20 Oct: "Will
 // need some crazy inspirational soundtrack for the last three slides spanning - maybe
@@ -16,7 +17,8 @@ import { onSlideEnter, useSlideContext, useNav } from '@slidev/client'
 // files, not a seek: a server without byte ranges (the venue zip's python http.server)
 // cannot seek, and a seek there restarts the piece. Levels and fades go through Web
 // Audio gain where it exists (iOS ignores an element's volume). Going to a slide without
-// a <Soundtrack> fades it out. Only the audience's window plays it.
+// a <Soundtrack> fades it out. Only the audience's window plays it. `+` / `-` scale every
+// level (setup/soundLevel.js).
 const props = defineProps({
   src: { type: String, default: 'audio/starfire_close.m4a' },
   tail: { type: String, default: 'audio/starfire_close_from49.m4a' },
@@ -46,7 +48,8 @@ function track(src) {
   }
   return t
 }
-const set = (t, v) => { t.level = v; if (t.gain) t.gain.gain.value = v; else t.e.volume = Math.max(0, Math.min(1, v)) }
+// `level` as written; what sounds is it times the presenter's `+` / `-` (soundLevel)
+const set = (t, v) => { t.level = v; const w = v * soundLevel(); if (t.gain) t.gain.gain.value = w; else t.e.volume = Math.max(0, Math.min(1, w)) }
 function ramp(t, to, ms, then) {
   cancelAnimationFrame(t.raf)
   const from = t.level, t0 = performance.now()
@@ -91,6 +94,8 @@ function arrive() {
   if (playing()) ramp(G.cur, props.level, 1200)
 }
 onSlideEnter(arrive)
+// a `+` / `-` (this window's or the presenter's): every track at its level times the new one
+if (!G.level) G.level = onSoundLevel(() => { for (const t of G.tracks.values()) if (!t.raf) set(t, t.level) })
 // the pages that have a live <Soundtrack>, counted (the overview's copies never count)
 let mine = null
 onMounted(() => {

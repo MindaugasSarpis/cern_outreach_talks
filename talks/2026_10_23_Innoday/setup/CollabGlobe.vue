@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
 import { collab, T, sampleFrame, placeAlongRays } from './globe.js'
 import { places } from './afterCover.js'
@@ -14,6 +14,11 @@ import { places } from './afterCover.js'
 // space beside the globe once the grains have left the photo, so it never covers the photo's
 // LHCb banner; mounted then, so its <Count>s count as it comes in. Everything runs on the
 // world's clock (globe.js `elapsed`), the copy too.
+// The photo holds until the slide's click (owner, 22 Oct: "can we do on click transfer to the
+// globe view? I might stay for a minute or so on the photo"; the slide has `clicks: 1`); an
+// arrival at the click already (back from slide 12) goes on at once. The recorders
+// (window.__rec: the plates, the PPTX's takes) do not wait, so a plate holds the photo T.hold
+// as before and the click under it shows the formed globe.
 // Without a world (no WebGL, reduced motion, a boot slower than 8 s) the photo holds T.hold and
 // fades to the stage's still of this slide (the globe); on the plate layer (v0.8.2) the same,
 // once the plate plays. Printed: no photo, the numbers over the still. Elsewhere (overview,
@@ -25,7 +30,7 @@ const props = defineProps({
   far: { type: Number, default: 21 },
   gain: { type: Number, default: 1.45 },   // 100k grains carry the photo's light
 })
-const { $renderContext, $frontmatter, $page } = useSlideContext()
+const { $renderContext, $frontmatter, $page, $clicks } = useSlideContext()
 const nav = useNav()
 const print = computed(() => !!nav.isPrintMode?.value)
 const url = computed(() => (props.src.startsWith('/') || /^https?:/.test(props.src)) ? props.src : import.meta.env.BASE_URL + props.src)
@@ -38,9 +43,24 @@ const overlay = ref(null)
 const box = ref({ left: 0, top: 0, width: 0, height: 0 })
 const gen = ref(0)
 
-let run = 0, raf = 0, gl = null, timers = []
+let run = 0, raf = 0, gl = null, timers = [], unwatch = null
 const later = (ms, fn) => timers.push(setTimeout(fn, ms))
-const clear = () => { timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(raf) }
+const clear = () => { timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(raf); unwatch?.(); unwatch = null }
+
+// the click that lets the photo go (true), or this run is over (false)
+const clicked = () => (($clicks?.value ?? $clicks) || 0) >= 1 || !!window.__rec
+function untilClick(id) {
+  if (clicked()) return Promise.resolve(true)
+  return new Promise((resolve) => {
+    unwatch?.()
+    const stop = watch(() => $clicks?.value, () => {
+      if (id !== run) { stop(); return resolve(false) }
+      if (clicked()) { stop(); if (unwatch === off) unwatch = null; resolve(true) }
+    })
+    const off = () => { stop(); resolve(false) }
+    unwatch = off
+  })
+}
 
 // the photo, decoded once the cover is behind (afterCover.js), and its grains once per tier
 let loading = null
@@ -95,11 +115,14 @@ function untilPlate(id) {
   })
 }
 
-// no world to dissolve into: the photo holds, then fades to what is under it
-function wallClock(id) {
-  later(T.hold * 1000, () => { if (id === run) fading.value = true })
-  later((T.hold + 0.9) * 1000, () => { if (id === run) still.value = false })
-  later((T.hold + T.nums) * 1000, () => { if (id === run) nums.value = true })
+// no world to dissolve into: the photo holds until the click, then fades to what is under it
+async function wallClock(id) {
+  const waited = !clicked()
+  if (!(await untilClick(id)) || id !== run) return
+  const h = waited ? 0.15 : T.hold   // after a click the photo goes at once
+  later(h * 1000, () => { if (id === run) fading.value = true })
+  later((h + 0.9) * 1000, () => { if (id === run) still.value = false })
+  later((h + T.nums) * 1000, () => { if (id === run) nums.value = true })
 }
 
 async function takeOver() {
@@ -139,7 +162,11 @@ async function takeOver() {
     s.camera.updateMatrixWorld()
     const pos = placeAlongRays(sample, s.camera, box.value, s.canvas.getBoundingClientRect(), { near: props.near, far: props.far })
     if (!g.prime(sample, pos, s.camera.position.clone(), { gain: props.gain })) { stopGl(); releaseGl(); collab.pending = false; return wallClock(id) }
-    g.start()
+    // the world rests (not busy) while the photo waits for the click
+    collab.pending = false
+    const waited = !clicked()
+    if (!(await untilClick(id)) || id !== run) return
+    g.start(waited ? T.hold - 0.15 : 0)   // after a click the photo goes at once
     collab.pending = false
     // the copy over the world now shows the photo exactly: the still can go (without a copy
     // it stays, and fades as the grains light)

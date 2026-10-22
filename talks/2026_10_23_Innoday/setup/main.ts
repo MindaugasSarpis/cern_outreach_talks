@@ -28,6 +28,8 @@ import ClipEnd from './ClipEnd.vue'
 import { installGlobe } from './globe.js'
 import CollabGlobe from './CollabGlobe.vue'
 import Drone from './Drone.vue'
+// `+` / `-` for the music and the hum (setup/soundLevel.js)
+import { installSoundKeys } from './soundLevel.js'
 // the LHCb event the shared collision draws by default (lhc-opening's own): the
 // close's detector marks the grains its tracks pass through
 import EVENT_LB from '../components/lhc-opening/event.json'
@@ -91,7 +93,13 @@ export default ({ app, router }) => {
   installFunnel(registerBuilder)
   installPlots(registerBuilder)
   installSun(registerBuilder)
-  installOpening({ app, registerBuilder })
+  // a collision with `fixed: true` stays at its place over the ring as the close pulls out (the
+  // ring's zoom shrinks the rest of the station toward Point 8; setup/emblems.js): „Ačiū“'s
+  installOpening({ app, registerBuilder: (type: string, fn: any, opts: any) => registerBuilder(type, (o: any, ctx: any) => {
+    const b = fn(o, ctx)
+    if (o.fixed && b?.group) b.group.userData.travel = true
+    return b
+  }, opts) })
   installCoverCollision(registerBuilder)   // the cover's loop (setup/coverCollision.js)
   installDetector(registerBuilder, { event: EVENT_LB })
   installEmblems(registerBuilder)   // the close's LHCb logo and Lithuanian flag in grains (setup/emblems.js)
@@ -112,4 +120,5 @@ export default ({ app, router }) => {
   installGlobe(registerBuilder)   // slide 11's globe of institutes (setup/globe.js)
   app.component('CollabGlobe', CollabGlobe)
   app.component('Drone', Drone)   // a synthesised deep hum under a slide (slide 27)
+  installSoundKeys()   // `+` / `-`: the music and the hum louder or quieter
 }

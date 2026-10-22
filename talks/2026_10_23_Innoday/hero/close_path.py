@@ -16,19 +16,18 @@ Seconds of the slide (the music's second file: the arrival at 17,5, the second c
 
   0-2      the clip's last view, held (path[0], hero/lis_pose.py)
   2-5.5    out of the module's end (the stage's own first segment)
-  5.5-17.5 the crane down and round to eye level (1,71 m) in front of the person for
-           scale at the muon wall's foot, 7,6 m from him: the muon wall towers off the
-           top of the frame and the detector recedes along its 21 m to the vertex at the
-           far left; LHCb's collision crosses there on the music's arrival
-  17.5-29  a slow walk upstream along it at eye level, turning toward side on, while the
-           debris crosses the stations toward the camera (the person drifts right)
-  29-43.5  the long pull-back and rise to the whole detector, the person tiny at its
-           foot on the cavern floor, the logo and the flag gathering above it (by 42)
-  43.5-48.4 the pull-out to the LHC: the camera keeps going back and up, LHCb shrinks to
+  5.5-17.5 the crane down and round to eye level (1,71 m), side on, LHCb filling the frame
+           from side to side; LHCb's collision crosses on the music's arrival
+  17.5-36  a slow drift back at eye level while the collisions come ever faster and merge
+           into the glow (40 million a second), and then
+  36-57    without a pause (owner, 22 Oct: "The zoomout to FCC should be slow and
+           continuous"; it took 5 s before) the pull-out to the LHC: LHCb shrinks to
            its point on the ring (`ring` in space.json, setup/emblems.js) as the ring
            fades in round it, the emblems ride along to the top of the frame; it stops
-           on the whole ring from above, Point 8 marked at its near side. „Ačiū“ 0,6 s
-           later (49 s), in the ring.
+           straight above the map (owner, 22 Oct, with CERN's FCC map: "can you use
+           something like this?"), north up, the LHC and the whole FCC in frame, Point 8
+           marked. 0,6 s later (57,6 s; the pull-out ~35 s on the wall clock at the camera's rate 0,6) a collision in the FCC's middle, and „Ačiū“ and the
+           flag out of it.
 
 Poses: position = at + dist (sin yaw cos pitch, sin pitch, cos yaw cos pitch), as
 slidev-addon-stage places its camera. The last leg goes in log distance, the target
@@ -52,19 +51,19 @@ def pose_of(cam, at):
 
 STILL = dict(at=(9.54, -483.362, 0.96), dist=2.236, yaw=-90.0, pitch=-29.74)
 OUT = dict(at=(9.6, -482.0, 0.8), dist=7.0, yaw=-80.0, pitch=4.0)
-LAND = pose_of((25.5, EYE, 15.0), (14.197, -482.364, 0.0))   # eye level, 7,6 m in front of the person, looking up the detector
-ALONG = pose_of((17.0, EYE, 19.0), (12.0, -481.0, 0.0))     # 9 m upstream, toward side on
-WIDE = pose_of((11.5, -479.0, 48.0), (11.5, -477.0, 0.0))   # the whole detector, the person at its foot, the emblems above
-RING = dict(at=(0.0, -480.0, 57.0), dist=150.0, yaw=-90.0, pitch=40.0)   # the accelerator complex (`ring` in space.json) from above, the LHC on the left, the FCC on the right
+# owner, 22 Oct: "first zoom out untill you reach the eye level, so lhcb is full frame side to
+# side, then slowly move out until the beams run at full speed, only then zoom out to lhc fcc"
+SIDE = pose_of((12.5, EYE, 16.5), (12.5, -481.2, 0.0))   # eye level, side on, LHCb filling the frame's width (28 units for its ~26)
+BACK = pose_of((12.5, EYE + 0.4, 23.5), (12.5, -481.0, 0.0))   # the slow drift back at eye level, as the collisions merge into the glow
+RING = dict(at=(-18.33, -480.0, 43.373), dist=191.56, yaw=-34.22, pitch=89.0)   # the accelerator complex (`ring` in space.json) straight from above, north up, the LHC and the whole FCC (hero/ring_map.py prints it)
 
 # legs: (t0, t1, from, to, slope at the start, slope at the end, kind), slopes in units of
 # the leg's average pace (1: the average; 0: at rest); 'log': the distance in log space
 LEGS = [
     (2.0, 5.5, STILL, OUT, 0.0, 1.0, 'lin'),     # (the stage's own segment: for --probe only)
-    (5.5, 17.5, OUT, LAND, 1.0, 0.06, 'lin'),
-    (17.5, 29.0, LAND, ALONG, 0.17, 0.8, 'lin'),
-    (29.0, 43.5, ALONG, WIDE, 0.3, 1.5, 'lin'),
-    (43.5, 48.4, WIDE, RING, 0.2, 0.0, 'log'),
+    (5.5, 17.5, OUT, SIDE, 1.0, 0.06, 'lin'),
+    (17.5, 36.0, SIDE, BACK, 0.15, 2.2, 'lin'),
+    (36.0, 57.0, BACK, RING, 0.22, 0.0, 'log'),   # its start's pace the drift's end's (~1 unit/s): one move
 ]
 END = LEGS[-1][1]
 

@@ -168,6 +168,16 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-22 (00:45, deployed): the fresh-eyes review of all 31 slides found nothing high; its fixes
+are in (White Rabbit darker, 19 and 22 dimmed, „8 TeV“/„290 dalelių“ at bottom 96 px, slides 5–6
+further back, the units light blue, the cover's lines shadowed, the sun's cards stepping back at a
+touch, slide 4's notes point at the Big Bang); the plates re-recorded and published (--only, 8
+changed); the Scheduler's lockfile fix merged (path keys of the v0.8.1/v0.9.0 tarballs). `ready`
+passed with nothing skipped (plates: 03-plate 45 MB over budget; "stale" only because the merged
+lockfile entered the fingerprint, no file the talk builds from changed). Deployed 8e44020 —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ — Pages run 39680747326
+green, URL 200, the live walk 31/31. The venue zip rebuilt from it.
+
 2026-10-22 (00:10, deployed overnight; the owner asleep: "Continue working, I'm going to sleep.
 Implement all said improvements"): v0.8.2 adopted (merged origin/main and origin/chore/live-fallback,
 `pnpm talk pin … v0.8.2`, `stage.motion: floor`), 24 plates recorded (`talk record --plates`) and
@@ -364,6 +374,50 @@ v0.8.1 since 20 Oct and builds the zip local-first itself).
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
+- The 22 Oct afternoon round (owner, in this window; "This is the last of the comments"):
+  - Slide 11 waits for a click on the photo ("can we do on click transfer to the globe view? I
+    might stay for a minute or so one the photo"): `clicks: 1`; CollabGlobe holds the photo until
+    `$clicks` ≥ 1, then the globe starts 1,05 s into its sequence; the recorders (`window.__rec`)
+    never wait, so the plate and the PPTX take play it through.
+  - The Web (and its server) visited last of the inventions ("Pasaulinis žiniatinklis we visit
+    last"): now slides 21–22, the Part's opening line names information last.
+  - Slide 16's caption „3D rentgenogramos su spalvine audinių indikacija“ (owner's words).
+  - Slides 23–26: the islands are back (Douglas–Peucker on a closed ring kept nothing: Great
+    Britain, Ireland, Iceland, Sicily; "why is UK not rendered") and the coastlines beyond, to
+    the frames' edges ("and other continents"), sparse and border-faint (europe.json `far`).
+  - Slide 27's hum steady ("repeating / puslating.. can we just have more constant one").
+  - `+` / `-` show nothing to the audience ("invisible, but -+ to control"): the badge only in
+    the presenter's window.
+  - Slide 30: down to eye level side on, LHCb filling the frame side to side; a slow drift back
+    as the collisions merge into the glow; then one slow pull-out to the map, no pause (path 33–54
+    s) ("first zoom out untill you reach the eye level, so lhcb is full frame side to side, then
+    slowly move out until the beams run at full speed, only then zoom out to lhc fcc"; "slow and
+    continuous"). The SPS, the PS and the transfer lines are gone ("the inner ring of the lhc
+    doesn't make sense... don't show it"). A small flag (`ltMap`) rides from the SciFi's place to
+    just below LHCb's point on the map and stays ("Still need lithuanian flag on 30"). The map's
+    still grains 86k → 53k and the logo's 80k → 55k ("lags on zooming out to lhc / fcc" on a Mac).
+  - The LHCb logo is a solid image, not grains ("logos could even be baked in", "so not particle
+    like"): the emblem's `solid: true` draws `src` on one plane that fades in over `dur` and rides
+    as before. The glow before the pull-out merges sooner (cascade 4 s after the crossing, rate
+    0,34) and the drift lasts to path 36 s, so the beams are at full rate before the zoom.
+- The 22 Oct round (owner, in this window):
+  - „Ačiū“'s music at 0,3, half of 0,6 ("And the last soundtrack 50% quieter"); `+` / `-` step
+    the music and slide 27's hum on a slide without a clip, 0–200 % of the written level, kept in
+    the browser and crossing to the audience window ("would be good to have control over sound as
+    well"; setup/soundLevel.js); on a clip's slide the same keys stay the clip's own.
+  - The close ends on a map after CERN's FCC schematic ("For the last one, can you use something
+    like this? Now the SPS is weirdly connected to lhc"): straight down, north up, the LHC and the
+    whole FCC in frame; the SPS, the PS and TI 2, TI 8, TT2/TT10 are the tunnels' own lines from
+    OpenStreetMap (they meet the LHC at Points 2 and 8), the FCC a dashed orange 90,7 km circle
+    fitted to its eight sites (cern-fcc-sites), Lake Geneva, the border, the Rhône, the Jura's
+    crest and four ridges (hero/ring_map.py → public/data/ring_map.json; credited). The logo rides
+    to the top left.
+  - „Ačiū“ comes out of a collision ("aciu should appear out of particle collision now it's a bit
+    flat"), with the Lithuanian flag under it ("Also Lithuanian flag should appear with aciu"): a
+    CMS crossing (`aciuCol`, scale 10) in the FCC's middle as the camera stops; 0,9 s after its
+    crossing the word and the flag (`aciu`, `ltAciu`: emblems with `text` / `flag` and `burst`)
+    gather out of it on curling tracks; the collision lets go after 5 s. The slot's HTML word is
+    hidden wherever the world or its plate runs; it stays for the still, living layer and print.
 - The 21 Oct round (owner, in this window; each answered by him):
   - The music goes on after „Ačiū“ ("sountrack has to continue"): both Starfire files now run
     to the track's own end (src 0:30–5:41, tail 1:19–5:41, 311 s and 262 s, the master from
