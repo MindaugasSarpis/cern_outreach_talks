@@ -50,7 +50,7 @@ html[data-stage] .slidev-layout.cover h2 {
   font-size: 30px !important; font-weight: 500 !important; letter-spacing: 0 !important; text-transform: none !important;
   color: var(--stage-fg) !important; opacity: 0.92; line-height: 1.2 !important; max-width: 24ch;
 }
-html[data-stage] .slidev-layout.cover .mt-md { margin-top: 106px; }   /* no title above it (16 Oct): the line level with the form, not in a title's slot */
+html[data-stage] .slidev-layout.cover .mt-md { margin-top: 80px; }   /* 106 px until 22 Oct, when the line became three (it touched the form): the third line out of the lower third   /* no title above it (16 Oct): the line level with the form, not in a title's slot */
 
 /* --- a line spoken into the world: a kicker, one big sentence, maybe one more line.
    Anchored to the floor of the text area, left (or right) of the frame. */
@@ -267,9 +267,19 @@ html[data-stage] .lhc-cap { left: var(--kk-x) !important; bottom: var(--kk-floor
 @keyframes kk-out { from { opacity: 1; } to { opacity: 0; } }
 html[data-stage] .readout.depth { animation: stage-rise 0.8s var(--stage-ease) 2s both, kk-out 1s ease 18s forwards; }
 html[data-stage] .readout.glow { animation-delay: 24s; }
-html[data-stage] .readout.glow .unit { font-size: 0.36em; }
+html[data-stage] .readout.glow .unit { font-size: 0.4em; }   /* 0.36 until 22 Oct */
+/* 22 Oct: the glow's readout in the empty dark top left, off the wireframe and the beam glow (and out of the lower third) */
+html[data-stage] .readout.glow { bottom: auto; top: var(--kk-top); }
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .readout.depth { display: none; } }
 /* 22 Oct: on the 150 px floor the readout stands on the detector's bright wireframe (the glow's „mln. per sekundę“ crossed it):
    a soft shade behind each of slide 9's readouts, as the age's on slide 3 (read as shadow, not a badge) */
 html[data-stage] .readout.depth, html[data-stage] .readout.glow { z-index: 0; }
 html[data-stage] .readout.depth::before, html[data-stage] .readout.glow::before { content: ''; position: absolute; inset: -70px -120px -50px -90px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0, 2, 6, 0.8) 0%, rgba(0, 2, 6, 0.58) 45%, rgba(0, 2, 6, 0.2) 75%, rgba(0, 2, 6, 0) 100%); }
+
+/* ---- 22 Oct, the pre-filming review (notes/review.md) */
+/* slide 3: the age in the empty sky top left, off the funnel's floor grid and out of the lower third */
+html[data-stage] .age { bottom: auto; top: var(--kk-top); }
+/* slide 5: „LHC“ white on the tunnel's grey (light blue read weak) */
+html[data-stage] .lhc-cap .lhc-name { color: #fff; }
+/* slide 18: „Atvirieji LHCb duomenys“ on one line */
+html[data-stage] .readout .caption { white-space: nowrap; }

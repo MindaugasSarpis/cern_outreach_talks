@@ -40,7 +40,7 @@ info: |
   Ωc⁰ spectrum, five narrow peaks; the 2015 pentaquark peak, which held; the
   two plots and the rule. Then the speaker's road round Europe, the group in
   Vilnius and its part of the detector (the SciFi light injection),
-  OpenData's piles of open data, the data centre's tape robot, the sun of
+  OpenData's piles of open data, the sun of
   plots and a VU student's check, the masterclass, and „Ačiū“.
 layout: cover
 space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
@@ -48,7 +48,7 @@ space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
 
 <Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0 }" />
 
-<div class="mt-md">Dr. Mindaugas Šarpis · <span class="nt">LHCb</span>&nbsp;Vilnius<br>Vilniaus universitetas</div>
+<div class="mt-md">Dr. Mindaugas Šarpis<br><span class="nt">LHCb</span>&nbsp;Vilnius<br>Vilniaus universitetas</div>
 
 <PptxButton />
 
@@ -229,10 +229,10 @@ The event: CMS Open Data record 300 (CC0), run 195099, event 137440354, a Higgs 
 
 <!--
 Message: this is LHCb, three storeys high; almost two thousand people work on it, our Vilnius group among them, and I am one of them. (How a collision becomes a dot moved to the next slide, inside the detector, 21 Oct.)
-Picture: the LHCb detector in 3D, with music. Start about 3 s in; about 30 words take 16 s, 20 s at a slow delivery; then let the music run to the clip's end (39 s) and → (no auto-advance).
+Picture: the LHCb detector in 3D, with music. Start about 3 s in; about 30 words take 16 s, 20 s at a slow delivery; then → about 3 s after „Aš – vienas iš jų.“ (22 Oct, for time: the next slide cranes down to the same detector; the reel need not end).
 
 Tai LHCb. Jis dešimties metrų aukščio – kaip trijų aukštų namas. Šiame eksperimente dirba beveik du tūkstančiai žmonių iš viso pasaulio, tarp jų ir mūsų grupė iš Vilniaus universiteto. Aš – vienas iš jų.
-[leisk muzikai skambėti iki klipo pabaigos] → spausk
+[palauk 3 s] → spausk
 
 „beveik du tūkstančiai“: 1 891 members in September 2026; never „daugiau nei“. „kaip trijų aukštų namas“ is our arithmetic (10 m at about 3 m a storey). The particle that split is named before its fragments, so „skeveldros“ has a referent when heard. „Same mass every time“ is said on slide 10 while the dots fall. If asked: 5 600 tonnes, 21 m long; VU joined LHCb in September 2024.
 
@@ -286,24 +286,24 @@ space: { at: trial, dim: 0.05 }
 clicks: 2
 ---
 
-<Grains :set="{ pq: 3, route: -1, th2: 0, th1: 1, oc: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { th1: 2 }, 2: { th1: 0, th2: 2 } }" />
+<Grains :set="{ pq: 3, route: -1, th2: 0, th1: 1, oc: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { th1: 2 }, 2: { th1: 0, th2: 1 } }" />
 
 <!-- facts: particle-decay-reconstructed-mass, theta-toy-140-entries, chance-bumps-shrink-with-data, poisson-fluctuation-sqrt-n, theta-plus-2003-false-alarm, theta-plus-leps-japan-19-events, theta-plus-clas-2006-null -->
 
 <!--
 Message: we work on questions nobody has answered, so you try: each dot falls into a column by its mass; a real particle keeps landing in one column and a bump rises; chance can make a bump too. Is this one a new particle? No: a computer made it from random numbers. With 25 times more of the same random dots the bump is gone (seen, not only told: 21 Oct). In 2003 real physicists were fooled the same way, and more data wiped the bump out.
-Picture: a small gold plot fills dot by dot into its columns (140 dots, 7 s); at the first click a tick lights over the one column that stands out (`th1` step 2). At the second the gold dots go and 3 500 pale dots of the same random spectrum fill the same frame (`th2`, 12 s), smooth: the tick comes back over the same column once it is full, and nothing stands there. The first two sentences are said over the flight (4,5 s), the column sentences over the fill.
+Picture: a small gold plot fills dot by dot into its columns (140 dots, 7 s); at the first click a tick lights over the one column that stands out (`th1` step 2). At the second the gold dots go and 3 500 pale dots of the same random spectrum fill the same frame (`th2`, 12 s), smooth, with no tick (`th2` step 1; 22 Oct: the tick and the dimmed rest made the filled column read as a peak on camera): where the bump was, the column is as tall as its neighbours. The first two sentences are said over the flight (4,5 s), the column sentences over the fill.
 Note: both plots are illustrations, not measured data: two random samples from one smooth spectrum with no particle in it; in the 140 chance made the bump, the 3 500 are smooth (public/data/theta-toy.json, seeds inside). Say „sudėliojo kompiuteris“, never „tikri duomenys“. Each plot fills its frame to its own tallest column, so the two are not at one scale (that is slide 13).
 
 Mes dirbame su klausimais, į kuriuos dar niekas neatsakė. Tokį darbą dabar išbandysi ir tu. Kiekvienas taškas krenta į stulpelį pagal masę. Kairėje – lengvesnės dalelės, dešinėje – sunkesnės. Lyg surikiuotum visus savo mokyklos mokinius pagal ūgį. Jei dalelė tikra, jos masė kaskart išeina beveik ta pati, ir taškai krenta į tą patį stulpelį. Taip iškyla kauburys. Bet kauburį gali sukurti ir atsitiktinumas – kaip kauliukas, kuris kelis kartus iš eilės išmeta šešetą.
 → spausk
 Kaip manai, ar šis kauburys – nauja dalelė?
 [pauzė 3 s]
-Ne. Šį grafiką kompiuteris sudėliojo iš atsitiktinių skaičių – jokios dalelės jame nėra. Iš šimto keturiasdešimties taškų tikros dalelės nuo atsitiktinumo neatskirsi.
+Ne. Šį grafiką kompiuteris sudėliojo iš atsitiktinių skaičių – jokios dalelės jame nėra.
 → spausk
 Štai tas pats atsitiktinumas, tik taškų dvidešimt penkis kartus daugiau.
 [leisk prisipildyti]
-Kauburio nebeliko.
+Kauburio nebeliko – ten, kur jis buvo, stulpelis dabar toks pat kaip kiti.
 Panašų kauburį 2003 metais pamatė ir tikri fizikai. Eksperimentas Japonijoje pranešė apie kitą dalelę iš penkių kvarkų. Jo kauburį sudarė vos keliolika taškų. Kiti eksperimentai surinko daug daugiau duomenų ir tos dalelės nerado.
 Štai kaip atrodo, kai taškų – dešimtys tūkstančių.
 
@@ -389,7 +389,7 @@ space: { at: [1796.4, 3.0, 0], dist: 26, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 
 Message: at one scale, your 140 dots are a thin strip beside LHCb's more than 27 000. Physicists call a discovery only a peak that chance alone would make less than once in 3,5 million times, rarer than eight sixes in a row. LHCb's peaks passed that bar; that is how physicists know they have found something nobody has seen.
 Picture: the camera draws back to two plots at the same scale, one grain per entry and the same height per entry. Left, the 140-dot plot of slide 10 as a thin strip (an illustration, not LEPS's data); right, LHCb's 27 292 candidates with their three marked peaks. Under them, their counts. The last line is said as the camera flies to Europe (4,5 s).
 
-Abu grafikai tuo pačiu masteliu. Kairėje – tavo šimtas keturiasdešimt taškų. Dešinėje – daugiau nei dvidešimt septyni tūkstančiai. Atradimu fizikai vadina tik tokią smailę, kurią vien atsitiktinumas sukurtų rečiau nei kartą iš trijų su puse milijono. Tai rečiau, nei kauliukas aštuonis kartus iš eilės išmestų šešetą. LHCb smailės šią ribą peržengė. Taip fizikai ir sužino, kad rado tai, ko dar niekas nematė.
+Abu grafikai tuo pačiu masteliu. Kairėje – ši plona juostelė, tavo šimtas keturiasdešimt taškų. Dešinėje – daugiau nei dvidešimt septyni tūkstančiai. Atradimu fizikai vadina tik tokią smailę, kurią vien atsitiktinumas sukurtų rečiau nei kartą iš trijų su puse milijono. Tai rečiau, nei kauliukas aštuonis kartus iš eilės išmestų šešetą. LHCb smailės šią ribą peržengė. Taip fizikai ir sužino, kad rado tai, ko dar niekas nematė.
 [pauzė 4 s]
 Pentakvarkų ieškojau ir aš.
 
@@ -441,7 +441,7 @@ If asked: Glasgow 2011–2015; Heidelberg 2019–2020; Bonn 2020–2023 (the the
 -->
 
 ---
-space: { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62, sway: 0.3, dim: 0.3 }   # dim 0.2 until 20 Oct: the route head's bloom washed out the east of the outline in the still
+space: { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62, sway: 0.3, dim: 0.4 }   # dim 0.2 until 20 Oct: the route head's bloom washed out the east of the outline in the still
 ---
 
 <Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 1 }" />
@@ -503,7 +503,7 @@ space: { at: [2599.3, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8, dim: 0.15 }   # (
 Message: the data I prepared in Bonn, in one picture: each sphere a terabyte, about a laptop's disk; LHCb's 2011 and 2012 data are 800 of them; every file found, checked and described, about a year and a half; the pentaquark peak first rose in exactly these data, and now they are open to everyone.
 Picture: OpenData's piles (the owner, 18 Oct: "Show something about open data"): the camera flies in to a single gold sphere and a pile of 800 like it, standing on a floor of grains in a space of data; „1 TB“ under the sphere, the count „800 TB“ low on the left (once: the pile's own label is gone).
 
-Štai jie. Kiekviena sfera – vienas terabaitas, maždaug nešiojamojo kompiuterio diskas. Čia LHCb 2011 ir 2012 metų duomenys – aštuoni šimtai terabaitų. Kiekvieną failą reikėjo surasti, patikrinti ir aprašyti. Net su tam parašytomis programomis tai užtruko apie pusantrų metų. Būtent šiuose duomenyse 2015 metais iškilo pentakvarko smailė. Dabar jie atviri visiems.
+Štai jie. Šis taškelis dešinėje – vienas terabaitas, maždaug nešiojamojo kompiuterio diskas. Kiekviena sfera krūvoje – tokia pati. Čia LHCb 2011 ir 2012 metų duomenys – aštuoni šimtai terabaitų. Kiekvieną failą reikėjo surasti, patikrinti ir aprašyti. Net su tam parašytomis programomis tai užtruko apie pusantrų metų. Būtent šiuose duomenyse 2015 metais iškilo pentakvarko smailė. Dabar jie atviri visiems.
 
 Terabytes only, never „petabaitas“. 800 TB is CERN's figure (VU: over 1 PB in all, of which 800 TB of physics data in over 100 000 files); the release holds the same 2011–2012 collisions the 2015 peak rose in (2019 used Run 1 and Run 2). The year-and-a-half line is the speaker's public interview (VU Library, 5 March 2026). If asked: the full Run 1 release was completed on 20 December 2023; a terabyte holds tens of millions of recorded collisions.
 
@@ -563,34 +563,13 @@ Message: all the data LHCb has collected: more than 100 000 terabytes, a stack o
 Picture: the camera pulls far back; a blue pile of 100 000 spheres rises behind the gold one; „> 100 000 TB“ counts up low on the left (a lower bound: LHCb's 100 PB is its March 2025 figure), the caption names it. The first sentence as the blue pile rises.
 
 O tai visi LHCb surinkti duomenys – daugiau nei šimtas tūkstančių terabaitų. Sukrovus šimtą tūkstančių nešiojamųjų kompiuterių vieną ant kito, bokštas būtų aukštesnis nei kilometras. Auksinė krūva priekyje jau atvira.
-O saugomi jie štai kur.
+O štai ką su atviraisiais duomenimis padarė vienas mūsų studentas.
 
 Scale, worked out: a 1 TB laptop of today is about 1,1 cm thick, so 100 000 of them stack to about 1,1 km: „daugiau nei kilometro“, never „dviejų kilometrų“. If asked: LHCb opens about half of a period's data five years after it ends and all of it after ten.
 
 Šaltiniai: B. Couturier, ISGC 2025 („more than 100 PB of data“); LHCb, arXiv:2504.00610 (atvirųjų duomenų politika).
 
 (~0.45 min)
--->
-
----
-
-<!-- 21 Oct, the 15-minute round: where the data live. This talk's cut of CERN-FOOTAGE-2022-013-006 (videos/manifest.toml): its last shot, 1:48–2:02, 14 s, silent: the tape library's aisle, the robot's carriage running away down it between walls of tapes. → moves on (no auto-advance). -->
-<VideoPlayer src="cern_footage_2022_013_006.mp4" muted :controls="false" />
-
-<!-- facts: cern-exabyte, cern-physics-data-tape-1p3eb, lhcb-data-100pb -->
-
-<!--
-Message: the data are kept in CERN's data centre, mostly on magnetic tape: about sixty thousand tapes, more than a million terabytes from all the LHC experiments; a robot takes them from the shelves. Then the bridge to Dominykas.
-Picture: real footage inside CERN's tape library: an aisle between walls of tapes, the robot's carriage running away down it (14 s, silent); → as you finish.
-
-Visų LHC eksperimentų duomenys saugomi CERN duomenų centre – daugiausia magnetinėse juostose. Juostų ten apie šešiasdešimt tūkstančių, o duomenų – daugiau nei milijonas terabaitų. Juostas iš lentynų paima robotas.
-O štai ką su atviraisiais duomenimis padarė vienas mūsų studentas.
-
-„daugiau nei milijonas terabaitų“: CERN passed one exabyte of stored LHC data in December 2025, mostly on about 60 000 tapes (home.cern); never „vien LHCb“ (LHCb's is the 100 000 TB of slide 19). „Juostas … paima robotas“ says what the footage shows (the carriage on its rail). If asked: CERN says this is about a tenth of what it will need over the next ten years.
-
-Šaltiniai: home.cern, 2025-12 („one exabyte“); CERN Annual Progress Report 2025, p. 17; CERN-FOOTAGE-2022-013-006 (CERN).
-
-(~0.3 min)
 -->
 
 ---
@@ -605,10 +584,10 @@ space: { at: [2600, -0.3, 0], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }   # OpenDa
 Message: these plots were drawn from the open data; this year a VU bachelor student collected thousands of dots from them and checked whether the bump would rise where LHCb found the pentaquarks; it did, and he calls his work a check.
 Picture: OpenData's sun of plots: a sun turns slowly round the gold pile, rays of grains leaving it to every side, nineteen of them ending at plots made from LHCb's open data (the grains land on each plot's curves), seven at empty places, gold clouds waiting. No text: „everyone can use this“ is said, not shown (the owner, 18 Oct, through the Scheduler).
 
-Šie grafikai nubraižyti iš atvirųjų LHCb duomenų. Šiais metais mūsų bakalauro studentas Dominykas Stonkus paėmė atviruosius 2012 metų LHCb duomenis ir surinko iš jų tūkstančius taškų. Jis tikrino, ar kauburys iškils toje pačioje vietoje, kur LHCb rado pentakvarkus. Iškilo. Pats savo darbą jis vadina patikrinimu. O rugsėjį du Browno universiteto fizikai paskelbė išankstinį straipsnį, parengtą su atviraisiais LHCb duomenimis.
+Šie grafikai nubraižyti iš atvirųjų LHCb duomenų – tų pačių auksinių krūvų viduryje. Šiais metais mūsų bakalauro studentas Dominykas Stonkus paėmė atviruosius 2012 metų LHCb duomenis ir surinko iš jų tūkstančius taškų. Jis tikrino, ar kauburys iškils toje pačioje vietoje, kur LHCb rado pentakvarkus. Iškilo. Pats savo darbą jis vadina patikrinimu.
 Pradėti galima dar mokykloje.
 
-Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filtered on CERN computing) or „pakartojo paiešką“ as if independent: the thesis calls itself a qualitative check. „tūkstančius taškų“ rests on the about 16 400 selected decays. No web address in speech. The plots, if asked: the masses of π⁰, D⁰, J/ψ, K⁰S and Λ, the D⁰ and K⁰S lifetimes, the magnet's field, the beam spot, spectra and multiplicities, all from CERN Open Data records 401 and 24506. The Brown line (21 Oct, in the script): a preprint, posted, not yet published, so never „paskelbė tyrimą“.
+Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filtered on CERN computing) or „pakartojo paiešką“ as if independent: the thesis calls itself a qualitative check. „tūkstančius taškų“ rests on the about 16 400 selected decays. No web address in speech. The plots, if asked: the masses of π⁰, D⁰, J/ψ, K⁰S and Λ, the D⁰ and K⁰S lifetimes, the magnet's field, the beam spot, spectra and multiplicities, all from CERN Open Data records 401 and 24506. The Brown preprint (arXiv:2609.09275, September 2026) left the script on 22 Oct for time; if asked: two Brown University physicists posted a preprint built on LHCb open data (not yet published, so never „paskelbė tyrimą“).
 
 Šaltiniai: D. Stonkus, bakalauro darbas, VU, 2026, epublications.vu.lt/object/elaba:308118793/308118793.pdf; CERN Open Data, įrašai 401 ir 24506; arXiv:2609.09275.
 
@@ -624,14 +603,14 @@ space: { at: [2598.7, 1.5, 0], dist: 37.5, yaw: 0, pitch: 3, dim: 0.05 }   # Ope
 <!-- facts: lhcb-masterclass-vilnius-2026, lhcb-masterclass-vilnius-2027, vu-masterclass-annual, stonkus-bsc-2026, vu-bsc-2026-cms-open-data-spukas, lhcb-opendata-masterclass-2014 -->
 
 <!--
-Message: you can start at school: pupils have measured a particle's lifetime in real LHCb data at VU's masterclass; later a bachelor's thesis from open data, as Dominykas did; the empty places are work nobody has done yet, and they wait for you. You need not know now what you will be.
+Message: you can start at school: pupils have measured a particle's lifetime in real LHCb data at VU's masterclass; later a bachelor's thesis from open data, as Dominykas did; the empty places are work nobody has done yet. You need not know now what you will be.
 Picture: OpenData's second sun, round the same gold pile: rays end at two white clusters named „Meistriškumo pamoka“ and „Bakalauro darbai“ and at gold clouds breathing slowly, room for what comes next. The last line is said as the camera flies back to the particle (4,5 s).
 The masterclass is told without dates (the owner, 15 Oct: "No dates for masterclass") and in the past tense: no 2026–27 LHCb date was public on 20 Oct (two editions held, 2025 and 2026); VU's yearly masterclasses are the CMS ones, so never „kasmet“ of the LHCb one. Do not say it uses CERN Open Data files: no source shows it; it uses real LHCb data.
 
-Vilniaus universitete jau vyko LHCb meistriškumo pamokos. Mokiniai ten su tikrais LHCb duomenimis patys išmatavo, kiek laiko gyvuoja viena dalelė. Beje, pirmieji vieši LHCb failai buvo paskelbti būtent tokioms pamokoms. Universitete iš atvirųjų duomenų gali parašyti bakalauro darbą, kaip Dominykas. O šios tuščios vietos – darbai, kurių dar niekas nepadarė. Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
+Vilniaus universitete jau vyko LHCb meistriškumo pamokos. Mokiniai ten su tikrais LHCb duomenimis patys išmatavo, kiek laiko gyvuoja viena dalelė. Universitete iš atvirųjų duomenų gali parašyti bakalauro darbą, kaip Dominykas. O šios tuščios vietos – darbai, kurių dar niekas nepadarė. Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
 Ir grįžkime prie dalelės, nuo kurios pradėjome.
 
-The organisers' point is said once, here, as advice; it claims nothing about you. Optional, after it, one sentence of your own about a moment you noticed something and followed it (nothing is written for it). If asked: the particle is the D⁰ meson; another VU bachelor's thesis of 2026 used CMS open data. „Beje, pirmieji vieši LHCb failai…“ (21 Oct, in the script): never as if the Vilnius masterclass uses them.
+The organisers' point is said once, here, as advice; it claims nothing about you. Optional, after it, one sentence of your own about a moment you noticed something and followed it (nothing is written for it). If asked: the particle is the D⁰ meson; another VU bachelor's thesis of 2026 used CMS open data. If asked: the first public LHCb files (2014) were released for such masterclasses; never as if the Vilnius masterclass uses them (the line left the script on 22 Oct, for time).
 
 Šaltiniai: VU FF, LHCb meistriškumo pamokos (indico.cern.ch/event/1648092); D. Stonkus, bakalauro darbas, VU, 2026; CERN Open Data, įrašas 401 (2014).
 

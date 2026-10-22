@@ -238,8 +238,8 @@ function buildFunnel(o, ctx) {
   mesh = 1
   if (o.floor !== false) {
     const y = -(mouth + 1.2), x0 = -8, x1 = L + 10, z0 = -18, z1 = 18, step = 2
-    for (let x = x0; x <= x1; x += step) for (let i = 0; i <= 500; i++) add(x, y, z0 + (z1 - z0) * i / 500, [0.5, 0.6, 0.9], 1.3, 0.02, 0.9)
-    for (let z = z0; z <= z1; z += step) for (let i = 0; i <= 700; i++) add(x0 + (x1 - x0) * i / 700, y, z, [0.5, 0.6, 0.9], 1.3, 0.02, 0.9)
+    for (let x = x0; x <= x1; x += step) for (let i = 0; i <= 500; i++) add(x, y, z0 + (z1 - z0) * i / 500, [0.5, 0.6, 0.9], 1.3, 0.02, 0.45)   // 0.9 until 22 Oct: the grid moiréd on camera
+    for (let z = z0; z <= z1; z += step) for (let i = 0; i <= 700; i++) add(x0 + (x1 - x0) * i / 700, y, z, [0.5, 0.6, 0.9], 1.3, 0.02, 0.45)
   }
   mesh = 0
 
