@@ -100,7 +100,7 @@ PASSTHROUGH = {"dev", "build", "shots", "record", "safe", "export", "render", "p
 SHA_RE = re.compile(r"^[0-9a-f]{7,40}$")
 TAG_RE = re.compile(r"^v\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$")
 PIN_RE = re.compile(r'("slidev-addon-(?:videos|stage)"\s*:\s*"github:MindaugasSarpis/slidev-videos#)([^"&]+)')
-ENV_PIN_RE = re.compile(r"(slidev-videos @ git\+https://github\.com/MindaugasSarpis/slidev-videos@)([^\"'\s]+)")
+ENV_PIN_RE = re.compile(r"(slidev-videos(?:\[[\w,-]+\])? @ git\+https://github\.com/MindaugasSarpis/slidev-videos@)([^\"'\s]+)")
 REF_RE = re.compile(r'^(ADDONS_REF\s*=\s*")([^"]+)(")', re.M)
 TYPE_RE = re.compile(r"registerBuilder\(\s*['\"]([\w:-]+)['\"]")
 # The plates `record --plates` makes: the recorder's NN-plate.mp4 at 1080p25 with a 20 s hold, up to
