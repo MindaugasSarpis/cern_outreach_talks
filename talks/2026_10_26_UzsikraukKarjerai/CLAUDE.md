@@ -102,8 +102,12 @@ purpose).
 
 ## Status
 
-- 2026-10-22 (latest): **on v0.8.2, every label inside the broadcast safe
-  box; plates recording; the deploy follows `talk ready`** (the owner, in this
+- 2026-10-22 (latest): **deployed 883560a on v0.8.2** (Pages run
+  39751672500, green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed with nothing skipped, its one
+  warning the plates' fingerprint counting this CLAUDE.md, the only change
+  after the take). Every label inside the broadcast safe box; plates on the
+  release (the owner, in this
   window: "Deploy"; the Scheduler gave the render lock and main for v0.8.2,
   the PptxButton and `talk pptx` in a second round once v0.8.3 is tagged).
   On the branch: origin/main merged (8e44020); pinned v0.8.2 (the lockfile's
