@@ -168,6 +168,16 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-22 (17:40, committed, not deployed: GitHub Actions degraded, Karjera's run queued; the
+Scheduler holds main). Deployed and live: 9f3a868 (Pages run 39789658656, green, URL 200, walk
+clean). Since then on the branch: slide 30 is the recorded close (close.mp4, on the release);
+the SciFi module lands in the cloud's SciFi; the logo without its baked-in reflection; the close
+lighter; the drawing buffer at most 1920 wide; no PowerPoint (owner: "Drop the powerpoint
+option"); the landing page's ZIP from videos/venue.json (the zip from 9e3cac8 on the release,
+778 410 467 bytes, URL 200). The owner has the zip's path for his laptop. Next: `ready` and
+`deploy` on the Scheduler's go. Open: plates 30–31 stale (slide 30 is a clip now; 31 the credits,
+never shown); the Mac's lag untested here.
+
 2026-10-22 (00:45, deployed): the fresh-eyes review of all 31 slides found nothing high; its fixes
 are in (White Rabbit darker, 19 and 22 dimmed, „8 TeV“/„290 dalelių“ at bottom 96 px, slides 5–6
 further back, the units light blue, the cover's lines shadowed, the sun's cards stepping back at a
@@ -371,6 +381,17 @@ iPhone retest. For a PDF: `pnpm talk export innoday --format pdf -- --wait
 v0.8.1 since 20 Oct and builds the zip local-first itself).
 
 ## Decisions
+
+- **The close is a recording (22 Oct, evening).** The owner: "the very last frame is laggy even in
+  zip" — "Maybe worth prerecording a video? So it doesn't lag?" — "For both SciFi module (which
+  then would all go into the SciFi detector and become the point cloud aligned with the scifi)".
+  Slide 30 plays close.mp4 (slidev-stage-record of the live slide at 22efcef, `--slides 30 --fps
+  50 --hold 16 --clicks none`, x264 slow CRF 17 under 10 Mbit/s, 73 s, a generated manifest
+  entry); the music stays live and `<Soundtrack keys>` gives it + and − over the muted clip. To
+  change the close: restore slide 30 from 22efcef, record, encode, publish `--only close.mp4`.
+  The LIS anchor is LHCb (0.8, −2.00, 7.95) m (the cold box's true −2.55 m sat 0.11 m under the
+  cloud's lowest SciFi grain). The PowerPoint is dropped ("not going to work for this"); the old
+  PPTX asset stays on the release unused.
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
