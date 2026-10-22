@@ -374,6 +374,24 @@ v0.8.1 since 20 Oct and builds the zip local-first itself).
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
+- The 22 Oct round (owner, in this window):
+  - „Ačiū“'s music at 0,3, half of 0,6 ("And the last soundtrack 50% quieter"); `+` / `-` step
+    the music and slide 27's hum on a slide without a clip, 0–200 % of the written level, kept in
+    the browser and crossing to the audience window ("would be good to have control over sound as
+    well"; setup/soundLevel.js); on a clip's slide the same keys stay the clip's own.
+  - The close ends on a map after CERN's FCC schematic ("For the last one, can you use something
+    like this? Now the SPS is weirdly connected to lhc"): straight down, north up, the LHC and the
+    whole FCC in frame; the SPS, the PS and TI 2, TI 8, TT2/TT10 are the tunnels' own lines from
+    OpenStreetMap (they meet the LHC at Points 2 and 8), the FCC a dashed orange 90,7 km circle
+    fitted to its eight sites (cern-fcc-sites), Lake Geneva, the border, the Rhône, the Jura's
+    crest and four ridges (hero/ring_map.py → public/data/ring_map.json; credited). The logo rides
+    to the top left.
+  - „Ačiū“ comes out of a collision ("aciu should appear out of particle collision now it's a bit
+    flat"), with the Lithuanian flag under it ("Also Lithuanian flag should appear with aciu"): a
+    CMS crossing (`aciuCol`, scale 10) in the FCC's middle as the camera stops; 0,9 s after its
+    crossing the word and the flag (`aciu`, `ltAciu`: emblems with `text` / `flag` and `burst`)
+    gather out of it on curling tracks; the collision lets go after 5 s. The slot's HTML word is
+    hidden wherever the world or its plate runs; it stays for the still, living layer and print.
 - The 21 Oct round (owner, in this window; each answered by him):
   - The music goes on after „Ačiū“ ("sountrack has to continue"): both Starfire files now run
     to the track's own end (src 0:30–5:41, tail 1:19–5:41, 311 s and 262 s, the master from

@@ -430,3 +430,8 @@ html[data-stage] .globe-stats .n {
 }
 html[data-stage] .globe-stats .u { font-size: 24px; font-weight: 500; margin-left: 0.4em; color: var(--in-accent); text-shadow: 0 0 16px rgba(0, 0, 0, 0.7); }
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .globe-stats .gs { animation: none !important; } }
+
+/* `+` / `-` on a slide without a clip: the music's and the hum's level, for a moment (setup/soundLevel.js) */
+.innoday-sound-badge { position: fixed; right: 18px; bottom: 18px; z-index: 1000; padding: 4px 12px; border-radius: 999px; background: rgba(0, 1, 3, 0.72); color: #e8ecf4; font: 600 16px/1.4 system-ui, sans-serif; opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
+.innoday-sound-badge.on { opacity: 1; }
+html.print .innoday-sound-badge { display: none; }

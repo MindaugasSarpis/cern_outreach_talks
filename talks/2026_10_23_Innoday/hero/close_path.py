@@ -27,8 +27,10 @@ Seconds of the slide (the music's second file: the arrival at 17,5, the second c
   43.5-48.4 the pull-out to the LHC: the camera keeps going back and up, LHCb shrinks to
            its point on the ring (`ring` in space.json, setup/emblems.js) as the ring
            fades in round it, the emblems ride along to the top of the frame; it stops
-           on the whole ring from above, Point 8 marked at its near side. „Ačiū“ 0,6 s
-           later (49 s), in the ring.
+           straight above the map (owner, 22 Oct, with CERN's FCC map: "can you use
+           something like this?"), north up, the LHC and the whole FCC in frame, Point 8
+           marked. 0,6 s later (49 s) a collision in the FCC's middle, and „Ačiū“ and the
+           flag out of it.
 
 Poses: position = at + dist (sin yaw cos pitch, sin pitch, cos yaw cos pitch), as
 slidev-addon-stage places its camera. The last leg goes in log distance, the target
@@ -55,7 +57,7 @@ OUT = dict(at=(9.6, -482.0, 0.8), dist=7.0, yaw=-80.0, pitch=4.0)
 LAND = pose_of((25.5, EYE, 15.0), (14.197, -482.364, 0.0))   # eye level, 7,6 m in front of the person, looking up the detector
 ALONG = pose_of((17.0, EYE, 19.0), (12.0, -481.0, 0.0))     # 9 m upstream, toward side on
 WIDE = pose_of((11.5, -479.0, 48.0), (11.5, -477.0, 0.0))   # the whole detector, the person at its foot, the emblems above
-RING = dict(at=(0.0, -480.0, 57.0), dist=150.0, yaw=-90.0, pitch=40.0)   # the accelerator complex (`ring` in space.json) from above, the LHC on the left, the FCC on the right
+RING = dict(at=(-18.33, -480.0, 43.373), dist=191.56, yaw=-34.22, pitch=89.0)   # the accelerator complex (`ring` in space.json) straight from above, north up, the LHC and the whole FCC (hero/ring_map.py prints it)
 
 # legs: (t0, t1, from, to, slope at the start, slope at the end, kind), slopes in units of
 # the leg's average pace (1: the average; 0: at rest); 'log': the distance in log space

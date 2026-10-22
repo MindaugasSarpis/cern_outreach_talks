@@ -20,6 +20,11 @@
 // Steps from <Grains> or setGrains(name, k): 1 gathers it (2.6 s), 0 lets it fade; `of`
 // follows another name's steps instead (the person beside LHCb: the detector's).
 // Also a person for scale: { type: emblem, src: 'figures/person_grains.png', mode: alpha, of: det }
+// `text: 'Ačiū'` draws a word in the deck's heading type instead of an image; `burst: { at:
+// [0, 0, 0], curl?: 0.7, out?: 0.5, hot?: '#ffffff' }` gathers it out of a collision at `at`
+// (owner, 22 Oct: "aciu should appear out of particle collision now it's a bit flat"; "Also
+// Lithuanian flag should appear with aciu"): the grains leave that point white-hot on
+// curling tracks and cool to their colours as they land (`dur` s, 2.6 by default).
 import { BufferGeometry, BufferAttribute, Points, Group, Color, NormalBlending, AdditiveBlending, ShaderMaterial, Mesh, PlaneGeometry, MeshBasicMaterial, CanvasTexture, Vector3 } from 'three'
 import { PLACE, listen, state, material as materialOf } from './detector.js'
 import { places } from './afterCover.js'
@@ -31,22 +36,28 @@ const LT = ['#FFC800', '#006A44', '#C1272D'].map((h) => new Color(h))
 LT[0].multiplyScalar(1.05)   // and lifted a little more (in display values; the finish brings it down to about #FDB913)
 
 const VERT = PLACE + /* glsl */ `
-attribute vec3 aStart, aColor;
+attribute vec3 aStart, aColor, aBend;
 attribute float aSeed, aU;
-uniform float uT0, uHide, uDur, uSize, uAlpha, uWave, uWidth;
+uniform float uT0, uHide, uDur, uSize, uAlpha, uWave, uWidth, uHot;
+uniform vec3 uHotColor;
 void main() {
   if (uT0 > 1e8) { hide(); return; }
   float k = clamp((uTime - uT0) / uDur * 1.35 - aSeed * 0.35, 0.0, 1.0);
   float e = ease(k);
-  vec3 p = mix(aStart, position, e);
+  // a burst (aBend not zero): out of the collision on a curling track, then into place
+  vec3 p = mix(aStart, position, e) + aBend * sin(3.14159 * e) * (1.0 - 0.5 * e);
   // the flag's cloth: a travelling wave, pinned at its hoist (aU = 0)
   vec3 col = aColor;
   if (uWave > 0.0) {
     p.z += uWave * aU * sin(aU * 7.0 - uTime * 2.2) * e;
     col *= 1.02 + 0.07 * cos(aU * 7.0 - uTime * 2.2) * aU;   // the folds catch the light, a little
   }
+  // a burst's grains leave the collision white-hot and cool to their colour as they land
+  col = mix(col, uHotColor, uHot * (1.0 - smoothstep(0.35, 1.0, k)));
   float fade = uHide > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.0, uTime - uHide);
-  place(p, uSize * (0.7 + 0.6 * aSeed), uAlpha * smoothstep(0.0, 0.25, k) * fade, col, aSeed);
+  // (a burst's grains in flight at a third of their light: 60 000 leaving one point read as a white blob)
+  float fly = uHot > 0.0 ? smoothstep(0.0, 0.12, k) * mix(0.3, 1.0, smoothstep(0.55, 1.0, k)) : smoothstep(0.0, 0.25, k);
+  place(p, uSize * (0.7 + 0.6 * aSeed), uAlpha * fly * fade, col, aSeed);
 }`
 // a soft round grain, its own colour, laid over what is behind it
 const FRAG = /* glsl */ `
@@ -83,10 +94,10 @@ function flagGrains(n, w) {
 // grains where an image has its marks (dark or coloured on a light ground, or lit on a
 // transparent one), each with its pixel's colour, or a tint for it
 async function imageGrains(url, n, w, o) {
-  const img = new Image()
-  img.src = url
-  await img.decode()
-  const W = 480, H = Math.round(480 * img.naturalHeight / img.naturalWidth)
+  let img = url
+  if (typeof url === 'string') { img = new Image(); img.src = url; await img.decode() }
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height
+  const W = 480, H = Math.round(480 * ih / iw)
   const c = document.createElement('canvas')
   c.width = W; c.height = H
   const g = c.getContext('2d', { willReadFrequently: true })
@@ -126,6 +137,22 @@ async function imageGrains(url, n, w, o) {
   return out
 }
 
+// a word as a picture for imageGrains (`text`): white on transparent, in the deck's heading
+// type (the slide's own h1, once the fonts are in)
+async function textCanvas(o) {
+  await document.fonts?.ready
+  const h1 = document.querySelector('.thanks-lhcb h1') || document.querySelector('h1')
+  const cs = h1 ? getComputedStyle(h1) : null
+  const font = `${cs?.fontWeight || 700} 220px ${cs?.fontFamily || 'sans-serif'}`
+  const c = document.createElement('canvas'), x = c.getContext('2d')
+  x.font = font
+  const m = x.measureText(o.text)
+  c.width = Math.ceil(m.width + 40); c.height = 300
+  x.font = font; x.fillStyle = o.color || '#ffffff'; x.textAlign = 'center'; x.textBaseline = 'middle'
+  x.fillText(o.text, c.width / 2, 150)
+  return c
+}
+
 // the stage's camera (its canvas's handle), for the emblems' ride over the ring's pull-out
 let camRef = null, camCanvas = null
 function cameraOf() {
@@ -139,7 +166,7 @@ function buildEmblem(o, ctx) {
   const P = o.pos || [0, 0, 0]
   g.position.set(P[0] || 0, P[1] || 0, P[2] || 0)
   g.rotation.set((o.pitch || 0) * Math.PI / 180, (o.yaw || 0) * Math.PI / 180, 0, 'YXZ')
-  if (o.far) g.userData.travel = true   // the ring's zoom moves it, never shrinks it
+  if (o.far || o.fixed) g.userData.travel = true   // the ring's zoom moves it (`far`) or leaves it be (`fixed`: at its place over the ring), never shrinks it
   const w = o.width ?? 4, n = Math.round((o.grains ?? 26000) * Math.min(1, (ctx.budget || 300000) / 300000) ** 0.5)
   const mat = new ShaderMaterial({
     // `blend: 'add'` adds the grains on as the world's are (the person: light among the grains)
@@ -148,6 +175,7 @@ function buildEmblem(o, ctx) {
     uniforms: {
       uTime: { value: 0 }, uPixelRatio: { value: 1 }, uT0: { value: 1e9 }, uHide: { value: 1e9 }, uDur: { value: o.dur ?? 2.6 },
       uSize: { value: o.size ?? 1.2 }, uAlpha: { value: o.alpha ?? 0.85 }, uWave: { value: o.wave ?? 0 }, uWidth: { value: w },
+      uHot: { value: o.burst ? 1 : 0 }, uHotColor: { value: new Color(o.burst?.hot || '#ffffff') },
     },
   })
   const u = mat.uniforms
@@ -167,15 +195,26 @@ function buildEmblem(o, ctx) {
   const make = (d) => {
     if (!alive) return
     const geo = new BufferGeometry()
-    const start = new Float32Array(n * 3), seed = new Float32Array(n)
+    const start = new Float32Array(n * 3), seed = new Float32Array(n), bend = new Float32Array(n * 3)
+    const B = o.burst, at = B?.at || [0, 0, 0]
     for (let i = 0; i < n; i++) {
+      seed[i] = Math.random()
+      if (B) {
+        // out of the collision at `at` (the group's frame): each grain's track bows to one side
+        // or the other of the straight line to its place (a charge in a field), and overshoots
+        const hx = d.home[i * 3] - at[0], hy = d.home[i * 3 + 1] - at[1], L = Math.hypot(hx, hy) || 1
+        const side = (Math.random() < 0.5 ? -1 : 1) * (B.curl ?? 0.7) * (0.4 + Math.random()), out = (B.out ?? 0.5) * Math.random()
+        start.set([at[0] + gauss() * 0.3, at[1] + gauss() * 0.3, at[2]], i * 3)
+        bend.set([(-hy * side + hx * out), (hx * side + hy * out), gauss() * L * 0.1], i * 3)
+        continue
+      }
       // scattered a little around where it will hang (a wide scatter read as a firework
       // raining into the detector below)
       start.set([d.home[i * 3] * 1.3 + gauss() * w * 0.3, d.home[i * 3 + 1] * 1.3 + gauss() * w * 0.2, gauss() * w * 0.35], i * 3)
-      seed[i] = Math.random()
     }
     geo.setAttribute('position', new BufferAttribute(d.home, 3))
     geo.setAttribute('aStart', new BufferAttribute(start, 3))
+    geo.setAttribute('aBend', new BufferAttribute(bend, 3))
     geo.setAttribute('aColor', new BufferAttribute(d.col, 3))
     geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
     geo.setAttribute('aU', new BufferAttribute(d.u, 1))
@@ -188,6 +227,7 @@ function buildEmblem(o, ctx) {
   // the cover's fly-in
   const offLatch = places.when(() => {
     if (o.flag === 'lt') make(flagGrains(n, w))
+    else if (o.text) textCanvas(o).then((c) => imageGrains(c, n, w, { mode: 'alpha', ...o })).then(make).catch((e) => console.warn('stage: emblem failed', o.text, e))
     else if (o.src) imageGrains(ctx.asset('/' + String(o.src).replace(/^\//, '')), n, w, o).then(make).catch((e) => console.warn('stage: emblem failed', o.src, e))
   })
   let warm = 0
@@ -372,14 +412,20 @@ function buildSupports(o, ctx) {
 // other objects shrink toward it (to `shrink` of their size) and fade (to `dimTo`), the
 // complex and the mark fade in, and emblems with `far` ride to their place in the last frame
 // (`zoom.b`, 0 → 1 in log distance). Shown with the detector (`of`: 'det'); off, everything
-// is as it was.
+// is as it was. An object marked `userData.travel` is left be (an emblem's `far` or `fixed`, a
+// collision's `fixed`: setup/main.ts).
 //   { type: ring, name, of?: 'det', pos: [0, 0, 0], radius?: 20, side?: -1, near?: 52, far?: 180,
 //     shrink?: 0.05, dimTo?: 0.2, grains?: 40000, size?: 4, alpha?: 0.8, colors?: ['#9cc4ff', '#ffffff'],
 //     lap?: 12 (s a beam takes round), trains?: 18, bunch?: 0.35, width?: 0.3, gap?: 0.3 (between the beams),
 //     mark?: { grains: 600, size: 8, radius: 1.0, alpha: 0.6, color },
-//     map?: { km: 4.243 (the LHC's radius), p8: -55.7 (Point 8's bearing from the centre, degrees
-//       from east), rings: [{ c: [x, y], r, grains, size, alpha, color, dash? }],
-//       lines: [{ pts: [[x, y], …], grains, size, alpha, color }] } }
+//     map?: 'data/ring_map.json' (hero/ring_map.py) | { km: 4.243 (the LHC's radius), p8: -55.7
+//       (Point 8's bearing from the centre, degrees from east), rings: [{ c: [x, y], r, grains,
+//       alpha, color, width?, dash? }], lines: [{ pts: [[x, y], …], grains, alpha, color, width?,
+//       dash? }], fills: [{ pts (a polygon), grains, alpha, color, box?: [x0, y0, x1, y1] }] } }
+// (owner, 22 Oct, with CERN's FCC map: "For the last one, can you use something like this? Now
+// the SPS is weirdly connected to lhc": the map is the tunnels' own lines from OpenStreetMap,
+// the FCC on its eight sites, Lake Geneva, the border, the Rhône and the ridges; seen from
+// straight above, north up)
 export const zoom = { b: 0, k: 1, at: new Vector3() }   // at: Point 8 in the world (what shrinks, shrinks toward it)
 const RING_VERT = PLACE + /* glsl */ `
 attribute vec4 aRing;   // a beam grain: angle, radial offset, height, direction (+1 / -1); else its place and its light
@@ -424,46 +470,87 @@ function buildRing(o, ctx) {
   const mk = o.mark || {}, mc = new Color(mk.color || '#ffffff'), mr = mk.radius ?? 1.0
   for (let i = 0; i < (mk.grains ?? 600); i++) recs.push([gauss() * mr, gauss() * mr, gauss() * mr, 1, 1, mc.r, mc.g, mc.b])
   // the complex, from the map: km east and north of the LHC's centre → the ring's frame
-  const M = o.map || {}, u = R / (M.km ?? 4.243), rot = ((M.p8 ?? -55.7) * -1) * Math.PI / 180
-  const at = (x, y) => {
-    const X = x * Math.cos(rot) - y * Math.sin(rot), Y = x * Math.sin(rot) + y * Math.cos(rot)
-    return [Y * u, 0, side * (R - X * u)]   // east (after the turn) → toward Point 8; north → +x
-  }
-  for (const r of M.rings || []) {
-    const n = Math.round((r.grains ?? 6000) * thin), c = new Color(r.color || '#9cc4ff'), dash = r.dash || 0
-    for (let i = 0; i < n; i++) {
-      let t = Math.random()
-      if (dash) t = (Math.floor(t * dash) + Math.random() * 0.55) / dash   // a proposed ring: dashed
-      const a = t * Math.PI * 2, rr = r.r + gauss() * (r.width ?? 0.04)
-      const p = at(r.c[0] + rr * Math.cos(a), r.c[1] + rr * Math.sin(a))
-      recs.push([p[0], gauss() * 0.15, p[2], r.alpha ?? 0.5, 2, c.r, c.g, c.b])
+  // (`map` inline, or the path of a JSON file of the same: hero/ring_map.py writes one)
+  const complex = (M) => {
+    const out = [], u = R / (M.km ?? 4.243), rot = ((M.p8 ?? -55.7) * -1) * Math.PI / 180
+    const at = (x, y) => {
+      const X = x * Math.cos(rot) - y * Math.sin(rot), Y = x * Math.sin(rot) + y * Math.cos(rot)
+      return [Y * u, 0, side * (R - X * u)]   // east (after the turn) → toward Point 8; north → +x
     }
-  }
-  for (const l of M.lines || []) {
-    const seg = [], n = Math.round((l.grains ?? 1500) * thin), c = new Color(l.color || '#9cc4ff')
-    let total = 0
-    for (let j = 1; j < l.pts.length; j++) { const d = Math.hypot(l.pts[j][0] - l.pts[j - 1][0], l.pts[j][1] - l.pts[j - 1][1]); seg.push(d); total += d }
-    for (let i = 0; i < n; i++) {
-      let s = Math.random() * total, j = 0
-      while (j < seg.length - 1 && s > seg[j]) { s -= seg[j]; j++ }
-      const k = seg[j] ? s / seg[j] : 0, A = l.pts[j], B = l.pts[j + 1]
-      const p = at(A[0] + (B[0] - A[0]) * k + gauss() * (l.width ?? 0.03), A[1] + (B[1] - A[1]) * k + gauss() * (l.width ?? 0.03))
-      recs.push([p[0], gauss() * 0.1, p[2], l.alpha ?? 0.4, 2, c.r, c.g, c.b])
+    for (const r of M.rings || []) {
+      const n = Math.round((r.grains ?? 6000) * thin), c = new Color(r.color || '#9cc4ff'), dash = r.dash || 0
+      for (let i = 0; i < n; i++) {
+        let t = Math.random()
+        if (dash) t = (Math.floor(t * dash) + Math.random() * 0.55) / dash   // a proposed ring: dashed
+        const a = t * Math.PI * 2, rr = r.r + gauss() * (r.width ?? 0.04)
+        const p = at(r.c[0] + rr * Math.cos(a), r.c[1] + rr * Math.sin(a))
+        out.push([p[0], gauss() * 0.15, p[2], r.alpha ?? 0.5, 2, c.r, c.g, c.b])
+      }
     }
+    // lines (tunnels, shores, a border, ridges): grains along them, `dash` pieces with gaps
+    for (const l of M.lines || []) {
+      const seg = [], n = Math.round((l.grains ?? 1500) * thin), c = new Color(l.color || '#9cc4ff'), dash = l.dash || 0
+      let total = 0
+      for (let j = 1; j < l.pts.length; j++) { const d = Math.hypot(l.pts[j][0] - l.pts[j - 1][0], l.pts[j][1] - l.pts[j - 1][1]); seg.push(d); total += d }
+      if (!total) continue
+      for (let i = 0; i < n; i++) {
+        let f = Math.random()
+        if (dash) f = (Math.floor(f * dash) + Math.random() * 0.5) / dash
+        let s = f * total, j = 0
+        while (j < seg.length - 1 && s > seg[j]) { s -= seg[j]; j++ }
+        const k = seg[j] ? s / seg[j] : 0, A = l.pts[j], B = l.pts[j + 1]
+        const p = at(A[0] + (B[0] - A[0]) * k + gauss() * (l.width ?? 0.03), A[1] + (B[1] - A[1]) * k + gauss() * (l.width ?? 0.03))
+        out.push([p[0], gauss() * 0.1, p[2], l.alpha ?? 0.4, 2, c.r, c.g, c.b])
+      }
+    }
+    // fills (a lake): grains spread inside a polygon, within `box` (km: x0, y0, x1, y1)
+    for (const f of M.fills || []) {
+      const P = f.pts, c = new Color(f.color || '#3f78d0'), n = Math.round((f.grains ?? 4000) * thin)
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity
+      for (const [x, y] of P) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y) }
+      if (f.box) { x0 = Math.max(x0, f.box[0]); y0 = Math.max(y0, f.box[1]); x1 = Math.min(x1, f.box[2]); y1 = Math.min(y1, f.box[3]) }
+      const inside = (x, y) => {
+        let o = false
+        for (let i = 0, j = P.length - 1; i < P.length; j = i++) {
+          if ((P[i][1] > y) !== (P[j][1] > y) && x < (P[j][0] - P[i][0]) * (y - P[i][1]) / (P[j][1] - P[i][1]) + P[i][0]) o = !o
+        }
+        return o
+      }
+      for (let i = 0, tries = 0; i < n && tries < n * 40; tries++) {
+        const x = x0 + Math.random() * (x1 - x0), y = y0 + Math.random() * (y1 - y0)
+        if (!inside(x, y)) continue
+        const p = at(x, y)
+        out.push([p[0], gauss() * 0.1, p[2], f.alpha ?? 0.2, 2, c.r, c.g, c.b]); i++
+      }
+    }
+    return out
   }
-  const N = recs.length
-  const ring = new Float32Array(N * 4), col = new Float32Array(N * 3), seed = new Float32Array(N), kind = new Float32Array(N)
-  recs.forEach((r, i) => { ring.set(r.slice(0, 4), i * 4); kind[i] = r[4]; col.set(r.slice(5, 8), i * 3); seed[i] = Math.random() })
-  const geo = new BufferGeometry()
-  geo.setAttribute('position', new BufferAttribute(new Float32Array(N * 3), 3))
-  geo.setAttribute('aRing', new BufferAttribute(ring, 4))
-  geo.setAttribute('aCol', new BufferAttribute(col, 3))
-  geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
-  geo.setAttribute('aKind', new BufferAttribute(kind, 1))
+  const toGeo = (rs) => {
+    const N = rs.length
+    const ring = new Float32Array(N * 4), col = new Float32Array(N * 3), seed = new Float32Array(N), kind = new Float32Array(N)
+    rs.forEach((r, i) => { ring.set(r.slice(0, 4), i * 4); kind[i] = r[4]; col.set(r.slice(5, 8), i * 3); seed[i] = Math.random() })
+    const geo = new BufferGeometry()
+    geo.setAttribute('position', new BufferAttribute(new Float32Array(N * 3), 3))
+    geo.setAttribute('aRing', new BufferAttribute(ring, 4))
+    geo.setAttribute('aCol', new BufferAttribute(col, 3))
+    geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
+    geo.setAttribute('aKind', new BufferAttribute(kind, 1))
+    return geo
+  }
+  const M = o.map || {}
+  if (typeof M !== 'string') recs.push(...complex(M))
+  const geo = toGeo(recs)
   const mat = materialOf(RING_VERT, {
     uShow: { value: 0 }, uMark: { value: 0 }, uAlpha: { value: o.alpha ?? 0.8 }, uSize: { value: o.size ?? 4 },
     uR: { value: R }, uSide: { value: side }, uSpeed: { value: Math.PI * 2 / (o.lap ?? 12) },
   })
+  let alive = true
+  if (typeof M === 'string') {
+    fetch(ctx.asset('/' + M.replace(/^\//, ''))).then((r) => r.json()).then((m) => {
+      if (!alive) return
+      const pts = new Points(toGeo(complex(m)), mat); pts.frustumCulled = false; g.add(pts)
+    }).catch((e) => console.warn('stage: ring map failed', M, e))
+  }
   const markAlpha = mk.alpha ?? 0.6
   const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts)
   const un = mat.uniforms, of = o.of || 'det'
@@ -505,7 +592,7 @@ function buildRing(o, ctx) {
       g.visible = b > 0 || warm > 0
       if (b !== last) { apply(par, zoom.k, 1 - (1 - dimTo) * smooth(0.15, 0.9, b)); last = b }
     },
-    dispose() { off(); removeEventListener('innoday:prewarm', onWarm); zoom.b = 0; zoom.k = 1 },
+    dispose() { alive = false; off(); removeEventListener('innoday:prewarm', onWarm); zoom.b = 0; zoom.k = 1 },
   }
 }
 

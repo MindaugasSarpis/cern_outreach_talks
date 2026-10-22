@@ -1,6 +1,7 @@
 <script setup>
 import { onUnmounted } from 'vue'
 import { onSlideEnter, onSlideLeave, useNav, useSlideContext } from '@slidev/client'
+import { soundLevel, onSoundLevel } from './soundLevel.js'
 
 // <Drone :level="0.22" :swell="14" />: a deep, slowly moving hum under a slide (owner, 21 Oct,
 // slide 27: "needs some deep cool hum sounds or something"). Synthesised here, nothing to
@@ -11,6 +12,7 @@ import { onSlideEnter, onSlideLeave, useNav, useSlideContext } from '@slidev/cli
 // clip's end, under the question), and fades out over `fadeOut` s when the slide is left.
 // Only the audience's window sounds (the presenter's views mount the slide too); a page
 // without a press yet stays silent (the browser's rule) and starts on the next arrival.
+// `+` / `-` scale it (setup/soundLevel.js), through one gain after every voice.
 const props = defineProps({
   level: { type: Number, default: 0.22 },
   fadeIn: { type: Number, default: 3 },
@@ -21,7 +23,14 @@ const { $renderContext } = useSlideContext()
 const nav = useNav()
 const live = () => $renderContext?.value === 'slide' && !nav.isPrintMode?.value
 
-const D = (globalThis.__innodayDrone ||= { ctx: null })
+const D = (globalThis.__innodayDrone ||= { ctx: null, master: null })
+function master(ctx) {
+  if (!D.master) {
+    D.master = ctx.createGain(); D.master.gain.value = soundLevel(); D.master.connect(ctx.destination)
+    onSoundLevel((v) => D.master.gain.setTargetAtTime(v, ctx.currentTime, 0.05))
+  }
+  return D.master
+}
 let voice = null
 
 function start() {
@@ -34,7 +43,7 @@ function start() {
   out.gain.linearRampToValueAtTime(props.level, t + props.fadeIn)
   out.gain.setValueAtTime(props.level, t + props.swell)
   out.gain.linearRampToValueAtTime(props.level * 1.33, t + props.swell + 3)
-  out.connect(ctx.destination)
+  out.connect(master(ctx))
   const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 380; lp.Q.value = 0.7
   lp.connect(out)
   const lfo = ctx.createOscillator(); lfo.frequency.value = 1 / 11
