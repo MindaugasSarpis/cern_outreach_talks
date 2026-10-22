@@ -102,8 +102,19 @@ purpose).
 
 ## Status
 
-- 2026-10-22 (latest, afternoon): **the second round on the branch, not
-  deployed**: origin/main 5f0d669 merged (v0.8.3's talks side), pinned
+- 2026-10-22 (latest, evening): **deployed acc0993 on v0.8.3** (Pages run
+  39790852994, green after its deploy job sat queued about an hour on
+  GitHub's Actions incident; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed on 23 slides). `talk ready` had passed on acc0993
+  with nothing skipped ("pptx: skipped, no pptx"; plates one warning, the
+  fingerprint false positive). Live: the v0.8.3 pin and the cover's
+  `<PptxButton />`, which shows nothing until `videos/pptx.json` exists. No
+  PPTX yet: `talk pptx` waits for Tools' clip-embed fix, and whether the
+  studio copy is a PPTX is still open with the owner. No per-slide
+  `talk record` MP4s exist, only the plates. Main is Innoday's; this talk
+  pushes nothing until the Scheduler says.
+- 2026-10-22 (afternoon): **the second round on the branch, then
+  deployed as acc0993 (above)**: origin/main 5f0d669 merged (v0.8.3's talks side), pinned
   v0.8.3 (the lockfile's v0.8.1/v0.9.0 entries restored from main's after
   the pin; `talk lock` passes), `<PptxButton />` on the cover (it renders
   nothing until `videos/pptx.json` is there); lint 0 errors, `talk check` ok,
@@ -116,7 +127,7 @@ purpose).
   `talk record`. The plates were recorded on v0.8.2; `ready` will call them
   stale (the fingerprint counts package.json and the lockfile), with no change
   to what they show expected from a PPTX-only release.
-- 2026-10-22 (latest): **deployed 883560a on v0.8.2** (Pages run
+- 2026-10-22 (morning): **deployed 883560a on v0.8.2** (Pages run
   39751672500, green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed; `talk ready` passed with nothing skipped, its one
   warning the plates' fingerprint counting this CLAUDE.md, the only change
