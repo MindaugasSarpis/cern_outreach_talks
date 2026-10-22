@@ -101,10 +101,14 @@ purpose).
 
 ## Status
 
-- 2026-10-23 (latest, night; the owner asleep, "finish the talk to completion
+- 2026-10-23 (latest): **deployed c81b29c** (Pages run 39855393262, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, plates one warning, the
+  fingerprint). The landing page shows „ZIP · 226 MB“ (the venue zip from
+  3489ef5, the same deck). Main handed back to the Scheduler.
+- 2026-10-23 (night; the owner asleep, "finish the talk to completion
   deploy, make zip availabe"): **the pre-filming round, 22 slides** (Decisions,
-  22 Oct; notes/review.md). The deploy and its run are in the next entry once
-  green. The venue zip is rebuilt from 3489ef5 (226 MB, 22 slides, the new
+  22 Oct; notes/review.md). The venue zip is rebuilt from 3489ef5 (226 MB, 22 slides, the new
   plates and stills) and on the talk's release; `videos/venue.json` puts it on
   the landing page. `talk ready` passed on 3489ef5 (plates: one warning, the
   fingerprint counting the notes and manifest written after the take; the
