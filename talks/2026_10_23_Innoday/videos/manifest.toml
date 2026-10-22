@@ -147,6 +147,16 @@ opening, 0:26 the President's greeting on both screens, 0:28 the lectern, \
 [[videos]]
 name      = "close.mp4"
 profile   = "remux"
+used_in   = []
+generated = true
+notes     = """\
+Slide 30's close up to 4744b0d (the ring and „Ačiū" over the map), the take without the \
+bookend; no longer in the deck: its asset stays on the release for that deploy. See \
+close_home.mp4."""
+
+[[videos]]
+name      = "close_home.mp4"
+profile   = "remux"
 used_in   = ["deck"]
 generated = true
 notes     = """\
@@ -154,9 +164,14 @@ Slide 30, the close, recorded (owner, 22 Oct: "Maybe worth prerecording a video?
 doesn't lag?" - the live close lagged on a Mac): slidev-stage-record's take of the live \
 slide at 22efcef (LisTakeover: the module's grains land in the SciFi, the eye-level \
 LHCb, the glow, the pull-out to the LHC and the FCC, „Ačiū" out of a collision) at \
-1080p50 with a 6 s hold, encoded with x264 (slow, CRF 17, under 10 Mbit/s), silent: \
-the music is <Soundtrack> on the slide. Placed in public/videos/ and published with \
---only; no raw."""
+1080p50 with a 16 s hold, silent: the music is <Soundtrack> on the slide. Then the \
+bookend (owner, 22 Oct, "Go ahead and do it"; hero/bookend.py): from 57.4 s the ring \
+dissolves into the opener's first frame (NFTMC from above, nftmc_zoom_web.mp4 at 0 s, \
+graded to the black ground, its Google Earth logo kept) and the take's „Ačiū" collision, \
+lifted off the map (each frame minus the still ring's least, the map's own flicker and \
+the LHC's beams masked), is added over it: the crossing at 61.2 s, on Starfire's peak \
+(the Soundtrack's `drop`). x264 slow, CRF 17, under 10 Mbit/s. Placed in \
+public/videos/ and published with --only; no raw."""
 
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 

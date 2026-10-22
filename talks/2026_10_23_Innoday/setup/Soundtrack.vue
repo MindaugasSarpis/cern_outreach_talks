@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, onUnmounted, watch } from 'vue'
-import { onSlideEnter, useSlideContext, useNav } from '@slidev/client'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
 import { soundLevel, onSoundLevel, musicKeys } from './soundLevel.js'
 
 // <Soundtrack :level="0.3" start />, on each of the close's slides (owner, 20 Oct: "Will
@@ -19,6 +19,13 @@ import { soundLevel, onSoundLevel, musicKeys } from './soundLevel.js'
 // Audio gain where it exists (iOS ignores an element's volume). Going to a slide without
 // a <Soundtrack> fades it out. Only the audience's window plays it. `+` / `-` scale every
 // level (setup/soundLevel.js).
+// `drop` (the recorded close; owner, 22 Oct, "Go ahead and do it": the word on Starfire's
+// peak, the music falling away for a moment before it): { at, file, hit, duck, quiet }, timed
+// off the slide's clip. At `duck` s of the clip the music falls to `quiet` of its level; `file`
+// (the track from `hit` s before its peak, the 2:54,85 downbeat after the drum fill) starts
+// that quiet so its peak lands at `at` s of the clip (the „Ačiū“ collision's crossing), the
+// clip's rate nudged (at most ±10 %) to stay on the music meanwhile; on the peak the level
+// opens again, on the music's own clock. A third file, not a seek (see `resync`).
 const props = defineProps({
   src: { type: String, default: 'audio/starfire_close.m4a' },
   tail: { type: String, default: 'audio/starfire_close_from49.m4a' },
@@ -27,6 +34,7 @@ const props = defineProps({
   start: { type: Boolean, default: false },
   resync: { type: Boolean, default: false },
   keys: { type: Boolean, default: false },   // + and - are the music's here, even over a clip (soundLevel.js)
+  drop: { type: Object, default: null },
 })
 const { $renderContext, $page } = useSlideContext()
 const nav = useNav()
@@ -95,7 +103,59 @@ function arrive() {
   }
   if (playing()) ramp(G.cur, props.level, 1200)
 }
-onSlideEnter(arrive)
+onSlideEnter(() => { arrive(); if (props.drop && live()) startDrop() })
+
+// the drop: watched each frame from the clip's time (see `drop`)
+const root = ref(null)
+let dropRaf = 0, dropVideo = null
+function endDrop() {
+  cancelAnimationFrame(dropRaf); dropRaf = 0
+  if (dropVideo) { try { dropVideo.playbackRate = 1 } catch {} }
+  dropVideo = null
+}
+function startDrop() {
+  endDrop()
+  const d = props.drop, me = page()
+  const peak = track(d.file)
+  let phase = 0
+  const tick = () => {
+    if (nav.currentSlideNo?.value !== me) return endDrop()
+    dropVideo ||= root.value?.closest('.slidev-page')?.querySelector('.video-player video') || null
+    const v = dropVideo
+    if (v && !v.paused) {
+      const V = v.currentTime
+      if (phase === 0 && V >= d.duck && V < d.at) { if (G.cur) ramp(G.cur, props.level * d.quiet, 1000); phase = 1 }
+      if (phase <= 1 && V >= d.at - d.hit && V < d.at) {
+        const old = G.cur
+        G.cur = peak; peak.e.currentTime = 0; cancelAnimationFrame(peak.raf); peak.raf = 0; set(peak, props.level * d.quiet); play(peak)
+        if (old && old !== peak) { cancelAnimationFrame(old.raf); ramp(old, 0, 250, () => old.e.pause()) }
+        phase = 2
+      }
+      if (phase === 2 && !peak.e.paused && peak.e.currentTime > 0) {
+        const a = peak.e.currentTime, left = d.hit - a
+        // the clip where the music is: ahead, it slows; behind, it hurries
+        const err = V - (d.at - d.hit + a)
+        v.playbackRate = Math.min(1.1, Math.max(0.9, 1 - err * 1.5))
+        if (left < 0.25) {
+          const g = peak.gain?.gain
+          if (g && G.ctx) {
+            const now = G.ctx.currentTime
+            g.cancelScheduledValues(now); g.setValueAtTime(g.value, now)
+            g.setValueAtTime(props.level * soundLevel(), now + Math.max(0, left))
+            peak.level = props.level
+          } else setTimeout(() => set(peak, props.level), Math.max(0, left) * 1000)
+          v.playbackRate = 1
+          phase = 3
+        }
+      }
+    }
+    if (phase < 3) dropRaf = requestAnimationFrame(tick)
+    else dropVideo = null
+  }
+  dropRaf = requestAnimationFrame(tick)
+}
+onSlideLeave(() => endDrop())
+onUnmounted(() => endDrop())
 // a `+` / `-` (this window's or the presenter's): every track at its level times the new one
 if (!G.level) G.level = onSoundLevel(() => { for (const t of G.tracks.values()) if (!t.raf) set(t, t.level) })
 // the pages that have a live <Soundtrack>, counted (the overview's copies never count)
@@ -125,4 +185,4 @@ onMounted(() => {
 onUnmounted(() => stop?.())
 </script>
 
-<template><span class="soundtrack" aria-hidden="true" /></template>
+<template><span ref="root" class="soundtrack" aria-hidden="true" /></template>
