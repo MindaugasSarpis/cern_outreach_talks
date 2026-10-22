@@ -4,8 +4,9 @@
 // On a slide with a clip the same keys are the clip's own (VideoPlayer's session volume,
 // which marks the key handled): this one steps only when nothing else took the press.
 // The level sticks in this browser (localStorage) and crosses windows: a press in the
-// presenter's window sets the audience window's music, where the music plays. A badge
-// shows the level for a moment in the window pressed.
+// presenter's window sets the audience window's music, where the music plays. The audience
+// sees nothing (owner, 22 Oct: "invisible, but -+ to control"); the presenter's window shows
+// the level for a moment.
 const KEY = 'innoday:sound'
 const subs = new Set()
 let level = read()
@@ -27,6 +28,7 @@ export function onSoundLevel(f) { subs.add(f); return () => subs.delete(f) }
 
 let badge = null, badgeTimer = 0
 function flash(v) {
+  if (!/presenter/.test(location.hash + location.pathname)) return
   if (!badge) {
     badge = document.createElement('div')
     badge.className = 'innoday-sound-badge'

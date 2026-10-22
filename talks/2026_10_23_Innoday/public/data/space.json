@@ -586,6 +586,11 @@
           "grains": 30000, "size": 3.6, "alpha": 1.0, "wave": 0.6, "dur": 3.8, "fixed": true, "burst": { "at": [0, 23.7, 0], "curl": 0.9, "out": 0.25, "hot": "#cfe6ff" }
         },
         {
+          "type": "emblem", "name": "ltMap", "flag": "lt", "pos": [9.54, -3.06, 0.96], "width": 1.6, "yaw": 0, "pitch": 8,
+          "grains": 9000, "size": 1.0, "alpha": 1.0, "wave": 0.08, "dur": 2.6,
+          "far": { "screen": [-0.035, 0.453], "depth": 191.4, "pos": [0, 1, 7], "width": 12, "yaw": -34.22, "pitch": -90 }
+        },
+        {
           "type": "emblem",
           "name": "lhcbLogo",
           "pos": [

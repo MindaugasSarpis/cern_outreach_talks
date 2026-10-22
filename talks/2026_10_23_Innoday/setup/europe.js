@@ -11,7 +11,8 @@
 //
 // The map lies in the station's x–z plane, north toward −z, its origin at CERN.
 // Data: Natural Earth 1:50m (public domain) coastlines and international land
-// boundaries, cropped to 13° W–46° E, 29–72° N, in a Lambert azimuthal equal-area
+// boundaries, cropped to 13° W–46° E, 29–72° N (and `far`: the coastlines beyond, to the
+// frames' edges, hero/europe_map.py), in a Lambert azimuthal equal-area
 // projection centred at 15° E 52° N, in km (made once from the GeoJSON of v5.1.2).
 //
 // Steps from <Grains :set="{ eu: k }" /> (setup/Grains.vue, the bus in detector.js):
@@ -98,7 +99,7 @@ function makeGrains(d, o, f) {
   const at = (x, y) => [(x - cx) / S, 0, -(y - cy) / S]
   // the crop's edges fade out (no hard border where the projection was cut)
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9
-  for (const l of d.coast) for (let i = 0; i < l.length; i += 2) { x0 = Math.min(x0, l[i]); x1 = Math.max(x1, l[i]); y0 = Math.min(y0, l[i + 1]); y1 = Math.max(y1, l[i + 1]) }
+  for (const l of d.coast.concat(d.far || [])) for (let i = 0; i < l.length; i += 2) { x0 = Math.min(x0, l[i]); x1 = Math.max(x1, l[i]); y0 = Math.min(y0, l[i + 1]); y1 = Math.max(y1, l[i + 1]) }
   const mx = (x0 + x1) / 2, my = (y0 + y1) / 2, hx = (x1 - x0) / 2, hy = (y1 - y0) / 2
   const fall = (x, y) => { const r = Math.max(Math.abs(x - mx) / hx, Math.abs(y - my) / hy); return 1 - Math.min(1, Math.max(0, (r - 0.82) / 0.18)) ** 2 }
   const reach = Math.hypot(hx, hy) / S
@@ -125,6 +126,8 @@ function makeGrains(d, o, f) {
   }
   for (const l of d.coast) line(l, K.coast, spacing)
   for (const l of d.border) line(l, K.border, spacing * 1.3)
+  // the rest of the world to the frame's edges (the Americas, Africa, Asia): sparse, as faint as a border
+  for (const l of d.far || []) line(l, K.border, spacing * 3)
   const lt = d.lt.concat(d.lt.slice(0, 2))
   line(lt, K.ltLine, spacing * 0.35)
   // Lithuania's land, shown as it lights

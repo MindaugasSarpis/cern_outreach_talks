@@ -229,7 +229,7 @@ function buildGlobe(o, ctx) {
   })
 
   // ---- the sequence ----------------------------------------------------------------
-  let now = 0, last = null, t0 = null, startReq = false, tRef = null, done = true
+  let now = 0, last = null, t0 = null, startReq = false, skip = 0, tRef = null, done = true
   const el = () => (t0 == null ? -1 : now - t0)
   const wp = new Vector3()
   const self = {
@@ -296,7 +296,8 @@ function buildGlobe(o, ctx) {
       done = false
       return true
     },
-    start() { startReq = true; done = false },
+    // `from`: world seconds of the sequence already behind (the photo held for its click)
+    start(from = 0) { startReq = true; skip = from; done = false },
     // left mid-way, or nothing to dissolve: the globe whole at once
     finish() {
       startReq = false
@@ -315,7 +316,7 @@ function buildGlobe(o, ctx) {
       const dt = last == null ? 0 : Math.max(0, t - last); last = t; now = t
       u.uTime.value = t
       if (tRef == null) tRef = t
-      if (startReq) { startReq = false; t0 = t; tRef = t + T.hold + T.globe + 1.2 }
+      if (startReq) { startReq = false; t0 = t - skip; tRef = t0 + T.hold + T.globe + 1.2 }
       rotAt(lon0 - spin * (t - tRef), uRot.value)
       if (cam) { g.getWorldPosition(wp); const dd = wp.distanceTo(cam); u.uFar.value = 1 - Math.min(1, Math.max(0, (dd - 40) / 25)) }
       if (pts) pts.visible = u.uFar.value > 0.002

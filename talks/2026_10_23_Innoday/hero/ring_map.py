@@ -151,13 +151,9 @@ def main(src, dst):
         # the FCC: dashed, warm, as CERN's map draws it
         {'c': [round(fx, 3), round(fy, 3)], 'r': round(rf, 3), 'grains': 18000, 'alpha': 1.0, 'color': warm, 'dash': 72, 'width': 0.12},
     ]
-    lines = [
-        {'pts': way(66473762), 'grains': 3000, 'alpha': 0.75, 'color': pale, 'width': 0.03},   # the SPS
-        {'pts': way(174646428), 'grains': 500, 'alpha': 0.7, 'color': pale, 'width': 0.01},    # the PS
-        {'pts': way(317804188, 685422590), 'grains': 900, 'alpha': 0.5, 'color': pale, 'width': 0.02},   # TI 2 → Point 2
-        {'pts': way(317804189, 685422588), 'grains': 900, 'alpha': 0.5, 'color': pale, 'width': 0.02},   # TI 8 → Point 8
-        {'pts': way(317804190), 'grains': 300, 'alpha': 0.5, 'color': pale, 'width': 0.02},   # TT2/TT10: the PS → the SPS
-    ]
+    # the SPS, the PS and the transfer tunnels are left out (owner, 22 Oct: "the inner ring of the
+    # lhc doesn't make sense... don't show it"): the LHC (the ring builder's beams) and the FCC only
+    lines = []
     for l in border:
         lines.append({'pts': l, 'grains': max(120, int(len(l) * 90)), 'alpha': 0.75, 'color': '#d8dde6', 'width': 0.04, 'dash': max(4, int(len(l) * 1.6))})
     for l in rivers:

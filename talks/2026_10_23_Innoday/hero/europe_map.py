@@ -4,12 +4,18 @@
     python3 -I europe_map.py <dir with the three .geojson> <out.json>
 
 Coastlines and international land boundaries (the disputed, indefinite and
-line-of-control classes left out), cropped to lon -13..46, lat 29..72 (Iceland
-out), in a Lambert azimuthal equal-area projection centred at 15 E 52 N, in
+line-of-control classes left out), cropped to lon -13..46, lat 29..72, in a Lambert azimuthal equal-area projection centred at 15 E 52 N, in
 whole km, north up. Lithuania's outline separately; CERN (Meyrin) as a point;
 thread ends: points inside each CERN Member and Associate Member State on the
 map (cern-members-2026), drawn at random (seeded) inside its largest polygon:
 a picture of flow, not data.
+
+`far`: the coastlines beyond that box, out to the edges of slides 23-26's frames
+(the Americas' east coast, Greenland, Africa, Asia Minor and on; owner, 22 Oct: "why
+is UK not rendered... and other continents"), simplified harder (12 km) and drawn
+sparser. A closed coastline (an island: Great Britain, Ireland, Iceland, Sicily...)
+is simplified as two halves: Douglas-Peucker on a ring whose ends coincide keeps
+nothing of it, which is how the islands went missing.
 """
 import json, math, random, sys
 
@@ -34,7 +40,19 @@ def inside(p):
     return BOX[0] <= p[0] <= BOX[2] and BOX[1] <= p[1] <= BOX[3]
 
 
-def crop(line):
+# the far coastlines' window, km from the projection's centre (CERN at about -687, -599)
+WIN = (-11500.0, -5600.0, 5000.0, 4000.0)
+
+
+def in_win(p):
+    lon, lat = p
+    c = math.sin(LAT0) * math.sin(math.radians(lat)) + math.cos(LAT0) * math.cos(math.radians(lat)) * math.cos(math.radians(lon) - LON0)
+    if c < -0.2: return False   # past ~100 degrees from the centre: the projection folds
+    x, y = proj(lon, lat)
+    return WIN[0] <= x <= WIN[2] and WIN[1] <= y <= WIN[3] and not inside(p)
+
+
+def crop(line, inside=inside):
     out, cur = [], []
     for p in line:
         if inside(p):
@@ -73,13 +91,18 @@ def flat(pts):
     return [v for p in pts for v in (round(p[0]), round(p[1]))]
 
 
-def polylines(features, tol, keep=lambda f: True):
+def polylines(features, tol, keep=lambda f: True, where=inside):
     out = []
     for f in features:
         if not keep(f): continue
         for line in lines_of(f['geometry']):
-            for part in crop(line):
-                pts = dp([proj(*p) for p in part], tol)
+            for part in crop(line, where):
+                q = [proj(*p) for p in part]
+                if len(q) > 3 and q[0] == q[-1]:   # a ring: two halves
+                    h = len(q) // 2
+                    pts = dp(q[:h + 1], tol)[:-1] + dp(q[h:], tol)
+                else:
+                    pts = dp(q, tol)
                 if len(pts) > 1: out.append(flat(pts))
     return out
 
@@ -103,6 +126,7 @@ def pip(x, y, ring):
 def main(src, dst):
     rd = lambda n: json.load(open(f'{src}/{n}.geojson', encoding='utf-8'))['features']
     coast = polylines(rd('ne_50m_coastline'), 2.5)
+    far = polylines(rd('ne_50m_coastline'), 12.0, where=in_win)
     border = polylines(rd('ne_50m_admin_0_boundary_lines_land'), 2.5,
                        lambda f: f['properties'].get('FEATURECLA') == 'International boundary (verify)')
     rng = random.Random(23)
@@ -137,7 +161,7 @@ def main(src, dst):
                  'Lithuania; LAEA 15E 52N, km, north up; ends: points in CERN Member (m 1) and Associate '
                  'Member (m 0) States, a picture of flow, not data',
         'cern': [round(cx), round(cy)],
-        'coast': coast, 'border': border, 'lt': lt, 'ends': ends,
+        'coast': coast, 'far': far, 'border': border, 'lt': lt, 'ends': ends,
     }
     s = json.dumps(out, separators=(',', ':'))
     open(dst, 'w').write(s)
@@ -145,6 +169,8 @@ def main(src, dst):
     print(f'{dst}: {len(s)} bytes, {len(coast)} coast, {len(border)} border lines, {nv} vertices, '
           f'{len(ends)} ends, lt {len(lt) // 2} vertices')
     xs = [v for l in coast for v in l[0::2]]; ys = [v for l in coast for v in l[1::2]]
+    km = lambda ls: sum(math.hypot(l[i] - l[i - 2], l[i + 1] - l[i - 1]) for l in ls for i in range(2, len(l), 2))
+    print(f'length km: coast {km(coast):.0f}, far {km(far):.0f}, border {km(border):.0f}')
     print('extent km', min(xs), max(xs), min(ys), max(ys), 'cern', out['cern'])
 
 

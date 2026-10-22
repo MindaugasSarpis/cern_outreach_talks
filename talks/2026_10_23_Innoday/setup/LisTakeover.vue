@@ -43,12 +43,12 @@ const props = defineProps({
   fade: { type: Number, default: 1400 },   // ms
   collision: { type: String, default: 'thanks' },
   detAt: { type: Number, default: 3.2 },   // the camera this far from the flag (units): the detector lights up
-  colAt: { type: Number, default: 15.6 },  // … LHCb's collision starts in it (12,6 s on the path, hero/close_path.py --probe; the bunches cross 5 s later, `approach` 2.5 at the slide's rate 0.5: as the camera lands at eye level, on the music's arrival, 17-19 s)
+  colAt: { type: Number, default: 12.6 },  // … LHCb's collision starts in it (12,6 s on the path; 15,6 before the side-on landing, 22 Oct, hero/close_path.py --probe; the bunches cross 5 s later, `approach` 2.5 at the slide's rate 0.5: as the camera lands at eye level, on the music's arrival, 17-19 s)
   freeze: { type: Array, default: () => [[0, 0.5], [0.25, 0.15], [0.8, 0.15], [1.6, 0.6]] },   // the world's rate from the crossing (17,5 s): slow while the flash lights, then the debris bursts out (~19 s, still in the music's peak; at 0.08 for 1,8 s the burst came at 21 s)
   embAt: { type: Number, default: 34 },    // … the emblems gather, on the pull-back (38,5 s: whole by the music's second climax, 42-44 s; the camera is never this far before)
   dEnd: { type: Number, default: 19 },     // the camera's distance from the flag where the picture reaches true scale (~15 s, coming down to eye level; the walk never comes nearer than 19,6)
   wordTop: { type: String, default: '42.5%' },   // the word's middle once the world has run: inside the FCC's ring (the still and print keep it low)
-  emblems: { type: Array, default: () => ['lhcbLogo'] },
+  emblems: { type: Array, default: () => ['lhcbLogo', 'ltMap'] },   // ltMap: the flag from the SciFi's place out to LHCb's point on the map (owner, 22 Oct: "Still need lithuanian flag on 30")
   wordAfter: { type: Number, default: 0.6 },   // s after the camera has stopped (48 s): the word
   wordBy: { type: Number, default: 62 },   // s: the word shows by then whatever the world does
   // the word out of a collision (owner, 22 Oct: "aciu should appear out of particle collision now
