@@ -172,7 +172,7 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 green, URL 200, live walk clean). Live: slide 30 is the recorded close (close.mp4), faded in so
 the world rests under it (a cut clip never rested it: the M2 Mac's lag, owner "MacPro M2 can't
 quite handle the final slide"); slide 31 the clip's last frame as a still (CloseStill); the SciFi
-module lands in the cloud's SciFi; the logo without its reflection; the buffer at most 1920 wide;
+module lands in the cloud's SciFi; the logo cropped to its upper half (a mistake: undone at night); the buffer at most 1920 wide;
 no PowerPoint. The landing page shows "ZIP · 742 MB"; the zip on the release is rebuilt from
 4744b0d (778 514 435 bytes). Open: the owner to retry the final slide on the M2; plates 30–31
 stale (30 a clip, 31 a still; neither drawn live); the toolkit's cut clip told to the Scheduler.
@@ -414,6 +414,12 @@ v0.8.1 since 20 Oct and builds the zip local-first itself).
   4744b0d close) stays on the release for that deploy. Limits: the opener's Earth is a CG limb
   with no readable coastline, so the map goes down on its lit side, not on Geneva; the dive
   passes the opener's Google Earth to CG change (~29 s of it).
+  The owner on that cut: "Make this going back to vilnius quicker, but all good otherwise apart
+  from LHCb Logo only showing half": the dive is 14 s (62.5–76.5 s, the opener at 4×), the
+  crossing at 79.8 s (the `drop` brings the peak there out of the music's quiet middle). The
+  logo is the whole official one again (figures/lhcb_logo_grains.png: the light „LHCb“ over the
+  dark inverted one and the red track): its lower half is the logo, not a reflection, and the
+  22 Oct crop (figures/lhcb_logo.png, gone) had cut it; the take re-recorded with it.
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 

@@ -14,10 +14,10 @@ on to Vilnius?".
 
 Times (s of the clip; the music is the slide's <Soundtrack>, its `drop` on V_HIT):
   0-57      the take: the module, LHCb at eye level, the pull-out to the LHC and the FCC
-  57.4-64   the map flies away to a point (Geneva) as the whole Earth comes up round it
-  64-92.2   down into Vilnius: the opener's first EARTH_T s backwards, landing on NFTMC; the
+  57.4-62.5 the map flies away into the Earth's lit side as the Earth comes up round it
+  62.5-76.5 down into Vilnius: the opener's first 56 s backwards (4x), landing on NFTMC; the
             picture settles to the deck's dark ground over the last seconds
-  92.2-107  the take's „Ačiū“ collision over Vilnius (its bunches from 92.2, the crossing on
+  76.5-94.5 the take's „Ačiū“ collision over Vilnius (its bunches from 76.5, the crossing on
             V_HIT, Starfire's 2:54.85 downbeat), the word and the flag, held
 """
 import argparse, subprocess, sys
@@ -28,9 +28,9 @@ from scipy.ndimage import maximum_filter, gaussian_filter
 W, H, FPS = 1920, 1080, 50
 T_STILL = (56.95, 57.95)   # the take: the camera stands still over the map
 T_CROSS = 61.2             # the take: the word's collision crosses
-V_HIT = 95.5               # the clip: the crossing, on Starfire's peak (the music's 2:54.85, the slide's tail file 0.35 s ahead of the clip)
+V_HIT = 79.8               # the clip: the crossing, on Starfire's peak (the music's 2:54.85: the Soundtrack's `drop` brings it here)
 SHIFT = V_HIT - T_CROSS    # the take's word, later in the clip
-V_OUT0, V_OUT1 = 57.4, 64.0   # the map away, the Earth up
+V_OUT0, V_OUT1 = 57.4, 62.5   # the map away, the Earth up (owner, on the 28 s dive: "Make this going back to vilnius quicker": 14 s)
 V_LAND = V_HIT - (T_CROSS - T_STILL[1])   # NFTMC reached as the word's bunches come in
 KNEE = 4.0
 
@@ -75,7 +75,7 @@ def smooth(a, b, t):
 # the deck's dark ground: the photo darker, less colour, a cool cast, a vignette
 yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
 # the map's edges feathered, so it shrinks away without a frame round it
-feather = (smooth(0.0, 0.14, np.minimum(xx / W, 1 - xx / W)) * smooth(0.0, 0.14, np.minimum(yy / H, 1 - yy / H)))[..., None]
+feather = (smooth(0.0, 0.06, np.minimum(xx / W, 1 - xx / W)) * smooth(0.0, 0.06, np.minimum(yy / H, 1 - yy / H)))[..., None]   # narrow: the logo near the top stays whole
 vign = (1 - 0.55 * np.clip((np.hypot((xx - W / 2) / (W / 2), (yy - H / 2) / (H / 2)) - 0.45) / 0.9, 0, 1) ** 1.6)[..., None]
 def grade(img, k):
     if k <= 0: return img
@@ -95,9 +95,9 @@ for f in reader(x.take, *T_STILL):
     r = f.astype(np.float32) - plate
     floor = r if floor is None else np.maximum(floor, r)
 floor = maximum_filter(floor, size=(3, 3, 1)) * 1.5
-# … except where the word's two bunches already flicker in that second (the frame's middle): a
-# floor there wiped them, two black holes in the glow over the campus
-floor[420:760, 760:1180] = np.minimum(floor[420:760, 760:1180], 12.0)
+# … except over the word, the flag and the bunches (the frame's middle): they already flicker
+# there in that second, and a floor wiped them (two black holes in the glow; specks in the word)
+floor[420:830, 690:1240] = np.minimum(floor[420:830, 690:1240], 12.0)
 def spread(t0, t1):
     lo = hi = None
     for f in reader(x.take, t0, t1):
@@ -111,7 +111,9 @@ keep = (1 - gaussian_filter(mask.astype(np.float32), 2.0))[..., None]
 
 def layer_of(f, t=None):
     L = np.clip(f - plate - floor - KNEE, 0, None) * keep
-    return L
+    # the 4K grains are finer: the campus shows between them, and the word reads as chalk; each
+    # pixel at least its close neighbourhood's light, so the letters and stripes read solid
+    return np.maximum(L, gaussian_filter(L, sigma=(1.3, 1.3, 0)))
 
 
 def zoomed(img, s, cx, cy):
@@ -164,7 +166,7 @@ def compose(V, take_frame):
         return mp * (1 - fade) + ea * fade
     if V < V_LAND:
         img = dive.at(x.dive_span - dive_t(V))
-        return grade(img, smooth(V_LAND - 5.0, V_LAND, V))
+        return grade(img, smooth(V_LAND - 3.0, V_LAND, V))
     # landed: NFTMC, dark, and the take's word over it
     base = grade(nftmc, 1.0)
     t = V - SHIFT
