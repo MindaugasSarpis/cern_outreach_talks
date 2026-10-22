@@ -109,8 +109,8 @@ purpose).
   with nothing skipped ("pptx: skipped, no pptx"; plates one warning, the
   fingerprint false positive). Live: the v0.8.3 pin and the cover's
   `<PptxButton />`, which shows nothing until `videos/pptx.json` exists. No
-  PPTX yet: `talk pptx` waits for Tools' clip-embed fix, and whether the
-  studio copy is a PPTX is still open with the owner. No per-slide
+  PPTX: the owner said "no pptx" (Decisions), so the studio runs the live
+  URL with the venue zip as the fallback. No per-slide
   `talk record` MP4s exist, only the plates. Main is Innoday's; this talk
   pushes nothing until the Scheduler says.
 - 2026-10-22 (afternoon): **the second round on the branch, then
@@ -429,6 +429,10 @@ purpose).
 
 ## Decisions
 
+- 2026-10-22 — No PPTX (the owner: "no pptx"). The studio runs the live URL,
+  the venue zip as the fallback; `talk pptx` is not run and the pin stays
+  v0.8.3. The cover's `<PptxButton />` stays: it shows nothing without
+  `videos/pptx.json`.
 - 2026-10-22 — The broadcast safe box (x 98–882, y 55–408 of the 980 canvas,
   37 px type floor; `talk safe` for a talk marked `broadcast`): the text
   area's edge `--kk-x` 72 → 104 px and floor `--kk-floor` 84 → 150 px, the
