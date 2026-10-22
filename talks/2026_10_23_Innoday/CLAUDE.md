@@ -400,17 +400,20 @@ v0.8.1 since 20 Oct and builds the zip local-first itself).
   complex drawn live. Toolkit: a cut clip should announce cover too (told the Scheduler).
 - **The bookend: „…ir atgal“ (22 Oct, night).** The owner, on the Scheduler's proposal (the
   title promises „…ir atgal“, the opener flies out from NFTMC, the close ended on the LHC
-  ring): "Go ahead and do it". Slide 30 plays close_home.mp4 (hero/bookend.py on the same
-  take): the ring, then from 57.4 s a dissolve into the opener's first frame (NFTMC from
-  above, graded to the black ground, the Google Earth logo kept), and the take's „Ačiū“
-  collision lifted off the map and laid over Vilnius, its crossing at 61.2 s. Starfire's peak,
-  measured in the file: the downbeat at 2:54.85 after the drum fill (the biggest onset of the
-  piece, +7 dB; the track's loudest stretch, 3:53–4:41, has no single hit). The `drop` on the
-  slide's <Soundtrack>: the music falls to 6 % from 58.4 s, a third file
-  (audio/starfire_close_peak.m4a, the track from 2:52.85) starts quiet and opens on the
-  downbeat, the clip's rate nudged to stay on it (headless: 2 ms off). The word gathers over
-  the next ~5 s, in the music's surge. close.mp4 (the 4744b0d close) stays on the release for
-  that deploy. The flight home (Earth, the dive to Vilnius) is for after the talk.
+  ring): "Go ahead and do it"; on the first cut (a fade from the ring to NFTMC): "shouldn't
+  there be world zooming out and so on to Vilnius? Also, for the video could we get better
+  resolved sharper pointcloud?". Slide 30 plays close_home.mp4 (~110 s; the manifest's notes,
+  hero/bookend.py): the take re-recorded at 3840×2160 and taken down to 1080p; at 57.4 s the map
+  flies away into the Earth, then the opener's first 56 s backwards down into Vilnius, landing
+  on NFTMC from above (~92 s); the take's „Ačiū“ collision lifted off the map crosses over
+  Vilnius at 95.5 s. Starfire's peak, measured in the file: the downbeat at 2:54.85 after the
+  drum fill (the piece's biggest onset, +7 dB); the music's quiet middle plays under the flight
+  and its drum build on the approach. The `drop` on the slide's <Soundtrack>: the music falls
+  to 6 % from 92.7 s, a third file (audio/starfire_close_peak.m4a, the track from 2:52.85)
+  starts quiet and opens on the downbeat, the clip's rate nudged to stay on it. close.mp4 (the
+  4744b0d close) stays on the release for that deploy. Limits: the opener's Earth is a CG limb
+  with no readable coastline, so the map goes down on its lit side, not on Geneva; the dive
+  passes the opener's Google Earth to CG change (~29 s of it).
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 

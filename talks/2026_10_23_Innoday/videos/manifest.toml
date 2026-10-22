@@ -160,18 +160,16 @@ profile   = "remux"
 used_in   = ["deck"]
 generated = true
 notes     = """\
-Slide 30, the close, recorded (owner, 22 Oct: "Maybe worth prerecording a video? So it \
-doesn't lag?" - the live close lagged on a Mac): slidev-stage-record's take of the live \
-slide at 22efcef (LisTakeover: the module's grains land in the SciFi, the eye-level \
-LHCb, the glow, the pull-out to the LHC and the FCC, „Ačiū" out of a collision) at \
-1080p50 with a 16 s hold, silent: the music is <Soundtrack> on the slide. Then the \
-bookend (owner, 22 Oct, "Go ahead and do it"; hero/bookend.py): from 57.4 s the ring \
-dissolves into the opener's first frame (NFTMC from above, nftmc_zoom_web.mp4 at 0 s, \
-graded to the black ground, its Google Earth logo kept) and the take's „Ačiū" collision, \
-lifted off the map (each frame minus the still ring's least, the map's own flicker and \
-the LHC's beams masked), is added over it: the crossing at 61.2 s, on Starfire's peak \
-(the Soundtrack's `drop`). x264 slow, CRF 17, under 10 Mbit/s. Placed in \
-public/videos/ and published with --only; no raw."""
+Slide 30, the close with the flight home (owner, 22 Oct: "Go ahead and do it"; "shouldn't \
+there be world zooming out and so on to Vilnius?"; "could we get better resolved sharper \
+pointcloud?"): slidev-stage-record's take of the live slide at 22efcef (LisTakeover) at \
+3840x2160, 50 fps, 16 s hold, the drawing buffer let up to 3840 for the take, taken down \
+to 1920x1080 (finer grains); then hero/bookend.py: the map flies away into the Earth \
+(nftmc_zoom_web.mp4 at 47 s), the opener's first 56 s backwards down to NFTMC (landing \
+~92 s, darkened to the black ground), and the take's „Ačiū" collision lifted off the map \
+over Vilnius, its crossing at 95.5 s on Starfire's 2:54.85 (the Soundtrack's `drop`). \
+x264 slow, CRF 17, under 10 Mbit/s, silent. Placed in public/videos/ and published with \
+--only; no raw."""
 
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 
