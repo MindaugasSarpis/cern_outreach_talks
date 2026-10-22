@@ -283,3 +283,22 @@ html[data-stage] .age { bottom: auto; top: var(--kk-top); }
 html[data-stage] .lhc-cap .lhc-name { color: #fff; }
 /* slide 18: „Atvirieji LHCb duomenys“ on one line */
 html[data-stage] .readout .caption { white-space: nowrap; }
+
+/* ---- 22 Oct (the owner: the histograms were "totally without context"): names on slides 10–13, as .heap labels
+   projected from each slide's pose. `l`/`r`: anchored at the left or right edge instead of the middle;
+   `axis`: the axis word („masė →“) in light blue, under the axis, its arrow ending where the axis ends */
+html[data-stage] .heap.l { translate: 0 0; text-align: left; }
+html[data-stage] .heap.r { translate: -100% 0; text-align: right; }
+html[data-stage] .heap.axis .n { color: var(--kk-blue); }   /* the kickers' light blue, not the pale one: on camera the pale one read as white, and the axis word as one phrase with the count beside it */
+/* a label that comes at its click, after --step-delay (the map's .city.step) */
+html[data-stage] .heap.step { animation: none; transition: opacity 0.8s var(--stage-ease) var(--step-delay, 0.8s); }
+html[data-stage] .heap.step.slidev-vclick-hidden { opacity: 0 !important; transition-delay: 0s; }
+/* a label that goes at a click (slide 10's „140 taškų“, v-click.hide): the rise-in's end state would beat Slidev's hidden class */
+html[data-stage] .heap:not(.step) { transition: opacity 0.4s ease; }
+html[data-stage] .heap.slidev-vclick-hidden { opacity: 0 !important; }
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .heap.step { transition: none !important; } }
+/* 22 Oct (the label round): slide 9's glow readout smaller, so „sekundę“ ends left of the muon stations' wireframe
+   (at 104 px with a 0.4 em unit it ran into their top on the dolly back); the unit stays on the 38 px floor */
+html[data-stage] .readout.glow .big { font-size: 84px; }
+html[data-stage] .readout.glow { top: calc(var(--kk-top) + 18px); }   /* the number's glyph box (1,29 em) stands out of its 0,92 em line by 16 px: its top on the safe box's y 55 (talk safe) */
+html[data-stage] .readout.glow .unit { font-size: 38px; }

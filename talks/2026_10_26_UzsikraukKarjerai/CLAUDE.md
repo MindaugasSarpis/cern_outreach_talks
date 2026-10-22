@@ -429,6 +429,18 @@ purpose).
 
 ## Decisions
 
+- 2026-10-22 — The pre-filming round (notes/review.md). The owner, on the review:
+  "There might have been this rule about no captions, now the histogram slides
+  are totally without context", then "Focus on story telling take or add
+  anything you need having in mind the format and time contraints and
+  everything". So: the histogram slides 10–13 get naming labels (the axis word
+  „masė →“, the counts, „LHCb duomenys“ against the computer's dots, the peaks
+  counted at their click, the 5σ rule as „< 1 iš 3,5 mln.“ on 13): the
+  pictures-and-numbers rule stands, a name of a word or two for a thing shown
+  is within it. Slide 20 (the tape robot: the slots moiré on camera; 20 s)
+  dropped; cut for time: slide 8 moves on 3 s after his line (not at the reel's
+  end), the Brown preprint (21→20), the first-public-files aside (22→21), one
+  sentence on 10. The deck is 22 slides. The labels (subagent, checked by shots and `talk safe`) reframe 10 and 12 so the words fit under the axes, and slow the second sun (21) to a 450 s turn, drawn back to dist 45, so its names stay in the safe box. Undo: 7713925 and the label commit after it.
 - 2026-10-22 — No PPTX (the owner: "no pptx"). The studio runs the live URL,
   the venue zip as the fallback; `talk pptx` is not run and the pin stays
   v0.8.3. The cover's `<PptxButton />` stays: it shows nothing without
