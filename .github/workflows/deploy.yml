@@ -198,7 +198,8 @@ jobs:
         run: exit 1
 
       # scripts/site_index.py: a talk's line links its site; a talk whose videos/pptx.json is
-      # committed gets a PPTX download on the right of its line (the release asset)
+      # committed gets a PPTX download on the right of its line (the release asset), and one whose
+      # videos/venue.json is, a ZIP (the offline venue zip on its release)
       - name: Write index.html, one bold line per talk (talk-labels.toml), and its PPTX
         run: |
           python3 scripts/site_index.py site

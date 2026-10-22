@@ -128,3 +128,23 @@ def test_sizes_read_as_mb_then_gb():
 def test_the_deploy_workflow_runs_the_script():
     wf = (ROOT / ".github" / "workflows" / "deploy.yml").read_text()
     assert "python3 scripts/site_index.py site" in wf and "python3 - <<" not in wf
+
+
+def venue_json(root: Path, t: str, **over) -> None:
+    data = {"url": f"https://github.com/o/r/releases/download/videos-x/{t}-venue.zip", "bytes": 700 * 1024 * 1024, **over}
+    (root / "talks" / t / "videos").mkdir(parents=True, exist_ok=True)
+    (root / "talks" / t / "videos" / "venue.json").write_text(json.dumps(data))
+
+
+def test_a_talk_with_a_venue_zip_gets_the_zip_download(tmp_path):
+    root = tree(tmp_path)
+    venue_json(root, "2026_10_23_Innoday")
+    run([SCRIPT, "site"], root)
+    page = (root / "site" / "index.html").read_text()
+    url = "https://github.com/o/r/releases/download/videos-x/2026_10_23_Innoday-venue.zip"
+    assert f'<a class=zip href="{url}" download>ZIP · 700 MB</a></li>' in page
+    assert page.count("class=zip") == 1 and "class=pptx" not in page
+    venue_json(root, "2026_10_23_Innoday", url="https://example.com/x.zip")
+    r = run([SCRIPT, "site"], root)
+    assert "class=zip" not in (root / "site" / "index.html").read_text()
+    assert "videos/venue.json url is not a GitHub release download" in r.stdout
