@@ -36,7 +36,7 @@ html[data-stage] .kicker { color: var(--in-accent); }
 
 /* --- stats: a row of big numbers with a line under each, low across the slide */
 html[data-stage] .stats {
-  position: absolute; left: 56px; right: 56px; bottom: 74px;
+  position: absolute; left: 56px; right: 56px; bottom: 112px;   /* 74 px until 21 Oct: clear of the room's heads */
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
 }
 html[data-stage] .stats.three { grid-template-columns: repeat(3, 1fr); }
@@ -273,8 +273,9 @@ html[data-stage] .hero .credit { background: rgba(4, 6, 16, 0.6); padding: 2px 7
 /* the tunnel slide: one footer baseline, cards that hide the tunnel behind them */
 html[data-stage] .hero.frame .credit { bottom: 22px; }
 html[data-stage] .hero.frame ~ .stats .stat { background: rgba(4, 6, 16, 0.8); }
-/* the cover's title waits for the pentaquark to assemble (kit: html[data-space-assembled]);
-   on a slow GPU that can take long or never come, so it shows after 4 s regardless */
+/* the cover's title waits for whatever assembles at the hero (kit: html[data-space-assembled];
+   since 21 Oct nothing does there: the CMS loop has no assembly, so it shows at once);
+   on a slow GPU an assembly can take long or never come, so it shows after 4 s regardless */
 html[data-stage]:not([data-space-assembled]) .slidev-layout.cover h1,
 html[data-stage]:not([data-space-assembled]) .slidev-layout.cover h2,
 html[data-stage]:not([data-space-assembled]) .slidev-layout.cover .mt-md { animation: in-cover-late 0.9s var(--stage-ease) 4s forwards !important; }
@@ -297,7 +298,7 @@ html[data-stage] .payoff .big {
   white-space: nowrap; font-variant-numeric: tabular-nums;
   color: #fff; filter: drop-shadow(0 2px 18px rgba(0, 0, 0, 0.6));
 }
-html[data-stage] .payoff .big .unit { font-size: 0.34em; letter-spacing: -0.01em; margin-left: 0.18em; }
+html[data-stage] .payoff .big .unit { font-size: 0.34em; letter-spacing: -0.01em; margin-left: 0.18em; color: var(--in-accent); }
 html[data-stage] .payoff h1 { font-size: 44px !important; line-height: 1.08 !important; margin: 0 0 14px !important; max-width: 20ch; text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7); animation: none !important; }
 html[data-stage] .payoff p:not(.kicker) { font-size: 24px; line-height: 1.38; margin: 0; max-width: 34ch; opacity: 0.95; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7); }
 
@@ -323,13 +324,25 @@ html[data-stage] .kicker { font-size: 18px; }
 html[data-stage] .slidev-layout.section h1:not(:only-child) { font-size: 18px !important; }
 /* the cover's subtitle and byline readable from the back of the room */
 html[data-stage] .slidev-layout.cover h2 { font-size: 20px !important; }
-html[data-stage] .slidev-layout.cover .mt-md { font-size: 16px !important; }
+html[data-stage] .slidev-layout.cover .mt-md { font-size: 18px !important; }
+html[data-stage] .slidev-layout.cover h1:first-of-type { font-size: 18px !important; }   /* „Innoday 2026“: the type floor */
 /* a kicker on a busy photograph gets a ground of its own */
 html[data-stage] .hero.deep .kicker { background: rgba(4, 6, 16, 0.55); padding: 2px 6px; border-radius: 3px; display: inline-block; }
 /* the 1989 page: the credit stays on the dark side */
 html[data-stage] .hero.page .credit { max-width: 36%; }
 /* a bright, white photograph graded down so the text side reads */
 html[data-stage] .hero.dim > img { filter: brightness(0.78) contrast(1.06) saturate(1.04); }
+/* review, 21 Oct: the near-white photos (the 1989 page, the NeXT, MedAustron, Stumpe, the PET
+   room) glared on a projector; the page darker still; the same in print, where html[data-stage]
+   is not set */
+html[data-stage] .hero.dim.page > img { filter: brightness(0.6) contrast(1.06); }
+html[data-stage] .hero.dim.darker > img, html.print .hero.dim.darker > img, .print-slide-container .hero.dim.darker > img { filter: brightness(0.62) contrast(1.06); }   /* White Rabbit: a white device on a white table */
+/* the collision's captions („8 TeV“, „290 dalelių“; components/lhc-opening) clear of the room's heads, as Part II's */
+html[data-stage] .lhc-cap { bottom: 96px !important; }
+/* the cover's subtitle and byline over the looping collision's tracks */
+html[data-stage] .slidev-layout.cover h2, html[data-stage] .slidev-layout.cover .mt-md { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 14px rgba(0, 0, 0, 0.85) !important; }
+html.print .hero.dim > img, .print-slide-container .hero.dim > img { filter: brightness(0.78) contrast(1.06) saturate(1.04); }
+html.print .hero.dim.page > img, .print-slide-container .hero.dim.page > img { filter: brightness(0.6) contrast(1.06); }
 
 /* a world caption at the top left, where a wide form fills the lower frame (the funnel) */
 html[data-stage] .world-caption.top { top: 52px !important; bottom: auto !important; }
@@ -337,6 +350,15 @@ html[data-stage] .world-caption.top { top: 52px !important; bottom: auto !import
 /* a step smaller: the funnel slide's line stays clear of the form */
 html[data-stage] .world-caption.narrow.small h1 { font-size: 34px !important; line-height: 1.12 !important; }
 html[data-stage] .world-caption.narrow.small { max-width: 32%; }
+
+/* the funnel's numbers over busy ground (slide 5's sits on the CMB map's speckle and the
+   wall's rings): a soft dark pool behind the line, no edge, and a close shadow on the glyphs */
+html[data-stage] .world-caption.scrim { isolation: isolate; }
+html[data-stage] .world-caption.scrim::before {
+  content: ''; position: absolute; z-index: -1; left: -70px; right: -90px; top: -60px; bottom: -50px; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0, 1, 3, 0.86), rgba(0, 1, 3, 0.62) 55%, rgba(0, 1, 3, 0) 100%);
+}
+html[data-stage] .world-caption.scrim h1 { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 18px rgba(0, 0, 0, 0.85); }
 
 /* --- Part II: the problem is the headline, the year a small kicker (the
    years run out of order, by ring part, and read as a broken timeline when
@@ -357,9 +379,9 @@ html[data-stage] .src.credits { font-size: 10px; opacity: 0.55; max-width: 92%; 
 /* an invention's name, the one caption a Part II photo carries (owner, 2026-10-10:
    "inventions in innoday can have a short caption"): bottom left, on its own ground */
 html[data-stage] .hero .invention {
-  position: absolute; z-index: 2; left: 56px; bottom: 52px; margin: 0; opacity: 1;
+  position: absolute; z-index: 2; left: 56px; bottom: 96px; margin: 0; opacity: 1;   /* 52 px until 21 Oct: heads in a flat room cover the lowest tenth */
   font-size: 30px; font-weight: 600; line-height: 1.15; letter-spacing: 0; color: #fff;
-  background: rgba(4, 6, 16, 0.62); padding: 6px 14px; border-radius: 4px;
+  background: rgba(4, 6, 16, 0.78); padding: 6px 14px; border-radius: 4px;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -381,3 +403,30 @@ html[data-stage] .credits-page .src.credits-list {
 /* „Ačiū“ over LHCb (owner, 19 Oct: "LHCb collision within lhcb"): the word below the
    detector, clear of the tracks */
 html[data-stage] .slidev-layout.statement.thanks-lhcb h1 { position: absolute; left: 0; right: 0; bottom: 8%; margin: 0; text-align: center; }
+
+/* the cover over its CMS loop (owner, 21 Oct: "the title stays legible on a darkened
+   centre"): the burst fills the frame round the text; a soft dark ground under the title
+   block (deeper than the kit's 0.55), and a shadow on the letters for the tracks that
+   still cross it */
+html[data-stage] .slidev-layout.cover::after {
+  background: radial-gradient(50% 44% at 36% 50%, rgba(0, 1, 3, 0.8) 0%, rgba(0, 1, 3, 0.66) 45%, rgba(0, 1, 3, 0.25) 78%, rgba(0, 1, 3, 0) 100%);
+}
+html[data-stage] .slidev-layout.cover h1, html[data-stage] .slidev-layout.cover h2,
+html[data-stage] .slidev-layout.cover .mt-md { text-shadow: 0 1px 3px rgba(0, 1, 3, 0.9), 0 0 18px rgba(0, 1, 3, 0.85); }
+
+/* --- slide 11: the numbers beside the globe of institutes (<CollabGlobe>), on the dark left,
+   in after the photo has gone (so never over its LHCb banner) */
+html[data-stage] .globe-stats { position: absolute; left: 64px; top: 50%; transform: translateY(-50%); }
+html[data-stage] .globe-stats .gs {
+  display: flex; align-items: baseline; margin: 0 0 20px; white-space: nowrap;
+  animation: stage-rise 0.8s var(--stage-ease) both;
+}
+html[data-stage] .globe-stats .gs:nth-child(2) { animation-delay: 0.15s; }
+html[data-stage] .globe-stats .gs:nth-child(3) { animation-delay: 0.3s; }
+html[data-stage] .globe-stats .gs:nth-child(4) { animation-delay: 0.45s; }
+html[data-stage] .globe-stats .n {
+  font-size: 62px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums; color: var(--in-blue-hi); text-shadow: 0 0 24px rgba(0, 0, 0, 0.6);
+}
+html[data-stage] .globe-stats .u { font-size: 24px; font-weight: 500; margin-left: 0.4em; color: var(--in-accent); text-shadow: 0 0 16px rgba(0, 0, 0, 0.7); }
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .globe-stats .gs { animation: none !important; } }

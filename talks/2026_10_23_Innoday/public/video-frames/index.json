@@ -93,17 +93,16 @@
         320,
         180
       ],
-      "cols": 3,
-      "count": 3,
+      "cols": 5,
+      "count": 5,
       "interval": 4.0,
       "size": [
         1920,
         1080
       ],
-      "duration": 10.0,
+      "duration": 20.0,
       "poster": "lis_flag.mp4.poster.jpg",
-      "lit": 9.96,
-      "poster_at": "0:09.96"
+      "lit": 0.0
     },
     "nftmc_zoom_web.mp4": {
       "file": "nftmc_zoom_web.mp4.jpg",

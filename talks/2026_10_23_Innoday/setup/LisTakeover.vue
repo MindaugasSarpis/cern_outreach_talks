@@ -5,6 +5,7 @@ import { Vector3 } from 'three'
 import { sampleFrame } from './takeover.js'
 import { placeInDepth, loadDepth, makeLisGrains, scaleLaw } from './lisGrains.js'
 import { setGrains } from './detector.js'
+import { zoom } from './emblems.js'
 import { places } from './afterCover.js'
 import { bus } from '../components/lhc-opening/bus.js'
 import META from './data/lis.json'
@@ -35,18 +36,19 @@ const props = defineProps({
   depth: { type: String, default: 'figures/lis_last.depth.png' },
   anchor: { type: Array, default: () => [9.54, -483.06, 0.96] },   // the flag's place: the lower cold box, LHCb (0.8, -2.55, 7.95) m at 1,2 units a metre (true proportions)
   d0: { type: Number, default: 2.4 },      // the camera's start distance from the flag, stage units (path[0])
-  sEnd: { type: Number, default: 2.5 },    // stage units a metre at the path's last key (the detector's own: 1.2 across)
-  sFlag: { type: Number, default: 20 },    // … and the flag's, so it stays a mark (~0.9 units: about 40 px)
+  sEnd: { type: Number, default: 1.2 },    // stage units a metre at the end of the scale law: the detector's own (owner, 21 Oct: the flag on its mat "moves to a position where scifi is. and reduces in size accordingly (because it's far away)")
   grains: { type: Number, default: 320000 },   // at tier 0; fewer on a lower tier (owner, 20 Oct: "more solid")
   gain: { type: Number, default: 0.92 },   // the grains' light: the stripes at the still's colours
   hold: { type: Number, default: 400 },    // ms of still before the fade
   fade: { type: Number, default: 1400 },   // ms
   collision: { type: String, default: 'thanks' },
   detAt: { type: Number, default: 3.2 },   // the camera this far from the flag (units): the detector lights up
-  colAt: { type: Number, default: 16.0 },  // … LHCb's collision starts in it (12,6 s on the path; the bunches cross 5 s later, `approach` 2.5 at the slide's rate 0.5: as the camera lands at eye level, on the music's arrival, 17-19 s)
+  colAt: { type: Number, default: 15.6 },  // … LHCb's collision starts in it (12,6 s on the path, hero/close_path.py --probe; the bunches cross 5 s later, `approach` 2.5 at the slide's rate 0.5: as the camera lands at eye level, on the music's arrival, 17-19 s)
   freeze: { type: Array, default: () => [[0, 0.5], [0.25, 0.15], [0.8, 0.15], [1.6, 0.6]] },   // the world's rate from the crossing (17,5 s): slow while the flash lights, then the debris bursts out (~19 s, still in the music's peak; at 0.08 for 1,8 s the burst came at 21 s)
-  embAt: { type: Number, default: 26 },    // … the emblems gather, on the dolly back (38,5 s: whole by the music's second climax, 42-44 s)
-  emblems: { type: Array, default: () => ['lhcbLogo', 'ltFlag'] },
+  embAt: { type: Number, default: 34 },    // … the emblems gather, on the pull-back (38,5 s: whole by the music's second climax, 42-44 s; the camera is never this far before)
+  dEnd: { type: Number, default: 19 },     // the camera's distance from the flag where the picture reaches true scale (~15 s, coming down to eye level; the walk never comes nearer than 19,6)
+  wordTop: { type: String, default: '42.5%' },   // the word's middle once the world has run: inside the FCC's ring (the still and print keep it low)
+  emblems: { type: Array, default: () => ['lhcbLogo'] },
   wordAfter: { type: Number, default: 0.6 },   // s after the camera has stopped (48 s): the word
   wordBy: { type: Number, default: 62 },   // s: the word shows by then whatever the world does
 })
@@ -59,6 +61,7 @@ const page = () => $page?.value ?? $page
 const still = ref(true)
 const fading = ref(false)
 const word = ref(false)
+const high = ref(false)   // the word in the ring (the world or its plate ran to the end), not low over the still
 
 // the frame and its depth, fetched once, by the live slide only, once the cover is behind
 let loading = null
@@ -91,6 +94,41 @@ async function waitStage(id) {
   return null
 }
 const later = (ms, fn) => timers.push(setTimeout(fn, ms))
+// v0.8.2's plate layer (html[data-stage-layer="plate"], set with the `slidev-stage:fallback`
+// event): no world, but this slide's recorded plate plays under it, its first seconds this
+// still turning to grains. The still fades as it does over the world, and the word comes when
+// the plate's camera stops (the path's last key + wordAfter, on the wall clock: cameraRate 1).
+// Under the `living` and `still` layers (no plate) the still stays, with the word. Older
+// stages never set the attribute.
+const plated = () => document.documentElement.dataset.stageLayer === 'plate'
+// … and only once the plate shows (html[data-stage-plate]: loading | playing | paused | held |
+// none): a still faded over a plate still loading is a black gap. Resolves 'playing', 'held'
+// (a back-step or a jump: the plate's settled last frame), 'none' (the layer is not, or no
+// longer, a plate: e.g. `living` when the plate cannot be fetched) or null (left). Looked at
+// two frames after the arrival, so the previous slide's plate state is not read as this one's.
+function untilPlate(id) {
+  return new Promise((resolve) => {
+    const html = document.documentElement
+    let mo = null
+    const done = (v) => { mo?.disconnect(); mo = null; resolve(v) }
+    const check = () => {
+      if (id !== run) return done(null)
+      if (html.dataset.stageLayer !== 'plate') return done('none')
+      const st = html.dataset.stagePlate
+      if (st === 'playing' || st === 'held') done(st)
+    }
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (id !== run) return done(null)
+      mo = new MutationObserver(check)
+      mo.observe(html, { attributes: true, attributeFilter: ['data-stage-layer', 'data-stage-plate'] })
+      check()
+    }))
+  })
+}
+function pathEnd() {
+  const sp = $frontmatter?.value?.space ?? $frontmatter?.space
+  return Math.max(0, ...(sp?.path || []).map(([t]) => Number(t) || 0))
+}
 const clear = () => { timers.forEach(clearTimeout); timers = []; clearInterval(watcher); watcher = 0; offCross?.(); offCross = null }
 
 const A = new Vector3(...props.anchor)
@@ -107,7 +145,7 @@ function farthest() {
   }
   return far || 22
 }
-const law = scaleLaw({ s0, d0: props.d0, sEnd: props.sEnd, dEnd: farthest() })
+const law = scaleLaw({ s0, d0: props.d0, sEnd: props.sEnd, dEnd: props.dEnd || farthest() })
 const emblems = (k) => props.emblems.forEach((n) => setGrains(n, k))
 
 // the grains, made once per tier (a rebuilt world comes back a tier lower): fewer on a
@@ -134,11 +172,20 @@ function grains(s, got) {
     s.h.scene.add(pts)
   }
   // the form follows the camera every frame: its scale from the camera's distance
+  // (owner, 21 Oct: the engraved flag and its mat go "to a position where scifi is. and reduces
+  // in size accordingly"): the whole picture, flag and mat alike, in the module's own
+  // orientation, shrinks to the detector's true scale and stays there as a tiny mark; in the
+  // pull-out to the accelerator complex it shrinks toward Point 8 with the detector (`zoom`)
+  const hu = holeOf(s.h.scene)
   pts.userData.scale = (cam, un) => {
-    const sc = law(cam.position.distanceTo(A))
+    const s1 = law(cam.position.distanceTo(A)), sc = s1 * zoom.k
+    // the detector's clearing round the flag closes as the picture comes down to true scale
+    if (hu) hu.value.w = HOLE * Math.min(1, Math.max(0, (s1 - props.sEnd) / (s0 - props.sEnd)))
     un.uScale.value = sc
-    un.uScaleFlag.value = Math.max(sc, props.sFlag)
-    un.uRest.value = Math.min(1, Math.max(0, (sc - props.sFlag * 0.5) / (props.sFlag * 1.2)))
+    un.uScaleFlag.value = sc
+    un.uRest.value = 1
+    un.uAnchor.value.copy(A)
+    if (zoom.k < 1) un.uAnchor.value.sub(zoom.at).multiplyScalar(zoom.k).add(zoom.at)
   }
   pts.material.uniforms.uAnchor.value.copy(A)
   return pts
@@ -154,7 +201,7 @@ const stopCollision = () => { bus.set(props.collision, 0); bus.emit('stop', { na
 async function takeOver() {
   const id = ++run
   clear()
-  still.value = true; fading.value = false; word.value = false
+  still.value = true; fading.value = false; word.value = false; high.value = false
   setGrains('det', 0); emblems(0)
   const hole = s0Hole()
   if (hole) hole.value.w = HOLE
@@ -163,11 +210,23 @@ async function takeOver() {
   // behind the still: their buffers upload and programs compile now, not mid pull-back
   dispatchEvent(new Event('innoday:prewarm'))
   later(props.wordBy * 1000, () => { if (id === run) word.value = true })
+  if (plated()) {
+    const st = await untilPlate(id)
+    if (id !== run) return
+    if (st === 'none') { word.value = true; return }   // no plate after all: the still and the word
+    high.value = true
+    if (st === 'held') { still.value = false; word.value = true; return }   // the close as it ended
+    later(props.hold, () => { if (id === run) fading.value = true })
+    later(props.hold + props.fade, () => { if (id === run) still.value = false })
+    later((pathEnd() + props.wordAfter) * 1000, () => { if (id === run) word.value = true })
+    return
+  }
   const s = await waitStage(id)
   const got = s ? await load() : null
   if (id !== run || !live.value) return
   // no world, or nothing to show: the still stays, with the word over it
   if (!s || !got) { word.value = true; return }
+  high.value = true
   const pts = grains(s, got)
   const u = pts.material.uniforms
   u.uReveal.value = 0; u.uFade.value = 1
@@ -199,22 +258,8 @@ async function takeOver() {
     if (col && stopped < 0 && !s.api.flying) stopped = performance.now()
     if (col && !emb && (d > props.embAt || stopped >= 0)) {
       emb = true; emblems(1)
-      // the emblems take over: the collision's glow fades (it washed the logo out) and the
-      // small flag at the module goes (two flags read as a duplicate)
+      // the logo takes over: the collision's glow fades (it washed the logo out)
       bus.set(props.collision, 0)
-      const t0 = performance.now(), u = pts.material.uniforms
-      // the detector's clearing round the mark closes with it
-      const hole = holeOf(s.h.scene)
-      const r0 = hole?.value.w ?? 0
-      const out = (now) => {
-        if (id !== run) return
-        const k = Math.min(1, (now - t0) / 1500)
-        u.uFade.value = 1 - k
-        if (hole) hole.value.w = r0 * (1 - k)
-        if (k < 1) requestAnimationFrame(out)
-        else { pts.visible = false; pts.userData.gone = true }   // faded: no longer drawn at all
-      }
-      requestAnimationFrame(out)
     }
     if (emb && stopped >= 0 && performance.now() - stopped > props.wordAfter * 1000) { word.value = true; clearInterval(watcher); watcher = 0 }
   }, 100)
@@ -250,6 +295,8 @@ onSlideLeave(() => {
   if (nav.currentSlideNo?.value === page() + 1) endState(stage(), p)
   else { stopCollision(); emblems(0) }
 })
+// the plate layer can come after the slide's arrival (the stage decides its fallback late)
+const onFallback = () => { if (live.value && plated() && nav.currentSlideNo?.value === page()) takeOver() }
 const onRebuilt = () => {
   if (!live.value) return
   const n = nav.currentSlideNo?.value
@@ -259,10 +306,11 @@ const onRebuilt = () => {
 }
 onMounted(() => {
   window.addEventListener('slidev-stage:rebuilt', onRebuilt)
+  window.addEventListener('slidev-stage:fallback', onFallback)
   // opened at this slide (a reload, or the deck started here): no slide-enter comes
   if (live.value && nav.currentSlideNo?.value === page()) takeOver()
 })
-onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); run++; clear() })
+onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); window.removeEventListener('slidev-stage:fallback', onFallback); run++; clear() })
 // the grains are drawn here and on the credits page after it, hidden everywhere else
 watch(() => nav.currentSlideNo?.value, (n) => {
   if (!live.value) return
@@ -277,7 +325,7 @@ watch(() => nav.currentSlideNo?.value, (n) => {
     <img v-if="still" class="lis-still" :class="{ fading }" :src="url(src)" :style="{ transitionDuration: fade + 'ms' }"
       alt="Šviesos įvedimo sistema SciFi modulio gale; ant šaltosios dėžės išgraviruota Lietuvos vėliava" />
   </div>
-  <div class="lis-word" :class="{ on: word || !live || nav.isPrintMode?.value }"><slot /></div>
+  <div class="lis-word" :class="{ on: word || !live || nav.isPrintMode?.value, high: high && live && !nav.isPrintMode?.value }" :style="{ '--lis-word-top': wordTop }"><slot /></div>
 </template>
 
 <style>
@@ -289,5 +337,7 @@ html.print .lis-takeover .lis-still { opacity: 1; }
 /* a soft dark ground under the word, so it never sits on the detector's grains */
 .lis-word h1::before { content: ''; position: absolute; z-index: -1; left: 50%; top: 50%; width: 15em; height: 3.6em; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(0, 1, 3, 0.75), rgba(0, 1, 3, 0)); pointer-events: none; }
 .lis-word.on, html.print .lis-word { opacity: 1; }
+/* the world's close ends on the LHC ring from above: the word sits inside it */
+html[data-stage] .slidev-layout.statement.thanks-lhcb .lis-word.high h1 { top: var(--lis-word-top, 45%); bottom: auto; transform: translateY(-50%); }
 @media (prefers-reduced-motion: reduce) { .lis-word { opacity: 1; transition: none; } }
 </style>

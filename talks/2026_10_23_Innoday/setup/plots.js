@@ -1,5 +1,10 @@
 import { Group, Mesh, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColorSpace, AdditiveBlending } from 'three'
 
+// Unused since 21 Oct: slide 12 is a sun of the same plots (setup/sun.js, the
+// owner: "Slide 12 can be more dynamic"), which draws each plot as below. Kept
+// registered so the floating cards come back by putting `plot` objects in the
+// `results` station again.
+//
 // LHCb's result plots on slide 12, the way OpenData draws its plots (its
 // setup/sun.js; owner, 13 Oct: "papers should be more resolved, a really nice
 // way of this was in opendata talk"): a picture of light on black
