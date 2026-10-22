@@ -257,6 +257,8 @@ html[data-stage] .readout .gt { font-size: 0.72em; font-weight: 600; margin-righ
 html[data-stage] .heap.late { animation-delay: 0.2s; }
 /* slides 5 and 7: the shared opening's unit words („km“, „dalelių“) are 22 px in the component; 30 px here for the stream (the numbers are 56 px) */
 html[data-stage] .lhc-cap .lhc-unit, html[data-stage] .lhc-cap .lhc-name { font-size: 38px; }   /* 36 until 22 Oct: the broadcast floor is 37 */
+/* slides 5 and 7: the shared caption (left 56, bottom 44 in the component) on this talk's text area, inside the broadcast safe box (22 Oct) */
+html[data-stage] .lhc-cap { left: var(--kk-x) !important; bottom: var(--kk-floor) !important; }
 
 /* ---- 21 Oct (15 min): slide 9, inside LHCb. „100 m“ counts up as the camera cranes down, and goes before
    the glow's „40 mln. per sekundę“ comes (the dolly back): one readout at a time, in the same place */
