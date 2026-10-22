@@ -168,6 +168,14 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-22 (21:40, deployed): 95ff916 (Pages run 39831269167, green, URL 200, live walk clean).
+Slide 30's close: smooth round NFTMC (no held frames: slow passes blend neighbouring frames, the
+fly-in at the opener's pace), „Ačiū“ from NFTMC's first view, the collision full frame (a 4.5×
+close-up of the 4K take) crossing on Starfire's peak at 69.8 s, the slow zoom-out under the word
+(close_home.mp4, 111.6 s). The venue zip is rebuilt from 73940ec (the same deck; 95ff916 adds only
+venue.json), 907 285 203 bytes; the landing page shows "ZIP · 865 MB". Known leftovers: a few
+faint dashes in the flash for ~1 s, one stray particle dot near the word.
+
 2026-10-22 (21:15, deployed): 4bc29fa (Pages run 39827057266, green, URL 200, live walk clean).
 Slide 30's close now flies in to NFTMC over the dive's last 10 s and, under „Ačiū“, very slowly
 zooms out again (close_home.mp4, 111.6 s). The venue zip is rebuilt from 88f60de (the same deck;
