@@ -107,7 +107,9 @@ purpose).
   200, the live walk passed; `talk ready` passed with nothing skipped, its one
   warning the plates' fingerprint counting this CLAUDE.md, the only change
   after the take). Every label inside the broadcast safe box; plates on the
-  release (the owner, in this
+  release; the venue zip built after the deploy (`pnpm venue`, 227,1 MB, all
+  23 clips venue-safe, RUN_ME.command for the MacBook and RUN_ME.bat, in the
+  talk dir, gitignored) (the owner, in this
   window: "Deploy"; the Scheduler gave the render lock and main for v0.8.2,
   the PptxButton and `talk pptx` in a second round once v0.8.3 is tagged).
   On the branch: origin/main merged (8e44020); pinned v0.8.2 (the lockfile's
