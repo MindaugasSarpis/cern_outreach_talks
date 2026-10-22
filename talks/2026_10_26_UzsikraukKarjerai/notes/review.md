@@ -62,6 +62,15 @@ and 404s (no plate for a clip slide): console noise only.
 - 22: „Jos laukia tavęs.“ cut (a slogan).
 - 1, 3, 6, 10, 19: smaller wording fixes.
 
+## After the owner's word (22 Oct, night)
+
+"There might have been this rule about no captions, now the histogram slides are totally without context", then
+"Focus on story telling take or add anything you need …" and "finish the talk to completion deploy, make zip
+availabe". Applied: findings 1 (slide 20 dropped), 2, 4–8, 11, 12, 13 (the caption on one line; „4000“ left as
+Count groups only from 10 000), 9's pointer (not `vault: 0`), 10 not changed (the names read on every click);
+labels on 10–13; timing cuts 1–5 (not 6). Not changed: 3 (where he stands: Status), 14, 15 (a notes pointer).
+Commits 7713925, 7552141, 61f2d6c, 1697a98, 3489ef5; the venue zip from 3489ef5.
+
 ## Timing cuts (proposed, least loss first)
 
 1. Slide 8: → about 3 s after „Aš – vienas iš jų.“, not at the reel's end (−18 s, no edit).

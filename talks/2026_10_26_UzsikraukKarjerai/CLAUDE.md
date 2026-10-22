@@ -120,7 +120,7 @@ purpose).
   4. where he stands: the numbers sit low left (61–74 % down); stand
      screen-right, or say so and they move up;
   5. his MacBook: run slides 9 and 22 on it; slide 9 is Innoday's close scene
-     (the detector and the collision), which his M2 struggled with on 23 Oct
+     (the detector and the collision), which his M2 struggled with in the Innoday rehearsal (22 Oct)
      („MacPro M2 can't quite handle the final slide“). If it stutters, it can
      be recorded as a clip;
   6. Delfi's sound check: the collision's drone on 9 is 30–60 Hz, synthesised.
