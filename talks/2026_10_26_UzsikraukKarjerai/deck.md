@@ -60,7 +60,7 @@ Picture: the cover, as OpenData's and Innoday's: the name line over the five-qua
 
 Laba diena. Esu Mindaugas Šarpis, dalelių fizikas iš Vilniaus universiteto. Ekrane susidėlioja dalelė, kurios fizikai ieškojo penkiasdešimt vienerius metus. Kaip sužinoti, kad radai tai, ko dar niekas nematė?
 [pauzė 2 s]
-Šiandien pamatysi, kaip ją rado – taškas po taško. Ir spręsti bandysi tu. O pabaigoje pamatysi, kas tokį darbą dirba ir nuo ko jį galima pradėti.
+Šiandien pamatysi, kaip ją rado – taškas po taško. Ir spręsti bandysi tu. O pabaigoje sužinosi, kas tokį darbą dirba ir nuo ko jį galima pradėti.
 Bet pradėkime nuo visos Visatos.
 
 The question lands at about 0:20. „kvarkas“ and „pentakvarkas“ wait for slide 3. „spręsti bandysi tu“: the plain spoken order, and gender-neutral (never „pats“). The last line is said as the camera flies (4,5 s, hidden by the still).
@@ -103,7 +103,7 @@ Message: the funnel is the Universe's 13,8-billion-year history; you and I are m
 Picture: Innoday's funnel (the owner, 18 Oct: "copy the funnel as well"): the web's grains fly into the funnel's shape (4,4 s), the middle of the picture first, as the camera swings round to the side; then the funnel's own grains and the CMB disk resolve over them, and last its mesh comes in underneath. The Universe's history in grains, the NASA/WMAP figure: the Big Bang at the narrow end (left), the Planck disk, the dark ages with no stars, a crowd of hot first galaxies, then ever fewer, cooler ones to the mouth, today. „13,8 mlrd. metų“ once the funnel stands (6,8 s). Wait for it before the first sentence.
 
 [palauk, kol piltuvas susiformuos]
-Šis piltuvas – Visatos istorija. Siaurasis galas – Didysis sprogimas prieš 13,8 milijardo metų, platusis – šiandiena. Šis diskas – seniausia šviesa, kurią galime matyti. Ir tu, ir aš sudaryti iš atomų. Atomo branduolys – protonai ir neutronai, o kiekvienas jų sudarytas iš trijų dar smulkesnių dalelių – kvarkų. Dalelė, kurią matei pradžioje, sudaryta iš penkių kvarkų. Ji vadinama pentakvarku. Tokias daleles pagamina greitintuvo susidūrimai.
+Šis piltuvas – Visatos istorija. Siaurasis galas – Didysis sprogimas prieš 13,8 milijardo metų, platusis – šiandiena. Šis diskas – seniausia šviesa, kurią galime matyti. Ir tu, ir aš sudaryti iš atomų. Atomo branduolys – protonai ir neutronai, o kiekvienas jų sudarytas iš trijų dar smulkesnių dalelių – kvarkų. Dalelė, kurią matei pradžioje, sudaryta iš penkių kvarkų. Ji vadinama pentakvarku. Tokios dalelės gimsta greitintuvo susidūrimuose.
 Tam CERN pastatė didžiausią pasaulyje dalelių greitintuvą.
 
 The ladder goes atoms → nucleus → protons and neutrons → quarks, home.cern's own order. The last line is said as the clip condenses.
@@ -121,13 +121,13 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 <!-- The way in, as OpenData's: CERN from above, the library clip cern_overview_short.mp4 (11 s, no sound): from the Earth down to Geneva, then the LHC ring drawn over the fields with its four experiments named. At the speaker's → after its end, the camera pushes on into the ring (its right side, 0.72, 0.45 of the last frame), where the tunnel follows. -->
 <VideoPlayer src="cern_overview_short.mp4" exit="push" exit-at="0.72,0.45" />
 
-<!-- facts: lhc-geneva-27km-100m-four-experiments -->
+<!-- facts: cern-largest-particle-physics-lab, lhc-geneva-27km-100m-four-experiments -->
 
 <!--
 Message: this is CERN near Geneva; 100 m under its fields runs the 27 km ring.
-Picture: CERN from above (11 s), the LHC ring drawn over the fields, its four experiments named; at → after its end (it holds its last frame; no auto-advance) the camera pushes on into the ring, where the tunnel follows. 16 words take about 8 s, 10 s at a slow delivery, inside the 11 s.
+Picture: CERN from above (11 s), the LHC ring drawn over the fields, its four experiments named; at → after its end (it holds its last frame; no auto-advance) the camera pushes on into the ring, where the tunnel follows. 20 words take about 10 s, 12 s at a slow delivery: about the 11 s; the clip holds its last frame if he runs over.
 
-Tai CERN, laboratorija prie Ženevos. Po šiais laukais, šimto metrų gylyje, – dvidešimt septynių kilometrų greitintuvo žiedas.
+Tai CERN prie Ženevos – didžiausia pasaulyje dalelių fizikos laboratorija. Po šiais laukais, šimto metrų gylyje, – dvidešimt septynių kilometrų greitintuvo žiedas.
 
 The accelerator's acronym is not spoken; „greitintuvas“ carries it and „LHC 27 km“ on the next slide shows it. If asked: four large experiments, LHCb one of them.
 
@@ -171,8 +171,8 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 Message: inside the ring two beams fly in opposite directions in two pipes; 1 232 superconducting magnets bend them round, and when the accelerator runs they are cooled to −271 °C, colder than outer space.
 Picture: CERN's animation of an LHC dipole magnet: the blue cryostat cut open, then the camera turns to face its two beam pipes (10,8 s, silent). Under speech: 33 words take about 17 s, so say the first sentence over the clip and finish over its last frame, then →.
 
-Žiede protonai skrieja dviem vamzdžiais, priešingomis kryptimis. Aplink žiedą juos lenkia tūkstantis du šimtai trisdešimt du superlaidieji magnetai. Kai greitintuvas veikia, jie atšaldomi iki minus dviejų šimtų septyniasdešimt vieno laipsnio – šalčiau nei kosmose.
-Štai vienas susidūrimas.
+Žiede protonai skrieja dviem vamzdžiais, priešingomis kryptimis. Kad protonai suktųsi ratu, juos lenkia tūkstantis du šimtai trisdešimt du superlaidieji magnetai. Kai greitintuvas veikia, jie atšaldomi iki minus dviejų šimtų septyniasdešimt vieno laipsnio – šalčiau nei kosmose.
+Štai kaip jie susiduria.
 
 Tense for 26–27 Oct: the LHC is warm in Long Shutdown 3 (since 29 June 2026), so „kai greitintuvas veikia“; if asked: „Dabar jis atnaujinamas, vėl veiks nuo 2028 metų.“ „superlaidieji magnetai“: the 1 232 are the main dipoles, 15 m long; the LHC has 9 593 magnets in all. −271,3 °C is 1,9 K; outer space is 2,7 K.
 
@@ -209,8 +209,8 @@ Message: one real collision: hundreds of particles fly out, among them new, heav
 Picture: one real collision in the black, OpenData's and Innoday's. Two bunches of protons run in along the beam pipe and cross; 19 collisions flash along the beam, the world nearly stops at the crossing while the camera moves round it, then runs on as the debris flies out to every side: 290 tracks curling in the magnet, the calorimeters' cells lighting all round, two muons running out. „290 dalelių“ as it flies apart („8 TeV“ is hidden for this talk, styles/index.css: a unit grade 9–12 do not know). A low swell, a thump at the crossing, a low drone that fades over four seconds as it flies apart: quiet enough to talk over. Start speaking as the debris flies out (about 6 s in). → for the LHCb clip.
 
 [palauk, kol dalelės išlėks]
-Štai tikras susidūrimas. Šiame vaizde išlekia šimtai dalelių. Tarp jų būna ir naujų, sunkių dalelių, kurios gyvuoja labai trumpai: jos beveik iš karto suskyla, ir detektorius mato tik jų skeveldras.
-Šį susidūrimą 2012 metais užfiksavo CMS – kitas to paties greitintuvo detektorius.
+Štai tikras dviejų protonų paketų susidūrimas. Šiame vaizde išlekia šimtai dalelių. Tarp jų būna ir naujų, sunkių dalelių, kurios gyvuoja labai trumpai: jos beveik iš karto suskyla, ir detektorius mato tik jų skeveldras.
+Šį susidūrimą 2012 metais užfiksavo CMS – vienas iš keturių didžiųjų šio greitintuvo detektorių.
 O dabar – LHCb, detektorius, prie kurio dirbu aš.
 
 The decay sentence follows cms.cern's own wording (most particles produced are unstable and transform rapidly; the detector measures the stable ones), so „skeveldros“ on slide 9 is heard a second time; the mass is taught on slides 9 and 10. No acronym in speech. If asked: CMS, one of the four LHC detectors, recorded it on 27 May 2012; 19 proton pairs collided in this crossing; the picture draws the 290 clearest tracks (not a number CMS reports); 8 TeV is the collision energy.
@@ -231,7 +231,7 @@ The event: CMS Open Data record 300 (CC0), run 195099, event 137440354, a Higgs 
 Message: this is LHCb, three storeys high; almost two thousand people work on it, our Vilnius group among them, and I am one of them. (How a collision becomes a dot moved to the next slide, inside the detector, 21 Oct.)
 Picture: the LHCb detector in 3D, with music. Start about 3 s in; about 30 words take 16 s, 20 s at a slow delivery; then let the music run to the clip's end (39 s) and → (no auto-advance).
 
-Tai LHCb. Jis dešimties metrų aukščio – kaip trijų aukštų namas. Čia dirba beveik du tūkstančiai žmonių iš viso pasaulio, tarp jų ir mūsų grupė iš Vilniaus universiteto. Aš – vienas iš jų.
+Tai LHCb. Jis dešimties metrų aukščio – kaip trijų aukštų namas. Šiame eksperimente dirba beveik du tūkstančiai žmonių iš viso pasaulio, tarp jų ir mūsų grupė iš Vilniaus universiteto. Aš – vienas iš jų.
 [leisk muzikai skambėti iki klipo pabaigos] → spausk
 
 „beveik du tūkstančiai“: 1 891 members in September 2026; never „daugiau nei“. „kaip trijų aukštų namas“ is our arithmetic (10 m at about 3 m a storey). The particle that split is named before its fragments, so „skeveldros“ has a referent when heard. „Same mass every time“ is said on slide 10 while the dots fall. If asked: 5 600 tonnes, 21 m long; VU joined LHCb in September 2024.
@@ -270,8 +270,8 @@ Picture: LHCb's real geometry as a 3D model, glowing edges in the detector's blu
 
 Nusileiskime pas jį – šimtą metrų po žeme. Šalia detektoriaus stovi žmogus – mano ūgio.
 [palauk, kol susidurs dalelių paketai]
-Štai tikras LHCb susidūrimas. Išlėkusios dalelės pereina detektoriaus dalis, ir kiekviena dalis užrašo, kur jos praskriejo.
-Dalelių paketai čia susikerta keturiasdešimt milijonų kartų per sekundę. Kompiuteriai su vaizdo plokštėmis iš karto atrenka, kuriuos susidūrimus verta išsaugoti.
+Štai tikras LHCb susidūrimas. Išlėkusios dalelės skrieja pro detektoriaus dalis, ir kiekviena dalis užfiksuoja, kur jos praskriejo.
+Kai greitintuvas veikia, dalelių paketai čia susikerta keturiasdešimt milijonų kartų per sekundę. Kompiuteriai su vaizdo plokštėmis iš karto atrenka, kuriuos susidūrimus verta išsaugoti.
 Iš skeveldrų apskaičiuojame, kokios masės buvo suskilusi dalelė. Viena apskaičiuota masė – vienas taškas.
 
 „100 m“: LHCb sits 100 metres below ground near Ferney-Voltaire (home.cern); the title's „100 metrų po žeme“ is this. The person is 1,83 m, the speaker's height (Innoday's notes: "It can be me, 183cm in height"). „40 mln.“: bunches cross at 40 MHz; in Run 3 about 30 million crossings a second hold collisions, and LHCb reads out the whole detector for each. „Kompiuteriai su vaizdo plokštėmis“: HLT1 (Allen) on GPUs, the first trigger of its kind; never „žaidimų“ (the cards are NVIDIA RTX A5000 workstation cards) and no card count (the ~500 is a 2019–20 feasibility figure). The collision is LHCb's, from 2012 (Run 1): the 40 MHz and the GPUs are Run 3's, so never say this collision was chosen by those cards. If asked: about 4 TB/s read out in real time, about 10 GB/s kept, roughly one part in 400; the event: CERN Open Data, run 133488, event 2028034058, 1 December 2012 (components/lhc-opening/README.md). No magnet line: the bending-and-momentum wording was not reachable on 21 Oct (lhcb-outreach.web.cern.ch); add it once filed.
@@ -295,7 +295,7 @@ Message: we work on questions nobody has answered, so you try: each dot falls in
 Picture: a small gold plot fills dot by dot into its columns (140 dots, 7 s); at the first click a tick lights over the one column that stands out (`th1` step 2). At the second the gold dots go and 3 500 pale dots of the same random spectrum fill the same frame (`th2`, 12 s), smooth: the tick comes back over the same column once it is full, and nothing stands there. The first two sentences are said over the flight (4,5 s), the column sentences over the fill.
 Note: both plots are illustrations, not measured data: two random samples from one smooth spectrum with no particle in it; in the 140 chance made the bump, the 3 500 are smooth (public/data/theta-toy.json, seeds inside). Say „sudėliojo kompiuteris“, never „tikri duomenys“. Each plot fills its frame to its own tallest column, so the two are not at one scale (that is slide 13).
 
-Mes dirbame su klausimais, į kuriuos dar niekas neatsakė. Tokį darbą dabar išbandysi ir tu. Kiekvienas taškas krenta į stulpelį pagal masę. Kairėje – lengvesnės, dešinėje – sunkesnės. Lyg surikiuotum visus savo mokyklos mokinius pagal ūgį. Jei dalelė tikra, jos masė kaskart išeina beveik ta pati, ir taškai krenta į tą patį stulpelį. Taip iškyla kauburys. Bet kauburį gali sukurti ir atsitiktinumas – kaip kauliukas, kuris kelis kartus iš eilės išmeta šešetą.
+Mes dirbame su klausimais, į kuriuos dar niekas neatsakė. Tokį darbą dabar išbandysi ir tu. Kiekvienas taškas krenta į stulpelį pagal masę. Kairėje – lengvesnės dalelės, dešinėje – sunkesnės. Lyg surikiuotum visus savo mokyklos mokinius pagal ūgį. Jei dalelė tikra, jos masė kaskart išeina beveik ta pati, ir taškai krenta į tą patį stulpelį. Taip iškyla kauburys. Bet kauburį gali sukurti ir atsitiktinumas – kaip kauliukas, kuris kelis kartus iš eilės išmeta šešetą.
 → spausk
 Kaip manai, ar šis kauburys – nauja dalelė?
 [pauzė 3 s]
@@ -475,7 +475,7 @@ The doctoral student stays unnamed. „pretenduoti“, not „kandidatuoti“. I
 Message: one part of LHCb our group works on: the tracker of plastic fibres that light up when a particle passes, and the light injection system at the ends of its modules that sends short laser pulses into them to calibrate them. A computer-made picture, said so. Then my own job since August, the bridge to the data.
 Picture: the end of one SciFi module, its light injection boards with their laser diodes and fibres, the cold box below with the Lithuanian flag lasered on it (10 s, silent); its last frame holds while you finish. Say „kompiuteriu sukurtas vaizdas“ once: it is a render, not a photograph, and the flag is ours.
 
-Tai vieno LHCb sekiklio modulio galas – kompiuteriu sukurtas vaizdas pagal jo brėžinį, o vėliavą ant jo nupiešėme patys. Sekiklyje – daugiau nei vienuolika tūkstančių kilometrų plonų plastikinių skaidulų. Kai pro jas praskrieja dalelė, jose sužimba šviesa. Kad jos būtų tiksliai sukalibruotos, modulių galuose lazeriai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupės darbai LHCb apima ir šį sekiklį, ir šią sistemą.
+Tai vieno LHCb sekiklio modulio galas – kompiuteriu sukurtas vaizdas pagal jo brėžinį, o vėliavą ant jo nupiešėme patys. Sekiklyje – daugiau nei vienuolika tūkstančių kilometrų plonų plastikinių skaidulų. Kai pro jas praskrieja dalelė, jose sužimba šviesa. Kad šviesos jutikliai būtų tiksliai sukalibruoti, modulių galuose lazeriai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupė dirba ir prie šio sekiklio, ir prie šios sistemos.
 Nuo rugpjūčio esu ir LHCb atvirųjų duomenų koordinatorius. Prisimeni duomenis, kuriuos ruošiau Bonoje?
 
 „daugiau nei vienuolika tūkstančių kilometrų“: the SciFi tracker's 11 000+ km of 250 µm fibre (LHCb). Nothing more about Vilnius than the group's meeting agenda says (SciFi and the light injection system among its service tasks): never „mes sukūrėme“. The flag is not on the real module. If asked: 670 nm VCSEL lasers driven by GBLD chips; 524 288 SiPM channels read the light.
@@ -504,7 +504,6 @@ Message: the data I prepared in Bonn, in one picture: each sphere a terabyte, ab
 Picture: OpenData's piles (the owner, 18 Oct: "Show something about open data"): the camera flies in to a single gold sphere and a pile of 800 like it, standing on a floor of grains in a space of data; „1 TB“ under the sphere, the count „800 TB“ low on the left (once: the pile's own label is gone).
 
 Štai jie. Kiekviena sfera – vienas terabaitas, maždaug nešiojamojo kompiuterio diskas. Čia LHCb 2011 ir 2012 metų duomenys – aštuoni šimtai terabaitų. Kiekvieną failą reikėjo surasti, patikrinti ir aprašyti. Net su tam parašytomis programomis tai užtruko apie pusantrų metų. Būtent šiuose duomenyse 2015 metais iškilo pentakvarko smailė. Dabar jie atviri visiems.
-Šiais metais atverta dar daugiau.
 
 Terabytes only, never „petabaitas“. 800 TB is CERN's figure (VU: over 1 PB in all, of which 800 TB of physics data in over 100 000 files); the release holds the same 2011–2012 collisions the 2015 peak rose in (2019 used Run 1 and Run 2). The year-and-a-half line is the speaker's public interview (VU Library, 5 March 2026). If asked: the full Run 1 release was completed on 20 December 2023; a terabyte holds tens of millions of recorded collisions.
 
@@ -563,7 +562,7 @@ space: { at: [2570.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0
 Message: all the data LHCb has collected: more than 100 000 terabytes, a stack of laptops more than a kilometre high; the gold pile in front is open.
 Picture: the camera pulls far back; a blue pile of 100 000 spheres rises behind the gold one; „> 100 000 TB“ counts up low on the left (a lower bound: LHCb's 100 PB is its March 2025 figure), the caption names it. The first sentence as the blue pile rises.
 
-O tai visi LHCb surinkti duomenys – daugiau nei šimtas tūkstančių terabaitų. Šimtas tūkstančių nešiojamųjų kompiuterių, sukrautų vienas ant kito, būtų daugiau nei kilometro aukščio. Auksinė krūva priekyje jau atvira.
+O tai visi LHCb surinkti duomenys – daugiau nei šimtas tūkstančių terabaitų. Sukrovus šimtą tūkstančių nešiojamųjų kompiuterių vieną ant kito, bokštas būtų aukštesnis nei kilometras. Auksinė krūva priekyje jau atvira.
 O saugomi jie štai kur.
 
 Scale, worked out: a 1 TB laptop of today is about 1,1 cm thick, so 100 000 of them stack to about 1,1 km: „daugiau nei kilometro“, never „dviejų kilometrų“. If asked: LHCb opens about half of a period's data five years after it ends and all of it after ten.
@@ -584,7 +583,7 @@ Scale, worked out: a 1 TB laptop of today is about 1,1 cm thick, so 100 000 of t
 Message: the data are kept in CERN's data centre, mostly on magnetic tape: about sixty thousand tapes, more than a million terabytes from all the LHC experiments; a robot takes them from the shelves. Then the bridge to Dominykas.
 Picture: real footage inside CERN's tape library: an aisle between walls of tapes, the robot's carriage running away down it (14 s, silent); → as you finish.
 
-Visi CERN eksperimentų duomenys saugomi CERN duomenų centre – daugiausia magnetinėse juostose. Jų ten apie šešiasdešimt tūkstančių, o duomenų – daugiau nei milijonas terabaitų. Juostas iš lentynų paima robotas.
+Visų LHC eksperimentų duomenys saugomi CERN duomenų centre – daugiausia magnetinėse juostose. Juostų ten apie šešiasdešimt tūkstančių, o duomenų – daugiau nei milijonas terabaitų. Juostas iš lentynų paima robotas.
 O štai ką su atviraisiais duomenimis padarė vienas mūsų studentas.
 
 „daugiau nei milijonas terabaitų“: CERN passed one exabyte of stored LHC data in December 2025, mostly on about 60 000 tapes (home.cern); never „vien LHCb“ (LHCb's is the 100 000 TB of slide 19). „Juostas … paima robotas“ says what the footage shows (the carriage on its rail). If asked: CERN says this is about a tenth of what it will need over the next ten years.
@@ -629,7 +628,7 @@ Message: you can start at school: pupils have measured a particle's lifetime in 
 Picture: OpenData's second sun, round the same gold pile: rays end at two white clusters named „Meistriškumo pamoka“ and „Bakalauro darbai“ and at gold clouds breathing slowly, room for what comes next. The last line is said as the camera flies back to the particle (4,5 s).
 The masterclass is told without dates (the owner, 15 Oct: "No dates for masterclass") and in the past tense: no 2026–27 LHCb date was public on 20 Oct (two editions held, 2025 and 2026); VU's yearly masterclasses are the CMS ones, so never „kasmet“ of the LHCb one. Do not say it uses CERN Open Data files: no source shows it; it uses real LHCb data.
 
-Vilniaus universitete jau vyko LHCb meistriškumo pamokos. Mokiniai ten su tikrais LHCb duomenimis patys išmatavo, kiek laiko gyvuoja viena dalelė. Beje, pirmieji vieši LHCb failai buvo paskelbti būtent tokioms pamokoms. Universitete iš atvirųjų duomenų gali parašyti bakalauro darbą, kaip Dominykas. O šios tuščios vietos – darbai, kurių dar niekas nepadarė. Jos laukia tavęs. Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
+Vilniaus universitete jau vyko LHCb meistriškumo pamokos. Mokiniai ten su tikrais LHCb duomenimis patys išmatavo, kiek laiko gyvuoja viena dalelė. Beje, pirmieji vieši LHCb failai buvo paskelbti būtent tokioms pamokoms. Universitete iš atvirųjų duomenų gali parašyti bakalauro darbą, kaip Dominykas. O šios tuščios vietos – darbai, kurių dar niekas nepadarė. Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
 Ir grįžkime prie dalelės, nuo kurios pradėjome.
 
 The organisers' point is said once, here, as advice; it claims nothing about you. Optional, after it, one sentence of your own about a moment you noticed something and followed it (nothing is written for it). If asked: the particle is the D⁰ meson; another VU bachelor's thesis of 2026 used CMS open data. „Beje, pirmieji vieši LHCb failai…“ (21 Oct, in the script): never as if the Vilnius masterclass uses them.
