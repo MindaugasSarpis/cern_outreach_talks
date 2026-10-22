@@ -162,8 +162,9 @@ def compose(V, take_frame):
         s_earth = np.exp(np.log(6.0) * (1 - a))   # 6x -> 1, about Geneva
         mp = zoomed(m * feather, s_map, GX, GY)
         ea = zoomed(earth, s_earth, GX, GY)
-        fade = smooth(0.0, 0.55, a)
-        return mp * (1 - fade) + ea * fade
+        # the complex goes as the clouds come (owner: "The complex should fade out as soon as
+        # clouds appear"): gone by ~58.1 s, as the first clouds show, the Earth up by ~59.5 s
+        return mp * (1 - smooth(0.0, 0.05, a)) + ea * smooth(0.03, 0.3, a)
     if V < V_LAND:
         img = dive.at(x.dive_span - dive_t(V))
         return grade(img, smooth(V_LAND - 3.0, V_LAND, V))

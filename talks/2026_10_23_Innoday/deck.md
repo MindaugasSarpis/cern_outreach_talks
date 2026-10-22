@@ -707,8 +707,8 @@ Nuorodų ekrane nėra: licencijų reikalaujamos nuorodos — kitame puslapyje, k
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotos 3D rentgenogramos atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
 Faktai (jei paklaus apie švytėjimą): ryšuliai LHCb susikerta 40 MHz dažniu; 3-iajame etape vidutiniškai 30 mln. kartų per sekundę susikirtime būna susidūrimų, ir LHCb nuskaito visą detektorių kiekvieną kartą — apie 5 TB/s į programinį trigerį, saugoti lieka apie 10 GB/s (maždaug vienas baitas iš 500).
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
-Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaidrių pastabų laikus, 2026 10 20): iš viso apie 25 min; klipai — įžanginis 4:13, CERN iš oro 0:11, LHC tunelis 0:40, LHCb animacija 0:48, FCC žemėlapis 0:18, LHCb savaitės filmas 2:28 ir šviesos įvedimo sistema 0:20 (per filmą nekalbama, per kitus penkis — taip). Po šios — nuorodų puslapis (nerodyti), po jo paslėpta skaidrė (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
-(~0,4 min)
+Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaidrių pastabų laikus, 2026 10 22): iš viso apie 27,5 min (uždarymas su skrydžiu namo — 1:35); klipai — įžanginis 4:13, CERN iš oro 0:11, LHC tunelis 0:40, LHCb animacija 0:48, FCC žemėlapis 0:18, LHCb savaitės filmas 2:28 ir šviesos įvedimo sistema 0:20 (per filmą nekalbama, per kitus penkis — taip). Po šios — nuorodų puslapis (nerodyti), po jo paslėpta skaidrė (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
+(~2 min: įrašas 1:35, tada baigiamieji žodžiai)
 -->
 
 ---
