@@ -219,8 +219,10 @@ html[data-stage] .thanks { position: absolute; inset: 0; display: flex; align-it
 /* beside the five-quark form, not on it: the form turns in the right half (slide 20's pose), the word is centred in the left 576 px, level with it */
 html[data-stage] .thanks.beside { inset: 0 auto 0 0; width: 576px; }
 /* the shared opening's „LHC 27 km“ sits low left on the tunnel's near-white wall: a soft shade
-   from the slide's lower-left corner behind it (read as the tunnel's own shadow, not a badge), in this talk only (components/lhc-opening is shared; the fix there is the module's) */
-html[data-stage] .lhc-tunnel::before { content: ''; position: absolute; inset: auto auto -44px -56px; width: 760px; height: 420px; z-index: -1; background: radial-gradient(ellipse 100% 100% at 0% 100%, rgba(0, 2, 6, 0.8) 0%, rgba(0, 2, 6, 0.55) 35%, rgba(0, 2, 6, 0.2) 60%, rgba(0, 2, 6, 0) 80%); }
+   from the slide's lower-left corner behind it (read as the tunnel's own shadow, not a badge), in this talk only (components/lhc-opening is shared; the fix there is the module's).
+   22 Oct: the caption is on the 150 px floor, so the shade reaches back down to the frame's corner (bottom −floor, left −edge) and is
+   larger (1000 × 700, was 760 × 420 from the caption's old place): its edges fall off the frame, none shows as a hard line on the wall */
+html[data-stage] .lhc-tunnel::before { content: ''; position: absolute; inset: auto auto calc(-1 * var(--kk-floor)) calc(-1 * var(--kk-x)); width: 1000px; height: 700px; z-index: -1; background: radial-gradient(ellipse 100% 100% at 0% 100%, rgba(0, 2, 6, 0.8) 0%, rgba(0, 2, 6, 0.55) 35%, rgba(0, 2, 6, 0.2) 60%, rgba(0, 2, 6, 0) 80%); }
 
 /* ---- from Innoday (18 Oct): the funnel's age, low on the left once the funnel stands (<AfterFlight>) */
 html[data-stage] .age { position: absolute; z-index: 0; left: var(--kk-x); bottom: var(--kk-floor); font-size: 38px; font-weight: 500; letter-spacing: 0.02em; color: var(--kk-blue-hi); text-shadow: var(--kk-shadow); white-space: nowrap; }
@@ -267,3 +269,7 @@ html[data-stage] .readout.depth { animation: stage-rise 0.8s var(--stage-ease) 2
 html[data-stage] .readout.glow { animation-delay: 24s; }
 html[data-stage] .readout.glow .unit { font-size: 0.36em; }
 @media (prefers-reduced-motion: reduce), print { html[data-stage] .readout.depth { display: none; } }
+/* 22 Oct: on the 150 px floor the readout stands on the detector's bright wireframe (the glow's „mln. per sekundę“ crossed it):
+   a soft shade behind each of slide 9's readouts, as the age's on slide 3 (read as shadow, not a badge) */
+html[data-stage] .readout.depth, html[data-stage] .readout.glow { z-index: 0; }
+html[data-stage] .readout.depth::before, html[data-stage] .readout.glow::before { content: ''; position: absolute; inset: -70px -120px -50px -90px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0, 2, 6, 0.8) 0%, rgba(0, 2, 6, 0.58) 45%, rgba(0, 2, 6, 0.2) 75%, rgba(0, 2, 6, 0) 100%); }

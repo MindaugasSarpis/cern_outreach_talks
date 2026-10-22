@@ -313,13 +313,13 @@ The 2003 claim was Θ⁺, a different five-quark particle: „kitą dalelę iš 
 -->
 
 ---
-space: { at: omegac, dim: 0.05 }
+space: { at: [1650, 2.6, 0], dist: 23, yaw: 0, pitch: 3, sway: 0.4, dim: 0.05 }   # the omegac station's look ([0, 3, 0], dist 21) drawn back and lowered (22 Oct): the axis at y 345, so the count under it ends inside the broadcast safe box (y 408)
 clicks: 1
 ---
 
 <Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 1, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { oc: 2 } }" />
 
-<AfterFlight :delay="6"><div class="heap late" style="left: 490px; top: 374px"><span class="n">59&nbsp;453&nbsp;masės</span></div></AfterFlight>
+<AfterFlight :delay="6"><div class="heap late" style="left: 490px; top: 356px"><span class="n">59&nbsp;453&nbsp;masės</span></div></AfterFlight>
 
 <!-- facts: lhcb-omegac-2017-fig2-candidates, lhcb-omegac-five-2017, lhcb-omegac-2017-masses, omegac-quark-content, proton-neutron-three-quarks, lhcb-omegac-confirmed, chance-bumps-shrink-with-data, poisson-fluctuation-sqrt-n -->
 
@@ -373,13 +373,13 @@ The checks are worded to the stored claim only (fits with other known particles 
 -->
 
 ---
-space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 }
+space: { at: [1796.4, 3.0, 0], dist: 26, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 }   # drawn back (dist 21 until 22 Oct): both plots and their counts inside the broadcast safe box (x 98–882, y 55–408); the labels are projected from this pose
 ---
 
 <Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 0, jp: 2, jx: 1, lietuva: 0 }" />
 
-<div class="heap" style="left: 557px; top: 404px"><span class="n">27&nbsp;292&nbsp;taškai</span></div>
-<div class="heap" style="left: 116px; top: 404px"><span class="n">140&nbsp;taškų</span></div>
+<div class="heap" style="left: 571px; top: 354px"><span class="n">27&nbsp;292&nbsp;taškai</span></div>
+<div class="heap" style="left: 210px; top: 354px"><span class="n">140&nbsp;taškų</span></div>
 
 <!-- facts: theta-toy-140-entries, lhcb-pentaquark-2019-27292-entries, particle-physics-5-sigma-discovery, dice-eight-sixes-worked, lhcb-pentaquark-2015-cross-checks, lhcb-pentaquark-2019, sarpis-phd-bonn-2023, sarpis-glasgow-study-and-job -->
 
@@ -399,17 +399,17 @@ The one spoken answer to the cover's question, in its words, said once. „Sigma
 -->
 
 ---
-space: { at: whole, sway: 0, dim: 0.05 }
+space: { at: [1201, 0, 2.5], dist: 36, yaw: 0, pitch: 60, sway: 0, dim: 0.05 }   # the `whole` pose (europe + [1, 0, −3]) moved 5.5 south (22 Oct), so the map stands higher and CERN's name ends inside the broadcast safe box; the five names are projected from this pose
 clicks: 4
 ---
 
 <Grains :set="{ pq: 3, route: 1, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 4 }, 3: { route: 6 }, 4: { route: 7 } }" />
 
-<div class="city late caption" style="left: 734px; top: 149px">Vilnius</div>
-<div class="city late caption" style="left: 360px; top: 452px">CERN</div>
-<div v-click="1" class="city step caption" style="left: 280px; top: 152px; --step-delay: 3.4s">Glazgas</div>
-<div v-click="3" class="city step caption" style="left: 470px; top: 357px; --step-delay: 2.2s">Heidelbergas</div>
-<div v-click="3" class="city r step caption" style="left: 394px; top: 250px; --step-delay: 3.6s">Bona</div>
+<div class="city late caption" style="left: 719px; top: 84px">Vilnius</div>
+<div class="city late caption" style="left: 367px; top: 356px">CERN</div>
+<div v-click="1" class="city step caption" style="left: 295px; top: 90px; --step-delay: 3.4s">Glazgas</div>
+<div v-click="3" class="city step caption" style="left: 473px; top: 276px; --step-delay: 2.2s">Heidelbergas</div>
+<div v-click="3" class="city r step caption" style="left: 399px; top: 173px; --step-delay: 3.6s">Bona</div>
 
 <!-- facts: sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn, sarpis-phd-bonn-2023, lhcb-run1-release-sarpis-lrt-2025, lhcb-vilnius-joined -->
 
@@ -484,7 +484,7 @@ Nuo rugpjūčio esu ir LHCb atvirųjų duomenų koordinatorius. Prisimeni duomen
 -->
 
 ---
-space: { at: [2597.0, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8, dim: 0.15 }   # from the front, so the 1 TB sphere and its label stand in frame right of the 800 pile, nearly as far from the lens (OpenData's yaw-73 pose, its slide 7, left the sphere below the frame); the camera stays inside the vault's clear capsules
+space: { at: [2599.3, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8, dim: 0.15 }   # (x 2597.0 until 22 Oct: „1 TB“ ran to x 930, past the broadcast safe box) from the front, so the 1 TB sphere and its label stand in frame right of the 800 pile, nearly as far from the lens (OpenData's yaw-73 pose, its slide 7, left the sphere below the frame); the camera stays inside the vault's clear capsules
 ---
 
 <Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 1, scale: [0, 1], 'scale:labels': 1, sun: 0, vilnius: 0 }" />
@@ -542,7 +542,7 @@ Never „4 PB“ in speech. If asked: the Ntupling Service (February 2026) opens
 -->
 
 ---
-space: { at: [2583.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0.15 }   # OpenData's 100 PB pose (its slide 9)
+space: { at: [2570.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0.15 }   # OpenData's 100 PB pose (its slide 9) moved 13 west (x 2583.5 until 22 Oct): with the readout on the 150 px floor, the blue sphere stood on „000 TB“; now it stands right of it (x ≈ 630–735)
 ---
 
 <Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 1, scale: [0, 1, 2, 3], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
@@ -615,7 +615,7 @@ Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filter
 -->
 
 ---
-space: { at: [2600.17, -1.03, 0], dist: 30.45, yaw: 0, pitch: 3, dim: 0.05 }   # OpenData's Vilnius pose (its slide 12)
+space: { at: [2598.7, 1.5, 0], dist: 37.5, yaw: 0, pitch: 3, dim: 0.05 }   # OpenData's Vilnius pose (its slide 12: at [2600.17, −1.03, 0], dist 30.45) drawn back (22 Oct), with the names at labelH 0.1 and the turn at 300 s, so both names stay inside the broadcast safe box for the slide's first 48 s
 ---
 
 <Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 0, vilnius: 1 }" />
