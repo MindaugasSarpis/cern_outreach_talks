@@ -56,19 +56,6 @@ clip folder's cern_video_2019_050_008_1080ph265.mp4 (HEVC, 72 MB), copied into t
 bank under this name."""
 
 [[videos]]
-name    = "cern_footage_2022_013_006.mp4"
-profile = "silent-loop"
-used_in = ["deck"]
-trim    = ["1:48", "2:02"]
-notes   = """\
-Where the data live (slide 20, the 15-minute round, 21 Oct): CERN-FOOTAGE-2022-013-006, \
-the CERN data centre, its last shot: the tape library's aisle, the robot's carriage \
-running away down it between walls of tapes (1:47-2:04 in the film; cut 1:48-2:02, 14 s, \
-from a frame sheet). Under speech, so silent (the film's sound dropped). Same name as the \
-library's full-length copy, so this talk's release wins. Raw: the Drive clip folder's \
-cern_footage_2022_013_006_1080p_data_center.mp4, copied into the raw bank under this name."""
-
-[[videos]]
 name    = "lis_flag.mp4"
 profile = "remux"
 used_in = ["deck"]
