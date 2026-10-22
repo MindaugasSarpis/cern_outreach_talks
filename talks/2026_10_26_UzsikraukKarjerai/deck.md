@@ -236,7 +236,7 @@ Tai LHCb. Jis dešimties metrų aukščio – kaip trijų aukštų namas. Šiame
 
 „beveik du tūkstančiai“: 1 891 members in September 2026; never „daugiau nei“. „kaip trijų aukštų namas“ is our arithmetic (10 m at about 3 m a storey). The particle that split is named before its fragments, so „skeveldros“ has a referent when heard. „Same mass every time“ is said on slide 10 while the dots fall. If asked: 5 600 tonnes, 21 m long; VU joined LHCb in September 2024.
 
-The line is said over the clip; its 39 s are counted from the manifest.
+The line is said over the clip. The lint counts the clip's whole 39 s from the manifest; pressed 3 s after the line (22 Oct), the slide takes about 25 s.
 -->
 
 ---
@@ -315,7 +315,7 @@ The 2003 claim was Θ⁺, a different five-quark particle: „kitą dalelę iš 
 
 Šaltiniai: LEPS, Phys. Rev. Lett. 91, 012002 (2003), arXiv:hep-ex/0301020; CLAS, Phys. Rev. Lett. 96, 042001 (2006); PDG 2008, „Pentaquarks“ (C. G. Wohl).
 
-(~1.65 min)
+(~1.6 min)
 -->
 
 ---
@@ -603,7 +603,7 @@ Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filter
 
 Šaltiniai: D. Stonkus, bakalauro darbas, VU, 2026, epublications.vu.lt/object/elaba:308118793/308118793.pdf; CERN Open Data, įrašai 401 ir 24506; arXiv:2609.09275.
 
-(~0.6 min)
+(~0.55 min)
 -->
 
 ---
@@ -626,7 +626,7 @@ The organisers' point is said once, here, as advice; it claims nothing about you
 
 Šaltiniai: VU FF, LHCb meistriškumo pamokos (indico.cern.ch/event/1648092); D. Stonkus, bakalauro darbas, VU, 2026; CERN Open Data, įrašas 401 (2014).
 
-(~0.7 min)
+(~0.65 min)
 -->
 
 ---

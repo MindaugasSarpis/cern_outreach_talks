@@ -54,7 +54,7 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (ninth version, 21 Oct: the 15-minute round on blueprint v2: 23 slides, 13,6 min scripted, about 15,5–16 delivered)
+## Story (tenth version, 22 Oct: the pre-filming round: 22 slides, 13,3 min by the lint's slide times; about 14–15 min delivered with the three slots)
 
 The owner, 21 Oct: "15 min we can cover quite a lot of content … more
 visuals", then "Build" on the proposal in this window. Blueprint v2
@@ -83,22 +83,21 @@ purpose).
 | 5 | „LHC 27 km“ | the real tunnel (18 s cut) | 0,3 |
 | 6 | — (clip) | **new**: an LHC dipole magnet cut open, its two beam pipes (`cern_video_2019_050_008.mp4`, 10,8 s, the owner's "A, ok"); 1 232 magnets at −271 °C | 0,3 |
 | 7 | „290 dalelių“ | one real 2012 CMS crossing in 4π; „užfiksavo CMS“ spoken | 0,55 |
-| 8 | — (clip) | `lhcb.mp4` (39 s): LHCb, its people | 0,65 |
+| 8 | — (clip) | `lhcb.mp4` (39 s): LHCb, its people; → 3 s after „Aš – vienas iš jų.“ (22 Oct), not at its end | 0,4 |
 | 9 | „100 m“, then „40 mln. per sekundę“ | **new**: inside LHCb, the 3D model beside a 1,83 m person (Innoday's), the camera craned down to the cavern floor; LHCb's own 2012 collision in it; the 40 MHz glow; one mass, one dot (`<InsideLhcb>`, station `cavern`) | 1,0 |
-| 10 | — (two clicks) | `th1` fills, 140 dots; the viewer judges; the tick; **new**: click 2, `th2` 3 500 random dots, the bump gone; 2003 | 1,65 |
-| 11 | „59 453 masės“ (one click) | `oc`, five peaks; „paskelbė visas penkias“ spoken | 0,75 |
-| 12 | — (one click) | `jp`, the 2015 peak judged; three peaks | 0,8 |
-| 13 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp`; the rule; the answer (4 s held) | 0,7 |
+| 10 | „140 taškų“ → „3 500 taškų“, „masė →“ (two clicks) | `th1` fills, 140 dots; the viewer judges; the tick; click 2, `th2` 3 500 random dots, no tick, the bump gone; 2003 | 1,6 |
+| 11 | „LHCb duomenys“, „59 453 masės“, „masė →“; „5 naujos dalelės“ (one click) | `oc`, five peaks; „paskelbė visas penkias“ spoken | 0,75 |
+| 12 | „LHCb duomenys“, „masė →“; „3 pentakvarkai“ (one click) | `jp`, the 2015 peak judged; three peaks | 0,8 |
+| 13 | „atsitiktinumas“ „140 taškų“ · „LHCb“ „27 292 taškai“; „< 1 iš 3,5 mln.“ | `jx` beside `jp`; the rule; the answer (4 s held) | 0,7 |
 | 14 | Vilnius, CERN; „Glazgas“; „Heidelbergas“, „Bona“ | the route (4 clicks), three optional owner slots | 0,6 |
 | 15 | Vilnius | the dive to Vilnius; the group | 0,55 |
 | 16 | — (clip) | **new**: `lis_flag.mp4` (10 s, a render): a SciFi module's end, its light injection; the group's part; the coordinator bridge | 0,4 |
 | 17 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared | 0,6 |
 | 18 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile | 0,3 |
 | 19 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops | 0,45 |
-| 20 | — (clip) | **new**: the CERN data centre's tape robot (`cern_footage_2022_013_006.mp4`; the cut is Friday's TODO) | 0,3 |
-| 21 | — | OpenData's sun of plots; Dominykas's check; the Brown preprint | 0,6 |
-| 22 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; the masterclass files line; the advice | 0,7 |
-| 23 | „Ačiū“ | the five-quark form gathers again | 0,45 |
+| 20 | — | OpenData's sun of plots; Dominykas's check (the Brown preprint only if asked) | 0,55 |
+| 21 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; the masterclass; the advice | 0,65 |
+| 22 | „Ačiū“ | the five-quark form gathers again | 0,45 |
 
 ## Status
 

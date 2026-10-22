@@ -180,6 +180,13 @@ generated = true
 notes     = "the world of slide 19 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
+name      = "20-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 20"]
+generated = true
+notes     = "the world of slide 20 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
 name      = "21-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 21"]
@@ -192,11 +199,4 @@ profile   = "remux"
 used_in   = ["slide 22"]
 generated = true
 notes     = "the world of slide 22 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
-
-[[videos]]
-name      = "23-plate.mp4"
-profile   = "remux"
-used_in   = ["slide 23"]
-generated = true
-notes     = "the world of slide 23 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 # <<< plates
