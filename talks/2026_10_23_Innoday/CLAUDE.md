@@ -396,6 +396,10 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
     doesn't make sense... don't show it"). A small flag (`ltMap`) rides from the SciFi's place to
     just below LHCb's point on the map and stays ("Still need lithuanian flag on 30"). The map's
     still grains 86k → 53k and the logo's 80k → 55k ("lags on zooming out to lhc / fcc" on a Mac).
+  - The LHCb logo is a solid image, not grains ("logos could even be baked in", "so not particle
+    like"): the emblem's `solid: true` draws `src` on one plane that fades in over `dur` and rides
+    as before. The glow before the pull-out merges sooner (cascade 4 s after the crossing, rate
+    0,34) and the drift lasts to path 36 s, so the beams are at full rate before the zoom.
 - The 22 Oct round (owner, in this window):
   - „Ačiū“'s music at 0,3, half of 0,6 ("And the last soundtrack 50% quieter"); `+` / `-` step
     the music and slide 27's hum on a slide without a clip, 0–200 % of the written level, kept in
