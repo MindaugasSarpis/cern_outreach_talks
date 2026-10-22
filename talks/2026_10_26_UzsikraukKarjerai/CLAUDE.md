@@ -102,6 +102,20 @@ purpose).
 
 ## Status
 
+- 2026-10-22 (latest, afternoon): **the second round on the branch, not
+  deployed**: origin/main 5f0d669 merged (v0.8.3's talks side), pinned
+  v0.8.3 (the lockfile's v0.8.1/v0.9.0 entries restored from main's after
+  the pin; `talk lock` passes), `<PptxButton />` on the cover (it renders
+  nothing until `videos/pptx.json` is there); lint 0 errors, `talk check` ok,
+  `talk pptx --dry-run` plan ok. The PPTX waits: Innoday's take showed the
+  recorder films clip slides frame by frame at 1080p50 (53 min for a 4-min
+  opener), and Tools is changing `talk pptx` to embed the clip files and
+  record only the world slides. Next: `talk ready` and the deploy when the
+  Scheduler gives main after Innoday's (about 18:00); `talk pptx` after the
+  toolkit fix. Until then the studio's 1080p50 copy is the per-slide MP4s of
+  `talk record`. The plates were recorded on v0.8.2; `ready` will call them
+  stale (the fingerprint counts package.json and the lockfile), with no change
+  to what they show expected from a PPTX-only release.
 - 2026-10-22 (latest): **deployed 883560a on v0.8.2** (Pages run
   39751672500, green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed; `talk ready` passed with nothing skipped, its one
