@@ -38,6 +38,11 @@ cut off unsettled at the recorder's `--max` (the warning names the
 no plates". Stale or missing plates:
 `pnpm talk record <t> --plates` (the render slot), then the `pnpm
 videos:publish --only …` line it prints, in the talk (`talk-broadcast` §5).
+For a talk with `videos/pptx.json`, the pptx step: the PPTX is on the
+release at the size the file records, its take is current by content, it is
+under 1.5 GB; warnings, `--strict-pptx` to fail, "skipped: no pptx" without
+the file. Stale or missing: `pnpm talk pptx <t>` (the render slot), then
+commit `videos/pptx.json`.
 
 Renders share the machine with other sessions. `pnpm talk shots`, `review`,
 `ready`, `record` and `safe` queue for the render slot themselves; any other

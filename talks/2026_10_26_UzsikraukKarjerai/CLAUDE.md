@@ -6,17 +6,47 @@
   Achievement, for grades 9–12 (LJA lists 8–12).
 - Filmed in the Delfi studio, Vilnius, on 26 Oct 2026, 16:00–18:00, with no
   audience; streamed to classrooms on 27 Oct 2026 at 12:00.
-- Lithuanian, 10–15 minutes (this deck: about 10).
+- Title (the owner, 21 Oct, through the Scheduler; his capitalisation): „Kas
+  vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po žeme“. No
+  title slide (16 Oct): it is the deck's `title:` (the tab) and goes to Delfi
+  with the notes. Hedge for the speaker: CERN is the world's largest
+  *particle physics* laboratory (`cern-largest-particle-physics-lab`; no
+  source ranks it among all science labs), and 100 m is LHCb's depth and the
+  LHC tunnel's (`lhcb-100m-below-ground`, `lhc-geneva-27km-100m-four-experiments`).
+  In speech: „didžiausia pasaulyje dalelių fizikos laboratorija“.
+- Lithuanian, **15 minutes** (the owner, 21 Oct: "school students oriented, so
+  more visuals, but 15 min we can cover quite a lot of content"; until then
+  10–15, and the 20 Oct deck is about 10).
 - The organisers' ask: real stories over conference talks; you don't need to
   know now what you will be; notice what interests you and dig; what working
   on questions with no textbook answer is like.
-- Delivery (owner, 2026-10-08, replaces the earlier broadcast brief): **a
-  private event delivered online, not TV.** No TV safe area, logo corners,
-  `safe` check, Delfi questions, per-slide MP4s for a broadcaster or a
-  2.5 Mbit/s gate. Keep: type readable on a laptop or a classroom
-  projector showing a stream, and no ultra-fine dust that video
-  compression smears. The normal stage look is allowed again. No sources
-  on slides and no reference lists required; facts must still be true.
+- Delivery (owner, 21 Oct, through the Scheduler: "15min talk, will be
+  recorded in a studio with good quality"): **a studio recording of good
+  quality**, filmed at Delfi on 26 Oct and streamed to classrooms on 27 Oct.
+  The broadcast path in full (skill talk-broadcast): `broadcast: true` in the
+  headmatter, so `talk ready` runs the safe-area check; per-slide MP4s and
+  text-free plates at the studio's frame and rate (`talk record --plates`,
+  Friday on v0.8.2); the stills PDF with cue lines, `credits.txt`, the source
+  clips; the venue zip (`pnpm venue`) as the fallback copy. Open with the
+  owner (asked 21 Oct): the frame and rate (1080p50 or 2160p), how the deck is
+  fed (a screen capture of the laptop or files), and the rest of the
+  broadcaster's list. The 8 Oct "not TV" meant no broadcast channel; it
+  replaced the earlier TV brief and is itself replaced by this. Kept from
+  then: the stage look, no sources on slides; facts must still be true.
+- The studio (the owner, 21 Oct, in this window): **1080p50**; the deck runs
+  on his MacBook and must also be available online (he will try the local
+  copy first) and wants a package that plays anywhere; shown **on a screen
+  behind him** (the camera films the screen, so no direct feed is known);
+  **he clicks**; the laptop's sound **goes into the mixer** (the clips at
+  −16 LUFS, the opening's swell, thump and drone, the tunnel at 0,5);
+  probably **no on-screen logo** of theirs (he is not sure). Ways to run it,
+  in order: the live URL; the venue zip on the MacBook (local HTTP); with
+  v0.8.2 either one falls back to recorded plates where the world cannot run;
+  the per-slide 1080p50 MP4s as the last copy (a Keynote/PowerPoint file of
+  them plays on any machine, if he wants it). The order is the Scheduler's
+  approved plan (21 Oct). v0.8.2 adds `RUN_ME.command` (macOS) and
+  `RUN_ME.bat` (Windows) to the venue zip: python3's http.server where it
+  exists, else what to install; a bundled server binary is put to the owner.
 - Owner's steers: "doesn't have to be my life story"; the first version was
   rejected for too many slides, AI-sounding lines and a broken story; the
   second for incoherent flow and washed-out visuals ("more striking but not
@@ -24,52 +54,103 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (eighth version, 20 Oct: blueprint v2, the flow reworked for a 10–15 min talk: 19 slides, about 10 min)
+## Story (ninth version, 21 Oct: the 15-minute round on blueprint v2: 23 slides, 13,6 min scripted, about 15,5–16 delivered)
 
-The blueprint: `notes/blueprint.md` (v2, 20 Oct; v1 of 18 Oct is at
-f840ac0). One dot: a particle of five quarks took 51 years to find, so how do
-you know you have found something nobody has seen? The viewer sees how, dot by
-dot, and judges twice (a 140-dot bump that fools them, as physicists were fooled
-in 2003; LHCb's 2015 peak, which held); the rule is said once, in the cover's
-words. Then the dots are handed on through the speaker's road (Glasgow,
-Heidelberg, Bonn: the pentaquark search and the open-data release), the group in
-Vilnius, OpenData's piles, a VU student's check of the bump and the masterclass.
-Elements from Innoday (the web, the funnel) and OpenData (the way in, the LHCb
-clip, the piles, the suns) as built on 18 Oct; the owner's career path as a
-thread, scripted only from the facts bank, with three optional owner slots on
-the road slide. The old outline: `notes/outline-v5.md`.
+The owner, 21 Oct: "15 min we can cover quite a lot of content … more
+visuals", then "Build" on the proposal in this window. Blueprint v2
+(`notes/blueprint.md`, 20 Oct) stays the spine: one dot, a particle of five
+quarks that took 51 years to find, and how you know you have found something
+nobody has seen; the viewer judges twice; the rule said once; then the dots are
+handed on through the speaker's road, the group in Vilnius, the open data and
+the masterclass. The round deepens three places: what happens 100 m down
+(the dipole magnet, new 6; inside LHCb, new 9), how chance bumps drown in more
+data (10's second click), and what the Vilnius group does (its part of the
+detector, new 16; where the data live, new 20); the blueprint's "If there is room" lines are now spoken.
+The owner's three slots on 14 stay optional (+0,75 min delivered).
 
 Pictures and numbers (owner, 2026-10-10): no titles, kickers, statements or
 section slides; the speaker narrates from the notes. A number carries the word
-that names it; a thing shown may carry its name (the map's cities, the sun's
-two clusters, the piles' two captions). Exceptions taken from OpenData and
-Innoday on 15 Oct: the cover's name line and „Ačiū“ (lint: TEXT warnings, on
+that names it; a thing shown may carry its name. Exceptions from OpenData and
+Innoday on 15 Oct: the cover's name line and „Ačiū“ (lint TEXT warnings, on
 purpose).
 
-| # | Screen | Picture |
-|---|---|---|
-| 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks`; the question and the promise |
-| 2 | — | Innoday's cosmic web, a still that dissolves into grains in place (`<WebTakeover>`); no words |
-| 3 | „13,8 mlrd. metų“ | the grains fly into Innoday's funnel; atoms → three quarks → five, a pentakvarkas |
-| 4 | — (clip) | CERN from above (`cern_overview_short.mp4`, 11 s), pushing into the ring |
-| 5 | „LHC 27 km“ | the real tunnel (18 s cut); collision energy becomes new particles |
-| 6 | „290 dalelių“ („8 TeV“ hidden by the talk's CSS) | one real 2012 CMS crossing in 4π |
-| 7 | — (clip) | `lhcb.mp4` (39 s); a mass from the fragments; one mass, one dot |
-| 8 | — (one click) | `th1` fills, 140 dots; the viewer judges; the tick at the click; chance, and 2003 |
-| 9 | „59 453 masės“ (one click) | `oc` fills in light blue; ticks over the five peaks at the click |
-| 10 | — (one click) | `jp` fills; the viewer judges LHCb's 2015 peak; three peaks at the click |
-| 11 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp` at one scale; the rule; the answer |
-| 12 | Vilnius, CERN; „Glazgas“ (click 1); „Heidelbergas“, „Bona“ (click 3) | the route (4 clicks): the bank's road, three optional owner slots |
-| 13 | Vilnius | the dive to Vilnius, Lithuania's outline; the group; the coordinator line as the bridge |
-| 14 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared; the peak rose in them |
-| 15 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile of 4 PB |
-| 16 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops |
-| 17 | — | OpenData's sun of plots; Dominykas's check |
-| 18 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; empty places; the advice |
-| 19 | „Ačiū“ | the five-quark form gathers again (the close is the default until the owner says) |
+| # | Screen | Picture | min |
+|---|---|---|---|
+| 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks` | 0,6 |
+| 2 | — | Innoday's cosmic web, a still that dissolves into grains (`<WebTakeover>`); one spoken line | 0,2 |
+| 3 | „13,8 mlrd. metų“ | Innoday's funnel; atoms → three quarks → five | 0,6 |
+| 4 | — (clip) | CERN from above (`cern_overview_short.mp4`, 11 s) | 0,19 |
+| 5 | „LHC 27 km“ | the real tunnel (18 s cut) | 0,3 |
+| 6 | — (clip) | **new**: an LHC dipole magnet cut open, its two beam pipes (`cern_video_2019_050_008.mp4`, 10,8 s, the owner's "A, ok"); 1 232 magnets at −271 °C | 0,3 |
+| 7 | „290 dalelių“ | one real 2012 CMS crossing in 4π; „užfiksavo CMS“ spoken | 0,55 |
+| 8 | — (clip) | `lhcb.mp4` (39 s): LHCb, its people | 0,65 |
+| 9 | „100 m“, then „40 mln. per sekundę“ | **new**: inside LHCb, the 3D model beside a 1,83 m person (Innoday's), the camera craned down to the cavern floor; LHCb's own 2012 collision in it; the 40 MHz glow; one mass, one dot (`<InsideLhcb>`, station `cavern`) | 1,0 |
+| 10 | — (two clicks) | `th1` fills, 140 dots; the viewer judges; the tick; **new**: click 2, `th2` 3 500 random dots, the bump gone; 2003 | 1,65 |
+| 11 | „59 453 masės“ (one click) | `oc`, five peaks; „paskelbė visas penkias“ spoken | 0,75 |
+| 12 | — (one click) | `jp`, the 2015 peak judged; three peaks | 0,8 |
+| 13 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp`; the rule; the answer (4 s held) | 0,7 |
+| 14 | Vilnius, CERN; „Glazgas“; „Heidelbergas“, „Bona“ | the route (4 clicks), three optional owner slots | 0,6 |
+| 15 | Vilnius | the dive to Vilnius; the group | 0,55 |
+| 16 | — (clip) | **new**: `lis_flag.mp4` (10 s, a render): a SciFi module's end, its light injection; the group's part; the coordinator bridge | 0,4 |
+| 17 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared | 0,6 |
+| 18 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile | 0,3 |
+| 19 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops | 0,45 |
+| 20 | — (clip) | **new**: the CERN data centre's tape robot (`cern_footage_2022_013_006.mp4`; the cut is Friday's TODO) | 0,3 |
+| 21 | — | OpenData's sun of plots; Dominykas's check; the Brown preprint | 0,6 |
+| 22 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; the masterclass files line; the advice | 0,7 |
+| 23 | „Ačiū“ | the five-quark form gathers again | 0,45 |
 
 ## Status
 
+- 2026-10-22 (latest): **on v0.8.2, every label inside the broadcast safe
+  box; plates recording; the deploy follows `talk ready`** (the owner, in this
+  window: "Deploy"; the Scheduler gave the render lock and main for v0.8.2,
+  the PptxButton and `talk pptx` in a second round once v0.8.3 is tagged).
+  On the branch: origin/main merged (8e44020); pinned v0.8.2 (the lockfile's
+  v0.8.1/v0.9.0 entries of other talks keep `path: /packages/stage`, restored
+  by hand from main's after the pin dropped them); `stage.motion: floor`;
+  `lis_flag.mp4` made talk-owned (the library's 10 s copy as-is, on this
+  talk's release: the env's CLI, 0.8.3, predates v0.9.0's registry and failed
+  `videos:check` on it). First shots of all 23 and a review by a subagent;
+  `talk safe` found 19 problems (the left edge at 72 px, readouts and labels
+  below y 408, type at 30–36 px), all fixed (Decisions, 22 Oct): `talk safe`
+  0 problems, lint 0 errors. Plates: 17 (every non-clip slide; 1080p25,
+  20 s hold) recorded at 6eda07d in 16 min, 180,7 MB (6,2–20,6 MB each),
+  published to the talk's release with --only. Not shot: the late text of 3 and 11 (judged from
+  geometry), 14's click states (checked by `talk safe`), 9's crane and
+  collision in motion. Left as they are, for the owner: 21's sun of plots is
+  unreadable in detail by design; 6's clip carries a small burned-in
+  „CERN Control Centre“ inset with an accelerator map, top right (cut A, its
+  English labels approved); 20's robot is small in the frame at the start.
+  Open owner questions (they do not block): the road (Bonn → Manchester and
+  Vilnius in order or together, which Irish city, whether the trail starts in
+  Vilnius, years or roles); drop 20 if long; where he stands; Delfi's flash
+  check.
+- 2026-10-21 (latest): **the 15-minute round built on the branch, not
+  rendered, not deployed** (the owner: "Build"; then the dipole magnet as
+  slide 6, encoded and published). 23 slides, 13,6 min by the
+  notes (lint: 0 errors; the open TODO on 19 and the three optional slots are
+  the warnings), so about 15 delivered with the slots. `talk check` ok
+  (videos, stage, build). Not yet seen in a browser: no shots or recordings
+  while Innoday holds the render lock (until its Thursday redeploy). Friday,
+  in one batch: pin v0.8.2; a frame sheet of `cern_footage_2022_013_006.mp4`
+  to cut the tape-robot shot (20's TODO: manifest trim, encode, publish);
+  shots of all 23 (9's crane, collision and glow at their seconds; 10's second
+  click; the clips on 6, 16 and 20), a review; `talk safe`; `talk record --plates` at
+  1080p50; the stills PDF; `pnpm venue`; the Keynote/PowerPoint copy of the
+  per-slide MP4s; `talk ready`; the deploy when the Scheduler gives main.
+- 2026-10-21 (latest): **live is the 20 Oct rebuild, not a60d0fa.** It went
+  out with main's Pages run 39485774569 at 404f3a7 (Innoday's deploy, green,
+  20 Oct 19:42 UTC), which builds every talk and contains 292181d…3c7c655.
+  Checked 21 Oct: URL 200, tab „Užsikrauk karjerai“, the live bundle carries
+  the rebuild's „59 453“ and „Bakalauro darbai“ and not the 18 Oct
+  „Magistro ir bakalauro darbai“. This talk's own `talk ready` was not run on
+  the rebuild (no ready or deploy record on this machine), so it is live
+  unverified by a walk. On the branch since: `advance-on-end` stripped from
+  the three clips (Decisions, 2026-10-21), the owner's title in the headmatter
+  and Brief, two facts filed. Next: the owner's answer to the 15-min proposal
+  (in this window), then build content; renders wait for Innoday's Thursday
+  redeploy; Friday: pin v0.8.2, stills, `talk record --plates`, `talk ready`.
 - 2026-10-18 (latest): **flow overhaul, blueprint written, not built.** The
   owner, in this window, on the deployed 20-slide deck: "This one still lacks
   coherence, now I can build some story telling around it ... but need a much
@@ -317,6 +398,87 @@ purpose).
 
 ## Decisions
 
+- 2026-10-22 — The broadcast safe box (x 98–882, y 55–408 of the 980 canvas,
+  37 px type floor; `talk safe` for a talk marked `broadcast`): the text
+  area's edge `--kk-x` 72 → 104 px and floor `--kk-floor` 84 → 150 px, the
+  readouts and the shared opening's caption on it; names, units and the cover
+  line at 38 px. Labels projected from a pose re-projected after a reframe:
+  11 (drawn back, dist 23), 13 (dist 26), 14 (the `whole` pose moved 5,5
+  south: `[1201, 0, 2.5]`, dist 36, pitch 60; `whole` itself is unused now),
+  17 (the 1 TB sphere left of x 800, its label 0.12), 19 (13 west, the 100 PB
+  sphere clear of the readout), 22 (the sun's names at labelH 0.1, the camera
+  back to dist 37,5, and the sun turns at 300 s instead of 100, its items
+  started 219 s along their orbit: at the old turn no pose keeps
+  „Meistriškumo pamoka“ in the box; the sun is about 20 % smaller and slower).
+  Soft shades behind 9's readouts (they stand on the detector's wireframe now)
+  and a larger one behind 5's caption. Undo: the commit 6eda07d and 13c0b43.
+- 2026-10-22 — `lis_flag.mp4` talk-owned: the library's 10 s copy, byte for
+  byte, on this talk's release, so `videos:check` passes on any CLI and the
+  clip no longer depends on the library chain. Innoday's 20 s cut stays
+  Innoday's.
+- 2026-10-22 — The tape library cut (slide 20's TODO, cleared): from a frame
+  sheet, CERN-FOOTAGE-2022-013-006's last shot, 1:48–2:02 (14 s): the tape
+  library's aisle, the robot's carriage running down it. Silent (`silent-loop`;
+  under speech). Talk-owned, same name as the library copy; encoded from the
+  Drive raw, published to the talk's release, its dust strip committed.
+- 2026-10-21 — The LHC dipole magnet (the owner, through the Scheduler: "can
+  show magnet video from CERN (somewhere in google drive)", the file
+  cern_video_2019_050_008_1080ph265.mp4; then in this window "A, ok" to cut A
+  and to its labels; his third answer, whether to drop the data-centre slide if
+  the talk runs long, not given, so it stays). New slide 6, between the
+  tunnel's push and the collision: the first 10,8 s (a cutaway of the
+  cryostat into the two beam pipes; the film dissolves to its vacuum part at
+  11 s), its English/French labels kept, silent. Talk-owned, same name as the
+  library's full-length copy so this release wins; encoded from the Drive raw
+  (in the worktree's gitignored `videos/raw`), published to
+  `videos-2026-10-26-uzsikraukkarjerai`, its dust strip committed. The tunnel's
+  bridge „Štai vienas toks susidūrimas.“ moved to the magnet slide. New fact
+  `lhc-two-beam-pipes-opposite` (home.cern). Every later slide is one higher;
+  the notes, comments and credits renumbered. Undo: delete the slide and the
+  manifest entry.
+- 2026-10-21 — The 15-minute round (the owner, in this window: "Build", to the
+  proposal of the same day; his photos for the road and the Keynote copy were
+  not answered, so: no photos, the slots stay spoken; the Keynote/PowerPoint
+  copy is made on Friday with the recordings). Built:
+  - **8, inside LHCb** (new): Innoday's model of LHCb's Run 3 geometry with the
+    1,83 m person (main 404f3a7: `setup/detector.js` → this talk's, on its grain
+    bus and `disk` latch, grains file not fetched; its floor and cradles from
+    `emblems.js` → `setup/cavern.js`, `floor` renamed `cavern-floor`, since
+    OpenData's `floor` is this talk's); station `cavern` at [1000, −480, 0] with
+    Innoday's `thanks` objects (collision `inside`, LHCb's own 2012 event, the
+    default of components/lhc-opening); `<InsideLhcb>` starts it once the
+    camera has craned down (y < −482), and freezes the world at the crossing
+    as Innoday's; the 40 MHz glow is the detector's `cascade`. „100 m“ counts up
+    during the crane (the title's depth, `lhcb-100m-below-ground`), then „40 mln.
+    per sekundę“ on the dolly back. The mass lines moved here from 7, which now
+    lets the reel's music run. No magnet line: the outreach page did not answer.
+  - **9, click 2** (new): `th2`, the 3 500-dot sample of the same random
+    spectrum (theta-toy.json's `large`, back from before 18 Oct), fills where
+    `th1` was and lights the tick over the same column: the bump is gone. 10's
+    smoothing sentence now says only what real particles do (no repeat).
+  - **15, the group's part** (new): the library clip `lis_flag.mp4` (Innoday's
+    10 s render, the flag Innoday's touch, both said in the script); the
+    coordinator bridge moved here from 14. Not a real photograph: my proposal
+    called it real footage, corrected the same day.
+  - **19, the data centre** (new): `cern_footage_2022_013_006.mp4` whole until
+    Friday's cut (TODO mark, so `lint --release` stops a deploy without it);
+    about 60 000 tapes, over a million terabytes (`cern-exabyte`).
+  - Spoken now (the blueprint's "If there is room"): 2's web line, 6's CMS line,
+    10's five-at-once and the four confirmed, 20's Brown preprint, 21's first
+    LHCb files for masterclasses; held silences of 4 s on 12, 3 s on 22.
+  - `duration: 15min`, the `info` block, slide references renumbered.
+  Undo: `git revert` the round's commit; the 20 Oct deck is 3c7c655.
+- 2026-10-21 — No `advance-on-end` on any clip unless the owner asks for that
+  clip by name (his standing rule, 21 Oct, after OpenData's "autoclick";
+  through the Scheduler). Stripped from slides 4 (`cern_overview_short.mp4`),
+  5 (the tunnel) and 7 (`lhcb.mp4`); the notes now say → at the clip's end
+  (a clip holds its last frame; the push exits still run on the speaker's →).
+  `slidev-stage-record` drives the deck itself, so the recordings are
+  unchanged. Undo: none wanted; ask the owner per clip.
+- 2026-10-21 — The title back in the headmatter: `title:` is the owner's
+  „Kas vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po
+  žeme“ (the 16 Oct „Užsikrauk karjerai“ tab name replaced); still no title
+  slide or h1. Kept his capital „Pasaulyje“ as given.
 - 2026-10-20 — Blueprint v2 built (the owner, 20 Oct, on v1: "This will
   need to be reworked a bit…"; asked what is off: "10-15min talk"; then:
   "Taking elements from innoday and open data set up a good story telling
@@ -777,8 +939,9 @@ purpose).
   with no nebula there are few gradients left; check a test encode at
   2.5 Mbit/s before the filming. Undo: drop the `options` overrides.
 - 2026-10-08 — City names on the map are HTML labels at positions projected
-  from the `whole` pose (target europe + [1, 0, −3], dist 36, yaw 0, pitch
-  60, sway 0). If that pose changes, recompute them.
+  from the slide's pose (until 22 Oct the `whole` pose, target europe +
+  [1, 0, −3]; since then `[1201, 0, 2.5]`, dist 36, yaw 0, pitch 60, sway 0,
+  in the slide's frontmatter). If that pose changes, recompute them.
 
 - 2026-10-08 — Real photographs where the story names something real: the
   LHCb cavern (Rosa Menkman, CC BY 2.0), Gell-Mann (Joi Ito, CC BY 2.5),
@@ -789,9 +952,12 @@ purpose).
 
 ## Figures and open items (for the speaker)
 
-The owner's list after the 15 and 18 Oct rounds, each a yes/no or a fact only they
-have (the AFK default is built and deployed; each has an undo under Decisions):
-
+0. ~~TV or online?~~ Answered 21 Oct: "15min talk, will be recorded in a
+   studio with good quality" (Brief, Delivery); the studio's answers are in
+   the Brief (1080p50, a screen behind him, he clicks, sound to the mixer,
+   probably no logo). Still open: where he stands against the screen (what
+   his body hides), whether Delfi runs a flash check, the Keynote/PowerPoint
+   copy.
 1. ~~The cover's title~~ Answered 16 Oct: "Don't call it 'vadovelio gale
    atsakymo nera' don't need that". The name line stays (the Scheduler's
    reading); say if the cover should go too.

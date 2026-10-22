@@ -1,8 +1,9 @@
-# The landing page's link text for each talk (the index step in
-# .github/workflows/deploy.yml): its date and name, newest first by this
+# The landing page's link text for each talk (scripts/site_index.py, run
+# by .github/workflows/deploy.yml): its date and name, newest first by this
 # label. Keyed by slug, the directory name without its date, so a talk
 # whose date changes keeps its label. A talk not listed shows its
-# directory name.
+# directory name. A talk with a committed videos/pptx.json also gets a
+# "PPTX · size" download on the right of its line.
 [labels]
 Tokyo = "2026_11_18_Tokyo_Embassy"
 UzsikraukKarjerai = "2026_10_26_Uzsikrauk_Karjerai"
