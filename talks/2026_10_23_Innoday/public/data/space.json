@@ -603,7 +603,7 @@
           "pitch": 8,
           "src": "figures/lhcb_logo_grains.png",
           "mode": "alpha",
-          "grains": 80000,
+          "grains": 55000,
           "size": 1.35,
           "alpha": 1.0,
           "scrim": 0.7,

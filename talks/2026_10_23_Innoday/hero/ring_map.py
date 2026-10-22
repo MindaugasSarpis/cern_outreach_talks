@@ -149,7 +149,7 @@ def main(src, dst):
     blue, pale, warm = '#9cc4ff', '#cfe2ff', '#ffb054'
     rings = [
         # the FCC: dashed, warm, as CERN's map draws it
-        {'c': [round(fx, 3), round(fy, 3)], 'r': round(rf, 3), 'grains': 18000, 'alpha': 1.0, 'color': warm, 'dash': 72, 'width': 0.12},
+        {'c': [round(fx, 3), round(fy, 3)], 'r': round(rf, 3), 'grains': 12000, 'alpha': 1.0, 'color': warm, 'dash': 72, 'width': 0.12},
     ]
     # the SPS, the PS and the transfer tunnels are left out (owner, 22 Oct: "the inner ring of the
     # lhc doesn't make sense... don't show it"): the LHC (the ring builder's beams) and the FCC only
@@ -160,10 +160,11 @@ def main(src, dst):
         lines.append({'pts': l, 'grains': max(120, int(len(l) * 70)), 'alpha': 0.8, 'color': '#6f9fe0', 'width': 0.05})
     for l in lake_poly:
         for run in cut(l):
-            lines.append({'pts': run, 'grains': 4000, 'alpha': 1.0, 'color': '#7fb0ff', 'width': 0.06})
+            lines.append({'pts': run, 'grains': 3000, 'alpha': 1.0, 'color': '#7fb0ff', 'width': 0.06})
     for l in ridges:
-        lines.append({'pts': l, 'grains': 5000, 'alpha': 0.7, 'color': '#6fae78', 'width': 0.6})
-    fills = [{'pts': l, 'grains': 26000, 'alpha': 1.0, 'color': '#4f86da', 'box': list(BOX)} for l in lake_poly]
+        lines.append({'pts': l, 'grains': 2500, 'alpha': 0.7, 'color': '#6fae78', 'width': 0.6})
+    fills = [{'pts': l, 'grains': 15000, 'alpha': 1.0, 'color': '#4f86da', 'box': list(BOX)} for l in lake_poly]
+    # (grain counts cut by a third, 22 Oct: "lags on zooming out to lhc / fcc" on a Mac)
 
     # the last view: straight down (pitch 89), north up, framing the LHC and the whole FCC
     rot = math.radians(-bearing)
