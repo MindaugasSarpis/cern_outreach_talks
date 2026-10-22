@@ -169,8 +169,11 @@ to 1920x1080 (finer grains); then hero/bookend.py: the map flies away into the E
 (owner: "Make this going back to vilnius quicker"; the last 10 s flying in, "better to fly \
 in to it for the last 10 seconds and then very slowly start zooming out again"; landing \
 ~76.5 s, darkened to the black ground, then the opener forwards at 0.12x to ~111.5 s), and \
-the take's „Ačiū" collision lifted off the map over Vilnius, its crossing at \
-79.8 s on Starfire's 2:54.85 (the Soundtrack's `drop`). The take has the whole LHCb logo \
+the take's „Ačiū" collision lifted off the map over Vilnius as soon as NFTMC is in view \
+("start ACIU as soon as it's visible"), its crossing at 69.8 s on Starfire's 2:54.85 (the \
+Soundtrack's `drop`), full frame ("and collision full frame": a 4.5x close-up of the 4K \
+take, easing back as the word gathers); slow passes blend neighbouring frames ("looks \
+choppy"). The take has the whole LHCb logo \
 (owner: "LHCb Logo only showing half"). \
 x264 slow, CRF 17, under 10 Mbit/s, silent. Placed in public/videos/ and published with \
 --only; no raw."""

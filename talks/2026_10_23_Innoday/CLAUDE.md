@@ -441,6 +441,13 @@ v0.8.1 since 20 Oct and builds the zip local-first itself).
   out again" (read as: not a still): the dive fast through space and the clouds, its last 10 s
   a fly-in easing onto NFTMC (~76.5 s), and under „Ačiū“ the opener forwards at 0.12× (the clip
   ~111.5 s, then held).
+  Then: "looks choppy... because of framerate ... need the video to be smooth around NFTMC, so
+  start ACIU as soon as it's visible (can still be around vilnius) maintain original or at least
+  decent framerate": the fly-in at about the opener's own pace (at most 1.33×), every slower
+  pass a blend of neighbouring frames (no held frames), the word's bunches from 66.55 s (NFTMC
+  in view), the crossing and the peak at 69.8 s, the landing at 76.55 s.
+  And "and collision full frame": the collision is a close-up of the 4K take (4.5×: its spray
+  fills the frame), easing back to the whole word as it gathers (the take's 64–68 s).
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 

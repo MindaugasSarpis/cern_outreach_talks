@@ -29,12 +29,13 @@ from scipy.ndimage import maximum_filter, gaussian_filter
 W, H, FPS = 1920, 1080, 50
 T_STILL = (56.95, 57.95)   # the take: the camera stands still over the map
 T_CROSS = 61.2             # the take: the word's collision crosses
-V_HIT = 79.8               # the clip: the crossing, on Starfire's peak (the music's 2:54.85: the Soundtrack's `drop` brings it here)
+V_LAND = 76.55             # the clip: the fly-in comes to rest on NFTMC
+FLY_IN = 10.0              # the dive's last s: flying in to NFTMC at about the opener's own pace (owner: "better to fly in to it for the last 10 seconds")
+V_SEE = V_LAND - FLY_IN    # NFTMC in view: the word's bunches come in now, over Vilnius (owner: "start ACIU as soon as it's visible (can still be around vilnius)")
+V_HIT = V_SEE + (T_CROSS - T_STILL[1])   # the crossing, on Starfire's peak (the music's 2:54.85: the Soundtrack's `drop` brings it here)
 SHIFT = V_HIT - T_CROSS    # the take's word, later in the clip
 V_OUT0, V_OUT1 = 57.4, 61.0   # the map away, the Earth up (owner, on the 28 s dive: "Make this going back to vilnius quicker")
-FLY_IN = 10.0                 # the dive's last s: flying in to NFTMC at about the opener's own pace (owner: "better to fly in to it for the last 10 seconds")
-DRIFT = 0.12                  # after the landing, the opener forwards at this rate: "then very slowly start zooming out again"
-V_LAND = V_HIT - (T_CROSS - T_STILL[1])   # NFTMC reached as the word's bunches come in
+DRIFT = 0.15                  # after the landing, the opener forwards at this rate: "then very slowly start zooming out again"
 KNEE = 4.0
 
 ap = argparse.ArgumentParser()
@@ -51,18 +52,21 @@ EARTH_T = x.earth_t
 GX, GY = (float(v) for v in x.geneva.split(','))
 
 
-def reader(path, t0, t1=None, fps=None):
+def reader(path, t0, t1=None, fps=None, native=None):
+    # native: (w, h) as recorded, unscaled (the 4K take, for the collision's close-up)
+    w, h = native or (W, H)
     args = ['ffmpeg', '-v', 'error', '-ss', f'{t0:.3f}', '-i', path]
     if t1 is not None: args += ['-t', f'{t1 - t0:.3f}']
-    vf = [f'scale={W}:{H}:flags=lanczos'] + ([f'fps={fps}'] if fps else [])
-    args += ['-vf', ','.join(vf), '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-']
-    p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, bufsize=W * H * 3 * 4)
-    n = W * H * 3
+    vf = ([] if native else [f'scale={W}:{H}:flags=lanczos']) + ([f'fps={fps}'] if fps else [])
+    if vf: args += ['-vf', ','.join(vf)]
+    args += ['-f', 'rawvideo', '-pix_fmt', 'rgb24', '-']
+    p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, bufsize=w * h * 3 * 4)
+    n = w * h * 3
     try:
         while True:
             b = p.stdout.read(n)
             if len(b) < n: break
-            yield np.frombuffer(b, np.uint8).reshape(H, W, 3)
+            yield np.frombuffer(b, np.uint8).reshape(h, w, 3)
     finally:
         p.kill()
 
@@ -114,6 +118,8 @@ keep = (1 - gaussian_filter(mask.astype(np.float32), 2.0))[..., None]
 
 def layer_of(f, t=None):
     L = np.clip(f - plate - floor - KNEE, 0, None) * keep
+    # where the take is white (the flash), white: the map's bright dashes under it cut dark dashes
+    L = np.where(f >= 245, np.maximum(L, f), L)
     # the 4K grains are finer: the campus shows between them, and the word reads as chalk; each
     # pixel at least its close neighbourhood's light, so the letters and stripes read solid
     return np.maximum(L, gaussian_filter(L, sigma=(1.3, 1.3, 0)))
@@ -132,42 +138,44 @@ def zoomed(img, s, cx, cy):
 earth = one(x.opener, EARTH_T)
 nftmc = one(x.opener, 0.0)
 # the dive: read forward through the reversed opener, frame by frame as the clip needs them
-class Dive:
-    def __init__(self): self.it, self.k, self.f = None, -1, None
-    def at(self, r):
-        want = max(0, int(round(r * 60)))
-        if x.stills: return one(x.dive, want / 60)
-        if self.it is None or want < self.k: self.it, self.k = reader(x.dive, 0), -1
-        while self.k < want:
-            nxt = next(self.it, None)
-            if nxt is None: break
-            self.f, self.k = nxt, self.k + 1
-        return self.f.astype(np.float32)
-dive = Dive()
-
-
-class Fwd:
-    """the opener forwards (60 fps), frame by frame as the clip needs them"""
-    def __init__(self): self.it, self.k, self.f = None, -1, None
+class Seq60:
+    """a 60 fps video read forward; a time between two frames is their blend, so a slow pass
+    glides instead of stepping (owner: "looks choppy... because of framerate")"""
+    def __init__(self, path): self.path, self.it, self.k, self.cache = path, None, -1, {}
+    def frame(self, k):
+        if k in self.cache: return self.cache[k]
+        if x.stills:
+            try: f = one(self.path, k / 60)
+            except StopIteration: f = self.cache[max(self.cache)] if self.cache else one(self.path, 0)
+            self.cache[k] = f
+            return f
+        if self.it is None or k < self.k: self.it, self.k, self.cache = reader(self.path, 0), -1, {}
+        while self.k < k:
+            n = next(self.it, None)
+            if n is None: break
+            self.k += 1
+            self.cache[self.k] = n.astype(np.float32)
+            for j in [j for j in self.cache if j < self.k - 2]: del self.cache[j]
+        return self.cache[k] if k in self.cache else self.cache[max(self.cache)]
     def at(self, T):
-        want = max(0, int(round(T * 60)))
-        if x.stills: return one(x.opener, want / 60)
-        if self.it is None or want < self.k: self.it, self.k = reader(x.opener, 0), -1
-        while self.k < want:
-            nxt = next(self.it, None)
-            if nxt is None: break
-            self.f, self.k = nxt, self.k + 1
-        return self.f.astype(np.float32)
-fwd = Fwd()
+        pos = max(0.0, T * 60); k0 = int(np.floor(pos)); fr = pos - k0
+        a = self.frame(k0)
+        if fr < 1e-3: return a
+        b = self.frame(k0 + 1)
+        return a * (1 - fr) + b * fr
+dive = Seq60(x.dive)
+fwd = Seq60(x.opener)
 
 
 def dive_t(V):
-    # fast through space and the clouds, then the last FLY_IN s over the opener's last ~10 s,
-    # easing into the campus: T = EARTH_T (1-u)^p, with T = 10 at FLY_IN s before the landing
-    D = V_LAND - V_OUT1
-    u = np.clip((V - V_OUT1) / D, 0, 1)
-    p = np.log(10.0 / EARTH_T) / np.log(FLY_IN / D)
-    return EARTH_T * (1 - u) ** p
+    """the opener's time at clip time V: fast through space and the clouds (to its 10 s, NFTMC
+    in view, at V_SEE), then the fly-in at about its own pace (at most 1.33x), coming to rest on
+    NFTMC at V_LAND; the speeds meet at V_SEE"""
+    if V >= V_SEE:
+        d = max(0.0, V_LAND - V)
+        return -0.01 * d ** 3 + 0.2 * d ** 2   # 10 at d = 10 with speed 1, 0 at rest
+    L = V_SEE - V_OUT1; e = (V_SEE - V)
+    return 10.0 + e + (EARTH_T - 10.0 - L) * (e / L) ** 3
 
 
 def drift_t(V):
@@ -192,13 +200,15 @@ def compose(V, take_frame):
         # clouds appear"): gone by ~58.1 s, as the first clouds show, the Earth up by ~59.5 s
         return mp * (1 - smooth(0.0, 0.05, a)) + ea * smooth(0.03, 0.3, a)
     if V < V_LAND:
-        img = dive.at(x.dive_span - dive_t(V))
-        return grade(img, smooth(V_LAND - 3.0, V_LAND, V))
-    # landed: NFTMC, dark, and the take's word over it
-    base = grade(fwd.at(drift_t(V)), 1.0)
+        # the picture settles to the deck's dark ground before NFTMC is in view, so the word reads
+        base = grade(dive.at(x.dive_span - dive_t(V)), smooth(V_SEE - 2.5, V_SEE, V))
+        if V < V_SEE: return base
+    else:
+        # landed: then very slowly out again
+        base = grade(fwd.at(drift_t(V)), 1.0)
     t = V - SHIFT
     if t > 73 - 1 / FPS: t = 73 - 1 / FPS
-    return base + layer_of(take_at(t), t)
+    return base + word_layer(t)
 
 
 class Seq:
@@ -215,6 +225,64 @@ class Seq:
         return self.f.astype(np.float32)
 word_take = Seq(x.take)
 take_at = word_take.at
+
+
+# The collision full frame (owner: "and collision full frame"): from the bunches' arrival the
+# word's layer is a close-up of the 4K take round the collision (S_COL x: its spray, ~370 px of
+# 1080, fills the frame), easing back to the whole word by ~68 s of the take as the word gathers
+S_COL = 4.5
+C4 = (1920.0, 1156.0)   # the collision in the 4K take (960, 578 at 1080)
+def zoom_of(t): return 1 + (S_COL - 1) * (1 - smooth(63.5, 68.5, t))   # back over 5 s, as the word gathers
+class Take4:
+    def __init__(self): self.it, self.k, self.f, self.ready = None, -1, None, False
+    def prepare(self):
+        if self.ready: return
+        fs = None; lo = None
+        for f in reader(x.take, *T_STILL, native=(3840, 2160)):
+            g = f.astype(np.float32)
+            lo = g if lo is None else np.minimum(lo, g)
+        hi = None
+        for f in reader(x.take, *T_STILL, native=(3840, 2160)):
+            r = f.astype(np.float32) - lo
+            hi = r if hi is None else np.maximum(hi, r)
+        hi = maximum_filter(hi, size=(5, 5, 1)) * 1.5
+        hi[840:1660, 1380:2480] = np.minimum(hi[840:1660, 1380:2480], 12.0)
+        self.plate, self.floor = lo, hi
+        # the map without its thin bright lines: under the glow the renderer's tone curve adds
+        # less than the line's light, so the plain plate cut dark dashes into the spray
+        from scipy.ndimage import grey_opening
+        self.plate_open = grey_opening(lo, size=(9, 9, 1))
+        self.keep = np.repeat(np.repeat(keep, 2, axis=0), 2, axis=1)
+        self.ready = True
+    def at(self, t):
+        want = int(round(t * FPS))
+        if x.stills: return next(reader(x.take, want / FPS, native=(3840, 2160))).astype(np.float32)
+        if self.it is None or want < self.k: self.it, self.k = reader(x.take, want / FPS, native=(3840, 2160)), want - 1
+        while self.k < want:
+            n = next(self.it, None)
+            if n is None: break
+            self.f, self.k = n, self.k + 1
+        return self.f.astype(np.float32)
+take4 = Take4()
+def word_layer(t):
+    s = zoom_of(t)
+    if s <= 1.02: return layer_of(take_at(t), t)
+    take4.prepare()
+    w, h = 3840 / s, 2160 / s
+    x0 = int(round(min(max(C4[0] - w / 2, 0), 3840 - w))); y0 = int(round(min(max(C4[1] - h / 2, 0), 2160 - h)))
+    x1, y1 = x0 + int(round(w)), y0 + int(round(h))
+    f = take4.at(t)[y0:y1, x0:x1]
+    fl = take4.floor[y0:y1, x0:x1] + KNEE
+    L = np.clip(f - take4.plate[y0:y1, x0:x1] - fl, 0, None)
+    Lo = np.clip(f - take4.plate_open[y0:y1, x0:x1] - fl, 0, None)
+    # in the spray's light (the plain subtraction bright all round, blurred: a map line alone
+    # never is), the line-free plate
+    glow = smooth(25.0, 70.0, gaussian_filter(L.max(axis=2), 10.0)[..., None])
+    L = (L * (1 - glow) + Lo * glow) * take4.keep[y0:y1, x0:x1]
+    L = np.where(f >= 245, np.maximum(L, f), L)
+    L = np.maximum(L, gaussian_filter(L, sigma=(2.6, 2.6, 0)))
+    im = Image.fromarray(np.clip(L, 0, 255).astype(np.uint8)).resize((W, H), Image.LANCZOS)
+    return np.asarray(im).astype(np.float32)
 
 
 V_END = V_LAND + 35.0   # the word held over the slow zoom-out; the player holds the last frame
