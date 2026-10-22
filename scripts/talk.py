@@ -26,7 +26,7 @@
                   public/videos/NN-plate.mp4, videos/plates.json and the manifest's
                   plates block, for the stage to play where WebGL is missing
   pptx NAME       the deck as a PPTX, one autoplaying video per slide and click: pull the clips,
-                  record the takes (1080p50, an 8 s hold, every click) unless the take is current,
+                  record the takes (1080p25, an 8 s hold, every click; a clip slide is its clip) unless current,
                   `slidev-videos pptx` into $TALK_TMP/talk-<slug>/pptx/, upload <talk>.pptx to
                   the talk's videos release, write videos/pptx.json (commit it: the site's PPTX link)
   export NAME     slidev export (PDF; --format png|pptx) in the render slot, with
@@ -115,10 +115,12 @@ PLATE_RE = re.compile(r"^(\d{2,})-plate\.mp4$")
 PLATES_BEGIN = "# >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost"
 PLATES_END = "# <<< plates"
 PLATES_BLOCK_RE = re.compile(r"\n*^# >>> plates.*?^# <<< plates[^\n]*\n?", re.S | re.M)
-# `talk pptx`: the takes at 1080p50 with an 8 s hold and every click (one PPTX slide each), and the
-# recorder's --max past the longest clip by a settle (a clip slide holds for the rest of its clip);
-# 600 s when a clip's length is unknown. ready warns on a PPTX over 1.5 GB (GitHub takes 2 GB an asset).
-PPTX_FPS, PPTX_HOLD, PPTX_MAX, PPTX_SETTLE, PPTX_MAX_UNKNOWN = 50, 8, 120, 60, 600
+# `talk pptx`: the takes at 1080p25 (the plates look fine at 25; `-- --fps 50`) with an 8 s hold and
+# every click (one PPTX slide each); a clip slide is not filmed (the recorder's --skip-clips: the PPTX
+# gets the clip file itself), so --max is the settle's 120 s. --film-clips films them as before, --max
+# past the longest clip by a settle (a clip slide holds for the rest of its clip), 600 s when a clip's
+# length is unknown. ready warns on a PPTX over 1.5 GB (GitHub takes 2 GB an asset).
+PPTX_FPS, PPTX_HOLD, PPTX_MAX, PPTX_SETTLE, PPTX_MAX_UNKNOWN = 25, 8, 120, 60, 600
 PPTX_CAP = "6M"
 PPTX_MB = 1536
 VIDEO_SRC_RE = re.compile(r"<VideoPlayer\b[^>]*?\bsrc\s*=\s*\"([^\"]+)\"[^>]*>", re.S)
@@ -2233,7 +2235,8 @@ def last_json(text: str) -> dict:
 def cmd_pptx(repo: Repo, a, extra) -> tuple[int, dict]:
     """The deck as a PPTX, one autoplaying video per slide and click (slidev-videos pptx), from the
     stage's takes: the clips pulled (--include-shared, so no clip slide records without its clip), the
-    takes recorded at 1080p50 with an 8 s hold and every click into $TALK_TMP/talk-<slug>/pptx/rec unless
+    takes recorded at 1080p25 with an 8 s hold and every click (a clip slide not filmed: --skip-clips, the
+    PPTX gets the clip file; --film-clips films it) into $TALK_TMP/talk-<slug>/pptx/rec unless
     the take there is current (take.json: the talk's content fingerprint and the recorder's args), the
     PPTX built in the render slot, uploaded as <talk>.pptx to the talk's videos release (--clobber), and
     videos/pptx.json written for ready's pptx step and the site's PPTX link (commit it). The recorder's
@@ -2249,6 +2252,11 @@ def cmd_pptx(repo: Repo, a, extra) -> tuple[int, dict]:
     if not supports(b, "--max"):
         raise UsageError(f"this slidev-stage-record has no --max ({b}): pin the talk to a toolkit release "
                          f"(pnpm talk pin {slug} <tag>), or SLIDEV_STAGE_BIN")
+    skip_clips = not a.film_clips
+    if skip_clips and not supports(b, "--skip-clips"):
+        raise UsageError(f"this slidev-stage-record has no --skip-clips ({b}), so it would film every clip slide frame "
+                         f"by frame (a 4-minute clip took 53 min): pin the talk to v0.8.4 or later (pnpm talk pin {slug} "
+                         f"<tag>), or SLIDEV_STAGE_BIN at a recorder that has it; --film-clips to film them anyway")
     work = build_dir(talk) / "pptx"
     rec, part, out, deck = work / "rec", work / "rec-part", work / f"{talk}.pptx", d / "deck.md"
     pj_path = d / "videos" / "pptx.json"
@@ -2274,10 +2282,11 @@ def cmd_pptx(repo: Repo, a, extra) -> tuple[int, dict]:
             say_summary(summarize(r.stdout, False))
             return fail(f"slidev-videos pull --include-shared failed (exit {r.returncode}): a clip slide would record "
                         "without its clip", log=str(LOG.path) if LOG.path else None)
-    seconds = clip_seconds(d, deck_clips(d), env)
+    # left to the clips, a clip slide takes no frames: their lengths do not matter
+    seconds = {} if skip_clips else clip_seconds(d, deck_clips(d), env)
     unknown = sorted(n for n, v in seconds.items() if v is None)
     mx = pptx_max(seconds)
-    data.update(clips=seconds, unknown_clips=unknown, max=mx)
+    data.update(clips=seconds, unknown_clips=unknown, max=mx, skip_clips=skip_clips)
     if unknown:
         OUT.say(f"warning: no length for {', '.join(unknown)} (not in public/videos, not in the frames index): "
                 f"the recorder's --max is {mx} s")
@@ -2285,6 +2294,8 @@ def cmd_pptx(repo: Repo, a, extra) -> tuple[int, dict]:
     for flag, default in (("--fps", PPTX_FPS), ("--hold", PPTX_HOLD), ("--clicks", "all"), ("--max", mx)):
         if flag not in given:
             args += [flag, str(default)]
+    if skip_clips and "--skip-clips" not in given:
+        args.append("--skip-clips")
     args += [str(x) for x in extra]
     key = without_slides(args)
     fp = take_fingerprint(repo.here, talk)
@@ -3230,6 +3241,9 @@ def build_parser() -> argparse.ArgumentParser:
     sp = verb("pptx", "the deck as a PPTX of the stage's takes, one autoplaying video per slide and click, on the "
                       "talk's videos release, and videos/pptx.json (the recorder's flags after --)")
     sp.add_argument("--rerecord", action="store_true", help="record the takes again though the take is current")
+    sp.add_argument("--film-clips", action="store_true",
+                    help="film the clip slides frame by frame, as the world is (default: the recorder's --skip-clips, "
+                         "the PPTX gets each clip file itself)")
     sp.add_argument("--no-publish", action="store_true", help="build the PPTX only: no upload, no videos/pptx.json")
     sp.add_argument("--dry-run", action="store_true", help="print the plan; pull, record, build and upload nothing")
     sp.add_argument("--cap", help="the PPTX encode's bitrate cap (slidev-videos pptx --cap; its default 6M)")

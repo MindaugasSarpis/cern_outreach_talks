@@ -189,8 +189,10 @@ the package.
   browser: `navigator.webdriver`, `window.__rec`, `window.__shots`) →
   `pnpm talk pptx <t>` (the render slot: `slidev-videos pull
   --include-shared`, so no clip slide records without its clip; the takes
-  at 1080p50, an 8 s hold, every click, `--max` the longest clip + 60 s
-  (120 s at least, 600 s when a clip's length is unknown) into
+  at 1080p25, an 8 s hold, every click, a clip slide not filmed (the
+  recorder's `--skip-clips`: the PPTX gets the clip file), `--max` 120 s;
+  `--film-clips` films them, `--max` the longest clip + 60 s (600 s when a
+  clip's length is unknown); `-- --fps 50` for 50 fps) into
   `$TALK_TMP/talk-<slug>/pptx/rec`, kept while `rec/take.json`'s content
   fingerprint and recorder args match, `--rerecord` to record again, `--
   --slides N-M` for some slides, the recorder's flags after `--`; then

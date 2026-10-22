@@ -21,7 +21,7 @@ FAKE_RECORDER = ('echo "$*" >> "$REC_ARGS_OUT"\nout="$3"\nmkdir -p "$out"\nsegs=
                  'for n in ${REC_SLIDES:-1 2 3}; do f=$(printf "%02d.mp4" $n); printf "${REC_TAKE:-take}" > "$out/$f"\n'
                  '  segs="$segs${segs:+, }{\\"slide\\": $n, \\"clicks\\": 0, \\"file\\": \\"$f\\", \\"seconds\\": 11}"\ndone\n'
                  'echo "{\\"fps\\": 50, \\"hold\\": 8, \\"segments\\": [$segs]}" > "$out/index.json"\necho "$n file(s)"\n')
-STAGE_RECORD = "# else if (a === '--max') ...; else if (a === '--clicks') ...\n"
+STAGE_RECORD = "# else if (a === '--max') ...; else if (a === '--clicks') ...; else if (a === '--skip-clips') ...\n"
 # slidev-videos: --version, `pptx --help` (exit $SV_PPTX_HELP, else 0), pull, and pptx writing --out and its --json
 FAKE_SV = r'''echo "$*" >> "$SV_LOG"
 case "$1" in
@@ -86,16 +86,17 @@ def test_pptx_records_builds_uploads_and_writes_pptx_json(repo, tools, tmp_path)
     sv = lines(tmp_path / "sv.log")
     assert sv[0] == ["pptx", "--help"] and ["pull", "--include-shared"] in sv
     assert [x for x in sv if x[:1] == ["pptx"]][-1] == ["pptx", str(rec), "--deck", str(deck), "--out", str(out), "--json"]
-    # every clip slide whole: --max past the longest clip (253.4 s) by the settle's 60 s
+    # the world at 25 fps; a clip slide is not filmed (--skip-clips: the PPTX gets the clip itself), so
+    # --max is the settle's 120 s whatever the clips' lengths
     assert lines(tmp_path / "rec.args") == [[str(tmp_path / "stage-bin" / "slidev-stage-record"), str(tmp_path / "tmp" / "talk-opendata" / "site"),
-                                             str(rec), "--fps", "50", "--hold", "8", "--clicks", "all", "--max", "314"]]
+                                             str(rec), "--fps", "25", "--hold", "8", "--clicks", "all", "--max", "120", "--skip-clips"]]
     assert lines(tmp_path / "gh.log") == [["release", "view", "videos-t", "--repo", "o/r"],
                                           ["release", "upload", "videos-t", str(out), "--clobber", "--repo", "o/r"]]
     data = json.loads((repo / "talks" / TALK / "videos" / "pptx.json").read_text())
     recorded_at = data.pop("recorded_at")
     assert data == {"fingerprint": talk_cli.take_fingerprint(repo, TALK), "asset": ASSET, "repo": "o/r", "tag": "videos-t",
                     "url": URL, "bytes": 1234, "slides": 3, "segments": 3, "deck_slides": 3, "skipped": [],
-                    "fps": 50, "hold": 8, "max": 314, "cap": "6M", "cli": "slidev-videos 0.8.3"}
+                    "fps": 25, "hold": 8, "max": 120, "cap": "6M", "cli": "slidev-videos 0.8.3"}
     assert recorded_at == json.loads((rec / "take.json").read_text())["recorded_at"]
     assert obj["url"] == URL and obj["recorded"] is True and obj["uploaded"] is True and obj["out"] == str(out)
     assert "commit it" in err and "videos/pptx.json" in err
@@ -141,7 +142,7 @@ def test_pptx_dry_run_does_nothing_and_no_publish_uploads_nothing(repo, tools, t
     assert not (tmp_path / "rec.args").exists() and not (tmp_path / "gh.log").exists()
     assert [x for x in lines(tmp_path / "sv.log") if x[:1] != ["--version"]] == [["pptx", "--help"]]
     plan = obj["plan"]
-    assert plan["record"].endswith("--max 314") and plan["upload"].startswith("gh release upload videos-t")
+    assert plan["record"].endswith("--max 120 --skip-clips") and plan["upload"].startswith("gh release upload videos-t")
     assert not (repo / "talks" / TALK / "videos" / "pptx.json").exists()
     code, obj, _ = pptx(repo, tools, "--dry-run", "--cap", "4M", "--allow-skips")       # the builder's own flags
     assert obj["plan"]["build"].endswith("--json --cap 4M --allow-skips")
@@ -177,16 +178,40 @@ def test_pptx_failures_write_no_pptx_json(repo, tools, over, step):
     assert not (repo / "talks" / TALK / "videos" / "pptx.json").exists()
 
 
+def test_pptx_film_clips_films_every_clip_slide_whole(repo, tools, tmp_path):
+    code, obj, err = pptx(repo, tools, "--film-clips")
+    assert code == 0, err
+    # every clip slide whole: --max past the longest clip (253.4 s) by the settle's 60 s
+    assert lines(tmp_path / "rec.args")[-1][3:] == ["--fps", "25", "--hold", "8", "--clicks", "all", "--max", "314"]
+    assert json.loads((repo / "talks" / TALK / "videos" / "pptx.json").read_text())["max"] == 314
+    # the recorder's own --fps wins (the plates look fine at 25; 50 when asked)
+    code, obj, _ = pptx(repo, tools, "--dry-run", "--", "--fps", "50")
+    rec = obj["plan"]["record"].split()
+    assert rec.count("--fps") == 1 and rec[rec.index("--fps") + 1] == "50" and rec[-1] == "50"
+    assert json.loads((repo / "talks" / TALK / "videos" / "pptx.json").read_text())["fps"] == 25
+
+
+def test_pptx_refuses_a_recorder_that_cannot_skip_clips(repo, tools, tmp_path):
+    fake_bin(tmp_path / "stage-bin", "slidev-stage-record", "# else if (a === '--max') ...: v0.8.3\n")
+    code, obj, _ = pptx(repo, tools)
+    assert code == 2 and not (tmp_path / "rec.args").exists()
+    assert "--skip-clips" in obj["error"] and "SLIDEV_STAGE_BIN" in obj["error"] and "--film-clips" in obj["error"]
+    code, obj, err = pptx(repo, tools, "--film-clips")
+    assert code == 0, err
+
+
 def test_pptx_max_without_clips_and_with_a_clip_of_unknown_length(repo, tools, tmp_path):
     d = repo / "talks" / TALK
     (d / "public" / "videos" / "long.mp4").unlink()                    # not pulled: its length is unknown
-    code, obj, err = pptx(repo, tools, "--dry-run")
+    code, obj, err = pptx(repo, tools, "--dry-run", "--film-clips")
     assert obj["max"] == 600 and obj["unknown_clips"] == ["long.mp4"] and "long.mp4" in err
+    code, obj, err = pptx(repo, tools, "--dry-run")                    # left to the clips: their lengths do not matter
+    assert obj["max"] == 120 and "long.mp4" not in err
     (d / "deck.md").write_text("---\ntitle: x\n---\n\n# no clips\n")
-    code, obj, _ = pptx(repo, tools, "--dry-run")
+    code, obj, _ = pptx(repo, tools, "--dry-run", "--film-clips")
     assert obj["max"] == 120 and obj["clips"] == {}
     code, obj, _ = pptx(repo, tools, "--dry-run", "--", "--max", "90")      # the recorder's own --max wins
-    assert obj["plan"]["record"].endswith("--max 90")
+    assert "--max 90" in obj["plan"]["record"] and "--max 120" not in obj["plan"]["record"]
 
 
 def test_take_fingerprint_is_the_plates_one_and_leaves_out_pptx_json(repo):

@@ -79,7 +79,7 @@ pnpm talk build <t>                # into /tmp/talk-<slug>/site
 pnpm talk record <t> --slides 2-2  # from v0.6: one slide first, to time it
 pnpm talk record <t> --plate       # per-slide NN.mp4 at 1080p50 with a hold, NN-plate.mp4 without text, index.json
 pnpm talk record <t> --plates      # the stage's fallback plates: the world alone per non-clip slide, 1080p25, a 20 s hold, --max 120
-pnpm talk pptx <t>                 # the deck as a PPTX: a take per slide and click at 1080p50, onto the videos release
+pnpm talk pptx <t>                 # the deck as a PPTX: a take per slide and click at 1080p25 (a clip slide is its clip), onto the videos release
 ```
 
 `--plates` (plural) is not the broadcaster's plate set: it records what the
@@ -96,13 +96,18 @@ re-record takes an hour), `--strict-plates` to fail. The recorder and the
 
 `pnpm talk pptx <t>` is the PPTX the site and the cover's `<PptxButton />`
 offer (every stage talk from Innoday on): it pulls the clips with
-`--include-shared`, records the takes at 1080p50 with an 8 s hold and every
-click (`--max` past the longest clip) unless the take in
+`--include-shared`, records the takes at 1080p25 with an 8 s hold and every
+click unless the take in
 `$TALK_TMP/talk-<slug>/pptx/rec` is current, builds one autoplaying video per
 slide and click with the notes (`slidev-videos pptx`), uploads `<talk>.pptx`
 to the talk's videos release and writes `videos/pptx.json`: commit it. About
-half an hour for a 10-minute deck on this machine's GPU; `--dry-run` first.
-The takes are silent, so a clip's sound is not in the PPTX. A click segment
+half an hour for a 31-slide deck on this machine's GPU; `--dry-run` first.
+A clip slide is not filmed (the recorder's `--skip-clips`, toolkit v0.8.4):
+the PPTX gets the clip file itself, with its sound at the player's level;
+what the slide shows over or after its clip (a ClipEnd line, an exit push,
+AfterFlight stats) is not in it. `--film-clips` films clip slides frame by
+frame (a 4-minute clip took 53 min at 50 fps); `-- --fps 50` for 50 fps.
+The world's takes are silent. A click segment
 is its own PPTX slide, so PowerPoint counts more slides than the deck.
 
 `slidev-stage-record` steps the engine on a fixed clock, so frames are exact.
