@@ -55,7 +55,7 @@ OUT = dict(at=(9.6, -482.0, 0.8), dist=7.0, yaw=-80.0, pitch=4.0)
 LAND = pose_of((25.5, EYE, 15.0), (14.197, -482.364, 0.0))   # eye level, 7,6 m in front of the person, looking up the detector
 ALONG = pose_of((17.0, EYE, 19.0), (12.0, -481.0, 0.0))     # 9 m upstream, toward side on
 WIDE = pose_of((11.5, -479.0, 48.0), (11.5, -477.0, 0.0))   # the whole detector, the person at its foot, the emblems above
-RING = dict(at=(0.0, -480.0, -88.0), dist=240.0, yaw=0.0, pitch=38.0)   # the ring (radius 110, centre (0, -480, -110)) from above
+RING = dict(at=(0.0, -480.0, 57.0), dist=150.0, yaw=-90.0, pitch=40.0)   # the accelerator complex (`ring` in space.json) from above, the LHC on the left, the FCC on the right
 
 # legs: (t0, t1, from, to, slope at the start, slope at the end, kind), slopes in units of
 # the leg's average pace (1: the average; 0: at rest); 'log': the distance in log space
@@ -87,7 +87,7 @@ def mix_log(p, q, e):
     d = math.exp(lerp(math.log(p['dist']), math.log(q['dist']), e))
     f = (d - p['dist']) / (q['dist'] - p['dist'])
     return dict(at=tuple(lerp(a, b, f) for a, b in zip(p['at'], q['at'])), dist=d,
-                yaw=lerp(p['yaw'], q['yaw'], f), pitch=lerp(p['pitch'], q['pitch'], e))
+                yaw=lerp(p['yaw'], q['yaw'], e), pitch=lerp(p['pitch'], q['pitch'], e))
 
 
 def pose(t):
@@ -106,6 +106,7 @@ def camera(p):
 
 
 def num(v):
+    v = 0.0 if abs(v) < 5e-4 else v   # never '-0'
     return f'{v:.3f}'.rstrip('0').rstrip('.')
 
 

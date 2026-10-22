@@ -54,6 +54,11 @@ Slidev counts it (hidden slides are not counted).
                           headmatter (the deck keeps its sources in the
                           notes) a 'Sources:' / 'Šaltiniai:' line in the
                           slide's notes is asked for instead
+  ADVANCE        warning  `advance-on-end` on a <VideoPlayer>: a clip ends and
+                          waits for the press unless the owner asked for that
+                          clip by name (the owner, 2026-10-21, after a deck
+                          clicked itself on at a venue without WebGL);
+                          `:advance-on-end="false"` is not flagged
   CHECK          warning  an open mark left in the deck below the headmatter
                           (OPEN_MARKS): [CHECK…], [PATIKSLINTI…] (a question
                           for the owner), [ASR…] (a quote from an automatic
@@ -130,6 +135,8 @@ SOURCES = ("slides", "notes")                            # headmatter `sources:`
 NOTES_SRC = re.compile(r"(?im)^[ \t]*(?:[-*•][ \t]*)?(?:sources?|šaltin(?:is|iai)|references?)"
                        r"(?:[ \t]*\([^)\n]*\))?[ \t]*:")
 LHCB = re.compile(r"LHCb")
+# `advance-on-end` on a player's tag, plain or bound (`:advance-on-end="false"` switches it off)
+ADVANCE = re.compile(r"""(?<![\w.-])(:|v-bind:)?(?:advance-on-end|advanceOnEnd)(?![\w-])(?:\s*=\s*(?:"([^"]*)"|'([^']*)'))?""")
 NUMBERS_FROM = "2026_10"          # talks dated from here on keep only numbers on screen
 CAPTION_WORDS = 5                # a naming caption on a thing shown: a few words, no sentence
 UNITS = {"%", "‰", "eV", "keV", "MeV", "GeV", "TeV", "PeV", "B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB",
@@ -248,6 +255,7 @@ class Lint:
             self.check_headings(s, screen)
             self.check_slop(s, text)
             self.check_words_and_sources(s, text)
+            self.check_advance(s)
             own = str(s.frontmatter.get("onscreen") or "").strip().lower()
             if self.numbers_only or own == "numbers":
                 self.check_numbers(s, self.numbers_text(s), words_ok=own == "words" or (s.layout == "cover" and own != "numbers"))
@@ -463,6 +471,19 @@ class Lint:
                          + (f"; its notes have a '{squash(in_notes.group(0))}' line, so if the deck keeps its "
                             "sources there, say `sources: notes` in the headmatter" if in_notes else ""),
                          "deck.md", s.content_line, s.number)
+
+    def check_advance(self, s: td.Slide):
+        for el in td.elements(s.body):
+            if el.tag != "videoplayer":
+                continue
+            tag = s.body[el.start:el.inner_start]
+            m = ADVANCE.search(tag)
+            if not m or (m.group(1) and (m.group(2) or m.group(3) or "").strip() == "false"):
+                continue
+            src = re.search(r"\bsrc\s*=\s*\"([^\"]+)\"", tag)
+            self.at(s, el.start, "ADVANCE", "warning",
+                    f"advance-on-end on {src.group(1) if src else 'a clip'!r} (the owner asks for it by name, "
+                    "2026-10-21; a clip ends and waits for the press otherwise)")
 
     def check_marks(self, s: td.Slide, n_visible: int):
         hidden = td.comment_spans(s.content)                # the notes and any other comment: not on screen

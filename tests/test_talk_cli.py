@@ -16,6 +16,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import tomllib
 from pathlib import Path
 
 import pytest
@@ -411,7 +412,7 @@ def system_bin():
         for src in (Path("/usr/bin"), Path("/bin")):
             for f in src.iterdir() if src.is_dir() else ():
                 link = d / f.name
-                if not SCHEDULER_TOOLS.match(f.name) and not link.exists():
+                if not SCHEDULER_TOOLS.match(f.name) and not os.path.lexists(link):   # /bin is /usr/bin; a dangling link is still a link
                     link.symlink_to(f)
         _SYSTEM_BIN = str(d)
     return _SYSTEM_BIN
@@ -1243,3 +1244,327 @@ def test_deploy_walks_the_live_deck_once_more_before_it_fails(tmp_path, monkeypa
     assert data["status"]["deployed"] is True
     if len(walks) == 2:
         assert len(data["status"]["live"]["attempts"]) == 2
+
+
+# ---------------------------------------------------------------- plates: the recorded worlds the live fallback plays
+
+TALK = "2026_10_00_OpenData"
+# node <slidev-stage-record> <site> <out> args...: what talk passed, and a plate per slide ($REC_PLATES, else 03 and 04).
+# index.json as the recorder writes it: a segment per plate, settled at 12.5 s, or cut off unsettled at --max
+# for the slides $REC_CAPPED names; $REC_INDEX=plain: the empty index of a recorder before the settle report
+FAKE_RECORDER = ('echo "$*" > "$REC_ARGS_OUT"\nout="$3"\nmkdir -p "$out"\nsegs=""\n'
+                 'for n in ${REC_PLATES:-03 04}; do printf "plate $n" > "$out/$n-plate.mp4"\n'
+                 '  case " ${REC_CAPPED:-} " in *" $n "*) s=\'"settle": null, "capped": true\';; *) s=\'"settle": 12.5, "capped": false\';; esac\n'
+                 '  segs="$segs${segs:+, }{\\"slide\\": ${n#0}, \\"clicks\\": 0, \\"file\\": null, \\"plate\\": \\"$n-plate.mp4\\", $s}"\ndone\n'
+                 'if [ "${REC_INDEX:-segments}" = plain ]; then echo "{}" > "$out/index.json"\n'
+                 'else echo "{\\"segments\\": [$segs]}" > "$out/index.json"; fi\necho "2 file(s)"\n')
+
+
+# the stage's recorder of the release with the live fallback: supports() reads the flags off the file
+STAGE_RECORD_WITH_PLATES = "# else if (a === '--plate-only') ...; else if (a === '--clicks') ...\n"
+# the videos CLI's `check --json` answer, from a CLI that knows generated entries and from one that does not
+CHECK_KNOWS_GENERATED = ('echo "$*" > "$SV_ARGS_OUT"\n'
+                         'echo \'{"command": "check", "ok": true, "exit": 0, "problems": [], "generated": ["03-plate.mp4"]}\'\n')
+CHECK_UNUSED_MANIFEST = ('echo "$*" > "$SV_ARGS_OUT"\n'
+                         'echo \'{"command": "check", "ok": false, "exit": 1, "problems": [{"kind": "UNUSED MANIFEST", '
+                         '"name": "03-plate.mp4", "detail": ""}]}\'\nexit 1\n')
+
+
+@pytest.fixture
+def recorder(repo, env, tmp_path):
+    b = tmp_path / "bin"
+    fake_bin(b, "node", FAKE_RECORDER)
+    fake_bin(b, "slidev-videos", CHECK_KNOWS_GENERATED)
+    stage = tmp_path / "stage-bin"
+    fake_bin(stage, "slidev-stage-record", STAGE_RECORD_WITH_PLATES)
+    site = tmp_path / "tmp" / "talk-opendata" / "site"
+    site.mkdir(parents=True)
+    (site / "index.html").write_text("<html></html>\n")
+    return {**path_with(b, env), "SLIDEV_STAGE_BIN": str(stage), "REC_ARGS_OUT": str(tmp_path / "rec.args"),
+            "SV_ARGS_OUT": str(tmp_path / "sv.args")}
+
+
+def test_record_plates_records_the_world_alone_and_copies_the_plates_in(repo, recorder, tmp_path):
+    talkdir = repo / "talks" / TALK
+    (talkdir / "videos").mkdir()
+    own = '[defaults]\nmax_size_mb = 320\n\n[[videos]]\nname = "a.mp4"\nprofile = "remux"\nused_in = ["deck"]\n'
+    (talkdir / "videos" / "manifest.toml").write_text(own)
+    (talkdir / "public" / "videos").mkdir(parents=True)
+    (talkdir / "public" / "videos" / "09-plate.mp4").write_text("an old take")       # a slide that is gone
+    code, obj, err = talk(repo, "record", "opendata", "--plates", "--no-build", env=recorder)
+    assert code == 0, err
+    site, out = tmp_path / "tmp" / "talk-opendata" / "site", tmp_path / "tmp" / "talk-opendata" / "plates"
+    assert (tmp_path / "rec.args").read_text().split()[1:] == [str(site), str(out), "--plate-only", "--fps", "25", "--hold", "20",
+                                                               "--max", "120", "--clicks", "none"]   # a close settles late; never a click's plate
+    probe = (tmp_path / "sv.args").read_text().split()         # the CLI was asked, on a scratch project, before anything ran
+    assert probe[:3] == ["check", "--json", "--project"] and not Path(probe[3]).exists() and probe[3] != str(talkdir)
+    assert (talkdir / "public" / "videos" / "03-plate.mp4").read_text() == "plate 03"
+    assert (talkdir / "public" / "videos" / "04-plate.mp4").read_text() == "plate 04"
+    assert not (talkdir / "public" / "videos" / "09-plate.mp4").exists()            # a full take replaces them all
+    plates = json.loads((talkdir / "videos" / "plates.json").read_text())
+    assert plates == {"fingerprint": talk_cli.plates_fingerprint(repo, TALK), "fps": 25, "hold": 20,
+                      "slides": [3, 4], "bytes": {"03-plate.mp4": 8, "04-plate.mp4": 8},
+                      "settle": {"03-plate.mp4": 12.5, "04-plate.mp4": 12.5}, "capped": {"03-plate.mp4": False, "04-plate.mp4": False}}
+    assert obj["publish"] == "pnpm videos:publish --only 03-plate.mp4 04-plate.mp4" and obj["publish"] in err
+    assert obj["plates"] == ["03-plate.mp4", "04-plate.mp4"] and obj["out"] == str(out)
+    manifest = (talkdir / "videos" / "manifest.toml").read_text()
+    assert manifest.startswith(own)                                                  # the talk's own entries stay
+    entries = tomllib.loads(manifest)["videos"]
+    assert [e["name"] for e in entries] == ["a.mp4", "03-plate.mp4", "04-plate.mp4"]
+    assert all(e.get("generated") is True and e["profile"] == "remux" for e in entries[1:])
+    assert "generated" not in entries[0]
+    # a second take replaces the block, never adds another
+    code, obj, _ = talk(repo, "record", "opendata", "--plates", "--no-build", env=recorder)
+    assert code == 0 and (talkdir / "videos" / "manifest.toml").read_text() == manifest
+
+
+def test_record_plates_lets_the_recorders_own_flags_through(repo, recorder, tmp_path):
+    code, obj, err = talk(repo, "record", "opendata", "--plates", "--no-build", "--out", str(tmp_path / "take"),
+                          "--", "--hold", "8", "--fps=50", "--slides", "3-4", "--clicks", "all", "--max", "90", env=recorder)
+    assert code == 0, err
+    args = (tmp_path / "rec.args").read_text().split()
+    assert args[2:] == [str(tmp_path / "take"), "--plate-only", "--hold", "8", "--fps=50", "--slides", "3-4", "--clicks", "all", "--max", "90"]
+    plates = json.loads((repo / "talks" / TALK / "videos" / "plates.json").read_text())
+    assert (plates["fps"], plates["hold"], plates["slides"]) == (50, 8, [3, 4])
+    # without --plates the verb is what it was: the recorder on shots/record, no plate flags
+    code, obj, _ = talk(repo, "record", "opendata", "--no-build", env=recorder)
+    assert code == 0 and (tmp_path / "rec.args").read_text().split()[2:] == [str(repo / "talks" / TALK / "shots" / "record")]
+
+
+def test_record_plates_refuses_tools_that_do_not_know_the_plates(repo, recorder, tmp_path):
+    talkdir = repo / "talks" / TALK
+    # the recorder the talks pinned before the live fallback: no --plate-only (it would exit 2 on the flag, an hour in)
+    fake_bin(tmp_path / "stage-bin", "slidev-stage-record", "# else if (a === '--plate') ...\n")
+    code, obj, _ = talk(repo, "record", "opendata", "--plates", "--no-build", env=recorder)
+    assert code == 2 and "no --plate-only" in obj["error"] and "pnpm talk pin opendata" in obj["error"]
+    assert not (tmp_path / "rec.args").exists()
+    # the videos CLI on the machine (the env's editable install) whose check does not know generated entries:
+    # it would report the plates block UNUSED MANIFEST and fail ready and deploy
+    fake_bin(tmp_path / "stage-bin", "slidev-stage-record", STAGE_RECORD_WITH_PLATES)
+    fake_bin(tmp_path / "bin", "slidev-videos", CHECK_UNUSED_MANIFEST)
+    code, obj, _ = talk(repo, "record", "opendata", "--plates", "--no-build", env=recorder)
+    assert code == 2 and "does not know generated" in obj["error"] and "SLIDEV_VIDEOS_DIR" in obj["error"]
+    assert not (tmp_path / "rec.args").exists() and not (talkdir / "videos" / "plates.json").exists()
+    # no CLI at all: nothing could publish or pull the plates
+    (tmp_path / "bin" / "slidev-videos").unlink()
+    code, obj, _ = talk(repo, "record", "opendata", "--plates", "--no-build", env=recorder)
+    assert code == 2 and "slidev-videos is not installed" in obj["error"]
+
+
+def test_record_plates_partial_take_keeps_the_earlier_plates(repo, recorder, tmp_path):
+    talkdir = repo / "talks" / TALK
+    code, obj, err = talk(repo, "record", "opendata", "--plates", "--no-build", env=recorder)
+    assert code == 0, err
+    # a reboot emptied $TALK_TMP, one slide changed: a one-slide take into a fresh out dir must not
+    # shrink plates.json and the manifest block to that slide (pull, venue and the publish line go by them)
+    env = {**recorder, "REC_PLATES": "05", "REC_CAPPED": "05"}       # and this one the recorder cut off at its --max
+    code, obj, err = talk(repo, "record", "opendata", "--plates", "--no-build", "--out", str(tmp_path / "take2"),
+                          "--", "--slides", "5-5", env=env)
+    assert code == 0, err
+    assert sorted(p.name for p in (talkdir / "public" / "videos").glob("*-plate.mp4")) == ["03-plate.mp4", "04-plate.mp4", "05-plate.mp4"]
+    plates = json.loads((talkdir / "videos" / "plates.json").read_text())
+    assert plates["slides"] == [3, 4, 5] and plates["bytes"] == {f"{n:02d}-plate.mp4": 8 for n in (3, 4, 5)}
+    # the earlier plates keep what their take's index said; this take's entry comes from the new index
+    assert plates["settle"] == {"03-plate.mp4": 12.5, "04-plate.mp4": 12.5, "05-plate.mp4": None}
+    assert plates["capped"] == {"03-plate.mp4": False, "04-plate.mp4": False, "05-plate.mp4": True}
+    assert obj["capped"] == ["05-plate.mp4"] and "05-plate.mp4: cut off unsettled" in err
+    entries = tomllib.loads((talkdir / "videos" / "manifest.toml").read_text())["videos"]
+    assert [e["name"] for e in entries] == ["03-plate.mp4", "04-plate.mp4", "05-plate.mp4"]
+    assert obj["plates"] == ["03-plate.mp4", "04-plate.mp4", "05-plate.mp4"] and obj["taken"] == ["05-plate.mp4"]
+    assert obj["publish"] == "pnpm videos:publish --only 05-plate.mp4" and obj["bytes"] == 24
+
+
+def test_record_plates_takes_a_recorder_without_a_settle_report(repo, recorder, tmp_path):
+    # an index.json with no segments (an older recorder): nothing known about the settle, nothing capped
+    code, obj, err = talk(repo, "record", "opendata", "--plates", "--no-build", env={**recorder, "REC_INDEX": "plain"})
+    assert code == 0, err
+    plates = json.loads((repo / "talks" / TALK / "videos" / "plates.json").read_text())
+    assert plates["settle"] == {"03-plate.mp4": None, "04-plate.mp4": None}
+    assert plates["capped"] == {"03-plate.mp4": False, "04-plate.mp4": False} and obj["capped"] == []
+
+
+def plates_json(wt, slides, **over):
+    talkdir = wt / "talks" / TALK
+    (talkdir / "videos").mkdir(exist_ok=True)
+    data = {"fingerprint": talk_cli.plates_fingerprint(wt, TALK), "fps": 25, "hold": 20, "slides": slides,
+            "bytes": {f"{n:02d}-plate.mp4": 8 for n in slides}, **over}
+    (talkdir / "videos" / "plates.json").write_text(json.dumps(data))
+    return talkdir
+
+
+def local_plates(talkdir, *slides, size=5):
+    (talkdir / "public" / "videos").mkdir(parents=True, exist_ok=True)
+    for n in slides:
+        with open(talkdir / "public" / "videos" / f"{n:02d}-plate.mp4", "wb") as f:
+            f.truncate(size)
+
+
+def ready_plates(wt, env, *more):
+    code, obj, err = talk(wt, "ready", "opendata", *SKIPS, "--skip", "preflight", "--skip", "venue", *more, cwd=wt, env=env)
+    return code, next(s for s in obj["steps"] if s["name"] == "plates"), err
+
+
+def gh_listing(tmp_path, env, *names, size=7):
+    """A gh whose `release view` lists these assets (the machine's own gh must never answer for the
+    release); the env, and the assets file to rewrite for another listing."""
+    b = tmp_path / "bin"
+    fake_bin(b, "gh", 'echo "$*" > "$GH_ARGS_OUT"\ncat "$GH_ASSETS"\n')
+    assets = tmp_path / "assets.json"
+    assets.write_text(json.dumps({"assets": [{"name": n, "size": size} for n in names]}))
+    return {**path_with(b, env), "GH_ARGS_OUT": str(tmp_path / "gh.args"), "GH_ASSETS": str(assets)}, assets
+
+
+def test_ready_plates_step_is_skipped_without_plates(od_worktree, counted):
+    env, _ = counted
+    code, step, _ = ready_plates(od_worktree, env)
+    assert code == 0 and step == {"name": "plates", "ok": True, "skipped": "no plates"}
+
+
+def test_ready_checks_every_plate_is_local_or_released(od_worktree, counted, tmp_path):
+    env, _ = counted
+    (od_worktree / "videos.toml").write_text('[defaults]\nrepo = "o/r"\n')
+    (od_worktree / "talks" / TALK / "videos.toml").write_text('[defaults]\nrelease_tag = "videos-t"\n')
+    talkdir = plates_json(od_worktree, [3, 4, 5])          # after the files the fingerprint counts
+    local_plates(talkdir, 3)
+    env, assets = gh_listing(tmp_path, env, "04-plate.mp4")
+    code, step, err = ready_plates(od_worktree, env)
+    assert code == 0, err                                      # 05 is missing: a warning, a re-record takes an hour
+    assert (tmp_path / "gh.args").read_text().split() == ["release", "view", "videos-t", "--repo", "o/r", "--json", "assets"]
+    assert step["ok"] is True and (step["slides"], step["local"], step["released"]) == (3, 1, 1)
+    assert step["warnings"] == ["03-plate.mp4: local only, not on release videos-t (pnpm videos:publish --only 03-plate.mp4)",
+                                "05-plate.mp4: not local, not on release videos-t (pnpm talk record opendata --plates, then publish)"]
+    assert step["publish"] == "pnpm videos:publish --only 03-plate.mp4"
+    assert step["bytes"] == {"03-plate.mp4": 5, "04-plate.mp4": 7, "05-plate.mp4": 8}
+    code, step, _ = ready_plates(od_worktree, env, "--strict-plates")
+    assert code == 1 and step["ok"] is False and step["error"] == "2 warnings (--strict-plates)"
+    assets.write_text(json.dumps({"assets": [{"name": "04-plate.mp4", "size": 7}, {"name": "05-plate.mp4", "size": 8}]}))
+    code, step, _ = ready_plates(od_worktree, env, "--strict-plates")
+    assert code == 1 and step["warnings"] == ["03-plate.mp4: local only, not on release videos-t (pnpm videos:publish --only 03-plate.mp4)"]
+    assets.write_text(json.dumps({"assets": [{"name": f"{n:02d}-plate.mp4", "size": 8} for n in (3, 4, 5)]}))
+    code, step, _ = ready_plates(od_worktree, env, "--strict-plates")
+    assert code == 0 and step["warnings"] == [] and step["released"] == 2 and "publish" not in step
+
+
+def test_ready_warns_on_a_take_that_is_local_but_not_published(od_worktree, counted, tmp_path):
+    # record --plates copies the plates in; the owner skips the publish line; deploy would ship a
+    # Pages build whose stage finds no plate (public/videos is not in it) and shows the living still
+    env, _ = counted
+    (od_worktree / "talks" / TALK / "videos.toml").write_text('[defaults]\nrelease_tag = "videos-t"\n')
+    talkdir = plates_json(od_worktree, [3, 4])
+    local_plates(talkdir, 3, 4)
+    env, _ = gh_listing(tmp_path, env)                        # the release has nothing yet
+    code, step, err = ready_plates(od_worktree, env)
+    assert code == 0, err
+    assert (tmp_path / "gh.args").read_text().split() == ["release", "view", "videos-t", "--json", "assets"]
+    assert step["ok"] is True and (step["slides"], step["local"], step["released"]) == (2, 2, 0)
+    assert step["warnings"] == ["03-plate.mp4: local only, not on release videos-t (pnpm videos:publish --only 03-plate.mp4)",
+                                "04-plate.mp4: local only, not on release videos-t (pnpm videos:publish --only 04-plate.mp4)"]
+    assert step["publish"] == "pnpm videos:publish --only 03-plate.mp4 04-plate.mp4" and step["publish"] in err
+    code, step, _ = ready_plates(od_worktree, env, "--strict-plates")
+    assert code == 1 and step["ok"] is False
+    # a gh that cannot list the release (not logged in, offline): one warning, still a warning
+    fake_bin(tmp_path / "bin", "gh", 'echo "gh: not logged in" >&2\nexit 1\n')
+    code, step, _ = ready_plates(od_worktree, env)
+    assert code == 0 and step["warnings"] == ["release videos-t could not be listed (gh): whether the 2 local plate(s) are on it is unknown"]
+
+
+def test_ready_warns_when_the_talk_changed_since_the_plates(od_worktree, counted, tmp_path):
+    env, _ = counted
+    talkdir = plates_json(od_worktree, [3])
+    local_plates(talkdir, 3)
+    env, _ = gh_listing(tmp_path, env, "03-plate.mp4")
+    deck = talkdir / "deck.md"
+    deck.write_text(deck.read_text() + "\n---\n\n# one more slide\n")
+    code, step, _ = ready_plates(od_worktree, env)
+    assert code == 0 and step["ok"] is True and step["stale"] is True
+    assert step["warnings"] == ["stale: the talk changed since the plates were recorded (pnpm talk record opendata --plates)"]
+    code, step, _ = ready_plates(od_worktree, env, "--strict-plates")
+    assert code == 1 and step["ok"] is False
+
+
+def test_plates_fingerprint_goes_by_content_not_mtime(repo):
+    talkdir = repo / "talks" / TALK
+    deck = talkdir / "deck.md"
+    before, build = talk_cli.plates_fingerprint(repo, TALK), talk_cli.fingerprint(repo, TALK)
+    t = time.time() + 100
+    for f in (deck, talkdir / "package.json", repo / "package.json"):     # another checkout, a merge, a pull: new mtimes, same bytes
+        os.utime(f, (t, t))
+    assert talk_cli.plates_fingerprint(repo, TALK) == before
+    assert talk_cli.fingerprint(repo, TALK) != build                         # the build cache still goes by mtime (same machine, same checkout)
+    clips = talkdir / "public" / "videos"
+    clips.mkdir(parents=True)
+    (clips / "a_clip.mp4").write_text("a clip pulled later")
+    (clips / "03-plate.mp4").write_text("a plate")
+    (talkdir / "videos").mkdir()
+    (talkdir / "videos" / "plates.json").write_text("{}")
+    assert talk_cli.plates_fingerprint(repo, TALK) == before                 # the plates depend on none of these
+    (talkdir / "public" / "stills").mkdir()
+    (talkdir / "public" / "stills" / "03.jpg").write_bytes(b"a poster")
+    assert talk_cli.plates_fingerprint(repo, TALK) != before                 # a still is what a plate drifts over
+    after = talk_cli.plates_fingerprint(repo, TALK)
+    deck.write_text(deck.read_text() + "\n---\n\n# one more slide\n")
+    assert talk_cli.plates_fingerprint(repo, TALK) not in (before, after)
+
+
+def test_ready_keeps_the_plates_current_when_only_mtimes_changed(od_worktree, counted, tmp_path):
+    env, _ = counted
+    talkdir = plates_json(od_worktree, [3])
+    local_plates(talkdir, 3)
+    env, _ = gh_listing(tmp_path, env, "03-plate.mp4")
+    t = time.time() + 100
+    for f in (talkdir / "deck.md", talkdir / "package.json", od_worktree / "pnpm-lock.yaml" if (od_worktree / "pnpm-lock.yaml").exists() else od_worktree / "package.json"):
+        os.utime(f, (t, t))                                                  # the plates were recorded in another checkout
+    code, step, _ = ready_plates(od_worktree, env, "--strict-plates")
+    assert code == 0 and step["stale"] is False and step["warnings"] == []
+
+
+def test_ready_warns_on_a_plate_or_a_deck_over_budget(od_worktree, counted, tmp_path):
+    env, _ = counted
+    talkdir = plates_json(od_worktree, list(range(3, 34)))             # 31 plates (sparse files: no bytes written)
+    local_plates(talkdir, 3, size=41 * 1024 * 1024)
+    local_plates(talkdir, *range(4, 34), size=19 * 1024 * 1024)
+    env, _ = gh_listing(tmp_path, env, *(f"{n:02d}-plate.mp4" for n in range(3, 34)))
+    code, step, _ = ready_plates(od_worktree, env)
+    assert code == 0 and step["stale"] is False
+    assert step["warnings"] == ["03-plate.mp4: 41.0 MB, over the 40 MB a plate may take",
+                                "611.0 MB of plates, over the 600 MB a deck may take"]
+
+
+def test_ready_warns_on_a_plate_the_recorder_cut_off_unsettled(od_worktree, counted, tmp_path):
+    # the close of a deck can take 50 s to settle: at the recorder's --max it stops, the plate ends mid-flight
+    env, _ = counted
+    talkdir = plates_json(od_worktree, [3, 30], settle={"03-plate.mp4": 12.5, "30-plate.mp4": None},
+                          capped={"03-plate.mp4": False, "30-plate.mp4": True})
+    local_plates(talkdir, 3, 30)
+    env, _ = gh_listing(tmp_path, env, "03-plate.mp4", "30-plate.mp4")
+    code, step, err = ready_plates(od_worktree, env)
+    assert code == 0, err
+    assert step["ok"] is True and step["capped"] == ["30-plate.mp4"]
+    assert step["warnings"] == ["30-plate.mp4: cut off unsettled at the recorder's --max "
+                                "(re-record: pnpm talk record opendata --plates -- --max N)"]
+    code, step, _ = ready_plates(od_worktree, env, "--strict-plates")
+    assert code == 1 and step["ok"] is False and step["error"] == "1 warning (--strict-plates)"
+    # a take from before the settle report: nothing known, nothing warned
+    plates_json(od_worktree, [3, 30])
+    code, step, _ = ready_plates(od_worktree, env, "--strict-plates")
+    assert code == 0 and step["warnings"] == [] and step["capped"] == []
+
+
+def test_ready_warns_on_an_unreadable_plates_json(od_worktree, counted):
+    env, _ = counted
+    talkdir = plates_json(od_worktree, [3])
+    local_plates(talkdir, 3)
+    (talkdir / "videos" / "plates.json").write_text('<<<<<<< HEAD\n{"slides": [3]}\n=======\n')     # a merge left its markers
+    code, step, _ = ready_plates(od_worktree, env)
+    assert code == 0 and step["ok"] is True and (step["slides"], step["local"], step["stale"]) == (0, 0, False)
+    assert step["warnings"] == ["videos/plates.json is unreadable or lists no slides (a merge conflict, a hand edit?): "
+                                "restore it from the last take, or pnpm talk record opendata --plates"]
+    code, step, _ = ready_plates(od_worktree, env, "--strict-plates")
+    assert code == 1 and step["ok"] is False and step["error"] == "1 warning (--strict-plates)"
+
+
+def test_ready_can_skip_the_plates(od_worktree, counted):
+    env, _ = counted
+    plates_json(od_worktree, [3])
+    code, step, _ = ready_plates(od_worktree, env, "--skip", "plates")
+    assert code == 0 and step == {"name": "plates", "ok": True, "skipped": "--skip plates"}

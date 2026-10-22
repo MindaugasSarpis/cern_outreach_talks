@@ -98,7 +98,8 @@ const wallLight = (t, dawn) => t < 0 ? 0.75 : t < dawn ? 0.06 + 0.84 * Math.exp(
 
 const VERT = /* glsl */ `
 attribute vec3 aColor; attribute float aSize, aSeed, aTw, aAlpha, aFlare, aDisk, aLay, aKey;
-uniform float uTime, uSize, uAlpha, uFlare, uDisk, uBody, uMesh;
+uniform float uTime, uSize, uAlpha, uFlare, uDisk, uBody, uMesh, uOcc, uR0;
+uniform vec3 uCam;
 varying vec3 vColor; varying float vAlpha;
 ${POINT_GLSL}
 void main() {
@@ -117,7 +118,16 @@ void main() {
   // passes through the haze: no big sprite flares across the frame)
   // (the mesh from 5 units: its dotted lines, seen edge-on close by, crossed slide 6's frame)
   float near = aLay < 0.5 ? smoothstep(0.25, 0.6 + 0.5 * aSize, -mv.z) : smoothstep(1.5, 5.0, -mv.z);
-  vColor = aColor; vAlpha = uAlpha * aAlpha * tw * coverage(ps) * near * mix(1.0, uFlare, aFlare) * mix(1.0, uDisk, aDisk) * shown;
+  // the CMB disk hides what lies behind it (the neck, the Big Bang): these grains draw
+  // without a depth test, so a grain behind the disk plane whose line of sight crosses the
+  // disk is dropped (the neck's white tip showed through the map on slide 4). uCam is the
+  // camera in the funnel's frame (z along the axis, the disk at z = 0.02)
+  float occ = 1.0;
+  if (uOcc > 0.5 && position.z < 0.0 && uCam.z > 0.02) {
+    float k = (uCam.z - 0.02) / (uCam.z - position.z);
+    occ = smoothstep(uR0 * 0.97, uR0 * 1.03, length(uCam.xy + k * (position.xy - uCam.xy)));
+  }
+  vColor = aColor; vAlpha = uAlpha * aAlpha * tw * coverage(ps) * near * mix(1.0, uFlare, aFlare) * mix(1.0, uDisk, aDisk) * shown * occ;
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;
@@ -175,19 +185,25 @@ function buildFunnel(o, ctx) {
     add(s, r * Math.cos(t), r * Math.sin(t), ramp(WALL, s / L), 1.0, 0.3, 0.75)
   }
   // the Big Bang: a white-hot flare with a soft glow and spikes, just before the neck
-  const bb = -2.6
+  // (owner, 21 Oct: "don't like this fuzzy big bang should be a bit displaced, and
+  // point-like but bright"): a small, intense point a little before the neck's tip (-1.3),
+  // so the point, the neck and the CMB ring read apart. It was 1 300 sprites of size 4.5
+  // in a 0.6 ball and 2 600 of size 14 in a 4-unit glow: a white bloom over the disk.
+  // At -3.2 slide 4's camera saw it through the disk's face (on the axis behind the disk it
+  // projects inside the rim up to about -4.3); at -5.8 it stands just beside the rim.
+  const bb = o.bigBang ?? -5.8
   flare = 1
-  for (let i = 0; i < 1300; i++) {   // the core
-    const r = 0.6 * Math.abs(gauss(i)), t = hash(i * 2.3) * Math.PI * 2, u = hash(i * 4.1) * 2 - 1
-    add(bb + r * u, r * Math.sqrt(1 - u * u) * Math.cos(t), r * Math.sqrt(1 - u * u) * Math.sin(t), W, 4.5, 0.1, 1)
+  for (let i = 0; i < 160; i++) {    // the point: many small grains on one spot, so it blooms to a star, not a disc
+    const r = 0.05 * Math.abs(gauss(i)), t = hash(i * 2.3) * Math.PI * 2, u = hash(i * 4.1) * 2 - 1
+    add(bb + r * u, r * Math.sqrt(1 - u * u) * Math.cos(t), r * Math.sqrt(1 - u * u) * Math.sin(t), W, 1.5, 0.02, 1)
   }
-  for (let i = 0; i < 2600; i++) {   // the glow: big, soft
-    const r = 4.2 * Math.abs(gauss(i + 900)), t = hash(i * 5.9) * Math.PI * 2, u = hash(i * 6.7) * 2 - 1
-    add(bb + r * u * 0.6, r * Math.sqrt(1 - u * u) * Math.cos(t), r * Math.sqrt(1 - u * u) * Math.sin(t), [0.72, 0.86, 1], 14, 0.06, 0.4)
+  for (let i = 0; i < 400; i++) {    // a fine, short glow
+    const r = 0.38 * Math.pow(Math.abs(gauss(i + 900)), 1.4), t = hash(i * 5.9) * Math.PI * 2, u = hash(i * 6.7) * 2 - 1
+    add(bb + r * u, r * Math.sqrt(1 - u * u) * Math.cos(t), r * Math.sqrt(1 - u * u) * Math.sin(t), [0.86, 0.93, 1], 0.8, 0.05, 0.4)
   }
-  for (let k = 0; k < 10; k++) {    // spikes, as a lens draws a bright light
-    const t = (k / 10) * Math.PI * 2 + 0.2, len = 4 + 3 * hash(k * 3.3)
-    for (let i = 0; i < 160; i++) { const d = (i / 160) * len; add(bb - d * 0.15, d * Math.cos(t), d * Math.sin(t), [0.85, 0.92, 1], 1.4, 0.2, 0.8 * (1 - i / 160)) }
+  for (let k = 0; k < 6; k++) {      // six thin, short spikes along the three axes
+    const dir = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]][k], len = 0.9
+    for (let i = 1; i <= 60; i++) { const d = (i / 60) * len, f = 1 - i / 60; add(bb + d * dir[0], d * dir[1], d * dir[2], [0.9, 0.95, 1], 0.6, 0.05, 0.75 * f * f) }
   }
   flare = 0
   // the CMB: a disk across the narrow end; colours come from the map
@@ -361,7 +377,8 @@ function buildFunnel(o, ctx) {
   geo.setAttribute('aLay', new BufferAttribute(lay, 1)); geo.setAttribute('aKey', new BufferAttribute(key, 1))
   const mat = new ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
-    uniforms: { uTime: { value: 0 }, uView: { value: 1 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.6 }, uFlare: { value: 1 }, uDisk: { value: 1 }, uBody: { value: 1 }, uMesh: { value: 1 } },
+    uniforms: { uTime: { value: 0 }, uView: { value: 1 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.6 }, uFlare: { value: 1 }, uDisk: { value: 1 }, uBody: { value: 1 }, uMesh: { value: 1 },
+      uOcc: { value: o.cmbDisk && axis === 'z+' ? 1 : 0 }, uR0: { value: R(0) * 0.985 }, uCam: { value: new Vector3() } },
   })
   const points = new Points(geo, mat); points.frustumCulled = false
   const g = new Group(); g.add(points)
@@ -382,6 +399,7 @@ function buildFunnel(o, ctx) {
     if (diskTex && !diskUp && diskLatch.on.value) warmDisk()
     mat.uniforms.uView.value = viewScale(r)
     g.worldToLocal(cam.copy(camera.position))
+    mat.uniforms.uCam.value.copy(cam)
     const sAx = along(cam), off = across(cam)
     const k = sAx <= 0 ? 1 : Math.min(1, Math.max(0, (off / sAx - 0.6) / 0.3))
     // (to nothing: at 0.06 its spikes, seen edge-on from slide 6, still drew a white bar
@@ -425,7 +443,7 @@ function buildFunnel(o, ctx) {
   const diskMat = new MeshBasicMaterial({ color: new Color().setScalar(o.cmbTint ?? 0.85), side: DoubleSide, transparent: true })
   const disk = new Mesh(new CircleGeometry(r0d, 192), diskMat)
   disk.visible = false; disk.renderOrder = -1
-  const parts = { mat, diskMat, disk, diskReady: false, diskPx: null, group: g, geom: { L, R, place, bb: -2.6, dawn: o.dawn ?? 0.32, r0: r0d } }
+  const parts = { mat, diskMat, disk, diskReady: false, diskPx: null, group: g, geom: { L, R, place, bb, dawn: o.dawn ?? 0.32, r0: r0d } }
   if (o.cmbDisk && axis === 'z+') {
     // the circle faces +z (the mouth); its u runs with world x (b, right), v with world y (a, up)
     disk.position.set(0, 0, 0.02)

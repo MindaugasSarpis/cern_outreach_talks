@@ -6,8 +6,9 @@ import { onSlideEnter, useSlideContext, useNav } from '@slidev/client'
 // need some crazy inspirational soundtrack for the last three slides spanning - maybe
 // scott buckley"): one piece across them, Scott Buckley's „Starfire“ (CC BY 4.0, credited
 // on the page after „Ačiū“), in two files cut from the same master at the same gain
-// (public/audio, -16 LUFS): the track's 0:30–2:25 (`src`) and its 1:19–2:25 (`tail`, the
-// cut's 49 s on). `start` (the hall photo) starts `src` from its top on a forward arrival;
+// (public/audio, -0,5 dB from the master): the track's 0:30 to its end, 5:41 (`src`), and its
+// 1:19 to its end (`tail`, the cut's 49 s on): the music goes on under the questions for
+// about four minutes and ends with the track (owner, 21 Oct: "sountrack has to continue"). `start` (the hall photo) starts `src` from its top on a forward arrival;
 // `level` is its volume on the slide (low under the speech, full on „Ačiū“); `resync`
 // (on „Ačiū“): while `src` is still before the cut's 49 s, it cross-fades to `tail` from
 // its top, so the music's arrival (the track's 1:37) lands on the eye-level view about

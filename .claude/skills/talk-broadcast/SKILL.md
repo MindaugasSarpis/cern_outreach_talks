@@ -78,7 +78,20 @@ gradient bands at stream bitrates. Pick a palette no other October talk uses.
 pnpm talk build <t>                # into /tmp/talk-<slug>/site
 pnpm talk record <t> --slides 2-2  # from v0.6: one slide first, to time it
 pnpm talk record <t> --plate       # per-slide NN.mp4 at 1080p50 with a hold, NN-plate.mp4 without text, index.json
+pnpm talk record <t> --plates      # the stage's fallback plates: the world alone per non-clip slide, 1080p25, a 20 s hold, --max 120
 ```
+
+`--plates` (plural) is not the broadcaster's plate set: it records what the
+stage plays where WebGL is missing, into `public/videos/NN-plate.mp4`
+(gitignored), writes `videos/plates.json` and the manifest's `# >>> plates`
+block of `generated = true` entries, and prints the `pnpm videos:publish
+--only …` line to run in the talk. Commit `plates.json` and the manifest.
+`pnpm talk ready` checks each plate is on the release (or at least local: it
+prints the publish line), the take current, no plate cut off unsettled at
+the recorder's `--max`, and within 40 MB a plate, 600 MB a deck: warnings (a
+re-record takes an hour), `--strict-plates` to fail. The recorder and the
+`slidev-videos` CLI must be the release with the live fallback, else `record
+--plates` refuses. The recipe in full: `docs/authoring.md`, "The stage".
 
 `slidev-stage-record` steps the engine on a fixed clock, so frames are exact.
 Its speed depends on the renderer headless Chromium gets on the machine:

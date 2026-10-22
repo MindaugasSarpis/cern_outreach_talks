@@ -5,6 +5,7 @@ import { Vector3 } from 'three'
 import { sampleFrame } from './takeover.js'
 import { placeInDepth, loadDepth, makeLisGrains, scaleLaw } from './lisGrains.js'
 import { setGrains } from './detector.js'
+import { zoom } from './emblems.js'
 import { places } from './afterCover.js'
 import { bus } from '../components/lhc-opening/bus.js'
 import META from './data/lis.json'
@@ -35,8 +36,7 @@ const props = defineProps({
   depth: { type: String, default: 'figures/lis_last.depth.png' },
   anchor: { type: Array, default: () => [9.54, -483.06, 0.96] },   // the flag's place: the lower cold box, LHCb (0.8, -2.55, 7.95) m at 1,2 units a metre (true proportions)
   d0: { type: Number, default: 2.4 },      // the camera's start distance from the flag, stage units (path[0])
-  sEnd: { type: Number, default: 2.5 },    // stage units a metre at the path's last key (the detector's own: 1.2 across)
-  sFlag: { type: Number, default: 20 },    // … and the flag's, so it stays a mark (~0.9 units: about 40 px)
+  sEnd: { type: Number, default: 1.2 },    // stage units a metre at the end of the scale law: the detector's own (owner, 21 Oct: the flag on its mat "moves to a position where scifi is. and reduces in size accordingly (because it's far away)")
   grains: { type: Number, default: 320000 },   // at tier 0; fewer on a lower tier (owner, 20 Oct: "more solid")
   gain: { type: Number, default: 0.92 },   // the grains' light: the stripes at the still's colours
   hold: { type: Number, default: 400 },    // ms of still before the fade
@@ -46,9 +46,9 @@ const props = defineProps({
   colAt: { type: Number, default: 15.6 },  // … LHCb's collision starts in it (12,6 s on the path, hero/close_path.py --probe; the bunches cross 5 s later, `approach` 2.5 at the slide's rate 0.5: as the camera lands at eye level, on the music's arrival, 17-19 s)
   freeze: { type: Array, default: () => [[0, 0.5], [0.25, 0.15], [0.8, 0.15], [1.6, 0.6]] },   // the world's rate from the crossing (17,5 s): slow while the flash lights, then the debris bursts out (~19 s, still in the music's peak; at 0.08 for 1,8 s the burst came at 21 s)
   embAt: { type: Number, default: 34 },    // … the emblems gather, on the pull-back (38,5 s: whole by the music's second climax, 42-44 s; the camera is never this far before)
-  dEnd: { type: Number, default: 33 },     // the camera's distance from the flag where the picture's scale law ends (the whole detector; the path goes on to the ring)
-  wordTop: { type: String, default: '45.5%' },   // the word's middle once the world has run: inside the ring (the still and print keep it low)
-  emblems: { type: Array, default: () => ['lhcbLogo', 'ltFlag'] },
+  dEnd: { type: Number, default: 19 },     // the camera's distance from the flag where the picture reaches true scale (~15 s, coming down to eye level; the walk never comes nearer than 19,6)
+  wordTop: { type: String, default: '42.5%' },   // the word's middle once the world has run: inside the FCC's ring (the still and print keep it low)
+  emblems: { type: Array, default: () => ['lhcbLogo'] },
   wordAfter: { type: Number, default: 0.6 },   // s after the camera has stopped (48 s): the word
   wordBy: { type: Number, default: 62 },   // s: the word shows by then whatever the world does
 })
@@ -172,11 +172,20 @@ function grains(s, got) {
     s.h.scene.add(pts)
   }
   // the form follows the camera every frame: its scale from the camera's distance
+  // (owner, 21 Oct: the engraved flag and its mat go "to a position where scifi is. and reduces
+  // in size accordingly"): the whole picture, flag and mat alike, in the module's own
+  // orientation, shrinks to the detector's true scale and stays there as a tiny mark; in the
+  // pull-out to the accelerator complex it shrinks toward Point 8 with the detector (`zoom`)
+  const hu = holeOf(s.h.scene)
   pts.userData.scale = (cam, un) => {
-    const sc = law(cam.position.distanceTo(A))
+    const s1 = law(cam.position.distanceTo(A)), sc = s1 * zoom.k
+    // the detector's clearing round the flag closes as the picture comes down to true scale
+    if (hu) hu.value.w = HOLE * Math.min(1, Math.max(0, (s1 - props.sEnd) / (s0 - props.sEnd)))
     un.uScale.value = sc
-    un.uScaleFlag.value = Math.max(sc, props.sFlag)
-    un.uRest.value = Math.min(1, Math.max(0, (sc - props.sFlag * 0.5) / (props.sFlag * 1.2)))
+    un.uScaleFlag.value = sc
+    un.uRest.value = 1
+    un.uAnchor.value.copy(A)
+    if (zoom.k < 1) un.uAnchor.value.sub(zoom.at).multiplyScalar(zoom.k).add(zoom.at)
   }
   pts.material.uniforms.uAnchor.value.copy(A)
   return pts
@@ -249,22 +258,8 @@ async function takeOver() {
     if (col && stopped < 0 && !s.api.flying) stopped = performance.now()
     if (col && !emb && (d > props.embAt || stopped >= 0)) {
       emb = true; emblems(1)
-      // the emblems take over: the collision's glow fades (it washed the logo out) and the
-      // small flag at the module goes (two flags read as a duplicate)
+      // the logo takes over: the collision's glow fades (it washed the logo out)
       bus.set(props.collision, 0)
-      const t0 = performance.now(), u = pts.material.uniforms
-      // the detector's clearing round the mark closes with it
-      const hole = holeOf(s.h.scene)
-      const r0 = hole?.value.w ?? 0
-      const out = (now) => {
-        if (id !== run) return
-        const k = Math.min(1, (now - t0) / 1500)
-        u.uFade.value = 1 - k
-        if (hole) hole.value.w = r0 * (1 - k)
-        if (k < 1) requestAnimationFrame(out)
-        else { pts.visible = false; pts.userData.gone = true }   // faded: no longer drawn at all
-      }
-      requestAnimationFrame(out)
     }
     if (emb && stopped >= 0 && performance.now() - stopped > props.wordAfter * 1000) { word.value = true; clearInterval(watcher); watcher = 0 }
   }, 100)
