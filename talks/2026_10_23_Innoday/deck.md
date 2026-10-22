@@ -685,79 +685,21 @@ Faktai: VCSEL lazeriai (670 nm), po du vienoje plokštelėje; kiekvienas SiPM ka
 -->
 
 ---
-layout: statement
-class: thanks-lhcb
-space:
-  at: thanks
-  dim: 0
-  ambient: 0
-  hum: false
-  rate: [[0, 0.7], [2.4, 0.5]]   # LisTakeover slows it almost to a stop as the bunches cross (~18 s), then runs it on at 0.6
-  cameraRate: 1
-  path:   # hero/close_path.py: out of the module's end, down to eye level side on, LHCb filling the frame (17,5 s), a slow drift back as the collisions merge into the glow (36 s), then without a pause, slowly, out to the accelerator complex (57 s; owner, 22 Oct: "first zoom out untill you reach the eye level, so lhcb is full frame side to side, then slowly move out until the beams run at full speed, only then zoom out to lhc fcc")
-    - [0, { at: [9.54, -482.702, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]
-    - [2, { at: [9.54, -482.702, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]
-    - [5.5, { at: [9.6, -482, 0.8], dist: 7, yaw: -80, pitch: 4 }]
-    - [7, { at: [10, -481.89, 0.69], dist: 8.359, yaw: -68.972, pitch: 1.811 }]
-    - [8.5, { at: [10.453, -481.765, 0.565], dist: 9.9, yaw: -56.475, pitch: -0.669 }]
-    - [10, { at: [10.927, -481.634, 0.434], dist: 11.513, yaw: -43.391, pitch: -3.265 }]
-    - [11.5, { at: [11.391, -481.506, 0.306], dist: 13.089, yaw: -30.6, pitch: -5.804 }]
-    - [13, { at: [11.812, -481.39, 0.19], dist: 14.521, yaw: -18.984, pitch: -8.109 }]
-    - [14.5, { at: [12.158, -481.294, 0.094], dist: 15.699, yaw: -9.425, pitch: -10.006 }]
-    - [16, { at: [12.398, -481.228, 0.028], dist: 16.515, yaw: -2.803, pitch: -11.32 }]
-    - [17.5, { at: [12.5, -481.2, 0], dist: 16.861, yaw: 0, pitch: -11.876 }]
-    - [19, { at: [12.5, -481.197, 0], dist: 16.968, yaw: 0, pitch: -11.815 }]
-    - [20.5, { at: [12.5, -481.192, 0], dist: 17.128, yaw: 0, pitch: -11.722 }]
-    - [22, { at: [12.5, -481.186, 0], dist: 17.349, yaw: 0, pitch: -11.595 }]
-    - [23.5, { at: [12.5, -481.177, 0], dist: 17.638, yaw: 0, pitch: -11.429 }]
-    - [25, { at: [12.5, -481.167, 0], dist: 18.003, yaw: 0, pitch: -11.219 }]
-    - [26.5, { at: [12.5, -481.154, 0], dist: 18.451, yaw: 0, pitch: -10.96 }]
-    - [28, { at: [12.5, -481.138, 0], dist: 18.991, yaw: 0, pitch: -10.65 }]
-    - [29.5, { at: [12.5, -481.119, 0], dist: 19.629, yaw: 0, pitch: -10.282 }]
-    - [31, { at: [12.5, -481.098, 0], dist: 20.374, yaw: 0, pitch: -9.853 }]
-    - [32.5, { at: [12.5, -481.073, 0], dist: 21.234, yaw: 0, pitch: -9.358 }]
-    - [34, { at: [12.5, -481.044, 0], dist: 22.215, yaw: 0, pitch: -8.792 }]
-    - [35.5, { at: [12.5, -481.012, 0], dist: 23.326, yaw: 0, pitch: -8.152 }]
-    - [36, { at: [12.5, -481, 0], dist: 23.726, yaw: 0, pitch: -7.922 }]
-    - [36.7, { at: [12.407, -480.997, 0.131], dist: 24.233, yaw: -0.346, pitch: -6.942 }]
-    - [37.4, { at: [12.261, -480.992, 0.336], dist: 25.025, yaw: -0.873, pitch: -5.449 }]
-    - [38.1, { at: [12.062, -480.986, 0.616], dist: 26.109, yaw: -1.568, pitch: -3.481 }]
-    - [38.8, { at: [11.807, -480.978, 0.975], dist: 27.498, yaw: -2.417, pitch: -1.077 }]
-    - [39.5, { at: [11.493, -480.967, 1.417], dist: 29.209, yaw: -3.406, pitch: 1.726 }]
-    - [40.2, { at: [11.115, -480.955, 1.949], dist: 31.269, yaw: -4.523, pitch: 4.887 }]
-    - [40.9, { at: [10.667, -480.941, 2.579], dist: 33.706, yaw: -5.752, pitch: 8.371 }]
-    - [41.6, { at: [10.143, -480.924, 3.316], dist: 36.556, yaw: -7.082, pitch: 12.137 }]
-    - [42.3, { at: [9.537, -480.904, 4.168], dist: 39.856, yaw: -8.498, pitch: 16.148 }]
-    - [43, { at: [8.841, -480.881, 5.148], dist: 43.648, yaw: -9.987, pitch: 20.365 }]
-    - [43.7, { at: [8.046, -480.856, 6.266], dist: 47.974, yaw: -11.535, pitch: 24.75 }]
-    - [44.4, { at: [7.145, -480.826, 7.533], dist: 52.876, yaw: -13.13, pitch: 29.265 }]
-    - [45.1, { at: [6.132, -480.793, 8.959], dist: 58.394, yaw: -14.756, pitch: 33.871 }]
-    - [45.8, { at: [4.999, -480.757, 10.553], dist: 64.561, yaw: -16.401, pitch: 38.531 }]
-    - [46.5, { at: [3.742, -480.716, 12.321], dist: 71.402, yaw: -18.051, pitch: 43.204 }]
-    - [47.2, { at: [2.36, -480.671, 14.266], dist: 78.928, yaw: -19.693, pitch: 47.855 }]
-    - [47.9, { at: [0.853, -480.622, 16.386], dist: 87.131, yaw: -21.313, pitch: 52.443 }]
-    - [48.6, { at: [-0.772, -480.57, 18.672], dist: 95.978, yaw: -22.897, pitch: 56.931 }]
-    - [49.3, { at: [-2.504, -480.513, 21.109], dist: 105.408, yaw: -24.433, pitch: 61.28 }]
-    - [50, { at: [-4.326, -480.454, 23.671], dist: 115.324, yaw: -25.906, pitch: 65.452 }]
-    - [50.7, { at: [-6.211, -480.393, 26.324], dist: 125.588, yaw: -27.303, pitch: 69.408 }]
-    - [51.4, { at: [-8.128, -480.331, 29.02], dist: 136.02, yaw: -28.61, pitch: 73.111 }]
-    - [52.1, { at: [-10.033, -480.269, 31.701], dist: 146.395, yaw: -29.814, pitch: 76.522 }]
-    - [52.8, { at: [-11.879, -480.209, 34.298], dist: 156.443, yaw: -30.902, pitch: 79.602 }]
-    - [53.5, { at: [-13.609, -480.153, 36.731], dist: 165.857, yaw: -31.859, pitch: 82.314 }]
-    - [54.2, { at: [-15.16, -480.103, 38.913], dist: 174.302, yaw: -32.673, pitch: 84.619 }]
-    - [54.9, { at: [-16.469, -480.06, 40.754], dist: 181.427, yaw: -33.33, pitch: 86.478 }]
-    - [55.6, { at: [-17.471, -480.028, 42.165], dist: 186.886, yaw: -33.815, pitch: 87.854 }]
-    - [56.3, { at: [-18.109, -480.007, 43.061], dist: 190.354, yaw: -34.117, pitch: 88.707 }]
-    - [57, { at: [-18.33, -480, 43.373], dist: 191.56, yaw: -34.22, pitch: 89 }]
+space: { at: [9.54, -482.702, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim: 0, hum: false }   # the world idle under the recorded close (the clip slide's pose, its forms off)
 ---
 
-<LisTakeover><h1>Ačiū</h1></LisTakeover>
-<Soundtrack :level="0.3" resync />
+<!-- the close, recorded (owner, 22 Oct: "Maybe worth prerecording a video? So it doesn't lag?"): the live one is
+     LisTakeover on this slide at 22efcef (its path from hero/close_path.py); to change it, restore that
+     slide, `pnpm talk record NAME --out DIR -- --slides 30 --fps 50 --hold 6 --max 95 --clicks none`,
+     encode DIR/30.mp4 as close.mp4 (talks/…/CLAUDE.md, Decisions) and put this slide back -->
+<VideoPlayer src="close.mp4" muted :controls="false" transition="cut" />
+<Grains :set="{ det: 0, lhcbLogo: 0, ltMap: 0 }" />
+<Soundtrack :level="0.3" resync keys />
 
 <!-- facts: lhcb-detector-size, lhcb-hlt1-30mhz, lhcb-trigger-5tbs-10gbs, cern-lhc-size-cost, cern-fcc-study -->
 
 <!--
-Kalbėtojui. Klipo paskutinis kadras (vėliava ant apatinės šaltosios dėžės, SciFi apačioje) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių — taškų debesį pagal tikrąją geometriją (savininkas, 2026 10 21: „let's get back to point cloud“); išgraviruota vėliava kartu su modulio vaizdu, kuriame ji yra, lieka ten, kur LHCb sekiklyje iš tikrųjų stovi tas SciFi modulis (apatinė šaltoji dėžė), modulio padėtimi, ir kamerai tolstant mažėja iki tikrojo detektoriaus mastelio (~15 s), kol tampa mažyčiu ženklu; iš šono ji matoma kampu (savininkas, 2026 10 21: „the inscribed flag (on one of the SciFi mats) along with the mat itself moves to a position where scifi is. and reduces in size accordingly (because it's far away)“). Kamera nusileidžia iki kalbėtojo akių aukščio (1,71 m) ir žiūri į detektorių iš šono: LHCb užpildo kadrą nuo krašto iki krašto, visi 21 m (savininkas, 2026 10 22: „first zoom out untill you reach the eye level, so lhcb is full frame side to side“); arčiau kameros, dešinėje, stovi žmogus mastui (1,83 m, toks pat taškų debesis). Kamerai nusileidus, kartu su muzikos kulminacija (~18 s), susidūrimo taške susikerta tikro LHCb susidūrimo protonų paketai (savininkas: „LHCb collision within lhcb“): laikas beveik sustoja, tada susidūrime gimusios dalelės lekia per detektorių, ir kiekviena jo dalis sušvinta, kai jos ją pasiekia. Paskui kamera lėtai traukiasi atgal, vis dar akių aukštyje (~18–36 s), o susidūrimai kartojasi vis dažniau, kol jų blyksniai susilieja ir detektorius ima švytėti tolygiai (savininkas, 2026 10 20: „40 million collisions a second“; 2026 10 22: „then slowly move out until the beams run at full speed, only then zoom out to lhc fcc“): ryšuliai LHCb susikerta 40 mln. kartų per sekundę, ir visas detektorius nuskaitomas kiekvieną kartą. Tada be sustojimo, lėtai (~36–57 kelio s, apie pusę minutės; savininkas, 2026 10 22: „The zoomout to FCC should be slow and continuous“) kamera traukiasi toliau ir kyla, kol žiūri tiesiai žemyn, šiaurė viršuje (savininkas, 2026 10 22, su CERN FCC žemėlapiu: „For the last one, can you use something like this?“): LHCb kartu su vėliava susitraukia į tašką, ir aplink jį išnyra žemėlapis tikrosiomis proporcijomis: LHC žiedas (26,7 km) su dviem priešpriešiais skriejančiais pluoštais (žydru ir baltu); SPS, PS ir pernešimo linijų nėra (savininkas, 2026 10 22: „the inner ring of the lhc doesn't make sense... don't show it“); oranžiniu punktyru — siūlomas FCC žiedas (90,7 km) per savo aštuonias antžemines vietas, Ženevos ežeras, Prancūzijos ir Šveicarijos siena, Rona, Jura ir Salève; logotipas pakyla į kadro viršų, o maža Lietuvos vėliava nuo SciFi vietos atkeliauja prie LHCb taško žemėlapyje, tiesiai po LHC žiedu, ir lieka ten iki galo (savininkas, 2026 10 22: „Still need lithuanian flag on 30“; 2026 10 21: „can show the accelerator as well, so this doesn't look isolated, it's a part of huge infrastructure“; „still want to see LHC, FCC, and 2 beams circulating“). Kamerai sustojus, FCC žiedo viduryje susiduria protonų paketai, ir iš susidūrimo išlėkusios dalelės vingiuotomis trajektorijomis sugula į „Ačiū“, o po juo — į Lietuvos vėliavą (savininkas, 2026 10 22: „aciu should appear out of particle collision“; „Also Lithuanian flag should appear with aciu“). LHCb vieta LHC žiede (8-asis taškas) pažymėta šviesiu tašku. Pavadinimų ekrane nėra: žiedus įvardyti žodžiu (viršuje kairėje mažesnis — LHC, didysis oranžinis punktyrinis — FCC; ežeras — į dešinę nuo LHC). LHCb ir kompleksas nupiešti skirtingu masteliu (LHCb ilgis 21 m): kompleksas rodo, kur LHCb stovi. Pluoštai sukasi tol, kol vyksta klausimai. Viskas lieka per klausimus. Muzika po minutės pati nutyla.
+Kalbėtojui. Ši skaidrė dabar — įrašas (close.mp4, 1080p50; savininkas, 2026 10 22: kad nestrigtų), muzika lieka gyva, + ir − keičia jos garsumą; klavišas P sustabdo ir vėl paleidžia įrašą. Klipo paskutinis kadras (vėliava ant apatinės šaltosios dėžės, SciFi apačioje) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių — taškų debesį pagal tikrąją geometriją (savininkas, 2026 10 21: „let's get back to point cloud“); išgraviruota vėliava kartu su modulio vaizdu, kuriame ji yra, lieka ten, kur LHCb sekiklyje iš tikrųjų stovi tas SciFi modulis (apatinė šaltoji dėžė), modulio padėtimi, ir kamerai tolstant mažėja iki tikrojo detektoriaus mastelio (~15 s), kol tampa mažyčiu ženklu; iš šono ji matoma kampu (savininkas, 2026 10 21: „the inscribed flag (on one of the SciFi mats) along with the mat itself moves to a position where scifi is. and reduces in size accordingly (because it's far away)“). Kamera nusileidžia iki kalbėtojo akių aukščio (1,71 m) ir žiūri į detektorių iš šono: LHCb užpildo kadrą nuo krašto iki krašto, visi 21 m (savininkas, 2026 10 22: „first zoom out untill you reach the eye level, so lhcb is full frame side to side“); arčiau kameros, dešinėje, stovi žmogus mastui (1,83 m, toks pat taškų debesis). Kamerai nusileidus, kartu su muzikos kulminacija (~18 s), susidūrimo taške susikerta tikro LHCb susidūrimo protonų paketai (savininkas: „LHCb collision within lhcb“): laikas beveik sustoja, tada susidūrime gimusios dalelės lekia per detektorių, ir kiekviena jo dalis sušvinta, kai jos ją pasiekia. Paskui kamera lėtai traukiasi atgal, vis dar akių aukštyje (~18–36 s), o susidūrimai kartojasi vis dažniau, kol jų blyksniai susilieja ir detektorius ima švytėti tolygiai (savininkas, 2026 10 20: „40 million collisions a second“; 2026 10 22: „then slowly move out until the beams run at full speed, only then zoom out to lhc fcc“): ryšuliai LHCb susikerta 40 mln. kartų per sekundę, ir visas detektorius nuskaitomas kiekvieną kartą. Tada be sustojimo, lėtai (~36–57 kelio s, apie pusę minutės; savininkas, 2026 10 22: „The zoomout to FCC should be slow and continuous“) kamera traukiasi toliau ir kyla, kol žiūri tiesiai žemyn, šiaurė viršuje (savininkas, 2026 10 22, su CERN FCC žemėlapiu: „For the last one, can you use something like this?“): LHCb kartu su vėliava susitraukia į tašką, ir aplink jį išnyra žemėlapis tikrosiomis proporcijomis: LHC žiedas (26,7 km) su dviem priešpriešiais skriejančiais pluoštais (žydru ir baltu); SPS, PS ir pernešimo linijų nėra (savininkas, 2026 10 22: „the inner ring of the lhc doesn't make sense... don't show it“); oranžiniu punktyru — siūlomas FCC žiedas (90,7 km) per savo aštuonias antžemines vietas, Ženevos ežeras, Prancūzijos ir Šveicarijos siena, Rona, Jura ir Salève; logotipas pakyla į kadro viršų, o maža Lietuvos vėliava nuo SciFi vietos atkeliauja prie LHCb taško žemėlapyje, tiesiai po LHC žiedu, ir lieka ten iki galo (savininkas, 2026 10 22: „Still need lithuanian flag on 30“; 2026 10 21: „can show the accelerator as well, so this doesn't look isolated, it's a part of huge infrastructure“; „still want to see LHC, FCC, and 2 beams circulating“). Kamerai sustojus, FCC žiedo viduryje susiduria protonų paketai, ir iš susidūrimo išlėkusios dalelės vingiuotomis trajektorijomis sugula į „Ačiū“, o po juo — į Lietuvos vėliavą (savininkas, 2026 10 22: „aciu should appear out of particle collision“; „Also Lithuanian flag should appear with aciu“). LHCb vieta LHC žiede (8-asis taškas) pažymėta šviesiu tašku. Pavadinimų ekrane nėra: žiedus įvardyti žodžiu (viršuje kairėje mažesnis — LHC, didysis oranžinis punktyrinis — FCC; ežeras — į dešinę nuo LHC). LHCb ir kompleksas nupiešti skirtingu masteliu (LHCb ilgis 21 m): kompleksas rodo, kur LHCb stovi. Pluoštai sukasi tol, kol vyksta klausimai. Viskas lieka per klausimus. Muzika po minutės pati nutyla.
 Muzika čia tylesnė (0,3, kaip šviesos įvedimo skaidrėje; savininkas, 2026 10 22: „the last soundtrack 50% quieter“); garsumą galima keisti klavišais + ir − (skaidrėse be klipo jie keičia muziką ir gaudimą, su klipu — klipo garsumą; lygis trumpam parodomas tik pranešėjo lange, žiūrovai nieko nemato; savininkas, 2026 10 22: „invisible, but -+ to control“).
 Nuorodų ekrane nėra: licencijų reikalaujamos nuorodos — kitame puslapyje, kurio nerodyti (savininkas, 2026 10 19: „We don't need credits at the last slide“).
 Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotos 3D rentgenogramos atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“

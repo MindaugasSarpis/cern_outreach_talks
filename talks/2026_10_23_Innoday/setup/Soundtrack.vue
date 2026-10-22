@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, onUnmounted, watch } from 'vue'
 import { onSlideEnter, useSlideContext, useNav } from '@slidev/client'
-import { soundLevel, onSoundLevel } from './soundLevel.js'
+import { soundLevel, onSoundLevel, musicKeys } from './soundLevel.js'
 
 // <Soundtrack :level="0.3" start />, on each of the close's slides (owner, 20 Oct: "Will
 // need some crazy inspirational soundtrack for the last three slides spanning - maybe
@@ -26,12 +26,14 @@ const props = defineProps({
   level: { type: Number, default: 0.9 },
   start: { type: Boolean, default: false },
   resync: { type: Boolean, default: false },
+  keys: { type: Boolean, default: false },   // + and - are the music's here, even over a clip (soundLevel.js)
 })
 const { $renderContext, $page } = useSlideContext()
 const nav = useNav()
 const page = () => $page?.value ?? $page
 const live = () => $renderContext?.value === 'slide' && !nav.isPrintMode?.value
 const url = (p) => (p.startsWith('/') || /^https?:/.test(p)) ? p : import.meta.env.BASE_URL + p
+if (props.keys) musicKeys(page())
 
 // one player for the deck (a window): the elements by source, each with its gain
 const G = (globalThis.__innodaySound ||= { tracks: new Map(), cur: null, pages: new Map(), prev: null, ctx: null, pending: null })

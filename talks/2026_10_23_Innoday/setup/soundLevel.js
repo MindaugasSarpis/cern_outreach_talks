@@ -25,6 +25,17 @@ function apply(v) {
 export const soundLevel = () => level
 // f(level) on every change; returns the unsubscribe
 export function onSoundLevel(f) { subs.add(f); return () => subs.delete(f) }
+// pages where the keys are the music's even over a clip (<Soundtrack keys>: slide 30's clip is
+// the recorded close, silent, and the owner wants the music there at his hand)
+const musicPages = new Set()
+export const musicKeys = (n) => { musicPages.add(Number(n)) }
+const pageNow = () => Number((location.hash.match(/(\d+)(?:\?.*)?$/) || [])[1] || 0)
+function step(up) {
+  const v = Math.max(0, Math.min(2, Math.round((level + (up ? 0.1 : -0.1)) * 10) / 10))
+  try { localStorage.setItem(KEY, String(v)) } catch {}
+  apply(v)
+  flash(v)
+}
 
 let badge = null, badgeTimer = 0
 function flash(v) {
@@ -52,12 +63,15 @@ export function installSoundKeys() {
     const t = e.target
     if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return
     // after every other listener: a clip's player takes the press first
-    setTimeout(() => {
-      if (e.defaultPrevented) return
-      const v = Math.max(0, Math.min(2, Math.round((level + (up ? 0.1 : -0.1)) * 10) / 10))
-      try { localStorage.setItem(KEY, String(v)) } catch {}
-      apply(v)
-      flash(v)
-    })
+    setTimeout(() => { if (!e.defaultPrevented) step(up) })
   })
+  // on a music page the press is the music's before the clip's player sees it
+  addEventListener('keydown', (e) => {
+    const up = e.key === '+' || e.key === '=', down = e.key === '-' || e.key === '_'
+    if ((!up && !down) || e.metaKey || e.ctrlKey || e.altKey || !musicPages.has(pageNow())) return
+    const t = e.target
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return
+    e.preventDefault(); e.stopImmediatePropagation()
+    step(up)
+  }, true)
 }

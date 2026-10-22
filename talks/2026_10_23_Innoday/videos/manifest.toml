@@ -144,6 +144,20 @@ bank under this name; not on gdrive released/. 0:25 the full hall at the \
 opening, 0:26 the President's greeting on both screens, 0:28 the lectern, \
 0:30-0:31 the panel: what the four photos showed."""
 
+[[videos]]
+name      = "close.mp4"
+profile   = "remux"
+used_in   = ["deck"]
+generated = true
+notes     = """\
+Slide 30, the close, recorded (owner, 22 Oct: "Maybe worth prerecording a video? So it \
+doesn't lag?" - the live close lagged on a Mac): slidev-stage-record's take of the live \
+slide at 22efcef (LisTakeover: the module's grains land in the SciFi, the eye-level \
+LHCb, the glow, the pull-out to the LHC and the FCC, „Ačiū" out of a collision) at \
+1080p50 with a 6 s hold, encoded with x264 (slow, CRF 17, under 10 Mbit/s), silent: \
+the music is <Soundtrack> on the slide. Placed in public/videos/ and published with \
+--only; no raw."""
+
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 
 [[videos]]
