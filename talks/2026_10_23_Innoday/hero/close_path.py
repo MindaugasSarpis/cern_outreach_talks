@@ -38,7 +38,7 @@ moving with the distance, so LHCb leaves the frame's middle at an even pace. Wit
 import argparse
 import math
 
-A = (9.54, -483.06, 0.96)   # the flag's anchor (LisTakeover's `anchor`)
+A = (9.54, -482.40, 0.96)   # the flag's anchor (LisTakeover's `anchor`)
 V = (0.0, -480.0, 0.0)      # the vertex: the `thanks` station's origin, Point 8 on the ring
 EYE = -484.67               # 1,71 m above the floor (y -6,72 at the station: LHCb's -5,6 m) at 1,2 units a metre
 
@@ -49,7 +49,7 @@ def pose_of(cam, at):
     return dict(at=tuple(at), dist=r, yaw=math.degrees(math.atan2(d[0], d[2])), pitch=math.degrees(math.asin(d[1] / r)))
 
 
-STILL = dict(at=(9.54, -483.362, 0.96), dist=2.236, yaw=-90.0, pitch=-29.74)
+STILL = dict(at=(9.54, -482.702, 0.96), dist=2.236, yaw=-90.0, pitch=-29.74)
 OUT = dict(at=(9.6, -482.0, 0.8), dist=7.0, yaw=-80.0, pitch=4.0)
 # owner, 22 Oct: "first zoom out untill you reach the eye level, so lhcb is full frame side to
 # side, then slowly move out until the beams run at full speed, only then zoom out to lhc fcc"

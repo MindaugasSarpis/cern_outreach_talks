@@ -4,7 +4,9 @@
     python3 scripts/site_index.py site        # from the checkout root (deploy.yml's assemble job)
 
 A talk's line is its web link; when the checkout has its videos/pptx.json (written by `pnpm talk
-pptx NAME`, committed with the upload), a "PPTX · <size>" download sits on the right of the line.
+pptx NAME`, committed with the upload), a "PPTX · <size>" download sits on the right of the line,
+and with its videos/venue.json ({"url", "bytes"}: the offline venue zip, `pnpm venue`, uploaded to
+the talk's release) a "ZIP · <size>" one.
 The committed file, never the API: the assemble job has no token, a pull request's build stays
 offline, and the file says the asset was uploaded by the run that wrote it. Stdlib only.
 """
@@ -24,10 +26,13 @@ STYLE = (":root{color-scheme:light dark;--fg:#1d1f24;--line:#e5e7eb;--link:#1d4e
          "h1{font-size:1.6rem;font-weight:650;margin:0 0 1.5rem}ul{list-style:none;padding:0;margin:0}"
          "li{padding:.85rem 0;border-top:1px solid var(--line)}li:last-child{border-bottom:1px solid var(--line)}"
          "a{color:var(--link);font-weight:700;font-size:1.08rem;text-decoration:none;overflow-wrap:anywhere}a:hover{text-decoration:underline}")
-# only on a page with a PPTX, so a page without one stays what the inline generator wrote
+# only on a page with a download, so a page without one stays what the inline generator wrote
 PPTX_STYLE = ("li{display:flex;align-items:baseline;gap:1rem}"
-              ".pptx{margin-left:auto;flex:none;font-size:.85rem;font-weight:600;letter-spacing:.04em;white-space:nowrap}")
+              ".pptx{margin-left:auto;flex:none;font-size:.85rem;font-weight:600;letter-spacing:.04em;white-space:nowrap}"
+              ".zip{flex:none;font-size:.85rem;font-weight:600;letter-spacing:.04em;white-space:nowrap}"
+              "li>a:first-child+.zip{margin-left:auto}")
 RELEASE_URL = re.compile(r"https://github\.com/[\w.-]+/[\w.-]+/releases/download/[^\s\"'<>]+\.pptx")
+ZIP_URL = re.compile(r"https://github\.com/[\w.-]+/[\w.-]+/releases/download/[^\s\"'<>]+\.zip")
 MB = 1024 * 1024
 
 
@@ -39,9 +44,10 @@ def human(n: int) -> str:
     return f"{max(1, round(n / MB))} MB" if n < 1024 * MB else f"{n / (1024 * MB):.1f} GB"
 
 
-def pptx_link(root: Path, talk: str) -> str:
-    """The row's download link from talks/<talk>/videos/pptx.json, or "" (no file, or one that does not hold up: a warning)."""
-    p = root / "talks" / talk / "videos" / "pptx.json"
+def asset_link(root: Path, talk: str, file: str = "pptx.json", kind: str = "pptx", pattern: re.Pattern = RELEASE_URL) -> str:
+    """The row's download link from talks/<talk>/videos/<file>, or "" (no file, or one that does not hold up: a warning)."""
+    p = root / "talks" / talk / "videos" / file
+    label = kind.upper()
     if not p.is_file():
         return ""
     try:
@@ -49,16 +55,24 @@ def pptx_link(root: Path, talk: str) -> str:
     except (OSError, ValueError):
         data = None
     if not isinstance(data, dict):
-        print(f"::warning::{talk}: videos/pptx.json is unreadable (a merge conflict?); no PPTX link")
+        print(f"::warning::{talk}: videos/{file} is unreadable (a merge conflict?); no {label} link")
         return ""
     url, size = data.get("url"), data.get("bytes")
-    if not (isinstance(url, str) and RELEASE_URL.fullmatch(url)):
-        print(f"::warning::{talk}: videos/pptx.json url is not a GitHub release download; no PPTX link")
+    if not (isinstance(url, str) and pattern.fullmatch(url)):
+        print(f"::warning::{talk}: videos/{file} url is not a GitHub release download; no {label} link")
         return ""
     if not (isinstance(size, int) and not isinstance(size, bool) and size > 0):
-        print(f"::warning::{talk}: videos/pptx.json has no size; no PPTX link")
+        print(f"::warning::{talk}: videos/{file} has no size; no {label} link")
         return ""
-    return f'<a class=pptx href="{html.escape(url)}" download>PPTX · {human(size)}</a>'
+    return f'<a class={kind} href="{html.escape(url)}" download>{label} · {human(size)}</a>'
+
+
+def pptx_link(root: Path, talk: str) -> str:
+    return asset_link(root, talk)
+
+
+def zip_link(root: Path, talk: str) -> str:
+    return asset_link(root, talk, "venue.json", "zip", ZIP_URL)
 
 
 def write_index(site: Path, root: Path) -> None:
@@ -69,7 +83,7 @@ def write_index(site: Path, root: Path) -> None:
     labels = conf.get("labels", {})
     talks = [d.name for d in (root / "talks").iterdir() if (site / d.name / "index.html").is_file()]
     rows = sorted(((str(labels.get(slug(n)) or n), n) for n in talks), reverse=True)
-    links = {n: pptx_link(root, n) for _, n in rows}
+    links = {n: pptx_link(root, n) + zip_link(root, n) for _, n in rows}
     items = [f'<li><a href="./{n}/">{html.escape(label)}</a>{links[n]}</li>' for label, n in rows]
     page = ("<!doctype html><html lang=lt><meta charset=utf-8>"
             "<meta name=viewport content='width=device-width,initial-scale=1'>"

@@ -24,6 +24,7 @@ import Grains from './Grains.vue'
 import LisTakeover from './LisTakeover.vue'
 import Soundtrack from './Soundtrack.vue'
 import ClipEnd from './ClipEnd.vue'
+import CloseStill from './CloseStill.vue'
 // slide 11: the collaboration photo → its grains → a globe of LHCb's institutes (setup/globe.js)
 import { installGlobe } from './globe.js'
 import CollabGlobe from './CollabGlobe.vue'
@@ -117,6 +118,7 @@ export default ({ app, router }) => {
   app.component('LisTakeover', LisTakeover)
   app.component('Soundtrack', Soundtrack)   // the close's music across its slides
   app.component('ClipEnd', ClipEnd)   // words over a clip's held last frame (slide 27)
+  app.component('CloseStill', CloseStill)   // the credits page on the close's last frame, the world resting (slide 31)
   installGlobe(registerBuilder)   // slide 11's globe of institutes (setup/globe.js)
   app.component('CollabGlobe', CollabGlobe)
   app.component('Drone', Drone)   // a synthesised deep hum under a slide (slide 27)

@@ -323,7 +323,7 @@ void main() {
   place(position, uSize, a * uDim, uColor, aSeed);
 }`
 function buildFloor(o, ctx) {
-  const g = new Group()
+  const g = new Group(); g.name = 'floor:' + (o.name || '')
   const P = o.pos || [0, 0, 0]
   g.position.set(P[0] || 0, P[1] || 0, P[2] || 0)
   const [sx, sz] = o.area || [32, 28], step = o.step ?? 2, n = o.grains ?? 18000
@@ -371,7 +371,7 @@ function buildFloor(o, ctx) {
 //   { type: supports, name, of?: 'det', floor: -6.72, parts: [[x0, x1, zHalf, yBottom], …],
 //     grains?: 16000, color?, alpha?: 0.6, size?: 1.2 }
 function buildSupports(o, ctx) {
-  const g = new Group()
+  const g = new Group(); g.name = 'supports:' + (o.name || '')
   const P = o.pos || [0, 0, 0]
   g.position.set(P[0] || 0, P[1] || 0, P[2] || 0)
   const parts = o.parts || [], n = o.grains ?? 16000, fl = o.floor ?? -6.72
@@ -580,13 +580,20 @@ function buildRing(o, ctx) {
   const v = new Vector3(), here = new Vector3()
   const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t) }
   // the station's other objects, scaled about Point 8 and faded
-  const apply = (par, k, m) => {
+  // past `hideAt` of the pull-out the detector, its floor and cradles are specks under the
+  // collision's glow: their ~0.5 M grains are not drawn (owner, 22 Oct: "laggy, too many points
+  // on the screen"); the group's own `visible` stays the builder's, its children are hidden
+  const hideAt = o.hideAt ?? 0.75, specks = /^(detector|floor|supports):/
+  const apply = (par, k, m, b) => {
     for (const c of par.children) {
       if (c === g || c.userData.travel) continue
+      const speck = specks.test(c.name)
+      if (speck) { const on = b < hideAt; for (const x of c.children) x.visible = on }
       const z = (c.userData.zoom0 ||= { p: c.position.clone(), s: c.scale.x })
       c.position.copy(z.p).sub(here).multiplyScalar(k).add(here)
       c.scale.setScalar(z.s * k)
-      c.traverse((x) => { const uu = x.material?.uniforms; if (uu?.uDim) uu.uDim.value = m })
+      const mm = speck ? m * (1 - smooth(hideAt - 0.12, hideAt, b)) : m   // faded out before it goes
+      c.traverse((x) => { const uu = x.material?.uniforms; if (uu?.uDim) uu.uDim.value = mm })
     }
   }
   return {
@@ -608,7 +615,7 @@ function buildRing(o, ctx) {
       un.uMark.value = markAlpha * smooth(0.3, 0.8, b)
       if (warm > 0) warm--
       g.visible = b > 0 || warm > 0
-      if (b !== last) { apply(par, zoom.k, 1 - (1 - dimTo) * smooth(0.15, 0.9, b)); last = b }
+      if (b !== last) { apply(par, zoom.k, 1 - (1 - dimTo) * smooth(0.15, 0.9, b), b); last = b }
     },
     dispose() { alive = false; off(); removeEventListener('innoday:prewarm', onWarm); zoom.b = 0; zoom.k = 1 },
   }

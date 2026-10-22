@@ -168,6 +168,31 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-22 (21:15, deployed): 4bc29fa (Pages run 39827057266, green, URL 200, live walk clean).
+Slide 30's close now flies in to NFTMC over the dive's last 10 s and, under „Ačiū“, very slowly
+zooms out again (close_home.mp4, 111.6 s). The venue zip is rebuilt from 88f60de (the same deck;
+4bc29fa adds only venue.json), 899 061 992 bytes; the landing page shows "ZIP · 857 MB". Open as
+below.
+
+2026-10-22 (20:50, deployed): efba698 (Pages run 39824423357, green, URL 200, live walk clean;
+`ready` passed on it, nothing skipped). Live: slide 30 is close_home.mp4, the close re-recorded at
+4K with the whole LHCb logo and the flight home (the complex gone as the clouds appear, a 14 s
+dive into Vilnius, „Ačiū“ over NFTMC on Starfire's 2:54.85 at 79.8 s; the owner on the review:
+"Otherwise all really good, go for final deploy and zip available in the list of talks on the
+web"). The venue zip is rebuilt from 6ee27ad (the same deck; efba698 adds only venue.json),
+877 165 607 bytes on the release; the landing page shows "ZIP · 837 MB". The talk now times at
+~27.5 min (slide 30: 2 min). Open: plates 30–31 stale (30 a clip, 31 a still); the old close.mp4
+and the PPTX stay on the release unused; the toolkit's cut clip (no cover) told to the Scheduler.
+
+2026-10-22 (19:00, deployed): 4744b0d (origin/main merged at acc0993; Pages run 39808661599,
+green, URL 200, live walk clean). Live: slide 30 is the recorded close (close.mp4), faded in so
+the world rests under it (a cut clip never rested it: the M2 Mac's lag, owner "MacPro M2 can't
+quite handle the final slide"); slide 31 the clip's last frame as a still (CloseStill); the SciFi
+module lands in the cloud's SciFi; the logo cropped to its upper half (a mistake: undone at night); the buffer at most 1920 wide;
+no PowerPoint. The landing page shows "ZIP · 742 MB"; the zip on the release is rebuilt from
+4744b0d (778 514 435 bytes). Open: the owner to retry the final slide on the M2; plates 30–31
+stale (30 a clip, 31 a still; neither drawn live); the toolkit's cut clip told to the Scheduler.
+
 2026-10-22 (00:45, deployed): the fresh-eyes review of all 31 slides found nothing high; its fixes
 are in (White Rabbit darker, 19 and 22 dimmed, „8 TeV“/„290 dalelių“ at bottom 96 px, slides 5–6
 further back, the units light blue, the cover's lines shadowed, the sun's cards stepping back at a
@@ -371,6 +396,58 @@ iPhone retest. For a PDF: `pnpm talk export innoday --format pdf -- --wait
 v0.8.1 since 20 Oct and builds the zip local-first itself).
 
 ## Decisions
+
+- **The close is a recording (22 Oct, evening).** The owner: "the very last frame is laggy even in
+  zip" — "Maybe worth prerecording a video? So it doesn't lag?" — "For both SciFi module (which
+  then would all go into the SciFi detector and become the point cloud aligned with the scifi)".
+  Slide 30 plays close.mp4 (slidev-stage-record of the live slide at 22efcef, `--slides 30 --fps
+  50 --hold 16 --clicks none`, x264 slow CRF 17 under 10 Mbit/s, 73 s, a generated manifest
+  entry); the music stays live and `<Soundtrack keys>` gives it + and − over the muted clip. To
+  change the close: restore slide 30 from 22efcef, record, encode, publish `--only close.mp4`.
+  The LIS anchor is LHCb (0.8, −2.00, 7.95) m (the cold box's true −2.55 m sat 0.11 m under the
+  cloud's lowest SciFi grain). The PowerPoint is dropped ("not going to work for this"); the old
+  PPTX asset stays on the release unused.
+- **Nothing live under the close (22 Oct, night).** The owner: "Looks good on this RTX5080
+  workstation, but MacPro M2 can't quite handle the final slide". Slide 30's clip is
+  `transition="fade"`, never `cut`: in slidev-addon-videos v0.8.3 a cut clip never sends
+  `slidev-videos:cover`, so the world drew 160–430 draw calls a second under the whole
+  recording (a headless count; fade: 0). Slide 31 (credits) is `<CloseStill>` (setup/CloseStill.vue):
+  the clip's last frame (figures/close_end.jpg, from close.mp4) with the world resting, not the
+  complex drawn live. Toolkit: a cut clip should announce cover too (told the Scheduler).
+- **The bookend: „…ir atgal“ (22 Oct, night).** The owner, on the Scheduler's proposal (the
+  title promises „…ir atgal“, the opener flies out from NFTMC, the close ended on the LHC
+  ring): "Go ahead and do it"; on the first cut (a fade from the ring to NFTMC): "shouldn't
+  there be world zooming out and so on to Vilnius? Also, for the video could we get better
+  resolved sharper pointcloud?". Slide 30 plays close_home.mp4 (~110 s; the manifest's notes,
+  hero/bookend.py): the take re-recorded at 3840×2160 and taken down to 1080p; at 57.4 s the map
+  flies away into the Earth, then the opener's first 56 s backwards down into Vilnius, landing
+  on NFTMC from above (~92 s); the take's „Ačiū“ collision lifted off the map crosses over
+  Vilnius at 95.5 s. Starfire's peak, measured in the file: the downbeat at 2:54.85 after the
+  drum fill (the piece's biggest onset, +7 dB); the music's quiet middle plays under the flight
+  and its drum build on the approach. The `drop` on the slide's <Soundtrack>: the music falls
+  to 6 % from 92.7 s, a third file (audio/starfire_close_peak.m4a, the track from 2:52.85)
+  starts quiet and opens on the downbeat, the clip's rate nudged to stay on it. close.mp4 (the
+  4744b0d close) stays on the release for that deploy. Limits: the opener's Earth is a CG limb
+  with no readable coastline, so the map goes down on its lit side, not on Geneva; the dive
+  passes the opener's Google Earth to CG change (~29 s of it).
+  The owner on that cut: "Make this going back to vilnius quicker, but all good otherwise apart
+  from LHCb Logo only showing half": the dive is 14 s (62.5–76.5 s, the opener at 4×), the
+  crossing at 79.8 s (the `drop` brings the peak there out of the music's quiet middle). The
+  logo is the whole official one again (figures/lhcb_logo_grains.png: the light „LHCb“ over the
+  dark inverted one and the red track): its lower half is the logo, not a reflection, and the
+  22 Oct crop (figures/lhcb_logo.png, gone) had cut it; the take re-recorded with it.
+  Then: "The complex should fade out as soon as clouds appear" (gone by ~58 s); "NFTMC should
+  be static, better to fly in to it for the last 10 seconds and then very slowly start zooming
+  out again" (read as: not a still): the dive fast through space and the clouds, its last 10 s
+  a fly-in easing onto NFTMC (~76.5 s), and under „Ačiū“ the opener forwards at 0.12× (the clip
+  ~111.5 s, then held).
+  Then: "looks choppy... because of framerate ... need the video to be smooth around NFTMC, so
+  start ACIU as soon as it's visible (can still be around vilnius) maintain original or at least
+  decent framerate": the fly-in at about the opener's own pace (at most 1.33×), every slower
+  pass a blend of neighbouring frames (no held frames), the word's bunches from 66.55 s (NFTMC
+  in view), the crossing and the peak at 69.8 s, the landing at 76.55 s.
+  And "and collision full frame": the collision is a close-up of the 4K take (4.5×: its spray
+  fills the frame), easing back to the whole word as it gathers (the take's 64–68 s).
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 

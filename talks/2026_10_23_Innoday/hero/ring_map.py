@@ -160,10 +160,10 @@ def main(src, dst):
         lines.append({'pts': l, 'grains': max(120, int(len(l) * 70)), 'alpha': 0.8, 'color': '#6f9fe0', 'width': 0.05})
     for l in lake_poly:
         for run in cut(l):
-            lines.append({'pts': run, 'grains': 3000, 'alpha': 1.0, 'color': '#7fb0ff', 'width': 0.06})
+            lines.append({'pts': run, 'grains': 2000, 'alpha': 1.0, 'color': '#7fb0ff', 'width': 0.06})
     for l in ridges:
-        lines.append({'pts': l, 'grains': 2500, 'alpha': 0.7, 'color': '#6fae78', 'width': 0.6})
-    fills = [{'pts': l, 'grains': 15000, 'alpha': 1.0, 'color': '#4f86da', 'box': list(BOX)} for l in lake_poly]
+        lines.append({'pts': l, 'grains': 1000, 'alpha': 0.7, 'color': '#6fae78', 'width': 0.6})
+    fills = [{'pts': l, 'grains': 6000, 'alpha': 1.0, 'color': '#4f86da', 'box': list(BOX)} for l in lake_poly]
     # (grain counts cut by a third, 22 Oct: "lags on zooming out to lhc / fcc" on a Mac)
 
     # the last view: straight down (pitch 89), north up, framing the LHC and the whole FCC

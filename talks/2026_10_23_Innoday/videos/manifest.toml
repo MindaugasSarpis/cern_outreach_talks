@@ -144,6 +144,40 @@ bank under this name; not on gdrive released/. 0:25 the full hall at the \
 opening, 0:26 the President's greeting on both screens, 0:28 the lectern, \
 0:30-0:31 the panel: what the four photos showed."""
 
+[[videos]]
+name      = "close.mp4"
+profile   = "remux"
+used_in   = []
+generated = true
+notes     = """\
+Slide 30's close up to 4744b0d (the ring and „Ačiū" over the map), the take without the \
+bookend; no longer in the deck: its asset stays on the release for that deploy. See \
+close_home.mp4."""
+
+[[videos]]
+name      = "close_home.mp4"
+profile   = "remux"
+used_in   = ["deck"]
+generated = true
+notes     = """\
+Slide 30, the close with the flight home (owner, 22 Oct: "Go ahead and do it"; "shouldn't \
+there be world zooming out and so on to Vilnius?"; "could we get better resolved sharper \
+pointcloud?"): slidev-stage-record's take of the live slide at 22efcef (LisTakeover) at \
+3840x2160, 50 fps, 16 s hold, the drawing buffer let up to 3840 for the take, taken down \
+to 1920x1080 (finer grains); then hero/bookend.py: the map flies away into the Earth \
+(nftmc_zoom_web.mp4 at 47 s), the opener's first 56 s backwards down to NFTMC in 14 s \
+(owner: "Make this going back to vilnius quicker"; the last 10 s flying in, "better to fly \
+in to it for the last 10 seconds and then very slowly start zooming out again"; landing \
+~76.5 s, darkened to the black ground, then the opener forwards at 0.12x to ~111.5 s), and \
+the take's „Ačiū" collision lifted off the map over Vilnius as soon as NFTMC is in view \
+("start ACIU as soon as it's visible"), its crossing at 69.8 s on Starfire's 2:54.85 (the \
+Soundtrack's `drop`), full frame ("and collision full frame": a 4.5x close-up of the 4K \
+take, easing back as the word gathers); slow passes blend neighbouring frames ("looks \
+choppy"). The take has the whole LHCb logo \
+(owner: "LHCb Logo only showing half"). \
+x264 slow, CRF 17, under 10 Mbit/s, silent. Placed in public/videos/ and published with \
+--only; no raw."""
+
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 
 [[videos]]
