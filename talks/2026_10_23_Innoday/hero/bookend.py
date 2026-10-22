@@ -14,11 +14,12 @@ on to Vilnius?".
 
 Times (s of the clip; the music is the slide's <Soundtrack>, its `drop` on V_HIT):
   0-57      the take: the module, LHCb at eye level, the pull-out to the LHC and the FCC
-  57.4-62.5 the map flies away into the Earth's lit side as the Earth comes up round it
-  62.5-76.5 down into Vilnius: the opener's first 56 s backwards (4x), landing on NFTMC; the
-            picture settles to the deck's dark ground over the last seconds
-  76.5-94.5 the take's „Ačiū“ collision over Vilnius (its bunches from 76.5, the crossing on
-            V_HIT, Starfire's 2:54.85 downbeat), the word and the flag, held
+  57.4-61   the map goes as the clouds come, the Earth up round it
+  61-76.5   down into Vilnius: the opener backwards, fast through space and the clouds, the
+            last 10 s flying in to NFTMC; settling to the deck's dark ground at the end
+  76.5-111.5 the take's „Ačiū“ collision over Vilnius (its bunches from 76.5, the crossing on
+            V_HIT, Starfire's 2:54.85 downbeat), the word and the flag, held, while the
+            view very slowly zooms out again (the opener forwards at 0.12x)
 """
 import argparse, subprocess, sys
 import numpy as np
@@ -30,7 +31,9 @@ T_STILL = (56.95, 57.95)   # the take: the camera stands still over the map
 T_CROSS = 61.2             # the take: the word's collision crosses
 V_HIT = 79.8               # the clip: the crossing, on Starfire's peak (the music's 2:54.85: the Soundtrack's `drop` brings it here)
 SHIFT = V_HIT - T_CROSS    # the take's word, later in the clip
-V_OUT0, V_OUT1 = 57.4, 62.5   # the map away, the Earth up (owner, on the 28 s dive: "Make this going back to vilnius quicker": 14 s)
+V_OUT0, V_OUT1 = 57.4, 61.0   # the map away, the Earth up (owner, on the 28 s dive: "Make this going back to vilnius quicker")
+FLY_IN = 10.0                 # the dive's last s: flying in to NFTMC at about the opener's own pace (owner: "better to fly in to it for the last 10 seconds")
+DRIFT = 0.12                  # after the landing, the opener forwards at this rate: "then very slowly start zooming out again"
 V_LAND = V_HIT - (T_CROSS - T_STILL[1])   # NFTMC reached as the word's bunches come in
 KNEE = 4.0
 
@@ -143,11 +146,34 @@ class Dive:
 dive = Dive()
 
 
+class Fwd:
+    """the opener forwards (60 fps), frame by frame as the clip needs them"""
+    def __init__(self): self.it, self.k, self.f = None, -1, None
+    def at(self, T):
+        want = max(0, int(round(T * 60)))
+        if x.stills: return one(x.opener, want / 60)
+        if self.it is None or want < self.k: self.it, self.k = reader(x.opener, 0), -1
+        while self.k < want:
+            nxt = next(self.it, None)
+            if nxt is None: break
+            self.f, self.k = nxt, self.k + 1
+        return self.f.astype(np.float32)
+fwd = Fwd()
+
+
 def dive_t(V):
-    u = np.clip((V - V_OUT1) / (V_LAND - V_OUT1), 0, 1)
-    # leave the Earth gently, run, and slow into the campus (the opener eases out of it too)
-    e = u * u * (3 - 2 * u) * 0.35 + u * 0.65
-    return EARTH_T * (1 - e)
+    # fast through space and the clouds, then the last FLY_IN s over the opener's last ~10 s,
+    # easing into the campus: T = EARTH_T (1-u)^p, with T = 10 at FLY_IN s before the landing
+    D = V_LAND - V_OUT1
+    u = np.clip((V - V_OUT1) / D, 0, 1)
+    p = np.log(10.0 / EARTH_T) / np.log(FLY_IN / D)
+    return EARTH_T * (1 - u) ** p
+
+
+def drift_t(V):
+    # the opener's own zoom-out again, starting from rest and very slowly
+    w = max(0.0, V - V_LAND)
+    return DRIFT * (w - 2.0 * (1 - np.exp(-w / 2.0)))
 
 
 def compose(V, take_frame):
@@ -169,7 +195,7 @@ def compose(V, take_frame):
         img = dive.at(x.dive_span - dive_t(V))
         return grade(img, smooth(V_LAND - 3.0, V_LAND, V))
     # landed: NFTMC, dark, and the take's word over it
-    base = grade(nftmc, 1.0)
+    base = grade(fwd.at(drift_t(V)), 1.0)
     t = V - SHIFT
     if t > 73 - 1 / FPS: t = 73 - 1 / FPS
     return base + layer_of(take_at(t), t)
@@ -191,7 +217,7 @@ word_take = Seq(x.take)
 take_at = word_take.at
 
 
-V_END = 73 - 1 / FPS + SHIFT + 3.0   # the word held 3 s past the take's end
+V_END = V_LAND + 35.0   # the word held over the slow zoom-out; the player holds the last frame
 
 if x.stills:
     import os

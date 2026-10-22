@@ -430,6 +430,11 @@ v0.8.1 since 20 Oct and builds the zip local-first itself).
   logo is the whole official one again (figures/lhcb_logo_grains.png: the light „LHCb“ over the
   dark inverted one and the red track): its lower half is the logo, not a reflection, and the
   22 Oct crop (figures/lhcb_logo.png, gone) had cut it; the take re-recorded with it.
+  Then: "The complex should fade out as soon as clouds appear" (gone by ~58 s); "NFTMC should
+  be static, better to fly in to it for the last 10 seconds and then very slowly start zooming
+  out again" (read as: not a still): the dive fast through space and the clouds, its last 10 s
+  a fly-in easing onto NFTMC (~76.5 s), and under „Ačiū“ the opener forwards at 0.12× (the clip
+  ~111.5 s, then held).
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
