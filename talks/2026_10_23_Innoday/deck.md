@@ -63,6 +63,8 @@ space: { at: wide, dim: 0, ambient: 0.35, hum: false }   # wide: the hero statio
 
 <div class="mt-md">Dr. Mindaugas Šarpis · <span class="nc">LHCb</span> Vilnius · Vilniaus universitetas</div>
 
+<PptxButton />
+
 <!-- facts: cms-195099-137440354-record-300, cms-195099-8tev, cms-195099-m4l-127-gev, cms-195099-290-drawn-tracks, cms-195099-523-tracks -->
 
 <!--
