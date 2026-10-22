@@ -2252,7 +2252,8 @@ def cmd_pptx(repo: Repo, a, extra) -> tuple[int, dict]:
     if not supports(b, "--max"):
         raise UsageError(f"this slidev-stage-record has no --max ({b}): pin the talk to a toolkit release "
                          f"(pnpm talk pin {slug} <tag>), or SLIDEV_STAGE_BIN")
-    skip_clips = not a.film_clips
+    given = {x.split("=")[0] for x in extra}
+    skip_clips = not a.film_clips or "--skip-clips" in given      # by hand after -- counts too
     if skip_clips and not supports(b, "--skip-clips"):
         raise UsageError(f"this slidev-stage-record has no --skip-clips ({b}), so it would film every clip slide frame "
                          f"by frame (a 4-minute clip took 53 min): pin the talk to v0.8.4 or later (pnpm talk pin {slug} "
@@ -2261,7 +2262,6 @@ def cmd_pptx(repo: Repo, a, extra) -> tuple[int, dict]:
     rec, part, out, deck = work / "rec", work / "rec-part", work / f"{talk}.pptx", d / "deck.md"
     pj_path = d / "videos" / "pptx.json"
     repo_name, tag = videos_release(repo.here, d)
-    given = {x.split("=")[0] for x in extra}
     partial = "--slides" in given
     if partial and not (rec / "index.json").is_file():
         raise UsageError(f"--slides records some slides into a whole take, and {rec} holds none: "
@@ -2302,6 +2302,11 @@ def cmd_pptx(repo: Repo, a, extra) -> tuple[int, dict]:
     take = read_json(rec / "take.json")
     current = (not a.rerecord and isinstance(take, dict) and take.get("fingerprint") == fp
                and take.get("args") == key and (rec / "index.json").is_file())
+    # some slides into a take made with other flags (another fps, clip slides filmed) would mix the two
+    if partial and isinstance(take, dict) and take.get("args") is not None and take.get("args") != key:
+        raise UsageError(f"the take in {rec} was recorded with other flags ({shlex.join(map(str, take.get('args') or []))}), "
+                         f"not {shlex.join(key)}: record it whole (pnpm talk pptx {slug} with these flags, "
+                         f"without --slides) before redoing some slides")
     record = partial or not current
     target = part if partial else rec
     build = [sv, "pptx", rec, "--deck", deck, "--out", out, "--json",
@@ -2380,7 +2385,7 @@ def cmd_pptx(repo: Repo, a, extra) -> tuple[int, dict]:
           "segments": len(segments), "deck_slides": len({s.get("slide") for s in segments}),
           "skipped": report.get("skipped") if isinstance(report.get("skipped"), list) else [],
           "fps": number(flag_value(took, "--fps"), PPTX_FPS), "hold": number(flag_value(took, "--hold"), PPTX_HOLD),
-          "max": number(flag_value(took, "--max"), take.get("max")), "cap": a.cap or report.get("cap") or profile.get("cap") or PPTX_CAP,
+          "max": number(flag_value(took, "--max"), take.get("max")), "skip_clips": "--skip-clips" in took, "cap": a.cap or report.get("cap") or profile.get("cap") or PPTX_CAP,
           "cli": (ver.stdout.strip().splitlines() or [None])[-1] if ver.returncode == 0 else None,
           "recorded_at": take.get("recorded_at")}
     pj_path.parent.mkdir(exist_ok=True)

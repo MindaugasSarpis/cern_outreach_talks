@@ -96,7 +96,7 @@ def test_pptx_records_builds_uploads_and_writes_pptx_json(repo, tools, tmp_path)
     recorded_at = data.pop("recorded_at")
     assert data == {"fingerprint": talk_cli.take_fingerprint(repo, TALK), "asset": ASSET, "repo": "o/r", "tag": "videos-t",
                     "url": URL, "bytes": 1234, "slides": 3, "segments": 3, "deck_slides": 3, "skipped": [],
-                    "fps": 25, "hold": 8, "max": 120, "cap": "6M", "cli": "slidev-videos 0.8.3"}
+                    "fps": 25, "hold": 8, "max": 120, "skip_clips": True, "cap": "6M", "cli": "slidev-videos 0.8.3"}
     assert recorded_at == json.loads((rec / "take.json").read_text())["recorded_at"]
     assert obj["url"] == URL and obj["recorded"] is True and obj["uploaded"] is True and obj["out"] == str(out)
     assert "commit it" in err and "videos/pptx.json" in err
@@ -189,6 +189,23 @@ def test_pptx_film_clips_films_every_clip_slide_whole(repo, tools, tmp_path):
     rec = obj["plan"]["record"].split()
     assert rec.count("--fps") == 1 and rec[rec.index("--fps") + 1] == "50" and rec[-1] == "50"
     assert json.loads((repo / "talks" / TALK / "videos" / "pptx.json").read_text())["fps"] == 25
+
+
+def test_pptx_slides_refuses_a_take_made_with_other_flags(repo, tools, tmp_path):
+    # a take from before (another fps, clip slides filmed): some slides of a new kind would make a mixed take
+    assert pptx(repo, tools, "--film-clips")[0] == 0
+    code, obj, _ = pptx(repo, tools, "--", "--slides", "2-2")
+    assert code == 2 and "whole" in obj["error"] and len(lines(tmp_path / "rec.args")) == 1
+    assert pptx(repo, tools, "--film-clips", "--", "--slides", "2-2")[0] == 0         # the same flags: fine
+
+
+def test_pptx_skip_clips_by_hand_counts_as_skipping(repo, tools, tmp_path):
+    code, obj, err = pptx(repo, tools, "--film-clips", "--", "--skip-clips")
+    assert code == 0 and obj["skip_clips"] is True and obj["max"] == 120, err
+    assert lines(tmp_path / "rec.args")[-1].count("--skip-clips") == 1
+    fake_bin(tmp_path / "stage-bin", "slidev-stage-record", "# else if (a === '--max') ...: v0.8.3\n")
+    code, obj, _ = pptx(repo, tools, "--film-clips", "--rerecord", "--", "--skip-clips")
+    assert code == 2 and "--skip-clips" in obj["error"]
 
 
 def test_pptx_refuses_a_recorder_that_cannot_skip_clips(repo, tools, tmp_path):
