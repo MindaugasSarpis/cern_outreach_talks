@@ -18,15 +18,15 @@ Seconds of the slide (the music's second file: the arrival at 17,5, the second c
   2-5.5    out of the module's end (the stage's own first segment)
   5.5-17.5 the crane down and round to eye level (1,71 m), side on, LHCb filling the frame
            from side to side; LHCb's collision crosses on the music's arrival
-  17.5-33  a slow drift back at eye level while the collisions come ever faster and merge
+  17.5-36  a slow drift back at eye level while the collisions come ever faster and merge
            into the glow (40 million a second), and then
-  33-54    without a pause (owner, 22 Oct: "The zoomout to FCC should be slow and
+  36-57    without a pause (owner, 22 Oct: "The zoomout to FCC should be slow and
            continuous"; it took 5 s before) the pull-out to the LHC: LHCb shrinks to
            its point on the ring (`ring` in space.json, setup/emblems.js) as the ring
            fades in round it, the emblems ride along to the top of the frame; it stops
            straight above the map (owner, 22 Oct, with CERN's FCC map: "can you use
            something like this?"), north up, the LHC and the whole FCC in frame, Point 8
-           marked. 0,6 s later (54,6 s; the pull-out ~35 s on the wall clock at the camera's rate 0,6) a collision in the FCC's middle, and „Ačiū“ and the
+           marked. 0,6 s later (57,6 s; the pull-out ~35 s on the wall clock at the camera's rate 0,6) a collision in the FCC's middle, and „Ačiū“ and the
            flag out of it.
 
 Poses: position = at + dist (sin yaw cos pitch, sin pitch, cos yaw cos pitch), as
@@ -62,8 +62,8 @@ RING = dict(at=(-18.33, -480.0, 43.373), dist=191.56, yaw=-34.22, pitch=89.0)   
 LEGS = [
     (2.0, 5.5, STILL, OUT, 0.0, 1.0, 'lin'),     # (the stage's own segment: for --probe only)
     (5.5, 17.5, OUT, SIDE, 1.0, 0.06, 'lin'),
-    (17.5, 33.0, SIDE, BACK, 0.15, 2.0, 'lin'),
-    (33.0, 54.0, BACK, RING, 0.25, 0.0, 'log'),   # its start's pace the drift's end's (~1 unit/s): one move
+    (17.5, 36.0, SIDE, BACK, 0.15, 2.2, 'lin'),
+    (36.0, 57.0, BACK, RING, 0.22, 0.0, 'log'),   # its start's pace the drift's end's (~1 unit/s): one move
 ]
 END = LEGS[-1][1]
 

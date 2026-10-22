@@ -527,7 +527,7 @@
           "light3": [-0.35, 0.75, 0.55],
           "shade": 0.45,
           "edgeGain": 0.8,
-          "cascade": { "after": 7, "rate": 0.28, "speed": 12 },
+          "cascade": { "after": 4, "rate": 0.34, "speed": 12 },
           "person": { "color": "#d6e8ff", "gain": 1.0 }
         },
         {

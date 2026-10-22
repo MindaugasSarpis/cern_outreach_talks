@@ -374,6 +374,28 @@ v0.8.1 since 20 Oct and builds the zip local-first itself).
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
+- The 22 Oct afternoon round (owner, in this window; "This is the last of the comments"):
+  - Slide 11 waits for a click on the photo ("can we do on click transfer to the globe view? I
+    might stay for a minute or so one the photo"): `clicks: 1`; CollabGlobe holds the photo until
+    `$clicks` ≥ 1, then the globe starts 1,05 s into its sequence; the recorders (`window.__rec`)
+    never wait, so the plate and the PPTX take play it through.
+  - The Web (and its server) visited last of the inventions ("Pasaulinis žiniatinklis we visit
+    last"): now slides 21–22, the Part's opening line names information last.
+  - Slide 16's caption „3D rentgenogramos su spalvine audinių indikacija“ (owner's words).
+  - Slides 23–26: the islands are back (Douglas–Peucker on a closed ring kept nothing: Great
+    Britain, Ireland, Iceland, Sicily; "why is UK not rendered") and the coastlines beyond, to
+    the frames' edges ("and other continents"), sparse and border-faint (europe.json `far`).
+  - Slide 27's hum steady ("repeating / puslating.. can we just have more constant one").
+  - `+` / `-` show nothing to the audience ("invisible, but -+ to control"): the badge only in
+    the presenter's window.
+  - Slide 30: down to eye level side on, LHCb filling the frame side to side; a slow drift back
+    as the collisions merge into the glow; then one slow pull-out to the map, no pause (path 33–54
+    s) ("first zoom out untill you reach the eye level, so lhcb is full frame side to side, then
+    slowly move out until the beams run at full speed, only then zoom out to lhc fcc"; "slow and
+    continuous"). The SPS, the PS and the transfer lines are gone ("the inner ring of the lhc
+    doesn't make sense... don't show it"). A small flag (`ltMap`) rides from the SciFi's place to
+    just below LHCb's point on the map and stays ("Still need lithuanian flag on 30"). The map's
+    still grains 86k → 53k and the logo's 80k → 55k ("lags on zooming out to lhc / fcc" on a Mac).
 - The 22 Oct round (owner, in this window):
   - „Ačiū“'s music at 0,3, half of 0,6 ("And the last soundtrack 50% quieter"); `+` / `-` step
     the music and slide 27's hum on a slide without a clip, 0–200 % of the written level, kept in
