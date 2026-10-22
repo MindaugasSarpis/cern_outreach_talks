@@ -67,3 +67,14 @@ running away down it between walls of tapes (1:47-2:04 in the film; cut 1:48-2:0
 from a frame sheet). Under speech, so silent (the film's sound dropped). Same name as the \
 library's full-length copy, so this talk's release wins. Raw: the Drive clip folder's \
 cern_footage_2022_013_006_1080p_data_center.mp4, copied into the raw bank under this name."""
+
+[[videos]]
+name    = "lis_flag.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = """\
+The library's lis_flag.mp4 (10 s, silent, played once: a Blender render of a SciFi module's \
+end, the Lithuanian flag lasered on its cold box), copied as-is from the slidev-videos \
+videos-shared release onto this talk's own, so it plays and checks on any toolkit pin: \
+the library holds it only from v0.9.0, and this talk runs v0.8.x. Innoday's 20 s cut stays \
+on Innoday's release. Raw: that release asset (1,68 MB), remuxed."""
