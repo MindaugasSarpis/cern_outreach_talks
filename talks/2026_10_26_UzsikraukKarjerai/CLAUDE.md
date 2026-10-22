@@ -101,6 +101,32 @@ purpose).
 
 ## Status
 
+- 2026-10-23 (latest, night; the owner asleep, "finish the talk to completion
+  deploy, make zip availabe"): **the pre-filming round, 22 slides** (Decisions,
+  22 Oct; notes/review.md). The deploy and its run are in the next entry once
+  green. The venue zip is rebuilt from 3489ef5 (226 MB, 22 slides, the new
+  plates and stills) and on the talk's release; `videos/venue.json` puts it on
+  the landing page. `talk ready` passed on 3489ef5 (plates: one warning, the
+  fingerprint counting the notes and manifest written after the take; the
+  world is the take's). **For the owner to look at before Monday:**
+  1. the histogram labels on 10–13 (his "totally without context"), worded by
+     the session: „masė →“, „140 taškų“ → „3 500 taškų“, „LHCb duomenys“,
+     „5 naujos dalelės“, „3 pentakvarkai“, „atsitiktinumas“ / „LHCb“,
+     „< 1 iš 3,5 mln.“ (13, 10 s in: timed to the sentence at 120 words a
+     minute; it may land early or late against his pace);
+  2. slide 20 (the tape robot) dropped and the cuts (Decisions): to put the
+     robot back, revert 7713925's slide and 3489ef5's manifest change;
+  3. slide 8: he presses 3 s after „Aš – vienas iš jų.“, not at the reel's end;
+  4. where he stands: the numbers sit low left (61–74 % down); stand
+     screen-right, or say so and they move up;
+  5. his MacBook: run slides 9 and 22 on it; slide 9 is Innoday's close scene
+     (the detector and the collision), which his M2 struggled with on 23 Oct
+     („MacPro M2 can't quite handle the final slide“). If it stutters, it can
+     be recorded as a clip;
+  6. Delfi's sound check: the collision's drone on 9 is 30–60 Hz, synthesised.
+  Still open: the road slide 14 (the last stretch Bonn → Manchester → Vilnius?,
+  which Irish city, did the trail start in Vilnius, years and roles for the
+  notes); its three optional slots stay his.
 - 2026-10-22 (latest, evening): **deployed acc0993 on v0.8.3** (Pages run
   39790852994, green after its deploy job sat queued about an hour on
   GitHub's Actions incident; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
