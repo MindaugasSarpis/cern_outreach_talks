@@ -436,10 +436,10 @@ html[data-stage] .globe-stats .u { font-size: 24px; font-weight: 500; margin-lef
 .innoday-sound-badge.on { opacity: 1; }
 html.print .innoday-sound-badge { display: none; }
 
-/* the cover's ZIP: the venue zip (pnpm venue) on the talk's release, beside the PPTX button
-   (owner, 22 Oct: "I don't see zip / pptx download buttons"); styled as components/PptxButton.vue;
+/* the cover's ZIP: the venue zip (pnpm venue) on the talk's release (owner, 22 Oct: "I don't see
+   zip / pptx download buttons"; then "Drop the powerpoint option"); styled as components/PptxButton.vue;
    only on the slide itself, never on the plates (they hide .slidev-layout) or in print */
-.slidev-layout .zip-button { position: absolute; right: 4.6rem; bottom: 1rem; z-index: 10; padding: 0.25rem 0.6rem;
+.slidev-layout .zip-button { position: absolute; right: 1rem; bottom: 1rem; z-index: 10; padding: 0.25rem 0.6rem;
   border: 1px solid currentColor; border-radius: 0.3rem; color: inherit; font-size: 0.55rem; font-weight: 600;
   letter-spacing: 0.12em; line-height: 1; text-transform: uppercase; text-decoration: none; opacity: 0.55; transition: opacity 0.2s; }
 .slidev-layout .zip-button:hover, .slidev-layout .zip-button:focus-visible { opacity: 1; }

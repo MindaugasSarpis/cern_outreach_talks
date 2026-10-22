@@ -63,7 +63,6 @@ space: { at: wide, dim: 0, ambient: 0.35, hum: false }   # wide: the hero statio
 
 <div class="mt-md">Dr. Mindaugas Šarpis · <span class="nc">LHCb</span> Vilnius · Vilniaus universitetas</div>
 
-<PptxButton />
 <a class="zip-button" href="https://github.com/MindaugasSarpis/cern_outreach_talks/releases/download/videos-2026-10-00-innoday/2026_10_23_Innoday-venue.zip" download title="Visa prezentacija be interneto: išarchyvuoti, RUN_ME.txt">ZIP</a>
 
 <!-- facts: cms-195099-137440354-record-300, cms-195099-8tev, cms-195099-m4l-127-gev, cms-195099-290-drawn-tracks, cms-195099-523-tracks -->
