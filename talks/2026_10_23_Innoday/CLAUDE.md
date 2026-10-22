@@ -168,6 +168,16 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-22 (20:50, deployed): efba698 (Pages run 39824423357, green, URL 200, live walk clean;
+`ready` passed on it, nothing skipped). Live: slide 30 is close_home.mp4, the close re-recorded at
+4K with the whole LHCb logo and the flight home (the complex gone as the clouds appear, a 14 s
+dive into Vilnius, „Ačiū“ over NFTMC on Starfire's 2:54.85 at 79.8 s; the owner on the review:
+"Otherwise all really good, go for final deploy and zip available in the list of talks on the
+web"). The venue zip is rebuilt from 6ee27ad (the same deck; efba698 adds only venue.json),
+877 165 607 bytes on the release; the landing page shows "ZIP · 837 MB". The talk now times at
+~27.5 min (slide 30: 2 min). Open: plates 30–31 stale (30 a clip, 31 a still); the old close.mp4
+and the PPTX stay on the release unused; the toolkit's cut clip (no cover) told to the Scheduler.
+
 2026-10-22 (19:00, deployed): 4744b0d (origin/main merged at acc0993; Pages run 39808661599,
 green, URL 200, live walk clean). Live: slide 30 is the recorded close (close.mp4), faded in so
 the world rests under it (a cut clip never rested it: the M2 Mac's lag, owner "MacPro M2 can't
