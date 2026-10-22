@@ -25,7 +25,10 @@
 // (owner, 22 Oct: "aciu should appear out of particle collision now it's a bit flat"; "Also
 // Lithuanian flag should appear with aciu"): the grains leave that point white-hot on
 // curling tracks and cool to their colours as they land (`dur` s, 2.6 by default).
-import { BufferGeometry, BufferAttribute, Points, Group, Color, NormalBlending, AdditiveBlending, ShaderMaterial, Mesh, PlaneGeometry, MeshBasicMaterial, CanvasTexture, Vector3 } from 'three'
+// `solid: true` (with `src`) shows the image itself, fading in over `dur` and out as the grains
+// would, no grains (owner, 22 Oct, of the LHCb logo: "logos could even be baked in"; "so not
+// particle like"; and the zoom-out lagged on a Mac): one textured plane, `width` wide.
+import { BufferGeometry, BufferAttribute, Points, Group, Color, NormalBlending, AdditiveBlending, ShaderMaterial, Mesh, PlaneGeometry, MeshBasicMaterial, CanvasTexture, TextureLoader, SRGBColorSpace, Vector3 } from 'three'
 import { PLACE, listen, state, material as materialOf } from './detector.js'
 import { places } from './afterCover.js'
 
@@ -225,8 +228,18 @@ function buildEmblem(o, ctx) {
   }
   // built once the cover is behind (afterCover.js): sampled at the world's boot, it fell in
   // the cover's fly-in
+  let solid = null
   const offLatch = places.when(() => {
-    if (o.flag === 'lt') make(flagGrains(n, w))
+    if (o.solid && o.src) {
+      new TextureLoader().load(ctx.asset('/' + String(o.src).replace(/^\//, '')), (tex) => {
+        if (!alive) { tex.dispose(); return }
+        tex.colorSpace = SRGBColorSpace
+        const im = tex.image, h = w * (im.naturalHeight || im.height) / (im.naturalWidth || im.width)
+        solid = new Mesh(new PlaneGeometry(w, h), new MeshBasicMaterial({ map: tex, transparent: true, opacity: 0, depthTest: false, depthWrite: false }))
+        solid.renderOrder = 20
+        g.add(solid)
+      }, undefined, (e) => console.warn('stage: emblem failed', o.src, e))
+    } else if (o.flag === 'lt') make(flagGrains(n, w))
     else if (o.text) textCanvas(o).then((c) => imageGrains(c, n, w, { mode: 'alpha', ...o })).then(make).catch((e) => console.warn('stage: emblem failed', o.text, e))
     else if (o.src) imageGrains(ctx.asset('/' + String(o.src).replace(/^\//, '')), n, w, o).then(make).catch((e) => console.warn('stage: emblem failed', o.src, e))
   })
@@ -247,6 +260,11 @@ function buildEmblem(o, ctx) {
       now = t; u.uTime.value = t
       if (fresh) { fresh = false; apply() }
       if (u.uHide.value < 1e8 && t - u.uHide.value > 1.1) { u.uT0.value = 1e9; u.uHide.value = 1e9 }
+      if (solid) {
+        const on = u.uT0.value > 1e8 ? 0 : Math.min(1, (t - u.uT0.value) / u.uDur.value)
+        const off = u.uHide.value > 1e8 ? 1 : Math.max(0, 1 - (t - u.uHide.value))
+        solid.material.opacity = (o.alpha ?? 1) * on * on * (3 - 2 * on) * off
+      }
       if (scrim) {
         const on = u.uT0.value > 1e8 ? 0 : Math.min(1, (t - u.uT0.value) / u.uDur.value)
         const off = u.uHide.value > 1e8 ? 1 : Math.max(0, 1 - (t - u.uHide.value))

@@ -601,7 +601,7 @@
           "width": 8.36,
           "yaw": 0,
           "pitch": 8,
-          "src": "figures/lhcb_logo_grains.png",
+          "src": "figures/lhcb_logo_grains.png", "solid": true,
           "mode": "alpha",
           "grains": 55000,
           "size": 1.35,

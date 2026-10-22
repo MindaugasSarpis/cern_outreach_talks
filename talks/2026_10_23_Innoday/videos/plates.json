@@ -1,5 +1,5 @@
 {
-  "fingerprint": "a58b6a8febce2ed95f6129e5163c48ac6d5bccf8",
+  "fingerprint": "5eff07bedf02e7780cc5a99acd9092564f132afb",
   "fps": 25,
   "hold": 20,
   "slides": [
@@ -51,8 +51,8 @@
     "24-plate.mp4": 9555956,
     "25-plate.mp4": 10423708,
     "26-plate.mp4": 8797047,
-    "30-plate.mp4": 32130152,
-    "31-plate.mp4": 10901969
+    "30-plate.mp4": 32066827,
+    "31-plate.mp4": 10911817
   },
   "settle": {
     "01-plate.mp4": null,
