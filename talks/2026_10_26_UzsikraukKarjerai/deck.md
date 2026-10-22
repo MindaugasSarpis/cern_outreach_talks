@@ -50,6 +50,8 @@ space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
 
 <div class="mt-md">Dr. Mindaugas Šarpis · <span class="nt">LHCb</span>&nbsp;Vilnius<br>Vilniaus universitetas</div>
 
+<PptxButton />
+
 <!-- facts: pentaquark-idea-to-discovery-51-years, lhcb-pentaquark-2015, lhcb-vilnius-joined, pentaquark-idea-1964 -->
 
 <!--
