@@ -560,7 +560,7 @@
           "far": 198,
           "shrink": 0.05,
           "dimTo": 0.2,
-          "grains": 20000,
+          "grains": 14000,
           "size": 5,
           "alpha": 0.6,
           "bunch": 0.2,
@@ -579,11 +579,11 @@
         },
         {
           "type": "emblem", "name": "aciu", "text": "Ačiū", "pos": [-22.08, 1, 48.93], "width": 80, "yaw": -34.22, "pitch": -90,
-          "color": "#c4d0e2", "grains": 50000, "size": 3.2, "alpha": 0.95, "dur": 3.2, "fixed": true, "burst": { "at": [0, 0, 0], "curl": 1.1, "out": 0.35, "hot": "#cfe6ff" }
+          "color": "#c4d0e2", "grains": 32000, "size": 3.2, "alpha": 0.95, "dur": 3.2, "fixed": true, "burst": { "at": [0, 0, 0], "curl": 1.1, "out": 0.35, "hot": "#cfe6ff" }
         },
         {
           "type": "emblem", "name": "ltAciu", "flag": "lt", "pos": [-35.43, 1, 68.51], "width": 34, "yaw": -34.22, "pitch": -90,
-          "grains": 30000, "size": 3.6, "alpha": 1.0, "wave": 0.6, "dur": 3.8, "fixed": true, "burst": { "at": [0, 23.7, 0], "curl": 0.9, "out": 0.25, "hot": "#cfe6ff" }
+          "grains": 20000, "size": 3.6, "alpha": 1.0, "wave": 0.6, "dur": 3.8, "fixed": true, "burst": { "at": [0, 23.7, 0], "curl": 0.9, "out": 0.25, "hot": "#cfe6ff" }
         },
         {
           "type": "emblem", "name": "ltMap", "flag": "lt", "pos": [9.54, -3.06, 0.96], "width": 1.6, "yaw": 0, "pitch": 8,
@@ -601,7 +601,7 @@
           "width": 8.36,
           "yaw": 0,
           "pitch": 8,
-          "src": "figures/lhcb_logo_grains.png", "solid": true,
+          "src": "figures/lhcb_logo.png", "solid": true,
           "mode": "alpha",
           "grains": 55000,
           "size": 1.35,
