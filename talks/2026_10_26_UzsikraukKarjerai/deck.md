@@ -572,19 +572,19 @@ Scale, worked out: a 1 TB laptop of today is about 1,1 cm thick, so 100 000 of t
 
 ---
 
-<!-- 21 Oct, the 15-minute round: where the data live. The library clip cern_footage_2022_013_006.mp4 (CERN-FOOTAGE-2022-013-006, the CERN data centre and its tape robot, 2:04, CERN). [TODO: Friday, from a frame sheet of the clip: cut the tape-robot shot (10–12 s) in videos/manifest.toml as this talk's own clip, encode, publish, and point src at it; until then the whole clip plays from its start and → moves on.] -->
+<!-- 21 Oct, the 15-minute round: where the data live. This talk's cut of CERN-FOOTAGE-2022-013-006 (videos/manifest.toml): its last shot, 1:48–2:02, 14 s, silent: the tape library's aisle, the robot's carriage running away down it between walls of tapes. → moves on (no auto-advance). -->
 <VideoPlayer src="cern_footage_2022_013_006.mp4" muted :controls="false" />
 
 <!-- facts: cern-exabyte, cern-physics-data-tape-1p3eb, lhcb-data-100pb -->
 
 <!--
 Message: the data are kept in CERN's data centre, mostly on magnetic tape: about sixty thousand tapes, more than a million terabytes from all the LHC experiments; a robot takes them from the shelves. Then the bridge to Dominykas.
-Picture: real footage of the CERN data centre, the tape robot moving along its shelves (silent, about 10 s); → as you finish.
+Picture: real footage inside CERN's tape library: an aisle between walls of tapes, the robot's carriage running away down it (14 s, silent); → as you finish.
 
 Visi CERN eksperimentų duomenys saugomi CERN duomenų centre – daugiausia magnetinėse juostose. Jų ten apie šešiasdešimt tūkstančių, o duomenų – daugiau nei milijonas terabaitų. Juostas iš lentynų paima robotas.
 O štai ką su atviraisiais duomenimis padarė vienas mūsų studentas.
 
-„daugiau nei milijonas terabaitų“: CERN passed one exabyte of stored LHC data in December 2025, mostly on about 60 000 tapes (home.cern); never „vien LHCb“ (LHCb's is the 100 000 TB of slide 19). „Juostas … paima robotas“ says what the footage shows; check it on the cut (TODO above). If asked: CERN says this is about a tenth of what it will need over the next ten years.
+„daugiau nei milijonas terabaitų“: CERN passed one exabyte of stored LHC data in December 2025, mostly on about 60 000 tapes (home.cern); never „vien LHCb“ (LHCb's is the 100 000 TB of slide 19). „Juostas … paima robotas“ says what the footage shows (the carriage on its rail). If asked: CERN says this is about a tenth of what it will need over the next ten years.
 
 Šaltiniai: home.cern, 2025-12 („one exabyte“); CERN Annual Progress Report 2025, p. 17; CERN-FOOTAGE-2022-013-006 (CERN).
 

@@ -374,6 +374,11 @@ purpose).
 
 ## Decisions
 
+- 2026-10-22 — The tape library cut (slide 20's TODO, cleared): from a frame
+  sheet, CERN-FOOTAGE-2022-013-006's last shot, 1:48–2:02 (14 s): the tape
+  library's aisle, the robot's carriage running down it. Silent (`silent-loop`;
+  under speech). Talk-owned, same name as the library copy; encoded from the
+  Drive raw, published to the talk's release, its dust strip committed.
 - 2026-10-21 — The LHC dipole magnet (the owner, through the Scheduler: "can
   show magnet video from CERN (somewhere in google drive)", the file
   cern_video_2019_050_008_1080ph265.mp4; then in this window "A, ok" to cut A
