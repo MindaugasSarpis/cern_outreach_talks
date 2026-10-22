@@ -20,11 +20,15 @@
   facts ...       scripts/facts.py, everything after `facts` passed as it is
   map NAME        scripts/talk_map.py
   ready NAME      before the venue: lint --release, check, shots, videos:preflight,
-                  venue --dry-run, the plates (and the safe-area check for a broadcast talk)
+                  venue --dry-run, the plates, the PPTX (and the safe-area check for a broadcast talk)
   record NAME     slidev-stage-record of the build: one MP4 per slide; --plates: the
                   world alone for every non-clip slide (1080p25, a 20 s hold, 120 s at most) into
                   public/videos/NN-plate.mp4, videos/plates.json and the manifest's
                   plates block, for the stage to play where WebGL is missing
+  pptx NAME       the deck as a PPTX, one autoplaying video per slide and click: pull the clips,
+                  record the takes (1080p50, an 8 s hold, every click) unless the take is current,
+                  `slidev-videos pptx` into $TALK_TMP/talk-<slug>/pptx/, upload <talk>.pptx to
+                  the talk's videos release, write videos/pptx.json (commit it: the site's PPTX link)
   export NAME     slidev export (PDF; --format png|pptx) in the render slot, with
                   --wait-until load --wait 4000 (the stage never lets the network go idle),
                   into $TALK_TMP/talk-<slug>/ unless --out; more slidev args after --
@@ -68,6 +72,7 @@ import fcntl
 import functools
 import hashlib
 import json
+import math
 import os
 import re
 import shlex
@@ -91,11 +96,11 @@ import new_talk  # noqa: E402  (NAME_RE, REPO, PAGES, worktree_slug: one source 
 REPO_NAME = new_talk.REPO.split("/")[1]
 STAGE_BINS = {"shots": "slidev-stage-shots", "record": "slidev-stage-record", "safe": "slidev-stage-safe"}
 DELEGATES = {"lint": "talk_lint.py", "facts": "facts.py", "map": "talk_map.py"}
-PASSTHROUGH = {"dev", "build", "shots", "record", "safe", "export", "render"}   # extra args go to the tool
+PASSTHROUGH = {"dev", "build", "shots", "record", "safe", "export", "render", "pptx"}   # extra args go to the tool
 SHA_RE = re.compile(r"^[0-9a-f]{7,40}$")
 TAG_RE = re.compile(r"^v\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$")
 PIN_RE = re.compile(r'("slidev-addon-(?:videos|stage)"\s*:\s*"github:MindaugasSarpis/slidev-videos#)([^"&]+)')
-ENV_PIN_RE = re.compile(r"(slidev-videos @ git\+https://github\.com/MindaugasSarpis/slidev-videos@)([^\"'\s]+)")
+ENV_PIN_RE = re.compile(r"(slidev-videos(?:\[[\w,-]+\])? @ git\+https://github\.com/MindaugasSarpis/slidev-videos@)([^\"'\s]+)")
 REF_RE = re.compile(r'^(ADDONS_REF\s*=\s*")([^"]+)(")', re.M)
 TYPE_RE = re.compile(r"registerBuilder\(\s*['\"]([\w:-]+)['\"]")
 # The plates `record --plates` makes: the recorder's NN-plate.mp4 at 1080p25 with a 20 s hold, up to
@@ -110,6 +115,13 @@ PLATE_RE = re.compile(r"^(\d{2,})-plate\.mp4$")
 PLATES_BEGIN = "# >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost"
 PLATES_END = "# <<< plates"
 PLATES_BLOCK_RE = re.compile(r"\n*^# >>> plates.*?^# <<< plates[^\n]*\n?", re.S | re.M)
+# `talk pptx`: the takes at 1080p50 with an 8 s hold and every click (one PPTX slide each), and the
+# recorder's --max past the longest clip by a settle (a clip slide holds for the rest of its clip);
+# 600 s when a clip's length is unknown. ready warns on a PPTX over 1.5 GB (GitHub takes 2 GB an asset).
+PPTX_FPS, PPTX_HOLD, PPTX_MAX, PPTX_SETTLE, PPTX_MAX_UNKNOWN = 50, 8, 120, 60, 600
+PPTX_CAP = "6M"
+PPTX_MB = 1536
+VIDEO_SRC_RE = re.compile(r"<VideoPlayer\b[^>]*?\bsrc\s*=\s*\"([^\"]+)\"[^>]*>", re.S)
 
 
 class UsageError(Exception):
@@ -823,12 +835,13 @@ def fingerprint(root: Path, talk: str, skip=None) -> str:
     return h.hexdigest()
 
 
-def plates_fingerprint(root: Path, talk: str) -> str:
-    """What the plates show, by path, size and content: a take is committed, and must stay current
-    in another checkout, after a merge or a pull, where every mtime is new and no byte is. Left out:
-    public/videos* (the clips, which no plate shows, and the plates themselves) and what `record
-    --plates` writes (plates.json, the manifest). The stills stay in: a plate drifts over its own."""
-    own = {Path("talks", talk, "videos", "plates.json"), Path("talks", talk, "videos", "manifest.toml")}
+def take_fingerprint(root: Path, talk: str) -> str:
+    """What a recorded take shows (the plates, the PPTX's takes), by path, size and content: a take's
+    fingerprint is committed (plates.json, pptx.json), and must stay current in another checkout,
+    after a merge or a pull, where every mtime is new and no byte is. Left out: public/videos* (the
+    clips, published on their own, and the plates themselves) and what the takes write (plates.json,
+    pptx.json, the manifest). The stills stay in: a plate drifts over its own."""
+    own = {Path("talks", talk, "videos", n) for n in ("plates.json", "pptx.json", "manifest.toml")}
     public = ("talks", talk, "public")
 
     def skip(rel: Path) -> bool:
@@ -844,6 +857,9 @@ def plates_fingerprint(root: Path, talk: str) -> str:
             continue
         h.update(f"{rel}\0{size}\0{digest}\n".encode())
     return h.hexdigest()
+
+
+plates_fingerprint = take_fingerprint      # the plates' name for it (record --plates, ready's plates step)
 
 
 def build_dir(talk: str) -> Path:
@@ -1246,11 +1262,65 @@ def stage_types(d: Path) -> list[str]:
     return sorted(types)
 
 
+# pnpm-lock.yaml's `packages:` block of a tarball with a subpath
+# (`…#path:/packages/stage`) keeps `path:` in its resolution. A pnpm 10.33 reinstall
+# (Innoday's v0.8.2 pin) rewrote the older toolkit tarballs without it: three talks
+# installed the slidev-videos root as slidev-addon-stage and failed to build on Pages
+# (fixed on main, e3a23df). A missing `gitHosted` alone is sound: 10.33 writes new
+# blocks without it, and they build.
+LOCK_KEY_RE = re.compile(r"^  '?([^\s'][^']*?)'?:\s*$")
+LOCK_FIX = "take main's (git checkout origin/main -- pnpm-lock.yaml), pnpm install, and check again"
+
+
+def lock_subpath_problems(text: str) -> list[dict]:
+    """Every block in `packages:` keyed `…#path:P` whose resolution lacks `path: P`:
+    [{package, missing, line}], in the file's order."""
+    problems: list[dict] = []
+    section, key = None, None
+    for n, line in enumerate(text.splitlines(), 1):
+        if line and not line[0].isspace():
+            section, key = line.rstrip().rstrip(":"), None
+            continue
+        if section != "packages":
+            continue
+        m = LOCK_KEY_RE.match(line)
+        if m:
+            key = m.group(1)
+            continue
+        if key and line.startswith("    resolution:"):
+            want = "path: " + key.split("#path:", 1)[1] if "#path:" in key else ""
+            if want and not re.search(r"[{,]\s*" + re.escape(want) + r"\s*[,}]", line.split(":", 1)[1]):
+                problems.append({"package": key, "missing": want, "line": n})
+            key = None
+    return problems
+
+
+def lock_step(root: Path) -> dict:
+    """The lockfile check as a step of check (so review and ready) and of pin."""
+    lock = root / "pnpm-lock.yaml"
+    probs = lock_subpath_problems(lock.read_text(encoding="utf-8")) if lock.is_file() else []
+    res = {"name": "lockfile", "ok": not probs, "problems": probs}
+    for p in probs:
+        OUT.say(f"error: pnpm-lock.yaml:{p['line']}: {p['package']} lacks `{p['missing']}` in its resolution")
+    if probs:
+        res["fix"] = LOCK_FIX
+        OUT.say(f"fix: {LOCK_FIX}")
+    return res
+
+
+def cmd_lock(repo: Repo, a, extra) -> tuple[int, dict]:
+    """The lockfile check alone: deploy.yml's plan job runs it before any build."""
+    res = lock_step(repo.here)
+    if res["ok"]:
+        OUT.say("pnpm-lock.yaml: every tarball keeps its subpath")
+    return (0 if res["ok"] else 1), res
+
+
 def do_check(repo: Repo, talk: str, pages: bool = False) -> tuple[int, dict]:
     d = repo.here / "talks" / talk
     env = tool_env()
     info = talk_info(repo.here, talk)
-    steps = []
+    steps = [lock_step(repo.here)]
     sv = which("slidev-videos", env)
     if (d / "videos.toml").exists():
         steps.append(step("videos:check", [sv or "slidev-videos", "check"], d, env))
@@ -1771,9 +1841,9 @@ def ready_stamp(repo: Repo, talk: str) -> Path:
 def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
     talk, d = resolve_talk(repo, a.name, invocation_dir())
     skip = {x.strip() for v in (a.skip or []) for x in v.split(",") if x.strip()}   # --skip a --skip b, or --skip a,b
-    unknown = skip - {"lint", "check", "shots", "pages", "preflight", "venue", "plates", "safe"}
+    unknown = skip - {"lint", "check", "shots", "pages", "preflight", "venue", "plates", "pptx", "safe"}
     if unknown:
-        raise UsageError(f"--skip takes lint, check, shots, pages, preflight, venue, plates, safe (not {', '.join(sorted(unknown))})")
+        raise UsageError(f"--skip takes lint, check, shots, pages, preflight, venue, plates, pptx, safe (not {', '.join(sorted(unknown))})")
     LOG.begin(repo.here, wt_slug(talk), "ready")
     # first, before a build that would run on what the lockfile says rather than what is pinned
     drift = lock_drift(repo.here, talk)
@@ -1840,6 +1910,11 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
         steps.append(step("plates", None, d, skip="--skip plates"))
     else:
         steps.append(plates_step(repo, talk, strict=getattr(a, "strict_plates", False)))
+    # the PPTX on the release (talk pptx): a warning each unless --strict-pptx
+    if "pptx" in skip:
+        steps.append(step("pptx", None, d, skip="--skip pptx"))
+    else:
+        steps.append(pptx_step(repo, talk, strict=getattr(a, "strict_pptx", False)))
     if info["broadcast"] or a.safe:
         if "safe" in skip:
             steps.append(step("safe", None, d, skip="--skip safe"))
@@ -2050,6 +2125,303 @@ def cmd_stage(repo: Repo, a, extra) -> tuple[int, dict]:
     return code, data
 
 
+# ---------------------------------------------------------------- pptx: the deck as a PPTX of the stage's takes
+
+def deck_clips(talkdir: Path) -> list[str]:
+    """The clips the deck plays (<VideoPlayer src="...">), by name."""
+    try:
+        return sorted(set(VIDEO_SRC_RE.findall((talkdir / "deck.md").read_text(encoding="utf-8"))))
+    except OSError:
+        return []
+
+
+def clip_seconds(talkdir: Path, names: list[str], env: dict) -> dict[str, float | None]:
+    """Each clip's length: ffprobe of the local copy (public/videos, what the recorder plays), else the
+    frames index (public/video-frames/index.json, committed by videos:frames); None when neither knows."""
+    frames = read_json(talkdir / "public" / "video-frames" / "index.json")
+    frames = frames.get("clips") if isinstance(frames, dict) and isinstance(frames.get("clips"), dict) else {}
+    ffprobe = which("ffprobe", env)
+    out: dict[str, float | None] = {}
+    for n in names:
+        secs = None
+        f = talkdir / "public" / "videos" / n
+        if ffprobe and f.is_file():
+            r = run([ffprobe, "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", f],
+                    env=env, capture=True, quiet=True, timeout=60)
+            try:
+                secs = float(r.stdout.strip().splitlines()[-1])
+            except (ValueError, IndexError):
+                secs = None
+        if secs is None:
+            c = frames.get(n)
+            d = c.get("duration") if isinstance(c, dict) else None
+            if isinstance(d, (int, float)) and not isinstance(d, bool):
+                secs = float(d)
+        out[n] = secs
+    return out
+
+
+def pptx_max(seconds: dict[str, float | None]) -> int:
+    """The recorder's --max for the PPTX's takes: a clip slide holds for the rest of its clip, so past the
+    longest clip by a settle; 120 s at least (a deck's close can take 50 s to settle); 600 s at least when
+    a clip's length is unknown."""
+    known = [v for v in seconds.values() if v is not None]
+    floor = PPTX_MAX_UNKNOWN if len(known) < len(seconds) else PPTX_MAX
+    return max(floor, math.ceil(max(known, default=0)) + PPTX_SETTLE)
+
+
+def videos_cli_knows_pptx(env: dict) -> str:
+    """The slidev-videos on PATH (the env's editable install) must have the `pptx` subcommand: asked
+    with `pptx --help` before anything is pulled or recorded. The CLI's path, or a UsageError."""
+    sv = which("slidev-videos", env)
+    if not sv:
+        raise UsageError("slidev-videos is not installed (the env's editable CLI, SLIDEV_VIDEOS_DIR): it builds the PPTX")
+    r = run([sv, "pptx", "--help"], env=env, capture=True, quiet=True, timeout=60)
+    if r.returncode != 0:
+        raise UsageError(f"the slidev-videos on PATH ({sv}) has no `pptx` subcommand: install the toolkit release that "
+                         "carries it in the env's editable checkout (SLIDEV_VIDEOS_DIR) first", cli=sv)
+    return sv
+
+
+def without_slides(args: list) -> list[str]:
+    """The recorder's args without --slides (a take's args, what makes another take)."""
+    out, skip = [], False
+    for x in map(str, args):
+        if skip:
+            skip = False
+        elif x == "--slides":
+            skip = True
+        elif not x.startswith("--slides="):
+            out.append(x)
+    return out
+
+
+def take_segments(index: dict) -> list[dict]:
+    segs = index.get("segments") if isinstance(index, dict) else None
+    return [s for s in segs if isinstance(s, dict)] if isinstance(segs, list) else []
+
+
+def merge_take(rec: Path, part: Path) -> None:
+    """A take of some slides (--slides) into the whole take: its files over the old ones, its segments in
+    place of those slides' in index.json, in deck order."""
+    base, new = read_json(rec / "index.json"), read_json(part / "index.json")
+    redone = {s.get("slide") for s in take_segments(new)}
+    merged = [s for s in take_segments(base) if s.get("slide") not in redone] + take_segments(new)
+    merged.sort(key=lambda s: (number(str(s.get("slide")), 0), number(str(s.get("clicks")), 0)))
+    for f in part.iterdir():
+        if f.is_file() and f.name != "index.json":
+            shutil.copy2(f, rec / f.name)
+    head = {k: v for k, v in (new if isinstance(new, dict) else {}).items() if k != "segments"}
+    (rec / "index.json").write_text(json.dumps({**(base if isinstance(base, dict) else {}), **head, "segments": merged},
+                                               indent=2) + "\n", encoding="utf-8")
+
+
+def last_json(text: str) -> dict:
+    """The last line of a tool's output that is a JSON object (its --json), else {}."""
+    for line in reversed((text or "").splitlines()):
+        line = line.strip()
+        if line.startswith("{"):
+            try:
+                obj = json.loads(line)
+            except ValueError:
+                continue
+            if isinstance(obj, dict):
+                return obj
+    return {}
+
+
+def cmd_pptx(repo: Repo, a, extra) -> tuple[int, dict]:
+    """The deck as a PPTX, one autoplaying video per slide and click (slidev-videos pptx), from the
+    stage's takes: the clips pulled (--include-shared, so no clip slide records without its clip), the
+    takes recorded at 1080p50 with an 8 s hold and every click into $TALK_TMP/talk-<slug>/pptx/rec unless
+    the take there is current (take.json: the talk's content fingerprint and the recorder's args), the
+    PPTX built in the render slot, uploaded as <talk>.pptx to the talk's videos release (--clobber), and
+    videos/pptx.json written for ready's pptx step and the site's PPTX link (commit it). The recorder's
+    flags after -- override ours; `-- --slides N-M` records those slides again into the whole take."""
+    talk, d = resolve_talk(repo, a.name, invocation_dir())
+    slug = wt_slug(talk)
+    env = tool_env()
+    sv = videos_cli_knows_pptx(env)
+    b = stage_bin("record", d)
+    if not b:
+        raise UsageError(f"{STAGE_BINS['record']} is not installed: set SLIDEV_STAGE_BIN to a slidev-videos "
+                         f"packages/stage/bin, or install the talk")
+    if not supports(b, "--max"):
+        raise UsageError(f"this slidev-stage-record has no --max ({b}): pin the talk to a toolkit release "
+                         f"(pnpm talk pin {slug} <tag>), or SLIDEV_STAGE_BIN")
+    work = build_dir(talk) / "pptx"
+    rec, part, out, deck = work / "rec", work / "rec-part", work / f"{talk}.pptx", d / "deck.md"
+    pj_path = d / "videos" / "pptx.json"
+    repo_name, tag = videos_release(repo.here, d)
+    given = {x.split("=")[0] for x in extra}
+    partial = "--slides" in given
+    if partial and not (rec / "index.json").is_file():
+        raise UsageError(f"--slides records some slides into a whole take, and {rec} holds none: "
+                         f"pnpm talk pptx {slug} without it first")
+    LOG.begin(repo.here, slug, "pptx")
+    data: dict = {"talk": talk, "out": str(out), "rec": str(rec), "asset": out.name, "tag": tag, "repo": repo_name,
+                  "dry_run": a.dry_run, "recorded": False, "uploaded": False}
+
+    def fail(msg: str, code: int = 1, **more) -> tuple[int, dict]:
+        data.update(error=msg, **more)
+        OUT.say(f"error: {msg}")
+        return code, data
+
+    pull = [sv, "pull", "--include-shared"]
+    if not a.dry_run:
+        r = run(pull, cwd=d, env=env, log=True)
+        if r.returncode:
+            say_summary(summarize(r.stdout, False))
+            return fail(f"slidev-videos pull --include-shared failed (exit {r.returncode}): a clip slide would record "
+                        "without its clip", log=str(LOG.path) if LOG.path else None)
+    seconds = clip_seconds(d, deck_clips(d), env)
+    unknown = sorted(n for n, v in seconds.items() if v is None)
+    mx = pptx_max(seconds)
+    data.update(clips=seconds, unknown_clips=unknown, max=mx)
+    if unknown:
+        OUT.say(f"warning: no length for {', '.join(unknown)} (not in public/videos, not in the frames index): "
+                f"the recorder's --max is {mx} s")
+    args: list[str] = []
+    for flag, default in (("--fps", PPTX_FPS), ("--hold", PPTX_HOLD), ("--clicks", "all"), ("--max", mx)):
+        if flag not in given:
+            args += [flag, str(default)]
+    args += [str(x) for x in extra]
+    key = without_slides(args)
+    fp = take_fingerprint(repo.here, talk)
+    take = read_json(rec / "take.json")
+    current = (not a.rerecord and isinstance(take, dict) and take.get("fingerprint") == fp
+               and take.get("args") == key and (rec / "index.json").is_file())
+    record = partial or not current
+    target = part if partial else rec
+    build = [sv, "pptx", rec, "--deck", deck, "--out", out, "--json",
+             *(["--cap", a.cap] if a.cap else []), *(["--allow-skips"] if a.allow_skips else [])]
+    gh = which("gh", env) or "gh"
+    repo_args = ["--repo", repo_name] if repo_name else []
+    upload = [gh, "release", "upload", tag, out, "--clobber", *repo_args]
+    if a.dry_run:
+        plan = {"pull": shlex.join(map(str, pull)),
+                "record": (shlex.join([STAGE_BINS["record"], str(build_dir(talk) / "site"), str(target), *args]) if record
+                           else f"the take in {rec} is current (--rerecord to record it again)"),
+                "build": shlex.join(map(str, build)),
+                "upload": "--no-publish" if a.no_publish else shlex.join(["gh", "release", "upload", tag, str(out), "--clobber", *repo_args]),
+                "write": "--no-publish" if a.no_publish else str(pj_path)}
+        data["plan"] = plan
+        for k, v in plan.items():
+            OUT.show(f"{k:<14} {v}")
+        return 0, data
+    if record:
+        if target.exists():
+            shutil.rmtree(target)
+        code, rd = run_stage_bin(repo, "record", talk, [target, *args], no_build=a.no_build, rebuild=a.rebuild)
+        data["record"] = {k: v for k, v in rd.items() if k != "talk"}
+        if code:
+            return fail(rd.get("error") or f"the recorder failed (exit {rd.get('tool_exit')})", code)
+        if partial:
+            merge_take(rec, part)
+        elif not (rec / "index.json").is_file():
+            return fail(f"the recorder wrote no index.json into {rec}")
+        take = {"fingerprint": fp, "args": key, "max": mx,
+                "recorded_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")}
+        (rec / "take.json").write_text(json.dumps(take, indent=2) + "\n", encoding="utf-8")
+        data["recorded"] = True
+    else:
+        OUT.say(f"the take in {rec} is current (recorded {take.get('recorded_at')}); --rerecord to record it again")
+    segments = take_segments(read_json(rec / "index.json"))
+    capped = [s.get("file") for s in segments if s.get("capped") is True]
+    for f in capped:
+        OUT.say(f"warning: {f}: cut off at the recorder's --max (pnpm talk pptx {slug} -- --max N)")
+    if out.exists():
+        out.unlink()
+    OUT.say("-- slidev-videos pptx")
+    r, plan = render_run(build, d, env)
+    report = last_json(r.stdout)
+    data.update(build={"argv": plan["argv"], "tool_exit": r.returncode, "report": report}, capped=capped)
+    if r.returncode or not out.is_file():
+        say_summary(summarize(r.stdout, False))
+        return fail(f"slidev-videos pptx failed (exit {r.returncode})", log=str(LOG.path) if LOG.path else None)
+    size = out.stat().st_size
+    data["bytes"] = size
+    if size > PPTX_MB * MB:
+        OUT.say(f"warning: {out.name}: {size / MB:.1f} MB, over the {PPTX_MB} MB a PPTX may take (GitHub's limit is 2 GB an asset)")
+    if a.no_publish:
+        OUT.say(f"{out} ({size / MB:.1f} MB); not uploaded (--no-publish), videos/pptx.json not written")
+        return 0, data
+    if not repo_name:
+        return fail("no GitHub repo for the release: videos.toml [defaults] repo, or origin on GitHub")
+    if not which("gh", env):
+        return fail("gh not found: the PPTX is built, nothing uploaded (--no-publish to build only)")
+    if run([gh, "release", "view", tag, *repo_args], cwd=d, env=env, capture=True, quiet=True, timeout=60).returncode:
+        c = run([gh, "release", "create", tag, *repo_args, "--title", tag, "--notes", f"Videos for {talk}"],
+                cwd=d, env=env, log=True)
+        if c.returncode:
+            return fail(f"release {tag} is not there and gh release create failed (exit {c.returncode})")
+    u = run(upload, cwd=d, env=env, log=True)
+    if u.returncode:
+        say_summary(summarize(u.stdout, False))
+        return fail(f"gh release upload failed (exit {u.returncode}): nothing written")
+    data["uploaded"] = True
+    url = f"https://github.com/{repo_name}/releases/download/{tag}/{out.name}"
+    ver = run([sv, "--version"], env=env, capture=True, quiet=True, timeout=60)
+    took = take.get("args") if isinstance(take.get("args"), list) else key
+    profile = report.get("profile") if isinstance(report.get("profile"), dict) else {}
+    pj = {"fingerprint": take.get("fingerprint"), "asset": out.name, "repo": repo_name, "tag": tag, "url": url,
+          "bytes": size, "slides": report.get("slides") if isinstance(report.get("slides"), int) else len(segments),
+          "segments": len(segments), "deck_slides": len({s.get("slide") for s in segments}),
+          "skipped": report.get("skipped") if isinstance(report.get("skipped"), list) else [],
+          "fps": number(flag_value(took, "--fps"), PPTX_FPS), "hold": number(flag_value(took, "--hold"), PPTX_HOLD),
+          "max": number(flag_value(took, "--max"), take.get("max")), "cap": a.cap or report.get("cap") or profile.get("cap") or PPTX_CAP,
+          "cli": (ver.stdout.strip().splitlines() or [None])[-1] if ver.returncode == 0 else None,
+          "recorded_at": take.get("recorded_at")}
+    pj_path.parent.mkdir(exist_ok=True)
+    pj_path.write_text(json.dumps(pj, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    data.update(url=url, pptx_json=str(pj_path), slides=pj["slides"])
+    OUT.say(f"{out.name} ({size / MB:.1f} MB, {pj['slides']} slides) on release {tag}: {url}")
+    OUT.say(f"wrote talks/{talk}/videos/pptx.json: commit it (the site's PPTX link and ready's pptx step go by it)")
+    return 0, data
+
+
+def pptx_step(repo: Repo, talk: str, strict: bool = False) -> dict:
+    """ready's pptx step: the PPTX videos/pptx.json records (talk pptx) is on its release at the size it
+    records, its take is current (the talk's content fingerprint), it is within budget. Each miss is a
+    warning (a take takes up to an hour); --strict-pptx makes them fail the step."""
+    d = repo.here / "talks" / talk
+    pj = d / "videos" / "pptx.json"
+    if not pj.exists():
+        return step("pptx", None, d, skip="no pptx")
+    OUT.say("-- pptx (on the release at its size, the take current, within budget)")
+    data = read_json(pj)
+    slug = wt_slug(talk)
+    warnings: list[str] = []
+    asset = data.get("asset") if isinstance(data, dict) else None
+    res: dict = {"name": "pptx", "stale": False}
+    if not (isinstance(asset, str) and asset and isinstance(data.get("fingerprint"), str)):
+        warnings.append(f"videos/pptx.json is unreadable (a merge conflict, a hand edit?): restore it, or pnpm talk pptx {slug}")
+    else:
+        size = data.get("bytes")
+        repo_name, tag = (data.get("repo"), data["tag"]) if data.get("tag") else videos_release(repo.here, d)
+        assets = release_assets(repo_name, tag, d)
+        if assets is None:
+            warnings.append(f"release {tag} could not be listed (gh): whether {asset} is on it is unknown")
+        elif asset not in assets:
+            warnings.append(f"{asset} is not on release {tag} (pnpm talk pptx {slug})")
+        elif assets[asset] != size:
+            warnings.append(f"{asset} on release {tag} is {assets[asset]} bytes, not the {size} videos/pptx.json "
+                            f"records (pnpm talk pptx {slug})")
+        stale = data["fingerprint"] != take_fingerprint(repo.here, talk)
+        if stale:
+            warnings.append(f"stale: the talk changed since the PPTX was recorded (pnpm talk pptx {slug})")
+        if isinstance(size, int) and size > PPTX_MB * MB:
+            warnings.append(f"{asset}: {size / MB:.1f} MB, over the {PPTX_MB} MB a PPTX may take (GitHub's limit is 2 GB an asset)")
+        res.update(asset=asset, tag=tag, url=data.get("url"), bytes=size, stale=stale)
+    for w in warnings:
+        OUT.say(f"   warning: {w}")
+    ok = not (strict and warnings)
+    res.update(ok=ok, warnings=warnings)
+    if not ok:
+        res["error"] = f"{len(warnings)} warning{'s' if len(warnings) != 1 else ''} (--strict-pptx)"
+    return res
+
+
 def not_own(repo: Repo, talk: str) -> str | None:
     """Why this worktree is not the talk's own (owns), or None when it is."""
     branch = git_out(["branch", "--show-current"], repo.here) or None
@@ -2145,7 +2517,8 @@ def cmd_deploy(repo: Repo, a, extra) -> tuple[int, dict]:
         else:
             OUT.say(f"-- ready {talk}")
             sub = Repo(main=repo.main, common=repo.common, here=wt)
-            code, ready = cmd_ready(sub, argparse.Namespace(name=talk, skip=a.ready_skip, safe=False, strict_plates=False), [])
+            code, ready = cmd_ready(sub, argparse.Namespace(name=talk, skip=a.ready_skip, safe=False, strict_plates=False,
+                                                       strict_pptx=False), [])
             data["ready"] = ready
             if code:
                 return fail(f"{talk} is not ready (fix it, or --skip-ready when the owner says so)")
@@ -2540,6 +2913,14 @@ def cmd_pin(repo: Repo, a, extra) -> tuple[int, dict]:
             data["error"] = "pnpm install failed; the pins are written (fix it and run pnpm install again)"
             OUT.say(f"error: {data['error']}")
             return 1, data
+        # pnpm may rewrite other talks' tarball blocks as it reinstalls (e3a23df)
+        data["lockfile"] = lock_step(repo.here)
+        if not data["lockfile"]["ok"]:
+            missing = sorted({p["missing"] for p in data["lockfile"]["problems"]})
+            data["error"] = (f"pnpm install rewrote pnpm-lock.yaml: {len(data['lockfile']['problems'])} tarball block(s) "
+                             f"lack {', '.join(missing)}; commit nothing and {LOCK_FIX}")
+            OUT.say(f"error: {data['error']}")
+            return 1, data
     OUT.say(f"next: pnpm talk review {wt_slug(talk)}, then commit talks/{talk}/package.json and pnpm-lock.yaml")
     return 0, data
 
@@ -2814,7 +3195,8 @@ def build_parser() -> argparse.ArgumentParser:
     verb("dev", "pnpm dev in the talk (more args after --)")
     sp = verb("build", "build into $TALK_TMP/talk-<slug>/site")
     sp.add_argument("--pages", action="store_true", help="the Pages base /<repo>/<talk>/ instead of /")
-    sp = verb("check", "videos:check, stage:check, build")
+    verb("lock", "pnpm-lock.yaml: every tarball keeps its #path: subpath (deploy.yml runs it)", talk=False)
+    sp = verb("check", "the lockfile's subpaths, videos:check, stage:check, build")
     sp.add_argument("--pages", action="store_true")
     sp = verb("shots", "slidev-stage-shots of the build into talks/<t>/shots/")
     sp.add_argument("--slides")
@@ -2829,11 +3211,13 @@ def build_parser() -> argparse.ArgumentParser:
     sp = verb("facts", "scripts/facts.py search|add|show|check ...", talk=False)
     sp.add_argument("rest", nargs=argparse.REMAINDER)
     verb("map", "scripts/talk_map.py")
-    sp = verb("ready", "lint --release, check, shots, pages, videos:preflight, venue --dry-run, the plates")
-    sp.add_argument("--skip", action="append", metavar="STEP", help="lint, check, shots, pages, preflight, venue, plates, safe")
+    sp = verb("ready", "lint --release, check, shots, pages, videos:preflight, venue --dry-run, the plates, the PPTX")
+    sp.add_argument("--skip", action="append", metavar="STEP", help="lint, check, shots, pages, preflight, venue, plates, pptx, safe")
     sp.add_argument("--safe", action="store_true", help="run the safe-area check even if the talk is not marked broadcast")
     sp.add_argument("--strict-plates", action="store_true",
                     help="a stale, missing, oversized or unsettled (cut off at --max) plate fails ready (default: a warning)")
+    sp.add_argument("--strict-pptx", action="store_true",
+                    help="a PPTX that is stale, not on the release at its size, or oversized fails ready (default: a warning)")
     for name, what in (("record", "slidev-stage-record: one MP4 per slide"), ("safe", "slidev-stage-safe: the TV safe area")):
         sp = verb(name, what)
         sp.add_argument("--no-build", action="store_true")
@@ -2843,6 +3227,16 @@ def build_parser() -> argparse.ArgumentParser:
             sp.add_argument("--plates", action="store_true",
                             help="the world alone for every non-clip slide (--plate-only --fps 25 --hold 20 --max 120, each "
                                  "unless given after --) into public/videos/, videos/plates.json and the manifest's plates block")
+    sp = verb("pptx", "the deck as a PPTX of the stage's takes, one autoplaying video per slide and click, on the "
+                      "talk's videos release, and videos/pptx.json (the recorder's flags after --)")
+    sp.add_argument("--rerecord", action="store_true", help="record the takes again though the take is current")
+    sp.add_argument("--no-publish", action="store_true", help="build the PPTX only: no upload, no videos/pptx.json")
+    sp.add_argument("--dry-run", action="store_true", help="print the plan; pull, record, build and upload nothing")
+    sp.add_argument("--cap", help="the PPTX encode's bitrate cap (slidev-videos pptx --cap; its default 6M)")
+    sp.add_argument("--allow-skips", action="store_true",
+                    help="a clip slide with no take becomes a black slide (slidev-videos pptx --allow-skips)")
+    sp.add_argument("--no-build", action="store_true", help="record from the build that is there")
+    sp.add_argument("--rebuild", action="store_true")
     sp = verb("export", "slidev export in the render slot, --wait-until load --wait 4000 (more slidev args after --)")
     sp.add_argument("--format", choices=("pdf", "png", "pptx"))
     sp.add_argument("--out", help="the file (default $TALK_TMP/talk-<slug>/<slug>.<format>)")
@@ -2881,9 +3275,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 VERBS = {
     "new": cmd_new, "open": cmd_open, "list": cmd_list, "status": cmd_status, "dev": cmd_dev,
-    "build": cmd_build, "check": cmd_check, "shots": cmd_shots, "review": cmd_review,
+    "build": cmd_build, "lock": cmd_lock, "check": cmd_check, "shots": cmd_shots, "review": cmd_review,
     "lint": cmd_delegate, "facts": cmd_delegate, "map": cmd_delegate, "ready": cmd_ready,
-    "record": cmd_stage, "safe": cmd_stage, "export": cmd_export, "deploy": cmd_deploy, "doctor": cmd_doctor, "bump-toolkit": cmd_bump,
+    "record": cmd_stage, "safe": cmd_stage, "pptx": cmd_pptx, "export": cmd_export, "deploy": cmd_deploy, "doctor": cmd_doctor, "bump-toolkit": cmd_bump,
     "render": cmd_render, "pin": cmd_pin, "session": cmd_session, "sessions": cmd_sessions, "config": cmd_config,
 }
 

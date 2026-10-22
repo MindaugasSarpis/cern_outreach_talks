@@ -123,7 +123,7 @@ a talk's directory name. README's "Day to day" pairs each step with its skill.
 | `new NAME`, `open NAME` | a worktree on `talk/<slug>` with the scaffold; find or make one |
 | `list`, `status` | talks and pins; every worktree, the last deploys and Pages run |
 | `dev`, `build` | live reload; a build into `$TALK_TMP/talk-<slug>/site`, never `dist/` |
-| `check`, `shots`, `review` | videos:check, stage:check, build; shots into `shots/`; check, then shots of changed slides |
+| `check`, `shots`, `review` | the lockfile, videos:check, stage:check, build; shots into `shots/`; check, then shots of changed slides |
 | `lint`, `map`, `facts …` | the deck lint; the slide map; the facts bank (`search`, `show`, `add`, `check`) |
 | `ready`, `deploy` | before the venue (lint --release, check, shots, preflight, plates); deploy, when asked |
 | `record`, `safe` | MP4s per slide, or `--plates`; the TV safe area |
