@@ -392,6 +392,13 @@ v0.8.1 since 20 Oct and builds the zip local-first itself).
   The LIS anchor is LHCb (0.8, −2.00, 7.95) m (the cold box's true −2.55 m sat 0.11 m under the
   cloud's lowest SciFi grain). The PowerPoint is dropped ("not going to work for this"); the old
   PPTX asset stays on the release unused.
+- **Nothing live under the close (22 Oct, night).** The owner: "Looks good on this RTX5080
+  workstation, but MacPro M2 can't quite handle the final slide". Slide 30's clip is
+  `transition="fade"`, never `cut`: in slidev-addon-videos v0.8.3 a cut clip never sends
+  `slidev-videos:cover`, so the world drew 160–430 draw calls a second under the whole
+  recording (a headless count; fade: 0). Slide 31 (credits) is `<CloseStill>` (setup/CloseStill.vue):
+  the clip's last frame (figures/close_end.jpg, from close.mp4) with the world resting, not the
+  complex drawn live. Toolkit: a cut clip should announce cover too (told the Scheduler).
 
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 

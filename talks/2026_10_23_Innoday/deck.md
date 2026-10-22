@@ -692,7 +692,9 @@ space: { at: [9.54, -482.702, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim
      LisTakeover on this slide at 22efcef (its path from hero/close_path.py); to change it, restore that
      slide, `pnpm talk record NAME --out DIR -- --slides 30 --fps 50 --hold 6 --max 95 --clicks none`,
      encode DIR/30.mp4 as close.mp4 (talks/…/CLAUDE.md, Decisions) and put this slide back -->
-<VideoPlayer src="close.mp4" muted :controls="false" transition="cut" />
+<!-- fade, not cut: in slidev-addon-videos v0.8.3 a cut clip never announces that it covers the slide, so the
+     world went on drawing under the whole recording (owner, 22 Oct: "MacPro M2 can't quite handle the final slide") -->
+<VideoPlayer src="close.mp4" muted :controls="false" transition="fade" />
 <Grains :set="{ det: 0, lhcbLogo: 0, ltMap: 0 }" />
 <Soundtrack :level="0.3" resync keys />
 
@@ -711,10 +713,11 @@ Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaid
 
 ---
 class: credits-page
-space: { at: [-18.33, -480, 43.373], dist: 191.56, yaw: -34.22, pitch: 89, dim: 0.7, ambient: 0, hum: false }   # the close's last view: the accelerator complex straight from above, north up
+space: { at: [-18.33, -480, 43.373], dist: 191.56, yaw: -34.22, pitch: 89, dim: 0.7, ambient: 0, hum: false }   # the close's last view: the accelerator complex straight from above, north up; the world rests under the recording's last frame (CloseStill)
 ---
 
-<Grains :set="{ det: 1, lhcbLogo: 1, ltMap: 1, aciu: 1, ltAciu: 1 }" />
+<CloseStill src="figures/close_end.jpg" />
+<Grains :set="{ det: 0, lhcbLogo: 0, ltMap: 0 }" />
 <Soundtrack :level="0.3" />
 <div class="src credits credits-list">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas)<br>
 1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0<br>
@@ -728,7 +731,7 @@ Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF
 Muzika: Scott Buckley, „Starfire“ (scottbuckley.com.au), CC BY 4.0</div>
 
 <!--
-Kalbėtojui. Šio puslapio nerodyti: po „Ačiū“ nebespausti. Jis — licencijų reikalaujamoms nuorodoms (savininkas, 2026 10 19: „We don't need credits at the last slide“; pasirinkta „B“ — paveikslai lieka, nuorodos kitame puslapyje); lieka žiniatinklio versijoje ir PDF. Planck žemėlapiui (CC BY-NC 3.0 IGO) ir Sailko nuotraukai (CC BY 3.0) jų reikia; CERN medžiagai — ne.
+Kalbėtojui. Šio puslapio nerodyti: po „Ačiū“ nebespausti. Fone — paskutinis įrašo kadras (paveikslas), o gyvas pasaulis po juo sustabdytas, kad lėtesnis kompiuteris nestrigtų (savininkas, 2026 10 22: „MacPro M2 can't quite handle the final slide“). Jis — licencijų reikalaujamoms nuorodoms (savininkas, 2026 10 19: „We don't need credits at the last slide“; pasirinkta „B“ — paveikslai lieka, nuorodos kitame puslapyje); lieka žiniatinklio versijoje ir PDF. Planck žemėlapiui (CC BY-NC 3.0 IGO) ir Sailko nuotraukai (CC BY 3.0) jų reikia; CERN medžiagai — ne.
 (~0 min)
 -->
 
