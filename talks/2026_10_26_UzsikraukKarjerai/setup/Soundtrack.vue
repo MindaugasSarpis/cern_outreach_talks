@@ -38,6 +38,7 @@ const props = defineProps({
   resync: { type: Boolean, default: false },
   keys: { type: Boolean, default: false },   // + and - are the music's here, even over a clip (soundLevel.js)
   drop: { type: Object, default: null },
+  clipAt: { type: Number, default: null },   // start `src` from its top when the slide's clip reaches this second (slide 2: the web)
 })
 const { $renderContext, $page } = useSlideContext()
 const nav = useNav()
@@ -106,7 +107,33 @@ function arrive() {
   }
   if (playing()) ramp(G.cur, props.level, 1200)
 }
-onSlideEnter(() => { arrive(); if (props.drop && live()) startDrop() })
+let cueRaf = 0
+function watchCue() {
+  cancelAnimationFrame(cueRaf)
+  const me = page()
+  let v = null
+  const tick = () => {
+    if (nav.currentSlideNo?.value !== me) return
+    v ||= root.value?.closest('.slidev-page')?.querySelector('.video-player video') || null
+    if (v && (v.ended || v.currentTime >= props.clipAt)) {
+      if (!(playing() && G.cur === track(props.src))) {
+        if (!G.ctx && (globalThis.AudioContext || globalThis.webkitAudioContext)) {
+          try { G.ctx = new (globalThis.AudioContext || globalThis.webkitAudioContext)() } catch {}
+        }
+        G.ctx?.state === 'suspended' && G.ctx.resume().catch(() => {})
+        begin(props.src, props.level)
+      }
+      return
+    }
+    cueRaf = requestAnimationFrame(tick)
+  }
+  cueRaf = requestAnimationFrame(tick)
+}
+onSlideEnter(() => {
+  if (props.clipAt != null) { if (live()) { if (playing() && G.cur !== track(props.src)) ramp(G.cur, 0, 1200); watchCue() } }
+  else arrive()
+  if (props.drop && live()) startDrop()
+})
 
 // the drop: watched each frame from the clip's time (see `drop`)
 const root = ref(null)
@@ -157,7 +184,7 @@ function startDrop() {
   }
   dropRaf = requestAnimationFrame(tick)
 }
-onSlideLeave(() => endDrop())
+onSlideLeave(() => { endDrop(); cancelAnimationFrame(cueRaf) })
 onUnmounted(() => endDrop())
 // a `+` / `-` (this window's or the presenter's): every track at its level times the new one
 if (!G.level) G.level = onSoundLevel(() => { for (const t of G.tracks.values()) if (!t.raf) set(t, t.level) })

@@ -77,6 +77,7 @@ space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0
 
 <!-- The zoom out (the owner, 23 Oct: "a quick zoomout from vilnius straight to universe web - in 20s"): Innoday's opener, the owner's SpaceEngine edit, time-remapped to 20 s. It ends on the frame slide 3's still is (public/figures/opener_last.jpg) and holds it; the fade out shows the same picture underneath. -->
 <VideoPlayer src="vilnius_zoom.mp4" transition="fade" />
+<Soundtrack src="audio/aphelion.m4a" tail="audio/aphelion.m4a" :clip-at="15.5" :level="0.35" keys />
 
 <!-- facts: nftmc-opened-2016 -->
 
@@ -101,6 +102,7 @@ space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0, dim: 0 }   # In
 ---
 
 <WebTakeover />
+<Soundtrack src="audio/aphelion.m4a" tail="audio/aphelion.m4a" :level="0.35" keys />
 
 <!-- facts: cosmic-web-simulation-filaments-voids -->
 
@@ -122,6 +124,7 @@ space: { at: [30, 39, -119], dist: 25, yaw: -72, pitch: 13, dim: 0, flight: 3.5 
 ---
 
 <AfterFlight :delay="6.8"><div class="age"><span class="n">13,8</span> mlrd. metų</div></AfterFlight>
+<Soundtrack src="audio/aphelion.m4a" tail="audio/aphelion.m4a" :level="0.3" keys />
 
 <!-- facts: universe-age-planck-2018, human-body-atoms, atom-nucleus-protons-neutrons, proton-neutron-three-quarks, lhcb-pentaquark-2015, lhc-collisions-create-new-particles, lhc-worlds-largest-accelerator, cmb-oldest-light-planck-2018, cmb-formed-380000-years-esa -->
 
@@ -147,6 +150,7 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 
 <!-- The way in, as OpenData's: CERN from above, the library clip cern_overview_short.mp4 (11 s, no sound): from the Earth down to Geneva, then the LHC ring drawn over the fields with its four experiments named. At the speaker's → after its end, the camera pushes on into the ring (its right side, 0.72, 0.45 of the last frame), where the tunnel follows. -->
 <VideoPlayer src="cern_overview_short.mp4" exit="push" exit-at="0.72,0.45" />
+<Soundtrack src="audio/aphelion.m4a" tail="audio/aphelion.m4a" :level="0.3" keys />
 
 <!-- facts: cern-largest-particle-physics-lab, lhc-geneva-27km-100m-four-experiments -->
 
@@ -168,7 +172,7 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 ---
 
 <!-- The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, an 18 s cut (videos/manifest.toml). At the speaker's → after its end, it pushes on into the beam pipe. -->
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.5" exit="push" exit-at="0.45,0.53" />
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.05" exit="push" exit-at="0.45,0.53" />
 
 <LhcOpening part="tunnel" />
 
@@ -264,48 +268,6 @@ Tai LHCb. Jis dešimties metrų aukščio – kaip trijų aukštų namas. Šiame
 „beveik du tūkstančiai“: 1 891 members in September 2026; never „daugiau nei“. „kaip trijų aukštų namas“ is our arithmetic (10 m at about 3 m a storey). „Same mass every time“ is said on slide 11 while the dots fall. If asked: 5 600 tonnes, 21 m long; VU joined LHCb in September 2024.
 
 The line is said over the clip. The lint counts the clip's whole 39 s from the manifest; pressed 3 s after the line (22 Oct), the slide takes about 25 s.
--->
-
----
-space:
-  at: cavern
-  dim: 0
-  ambient: 0
-  hum: false
-  cameraRate: 1
-  path:   # cranes down from above the detector to the cavern floor at eye level (Innoday's „Ačiū“ pose, 1,83 m person beside LHCb's foot), lingers side on, then dollies back
-    - [0, { at: [1013.5, -480, 0.5], dist: 40, yaw: -35, pitch: 50 }]
-    - [2.5, { at: [1013.5, -480, 0.5], dist: 38, yaw: -30, pitch: 47 }]
-    - [5, { at: [1013.5, -479.9, 0.5], dist: 30, yaw: -18, pitch: 22 }]
-    - [7.5, { at: [1013.5, -479.81, 0.55], dist: 23, yaw: -7, pitch: -6 }]
-    - [9, { at: [1013.5, -479.81, 0.55], dist: 21.6, yaw: -5, pitch: -13 }]
-    - [15, { at: [1013.5, -479.81, 0.55], dist: 21.6, yaw: -3, pitch: -13 }]
-    - [22, { at: [1013.5, -479.81, 0.55], dist: 21.6, yaw: 0, pitch: -13 }]
-    - [36, { at: [1013.6, -479.9, 0.43], dist: 30, yaw: 0, pitch: -10 }]
----
-
-<InsideLhcb />
-
-<div class="readout depth"><div class="big"><Count :from="0" :to="100" :delay="2500" :ms="5000" /><span class="unit">m</span></div></div>
-<div class="readout glow"><div class="big">40<span class="unit">mln. per sekundę</span></div></div>
-
-<!-- facts: lhcb-100m-below-ground, lhcb-detector-size, lhcb-hlt1-30mhz, lhcb-upgrade1-trigger, lhcb-allen-gpu, lhcb-realtime-analysis, particles-decay-detector-sees-products, particle-decay-reconstructed-mass -->
-
-<!--
-Message: LHCb stands 100 m under the ground; beside it a person of my height. In one real LHCb collision the particles fly out through the detector's parts, and each part records where they passed. The bunches cross here 40 million times a second; computers with graphics cards choose, as it happens, which collisions to keep. From the fragments we compute the mass of the particle that split: one computed mass, one dot.
-Picture: LHCb's real geometry as a 3D model, glowing edges in the detector's blue (Innoday's „Ačiū“ model, the owner's choice there, 20 Oct), with its cavern floor and cradles. The camera cranes down from above while the model comes in (5 s) and „100 m“ counts up low on the left; it lands at eye level on the cavern floor, a 1,83 m person beside the detector's foot (9 s). Then LHCb's own real 2012 collision starts in it (the shared opening's LHCb event, CERN open data): the bunches cross, the world nearly stops, the debris runs out through the stations and each part lights as the particles reach it. About 7 s later the crossings follow faster and faster until they merge into a steady glow, „40 mln. per sekundę“ low on the left as the camera dollies back (24 s). Speak the first two sentences over the crane, the collision ones as the debris flies, the last two over the dolly back.
-
-Nusileiskime pas jį – šimtą metrų po žeme. Šalia detektoriaus stovi žmogus – mano ūgio.
-[palauk, kol susidurs dalelių paketai]
-Štai tikras LHCb susidūrimas. Išlėkusios dalelės skrieja pro detektoriaus dalis, ir kiekviena dalis užfiksuoja, kur jos praskriejo.
-Kai greitintuvas veikia, dalelių paketai čia susikerta keturiasdešimt milijonų kartų per sekundę. Kompiuteriai su vaizdo plokštėmis iš karto atrenka, kuriuos susidūrimus verta išsaugoti.
-Iš skeveldrų apskaičiuojame, kokios masės buvo suskilusi dalelė. Viena apskaičiuota masė – vienas taškas.
-
-„100 m“: LHCb sits 100 metres below ground near Ferney-Voltaire (home.cern); the title's „100 metrų po žeme“ is this. The person is 1,83 m, the speaker's height (Innoday's notes: "It can be me, 183cm in height"). „40 mln.“: bunches cross at 40 MHz; in Run 3 about 30 million crossings a second hold collisions, and LHCb reads out the whole detector for each. „Kompiuteriai su vaizdo plokštėmis“: HLT1 (Allen) on GPUs, the first trigger of its kind; never „žaidimų“ (the cards are NVIDIA RTX A5000 workstation cards) and no card count (the ~500 is a 2019–20 feasibility figure). The collision is LHCb's, from 2012 (Run 1): the 40 MHz and the GPUs are Run 3's, so never say this collision was chosen by those cards. If asked: about 4 TB/s read out in real time, about 10 GB/s kept, roughly one part in 400; the event: CERN Open Data, run 133488, event 2028034058, 1 December 2012 (components/lhc-opening/README.md). No magnet line: the bending-and-momentum wording was not reachable on 21 Oct (lhcb-outreach.web.cern.ch); add it once filed.
-
-Šaltiniai: home.cern, „LHCb“; LHCb Upgrade I, JINST 19 (2024) P05065; CERN EP Newsletter (2020), Allen; CERN Open Data (LHCb 2012).
-
-(~1.0 min)
 -->
 
 ---
@@ -613,7 +575,7 @@ space: { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 0, dim: 0.7 }   
 
 <div class="credits-page">
 
-Vaizdai ir duomenys: CERN (CERN iš oro, LHC tunelis CERN-FOOTAGE-2022-013-001, dipolis CERN-VIDEO-2019-050-008) · CMS susidūrimas: CERN atvirieji duomenys, įrašas 300 (CC0) · LHCb filmukas: LHCb kolaboracija · LHCb modelis: © CERN LHCb kolaboracijos naudai (GPL-3.0), HSF Phoenix (Apache-2.0); žmogaus modelis: Blender Human Base Meshes (CC0) · LHCb susidūrimas: CERN atvirieji duomenys · Ωc⁰ spektras: LHCb, Phys. Rev. Lett. 118, 182001 (2017), CC BY 4.0 · Priartinimas: autoriaus SpaceEngine montažas; Žemė: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies) · Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF) · CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (pakeistas) · Žemėlapiai: Natural Earth (viešasis domenas); © OpenStreetMap bendraautoriai (ODbL) · SciFi modulis ir pabaigos įrašas: Innoday (Blender; LHCb geometrija) · Muzika: Scott Buckley, „Starfire“ (scottbuckley.com.au), CC BY 4.0
+Vaizdai ir duomenys: CERN (CERN iš oro, LHC tunelis CERN-FOOTAGE-2022-013-001, dipolis CERN-VIDEO-2019-050-008) · CMS susidūrimas: CERN atvirieji duomenys, įrašas 300 (CC0) · LHCb filmukas: LHCb kolaboracija · LHCb modelis: © CERN LHCb kolaboracijos naudai (GPL-3.0), HSF Phoenix (Apache-2.0); žmogaus modelis: Blender Human Base Meshes (CC0) · LHCb susidūrimas: CERN atvirieji duomenys · Ωc⁰ spektras: LHCb, Phys. Rev. Lett. 118, 182001 (2017), CC BY 4.0 · Priartinimas: autoriaus SpaceEngine montažas; Žemė: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies) · Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF) · CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (pakeistas) · Žemėlapiai: Natural Earth (viešasis domenas); © OpenStreetMap bendraautoriai (ODbL) · SciFi modulis ir pabaigos įrašas: Innoday (Blender; LHCb geometrija) · Muzika: Scott Buckley, „Aphelion“ ir „Starfire“ (scottbuckley.com.au), CC BY 4.0
 
 </div>
 
