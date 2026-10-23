@@ -100,7 +100,22 @@ purpose).
 
 ## Status
 
-- 2026-10-23 (latest): **deployed c30e7e8** (Pages run 39924390162, green;
+- 2026-10-23 (latest): **deployed 1da3ab7** (Pages run 39944544983, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, nothing skipped, plates
+  one warning, the fingerprint): 21 slides, 12,9 min timed, about 14½–15½ delivered
+  with his slots. New: the 20 s zoom from Saulėtekis to the web (slide 2, silent,
+  stabilised), Innoday's SciFi flag (19) and its close cut at the LHC/FCC map (20);
+  the masterclass slide cut (Decisions). Plates (14) and stills 01–21 retaken and
+  published; the venue zip rebuilt from 1da3ab7 (263 MB) on the release; venue.json.
+  Review copies sent in the window: the zoom silent and with the swoosh, the close
+  at 720p. Open for the owner: silent or the swoosh; the OpenStreetMap credit for
+  the close's map (ODbL: tiny print on „Ačiū“?); whether the advice lines on 20 stay;
+  the time (at the slot's edge with his slots: the slots or the advice are the cuts);
+  the release clean-up he asked for (below). The release still holds 02-, 07-, 09-,
+  19-, 20-, 22-, 23-plate.mp4 and cern_footage_2022_013_006.mp4, unused: the delete
+  was refused by this session's permission check, so the owner runs it.
+- 2026-10-23: **deployed c30e7e8** (Pages run 39924390162, green;
   https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed; `talk ready` passed on it, nothing skipped, plates
   one warning, the fingerprint): the owner's 23 Oct cuts (Decisions), 19 slides,
