@@ -7,8 +7,9 @@ import { disk } from './afterCover.js'
 
 // <WebTakeover src="figures/opener_last.jpg" />: Innoday's (feat/innoday-cern d80ea9a).
 // There the opener clip ends on the cosmic web and this slide opens on its last frame;
-// here there is no clip: the slide opens on that frame as a still picture (the owner,
-// 18 Oct: "take the still cosmic web from the innoday"). Under it the world is already made of
+// here the slide opens on that frame as a still picture (the owner, 18 Oct: "take the
+// still cosmic web from the innoday"); since 23 Oct a 20 s cut of that clip plays before it
+// and ends on the same frame. Under it the world is already made of
 // the frame's grains, each on its pixel's line of sight from the camera, so
 // the picture can dissolve into them: the voids first, the filaments last. The
 // next slide moves the camera and the grains fly into the funnel (funnel.js
@@ -97,7 +98,7 @@ async function takeOver() {
   setPositions(pts, placeAlongRays(sample, s.camera, box.value, s.canvas.getBoundingClientRect(), { near: props.near, far: props.far }))
   // under the copy: the web stands alone until its grains make the funnel
   funnelSeq.hide()
-  // here, with no clip before it, the CMB picture's decode and upload run now, while the
+  // here the CMB picture's decode and upload run now, while the
   // copy holds still (afterCover.js): the disk's colours are then read before prepare()
   disk.flip()
   still.value = false

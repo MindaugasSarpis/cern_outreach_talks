@@ -60,12 +60,37 @@ Picture: the cover, as OpenData's and Innoday's: the name line over the five-qua
 Laba diena. Esu Mindaugas Šarpis, dalelių fizikas iš Vilniaus universiteto. Ekrane susidėlioja dalelė, kurios fizikai ieškojo penkiasdešimt vienerius metus. Kaip sužinoti, kad radai tai, ko dar niekas nematė?
 [pauzė 2 s]
 Šiandien pamatysi, kaip ją rado – taškas po taško. Ir spręsti bandysi tu. O pabaigoje sužinosi, kas tokį darbą dirba ir nuo ko jį galima pradėti.
-Bet pradėkime nuo visos Visatos.
+Bet pradėkime nuo Vilniaus.
 
-The question lands at about 0:20. „kvarkas“ and „pentakvarkas“ wait for slide 3. „spręsti bandysi tu“: the plain spoken order, and gender-neutral (never „pats“). The last line is said as the camera flies (4,5 s, hidden by the still).
+The question lands at about 0:20. „kvarkas“ and „pentakvarkas“ wait for slide 4. „spręsti bandysi tu“: the plain spoken order, and gender-neutral (never „pats“). The last line is said as the zoom fades in.
 If asked: the idea of five-quark particles is from 1964 (Gell-Mann and Zweig); LHCb announced the particle on 14 July 2015.
 
 (~0.6 min)
+-->
+
+---
+space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0, dim: 0 }   # a cut to the takeover's pose under the clip, as Innoday's opener: the next slide stands exactly here
+---
+
+<!-- The zoom out (the owner, 23 Oct: "a quick zoomout from vilnius straight to universe web - in 20s"): Innoday's opener, the owner's SpaceEngine edit, time-remapped to 20 s. It ends on the frame slide 3's still is (public/figures/opener_last.jpg) and holds it; the fade out shows the same picture underneath. -->
+<VideoPlayer src="vilnius_zoom.mp4" transition="fade" />
+
+<!-- facts: nftmc-opened-2016 -->
+
+<!--
+Message: where we are, then out past everything to the largest scale.
+Picture: the owner's SpaceEngine zoom for Innoday, 4:13 run in 20 s: the NFTMC building in Saulėtekis (Google Earth, 0–2,3 s), the Saulėtekis campus (to ~3,9 s), Vilnius and its region (~3,9–5,4 s), the clouds and the Earth's limb, the Earth whole (~7,2–7,8 s; an orange, dust-laned band beside it is in the edit), the Sun (~8,6 s), then a star among stars, out through our galaxy's disc (~10–12,5 s), our galaxy whole (~12,8–13,8 s), half a second of dark, then the cosmic web (from ~14,4 s) slowing to a stop and held from 19 s. No sound of its own. It waits on the web for the press (no advance-on-end).
+
+Čia – Saulėtekis Vilniuje. Čia dirba Vilniaus universiteto fizikai.
+[kai matosi visa Žemė, ~7 s] Žemė. [~8,5 s] Saulė. [~13 s] Mūsų galaktika.
+[tinklui pasirodžius tylėk; kai jis sustoja] → spausk
+
+The words follow the picture: say each name as it comes, not before; the first sentence is over by the time Vilnius is in sight (~4,5 s). „Čia dirba Vilniaus universiteto fizikai“: NFTMC houses units of the VU Faculty of Physics (nftmc-opened-2016). Lithuania as a country is not shown, so it is not named.
+The footage: the owner's SpaceEngine edit spaceengine/nftmc_zoom.mp4 (Google Earth for the Earth part: its logo is on every Earth frame and the imagery providers are named in the footage, as Innoday's notes say; at this speed the providers' line is up for well under a second); the web, NCSA's Advanced Visualization Lab („Cosmic Bubble Bath“), as on the next slide.
+
+The clip runs 20 s.
+
+(~0.35 min)
 -->
 
 ---
@@ -77,14 +102,14 @@ space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0, dim: 0 }   # In
 <!-- facts: cosmic-web-simulation-filaments-voids -->
 
 <!--
-Message: the Universe at its largest scale, as a picture that breaks into grains. No words: the cover's last line has named it.
-Picture: Innoday's cosmic web as a still (the owner, 18 Oct: "take the still cosmic web from the innoday"): the picture holds for half a second, then its dark lets go evenly and its bright filaments break into grains, each on its own pixel's line of sight (3 s). They make the funnel on the next step.
+Message: the Universe at its largest scale, as a picture that breaks into grains.
+Picture: Innoday's cosmic web as a still (the owner, 18 Oct: "take the still cosmic web from the innoday"), the zoom's own last frame, so the cut from the clip does not show: the picture holds for half a second, then its dark lets go evenly and its bright filaments break into grains, each on its own pixel's line of sight (3 s). They make the funnel on the next step.
 
 Maždaug taip atrodo Visata didžiausiu mastu – galaktikų gijos ir tuštumos tarp jų.
 [leisk vaizdui subyrėti į grūdelius, maždaug 3,5 s] → spausk
 
 The line is in the script since 21 Oct (the 15-minute round; the web is a cosmological simulation's visualisation, cosmic-web-simulation-filaments-voids); hold the slide for it.
-The picture: the last frame of the owner's SpaceEngine edit for Innoday (public/figures/opener_last.jpg), the cosmic web of NCSA's Advanced Visualization Lab („Cosmic Bubble Bath“, NSF), as Innoday credits it; no public page of that title was found on 20 Oct (NASA SVS 10663 is the closest NCSA AVL piece), so the still's own source is the owner's to name for the credit. If the NCSA or Planck licence is refused for the Delfi stream, cut slides 2 and 3: the cover flies straight to CERN and slide 3's quark ladder is said on slide 7 over the debris.
+The picture: the last frame of the owner's SpaceEngine edit for Innoday (public/figures/opener_last.jpg), the cosmic web of NCSA's Advanced Visualization Lab („Cosmic Bubble Bath“, NSF), as Innoday credits it; no public page of that title was found on 20 Oct (NASA SVS 10663 is the closest NCSA AVL piece), so the still's own source is the owner's to name for the credit. If the NCSA or Planck licence is refused for the Delfi stream, cut slides 2, 3 and 4: the cover flies straight to CERN and slide 4's quark ladder is said on slide 8 over the debris.
 
 (~0.2 min)
 -->
@@ -148,7 +173,7 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 
 <!--
 Message: when the accelerator runs, protons at almost the speed of light collide over a billion times a second, and the collision energy becomes new particles.
-Picture: the real LHC tunnel, 100 m under the border, the magnets on the right; „LHC 27 km“ low on the left. Let it run, then → at its end: the camera goes on into the beam pipe (no auto-advance). Its sound is the tunnel's own ventilation hum. 26 words take about 14 s, 17 s at a slow delivery, inside the 18 s; the last sentence as the push into the pipe begins (into the magnet, slide 6, since 21 Oct).
+Picture: the real LHC tunnel, 100 m under the border, the magnets on the right; „LHC 27 km“ low on the left. Let it run, then → at its end: the camera goes on into the beam pipe (no auto-advance). Its sound is the tunnel's own ventilation hum. 26 words take about 14 s, 17 s at a slow delivery, inside the 18 s; the last sentence as the push into the pipe begins (into the magnet, slide 7, since 21 Oct).
 
 Kai greitintuvas veikia, protonai jame skrieja beveik šviesos greičiu ir susiduria daugiau nei milijardą kartų per sekundę. Susidūrimo energija virsta naujomis dalelėmis.
 
@@ -212,7 +237,7 @@ Picture: one real collision in the black, OpenData's and Innoday's. Two bunches 
 Šį susidūrimą 2012 metais užfiksavo CMS – vienas iš keturių didžiųjų šio greitintuvo detektorių.
 O dabar – LHCb, detektorius, prie kurio dirbu aš.
 
-The decay sentence follows cms.cern's own wording (most particles produced are unstable and transform rapidly; the detector measures the stable ones), so „skeveldros“ on slide 9 is heard a second time; the mass is taught on slides 9 and 10. No acronym in speech. If asked: CMS, one of the four LHC detectors, recorded it on 27 May 2012; 19 proton pairs collided in this crossing; the picture draws the 290 clearest tracks (not a number CMS reports); 8 TeV is the collision energy.
+The decay sentence follows cms.cern's own wording (most particles produced are unstable and transform rapidly; the detector measures the stable ones), so „skeveldros“ on slide 10 is heard a second time; the mass is taught on slides 10 and 11. No acronym in speech. If asked: CMS, one of the four LHC detectors, recorded it on 27 May 2012; 19 proton pairs collided in this crossing; the picture draws the 290 clearest tracks (not a number CMS reports); 8 TeV is the collision energy.
 
 The event: CMS Open Data record 300 (CC0), run 195099, event 137440354, a Higgs boson candidate. Provenance: components/lhc-opening/README.md.
 
@@ -233,7 +258,7 @@ Picture: the LHCb detector in 3D, with music. Start about 3 s in; about 30 words
 Tai LHCb. Jis dešimties metrų aukščio – kaip trijų aukštų namas. Šiame eksperimente dirba beveik du tūkstančiai žmonių iš viso pasaulio, tarp jų ir mūsų grupė iš Vilniaus universiteto. Aš – vienas iš jų.
 [palauk 3 s] → spausk
 
-„beveik du tūkstančiai“: 1 891 members in September 2026; never „daugiau nei“. „kaip trijų aukštų namas“ is our arithmetic (10 m at about 3 m a storey). The particle that split is named before its fragments, so „skeveldros“ has a referent when heard. „Same mass every time“ is said on slide 10 while the dots fall. If asked: 5 600 tonnes, 21 m long; VU joined LHCb in September 2024.
+„beveik du tūkstančiai“: 1 891 members in September 2026; never „daugiau nei“. „kaip trijų aukštų namas“ is our arithmetic (10 m at about 3 m a storey). The particle that split is named before its fragments, so „skeveldros“ has a referent when heard. „Same mass every time“ is said on slide 11 while the dots fall. If asked: 5 600 tonnes, 21 m long; VU joined LHCb in September 2024.
 
 The line is said over the clip. The lint counts the clip's whole 39 s from the manifest; pressed 3 s after the line (22 Oct), the slide takes about 25 s.
 -->

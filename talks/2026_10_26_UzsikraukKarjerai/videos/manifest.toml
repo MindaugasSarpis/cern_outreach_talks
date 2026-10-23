@@ -55,6 +55,31 @@ the library clip (full length), so this talk's release wins the chain. Raw: the 
 clip folder's cern_video_2019_050_008_1080ph265.mp4 (HEVC, 72 MB), copied into the raw \
 bank under this name."""
 
+[[videos]]
+name    = "vilnius_zoom.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+loudnorm = false
+notes   = """\
+The zoom out on slide 2 (the owner, 23 Oct, through the Scheduler: "Can we do a \
+quick zoomout from vilnius straight to universe web - in 20s"): Innoday's opener, \
+the owner's SpaceEngine edit spaceengine/nftmc_zoom.mp4 \
+(gdrive:work/outreach/resources/videos/spaceengine/, 4:27.6, 1080p60 HEVC), its \
+first 253.42 s time-remapped to 19 s at 50 fps and the last frame held 1 s: 20 s. \
+The speed eases from 1.2x over NFTMC in Saulėtekis, slows for Vilnius, the Earth's \
+globe and our galaxy seen whole, runs up to 55x through the dark stretches and \
+brakes to a stop on the cosmic web; each frame averages the source frames under a \
+180-degree shutter (at most 24). Made by scripts/remap_zoom.py (its KEYS), in \
+pnpm talk render. Its last frame is the source's at 253.42 s, Innoday's cut point, \
+so it matches public/figures/opener_last.jpg (slide 3's still; correlation 0.998). \
+No audio. Google Earth (NFTMC to the Earth, 0-5.5 s): its attribution is in the \
+footage and not cropped, the "Google Earth" logo and the imagery providers \
+("Landsat / Copernicus", "Airbus, CNES / Airbus, Maxar Technologies"), as in \
+Innoday's manifest; the web: NCSA Advanced Visualization Lab ("Cosmic Bubble \
+Bath"). The raw (videos/raw/vilnius_zoom.mp4) is that output, not on gdrive \
+released/: never run a plain videos:sync here (it would delete it); make it again \
+with the script."""
+
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 
 [[videos]]

@@ -382,7 +382,7 @@ function buildFunnel(o, ctx) {
 }
 
 // ---- the prologue: the web's grains become the funnel (owner, 13 Oct) -----------
-// On the step from the takeover (slide 2 here) to the funnel's side view (slide 3) the
+// On the step from the takeover (slide 3 here) to the funnel's side view (slide 4) the
 // cosmic web's grains fly into the funnel's shape, the middle of the picture first:
 // the takeover's camera looks down the funnel's axis, so the middle of its picture
 // becomes the Big Bang, then the CMB disk, then the bell out to the mouth. Then the
