@@ -341,6 +341,31 @@
       1
      ],
      "markStep": 2
+    },
+    {
+     "type": "triplet",
+     "name": "omega",
+     "pos": [
+      16.7,
+      4.9,
+      0
+     ],
+     "spread": 2.4,
+     "radius": 1.0,
+     "colors": [
+      "#ff8378",
+      "#72e09c",
+      "#7fa6ff"
+     ],
+     "grains": 700,
+     "gluon": 520,
+     "loops": 3,
+     "size": 2.0,
+     "alpha": 0.8,
+     "gluonSize": 1.5,
+     "gluonAlpha": 1.0,
+     "delay": 0.9,
+     "dur": 2.4
     }
    ]
   },

@@ -9,6 +9,7 @@ import { installOpening } from '../components/lhc-opening/index.js'
 import { installDetector } from './detector.js'
 import { installCavern } from './cavern.js'
 import { installThesis } from './thesis.js'
+import { installTriplet } from './triplet.js'
 import InsideLhcb from './InsideLhcb.vue'
 // LHCb's own 2012 event, the shared collision's default: slide 8's detector (setup/detector.js)
 import EVENT_LB from '../components/lhc-opening/event.json'
@@ -66,6 +67,9 @@ function reloadOnStaleChunk() {
 // Back on 23 Oct (the review, "implement all"): `peakhist`, Dominykas's thesis plot
 // with the rise into `pq2` (setup/thesis.js, here 15–18 Oct), on slide 18's click,
 // and <ClickPose>, which takes the camera to it on that click (setup/ClickPose.vue).
+// On 23 Oct (the owner: "after histogram is filled indicate schematically Omega particle"):
+// `triplet`, a three-quark particle in the colour-charge picture with gluons between the
+// quarks (setup/triplet.js), the Ωc⁰ beside its spectrum on slide 12's click.
 // (A plain function: Slidev's defineAppSetup is the identity, and
 // @slidev/types is not a dependency of the talk.)
 export default ({ app, router }) => {
@@ -81,6 +85,7 @@ export default ({ app, router }) => {
   installDetector(registerBuilder, { event: EVENT_LB })
   installCavern(registerBuilder)
   installThesis(registerBuilder)
+  installTriplet(registerBuilder)
   app.component('Grains', Grains)
   app.component('Count', Count)
   app.component('FillClock', FillClock)
