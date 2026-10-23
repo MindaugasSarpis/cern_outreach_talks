@@ -76,7 +76,7 @@ space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0
 ---
 
 <!-- The zoom out (the owner, 23 Oct: "a quick zoomout from vilnius straight to universe web - in 20s"): Innoday's opener, the owner's SpaceEngine edit, time-remapped to 20 s. It ends on the frame slide 3's still is (public/figures/opener_last.jpg) and holds it; the fade out shows the same picture underneath. -->
-<VideoPlayer src="vilnius_zoom.mp4" transition="fade" />
+<VideoPlayer src="vilnius_zoom.mp4" transition="fade" :volume="0.63" />
 <Soundtrack src="audio/aphelion.m4a" tail="audio/aphelion.m4a" :clip-at="13.6" :level="0.35" keys />
 
 <!-- facts: nftmc-opened-2016 -->
