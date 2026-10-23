@@ -566,8 +566,8 @@ space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway:
 Message: one part of LHCb our group works on: the tracker of plastic fibres that light up when a particle passes, and the light injection system at the ends of its modules that sends short laser pulses into them to calibrate them. A computer-made picture, said so; the flag is ours.
 Picture: Innoday's clip from its 3,5 s (the dark start cut), 16,5 s, silent: 0–3,5 s the camera pans slowly down a whole SciFi module (two fibre mats of 2,4 m) from below; 3,1–6,5 s the cold box at its lower end is outlined in soft light blue (the light injection system is inside it); 6,5–8,5 s the camera closes in on the box; 8,5–14 s a laser engraves the Lithuanian flag on it; it holds from 16 s. The press goes on to the close, which starts from this frame.
 
-Tai vienas LHCb sekiklio modulis – kompiuteriu sukurtas vaizdas. Tai viena iš tų dalių, kurios užfiksuoja, kur praskriejo dalelės. Jame – plonos plastikinės skaidulos, visame sekiklyje jų daugiau nei vienuolika tūkstančių kilometrų. Kai pro jas praskrieja dalelė, jose sužimba šviesa.
-[kai apačioje nušvinta dėžė, ~3 s] Šioje dėžėje lazeriai siunčia į skaidulas trumpus šviesos impulsus – taip tikrinama, ar sekiklis matuoja tiksliai. Prie jo dirba ir mūsų grupė.
+Tai vienas LHCb sekiklio modulis – kompiuteriu sukurtas vaizdas. Sekiklis užfiksuoja, kur praskriejo dalelės. Jame – plonos plastikinės skaidulos, iš viso daugiau nei vienuolika tūkstančių kilometrų. Kai pro jas praskrieja dalelė, jose sužimba šviesa.
+[kamerai priartėjus prie apatinės dėžės] Šioje dėžėje lazeriai siunčia į skaidulas trumpus šviesos impulsus – taip tikrinama, ar sekiklis matuoja tiksliai. Prie jo dirba ir mūsų grupė.
 [vėliavai išryškėjus] Vėliavą į šį vaizdą įpiešėme patys.
 [kai vaizdas sustoja] → spausk
 
