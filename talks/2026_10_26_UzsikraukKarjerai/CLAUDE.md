@@ -117,8 +117,11 @@ on the last slide (lint TEXT warnings, on purpose).
   the zoom music's title and licence; his words for slide 13's four slots (11th grade,
   Ireland and the years between, the pentaquark search's outcome, Manchester); slide 10's
   camera lift (not applied); where he stands in the room view; a beat at each city on 13
-  if he wants one (now the head turns straight back). The release still holds 18-, 21-plate
-  and the tape-robot clip, unused.
+  if he wants one (now the head turns straight back). The release matches plates.json (the
+  Scheduler deleted 18- and 21-plate); the tape-robot clip stays. Fragile: the close's 4K
+  source (videos/raw/innoday/close_take_4k.mp4, 735 MB) is only in this machine's raw bank,
+  copied from an Innoday /tmp scratchpad; the rclone remote is read-only, so the owner should
+  copy it to his Drive with the other raws (without it, close_home.mp4 remakes a softer clip).
 - 2026-10-23 (night, latest): **deployed 2646fa4** (Pages run 40014341245, green;
   https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed; `talk ready` passed on it, nothing skipped, plates one

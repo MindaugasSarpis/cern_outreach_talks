@@ -115,8 +115,10 @@ the map's thin lines brightened for the stream (thickened 3 px); the source's ow
 the FCC ring full frame; x264 slow CRF 12 under a 9,5 Mbit/s cap, remuxed (no second \
 encode). The logo's mirrored "LHCb" with the red slash is LHCb's own logo (the CP \
 mirror) and is kept. „mano greitintuvas" and „jūsų greitintuvas" are the deck's text \
-over it (<ClipCue>), not in the clip. Raw: that output; its source, Innoday's release \
-asset close_home.mp4 (125 MB), is videos/raw/innoday/close_home.mp4."""
+over it (<ClipCue>), not in the clip. Raw: that output. Its source, the 4K take (735 MB), lives ONLY in \
+this machine's raw bank (videos/raw/innoday/close_take_4k.mp4, gitignored; it was \
+copied from an Innoday session's /tmp scratchpad, on no release or Drive): if it is \
+lost, close_home.mp4 (Innoday's release, 125 MB) remakes a softer clip."""
 
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 
