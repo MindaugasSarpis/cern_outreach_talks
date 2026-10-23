@@ -314,5 +314,5 @@ html[data-stage] .clip-cue.close-credits.on { opacity: 0.8; }
 html[data-stage] .clip-cue.close-label { font-size: 38px; font-weight: 500; line-height: 1; width: 228px; text-align: right; white-space: normal; color: #eef1ff; text-shadow: var(--kk-shadow); }
 
 /* slide 20, the credits page (kept, not shown): a small list in the safe box */
-html[data-stage] .credits-page { position: absolute; left: 98px; top: 64px; width: 784px; font-size: 18px; line-height: 1.45; color: #c8d0e8; text-shadow: var(--kk-shadow); }
+html[data-stage] .credits-page { position: absolute; left: 98px; top: 92px; width: 784px; font-size: 18px; line-height: 1.45; color: #c8d0e8; text-shadow: var(--kk-shadow); }
 html[data-stage] .credits-page p { margin: 0; }
