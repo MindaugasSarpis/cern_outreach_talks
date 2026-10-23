@@ -8,7 +8,8 @@ import { fillShare } from './grains.js'
 // histogram `name` landed so far, times `to`, with the Lithuanian form of the
 // unit for that number (1, 21: diena; 2–9, 22–29: dienos; 0, 10–20, 30: dienų).
 // <FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015]]" />: the
-// year of the data landing now, from the share at which each year's data begin.
+// year of the data landing now, from the share at which each year's data begin
+// (a last entry at share 1 may name the whole span: '2011–2015').
 // Without WebGL the plot is not built: the clock runs on its own from the
 // slide's arrival (or from click `at`), `delay` s later, over `fill` s, as the
 // plate's fill does. Printed, in the overview and under reduced motion: the end.

@@ -54,7 +54,7 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (tenth version, 22 Oct: the pre-filming round: 22 slides, 13,3 min by the lint's slide times; about 14–15 min delivered with the three slots)
+## Story (eleventh version, 23 Oct: the owner's cuts: 19 slides, 11,6 min by the lint's slide times; about 13–14 min delivered with the three slots)
 
 The owner, 21 Oct: "15 min we can cover quite a lot of content … more
 visuals", then "Build" on the proposal in this window. Blueprint v2
@@ -85,19 +85,16 @@ purpose).
 | 7 | „290 dalelių“ | one real 2012 CMS crossing in 4π; „užfiksavo CMS“ spoken | 0,55 |
 | 8 | — (clip) | `lhcb.mp4` (39 s): LHCb, its people; → 3 s after „Aš – vienas iš jų.“ (22 Oct), not at its end | 0,4 |
 | 9 | „100 m“, then „40 mln. per sekundę“ | **new**: inside LHCb, the 3D model beside a 1,83 m person (Innoday's), the camera craned down to the cavern floor; LHCb's own 2012 collision in it; the 40 MHz glow; one mass, one dot (`<InsideLhcb>`, station `cavern`) | 1,0 |
-| 10 | „140 taškų“ → „3 500 taškų“, „masė →“ (two clicks) | `th1` fills, 140 dots; the viewer judges; the tick; click 2, `th2` 3 500 random dots, no tick, the bump gone; 2003 | 1,6 |
-| 11 | „LHCb duomenys“, „59 453 masės“, „masė →“; „5 naujos dalelės“ (one click) | `oc`, five peaks; „paskelbė visas penkias“ spoken | 0,75 |
-| 12 | „LHCb duomenys“, „masė →“; „3 pentakvarkai“ (one click) | `jp`, the 2015 peak judged; three peaks | 0,8 |
-| 13 | „atsitiktinumas“ „140 taškų“ · „LHCb“ „27 292 taškai“; „< 1 iš 3,5 mln.“ | `jx` beside `jp`; the rule; the answer (4 s held) | 0,7 |
-| 14 | Vilnius, CERN; „Glazgas“; „Heidelbergas“, „Bona“ | the route (4 clicks), three optional owner slots | 0,6 |
-| 15 | Vilnius | the dive to Vilnius; the group | 0,55 |
-| 16 | — (clip) | **new**: `lis_flag.mp4` (10 s, a render): a SciFi module's end, its light injection; the group's part; the coordinator bridge | 0,4 |
-| 17 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared | 0,6 |
-| 18 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile | 0,3 |
-| 19 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops | 0,45 |
-| 20 | — | OpenData's sun of plots; Dominykas's check (the Brown preprint only if asked) | 0,55 |
-| 21 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; the masterclass; the advice | 0,65 |
-| 22 | „Ačiū“ | the five-quark form gathers again | 0,45 |
+| 10 | days ticking „0 dienų“ → „4 dienos“, then → „100 dienų“; „masė →“ (two clicks) | `th1` fills, 140 dots in four days („tarkime“); the viewer judges; the tick; click 2, `th2` 3 500 random dots in 100 days, no tick, the bump gone; 2003 | 1,6 |
+| 11 | „LHCb duomenys“, the year ticking „2011 m.“ → „2012 m.“ → „2015 m.“, then „2011–2015 m.“, „masė →“; „5 naujos dalelės“ (one click) | `oc` at a steady rate, five peaks; the rule (< 1 in 3,5 mln.) and the 2015 pentaquark spoken; „Pentakvarkų ieškojau ir aš.“ | 1,2 |
+| 12 | Vilnius, CERN; „Glazgas“; „Heidelbergas“, „Bona“ | the route (4 clicks), three optional owner slots | 0,6 |
+| 13 | Vilnius | the dive to Vilnius; the group; the coordinator bridge | 0,65 |
+| 14 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared | 0,6 |
+| 15 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile | 0,3 |
+| 16 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops | 0,45 |
+| 17 | — | OpenData's sun of plots; Dominykas's check (the Brown preprint only if asked) | 0,55 |
+| 18 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; the masterclass; the advice | 0,65 |
+| 19 | „Ačiū“ | the five-quark form gathers again | 0,45 |
 
 ## Status
 
@@ -457,6 +454,27 @@ purpose).
   a3001a1 and 71fb6f1 before it, all rejected by the owner.
 
 ## Decisions
+
+- 2026-10-23 — The owner's cuts, in this window: "Don't need scifi module, a
+  bit too much histograms, just show one with not a lot of data (show days /
+  years of collection increasing) then show the 5 omega resonances also with
+  time ticking of when this was collected." Cut: the SciFi clip (old 16), the
+  pentaquark plot (old 12) and the two plots at one scale with the rule (old
+  13); 22 → 19 slides. The toy keeps its two clicks (the bump drowning is the
+  "collection increasing"); its counts give way to a clock of days, „0 dienų“ →
+  „4 dienos“, then „0 dienų“ → „100 dienų“ for the 3 500 (35 dots a day in
+  both, an illustration said with „tarkime“). The Ωc plot's count gives way to
+  the year the landing data were recorded, „2011 m.“ → „2012 m.“ → „2015 m.“,
+  then the span „2011–2015 m.“ once full (not a lone 2015 beside the five), switched at the sample's luminosity shares (1,0 / 2,0 / 0,3 fb⁻¹: 30 %, 91 %;
+  `lhcb-omegac-2017-years`), and it fills at a steady rate (`curve` 1, was 1,8)
+  so the years tick as the data came. The clock is `<FillClock>`
+  (setup/FillClock.vue), which reads the plot's landed share (grains.js
+  `fillShare`), so it cannot run ahead of the dots; without WebGL it keeps its
+  own time as the plate does. Decided without him, kept from the cut slides:
+  the discovery rule (spoken on 11, no on-screen number: "too much"), the 2015
+  pentaquark after 51 years and „Pentakvarkų ieškojau ir aš.“ (spoken on 11:
+  the cover's question and slides 14 and 19 lean on them), and the coordinator
+  line (moved to the Lithuania slide, 13). Undo: revert 4c848d7.
 
 - 2026-10-22 — The pre-filming round (notes/review.md). The owner, on the review:
   "There might have been this rule about no captions, now the histogram slides
