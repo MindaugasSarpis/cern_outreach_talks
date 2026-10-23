@@ -302,3 +302,7 @@ html[data-stage] .heap.slidev-vclick-hidden { opacity: 0 !important; }
 html[data-stage] .readout.glow .big { font-size: 84px; }
 html[data-stage] .readout.glow { top: calc(var(--kk-top) + 18px); }   /* the number's glyph box (1,29 em) stands out of its 0,92 em line by 16 px: its top on the safe box's y 55 (talk safe) */
 html[data-stage] .readout.glow .unit { font-size: 38px; }
+
+/* slide 8 (23 Oct review): with the readouts raised, „290 dalelių“ sat on the bright muon track: the scrim slide 10's numbers have */
+html[data-stage] .lhc-collision { z-index: 0; min-width: 250px; min-height: 64px; }   /* its lines are absolute: give the box the text's size for the scrim */
+html[data-stage] .lhc-collision::before { content: ''; position: absolute; inset: -70px -120px -50px -90px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0, 2, 6, 0.8) 0%, rgba(0, 2, 6, 0.58) 45%, rgba(0, 2, 6, 0.2) 75%, rgba(0, 2, 6, 0) 100%); }

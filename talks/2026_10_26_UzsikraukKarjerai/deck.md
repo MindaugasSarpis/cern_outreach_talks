@@ -444,14 +444,14 @@ The doctoral student stays unnamed. „pretenduoti“, not „kandidatuoti“. I
 -->
 
 ---
-space: { path: [[3, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [7.5, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [11.5, { at: [2599.3, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8 }]], dim: 0.15 }   # 23 Oct review: in close on the 1 TB sphere (the unit), held while it is named, then drawn back to the 800 pile;   # (x 2597.0 until 22 Oct: „1 TB“ ran to x 930, past the broadcast safe box) from the front, so the 1 TB sphere and its label stand in frame right of the 800 pile, nearly as far from the lens (OpenData's yaw-73 pose, its slide 7, left the sphere below the frame); the camera stays inside the vault's clear capsules
+space: { path: [[3, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [7.5, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [11.5, { at: [2598.3, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8 }]], dim: 0.15 }   # 23 Oct review: in close on the 1 TB sphere (the unit), held while it is named, then drawn back to the 800 pile;   # (x 2597.0 until 22 Oct: „1 TB“ ran to x 930, past the broadcast safe box) from the front, so the 1 TB sphere and its label stand in frame right of the 800 pile, nearly as far from the lens (OpenData's yaw-73 pose, its slide 7, left the sphere below the frame); the camera stays inside the vault's clear capsules
 ---
 
 <Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [0, 1], 'scale:labels': 1, sun: 0, vilnius: 0 }" />
 
-<div class="readout late">
+<div class="readout" style="animation-delay: 8s">
 
-<div class="big"><Count name="open" :from="0" :to="800" :delay="2400" /><span class="unit">TB</span></div>
+<div class="big"><Count name="open" :from="0" :to="800" :delay="8000" /><span class="unit">TB</span></div>
 
 </div>
 
@@ -461,7 +461,7 @@ space: { path: [[3, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], 
 Message: the data I prepared in Bonn, in one picture: each sphere a terabyte, about a laptop's disk; LHCb's 2011 and 2012 data are 800 of them; every file found, checked and described, about a year and a half; the pentaquark peak first rose in exactly these data, and now they are open to everyone.
 Picture: OpenData's piles (the owner, 18 Oct: "Show something about open data"): the camera flies in to a single gold sphere and a pile of 800 like it, standing on a floor of grains in a space of data; „1 TB“ under the sphere, the count „800 TB“ low on the left (once: the pile's own label is gone).
 
-Štai jie. Šis taškelis – vienas terabaitas, maždaug nešiojamojo kompiuterio diskas. Kiekviena sfera krūvoje – tokia pati. Čia LHCb 2011 ir 2012 metų duomenys – aštuoni šimtai terabaitų. Kiekvieną failą reikėjo surasti, patikrinti ir aprašyti. Net su tam parašytomis programomis tai užtruko apie pusantrų metų. Būtent šiuose duomenyse 2015 metais iškilo pentakvarko smailė. Dabar jie atviri visiems – ir tau.
+Štai jie. Šis rutuliukas – vienas terabaitas, maždaug nešiojamojo kompiuterio diskas. Kiekviena sfera krūvoje – tokia pati. Čia LHCb 2011 ir 2012 metų duomenys – aštuoni šimtai terabaitų. Kiekvieną failą reikėjo surasti, patikrinti ir aprašyti. Net su tam parašytomis programomis tai užtruko apie pusantrų metų. Būtent šiuose duomenyse 2015 metais iškilo pentakvarko smailė. Dabar jie atviri visiems – ir tau.
 
 Terabytes only, never „petabaitas“. 800 TB is CERN's figure (VU: over 1 PB in all, of which 800 TB of physics data in over 100 000 files); the release holds the same 2011–2012 collisions the 2015 peak rose in (2019 used Run 1 and Run 2). The year-and-a-half line is the speaker's public interview (VU Library, 5 March 2026). If asked: the full Run 1 release was completed on 20 December 2023; a terabyte holds tens of millions of recorded collisions.
 
@@ -480,7 +480,7 @@ space: { at: [2591.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, flight: 5, d
 
 <div class="big"><Count name="open" :from="800" :to="4000" :delay="5200" :ms="900" /><span class="unit">TB</span></div>
 
-<p class="caption">Atvirieji LHCb duomenys</p>
+<p class="caption">Atvirieji duomenys</p>
 
 </div>
 
@@ -532,11 +532,13 @@ Scale, worked out: a 1 TB laptop of today is about 1,1 cm thick, so 100 000 of t
 
 ---
 clicks: 1
-space: { at: [2600, 1.86, 0], dist: 22, yaw: 0, pitch: 3, dim: 0.05 }   # OpenData's sun pose (its slide 11) closer, on the sun's middle (23 Oct: dist 36, at y −0.3 until then); the click flies to `thesis` (<ClickPose>)
+space: { at: [2600, -0.5, 0], dist: 31.5, yaw: 0, pitch: 3, dim: 0.05 }   # OpenData's sun pose (its slide 11) a little closer, the 8 plots inside the safe box (23 Oct: dist 36, at y −0.3 until then; dist 22 ran past every edge); the click flies to `thesis` (<ClickPose>)
 ---
 
 <Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 1, vilnius: 0, peak: 0, pq2: 0 }" :clicks="{ 1: { sun: 0, peak: 1 } }" />
 <ClickPose :poses="{ 1: { at: 'thesis', flight: 2.5 } }" />
+<div v-click="1" class="heap r axis step" style="left: 712px; top: 358px; --step-delay: 2.6s"><span class="n">masė&nbsp;→</span></div>
+<div v-click="1" class="heap l step" style="left: 268px; top: 358px; --step-delay: 2.6s"><span class="n">2012&nbsp;m.</span></div>
 
 <!-- facts: opendata-sun-plots-from-records, stonkus-bsc-2026, stonkus-bsc-2026-yield, lhcb-pentaquark-2015, lhcb-open-data, lhcb-opendata-brown-2026 -->
 
