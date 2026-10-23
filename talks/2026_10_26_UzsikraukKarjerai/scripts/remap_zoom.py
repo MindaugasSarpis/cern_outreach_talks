@@ -1,4 +1,4 @@
-"""The NFTMC → cosmic web zoom as a 17 s clip (slide 2), from the owner's SpaceEngine edit.
+"""The NFTMC → cosmic web zoom as a 19 s clip (slide 2), from the owner's SpaceEngine edit.
 
 Four stretches of the source, each at its own eased speed, joined by dissolves:
 the Google Earth flight out to the clouds, the Earth from space, our galaxy
@@ -23,8 +23,15 @@ from scipy.ndimage import gaussian_filter1d, maximum_filter1d
 SRC_FPS, OUT_FPS = 60, 50
 W, H = 1920, 1080
 END_SRC = 253.42
-TOTAL, HOLD = 17.0, 1.0
-XF = 0.4                  # each dissolve, seconds
+TOTAL, HOLD = 19.0, 1.0
+# the joins, seconds: two Earth views dissolve quickly; the jumps in scale (the Earth to the galaxy,
+# the galaxy to the web) are zoom-dissolves (owner, 23 Oct: "This immediate switch from galaxy to
+# universe web and from earth to galaxy doesn't work"): the outgoing picture shrinks on into the
+# centre as it fades and the incoming one comes in larger and settles, so the pull-back carries on
+XFS = [0.4, 1.4, 1.4]
+ZOOM_JOIN = [False, True, True]
+OUT_TO, IN_FROM = 1 / 2.2, 2.2    # one camera through a zoom-dissolve: both pictures scale by the same steady log rate
+FEATHER_FR = 0.12                 # the outgoing picture's edges feathered over this share, so no frame edge shows as it shrinks
 SHUTTER = 0.5
 MAX_BLEND = 24
 BOUND = np.array([70.0, 40.0, 1.5, 0.03])   # px, px, degrees, log scale: the corridor round the real path
@@ -32,7 +39,8 @@ BOUND = np.array([70.0, 40.0, 1.5, 0.03])   # px, px, degrees, log scale: the co
 # synthetic-looking pictures in the talk and near-black on a stream; the Earth dissolves into the galaxy
 # the cloud whiteout after Google Earth's fade (source ~29.5-33 s) and the bright limb toned down: they
 # flashed after Vilnius (YAVG 101 -> 156); keyed by source seconds
-GAIN = [(28.8, 1.0), (29.8, 0.6), (32.4, 0.62), (37.6, 0.75), (39.6, 0.85), (42.0, 1.0)]
+GAIN = [(28.8, 1.0), (29.8, 0.6), (32.4, 0.62), (37.6, 0.75), (39.6, 0.85), (42.0, 1.0),
+        (225.9, 1.0), (226.0, 1.5), (233.0, 1.0)]   # the web lifted as it comes in: no near-black second before it
 BOUNDS = {0: np.array([50.0, 30.0, 0.8, 0.02]), 1: np.array([50.0, 30.0, 0.8, 0.02])}   # Google Earth's: less crop, sharper
 # Google Earth's attribution (its logo and the imagery line under it, burnt into the source until
 # its fade to SpaceEngine ends at ~29.9 s) is put back unmoved and uncropped over the moved frame:
@@ -48,8 +56,8 @@ GRID = 1 / 250
 # length is what is left of TOTAL, its shape in fractions of it.
 STRETCHES = [
     (0.0, 32.4, 5.6, [(0.0, 1.2), (1.0, 2.5), (2.5, 6), (3.8, 8), (4.5, 6.5), (5.2, 6), (5.6, 6)]),   # NFTMC → Vilnius → the clouds
-    (37.6, 62.0, 2.7, [(0.0, 10), (1.2, 10), (1.7, 8), (2.7, 8)]),           # the Earth from space (its 95° roll at 32-37 s dissolved over)
-    (186.0, 196.0, 3.8, [(0.0, 1.4), (2.2, 1.0), (3.8, 0.5)]),               # the galaxy whole, drifting one way
+    (37.6, 62.0, 4.6, [(0.0, 9), (1.8, 8), (3.0, 6), (4.6, 5)]),           # the Earth from space (its 95° roll at 32-37 s dissolved over)
+    (186.0, 205.0, 5.0, [(0.0, 1.2), (2.0, 1.0), (3.0, 5.0), (3.6, 3.0), (5.0, 1.2)]),   # the galaxy whole, then turning and receding to a dot
     (226.0, END_SRC, None, [(0.0, 9), (0.55, 2.5), (1.0, 0.4)]),             # the web, braking to a stop
 ]
 
@@ -65,9 +73,9 @@ def ease_speed(keys, t):
 def layout():
     """Each stretch: (start in output, length, local time grid, source time on it)."""
     fixed = sum(d for _, _, d, _ in STRETCHES if d)
-    web = (TOTAL - HOLD) - fixed + XF * (len(STRETCHES) - 1)
+    web = (TOTAL - HOLD) - fixed + sum(XFS)
     out, t0 = [], 0.0
-    for a, b, d, keys in STRETCHES:
+    for j, (a, b, d, keys) in enumerate(STRETCHES):
         if d is None:
             d = web
             keys = [(f * d, v) for f, v in keys]
@@ -76,7 +84,7 @@ def layout():
         s = np.concatenate([[0], np.cumsum((v[1:] + v[:-1]) / 2 * np.diff(t))])
         s = a + s * (b - a) / s[-1]
         out.append((t0, d, t, s))
-        t0 += d - XF
+        t0 += d - (XFS[j] if j < len(XFS) else 0)
     return out
 
 
@@ -168,6 +176,56 @@ def text_matte(raw, logo):
     return cv2.GaussianBlur(m, (0, 0), 1.5)[..., None]
 
 
+_FEATHER = None
+
+
+def feather(k):
+    """1 inside, falling to 0 at the frame's edges over FEATHER_FR, blended in by k (0-1)."""
+    global _FEATHER
+    if _FEATHER is None:
+        rx = np.clip(np.minimum(np.arange(W), W - 1 - np.arange(W)) / (FEATHER_FR * W), 0, 1)
+        ry = np.clip(np.minimum(np.arange(H), H - 1 - np.arange(H)) / (FEATHER_FR * H), 0, 1)
+        m = np.outer(ry, rx); _FEATHER = (m * m * (3 - 2 * m)).astype(np.float32)[..., None]
+    return 1 - k * (1 - _FEATHER)
+
+
+_SIDE = None
+
+
+def side_fade():
+    global _SIDE
+    if _SIDE is None:
+        _SIDE = np.clip((0.55 * W - np.arange(W)) / (0.2 * W), 0, 1).astype(np.float32)[None, :, None]
+    return _SIDE
+
+
+def join_zoom(img, j, uk, lay):
+    """A stretch's picture at output time uk, scaled about the centre inside a zoom-dissolve."""
+    t0, d = lay[j][0], lay[j][1]
+    sc = 1.0
+    if j < len(lay) - 1 and ZOOM_JOIN[j]:
+        js = t0 + d - XFS[j]                      # the join starts
+        k = float(np.clip((uk - (js - 0.4)) / 0.4, 0, 1))   # the mattes come in over the 0.4 s before it
+        if k > 0:
+            img = img * feather(k)
+            if j == 1:                            # the Earth: its own Milky Way band (right) goes, the Earth (left) stays
+                img = img * (1 - k * (1 - side_fade()))
+        if uk > js:
+            p = float(np.clip((uk - js) / XFS[j], 0, 1))
+            sc = OUT_TO ** p
+    if j > 0 and ZOOM_JOIN[j - 1] and uk < t0 + XFS[j - 1]:
+        p = float(np.clip((uk - t0) / XFS[j - 1], 0, 1))
+        sc = IN_FROM ** (1 - p)
+        if j == 2:                                # the galaxy's bright core drawn large would bloom over the frame
+            img = img * sc ** -2
+    if abs(sc - 1) < 1e-3:
+        return img
+    import cv2
+    c = np.array([W / 2, H / 2])
+    M = np.float32([[sc, 0, c[0] * (1 - sc)], [0, sc, c[1] * (1 - sc)]])
+    return cv2.warpAffine(img, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+
+
 def frames_of(t0, d, t, s, uk):
     """The source frames under output time uk's shutter in one stretch."""
     half = SHUTTER / OUT_FPS / 2
@@ -191,20 +249,26 @@ def main(src, out, motion=None):
             jobs.append([(len(lay) - 1, last, 1.0)]); continue
         uk = k / OUT_FPS
         parts = []
+        zoomed = False
         for j, (t0, d, t, s) in enumerate(lay):
             if not (t0 - 1e-9 <= uk <= t0 + d):
                 continue
             w = 1.0
-            if j > 0 and uk < t0 + XF:
-                w = min(w, (uk - t0) / XF)
-            if j < len(lay) - 1 and uk > t0 + d - XF:
-                w = min(w, (t0 + d - uk) / XF)
-            w = w * w * (3 - 2 * w)
+            ss = lambda x: x * x * (3 - 2 * x)
+            if j > 0 and uk < t0 + XFS[j - 1]:
+                p = (uk - t0) / XFS[j - 1]
+                # into a zoom-dissolve the incoming comes up first, so the frame never dips
+                w = min(w, ss(min(1.0, p / 0.7)) if ZOOM_JOIN[j - 1] else ss(p))
+                zoomed = zoomed or ZOOM_JOIN[j - 1]
+            if j < len(lay) - 1 and uk > t0 + d - XFS[j]:
+                p = (uk - (t0 + d - XFS[j])) / XFS[j]
+                w = min(w, 1 - ss(p))
+                zoomed = zoomed or ZOOM_JOIN[j]
             if w <= 0:
                 continue
             idx = frames_of(t0, d, t, s, uk)
             parts += [(j, int(min(i, last)), w / len(idx)) for i in idx]
-        tot = sum(p[2] for p in parts)
+        tot = 1.0 if zoomed else sum(p[2] for p in parts)   # a zoom-dissolve adds (clipped at white)
         jobs.append([(j, i, w / tot) for j, i, w in parts])
     stab = stabilise(motion, lay, last + 1) if motion else None
     if stab:
@@ -254,10 +318,15 @@ def main(src, out, motion=None):
                 if text:
                     f = f * (1 - mask) + raw.astype(np.float32) * mask
                 moved[j] = f
-            acc[k] = acc[k] + moved[j] * w if k in acc else moved[j] * w
+            a = acc.setdefault(k, {})
+            a[j] = a[j] + moved[j] * w if j in a else moved[j] * w
             left[k] -= 1
         while nxt < n and left[nxt] == 0:
-            enc.stdin.write(np.clip(acc.pop(nxt) + 0.5, 0, 255).astype(np.uint8).tobytes())
+            img = None
+            for j, part in acc.pop(nxt).items():
+                part = join_zoom(part, j, nxt / OUT_FPS, lay)
+                img = part if img is None else img + part
+            enc.stdin.write(np.clip(img + 0.5, 0, 255).astype(np.uint8).tobytes())
             nxt += 1
     dec.stdout.close(); dec.kill()
     enc.stdin.close(); enc.wait()

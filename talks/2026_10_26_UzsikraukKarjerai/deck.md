@@ -384,23 +384,25 @@ If asked why chance bumps flatten out: a chance fluctuation of N counts is about
 -->
 
 ---
-space: { at: [1201, 0, 2.5], dist: 36, yaw: 0, pitch: 60, sway: 0, dim: 0.05 }   # the `whole` pose (europe + [1, 0, −3]) moved 5.5 south (22 Oct), so the map stands higher and CERN's name ends inside the broadcast safe box; the five names are projected from this pose
-clicks: 4
+space: { at: [1199.83, 0, 1.06], dist: 29.07, yaw: 0, pitch: 60, sway: 0, dim: 0.05 }   # 23 Oct (the criss-cross): closer than the `whole` pose's [1201, 0, 2.5] at dist 36, so the seven stops spread out and every name fits inside the broadcast safe box off the trail; the seven names are projected from this pose
+clicks: 5
 ---
 
-<Grains :set="{ pq: 3, route: 1, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 4 }, 3: { route: 6 }, 4: { route: 7 } }" />
+<Grains :set="{ pq: 3, route: 1, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 5 }, 3: { route: 7 }, 4: { route: 9 }, 5: { route: 12 } }" />
 
-<div class="city late caption" style="left: 719px; top: 84px">Vilnius</div>
-<div class="city late caption" style="left: 367px; top: 356px">CERN</div>
-<div v-click="1" class="city step caption" style="left: 295px; top: 90px; --step-delay: 3.4s">Glazgas</div>
-<div v-click="3" class="city step caption" style="left: 473px; top: 276px; --step-delay: 2.2s">Heidelbergas</div>
-<div v-click="3" class="city r step caption" style="left: 399px; top: 173px; --step-delay: 3.6s">Bona</div>
+<div class="city late caption" style="left: 742px; top: 153px">Vilnius</div>
+<div class="city late caption" style="left: 421px; top: 344px">CERN</div>
+<div v-click="1" class="city step caption" style="left: 138px; top: 56px; --step-delay: 1.2s">Glazgas</div>
+<div v-click="2" class="city step caption" style="left: 102px; top: 116px; --step-delay: 1.2s">Airija</div>
+<div v-click="3" class="city step caption" style="left: 500px; top: 285px; --step-delay: 1.2s">Heidelbergas</div>
+<div v-click="4" class="city step caption" style="left: 337px; top: 180px; --step-delay: 1.2s">Bona</div>
+<div v-click="5" class="city step caption" style="left: 282px; top: 113px; --step-delay: 1.7s">Mančesteris</div>
 
 <!-- facts: sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn, sarpis-phd-bonn-2023, lhcb-run1-release-sarpis-lrt-2025, lhcb-vilnius-joined -->
 
 <!--
-Message: my road went through Europe: Glasgow; the doctorate begun in Heidelberg and finished in Bonn, where I searched for pentaquarks and prepared LHCb's data for everyone; then back to Lithuania, and now the LHCb group at Vilnius University. The personal touches are yours to tell, in three slots (the first is the one to keep).
-Picture: the trail draws across Europe leg by leg as the stops are told (the owner, 15 Oct: "Show my path around europe"): Vilnius → CERN on arrival (the talk's own frame: home and the place of the work, not a dated trip), then Glasgow (click 1), home (2), Heidelberg and Bonn (3), home to Vilnius (4). Each city's name comes up as the trail reaches it. A click whose slot you skip just draws its leg (about 3 s).
+Message: my road went through Europe, back and forth: Glasgow; the doctorate begun in Heidelberg and finished in Bonn, where I searched for pentaquarks and prepared LHCb's data for everyone; then back to Lithuania, and now the LHCb group at Vilnius University. CERN is the place I kept coming back to. The personal touches are yours to tell, in four slots (the first is the one to keep).
+Picture: the trail criss-crosses Europe leg by leg, in the owner's order (23 Oct: "Vilnius, CERN, Glasgow, CERN, Ireland, Vilnius, Heidelberg, CERN, Bonn, CERN, Vilnius and Manchester CERN - like a criss cross. a bit more snappy on clicks"): Vilnius → CERN on arrival, then → Glasgow → CERN (click 1), → Ireland → Vilnius (2), → Heidelberg → CERN (3), → Bonn → CERN (4), → Vilnius → Manchester → CERN (5). Each leg bows to its own side (`bends` on the route), so a return over the same pair is a second line, not the first one drawn over. A click draws its legs in about 2 s (2,6 s for the last, three legs), and each name comes up as the trail reaches it. Ireland is named as the country („Airija“): the owner named no city. A click whose slot you skip just draws its legs.
 
 Mano kelias iki šio darbo ėjo per Europą.
 [PATIKSLINTI, neprivaloma, bet geriausia pasakyti: savais žodžiais – kaip 11 klasėje, žiūrovų amžiaus, pirmą kartą apsilankei CERN; ir kuo tada norėjai būti]
@@ -408,15 +410,18 @@ Mano kelias iki šio darbo ėjo per Europą.
 Studijavau Glazgo universitete.
 → spausk
 Tarp studijų ir doktorantūros praėjo ketveri metai.
-[PATIKSLINTI, neprivaloma: savais žodžiais – ką tuos metus dirbai, Glazge ir Lietuvoje]
+[PATIKSLINTI, neprivaloma: savais žodžiais – ką veikei Airijoje ir ką tuos metus dirbai Glazge ir Lietuvoje]
 → spausk
-Doktorantūrą pradėjau Heidelberge, o baigiau Bonoje. Ten ieškojau pentakvarkų ir ruošiau LHCb duomenis, kad jais galėtų naudotis visi.
+Doktorantūrą pradėjau Heidelberge.
+→ spausk
+Baigiau ją Bonoje. Ten ieškojau pentakvarkų ir ruošiau LHCb duomenis, kad jais galėtų naudotis visi.
 [PATIKSLINTI, neprivaloma: vienu sakiniu savais žodžiais – ką ta paieška parodė (ji atsako į „Pentakvarkų ieškojau ir aš“)]
 → spausk
 Tada grįžau į Lietuvą. Dabar Vilniaus universitete vadovauju LHCb grupei.
+[PATIKSLINTI, neprivaloma: savais žodžiais – ką veikei Mančesteryje]
 Ir visa tai dabar galima daryti iš Lietuvos.
 
-Only the bank's lines are scripted: Glasgow 2011–2015 (study), the doctorate in Heidelberg 2019–2020 then Bonn 2020–2023, the pentaquark search and the open-data preparation in Bonn, the return and LHCb Vilnius; „ketveri metai“ is 2015 to 2019. The slots are yours, in your own words (10–15 s each): the first (the CERN visit in 11th grade, at the viewers' age) is the one to tell, since the last slide (19) leans on „Mano kelias … nebuvo tiesus“; the second, what you did in the four years; the third, one sentence on what your pentaquark search showed, which answers „Pentakvarkų ieškojau ir aš“ (12). Nothing is written in their place: the bank does not hold them. The reason the doctorate moved to Bonn is no longer asked (23 Oct, for time). The last line is said as the camera dives to Vilnius (4 s).
+Only the bank's lines are scripted: Glasgow 2011–2015 (study), the doctorate in Heidelberg 2019–2020 then Bonn 2020–2023, the pentaquark search and the open-data preparation in Bonn, the return and LHCb Vilnius; „ketveri metai“ is 2015 to 2019. Ireland, Manchester and the trips back to CERN are not in the bank: nothing is said about them unless you say it, and the returns to CERN are drawn without words. The slots are yours, in your own words (10–15 s each): the first (the CERN visit in 11th grade, at the viewers' age) is the one to tell, since the last slide (19) leans on „Mano kelias … nebuvo tiesus“; the second, what you did in Ireland and in the four years; the third, one sentence on what your pentaquark search showed, which answers „Pentakvarkų ieškojau ir aš“ (12); the fourth, what took you to Manchester. Nothing is written in their place: the bank does not hold them. The reason the doctorate moved to Bonn is no longer asked (23 Oct, for time). The last line is said as the camera dives to Vilnius (4 s).
 If asked: Glasgow 2011–2015; Heidelberg 2019–2020; Bonn 2020–2023 (the thesis, December 2023: a pentaquark search and the LHCb open-data release); the Run 1 release is over 100 000 files, about a petabyte by VU's count.
 
 Šaltiniai: INSPIRE-HEP author record; M. Šarpis, PhD thesis, University of Bonn, 2023; LRT.lt, 2025-01-08 (from a VU press release).
@@ -428,7 +433,7 @@ If asked: Glasgow 2011–2015; Heidelberg 2019–2020; Bonn 2020–2023 (the the
 space: { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62, sway: 0.3, dim: 0.5 }   # dim 0.4 until 23 Oct (the outline brighter, size 5); dim 0.2 until 20 Oct: the route head's bloom washed out the east of the outline in the still
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 1 }" />
+<Grains :set="{ pq: 3, route: 12, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 1 }" />
 
 <div class="city caption" style="left: 718px; top: 230px">Vilnius</div>
 
@@ -452,7 +457,7 @@ The doctoral student stays unnamed. „pretenduoti“, not „kandidatuoti“. I
 space: { path: [[3, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [7.5, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [11.5, { at: [2598.3, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8 }]], dim: 0.15 }   # 23 Oct review: in close on the 1 TB sphere (the unit), held while it is named, then drawn back to the 800 pile;   # (x 2597.0 until 22 Oct: „1 TB“ ran to x 930, past the broadcast safe box) from the front, so the 1 TB sphere and its label stand in frame right of the 800 pile, nearly as far from the lens (OpenData's yaw-73 pose, its slide 7, left the sphere below the frame); the camera stays inside the vault's clear capsules
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [0, 1], 'scale:labels': 1, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 12, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [0, 1], 'scale:labels': 1, sun: 0, vilnius: 0 }" />
 
 <div class="readout" style="animation-delay: 8s">
 
@@ -479,7 +484,7 @@ Terabytes only, never „petabaitas“. 800 TB is CERN's figure (VU: over 1 PB i
 space: { at: [2591.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, flight: 5, dim: 0.15 }   # OpenData's 4 PB pose (its slide 8)
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [0, 1, 2], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 12, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [0, 1, 2], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
 
 <div class="readout last">
 
@@ -509,7 +514,7 @@ Never „4 PB“ in speech. If asked: the Ntupling Service (February 2026) opens
 space: { at: [2570.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0.15 }   # OpenData's 100 PB pose (its slide 9) moved 13 west (x 2583.5 until 22 Oct): with the readout on the 150 px floor, the blue sphere stood on „000 TB“; now it stands right of it (x ≈ 630–735)
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [0, 1, 2, 3], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 12, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [0, 1, 2, 3], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
 
 <div class="readout blue late">
 
@@ -542,7 +547,7 @@ space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway:
 <!-- The owner, 23 Oct: "Don't need second to last slide, better take 2 last slides from innoday just zoom out to lhc / fcc, not the globe". Innoday's lis_flag.mp4, here from its 3,5 s, 16,5 s (a Blender render of a whole SciFi module, then its light injection cold box and the Lithuanian flag lasered on it); its last frame is the first of the close. -->
 <VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
 <Soundtrack src="audio/starfire_close.m4a" tail="audio/starfire_from52.m4a" :tail-at="52" :level="0.3" start keys />
-<Grains :set="{ pq: 0, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 0, route: 12, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
 
 <!-- facts: lhcb-scifi, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
 

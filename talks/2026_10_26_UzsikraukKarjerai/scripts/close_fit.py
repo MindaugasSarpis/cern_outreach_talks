@@ -25,7 +25,7 @@ Four fixes, each from measurements of the source (1080p50, silent, BT.709 tv ran
    opening of itself (the glow stays, the strokes go). NB: the official LHCb logo has
    this mirrored "LHCb" and red slash as part of its design; --keep-mirror skips step 4.
 
-python scripts/close_fit.py [SRC] [OUT]      (defaults: ../../videos/raw/innoday/close_home.mp4 ->
+python scripts/close_fit.py [SRC] [OUT]      (defaults: ../../videos/raw/innoday/close_take_4k.mp4, Innoday's 4K take of its slide 30 ->
                                               ../../videos/raw/close_lhc_fcc.mp4, the deck's raw; run with --keep-mirror)
   --plan          measure and print the cut, the track and the fit; write nothing
   --stills DIR --at 2400,2859   write the processed source frames as PNGs, no video
@@ -126,8 +126,14 @@ def luma_mean(buf):
 
 def decode(src, n, start=0, fmt='yuv420p'):
     cmd = ['ffmpeg', '-v', 'error', '-i', str(src), '-map', '0:v:0']
+    vf = []
     if start:
-        cmd += ['-vf', f"select=gte(n\\,{start})", '-vsync', '0']
+        vf.append(f"select=gte(n\\,{start})")
+    # the 4K take (owner, 23 Oct: "slide 19 is a bit fuzzy"): down once, with Lanczos, from the master
+    vf.append(f'scale={W}:{H}:flags=lanczos+accurate_rnd+full_chroma_int')
+    cmd += ['-vf', ','.join(vf)]
+    if start:
+        cmd += ['-vsync', '0']
     cmd += ['-frames:v', str(n), '-f', 'rawvideo', '-pix_fmt', fmt, '-']
     size = FRAME if fmt == 'yuv420p' else W * H * (1 if fmt == 'gray' else 3)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, bufsize=size * 4)
@@ -308,7 +314,7 @@ def remove_copy(rgb, i):
 
 
 K_OPEN = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (13, 13))
-K_DIL = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+K_DIL = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))   # 5 until 23 Oct: thick lines read soft at 1:1
 
 
 def enhance(rgb, i, w):
@@ -444,7 +450,7 @@ def frames_out(src, P):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
-    ap.add_argument('src', nargs='?', default=ROOT / 'videos/raw/innoday/close_home.mp4', type=Path)
+    ap.add_argument('src', nargs='?', default=ROOT / 'videos/raw/innoday/close_take_4k.mp4', type=Path)
     ap.add_argument('out', nargs='?', default=ROOT / 'videos/raw/close_lhc_fcc.mp4', type=Path)
     ap.add_argument('--plan', action='store_true')
     ap.add_argument('--keep-mirror', action='store_true')
@@ -476,7 +482,7 @@ def main():
         # converts the untagged raw frames from BT.601 to BT.709 (a ~1.4 level shift in Y)
         ['ffmpeg', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', f'{W}x{H}',
          '-r', str(FPS), '-colorspace', 'bt709', '-color_range', 'tv', '-i', '-', '-an',
-         '-c:v', 'libx264', '-preset', 'slow', '-crf', '16', '-maxrate', '9500k', '-bufsize', '19000k',
+         '-c:v', 'libx264', '-preset', 'slow', '-crf', '12', '-maxrate', '9500k', '-bufsize', '19000k',
          '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(a.out)], stdin=subprocess.PIPE)
     n = 0
     with Pool(a.workers, initializer=init, initargs=(P,)) as pool:

@@ -272,7 +272,10 @@ function buildPairs(o, ctx) {
 //   { type: path, name, pos, points: [[x,y,z], …] (2–16), colors?: ['#…', …] per point,
 //     color?, grains?: 14000, node?: 700, nodeRadius?: 0.55, width?: 0.1, speed?: 0.35,
 //     size?: 1, alpha?: 0.55, delay?: 0.8, draw?: 2.8 (seconds to draw one leg),
-//     arc?: 0 (each leg rises off the ground between its places, by this times 0.12 of its length) }
+//     arc?: 0 (each leg rises off the ground between its places, by this times 0.12 of its length),
+//     arcs?: [per leg] (overrides `arc` leg by leg), bend?: 0, bends?: [per leg] (each leg bows
+//     sideways on the ground, to the right of its way for a positive bend, by the same measure:
+//     a return over the same pair bows to the other side, so a round trip reads as a loop) }
 // Step k (0 … points-1) draws the trail on to point k; -1 hides it. The head
 // travels there over `draw` seconds per leg, after `delay`; each point's
 // cluster gathers as the head reaches it. The cluster at the head burns
@@ -284,7 +287,8 @@ attribute vec3 aOff;
 uniform vec3 uP[${MAXP}];
 uniform vec3 uC[${MAXP}];
 uniform float uAlias[${MAXP}];   // the first point at the same place: a return lights the cluster already there
-uniform float uN, uFrom, uTo, uT0, uDur, uSpeed, uSize, uAlpha, uNodeR, uWidth, uArc;
+uniform float uArcs[${MAXP}], uBends[${MAXP}];   // per leg: rise off the ground, bow to the right of the way
+uniform float uN, uFrom, uTo, uT0, uDur, uSpeed, uSize, uAlpha, uNodeR, uWidth;
 uniform vec3 uColor;
 ${PLACE}
 vec3 pt(int i) { return uP[clamp(i, 0, int(uN) - 1)]; }
@@ -298,8 +302,11 @@ vec3 curve(float u) {
   if (i + 2 > int(m)) p3 = 2.0 * p2 - p1;
   float t2 = t * t, t3 = t2 * t;
   vec3 c = 0.5 * ((2.0 * p1) + (-p0 + p2) * t + (2.0 * p0 - 5.0 * p1 + 4.0 * p2 - p3) * t2 + (-p0 + 3.0 * p1 - 3.0 * p2 + p3) * t3);
-  // arc: each leg rises off the ground between its two places, by its length
-  c.y += uArc * 4.0 * t * (1.0 - t) * length(p2 - p1) * 0.12;
+  // arc: each leg rises off the ground between its two places, by its length; bend: it bows sideways
+  vec3 d = p2 - p1;
+  float bow = 4.0 * t * (1.0 - t) * length(d) * 0.12;
+  c.y += uArcs[i] * bow;
+  c += normalize(vec3(-d.z, 0.0, d.x) + vec3(1e-5, 0.0, 0.0)) * uBends[i] * bow;
   return c;
 }
 void main() {
@@ -378,7 +385,9 @@ function buildPath(o, ctx) {
     uAlias: { value: Array.from({ length: MAXP }, (_, i) => (i < np ? alias[i] : -10)) },
     uFrom: { value: -1 }, uTo: { value: -1 }, uT0: { value: 0 }, uDur: { value: 1 },
     uSpeed: { value: o.speed ?? 0.35 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.55 },
-    uNodeR: { value: o.nodeRadius ?? 0.55 }, uWidth: { value: o.width ?? 0.1 }, uArc: { value: o.arc ?? 0 },
+    uNodeR: { value: o.nodeRadius ?? 0.55 }, uWidth: { value: o.width ?? 0.1 },
+    uArcs: { value: Array.from({ length: MAXP }, (_, i) => +((o.arcs && o.arcs[i]) ?? o.arc ?? 0)) },
+    uBends: { value: Array.from({ length: MAXP }, (_, i) => +((o.bends && o.bends[i]) ?? o.bend ?? 0)) },
     uColor: { value: new Color(...rgb(base)) },
   })
   const g = pointsGroup(geo, mat, o.pos)

@@ -7,7 +7,7 @@ python3 -I scripts/zoom_swoosh.py OUT.wav
 """
 import sys, wave, numpy as np
 sys.path.insert(0, __file__.rsplit('/', 1)[0])
-from remap_zoom import layout, TOTAL, HOLD, XF
+from remap_zoom import layout, TOTAL, HOLD, XFS
 
 SR = 48000
 BLOCK = 256
@@ -40,7 +40,7 @@ def main(out):
         v = np.interp(t[inside] - t0, tt, np.gradient(ss, tt))
         sp[inside] = np.maximum(sp[inside], v)
         if j:                                    # a dissolve jumps far: give it a swell
-            sp += 25 * np.exp(-0.5 * ((t - t0 - XF / 2) / 0.25) ** 2)
+            sp += 25 * np.exp(-0.5 * ((t - t0 - XFS[j - 1] / 2) / (0.25 + XFS[j - 1] / 3)) ** 2)
     lv = np.log1p(sp) / np.log1p(sp.max())     # 0..1, the felt speed
     k = int(0.35 * SR)                         # smooth it: the swoosh breathes, it does not twitch
     lv = np.convolve(lv, np.hanning(k) / np.hanning(k).sum(), mode='same')
