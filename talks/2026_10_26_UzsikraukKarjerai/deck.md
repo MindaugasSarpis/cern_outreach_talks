@@ -29,19 +29,21 @@ info: |
   „Kas vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po žeme“:
   „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement), a Lithuanian
   talk for grades 9–12, recorded in the Delfi studio on 26 Oct 2026 (1080p50,
-  on a screen behind the speaker) and streamed on 27 Oct. 15 minutes, 19
-  slides (notes/blueprint.md v2 of 20 Oct, with the owner's 15-minute round
-  of 21 Oct and his cuts of 23 Oct). One dot: a particle of five quarks took 51 years to find, so
-  how do you know you have found something nobody has seen? The cover;
-  Innoday's cosmic web and funnel; the LHC opening (CERN from above, the real
-  tunnel, a real 2012 CMS collision, the 3D LHCb clip); inside LHCb 100 m
-  down, its model beside a person, its own real collision and the 40 MHz
+  on a screen behind the speaker and the laptop's feed) and streamed on 27 Oct.
+  15 minutes, 19 slides (notes/blueprint.md v2 of 20 Oct, the owner's rounds of
+  21–23 Oct). One dot: a particle of five quarks took 51 years to find, so how
+  do you know you have found something nobody has seen? The cover; the zoom
+  from Saulėtekis to the cosmic web; Innoday's funnel; the LHC opening (CERN
+  from above, the real tunnel, the dipole, a real 2012 CMS collision, the 3D
+  LHCb clip); inside LHCb 100 m down, its own real collision and the 40 MHz
   glow, one mass one dot. The viewer judges a bump of 140 dots in four days,
   sees it drown in a hundred days of the same random dots, as physicists were
   fooled in 2003; LHCb's Ωc⁰ spectrum as its years tick, five narrow peaks,
-  the rule, and the pentaquark found the same way in 2015. Then the speaker's
-  road round Europe, the group in Vilnius, OpenData's piles of open data, the sun of
-  plots and a VU student's check, the masterclass, and „Ačiū“.
+  three quarks and their gluons, the rule, and the pentaquark found the same
+  way in 2015 (the zoom's music under both). Then the speaker's road round
+  Europe, the group in Vilnius, OpenData's piles of open data, the group's
+  SciFi module and its flag, and Innoday's close out to the LHC, „mano
+  greitintuvas“, and the FCC, „jūsų greitintuvas“ (Starfire under both); „Ačiū“.
 layout: cover
 space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
 ---
@@ -312,6 +314,7 @@ clicks: 2
 ---
 
 <Grains :set="{ pq: 3, route: -1, th2: 0, th1: 1, oc: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { th1: 2 }, 2: { th1: 0, th2: 1 } }" />
+<Soundtrack src="audio/zoom_music.m4a" tail="audio/zoom_music.m4a" :level="0.25" start keys />
 
 <AfterFlight :delay="6"><div class="heap r axis late" style="left: 757px; top: 358px"><span class="n">masė&nbsp;→</span></div></AfterFlight>
 <AfterFlight :delay="4.6"><div v-click.hide="2" class="heap l late" style="left: 223px; top: 358px"><span class="n"><FillClock name="th1" :to="4" unit="diena,dienos,dienų" :fill="7" /></span></div></AfterFlight>
@@ -349,6 +352,7 @@ clicks: 1
 ---
 
 <Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 1, omega: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { oc: 2, omega: 1 } }" />
+<Soundtrack src="audio/zoom_music.m4a" tail="audio/zoom_music.m4a" :level="0.25" keys />
 
 <AfterFlight :delay="2.5"><div class="heap l late" style="left: 403px; top: 80px"><span class="n">LHCb duomenys</span></div><div class="heap r axis late" style="left: 679px; top: 357px"><span class="n">masė&nbsp;→</span></div></AfterFlight>
 <AfterFlight :delay="4.6"><div class="heap l late" style="left: 114px; top: 357px"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015], [1, '2011–2015']]" :fill="20" /></span></div></AfterFlight>
@@ -522,7 +526,7 @@ Message: all the data LHCb has collected: more than 100 000 terabytes, a stack o
 Picture: the camera pulls far back; a blue pile of 100 000 spheres rises behind the gold one; „> 100 000 TB“ counts up low on the left (a lower bound: LHCb's 100 PB is its March 2025 figure), the caption names it. The first sentence as the blue pile rises.
 
 O tai visi LHCb surinkti duomenys – daugiau nei šimtas tūkstančių terabaitų. Sukrovus šimtą tūkstančių nešiojamųjų kompiuterių vieną ant kito, bokštas būtų aukštesnis nei kilometras. Auksinė krūva priekyje jau atvira.
-O štai ką su atviraisiais duomenimis padarė vienas mūsų studentas.
+Mūsų grupė dirba ir prie paties detektoriaus.
 
 Scale, worked out: a 1 TB laptop of today is about 1,1 cm thick, so 100 000 of them stack to about 1,1 km: „daugiau nei kilometro“, never „dviejų kilometrų“. If asked: LHCb opens about half of a period's data five years after it ends and all of it after ten.
 
@@ -532,39 +536,12 @@ Scale, worked out: a 1 TB laptop of today is about 1,1 cm thick, so 100 000 of t
 -->
 
 ---
-clicks: 1
-space: { at: [2600, -0.5, 0], dist: 31.5, yaw: 0, pitch: 3, dim: 0.05 }   # OpenData's sun pose (its slide 11) a little closer, the 8 plots inside the safe box (23 Oct: dist 36, at y −0.3 until then; dist 22 ran past every edge); the click flies to `thesis` (<ClickPose>)
----
-
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 1, vilnius: 0, peak: 0, pq2: 0 }" :clicks="{ 1: { sun: 0, peak: 1 } }" />
-<ClickPose :poses="{ 1: { at: 'thesis', flight: 2.5 } }" />
-<div v-click="1" class="heap r axis step" style="left: 712px; top: 358px; --step-delay: 2.6s"><span class="n">masė&nbsp;→</span></div>
-<div v-click="1" class="heap l step" style="left: 268px; top: 358px; --step-delay: 2.6s"><span class="n">2012&nbsp;m.</span></div>
-
-<!-- facts: opendata-sun-plots-from-records, stonkus-bsc-2026, stonkus-bsc-2026-yield, lhcb-pentaquark-2015, lhcb-open-data, lhcb-opendata-brown-2026 -->
-
-<!--
-Message: these plots were drawn from the open data; this year a VU bachelor student collected thousands of dots from them and checked whether the bump would rise where LHCb found the pentaquarks; it did, and he calls his work a check.
-Picture: OpenData's sun of plots, closer (the 23 Oct review): eight plots made from LHCb's open data, twice the size on screen, on a ring that turns slowly round the gold pile (a turn in 72 s), rays of grains running out to each and landing on its curves; the empty gold clouds are gone. → spausk before „Jis tikrino…“: the sun fades and the camera rises in 2,5 s to Dominykas's own plot (OpenData's thesis view, here 15–18 Oct): his m(J/ψ p) from the 2012 open data (thesis Fig. 17, sideband-subtracted, 80 bins of 15 MeV, 4,0–5,2 GeV, digitised; about 16 400 decays) fills grain by grain, fast at first (6 s); about 11 s after the click the bins at 4,4–4,5 GeV brighten with a tick over the tallest: „Iškilo.“ there; then grains rise out of the peak and the cover's five-quark form gathers over it (`pq2`, from about 13 s). No text: „everyone can use this“ is said, not shown (the owner, 18 Oct, through the Scheduler).
-
-Šie grafikai nubraižyti iš atvirųjų LHCb duomenų – tų pačių auksinių krūvų viduryje. Šiais metais mūsų bakalauro studentas Dominykas Stonkus paėmė atviruosius 2012 metų LHCb duomenis ir surinko iš jų tūkstančius taškų.
-→ spausk
-Jis tikrino, ar kauburys iškils toje pačioje vietoje, kur LHCb rado pentakvarkus. [kauburiui iškilus, ~11 s] Iškilo. Pats savo darbą jis vadina patikrinimu.
-Mūsų grupė dirba ir prie paties detektoriaus.
-
-Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filtered on CERN computing) or „pakartojo paiešką“ as if independent: the thesis calls itself a qualitative check. „tūkstančius taškų“ rests on the about 16 400 selected decays. No web address in speech. The plots, if asked: the masses of π⁰, D⁰, J/ψ and K⁰S, the D⁰ lifetime, the magnet's field, the beam spot and the muons' pseudorapidity, all from CERN Open Data records 401 and 24506. The Brown preprint (arXiv:2609.09275, September 2026) left the script on 22 Oct for time; if asked: two Brown University physicists posted a preprint built on LHCb open data (not yet published, so never „paskelbė tyrimą“).
-
-Šaltiniai: D. Stonkus, bakalauro darbas, VU, 2026, epublications.vu.lt/object/elaba:308118793/308118793.pdf; CERN Open Data, įrašai 401 ir 24506; arXiv:2609.09275.
-
-(~0.7 min: the wait for the peak after the click)
--->
-
----
 space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway: 0, dim: 0.25 }   # under the two clips, a cut to the Ačiū slide's pose: the world is there when the close fades out
 ---
 
 <!-- The owner, 23 Oct: "Don't need second to last slide, better take 2 last slides from innoday just zoom out to lhc / fcc, not the globe". Innoday's 20 s lis_flag.mp4 (a Blender render of a whole SciFi module, then its light injection cold box and the Lithuanian flag lasered on it); its last frame is the first of the close. -->
 <VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
+<Soundtrack src="audio/starfire_close.m4a" tail="audio/starfire_from52.m4a" :tail-at="52" :level="0.3" start keys />
 <Grains :set="{ pq: 0, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
 
 <!-- facts: lhcb-scifi, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
@@ -593,47 +570,32 @@ space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway:
 
 <!-- Innoday's recorded close (close_home.mp4, Innoday's last shown slide) cut at 57,2 s, where it rests on the LHC and FCC map, before it flies off to the globe and home (the owner: "just zoom out to lhc / fcc, not the globe"); fitted for TV (scripts/close_fit.py: the dark gap after the flag cut, the map brought inside the safe box, its lines thickened), 54 s. Muted (Innoday's music is its own Soundtrack, not in the clip); it holds the map until the press. -->
 <VideoPlayer src="close_lhc_fcc.mp4" muted :controls="false" transition="fade" />
+<Soundtrack src="audio/starfire_close.m4a" tail="audio/starfire_from52.m4a" :tail-at="52" :level="0.3" resync keys />
+<!-- the labels the owner asked for (23 Oct: "mano appearing where LHC is and when FCC is in view - jūsų greitintuvas"), on the clip's clock: the LHC ring reads from 43,3 s, the FCC's whole circle from 52 s (measured on the clip); canvas px, beside each ring, clear of the lines and the logo -->
+<ClipCue :from="43.3" :path="[[43.3, 562, 69]]" class="ring">mano greitintuvas</ClipCue>
+<ClipCue :from="52" :path="[[52, 602, 412]]" class="ring">jūsų greitintuvas</ClipCue>
+<ClipCue :end="1.5" class="credit">Muzika: Scott Buckley, „Starfire“ (CC BY 4.0) · Žemėlapis: © OpenStreetMap bendraautoriai (ODbL), Natural Earth · CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (pakeistas) · Kosminis tinklas: NCSA Advanced Visualization Lab · Žemė: Google Earth</ClipCue>
 
-<!-- facts: lhcb-detector-size, lhc-geneva-27km-100m-four-experiments, cern-fcc-study, cern-fcc-council-2025, lt-fcc-unis, cern-ls3-hllhc -->
+<!-- facts: lhcb-detector-size, lhc-geneva-27km-100m-four-experiments, cern-fcc-study, cern-fcc-council-2025, lt-fcc-unis, cern-ls3-hllhc, sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn -->
 
 <!--
-Message: from our flag on one module, out to the whole detector and its collisions, then the LHC ring and the ring CERN proposes next, whose study Vilnius University has joined; you need not know now what you will be.
-Picture: Innoday's close fitted for TV, 54 s, no sound: the flag's frame breaks into grains and dissolves (~2,5 s) into the whole LHCb as a point cloud of its real geometry, the flag shrinking to where the module stands, a 1,83 m person for scale; a real LHCb collision crosses at ~4,7 s, then the crossings come faster until the detector glows evenly; then a slow climb until it looks straight down, north up: from ~35 s the picture eases smaller so the whole map ends inside the frame; LHCb shrinks to a point and the map comes up round it at true scale (~38,5–44 s), the LHC ring (26,7 km) with its two beams, the proposed FCC ring (90,7 km) in orange dashes, Lake Geneva, the small flag at LHCb's point, the LHCb logo top left (its mirrored „LHCb“ is the logo's own CP mirror). No names on screen: name the rings by word while they are in view.
+Message: the last slide (the owner, 23 Oct: "we finish on slide 20 FCC full frame - saying 'LHC - mano greitintuvas, FCC - jūsų greitintuvas'"): from our flag on one module, out to the whole detector and its collisions; the LHC runs till they are about thirty; the cover's promise kept (my road was not straight; you need not know now what you will be); then the LHC ring, mine, and the FCC, CERN's proposed next ring, whose study VU has joined: theirs. Thanks.
+Picture: Innoday's close, 54 s, no sound, at its own full framing (the FCC ring fills the height at the end): the flag's frame breaks into grains and dissolves (~2,5 s) into the whole LHCb as a point cloud of its real geometry, the flag shrinking to where the module stands, a 1,83 m person for scale; a real LHCb collision crosses at ~4,7 s, then the crossings come faster until the detector glows evenly; then a slow climb until it looks straight down, north up: LHCb shrinks to a point and the map comes up round it at true scale (~38,5–44 s), the LHC ring (26,7 km) with its two beams, the proposed FCC ring (90,7 km) in orange dashes, Lake Geneva, the small flag at LHCb's point, the LHCb logo top left (its mirrored „LHCb“ is the logo's own CP mirror). „mano greitintuvas“ comes up beside the LHC ring as it appears, „jūsų greitintuvas“ beside the FCC ring once it is whole (deck text, <ClipCue>, following the rings as the camera settles); the licence credits in tiny print as the clip ends. The music: Scott Buckley's „Starfire“, as Innoday's close, low under the speech; it goes on over the held frame.
 
 [kai pasirodo visas detektorius, ~3 s] Visas LHCb – dvidešimt vieno metro ilgio.
 [kai susidūrimai ima kartotis] Dabar greitintuvas atnaujinamas. Atnaujintas jis veiks iki 2041 metų. Tada tau bus apie trisdešimt.
 [tylėk, kol susidūrimai susilieja į švytėjimą]
-[kai iškyla žemėlapis, ~40 s] Mažesnis žiedas – dvidešimt septynių kilometrų LHC. Didysis – devyniasdešimt vieno kilometro greitintuvas, kurį CERN siūlo statyti kitą. Sprendimą tikimasi priimti apie 2028 metus. Prie jo tyrimų jau prisijungė ir Vilniaus universitetas.
-→ spausk
-
-„iki 2041 metų“: the HL-LHC is to run from June 2030 to 2041 (cern-ls3-hllhc); „apie trisdešimt“ is our arithmetic (15–18 now, plus 15). The organisers' advice moved to „Ačiū“ (21), where it closes the cover's promise. „Prie jo tyrimų jau prisijungė“: VU, KTU and LSMU signed a memorandum with CERN to join the FCC feasibility study (lt-fcc-unis, 22 Sept 2025). „apie 2028 metus“: the CERN Council's aim, a decision „possibly in 2028“ (cern-fcc-council-2025). The collision is the same kind as slide 10's; its 40 MHz is not said again. If asked: FCC 90,7 km, about 200 m deep, its first stage an electron–positron collider of about 15 billion CHF (cern-fcc-study).
-
-Šaltiniai: home.cern (LHCb; the FCC, 2025-11); cerncourier.com/a/fcc-feasibility-study-complete/; ff.vu.lt (2025-09-22).
-
-The clip runs 54 s; the words are all said over it, so the slide's time is the clip's.
-
-(~0.95 min)
--->
-
----
-space: { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }   # the cover's view and dim, the form a little nearer the middle (right half), „Ačiū“ beside it in the left half
----
-
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
-
-<div class="thanks beside">Ačiū</div>
-
-<!-- facts: sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn -->
-
-<!--
-Message: the cover promised where this work can start: my road was not straight; you need not know now what you will be, notice what interests you and dig. Thanks. The organisers' point, said once, over the cover's particle.
-Picture: back to the cover's five-quark particle, gathering again out of the dust (`pq` replays its gather on arrival: more than 5 s since its last step change); „Ačiū“ beside it. Whether the talk closes on „Ačiū“, and over what, is the owner's to say (the Scheduler asked, 18 Oct); built as the default.
-
-Pradžioje žadėjau pasakyti, nuo ko tokį darbą galima pradėti. Mano kelias, kaip girdėjai, nebuvo tiesus. Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
+[susidūrimams susiliejus į švytėjimą] Pradžioje žadėjau pasakyti, nuo ko tokį darbą galima pradėti. Mano kelias, kaip girdėjai, nebuvo tiesus. Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
+[kai iškyla LHC žiedas ir prie jo „mano greitintuvas“, ~43 s] Šis žiedas – dvidešimt septynių kilometrų LHC. LHC – mano greitintuvas.
+[kai iškyla FCC žiedas, ~45 s; „jūsų greitintuvas“ prie jo pasirodo ~52 s] O šis – devyniasdešimt vieno kilometro FCC, kurį CERN siūlo statyti kitą. Sprendimą tikimasi priimti apie 2028 metus, ir prie jo tyrimų jau prisijungė Vilniaus universitetas. FCC – jūsų greitintuvas.
 [pauzė 2 s]
 Ačiū.
 
-The cover's question was answered on 12; this keeps the cover's other promise („nuo ko tokį darbą galima pradėti“). „Mano kelias … nebuvo tiesus“ leans on 13 (Glasgow, four years before the doctorate, two universities for it).
+„iki 2041 metų“: the HL-LHC is to run from June 2030 to 2041 (cern-ls3-hllhc); „apie trisdešimt“ is our arithmetic (15–18 now, plus 15). The organisers' advice is here since „Ačiū“'s slide went (23 Oct), where it closes the cover's promise; „Mano kelias … nebuvo tiesus“ leans on 13. The two last lines are the owner's own („jūsų“, plural, as he said it). „Prie jo tyrimų jau prisijungė“: VU, KTU and LSMU signed a memorandum with CERN to join the FCC feasibility study (lt-fcc-unis, 22 Sept 2025). „apie 2028 metus“: the CERN Council's aim, a decision „possibly in 2028“ (cern-fcc-council-2025). The collision is the same kind as slide 10's; its 40 MHz is not said again. If asked: FCC 90,7 km, about 200 m deep, its first stage an electron–positron collider of about 15 billion CHF (cern-fcc-study).
 
-(~0.45 min)
+Šaltiniai: home.cern (LHCb; the FCC, 2025-11); cerncourier.com/a/fcc-feasibility-study-complete/; ff.vu.lt (2025-09-22).
+
+The clip runs 54 s; the words run about 15 s past it, over the held map, and the music goes on after „Ačiū“.
+
+(~1.2 min)
 -->

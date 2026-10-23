@@ -99,23 +99,22 @@ Innoday's raw bank copy (12,2 MB), its manifest's notes."""
 
 [[videos]]
 name    = "close_lhc_fcc.mp4"
-profile = "high-motion"
+profile = "remux"
 used_in = ["deck"]
 notes   = """\
-Slide 20 (the owner, 23 Oct: "take 2 last slides from innoday just zoom out to lhc / \
-fcc, not the globe"; then the review, "implement all"): Innoday's recorded close, \
-close_home.mp4 (its slide 30, 1080p50, silent; slidev-stage-record's take of \
-LisTakeover at 22efcef), its first 57,2 s (to where the camera rests over the LHC and \
-FCC map, before the fly-off to the Earth at 57,5 s), fitted for TV by \
-scripts/close_fit.py --keep-mirror: the dark gap after the flag (2,5-5,5 s) cut with \
-a 0,5 s dissolve (3 s shorter, 54,2 s); from 35 s the picture eased down to 0,66 so \
-the rings and the logo end inside the safe box (x 96-1824, y 108-800); the map's \
-thin lines thickened and brightened for the stream. The logo's mirrored "LHCb" with \
-the red slash is LHCb's own logo (the CP mirror) and is kept. From lis_flag.mp4's \
-last frame out through the LHCb point cloud, a real LHCb collision (~4,7 s) and its \
-40 MHz glow, to the LHC (26,7 km) and the proposed FCC (90,7 km) at true scale, the \
-flag at LHCb's point (map from ~38,5 s, whole ~44 s). Raw: that output; its source, \
-Innoday's release asset close_home.mp4 (125 MB), is videos/raw/innoday/close_home.mp4."""
+The last slide (the owner, 23 Oct: "take 2 last slides from innoday just zoom out to lhc \
+/ fcc, not the globe"; "we finish on slide 20 FCC full frame"; "should be better \
+resolved now fuzzy"): Innoday's recorded close, close_home.mp4 (its slide 30, 1080p50, \
+silent; slidev-stage-record's take of LisTakeover at 22efcef, recorded at 4K and taken \
+down to 1080p), its first 57,2 s (to where the camera rests over the LHC and FCC map, \
+before the fly-off to the Earth at 57,5 s), by scripts/close_fit.py --keep-mirror \
+--no-fit: the dark gap after the flag (2,5-5,5 s) cut with a 0,5 s dissolve (54,2 s); \
+the map's thin lines thickened and brightened for the stream; the source's own framing, \
+the FCC ring full frame; x264 slow CRF 16 under a 9,5 Mbit/s cap, remuxed (no second \
+encode). The logo's mirrored "LHCb" with the red slash is LHCb's own logo (the CP \
+mirror) and is kept. „mano greitintuvas" and „jūsų greitintuvas" are the deck's text \
+over it (<ClipCue>), not in the clip. Raw: that output; its source, Innoday's release \
+asset close_home.mp4 (125 MB), is videos/raw/innoday/close_home.mp4."""
 
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 

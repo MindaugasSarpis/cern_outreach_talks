@@ -360,11 +360,14 @@ def weights(i):
     return float(smootherstep((t - FIT_T0) / FIT_EASE)), float(smoothstep((t - ENH_T0) / (ENH_T1 - ENH_T0)))
 
 
+NOFIT = False                     # --no-fit (the owner, 23 Oct: "we finish on slide 20 FCC full frame"): the source's own framing
+
+
 def process_rgb(i, rgb):
     wf, we = weights(i)
     rgb = remove_copy(rgb, i)
     rgb = enhance(rgb, i, we)
-    return fit(rgb, wf)
+    return rgb if NOFIT else fit(rgb, wf)
 
 
 def work(job):
@@ -445,10 +448,13 @@ def main():
     ap.add_argument('out', nargs='?', default=ROOT / 'videos/raw/close_lhc_fcc.mp4', type=Path)
     ap.add_argument('--plan', action='store_true')
     ap.add_argument('--keep-mirror', action='store_true')
+    ap.add_argument('--no-fit', action='store_true')
     ap.add_argument('--stills')
     ap.add_argument('--at', default='')
     ap.add_argument('--workers', type=int, default=max(1, (os.cpu_count() or 4) - 2))
     a = ap.parse_args([x for x in sys.argv[1:] if x != '--'])
+    global NOFIT
+    NOFIT = a.no_fit
 
     P = plan(a.src, a.keep_mirror)
     if a.plan:
@@ -470,8 +476,8 @@ def main():
         # converts the untagged raw frames from BT.601 to BT.709 (a ~1.4 level shift in Y)
         ['ffmpeg', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', f'{W}x{H}',
          '-r', str(FPS), '-colorspace', 'bt709', '-color_range', 'tv', '-i', '-', '-an',
-         '-c:v', 'libx264', '-preset', 'slow', '-crf', '16', '-profile:v', 'high', '-pix_fmt', 'yuv420p',
-         '-movflags', '+faststart', str(a.out)], stdin=subprocess.PIPE)
+         '-c:v', 'libx264', '-preset', 'slow', '-crf', '16', '-maxrate', '9500k', '-bufsize', '19000k',
+         '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(a.out)], stdin=subprocess.PIPE)
     n = 0
     with Pool(a.workers, initializer=init, initargs=(P,)) as pool:
         batch = []

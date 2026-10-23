@@ -306,3 +306,9 @@ html[data-stage] .readout.glow .unit { font-size: 38px; }
 /* slide 8 (23 Oct review): with the readouts raised, „290 dalelių“ sat on the bright muon track: the scrim slide 10's numbers have */
 html[data-stage] .lhc-collision { z-index: 0; min-width: 250px; min-height: 64px; }   /* its lines are absolute: give the box the text's size for the scrim */
 html[data-stage] .lhc-collision::before { content: ''; position: absolute; inset: -70px -120px -50px -90px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0, 2, 6, 0.8) 0%, rgba(0, 2, 6, 0.58) 45%, rgba(0, 2, 6, 0.2) 75%, rgba(0, 2, 6, 0) 100%); }
+
+/* the last slide (23 Oct): the credits a licence asks for, tiny print over the close's held frame (the owner's rule) */
+html[data-stage] .clip-cue.credit { left: 50%; bottom: 10px; translate: -50% 0; width: 820px; text-align: center; font-size: 16px; line-height: 1.3; color: #c8d0e8; opacity: 0; text-shadow: var(--kk-shadow); }
+html[data-stage] .clip-cue.credit.on { opacity: 0.8; }
+/* the ring labels over the close: as the plots' labels, white, 38 px */
+html[data-stage] .clip-cue.ring { font-size: 38px; font-weight: 500; color: #eef1ff; white-space: nowrap; text-shadow: var(--kk-shadow); }

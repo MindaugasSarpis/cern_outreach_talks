@@ -19,6 +19,11 @@ import FillClock from './FillClock.vue'
 import WebTakeover from './WebTakeover.vue'
 import AfterFlight from './AfterFlight.vue'
 import ClickPose from './ClickPose.vue'
+// Innoday's music player (23 Oct): the zoom's music under the histograms, Starfire under the close;
+// `+` / `-` for its level (setup/soundLevel.js); <ClipCue>: text on a clip's own clock
+import Soundtrack from './Soundtrack.vue'
+import ClipCue from './ClipCue.vue'
+import { installSoundKeys } from './soundLevel.js'
 // The CMS event's data in the deck's own bundle (as Innoday's main.ts): lhc-opening
 // loads it with a dynamic import, so the collision's cloud was filled when that
 // chunk arrived, a few seconds in, in the middle of the cover's fly-in (0.25-0.3 s
@@ -93,4 +98,7 @@ export default ({ app, router }) => {
   app.component('AfterFlight', AfterFlight)
   app.component('InsideLhcb', InsideLhcb)
   app.component('ClickPose', ClickPose)
+  app.component('Soundtrack', Soundtrack)
+  app.component('ClipCue', ClipCue)
+  installSoundKeys()
 }

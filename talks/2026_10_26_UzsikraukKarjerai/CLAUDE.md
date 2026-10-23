@@ -62,7 +62,7 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (fourteenth version, 23 Oct evening: the review round on top of the owner's cuts, his zoom and Innoday's ending: 21 slides; about 14–15 min delivered with the slots)
+## Story (fifteenth version, 23 Oct night: the review round, then the owner's last cuts: 19 slides, 11,8 min by the lint's slide times; about 13–14 min delivered with the slots)
 
 The owner, 21 Oct: "15 min we can cover quite a lot of content … more
 visuals", then "Build" on the proposal in this window. Blueprint v2
@@ -95,16 +95,15 @@ purpose).
 | 9 | — (clip) | `lhcb.mp4` (39 s): LHCb, its people; → 3 s after „Aš – vienas iš jų.“ (22 Oct), not at its end | 0,4 |
 | 10 | „100 m“, then „40 mln. per sekundę“ | **new**: inside LHCb, the 3D model beside a 1,83 m person (Innoday's), the camera craned down to the cavern floor; LHCb's own 2012 collision in it; the 40 MHz glow; one mass, one dot (`<InsideLhcb>`, station `cavern`) | 1,0 |
 | 11 | days ticking „0 dienų“ → „4 dienos“, then → „100 dienų“; „masė →“ (two clicks) | `th1` fills, 140 dots in four days („tarkime“); the viewer judges; the tick; click 2, `th2` 3 500 random dots in 100 days, no tick, the bump gone; 2003 | 1,6 |
-| 12 | „LHCb duomenys“, the year ticking „2011 m.“ → „2012 m.“ → „2015 m.“, then „2011–2015 m.“, „masė →“; „5 naujos dalelės“ (one click) | `oc` at a steady rate, five peaks; the rule (< 1 in 3,5 mln.) and the 2015 pentaquark spoken; „Pentakvarkų ieškojau ir aš.“ | 1,2 |
+| 12 | „LHCb duomenys“, the year ticking „2011 m.“ → „2012 m.“ → „2015 m.“, then „2011–2015 m.“, „masė →“; „5 naujos dalelės“ (one click) | `oc` at a steady rate, five peaks; the rule (< 1 in 3,5 mln.) and the 2015 pentaquark spoken; „Pentakvarkų ieškojau ir aš.“; on the click an Ωc⁰ drawn as three quarks (c, s, s) and gluons beside it; the zoom's music under 11–12 | 1,2 |
 | 13 | Vilnius, CERN; „Glazgas“; „Heidelbergas“, „Bona“ | the route (4 clicks), three optional owner slots | 0,6 |
 | 14 | Vilnius | the dive to Vilnius; the group; the coordinator bridge | 0,65 |
 | 15 | „1 TB“, „800 TB“ | OpenData's piles: in close on the 1 TB sphere (the unit), then back to the Run 1 data the speaker prepared; „– ir tau“ | 0,6 |
 | 16 | „4 000 TB“, „Atvirieji duomenys“ | the gold pile | 0,3 |
 | 17 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's pale pile; a kilometre of laptops | 0,45 |
-| 18 | „masė →“, „2012 m.“ (on the click) | the sun of 8 plots, closer; on the click Dominykas's own m(J/ψ p) fills, its peak gathers into the five-quark form; his check | 0,7 |
-| 19 | — (clip) | Innoday's `lis_flag.mp4` from 3,5 s (16,5 s): the SciFi module, its cold box, the flag; the group works on it | 0,1 + clip |
-| 20 | — (clip) | Innoday's close fitted for TV (`close_lhc_fcc.mp4`, 54 s): out from the flag to LHCb and its collisions, to the LHC and FCC rings; the HL-LHC to 2041 („tau bus apie trisdešimt“), the FCC, VU in its study | 0,1 + clip |
-| 21 | „Ačiū“ | the five-quark form gathers again; the cover's promise kept: his road was not straight, the organisers' advice, „Ačiū“ | 0,45 |
+| 18 | — (clip) | Innoday's `lis_flag.mp4` from 3,5 s (16,5 s): the SciFi module, its cold box, the flag; the group works on it; „Starfire“ starts low | 0,1 + clip |
+| 19 | „mano greitintuvas“, „jūsų greitintuvas“; the credits | the last: Innoday's close at full frame (`close_lhc_fcc.mp4`, 54 s): out from the flag to LHCb and its collisions, to the LHC and FCC rings; the HL-LHC to 2041, the cover's promise and the advice, „LHC – mano greitintuvas. FCC – jūsų greitintuvas.“, „Ačiū.“ | 1,2 |
+
 
 ## Status
 
@@ -502,6 +501,44 @@ purpose).
   a3001a1 and 71fb6f1 before it, all rejected by the owner.
 
 ## Decisions
+
+- 2026-10-23 (night) — The owner's last round, in the window: "Need this soundtrack
+  spanning the histogram slides, what did we use in innoday zoomout?"; "On slide 12
+  after histogram is filled indicate schematically Omega particle (quarks, some
+  gluons..)"; "Slide 18 not needed, slide 19-20 has to have the same soundtrack like
+  in innoday"; "And we finish on slide 20 FCC full frame - saying 'LHC - mano
+  greitintuvas, FCC - jūsų greitintuvas'"; "mano appearing where LHC is and when FCC
+  is in view - jūsų greitintuvas"; "also should be better resolved now fuzzy";
+  "Slide 21 not needed"; "Go to completion now"; "implement all the suggestions,
+  carefully review"; "not that we are in a rush". So:
+  - **Music** (Innoday's `<Soundtrack>`, setup/Soundtrack.vue and soundLevel.js, with
+    `+`/`-` for its level):
+    - 11–12: the zoom-out's own music, the track of his SpaceEngine edit
+      (public/audio/zoom_music.m4a, its 4:13 at −16 LUFS, level 0,25 under the speech);
+    - 18–19: Innoday's „Starfire“ (Scott Buckley, CC BY 4.0), started low (0,3) on the
+      SciFi clip, cross-faded on the close to a second file from the track's 1:22
+      (public/audio/starfire_from52.m4a), so its 1:37 arrival lands where Innoday's
+      did, our close being 3 s shorter; it goes on over the held last frame.
+  - **12:** on the click, beside the plot, an Ωc⁰ as three quark balls (c, s, s) and
+    gluon curls (setup/triplet.js); the camera a step back to make room, the labels
+    moved; „Kvarkus kartu laiko gliuonai.“ added.
+  - **Cut:** old 18 (the sun and Dominykas's plot; 17's bridge is now „Mūsų grupė
+    dirba ir prie paties detektoriaus.“, his thesis no longer told) and old 21
+    („Ačiū“).
+  - **The talk ends on the close (19), at its own full framing** (scripts/close_fit.py
+    --no-fit: the dark gap cut, the lines thickened, CRF 16 under 9,5 Mbit/s,
+    remuxed). Over it, „mano greitintuvas“ beside the LHC ring from 43,3 s and „jūsų
+    greitintuvas“ beside the FCC ring from 52 s, deck text on the clip's clock
+    (setup/ClipCue.vue; the rings measured on the clip).
+  - **Words over the close:** the 21 m, the HL-LHC to 2041, the cover's promise and
+    the advice, then „Šis žiedas – … LHC. LHC – mano greitintuvas.“, the FCC, VU in its
+    study, „FCC – jūsų greitintuvas.“, „Ačiū.“
+  - **Credits:** the licence credits in tiny print over its last 1,5 s: Starfire,
+    OpenStreetMap and Natural Earth, Planck, with NCSA's web and Google Earth.
+
+  Decided without him: the zoom music's title and licence are still unknown
+  (Innoday never filed them), used as he asked, to be cleared before the stream; „Ačiū“
+  is said, not shown. Undo: revert the commits of 23 Oct night.
 
 - 2026-10-23 (evening) — The review round (the owner: "Condition workable but can be
   improved. Review story telling, what can we do better? Also visuals?", then "Go
