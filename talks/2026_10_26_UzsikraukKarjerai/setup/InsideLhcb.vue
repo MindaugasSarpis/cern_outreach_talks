@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted } from 'vue'
+import { computed, watch, onMounted, onUnmounted } from 'vue'
 import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
 import { setGrains } from './grains.js'
 import { bus } from '../components/lhc-opening/bus.js'
@@ -14,12 +14,18 @@ import { bus } from '../components/lhc-opening/bus.js'
 // the 40 MHz glow (the detector's `cascade`). The collision waits for the camera, not a
 // timer: on a slow machine the world's clock runs behind the wall's. Without a world, in
 // print and in the previews nothing runs; the readouts stay.
+// Since 24 Oct the data slide's too (the owner: "the detector besides showing we are taking
+// data and a single histogram with peaks built up"): the camera is already there, so
+// `land-y` above it starts the collision at once (the plot beside it waits for the crossing
+// with its `lead`, setup/grains.js). `until` (a click): from it the collision is let go and
+// the detector fades (the camera moves on to the plot); back below it, it all starts again.
 const props = defineProps({
   collision: { type: String, default: 'inside' },
   landY: { type: Number, default: -482 },   // the camera below this (world y): it has come down, the collision starts
   freeze: { type: Array, default: () => [[0, 0.4], [0.25, 0.15], [0.8, 0.15], [1.6, 1]] },   // the world's rate from the crossing: slow while the flash lights, then the debris bursts out
+  until: { type: Number, default: 0 },   // from this click: the collision let go, the detector gone (0: never)
 })
-const { $renderContext, $page } = useSlideContext()
+const { $renderContext, $page, $clicks } = useSlideContext()
 const nav = useNav()
 const live = computed(() => $renderContext?.value === 'slide' && !nav.isPrintMode?.value)
 const page = () => $page?.value ?? $page
@@ -53,16 +59,23 @@ async function start() {
   }, 100)
 }
 
-onSlideEnter(() => { if (live.value) start() })
+const over = () => props.until > 0 && $clicks.value >= props.until
+function letGo() { run++; clear(); stopCollision(); setGrains('det', 0) }
+onSlideEnter(() => { if (live.value) (over() ? letGo() : start()) })
+watch($clicks, (c, was) => {
+  if (!live.value || nav.currentSlideNo?.value !== page() || !props.until) return
+  if (c >= props.until && was < props.until) letGo()
+  else if (c < props.until && was >= props.until) start()
+})
 onSlideLeave(() => {
   if (!live.value) return
   run++; clear(); stopCollision(); setGrains('det', 0)
 })
-const onRebuilt = () => { if (live.value && nav.currentSlideNo?.value === page()) start() }
+const onRebuilt = () => { if (live.value && nav.currentSlideNo?.value === page() && !over()) start() }
 onMounted(() => {
   window.addEventListener('slidev-stage:rebuilt', onRebuilt)
   // opened at this slide (a reload, or the deck started here): no slide-enter comes
-  if (live.value && nav.currentSlideNo?.value === page()) start()
+  if (live.value && nav.currentSlideNo?.value === page() && !over()) start()
 })
 onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); run++; clear() })
 </script>

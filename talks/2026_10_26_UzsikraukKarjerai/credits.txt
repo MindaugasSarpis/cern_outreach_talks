@@ -35,3 +35,9 @@ Added 23 Oct (the zoom)
 Added 23 Oct (the ending, from Innoday)
 - Slide 19: lis_flag.mp4, Innoday's 20 s Blender render of a SciFi module after the SciFi drawing (no photograph); the flag is Innoday's own touch.
 - Slide 20: close_lhc_fcc.mp4, Innoday's recorded close (its slide 30, cut at 57,2 s): the LHCb point cloud from the DD4hep description through HSF Phoenix (as slide 10's model: © CERN for the benefit of the LHCb Collaboration, GPL-3.0; Apache-2.0), LHCb's own collision from CERN Open Data, and the map: Natural Earth (public domain) and © OpenStreetMap contributors (ODbL: city positions, the accelerator tunnels, the ridges), as Innoday credits them. [ODbL asks for the OpenStreetMap credit where the map is shown: the owner to say whether it goes in tiny print on „Ačiū“.]
+
+Added 24 Oct
+- Slide 2: the zoom is one continuous stabilised flight with a warp effect and a synthesised whoosh (scripts/remap_zoom.py, zoom_swoosh.py); its earlier music (the SpaceEngine edit's own track, title and licence unknown) is no longer used.
+- Music: Scott Buckley, „Aphelion“ (slides 2–5) and „Born Of The Sky“ (the data slide), scottbuckley.com.au, CC BY 4.0; „Starfire“ as before.
+- The touchscreen slide: B. Stumpe, photo S. E. Bennett / CERN, CC BY 4.0 (from Innoday). The first website: a capture of info.cern.ch (CERN).
+- Slide numbers above are older decks'; the credits page (the last slide) lists all.

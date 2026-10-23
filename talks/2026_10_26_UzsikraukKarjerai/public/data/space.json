@@ -114,7 +114,8 @@
      "scale": 1.6,
      "alpha": 1,
      "size": 5,
-     "color": "#9fd0ff"
+     "color": "#9fd0ff",
+     "showDelay": 5.0
     },
     {
      "type": "path",
@@ -348,101 +349,6 @@
      "tickSize": 2.2,
      "tickAlpha": 0.55,
      "markStep": 2
-    }
-   ]
-  },
-  {
-   "id": "omegac",
-   "pos": [
-    1650,
-    0,
-    0
-   ],
-   "look": {
-    "dist": 21,
-    "yaw": 0,
-    "pitch": 3,
-    "sway": 0.4,
-    "target": [
-     0,
-     3.0,
-     0
-    ]
-   },
-   "objects": [
-    {
-     "type": "histogram",
-     "name": "oc",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "src": "data/omegac.json",
-     "width": 24,
-     "height": 8.5,
-     "unit": 2,
-     "size": 1.7,
-     "alpha": 0.62,
-     "tickAlpha": 0.7,
-     "fill": 20,
-     "fall": 1.0,
-     "color": "#9fd0ff",
-     "hot": "#ffffff",
-     "curve": 1,
-     "marks": [
-      [
-       2998,
-       3004
-      ],
-      [
-       3048,
-       3054
-      ],
-      [
-       3062,
-       3068
-      ],
-      [
-       3088,
-       3094
-      ],
-      [
-       3116,
-       3122
-      ]
-     ],
-     "steps": [
-      0,
-      1,
-      1
-     ],
-     "markStep": 2
-    },
-    {
-     "type": "triplet",
-     "name": "omega",
-     "pos": [
-      16.7,
-      4.9,
-      0
-     ],
-     "spread": 2.4,
-     "radius": 1.0,
-     "colors": [
-      "#ff8378",
-      "#72e09c",
-      "#7fa6ff"
-     ],
-     "grains": 700,
-     "gluon": 520,
-     "loops": 3,
-     "size": 2.0,
-     "alpha": 0.8,
-     "gluonSize": 1.5,
-     "gluonAlpha": 1.0,
-     "delay": 0.9,
-     "dur": 2.4
     }
    ]
   },
@@ -1372,6 +1278,94 @@
       ]
      ],
      "frame": "legs"
+    },
+    {
+     "type": "histogram",
+     "name": "oc",
+     "pos": [
+      37.5,
+      -5,
+      5
+     ],
+     "src": "data/omegac.json",
+     "width": 19,
+     "height": 10.5,
+     "unit": 3,
+     "size": 2.1,
+     "alpha": 0.6,
+     "tickAlpha": 0.5,
+     "fill": 20,
+     "fall": 1.8,
+     "color": "#9fd0ff",
+     "hot": "#ffffff",
+     "curve": 1,
+     "marks": [
+      [
+       2998,
+       3004
+      ],
+      [
+       3048,
+       3054
+      ],
+      [
+       3062,
+       3068
+      ],
+      [
+       3088,
+       3094
+      ],
+      [
+       3116,
+       3122
+      ]
+     ],
+     "steps": [
+      0,
+      1,
+      1
+     ],
+     "markStep": 2,
+     "from": [
+      16,
+      2,
+      0
+     ],
+     "fromSpread": [
+      10,
+      6,
+      5
+     ],
+     "arc": 3.5,
+     "flyColor": "#dff0ff",
+     "tickSize": 1.5,
+     "lead": 3.4
+    },
+    {
+     "type": "triplet",
+     "name": "omega",
+     "pos": [
+      54,
+      0.3,
+      5
+     ],
+     "spread": 2.4,
+     "radius": 1.0,
+     "colors": [
+      "#ff8378",
+      "#72e09c",
+      "#7fa6ff"
+     ],
+     "grains": 700,
+     "gluon": 520,
+     "loops": 3,
+     "size": 2.0,
+     "alpha": 0.8,
+     "gluonSize": 1.5,
+     "gluonAlpha": 1.0,
+     "delay": 0.9,
+     "dur": 2.4
     }
    ]
   }

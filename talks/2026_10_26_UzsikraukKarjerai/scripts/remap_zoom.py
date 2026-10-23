@@ -26,7 +26,7 @@ python scripts/remap_zoom.py ../../videos/raw/spaceengine/nftmc_zoom.mp4 ../../v
 (in pnpm talk render; OpenCV for the warp; --plan prints the stretches). No audio.
 """
 import subprocess, sys, numpy as np
-from scipy.ndimage import gaussian_filter1d, maximum_filter1d
+from scipy.ndimage import gaussian_filter1d, maximum_filter1d, minimum_filter1d
 
 SRC_FPS, OUT_FPS = 60, 50
 W, H = 1920, 1080
@@ -38,9 +38,9 @@ TOTAL, HOLD = 20.0, 1.0
 # centre as it fades and the incoming one comes in larger and settles, so the pull-back carries on
 XFS = []
 ZOOM_JOIN = []
-WARP_FROM, WARP_FULL = 10.0, 40.0   # speed x where the warp starts, and where it is full
-WARP_BOUND = np.array([420.0, 260.0, 6.0, 0.10])   # added to the corridor at full warp
-WARP_BLUR, WARP_BULGE, WARP_VIGNETTE = 0.32, 0.22, 0.55   # at full warp: zoom-blur span, fisheye, edge darkening
+WARP_FROM, WARP_FULL = 12.0, 50.0   # speed x where the warp starts, and where it is full
+WARP_BOUND = np.array([420.0, 140.0, 6.0, 0.10])   # added to the corridor at full warp
+WARP_BLUR, WARP_BULGE, WARP_VIGNETTE = 0.32, 0.22, 0.7   # at full warp: zoom-blur span, fisheye, edge darkening
 ZOOM_CAP = 1.15                   # past this the borders are reflected (hidden under the warp), not cropped
 OUT_TO, IN_FROM = 1 / 2.2, 2.2    # one camera through a zoom-dissolve: both pictures scale by the same steady log rate
 FEATHER_FR = 0.12                 # the outgoing picture's edges feathered over this share, so no frame edge shows as it shrinks
@@ -51,8 +51,10 @@ BOUND = np.array([70.0, 40.0, 1.5, 0.03])   # px, px, degrees, log scale: the co
 # synthetic-looking pictures in the talk and near-black on a stream; the Earth dissolves into the galaxy
 # the cloud whiteout after Google Earth's fade (source ~29.5-33 s) and the bright limb toned down: they
 # flashed after Vilnius (YAVG 101 -> 156); keyed by source seconds
-GAIN = [(28.8, 1.0), (29.8, 0.6), (32.4, 0.62), (37.6, 0.75), (39.6, 0.85), (42.0, 1.0),
-        (225.9, 1.0), (226.0, 1.5), (233.0, 1.0)]   # the web lifted as it comes in (the second before it is the receding galaxy, dark by nature)
+GAIN = [(28.8, 1.0), (29.8, 0.6), (32.4, 0.62), (37.6, 0.75), (39.6, 0.85), (42.0, 0.9), (46.0, 0.8), (54.0, 0.8), (58.0, 1.0),
+        (84.0, 1.0), (88.0, 0.6), (100.0, 0.6), (104.0, 1.0),   # the Earth's lit side and the Sun's glare toned down
+        (168.0, 1.0), (174.0, 0.75), (187.0, 0.8), (192.0, 1.0),   # the galaxy's core not blown out
+        (224.0, 1.0), (227.0, 1.5), (233.0, 1.0)]   # the web lifted as it comes in (the second before it is the receding galaxy, dark by nature)
 BOUNDS = {0: np.array([50.0, 30.0, 0.8, 0.02]), 1: np.array([50.0, 30.0, 0.8, 0.02])}   # Google Earth's: less crop, sharper
 # Google Earth's attribution (its logo and the imagery line under it, burnt into the source until
 # its fade to SpaceEngine ends at ~29.9 s) is put back unmoved and uncropped over the moved frame:
@@ -70,9 +72,9 @@ GRID = 1 / 250
 # sets the speed. Saulėtekis read; Vilnius; the clouds and their roll; the Earth from space;
 # warp past the Sun and through our galaxy; out of warp for the galaxy whole; warp through the
 # dark between the galaxies; braking onto the web
-MAP = [(0.0, 0.0), (1.5, 2.5), (4.2, 22.0), (5.4, 30.0), (6.4, 40.0), (7.6, 56.0), (8.4, 62.5),
-       (9.9, 150.0), (11.1, 185.5), (12.5, 192.5), (13.7, 222.0), (14.5, 232.0), (16.5, 248.0),
-       (19.0, END_SRC)]
+MAP = [(0.0, 0.0), (1.5, 2.5), (4.2, 22.0), (5.4, 30.0), (6.4, 40.0), (7.6, 52.0), (8.3, 62.0),
+       (8.8, 80.0), (9.3, 118.0), (9.8, 155.0), (10.4, 177.0), (11.0, 185.0), (12.4, 192.5),
+       (12.9, 199.0), (13.25, 214.0), (13.6, 226.0), (14.5, 234.0), (16.5, 248.0), (19.0, END_SRC)]
 STRETCHES = [(0.0, END_SRC, 19.0, 'map')]
 
 
@@ -145,7 +147,7 @@ def stabilise(motion, lay, n_src):
             taper = e * e * (3 - 2 * e)
         D = np.zeros_like(C)
         wg = warp_w(np.interp(g, t, np.gradient(s, t)))
-        wg = gaussian_filter1d(wg, 0.3 / GRID, mode='nearest')    # the corridor widens and narrows smoothly
+        wg = gaussian_filter1d(minimum_filter1d(wg, int(0.5 / GRID)), 0.12 / GRID, mode='nearest')   # wide only while the warp shows
         wi = np.interp(ti, g, wg)
         for k in range(4):
             c = np.interp(g, ti, C[:, k])
@@ -276,10 +278,10 @@ def warp_fx(img, w):
     if _RN2 is None:
         yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
         dx, dy = xx - c[0], yy - c[1]
-        _RN2 = (dx, dy, (dx * dx + dy * dy) / float(c[0] ** 2 + c[1] ** 2))
-    dx, dy, rn2 = _RN2
+        _RN2 = (dx, dy, (dx * dx + dy * dy) / float(c[0] ** 2 + c[1] ** 2), np.minimum((dx / c[0]) ** 2 + (dy / c[1]) ** 2, 1))
+    dx, dy, rn2, rn2e = _RN2
     span = WARP_BLUR * w                      # the zoom blur: copies scaled out from the centre, averaged
-    n = 8
+    n = max(8, int(64 * span))             # enough copies that stars streak, not dash
     acc = np.zeros_like(img)
     for q in range(n):
         sc = 1 + span * q / (n - 1)
@@ -289,7 +291,7 @@ def warp_fx(img, w):
     k = WARP_BULGE * w                        # the bulge: the middle magnified, the edges drawn in
     f = 1 + k * (rn2 - 1)
     img = cv2.remap(img, c[0] + dx * f, c[1] + dy * f, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
-    vig = np.clip(1 - WARP_VIGNETTE * w * rn2 ** 1.5, 0, 1).astype(np.float32)[..., None]
+    vig = np.clip(1 - WARP_VIGNETTE * w * rn2e ** 1.5, 0, 1).astype(np.float32)[..., None]   # elliptical: the edges' middles too
     return img * vig
 
 

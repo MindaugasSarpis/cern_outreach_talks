@@ -3,9 +3,8 @@ import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
 import { soundLevel, onSoundLevel, musicKeys } from './soundLevel.js'
 
-// Innoday's component (23 Oct): here the music of the owner's SpaceEngine zoom (public/audio/zoom_music.m4a, the
-// edit's own track, -16 LUFS) across the histogram slides, 11 and 12 (owner, 23 Oct: "Need this soundtrack spanning
-// the histogram slides"): `start` on 11, low under the speech. Innoday's notes follow.
+// Innoday's component (23-24 Oct). Here: Scott Buckley's Aphelion from the web (slide 2, `clip-at`) through 5,
+// Born Of The Sky on the data slide, Starfire under the SciFi clip and the close (all CC BY 4.0). Innoday's notes follow.
 // <Soundtrack :level="0.3" start />, on each of the close's slides (owner, 20 Oct: "Will
 // need some crazy inspirational soundtrack for the last three slides spanning - maybe
 // scott buckley"): one piece across them, Scott Buckley's „Starfire“ (CC BY 4.0, credited
@@ -30,8 +29,8 @@ import { soundLevel, onSoundLevel, musicKeys } from './soundLevel.js'
 // clip's rate nudged (at most ±10 %) to stay on the music meanwhile; on the peak the level
 // opens again, on the music's own clock. A third file, not a seek (see `resync`).
 const props = defineProps({
-  src: { type: String, default: 'audio/zoom_music.m4a' },
-  tail: { type: String, default: 'audio/zoom_music.m4a' },
+  src: { type: String, default: 'audio/aphelion.m4a' },
+  tail: { type: String, default: 'audio/aphelion.m4a' },
   tailAt: { type: Number, default: 49 },
   level: { type: Number, default: 0.9 },
   start: { type: Boolean, default: false },
