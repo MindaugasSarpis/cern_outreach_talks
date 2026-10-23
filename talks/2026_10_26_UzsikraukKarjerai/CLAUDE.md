@@ -108,7 +108,18 @@ purpose).
 
 ## Status
 
-- 2026-10-23 (latest): **deployed 1da3ab7** (Pages run 39944544983, green;
+- 2026-10-23 (evening, latest): **deployed 6f13fc3** (Pages run 39998140027, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, nothing skipped, plates one
+  warning, the fingerprint): the review round (Decisions), 21 slides, 12,7 min
+  timed, about 14–15 delivered with his slots. Plates (14) and stills 01–21 retaken
+  under the broadcast look and published; the zoom (17 s), the SciFi clip (16,5 s)
+  and the fitted close (54 s) on the release; the venue zip rebuilt from 6f13fc3
+  (236 MB); venue.json. Review copies of the zoom and the close in the window. Open
+  for the owner: silent or the swoosh; the OpenStreetMap credit on „Ačiū“; his
+  words for slide 13's slots (the 11th-grade visit, the four years, what his
+  pentaquark search showed); slide 10's camera lift (not applied); where he stands.
+- 2026-10-23: **deployed 1da3ab7** (Pages run 39944544983, green;
   https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed; `talk ready` passed on it, nothing skipped, plates
   one warning, the fingerprint): 21 slides, 12,9 min timed, about 14½–15½ delivered
