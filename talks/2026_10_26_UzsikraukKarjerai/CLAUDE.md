@@ -54,7 +54,7 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (twelfth version, 23 Oct: the owner's cuts and his 20 s zoom: 20 slides, 12,0 min by the lint's slide times; about 13½–14½ min delivered with the three slots)
+## Story (thirteenth version, 23 Oct: the owner's cuts, his 20 s zoom and Innoday's ending: 21 slides, 12,9 min by the lint's slide times; about 14½–15½ min delivered with the three slots)
 
 The owner, 21 Oct: "15 min we can cover quite a lot of content … more
 visuals", then "Build" on the proposal in this window. Blueprint v2
@@ -94,8 +94,9 @@ purpose).
 | 16 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile | 0,3 |
 | 17 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops | 0,45 |
 | 18 | — | OpenData's sun of plots; Dominykas's check (the Brown preprint only if asked) | 0,55 |
-| 19 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; the masterclass; the advice | 0,65 |
-| 20 | „Ačiū“ | the five-quark form gathers again | 0,45 |
+| 19 | — (clip) | **new (23 Oct)**: Innoday's `lis_flag.mp4` (20 s): a whole SciFi module, its light injection cold box, the Lithuanian flag lasered on it; the group's part of LHCb (old 16's words) | 0,4 |
+| 20 | — (clip) | **new (23 Oct)**: Innoday's recorded close cut at the LHC/FCC map (`close_lhc_fcc.mp4`, 57 s): out from the flag to LHCb, its collisions, the LHC and FCC rings; the FCC, VU's part in its study, the organisers' advice | 1,0 |
+| 21 | „Ačiū“ | the five-quark form gathers again | 0,45 |
 
 ## Status
 
@@ -467,6 +468,35 @@ purpose).
 
 ## Decisions
 
+- 2026-10-23 — The ending (the owner, in this window: "Don't need second to last
+  slide, better take 2 last slides from innoday just zoom out to lhc / fcc, not the
+  globe"). The masterclass slide (old 19, the second sun) is cut; in its place
+  Innoday's two last shown slides: its 20 s `lis_flag.mp4` (the whole SciFi module,
+  then the flag; not the library's 10 s copy this release held, because the close
+  starts from the 20 s cut's last frame, correlation 0,998) and its recorded close
+  `close_home.mp4` cut at 57,2 s, where the camera rests over the LHC/FCC map
+  (`close_lhc_fcc.mp4`; the fly-off to the globe starts at 57,5 s). Both fade, muted,
+  no advance-on-end. „Ačiū“ (the five-quark form) stays last: he named only the
+  second to last. Read as his ask, though he cut the SciFi clip from the middle of
+  the talk this morning. Decided without him: old 16's SciFi words on 19; on 20 the
+  LHC and FCC named, the FCC decision „apie 2028 metus“, VU's part in the FCC study
+  (lt-fcc-unis), and the organisers' advice from the cut masterclass slide
+  („Nebūtina jau dabar žinoti, kuo būsi …“); the masterclass itself is no longer
+  told; slide 18's bridge „Pradėti galima dar mokykloje.“ → „O štai dar viena
+  dalis, prie kurios dirba mūsų grupė.“ +0,9 min: 12,9 timed, about 14½–15½
+  delivered with his slots, at the slot's edge.
+- 2026-10-23 — The zoom, round 2 (the owner: "Silent, maybe some swoosh, also
+  needs stabilization"; "The source, but on speedup it doesn't look good"). The
+  edit's camera sways by screen widths over 10–20 s, a shake at 30–55×, more than any
+  crop can take out, so `scripts/remap_zoom.py` now plays six steadier stretches
+  joined by 0,4 s dissolves (Google Earth to the clouds; the Earth from space; the
+  Sun; inside the galaxy; the galaxy whole, ~1,8 s; the web) and stabilises each
+  onto a smooth path within a corridor of the real one (`scripts/zoom_motion.py`,
+  OpenCV; crop at most 1,12). Google Earth's logo and providers' line are filled out
+  of the frame before it moves and pasted back fixed, so they stay readable and
+  whole. Four review passes by a subagent over the frames and the measured motion.
+  Silent in the deck; a swoosh that follows the speed (`scripts/zoom_swoosh.py`) is
+  a review copy for him.
 - 2026-10-23 — The zoom (the owner, through the Scheduler: "Can we do a quick
   zoomout from vilnius straight to universe web - in 20s"). New slide 2 after
   the cover: Innoday's opener (his SpaceEngine edit spaceengine/nftmc_zoom.mp4,

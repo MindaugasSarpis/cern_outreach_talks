@@ -29,17 +29,25 @@ XF = 0.4                  # each dissolve, seconds
 SHUTTER = 0.5
 MAX_BLEND = 24
 BOUND = np.array([70.0, 40.0, 1.5, 0.03])   # px, px, degrees, log scale: the corridor round the real path
+BOUNDS = {0: np.array([50.0, 30.0, 0.8, 0.02]), 1: np.array([50.0, 30.0, 0.8, 0.02])}   # Google Earth's: less crop, sharper
+# Google Earth's attribution (its logo and the imagery line under it, burnt into the source until
+# its fade to SpaceEngine ends at ~29.9 s) is put back unmoved and uncropped over the moved frame:
+# only the letters (a matte of the bright text), so the picture round them stays on the smooth path;
+# the burnt-in letters are filled in (inpainted) before the frame is moved, so they do not show twice
+ATTRIB = (1480, 940, 30.0)                    # x from, y from, source seconds it lasts
+CREDIT_Y = 1016                               # the logo above, the providers' line below: it changes, so matted per frame
+CREDIT_ROWS = (1018, 1037)                    # where the providers' letters are
 GRID = 1 / 250
 
 # (source from, source to, output seconds, [(stretch seconds, speed x)]): the speeds are
 # shapes, scaled so each stretch covers its source span in its time. The web's
 # length is what is left of TOTAL, its shape in fractions of it.
 STRETCHES = [
-    (0.0, 62.0, 7.9, [(0.0, 1.2), (1.0, 2.5), (2.5, 6), (3.8, 8), (4.5, 6.5), (5.2, 6),
-                      (5.6, 20), (6.4, 14), (6.8, 10), (7.3, 8), (7.9, 8)]),   # NFTMC → Vilnius → the Earth whole
-    (86.0, 98.0, 1.5, [(0.0, 1), (1.5, 1)]),                                  # the Sun
-    (127.0, 158.0, 2.4, [(0.0, 1), (2.4, 1)]),                                # a star in the band, then inside the galaxy
-    (174.0, 192.0, 3.4, [(0.0, 1.3), (2.6, 1), (3.4, 1.6)]),                 # the disc and bulge, then the galaxy whole
+    (0.0, 32.4, 5.6, [(0.0, 1.2), (1.0, 2.5), (2.5, 6), (3.8, 8), (4.5, 6.5), (5.2, 6), (5.6, 6)]),   # NFTMC → Vilnius → the clouds
+    (37.6, 62.0, 2.7, [(0.0, 10), (1.2, 10), (1.7, 8), (2.7, 8)]),           # the Earth from space (its 95° roll at 32-37 s dissolved over)
+    (90.5, 94.0, 1.5, [(0.0, 1), (1.5, 1)]),                                  # the Sun, one steady pan
+    (127.0, 146.0, 2.4, [(0.0, 1), (2.4, 1)]),                                # a star in the band, then inside the galaxy
+    (186.0, 196.0, 3.4, [(0.0, 1.4), (2.0, 1.0), (3.4, 0.5)]),               # the galaxy whole, drifting one way
     (226.0, END_SRC, None, [(0.0, 9), (0.55, 2.5), (1.0, 0.4)]),             # the web, braking to a stop
 ]
 
@@ -97,11 +105,12 @@ def stabilise(motion, lay, n_src):
         D = np.zeros_like(C)
         for k in range(4):
             c = np.interp(g, ti, C[:, k])
-            bnd = BOUND[k] * taper
+            bnd = BOUNDS.get(j, BOUND)[k] * taper
             p = c.copy()
             for _ in range(600):                 # as smooth as the corridor allows, over ~0.4 s
                 p = np.clip(gaussian_filter1d(p, 4, mode='nearest'), c - bnd, c + bnd)
-            D[:, k] = np.clip(np.interp(ti, g, p) - C[:, k], -BOUND[k], BOUND[k]) * np.interp(ti, g, taper)
+            B = BOUNDS.get(j, BOUND)[k]
+            D[:, k] = np.clip(np.interp(ti, g, p) - C[:, k], -B, B) * np.interp(ti, g, taper)
         need = np.ones(len(idx))
         for n, dd in enumerate(D):
             ang = np.radians(dd[2]); sc = np.exp(dd[3])
@@ -124,7 +133,37 @@ def warp(f, d, z):
     A = np.array([[sc * np.cos(ang), -sc * np.sin(ang)], [sc * np.sin(ang), sc * np.cos(ang)]])
     c = np.array([W / 2, H / 2])
     M = np.hstack([A, (c + z * d[:2] - A @ c)[:, None]])
-    return cv2.warpAffine(f, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+    return cv2.warpAffine(f, M, (W, H), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
+
+
+def logo_matte(src):
+    """The fixed logo's letters: bright in every frame of the Google Earth part (the
+    picture behind them changes, so its per-pixel minimum is dark), grown and softened."""
+    import cv2
+    x0, y0, end = ATTRIB
+    w, h = W - x0, CREDIT_Y - y0
+    p = subprocess.run(['ffmpeg', '-v', 'error', '-i', src, '-t', str(end - 1.0), '-map', '0:v:0',
+                        '-vf', f'fps=4,crop={w}:{h}:{x0}:{y0},format=gray', '-f', 'rawvideo', '-'],
+                       capture_output=True, check=True)
+    lo = np.frombuffer(p.stdout, np.uint8).reshape(-1, h, w).min(axis=0)
+    m = np.zeros((H, W), np.float32)
+    m[y0:CREDIT_Y, x0:] = (lo > 170).astype(np.float32)
+    return m
+
+
+def text_matte(raw, logo):
+    """The logo, and the credit line's bright letters in this frame, as a soft 0-1 matte."""
+    import cv2
+    x0 = ATTRIB[0]
+    m = logo.copy()
+    r0, r1 = CREDIT_ROWS
+    lit = (raw[r0:r1, x0:].mean(axis=2) > 200).astype(np.uint8)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(lit, connectivity=8)
+    keep = np.zeros(n, bool)
+    keep[1:] = (st[1:, cv2.CC_STAT_HEIGHT] <= 17) & (st[1:, cv2.CC_STAT_AREA] < 300)   # letters, not white roofs
+    m[r0:r1, x0:] = keep[lab].astype(np.float32)
+    m = cv2.dilate(m, np.ones((5, 5), np.uint8))
+    return cv2.GaussianBlur(m, (0, 0), 1.5)[..., None]
 
 
 def frames_of(t0, d, t, s, uk):
@@ -181,6 +220,7 @@ def main(src, out, motion=None):
                             '-pix_fmt', 'yuv420p', '-color_primaries', 'bt709', '-color_trc', 'bt709',
                             '-colorspace', 'bt709', '-movflags', '+faststart', out], stdin=subprocess.PIPE)
     left = [len(p) for p in jobs]
+    logo = logo_matte(src) if stab else None
     acc = {}
     nxt = 0
     fsize = W * H * 3
@@ -195,10 +235,21 @@ def main(src, out, motion=None):
         for k, j, w in need[i]:
             if j not in moved:
                 f = raw
+                text = stab and i < ATTRIB[2] * SRC_FPS
+                if text:
+                    mask = text_matte(raw, logo)
+                    import cv2
+                    hole = (mask[..., 0] > 0.02).astype(np.uint8)
+                    x0, y0 = ATTRIB[0], ATTRIB[1] - 20
+                    f = raw.copy()
+                    f[y0:, x0:] = cv2.inpaint(np.ascontiguousarray(raw[y0:, x0:]), hole[y0:, x0:], 5, cv2.INPAINT_TELEA)
                 if stab and i in stab[j]:
                     dd, z = stab[j][i]
-                    f = warp(raw, dd, z)
-                moved[j] = f.astype(np.float32)
+                    f = warp(f, dd, z)
+                f = f.astype(np.float32)
+                if text:
+                    f = f * (1 - mask) + raw.astype(np.float32) * mask
+                moved[j] = f
             acc[k] = acc[k] + moved[j] * w if k in acc else moved[j] * w
             left[k] -= 1
         while nxt < n and left[nxt] == 0:

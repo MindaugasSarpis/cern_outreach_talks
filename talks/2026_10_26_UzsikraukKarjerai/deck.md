@@ -79,10 +79,10 @@ space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0
 
 <!--
 Message: where we are, then out past everything to the largest scale.
-Picture: the owner's SpaceEngine zoom for Innoday, 4:13 run in 20 s: the NFTMC building in Saulėtekis (Google Earth, 0–2,3 s), the Saulėtekis campus (to ~3,9 s), Vilnius and its region (~3,9–5,4 s), the clouds and the Earth's limb, the Earth whole (~7,2–7,8 s; an orange, dust-laned band beside it is in the edit), the Sun (~8,6 s), then a star among stars, out through our galaxy's disc (~10–12,5 s), our galaxy whole (~12,8–13,8 s), half a second of dark, then the cosmic web (from ~14,4 s) slowing to a stop and held from 19 s. No sound of its own. It waits on the web for the press (no advance-on-end).
+Picture: the owner's SpaceEngine zoom for Innoday, 4:13 made 20 s (scripts/remap_zoom.py): the NFTMC building in Saulėtekis (Google Earth, 0–2,3 s), the Saulėtekis campus (to ~3,9 s), Vilnius and its region (~3,9–5,4 s), into the clouds (~5 s), then, joined by dissolves, the Earth from space (~5,5–7,9 s), the Sun (~7,6–9 s), inside our galaxy (~9–10,8 s), our galaxy whole (~11–14 s), and the cosmic web (from ~13,6 s) slowing to a stop, held from 19 s. Stabilised (the owner: the source's wobble "on speedup it doesn't look good"); the swaying stretches between the five are dissolved over, not played. No sound of its own. It waits on the web for the press (no advance-on-end).
 
 Čia – Saulėtekis Vilniuje. Čia dirba Vilniaus universiteto fizikai.
-[kai matosi visa Žemė, ~7 s] Žemė. [~8,5 s] Saulė. [~13 s] Mūsų galaktika.
+[kai matosi Žemė iš kosmoso, ~6 s] Žemė. [~8 s] Saulė. [~11,5 s] Mūsų galaktika.
 [tinklui pasirodžius tylėk; kai jis sustoja] → spausk
 
 The words follow the picture: say each name as it comes, not before; the first sentence is over by the time Vilnius is in sight (~4,5 s). „Čia dirba Vilniaus universiteto fizikai“: NFTMC houses units of the VU Faculty of Physics (nftmc-opened-2016). Lithuania as a country is not shown, so it is not named.
