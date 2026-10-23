@@ -19,7 +19,8 @@ stage:
   palette: { base: blue, bg: '#000206', accent: '#5b6fd6', dust: '#5b4fd6', dustBright: '#ebe6ff', nebula: '#3a2a9e', nebulaAlt: '#0f6e86', sky: '#9a8cff', fill: '#c9b8ff', highlight: '#fff0d0', dim: '#a39dc0' }   # a true black ground, as OpenData's
   sound: { hum: false, flight: false, clip: false }   # no hum and no transition sounds (owner, 13–14 Oct: "transitions were like driving sounds", "only 2-3s"); the clips' audio and the collision's own sound still play
   motion: floor   # the owner's MacBook or a studio PC: its reduced-motion setting is not the audience's choice (v0.8.2; Scheduler, 21 Oct)
-  options: { dustSize: 2.2, reach: 22, nebula: 0.12, grain: 0.012, aberration: 0, vignette: 0.7, bloom: 0.42 }   # OpenData's look: deep, crisp, not hazy
+  look: broadcast   # 23 Oct review: for the stream (no film grain, fewer and larger grains, the ground lifted off black so it does not band); dropped on 8 Oct when the talk was "not TV", back now it is filmed
+  options: { reach: 22, nebula: 0.12, aberration: 0, vignette: 0.45, bloom: 0.42 }   # OpenData's depth over the broadcast look (until 23 Oct: dustSize 2.2, grain 0.012, vignette 0.7)
 title: Kas vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po žeme
 duration: 15min
 broadcast: true            # a studio recording (owner, 21 Oct): talk ready runs the safe-area check, talk record the broadcast rules
@@ -57,10 +58,10 @@ space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
 Message: who is speaking; the particle this story is about took 51 years to find; the question of the talk, and the promise: you will see how, dot by dot, and you judge; at the end, who does this work and where it starts.
 Picture: the cover, as OpenData's and Innoday's: the name line over the five-quark form gathering out of the dust (`quarks`, 2,4 s). The overview clip buffers behind it. → starts the way in; that key is also the gesture browsers ask for before any sound.
 
-Laba diena. Esu Mindaugas Šarpis, dalelių fizikas iš Vilniaus universiteto. Ekrane susidėlioja dalelė, kurios fizikai ieškojo penkiasdešimt vienerius metus. Kaip sužinoti, kad radai tai, ko dar niekas nematė?
+Laba diena. Esu Mindaugas Šarpis, dalelių fizikas iš Vilniaus universiteto. Ekrane susidėlioja dalelė, kurią rasti užtruko penkiasdešimt vienerius metus. Kaip sužinoti, kad radai tai, ko dar niekas nematė, ir neapsigavai?
 [pauzė 2 s]
-Šiandien pamatysi, kaip ją rado – taškas po taško. Ir spręsti bandysi tu. O pabaigoje sužinosi, kas tokį darbą dirba ir nuo ko jį galima pradėti.
-Bet pradėkime nuo Vilniaus.
+Šiandien nusileisime šimtą metrų po žeme ir pamatysi, kaip ją rado – taškas po taško. Ir spręsti bandysi tu. O pabaigoje pasakysiu, nuo ko tokį darbą galima pradėti.
+Pradėkime nuo Vilniaus.
 
 The question lands at about 0:20. „kvarkas“ and „pentakvarkas“ wait for slide 4. „spręsti bandysi tu“: the plain spoken order, and gender-neutral (never „pats“). The last line is said as the zoom fades in.
 If asked: the idea of five-quark particles is from 1964 (Gell-Mann and Zweig); LHCb announced the particle on 14 July 2015.
@@ -127,8 +128,8 @@ Message: the funnel is the Universe's 13,8-billion-year history; you and I are m
 Picture: Innoday's funnel (the owner, 18 Oct: "copy the funnel as well"): the web's grains fly into the funnel's shape (4,4 s), the middle of the picture first, as the camera swings round to the side; then the funnel's own grains and the CMB disk resolve over them, and last its mesh comes in underneath. The Universe's history in grains, the NASA/WMAP figure: the Big Bang at the narrow end (left), the Planck disk, the dark ages with no stars, a crowd of hot first galaxies, then ever fewer, cooler ones to the mouth, today. „13,8 mlrd. metų“ once the funnel stands (6,8 s). Wait for it before the first sentence.
 
 [palauk, kol piltuvas susiformuos]
-Šis piltuvas – Visatos istorija. Siaurasis galas – Didysis sprogimas prieš 13,8 milijardo metų, platusis – šiandiena. Šis diskas – seniausia šviesa, kurią galime matyti. Ir tu, ir aš sudaryti iš atomų. Atomo branduolys – protonai ir neutronai, o kiekvienas jų sudarytas iš trijų dar smulkesnių dalelių – kvarkų. Dalelė, kurią matei pradžioje, sudaryta iš penkių kvarkų. Ji vadinama pentakvarku. Tokios dalelės gimsta greitintuvo susidūrimuose.
-Tam CERN pastatė didžiausią pasaulyje dalelių greitintuvą.
+Šis piltuvas – Visatos istorija. Siaurasis galas – Didysis sprogimas prieš 13,8 milijardo metų, platusis – šiandiena. Šis diskas – seniausia šviesa, kurią galime matyti. O dabar – į mažiausią mastą. Ir Žemė, ir tu, ir aš sudaryti iš atomų. Atomo branduolys – protonai ir neutronai, o kiekvienas jų sudarytas iš trijų dar smulkesnių dalelių – kvarkų. Dalelė, kurią matei pradžioje, sudaryta iš penkių kvarkų. Ji vadinama pentakvarku. Tokios dalelės gimsta greitintuvo susidūrimuose.
+Tam CERN pastatė greitintuvą.
 
 The ladder goes atoms → nucleus → protons and neutrons → quarks, home.cern's own order. The last line is said as the clip condenses.
 If asked: strictly a pentaquark is four quarks and one antiquark; the three quarks of a proton are its valence quarks. The disk is the real cosmic microwave background, Planck's 2018 map (the one sentence spoken for it is in the script): „Ji išsiskyrė, kai Visatai buvo apie 380 000 metų.“
@@ -235,7 +236,7 @@ Picture: one real collision in the black, OpenData's and Innoday's. Two bunches 
 [palauk, kol dalelės išlėks]
 Štai tikras dviejų protonų paketų susidūrimas. Šiame vaizde išlekia šimtai dalelių. Tarp jų būna ir naujų, sunkių dalelių, kurios gyvuoja labai trumpai: jos beveik iš karto suskyla, ir detektorius mato tik jų skeveldras.
 Šį susidūrimą 2012 metais užfiksavo CMS – vienas iš keturių didžiųjų šio greitintuvo detektorių.
-O dabar – LHCb, detektorius, prie kurio dirbu aš.
+O dabar – LHCb.
 
 The decay sentence follows cms.cern's own wording (most particles produced are unstable and transform rapidly; the detector measures the stable ones), so „skeveldros“ on slide 10 is heard a second time; the mass is taught on slides 10 and 11. No acronym in speech. If asked: CMS, one of the four LHC detectors, recorded it on 27 May 2012; 19 proton pairs collided in this crossing; the picture draws the 290 clearest tracks (not a number CMS reports); 8 TeV is the collision energy.
 
@@ -323,11 +324,11 @@ Message: we work on questions nobody has answered, so you try: each dot falls in
 Picture: a small gold plot fills dot by dot into its columns (140 dots, 7 s) while the days of collecting tick under the axis's left end, „0 dienų“ to „4 dienos“, in step with the dots landing (the owner, 23 Oct: "just show one with not a lot of data (show days / years of collection increasing)"); „masė →“ under the axis, ending at its right end, from 6 s, as the columns are explained (what they sort by: light left, heavy right): the clock bottom left, the axis word bottom right. At the first click a tick lights over the one column that stands out (`th1` step 2); no new word (it is not called random before the answer). At the second the gold dots go and their clock with them, and 3 500 pale dots of the same random spectrum fill the same frame (`th2`, 12 s), smooth, with no tick (`th2` step 1; 22 Oct: the tick and the dimmed rest made the filled column read as a peak on camera), the clock in the same place running „0 dienų“ to „100 dienų“: 25 times the dots in 25 times the days, so where the bump was, the column is as tall as its neighbours. The first two sentences are said over the flight (4,5 s), the column sentences over the fill.
 Note: both plots are illustrations, not measured data: two random samples from one smooth spectrum with no particle in it; in the 140 chance made the bump, the 3 500 are smooth (public/data/theta-toy.json, seeds inside). The days are the same illustration (35 dots a day, both plots), so they are said with „tarkime“. Say „sudėliojo kompiuteris“, never „tikri duomenys“. Each plot fills its frame to its own tallest column, so the two are not at one scale. The clock is <FillClock> (setup/FillClock.vue): it reads how much of the plot has landed, so it cannot run ahead of the dots.
 
-Mes dirbame su klausimais, į kuriuos dar niekas neatsakė. Tokį darbą dabar išbandysi ir tu. Tarkime, duomenis renkame keturias dienas. Kiekvienas taškas krenta į stulpelį pagal masę. Kairėje – lengvesnės dalelės, dešinėje – sunkesnės. Lyg surikiuotum visus savo mokyklos mokinius pagal ūgį. Jei dalelė tikra, jos masė kaskart išeina beveik ta pati, ir taškai krenta į tą patį stulpelį. Taip iškyla kauburys. Bet kauburį gali sukurti ir atsitiktinumas – kaip kauliukas, kuris kelis kartus iš eilės išmeta šešetą.
+Mano darbe nėra vadovėlio su atsakymais gale. Tokį darbą dabar išbandysi ir tu. Tarkime, duomenis renkame keturias dienas. Kiekvienas taškas krenta į stulpelį pagal masę. Kairėje – lengvesnės dalelės, dešinėje – sunkesnės. Lyg surikiuotum visus savo mokyklos mokinius pagal ūgį. Jei dalelė tikra, jos masė kaskart išeina beveik ta pati, ir taškai krenta į tą patį stulpelį. Taip iškyla kauburys.
 → spausk
 Kaip manai, ar šis kauburys – nauja dalelė?
 [pauzė 3 s]
-Ne. Šį grafiką kompiuteris sudėliojo iš atsitiktinių skaičių – jokios dalelės jame nėra.
+Ne. Šį grafiką kompiuteris sudėliojo iš atsitiktinių skaičių – jokios dalelės jame nėra. Kauburį gali sukurti ir atsitiktinumas – kaip kauliukas, kuris kelis kartus iš eilės išmeta šešetą.
 → spausk
 Štai tas pats atsitiktinumas, tik duomenis renkame šimtą dienų – dvidešimt penkis kartus ilgiau.
 [leisk prisipildyti]
@@ -353,7 +354,7 @@ clicks: 1
 <AfterFlight :delay="4.6"><div class="heap l late" style="left: 183px; top: 356px"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015], [1, '2011–2015']]" :fill="20" /></span></div></AfterFlight>
 <div v-click="1" class="heap l step" style="left: 500px; top: 118px; --step-delay: 0.8s"><span class="n">5&nbsp;naujos dalelės</span></div>
 
-<!-- facts: lhcb-omegac-2017-fig2-candidates, lhcb-omegac-2017-sample, lhcb-omegac-2017-years, lhcb-omegac-five-2017, lhcb-omegac-2017-masses, omegac-quark-content, proton-neutron-three-quarks, lhcb-omegac-confirmed, chance-bumps-shrink-with-data, poisson-fluctuation-sqrt-n, particle-physics-5-sigma-discovery, lhcb-pentaquark-2015, pentaquark-idea-to-discovery-51-years -->
+<!-- facts: lhcb-omegac-2017-fig2-candidates, lhcb-pentaquark-2015-cross-checks, lhcb-omegac-2017-sample, lhcb-omegac-2017-years, lhcb-omegac-five-2017, lhcb-omegac-2017-masses, omegac-quark-content, proton-neutron-three-quarks, lhcb-omegac-confirmed, chance-bumps-shrink-with-data, poisson-fluctuation-sqrt-n, particle-physics-5-sigma-discovery, lhcb-pentaquark-2015, pentaquark-idea-to-discovery-51-years -->
 
 <!--
 Message: real LHCb data, almost 60 000 computed masses collected over five years: with this many, real particles rise as tall, narrow peaks; five here, five new particles, each of three quarks like a proton. Physicists call a discovery only a peak chance alone would make less than once in 3,5 million; these five pass it by far, and that is how they know. The cover's five-quark particle LHCb found the same way, in 2015, after 51 years; I searched for pentaquarks too. (Since 23 Oct this slide carries the rule and the pentaquark: the owner cut the pentaquark plot and the two plots at one scale, "a bit too much histograms".)
@@ -364,9 +365,9 @@ Tai tikri LHCb duomenys – beveik šešiasdešimt tūkstančių apskaičiuotų 
 [leisk prisipildyti]
 Su tikromis dalelėmis – atvirkščiai: kai taškų daugėja, jos iškyla aukštomis, siauromis smailėmis.
 → spausk
-Čia jų penkios – penkios naujos dalelės. LHCb jas paskelbė iš karto, visas penkias. Keturias iš jų vėliau patvirtino ir kiti matavimai. Kiekviena sudaryta iš trijų kvarkų, kaip ir protonas. Trys kvarkai – įprasta.
-Atradimu fizikai vadina tik tokią smailę, kurią vien atsitiktinumas sukurtų rečiau nei kartą iš trijų su puse milijono. Šios penkios tą ribą peržengė su didele atsarga. Taip fizikai ir sužino, kad rado tai, ko dar niekas nematė.
-O dalelę iš penkių kvarkų, kurią matei pradžioje, LHCb rado 2015 metais – po penkiasdešimt vienerių metų paieškų.
+Čia jų penkios – penkios naujos dalelės. Kiekviena sudaryta iš trijų kvarkų, kaip ir protonas. Trys kvarkai – įprasta.
+Atradimu fizikai vadina tik tokią smailę, kurią vien atsitiktinumas sukurtų rečiau nei kartą iš trijų su puse milijono. Šios penkios tą ribą peržengė su didele atsarga.
+Lygiai taip pat 2015 metais LHCb rado ir dalelę iš penkių kvarkų, kurią matei pradžioje. Pirmiausia fizikai bandė jos smailę paaiškinti jau žinomomis dalelėmis. Nepavyko. Tada atskirai patikrino 2011 ir 2012 metų duomenis – smailė liko abiejuose. Štai kaip po penkiasdešimt vienerių metų fizikai įsitikino, kad rado tai, ko dar niekas nematė.
 [pauzė 2 s]
 Pentakvarkų ieškojau ir aš.
 
@@ -393,23 +394,24 @@ clicks: 4
 <!-- facts: sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn, sarpis-phd-bonn-2023, lhcb-run1-release-sarpis-lrt-2025, lhcb-vilnius-joined -->
 
 <!--
-Message: my road went through Europe: Glasgow; the doctorate begun in Heidelberg and finished in Bonn, where I searched for pentaquarks and prepared LHCb's data for everyone; then back to Lithuania, and now the LHCb group at Vilnius University. The personal touches are yours to tell, in three optional slots.
+Message: my road went through Europe: Glasgow; the doctorate begun in Heidelberg and finished in Bonn, where I searched for pentaquarks and prepared LHCb's data for everyone; then back to Lithuania, and now the LHCb group at Vilnius University. The personal touches are yours to tell, in three slots (the first is the one to keep).
 Picture: the trail draws across Europe leg by leg as the stops are told (the owner, 15 Oct: "Show my path around europe"): Vilnius → CERN on arrival (the talk's own frame: home and the place of the work, not a dated trip), then Glasgow (click 1), home (2), Heidelberg and Bonn (3), home to Vilnius (4). Each city's name comes up as the trail reaches it. A click whose slot you skip just draws its leg (about 3 s).
 
 Mano kelias iki šio darbo ėjo per Europą.
-[PATIKSLINTI, neprivaloma: savais žodžiais – kuo norėjai būti vaikystėje ir kaip 11 klasėje pirmą kartą apsilankei CERN]
+[PATIKSLINTI, neprivaloma, bet geriausia pasakyti: savais žodžiais – kaip 11 klasėje, žiūrovų amžiaus, pirmą kartą apsilankei CERN; ir kuo tada norėjai būti]
 → spausk
 Studijavau Glazgo universitete.
 → spausk
-[PATIKSLINTI, neprivaloma: savais žodžiais – darbai tarp studijų ir doktorantūros, Glazge ir Lietuvoje]
+Tarp studijų ir doktorantūros praėjo ketveri metai.
+[PATIKSLINTI, neprivaloma: savais žodžiais – ką tuos metus dirbai, Glazge ir Lietuvoje]
 → spausk
 Doktorantūrą pradėjau Heidelberge, o baigiau Bonoje. Ten ieškojau pentakvarkų ir ruošiau LHCb duomenis, kad jais galėtų naudotis visi.
-[PATIKSLINTI, neprivaloma: savais žodžiais – kodėl doktorantūra iš Heidelbergo persikėlė į Boną]
+[PATIKSLINTI, neprivaloma: vienu sakiniu savais žodžiais – ką ta paieška parodė (ji atsako į „Pentakvarkų ieškojau ir aš“)]
 → spausk
 Tada grįžau į Lietuvą. Dabar Vilniaus universitete vadovauju LHCb grupei.
 Ir visa tai dabar galima daryti iš Lietuvos.
 
-Only the bank's lines are scripted: Glasgow 2011–2015 (study), the doctorate in Heidelberg 2019–2020 then Bonn 2020–2023, the pentaquark search and the open-data preparation in Bonn, the return and LHCb Vilnius. The three slots are yours: fill them in your own words (10–15 s each, outside the scripted time) or skip them; nothing is written in their place, and nothing on this slide claims anything the bank does not confirm. Skipped, slot 1 leaves the first sentence alone over the first leg, slot 2 lets click 2 just draw the leg home, slot 3 lets click 4 follow at once. The last line is said as the camera dives to Vilnius (4 s).
+Only the bank's lines are scripted: Glasgow 2011–2015 (study), the doctorate in Heidelberg 2019–2020 then Bonn 2020–2023, the pentaquark search and the open-data preparation in Bonn, the return and LHCb Vilnius; „ketveri metai“ is 2015 to 2019. The slots are yours, in your own words (10–15 s each): the first (the CERN visit in 11th grade, at the viewers' age) is the one to tell, since „Ačiū“ leans on „Mano kelias … nebuvo tiesus“; the second, what you did in the four years; the third, one sentence on what your pentaquark search showed, which answers „Pentakvarkų ieškojau ir aš“ (12). Nothing is written in their place: the bank does not hold them. The reason the doctorate moved to Bonn is no longer asked (23 Oct, for time). The last line is said as the camera dives to Vilnius (4 s).
 If asked: Glasgow 2011–2015; Heidelberg 2019–2020; Bonn 2020–2023 (the thesis, December 2023: a pentaquark search and the LHCb open-data release); the Run 1 release is over 100 000 files, about a petabyte by VU's count.
 
 Šaltiniai: INSPIRE-HEP author record; M. Šarpis, PhD thesis, University of Bonn, 2023; LRT.lt, 2025-01-08 (from a VU press release).
@@ -418,7 +420,7 @@ If asked: Glasgow 2011–2015; Heidelberg 2019–2020; Bonn 2020–2023 (the the
 -->
 
 ---
-space: { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62, sway: 0.3, dim: 0.4 }   # dim 0.2 until 20 Oct: the route head's bloom washed out the east of the outline in the still
+space: { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62, sway: 0.3, dim: 0.5 }   # dim 0.4 until 23 Oct (the outline brighter, size 5); dim 0.2 until 20 Oct: the route head's bloom washed out the east of the outline in the still
 ---
 
 <Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 1 }" />
@@ -431,7 +433,7 @@ space: { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62, sway: 0.3, dim: 
 Message: all of it can now be done from Lithuania (the owner, 15 Oct: "then stress all of this can now be done in Lithuania"): a CERN associate member; a group of mostly students, on the detector, on software, or searching for particles; the first VU doctoral student on LHCb also searches for pentaquarks; 13 VU students at CERN this summer, a record. Then my own job since August, the bridge to the data (back here on 23 Oct, when the owner cut the SciFi clip: "Don't need scifi module").
 Picture: the camera dives from the whole of Europe down to Vilnius, and Lithuania's outline comes up in light blue round it (`lietuva`, Natural Earth); the route's arcs leave Vilnius westward out of frame. Only Vilnius is named. The question is asked as the camera flies to the piles of data.
 
-Lietuva – asocijuotoji CERN narė, todėl lietuviai gali pretenduoti į darbą CERN. Didžioji mūsų grupės dalis – studentai. Vieni dirba su detektoriumi, kiti – su programomis, treti ieško naujų dalelių. Pirmoji VU doktorantė LHCb eksperimente irgi ieško pentakvarkų. O šią vasarą praktiką CERN atliko trylika VU studentų – daugiausia iki šiol.
+Lietuva – asocijuotoji CERN narė, todėl lietuviai gali pretenduoti į darbą CERN. Didžioji mūsų grupės dalis – studentai. Jie dirba ir su detektoriumi, ir su programomis, ir ieško naujų dalelių. Pirmoji VU doktorantė LHCb eksperimente irgi ieško pentakvarkų. O šią vasarą praktiką CERN atliko trylika VU studentų – daugiausia iki šiol.
 Nuo rugpjūčio esu ir LHCb atvirųjų duomenų koordinatorius. Prisimeni duomenis, kuriuos ruošiau Bonoje?
 
 The doctoral student stays unnamed. „pretenduoti“, not „kandidatuoti“. If asked: Lithuania has been an associate member since 2018; VU joined LHCb in September 2024.
@@ -442,10 +444,10 @@ The doctoral student stays unnamed. „pretenduoti“, not „kandidatuoti“. I
 -->
 
 ---
-space: { at: [2599.3, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8, dim: 0.15 }   # (x 2597.0 until 22 Oct: „1 TB“ ran to x 930, past the broadcast safe box) from the front, so the 1 TB sphere and its label stand in frame right of the 800 pile, nearly as far from the lens (OpenData's yaw-73 pose, its slide 7, left the sphere below the frame); the camera stays inside the vault's clear capsules
+space: { path: [[3, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [7.5, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [11.5, { at: [2599.3, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8 }]], dim: 0.15 }   # 23 Oct review: in close on the 1 TB sphere (the unit), held while it is named, then drawn back to the 800 pile;   # (x 2597.0 until 22 Oct: „1 TB“ ran to x 930, past the broadcast safe box) from the front, so the 1 TB sphere and its label stand in frame right of the 800 pile, nearly as far from the lens (OpenData's yaw-73 pose, its slide 7, left the sphere below the frame); the camera stays inside the vault's clear capsules
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 1, scale: [0, 1], 'scale:labels': 1, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [0, 1], 'scale:labels': 1, sun: 0, vilnius: 0 }" />
 
 <div class="readout late">
 
@@ -459,7 +461,7 @@ space: { at: [2599.3, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8, dim: 0.15 }   # (
 Message: the data I prepared in Bonn, in one picture: each sphere a terabyte, about a laptop's disk; LHCb's 2011 and 2012 data are 800 of them; every file found, checked and described, about a year and a half; the pentaquark peak first rose in exactly these data, and now they are open to everyone.
 Picture: OpenData's piles (the owner, 18 Oct: "Show something about open data"): the camera flies in to a single gold sphere and a pile of 800 like it, standing on a floor of grains in a space of data; „1 TB“ under the sphere, the count „800 TB“ low on the left (once: the pile's own label is gone).
 
-Štai jie. Šis taškelis dešinėje – vienas terabaitas, maždaug nešiojamojo kompiuterio diskas. Kiekviena sfera krūvoje – tokia pati. Čia LHCb 2011 ir 2012 metų duomenys – aštuoni šimtai terabaitų. Kiekvieną failą reikėjo surasti, patikrinti ir aprašyti. Net su tam parašytomis programomis tai užtruko apie pusantrų metų. Būtent šiuose duomenyse 2015 metais iškilo pentakvarko smailė. Dabar jie atviri visiems.
+Štai jie. Šis taškelis – vienas terabaitas, maždaug nešiojamojo kompiuterio diskas. Kiekviena sfera krūvoje – tokia pati. Čia LHCb 2011 ir 2012 metų duomenys – aštuoni šimtai terabaitų. Kiekvieną failą reikėjo surasti, patikrinti ir aprašyti. Net su tam parašytomis programomis tai užtruko apie pusantrų metų. Būtent šiuose duomenyse 2015 metais iškilo pentakvarko smailė. Dabar jie atviri visiems – ir tau.
 
 Terabytes only, never „petabaitas“. 800 TB is CERN's figure (VU: over 1 PB in all, of which 800 TB of physics data in over 100 000 files); the release holds the same 2011–2012 collisions the 2015 peak rose in (2019 used Run 1 and Run 2). The year-and-a-half line is the speaker's public interview (VU Library, 5 March 2026). If asked: the full Run 1 release was completed on 20 December 2023; a terabyte holds tens of millions of recorded collisions.
 
@@ -472,7 +474,7 @@ Terabytes only, never „petabaitas“. 800 TB is CERN's figure (VU: over 1 PB i
 space: { at: [2591.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, flight: 5, dim: 0.15 }   # OpenData's 4 PB pose (its slide 8)
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 1, scale: [0, 1, 2], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [0, 1, 2], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
 
 <div class="readout last">
 
@@ -502,7 +504,7 @@ Never „4 PB“ in speech. If asked: the Ntupling Service (February 2026) opens
 space: { at: [2570.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0.15 }   # OpenData's 100 PB pose (its slide 9) moved 13 west (x 2583.5 until 22 Oct): with the readout on the 150 px floor, the blue sphere stood on „000 TB“; now it stands right of it (x ≈ 630–735)
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 1, scale: [0, 1, 2, 3], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [0, 1, 2, 3], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
 
 <div class="readout blue late">
 
@@ -541,7 +543,7 @@ Message: these plots were drawn from the open data; this year a VU bachelor stud
 Picture: OpenData's sun of plots: a sun turns slowly round the gold pile, rays of grains leaving it to every side, nineteen of them ending at plots made from LHCb's open data (the grains land on each plot's curves), seven at empty places, gold clouds waiting. No text: „everyone can use this“ is said, not shown (the owner, 18 Oct, through the Scheduler).
 
 Šie grafikai nubraižyti iš atvirųjų LHCb duomenų – tų pačių auksinių krūvų viduryje. Šiais metais mūsų bakalauro studentas Dominykas Stonkus paėmė atviruosius 2012 metų LHCb duomenis ir surinko iš jų tūkstančius taškų. Jis tikrino, ar kauburys iškils toje pačioje vietoje, kur LHCb rado pentakvarkus. Iškilo. Pats savo darbą jis vadina patikrinimu.
-O štai dar viena dalis, prie kurios dirba mūsų grupė.
+Mūsų grupė dirba ir prie paties detektoriaus.
 
 Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filtered on CERN computing) or „pakartojo paiešką“ as if independent: the thesis calls itself a qualitative check. „tūkstančius taškų“ rests on the about 16 400 selected decays. No web address in speech. The plots, if asked: the masses of π⁰, D⁰, J/ψ, K⁰S and Λ, the D⁰ and K⁰S lifetimes, the magnet's field, the beam spot, spectra and multiplicities, all from CERN Open Data records 401 and 24506. The Brown preprint (arXiv:2609.09275, September 2026) left the script on 22 Oct for time; if asked: two Brown University physicists posted a preprint built on LHCb open data (not yet published, so never „paskelbė tyrimą“).
 
@@ -564,18 +566,18 @@ space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway:
 Message: one part of LHCb our group works on: the tracker of plastic fibres that light up when a particle passes, and the light injection system at the ends of its modules that sends short laser pulses into them to calibrate them. A computer-made picture, said so; the flag is ours.
 Picture: Innoday's clip, 20 s, silent: 0–7 s the camera pans slowly down a whole SciFi module (two fibre mats of 2,4 m) from below; 6,6–10 s the cold box at its lower end is outlined in soft light blue (the light injection system is inside it); 10–12 s the camera closes in on the box; 12–17,5 s a laser engraves the Lithuanian flag on it; it holds from 19,4 s. The press goes on to the close, which starts from this frame.
 
-Tai vienas LHCb sekiklio modulis – kompiuteriu sukurtas vaizdas pagal jo brėžinį. Sekiklyje – daugiau nei vienuolika tūkstančių kilometrų plonų plastikinių skaidulų. Kai pro jas praskrieja dalelė, jose sužimba šviesa.
-[kai apačioje nušvinta dėžė, ~7 s] Kad šviesos jutikliai būtų tiksliai sukalibruoti, modulių galuose lazeriai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupė dirba ir prie šio sekiklio, ir prie šios sistemos.
-[vėliavai išryškėjus] Vėliavą ant jo nupiešėme patys.
+Tai vienas LHCb sekiklio modulis – kompiuteriu sukurtas vaizdas. Tai viena iš tų dalių, kurios užfiksuoja, kur praskriejo dalelės. Jame – plonos plastikinės skaidulos, visame sekiklyje jų daugiau nei vienuolika tūkstančių kilometrų. Kai pro jas praskrieja dalelė, jose sužimba šviesa.
+[kai apačioje nušvinta dėžė] Šioje dėžėje lazeriai siunčia į skaidulas trumpus šviesos impulsus – taip tikrinama, ar sekiklis matuoja tiksliai. Prie jo dirba ir mūsų grupė.
+[vėliavai išryškėjus] Vėliavą į šį vaizdą įpiešėme patys.
 [kai vaizdas sustoja] → spausk
 
 The old slide 16's words (cut on 23 Oct with the clip, back with it at the end), without the coordinator bridge, which is on 14 since. „daugiau nei vienuolika tūkstančių kilometrų“: the SciFi tracker's 11 000+ km of 250 µm fibre (LHCb). Nothing more about Vilnius than the group's meeting agenda says (SciFi and the light injection system among its service tasks): never „mes sukūrėme“. The flag is not on the real module. If asked: 670 nm VCSEL lasers; 524 288 SiPM channels read the light.
 
 Šaltiniai: LHCb Upgrade I, JINST 19 (2024) P05065, 6.5.7 sk.; indico.cern.ch/event/1461467 (VU LHCb grupės susitikimas, 2024-10-03).
 
-The clip runs 20 s.
+The clip runs 16,5 s (trimmed); the words run a few seconds past it, over its held frame.
 
-(~0.4 min)
+(~0.1 min)
 -->
 
 ---
@@ -585,25 +587,25 @@ space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway:
 <!-- Innoday's recorded close (close_home.mp4, Innoday's last shown slide) cut at 57,2 s, where it rests on the LHC and FCC map, before it flies off to the globe and home (the owner: "just zoom out to lhc / fcc, not the globe"). Muted (Innoday's music is its own Soundtrack, not in the clip); it holds the map until the press. -->
 <VideoPlayer src="close_lhc_fcc.mp4" muted :controls="false" transition="fade" />
 
-<!-- facts: lhcb-detector-size, lhc-geneva-27km-100m-four-experiments, cern-fcc-study, cern-fcc-council-2025, lt-fcc-unis -->
+<!-- facts: lhcb-detector-size, lhc-geneva-27km-100m-four-experiments, cern-fcc-study, cern-fcc-council-2025, lt-fcc-unis, cern-ls3-hllhc -->
 
 <!--
 Message: from our flag on one module, out to the whole detector and its collisions, then the LHC ring and the ring CERN proposes next, whose study Vilnius University has joined; you need not know now what you will be.
 Picture: Innoday's close, 57 s, no sound: the flag's frame breaks into grains and the camera draws back out of the module to the whole LHCb as a point cloud of its real geometry, the flag shrinking to where the module stands; down to eye level, a 1,83 m person for scale (~15 s); a real LHCb collision crosses at ~19 s, then the crossings come faster until the detector glows evenly (~19–35 s); then a slow climb until it looks straight down, north up (~36–57 s): LHCb shrinks to a point and the map comes up round it at true scale, the LHC ring (26,7 km) with its two beams, the proposed FCC ring (90,7 km) in orange dashes, Lake Geneva, the small flag at LHCb's point. No names on screen: name the rings by word while they are in view.
 
 [kamerai atsitraukiant, ~5 s] Visas LHCb – dvidešimt vieno metro ilgio.
-[susidūrimai: tylėk ~20 s]
+[kai prasideda susidūrimai, ~19 s] Dabar greitintuvas atnaujinamas. Atnaujintas jis veiks iki 2041 metų. Tada tau bus apie trisdešimt.
+[tylėk, kol susidūrimai susilieja į švytėjimą]
 [kai iškyla žemėlapis, ~45 s] Mažesnis žiedas – dvidešimt septynių kilometrų LHC. Didysis – devyniasdešimt vieno kilometro greitintuvas, kurį CERN siūlo statyti kitą. Sprendimą tikimasi priimti apie 2028 metus. Prie jo tyrimų jau prisijungė ir Vilniaus universitetas.
-[kai vaizdas sustoja] Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
 → spausk
 
-The two advice sentences are the organisers' point, said once (kept from the cut masterclass slide; drop them if you would rather not). „Prie jo tyrimų jau prisijungė“: VU, KTU and LSMU signed a memorandum with CERN to join the FCC feasibility study (lt-fcc-unis, 22 Sept 2025). „apie 2028 metus“: the CERN Council's aim, a decision „possibly in 2028“ (cern-fcc-council-2025). The collision is the same kind as slide 10's; its 40 MHz is not said again. If asked: FCC 90,7 km, about 200 m deep, its first stage an electron–positron collider of about 15 billion CHF (cern-fcc-study).
+„iki 2041 metų“: the HL-LHC is to run from June 2030 to 2041 (cern-ls3-hllhc); „apie trisdešimt“ is our arithmetic (15–18 now, plus 15). The organisers' advice moved to „Ačiū“ (21), where it closes the cover's promise. „Prie jo tyrimų jau prisijungė“: VU, KTU and LSMU signed a memorandum with CERN to join the FCC feasibility study (lt-fcc-unis, 22 Sept 2025). „apie 2028 metus“: the CERN Council's aim, a decision „possibly in 2028“ (cern-fcc-council-2025). The collision is the same kind as slide 10's; its 40 MHz is not said again. If asked: FCC 90,7 km, about 200 m deep, its first stage an electron–positron collider of about 15 billion CHF (cern-fcc-study).
 
 Šaltiniai: home.cern (LHCb; the FCC, 2025-11); cerncourier.com/a/fcc-feasibility-study-complete/; ff.vu.lt (2025-09-22).
 
-The clip runs 57 s.
+The clip runs 57 s (the lint adds it); the words are all said over it.
 
-(~1.0 min)
+(~0.1 min)
 -->
 
 ---
@@ -614,17 +616,17 @@ space: { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }  
 
 <div class="thanks beside">Ačiū</div>
 
-<!-- facts: lhcb-pentaquark-2015-cross-checks, lhcb-pentaquark-2015-run1-data, lhcb-run1-full-release-2023 -->
+<!-- facts: sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn -->
 
 <!--
-Message: the particle was found because physicists gathered a great many dots and checked carefully, and the data it first showed up in are now open to you. Thanks.
+Message: the cover promised where this work can start: my road was not straight; you need not know now what you will be, notice what interests you and dig. Thanks. The organisers' point, said once, over the cover's particle.
 Picture: back to the cover's five-quark particle, gathering again out of the dust (`pq` replays its gather on arrival: more than 5 s since its last step change); „Ačiū“ beside it. Whether the talk closes on „Ačiū“, and over what, is the owner's to say (the Scheduler asked, 18 Oct); built as the default.
 
-Ji rasta, nes fizikai surinko labai daug taškų ir kruopščiai tikrino. Duomenys, kuriuose ji pirmą kartą pasirodė, dabar atviri ir tau.
-[pauzė 3 s]
+Pradžioje žadėjau pasakyti, nuo ko tokį darbą galima pradėti. Mano kelias, kaip girdėjai, nebuvo tiesus. Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
+[pauzė 2 s]
 Ačiū.
 
-The question is answered through the dots, without a third „51 metai“ and without repeating it.
+The cover's question was answered on 12; this keeps the cover's other promise („nuo ko tokį darbą galima pradėti“). „Mano kelias … nebuvo tiesus“ leans on 13 (Glasgow, four years before the doctorate, two universities for it).
 
 (~0.45 min)
 -->

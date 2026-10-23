@@ -112,8 +112,8 @@
       0
      ],
      "scale": 1.6,
-     "alpha": 0.9,
-     "size": 3.4,
+     "alpha": 1,
+     "size": 5,
      "color": "#9fd0ff"
     },
     {
@@ -470,6 +470,8 @@
    "objects": [
     {
      "type": "funnel",
+     "rings": 8,
+     "lines": 10,
      "pos": [
       0,
       0,
@@ -596,7 +598,7 @@
       },
       {
        "n": 100000,
-       "color": "#4d84ff",
+       "color": "#8fb2ff",
        "label": "100 PB",
        "at": [
         -9.5,
@@ -1352,9 +1354,9 @@
       -6.72,
       12
      ],
-     "step": 2,
+     "step": 3,
      "grains": 44000,
-     "alpha": 0.9,
+     "alpha": 0.45,
      "color": "#7f9fd8",
      "area": [
       52,

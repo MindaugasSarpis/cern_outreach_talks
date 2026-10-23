@@ -23,7 +23,7 @@ html[data-stage] {
   --kk-gold: #ffc05a; --kk-gold-hi: #ffe3a8; --kk-blue: #8fb2ff; --kk-blue-hi: #dfe8ff;
   --kk-kick: var(--kk-blue);   /* the one text accent: kickers */
   --kk-x: 104px;         /* left and right edge of the text area: inside the broadcast safe box (x 98–882; 72 px until 22 Oct) */
-  --kk-floor: 150px;    /* distance of the text area's lower edge from the bottom: above the safe box's y 408 and clear of the name-super corner (84 px until 22 Oct) */
+  --kk-floor: 200px;    /* (150 px until 23 Oct: raised clear of the speaker standing in front) distance of the text area's lower edge from the bottom: above the safe box's y 408 and clear of the name-super corner (84 px until 22 Oct) */
   --kk-top: 55px;
   --kk-shadow: 0 0 26px rgba(0, 0, 0, 0.75), 0 0 6px rgba(0, 0, 0, 0.6);
 }
