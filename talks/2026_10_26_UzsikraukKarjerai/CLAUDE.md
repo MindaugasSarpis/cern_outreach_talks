@@ -531,6 +531,14 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Decisions
 
+- 2026-10-24 (night) — The sound, levelled (the owner: "2" of the proposals). Heard
+  loudness (the file's integrated LUFS plus the deck's level): the music beds under the
+  speech at about −24/−25 (Aphelion 0,35 on 2 and 0,3 on 3–5, −23/−25; Born Of The Sky
+  0,25, −25; Starfire 0,33, −25); the zoom's whoosh −20 integrated, −19 at its peak, with no
+  speech over the warps; the LHCb reel (slide 9) from 1 (−16, peaks −13) to 0,45 (−23, peaks
+  −20), so it no longer jumps 10 dB over the beds; the tunnel at the owner's 5 % (−44).
+  Delfi sets one gain at the sound check on the zoom's start or the reel.
+
 - 2026-10-23 (late night) — The owner, on the result: "This immediate switch from galaxy
   to universe web and from earth to galaxy doesn't work"; "Slide 13 - sequence: Vilnius,
   CERN, Glasgow, CERN, Ireland, Vilnius, Heidelberg, CERN, Bonn, CERN, Vilnius and
