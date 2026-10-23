@@ -312,7 +312,7 @@
      "fall": 1.0,
      "color": "#9fd0ff",
      "hot": "#ffffff",
-     "curve": 1.8,
+     "curve": 1,
      "marks": [
       [
        2998,

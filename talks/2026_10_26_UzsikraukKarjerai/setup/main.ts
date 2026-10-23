@@ -13,6 +13,7 @@ import InsideLhcb from './InsideLhcb.vue'
 import EVENT_LB from '../components/lhc-opening/event.json'
 import Grains from './Grains.vue'
 import Count from './Count.vue'
+import FillClock from './FillClock.vue'
 import WebTakeover from './WebTakeover.vue'
 import AfterFlight from './AfterFlight.vue'
 // The CMS event's data in the deck's own bundle (as Innoday's main.ts): lhc-opening
@@ -76,6 +77,7 @@ export default ({ app, router }) => {
   installCavern(registerBuilder)
   app.component('Grains', Grains)
   app.component('Count', Count)
+  app.component('FillClock', FillClock)
   app.component('WebTakeover', WebTakeover)
   app.component('AfterFlight', AfterFlight)
   app.component('InsideLhcb', InsideLhcb)

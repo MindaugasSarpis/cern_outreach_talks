@@ -74,6 +74,10 @@ export function listen(name, fn) {
 }
 // a name's last step, for the forms kept in files of their own
 export const stepOf = (name) => state.get(name)
+// a histogram's share of entries landed so far (0 to 1), for <FillClock>; null while the
+// plot is not built (no WebGL: the clock then keeps its own time)
+const fills = new Map()
+export const fillShare = (name) => fills.get(name)?.() ?? null
 
 const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
@@ -1012,6 +1016,9 @@ function buildHistogram(o, ctx) {
   }
   const off = listen(o.name, request)
   mat.addEventListener('dispose', off)
+  // the share landed so far (a grain lands at its time in the fill, released `fall` before)
+  fills.set(o.name, shown)
+  mat.addEventListener('dispose', () => fills.delete(o.name))
   // a step set before the build is kept, but the set stays hidden until the station's first
   // assembly fills it (a reload on a plot slide: no full plot flashing before the fill)
   if (state.has(o.name)) { step = state.get(o.name); share = at(step) }

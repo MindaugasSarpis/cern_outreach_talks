@@ -28,19 +28,18 @@ info: |
   „Kas vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po žeme“:
   „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement), a Lithuanian
   talk for grades 9–12, recorded in the Delfi studio on 26 Oct 2026 (1080p50,
-  on a screen behind the speaker) and streamed on 27 Oct. 15 minutes, 22
+  on a screen behind the speaker) and streamed on 27 Oct. 15 minutes, 19
   slides (notes/blueprint.md v2 of 20 Oct, with the owner's 15-minute round
-  of 21 Oct). One dot: a particle of five quarks took 51 years to find, so
+  of 21 Oct and his cuts of 23 Oct). One dot: a particle of five quarks took 51 years to find, so
   how do you know you have found something nobody has seen? The cover;
   Innoday's cosmic web and funnel; the LHC opening (CERN from above, the real
   tunnel, a real 2012 CMS collision, the 3D LHCb clip); inside LHCb 100 m
   down, its model beside a person, its own real collision and the 40 MHz
-  glow, one mass one dot. The viewer judges a bump of 140 dots, sees it drown
-  in 25 times more random dots, as physicists were fooled in 2003; LHCb's
-  Ωc⁰ spectrum, five narrow peaks; the 2015 pentaquark peak, which held; the
-  two plots and the rule. Then the speaker's road round Europe, the group in
-  Vilnius and its part of the detector (the SciFi light injection),
-  OpenData's piles of open data, the sun of
+  glow, one mass one dot. The viewer judges a bump of 140 dots in four days,
+  sees it drown in a hundred days of the same random dots, as physicists were
+  fooled in 2003; LHCb's Ωc⁰ spectrum as its years tick, five narrow peaks,
+  the rule, and the pentaquark found the same way in 2015. Then the speaker's
+  road round Europe, the group in Vilnius, OpenData's piles of open data, the sun of
   plots and a VU student's check, the masterclass, and „Ačiū“.
 layout: cover
 space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
@@ -289,27 +288,27 @@ clicks: 2
 <Grains :set="{ pq: 3, route: -1, th2: 0, th1: 1, oc: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { th1: 2 }, 2: { th1: 0, th2: 1 } }" />
 
 <AfterFlight :delay="6"><div class="heap r axis late" style="left: 757px; top: 358px"><span class="n">masė&nbsp;→</span></div></AfterFlight>
-<AfterFlight :delay="12"><div v-click.hide="2" class="heap l late" style="left: 223px; top: 358px"><span class="n">140&nbsp;taškų</span></div></AfterFlight>
-<div v-click="2" class="heap l step" style="left: 223px; top: 358px; --step-delay: 1.5s"><span class="n">3&nbsp;500&nbsp;taškų</span></div>
+<AfterFlight :delay="4.6"><div v-click.hide="2" class="heap l late" style="left: 223px; top: 358px"><span class="n"><FillClock name="th1" :to="4" unit="diena,dienos,dienų" :fill="7" /></span></div></AfterFlight>
+<div v-click="2" class="heap l step" style="left: 223px; top: 358px; --step-delay: 0.6s"><span class="n"><FillClock name="th2" :to="100" unit="diena,dienos,dienų" :at="2" :delay="0.6" :fill="12" /></span></div>
 
 <!-- facts: particle-decay-reconstructed-mass, theta-toy-140-entries, chance-bumps-shrink-with-data, poisson-fluctuation-sqrt-n, theta-plus-2003-false-alarm, theta-plus-leps-japan-19-events, theta-plus-clas-2006-null -->
 
 <!--
 Message: we work on questions nobody has answered, so you try: each dot falls into a column by its mass; a real particle keeps landing in one column and a bump rises; chance can make a bump too. Is this one a new particle? No: a computer made it from random numbers. With 25 times more of the same random dots the bump is gone (seen, not only told: 21 Oct). In 2003 real physicists were fooled the same way, and more data wiped the bump out.
-Picture: a small gold plot fills dot by dot into its columns (140 dots, 7 s); „masė →“ under the axis, ending at its right end, from 6 s, as the columns are explained (what they sort by: light left, heavy right), and „140 taškų“ under the axis's left end once the plot has filled (12 s): the count bottom left, the axis word bottom right, so the two never read as one phrase. At the first click a tick lights over the one column that stands out (`th1` step 2); no new word (it is not called random before the answer). At the second the gold dots go and „140 taškų“ with them, and 3 500 pale dots of the same random spectrum fill the same frame (`th2`, 12 s), smooth, with no tick (`th2` step 1; 22 Oct: the tick and the dimmed rest made the filled column read as a peak on camera), „3 500 taškų“ in the count's place 1,5 s after the click: where the bump was, the column is as tall as its neighbours. The first two sentences are said over the flight (4,5 s), the column sentences over the fill.
-Note: both plots are illustrations, not measured data: two random samples from one smooth spectrum with no particle in it; in the 140 chance made the bump, the 3 500 are smooth (public/data/theta-toy.json, seeds inside). Say „sudėliojo kompiuteris“, never „tikri duomenys“. Each plot fills its frame to its own tallest column, so the two are not at one scale (that is slide 13).
+Picture: a small gold plot fills dot by dot into its columns (140 dots, 7 s) while the days of collecting tick under the axis's left end, „0 dienų“ to „4 dienos“, in step with the dots landing (the owner, 23 Oct: "just show one with not a lot of data (show days / years of collection increasing)"); „masė →“ under the axis, ending at its right end, from 6 s, as the columns are explained (what they sort by: light left, heavy right): the clock bottom left, the axis word bottom right. At the first click a tick lights over the one column that stands out (`th1` step 2); no new word (it is not called random before the answer). At the second the gold dots go and their clock with them, and 3 500 pale dots of the same random spectrum fill the same frame (`th2`, 12 s), smooth, with no tick (`th2` step 1; 22 Oct: the tick and the dimmed rest made the filled column read as a peak on camera), the clock in the same place running „0 dienų“ to „100 dienų“: 25 times the dots in 25 times the days, so where the bump was, the column is as tall as its neighbours. The first two sentences are said over the flight (4,5 s), the column sentences over the fill.
+Note: both plots are illustrations, not measured data: two random samples from one smooth spectrum with no particle in it; in the 140 chance made the bump, the 3 500 are smooth (public/data/theta-toy.json, seeds inside). The days are the same illustration (35 dots a day, both plots), so they are said with „tarkime“. Say „sudėliojo kompiuteris“, never „tikri duomenys“. Each plot fills its frame to its own tallest column, so the two are not at one scale. The clock is <FillClock> (setup/FillClock.vue): it reads how much of the plot has landed, so it cannot run ahead of the dots.
 
-Mes dirbame su klausimais, į kuriuos dar niekas neatsakė. Tokį darbą dabar išbandysi ir tu. Kiekvienas taškas krenta į stulpelį pagal masę. Kairėje – lengvesnės dalelės, dešinėje – sunkesnės. Lyg surikiuotum visus savo mokyklos mokinius pagal ūgį. Jei dalelė tikra, jos masė kaskart išeina beveik ta pati, ir taškai krenta į tą patį stulpelį. Taip iškyla kauburys. Bet kauburį gali sukurti ir atsitiktinumas – kaip kauliukas, kuris kelis kartus iš eilės išmeta šešetą.
+Mes dirbame su klausimais, į kuriuos dar niekas neatsakė. Tokį darbą dabar išbandysi ir tu. Tarkime, duomenis renkame keturias dienas. Kiekvienas taškas krenta į stulpelį pagal masę. Kairėje – lengvesnės dalelės, dešinėje – sunkesnės. Lyg surikiuotum visus savo mokyklos mokinius pagal ūgį. Jei dalelė tikra, jos masė kaskart išeina beveik ta pati, ir taškai krenta į tą patį stulpelį. Taip iškyla kauburys. Bet kauburį gali sukurti ir atsitiktinumas – kaip kauliukas, kuris kelis kartus iš eilės išmeta šešetą.
 → spausk
 Kaip manai, ar šis kauburys – nauja dalelė?
 [pauzė 3 s]
 Ne. Šį grafiką kompiuteris sudėliojo iš atsitiktinių skaičių – jokios dalelės jame nėra.
 → spausk
-Štai tas pats atsitiktinumas, tik taškų dvidešimt penkis kartus daugiau.
+Štai tas pats atsitiktinumas, tik duomenis renkame šimtą dienų – dvidešimt penkis kartus ilgiau.
 [leisk prisipildyti]
 Kauburio nebeliko – ten, kur jis buvo, stulpelis dabar toks pat kaip kiti.
 Panašų kauburį 2003 metais pamatė ir tikri fizikai. Eksperimentas Japonijoje pranešė apie kitą dalelę iš penkių kvarkų. Jo kauburį sudarė vos keliolika taškų. Kiti eksperimentai surinko daug daugiau duomenų ir tos dalelės nerado.
-Štai kaip atrodo, kai taškų – dešimtys tūkstančių.
+O dabar – tikri LHCb duomenys.
 
 The 2003 claim was Θ⁺, a different five-quark particle: „kitą dalelę iš penkių kvarkų“, never „ši dalelė“. „vos keliolika taškų“: LEPS's own peak was about 19 events above a background of about 17 (36 in the peak region). If asked: LEPS at SPring-8 reported „evidence“ at 4,6σ (Phys. Rev. Lett. 91, 012002 (2003)); CLAS and others with far more data found nothing; by 2008 the PDG review wrote the particle does not exist; the idea of five-quark particles dates from 1964.
 
@@ -326,90 +325,31 @@ clicks: 1
 <Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 1, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { oc: 2 } }" />
 
 <AfterFlight :delay="2.5"><div class="heap l late" style="left: 500px; top: 55px"><span class="n">LHCb duomenys</span></div><div class="heap r axis late" style="left: 797px; top: 356px"><span class="n">masė&nbsp;→</span></div></AfterFlight>
-<AfterFlight :delay="6"><div class="heap l late" style="left: 183px; top: 356px"><span class="n">59&nbsp;453&nbsp;masės</span></div></AfterFlight>
+<AfterFlight :delay="4.6"><div class="heap l late" style="left: 183px; top: 356px"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015]]" :fill="20" /></span></div></AfterFlight>
 <div v-click="1" class="heap l step" style="left: 500px; top: 118px; --step-delay: 0.8s"><span class="n">5&nbsp;naujos dalelės</span></div>
 
-<!-- facts: lhcb-omegac-2017-fig2-candidates, lhcb-omegac-five-2017, lhcb-omegac-2017-masses, omegac-quark-content, proton-neutron-three-quarks, lhcb-omegac-confirmed, chance-bumps-shrink-with-data, poisson-fluctuation-sqrt-n -->
+<!-- facts: lhcb-omegac-2017-fig2-candidates, lhcb-omegac-2017-sample, lhcb-omegac-2017-years, lhcb-omegac-five-2017, lhcb-omegac-2017-masses, omegac-quark-content, proton-neutron-three-quarks, lhcb-omegac-confirmed, chance-bumps-shrink-with-data, poisson-fluctuation-sqrt-n, particle-physics-5-sigma-discovery, lhcb-pentaquark-2015, pentaquark-idea-to-discovery-51-years -->
 
 <!--
-Message: real LHCb data with almost 60 000 computed masses: with this many, real particles rise as tall, narrow peaks; five here, five new particles, each of three quarks like a proton. Three quarks is usual.
-Picture: LHCb's real m(Ξc⁺K⁻) spectrum fills grain by grain in light blue, fast at first (about 20 s), until five narrow peaks stand clear of the rest (the owner, 18 Oct: "slide 7-8 just show such histogram with omega c resonances, nicely resolved"); „LHCb duomenys“ top right of the plot from 2,5 s (as the first sentence says so: real data, against slide 10's computer-made dots), with „masė →“ under the axis's right end; „59 453 masės“ under its left end from 6 s, as the number is said (moved from the middle on 22 Oct: beside the axis word it read „59 453 masės masė“). → spausk: white ticks light over the five peaks while the rest steps back (`oc` step 2), and „5 naujos dalelės“ comes up just right of the last tick, under the name (0,8 s). Light blue, so gold means the pentaquark family (the cover's form, the toy, the pentaquark plot).
+Message: real LHCb data, almost 60 000 computed masses collected over five years: with this many, real particles rise as tall, narrow peaks; five here, five new particles, each of three quarks like a proton. Physicists call a discovery only a peak chance alone would make less than once in 3,5 million; these five pass it by far, and that is how they know. The cover's five-quark particle LHCb found the same way, in 2015, after 51 years; I searched for pentaquarks too. (Since 23 Oct this slide carries the rule and the pentaquark: the owner cut the pentaquark plot and the two plots at one scale, "a bit too much histograms".)
+Picture: LHCb's real m(Ξc⁺K⁻) spectrum fills grain by grain in light blue at a steady rate (20 s; `curve` 1 since 23 Oct, so the years tick as the data came), until five narrow peaks stand clear of the rest (the owner, 18 Oct: "slide 7-8 just show such histogram with omega c resonances, nicely resolved"); „LHCb duomenys“ top right of the plot from 2,5 s (as the first sentence says so: real data, against slide 10's computer-made dots), with „masė →“ under the axis's right end; under its left end the year the landing dots were recorded in, „2011 m.“, „2012 m.“, „2015 m.“ (the owner, 23 Oct: "show the 5 omega resonances also with time ticking of when this was collected"): the year changes at the share of the sample's luminosity taken by then (1,0, 2,0 and 0,3 fb⁻¹: 30 % and 91 %); 2013 and 2014 are skipped, no data were taken. „59 453“ is said, no longer shown. → spausk: white ticks light over the five peaks while the rest steps back (`oc` step 2), and „5 naujos dalelės“ comes up just right of the last tick, under the name (0,8 s). Light blue, so gold means the pentaquark family (the cover's form, the toy, the pentaquark plot).
 Data: LHCb, Phys. Rev. Lett. 118, 182001 (2017), Fig. 2 (3,3 fb⁻¹ at 7, 8 and 13 TeV): its 1 MeV bin contents read from the vector figure (no HEPData record) and summed to 2 MeV, where they equal the paper's own Fig. 3 bin for bin; 2 960–3 300 MeV, 59 453 candidates (public/data/omegac.json), drawn one grain per two candidates (`unit: 2`, so „masės“, not „taškai“). All candidates as the figure shows them, no background subtracted.
 
-Tai tikri LHCb duomenys – beveik šešiasdešimt tūkstančių apskaičiuotų masių.
+Tai tikri LHCb duomenys – beveik šešiasdešimt tūkstančių apskaičiuotų masių, surinktų per penkerius metus.
 [leisk prisipildyti]
 Su tikromis dalelėmis – atvirkščiai: kai taškų daugėja, jos iškyla aukštomis, siauromis smailėmis.
 → spausk
 Čia jų penkios – penkios naujos dalelės. LHCb jas paskelbė iš karto, visas penkias. Keturias iš jų vėliau patvirtino ir kiti matavimai. Kiekviena sudaryta iš trijų kvarkų, kaip ir protonas. Trys kvarkai – įprasta.
-O dalelė iš penkių kvarkų – ta, kurią matei pradžioje?
-
-„atsitiktiniai kauburiai išsilygina“: a chance fluctuation of N counts is about √N while a real peak grows with N; Lyons (CERN Courier, 2023): many 3σ and 4σ effects went away with more data, and the Higgs peaks grew. 2017 is not spoken. If asked: the Ωc⁰ states, seen decaying to a Ξc⁺ and a K⁻; LHCb announced all five at once in March 2017; one charm and two strange quarks (flavour names stay out of speech); masses 3000, 3050, 3066, 3090 and 3119 MeV; four of the five were later confirmed by Belle and by LHCb in Ωb⁻ decays; the broad rise near 3 190 MeV is not a sixth narrow particle.
-
-Šaltiniai: LHCb, Phys. Rev. Lett. 118, 182001 (2017), arXiv:1703.04639, Fig. 2 (bin contents read from the vector figure).
-
-(~0.75 min)
--->
-
----
-space: { at: [1800, 2.75, 0], dist: 23, yaw: 0, pitch: 3, sway: 0.4, dim: 0.05 }   # the lhcb station's look ([0, 4.3, 0], dist 16.5) drawn back and lowered (22 Oct): the axis at y 346 and the ticks below y 60, so the axis word under it ends inside the broadcast safe box (y 408); the labels are projected from this pose
-clicks: 1
----
-
-<Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 0, jp: 1, jx: 0, lietuva: 0 }" :clicks="{ 1: { jp: 2 } }" />
-
-<AfterFlight :delay="2.5"><div class="heap l late" style="left: 572px; top: 55px"><span class="n">LHCb duomenys</span></div><div class="heap r axis late" style="left: 771px; top: 358px"><span class="n">masė&nbsp;→</span></div></AfterFlight>
-<div v-click="1" class="heap l step" style="left: 572px; top: 108px; --step-delay: 0.8s"><span class="n">3&nbsp;pentakvarkai</span></div>
-
-<!-- facts: lhcb-pentaquark-2015, lhcb-pentaquark-2015-cross-checks, pentaquark-idea-to-discovery-51-years, lhcb-pentaquark-2019, lhcb-pentaquark-2019-data-2011-2018, lhcb-pentaquark-2019-27292-entries -->
-
-<!--
-Message: LHCb's pentaquark plot, all its data up to 2019; the peak first rose in 2015. You judge again, and this time it is real: it survived the checks and was a pentaquark, 51 years on. Later, with nine times more data, there were three peaks.
-Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate in gold, fast at first, until the narrow peaks stand out (about 20 s); „LHCb duomenys“ top right from 2,5 s, as on slide 11, and „masė →“ under the axis's right end. The first two sentences over the flight and the fill; the question once the peaks stand. → spausk at „Vėliau…“: white ticks light over the three peaks while the rest of the plot steps back (`jp` step 2; at once if the fill is done, else when it ends), and „3 pentakvarkai“ comes up just right of the two close ticks, under the name (0,8 s).
-Data: LHCb, PRL 122, 222001 (2019), HEPData ins1728691 Table 2 (m(Kp) > 1,9 GeV): Run 1 and Run 2 together, so 2019 is named once, as the data's span; the 2015 peak is never placed „čia“.
-
-Štai LHCb pentakvarkų grafikas – jame visi duomenys iki 2019 metų. Pirmą kartą smailė iškilo 2015 metais, kai LHCb tyrė, kaip skyla viena sunki dalelė.
-[leisk prisipildyti]
-Kaip manai, ar ši smailė tikra?
+Atradimu fizikai vadina tik tokią smailę, kurią vien atsitiktinumas sukurtų rečiau nei kartą iš trijų su puse milijono. Šios penkios tą ribą peržengė su didele atsarga. Taip fizikai ir sužino, kad rado tai, ko dar niekas nematė.
+O dalelę iš penkių kvarkų, kurią matei pradžioje, LHCb rado 2015 metais – po penkiasdešimt vienerių metų paieškų.
 [pauzė 2 s]
-Fizikai tikrino, ar smailė neatsiranda dėl kitų, jau žinomų dalelių, ir ar ji išlieka skirtingų metų duomenyse. Smailė liko. Tai pentakvarkas – po penkiasdešimt vienerių metų paieškų.
-→ spausk
-Vėliau, turint devynis kartus daugiau duomenų, smailių buvo jau trys.
-Padėkime šalia grafiką, kurį vertinai tu.
-
-The checks are worded to the stored claim only (fits with other known particles alone; stability across the 2011 and 2012 data); never „viską“, „detektorius“ or „atranka“; never „netikėtai“. If asked: Λb → J/ψ p K⁻; in 2019, with Run 1 and Run 2 data, the 2015 peak split in two and a third appeared, Pc(4312)⁺ at 7,3σ.
-
-Šaltiniai: LHCb, Phys. Rev. Lett. 115, 072001 (2015); CERN, 2015-07-14 (the checks); LHCb, Phys. Rev. Lett. 122, 222001 (2019), HEPData ins1728691.
-
-(~0.8 min)
--->
-
----
-space: { at: [1796.4, 3.0, 0], dist: 26, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 }   # drawn back (dist 21 until 22 Oct): both plots and their counts inside the broadcast safe box (x 98–882, y 55–408); the labels are projected from this pose
----
-
-<Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 0, jp: 2, jx: 1, lietuva: 0 }" />
-
-<div class="heap" style="left: 571px; top: 354px"><span class="n">27&nbsp;292&nbsp;taškai</span></div>
-<div class="heap" style="left: 210px; top: 354px"><span class="n">140&nbsp;taškų</span></div>
-<div class="heap l" style="left: 104px; top: 170px"><span class="n">atsitiktinumas</span></div>
-<div class="heap" style="left: 730px; top: 170px"><span class="n">LHCb</span></div>
-<AfterFlight :delay="10"><div class="age"><span class="n">&lt;&nbsp;1</span> iš 3,5&nbsp;mln.</div></AfterFlight>
-
-<!-- facts: theta-toy-140-entries, lhcb-pentaquark-2019-27292-entries, particle-physics-5-sigma-discovery, dice-eight-sixes-worked, lhcb-pentaquark-2015-cross-checks, lhcb-pentaquark-2019, sarpis-phd-bonn-2023, sarpis-glasgow-study-and-job -->
-
-<!--
-Message: at one scale, your 140 dots are a thin strip beside LHCb's more than 27 000. Physicists call a discovery only a peak that chance alone would make less than once in 3,5 million times, rarer than eight sixes in a row. LHCb's peaks passed that bar; that is how physicists know they have found something nobody has seen.
-Picture: the camera draws back to two plots at the same scale, one grain per entry and the same height per entry. Left, the 140-dot plot of slide 10 as a thin strip (an illustration, not LEPS's data; no axis line of its own since 22 Oct: slide 12's drawn-back pose showed it, empty, as a stray line at the left edge); right, LHCb's 27 292 candidates with their three marked peaks. Under them, their counts; over them, their names: „atsitiktinumas“ over the strip (slide 10's random dots), „LHCb“ over the right plot. The rule as a number, top left, 10 s in (about when „Atradimu fizikai vadina…“ begins, at 120 words a minute): „< 1 iš 3,5 mln.“. The last line is said as the camera flies to Europe (4,5 s).
-
-Abu grafikai tuo pačiu masteliu. Kairėje – ši plona juostelė, tavo šimtas keturiasdešimt taškų. Dešinėje – daugiau nei dvidešimt septyni tūkstančiai. Atradimu fizikai vadina tik tokią smailę, kurią vien atsitiktinumas sukurtų rečiau nei kartą iš trijų su puse milijono. Tai rečiau, nei kauliukas aštuonis kartus iš eilės išmestų šešetą. LHCb smailės šią ribą peržengė. Taip fizikai ir sužino, kad rado tai, ko dar niekas nematė.
-[pauzė 4 s]
 Pentakvarkų ieškojau ir aš.
 
-The one spoken answer to the cover's question, in its words, said once. „Sigma“ is not said; if asked: five sigma; the 2015 states at 9σ and 12σ, Pc(4312)⁺ at 7,3σ; eight sixes in a row is (1/6)⁸, about 1 in 1,7 million; a 5σ fluke about 1 in 3,5 million.
+„atsitiktiniai kauburiai išsilygina“: a chance fluctuation of N counts is about √N while a real peak grows with N; Lyons (CERN Courier, 2023): many 3σ and 4σ effects went away with more data, and the Higgs peaks grew. 2017 is not spoken. „per penkerius metus“: the sample is 2011–2015 (7, 8 and 13 TeV), with nothing in 2013–2014. „Sigma“ is not said; the five are at 10σ to 24σ, the bar is 5σ. If asked: a 5σ fluke is about 1 in 3,5 million, rarer than eight sixes in a row ((1/6)⁸, about 1 in 1,7 million); the pentaquark of 2015 was at 9σ and 12σ; the Ωc⁰ states, seen decaying to a Ξc⁺ and a K⁻; LHCb announced all five at once in March 2017; one charm and two strange quarks (flavour names stay out of speech); masses 3000, 3050, 3066, 3090 and 3119 MeV; four of the five were later confirmed by Belle and by LHCb in Ωb⁻ decays; the broad rise near 3 190 MeV is not a sixth narrow particle.
 
-Šaltiniai: LHCb, Phys. Rev. Lett. 122, 222001 (2019), HEPData ins1728691; Physics World, 2007-05-01, „The tale of the blogs’ boson“ (5σ – atradimas).
+Šaltiniai: LHCb, Phys. Rev. Lett. 118, 182001 (2017), arXiv:1703.04639, Fig. 2 (bin contents read from the vector figure); LHCb, Phys. Rev. Lett. 131, 131902 (2023), arXiv:2302.04733 (2011–2015); LHCb, Phys. Rev. Lett. 115, 072001 (2015); Physics World, 2007-05-01, „The tale of the blogs’ boson“ (5σ – atradimas).
 
-(~0.7 min)
+(~1.2 min)
 -->
 
 ---
@@ -417,7 +357,7 @@ space: { at: [1201, 0, 2.5], dist: 36, yaw: 0, pitch: 60, sway: 0, dim: 0.05 }  
 clicks: 4
 ---
 
-<Grains :set="{ pq: 3, route: 1, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 4 }, 3: { route: 6 }, 4: { route: 7 } }" />
+<Grains :set="{ pq: 3, route: 1, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 4 }, 3: { route: 6 }, 4: { route: 7 } }" />
 
 <div class="city late caption" style="left: 719px; top: 84px">Vilnius</div>
 <div class="city late caption" style="left: 367px; top: 356px">CERN</div>
@@ -456,52 +396,31 @@ If asked: Glasgow 2011–2015; Heidelberg 2019–2020; Bonn 2020–2023 (the the
 space: { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62, sway: 0.3, dim: 0.4 }   # dim 0.2 until 20 Oct: the route head's bloom washed out the east of the outline in the still
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 1 }" />
+<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 1 }" />
 
 <div class="city caption" style="left: 718px; top: 230px">Vilnius</div>
 
 <!-- facts: cern-lithuania, lhcb-vilnius-students, lhcb-vilnius-work, lhcb-vilnius-racz, lhcb-open-data-coordinator-2026, lhcb-run1-release-sarpis-lrt-2025 -->
 
 <!--
-Message: all of it can now be done from Lithuania (the owner, 15 Oct: "then stress all of this can now be done in Lithuania"): a CERN associate member; a group of mostly students, on the detector, on software, or searching for particles; the first VU doctoral student on LHCb also searches for pentaquarks; 13 VU students at CERN this summer, a record. The coordinator line moved to slide 16 (21 Oct), after the group's own part of the detector.
-Picture: the camera dives from the whole of Europe down to Vilnius, and Lithuania's outline comes up in light blue round it (`lietuva`, Natural Earth); the route's arcs leave Vilnius westward out of frame. Only Vilnius is named. The last line is said as the clip condenses.
+Message: all of it can now be done from Lithuania (the owner, 15 Oct: "then stress all of this can now be done in Lithuania"): a CERN associate member; a group of mostly students, on the detector, on software, or searching for particles; the first VU doctoral student on LHCb also searches for pentaquarks; 13 VU students at CERN this summer, a record. Then my own job since August, the bridge to the data (back here on 23 Oct, when the owner cut the SciFi clip: "Don't need scifi module").
+Picture: the camera dives from the whole of Europe down to Vilnius, and Lithuania's outline comes up in light blue round it (`lietuva`, Natural Earth); the route's arcs leave Vilnius westward out of frame. Only Vilnius is named. The question is asked as the camera flies to the piles of data.
 
 Lietuva – asocijuotoji CERN narė, todėl lietuviai gali pretenduoti į darbą CERN. Didžioji mūsų grupės dalis – studentai. Vieni dirba su detektoriumi, kiti – su programomis, treti ieško naujų dalelių. Pirmoji VU doktorantė LHCb eksperimente irgi ieško pentakvarkų. O šią vasarą praktiką CERN atliko trylika VU studentų – daugiausia iki šiol.
-Mūsų grupė dirba ir prie paties detektoriaus.
+Nuo rugpjūčio esu ir LHCb atvirųjų duomenų koordinatorius. Prisimeni duomenis, kuriuos ruošiau Bonoje?
 
 The doctoral student stays unnamed. „pretenduoti“, not „kandidatuoti“. If asked: Lithuania has been an associate member since 2018; VU joined LHCb in September 2024.
 
 Šaltiniai: home.cern, 2018-01-08 (asocijuotoji narė); VU FF, 2024-09-02 (VU priimtas į LHCb); VU, 2026-08-20 (grupė ir 13 vasaros studentų); VU, R. Racz (pirmoji VU doktorantė LHCb); VU, 2026-07-30 (koordinatorius).
 
-(~0.55 min)
--->
-
----
-
-<!-- 21 Oct, the 15-minute round: the group's own part of LHCb. The library clip lis_flag.mp4 (Innoday's, 10 s, silent, played once): a SciFi module's end with its light injection system, a Blender render after the SciFi drawing (not a photograph); the Lithuanian flag lasered on the cold box is Innoday's own touch (the owner, 19–20 Oct). It holds its last frame; → moves on. -->
-<VideoPlayer src="lis_flag.mp4" muted :controls="false" />
-
-<!-- facts: lhcb-scifi, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis, lhcb-open-data-coordinator-2026, lhcb-run1-release-sarpis-lrt-2025 -->
-
-<!--
-Message: one part of LHCb our group works on: the tracker of plastic fibres that light up when a particle passes, and the light injection system at the ends of its modules that sends short laser pulses into them to calibrate them. A computer-made picture, said so. Then my own job since August, the bridge to the data.
-Picture: the end of one SciFi module, its light injection boards with their laser diodes and fibres, the cold box below with the Lithuanian flag lasered on it (10 s, silent); its last frame holds while you finish. Say „kompiuteriu sukurtas vaizdas“ once: it is a render, not a photograph, and the flag is ours.
-
-Tai vieno LHCb sekiklio modulio galas – kompiuteriu sukurtas vaizdas pagal jo brėžinį, o vėliavą ant jo nupiešėme patys. Sekiklyje – daugiau nei vienuolika tūkstančių kilometrų plonų plastikinių skaidulų. Kai pro jas praskrieja dalelė, jose sužimba šviesa. Kad šviesos jutikliai būtų tiksliai sukalibruoti, modulių galuose lazeriai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupė dirba ir prie šio sekiklio, ir prie šios sistemos.
-Nuo rugpjūčio esu ir LHCb atvirųjų duomenų koordinatorius. Prisimeni duomenis, kuriuos ruošiau Bonoje?
-
-„daugiau nei vienuolika tūkstančių kilometrų“: the SciFi tracker's 11 000+ km of 250 µm fibre (LHCb). Nothing more about Vilnius than the group's meeting agenda says (SciFi and the light injection system among its service tasks): never „mes sukūrėme“. The flag is not on the real module. If asked: 670 nm VCSEL lasers driven by GBLD chips; 524 288 SiPM channels read the light.
-
-Šaltiniai: LHCb Upgrade I, JINST 19 (2024) P05065, 6.5.7 sk.; indico.cern.ch/event/1461467 (VU LHCb grupės susitikimas, 2024-10-03); VU, 2026-07-30 (koordinatorius).
-
-(~0.4 min)
+(~0.65 min)
 -->
 
 ---
 space: { at: [2599.3, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8, dim: 0.15 }   # (x 2597.0 until 22 Oct: „1 TB“ ran to x 930, past the broadcast safe box) from the front, so the 1 TB sphere and its label stand in frame right of the 800 pile, nearly as far from the lens (OpenData's yaw-73 pose, its slide 7, left the sphere below the frame); the camera stays inside the vault's clear capsules
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 1, scale: [0, 1], 'scale:labels': 1, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 1, scale: [0, 1], 'scale:labels': 1, sun: 0, vilnius: 0 }" />
 
 <div class="readout late">
 
@@ -528,7 +447,7 @@ Terabytes only, never „petabaitas“. 800 TB is CERN's figure (VU: over 1 PB i
 space: { at: [2591.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, flight: 5, dim: 0.15 }   # OpenData's 4 PB pose (its slide 8)
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 1, scale: [0, 1, 2], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 1, scale: [0, 1, 2], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
 
 <div class="readout last">
 
@@ -558,7 +477,7 @@ Never „4 PB“ in speech. If asked: the Ntupling Service (February 2026) opens
 space: { at: [2570.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0.15 }   # OpenData's 100 PB pose (its slide 9) moved 13 west (x 2583.5 until 22 Oct): with the readout on the 150 px floor, the blue sphere stood on „000 TB“; now it stands right of it (x ≈ 630–735)
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 1, scale: [0, 1, 2, 3], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 1, scale: [0, 1, 2, 3], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
 
 <div class="readout blue late">
 
@@ -588,7 +507,7 @@ Scale, worked out: a 1 TB laptop of today is about 1,1 cm thick, so 100 000 of t
 space: { at: [2600, -0.3, 0], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }   # OpenData's sun pose (its slide 11)
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 1, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 1, vilnius: 0 }" />
 
 <!-- facts: opendata-sun-plots-from-records, stonkus-bsc-2026, stonkus-bsc-2026-yield, lhcb-pentaquark-2015, lhcb-open-data, lhcb-opendata-brown-2026 -->
 
@@ -610,7 +529,7 @@ Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filter
 space: { at: [2596.3, 1.0, 0], dist: 45, yaw: 0, pitch: 3, sway: 0, dim: 0.05 }   # OpenData's Vilnius pose (its slide 12: at [2600.17, −1.03, 0], dist 30.45) drawn back (22 Oct; dist 37.5 and the turn at 300 s until the names went to labelH 0.11, when „Bakalauro“ left the broadcast safe box on the left at 26–46 s and „Meistriškumo“ on the right by 56 s): with the turn at 450 s and no sway, both names stay inside the box from their arrival to about 60 s
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 0, vilnius: 1 }" />
+<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 0, vilnius: 1 }" />
 
 <!-- facts: lhcb-masterclass-vilnius-2026, lhcb-masterclass-vilnius-2027, vu-masterclass-annual, stonkus-bsc-2026, vu-bsc-2026-cms-open-data-spukas, lhcb-opendata-masterclass-2014 -->
 
@@ -633,7 +552,7 @@ The organisers' point is said once, here, as advice; it claims nothing about you
 space: { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }   # the cover's view and dim, the form a little nearer the middle (right half), „Ačiū“ beside it in the left half
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
 
 <div class="thanks beside">Ačiū</div>
 

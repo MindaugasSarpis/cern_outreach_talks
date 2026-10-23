@@ -55,17 +55,6 @@ the library clip (full length), so this talk's release wins the chain. Raw: the 
 clip folder's cern_video_2019_050_008_1080ph265.mp4 (HEVC, 72 MB), copied into the raw \
 bank under this name."""
 
-[[videos]]
-name    = "lis_flag.mp4"
-profile = "remux"
-used_in = ["deck"]
-notes   = """\
-The library's lis_flag.mp4 (10 s, silent, played once: a Blender render of a SciFi module's \
-end, the Lithuanian flag lasered on its cold box), copied as-is from the slidev-videos \
-videos-shared release onto this talk's own, so it plays and checks on any toolkit pin: \
-the library holds it only from v0.9.0, and this talk runs v0.8.x. Innoday's 20 s cut stays \
-on Innoday's release. Raw: that release asset (1,68 MB), remuxed."""
-
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 
 [[videos]]
