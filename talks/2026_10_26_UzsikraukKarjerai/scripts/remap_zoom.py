@@ -1,9 +1,8 @@
-"""The NFTMC → cosmic web zoom as a 20 s clip (slide 2), from the owner's SpaceEngine edit.
+"""The NFTMC → cosmic web zoom as a 17 s clip (slide 2), from the owner's SpaceEngine edit.
 
-Five stretches of the source, each at its own eased speed, joined by dissolves:
-the Google Earth flight out to the whole Earth in one move, then the Sun, our
-galaxy from inside, our galaxy whole, and the cosmic web slowing to a stop and
-held. In between, the edit's camera swings left and right by screen widths over
+Four stretches of the source, each at its own eased speed, joined by dissolves:
+the Google Earth flight out to the clouds, the Earth from space, our galaxy
+whole, and the cosmic web slowing to a stop and held. In between, the edit's camera swings left and right by screen widths over
 10-20 s (a gentle sway at 1x, a shake when sped up 30-55x: the owner, 23 Oct,
 "on speedup it doesn't look good"), so those stretches are dissolved over, not
 played. Each output frame averages the source frames under a 180-degree shutter.
@@ -24,11 +23,16 @@ from scipy.ndimage import gaussian_filter1d, maximum_filter1d
 SRC_FPS, OUT_FPS = 60, 50
 W, H = 1920, 1080
 END_SRC = 253.42
-TOTAL, HOLD = 20.0, 1.0
+TOTAL, HOLD = 17.0, 1.0
 XF = 0.4                  # each dissolve, seconds
 SHUTTER = 0.5
 MAX_BLEND = 24
 BOUND = np.array([70.0, 40.0, 1.5, 0.03])   # px, px, degrees, log scale: the corridor round the real path
+# the Sun and inside the galaxy (90.5-94, 127-146) left out on 23 Oct: the review found them the most
+# synthetic-looking pictures in the talk and near-black on a stream; the Earth dissolves into the galaxy
+# the cloud whiteout after Google Earth's fade (source ~29.5-33 s) and the bright limb toned down: they
+# flashed after Vilnius (YAVG 101 -> 156); keyed by source seconds
+GAIN = [(28.8, 1.0), (29.8, 0.6), (32.4, 0.62), (37.6, 0.75), (39.6, 0.85), (42.0, 1.0)]
 BOUNDS = {0: np.array([50.0, 30.0, 0.8, 0.02]), 1: np.array([50.0, 30.0, 0.8, 0.02])}   # Google Earth's: less crop, sharper
 # Google Earth's attribution (its logo and the imagery line under it, burnt into the source until
 # its fade to SpaceEngine ends at ~29.9 s) is put back unmoved and uncropped over the moved frame:
@@ -45,9 +49,7 @@ GRID = 1 / 250
 STRETCHES = [
     (0.0, 32.4, 5.6, [(0.0, 1.2), (1.0, 2.5), (2.5, 6), (3.8, 8), (4.5, 6.5), (5.2, 6), (5.6, 6)]),   # NFTMC → Vilnius → the clouds
     (37.6, 62.0, 2.7, [(0.0, 10), (1.2, 10), (1.7, 8), (2.7, 8)]),           # the Earth from space (its 95° roll at 32-37 s dissolved over)
-    (90.5, 94.0, 1.5, [(0.0, 1), (1.5, 1)]),                                  # the Sun, one steady pan
-    (127.0, 146.0, 2.4, [(0.0, 1), (2.4, 1)]),                                # a star in the band, then inside the galaxy
-    (186.0, 196.0, 3.4, [(0.0, 1.4), (2.0, 1.0), (3.4, 0.5)]),               # the galaxy whole, drifting one way
+    (186.0, 196.0, 3.8, [(0.0, 1.4), (2.2, 1.0), (3.8, 0.5)]),               # the galaxy whole, drifting one way
     (226.0, END_SRC, None, [(0.0, 9), (0.55, 2.5), (1.0, 0.4)]),             # the web, braking to a stop
 ]
 
@@ -247,6 +249,8 @@ def main(src, out, motion=None):
                     dd, z = stab[j][i]
                     f = warp(f, dd, z)
                 f = f.astype(np.float32)
+                gt, gv = zip(*GAIN)
+                f = f * float(np.interp(i / SRC_FPS, gt, gv))
                 if text:
                     f = f * (1 - mask) + raw.astype(np.float32) * mask
                 moved[j] = f

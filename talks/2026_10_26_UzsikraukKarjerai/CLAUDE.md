@@ -47,6 +47,14 @@
   approved plan (21 Oct). v0.8.2 adds `RUN_ME.command` (macOS) and
   `RUN_ME.bat` (Windows) to the venue zip: python3's http.server where it
   exists, else what to install; a bundled server binary is put to the owner.
+- The feed (the owner, 23 Oct): "They will have the ability to switch between
+  room view (me in front of screen) and the presentation view": Delfi takes the
+  laptop's output into the mixer as well as filming the screen behind him, so the
+  slides also go out full frame at stream bitrate (the broadcast look and the safe
+  box matter for both; where he stands only in the room view). For the day: the
+  MacBook's HDMI at 1920×1080, 50 Hz, mirrored (a presenter window on the laptop
+  runs a second world and may stutter); ask whether the sound goes over HDMI or
+  a separate cable.
 - Owner's steers: "doesn't have to be my life story"; the first version was
   rejected for too many slides, AI-sounding lines and a broken story; the
   second for incoherent flow and washed-out visuals ("more striking but not
