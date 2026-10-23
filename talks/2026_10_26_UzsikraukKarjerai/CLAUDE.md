@@ -106,6 +106,20 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-23 (night, latest): **deployed 2646fa4** (Pages run 40014341245, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, nothing skipped, plates one
+  warning, the fingerprint): the owner's last round (Decisions), 19 slides, 11,7 min
+  timed, about 13–14 delivered with his slots. The zoom's music under 11–12, Starfire
+  under 18–19; the Ωc⁰ on 12's click; old 18 and „Ačiū“ cut; the talk ends on the
+  close at full frame with „mano greitintuvas“ / „jūsų greitintuvas“ and the credits.
+  Reviewed after the changes by a visual pass (twice) and a story-and-facts pass; their
+  fixes are in. Plates (12) and stills 01–19 retaken and published; the close at full
+  frame on the release; the venue zip rebuilt from 2646fa4 (237 MB); venue.json. Open
+  for the owner: the zoom music's title and licence (unknown since Innoday); his
+  words for slide 13's slots; slide 10's camera lift (not applied); where he stands in
+  the room view; the release still holds 18-, 19-, 20- and 21-plate.mp4 and the old
+  10 s-era assets no slide uses (a prune is his or the Scheduler's to run).
 - 2026-10-23 (evening, latest): **deployed 6f13fc3** (Pages run 39998140027, green;
   https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed; `talk ready` passed on it, nothing skipped, plates one
