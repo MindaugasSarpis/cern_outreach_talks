@@ -88,6 +88,7 @@ delete it); make it again with the script."""
 name    = "lis_flag.mp4"
 profile = "silent-loop"
 used_in = ["deck"]
+trim    = ["0:03.5", "0:20"]   # 23 Oct review: its first 3,5 s are a grey sliver of module on black, a dead screen on camera
 notes   = """\
 Slide 19 (the owner, 23 Oct: "better take 2 last slides from innoday"): Innoday's \
 20 s lis_flag.mp4, the whole SciFi module from below, its light injection cold box \
