@@ -65,22 +65,21 @@
 ## Story (fifteenth version, 23 Oct night: the review round, then the owner's last cuts: 19 slides, 11,8 min by the lint's slide times; about 13–14 min delivered with the slots)
 
 The owner, 21 Oct: "15 min we can cover quite a lot of content … more
-visuals", then "Build" on the proposal in this window. Blueprint v2
-(`notes/blueprint.md`, 20 Oct) stays the spine: one dot, a particle of five
-quarks that took 51 years to find, and how you know you have found something
-nobody has seen; the viewer judges twice; the rule said once; then the dots are
-handed on through the speaker's road, the group in Vilnius, the open data and
-the masterclass. The round deepens three places: what happens 100 m down
-(the dipole magnet, new 6; inside LHCb, new 9), how chance bumps drown in more
-data (10's second click), and what the Vilnius group does (its part of the
-detector, new 16; where the data live, new 20); the blueprint's "If there is room" lines are now spoken.
-The owner's three slots on 14 stay optional (+0,75 min delivered).
+visuals", then "Build" on the proposal in this window; his rounds of 22–23 Oct
+reshaped the ends. Blueprint v2 (`notes/blueprint.md`, 20 Oct) stays the spine:
+one dot, a particle of five quarks that took 51 years to find, and how you know
+you have found something nobody has seen; the viewer judges; the rule said once;
+then the dots are handed on through the speaker's road, the group in Vilnius and
+the open data, to the group's own part of the detector and the close out to the
+LHC, „mano greitintuvas“, and the FCC, „jūsų greitintuvas“, where the cover's
+promise (where this work can start) is kept. The owner's three slots on 13 stay
+his (the first the one to tell).
 
 Pictures and numbers (owner, 2026-10-10): no titles, kickers, statements or
 section slides; the speaker narrates from the notes. A number carries the word
-that names it; a thing shown may carry its name. Exceptions from OpenData and
-Innoday on 15 Oct: the cover's name line and „Ačiū“ (lint TEXT warnings, on
-purpose).
+that names it; a thing shown may carry its name. Exceptions: the cover's name
+line, the plots' axis words, and the owner's two labels and the licence credits
+on the last slide (lint TEXT warnings, on purpose).
 
 | # | Screen | Picture | min |
 |---|---|---|---|
