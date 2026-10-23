@@ -8,6 +8,7 @@ import { armAfterCover } from './afterCover.js'
 import { installOpening } from '../components/lhc-opening/index.js'
 import { installDetector } from './detector.js'
 import { installCavern } from './cavern.js'
+import { installThesis } from './thesis.js'
 import InsideLhcb from './InsideLhcb.vue'
 // LHCb's own 2012 event, the shared collision's default: slide 8's detector (setup/detector.js)
 import EVENT_LB from '../components/lhc-opening/event.json'
@@ -16,6 +17,7 @@ import Count from './Count.vue'
 import FillClock from './FillClock.vue'
 import WebTakeover from './WebTakeover.vue'
 import AfterFlight from './AfterFlight.vue'
+import ClickPose from './ClickPose.vue'
 // The CMS event's data in the deck's own bundle (as Innoday's main.ts): lhc-opening
 // loads it with a dynamic import, so the collision's cloud was filled when that
 // chunk arrived, a few seconds in, in the middle of the cover's fly-in (0.25-0.3 s
@@ -61,6 +63,9 @@ function reloadOnStaleChunk() {
 // model with the 1,83 m person (setup/detector.js), its `cavern-floor` and `supports`
 // (setup/cavern.js), and <InsideLhcb>, which starts LHCb's own collision in it once the
 // camera has come down to the cavern floor (slide 9).
+// Back on 23 Oct (the review, "implement all"): `peakhist`, Dominykas's thesis plot
+// with the rise into `pq2` (setup/thesis.js, here 15–18 Oct), on slide 18's click,
+// and <ClickPose>, which takes the camera to it on that click (setup/ClickPose.vue).
 // (A plain function: Slidev's defineAppSetup is the identity, and
 // @slidev/types is not a dependency of the talk.)
 export default ({ app, router }) => {
@@ -75,10 +80,12 @@ export default ({ app, router }) => {
   installOpening({ app, registerBuilder })   // the shared LHC opening: its collision, sound and <LhcOpening>
   installDetector(registerBuilder, { event: EVENT_LB })
   installCavern(registerBuilder)
+  installThesis(registerBuilder)
   app.component('Grains', Grains)
   app.component('Count', Count)
   app.component('FillClock', FillClock)
   app.component('WebTakeover', WebTakeover)
   app.component('AfterFlight', AfterFlight)
   app.component('InsideLhcb', InsideLhcb)
+  app.component('ClickPose', ClickPose)
 }

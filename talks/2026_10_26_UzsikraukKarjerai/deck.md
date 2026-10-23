@@ -80,18 +80,18 @@ space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0
 
 <!--
 Message: where we are, then out past everything to the largest scale.
-Picture: the owner's SpaceEngine zoom for Innoday, 4:13 made 20 s (scripts/remap_zoom.py): the NFTMC building in Saulėtekis (Google Earth, 0–2,3 s), the Saulėtekis campus (to ~3,9 s), Vilnius and its region (~3,9–5,4 s), into the clouds (~5 s), then, joined by dissolves, the Earth from space (~5,5–7,9 s), the Sun (~7,6–9 s), inside our galaxy (~9–10,8 s), our galaxy whole (~11–14 s), and the cosmic web (from ~13,6 s) slowing to a stop, held from 19 s. Stabilised (the owner: the source's wobble "on speedup it doesn't look good"); the swaying stretches between the five are dissolved over, not played. No sound of its own. It waits on the web for the press (no advance-on-end).
+Picture: the owner's SpaceEngine zoom for Innoday, 4:13 made 17 s (scripts/remap_zoom.py): the NFTMC building in Saulėtekis (Google Earth, 0–2,3 s), the Saulėtekis campus (to ~3,9 s), Vilnius and its region (~3,9–5,4 s), into the clouds (~5 s), then, joined by dissolves, the Earth from space (~5,5–7,9 s), our galaxy whole (~7,9–11 s), and the cosmic web (from ~11 s) slowing to a stop, held from 16 s. Stabilised (the owner: the source's wobble "on speedup it doesn't look good"); the swaying stretches between them are dissolved over, not played, and since the 23 Oct review the Sun and the flight inside the galaxy are left out (the most synthetic-looking pictures, near-black on a stream). No sound of its own. It waits on the web for the press (no advance-on-end).
 
 Čia – Saulėtekis Vilniuje. Čia dirba Vilniaus universiteto fizikai.
-[kai matosi Žemė iš kosmoso, ~6 s] Žemė. [~8 s] Saulė. [~11,5 s] Mūsų galaktika.
+[kai matosi Žemė iš kosmoso, ~6 s] Žemė. [~8,5 s] Mūsų galaktika.
 [tinklui pasirodžius tylėk; kai jis sustoja] → spausk
 
 The words follow the picture: say each name as it comes, not before; the first sentence is over by the time Vilnius is in sight (~4,5 s). „Čia dirba Vilniaus universiteto fizikai“: NFTMC houses units of the VU Faculty of Physics (nftmc-opened-2016). Lithuania as a country is not shown, so it is not named.
 The footage: the owner's SpaceEngine edit spaceengine/nftmc_zoom.mp4 (Google Earth for the Earth part: its logo is on every Earth frame and the imagery providers are named in the footage, as Innoday's notes say; at this speed the providers' line is up for well under a second); the web, NCSA's Advanced Visualization Lab („Cosmic Bubble Bath“), as on the next slide.
 
-The clip runs 20 s.
+The clip runs 17 s.
 
-(~0.35 min)
+(~0.3 min)
 -->
 
 ---
@@ -531,25 +531,29 @@ Scale, worked out: a 1 TB laptop of today is about 1,1 cm thick, so 100 000 of t
 -->
 
 ---
-space: { at: [2600, -0.3, 0], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }   # OpenData's sun pose (its slide 11)
+clicks: 1
+space: { at: [2600, 1.86, 0], dist: 22, yaw: 0, pitch: 3, dim: 0.05 }   # OpenData's sun pose (its slide 11) closer, on the sun's middle (23 Oct: dist 36, at y −0.3 until then); the click flies to `thesis` (<ClickPose>)
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 1, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 1, vilnius: 0, peak: 0, pq2: 0 }" :clicks="{ 1: { sun: 0, peak: 1 } }" />
+<ClickPose :poses="{ 1: { at: 'thesis', flight: 2.5 } }" />
 
 <!-- facts: opendata-sun-plots-from-records, stonkus-bsc-2026, stonkus-bsc-2026-yield, lhcb-pentaquark-2015, lhcb-open-data, lhcb-opendata-brown-2026 -->
 
 <!--
 Message: these plots were drawn from the open data; this year a VU bachelor student collected thousands of dots from them and checked whether the bump would rise where LHCb found the pentaquarks; it did, and he calls his work a check.
-Picture: OpenData's sun of plots: a sun turns slowly round the gold pile, rays of grains leaving it to every side, nineteen of them ending at plots made from LHCb's open data (the grains land on each plot's curves), seven at empty places, gold clouds waiting. No text: „everyone can use this“ is said, not shown (the owner, 18 Oct, through the Scheduler).
+Picture: OpenData's sun of plots, closer (the 23 Oct review): eight plots made from LHCb's open data, twice the size on screen, on a ring that turns slowly round the gold pile (a turn in 72 s), rays of grains running out to each and landing on its curves; the empty gold clouds are gone. → spausk before „Jis tikrino…“: the sun fades and the camera rises in 2,5 s to Dominykas's own plot (OpenData's thesis view, here 15–18 Oct): his m(J/ψ p) from the 2012 open data (thesis Fig. 17, sideband-subtracted, 80 bins of 15 MeV, 4,0–5,2 GeV, digitised; about 16 400 decays) fills grain by grain, fast at first (6 s); about 11 s after the click the bins at 4,4–4,5 GeV brighten with a tick over the tallest: „Iškilo.“ there; then grains rise out of the peak and the cover's five-quark form gathers over it (`pq2`, from about 13 s). No text: „everyone can use this“ is said, not shown (the owner, 18 Oct, through the Scheduler).
 
-Šie grafikai nubraižyti iš atvirųjų LHCb duomenų – tų pačių auksinių krūvų viduryje. Šiais metais mūsų bakalauro studentas Dominykas Stonkus paėmė atviruosius 2012 metų LHCb duomenis ir surinko iš jų tūkstančius taškų. Jis tikrino, ar kauburys iškils toje pačioje vietoje, kur LHCb rado pentakvarkus. Iškilo. Pats savo darbą jis vadina patikrinimu.
+Šie grafikai nubraižyti iš atvirųjų LHCb duomenų – tų pačių auksinių krūvų viduryje. Šiais metais mūsų bakalauro studentas Dominykas Stonkus paėmė atviruosius 2012 metų LHCb duomenis ir surinko iš jų tūkstančius taškų.
+→ spausk
+Jis tikrino, ar kauburys iškils toje pačioje vietoje, kur LHCb rado pentakvarkus. [kauburiui iškilus, ~11 s] Iškilo. Pats savo darbą jis vadina patikrinimu.
 Mūsų grupė dirba ir prie paties detektoriaus.
 
-Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filtered on CERN computing) or „pakartojo paiešką“ as if independent: the thesis calls itself a qualitative check. „tūkstančius taškų“ rests on the about 16 400 selected decays. No web address in speech. The plots, if asked: the masses of π⁰, D⁰, J/ψ, K⁰S and Λ, the D⁰ and K⁰S lifetimes, the magnet's field, the beam spot, spectra and multiplicities, all from CERN Open Data records 401 and 24506. The Brown preprint (arXiv:2609.09275, September 2026) left the script on 22 Oct for time; if asked: two Brown University physicists posted a preprint built on LHCb open data (not yet published, so never „paskelbė tyrimą“).
+Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filtered on CERN computing) or „pakartojo paiešką“ as if independent: the thesis calls itself a qualitative check. „tūkstančius taškų“ rests on the about 16 400 selected decays. No web address in speech. The plots, if asked: the masses of π⁰, D⁰, J/ψ and K⁰S, the D⁰ lifetime, the magnet's field, the beam spot and the muons' pseudorapidity, all from CERN Open Data records 401 and 24506. The Brown preprint (arXiv:2609.09275, September 2026) left the script on 22 Oct for time; if asked: two Brown University physicists posted a preprint built on LHCb open data (not yet published, so never „paskelbė tyrimą“).
 
 Šaltiniai: D. Stonkus, bakalauro darbas, VU, 2026, epublications.vu.lt/object/elaba:308118793/308118793.pdf; CERN Open Data, įrašai 401 ir 24506; arXiv:2609.09275.
 
-(~0.55 min)
+(~0.7 min: the wait for the peak after the click)
 -->
 
 ---

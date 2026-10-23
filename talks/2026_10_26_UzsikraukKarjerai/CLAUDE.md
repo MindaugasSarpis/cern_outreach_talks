@@ -492,6 +492,48 @@ purpose).
 
 ## Decisions
 
+- 2026-10-23 (evening) — The review round (the owner: "Condition workable but can be
+  improved. Review story telling, what can we do better? Also visuals?", then "Go
+  ahead and implement all"). Two reviewers, one on the story, one on the visuals.
+  Story, in the script:
+  - 1: the 51 years are from the idea („rasti užtruko"), with the doubt
+    („…ir neapsigavai?") and the 100 m promised;
+  - 4: the turn „O dabar – į mažiausią mastą", and one superlative only (5's);
+  - 8: „O dabar – LHCb." (no double „aš");
+  - 11: the dice line after the reveal, so the viewer judges first; the opener
+    „Mano darbe nėra vadovėlio su atsakymais gale.";
+  - 12: the pentaquark gets how LHCb convinced itself in 2015 (fitted without it
+    first, the 2011 and 2012 data checked apart; lhcb-pentaquark-2015-cross-checks);
+    the five Ωc's later confirmations cut;
+  - 13: „Tarp studijų ir doktorantūros praėjo ketveri metai."; slot 1 (11th grade)
+    the one to tell; slot 3 now the outcome of his own search (answers 12's last
+    line), the Bonn reason dropped;
+  - 14: the student triad as one sentence; 15 ends „– ir tau.";
+  - 18 → 19: „Mūsų grupė dirba ir prie paties detektoriaus.";
+  - 19: shorter, the flag „į šį vaizdą įpiešėme";
+  - 20: the HL-LHC to 2041, „Tada tau bus apie trisdešimt." (cern-ls3-hllhc);
+  - 21: the advice moved here to close the cover's promise („Pradžioje žadėjau…
+    Mano kelias … nebuvo tiesus.").
+
+  Visuals:
+  - `look: broadcast` (dropped on 8 Oct when the talk was "not TV");
+  - the readouts 50 px higher (`--kk-floor` 200 px);
+  - the funnel 8 rings and 10 lines (15 and 16);
+  - the cavern floor alpha 0,45, step 3;
+  - Lithuania's outline size 5, alpha 1, dim 0,5;
+  - 15 arrives close on the 1 TB sphere and draws back;
+  - the 100 000 TB ball lighter (#8fb2ff);
+  - no vault web on 15–17;
+  - the zoom 17 s without the Sun and the flight inside the galaxy, its cloud
+    whiteout toned down;
+  - the SciFi clip without its dark first 3,5 s;
+  - slide 18's sun closer, with Dominykas's own plot on its click;
+  - the close's ending reworked for the camera.
+
+  Not applied: slide 10's camera lift (pitch −13 → −8, the reviewer's unchecked
+  guess; it would undo the eye-level view); where he stands stays his to decide.
+  Undo: revert the commits of 23 Oct evening.
+
 - 2026-10-23 — The ending (the owner, in this window: "Don't need second to last
   slide, better take 2 last slides from innoday just zoom out to lhc / fcc, not the
   globe"). The masterclass slide (old 19, the second sun) is cut; in its place
