@@ -62,7 +62,7 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (thirteenth version, 23 Oct: the owner's cuts, his 20 s zoom and Innoday's ending: 21 slides, 12,9 min by the lint's slide times; about 14½–15½ min delivered with the three slots)
+## Story (fourteenth version, 23 Oct evening: the review round on top of the owner's cuts, his zoom and Innoday's ending: 21 slides; about 14–15 min delivered with the slots)
 
 The owner, 21 Oct: "15 min we can cover quite a lot of content … more
 visuals", then "Build" on the proposal in this window. Blueprint v2
@@ -85,7 +85,7 @@ purpose).
 | # | Screen | Picture | min |
 |---|---|---|---|
 | 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks` | 0,6 |
-| 2 | — (clip) | **new (23 Oct)**: the zoom out from NFTMC in Saulėtekis past the Earth, the Sun and our galaxy to the cosmic web, 20 s (`vilnius_zoom.mp4`, Innoday's SpaceEngine opener time-remapped); four names spoken | 0,35 |
+| 2 | — (clip) | the zoom out from NFTMC in Saulėtekis past the Earth and our galaxy to the cosmic web, 17 s, stabilised, joined by dissolves (`vilnius_zoom.mp4`); four names spoken | 0,3 |
 | 3 | — | Innoday's cosmic web, a still that dissolves into grains (`<WebTakeover>`); one spoken line | 0,2 |
 | 4 | „13,8 mlrd. metų“ | Innoday's funnel; atoms → three quarks → five | 0,6 |
 | 5 | — (clip) | CERN from above (`cern_overview_short.mp4`, 11 s) | 0,19 |
@@ -98,13 +98,13 @@ purpose).
 | 12 | „LHCb duomenys“, the year ticking „2011 m.“ → „2012 m.“ → „2015 m.“, then „2011–2015 m.“, „masė →“; „5 naujos dalelės“ (one click) | `oc` at a steady rate, five peaks; the rule (< 1 in 3,5 mln.) and the 2015 pentaquark spoken; „Pentakvarkų ieškojau ir aš.“ | 1,2 |
 | 13 | Vilnius, CERN; „Glazgas“; „Heidelbergas“, „Bona“ | the route (4 clicks), three optional owner slots | 0,6 |
 | 14 | Vilnius | the dive to Vilnius; the group; the coordinator bridge | 0,65 |
-| 15 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared | 0,6 |
-| 16 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile | 0,3 |
-| 17 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops | 0,45 |
-| 18 | — | OpenData's sun of plots; Dominykas's check (the Brown preprint only if asked) | 0,55 |
-| 19 | — (clip) | **new (23 Oct)**: Innoday's `lis_flag.mp4` (20 s): a whole SciFi module, its light injection cold box, the Lithuanian flag lasered on it; the group's part of LHCb (old 16's words) | 0,4 |
-| 20 | — (clip) | **new (23 Oct)**: Innoday's recorded close cut at the LHC/FCC map (`close_lhc_fcc.mp4`, 57 s): out from the flag to LHCb, its collisions, the LHC and FCC rings; the FCC, VU's part in its study, the organisers' advice | 1,0 |
-| 21 | „Ačiū“ | the five-quark form gathers again | 0,45 |
+| 15 | „1 TB“, „800 TB“ | OpenData's piles: in close on the 1 TB sphere (the unit), then back to the Run 1 data the speaker prepared; „– ir tau“ | 0,6 |
+| 16 | „4 000 TB“, „Atvirieji duomenys“ | the gold pile | 0,3 |
+| 17 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's pale pile; a kilometre of laptops | 0,45 |
+| 18 | „masė →“, „2012 m.“ (on the click) | the sun of 8 plots, closer; on the click Dominykas's own m(J/ψ p) fills, its peak gathers into the five-quark form; his check | 0,7 |
+| 19 | — (clip) | Innoday's `lis_flag.mp4` from 3,5 s (16,5 s): the SciFi module, its cold box, the flag; the group works on it | 0,1 + clip |
+| 20 | — (clip) | Innoday's close fitted for TV (`close_lhc_fcc.mp4`, 54 s): out from the flag to LHCb and its collisions, to the LHC and FCC rings; the HL-LHC to 2041 („tau bus apie trisdešimt“), the FCC, VU in its study | 0,1 + clip |
+| 21 | „Ačiū“ | the five-quark form gathers again; the cover's promise kept: his road was not straight, the organisers' advice, „Ačiū“ | 0,45 |
 
 ## Status
 

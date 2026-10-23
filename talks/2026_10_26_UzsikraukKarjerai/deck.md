@@ -609,9 +609,9 @@ Picture: Innoday's close fitted for TV, 54 s, no sound: the flag's frame breaks 
 
 Šaltiniai: home.cern (LHCb; the FCC, 2025-11); cerncourier.com/a/fcc-feasibility-study-complete/; ff.vu.lt (2025-09-22).
 
-The clip runs 54 s (the lint adds it); the words are all said over it.
+The clip runs 54 s; the words are all said over it, so the slide's time is the clip's.
 
-(~0.1 min)
+(~0.95 min)
 -->
 
 ---
