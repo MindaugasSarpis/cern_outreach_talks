@@ -107,6 +107,18 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-24 (just after midnight, latest): **deployed f4ce1b5** (Pages run 40024556208,
+  green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed, 20 slides; `talk ready` passed on it, nothing skipped but the
+  pptx, plates one warning): the zoom's zoom-dissolves (19 s), slide 13's criss-cross route,
+  the close from the 4K take, the credits page (20, not shown). Plates (13) and stills 01–20
+  retaken and published; the venue zip rebuilt from f4ce1b5 (257 MB); venue.json. 19
+  slides spoken, 11,7 min timed, about 13–14 delivered with his slots. Open for the owner:
+  the zoom music's title and licence; his words for slide 13's four slots (11th grade,
+  Ireland and the years between, the pentaquark search's outcome, Manchester); slide 10's
+  camera lift (not applied); where he stands in the room view; a beat at each city on 13
+  if he wants one (now the head turns straight back). The release still holds 18-, 21-plate
+  and the tape-robot clip, unused.
 - 2026-10-23 (night, latest): **deployed 2646fa4** (Pages run 40014341245, green;
   https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed; `talk ready` passed on it, nothing skipped, plates one
