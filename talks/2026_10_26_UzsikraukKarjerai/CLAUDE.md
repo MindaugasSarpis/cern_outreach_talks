@@ -111,10 +111,11 @@ purpose).
   Review copies sent in the window: the zoom silent and with the swoosh, the close
   at 720p. Open for the owner: silent or the swoosh; the OpenStreetMap credit for
   the close's map (ODbL: tiny print on „Ačiū“?); whether the advice lines on 20 stay;
-  the time (at the slot's edge with his slots: the slots or the advice are the cuts);
-  the release clean-up he asked for (below). The release still holds 02-, 07-, 09-,
-  19-, 20-, 22-, 23-plate.mp4 and cern_footage_2022_013_006.mp4, unused: the delete
-  was refused by this session's permission check, so the owner runs it.
+  the time (at the slot's edge with his slots: the slots or the advice are the cuts).
+  Release clean-up done (the owner asked; the Scheduler ran it, 23 Oct): 02-, 07-,
+  09-, 19-, 20-, 22- and 23-plate.mp4 deleted, the 14 plates of plates.json remain;
+  cern_footage_2022_013_006.mp4 (the tape robot, no slide uses it) stays, as he
+  asked for plates only.
 - 2026-10-23: **deployed c30e7e8** (Pages run 39924390162, green;
   https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed; `talk ready` passed on it, nothing skipped, plates
