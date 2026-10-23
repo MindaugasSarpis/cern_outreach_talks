@@ -118,8 +118,8 @@ on the last slide (lint TEXT warnings, on purpose).
   frame on the release; the venue zip rebuilt from 2646fa4 (237 MB); venue.json. Open
   for the owner: the zoom music's title and licence (unknown since Innoday); his
   words for slide 13's slots; slide 10's camera lift (not applied); where he stands in
-  the room view; the release still holds 18-, 19-, 20- and 21-plate.mp4 and the old
-  10 s-era assets no slide uses (a prune is his or the Scheduler's to run).
+  the room view; the release still holds 18- and 21-plate.mp4 and the tape-robot clip, which
+  no slide uses (a prune is his or the Scheduler's to run).
 - 2026-10-23 (evening, latest): **deployed 6f13fc3** (Pages run 39998140027, green;
   https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed; `talk ready` passed on it, nothing skipped, plates one
