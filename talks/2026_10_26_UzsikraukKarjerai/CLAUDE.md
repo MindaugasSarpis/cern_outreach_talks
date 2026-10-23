@@ -98,7 +98,18 @@ purpose).
 
 ## Status
 
-- 2026-10-23 (latest): **deployed c81b29c** (Pages run 39855393262, green;
+- 2026-10-23 (latest): **deployed c30e7e8** (Pages run 39924390162, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, nothing skipped, plates
+  one warning, the fingerprint): the owner's 23 Oct cuts (Decisions), 19 slides,
+  11,6 min timed, about 13–14 min delivered with the slots. Plates retaken on
+  the GPU (15; 11–19 published with --only; 20–23-plate.mp4 left on the release,
+  unused, not pruned), stills 01–19. The venue zip rebuilt from c30e7e8
+  (203 MB) and on the release; venue.json. Open for the owner: whether to use
+  the 1–2 free minutes (his slots on 12 are the natural place); the road
+  slide's details (below) and the morning list (labels on 10–11, where he
+  stands, slides 9 and 19 on his MacBook, the drone at Delfi's sound check).
+- 2026-10-23: **deployed c81b29c** (Pages run 39855393262, green;
   https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed; `talk ready` passed on it, plates one warning, the
   fingerprint). The landing page shows „ZIP · 226 MB“ (the venue zip from
