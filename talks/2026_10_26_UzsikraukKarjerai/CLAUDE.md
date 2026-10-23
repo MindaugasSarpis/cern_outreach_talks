@@ -84,7 +84,7 @@ on the last slide (lint TEXT warnings, on purpose).
 | # | Screen | Picture | min |
 |---|---|---|---|
 | 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks` | 0,6 |
-| 2 | — (clip) | the zoom out from NFTMC in Saulėtekis past the Earth and our galaxy to the cosmic web, 17 s, stabilised, joined by dissolves (`vilnius_zoom.mp4`); four names spoken | 0,3 |
+| 2 | — (clip) | the zoom out from NFTMC in Saulėtekis past the Earth and our galaxy to the cosmic web, 19 s, stabilised, the scale jumps as zoom-dissolves (`vilnius_zoom.mp4`); four names spoken | 0,35 |
 | 3 | — | Innoday's cosmic web, a still that dissolves into grains (`<WebTakeover>`); one spoken line | 0,2 |
 | 4 | „13,8 mlrd. metų“ | Innoday's funnel; atoms → three quarks → five | 0,6 |
 | 5 | — (clip) | CERN from above (`cern_overview_short.mp4`, 11 s) | 0,19 |
@@ -95,13 +95,14 @@ on the last slide (lint TEXT warnings, on purpose).
 | 10 | „100 m“, then „40 mln. per sekundę“ | **new**: inside LHCb, the 3D model beside a 1,83 m person (Innoday's), the camera craned down to the cavern floor; LHCb's own 2012 collision in it; the 40 MHz glow; one mass, one dot (`<InsideLhcb>`, station `cavern`) | 1,0 |
 | 11 | days ticking „0 dienų“ → „4 dienos“, then → „100 dienų“; „masė →“ (two clicks) | `th1` fills, 140 dots in four days („tarkime“); the viewer judges; the tick; click 2, `th2` 3 500 random dots in 100 days, no tick, the bump gone; 2003 | 1,6 |
 | 12 | „LHCb duomenys“, the year ticking „2011 m.“ → „2012 m.“ → „2015 m.“, then „2011–2015 m.“, „masė →“; „5 naujos dalelės“ (one click) | `oc` at a steady rate, five peaks; the rule (< 1 in 3,5 mln.) and the 2015 pentaquark spoken; „Pentakvarkų ieškojau ir aš.“; on the click an Ωc⁰ drawn as three quarks (c, s, s) and gluons beside it; the zoom's music under 11–12 | 1,2 |
-| 13 | Vilnius, CERN; „Glazgas“; „Heidelbergas“, „Bona“ | the route (4 clicks), three optional owner slots | 0,6 |
+| 13 | Vilnius, CERN; „Glazgas“, „Airija“, „Heidelbergas“, „Bona“, „Mančesteris“ | the criss-cross route (the owner, 23 Oct): Vilnius → CERN → Glasgow → CERN → Ireland → Vilnius → Heidelberg → CERN → Bonn → CERN → Vilnius → Manchester → CERN, in 5 clicks of about 1 s a leg; four optional owner slots | 0,6 |
 | 14 | Vilnius | the dive to Vilnius; the group; the coordinator bridge | 0,65 |
 | 15 | „1 TB“, „800 TB“ | OpenData's piles: in close on the 1 TB sphere (the unit), then back to the Run 1 data the speaker prepared; „– ir tau“ | 0,6 |
 | 16 | „4 000 TB“, „Atvirieji duomenys“ | the gold pile | 0,3 |
 | 17 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's pale pile; a kilometre of laptops | 0,45 |
 | 18 | — (clip) | Innoday's `lis_flag.mp4` from 3,5 s (16,5 s): the SciFi module, its cold box, the flag; the group works on it; „Starfire“ starts low | 0,1 + clip |
 | 19 | „mano greitintuvas“, „jūsų greitintuvas“; the credits | the last: Innoday's close at full frame (`close_lhc_fcc.mp4`, 54 s): out from the flag to LHCb and its collisions, to the LHC and FCC rings; the HL-LHC to 2041, the cover's promise and the advice, „LHC – mano greitintuvas. FCC – jūsų greitintuvas.“, „Ačiū.“ | 1,2 |
+| 20 | the credits | kept, not shown: the licence credits (the owner, 23 Oct: "credits all go to slide 20 which I will make available but not show") | 0 |
 
 
 ## Status
@@ -514,6 +515,25 @@ on the last slide (lint TEXT warnings, on purpose).
   a3001a1 and 71fb6f1 before it, all rejected by the owner.
 
 ## Decisions
+
+- 2026-10-23 (late night) — The owner, on the result: "This immediate switch from galaxy
+  to universe web and from earth to galaxy doesn't work"; "Slide 13 - sequence: Vilnius,
+  CERN, Glasgow, CERN, Ireland, Vilnius, Heidelberg, CERN, Bonn, CERN, Vilnius and
+  manchester CERN - like a criss cross. a bit more snappy on clicks"; "credits all go to
+  slide 20 which I will make available but not shiw"; "slide 19 is a bit fuzzy". So:
+  - **The zoom (2), 19 s:** the scale jumps are zoom-dissolves (1,4 s; one camera at a
+    steady log rate, the outgoing feathered and shrinking into the centre, the incoming
+    from 2,2× settling); the galaxy now turns and recedes to a dot before the web; the
+    Earth longer (about 2,9 s alone); the galaxy's core dimmed while drawn large, the
+    Earth's own Milky Way band faded, the web lifted as it comes in. Two review passes.
+  - **13:** the criss-cross route in 5 clicks, „Airija“ (the owner said only "Ireland": no
+    city) and „Mančesteris“ new, about 1 s a leg (`draw` 1,5, `delay` 0,3; the path builder's
+    new `bends`/`arcs` keep round trips apart); slides 14–17 show the whole route
+    (`route: 12`). His roles in Ireland and Manchester are slots (the bank holds neither).
+  - **19:** made from Innoday's 4K take of its close (taken down once with Lanczos), the
+    lines thickened 3 px not 5: about 27 % sharper (Laplacian variance); CRF 12 under the
+    9,5 Mbit/s cap.
+  - **20:** the credits page, kept but not shown; the credits left the close.
 
 - 2026-10-23 (night) — The owner's last round, in the window: "Need this soundtrack
   spanning the histogram slides, what did we use in innoday zoomout?"; "On slide 12

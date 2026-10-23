@@ -82,18 +82,18 @@ space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0
 
 <!--
 Message: where we are, then out past everything to the largest scale.
-Picture: the owner's SpaceEngine zoom for Innoday, 4:13 made 17 s (scripts/remap_zoom.py): the NFTMC building in Saulėtekis (Google Earth, 0–2,3 s), the Saulėtekis campus (to ~3,9 s), Vilnius and its region (~3,9–5,4 s), into the clouds (~5 s), then, joined by dissolves, the Earth from space (~5,5–7,9 s), our galaxy whole (~7,9–11 s), and the cosmic web (from ~11 s) slowing to a stop, held from 16 s. Stabilised (the owner: the source's wobble "on speedup it doesn't look good"); the swaying stretches between them are dissolved over, not played, and since the 23 Oct review the Sun and the flight inside the galaxy are left out (the most synthetic-looking pictures, near-black on a stream). No sound of its own. It waits on the web for the press (no advance-on-end).
+Picture: the owner's SpaceEngine zoom for Innoday, 4:13 made 19 s (scripts/remap_zoom.py): the NFTMC building in Saulėtekis (Google Earth, 0–2,3 s), the Saulėtekis campus (to ~3,9 s), Vilnius and its region (~3,9–5,4 s), into the clouds (~5 s), a quick dissolve to the Earth from space (~5,5–8,4 s), then a zoom-dissolve (the Earth shrinking on into the centre as our galaxy comes in large and settles) to our galaxy whole (~9,5–11 s), turning and receding to a dot (~11–12,5 s), and a second zoom-dissolve into the cosmic web (from ~12,5 s), slowing to a stop, held from 18 s. Stabilised (the owner: the source's wobble "on speedup it doesn't look good"); the swaying stretches are left out, and the scale jumps are zoom-dissolves since the owner's "This immediate switch from galaxy to universe web and from earth to galaxy doesn't work" (23 Oct). No sound of its own. It waits on the web for the press (no advance-on-end).
 
 Čia – Saulėtekis Vilniuje. Čia dirba Vilniaus universiteto fizikai.
-[kai matosi Žemė iš kosmoso, ~6 s] Žemė. [~8,5 s] Mūsų galaktika.
+[kai matosi Žemė iš kosmoso, ~6 s] Žemė. [~9,5 s] Mūsų galaktika.
 [tinklui pasirodžius tylėk; kai jis sustoja] → spausk
 
 The words follow the picture: say each name as it comes, not before; the first sentence is over by the time Vilnius is in sight (~4,5 s). „Čia dirba Vilniaus universiteto fizikai“: NFTMC houses units of the VU Faculty of Physics (nftmc-opened-2016). Lithuania as a country is not shown, so it is not named.
 The footage: the owner's SpaceEngine edit spaceengine/nftmc_zoom.mp4 (Google Earth for the Earth part: its logo is on every Earth frame and the imagery providers are named in the footage, as Innoday's notes say; at this speed the providers' line is up for well under a second); the web, NCSA's Advanced Visualization Lab („Cosmic Bubble Bath“), as on the next slide.
 
-The clip runs 17 s.
+The clip runs 19 s.
 
-(~0.3 min)
+(~0.35 min)
 -->
 
 ---
@@ -579,13 +579,12 @@ space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway:
 <!-- the labels the owner asked for (23 Oct: "mano appearing where LHC is and when FCC is in view - jūsų greitintuvas"), on the clip's clock: the LHC ring reads from 43,3 s, the FCC's whole circle from 52 s (measured on the clip); „mano“ from 45 s, once the lake has swung clear of its place top right, „jūsų“ off the FCC ring's bottom right; canvas px, clear of the rings, the lake and the logo, inside the safe box -->
 <ClipCue :from="45" :path="[[45, 652, 58]]" class="close-label">mano<br>greitintuvas</ClipCue>
 <ClipCue :from="52" :path="[[52, 652, 328]]" class="close-label">jūsų<br>greitintuvas</ClipCue>
-<ClipCue :end="1.5" class="close-credits">Muzika: Scott Buckley, „Starfire“ (CC BY 4.0) · Žemėlapis: © OpenStreetMap bendraautoriai (ODbL), Natural Earth · CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (pakeistas) · Kosminis tinklas: NCSA Advanced Visualization Lab · Žemė: Google Earth</ClipCue>
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments, cern-fcc-study, lt-fcc-unis, cern-ls3-hllhc, sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn -->
 
 <!--
 Message: the last slide (the owner, 23 Oct: "we finish on slide 20 [now 19] FCC full frame - saying 'LHC - mano greitintuvas, FCC - jūsų greitintuvas'"): from our flag on one module, out to the whole detector and its collisions; the LHC runs till they are about thirty; the cover's promise kept (my road was not straight; you need not know now what you will be); then the LHC ring, mine, and the FCC, CERN's proposed next ring, whose study VU has joined: theirs. Thanks.
-Picture: Innoday's close, 54 s, no sound, at its own full framing (the FCC ring fills the height at the end): the flag's frame breaks into grains and dissolves (~2,5 s) into LHCb as a point cloud of its real geometry, the camera drawing back through it (3–14 s; the whole detector from ~12 s), the flag shrinking to where the module stands, a 1,83 m person for scale (~18 s); a real LHCb collision crosses at ~16 s, then the crossings come faster until the detector glows evenly (~18–33 s); then a slow climb until it looks straight down, north up (~35–42 s): LHCb shrinks to a point and the map comes up round it at true scale (the LHC ring from ~42 s, the FCC's whole circle ~49–52 s), the LHC ring (26,7 km) with its two beams, the proposed FCC ring (90,7 km) in orange dashes, Lake Geneva, the small flag at LHCb's point, the LHCb logo top left (its mirrored „LHCb“ is the logo's own CP mirror). „mano greitintuvas“ comes up beside the LHC ring as it appears, „jūsų greitintuvas“ beside the FCC ring once it is whole (deck text, <ClipCue>, following the rings as the camera settles); the licence credits in tiny print as the clip ends. The music: Scott Buckley's „Starfire“, as Innoday's close, low under the speech; it goes on over the held frame.
+Picture: Innoday's close, 54 s, no sound, at its own full framing (the FCC ring fills the height at the end): the flag's frame breaks into grains and dissolves (~2,5 s) into LHCb as a point cloud of its real geometry, the camera drawing back through it (3–14 s; the whole detector from ~12 s), the flag shrinking to where the module stands, a 1,83 m person for scale (~18 s); a real LHCb collision crosses at ~16 s, then the crossings come faster until the detector glows evenly (~18–33 s); then a slow climb until it looks straight down, north up (~35–42 s): LHCb shrinks to a point and the map comes up round it at true scale (the LHC ring from ~42 s, the FCC's whole circle ~49–52 s), the LHC ring (26,7 km) with its two beams, the proposed FCC ring (90,7 km) in orange dashes, Lake Geneva, the small flag at LHCb's point, the LHCb logo top left (its mirrored „LHCb“ is the logo's own CP mirror). „mano greitintuvas“ comes up beside the LHC ring as it appears, „jūsų greitintuvas“ beside the FCC ring once it is whole (deck text, <ClipCue>, following the rings as the camera settles); the licence credits are on slide 20, kept but not shown (the owner, 23 Oct). The music: Scott Buckley's „Starfire“, as Innoday's close, low under the speech; it goes on over the held frame.
 
 [vėliavai byrant, kamerai traukiantis, nuo 0 s] Pradžioje žadėjau pasakyti, nuo ko tokį darbą galima pradėti. Mano kelias, kaip girdėjai, nebuvo tiesus. Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
 [susidūrimams ėmus kartotis, ~19 s] Dabar greitintuvas atnaujinamas. Atnaujintas jis veiks iki 2041 metų. Tada tau bus apie trisdešimt.
@@ -604,3 +603,24 @@ The clip runs 54 s; the words run about 7 s past it, over the held map, and the 
 
 (~1.05 min)
 -->
+
+---
+space: { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 0, dim: 0.7 }   # the credits page: the world dimmed far under the list
+---
+
+<Grains :set="{ pq: 3, route: 12, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
+<Soundtrack src="audio/starfire_close.m4a" tail="audio/starfire_from52.m4a" :tail-at="52" :level="0.3" keys />
+
+<div class="credits-page">
+
+Vaizdai ir duomenys: CERN (CERN iš oro, LHC tunelis CERN-FOOTAGE-2022-013-001, dipolis CERN-VIDEO-2019-050-008) · CMS susidūrimas: CERN atvirieji duomenys, įrašas 300 (CC0) · LHCb filmukas: LHCb kolaboracija · LHCb modelis: © CERN LHCb kolaboracijos naudai (GPL-3.0), HSF Phoenix (Apache-2.0); žmogaus modelis: Blender Human Base Meshes (CC0) · LHCb susidūrimas: CERN atvirieji duomenys · Ωc⁰ spektras: LHCb, Phys. Rev. Lett. 118, 182001 (2017), CC BY 4.0 · Priartinimas: autoriaus SpaceEngine montažas; Žemė: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies) · Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF) · CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (pakeistas) · Žemėlapiai: Natural Earth (viešasis domenas); © OpenStreetMap bendraautoriai (ODbL) · SciFi modulis ir pabaigos įrašas: Innoday (Blender; LHCb geometrija) · Muzika: Scott Buckley, „Starfire“ (scottbuckley.com.au), CC BY 4.0
+
+</div>
+
+<!--
+Kalbėtojui: šio puslapio nerodyti – pranešimas baigiasi 19-oje skaidrėje. Jis laikomas dėl licencijų reikalaujamų nuorodų (savininkas, 2026 10 23: „credits all go to slide 20 which I will make available but not show“); lieka žiniatinklio versijoje ir PDF. Muzika čia tęsiasi, jei puslapis būtų atvertas.
+The zoom music's own credit is unknown (its title and licence were never filed): add it here once known. Everything listed follows credits.txt.
+
+(~0 min)
+-->
+

@@ -40,7 +40,7 @@ BOUND = np.array([70.0, 40.0, 1.5, 0.03])   # px, px, degrees, log scale: the co
 # the cloud whiteout after Google Earth's fade (source ~29.5-33 s) and the bright limb toned down: they
 # flashed after Vilnius (YAVG 101 -> 156); keyed by source seconds
 GAIN = [(28.8, 1.0), (29.8, 0.6), (32.4, 0.62), (37.6, 0.75), (39.6, 0.85), (42.0, 1.0),
-        (225.9, 1.0), (226.0, 1.5), (233.0, 1.0)]   # the web lifted as it comes in: no near-black second before it
+        (225.9, 1.0), (226.0, 1.5), (233.0, 1.0)]   # the web lifted as it comes in (the second before it is the receding galaxy, dark by nature)
 BOUNDS = {0: np.array([50.0, 30.0, 0.8, 0.02]), 1: np.array([50.0, 30.0, 0.8, 0.02])}   # Google Earth's: less crop, sharper
 # Google Earth's attribution (its logo and the imagery line under it, burnt into the source until
 # its fade to SpaceEngine ends at ~29.9 s) is put back unmoved and uncropped over the moved frame:
