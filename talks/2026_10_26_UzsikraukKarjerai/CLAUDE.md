@@ -107,6 +107,14 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-24 (about 2 am, latest): **deployed 26727ec** (Pages run 40036497924, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/ 200, the
+  live walk passed, 17 slides; `talk ready` passed on it, nothing skipped but the pptx). The
+  late rounds (Decisions): the warp-drive zoom with Aphelion, the data slide, the touchscreen
+  and first website, the route ending home and the Manchester legs, the levelled sound.
+  Plates (10, 30 s hold) and stills retaken and published; the venue zip rebuilt from 26727ec
+  (259 MB). Open for the owner: his words for slide 13's slots; where he stands; the
+  slide 10 camera lift; the credits page is one → after the close, so no extra press there.
 - 2026-10-24 (just after midnight, latest): **deployed f4ce1b5** (Pages run 40024556208,
   green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed, 20 slides; `talk ready` passed on it, nothing skipped but the
