@@ -27,3 +27,6 @@ Added 21 Oct (the 15-minute round)
 - Slide 16: lis_flag.mp4 (the slidev-videos library), a Blender render for Innoday after the SciFi drawing; no photograph; the Lithuanian flag on the cold box is Innoday's own touch.
 - Slide 20: CERN-FOOTAGE-2022-013-006, the CERN data centre and its tape robot (CERN; the owner, 10 Oct: "it's cern license, I'm CERN user").
 - Slide 6: CERN-VIDEO-2019-050-008, an LHC dipole magnet (CERN), its first 10,8 s.
+
+Added 23 Oct (the zoom)
+- Slide 2: vilnius_zoom.mp4, the owner's own SpaceEngine edit for Innoday (spaceengine/nftmc_zoom.mp4), time-remapped to 20 s. The Earth part is Google Earth, its attribution in the footage (the "Google Earth" logo; imagery Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies). The cosmic web: NCSA Advanced Visualization Lab ("Cosmic Bubble Bath", NSF), as for slide 3. The slide numbers above are the 19-slide deck's: from slide 2 on, add one.

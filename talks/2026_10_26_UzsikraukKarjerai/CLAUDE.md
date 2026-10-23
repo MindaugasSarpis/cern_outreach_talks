@@ -54,7 +54,7 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (eleventh version, 23 Oct: the owner's cuts: 19 slides, 11,6 min by the lint's slide times; about 13–14 min delivered with the three slots)
+## Story (twelfth version, 23 Oct: the owner's cuts and his 20 s zoom: 20 slides, 12,0 min by the lint's slide times; about 13½–14½ min delivered with the three slots)
 
 The owner, 21 Oct: "15 min we can cover quite a lot of content … more
 visuals", then "Build" on the proposal in this window. Blueprint v2
@@ -77,24 +77,25 @@ purpose).
 | # | Screen | Picture | min |
 |---|---|---|---|
 | 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks` | 0,6 |
-| 2 | — | Innoday's cosmic web, a still that dissolves into grains (`<WebTakeover>`); one spoken line | 0,2 |
-| 3 | „13,8 mlrd. metų“ | Innoday's funnel; atoms → three quarks → five | 0,6 |
-| 4 | — (clip) | CERN from above (`cern_overview_short.mp4`, 11 s) | 0,19 |
-| 5 | „LHC 27 km“ | the real tunnel (18 s cut) | 0,3 |
-| 6 | — (clip) | **new**: an LHC dipole magnet cut open, its two beam pipes (`cern_video_2019_050_008.mp4`, 10,8 s, the owner's "A, ok"); 1 232 magnets at −271 °C | 0,3 |
-| 7 | „290 dalelių“ | one real 2012 CMS crossing in 4π; „užfiksavo CMS“ spoken | 0,55 |
-| 8 | — (clip) | `lhcb.mp4` (39 s): LHCb, its people; → 3 s after „Aš – vienas iš jų.“ (22 Oct), not at its end | 0,4 |
-| 9 | „100 m“, then „40 mln. per sekundę“ | **new**: inside LHCb, the 3D model beside a 1,83 m person (Innoday's), the camera craned down to the cavern floor; LHCb's own 2012 collision in it; the 40 MHz glow; one mass, one dot (`<InsideLhcb>`, station `cavern`) | 1,0 |
-| 10 | days ticking „0 dienų“ → „4 dienos“, then → „100 dienų“; „masė →“ (two clicks) | `th1` fills, 140 dots in four days („tarkime“); the viewer judges; the tick; click 2, `th2` 3 500 random dots in 100 days, no tick, the bump gone; 2003 | 1,6 |
-| 11 | „LHCb duomenys“, the year ticking „2011 m.“ → „2012 m.“ → „2015 m.“, then „2011–2015 m.“, „masė →“; „5 naujos dalelės“ (one click) | `oc` at a steady rate, five peaks; the rule (< 1 in 3,5 mln.) and the 2015 pentaquark spoken; „Pentakvarkų ieškojau ir aš.“ | 1,2 |
-| 12 | Vilnius, CERN; „Glazgas“; „Heidelbergas“, „Bona“ | the route (4 clicks), three optional owner slots | 0,6 |
-| 13 | Vilnius | the dive to Vilnius; the group; the coordinator bridge | 0,65 |
-| 14 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared | 0,6 |
-| 15 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile | 0,3 |
-| 16 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops | 0,45 |
-| 17 | — | OpenData's sun of plots; Dominykas's check (the Brown preprint only if asked) | 0,55 |
-| 18 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; the masterclass; the advice | 0,65 |
-| 19 | „Ačiū“ | the five-quark form gathers again | 0,45 |
+| 2 | — (clip) | **new (23 Oct)**: the zoom out from NFTMC in Saulėtekis past the Earth, the Sun and our galaxy to the cosmic web, 20 s (`vilnius_zoom.mp4`, Innoday's SpaceEngine opener time-remapped); four names spoken | 0,35 |
+| 3 | — | Innoday's cosmic web, a still that dissolves into grains (`<WebTakeover>`); one spoken line | 0,2 |
+| 4 | „13,8 mlrd. metų“ | Innoday's funnel; atoms → three quarks → five | 0,6 |
+| 5 | — (clip) | CERN from above (`cern_overview_short.mp4`, 11 s) | 0,19 |
+| 6 | „LHC 27 km“ | the real tunnel (18 s cut) | 0,3 |
+| 7 | — (clip) | **new**: an LHC dipole magnet cut open, its two beam pipes (`cern_video_2019_050_008.mp4`, 10,8 s, the owner's "A, ok"); 1 232 magnets at −271 °C | 0,3 |
+| 8 | „290 dalelių“ | one real 2012 CMS crossing in 4π; „užfiksavo CMS“ spoken | 0,55 |
+| 9 | — (clip) | `lhcb.mp4` (39 s): LHCb, its people; → 3 s after „Aš – vienas iš jų.“ (22 Oct), not at its end | 0,4 |
+| 10 | „100 m“, then „40 mln. per sekundę“ | **new**: inside LHCb, the 3D model beside a 1,83 m person (Innoday's), the camera craned down to the cavern floor; LHCb's own 2012 collision in it; the 40 MHz glow; one mass, one dot (`<InsideLhcb>`, station `cavern`) | 1,0 |
+| 11 | days ticking „0 dienų“ → „4 dienos“, then → „100 dienų“; „masė →“ (two clicks) | `th1` fills, 140 dots in four days („tarkime“); the viewer judges; the tick; click 2, `th2` 3 500 random dots in 100 days, no tick, the bump gone; 2003 | 1,6 |
+| 12 | „LHCb duomenys“, the year ticking „2011 m.“ → „2012 m.“ → „2015 m.“, then „2011–2015 m.“, „masė →“; „5 naujos dalelės“ (one click) | `oc` at a steady rate, five peaks; the rule (< 1 in 3,5 mln.) and the 2015 pentaquark spoken; „Pentakvarkų ieškojau ir aš.“ | 1,2 |
+| 13 | Vilnius, CERN; „Glazgas“; „Heidelbergas“, „Bona“ | the route (4 clicks), three optional owner slots | 0,6 |
+| 14 | Vilnius | the dive to Vilnius; the group; the coordinator bridge | 0,65 |
+| 15 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared | 0,6 |
+| 16 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile | 0,3 |
+| 17 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops | 0,45 |
+| 18 | — | OpenData's sun of plots; Dominykas's check (the Brown preprint only if asked) | 0,55 |
+| 19 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; the masterclass; the advice | 0,65 |
+| 20 | „Ačiū“ | the five-quark form gathers again | 0,45 |
 
 ## Status
 
@@ -465,6 +466,26 @@ purpose).
   a3001a1 and 71fb6f1 before it, all rejected by the owner.
 
 ## Decisions
+
+- 2026-10-23 — The zoom (the owner, through the Scheduler: "Can we do a quick
+  zoomout from vilnius straight to universe web - in 20s"). New slide 2 after
+  the cover: Innoday's opener (his SpaceEngine edit spaceengine/nftmc_zoom.mp4,
+  its first 253,42 s) time-remapped to 19 s plus a 1 s hold on the web, 1080p50
+  (`scripts/remap_zoom.py`; the speed keys after two subagent passes over the
+  frames give Vilnius ~0,8 s, the Earth whole ~0,55 s, the galaxy whole ~1 s, the
+  web from 14,4 s; up to 55× through the dark). It ends on the source frame
+  slide 3's still is (correlation 0,998), so the clip's fade out (`transition="fade"`,
+  as Innoday's) shows the same picture underneath, and slide 2 cuts the camera to
+  the takeover pose. No advance-on-end. Decided without him: no sound (a review
+  copy with his edit's music at −24 LUFS under it is in this window: his call);
+  the cover's last line „Bet pradėkime nuo Vilniaus.“ (was „…nuo visos
+  Visatos.“); four spoken names over it (Saulėtekis with „Čia dirba Vilniaus
+  universiteto fizikai“, Žemė, Saulė, Mūsų galaktika; Lithuania is not shown as a
+  country, so not named); the Google Earth logo and providers left in the
+  footage, as Innoday's, though at this speed the providers' line is up for
+  well under a second (a tiny-print line on „Ačiū“ is his to say). The CMB
+  disk's decode latch (afterCover.js) now waits for slide 4, so it does not
+  stall the clip. +0,35 min: 12,0 timed. Undo: revert 3587200.
 
 - 2026-10-23 — The owner's cuts, in this window: "Don't need scifi module, a
   bit too much histograms, just show one with not a lot of data (show days /

@@ -80,6 +80,34 @@ Bath"). The raw (videos/raw/vilnius_zoom.mp4) is that output, not on gdrive \
 released/: never run a plain videos:sync here (it would delete it); make it again \
 with the script."""
 
+[[videos]]
+name    = "lis_flag.mp4"
+profile = "silent-loop"
+used_in = ["deck"]
+notes   = """\
+Slide 19 (the owner, 23 Oct: "better take 2 last slides from innoday"): Innoday's \
+20 s lis_flag.mp4, the whole SciFi module from below, its light injection cold box \
+outlined, then the Lithuanian flag lasered on it (a Blender render after the SciFi \
+drawing; 25 fps, silent, played once). Not the library's 10 s copy that was on this \
+release: the close (close_lhc_fcc.mp4) starts from this cut's last frame. Raw: \
+Innoday's raw bank copy (12,2 MB), its manifest's notes."""
+
+[[videos]]
+name    = "close_lhc_fcc.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+trim    = ["0:00", "0:57.2"]
+notes   = """\
+Slide 20 (the owner, 23 Oct: "take 2 last slides from innoday just zoom out to lhc / \
+fcc, not the globe"): Innoday's recorded close, close_home.mp4 (its slide 30, \
+1080p50, silent; its manifest: slidev-stage-record's take of LisTakeover at 22efcef), \
+cut at 57,2 s, where the camera has come to rest over the LHC and FCC map (frame \
+change 0,06 at 56,5 s), before the map flies away into the Earth at 57,5 s and the \
+flight home. From lis_flag.mp4's last frame out through the LHCb point cloud, a real \
+LHCb collision and its 40 MHz glow, to the LHC (26,7 km) and the proposed FCC \
+(90,7 km) at true scale, the flag at LHCb's point. Raw: Innoday's release asset \
+close_home.mp4 (125 MB) under this name; the encode trims it."""
+
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 
 [[videos]]
@@ -90,13 +118,6 @@ generated = true
 notes     = "the world of slide 1 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
-name      = "02-plate.mp4"
-profile   = "remux"
-used_in   = ["slide 2"]
-generated = true
-notes     = "the world of slide 2 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
-
-[[videos]]
 name      = "03-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 3"]
@@ -104,18 +125,18 @@ generated = true
 notes     = "the world of slide 3 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
-name      = "07-plate.mp4"
+name      = "04-plate.mp4"
 profile   = "remux"
-used_in   = ["slide 7"]
+used_in   = ["slide 4"]
 generated = true
-notes     = "the world of slide 7 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 4 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
-name      = "09-plate.mp4"
+name      = "08-plate.mp4"
 profile   = "remux"
-used_in   = ["slide 9"]
+used_in   = ["slide 8"]
 generated = true
-notes     = "the world of slide 9 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 8 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "10-plate.mp4"
@@ -186,4 +207,11 @@ profile   = "remux"
 used_in   = ["slide 19"]
 generated = true
 notes     = "the world of slide 19 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "20-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 20"]
+generated = true
+notes     = "the world of slide 20 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 # <<< plates

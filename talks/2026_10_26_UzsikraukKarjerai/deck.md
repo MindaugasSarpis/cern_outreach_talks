@@ -541,7 +541,7 @@ Message: these plots were drawn from the open data; this year a VU bachelor stud
 Picture: OpenData's sun of plots: a sun turns slowly round the gold pile, rays of grains leaving it to every side, nineteen of them ending at plots made from LHCb's open data (the grains land on each plot's curves), seven at empty places, gold clouds waiting. No text: „everyone can use this“ is said, not shown (the owner, 18 Oct, through the Scheduler).
 
 Šie grafikai nubraižyti iš atvirųjų LHCb duomenų – tų pačių auksinių krūvų viduryje. Šiais metais mūsų bakalauro studentas Dominykas Stonkus paėmė atviruosius 2012 metų LHCb duomenis ir surinko iš jų tūkstančius taškų. Jis tikrino, ar kauburys iškils toje pačioje vietoje, kur LHCb rado pentakvarkus. Iškilo. Pats savo darbą jis vadina patikrinimu.
-Pradėti galima dar mokykloje.
+O štai dar viena dalis, prie kurios dirba mūsų grupė.
 
 Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filtered on CERN computing) or „pakartojo paiešką“ as if independent: the thesis calls itself a qualitative check. „tūkstančius taškų“ rests on the about 16 400 selected decays. No web address in speech. The plots, if asked: the masses of π⁰, D⁰, J/ψ, K⁰S and Λ, the D⁰ and K⁰S lifetimes, the magnet's field, the beam spot, spectra and multiplicities, all from CERN Open Data records 401 and 24506. The Brown preprint (arXiv:2609.09275, September 2026) left the script on 22 Oct for time; if asked: two Brown University physicists posted a preprint built on LHCb open data (not yet published, so never „paskelbė tyrimą“).
 
@@ -551,26 +551,59 @@ Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filter
 -->
 
 ---
-space: { at: [2596.3, 1.0, 0], dist: 45, yaw: 0, pitch: 3, sway: 0, dim: 0.05 }   # OpenData's Vilnius pose (its slide 12: at [2600.17, −1.03, 0], dist 30.45) drawn back (22 Oct; dist 37.5 and the turn at 300 s until the names went to labelH 0.11, when „Bakalauro“ left the broadcast safe box on the left at 26–46 s and „Meistriškumo“ on the right by 56 s): with the turn at 450 s and no sway, both names stay inside the box from their arrival to about 60 s
+space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway: 0, dim: 0.25 }   # under the two clips, a cut to the Ačiū slide's pose: the world is there when the close fades out
 ---
 
-<Grains :set="{ pq: 3, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 0, vilnius: 1 }" />
+<!-- The owner, 23 Oct: "Don't need second to last slide, better take 2 last slides from innoday just zoom out to lhc / fcc, not the globe". Innoday's 20 s lis_flag.mp4 (a Blender render of a whole SciFi module, then its light injection cold box and the Lithuanian flag lasered on it); its last frame is the first of the close. -->
+<VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
+<Grains :set="{ pq: 0, route: 7, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
 
-<!-- facts: lhcb-masterclass-vilnius-2026, lhcb-masterclass-vilnius-2027, vu-masterclass-annual, stonkus-bsc-2026, vu-bsc-2026-cms-open-data-spukas, lhcb-opendata-masterclass-2014 -->
+<!-- facts: lhcb-scifi, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
 
 <!--
-Message: you can start at school: pupils have measured a particle's lifetime in real LHCb data at VU's masterclass; later a bachelor's thesis from open data, as Dominykas did; the empty places are work nobody has done yet. You need not know now what you will be.
-Picture: OpenData's second sun, round the same gold pile: rays end at two white clusters named „Meistriškumo pamoka“ and „Bakalauro darbai“ and at gold clouds breathing slowly, room for what comes next. The last line is said as the camera flies back to the particle (4,5 s).
-The masterclass is told without dates (the owner, 15 Oct: "No dates for masterclass") and in the past tense: no 2026–27 LHCb date was public on 20 Oct (two editions held, 2025 and 2026); VU's yearly masterclasses are the CMS ones, so never „kasmet“ of the LHCb one. Do not say it uses CERN Open Data files: no source shows it; it uses real LHCb data.
+Message: one part of LHCb our group works on: the tracker of plastic fibres that light up when a particle passes, and the light injection system at the ends of its modules that sends short laser pulses into them to calibrate them. A computer-made picture, said so; the flag is ours.
+Picture: Innoday's clip, 20 s, silent: 0–7 s the camera pans slowly down a whole SciFi module (two fibre mats of 2,4 m) from below; 6,6–10 s the cold box at its lower end is outlined in soft light blue (the light injection system is inside it); 10–12 s the camera closes in on the box; 12–17,5 s a laser engraves the Lithuanian flag on it; it holds from 19,4 s. The press goes on to the close, which starts from this frame.
 
-Vilniaus universitete jau vyko LHCb meistriškumo pamokos. Mokiniai ten su tikrais LHCb duomenimis patys išmatavo, kiek laiko gyvuoja viena dalelė. Universitete iš atvirųjų duomenų gali parašyti bakalauro darbą, kaip Dominykas. O šios tuščios vietos – darbai, kurių dar niekas nepadarė. Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
-Ir grįžkime prie dalelės, nuo kurios pradėjome.
+Tai vienas LHCb sekiklio modulis – kompiuteriu sukurtas vaizdas pagal jo brėžinį. Sekiklyje – daugiau nei vienuolika tūkstančių kilometrų plonų plastikinių skaidulų. Kai pro jas praskrieja dalelė, jose sužimba šviesa.
+[kai apačioje nušvinta dėžė, ~7 s] Kad šviesos jutikliai būtų tiksliai sukalibruoti, modulių galuose lazeriai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupė dirba ir prie šio sekiklio, ir prie šios sistemos.
+[vėliavai išryškėjus] Vėliavą ant jo nupiešėme patys.
+[kai vaizdas sustoja] → spausk
 
-The organisers' point is said once, here, as advice; it claims nothing about you. Optional, after it, one sentence of your own about a moment you noticed something and followed it (nothing is written for it). If asked: the particle is the D⁰ meson; another VU bachelor's thesis of 2026 used CMS open data. If asked: the first public LHCb files (2014) were released for such masterclasses; never as if the Vilnius masterclass uses them (the line left the script on 22 Oct, for time).
+The old slide 16's words (cut on 23 Oct with the clip, back with it at the end), without the coordinator bridge, which is on 14 since. „daugiau nei vienuolika tūkstančių kilometrų“: the SciFi tracker's 11 000+ km of 250 µm fibre (LHCb). Nothing more about Vilnius than the group's meeting agenda says (SciFi and the light injection system among its service tasks): never „mes sukūrėme“. The flag is not on the real module. If asked: 670 nm VCSEL lasers; 524 288 SiPM channels read the light.
 
-Šaltiniai: VU FF, LHCb meistriškumo pamokos (indico.cern.ch/event/1648092); D. Stonkus, bakalauro darbas, VU, 2026; CERN Open Data, įrašas 401 (2014).
+Šaltiniai: LHCb Upgrade I, JINST 19 (2024) P05065, 6.5.7 sk.; indico.cern.ch/event/1461467 (VU LHCb grupės susitikimas, 2024-10-03).
 
-(~0.65 min)
+The clip runs 20 s.
+
+(~0.4 min)
+-->
+
+---
+space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway: 0, dim: 0.25 }
+---
+
+<!-- Innoday's recorded close (close_home.mp4, Innoday's last shown slide) cut at 57,2 s, where it rests on the LHC and FCC map, before it flies off to the globe and home (the owner: "just zoom out to lhc / fcc, not the globe"). Muted (Innoday's music is its own Soundtrack, not in the clip); it holds the map until the press. -->
+<VideoPlayer src="close_lhc_fcc.mp4" muted :controls="false" transition="fade" />
+
+<!-- facts: lhcb-detector-size, lhc-geneva-27km-100m-four-experiments, cern-fcc-study, cern-fcc-council-2025, lt-fcc-unis -->
+
+<!--
+Message: from our flag on one module, out to the whole detector and its collisions, then the LHC ring and the ring CERN proposes next, whose study Vilnius University has joined; you need not know now what you will be.
+Picture: Innoday's close, 57 s, no sound: the flag's frame breaks into grains and the camera draws back out of the module to the whole LHCb as a point cloud of its real geometry, the flag shrinking to where the module stands; down to eye level, a 1,83 m person for scale (~15 s); a real LHCb collision crosses at ~19 s, then the crossings come faster until the detector glows evenly (~19–35 s); then a slow climb until it looks straight down, north up (~36–57 s): LHCb shrinks to a point and the map comes up round it at true scale, the LHC ring (26,7 km) with its two beams, the proposed FCC ring (90,7 km) in orange dashes, Lake Geneva, the small flag at LHCb's point. No names on screen: name the rings by word while they are in view.
+
+[kamerai atsitraukiant, ~5 s] Visas LHCb – dvidešimt vieno metro ilgio.
+[susidūrimai: tylėk ~20 s]
+[kai iškyla žemėlapis, ~45 s] Mažesnis žiedas – dvidešimt septynių kilometrų LHC. Didysis – devyniasdešimt vieno kilometro greitintuvas, kurį CERN siūlo statyti kitą. Sprendimą tikimasi priimti apie 2028 metus. Prie jo tyrimų jau prisijungė ir Vilniaus universitetas.
+[kai vaizdas sustoja] Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
+→ spausk
+
+The two advice sentences are the organisers' point, said once (kept from the cut masterclass slide; drop them if you would rather not). „Prie jo tyrimų jau prisijungė“: VU, KTU and LSMU signed a memorandum with CERN to join the FCC feasibility study (lt-fcc-unis, 22 Sept 2025). „apie 2028 metus“: the CERN Council's aim, a decision „possibly in 2028“ (cern-fcc-council-2025). The collision is the same kind as slide 10's; its 40 MHz is not said again. If asked: FCC 90,7 km, about 200 m deep, its first stage an electron–positron collider of about 15 billion CHF (cern-fcc-study).
+
+Šaltiniai: home.cern (LHCb; the FCC, 2025-11); cerncourier.com/a/fcc-feasibility-study-complete/; ff.vu.lt (2025-09-22).
+
+The clip runs 57 s.
+
+(~1.0 min)
 -->
 
 ---
