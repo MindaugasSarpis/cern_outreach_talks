@@ -421,7 +421,8 @@ function buildPath(o, ctx) {
     u.uFrom.value = -0.55; u.uTo.value = to; u.uT0.value = now + delay; u.uDur.value = legTime(to + 0.55) * (quick ? 0.6 : 1)
   }
   const request = (k) => {
-    if (!armed) return go(k)
+    // a drawn route goes on from where it stands, even while the camera moves (slide 14's legs)
+    if (!armed || u.uTo.value >= 0) return go(k)
     pending = k; hide()
   }
   const arrive = () => {
@@ -433,13 +434,13 @@ function buildPath(o, ctx) {
     }
     // an arrival from elsewhere, or `c`: the whole path is drawn again, quicker, from the start to where it stands
     const to = u.uTo.value
-    if (to >= 0 && now - played > 5) drawFromStart(to, 0.2, true)
+    if (to >= 0 && now - played > 5 && played < armT) drawFromStart(to, 0.2, true)   // not when it was drawn on this flight
   }
   const off = listen(o.name, request)
   mat.addEventListener('dispose', off)
   if (state.has(o.name)) pending = state.get(o.name)   // drawn by the station's first assembly
   const api = {
-    arm() { armed = true; armT = now; if (now - played < 1.5 && u.uTo.value >= 0) { pending = Math.round(u.uTo.value); hide() } },
+    arm() { armed = true; armT = now; if (now - played < 1.5 && u.uTo.value >= 0 && headNow() < u.uTo.value - 1e-3) { pending = Math.round(u.uTo.value); hide() } },
     assemble(t, onDone) { now = t; arrive(); onDone?.() },
     // waiting for its arrival, or still drawing (a step that waits at another station is not)
     busy: () => armed || (u.uTo.value >= 0 && headNow() < u.uTo.value - 1e-3),

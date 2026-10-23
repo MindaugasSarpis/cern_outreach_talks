@@ -52,7 +52,7 @@ BOUND = np.array([70.0, 40.0, 1.5, 0.03])   # px, px, degrees, log scale: the co
 # the cloud whiteout after Google Earth's fade (source ~29.5-33 s) and the bright limb toned down: they
 # flashed after Vilnius (YAVG 101 -> 156); keyed by source seconds
 GAIN = [(28.8, 1.0), (29.8, 0.6), (32.4, 0.62), (37.6, 0.75), (39.6, 0.85), (42.0, 0.9), (46.0, 0.8), (54.0, 0.8), (58.0, 1.0),
-        (84.0, 1.0), (88.0, 0.6), (100.0, 0.6), (104.0, 1.0),   # the Earth's lit side and the Sun's glare toned down
+        (84.0, 1.0), (87.0, 0.3), (102.0, 0.3), (106.0, 1.0),   # the Earth's lit side and the Sun's glare toned down
         (168.0, 1.0), (174.0, 0.75), (187.0, 0.8), (192.0, 1.0),   # the galaxy's core not blown out
         (224.0, 1.0), (227.0, 1.5), (233.0, 1.0)]   # the web lifted as it comes in (the second before it is the receding galaxy, dark by nature)
 BOUNDS = {0: np.array([50.0, 30.0, 0.8, 0.02]), 1: np.array([50.0, 30.0, 0.8, 0.02])}   # Google Earth's: less crop, sharper
@@ -73,7 +73,7 @@ GRID = 1 / 250
 # warp past the Sun and through our galaxy; out of warp for the galaxy whole; warp through the
 # dark between the galaxies; braking onto the web
 MAP = [(0.0, 0.0), (1.5, 2.5), (4.2, 22.0), (5.4, 30.0), (6.4, 40.0), (7.6, 52.0), (8.3, 62.0),
-       (8.8, 80.0), (9.3, 118.0), (9.8, 155.0), (10.4, 177.0), (11.0, 185.0), (12.4, 192.5),
+       (8.7, 80.0), (9.0, 118.0), (9.8, 155.0), (10.4, 177.0), (11.0, 185.0), (12.4, 192.5),
        (12.9, 199.0), (13.25, 214.0), (13.6, 226.0), (14.5, 234.0), (16.5, 248.0), (19.0, END_SRC)]
 STRETCHES = [(0.0, END_SRC, 19.0, 'map')]
 

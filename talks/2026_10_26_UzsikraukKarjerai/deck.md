@@ -86,7 +86,7 @@ Message: where we are, then out past everything to the largest scale.
 Picture: the owner's SpaceEngine zoom for Innoday, 4:13 made 19 s (scripts/remap_zoom.py): the NFTMC building in Saulėtekis (Google Earth, 0–2,3 s), the Saulėtekis campus (to ~3,9 s), Vilnius and its region (~3,9–5,4 s), into the clouds (~5 s), a quick dissolve to the Earth from space (~5,5–8,4 s), then a zoom-dissolve (the Earth shrinking on into the centre as our galaxy comes in large and settles) to our galaxy whole (~9,5–11 s), turning and receding to a dot (~11–12,5 s), and a second zoom-dissolve into the cosmic web (from ~12,5 s), slowing to a stop, held from 18 s. Stabilised (the owner: the source's wobble "on speedup it doesn't look good"); the swaying stretches are left out, and the scale jumps are zoom-dissolves since the owner's "This immediate switch from galaxy to universe web and from earth to galaxy doesn't work" (23 Oct). No sound of its own. It waits on the web for the press (no advance-on-end).
 
 Čia – Saulėtekis Vilniuje. Čia dirba Vilniaus universiteto fizikai.
-[kai matosi Žemė iš kosmoso, ~6 s] Žemė. [~9,5 s] Mūsų galaktika.
+[kai matosi Žemė iš kosmoso, ~6 s] Žemė. [~10,5 s] Mūsų galaktika.
 [tinklui pasirodžius tylėk; kai jis sustoja] → spausk
 
 The words follow the picture: say each name as it comes, not before; the first sentence is over by the time Vilnius is in sight (~4,5 s). „Čia dirba Vilniaus universiteto fizikai“: NFTMC houses units of the VU Faculty of Physics (nftmc-opened-2016). Lithuania as a country is not shown, so it is not named.
@@ -252,7 +252,7 @@ The event: CMS Open Data record 300 (CC0), run 195099, event 137440354, a Higgs 
 -->
 
 ---
-space: { path: [[0, { at: [1023.7, -483, 2.5], dist: 33, yaw: 0, pitch: 4 }]], sway: 0.3, dim: 0, ambient: 0, hum: false }   # 24 Oct: under the clip, a cut to the next slide's pose (the world rests there unseen), so the data slide starts at once, with no flight
+space: { path: [[0, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]], sway: 0.3, dim: 0, ambient: 0, hum: false }   # 24 Oct: under the clip, a cut to the next slide's pose (the world rests there unseen), so the data slide starts at once, with no flight
 ---
 
 <!-- The shared opening's LHCb reel: the detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release. It condenses out of the dust; the speaker's → moves on. -->
@@ -273,7 +273,7 @@ The line is said over the clip. The lint counts the clip's whole 39 s from the m
 -->
 
 ---
-space: { at: [1023.7, -483, 2.5], dist: 33, yaw: 0, pitch: 4, sway: 0.3, dim: 0, ambient: 0, hum: false }   # 24 Oct: the cavern side on, LHCb (x 0–24 of the `cavern` station) left and the Ωc⁰ plot (`oc`, x 28–47, 5 nearer) right, both in frame; the labels are projected from this pose (sway 0.3)
+space: { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4, sway: 0.3, dim: 0, ambient: 0, hum: false }   # 24 Oct: the cavern side on, LHCb (x 0–24 of the `cavern` station) left and the Ωc⁰ plot (`oc`, x 28–47, 5 nearer) right, both in frame; the labels are projected from this pose (sway 0.3)
 clicks: 1
 ---
 
@@ -282,11 +282,11 @@ clicks: 1
 <Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 1, omega: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { oc: 2, omega: 1 } }" />
 <Soundtrack src="audio/born_of_the_sky.m4a" tail="audio/born_of_the_sky.m4a" :level="0.25" start keys />
 
-<AfterFlight :delay="2.5"><div v-click.hide="1" class="heap r late" style="left: 880px; top: 56px"><span class="n">LHCb duomenys</span></div><div v-click.hide="1" class="heap r axis late" style="left: 880px; top: 328px"><span class="n">masė&nbsp;→</span></div></AfterFlight>
-<AfterFlight :delay="4.6"><div v-click.hide="1" class="heap l late" style="left: 104px; top: 344px"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015], [1, '2011–2015']]" :delay="5" :fill="20" /></span></div></AfterFlight>
+<AfterFlight :delay="2.5"><div v-click.hide="1" class="heap r late" style="left: 880px; top: 56px"><span class="n">LHCb duomenys</span></div><div v-click.hide="1" class="heap r axis late" style="left: 880px; top: 308px"><span class="n">masė&nbsp;→</span></div></AfterFlight>
+<AfterFlight :delay="4.6"><div v-click.hide="1" class="heap l late" style="left: 104px; top: 324px"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015], [1, '2011–2015']]" :delay="5" :fill="9" /></span></div></AfterFlight>
 <div v-click="1" class="heap l step" style="left: 390px; top: 66px; --step-delay: 2.2s"><span class="n">LHCb duomenys</span></div>
-<div v-click="1" class="heap l step" style="left: 154px; top: 360px; --step-delay: 2.2s"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015], [1, '2011–2015']]" :delay="5" :fill="20" /></span></div>
-<div v-click="1" class="heap r axis step" style="left: 600px; top: 360px; --step-delay: 2.2s"><span class="n">masė&nbsp;→</span></div>
+<div v-click="1" class="heap l step" style="left: 154px; top: 340px; --step-delay: 2.2s"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015], [1, '2011–2015']]" :delay="5" :fill="9" /></span></div>
+<div v-click="1" class="heap r axis step" style="left: 600px; top: 340px; --step-delay: 2.2s"><span class="n">masė&nbsp;→</span></div>
 <div v-click="1" class="heap l step" style="left: 390px; top: 124px; --step-delay: 2.8s"><span class="n">5&nbsp;naujos dalelės</span></div>
 <div v-click="1" class="heap step" style="left: 769px; top: 144px; --step-delay: 3.2s"><span class="n">c</span></div><div v-click="1" class="heap step" style="left: 718px; top: 230px; --step-delay: 3.2s"><span class="n">s</span></div><div v-click="1" class="heap step" style="left: 816px; top: 230px; --step-delay: 3.2s"><span class="n">s</span></div>
 
@@ -322,7 +322,7 @@ places: { inventions: true }   # the two invention photos stand in the world fro
 :global(html[data-stage] .hero .kk-invention.tr) { right: var(--kk-x); top: 62px; }
 /* near-white pictures graded down for the camera (Innoday's .hero.dim) */
 :global(html[data-stage] .hero.kk-dim > img) { filter: brightness(0.8) contrast(1.05); }
-:global(html[data-stage] .hero.kk-dim.page > img) { filter: brightness(0.7) contrast(1.05); }
+:global(html[data-stage] .hero.kk-dim.page > img) { filter: brightness(0.55) contrast(1.05); }
 </style>
 
 <!-- facts: gave-touch-stumpe-1972, gave-touch-sps-1976, gave-touch-johnson-1965 -->
@@ -486,7 +486,7 @@ space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway:
 <Soundtrack src="audio/starfire_close.m4a" tail="audio/starfire_from52.m4a" :tail-at="52" :level="0.33" resync keys />
 <!-- the labels the owner asked for (23 Oct: "mano appearing where LHC is and when FCC is in view - jūsų greitintuvas"), on the clip's clock: the LHC ring reads from 43,3 s, the FCC's whole circle from 52 s (measured on the clip); „mano“ from 45 s, once the lake has swung clear of its place top right, „jūsų“ off the FCC ring's bottom right; canvas px, clear of the rings, the lake and the logo, inside the safe box -->
 <ClipCue :from="45" :path="[[45, 652, 58]]" class="close-label">LHC – mano<br>greitintuvas</ClipCue>
-<ClipCue :from="52" :path="[[52, 652, 328]]" class="close-label">FCC – jūsų<br>greitintuvas</ClipCue>
+<ClipCue :from="52" :path="[[52, 652, 270]]" class="close-label">FCC – jūsų<br>greitintuvas</ClipCue>
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments, cern-fcc-study, lt-fcc-unis, cern-ls3-hllhc, sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn -->
 
