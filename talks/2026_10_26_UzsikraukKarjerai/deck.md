@@ -588,26 +588,26 @@ The clip runs 16,5 s (trimmed); the words run a few seconds past it, over its he
 space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway: 0, dim: 0.25 }
 ---
 
-<!-- Innoday's recorded close (close_home.mp4, Innoday's last shown slide) cut at 57,2 s, where it rests on the LHC and FCC map, before it flies off to the globe and home (the owner: "just zoom out to lhc / fcc, not the globe"). Muted (Innoday's music is its own Soundtrack, not in the clip); it holds the map until the press. -->
+<!-- Innoday's recorded close (close_home.mp4, Innoday's last shown slide) cut at 57,2 s, where it rests on the LHC and FCC map, before it flies off to the globe and home (the owner: "just zoom out to lhc / fcc, not the globe"); fitted for TV (scripts/close_fit.py: the dark gap after the flag cut, the map brought inside the safe box, its lines thickened), 54 s. Muted (Innoday's music is its own Soundtrack, not in the clip); it holds the map until the press. -->
 <VideoPlayer src="close_lhc_fcc.mp4" muted :controls="false" transition="fade" />
 
 <!-- facts: lhcb-detector-size, lhc-geneva-27km-100m-four-experiments, cern-fcc-study, cern-fcc-council-2025, lt-fcc-unis, cern-ls3-hllhc -->
 
 <!--
 Message: from our flag on one module, out to the whole detector and its collisions, then the LHC ring and the ring CERN proposes next, whose study Vilnius University has joined; you need not know now what you will be.
-Picture: Innoday's close, 57 s, no sound: the flag's frame breaks into grains and the camera draws back out of the module to the whole LHCb as a point cloud of its real geometry, the flag shrinking to where the module stands; down to eye level, a 1,83 m person for scale (~15 s); a real LHCb collision crosses at ~19 s, then the crossings come faster until the detector glows evenly (~19–35 s); then a slow climb until it looks straight down, north up (~36–57 s): LHCb shrinks to a point and the map comes up round it at true scale, the LHC ring (26,7 km) with its two beams, the proposed FCC ring (90,7 km) in orange dashes, Lake Geneva, the small flag at LHCb's point. No names on screen: name the rings by word while they are in view.
+Picture: Innoday's close fitted for TV, 54 s, no sound: the flag's frame breaks into grains and dissolves (~2,5 s) into the whole LHCb as a point cloud of its real geometry, the flag shrinking to where the module stands, a 1,83 m person for scale; a real LHCb collision crosses at ~4,7 s, then the crossings come faster until the detector glows evenly; then a slow climb until it looks straight down, north up: from ~35 s the picture eases smaller so the whole map ends inside the frame; LHCb shrinks to a point and the map comes up round it at true scale (~38,5–44 s), the LHC ring (26,7 km) with its two beams, the proposed FCC ring (90,7 km) in orange dashes, Lake Geneva, the small flag at LHCb's point, the LHCb logo top left (its mirrored „LHCb“ is the logo's own CP mirror). No names on screen: name the rings by word while they are in view.
 
-[kamerai atsitraukiant, ~5 s] Visas LHCb – dvidešimt vieno metro ilgio.
-[kai prasideda susidūrimai, ~19 s] Dabar greitintuvas atnaujinamas. Atnaujintas jis veiks iki 2041 metų. Tada tau bus apie trisdešimt.
+[kai pasirodo visas detektorius, ~3 s] Visas LHCb – dvidešimt vieno metro ilgio.
+[kai susidūrimai ima kartotis] Dabar greitintuvas atnaujinamas. Atnaujintas jis veiks iki 2041 metų. Tada tau bus apie trisdešimt.
 [tylėk, kol susidūrimai susilieja į švytėjimą]
-[kai iškyla žemėlapis, ~45 s] Mažesnis žiedas – dvidešimt septynių kilometrų LHC. Didysis – devyniasdešimt vieno kilometro greitintuvas, kurį CERN siūlo statyti kitą. Sprendimą tikimasi priimti apie 2028 metus. Prie jo tyrimų jau prisijungė ir Vilniaus universitetas.
+[kai iškyla žemėlapis, ~40 s] Mažesnis žiedas – dvidešimt septynių kilometrų LHC. Didysis – devyniasdešimt vieno kilometro greitintuvas, kurį CERN siūlo statyti kitą. Sprendimą tikimasi priimti apie 2028 metus. Prie jo tyrimų jau prisijungė ir Vilniaus universitetas.
 → spausk
 
 „iki 2041 metų“: the HL-LHC is to run from June 2030 to 2041 (cern-ls3-hllhc); „apie trisdešimt“ is our arithmetic (15–18 now, plus 15). The organisers' advice moved to „Ačiū“ (21), where it closes the cover's promise. „Prie jo tyrimų jau prisijungė“: VU, KTU and LSMU signed a memorandum with CERN to join the FCC feasibility study (lt-fcc-unis, 22 Sept 2025). „apie 2028 metus“: the CERN Council's aim, a decision „possibly in 2028“ (cern-fcc-council-2025). The collision is the same kind as slide 10's; its 40 MHz is not said again. If asked: FCC 90,7 km, about 200 m deep, its first stage an electron–positron collider of about 15 billion CHF (cern-fcc-study).
 
 Šaltiniai: home.cern (LHCb; the FCC, 2025-11); cerncourier.com/a/fcc-feasibility-study-complete/; ff.vu.lt (2025-09-22).
 
-The clip runs 57 s (the lint adds it); the words are all said over it.
+The clip runs 54 s (the lint adds it); the words are all said over it.
 
 (~0.1 min)
 -->

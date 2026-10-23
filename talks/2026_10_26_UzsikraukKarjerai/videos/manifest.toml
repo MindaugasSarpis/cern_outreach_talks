@@ -101,17 +101,21 @@ Innoday's raw bank copy (12,2 MB), its manifest's notes."""
 name    = "close_lhc_fcc.mp4"
 profile = "high-motion"
 used_in = ["deck"]
-trim    = ["0:00", "0:57.2"]
 notes   = """\
 Slide 20 (the owner, 23 Oct: "take 2 last slides from innoday just zoom out to lhc / \
-fcc, not the globe"): Innoday's recorded close, close_home.mp4 (its slide 30, \
-1080p50, silent; its manifest: slidev-stage-record's take of LisTakeover at 22efcef), \
-cut at 57,2 s, where the camera has come to rest over the LHC and FCC map (frame \
-change 0,06 at 56,5 s), before the map flies away into the Earth at 57,5 s and the \
-flight home. From lis_flag.mp4's last frame out through the LHCb point cloud, a real \
-LHCb collision and its 40 MHz glow, to the LHC (26,7 km) and the proposed FCC \
-(90,7 km) at true scale, the flag at LHCb's point. Raw: Innoday's release asset \
-close_home.mp4 (125 MB) under this name; the encode trims it."""
+fcc, not the globe"; then the review, "implement all"): Innoday's recorded close, \
+close_home.mp4 (its slide 30, 1080p50, silent; slidev-stage-record's take of \
+LisTakeover at 22efcef), its first 57,2 s (to where the camera rests over the LHC and \
+FCC map, before the fly-off to the Earth at 57,5 s), fitted for TV by \
+scripts/close_fit.py --keep-mirror: the dark gap after the flag (2,5-5,5 s) cut with \
+a 0,5 s dissolve (3 s shorter, 54,2 s); from 35 s the picture eased down to 0,66 so \
+the rings and the logo end inside the safe box (x 96-1824, y 108-800); the map's \
+thin lines thickened and brightened for the stream. The logo's mirrored "LHCb" with \
+the red slash is LHCb's own logo (the CP mirror) and is kept. From lis_flag.mp4's \
+last frame out through the LHCb point cloud, a real LHCb collision (~4,7 s) and its \
+40 MHz glow, to the LHC (26,7 km) and the proposed FCC (90,7 km) at true scale, the \
+flag at LHCb's point (map from ~38,5 s, whole ~44 s). Raw: that output; its source, \
+Innoday's release asset close_home.mp4 (125 MB), is videos/raw/innoday/close_home.mp4."""
 
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 
