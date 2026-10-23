@@ -531,6 +531,25 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Decisions
 
+- 2026-10-24 (early hours) — The owner's late rounds:
+  - **The zoom (2):** one continuous, stabilised flight with two "warps" (a fisheye bulge,
+    radial zoom blur, dark edges; the corridor widened under them) and a synthesised whoosh
+    in the clip. Scott Buckley's „Aphelion“ starts as the web appears (13,6 s, `<Soundtrack
+    clip-at>`) and plays through slide 5.
+  - **Cut:** inside LHCb (old 10), the three pile slides; the zoom-out's unlicensed music.
+  - **The data slide (10):** LHCb with its own collisions; grains rise out of it into the
+    Ωc⁰ spectrum (fills in 9 s); the click marks the five peaks and draws the Ωc⁰. „Born Of
+    The Sky“ under it.
+  - **11–12:** the touchscreen (Stumpe, 1972) and the first website (a capture of
+    info.cern.ch), as photos out of the grains.
+  - **13–14:** the criss-cross route ending home; 14 draws Vilnius → CERN → Manchester → CERN →
+    Vilnius before the dive; Lithuania's outline waits for the dive (map `showDelay`).
+  - **The close (16):** „LHC – mano / greitintuvas“, „FCC – jūsų / greitintuvas“.
+  - **Sound:** levelled (see the entry below).
+  - **Reviewed:** a final visual review and a re-check; the redraw a recorded take shows on 14
+    is the recorder opening each slide fresh (the live deck carries the route on).
+  - **Plates:** recorded with a 30 s hold so the data slide's fill is in.
+
 - 2026-10-24 (night) — The sound, levelled (the owner: "2" of the proposals). Heard
   loudness (the file's integrated LUFS plus the deck's level): the music beds under the
   speech at about −24/−25 (Aphelion 0,35 on 2 and 0,3 on 3–5, −23/−25; Born Of The Sky

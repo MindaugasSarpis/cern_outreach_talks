@@ -278,7 +278,7 @@ clicks: 1
 ---
 
 <InsideLhcb :land-y="-470" :until="1" />
-<ClickPose :poses="{ 1: { at: [1042.3, -481.9, 5], dist: 25, yaw: 0, pitch: 3, sway: 0.3, dim: 0, ambient: 0, hum: false, flight: 2.2 } }" />
+<ClickPose :poses="{ 1: { at: [1042.3, -481.9, 5], dist: 27, yaw: 0, pitch: 3, sway: 0.3, dim: 0, ambient: 0, hum: false, flight: 2.2 } }" />
 <Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 1, omega: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { oc: 2, omega: 1 } }" />
 <Soundtrack src="audio/born_of_the_sky.m4a" tail="audio/born_of_the_sky.m4a" :level="0.25" start keys />
 

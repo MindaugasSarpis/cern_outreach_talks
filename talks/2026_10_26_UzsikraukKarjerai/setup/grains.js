@@ -440,7 +440,7 @@ function buildPath(o, ctx) {
   mat.addEventListener('dispose', off)
   if (state.has(o.name)) pending = state.get(o.name)   // drawn by the station's first assembly
   const api = {
-    arm() { armed = true; armT = now; if (now - played < 1.5 && u.uTo.value >= 0 && headNow() < u.uTo.value - 1e-3) { pending = Math.round(u.uTo.value); hide() } },
+    arm() { armed = true; armT = now; if (now - played < 1.5 && u.uFrom.value < 0 && u.uTo.value >= 0) { pending = Math.round(u.uTo.value); hide() } },   // hold back only a draw from nothing
     assemble(t, onDone) { now = t; arrive(); onDone?.() },
     // waiting for its arrival, or still drawing (a step that waits at another station is not)
     busy: () => armed || (u.uTo.value >= 0 && headNow() < u.uTo.value - 1e-3),
