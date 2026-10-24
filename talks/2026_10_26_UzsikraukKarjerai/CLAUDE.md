@@ -107,7 +107,9 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
-- 2026-10-24 (evening, latest): **deployed 7586b41** (the owner: "DEPLOY"; Pages run 40122787406,
+- 2026-10-24 (late): the finale's hit moved to Starfire's 1:37 arrival (Decisions, 24 Oct late), a12ccba;
+  the venue zip rebuilt from it on the release; venue.json. Its deploy follows (see the next entry when made).
+- 2026-10-24 (evening): **deployed 7586b41** (the owner: "DEPLOY"; Pages run 40122787406,
   green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/ 200, the
   live walk passed, 17 slides; `talk ready` passed on it, nothing skipped but the pptx; plates one
   warning): the owner's round (Decisions, 24 Oct evening). A first deploy attempt was refused by
