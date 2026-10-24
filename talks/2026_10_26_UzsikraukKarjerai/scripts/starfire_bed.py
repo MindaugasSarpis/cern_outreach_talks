@@ -5,18 +5,22 @@ for the finale, so on click maybe we fade out and time to that accent like in in
 
 Two files from the master (scottbuckley.com.au/library/starfire, 5:41):
 
-- public/audio/starfire_bed.m4a, about 17 min, from slide 2 to the click into the close: the
-  track's opening and first rise (0:00-2:39.9) and its second half after the drop (3:06.9-5:00.9),
-  in turn, the opening again from 0:12.8, until the talk is safely covered. Every join is a
-  one-bar equal-power cross-fade on the track's own bar grid (80 bpm, a bar of 3.0005 s, anchored
-  on the 2:54.85 downbeat), so the meter runs on through it. The 2:42.85-2:54.85 build and its
-  downbeat are left out: the finale is the only place they are heard. Under the speech its
-  sections are ridden toward one loudness (a slow gain, 70 % of the way, at most ±8 dB), then the
-  whole is set to -16 LUFS.
-- public/audio/starfire_finale.m4a, the track from 2:42.85 to its end at the master's gain
-  -0,5 dB (as Innoday's close files): the four bars that build into the downbeat, which
-  <Soundtrack drop> on the close lands on LHCb's collision; then the track's second half under
-  the close and the credits, ending with the track.
+- public/audio/starfire_bed.m4a, from slide 2 to the click into the close: the track's opening
+  (0:00-1:21.8) and, from its breakdown on, its second half (2:27.8-5:00.9), in turn, the opening
+  again from 0:12.8, until the talk is safely covered. Every join is a one-bar equal-power
+  cross-fade on the track's own bar grid (80 bpm, a bar of 3.0005 s, anchored on the 2:54.85
+  downbeat), so the meter runs on through it. The crescendo, the 1:37 arrival and the first climax
+  (1:21.8-2:27.8) are left out (the owner, 24 Oct: "The finale (which is starfire 1:05) should only
+  be [heard] on LHCb Collision in the last slide"; his 1:05 is the old close file's, which began at
+  0:30; "It was really nice in the innoday"): the finale is the only place they are heard. Under
+  the speech its sections are ridden toward one loudness (a slow gain, 70 % of the way, at most
+  ±8 dB), then the whole is set to -16 LUFS.
+- public/audio/starfire_finale.m4a, the track from 1:21.38 to its end at the master's gain
+  -0,5 dB (as Innoday's close files): the 16 s of crescendo into the arrival at 1:37.38 (measured:
+  the level's first peak of the full orchestra), which <Soundtrack drop> on the close lands on
+  LHCb's collision, cross-fading in from the bed on the press (Innoday's close had the same
+  arrival about 18 s into the same clip); then the rest of the track under the close and the
+  credits, ending with the track.
 
 python3 -I scripts/starfire_bed.py Starfire.mp3 public/audio
 (in pnpm talk render; ffmpeg on PATH)
@@ -25,14 +29,15 @@ import subprocess, sys, numpy as np
 
 SR = 48000
 BAR = 3.0005
-DOWNBEAT = 174.85                 # 2:54.85, measured (Innoday's close)
-LEAD = 4                          # bars of build before it in the finale file
+DOWNBEAT = 174.85                 # 2:54.85, measured (Innoday's close): the bar grid's anchor
+ARRIVAL = 97.38                   # 1:37.38, the arrival the finale lands on the collision
+LEAD_S = 16.0                     # s of crescendo before it in the finale file
 BED_MIN = 16.5 * 60               # the bed's length at least
 g = lambda k: DOWNBEAT + k * BAR  # a bar line of the track, k bars from the downbeat
-# (in, out) on the grid: the opening and first rise; the second half; the opening again
-FIRST = (0.0, g(-5))              # to 2:39.85, a bar before the build the finale opens on
-SECOND = (g(4), g(42))            # 3:06.85-5:00.87
-AGAIN = (g(-54), g(-5))           # 0:12.82-2:39.85
+# (in, out) on the grid: the opening; the second half from the breakdown; the opening again
+FIRST = (0.0, g(-31))             # to 1:21.83, before the crescendo the finale opens on
+SECOND = (g(-9), g(42))           # 2:27.84-5:00.87
+AGAIN = (g(-54), g(-31))          # 0:12.82-1:21.83
 
 
 def decode(path):
@@ -101,9 +106,9 @@ def main(master, outdir):
     encode(bed, f'{outdir}/starfire_bed.m4a')
     print(f'starfire_bed.m4a {len(bed) / SR / 60:.2f} min, {len(parts)} parts:',
           ', '.join(f'{a:.2f}-{b:.2f}' for a, b in parts), f'{loudness(outdir + "/starfire_bed.m4a"):.1f} LUFS')
-    fin = sec(DOWNBEAT - LEAD * BAR, len(m) / SR) * 10 ** (-0.5 / 20)
+    fin = sec(ARRIVAL - LEAD_S, len(m) / SR) * 10 ** (-0.5 / 20)
     encode(fin, f'{outdir}/starfire_finale.m4a')
-    print(f'starfire_finale.m4a from {DOWNBEAT - LEAD * BAR:.2f} s, {len(fin) / SR:.1f} s, the downbeat {LEAD * BAR:.3f} s in')
+    print(f'starfire_finale.m4a from {ARRIVAL - LEAD_S:.2f} s, {len(fin) / SR:.1f} s, the arrival {LEAD_S:.3f} s in')
 
 
 if __name__ == '__main__':

@@ -549,6 +549,17 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Decisions
 
+- 2026-10-24 (late) — The finale's hit (the owner: "The finale (which is starfire 1:05) should only
+  be [heard] on LHCb Collision in the last slide"; "It was really nice in the innoday, but we didn't
+  have a soundtrack for all the slides"; "so have to reshuffle somehow, and on switch have a nice
+  transition to that one (like innoday)"). His 1:05 is the old close file's (it began at 0:30): the
+  track's 1:37 arrival, Innoday's ~18 s into the same close. Now: the bed is 0:00–1:21,8 and
+  2:27,8–5:00,9 in turn (18,7 min), so the crescendo, the arrival and the first climax are heard
+  only at the close; `starfire_finale.m4a` is the track from 1:21,38; on the press into 16 the bed
+  cross-fades into it over 2 s (`drop.xfade`, new) and its 1:37,38 arrival lands on LHCb's
+  collision at 16,36 s (Chromium: the file at 16,04 s when the clip is at 16,37 s). This replaces
+  the 2:54,85 downbeat and the fade-out of the entry below.
+
 - 2026-10-24 (evening) — The owner's round in this window ("Can we use Scott Buckley starfire for
   the entire deck? …", then slides 3, 4, 9, 10, 12, 15, 16; "Has to be within 15min (aim for a
   little less)"; "implement all of these"):

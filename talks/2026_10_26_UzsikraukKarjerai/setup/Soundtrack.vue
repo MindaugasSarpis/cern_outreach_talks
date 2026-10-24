@@ -5,8 +5,8 @@ import { soundLevel, onSoundLevel, musicKeys } from './soundLevel.js'
 
 // Innoday's component (23-24 Oct). Here since 24 Oct (the owner: "Can we use Scott Buckley starfire for the entire
 // deck?"): one piece, „Starfire“ (CC BY 4.0), from slide 2 on: scripts/starfire_bed.py's bed, `start` on every slide
-// 2-15 (so a reload or a jump picks it up), and on the close `drop` with `out: 0`: the press fades the bed out and the
-// finale file's downbeat lands on LHCb's collision. Innoday's notes follow.
+// 2-15 (so a reload or a jump picks it up), and on the close `drop` with `xfade`: on the press the bed cross-fades into
+// the finale file, whose 1:37 arrival lands on LHCb's collision. Innoday's notes follow.
 // <Soundtrack :level="0.3" start />, on each of the close's slides (owner, 20 Oct: "Will
 // need some crazy inspirational soundtrack for the last three slides spanning - maybe
 // scott buckley"): one piece across them, Scott Buckley's „Starfire“ (CC BY 4.0, credited
@@ -30,7 +30,8 @@ import { soundLevel, onSoundLevel, musicKeys } from './soundLevel.js'
 // that quiet so its peak lands at `at` s of the clip (the „Ačiū“ collision's crossing), the
 // clip's rate nudged (at most ±10 %) to stay on the music meanwhile; on the peak the level
 // opens again, on the music's own clock. A third file, not a seek (see `resync`). `out` and `fade` (this talk):
-// at `duck` the old track goes to `out` of the level (default `quiet`) over `fade` ms (default 1000).
+// at `duck` the old track goes to `out` of the level (default `quiet`) over `fade` ms (default 1000);
+// `xfade` ms: the finale comes in by a cross-fade from the old track instead (and `duck` past `at` skips the duck).
 const props = defineProps({
   src: { type: String, default: 'audio/aphelion.m4a' },
   tail: { type: String, default: 'audio/aphelion.m4a' },
@@ -154,8 +155,10 @@ function startDrop() {
       if (phase === 0 && V >= d.duck && V < d.at) { if (G.cur) ramp(G.cur, props.level * (d.out ?? d.quiet), d.fade ?? 1000); phase = 1 }
       if (phase <= 1 && V >= d.at - d.hit && V < d.at) {
         const old = G.cur
-        G.cur = peak; peak.e.currentTime = 0; cancelAnimationFrame(peak.raf); peak.raf = 0; set(peak, props.level * d.quiet); play(peak)
-        if (old && old !== peak) { cancelAnimationFrame(old.raf); ramp(old, 0, 250, () => old.e.pause()) }
+        G.cur = peak; peak.e.currentTime = 0; cancelAnimationFrame(peak.raf); peak.raf = 0
+        // `xfade` ms: an equal-power cross-fade from the old track (Innoday's close); without it the old one goes in 250 ms
+        if (d.xfade) { set(peak, 0); play(peak); ramp(peak, props.level * d.quiet, d.xfade) } else { set(peak, props.level * d.quiet); play(peak) }
+        if (old && old !== peak) { cancelAnimationFrame(old.raf); ramp(old, 0, d.xfade || 250, () => old.e.pause()) }
         phase = 2
       }
       if (phase === 2 && !peak.e.paused && peak.e.currentTime > 0) {
