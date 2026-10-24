@@ -192,8 +192,8 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 ---
 
 <!-- The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, an 18 s cut (videos/manifest.toml). At the speaker's → after its end, it pushes on into the beam pipe. -->
-<!-- 24 Oct review: `transition="fade"` on 6, 7 and 9 (the dust's condensing blocks read as codec blocking at stream bitrate; the push into the clip carries the motion) -->
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.05" exit="push" exit-at="0.45,0.53" transition="fade" />
+<!-- 24 Oct: the dust stays on 6, 7 and 9 (a review round's `transition="fade"` left ~0,6 s of black after the push out of the clip before: the owner saw it flicker) -->
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.05" exit="push" exit-at="0.45,0.53" />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <LhcOpening part="tunnel" />
@@ -216,7 +216,7 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 ---
 
 <!-- 21 Oct (the owner: "can show magnet video from CERN"; "A, ok"): the LHC dipole, CERN-VIDEO-2019-050-008, its first 10,8 s (videos/manifest.toml): a cutaway of the blue cryostat into the two copper-lined beam pipes; its small English/French labels („LHC Dipole“, „Beam pipes“) kept, the owner's "ok". Silent. It lands where the tunnel's push went in; → moves on (no auto-advance). -->
-<VideoPlayer src="cern_video_2019_050_008.mp4" muted :controls="false" transition="fade" />
+<VideoPlayer src="cern_video_2019_050_008.mp4" muted :controls="false" />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <!-- facts: lhc-two-beam-pipes-opposite, cern-lhc-magnets, cern-lhc-cold, gave-cryo-lhc, lhc-ls3-restart-2028 -->
@@ -282,7 +282,7 @@ space: { path: [[0, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]], s
 
 <!-- The shared opening's LHCb reel: the detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release. It condenses out of the dust; the speaker's → moves on. -->
 <!-- 24 Oct: muted, Starfire under it (the owner: "starfire for the entire deck … everything coherently connected"); the reel's own music was 0,45 -->
-<VideoPlayer src="lhcb.mp4" muted transition="fade" />
+<VideoPlayer src="lhcb.mp4" muted />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <!-- facts: lhcb-detector-size, lhcb-three-storey-worked, lhcb-collaboration-sep-2026, lhcb-vilnius-joined, particle-decay-reconstructed-mass, particles-decay-detector-sees-products -->
@@ -312,13 +312,15 @@ clicks: 1
 
 <AfterFlight :delay="2.5"><div v-click.hide="1" class="heap r late" style="left: 880px; top: 56px"><span class="n">LHCb duomenys</span></div><div v-click.hide="1" class="heap r axis late" style="left: 880px; top: 308px"><span class="n">masė&nbsp;→</span></div></AfterFlight>
 <AfterFlight :delay="4.6"><div v-click.hide="1" class="heap l late" style="left: 104px; top: 324px"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015], [1, '2011–2015']]" :delay="5" :fill="9" /></span></div></AfterFlight>
+<!-- 24 Oct (the owner: "Slide 10 indicate 4 TB/s"): LHCb's Run 3 readout, the whole detector every crossing, as its glow builds (lhcb-run3-readout-4tbs); top left, clear of the detector and the plot -->
+<AfterFlight :delay="6"><div v-click.hide="1" class="heap l late" style="left: 104px; top: 66px"><span class="n">4 TB/s</span></div></AfterFlight>
 <div v-click="1" class="heap l step" style="left: 390px; top: 66px; --step-delay: 2.2s"><span class="n">LHCb duomenys</span></div>
 <div v-click="1" class="heap l step" style="left: 154px; top: 340px; --step-delay: 2.2s"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015], [1, '2011–2015']]" :delay="5" :fill="9" /></span></div>
 <div v-click="1" class="heap r axis step" style="left: 600px; top: 340px; --step-delay: 2.2s"><span class="n">masė&nbsp;→</span></div>
 <div v-click="1" class="heap l step" style="left: 390px; top: 124px; --step-delay: 2.8s"><span class="n">5&nbsp;naujos dalelės</span></div>
 <div v-click="1" class="heap step" style="left: 769px; top: 144px; --step-delay: 3.2s"><span class="n">c</span></div><div v-click="1" class="heap step" style="left: 718px; top: 230px; --step-delay: 3.2s"><span class="n">s</span></div><div v-click="1" class="heap step" style="left: 816px; top: 230px; --step-delay: 3.2s"><span class="n">s</span></div>
 
-<!-- facts: lhcb-100m-below-ground, particles-decay-detector-sees-products, particle-decay-reconstructed-mass, lhcb-omegac-2017-fig2-candidates, lhcb-omegac-2017-sample, lhcb-omegac-2017-years, lhcb-omegac-five-2017, lhcb-omegac-2017-masses, omegac-quark-content, proton-neutron-three-quarks, chance-bumps-shrink-with-data, particle-physics-5-sigma-discovery, lhcb-pentaquark-2015, lhcb-pentaquark-2015-cross-checks, pentaquark-idea-to-discovery-51-years -->
+<!-- facts: lhcb-run3-readout-4tbs, lhcb-100m-below-ground, particles-decay-detector-sees-products, particle-decay-reconstructed-mass, lhcb-omegac-2017-fig2-candidates, lhcb-omegac-2017-sample, lhcb-omegac-2017-years, lhcb-omegac-five-2017, lhcb-omegac-2017-masses, omegac-quark-content, proton-neutron-three-quarks, chance-bumps-shrink-with-data, particle-physics-5-sigma-discovery, lhcb-pentaquark-2015, lhcb-pentaquark-2015-cross-checks, pentaquark-idea-to-discovery-51-years -->
 
 <!--
 Picture (24 Oct, the owner: "slide 11-12 a bit anticlimactic need maybe the detector besides showing we are taking data and a single histogram with peaks built up"; the toy plot cut): LHCb's 3D model in the cavern, left, and beside it LHCb's real Ωc⁰ spectrum, right. LHCb's own 2012 collision crosses in the detector (~3 s), then the crossings come faster until they merge into the 40 MHz glow; just after the first crossing the plot starts to fill (`lead` 3,4 world-s): grains rise out of the detector and arc into their mass bins (20 s), „LHCb duomenys“ over it, the year the landing data were taken under the detector („2011 m.“ → „2015 m.“, then „2011–2015 m.“), „masė →“ under the axis. → spausk: the camera moves in to the plot as the detector and its collisions fade (the data are in), the five peaks get ticks, „5 naujos dalelės“, and the Ωc⁰ as three quarks (c, s, s) with gluons gathers right of it. The zoom's music under it.

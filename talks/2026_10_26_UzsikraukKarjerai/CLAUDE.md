@@ -558,6 +558,13 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Decisions
 
+- 2026-10-24 (late night) — The owner: "some sort of flicker bug switching to slide 6", "and 7": the
+  review round's `transition="fade"` on 6, 7 and 9 left ~0,6 s of black after the push out of the clip
+  before (measured: the frame's mean 85 → 5 → 67); the dust is back on all three (the frame now
+  brightens straight through). "Slide 10 indicate 4 TB/s": „4 TB/s“ top left from 6 s, hidden on
+  the click (lhcb-run3-readout-4tbs: Run 3's average readout; the plot's years are Run 1's, so in
+  speech it is today's rate).
+
 - 2026-10-24 (late night) — The web darker (the owner: "can we make the web universe darker? no blue in
   the back just clear visitble strands, monumental, vast"): slides 3 and 4 `ambient: 0` (the ground,
   nebula and dust off: black), the web's grains brighter and a little larger (`gain` 1,75,
