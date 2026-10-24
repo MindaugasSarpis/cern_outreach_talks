@@ -18,23 +18,6 @@
       "poster": "cern_footage_2022_013_001_1080p_lhc.mp4.poster.jpg",
       "lit": 0.0
     },
-    "cern_footage_2022_013_006.mp4": {
-      "file": "cern_footage_2022_013_006.mp4.jpg",
-      "tile": [
-        320,
-        180
-      ],
-      "cols": 4,
-      "count": 4,
-      "interval": 4.0,
-      "size": [
-        1920,
-        1080
-      ],
-      "duration": 14.0,
-      "poster": "cern_footage_2022_013_006.mp4.poster.jpg",
-      "lit": 0.0
-    },
     "cern_overview_short.mp4": {
       "file": "cern_overview_short.mp4.jpg",
       "tile": [
@@ -69,23 +52,6 @@
       "poster": "cern_video_2019_050_008.mp4.poster.jpg",
       "lit": 0.0
     },
-    "close_quick.mp4": {
-      "file": "close_quick.mp4.jpg",
-      "tile": [
-        320,
-        180
-      ],
-      "cols": 8,
-      "count": 12,
-      "interval": 4.0,
-      "size": [
-        1920,
-        1080
-      ],
-      "duration": 44.18,
-      "poster": "close_quick.mp4.poster.jpg",
-      "lit": 0.0
-    },
     "lhcb.mp4": {
       "file": "lhcb.mp4.jpg",
       "tile": [
@@ -102,24 +68,6 @@
       "duration": 39.12,
       "poster": "lhcb.mp4.poster.jpg",
       "lit": 0.08
-    },
-    "lis_flag.mp4": {
-      "file": "lis_flag.mp4.jpg",
-      "tile": [
-        320,
-        180
-      ],
-      "cols": 3,
-      "count": 3,
-      "interval": 4.0,
-      "size": [
-        1920,
-        1080
-      ],
-      "duration": 10.0,
-      "poster": "lis_flag.mp4.poster.jpg",
-      "lit": 9.96,
-      "poster_at": "0:09.96"
     },
     "lis_flag_50.mp4": {
       "file": "lis_flag_50.mp4.jpg",

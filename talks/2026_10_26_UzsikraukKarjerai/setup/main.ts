@@ -8,6 +8,9 @@ import { armAfterCover } from './afterCover.js'
 import { installOpening } from '../components/lhc-opening/index.js'
 import { installDetector } from './detector.js'
 import { installCavern } from './cavern.js'
+import { installAccel } from './accel.js'
+import WorldLabel from './WorldLabel.vue'
+import ClickBus from './ClickBus.vue'
 import { installThesis } from './thesis.js'
 import { installTriplet } from './triplet.js'
 import InsideLhcb from './InsideLhcb.vue'
@@ -90,6 +93,7 @@ export default ({ app, router }) => {
   installOpening({ app, registerBuilder })   // the shared LHC opening: its collision, sound and <LhcOpening>
   installDetector(registerBuilder, { event: EVENT_LB })
   installCavern(registerBuilder)
+  installAccel(registerBuilder)   // the close's accelerators and its word (24 Oct)
   installThesis(registerBuilder)
   installTriplet(registerBuilder)
   app.component('Grains', Grains)
@@ -101,6 +105,8 @@ export default ({ app, router }) => {
   app.component('ClickPose', ClickPose)
   app.component('Soundtrack', Soundtrack)
   app.component('DataSfx', DataSfx)   // the data slide's sound (24 Oct)
+  app.component('WorldLabel', WorldLabel)   // the close's labels on the orbiting map (24 Oct)
+  app.component('ClickBus', ClickBus)   // a collision started by a click (the close's „Ačiū už dėmesį“)
   app.component('ClipCue', ClipCue)
   installSoundKeys()
 }

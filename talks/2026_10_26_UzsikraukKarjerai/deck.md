@@ -512,17 +512,33 @@ The clip runs 16,5 s (trimmed); the words run a few seconds past it, over its he
 -->
 
 ---
-space: { path: [[0, { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62 }]], sway: 0, dim: 0.35 }
+space:
+  dim: 0
+  sway: 0
+  hum: false
+  ambient: [[0, 1], [22, 1], [29, 0]]   # the map on black (as the web on 3)
+  path:   # 24 Oct (the owner: "why is this not fullscreen, make it vast, filling the entire screen"; "maybe slowly orbit, indicate 3D fcc 300m underground"; the recorded close's point cloud "a bit too fuzzy"): the close live, in the world
+    - [0, { at: [1012, -483, 2.5], dist: 30, yaw: -28, pitch: 7 }]       # LHCb in its cavern, the fine mesh (slide 10's detector), from three-quarters
+    - [16, { at: [1012, -483, 2.5], dist: 25, yaw: 8, pitch: 5 }]        # a slow crane round it under the crescendo; LHCb's collision crosses at 16,36 s, on Starfire's 1:37 arrival
+    - [20, { at: [1012, -483, 2.5], dist: 28, yaw: 14, pitch: 8 }]       # the debris
+    - [25, { at: [1023.7, -404, 2.5], dist: 32, yaw: 10, pitch: 76 }]    # up out of the cavern and through the surface, looking down at Point 8 (the detector let go at 23 s)
+    - [31, { at: [1028, -406, 23.8], dist: 70, yaw: 0, pitch: 56 }]      # the accelerators under the surface, filling the frame, north up: the LHC (100 m down, its two beams going round) and the FCC (200 m, dashed), the shafts
+    - [75, { at: [1028, -406, 23.8], dist: 60, yaw: 30, pitch: 42 }]     # a slow orbit, lower, so the two levels stand apart
+    - [140, { at: [1028, -406, 23.8], dist: 56, yaw: 55, pitch: 36 }]
+clicks: 1
 ---
 
-<!-- Innoday's recorded close (close_home.mp4, Innoday's last shown slide) cut at 57,2 s, where it rests on the LHC and FCC map, before it flies off to the globe and home (the owner: "just zoom out to lhc / fcc, not the globe"); for TV (scripts/close_fit.py --no-fit: the dark gap after the flag cut, its lines thickened, the source's own full framing), 54 s. Muted (Innoday's music is its own Soundtrack, not in the clip); it holds the map until the press. -->
-<!-- 24 Oct (the owner: "can we improve slide 16 somehow?"): close_quick.mp4, the same close with its even glow and the climb (24–44 s) played in 10 s at an eased speed (scripts/close_retime.py), 44,2 s; the collision at 16,36 s unmoved, the labels 10 s earlier -->
-<VideoPlayer src="close_quick.mp4" muted :controls="false" transition="fade" />
-<!-- 24 Oct (the owner: "time the collision in the LHCb right for the finale … like in innoday talk"; then "The finale (which is starfire 1:05) should only be [heard] on LHCb Collision in the last slide", "It was really nice in the innoday", "on switch have a nice transition to that one (like innoday)"): the press cross-fades the bed (2 s, Innoday's way) into starfire_finale.m4a, the track from 1:21,38, 16 s of crescendo before its 1:37,38 arrival (his 1:05 of the old close file, which began at 0:30; 16,02 s into the encoded file), which lands on LHCb's first collision crossing at 16,36 s of the clip (measured: the frame brightens from 16,34 s); the bed never plays 1:21,8–2:27,8; the clip's rate is nudged (at most ±10 %) to stay on the music; the track then runs on to its end under the close and the credits -->
-<Soundtrack src="audio/starfire_finale.m4a" tail="audio/starfire_finale.m4a" :level="0.33" keys :drop="{ at: 16.36, file: 'audio/starfire_finale.m4a', hit: 16.02, duck: 99, xfade: 2000, quiet: 1 }" />
-<!-- the labels the owner asked for (23 Oct: "mano appearing where LHC is and when FCC is in view - jūsų greitintuvas"), on the clip's clock: the LHC ring reads from 43,3 s, the FCC's whole circle from 52 s (measured on the clip); „mano“ from 45 s, once the lake has swung clear of its place top right, „jūsų“ off the FCC ring's bottom right; canvas px, clear of the rings, the lake and the logo, inside the safe box -->
-<ClipCue :from="35" :path="[[35, 652, 58]]" class="close-label">LHC – mano<br>greitintuvas</ClipCue>
-<ClipCue :from="42" :path="[[42, 652, 270]]" class="close-label">FCC – jūsų<br>greitintuvas</ClipCue>
+<!-- 24 Oct: the close rebuilt live (setup/accel.js; until then Innoday's recorded close, close_quick.mp4). LHCb's cavern (slide 10's station): the collision waits 13,86 s so it crosses at 16,36 s (`delay`), the arrival of Starfire's 1:37 on it (the drop on the world's clock); at 23 s the detector is let go and the camera rises out of the cavern to the accelerator map above it (the `accel` station: Point 8's shaft stands over the detector), which then turns slowly. The depths are drawn ~20 times deeper than true so the two levels read; the FCC's eight shafts are evenly placed (indicative). On the click a CMS collision (`bang`) crosses over the FCC's middle 2,5 s later, on Starfire's 2:54,85 downbeat (starfire_downbeat.m4a starts 2,6 s before it), and its debris gathers into „Ačiū už dėmesį“ (`word`). -->
+<InsideLhcb :land-y="-470" :delay="13.86" :fade-at="23" />
+<Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
+<ClickBus name="bang" :click="1" />
+<!-- the click: the camera flies in to face the place over the FCC's middle where the collision crosses and the words gather -->
+<ClickPose :poses="{ 1: { at: [1027.99, -389.2, 30.56], dist: 22, yaw: 20, pitch: 5, flight: 2.2, ambient: 0 } }" />
+<Soundtrack src="audio/starfire_finale.m4a" tail="audio/starfire_finale.m4a" :level="0.5" keys :drop="{ clock: 'world', at: 16.36, file: 'audio/starfire_finale.m4a', hit: 16.02, duck: 99, xfade: 2000, quiet: 0.8 }" :on-click="{ click: 1, file: 'audio/starfire_downbeat.m4a', level: 0.62, xfade: 700 }" />
+<WorldLabel v-click.hide="1" :at="[1009.66, -408, -9.36]" :above="-440" :delay="30" align="left">LHC – mano<br>greitintuvas</WorldLabel>
+<WorldLabel v-click.hide="1" :at="[1057.82, -416, 41.42]" :above="-440" :delay="34">FCC – jūsų<br>greitintuvas</WorldLabel>
+<WorldLabel v-click.hide="1" :at="[1023.7, -404, 2.5]" :above="-440" :delay="31" :dx="34" :dy="-30">100 m</WorldLabel>
+<WorldLabel v-click.hide="1" :at="[998.64, -408, 18.41]" :above="-440" :delay="35" align="left">~200 m</WorldLabel>
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments, cern-fcc-study, lt-fcc-unis, cern-ls3-hllhc, sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn -->
 

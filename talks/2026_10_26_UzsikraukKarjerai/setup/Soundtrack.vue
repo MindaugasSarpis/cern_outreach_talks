@@ -41,9 +41,12 @@ const props = defineProps({
   resync: { type: Boolean, default: false },
   keys: { type: Boolean, default: false },   // + and - are the music's here, even over a clip (soundLevel.js)
   drop: { type: Object, default: null },
-  clipAt: { type: Number, default: null },   // start `src` from its top when the slide's clip reaches this second (slide 2: the web)
+  clipAt: { type: Number, default: null },
+  // { click, file, level, xfade }: on that click, a cross-fade into `file` from its top at `level` (the close, 24 Oct:
+  // „Ačiū už dėmesį“ out of a collision on Starfire's 2:54,85 downbeat, the file starting the collision's approach before it)
+  onClick: { type: Object, default: null },   // start `src` from its top when the slide's clip reaches this second (slide 2: the web)
 })
-const { $renderContext, $page } = useSlideContext()
+const { $renderContext, $page, $clicks } = useSlideContext()
 const nav = useNav()
 const page = () => $page?.value ?? $page
 const live = () => $renderContext?.value === 'slide' && !nav.isPrintMode?.value
@@ -146,12 +149,16 @@ function startDrop() {
   const d = props.drop, me = page()
   const peak = track(d.file)
   let phase = 0
+  // `clock: 'world'` (the live close, 24 Oct): the drop runs on the world's time since the slide opened
+  // instead of a clip's (no clip to nudge: the world on the owner's MacBook keeps real time)
+  const el = () => globalThis.__stage?.state?.()?.elapsed
+  const e0 = d.clock === 'world' ? el() : null
   const tick = () => {
     if (nav.currentSlideNo?.value !== me) return endDrop()
-    dropVideo ||= root.value?.closest('.slidev-page')?.querySelector('.video-player video') || null
+    if (d.clock !== 'world') dropVideo ||= root.value?.closest('.slidev-page')?.querySelector('.video-player video') || null
     const v = dropVideo
-    if (v && !v.paused) {
-      const V = v.currentTime
+    const V = d.clock === 'world' ? (e0 != null && el() != null ? el() - e0 : null) : (v && !v.paused ? v.currentTime : null)
+    if (V != null) {
       if (phase === 0 && V >= d.duck && V < d.at) { if (G.cur) ramp(G.cur, props.level * (d.out ?? d.quiet), d.fade ?? 1000); phase = 1 }
       if (phase <= 1 && V >= d.at - d.hit && V < d.at) {
         const old = G.cur
@@ -165,7 +172,7 @@ function startDrop() {
         const a = peak.e.currentTime, left = d.hit - a
         // the clip where the music is: ahead, it slows; behind, it hurries
         const err = V - (d.at - d.hit + a)
-        v.playbackRate = Math.min(1.1, Math.max(0.9, 1 - err * 1.5))
+        if (v) v.playbackRate = Math.min(1.1, Math.max(0.9, 1 - err * 1.5))
         if (left < 0.25) {
           const g = peak.gain?.gain
           if (g && G.ctx) {
@@ -174,7 +181,7 @@ function startDrop() {
             g.setValueAtTime(props.level * soundLevel(), now + Math.max(0, left))
             peak.level = props.level
           } else setTimeout(() => set(peak, props.level), Math.max(0, left) * 1000)
-          v.playbackRate = 1
+          if (v) v.playbackRate = 1
           phase = 3
         }
       }
@@ -184,6 +191,15 @@ function startDrop() {
   }
   dropRaf = requestAnimationFrame(tick)
 }
+watch(() => $clicks?.value, (c, was) => {
+  const o = props.onClick
+  if (!o || !live() || nav.currentSlideNo?.value !== page()) return
+  if (c >= o.click && (was ?? 0) < o.click) {
+    const t = track(o.file), old = G.cur
+    G.cur = t; t.e.currentTime = 0; cancelAnimationFrame(t.raf); t.raf = 0; set(t, 0); play(t); ramp(t, o.level ?? props.level, o.xfade ?? 600)
+    if (old && old !== t) { cancelAnimationFrame(old.raf); ramp(old, 0, o.xfade ?? 600, () => old.e.pause()) }
+  }
+})
 // after the drop's state above: opened on its own slide, the hook can run during setup
 onSlideEnter(() => {
   if (props.clipAt != null) { if (live()) { if (playing() && G.cur !== track(props.src)) ramp(G.cur, 0, 1200); watchCue() } }
@@ -192,7 +208,7 @@ onSlideEnter(() => {
 })
 onSlideLeave(() => { endDrop(); cancelAnimationFrame(cueRaf) })
 // the drop's file loads while the slide is mounted ahead of its press, not in the seconds before its hit
-onMounted(() => { if (props.drop && live()) track(props.drop.file) })
+onMounted(() => { if (props.drop && live()) track(props.drop.file); if (props.onClick && live()) track(props.onClick.file) })
 onUnmounted(() => endDrop())
 // a `+` / `-` (this window's or the presenter's): every track at its level times the new one
 if (!G.level) G.level = onSoundLevel(() => { for (const t of G.tracks.values()) if (!t.raf) set(t, t.level) })

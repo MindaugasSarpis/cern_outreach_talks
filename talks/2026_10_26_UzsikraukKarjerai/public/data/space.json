@@ -1370,6 +1370,75 @@
      "dur": 2.4
     }
    ]
+  },
+  {
+   "id": "accel",
+   "pos": [
+    1018.48,
+    -400,
+    -5.18
+   ],
+   "look": {
+    "target": [
+     6,
+     -4,
+     28
+    ],
+    "dist": 110,
+    "yaw": 0,
+    "pitch": 52,
+    "sway": 0
+   },
+   "gather": 0.06,
+   "objects": [
+    {
+     "type": "accel",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "map": "data/accel_map.json",
+     "scale": 2.2,
+     "depth": 0.08,
+     "lhcDepth": 100,
+     "fccDepth": 200,
+     "assemble": false,
+     "show": {
+      "below": 80,
+      "over": 18
+     }
+    },
+    {
+     "type": "lhc-collision",
+     "name": "bang",
+     "pos": [
+      9.51,
+      13.4,
+      35.74
+     ],
+     "event": "cms",
+     "scale": 1.0,
+     "approach": 2.5,
+     "sound": true
+    },
+    {
+     "type": "word",
+     "name": "thanks",
+     "pos": [
+      9.51,
+      9.2,
+      35.74
+     ],
+     "text": "Ačiū už dėmesį",
+     "from": "bang",
+     "height": 7,
+     "grains": 60000,
+     "size": 1.8,
+     "gather": 2.4,
+     "burstY": 4.2
+    }
+   ]
   }
  ]
 }

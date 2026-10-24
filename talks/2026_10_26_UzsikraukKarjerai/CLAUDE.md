@@ -558,6 +558,24 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Decisions
 
+- 2026-10-25 (night) — The close rebuilt live (the owner: "Can we improve 16 somehow?", "why is this not
+  fullscreen, make it vast, filling the entire screen", "maybe slowly orbit, indicate 3D fcc 300m
+  underground", "Then, 'Ačiū už dėmesį' appears out of particle collision", the recorded point cloud "a
+  bit too fuzzy … or maybe a fine mesh", "a bit more expressed sound like in innoday on the last slide").
+  Slide 16 is now the world, not close_quick.mp4: LHCb in its cavern (slide 10's fine mesh); its
+  collision held 13,86 s (`InsideLhcb delay`) so it crosses at 16,36 s on Starfire's 1:37 arrival (the
+  drop on the world's clock, `drop.clock: 'world'`); at 23 s the detector is let go and the camera rises
+  through the surface to the accelerators (setup/accel.js `accel`, the `accel` station over the cavern:
+  Innoday's OSM map as the surface, the LHC 100 m down with its two beams, the proposed FCC dashed at
+  200 m, shafts at Point 8 and the FCC's eight sites, depths drawn ~20× deeper than true), on black, the
+  camera orbiting slowly; labels on the map (<WorldLabel>): „LHC – mano / greitintuvas“, „FCC – jūsų /
+  greitintuvas“, „100 m“, „~200 m“ (cern-fcc-study: about 200 m on average, not the owner's 300). On the
+  click: the camera flies in over the FCC's middle, a CMS collision (`bang`) crosses 2,5 s later on
+  Starfire's 2:54,85 downbeat (starfire_downbeat.m4a, from 2:52,25, at 0,62; <Soundtrack on-click>) and
+  its debris gathers into „Ačiū už dėmesį“ (setup/accel.js `word`, Space Grotesk). The music on 16 at
+  0,5 (0,33 before). close_quick.mp4 and close_lhc_fcc.mp4 are kept in the raw bank (videos/raw/innoday/)
+  but no slide plays them. The notes' cue times on 16 still describe the recorded close.
+
 - 2026-10-24 (late night) — The owner: "some sort of flicker bug switching to slide 6", "and 7": the
   review round's `transition="fade"` on 6, 7 and 9 left ~0,6 s of black after the push out of the clip
   before (measured: the frame's mean 85 → 5 → 67); the dust is back on all three (the frame now

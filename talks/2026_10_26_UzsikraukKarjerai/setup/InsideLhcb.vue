@@ -24,7 +24,10 @@ const props = defineProps({
   landY: { type: Number, default: -482 },   // the camera below this (world y): it has come down, the collision starts
   freeze: { type: Array, default: () => [[0, 0.4], [0.25, 0.15], [0.8, 0.15], [1.6, 1]] },   // the world's rate from the crossing: slow while the flash lights, then the debris bursts out
   until: { type: Number, default: 0 },   // from this click: the collision let go, the detector gone (0: never)
+  delay: { type: Number, default: 0 },   // world s after the camera has come down before the collision starts (the close: its crossing on the music)
+  fadeAt: { type: Number, default: 0 },  // world s after the slide opens: the collision let go, the detector gone (the close's rise out of the cavern; 0: never)
 })
+const elapsed = () => globalThis.__stage?.state?.()?.elapsed
 const { $renderContext, $page, $clicks } = useSlideContext()
 const nav = useNav()
 const live = computed(() => $renderContext?.value === 'slide' && !nav.isPrintMode?.value)
@@ -52,11 +55,16 @@ async function start() {
   for (let i = 0; i < 80 && id === run && !(s = stage()); i++) await new Promise((r) => setTimeout(r, 100))
   if (!s || id !== run) return
   offCross = bus.on('cross', (e) => { if (e.name === props.collision && id === run) s.api.setRate(props.freeze, { camera: 1 }) })
-  let col = false
+  let col = false, faded = false, down = null
+  const t0 = elapsed()
   watcher = setInterval(() => {
-    if (id !== run || col) return
-    if (s.camera.position.y < props.landY) { col = true; bus.set(props.collision, 1); clearInterval(watcher); watcher = 0 }
-  }, 100)
+    if (id !== run) return
+    const e = t0 != null ? (elapsed() ?? t0) - t0 : 0
+    if (props.fadeAt > 0 && !faded && e >= props.fadeAt) { faded = true; bus.set(props.collision, 0); setGrains('det', 0) }
+    if (col) { if (!props.fadeAt || faded) { clearInterval(watcher); watcher = 0 } return }
+    if (down === null && s.camera.position.y < props.landY) down = e
+    if (down !== null && e - down >= props.delay) { col = true; bus.set(props.collision, 1) }
+  }, 50)
 }
 
 const over = () => props.until > 0 && $clicks.value >= props.until
