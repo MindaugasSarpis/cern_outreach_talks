@@ -565,6 +565,16 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Decisions
 
+- 2026-10-25 — The close, second round (the owner: "The resolved LHCb mesh somehow has lesser effect than
+  the pointcloud. Can we keep it pointcloud but resolve better", "spend a little bit more time (like before)
+  at eye level … Maximize effect, keeping the soundtrack in mind", "the text was a bit jumping", "this blue
+  on blue … maybe deep black is better"): LHCb on 16 is the point cloud again (`detp`: Innoday's
+  lhcb-grains.bin with its shape, grains 0,85 and alpha 0,8 for a crisper cloud, Innoday's faster cascade);
+  the camera starts close among the grains and draws back to the detector beside the person, holds at eye
+  level through the collision (1:37 arrival, 16,4 s) and the 40 MHz glow to the breath at 1:54,8 (33,8 s),
+  climbs, and shows the accelerators whole on the 2:03,8 bar (42,8 s); the slide is deep black throughout
+  (`ambient: 0`); <WorldLabel> smoothed and placed by a sub-pixel transform (no jumping).
+
 - 2026-10-25 — The owner: "slide 6 too loud, and zoomout swoosh a bit too loud, on slide 6 let's just have
   music, mute the video": the tunnel clip muted (0,05 until then), the zoom's hum 0,25 (0,4).
 

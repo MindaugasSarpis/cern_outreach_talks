@@ -20,7 +20,7 @@ const { $renderContext, $page } = useSlideContext()
 const nav = useNav()
 const el = ref(null)
 const W = 980, H = 551.25
-let raf = 0, t0 = null
+let raf = 0, t0 = null, sx = null, sy = null   // the smoothed place: the projected point moves with every frame's camera; whole-pixel left/top made it jump (the owner, 25 Oct)
 function stage() {
   const rootEl = document.querySelector('.stage')
   const canvas = rootEl?.querySelector('canvas')
@@ -47,7 +47,8 @@ function tick() {
   const w = e.offsetWidth, hgt = e.offsetHeight
   let left = props.align === 'left' ? x - w : x
   left = Math.min(Math.max(left, 49), 931 - w); y = Math.min(Math.max(y - hgt / 2, 55), 408 - hgt)
-  e.style.left = left + 'px'; e.style.top = y + 'px'
+  if (sx === null || e.style.opacity === '0') { sx = left; sy = y } else { sx += (left - sx) * 0.12; sy += (y - sy) * 0.12 }
+  e.style.transform = `translate3d(${sx.toFixed(2)}px, ${sy.toFixed(2)}px, 0)`
   e.style.opacity = !behind && !late && cam.position.y > props.above ? '1' : '0'
 }
 onMounted(() => { if ($renderContext?.value === 'slide') raf = requestAnimationFrame(tick) })
@@ -58,7 +59,7 @@ onUnmounted(() => cancelAnimationFrame(raf))
 
 <style>
 html[data-stage] .world-label {
-  position: absolute; z-index: 3; font-size: 34px; font-weight: 500; line-height: 1.05; color: #eef1ff;
+  position: absolute; left: 0; top: 0; will-change: transform; z-index: 3; font-size: 34px; font-weight: 500; line-height: 1.05; color: #eef1ff;
   text-shadow: var(--kk-shadow); white-space: nowrap; transition: opacity 1.2s ease; pointer-events: none;
 }
 html[data-stage] .world-label.left { text-align: right; }

@@ -1368,6 +1368,43 @@
      "gluonAlpha": 1.0,
      "delay": 0.9,
      "dur": 2.4
+    },
+    {
+     "type": "detector",
+     "name": "detp",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "src": "data/lhcb-grains.bin",
+     "shape": "data/lhcb-grains.shape.bin",
+     "sweep": 3.5,
+     "alpha": 0.8,
+     "size": 0.85,
+     "color": "#6fa4ff",
+     "hot": "#e4eeff",
+     "out": [
+      16,
+      0,
+      0
+     ],
+     "scale": 1.2,
+     "stretch": 1.0,
+     "pulse": "inside",
+     "light": 4.0,
+     "light3": [
+      -0.35,
+      0.75,
+      0.55
+     ],
+     "shade": 0.45,
+     "edgeGain": 0.9,
+     "cascade": {
+      "after": 4,
+      "rate": 0.34,
+      "speed": 12
+     }
     }
    ]
   },

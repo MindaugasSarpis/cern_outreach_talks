@@ -24,6 +24,7 @@ const props = defineProps({
   landY: { type: Number, default: -482 },   // the camera below this (world y): it has come down, the collision starts
   freeze: { type: Array, default: () => [[0, 0.4], [0.25, 0.15], [0.8, 0.15], [1.6, 1]] },   // the world's rate from the crossing: slow while the flash lights, then the debris bursts out
   until: { type: Number, default: 0 },   // from this click: the collision let go, the detector gone (0: never)
+  det: { type: String, default: 'det' },   // the detector's name (the close: `detp`, the point cloud)
   delay: { type: Number, default: 0 },   // world s after the camera has come down before the collision starts (the close: its crossing on the music)
   fadeAt: { type: Number, default: 0 },  // world s after the slide opens: the collision let go, the detector gone (the close's rise out of the cavern; 0: never)
   // { src, at }: start the collision when the playing <Soundtrack> file whose path holds `src` reaches `at` s
@@ -55,7 +56,7 @@ async function start() {
   const id = ++run
   clear()
   stopCollision()   // a rebuilt world must not replay a kept step at once
-  setGrains('det', 1)
+  setGrains(props.det, 1)
   let s = null
   for (let i = 0; i < 80 && id === run && !(s = stage()); i++) await new Promise((r) => setTimeout(r, 100))
   if (!s || id !== run) return
@@ -65,7 +66,7 @@ async function start() {
   watcher = setInterval(() => {
     if (id !== run) return
     const e = t0 != null ? (elapsed() ?? t0) - t0 : 0
-    if (props.fadeAt > 0 && !faded && e >= props.fadeAt) { faded = true; bus.set(props.collision, 0); setGrains('det', 0) }
+    if (props.fadeAt > 0 && !faded && e >= props.fadeAt) { faded = true; bus.set(props.collision, 0); setGrains(props.det, 0) }
     if (col) { if (!props.fadeAt || faded) { clearInterval(watcher); watcher = 0 } return }
     if (down === null && s.camera.position.y < props.landY) down = e
     const m = props.syncTo ? musicAt(props.syncTo.src) : null
@@ -75,7 +76,7 @@ async function start() {
 }
 
 const over = () => props.until > 0 && $clicks.value >= props.until
-function letGo() { run++; clear(); stopCollision(); setGrains('det', 0) }
+function letGo() { run++; clear(); stopCollision(); setGrains(props.det, 0) }
 onSlideEnter(() => { if (live.value) (over() ? letGo() : start()) })
 watch($clicks, (c, was) => {
   if (!live.value || nav.currentSlideNo?.value !== page() || !props.until) return
@@ -84,7 +85,7 @@ watch($clicks, (c, was) => {
 })
 onSlideLeave(() => {
   if (!live.value) return
-  run++; clear(); stopCollision(); setGrains('det', 0)
+  run++; clear(); stopCollision(); setGrains(props.det, 0)
 })
 const onRebuilt = () => { if (live.value && nav.currentSlideNo?.value === page() && !over()) start() }
 onMounted(() => {

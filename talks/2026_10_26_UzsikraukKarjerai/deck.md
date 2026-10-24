@@ -517,29 +517,32 @@ space:
   dim: 0
   sway: 0
   hum: false
-  ambient: [[0, 1], [22, 1], [29, 0]]   # the map on black (as the web on 3)
-  path:   # 24 Oct (the owner: "why is this not fullscreen, make it vast, filling the entire screen"; "maybe slowly orbit, indicate 3D fcc 300m underground"; the recorded close's point cloud "a bit too fuzzy"): the close live, in the world
-    - [0, { at: [1012, -483, 2.5], dist: 30, yaw: -28, pitch: 7 }]       # LHCb in its cavern, the fine mesh (slide 10's detector), from three-quarters
-    - [16, { at: [1012, -483, 2.5], dist: 25, yaw: 8, pitch: 5 }]        # a slow crane round it under the crescendo; LHCb's collision crosses at 16,36 s, on Starfire's 1:37 arrival
-    - [20, { at: [1012, -483, 2.5], dist: 28, yaw: 14, pitch: 8 }]       # the debris
-    - [25, { at: [1023.7, -404, 2.5], dist: 32, yaw: 10, pitch: 76 }]    # up out of the cavern and through the surface, looking down at Point 8 (the detector let go at 23 s)
-    - [31, { at: [1028, -406, 23.8], dist: 70, yaw: 0, pitch: 56 }]      # the accelerators under the surface, filling the frame, north up: the LHC (100 m down, its two beams going round) and the FCC (200 m, dashed), the shafts
-    - [75, { at: [1028, -406, 23.8], dist: 60, yaw: 30, pitch: 42 }]     # a slow orbit, lower, so the two levels stand apart
-    - [140, { at: [1028, -406, 23.8], dist: 56, yaw: 55, pitch: 36 }]
+  ambient: 0   # deep black throughout (the owner, 25 Oct: "this blue on blue somehow diminished the effect a bit... maybe deep black is better")
+  path:   # 24–25 Oct (the owner: "make it vast, filling the entire screen"; "slowly orbit, indicate 3D fcc 300m underground"; then "keep it pointcloud but resolve better", "spend a little bit more time (like before) at eye level … Maximize effect, keeping the soundtrack in mind"): the close live, timed to Starfire (the finale file's 1:37,38 arrival at 16,36 s)
+    - [0, { at: [1012, -481, 2.5], dist: 13, yaw: -42, pitch: 3 }]      # close in among LHCb's grains (the point cloud, `detp`), as the recorded close began
+    - [12, { at: [1012, -481.5, 2.5], dist: 24, yaw: -18, pitch: 4 }]     # drawn back: the whole detector at eye level, the 1,83 m person beside it
+    - [16.4, { at: [1012, -481.5, 2.5], dist: 25, yaw: -12, pitch: 4 }]   # LHCb's collision crosses on the 1:37 arrival
+    - [26, { at: [1012, -481.5, 2.5], dist: 28, yaw: 0, pitch: 5 }]       # the crossings come faster (the cascade from ~20 s) …
+    - [33.8, { at: [1012, -481.5, 2.5], dist: 31, yaw: 10, pitch: 6 }]    # … until it glows evenly: 40 million a second; held at eye level to the breath at 1:54,8
+    - [38, { at: [1018, -470, 2.5], dist: 38, yaw: 10, pitch: 45 }]     # the climb (the detector let go at 38,5 s)
+    - [40.5, { at: [1023.7, -404, 2.5], dist: 32, yaw: 10, pitch: 76 }] # through the surface, over Point 8
+    - [42.8, { at: [1028, -406, 23.8], dist: 70, yaw: 0, pitch: 56 }]   # the accelerators whole on the 2:03,8 bar (the swell after the breath), north up
+    - [90, { at: [1028, -406, 23.8], dist: 60, yaw: 30, pitch: 42 }]    # a slow orbit, lower, so the two levels stand apart
+    - [150, { at: [1028, -406, 23.8], dist: 56, yaw: 55, pitch: 36 }]
 clicks: 1
 ---
 
 <!-- 24 Oct: the close rebuilt live (setup/accel.js; until then Innoday's recorded close, close_quick.mp4). LHCb's cavern (slide 10's station): the collision waits 13,86 s so it crosses at 16,36 s (`delay`), the arrival of Starfire's 1:37 on it (the drop on the world's clock); at 23 s the detector is let go and the camera rises out of the cavern to the accelerator map above it (the `accel` station: Point 8's shaft stands over the detector), which then turns slowly. The depths are drawn ~20 times deeper than true so the two levels read; the FCC's eight shafts are evenly placed (indicative). On the click a CMS collision (`bang`) crosses over the FCC's middle 2,5 s later, on Starfire's 2:54,85 downbeat (starfire_downbeat.m4a starts 2,6 s before it), and its debris gathers into „Ačiū už dėmesį“ (`word`). -->
-<InsideLhcb :land-y="-470" :delay="13.86" :fade-at="23" :sync-to="{ src: 'starfire_finale', at: 13.52 }" />
+<InsideLhcb det="detp" :land-y="-470" :delay="13.86" :fade-at="38.5" :sync-to="{ src: 'starfire_finale', at: 13.52 }" />
 <Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
 <ClickBus name="bang" :click="1" />
 <!-- the click: the camera flies in to face the place over the FCC's middle where the collision crosses and the words gather -->
 <ClickPose :poses="{ 1: { at: [1027.99, -389.2, 30.56], dist: 22, yaw: 20, pitch: 5, flight: 2.2, ambient: 0 } }" />
 <Soundtrack src="audio/starfire_finale.m4a" tail="audio/starfire_finale.m4a" :level="0.5" keys :drop="{ clock: 'world', at: 16.36, file: 'audio/starfire_finale.m4a', hit: 16.02, duck: 99, xfade: 2000, quiet: 0.8 }" :on-click="{ click: 1, file: 'audio/starfire_downbeat.m4a', level: 0.62, xfade: 700 }" />
-<WorldLabel v-click.hide="1" :at="[1009.66, -408, -9.36]" :above="-440" :delay="30" align="left">LHC – mano<br>greitintuvas</WorldLabel>
-<WorldLabel v-click.hide="1" :at="[1057.82, -416, 41.42]" :above="-440" :delay="34">FCC – jūsų<br>greitintuvas</WorldLabel>
-<WorldLabel v-click.hide="1" :at="[1023.7, -404, 2.5]" :above="-440" :delay="31" :dx="34" :dy="-30">100 m</WorldLabel>
-<WorldLabel v-click.hide="1" :at="[998.64, -408, 18.41]" :above="-440" :delay="35" align="left">~200 m</WorldLabel>
+<WorldLabel v-click.hide="1" :at="[1009.66, -408, -9.36]" :above="-440" :delay="44.5" align="left">LHC – mano<br>greitintuvas</WorldLabel>
+<WorldLabel v-click.hide="1" :at="[1057.82, -416, 41.42]" :above="-440" :delay="47.5">FCC – jūsų<br>greitintuvas</WorldLabel>
+<WorldLabel v-click.hide="1" :at="[1023.7, -404, 2.5]" :above="-440" :delay="45.5" :dx="34" :dy="-30">100 m</WorldLabel>
+<WorldLabel v-click.hide="1" :at="[998.64, -408, 18.41]" :above="-440" :delay="49" align="left">~200 m</WorldLabel>
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments, cern-fcc-study, lt-fcc-unis, cern-ls3-hllhc, sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn -->
 
