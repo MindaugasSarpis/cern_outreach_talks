@@ -107,6 +107,10 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-24 (late night, latest): the web on black (Decisions) at 1663c55, plates and stills retaken
+  and published, the venue zip rebuilt from it on the release; venue.json. Before it: **deployed
+  7bfce47** (the owner: "deploy"; Pages run 40129663772, green; the URL 200, the live walk passed):
+  the review round.
 - 2026-10-24 (night, latest): the review round (Decisions, 24 Oct night) at 8400bfa: plates (10) and
   stills retaken and published; the venue zip rebuilt from 8400bfa on the release; venue.json. Live
   until its deploy: 885b218 (below; its deploy entry is the next one when made).
