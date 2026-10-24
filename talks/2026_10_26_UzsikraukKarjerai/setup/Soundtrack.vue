@@ -131,11 +131,6 @@ function watchCue() {
   }
   cueRaf = requestAnimationFrame(tick)
 }
-onSlideEnter(() => {
-  if (props.clipAt != null) { if (live()) { if (playing() && G.cur !== track(props.src)) ramp(G.cur, 0, 1200); watchCue() } }
-  else arrive()
-  if (props.drop && live()) startDrop()
-})
 
 // the drop: watched each frame from the clip's time (see `drop`)
 const root = ref(null)
@@ -186,6 +181,12 @@ function startDrop() {
   }
   dropRaf = requestAnimationFrame(tick)
 }
+// after the drop's state above: opened on its own slide, the hook can run during setup
+onSlideEnter(() => {
+  if (props.clipAt != null) { if (live()) { if (playing() && G.cur !== track(props.src)) ramp(G.cur, 0, 1200); watchCue() } }
+  else arrive()
+  if (props.drop && live()) startDrop()
+})
 onSlideLeave(() => { endDrop(); cancelAnimationFrame(cueRaf) })
 // the drop's file loads while the slide is mounted ahead of its press, not in the seconds before its hit
 onMounted(() => { if (props.drop && live()) track(props.drop.file) })
