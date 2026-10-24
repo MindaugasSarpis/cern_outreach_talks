@@ -107,6 +107,10 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-25 (night, latest): the live close (Decisions, 25 Oct night) and the flicker fix and „4 TB/s“ (24 Oct
+  late night) on the branch; plates (11, 16's new) and stills retaken and published; the venue zip rebuilt
+  from 0046f36 on the release; venue.json. `talk ready` and the deploy follow (the classifier asks the
+  owner's word for each deploy). Live: df6fe11.
 - 2026-10-24 (late night, latest): the web on black (Decisions) at 1663c55, plates and stills retaken
   and published, the venue zip rebuilt from it on the release; venue.json. Before it: **deployed
   7bfce47** (the owner: "deploy"; Pages run 40129663772, green; the URL 200, the live walk passed):
