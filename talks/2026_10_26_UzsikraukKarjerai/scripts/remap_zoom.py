@@ -31,14 +31,17 @@ from scipy.ndimage import gaussian_filter1d, maximum_filter1d, minimum_filter1d
 SRC_FPS, OUT_FPS = 60, 50
 W, H = 1920, 1080
 END_SRC = 253.42
-TOTAL, HOLD = 20.0, 1.0
+TOTAL, HOLD = 25.0, 1.0
+# 24 Oct (the owner: "the zoomout could be a little bit slower as well"): the same flight, its
+# landmarks (MAP) and the warp's speeds stretched from 19 s of run to 24
+SLOW = (TOTAL - HOLD) / 19.0
 # the joins, seconds: two Earth views dissolve quickly; the jumps in scale (the Earth to the galaxy,
 # the galaxy to the web) are zoom-dissolves (owner, 23 Oct: "This immediate switch from galaxy to
 # universe web and from earth to galaxy doesn't work"): the outgoing picture shrinks on into the
 # centre as it fades and the incoming one comes in larger and settles, so the pull-back carries on
 XFS = []
 ZOOM_JOIN = []
-WARP_FROM, WARP_FULL = 12.0, 50.0   # speed x where the warp starts, and where it is full
+WARP_FROM, WARP_FULL = 12.0 / SLOW, 50.0 / SLOW  # speed x where the warp starts, and where it is full
 WARP_BOUND = np.array([420.0, 140.0, 6.0, 0.10])   # added to the corridor at full warp
 WARP_BLUR, WARP_BULGE, WARP_VIGNETTE = 0.32, 0.22, 0.7   # at full warp: zoom-blur span, fisheye, edge darkening
 ZOOM_CAP = 1.15                   # past this the borders are reflected (hidden under the warp), not cropped
@@ -75,7 +78,8 @@ GRID = 1 / 250
 MAP = [(0.0, 0.0), (1.5, 2.5), (4.2, 22.0), (5.4, 30.0), (6.4, 40.0), (7.6, 52.0), (8.3, 62.0),
        (8.7, 80.0), (9.0, 118.0), (9.8, 155.0), (10.4, 177.0), (11.0, 185.0), (12.4, 192.5),
        (12.9, 199.0), (13.25, 214.0), (13.6, 226.0), (14.5, 234.0), (16.5, 248.0), (19.0, END_SRC)]
-STRETCHES = [(0.0, END_SRC, 19.0, 'map')]
+MAP = [(t * SLOW, x) for t, x in MAP]
+STRETCHES = [(0.0, END_SRC, 19.0 * SLOW, 'map')]
 
 
 def ease_speed(keys, t):

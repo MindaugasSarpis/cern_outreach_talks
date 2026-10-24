@@ -38,6 +38,7 @@ Added 23 Oct (the ending, from Innoday)
 
 Added 24 Oct
 - Slide 2: the zoom is one continuous stabilised flight with a warp effect and a synthesised whoosh (scripts/remap_zoom.py, zoom_swoosh.py); its earlier music (the SpaceEngine edit's own track, title and licence unknown) is no longer used.
-- Music: Scott Buckley, „Aphelion“ (slides 2–5) and „Born Of The Sky“ (the data slide), scottbuckley.com.au, CC BY 4.0; „Starfire“ as before.
+- Music: Scott Buckley, „Aphelion“ (slides 2–5) and „Born Of The Sky“ (the data slide), scottbuckley.com.au, CC BY 4.0; „Starfire“ as before. (Replaced the same day, below.)
 - The touchscreen slide: B. Stumpe, photo S. E. Bennett / CERN, CC BY 4.0 (from Innoday). The first website: a capture of info.cern.ch (CERN).
+- Later on 24 Oct: one piece for the whole deck, Scott Buckley, „Starfire“ (scottbuckley.com.au/library/starfire), CC BY 4.0, adapted: sections joined into a longer bed and a cut for the close (scripts/starfire_bed.py); „Aphelion“ and „Born Of The Sky“ no longer used. Slide 2's whoosh replaced by a synthesised low hum (scripts/zoom_hum.py), the zoom 25 s.
 - Slide numbers above are older decks'; the credits page (the last slide) lists all.

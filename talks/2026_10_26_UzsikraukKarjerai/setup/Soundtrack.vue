@@ -3,8 +3,10 @@ import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
 import { soundLevel, onSoundLevel, musicKeys } from './soundLevel.js'
 
-// Innoday's component (23-24 Oct). Here: Scott Buckley's Aphelion from the web (slide 2, `clip-at`) through 5,
-// Born Of The Sky on the data slide, Starfire under the SciFi clip and the close (all CC BY 4.0). Innoday's notes follow.
+// Innoday's component (23-24 Oct). Here since 24 Oct (the owner: "Can we use Scott Buckley starfire for the entire
+// deck?"): one piece, „Starfire“ (CC BY 4.0), from slide 2 on: scripts/starfire_bed.py's bed, `start` on every slide
+// 2-15 (so a reload or a jump picks it up), and on the close `drop` with `out: 0`: the press fades the bed out and the
+// finale file's downbeat lands on LHCb's collision. Innoday's notes follow.
 // <Soundtrack :level="0.3" start />, on each of the close's slides (owner, 20 Oct: "Will
 // need some crazy inspirational soundtrack for the last three slides spanning - maybe
 // scott buckley"): one piece across them, Scott Buckley's „Starfire“ (CC BY 4.0, credited
@@ -27,7 +29,8 @@ import { soundLevel, onSoundLevel, musicKeys } from './soundLevel.js'
 // (the track from `hit` s before its peak, the 2:54,85 downbeat after the drum fill) starts
 // that quiet so its peak lands at `at` s of the clip (the „Ačiū“ collision's crossing), the
 // clip's rate nudged (at most ±10 %) to stay on the music meanwhile; on the peak the level
-// opens again, on the music's own clock. A third file, not a seek (see `resync`).
+// opens again, on the music's own clock. A third file, not a seek (see `resync`). `out` and `fade` (this talk):
+// at `duck` the old track goes to `out` of the level (default `quiet`) over `fade` ms (default 1000).
 const props = defineProps({
   src: { type: String, default: 'audio/aphelion.m4a' },
   tail: { type: String, default: 'audio/aphelion.m4a' },
@@ -153,7 +156,7 @@ function startDrop() {
     const v = dropVideo
     if (v && !v.paused) {
       const V = v.currentTime
-      if (phase === 0 && V >= d.duck && V < d.at) { if (G.cur) ramp(G.cur, props.level * d.quiet, 1000); phase = 1 }
+      if (phase === 0 && V >= d.duck && V < d.at) { if (G.cur) ramp(G.cur, props.level * (d.out ?? d.quiet), d.fade ?? 1000); phase = 1 }
       if (phase <= 1 && V >= d.at - d.hit && V < d.at) {
         const old = G.cur
         G.cur = peak; peak.e.currentTime = 0; cancelAnimationFrame(peak.raf); peak.raf = 0; set(peak, props.level * d.quiet); play(peak)
@@ -184,6 +187,8 @@ function startDrop() {
   dropRaf = requestAnimationFrame(tick)
 }
 onSlideLeave(() => { endDrop(); cancelAnimationFrame(cueRaf) })
+// the drop's file loads while the slide is mounted ahead of its press, not in the seconds before its hit
+onMounted(() => { if (props.drop && live()) track(props.drop.file) })
 onUnmounted(() => endDrop())
 // a `+` / `-` (this window's or the presenter's): every track at its level times the new one
 if (!G.level) G.level = onSoundLevel(() => { for (const t of G.tracks.values()) if (!t.raf) set(t, t.level) })
