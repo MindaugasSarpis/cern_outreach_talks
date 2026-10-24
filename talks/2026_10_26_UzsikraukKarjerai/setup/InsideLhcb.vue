@@ -26,7 +26,12 @@ const props = defineProps({
   until: { type: Number, default: 0 },   // from this click: the collision let go, the detector gone (0: never)
   delay: { type: Number, default: 0 },   // world s after the camera has come down before the collision starts (the close: its crossing on the music)
   fadeAt: { type: Number, default: 0 },  // world s after the slide opens: the collision let go, the detector gone (the close's rise out of the cavern; 0: never)
+  // { src, at }: start the collision when the playing <Soundtrack> file whose path holds `src` reaches `at` s
+  // (the close: Starfire's arrival then lands on the crossing, the collision's run-in later); `delay` + 1 s is
+  // the fallback when no music plays
+  syncTo: { type: Object, default: null },
 })
+const musicAt = (src) => { const G = globalThis.__innodaySound; const t = G && [...G.tracks].find(([s]) => s.includes(src))?.[1]; return t && !t.e.paused ? t.e.currentTime : null }
 const elapsed = () => globalThis.__stage?.state?.()?.elapsed
 const { $renderContext, $page, $clicks } = useSlideContext()
 const nav = useNav()
@@ -63,7 +68,9 @@ async function start() {
     if (props.fadeAt > 0 && !faded && e >= props.fadeAt) { faded = true; bus.set(props.collision, 0); setGrains('det', 0) }
     if (col) { if (!props.fadeAt || faded) { clearInterval(watcher); watcher = 0 } return }
     if (down === null && s.camera.position.y < props.landY) down = e
-    if (down !== null && e - down >= props.delay) { col = true; bus.set(props.collision, 1) }
+    const m = props.syncTo ? musicAt(props.syncTo.src) : null
+    const due = props.syncTo ? (m != null && m >= props.syncTo.at) || e - (down ?? e) >= props.delay + 1 : e - (down ?? e) >= props.delay
+    if (down !== null && due) { col = true; bus.set(props.collision, 1) }
   }, 50)
 }
 

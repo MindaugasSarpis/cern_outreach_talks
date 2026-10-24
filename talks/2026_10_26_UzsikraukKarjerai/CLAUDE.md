@@ -563,8 +563,10 @@ on the last slide (lint TEXT warnings, on purpose).
   underground", "Then, 'Ačiū už dėmesį' appears out of particle collision", the recorded point cloud "a
   bit too fuzzy … or maybe a fine mesh", "a bit more expressed sound like in innoday on the last slide").
   Slide 16 is now the world, not close_quick.mp4: LHCb in its cavern (slide 10's fine mesh); its
-  collision held 13,86 s (`InsideLhcb delay`) so it crosses at 16,36 s on Starfire's 1:37 arrival (the
-  drop on the world's clock, `drop.clock: 'world'`); at 23 s the detector is let go and the camera rises
+  collision started by the music (`InsideLhcb sync-to`: when starfire_finale.m4a reaches 13,52 s, its run-in
+  of 2,5 s ends on the 1:37 arrival; measured in Chromium: the crossing at the file's 16,07 s against the
+  arrival at 16,02; `delay` 13,86 s + 1 s is the fallback without sound), the file cross-fading in on the
+  world's clock (`drop.clock: 'world'`); at 23 s the detector is let go and the camera rises
   through the surface to the accelerators (setup/accel.js `accel`, the `accel` station over the cavern:
   Innoday's OSM map as the surface, the LHC 100 m down with its two beams, the proposed FCC dashed at
   200 m, shafts at Point 8 and the FCC's eight sites, depths drawn ~20× deeper than true), on black, the

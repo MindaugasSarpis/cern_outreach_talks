@@ -529,7 +529,7 @@ clicks: 1
 ---
 
 <!-- 24 Oct: the close rebuilt live (setup/accel.js; until then Innoday's recorded close, close_quick.mp4). LHCb's cavern (slide 10's station): the collision waits 13,86 s so it crosses at 16,36 s (`delay`), the arrival of Starfire's 1:37 on it (the drop on the world's clock); at 23 s the detector is let go and the camera rises out of the cavern to the accelerator map above it (the `accel` station: Point 8's shaft stands over the detector), which then turns slowly. The depths are drawn ~20 times deeper than true so the two levels read; the FCC's eight shafts are evenly placed (indicative). On the click a CMS collision (`bang`) crosses over the FCC's middle 2,5 s later, on Starfire's 2:54,85 downbeat (starfire_downbeat.m4a starts 2,6 s before it), and its debris gathers into „Ačiū už dėmesį“ (`word`). -->
-<InsideLhcb :land-y="-470" :delay="13.86" :fade-at="23" />
+<InsideLhcb :land-y="-470" :delay="13.86" :fade-at="23" :sync-to="{ src: 'starfire_finale', at: 13.52 }" />
 <Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
 <ClickBus name="bang" :click="1" />
 <!-- the click: the camera flies in to face the place over the FCC's middle where the collision crosses and the words gather -->
