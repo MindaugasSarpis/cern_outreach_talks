@@ -539,6 +539,42 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Decisions
 
+- 2026-10-24 (evening) — The owner's round in this window ("Can we use Scott Buckley starfire for
+  the entire deck? …", then slides 3, 4, 9, 10, 12, 15, 16; "Has to be within 15min (aim for a
+  little less)"; "implement all of these"):
+  - **Music:** one piece, „Starfire“ (CC BY 4.0, credited as adapted). `public/audio/starfire_bed.m4a`
+    (scripts/starfire_bed.py): 17,6 min, the track's opening and rise (0:00–2:39,9) and its second
+    half (3:06,9–5:00,9) in turn, every join a one-bar cross-fade on its 80 bpm bar grid anchored
+    at the 2:54,85 downbeat, ridden even, −16 LUFS; on every slide 2–15 at 0,36 (0,45 on the zoom),
+    `start` on each so a reload picks it up. The 2:42,85–2:54,85 build and its downbeat are only in
+    `starfire_finale.m4a`: on the press into the close (16) the bed fades out (2,5 s), the finale
+    comes in at 4,34 s on the hit that opens its last four bars and its downbeat lands on LHCb's
+    first collision crossing at 16,36 s of the clip (measured; checked in Chromium: the file at
+    12,027 s when the clip is at 16,368 s); `<Soundtrack drop>` gained `out` and `fade`.
+    Aphelion and Born Of The Sky are gone; the LHCb reel (9) is muted, Starfire under it.
+  - **The zoom (2):** 25 s (was 20; remap_zoom.py `SLOW`, the warp's speeds scaled with it), the
+    whoosh replaced by a low hum (scripts/zoom_hum.py: E1 with harmonics and a rumble, nothing above
+    ~400 Hz, swelling at the warps; −16 LUFS in the file, played at 0,4).
+  - **The web (3) and the funnel (4):** Innoday's latest takeover.js, WebTakeover.vue and funnel.js
+    (the web in depth with the procedural cosmos round it; the eras in their own colours, no floor
+    grid); slide 3 flies through the web on Innoday's path cut from 46 s to 27 s; slide 4 arrives far
+    back (the funnel small in the web) and swings in low beside it until the mouth looms (13 s).
+  - **The axis (9 → 10):** the Ωc⁰ plot's axis stood at 0,5 from the build and showed under the
+    reel's dust and before the fill; it now comes in as the first grains land (setup/grains.js).
+  - **Sound on the data slide (10):** the collision's own sound on (`inside`), and `<DataSfx>`: the
+    cascade's fronts as soft low pulses merging into a quiet band (the 40 MHz glow), each landing
+    grain a tiny click toward the plot, and on the click five B-minor-pentatonic bells for the peaks
+    and a low swell as the Ωc⁰ gathers.
+  - **The first website (12):** CERN's line-mode rendering of the first page, green on black
+    (CERN-HOMEWEB-PHO-2019-004, Achintya Rao/CERN: "freely available for non-commercial use", not
+    CC BY: the same open question as the Planck map for a stream Delfi co-organises); the label
+    top left, the page lower right of it, undimmed.
+  - **The flag (15):** `lis_flag_50.mp4`, motion-interpolated from 25 to 50 fps (no Blender scene
+    here), the high-motion profile (was 1,4 Mbit/s).
+  - **The close (16):** `close_quick.mp4` (scripts/close_retime.py): the even glow and the climb
+    (24–44 s) in 10 s, eased up to 2,5x; 44,2 s; the labels 10 s earlier (35 and 42 s).
+  - **Time:** the lint's 8,6 min plus the web's flight (~0,3) and the owner's slots: well under 15.
+
 - 2026-10-24 (early hours) — The owner's late rounds:
   - **The zoom (2):** one continuous, stabilised flight with two "warps" (a fisheye bulge,
     radial zoom blur, dark edges; the corridor widened under them) and a synthesised whoosh

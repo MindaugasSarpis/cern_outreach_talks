@@ -69,6 +69,23 @@
       "poster": "cern_video_2019_050_008.mp4.poster.jpg",
       "lit": 0.0
     },
+    "close_quick.mp4": {
+      "file": "close_quick.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 12,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 44.18,
+      "poster": "close_quick.mp4.poster.jpg",
+      "lit": 0.0
+    },
     "lhcb.mp4": {
       "file": "lhcb.mp4.jpg",
       "tile": [
@@ -103,6 +120,40 @@
       "poster": "lis_flag.mp4.poster.jpg",
       "lit": 9.96,
       "poster_at": "0:09.96"
+    },
+    "lis_flag_50.mp4": {
+      "file": "lis_flag_50.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 5,
+      "count": 5,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 16.42,
+      "poster": "lis_flag_50.mp4.poster.jpg",
+      "lit": 0.0
+    },
+    "vilnius_zoom.mp4": {
+      "file": "vilnius_zoom.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 7,
+      "count": 7,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 25.002,
+      "poster": "vilnius_zoom.mp4.poster.jpg",
+      "lit": 0.0
     }
   }
 }

@@ -926,6 +926,11 @@ function buildHistogram(o, ctx) {
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
   const W = o.width ?? 24, H = o.height ?? 10, unitN = o.unit ?? 1
   const steps = o.steps || [0, 1]
+  // the axis comes in with the first grains that land and goes with the set (the owner, 24 Oct:
+  // "in switching to slide 9 I see the axis of a histogram which is then later filled in": it
+  // stood at 0,5 from the build, seen under the reel's dust and before the data slide's fill)
+  let axU = null
+  const AXIS = 0.5
   const mat = material(HIST_VERT, {
     uFrom: { value: 0 }, uTo: { value: 0 }, uT0: { value: 0 }, uDur: { value: 1 }, uFall: { value: o.fall ?? 1.1 },
     uTop: { value: H * 1.25 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.35 },
@@ -991,10 +996,10 @@ function buildHistogram(o, ctx) {
       for (let i = 0; i < A; i++) { ap.set([-W / 2 - 0.3 + (W + 0.6) * i / (A - 1), -0.12, 0], i * 3); as[i] = Math.random() }
       const ag = new BufferGeometry()
       ag.setAttribute('position', new BufferAttribute(ap, 3)); ag.setAttribute('aSeed', new BufferAttribute(as, 1))
-      const am = material(AXIS_VERT, { uSize: { value: (o.size ?? 1) * 0.9 }, uAlpha: { value: 0.5 }, uColor: { value: new Color(...rgb(o.axisColor || '#cfd6ff')) } })
+      const am = material(AXIS_VERT, { uSize: { value: (o.size ?? 1) * 0.9 }, uAlpha: { value: 0 }, uColor: { value: new Color(...rgb(o.axisColor || '#cfd6ff')) } })
       am.uniforms.uTime = u.uTime; am.uniforms.uPixelRatio = u.uPixelRatio
       const ax = new Points(ag, am); ax.frustumCulled = false
-      g.add(ax)
+      g.add(ax); axU = am.uniforms
     }
   }
   if (o.counts) build(o.counts)
@@ -1064,11 +1069,17 @@ function buildHistogram(o, ctx) {
     // waiting for its arrival, still filling, or its marks still lighting
     busy: () => armed
       || (u.uTo.value > u.uFrom.value && now < u.uT0.value + u.uDur.value + u.uFall.value)
-      || (u.uMarkT.value < 1e8 && now < u.uMarkT.value + 2.4),
+      || (u.uMarkT.value < 1e8 && now < u.uMarkT.value + 2.4)
+      || (!!axU && Math.abs(axU.uAlpha.value - axisWant()) > 0.01),
   }
+  // landed: the share released `fall` ago (the first grains are down)
+  const axisWant = () => (u.uTo.value > 0 && now >= u.uT0.value + u.uFall.value ? AXIS : 0)
   return {
     group: g, labels: [], api, frameScale: u.uPixelRatio,
-    update(t) { now = t; u.uTime.value = t; if (armed && now - armT > 6) arrive() },
+    update(t) {
+      now = t; u.uTime.value = t; if (armed && now - armT > 6) arrive()
+      if (axU) { const a = axU.uAlpha.value, w = axisWant(); axU.uAlpha.value = Math.abs(w - a) < 0.005 ? w : a + (w - a) * 0.08 }
+    },
     dispose: off,
   }
 }

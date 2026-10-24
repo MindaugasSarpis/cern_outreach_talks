@@ -22,6 +22,7 @@ import ClickPose from './ClickPose.vue'
 // Innoday's music player (23 Oct): the zoom's music under the histograms, Starfire under the close;
 // `+` / `-` for its level (setup/soundLevel.js); <ClipCue>: text on a clip's own clock
 import Soundtrack from './Soundtrack.vue'
+import DataSfx from './DataSfx.vue'
 import ClipCue from './ClipCue.vue'
 import { installSoundKeys } from './soundLevel.js'
 // The CMS event's data in the deck's own bundle (as Innoday's main.ts): lhc-opening
@@ -99,6 +100,7 @@ export default ({ app, router }) => {
   app.component('InsideLhcb', InsideLhcb)
   app.component('ClickPose', ClickPose)
   app.component('Soundtrack', Soundtrack)
+  app.component('DataSfx', DataSfx)   // the data slide's sound (24 Oct)
   app.component('ClipCue', ClipCue)
   installSoundKeys()
 }

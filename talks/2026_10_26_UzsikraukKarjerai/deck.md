@@ -98,7 +98,19 @@ The clip runs 19 s.
 -->
 
 ---
-space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0, dim: 0 }   # Innoday's takeover pose: it looks down the funnel's axis, so the picture's middle becomes the Big Bang on the next step
+space:
+  dim: 0
+  sway: 0
+  hum: false
+  cameraRate: [[0, 0], [4, 0], [6, 1]]   # Innoday's: the camera stands still for the dissolve (WebTakeover restarts this when it places the grains), then eases into the path
+  path:   # 24 Oct (the owner: "take from innoday and improve the point based universe web"): Innoday's flight through the web in depth, its 46 s cut to 27 s; the frame's knot stands at [30.6, 40.8, -86]
+    - [0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]          # the zoom's own pose: the frame is the picture
+    - [6, { at: [30.6, 40.8, -86], dist: 40, yaw: 30, pitch: 10 }]    # a turn round the knot: the strands stand in depth
+    - [11, { at: [30.6, 40.8, -86], dist: 30, yaw: 70, pitch: 4 }]    # side on to the frame's web
+    - [16, { at: [10, 36, -112], dist: 34.5, yaw: 60.5, pitch: 2.5 }] # in past the knot
+    - [21, { at: [-10, 38, -128], dist: 25.2, yaw: 61.4, pitch: -6.8 }] # through the web behind it
+    - [27, { at: [30.6, 40.8, -86], dist: 54.9, yaw: -9, pitch: 5.4 }]  # out in front: the whole web, looking down the funnel's axis again
+    - [50, { at: [30.6, 40.8, -86], dist: 50.3, yaw: -5.2, pitch: 4.2 }] # a slow drift until the press
 ---
 
 <WebTakeover />
@@ -116,11 +128,15 @@ Maždaug taip atrodo Visata didžiausiu mastu – galaktikų gijos ir tuštumos 
 The line is in the script since 21 Oct (the 15-minute round; the web is a cosmological simulation's visualisation, cosmic-web-simulation-filaments-voids); hold the slide for it.
 The picture: the last frame of the owner's SpaceEngine edit for Innoday (public/figures/opener_last.jpg), the cosmic web of NCSA's Advanced Visualization Lab („Cosmic Bubble Bath“, NSF), as Innoday credits it; no public page of that title was found on 20 Oct (NASA SVS 10663 is the closest NCSA AVL piece), so the still's own source is the owner's to name for the credit. If the NCSA or Planck licence is refused for the Delfi stream, cut slides 2, 3 and 4: the cover flies straight to CERN and slide 4's quark ladder is said on slide 8 over the debris.
 
-(~0.2 min)
+(~0.5 min)
 -->
 
 ---
-space: { at: [30, 39, -119], dist: 25, yaw: -72, pitch: 13, dim: 0, flight: 3.5 }   # Innoday's: the bell on its side, narrow end left, from three-quarters on the mouth side (the NASA/WMAP figure)
+space:
+  dim: 0
+  path:   # 24 Oct (the owner: "make slide 4 look more dramatic, and vast"): the flight out of the web ends far back, the funnel small in the web round it, then the camera swings in low along its side until its mouth looms (until then one pose: [30, 39, -119], dist 25, yaw -72, pitch 13)
+    - [3.5, { at: [30, 40, -116], dist: 50, yaw: -58, pitch: 12 }]    # far back: the whole funnel inside the web
+    - [13, { at: [30, 39.3, -120.5], dist: 23.5, yaw: -78, pitch: 7 }]    # in low beside it, the narrow end left, the mouth coming at the camera on the right
 ---
 
 <AfterFlight :delay="6.8"><div class="age"><span class="n">13,8</span> mlrd. metų</div></AfterFlight>
@@ -283,6 +299,7 @@ clicks: 1
 ---
 
 <InsideLhcb :land-y="-470" :until="1" />
+<DataSfx />
 <ClickPose :poses="{ 1: { at: [1042.3, -481.9, 5], dist: 27, yaw: 0, pitch: 3, sway: 0.3, dim: 0, ambient: 0, hum: false, flight: 2.2 } }" />
 <Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 1, omega: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { oc: 2, omega: 1 } }" />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
@@ -317,9 +334,9 @@ places: { inventions: true }   # the two invention photos stand in the world fro
 ---
 
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[1023.7, -482.5, 22]" :size="3" :yaw="0" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="kk-dim">
-<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 <p class="kk-invention bl">Jutiklinis ekranas<br>1972</p>
 </StagePhoto>
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <style>
 /* 24 Oct: the inventions' names (a name of a thing shown), 38 px, white on a dark pill, inside the broadcast safe box and clear of the lower third */
@@ -349,10 +366,10 @@ Vaizdas: Bentas Stumpe, 2016; nuotr. Sophia Elizabeth Bennett / CERN, CC BY 4.0.
 space: { at: firstweb, flight: 1.6, dim: 0, hum: false }   # place mode, beside the touchscreen
 ---
 
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="firstweb" :relief="0.05" :at="[1031, -482.5, 22]" :size="3" :yaw="0" src="figures/first_website.jpg" alt="Pirmosios svetainės puslapis „World Wide Web“, info.cern.ch" focus="50% 50%" class="kk-dim page">
-<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
-<p class="kk-invention tr">Pirmoji svetainė · 1990</p>
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="firstweb" :relief="0.05" :at="[1031, -482.5, 22]" :size="3" :yaw="0" src="figures/first_website_crt.jpg" alt="Pirmosios svetainės puslapis „World Wide Web“ žaliomis raidėmis terminalo ekrane" focus="50% 50%" class="">
+<p class="kk-invention" style="left: var(--kk-x); top: 62px">Pirmoji svetainė · 1990</p>
 </StagePhoto>
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <!-- facts: gave-www-proposal-lhc, gave-www-next-server, gave-www-first-site-date, gave-www-first-site-text, gave-www-pellow-1991 -->
 
@@ -462,7 +479,7 @@ space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway:
 ---
 
 <!-- The owner, 23 Oct: "Don't need second to last slide, better take 2 last slides from innoday just zoom out to lhc / fcc, not the globe". Innoday's lis_flag.mp4, here from its 3,5 s, 16,5 s (a Blender render of a whole SciFi module, then its light injection cold box and the Lithuanian flag lasered on it); its last frame is the first of the close. -->
-<VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
+<VideoPlayer src="lis_flag_50.mp4" muted :controls="false" transition="fade" />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 <Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
 
@@ -491,12 +508,13 @@ space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway:
 ---
 
 <!-- Innoday's recorded close (close_home.mp4, Innoday's last shown slide) cut at 57,2 s, where it rests on the LHC and FCC map, before it flies off to the globe and home (the owner: "just zoom out to lhc / fcc, not the globe"); for TV (scripts/close_fit.py --no-fit: the dark gap after the flag cut, its lines thickened, the source's own full framing), 54 s. Muted (Innoday's music is its own Soundtrack, not in the clip); it holds the map until the press. -->
-<VideoPlayer src="close_lhc_fcc.mp4" muted :controls="false" transition="fade" />
+<!-- 24 Oct (the owner: "can we improve slide 16 somehow?"): close_quick.mp4, the same close with its even glow and the climb (24–44 s) played in 10 s at an eased speed (scripts/close_retime.py), 44,2 s; the collision at 16,36 s unmoved, the labels 10 s earlier -->
+<VideoPlayer src="close_quick.mp4" muted :controls="false" transition="fade" />
 <!-- 24 Oct (the owner: "time the collision in the LHCb right for the finale, so on click maybe we fade out and time to that accent like in innoday talk"): on the press the bed fades out (2,5 s); at 4,34 s Starfire comes back on the hit that opens its last four bars before the 2:54,85 downbeat (starfire_finale.m4a, 12,02 s before it in the file), so the downbeat lands on LHCb's first collision crossing at 16,36 s of the clip (measured: the frame brightens from 16,34 s); the clip's rate is nudged (at most ±10 %) to stay on the music; on the downbeat the level opens to 0,33 and the track runs on to its end under the close and the credits -->
 <Soundtrack src="audio/starfire_finale.m4a" tail="audio/starfire_finale.m4a" :level="0.33" keys :drop="{ at: 16.36, file: 'audio/starfire_finale.m4a', hit: 12.02, duck: 0, out: 0, fade: 2500, quiet: 1.25 }" />
 <!-- the labels the owner asked for (23 Oct: "mano appearing where LHC is and when FCC is in view - jūsų greitintuvas"), on the clip's clock: the LHC ring reads from 43,3 s, the FCC's whole circle from 52 s (measured on the clip); „mano“ from 45 s, once the lake has swung clear of its place top right, „jūsų“ off the FCC ring's bottom right; canvas px, clear of the rings, the lake and the logo, inside the safe box -->
-<ClipCue :from="45" :path="[[45, 652, 58]]" class="close-label">LHC – mano<br>greitintuvas</ClipCue>
-<ClipCue :from="52" :path="[[52, 652, 270]]" class="close-label">FCC – jūsų<br>greitintuvas</ClipCue>
+<ClipCue :from="35" :path="[[35, 652, 58]]" class="close-label">LHC – mano<br>greitintuvas</ClipCue>
+<ClipCue :from="42" :path="[[42, 652, 270]]" class="close-label">FCC – jūsų<br>greitintuvas</ClipCue>
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments, cern-fcc-study, lt-fcc-unis, cern-ls3-hllhc, sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn -->
 
@@ -531,7 +549,7 @@ space: { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 0, dim: 0.7 }   
 
 <div class="credits-page">
 
-Vaizdai ir duomenys: CERN (CERN iš oro, LHC tunelis CERN-FOOTAGE-2022-013-001, dipolis CERN-VIDEO-2019-050-008) · CMS susidūrimas: CERN atvirieji duomenys, įrašas 300 (CC0) · LHCb filmukas: LHCb kolaboracija · LHCb modelis: © CERN LHCb kolaboracijos naudai (GPL-3.0), HSF Phoenix (Apache-2.0); žmogaus modelis: Blender Human Base Meshes (CC0) · LHCb susidūrimas: CERN atvirieji duomenys · Ωc⁰ spektras: LHCb, Phys. Rev. Lett. 118, 182001 (2017), CC BY 4.0 · Jutiklinis ekranas: B. Stumpe, nuotr. S. E. Bennett / CERN, CC BY 4.0 · Pirmoji svetainė: info.cern.ch (CERN), ekrano kopija · Priartinimas: autoriaus SpaceEngine montažas; Žemė: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies) · Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF) · CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (pakeistas) · Žemėlapiai: Natural Earth (viešasis domenas); © OpenStreetMap bendraautoriai (ODbL) · SciFi modulis ir pabaigos įrašas: Innoday (Blender; LHCb geometrija) · Muzika: Scott Buckley, „Starfire“ (scottbuckley.com.au), CC BY 4.0 (sutrumpinta ir sujungta)
+Vaizdai ir duomenys: CERN (CERN iš oro, LHC tunelis CERN-FOOTAGE-2022-013-001, dipolis CERN-VIDEO-2019-050-008) · CMS susidūrimas: CERN atvirieji duomenys, įrašas 300 (CC0) · LHCb filmukas: LHCb kolaboracija · LHCb modelis: © CERN LHCb kolaboracijos naudai (GPL-3.0), HSF Phoenix (Apache-2.0); žmogaus modelis: Blender Human Base Meshes (CC0) · LHCb susidūrimas: CERN atvirieji duomenys · Ωc⁰ spektras: LHCb, Phys. Rev. Lett. 118, 182001 (2017), CC BY 4.0 · Jutiklinis ekranas: B. Stumpe, nuotr. S. E. Bennett / CERN, CC BY 4.0 · Pirmoji svetainė: Achintya Rao / CERN (CERN-HOMEWEB-PHO-2019-004) · Priartinimas: autoriaus SpaceEngine montažas; Žemė: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies) · Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF) · CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (pakeistas) · Žemėlapiai: Natural Earth (viešasis domenas); © OpenStreetMap bendraautoriai (ODbL) · SciFi modulis ir pabaigos įrašas: Innoday (Blender; LHCb geometrija) · Muzika: Scott Buckley, „Starfire“ (scottbuckley.com.au), CC BY 4.0 (sutrumpinta ir sujungta)
 
 </div>
 

@@ -1142,7 +1142,7 @@
      ],
      "light": 4.0,
      "approach": 2.5,
-     "sound": false,
+     "sound": true,
      "tone": "#9cc4ff",
      "muonTone": "#cfe2ff",
      "splashTone": "#5b93ff",

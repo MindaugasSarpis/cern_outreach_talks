@@ -192,3 +192,26 @@ used_in   = ["slide 17"]
 generated = true
 notes     = "the world of slide 17 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
 # <<< plates
+
+[[videos]]
+name    = "lis_flag_50.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = """\
+Slide 15 since 24 Oct (the owner: "Slide 15 framerate could be better"): lis_flag.mp4's \
+3,5-20 s (the trim above) motion-interpolated from its 25 fps render to 50 fps (no Blender \
+scene on this machine to render it again): ffmpeg -ss 3.5 -t 16.5 -i videos/raw/lis_flag.mp4 \
+-an -vf minterpolate=fps=50:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1 -crf 14; the \
+high-motion profile (the silent-loop copy was 1,4 Mbit/s). The raw (videos/raw/lis_flag_50.mp4) \
+is that output, not on gdrive released/: make it again with the command."""
+
+[[videos]]
+name    = "close_quick.mp4"
+profile = "remux"
+used_in = ["deck"]
+notes   = """\
+Slide 16 since 24 Oct (the owner: "can we improve slide 16 somehow?"): close_lhc_fcc.mp4 \
+with its even glow and the climb to the map (24-44 s) played in 10 s at an eased speed, \
+1x to 2,5x and back, by scripts/close_retime.py (44,18 s; the collision at 16,36 s, where \
+the music's downbeat lands, unmoved). The raw (videos/raw/close_quick.mp4) is that output: \
+make it again with the script from close_lhc_fcc.mp4."""
