@@ -107,6 +107,15 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-24 (evening, latest): **not yet deployed** — the owner's round (Decisions, 24 Oct evening)
+  is on `talk/uzsikraukkarjerai` (pushed) at 75112aa plus this note; `talk ready` passed on 75112aa
+  (nothing skipped but the pptx; plates one warning). The auto-mode classifier refused `pnpm talk
+  deploy` ("Production Deploy"), so the owner runs it. The new clips (vilnius_zoom 25 s,
+  lis_flag_50, close_quick), the 10 plates and the venue zip built from 75112aa (308 MB) are on the
+  release; venue.json points at it; stills retaken. 17 slides, 10,1 min timed. Open for the owner:
+  the terminal image's licence (CERN, non-commercial; as the Planck map); his ear on the Starfire
+  bed's joins, the hum and slide 10's effects (`+` / `-` scale all of them); his words for slide
+  13's slots; where he stands.
 - 2026-10-24 (about 2 am, latest): **deployed 26727ec** (Pages run 40036497924, green;
   https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/ 200, the
   live walk passed, 17 slides; `talk ready` passed on it, nothing skipped but the pptx). The
