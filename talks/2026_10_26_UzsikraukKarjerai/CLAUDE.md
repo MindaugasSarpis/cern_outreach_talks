@@ -107,6 +107,9 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-25 (latest): the close's second round and slide 6 muted / the zoom's hum lower (Decisions), plates
+  (11) and stills retaken and published, the venue zip rebuilt from f2373f6 on the release; venue.json;
+  deployed by the owner's "Implement and deploy" (the entry below names the run once made).
 - 2026-10-25 (night, latest): **deployed 9ef4113** (the owner: "DEPLOY"; Pages run 40135878779, green;
   https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/ 200, the live walk passed;
   `talk ready` passed on it, nothing skipped but the pptx): the live close, the flicker fix, „4 TB/s“.
