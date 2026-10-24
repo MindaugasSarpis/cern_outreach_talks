@@ -16,8 +16,8 @@ import { soundLevel } from './soundLevel.js'
 //   the data       each grain landing in its bin a tiny high click, panned toward the plot
 //                  (right) and timed `fall` after its release (the plot's fill share, polled
 //                  every frame), so the patter is fast at first and thins as the shape fills;
-//   the click      the five peaks' ticks as five glassy notes of B minor pentatonic (Starfire is in
-//                  B minor), low to high, and as the Ωc⁰ gathers, a soft swell on B1 rising to F#2.
+//   the click      the five peaks' ticks as five deep, soft struck notes of B minor pentatonic (B2 to A3;
+//                  Starfire is in B minor), low to high, and as the Ωc⁰ gathers, a soft swell on B1 rising to F#2.
 // Levels sit under the bed; `+` / `-` scale them with the music. Only the audience's window plays.
 const props = defineProps({
   plot: { type: String, default: 'oc' },
@@ -70,11 +70,17 @@ function pulse(t, x) {
   o.connect(g).connect(pan(ac, x)).connect(out); o.start(t); o.stop(t + 0.2)
   click(t, { f: 900, q: 0.9, dur: 0.03, gain: 0.05, x })
 }
-function bell(t, f, x, gain = 0.09) {
-  for (const [m, k] of [[1, 1], [2.76, 0.25], [5.4, 0.08]]) {
+// a deep, soft struck tone (24 Oct, the owner: "the three chimes on 10 are a bit out of place... could be
+// something deeper, lower"; they were glassy bells two octaves up): the note with a sub-octave under it and
+// a little of its octave, a soft 25 ms attack, a long dark decay through a low-pass that closes as it rings
+function bell(t, f, x, gain = 0.22) {
+  const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 0.5
+  lp.frequency.setValueAtTime(f * 6, t); lp.frequency.exponentialRampToValueAtTime(f * 1.5, t + 2.2)
+  lp.connect(pan(ac, x)).connect(out)
+  for (const [m, k, d] of [[0.5, 0.7, 3.2], [1, 1, 2.8], [2, 0.18, 1.2]]) {
     const o = ac.createOscillator(); o.type = 'sine'; o.frequency.value = f * m
-    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(gain * k, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6 / m)
-    o.connect(g).connect(pan(ac, x)).connect(out); o.start(t); o.stop(t + 1.7)
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(gain * k, t + 0.025); g.gain.exponentialRampToValueAtTime(0.0001, t + d)
+    o.connect(g).connect(lp); o.start(t); o.stop(t + d + 0.05)
   }
 }
 function swell(t) {
@@ -157,8 +163,9 @@ watch($clicks, (c, was) => {
   if (c >= props.marks && was < props.marks) {
     letGo()
     const t = ac.currentTime
-    // the ticks light 0,2 s after the click; B5 D6 E6 F#6 A6, low mass to high, left to right on the plot
-    ;[987.8, 1174.7, 1318.5, 1480, 1760].forEach((f, i) => bell(t + 0.35 + i * 0.16, f, 0.1 + i * 0.18))
+    // the ticks light 0,2 s after the click; B2 D3 E3 F#3 A3 (B minor pentatonic, Starfire's key), low mass to high,
+    // left to right on the plot, a little apart so each low note is heard
+    ;[123.47, 146.83, 164.81, 185.0, 220.0].forEach((f, i) => bell(t + 0.35 + i * 0.28, f, 0.1 + i * 0.18))
     swell(t + 2.4)
   } else if (c < props.marks && was >= props.marks) start()
 })
