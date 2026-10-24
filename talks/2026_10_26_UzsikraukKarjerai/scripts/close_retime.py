@@ -7,7 +7,7 @@ where <Soundtrack drop> lands Starfire's downbeat, does not move; after 44 s the
 10 s earlier (the labels' <ClipCue> times are moved by 10 s). Where a source time falls
 between frames the two are blended (a short motion blur at the fast part).
 
-python3 -I scripts/close_retime.py ../../videos/raw/close_lhc_fcc.mp4 ../../videos/raw/close_quick.mp4
+python3 -I scripts/close_retime.py ../../videos/raw/innoday/close_lhc_fcc.mp4 ../../videos/raw/close_quick.mp4
 """
 import subprocess, sys, numpy as np
 
