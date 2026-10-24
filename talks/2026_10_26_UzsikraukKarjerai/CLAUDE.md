@@ -565,6 +565,9 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Decisions
 
+- 2026-10-25 — The owner: "slide 6 too loud, and zoomout swoosh a bit too loud, on slide 6 let's just have
+  music, mute the video": the tunnel clip muted (0,05 until then), the zoom's hum 0,25 (0,4).
+
 - 2026-10-25 (night) — The close rebuilt live (the owner: "Can we improve 16 somehow?", "why is this not
   fullscreen, make it vast, filling the entire screen", "maybe slowly orbit, indicate 3D fcc 300m
   underground", "Then, 'Ačiū už dėmesį' appears out of particle collision", the recorded point cloud "a

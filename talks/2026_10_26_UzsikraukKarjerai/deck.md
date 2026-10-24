@@ -76,7 +76,7 @@ space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0
 ---
 
 <!-- The zoom out (the owner, 23 Oct: "a quick zoomout from vilnius straight to universe web - in 20s"): Innoday's opener, the owner's SpaceEngine edit, time-remapped to 20 s. It ends on the frame slide 3's still is (public/figures/opener_last.jpg) and holds it; the fade out shows the same picture underneath. -->
-<VideoPlayer src="vilnius_zoom.mp4" transition="fade" :volume="0.4" />
+<VideoPlayer src="vilnius_zoom.mp4" transition="fade" :volume="0.25" />   <!-- 25 Oct (the owner: "zoomout swoosh a bit too loud"): the hum 0,25 (0,4 until then) -->
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.45" start keys />
 
 <!-- facts: nftmc-opened-2016 -->
@@ -193,7 +193,8 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 
 <!-- The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, an 18 s cut (videos/manifest.toml). At the speaker's → after its end, it pushes on into the beam pipe. -->
 <!-- 24 Oct: the dust stays on 6, 7 and 9 (a review round's `transition="fade"` left ~0,6 s of black after the push out of the clip before: the owner saw it flicker) -->
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.05" exit="push" exit-at="0.45,0.53" />
+<!-- 25 Oct (the owner: "slide 6 too loud … on slide 6 let's just have music, mute the video"): muted (0,05 until then) -->
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" muted exit="push" exit-at="0.45,0.53" />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <LhcOpening part="tunnel" />
