@@ -510,7 +510,8 @@ function buildFunnel(o, ctx) {
 // the flight on a slow device, and is `busy` while it plays, so the headless shots
 // wait for its end. (One funnel in the world: the controller is the module's.)
 // (the grains' funnel stands a moment before the funnel's own grains take over)
-const STEPS = { morph: [0, 4.4], body: [4.8, 6.6], fade: [5.0, 6.8], mesh: [6.4, 8.0] }
+// (this talk, 24 Oct review: the body and its hand-over a second sooner, so the frame does not thin out between the web's landing and the funnel)
+const STEPS = { morph: [0, 4.4], body: [3.6, 5.6], fade: [4.2, 6.2], mesh: [5.6, 7.2] }
 const lin = ([a, b], x) => Math.min(1, Math.max(0, (x - a) / (b - a)))
 export const funnelSeq = {
   mode: 'hidden', t0: null, skip: 0, web: null, parts: null, hash: null,

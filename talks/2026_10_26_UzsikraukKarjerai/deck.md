@@ -45,7 +45,7 @@ info: |
   SciFi module and its flag, and Innoday's close out to the LHC, „mano
   greitintuvas“, and the FCC, „jūsų greitintuvas“ (Starfire under both); „Ačiū“.
 layout: cover
-space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
+space: { at: [594.9, 0, 0], dist: 10, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }   # 24 Oct review: closer (dist 13 at [593.2, 0, 0] until then), so the five-quark form is the cover's hero, not a fifth of the frame
 ---
 
 <Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0 }" />
@@ -103,14 +103,14 @@ space:
   sway: 0
   hum: false
   cameraRate: [[0, 0], [4, 0], [6, 1]]   # Innoday's: the camera stands still for the dissolve (WebTakeover restarts this when it places the grains), then eases into the path
-  path:   # 24 Oct (the owner: "take from innoday and improve the point based universe web"): Innoday's flight through the web in depth, its 46 s cut to 27 s; the frame's knot stands at [30.6, 40.8, -86]
+  path:   # 24 Oct (the owner: "take from innoday and improve the point based universe web"): Innoday's flight through the web in depth, its 46 s cut to 23 s; the frame's knot stands at [30.6, 40.8, -86]
     - [0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]          # the zoom's own pose: the frame is the picture
-    - [6, { at: [30.6, 40.8, -86], dist: 40, yaw: 30, pitch: 10 }]    # a turn round the knot: the strands stand in depth
-    - [11, { at: [30.6, 40.8, -86], dist: 30, yaw: 70, pitch: 4 }]    # side on to the frame's web
-    - [16, { at: [10, 36, -112], dist: 34.5, yaw: 60.5, pitch: 2.5 }] # in past the knot
-    - [21, { at: [-10, 38, -128], dist: 25.2, yaw: 61.4, pitch: -6.8 }] # through the web behind it
-    - [27, { at: [30.6, 40.8, -86], dist: 54.9, yaw: -9, pitch: 5.4 }]  # out in front: the whole web, looking down the funnel's axis again
-    - [50, { at: [30.6, 40.8, -86], dist: 50.3, yaw: -5.2, pitch: 4.2 }] # a slow drift until the press
+    - [5.5, { at: [30.6, 40.8, -86], dist: 40, yaw: 30, pitch: 10 }]    # a turn round the knot: the strands stand in depth
+    - [9.5, { at: [30.6, 40.8, -86], dist: 30, yaw: 70, pitch: 4 }]    # side on to the frame's web
+    - [13.5, { at: [10, 36, -112], dist: 34.5, yaw: 60.5, pitch: 2.5 }] # in past the knot
+    - [17.5, { at: [-10, 38, -128], dist: 33, yaw: 61.4, pitch: -6.8 }] # past the web behind it (24 Oct review: dist 25,2 went through a strand: a grey cloud on a stream)
+    - [23, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]          # 24 Oct review: back to the picture's own viewpoint (the web a picture again), where funnel.js's morph is made to be seen (seen from 55 units its grains were specks); the path 27 s → 23 s (6–16 s changed little)
+    - [46, { at: [30, 40, -70], dist: 19.5, yaw: 0, pitch: 0 }]        # a slow drift back until the press
 ---
 
 <WebTakeover />
@@ -135,11 +135,13 @@ The picture: the last frame of the owner's SpaceEngine edit for Innoday (public/
 space:
   dim: 0
   path:   # 24 Oct (the owner: "make slide 4 look more dramatic, and vast"): the flight out of the web ends far back, the funnel small in the web round it, then the camera swings in low along its side until its mouth looms (until then one pose: [30, 39, -119], dist 25, yaw -72, pitch 13)
-    - [3.5, { at: [30, 40, -116], dist: 50, yaw: -58, pitch: 12 }]    # far back: the whole funnel inside the web
-    - [13, { at: [30, 39.3, -120.5], dist: 23.5, yaw: -78, pitch: 7 }]    # in low beside it, the narrow end left, the mouth coming at the camera on the right
+    - [1, { at: [30, 40, -70], dist: 19.5, yaw: 0, pitch: 0 }]          # 24 Oct review: slide 3's last pose, the picture's viewpoint down the funnel's axis, held while the web's grains fly into the funnel (funnel.js's morph, 0–4,4 s; seen from the side far off, they all but vanished)
+    - [4.4, { at: [30, 40, -70], dist: 21, yaw: 0, pitch: 0 }]
+    - [8.5, { at: [30, 40, -116], dist: 50, yaw: -58, pitch: 12 }]    # out to the side, far back: the whole funnel inside the web
+    - [16, { at: [30, 39.3, -120.5], dist: 23.5, yaw: -78, pitch: 7 }]    # in low beside it, the narrow end left, the mouth coming at the camera on the right
 ---
 
-<AfterFlight :delay="6.8"><div class="age"><span class="n">13,8</span> mlrd. metų</div></AfterFlight>
+<AfterFlight :delay="9"><div class="age"><span class="n">13,8</span> mlrd. metų</div></AfterFlight>
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <!-- facts: universe-age-planck-2018, human-body-atoms, atom-nucleus-protons-neutrons, proton-neutron-three-quarks, lhcb-pentaquark-2015, lhc-collisions-create-new-particles, lhc-worlds-largest-accelerator, cmb-oldest-light-planck-2018, cmb-formed-380000-years-esa -->
@@ -188,7 +190,8 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 ---
 
 <!-- The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, an 18 s cut (videos/manifest.toml). At the speaker's → after its end, it pushes on into the beam pipe. -->
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.05" exit="push" exit-at="0.45,0.53" />
+<!-- 24 Oct review: `transition="fade"` on 6, 7 and 9 (the dust's condensing blocks read as codec blocking at stream bitrate; the push into the clip carries the motion) -->
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.05" exit="push" exit-at="0.45,0.53" transition="fade" />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <LhcOpening part="tunnel" />
@@ -211,7 +214,7 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 ---
 
 <!-- 21 Oct (the owner: "can show magnet video from CERN"; "A, ok"): the LHC dipole, CERN-VIDEO-2019-050-008, its first 10,8 s (videos/manifest.toml): a cutaway of the blue cryostat into the two copper-lined beam pipes; its small English/French labels („LHC Dipole“, „Beam pipes“) kept, the owner's "ok". Silent. It lands where the tunnel's push went in; → moves on (no auto-advance). -->
-<VideoPlayer src="cern_video_2019_050_008.mp4" muted :controls="false" />
+<VideoPlayer src="cern_video_2019_050_008.mp4" muted :controls="false" transition="fade" />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <!-- facts: lhc-two-beam-pipes-opposite, cern-lhc-magnets, cern-lhc-cold, gave-cryo-lhc, lhc-ls3-restart-2028 -->
@@ -236,17 +239,18 @@ space:
   dim: 0
   ambient: 0
   hum: false
-  rate: [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.6, 1.0], [8.0, 1.0], [9.0, 1.8], [11, 1.8], [12, 1]]
+  # 24 Oct review: the whole timeline at 75 % (the crossing came ~6 s in, after a black frame and a thin streak: dead air on TV); the run-in's rate ×4/3 so the bunches still cross where the world freezes (until then [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.6, 1.0], [8.0, 1.0], [9.0, 1.8], [11, 1.8], [12, 1]], the path's keys at 0, 2.6, 5.6, 6.5, 7.3, 8.3, 9.8, 11.5)
+  rate: [[0, 1.87], [1.5, 1.87], [2.03, 0.03], [4.2, 0.03], [4.95, 1.0], [6.0, 1.0], [6.75, 1.8], [8.25, 1.8], [9, 1]]
   cameraRate: 1
   path:
     - [0, { at: [0, -400, 0], dist: 4.2, yaw: 18, pitch: 5 }]
-    - [2.6, { at: [0, -400, 0], dist: 2.4, yaw: 32, pitch: 8 }]
-    - [5.6, { at: [0, -400, 0], dist: 1.5, yaw: 70, pitch: 14 }]
-    - [6.5, { at: [0, -400, 0], dist: 3.3, yaw: 58, pitch: 17 }]
-    - [7.3, { at: [0, -400, 0], dist: 5.6, yaw: 26, pitch: 20 }]
-    - [8.3, { at: [0, -400, 0], dist: 8.8, yaw: 9, pitch: 24 }]
-    - [9.8, { at: [0, -400, 0], dist: 11.2, yaw: 4, pitch: 26 }]
-    - [11.5, { at: [0, -400, 0], dist: 12, yaw: 2, pitch: 26 }]
+    - [1.95, { at: [0, -400, 0], dist: 2.4, yaw: 32, pitch: 8 }]
+    - [4.2, { at: [0, -400, 0], dist: 1.5, yaw: 70, pitch: 14 }]
+    - [4.9, { at: [0, -400, 0], dist: 3.3, yaw: 58, pitch: 17 }]
+    - [5.5, { at: [0, -400, 0], dist: 5.6, yaw: 26, pitch: 20 }]
+    - [6.2, { at: [0, -400, 0], dist: 8.8, yaw: 9, pitch: 24 }]
+    - [7.35, { at: [0, -400, 0], dist: 11.2, yaw: 4, pitch: 26 }]
+    - [8.6, { at: [0, -400, 0], dist: 12, yaw: 2, pitch: 26 }]
 ---
 
 <LhcOpening name="opening" :count="290" />
@@ -276,7 +280,7 @@ space: { path: [[0, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]], s
 
 <!-- The shared opening's LHCb reel: the detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release. It condenses out of the dust; the speaker's → moves on. -->
 <!-- 24 Oct: muted, Starfire under it (the owner: "starfire for the entire deck … everything coherently connected"); the reel's own music was 0,45 -->
-<VideoPlayer src="lhcb.mp4" muted />
+<VideoPlayer src="lhcb.mp4" muted transition="fade" />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <!-- facts: lhcb-detector-size, lhcb-three-storey-worked, lhcb-collaboration-sep-2026, lhcb-vilnius-joined, particle-decay-reconstructed-mass, particles-decay-detector-sees-products -->
@@ -386,7 +390,7 @@ Vaizdas: info.cern.ch/hypertext/WWW/TheProject.html (CERN), ekrano kopija.
 -->
 
 ---
-space: { at: [1199.83, 0, 1.06], dist: 29.07, yaw: 0, pitch: 60, sway: 0, dim: 0.05 }   # 23 Oct (the criss-cross): closer than the `whole` pose's [1201, 0, 2.5] at dist 36, so the seven stops spread out and every name fits inside the broadcast safe box off the trail; the seven names are projected from this pose
+space: { at: [1199.83, 0, 1.06], dist: 29.07, yaw: 0, pitch: 60, sway: 0, dim: 0.05, flight: 2 }   # 24 Oct review: `flight: 2` (the default flight up from the inventions took ~5,5 s of empty blue, and the map waited for it); 23 Oct (the criss-cross): closer than the `whole` pose's [1201, 0, 2.5] at dist 36, so the seven stops spread out and every name fits inside the broadcast safe box off the trail; the seven names are projected from this pose
 clicks: 5
 places: { inventions: false }   # the invention photos are gone from here on
 ---
@@ -475,7 +479,7 @@ The Manchester slot is yours, in your own words (10–15 s), while the trail dra
 -->
 
 ---
-space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway: 0, dim: 0.25 }   # under the two clips, a cut to the cover's pose (the world rests there, unseen under the clips)
+space: { path: [[0, { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62 }]], sway: 0, dim: 0.35 }   # 24 Oct review: slide 14's last pose held under the two clips (until then a cut to the cover's pose, whose five-quark form showed beside „Vilnius“ before the flag faded in); the credits page flies to the cover
 ---
 
 <!-- The owner, 23 Oct: "Don't need second to last slide, better take 2 last slides from innoday just zoom out to lhc / fcc, not the globe". Innoday's lis_flag.mp4, here from its 3,5 s, 16,5 s (a Blender render of a whole SciFi module, then its light injection cold box and the Lithuanian flag lasered on it); its last frame is the first of the close. -->
@@ -504,7 +508,7 @@ The clip runs 16,5 s (trimmed); the words run a few seconds past it, over its he
 -->
 
 ---
-space: { path: [[0, { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8 }]], sway: 0, dim: 0.25 }
+space: { path: [[0, { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62 }]], sway: 0, dim: 0.35 }
 ---
 
 <!-- Innoday's recorded close (close_home.mp4, Innoday's last shown slide) cut at 57,2 s, where it rests on the LHC and FCC map, before it flies off to the globe and home (the owner: "just zoom out to lhc / fcc, not the globe"); for TV (scripts/close_fit.py --no-fit: the dark gap after the flag cut, its lines thickened, the source's own full framing), 54 s. Muted (Innoday's music is its own Soundtrack, not in the clip); it holds the map until the press. -->

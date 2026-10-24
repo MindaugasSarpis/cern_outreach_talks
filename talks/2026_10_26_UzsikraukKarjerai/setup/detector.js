@@ -137,9 +137,11 @@ void main() {
   float flash = passed * exp(-max(d, 0.0) * 0.9);
   float fade = uHideT > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.2, uTime - uHideT);
   vec3 base = uUseParts > 0.5 ? uParts[int(aPart + 0.5)] : uColor;
-  vec3 p = position, col = mix(base, uHot, 0.6 * flash);
+  // the reveal's flash a third of Innoday's (this talk, 24 Oct review: on the data slide every grain and face flashed at
+  // once and the bloom made a white disc over a third of the frame)
+  vec3 p = position, col = mix(base, uHot, 0.4 * flash);
   float w = aPart == 1.0 ? 0.0 : (aPart == 0.0 ? 0.25 : (aPart >= 7.0 ? 1.4 : 1.0));   // (calorimeters and muon walls: 2.0 before their edges were drawn)
-  float a = (uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.5 * flash) * w;
+  float a = (uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.16 * flash) * w;
   // the face's light and the edges (aShape: the normal in LHCb's frame, its x, y, z → the
   // world's z, y, x as the positions; w: 1 on a feature edge)
   vec3 nrm = aShape.zyx * 2.0 - 1.0;
@@ -227,8 +229,8 @@ void main() {
   float passed = smoothstep(-0.4, 0.0, d), flash = passed * exp(-max(d, 0.0) * 0.9);
   float fade = uHideT > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.2, uTime - uHideT);
   float k = uLine > 0.0 ? uLine : uFace + uRim * pow(1.0 - abs(dot(normalize(vN), normalize(vV))), 2.5);
-  vec3 col = mix(uCol, uHot, 0.6 * flash);
-  float a = k * passed + 0.3 * flash * (uLine > 0.0 ? 1.0 : 0.3);
+  vec3 col = mix(uCol, uHot, 0.4 * flash);
+  float a = k * passed + 0.1 * flash * (uLine > 0.0 ? 1.0 : 0.3);
   if (uCrossT < 1e8) {
     float dd = (uTime - uCrossT) * uLight - vX;
     float reached = smoothstep(-0.3, 0.0, dd) * (uCrossHide > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.6, uTime - uCrossHide));

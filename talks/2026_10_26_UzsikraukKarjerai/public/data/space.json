@@ -97,7 +97,8 @@
      ],
      "scale": 1.6,
      "alpha": 0.8,
-     "size": 4.0,
+     "size": 5.0,
+     "assemble": false,
      "borderAlpha": 0.06,
      "color": "#cdd6ff",
      "border": "#7f74e0"
@@ -112,8 +113,8 @@
       0
      ],
      "scale": 1.6,
-     "alpha": 1,
-     "size": 5,
+     "alpha": 1.4,
+     "size": 7,
      "color": "#9fd0ff",
      "showDelay": 5.0
     },
@@ -1141,6 +1142,7 @@
       0
      ],
      "light": 4.0,
+     "flash": 0.05,
      "approach": 2.5,
      "sound": true,
      "tone": "#9cc4ff",
@@ -1160,10 +1162,10 @@
       0
      ],
      "sweep": 3.5,
-     "alpha": 0.5,
+     "alpha": 0.42,
      "size": 1.5,
      "color": "#6fa4ff",
-     "hot": "#ffffff",
+     "hot": "#b4ceff",
      "out": [
       16,
       0,

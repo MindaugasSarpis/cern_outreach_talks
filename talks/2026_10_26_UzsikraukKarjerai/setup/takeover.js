@@ -299,6 +299,10 @@ void main() {
   // made it, over the reference) draws every grain the same size on screen from there, so
   // the near ones do not blur the picture; in the funnel they are all one size again
   float ps = uView * aSize * mix(aDepth, 1.0, k) * (72.0 / max(-mv.z, 0.1));
+  // in flight they swell and brighten, most halfway (this talk, 24 Oct review: seen from the picture's viewpoint the
+  // web's grains went below a pixel as they flew and the web seemed to vanish for ~4 s before the funnel stood)
+  float fly = sin(3.14159 * k);
+  ps *= 1.0 + 1.8 * fly + 0.9 * k;
   gl_PointSize = pointSize(ps, 40.0);
   vColor = col * uGain;
   // gathered into the funnel the grains crowd a smaller part of the frame: uDense keeps
@@ -309,7 +313,7 @@ void main() {
   // away from the frame's viewpoint (uAway) the picture's border thins out, so the frame's
   // grains are not a block with straight edges seen from the side; back in full as they fly
   float edge = mix(1.0, mix(smoothstep(0.0, 0.16, aEdge), 1.0, k), uAway);
-  vAlpha = r * tw * coverage(ps) * near * edge * uFade * mix(1.0, uDense, k) * diskOcc((modelMatrix * vec4(p, 1.0)).xyz);
+  vAlpha = r * tw * coverage(ps) * near * edge * uFade * mix(1.0, uDense, k) * (1.0 + 0.9 * fly + 0.7 * k) * diskOcc((modelMatrix * vec4(p, 1.0)).xyz);
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;

@@ -551,6 +551,28 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Decisions
 
+- 2026-10-24 (night) — The full review (three reviewers on the live walk's contact sheets; the owner:
+  "Do A, B where needed improve the visuals sound is really good now"). Done:
+  - **13:** `flight: 2` (the default flight up from the inventions took ~5,5 s of empty blue, and
+    Europe's map only condenses on arrival); the Europe map `assemble: false` and size 5 (it was
+    there all along, but formed ~9,5 s after the press); Lithuania's outline size 7, alpha 1,4 (it
+    never read at the end of the dive on 14).
+  - **15–16:** slide 14's last pose held under both clips (the cut to the cover's pose flashed the
+    five-quark form beside „Vilnius“ before the flag faded in).
+  - **3–4:** slide 3's flight 27 → 23 s, off the strand it passed through, ending back at the
+    picture's viewpoint; slide 4 holds that view while the web pours into the funnel (the morph's
+    grains swell and brighten in flight, setup/takeover.js; the funnel's body ~1 s sooner,
+    setup/funnel.js), then swings out and in. „13,8 mlrd. metų“ at 9 s.
+  - **8:** the timeline at 75 % (the crossing ~4,5 s in, not ~6).
+  - **10:** the detector's reveal flash a third (setup/detector.js), its flares light blue
+    (`hot` #b4ceff) and its alpha 0,42; the collision's flash 0,05; the five notes on the click
+    deep and low (B2–A3).
+  - **12:** the page cropped to its heading and first two paragraphs, large.
+  - **1:** the camera closer on the five-quark form (dist 10 at [594,9, 0, 0]).
+  - **6, 7, 9:** `transition="fade"` for the dust's blocks.
+  - Not done: the zoom's galaxy highlights (a gain or curve made it grey and flat: kept as it is);
+    10's click pose (its labels are placed by hand for that pose).
+
 - 2026-10-24 (late) — The finale's hit (the owner: "The finale (which is starfire 1:05) should only
   be [heard] on LHCb Collision in the last slide"; "It was really nice in the innoday, but we didn't
   have a soundtrack for all the slides"; "so have to reshuffle somehow, and on switch have a nice
