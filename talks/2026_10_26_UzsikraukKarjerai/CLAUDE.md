@@ -554,6 +554,12 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Decisions
 
+- 2026-10-24 (late night) — The web darker (the owner: "can we make the web universe darker? no blue in
+  the back just clear visitble strands, monumental, vast"): slides 3 and 4 `ambient: 0` (the ground,
+  nebula and dust off: black), the web's grains brighter and a little larger (`gain` 1,75,
+  `cosmos-gain` 2,3, `size` 0,46, `cosmos-size` 1,5), the morph's in-flight lift halved so the vortex
+  on 4 is not blown out. Slide 5's clip covers the return of the blue ground.
+
 - 2026-10-24 (night) — The full review (three reviewers on the live walk's contact sheets; the owner:
   "Do A, B where needed improve the visuals sound is really good now"). Done:
   - **13:** `flight: 2` (the default flight up from the inventions took ~5,5 s of empty blue, and

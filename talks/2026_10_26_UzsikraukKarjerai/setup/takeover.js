@@ -313,7 +313,7 @@ void main() {
   // away from the frame's viewpoint (uAway) the picture's border thins out, so the frame's
   // grains are not a block with straight edges seen from the side; back in full as they fly
   float edge = mix(1.0, mix(smoothstep(0.0, 0.16, aEdge), 1.0, k), uAway);
-  vAlpha = r * tw * coverage(ps) * near * edge * uFade * mix(1.0, uDense, k) * (1.0 + 0.9 * fly + 0.7 * k) * diskOcc((modelMatrix * vec4(p, 1.0)).xyz);
+  vAlpha = r * tw * coverage(ps) * near * edge * uFade * mix(1.0, uDense, k) * (1.0 + 0.4 * fly + 0.7 * k) * diskOcc((modelMatrix * vec4(p, 1.0)).xyz);
 }`
 const FRAG = /* glsl */ `
 varying vec3 vColor; varying float vAlpha;

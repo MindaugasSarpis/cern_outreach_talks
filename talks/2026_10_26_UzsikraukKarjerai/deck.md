@@ -102,6 +102,7 @@ space:
   dim: 0
   sway: 0
   hum: false
+  ambient: 0   # 24 Oct (the owner: "can we make the web universe darker? no blue in the back just clear visitble strands, monumental, vast"): the ground, nebula and dust off, the strands alone on black
   cameraRate: [[0, 0], [4, 0], [6, 1]]   # Innoday's: the camera stands still for the dissolve (WebTakeover restarts this when it places the grains), then eases into the path
   path:   # 24 Oct (the owner: "take from innoday and improve the point based universe web"): Innoday's flight through the web in depth, its 46 s cut to 23 s; the frame's knot stands at [30.6, 40.8, -86]
     - [0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]          # the zoom's own pose: the frame is the picture
@@ -113,7 +114,7 @@ space:
     - [46, { at: [30, 40, -70], dist: 19.5, yaw: 0, pitch: 0 }]        # a slow drift back until the press
 ---
 
-<WebTakeover />
+<WebTakeover :gain="1.75" :cosmos-gain="2.3" :size="0.46" :cosmos-size="1.5" />   <!-- 24 Oct: brighter, slightly larger strands on the black (gain 1,3, cosmos 1,65, size 0,4 and 1,3 until then) -->
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <!-- facts: cosmic-web-simulation-filaments-voids -->
@@ -134,6 +135,7 @@ The picture: the last frame of the owner's SpaceEngine edit for Innoday (public/
 ---
 space:
   dim: 0
+  ambient: 0   # 24 Oct: the web's black carried on under the funnel
   path:   # 24 Oct (the owner: "make slide 4 look more dramatic, and vast"): the flight out of the web ends far back, the funnel small in the web round it, then the camera swings in low along its side until its mouth looms (until then one pose: [30, 39, -119], dist 25, yaw -72, pitch 13)
     - [1, { at: [30, 40, -70], dist: 19.5, yaw: 0, pitch: 0 }]          # 24 Oct review: slide 3's last pose, the picture's viewpoint down the funnel's axis, held while the web's grains fly into the funnel (funnel.js's morph, 0–4,4 s; seen from the side far off, they all but vanished)
     - [4.4, { at: [30, 40, -70], dist: 21, yaw: 0, pitch: 0 }]
