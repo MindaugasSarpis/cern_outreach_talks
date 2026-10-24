@@ -201,6 +201,8 @@ function buildWord(o, ctx) {
   const wp = new Vector3()
   return {
     group: g, labels: [], frameScale: u.uPixelRatio,
+    // the gathering runs on its own clock: the shots and plates wait for it
+    api: { busy: () => u.uT0.value < 1e8 && now - u.uT0.value < (o.gather ?? 2.2) + 1.2 },
     update(t, cam) {
       now = t; u.uTime.value = t
       // stand up and face the camera (turned about the vertical only, so the word stays level)
