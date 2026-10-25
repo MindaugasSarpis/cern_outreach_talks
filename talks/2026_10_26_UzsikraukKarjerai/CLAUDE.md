@@ -107,6 +107,11 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-25 (night, latest): slide 10 back to one press (02d7433; the owner: "They are not quarks.. a bit
+  confusing", "Remove the 2nd click") and the new cover (7f0adfd: the pentaquark in colour charge out of
+  Innoday's CMS collision; Decisions); plates (11) and stills retaken and published; the venue zip rebuilt
+  from ed667ce on the release (292.8 MB); venue.json. Deployed with them (the next
+  entry names the run once made).
 - 2026-10-25 (evening, latest): **deployed d75c4fc** (Pages run 40206964670, green; the URL 200, the live walk
   passed; `talk ready` passed, nothing skipped but the pptx): the beams' wait. The per-slide 1080p50 MP4s (the
   Brief's last copy; never made before today) recorded from d75c4fc: 25 takes (17 slides and every click),
@@ -589,6 +594,15 @@ on the last slide (lint TEXT warnings, on purpose).
   a3001a1 and 71fb6f1 before it, all rejected by the owner.
 
 ## Decisions
+
+- 2026-10-25 (night) — The cover (the owner: "the cover slide could be more substantial, maybe a colission from
+  innoday, or something even more innovative"; "the pentaquark should be much more detailed, spectacular"):
+  setup/pentaquark.js replaces the five gold clusters (`pq`): uudcc̄ in colour charge (u red, u green, d blue;
+  c red, c̄ cyan, a little larger), gluon springs, the sea's pairs, a skin, turning slowly; Innoday's
+  `cover-collision` loop far behind it on the camera's line through it (setup/coverCollision.js, its new
+  `gap`: a burst holds 7 s, the next ~34 s later); the pentaquark gathers out of the first crossing's flash
+  (~4 s, <CoverCollision>). The cover's dim 0,12. Slide 10's second press (the gold form) removed the same
+  evening ("They are not quarks.. a bit confusing"). The notes' Picture lines on 1 still describe the old form.
 
 - 2026-10-25 (late afternoon) — The owner: "go ahead implement these suggestions and deploy" (e8550d5), on
   the list offered in this window:
