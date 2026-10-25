@@ -1243,7 +1243,10 @@
     {
      "type": "supports",
      "name": "cradles",
-     "of": "det",
+     "of": [
+      "det",
+      "detp"
+     ],
      "pos": [
       0,
       0,
@@ -1413,6 +1416,61 @@
       0.96,
       0
      ]
+    },
+    {
+     "type": "shaft",
+     "name": "shaft",
+     "of": "detp",
+     "pos": [
+      23.7,
+      8,
+      2.5
+     ],
+     "height": 72,
+     "radius": 5,
+     "grains": 48000,
+     "ring": 6,
+     "lines": 16,
+     "alpha": 0.95,
+     "size": 1.4,
+     "color": "#7f9fd8"
+    },
+    {
+     "type": "cavern-floor",
+     "name": "floorp",
+     "of": "detp",
+     "pos": [
+      13,
+      -6.72,
+      12
+     ],
+     "step": 3,
+     "grains": 44000,
+     "alpha": 1.0,
+     "color": "#9fb8f0",
+     "area": [
+      52,
+      64
+     ],
+     "size": 1.6
+    },
+    {
+     "type": "beamline",
+     "name": "beams",
+     "of": "detp",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "from": -90,
+     "to": 110,
+     "grains": 9000,
+     "speed": 9,
+     "alpha": 1.0,
+     "size": 1.6,
+     "color": "#9cc4ff",
+     "color2": "#ffffff"
     }
    ]
   },

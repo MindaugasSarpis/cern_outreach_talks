@@ -6,17 +6,38 @@
 import { BufferGeometry, BufferAttribute, Points, Group, Color } from 'three'
 import { PLACE, listen, state, material as materialOf } from './detector.js'
 
+// shown while any of its step names (`of`: a name or a list, default 'det') is on; it fades in
+// over 2 s and out over 1,2 s (until 25 Oct it went at once)
+function shown(o, u, clock) {
+  const names = [].concat(o.of || 'det')
+  const on = () => names.some((n) => (state.get(n) ?? 0) > 0)
+  let fresh = true
+  const offs = names.map((n) => listen(n, () => { fresh = true }))
+  return {
+    update(t) {
+      if (fresh) {
+        fresh = false
+        if (on()) { if (u.uShowT.value > 1e8 || u.uHideT.value < 1e8) u.uShowT.value = u.uHideT.value < 1e8 ? t - 2 : t; u.uHideT.value = 1e9 }
+        else if (u.uShowT.value < 1e8 && u.uHideT.value > 1e8) u.uHideT.value = t
+      }
+      if (u.uHideT.value < 1e8 && t - u.uHideT.value > 1.3) { u.uShowT.value = 1e9; u.uHideT.value = 1e9 }
+    },
+    off: () => offs.forEach((f) => f()),
+  }
+}
+
 // `floor`: the cavern's floor as a faint grid of grains, for the eye-level view's scale
 // (owner, 20 Oct: "first person view at eye level"); shown with the detector (its
 // step name, `of`: 'det').
-//   { type: floor, name, of?: 'det', pos, area?: [32, 28], step?: 2, grains?: 18000, size?: 1.4, color?, alpha?: 0.9 }
+//   { type: floor, name, of?: 'det' (or a list), pos, area?: [32, 28], step?: 2, grains?: 18000, size?: 1.4, color?, alpha?: 0.9 }
 const FLOOR_VERT = PLACE + /* glsl */ `
 attribute float aSeed, aFall;
-uniform float uShowT, uAlpha, uSize;
+uniform float uShowT, uHideT, uAlpha, uSize;
 uniform vec3 uColor;
 void main() {
   if (uShowT > 1e8) { hide(); return; }
   float a = uAlpha * smoothstep(0.0, 2.0, uTime - uShowT) * aFall * (0.6 + 0.4 * hash(aSeed * 7.0));
+  if (uHideT < 1e8) a *= 1.0 - smoothstep(0.0, 1.2, uTime - uHideT);   // fades out with the detector (the close's climb)
   place(position, uSize, a, uColor, aSeed);
 }`
 function buildFloor(o, ctx) {
@@ -45,20 +66,16 @@ function buildFloor(o, ctx) {
   geo.setAttribute('position', new BufferAttribute(pos, 3))
   geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
   geo.setAttribute('aFall', new BufferAttribute(fall, 1))
-  const mat = materialOf(FLOOR_VERT, { uShowT: { value: 1e9 }, uAlpha: { value: o.alpha ?? 0.9 }, uSize: { value: o.size ?? 1.4 }, uColor: { value: new Color(o.color || '#7f9fd8') } })
+  const mat = materialOf(FLOOR_VERT, { uShowT: { value: 1e9 }, uHideT: { value: 1e9 }, uAlpha: { value: o.alpha ?? 0.9 }, uSize: { value: o.size ?? 1.4 }, uColor: { value: new Color(o.color || '#7f9fd8') } })
   const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts)
-  const u = mat.uniforms, of = o.of || 'det'
-  let now = 0, step0 = state.get(of) ?? 0, fresh = true
-  const off = listen(of, (k) => { step0 = k; fresh = true })
+  const u = mat.uniforms
+  let now = 0
+  const sh = shown(o, u, () => now)
   return {
     group: g, labels: [], frameScale: u.uPixelRatio,
     api: { busy: () => u.uShowT.value < 1e8 && now - u.uShowT.value < 2.2 },   // fading in
-    update(t) {
-      now = t; u.uTime.value = t
-      if (fresh) { fresh = false; if (step0 > 0) { if (u.uShowT.value > 1e8) u.uShowT.value = t } else u.uShowT.value = 1e9 }
-      g.visible = u.uShowT.value < 1e8
-    },
-    dispose: off,
+    update(t) { now = t; u.uTime.value = t; sh.update(t); g.visible = u.uShowT.value < 1e8 },
+    dispose: sh.off,
   }
 }
 
@@ -94,24 +111,120 @@ function buildSupports(o, ctx) {
   geo.setAttribute('position', new BufferAttribute(pos, 3))
   geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
   geo.setAttribute('aFall', new BufferAttribute(fall, 1))
-  const mat = materialOf(FLOOR_VERT, { uShowT: { value: 1e9 }, uAlpha: { value: o.alpha ?? 0.6 }, uSize: { value: o.size ?? 1.2 }, uColor: { value: new Color(o.color || '#6fa4ff') } })
+  const mat = materialOf(FLOOR_VERT, { uShowT: { value: 1e9 }, uHideT: { value: 1e9 }, uAlpha: { value: o.alpha ?? 0.6 }, uSize: { value: o.size ?? 1.2 }, uColor: { value: new Color(o.color || '#6fa4ff') } })
   const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts)
-  const u = mat.uniforms, of = o.of || 'det'
-  let now = 0, step0 = state.get(of) ?? 0, fresh = true
-  const off = listen(of, (k) => { step0 = k; fresh = true })
+  const u = mat.uniforms
+  let now = 0
+  const sh = shown(o, u, () => now)
   return {
     group: g, labels: [], frameScale: u.uPixelRatio,
     api: { busy: () => u.uShowT.value < 1e8 && now - u.uShowT.value < 2.2 },
-    update(t) {
-      now = t; u.uTime.value = t
-      if (fresh) { fresh = false; if (step0 > 0) { if (u.uShowT.value > 1e8) u.uShowT.value = t } else u.uShowT.value = 1e9 }
-      g.visible = u.uShowT.value < 1e8
-    },
-    dispose: off,
+    update(t) { now = t; u.uTime.value = t; sh.update(t); g.visible = u.uShowT.value < 1e8 },
+    dispose: sh.off,
+  }
+}
+
+// `shaft`: the access shaft from the cavern's roof up to the surface, as grains on its wall (the
+// owner, 25 Oct: "Maybe for the finale give lhcb a floor and indicate the schaft"): rings and
+// lines down its length, a brighter rim at its foot. On the close it stands at Point 8, where the
+// accelerator map's own shaft meets the surface, so the camera's climb goes up it.
+//   { type: shaft, name, of?: 'det', pos: [x, yFoot, z], height?: 70, radius?: 5, grains?: 26000,
+//     ring?: 6 (units between rings), lines?: 16, color?, alpha?: 0.5, size?: 1.3 }
+function buildShaft(o, ctx) {
+  const g = new Group()
+  const P = o.pos || [0, 0, 0]
+  g.position.set(P[0] || 0, P[1] || 0, P[2] || 0)
+  const H = o.height ?? 70, R = o.radius ?? 5, n = o.grains ?? 26000, ring = o.ring ?? 6, lines = o.lines ?? 16
+  const pos = new Float32Array(n * 3), seed = new Float32Array(n), fall = new Float32Array(n)
+  const rings = Math.floor(H / ring) + 1
+  for (let i = 0; i < n; i++) {
+    let a, y, f = 1
+    const kind = i % 6
+    if (kind < 1) { a = Math.random() * Math.PI * 2; y = Math.floor(Math.random() * rings) * ring }   // the rings
+    else if (kind < 4) { a = (Math.floor(Math.random() * lines) / lines) * Math.PI * 2; y = Math.random() * H }   // the lines (half the grains: the wall reads as going up)
+    else if (kind === 4) { a = Math.random() * Math.PI * 2; y = Math.random() * 0.4; f = 1.6 }   // the rim at its foot
+    else { a = Math.random() * Math.PI * 2; y = Math.random() * H; f = 0.35 }   // a little dust on the wall
+    const r = R + (Math.random() - 0.5) * 0.08
+    pos.set([r * Math.cos(a), y + (Math.random() - 0.5) * 0.06, r * Math.sin(a)], i * 3)
+    seed[i] = Math.random()
+    // fainter toward the top, so it reads as going up and away
+    fall[i] = f * (1 - 0.3 * (y / H))
+  }
+  const geo = new BufferGeometry()
+  geo.setAttribute('position', new BufferAttribute(pos, 3))
+  geo.setAttribute('aSeed', new BufferAttribute(seed, 1))
+  geo.setAttribute('aFall', new BufferAttribute(fall, 1))
+  const mat = materialOf(FLOOR_VERT, { uShowT: { value: 1e9 }, uHideT: { value: 1e9 }, uAlpha: { value: o.alpha ?? 0.5 }, uSize: { value: o.size ?? 1.3 }, uColor: { value: new Color(o.color || '#7f9fd8') } })
+  const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts)
+  const u = mat.uniforms
+  let now = 0
+  const sh = shown(o, u, () => now)
+  return {
+    group: g, labels: [], frameScale: u.uPixelRatio,
+    api: { busy: () => u.uShowT.value < 1e8 && now - u.uShowT.value < 2.2 },
+    update(t) { now = t; u.uTime.value = t; sh.update(t); g.visible = u.uShowT.value < 1e8 },
+    dispose: sh.off,
+  }
+}
+
+// `beamline`: the LHC's two beams through the detector and out of the cavern both ways into the tunnel
+// (the owner, 25 Oct: "could also indicate that LHCb is connected to lhc somehow"): a faint line along the
+// beam axis (the station's x) and grains flowing along it, one beam each way, fading toward its ends; on
+// the map that follows, the same two beams go round the LHC ring.
+//   { type: beamline, name, of?: 'det', pos, from?: -90, to?: 110 (units along x), grains?: 9000,
+//     speed?: 9 (units a second), color?: '#9cc4ff', color2?: '#ffffff', alpha?: 0.7, size?: 1.4 }
+const BEAM_VERT = PLACE + /* glsl */ `
+attribute float aSeed, aFall, aDir, aU;
+uniform float uShowT, uHideT, uAlpha, uSize, uFrom, uLen, uSpeed;
+uniform vec3 uColor, uColor2;
+void main() {
+  if (uShowT > 1e8) { hide(); return; }
+  float u = aDir == 0.0 ? aU : fract(aU + aDir * uSpeed * uTime / uLen);   // 0: the line itself, ±1: a beam
+  vec3 p = vec3(uFrom + u * uLen, position.y, position.z);
+  float ends = smoothstep(0.0, 0.25, u) * smoothstep(1.0, 0.75, u);   // into the dark of the tunnel both ways
+  float a = uAlpha * smoothstep(0.0, 2.0, uTime - uShowT) * aFall * ends * (0.6 + 0.4 * hash(aSeed * 7.0));
+  if (uHideT < 1e8) a *= 1.0 - smoothstep(0.0, 1.2, uTime - uHideT);
+  place(p, uSize, a, aDir > 0.0 ? uColor2 : uColor, aSeed);
+}`
+function buildBeamline(o, ctx) {
+  const g = new Group()
+  const P = o.pos || [0, 0, 0]
+  g.position.set(P[0] || 0, P[1] || 0, P[2] || 0)
+  const n = o.grains ?? 9000, from = o.from ?? -90, len = (o.to ?? 110) - from
+  const pos = new Float32Array(n * 3), seed = new Float32Array(n), fall = new Float32Array(n), dir = new Float32Array(n), uu = new Float32Array(n)
+  for (let i = 0; i < n; i++) {
+    const kind = i % 3   // the line, then a beam each way, side by side (as the map's two beams)
+    const off = kind === 0 ? 0 : (kind === 1 ? 0.09 : -0.09)
+    uu[i] = Math.random()
+    // a beam comes in bunches: grains gathered round evenly spaced places along it
+    if (kind > 0) { const b = 46; uu[i] = (Math.floor(Math.random() * b) + 0.5 + (Math.random() - 0.5) * 0.35) / b }
+    pos.set([0, off + (Math.random() - 0.5) * 0.05, (Math.random() - 0.5) * 0.05], i * 3)
+    dir[i] = kind === 0 ? 0 : (kind === 1 ? 1 : -1)
+    seed[i] = Math.random(); fall[i] = kind === 0 ? 0.45 : 1
+  }
+  const geo = new BufferGeometry()
+  geo.setAttribute('position', new BufferAttribute(pos, 3))
+  for (const [k, v] of [['aSeed', seed], ['aFall', fall], ['aDir', dir], ['aU', uu]]) geo.setAttribute(k, new BufferAttribute(v, 1))
+  const mat = materialOf(BEAM_VERT, {
+    uShowT: { value: 1e9 }, uHideT: { value: 1e9 }, uAlpha: { value: o.alpha ?? 0.7 }, uSize: { value: o.size ?? 1.4 },
+    uFrom: { value: from }, uLen: { value: len }, uSpeed: { value: o.speed ?? 9 },
+    uColor: { value: new Color(o.color || '#9cc4ff') }, uColor2: { value: new Color(o.color2 || '#ffffff') },
+  })
+  const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts)
+  const u = mat.uniforms
+  let now = 0
+  const sh = shown(o, u, () => now)
+  return {
+    group: g, labels: [], frameScale: u.uPixelRatio,
+    api: { busy: () => u.uShowT.value < 1e8 && now - u.uShowT.value < 2.2 },
+    update(t) { now = t; u.uTime.value = t; sh.update(t); g.visible = u.uShowT.value < 1e8 },
+    dispose: sh.off,
   }
 }
 
 export function installCavern(registerBuilder) {
   registerBuilder('cavern-floor', buildFloor, { fields: ['pos', 'name'] })
   registerBuilder('supports', buildSupports, { fields: ['name', 'parts'] })
+  registerBuilder('shaft', buildShaft, { fields: ['pos', 'name'] })
+  registerBuilder('beamline', buildBeamline, { fields: ['pos', 'name'] })
 }

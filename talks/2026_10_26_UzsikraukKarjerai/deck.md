@@ -528,7 +528,7 @@ space:
     - [16.4, { at: [1012, -481.5, 2.5], dist: 25, yaw: -12, pitch: 4 }]   # LHCb's collision crosses on the 1:37 arrival
     - [26, { at: [1012, -481.5, 2.5], dist: 28, yaw: 0, pitch: 5 }]       # the crossings come faster (the cascade from ~20 s) …
     - [33.8, { at: [1012, -481.5, 2.5], dist: 31, yaw: 10, pitch: 6 }]    # … until it glows evenly: 40 million a second; held at eye level to the breath at 1:54,8
-    - [38, { at: [1018, -470, 2.5], dist: 38, yaw: 10, pitch: 45 }]     # the climb (the detector let go at 38,5 s)
+    - [38, { at: [1018, -470, 2.5], dist: 38, yaw: 10, pitch: 45 }]     # the climb, beside the shaft (the detector, floor and shaft let go at 38,5 s)
     - [40.5, { at: [1023.7, -404, 2.5], dist: 32, yaw: 10, pitch: 76 }] # through the surface, over Point 8
     - [42.8, { at: [1028, -407, 24], dist: 72, yaw: 2, pitch: 54 }]     # the accelerators on the 2:03,8 bar (the swell after the breath), north up
     # 25 Oct (the owner: "The LHC FCC zoomout can be orbiting a bit quicker, zooming out so FCC is visible as a whole but 3D"): down to about 30° so the rings read in depth, both rings whole and filling about 80 % of the frame (each key's look point and distance fitted to the rings at its angle), and an orbit of 1,2° a second (0,5 until now)
@@ -549,6 +549,7 @@ clicks: 1
 <!-- 24 Oct: the close rebuilt live (setup/accel.js; until then Innoday's recorded close, close_quick.mp4). LHCb's cavern (slide 10's station): the collision waits 13,86 s so it crosses at 16,36 s (`delay`), the arrival of Starfire's 1:37 on it (the drop on the world's clock); at 23 s the detector is let go and the camera rises out of the cavern to the accelerator map above it (the `accel` station: Point 8's shaft stands over the detector), which then turns slowly. The depths are drawn ~20 times deeper than true so the two levels read; the FCC's eight shafts are evenly placed (indicative). On the click a CMS collision (`bang`) crosses over the FCC's middle 2,5 s later, on Starfire's 2:54,85 downbeat (starfire_downbeat.m4a starts 2,6 s before it), and its debris gathers into „Ačiū už dėmesį“ (`word`). -->
 <InsideLhcb det="detp" :land-y="-470" :delay="13.86" :fade-at="38.5" :sync-to="{ src: 'starfire_finale', at: 13.52 }" />
 <!-- 25 Oct: the clip's last frame (the flag on the cold box) turns to grains in LHCb's SciFi and shrinks to the detector's scale as the camera pulls back; it goes with the detector at 38,5 s. The point cloud no longer twinkles before the collision (`detp` steady, space.json). -->
+<!-- 25 Oct (the owner: "Maybe for the finale give lhcb a floor and indicate the schaft"): the cavern's floor and cradles (slide 10's) now come with `detp` too, and the access shaft (`shaft`, space.json) rises from the cavern's roof to the surface at Point 8, beside which the camera climbs; the detector, floor and shaft let go together at 38,5 s (later, the detector showed through the map). And ("could also indicate that LHCb is connected to lhc somehow"): the LHC's two beams through the detector and out of the cavern both ways (`beams`), as on the map that follows -->
 <LisFlag :fade-at="38.5" />
 <Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 1 }" />
 <ClickBus name="bang" :click="1" />
