@@ -45,10 +45,12 @@ info: |
   SciFi module and its flag, and Innoday's close out to the LHC, „mano
   greitintuvas“, and the FCC, „jūsų greitintuvas“ (Starfire under both); „Ačiū“.
 layout: cover
-space: { at: [594.9, 0, 0], dist: 10, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }   # 24 Oct review: closer (dist 13 at [593.2, 0, 0] until then), so the five-quark form is the cover's hero, not a fifth of the frame
+space: { at: [594.9, 0, 0], dist: 10, yaw: -14, pitch: 8, sway: 1, dim: 0.12 }   # 25 Oct: dim 0,12 (0,25) so the new pentaquark's colours carry; 24 Oct review: closer (dist 13 at [593.2, 0, 0] until then), so the five-quark form is the cover's hero, not a fifth of the frame
 ---
 
-<Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0 }" />
+<!-- 25 Oct (the owner: "the cover slide could be more substantial, maybe a colission from innoday, or something even more innovative"): Innoday's slow, silent CMS loop, far behind the particle on the camera's line through it, every ~34 s (`gap`); then "the pentaquark should be much more detailed, spectacular": the five gold clusters gave way to setup/pentaquark.js (u u d c c̄ in colour charge, gluon springs, the sea's pairs, a skin, turning), which gathers out of the first crossing's flash (<CoverCollision>) -->
+<CoverCollision />
+<Grains :set="{ pq: 0, route: -1, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0 }" />
 
 <div class="mt-md">Dr. Mindaugas Šarpis<br><span class="nt">LHCb</span>&nbsp;Vilnius<br>Vilniaus universitetas</div>
 

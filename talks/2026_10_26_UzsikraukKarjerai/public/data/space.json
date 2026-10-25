@@ -36,34 +36,40 @@
    "gather": 0.3,
    "objects": [
     {
-     "type": "quintet",
+     "type": "pentaquark",
      "name": "pq",
      "pos": [
       0,
       0,
       0
      ],
-     "radius": 2.4,
-     "size": 1.5,
-     "alpha": 0.6,
-     "steps": [
-      {
-       "hold": 0,
-       "light": 0.25
-      },
-      {
-       "hold": 0.55,
-       "light": 0.4
-      },
-      {
-       "hold": 0,
-       "light": 0.12
-      },
-      {
-       "hold": 1,
-       "light": 0.55
-      }
-     ]
+     "spread": 2.5,
+     "radius": 0.9,
+     "heavy": 1.25,
+     "grains": 1800,
+     "gluon": 900,
+     "loops": 4,
+     "sea": 5000,
+     "bag": 9000,
+     "size": 1.6,
+     "alpha": 0.55,
+     "gluonSize": 1.1,
+     "gluonAlpha": 0.75,
+     "spin": 0.09
+    },
+    {
+     "type": "cover-collision",
+     "name": "cover",
+     "pos": [
+      7.33,
+      -1.36,
+      -9.4
+     ],
+     "grain": 2.8,
+     "settled": 7,
+     "scale": 2.1,
+     "hold": 7,
+     "gap": 14
     }
    ]
   },

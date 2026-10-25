@@ -13,7 +13,11 @@ import WorldLabel from './WorldLabel.vue'
 import ClickBus from './ClickBus.vue'
 import { installThesis } from './thesis.js'
 import { installTriplet } from './triplet.js'
+import { installPentaquark } from './pentaquark.js'
 import InsideLhcb from './InsideLhcb.vue'
+import CoverCollision from './CoverCollision.vue'
+// the cover's slow, silent CMS loop (25 Oct, Innoday's): `cover-collision` and <CoverCollision>
+import { installCoverCollision } from './coverCollision.js'
 import LisFlag from './LisFlag.vue'
 // LHCb's own 2012 event, the shared collision's default: slide 8's detector (setup/detector.js)
 import EVENT_LB from '../components/lhc-opening/event.json'
@@ -92,17 +96,20 @@ export default ({ app, router }) => {
   installSun(registerBuilder)
   installFunnel(registerBuilder)
   installOpening({ app, registerBuilder })   // the shared LHC opening: its collision, sound and <LhcOpening>
+  installCoverCollision(registerBuilder)   // the cover's loop (setup/coverCollision.js)
   installDetector(registerBuilder, { event: EVENT_LB })
   installCavern(registerBuilder)
   installAccel(registerBuilder)   // the close's accelerators and its word (24 Oct)
   installThesis(registerBuilder)
   installTriplet(registerBuilder)
+  installPentaquark(registerBuilder)   // the cover's particle (setup/pentaquark.js)
   app.component('Grains', Grains)
   app.component('Count', Count)
   app.component('FillClock', FillClock)
   app.component('WebTakeover', WebTakeover)
   app.component('AfterFlight', AfterFlight)
   app.component('InsideLhcb', InsideLhcb)
+  app.component('CoverCollision', CoverCollision)
   app.component('LisFlag', LisFlag)
   app.component('ClickPose', ClickPose)
   app.component('Soundtrack', Soundtrack)
