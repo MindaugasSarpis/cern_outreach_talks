@@ -107,6 +107,13 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-25 (evening, latest): **deployed d75c4fc** (Pages run 40206964670, green; the URL 200, the live walk
+  passed; `talk ready` passed, nothing skipped but the pptx): the beams' wait. The per-slide 1080p50 MP4s (the
+  Brief's last copy; never made before today) recorded from d75c4fc: 25 takes (17 slides and every click),
+  1,9 GB, silent, last frames checked; on the release as
+  https://github.com/MindaugasSarpis/cern_outreach_talks/releases/download/videos-2026-10-26-uzsikraukkarjerai/2026_10_26_UzsikraukKarjerai-slides-1080p50.zip
+  (with ORDER.txt; local copy in shots/record, gitignored). Open for the owner: a MacBook rehearsal from the
+  venue zip (16 is the heaviest scene); slide 10 now takes two presses (the second for the 2015 line).
 - 2026-10-25 (evening, latest): the beams wait for the close's one collision (352b409; the owner: "It was a bit
   more dramatic when one collision happened … and them the speeding up ones after that"): plates (11) and
   stills retaken and published, the venue zip rebuilt from b552f79 on the release (289.2 MB);
