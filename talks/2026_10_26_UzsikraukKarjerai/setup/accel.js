@@ -1,5 +1,5 @@
 import { Group, Points, BufferGeometry, BufferAttribute, Color, Vector3 } from 'three'
-import { material, PLACE } from './grains.js'
+import { material, PLACE, state } from './grains.js'
 import { bus } from '../components/lhc-opening/bus.js'
 
 // The close (slide 16) as a world of its own (the owner, 24 Oct: "why is this not fullscreen, make it
@@ -10,7 +10,7 @@ import { bus } from '../components/lhc-opening/bus.js'
 // ---- accel --------------------------------------------------------------------------
 //   { type: accel, pos, map: 'data/accel_map.json', scale?: 2.2 (units a km), depth?: 0.04 (units a
 //     metre below the surface: the depths drawn ~20 times deeper than true so the layers read),
-//     lhcDepth?: 100, fccDepth?: 200 (m), show?: { below: 60, over: 25 } }
+//     lhcDepth?: 100, fccDepth?: 200 (m), show?: { below: 60, over: 25 }, step?: (a grain step name: shown only while it is on) }
 // Innoday's accelerator map (hero/ring_map.py: OpenStreetMap's tunnels, Lake Geneva, the border, the
 // Rhône and the ridges; km east and north of the LHC's centre) north up, as a surface of faint grains
 // with the rings under it: the LHC (4,22 km) at `lhcDepth` with its two beams going round it both ways,
@@ -133,7 +133,10 @@ function buildAccel(o, ctx) {
         const h = cam.y - (wp.y - below)
         // only from round about the station (the Europe station's camera stands high above, 180 units off)
         const near = Math.hypot(cam.x - wp.x, cam.z - wp.z) < 260 && cam.y < wp.y + 260
-        u.uShow.value = near ? Math.min(1, Math.max(0, h / over)) : 0
+        // and with `step`, only while that grain step is on (25 Oct: slide 13's flight up from the inventions,
+        // which stand by the cavern, rose through the map's surface and the map flashed on for half a second)
+        const on = !o.step || (state.get(o.step) ?? 0) > 0
+        u.uShow.value = near && on ? Math.min(1, Math.max(0, h / over)) : 0
       }
     },
   }

@@ -276,7 +276,8 @@ function buildPairs(o, ctx) {
 //     arcs?: [per leg] (overrides `arc` leg by leg), bend?: 0, bends?: [per leg] (each leg bows
 //     sideways on the ground, to the right of its way for a positive bend, by the same measure:
 //     a return over the same pair bows to the other side, so a round trip reads as a loop),
-//     stepDraw?: { step: seconds } (a draw on to that step takes this long, whatever `draw` says) }
+//     stepDraw?: { step: seconds } (a draw on to that step takes this long, whatever `draw` says),
+//     arriveDelay?: 1.2 (s after the camera's arrival before a waiting step draws) }
 // Step k (0 … points-1) draws the trail on to point k; -1 hides it. The head
 // travels there over `draw` seconds per leg, after `delay`; each point's
 // cluster gathers as the head reaches it. The cluster at the head burns
@@ -429,7 +430,7 @@ function buildPath(o, ctx) {
     armed = false
     if (pending != null) {
       const k = Math.max(-1, Math.min(np - 1, pending)); pending = null
-      if (k >= 0) drawFromStart(k, 1.2, false)
+      if (k >= 0) drawFromStart(k, o.arriveDelay ?? 1.2, false)
       return
     }
     // an arrival from elsewhere, or `c`: the whole path is drawn again, quicker, from the start to where it stands

@@ -403,12 +403,13 @@ places: { inventions: false }   # the invention photos are gone from here on
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 <Grains :set="{ pq: 3, route: 1, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 5 }, 3: { route: 7 }, 4: { route: 9 }, 5: { route: 10 } }" />
 
-<div class="city late caption" style="left: 742px; top: 153px">Vilnius</div>
-<div class="city late caption" style="left: 421px; top: 344px">CERN</div>
-<div v-click="1" class="city step caption" style="left: 138px; top: 56px; --step-delay: 1.2s">Glazgas</div>
-<div v-click="2" class="city step caption" style="left: 102px; top: 116px; --step-delay: 1.2s">Airija</div>
-<div v-click="3" class="city step caption" style="left: 500px; top: 285px; --step-delay: 1.2s">Heidelbergas</div>
-<div v-click="4" class="city step caption" style="left: 337px; top: 180px; --step-delay: 1.2s">Bona</div>
+<!-- 25 Oct (the owner: "the map with my travels is not very smooth, the path appears first only then the text, quite a slow animation"): each name comes up with its trail, not after it (the arrival's at 8,5 s until now, the clicks' 1,2 s after the press); the legs drawn quicker (`draw` 0,9 s a leg, was 1,5) and started sooner (space.json) -->
+<div class="city late caption" style="left: 742px; top: 153px; animation-delay: 2.8s">Vilnius</div>
+<div class="city late caption" style="left: 421px; top: 344px; animation-delay: 3.4s">CERN</div>
+<div v-click="1" class="city step caption" style="left: 138px; top: 56px; --step-delay: 0.15s">Glazgas</div>
+<div v-click="2" class="city step caption" style="left: 102px; top: 116px; --step-delay: 0.15s">Airija</div>
+<div v-click="3" class="city step caption" style="left: 500px; top: 285px; --step-delay: 0.15s">Heidelbergas</div>
+<div v-click="4" class="city step caption" style="left: 337px; top: 180px; --step-delay: 0.15s">Bona</div>
 
 <!-- facts: sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn, sarpis-phd-bonn-2023, lhcb-run1-release-sarpis-lrt-2025, lhcb-vilnius-joined -->
 
@@ -490,7 +491,7 @@ space: { path: [[0, { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62 }]],
 <!-- The owner, 23 Oct: "Don't need second to last slide, better take 2 last slides from innoday just zoom out to lhc / fcc, not the globe". Innoday's lis_flag.mp4, here from its 3,5 s, 16,5 s (a Blender render of a whole SciFi module, then its light injection cold box and the Lithuanian flag lasered on it); its last frame is the first of the close. -->
 <VideoPlayer src="lis_flag_50.mp4" muted :controls="false" transition="fade" />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
-<Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 0 }" />
 
 <!-- facts: lhcb-scifi, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
 
@@ -519,28 +520,44 @@ space:
   hum: false
   ambient: 0   # deep black throughout (the owner, 25 Oct: "this blue on blue somehow diminished the effect a bit... maybe deep black is better")
   path:   # 24–25 Oct (the owner: "make it vast, filling the entire screen"; "slowly orbit, indicate 3D fcc 300m underground"; then "keep it pointcloud but resolve better", "spend a little bit more time (like before) at eye level … Maximize effect, keeping the soundtrack in mind"): the close live, timed to Starfire (the finale file's 1:37,38 arrival at 16,36 s)
-    - [0, { at: [1012, -481, 2.5], dist: 13, yaw: -42, pitch: 3 }]      # close in among LHCb's grains (the point cloud, `detp`), as the recorded close began
-    - [12, { at: [1012, -481.5, 2.5], dist: 24, yaw: -18, pitch: 4 }]     # drawn back: the whole detector at eye level, the 1,83 m person beside it
+    - [0, { at: [1009.54, -482.702, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]   # 25 Oct (the owner: "the detector in slide 15 should move into LHCb as in innoday, with lithuanian flag"): the clip's last view, the flag on the cold box (<LisFlag>, Innoday's path at 22efcef, LHCb 1000 units along x here) …
+    - [2, { at: [1009.54, -482.702, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]   # … held while the frame turns to grains
+    - [5.5, { at: [1009.6, -482, 0.8], dist: 7, yaw: -80, pitch: 4 }]                # out of the module's end, the flag shrinking to the module's place in the SciFi
+    - [8.5, { at: [1010.6, -481.75, 1.6], dist: 14, yaw: -50, pitch: 4 }]
+    - [12, { at: [1012, -481.5, 2.5], dist: 24, yaw: -18, pitch: 4 }]     # drawn back: the whole detector at eye level, the 1,83 m person beside it, the flag a small mark on its module
     - [16.4, { at: [1012, -481.5, 2.5], dist: 25, yaw: -12, pitch: 4 }]   # LHCb's collision crosses on the 1:37 arrival
     - [26, { at: [1012, -481.5, 2.5], dist: 28, yaw: 0, pitch: 5 }]       # the crossings come faster (the cascade from ~20 s) …
     - [33.8, { at: [1012, -481.5, 2.5], dist: 31, yaw: 10, pitch: 6 }]    # … until it glows evenly: 40 million a second; held at eye level to the breath at 1:54,8
     - [38, { at: [1018, -470, 2.5], dist: 38, yaw: 10, pitch: 45 }]     # the climb (the detector let go at 38,5 s)
     - [40.5, { at: [1023.7, -404, 2.5], dist: 32, yaw: 10, pitch: 76 }] # through the surface, over Point 8
-    - [42.8, { at: [1028, -406, 23.8], dist: 70, yaw: 0, pitch: 56 }]   # the accelerators whole on the 2:03,8 bar (the swell after the breath), north up
-    - [90, { at: [1028, -406, 23.8], dist: 60, yaw: 30, pitch: 42 }]    # a slow orbit, lower, so the two levels stand apart
-    - [150, { at: [1028, -406, 23.8], dist: 56, yaw: 55, pitch: 36 }]
+    - [42.8, { at: [1028, -407, 24], dist: 72, yaw: 2, pitch: 54 }]     # the accelerators on the 2:03,8 bar (the swell after the breath), north up
+    # 25 Oct (the owner: "The LHC FCC zoomout can be orbiting a bit quicker, zooming out so FCC is visible as a whole but 3D"): down to about 30° so the rings read in depth, both rings whole and filling about 80 % of the frame (each key's look point and distance fitted to the rings at its angle), and an orbit of 1,2° a second (0,5 until now)
+    - [50, { at: [1031.1, -410, 38.7], dist: 62, yaw: 12, pitch: 32 }]
+    - [60, { at: [1034.1, -410, 37.7], dist: 61, yaw: 24, pitch: 31.6 }]
+    - [70, { at: [1036.8, -410, 36.1], dist: 59, yaw: 36, pitch: 31.2 }]
+    - [80, { at: [1039.1, -410, 34.0], dist: 57, yaw: 48, pitch: 30.8 }]
+    - [90, { at: [1041.0, -410, 31.5], dist: 54, yaw: 60, pitch: 30.4 }]
+    - [100, { at: [1042.3, -410, 28.6], dist: 51, yaw: 72, pitch: 30 }]
+    - [110, { at: [1042.9, -410, 25.6], dist: 48, yaw: 84, pitch: 29.6 }]
+    - [120, { at: [1042.9, -410, 22.4], dist: 47, yaw: 96, pitch: 29.2 }]
+    - [130, { at: [1042.3, -410, 19.4], dist: 49, yaw: 108, pitch: 28.8 }]
+    - [140, { at: [1041.0, -410, 16.5], dist: 53, yaw: 120, pitch: 28.4 }]
+    - [150, { at: [1039.1, -410, 14.0], dist: 56, yaw: 132, pitch: 28 }]
 clicks: 1
 ---
 
 <!-- 24 Oct: the close rebuilt live (setup/accel.js; until then Innoday's recorded close, close_quick.mp4). LHCb's cavern (slide 10's station): the collision waits 13,86 s so it crosses at 16,36 s (`delay`), the arrival of Starfire's 1:37 on it (the drop on the world's clock); at 23 s the detector is let go and the camera rises out of the cavern to the accelerator map above it (the `accel` station: Point 8's shaft stands over the detector), which then turns slowly. The depths are drawn ~20 times deeper than true so the two levels read; the FCC's eight shafts are evenly placed (indicative). On the click a CMS collision (`bang`) crosses over the FCC's middle 2,5 s later, on Starfire's 2:54,85 downbeat (starfire_downbeat.m4a starts 2,6 s before it), and its debris gathers into „Ačiū už dėmesį“ (`word`). -->
 <InsideLhcb det="detp" :land-y="-470" :delay="13.86" :fade-at="38.5" :sync-to="{ src: 'starfire_finale', at: 13.52 }" />
-<Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
+<!-- 25 Oct: the clip's last frame (the flag on the cold box) turns to grains in LHCb's SciFi and shrinks to the detector's scale as the camera pulls back; it goes with the detector at 38,5 s. The point cloud no longer twinkles before the collision (`detp` steady, space.json). -->
+<LisFlag :fade-at="38.5" />
+<Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 1 }" />
 <ClickBus name="bang" :click="1" />
 <!-- the click: the camera flies in to face the place over the FCC's middle where the collision crosses and the words gather -->
 <ClickPose :poses="{ 1: { at: [1027.99, -389.2, 30.56], dist: 22, yaw: 20, pitch: 5, flight: 2.2, ambient: 0 } }" />
 <Soundtrack src="audio/starfire_finale.m4a" tail="audio/starfire_finale.m4a" :level="0.5" keys :drop="{ clock: 'world', at: 16.36, file: 'audio/starfire_finale.m4a', hit: 16.02, duck: 99, xfade: 2000, quiet: 0.8 }" :on-click="{ click: 1, file: 'audio/starfire_downbeat.m4a', level: 0.62, xfade: 700 }" />
 <WorldLabel v-click.hide="1" :at="[1009.66, -408, -9.36]" :above="-440" :delay="44.5" align="left">LHC – mano<br>greitintuvas</WorldLabel>
-<WorldLabel v-click.hide="1" :at="[1057.82, -416, 41.42]" :above="-440" :delay="47.5">FCC – jūsų<br>greitintuvas</WorldLabel>
+<!-- the FCC label on the ring's south-west side (25 Oct): it stays in the safe box through the faster orbit; on the east side it ran off the bottom -->
+<WorldLabel v-click.hide="1" :at="[1001.97, -416, 48.78]" :above="-440" :delay="47.5">FCC – jūsų<br>greitintuvas</WorldLabel>
 <WorldLabel v-click.hide="1" :at="[1023.7, -404, 2.5]" :above="-440" :delay="45.5" :dx="34" :dy="-30">100 m</WorldLabel>
 <WorldLabel v-click.hide="1" :at="[998.64, -408, 18.41]" :above="-440" :delay="49" align="left">~200 m</WorldLabel>
 
@@ -572,7 +589,7 @@ The clip runs 54 s; the words run about 7 s past it, over the held map, and the 
 space: { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 0, dim: 0.7 }   # the credits page: the world dimmed far under the list
 ---
 
-<Grains :set="{ pq: 3, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
+<Grains :set="{ pq: 3, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 0 }" />
 <Soundtrack src="audio/starfire_finale.m4a" tail="audio/starfire_finale.m4a" :level="0.33" keys />
 
 <div class="credits-page">

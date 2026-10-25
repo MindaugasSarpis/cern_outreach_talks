@@ -14,6 +14,7 @@ import ClickBus from './ClickBus.vue'
 import { installThesis } from './thesis.js'
 import { installTriplet } from './triplet.js'
 import InsideLhcb from './InsideLhcb.vue'
+import LisFlag from './LisFlag.vue'
 // LHCb's own 2012 event, the shared collision's default: slide 8's detector (setup/detector.js)
 import EVENT_LB from '../components/lhc-opening/event.json'
 import Grains from './Grains.vue'
@@ -102,6 +103,7 @@ export default ({ app, router }) => {
   app.component('WebTakeover', WebTakeover)
   app.component('AfterFlight', AfterFlight)
   app.component('InsideLhcb', InsideLhcb)
+  app.component('LisFlag', LisFlag)
   app.component('ClickPose', ClickPose)
   app.component('Soundtrack', Soundtrack)
   app.component('DataSfx', DataSfx)   // the data slide's sound (24 Oct)

@@ -77,21 +77,30 @@ async function start() {
 
 const over = () => props.until > 0 && $clicks.value >= props.until
 function letGo() { run++; clear(); stopCollision(); setGrains(props.det, 0) }
-onSlideEnter(() => { if (live.value) (over() ? letGo() : start()) })
+// one start a visit: Slidev runs onSlideEnter again on a click within the slide (the owner, 25 Oct:
+// "slide 16 click 1 LHCb is redrawn again underground": the close's detector rebuilt under the map)
+let visiting = false
+onSlideEnter(() => {
+  if (!live.value || (visiting && nav.currentSlideNo?.value === page())) return
+  visiting = true
+  over() ? letGo() : start()
+})
+watch(() => nav.currentSlideNo?.value, (n) => { if (n !== page()) visiting = false })
 watch($clicks, (c, was) => {
   if (!live.value || nav.currentSlideNo?.value !== page() || !props.until) return
   if (c >= props.until && was < props.until) letGo()
   else if (c < props.until && was >= props.until) start()
 })
 onSlideLeave(() => {
-  if (!live.value) return
+  if (!live.value || nav.currentSlideNo?.value === page()) return
+  visiting = false
   run++; clear(); stopCollision(); setGrains(props.det, 0)
 })
 const onRebuilt = () => { if (live.value && nav.currentSlideNo?.value === page() && !over()) start() }
 onMounted(() => {
   window.addEventListener('slidev-stage:rebuilt', onRebuilt)
   // opened at this slide (a reload, or the deck started here): no slide-enter comes
-  if (live.value && nav.currentSlideNo?.value === page() && !over()) start()
+  if (live.value && nav.currentSlideNo?.value === page() && !over()) { visiting = true; start() }
 })
 onUnmounted(() => { window.removeEventListener('slidev-stage:rebuilt', onRebuilt); run++; clear() })
 </script>
