@@ -1466,11 +1466,17 @@
      "from": -90,
      "to": 110,
      "grains": 9000,
-     "speed": 9,
      "alpha": 1.0,
      "size": 1.6,
      "color": "#9cc4ff",
-     "color2": "#ffffff"
+     "color2": "#ffffff",
+     "pulse": "inside",
+     "flow": {
+      "after": 4,
+      "speed": 3,
+      "rate": 0.34,
+      "max": 45
+     }
     },
     {
      "type": "quintet",

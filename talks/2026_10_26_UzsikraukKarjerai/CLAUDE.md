@@ -107,6 +107,11 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-25 (evening, latest): **deployed 41dbe70** (the owner: "go ahead implement these suggestions and
+  deploy"; Pages run 40205027379, green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, nothing skipped but the pptx; plates three warnings:
+  the fingerprint, 16 capped at --max 120 and 55 MB, as the round before). The per-slide 1080p50 MP4s
+  recording after it (see the next entry).
 - 2026-10-25 (evening, latest): the owner's afternoon rounds (Decisions, 25 Oct afternoon and late afternoon:
   the flag into LHCb, the steady cloud, the click fix, the FCC whole in 3D, the travel map, floor, shaft,
   beams, slide 10's five quarks, the slide hooks) at e8550d5; plates (11) and stills retaken and published;

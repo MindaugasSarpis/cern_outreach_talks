@@ -5,6 +5,7 @@
 // talk's `floor` is OpenData's (setup/piles.js).
 import { BufferGeometry, BufferAttribute, Points, Group, Color } from 'three'
 import { PLACE, listen, state, material as materialOf } from './detector.js'
+import { bus } from '../components/lhc-opening/bus.js'
 
 // shown while any of its step names (`of`: a name or a list, default 'det') is on; it fades in
 // over 2 s and out over 1,2 s (until 25 Oct it went at once)
@@ -175,17 +176,19 @@ function buildShaft(o, ctx) {
 // beam axis (the station's x) and grains flowing along it, one beam each way, fading toward its ends; on
 // the map that follows, the same two beams go round the LHC ring.
 //   { type: beamline, name, of?: 'det', pos, from?: -90, to?: 110 (units along x), grains?: 9000,
-//     speed?: 9 (units a second), color?: '#9cc4ff', color2?: '#ffffff', alpha?: 0.7, size?: 1.4 }
+//     pulse?: (a collision's name: the bunches wait for it), flow?: { after: 4, speed: 3, rate: 0.34, max: 45 },
+//     color?: '#9cc4ff', color2?: '#ffffff', alpha?: 0.7, size?: 1.4 }
 const BEAM_VERT = PLACE + /* glsl */ `
 attribute float aSeed, aFall, aDir, aU;
-uniform float uShowT, uHideT, uAlpha, uSize, uFrom, uLen, uSpeed;
+uniform float uShowT, uHideT, uAlpha, uSize, uFrom, uLen, uPhase, uFlow;
 uniform vec3 uColor, uColor2;
 void main() {
   if (uShowT > 1e8) { hide(); return; }
-  float u = aDir == 0.0 ? aU : fract(aU + aDir * uSpeed * uTime / uLen);   // 0: the line itself, ±1: a beam
+  float u = aDir == 0.0 ? aU : fract(aU + aDir * uPhase / uLen);   // 0: the line itself, ±1: a beam (uPhase: how far the bunches have run)
   vec3 p = vec3(uFrom + u * uLen, position.y, position.z);
   float ends = smoothstep(0.0, 0.25, u) * smoothstep(1.0, 0.75, u);   // into the dark of the tunnel both ways
   float a = uAlpha * smoothstep(0.0, 2.0, uTime - uShowT) * aFall * ends * (0.6 + 0.4 * hash(aSeed * 7.0));
+  if (aDir != 0.0) a *= uFlow;   // the bunches only once they run
   if (uHideT < 1e8) a *= 1.0 - smoothstep(0.0, 1.2, uTime - uHideT);
   place(p, uSize, a, aDir > 0.0 ? uColor2 : uColor, aSeed);
 }`
@@ -210,18 +213,32 @@ function buildBeamline(o, ctx) {
   for (const [k, v] of [['aSeed', seed], ['aFall', fall], ['aDir', dir], ['aU', uu]]) geo.setAttribute(k, new BufferAttribute(v, 1))
   const mat = materialOf(BEAM_VERT, {
     uShowT: { value: 1e9 }, uHideT: { value: 1e9 }, uAlpha: { value: o.alpha ?? 0.7 }, uSize: { value: o.size ?? 1.4 },
-    uFrom: { value: from }, uLen: { value: len }, uSpeed: { value: o.speed ?? 9 },
+    uFrom: { value: from }, uLen: { value: len }, uPhase: { value: 0 }, uFlow: { value: o.pulse ? 0 : 1 },
     uColor: { value: new Color(o.color || '#9cc4ff') }, uColor2: { value: new Color(o.color2 || '#ffffff') },
   })
   const pts = new Points(geo, mat); pts.frustumCulled = false; g.add(pts)
   const u = mat.uniforms
-  let now = 0
+  let now = 0, last = 0, flowT = o.pulse ? 1e9 : -1e9
   const sh = shown(o, u, () => now)
+  // with `pulse`, the bunches wait for that collision: they start to run `flow.after` s after its crossing (as the
+  // detector's cascade does) and speed up with the crossings, v·e^(rate·t), to `flow.max` (the owner, 25 Oct: "It was a
+  // bit more dramatic when one collision happened in lhcb for the finale, and then the speeding up ones after that")
+  const F = { after: 4, speed: 3, rate: 0.34, max: 45, ...(o.flow || {}) }
+  const offs = o.pulse ? [
+    bus.on('start', (e) => { if (e.name === o.pulse) flowT = e.cross + F.after }),
+    bus.on('stop', (e) => { if (e.name === o.pulse) { flowT = 1e9; u.uPhase.value = 0 } }),
+  ] : []
   return {
     group: g, labels: [], frameScale: u.uPixelRatio,
     api: { busy: () => u.uShowT.value < 1e8 && now - u.uShowT.value < 2.2 },
-    update(t) { now = t; u.uTime.value = t; sh.update(t); g.visible = u.uShowT.value < 1e8 },
-    dispose: sh.off,
+    update(t) {
+      const dt = Math.min(0.1, Math.max(0, t - last)); last = t; now = t; u.uTime.value = t; sh.update(t)
+      const tau = t - flowT
+      if (tau > 0) u.uPhase.value += Math.min(F.max, F.speed * Math.exp(F.rate * tau)) * dt
+      u.uFlow.value = tau > 0 ? Math.min(1, tau / 1.5) : 0
+      g.visible = u.uShowT.value < 1e8
+    },
+    dispose() { sh.off(); offs.forEach((f) => f()) },
   }
 }
 
