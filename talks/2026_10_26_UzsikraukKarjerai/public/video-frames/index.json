@@ -92,14 +92,14 @@
         320,
         180
       ],
-      "cols": 7,
-      "count": 7,
+      "cols": 8,
+      "count": 13,
       "interval": 4.0,
       "size": [
         1920,
         1080
       ],
-      "duration": 25.002,
+      "duration": 49.002,
       "poster": "vilnius_zoom.mp4.poster.jpg",
       "lit": 0.0
     }
