@@ -107,6 +107,12 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-25 (evening, latest): the owner's afternoon rounds (Decisions, 25 Oct afternoon and late afternoon:
+  the flag into LHCb, the steady cloud, the click fix, the FCC whole in 3D, the travel map, floor, shaft,
+  beams, slide 10's five quarks, the slide hooks) at e8550d5; plates (11) and stills retaken and published;
+  the venue zip rebuilt from 2fb4fc5 on the release (275,8 MB); venue.json. Deploy on the owner's
+  "implement these suggestions and deploy" (the next entry names the run once made). The per-slide 1080p50
+  MP4s (the Brief's last copy) were never recorded before: recorded after the deploy.
 - 2026-10-25 (latest): the close's second round and slide 6 muted / the zoom's hum lower (Decisions), plates
   (11) and stills retaken and published, the venue zip rebuilt from f2373f6 on the release; venue.json;
   deployed by the owner's "Implement and deploy" (the entry below names the run once made).
