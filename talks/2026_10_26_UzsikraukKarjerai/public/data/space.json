@@ -1479,28 +1479,6 @@
      }
     },
     {
-     "type": "quintet",
-     "name": "pq10",
-     "pos": [
-      54,
-      0.3,
-      5
-     ],
-     "radius": 2.4,
-     "size": 1.5,
-     "alpha": 0.6,
-     "steps": [
-      {
-       "hold": 0,
-       "light": -0.3
-      },
-      {
-       "hold": 1,
-       "light": 0.7
-      }
-     ]
-    },
-    {
      "type": "cavern-floor",
      "name": "roof",
      "of": "cavp",
