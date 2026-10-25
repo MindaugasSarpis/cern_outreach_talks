@@ -76,9 +76,12 @@ GRID = 1 / 250
 # sets the speed. Saulėtekis read; Vilnius; the clouds and their roll; the Earth from space;
 # warp past the Sun and through our galaxy; out of warp for the galaxy whole; warp through the
 # dark between the galaxies; braking onto the web
-MAP = [(0.0, 0.0), (1.5, 2.5), (4.2, 22.0), (5.4, 30.0), (6.4, 40.0), (7.6, 52.0), (8.3, 62.0),
-       (8.7, 80.0), (9.0, 118.0), (9.8, 155.0), (10.4, 177.0), (11.0, 185.0), (12.4, 192.5),
-       (12.9, 199.0), (13.25, 214.0), (13.6, 226.0), (14.5, 234.0), (16.5, 248.0), (19.0, END_SRC)]
+# 25 Oct (the owner: "there is really nice part where we zoom past stars of the galaxy"): the flight past
+# the galaxy's stars (source 128-158 s, the star streaks) given 2,6 units (6,6 s at 48 s of run, about 4,5x,
+# under the warp), not 0,8 under the warp; the Earth's part and the end a little quicker to make room
+MAP = [(0.0, 0.0), (1.4, 2.5), (3.8, 22.0), (4.9, 30.0), (5.8, 40.0), (6.8, 52.0), (7.4, 62.0),
+       (7.7, 80.0), (8.0, 118.0), (8.4, 128.0), (11.0, 158.0), (11.6, 177.0), (12.1, 185.0), (13.3, 192.5),
+       (13.75, 199.0), (14.05, 214.0), (14.35, 226.0), (15.1, 234.0), (16.9, 248.0), (19.0, END_SRC)]
 MAP = [(t * SLOW, x) for t, x in MAP]
 STRETCHES = [(0.0, END_SRC, 19.0 * SLOW, 'map')]
 
