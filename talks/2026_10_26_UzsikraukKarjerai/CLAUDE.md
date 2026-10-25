@@ -107,6 +107,13 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-25 (night, latest): **deployed 9882d6f** (Pages run 40226043005, green; the URL 200, the live walk
+  passed; `talk ready` passed, nothing skipped but the pptx): the cover and slide 10's one press. Then the zoom
+  (slide 2) 49 s (the owner: "can be a bit slower (even twice as long)", "there is really nice part where we
+  zoom past stars of the galaxy"): remap_zoom.py TOTAL 49, the star flight (source 128–158 s) held 6,6 s under
+  the warp; the hum remade to it; encoded, its strip and poster, on the release; the venue zip rebuilt from
+  fbe9feb (315.2 MB); venue.json. Deployed with it (the next entry names the run).
+  The notes' cue times on 2 are the 25 s clip's (Žemė ~6 s → ~14 s; galaktika ~10,5 s → ~30 s).
 - 2026-10-25 (night, latest): slide 10 back to one press (02d7433; the owner: "They are not quarks.. a bit
   confusing", "Remove the 2nd click") and the new cover (7f0adfd: the pentaquark in colour charge out of
   Innoday's CMS collision; Decisions); plates (11) and stills retaken and published; the venue zip rebuilt
