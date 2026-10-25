@@ -107,6 +107,10 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Status
 
+- 2026-10-25 (evening, latest): the beams wait for the close's one collision (352b409; the owner: "It was a bit
+  more dramatic when one collision happened … and them the speeding up ones after that"): plates (11) and
+  stills retaken and published, the venue zip rebuilt from b552f79 on the release (289.2 MB);
+  venue.json. Redeployed under the same "implement … and deploy" (the next entry names the run once made).
 - 2026-10-25 (evening, latest): **deployed 41dbe70** (the owner: "go ahead implement these suggestions and
   deploy"; Pages run 40205027379, green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
   200, the live walk passed; `talk ready` passed on it, nothing skipped but the pptx; plates three warnings:
