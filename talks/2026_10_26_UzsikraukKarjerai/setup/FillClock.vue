@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onUnmounted, watch } from 'vue'
-import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
+import { onSlideLeave, useSlideContext, useNav } from '@slidev/client'
+import { onSlideEnter } from './slideHooks.js'
 import { fillShare } from './grains.js'
 
 // <FillClock name="th1" :to="4" unit="diena,dienos,dienų" />: how long the data

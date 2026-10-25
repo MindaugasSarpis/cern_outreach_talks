@@ -29,7 +29,8 @@ function shown(o, u, clock) {
 // `floor`: the cavern's floor as a faint grid of grains, for the eye-level view's scale
 // (owner, 20 Oct: "first person view at eye level"); shown with the detector (its
 // step name, `of`: 'det').
-//   { type: floor, name, of?: 'det' (or a list), pos, area?: [32, 28], step?: 2, grains?: 18000, size?: 1.4, color?, alpha?: 0.9 }
+//   { type: floor, name, of?: 'det' (or a list), pos, area?: [32, 28], step?: 2, grains?: 18000, size?: 1.4, color?, alpha?: 0.9,
+//     hole?: (a radius round its middle left empty: the close's roof round the shaft) }
 const FLOOR_VERT = PLACE + /* glsl */ `
 attribute float aSeed, aFall;
 uniform float uShowT, uHideT, uAlpha, uSize;
@@ -56,6 +57,8 @@ function buildFloor(o, ctx) {
       else { z = -sz / 2 + (l - nx) * step; x = (Math.random() - 0.5) * sx }
       x += (Math.random() - 0.5) * 0.04; z += (Math.random() - 0.5) * 0.04
     }
+    // `hole`: none inside this radius round its middle (the roof round the shaft's foot)
+    if (o.hole && Math.hypot(x, z) < o.hole) { i--; continue }
     pos.set([x, 0, z], i * 3)
     seed[i] = Math.random()
     // the floor fades out toward its edges: no border shows

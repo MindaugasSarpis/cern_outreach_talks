@@ -1,6 +1,7 @@
 <script setup>
 import { watch, onMounted, onUnmounted } from 'vue'
-import { onSlideEnter, useIsSlideActive, useSlideContext, useNav } from '@slidev/client'
+import { useIsSlideActive, useSlideContext, useNav } from '@slidev/client'
+import { onSlideEnter } from './slideHooks.js'
 
 // <ClickPose :poses="{ 1: { at: 'thesis', flight: 2.5 } }" />: from that click on, the
 // camera takes this pose instead of the slide's own `space` (the stage's `stops` take

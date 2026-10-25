@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onUnmounted } from 'vue'
-import { onSlideEnter, useSlideContext, useNav } from '@slidev/client'
+import { useSlideContext, useNav } from '@slidev/client'
+import { onSlideEnter } from './slideHooks.js'
 
 // <Count name="open" :from="800" :to="55000" />: the number counts up (or
 // down) when its slide becomes the current one, at the pace the grains of

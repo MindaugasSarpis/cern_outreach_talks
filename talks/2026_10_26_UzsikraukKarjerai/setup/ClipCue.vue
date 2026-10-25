@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { onSlideEnter, onSlideLeave, useNav, useSlideContext } from '@slidev/client'
+import { onSlideLeave, useNav, useSlideContext } from '@slidev/client'
+import { onSlideEnter } from './slideHooks.js'
 
 // <ClipCue :from="40" :path="[[40, 620, 120], [46, 640, 110]]">mano greitintuvas</ClipCue>,
 // beside a slide's <VideoPlayer>: what it wraps fades in at `from` s of the clip's own clock

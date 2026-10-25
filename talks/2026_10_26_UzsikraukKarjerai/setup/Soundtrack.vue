@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue'
-import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
+import { onSlideLeave, useSlideContext, useNav } from '@slidev/client'
+import { onSlideEnter } from './slideHooks.js'
 import { soundLevel, onSoundLevel, musicKeys } from './soundLevel.js'
 
 // Innoday's component (23-24 Oct). Here since 24 Oct (the owner: "Can we use Scott Buckley starfire for the entire

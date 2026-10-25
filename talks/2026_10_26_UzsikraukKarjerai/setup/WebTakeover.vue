@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
+import { onSlideLeave, useSlideContext, useNav } from '@slidev/client'
+import { onSlideEnter } from './slideHooks.js'
 import { Vector3 } from 'three'
 import { sampleFrame, placeWeb, buildCosmos, makeGrains, makeCosmos, setPositions, setTargets, diskCheck } from './takeover.js'
 import { funnelSeq } from './funnel.js'

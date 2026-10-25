@@ -1,10 +1,12 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
-import { Vector3 } from 'three'
+import { onSlideLeave, useSlideContext, useNav } from '@slidev/client'
+import { onSlideEnter } from './slideHooks.js'
+import { Vector3, Matrix4, Quaternion } from 'three'
 import { sampleFrame } from './takeover.js'
 import { placeInDepth, loadDepth, makeLisGrains, scaleLaw } from './lisGrains.js'
 import { disk as places } from './afterCover.js'
+import { setGrains } from './grains.js'
 import META from './data/lis.json'
 
 // <LisFlag />, the close (slide 16), after the light injection clip (the owner, 25 Oct: "the detector
@@ -27,6 +29,9 @@ const props = defineProps({
   d0: { type: Number, default: 2.4 },      // the camera's start distance from the flag (path[0])
   sEnd: { type: Number, default: 1.2 },    // stage units a metre at the end: the detector's own
   dEnd: { type: Number, default: 16 },     // the camera's distance from the flag where the picture reaches true scale
+  flagMark: { type: Number, default: 16 }, // the flag's own grains keep this many times true scale (about the clip's own: the engraving is ~5 cm wide, so at true scale it is a few pixels), a mark of about a metre on its module; the rest of the picture shrinks and fades
+  room: { type: String, default: 'cavp' },   // the step that brings the close's floor, roof, shaft and beams, once the camera is out of the module
+  roomAt: { type: Number, default: 6 },      // … this far from the flag (units)
   grains: { type: Number, default: 320000 },
   gain: { type: Number, default: 0.92 },
   hold: { type: Number, default: 400 },    // ms of still before the fade
@@ -102,6 +107,16 @@ function untilPlate(id) {
 const A = new Vector3(...props.anchor)
 const s0 = props.d0 / META.flagDist
 const law = scaleLaw({ s0, d0: props.d0, sEnd: props.sEnd, dEnd: props.dEnd })
+// the turn that shows the picture to a camera on the cavern's +z side as the clip's camera saw it
+// (right → x, up → y, forward → −z): seen from the eye-level poses the flag's face lay edge-on, a line.
+// It turns as the picture shrinks to its mark, so at the start nothing moves
+const FACE = (() => {
+  const V = (a) => new Vector3(...a)
+  const src = new Matrix4().makeBasis(V(META.right), V(META.up), V(META.forward))
+  const dst = new Matrix4().makeBasis(new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, 0, -1))
+  return new Quaternion().setFromRotationMatrix(dst.multiply(src.transpose()))
+})()
+const ID = new Quaternion(), q = new Quaternion(), m4 = new Matrix4()
 // the detector's clearing round the mark: its station's grains, added on, washed the flag's colours out
 const HOLE = 0.1
 const holeOf = (scene) => scene?.getObjectByName('detector:' + props.det)?.children.find((c) => c.material?.uniforms?.uHole)?.material.uniforms.uHole
@@ -128,10 +143,16 @@ function grains(s, got) {
   // the scale from the camera's distance, every frame: flag and mat alike shrink to the detector's scale
   pts.userData.scale = (cam, un) => {
     const s1 = law(cam.position.distanceTo(A))
-    if (hu) hu.value.set(A.x - 1000, A.y + 480, A.z, HOLE * Math.min(1, Math.max(0, (s1 - props.sEnd) / (s0 - props.sEnd))))
+    const mark = props.sEnd * props.flagMark, k = Math.min(1, Math.max(0, (s1 - props.sEnd) / (s0 - props.sEnd)))
+    const d = cam.position.distanceTo(A)
+    if (hu) hu.value.set(A.x - 1000, A.y + 480, A.z, Math.max(0.035, HOLE * Math.min(1, Math.max(0, (s1 - props.sEnd) / (s0 - props.sEnd)))))
     un.uScale.value = s1
-    un.uScaleFlag.value = s1
-    un.uRest.value = 1
+    un.uScaleFlag.value = Math.min(s0, Math.max(s1, mark))
+    un.uRest.value = 0.2 + 0.8 * k
+    // the turn eases in as the camera pulls out of the module (3 to 12 units from the flag)
+    const turn = Math.min(1, Math.max(0, (d - 3) / 9))
+    q.slerpQuaternions(ID, FACE, turn * turn * (3 - 2 * turn))
+    un.uRot.value.setFromMatrix4(m4.makeRotationFromQuaternion(q))
     un.uAnchor.value.copy(A)
   }
   pts.material.uniforms.uAnchor.value.copy(A)
@@ -147,6 +168,7 @@ const hide = () => {
 async function takeOver() {
   const id = ++run
   clear()
+  setGrains(props.room, 0)
   fading.value = false
   still.value = true
   if (plated()) {
@@ -181,11 +203,12 @@ async function takeOver() {
   })
   // the mark goes with the detector, on the world's clock (the camera's path runs on it)
   const e0 = elapsed()
-  let gone = -1
+  let gone = -1, room = false
   watcher = setInterval(() => {
     if (id !== run) return
     const e = e0 != null ? (elapsed() ?? e0) - e0 : 0
-    if (gone < 0 && e >= props.fadeAt) gone = e
+    if (!room && gone < 0 && s.camera.position.distanceTo(A) > props.roomAt) { room = true; setGrains(props.room, 1) }
+    if (gone < 0 && e >= props.fadeAt) { gone = e; setGrains(props.room, 0) }
     if (gone >= 0) {
       const k = Math.max(0, 1 - (e - gone) / 1.2)
       u.uFade.value = k
@@ -216,7 +239,7 @@ onSlideEnter(() => {
 onSlideLeave(() => {
   if (!live.value || nav.currentSlideNo?.value === page()) return
   visiting = false
-  run++; clear(); hide()
+  run++; clear(); hide(); setGrains(props.room, 0)
   still.value = false; fading.value = false
 })
 watch(() => nav.currentSlideNo?.value, (n) => {

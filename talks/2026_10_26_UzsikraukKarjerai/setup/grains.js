@@ -749,6 +749,7 @@ function buildMap(o, ctx) {
 // claimed find (half-held, dim), a retraction (scattered again, fading), the
 // discovery (held, bright). Default steps:
 //   0 scattered and faint · 1 half-held, dim · 2 scattered, fading · 3 held, bright
+// A step's light below about -0.28 hides it (slide 10's form: [{ hold: 0, light: -0.3 }, { hold: 1, light: 0.7 }]).
 // Each change eases over 2.4 s. Born scattered; on arrival it plays from
 // scattered to the current step.
 const QUINTET_VERT = /* glsl */ `
@@ -831,7 +832,10 @@ function buildQuintet(o, ctx) {
     arm() {},
     assemble(t, onDone) {
       now = t
-      if (now - played > 5) { played = now; goTo(steps[Math.max(0, Math.min(steps.length - 1, step))], { from: { hold: 0, light: 0.1 } }) }
+      const target = steps[Math.max(0, Math.min(steps.length - 1, step))]
+      // a step with negative light is hidden: it stays so (slide 10's `pq10` until its click), not a faint flash on arrival
+      if (target.light < 0) goTo(target, { instant: true })
+      else if (now - played > 5) { played = now; goTo(target, { from: { hold: 0, light: 0.1 } }) }
       onDone?.()
     },
     // still gathering (the headless tools' settle and the cover title wait for it)

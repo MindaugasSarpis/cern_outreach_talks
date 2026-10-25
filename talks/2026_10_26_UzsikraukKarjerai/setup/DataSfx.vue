@@ -1,5 +1,6 @@
 <script setup>
-import { onSlideEnter, onSlideLeave, useSlideContext, useNav } from '@slidev/client'
+import { onSlideLeave, useSlideContext, useNav } from '@slidev/client'
+import { onSlideEnter } from './slideHooks.js'
 import { onUnmounted, watch } from 'vue'
 import { bus } from '../components/lhc-opening/bus.js'
 import { fillShare } from './grains.js'

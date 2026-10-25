@@ -1,4 +1,4 @@
-import { Points, BufferGeometry, BufferAttribute, ShaderMaterial, AdditiveBlending, Vector3 } from 'three'
+import { Points, BufferGeometry, BufferAttribute, ShaderMaterial, AdditiveBlending, Vector3, Matrix3 } from 'three'
 import { POINT_GLSL, viewScale } from './view.js'
 
 // The close (owner, 19 Oct: "photorealistic 3D rendering of SciFi light injection
@@ -70,13 +70,14 @@ attribute vec3 aColor;
 attribute float aSize, aSeed, aKeep, aFlag, aEdge;
 uniform float uTime, uReveal, uGain, uScale, uScaleFlag, uS0, uFade, uRest;
 uniform vec3 uAnchor;
+uniform mat3 uRot;   // the picture turned about its anchor (this talk: toward the viewer as it settles into a mark)
 varying vec3 vColor; varying float vAlpha;
 ${POINT_GLSL}
 void main() {
   // the flag's grains keep a larger scale at the end, so the flag stays a mark the room can
   // see where the module stands; the rest of the module's picture fades as it shrinks
   float sc = aFlag > 0.5 ? uScaleFlag : uScale;
-  vec3 p = uAnchor + position * sc;
+  vec3 p = uAnchor + uRot * (position * sc);
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = projectionMatrix * mv;
   float tw = 0.85 + 0.15 * sin(uTime * (0.8 + aSeed * 1.9) + aSeed * 40.0);
@@ -121,7 +122,7 @@ export function makeLisGrains(s, placed, { size = 0.07, gain = 1.25, s0 = 18 } =
     uniforms: {
       uTime: { value: 0 }, uReveal: { value: 0 }, uView: { value: 1 }, uGain: { value: gain },
       uScale: { value: s0 }, uScaleFlag: { value: s0 }, uS0: { value: s0 }, uFade: { value: 1 }, uRest: { value: 1 },
-      uAnchor: { value: new Vector3() },
+      uAnchor: { value: new Vector3() }, uRot: { value: new Matrix3() },
     },
     transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
   })

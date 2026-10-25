@@ -302,13 +302,14 @@ The line is said over the clip. The lint counts the clip's whole 39 s from the m
 
 ---
 space: { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4, sway: 0.3, dim: 0, ambient: 0, hum: false }   # 24 Oct: the cavern side on, LHCb (x 0–24 of the `cavern` station) left and the Ωc⁰ plot (`oc`, x 28–47, 5 nearer) right, both in frame; the labels are projected from this pose (sway 0.3)
-clicks: 1
+clicks: 2   # 25 Oct: the second press brings the cover's five quarks for the 2015 line (the owner: "go ahead implement these suggestions")
 ---
 
 <InsideLhcb :land-y="-470" :until="1" />
 <DataSfx />
 <ClickPose :poses="{ 1: { at: [1042.3, -481.9, 5], dist: 27, yaw: 0, pitch: 3, sway: 0.3, dim: 0, ambient: 0, hum: false, flight: 2.2 } }" />
-<Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 1, omega: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { oc: 2, omega: 1 } }" />
+<!-- 25 Oct: on the second press the Ωc⁰'s three quarks go and a five-quark form like the cover's gathers in their place (`pq10`), for „O 2015 metais … dalelę iš penkių kvarkų“; „5 naujos dalelės“ and c, s, s go with the three, so no „5“ stands beside the wrong picture -->
+<Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 1, omega: 0, pq10: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { oc: 2, omega: 1 }, 2: { oc: 2, omega: 0, pq10: 1 } }" />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <AfterFlight :delay="2.5"><div v-click.hide="1" class="heap r late" style="left: 880px; top: 56px"><span class="n">LHCb duomenys</span></div><div v-click.hide="1" class="heap r axis late" style="left: 880px; top: 308px"><span class="n">masė&nbsp;→</span></div></AfterFlight>
@@ -318,8 +319,8 @@ clicks: 1
 <div v-click="1" class="heap l step" style="left: 390px; top: 66px; --step-delay: 2.2s"><span class="n">LHCb duomenys</span></div>
 <div v-click="1" class="heap l step" style="left: 154px; top: 340px; --step-delay: 2.2s"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015], [1, '2011–2015']]" :delay="5" :fill="9" /></span></div>
 <div v-click="1" class="heap r axis step" style="left: 600px; top: 340px; --step-delay: 2.2s"><span class="n">masė&nbsp;→</span></div>
-<div v-click="1" class="heap l step" style="left: 390px; top: 124px; --step-delay: 2.8s"><span class="n">5&nbsp;naujos dalelės</span></div>
-<div v-click="1" class="heap step" style="left: 769px; top: 144px; --step-delay: 3.2s"><span class="n">c</span></div><div v-click="1" class="heap step" style="left: 718px; top: 230px; --step-delay: 3.2s"><span class="n">s</span></div><div v-click="1" class="heap step" style="left: 816px; top: 230px; --step-delay: 3.2s"><span class="n">s</span></div>
+<div v-click="[1, 2]" class="heap l step" style="left: 390px; top: 124px; --step-delay: 2.8s"><span class="n">5&nbsp;naujos dalelės</span></div>
+<div v-click="[1, 2]" class="heap step" style="left: 769px; top: 144px; --step-delay: 3.2s"><span class="n">c</span></div><div v-click="[1, 2]" class="heap step" style="left: 718px; top: 230px; --step-delay: 3.2s"><span class="n">s</span></div><div v-click="[1, 2]" class="heap step" style="left: 816px; top: 230px; --step-delay: 3.2s"><span class="n">s</span></div>
 
 <!-- facts: lhcb-run3-readout-4tbs, lhcb-100m-below-ground, particles-decay-detector-sees-products, particle-decay-reconstructed-mass, lhcb-omegac-2017-fig2-candidates, lhcb-omegac-2017-sample, lhcb-omegac-2017-years, lhcb-omegac-five-2017, lhcb-omegac-2017-masses, omegac-quark-content, proton-neutron-three-quarks, chance-bumps-shrink-with-data, particle-physics-5-sigma-discovery, lhcb-pentaquark-2015, lhcb-pentaquark-2015-cross-checks, pentaquark-idea-to-discovery-51-years -->
 
@@ -328,7 +329,9 @@ Picture (24 Oct, the owner: "slide 11-12 a bit anticlimactic need maybe the dete
 
 Detektorius renka duomenis. Iš skeveldrų apskaičiuojame suskilusios dalelės masę – vienas taškas grafike. Tai tikri LHCb duomenys, surinkti per penkerius metus.
 → spausk
-Čia penkios smailės – penkios naujos dalelės, kiekviena iš trijų kvarkų. Atradimu fizikai vadina tik tokią smailę, kurios atsitiktinumas beveik niekada nesukurtų. O 2015 metais lygiai taip pat LHCb rado dalelę iš penkių kvarkų, kurią matei pradžioje. Pentakvarkų ieškojau ir aš.
+Čia penkios smailės – penkios naujos dalelės, kiekviena iš trijų kvarkų. Atradimu fizikai vadina tik tokią smailę, kurios atsitiktinumas beveik niekada nesukurtų.
+→ spausk
+O 2015 metais lygiai taip pat LHCb rado dalelę iš penkių kvarkų, kurią matei pradžioje. Pentakvarkų ieškojau ir aš.
 
 Data: LHCb, Phys. Rev. Lett. 118, 182001 (2017), Fig. 2, 2 960–3 300 MeV, 59 453 candidates (public/data/omegac.json), one grain per three candidates (`unit: 3`). The collision: CERN Open Data, LHCb 2012. The 40 MHz and the 2011–2015 years are not said together: the collision is Run 1's. If asked: the bar is 5σ, about 1 in 3,5 million; the five are at 10σ to 24σ.
 
@@ -342,6 +345,7 @@ space: { at: stumpe, flight: 1.6, dim: 0, hum: false }   # 24 Oct: the photo as 
 places: { inventions: true }   # the two invention photos stand in the world from here (hidden before)
 ---
 
+<Grains :set="{ pq10: 0 }" />
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[1023.7, -482.5, 22]" :size="3" :yaw="0" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="kk-dim">
 <p class="kk-invention bl">Jutiklinis ekranas<br>1972</p>
 </StagePhoto>
@@ -395,7 +399,7 @@ Vaizdas: info.cern.ch/hypertext/WWW/TheProject.html (CERN), ekrano kopija.
 -->
 
 ---
-space: { at: [1199.83, 0, 1.06], dist: 29.07, yaw: 0, pitch: 60, sway: 0, dim: 0.05, flight: 2 }   # 24 Oct review: `flight: 2` (the default flight up from the inventions took ~5,5 s of empty blue, and the map waited for it); 23 Oct (the criss-cross): closer than the `whole` pose's [1201, 0, 2.5] at dist 36, so the seven stops spread out and every name fits inside the broadcast safe box off the trail; the seven names are projected from this pose
+space: { at: [1199.83, 0, 1.06], dist: 29.07, yaw: 0, pitch: 60, sway: 0, dim: 0.05, flight: 1.3 }   # 25 Oct: `flight: 1.3` (2 until now: about 2 s of empty blue on the way up from the cavern); 24 Oct review: `flight: 2` (the default flight up from the inventions took ~5,5 s of empty blue, and the map waited for it); 23 Oct (the criss-cross): closer than the `whole` pose's [1201, 0, 2.5] at dist 36, so the seven stops spread out and every name fits inside the broadcast safe box off the trail; the seven names are projected from this pose
 clicks: 5
 places: { inventions: false }   # the invention photos are gone from here on
 ---
@@ -404,8 +408,8 @@ places: { inventions: false }   # the invention photos are gone from here on
 <Grains :set="{ pq: 3, route: 1, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 5 }, 3: { route: 7 }, 4: { route: 9 }, 5: { route: 10 } }" />
 
 <!-- 25 Oct (the owner: "the map with my travels is not very smooth, the path appears first only then the text, quite a slow animation"): each name comes up with its trail, not after it (the arrival's at 8,5 s until now, the clicks' 1,2 s after the press); the legs drawn quicker (`draw` 0,9 s a leg, was 1,5) and started sooner (space.json) -->
-<div class="city late caption" style="left: 742px; top: 153px; animation-delay: 2.8s">Vilnius</div>
-<div class="city late caption" style="left: 421px; top: 344px; animation-delay: 3.4s">CERN</div>
+<div class="city late caption" style="left: 742px; top: 153px; animation-delay: 1.9s">Vilnius</div>
+<div class="city late caption" style="left: 421px; top: 344px; animation-delay: 2.5s">CERN</div>
 <div v-click="1" class="city step caption" style="left: 138px; top: 56px; --step-delay: 0.15s">Glazgas</div>
 <div v-click="2" class="city step caption" style="left: 102px; top: 116px; --step-delay: 0.15s">Airija</div>
 <div v-click="3" class="city step caption" style="left: 500px; top: 285px; --step-delay: 0.15s">Heidelbergas</div>
@@ -491,7 +495,7 @@ space: { path: [[0, { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62 }]],
 <!-- The owner, 23 Oct: "Don't need second to last slide, better take 2 last slides from innoday just zoom out to lhc / fcc, not the globe". Innoday's lis_flag.mp4, here from its 3,5 s, 16,5 s (a Blender render of a whole SciFi module, then its light injection cold box and the Lithuanian flag lasered on it); its last frame is the first of the close. -->
 <VideoPlayer src="lis_flag_50.mp4" muted :controls="false" transition="fade" />
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
-<Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 0 }" />
+<Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 0, cavp: 0 }" />
 
 <!-- facts: lhcb-scifi, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
 
@@ -551,7 +555,7 @@ clicks: 1
 <!-- 25 Oct: the clip's last frame (the flag on the cold box) turns to grains in LHCb's SciFi and shrinks to the detector's scale as the camera pulls back; it goes with the detector at 38,5 s. The point cloud no longer twinkles before the collision (`detp` steady, space.json). -->
 <!-- 25 Oct (the owner: "Maybe for the finale give lhcb a floor and indicate the schaft"): the cavern's floor and cradles (slide 10's) now come with `detp` too, and the access shaft (`shaft`, space.json) rises from the cavern's roof to the surface at Point 8, beside which the camera climbs; the detector, floor and shaft let go together at 38,5 s (later, the detector showed through the map). And ("could also indicate that LHCb is connected to lhc somehow"): the LHC's two beams through the detector and out of the cavern both ways (`beams`), as on the map that follows -->
 <LisFlag :fade-at="38.5" />
-<Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 1 }" />
+<Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 1, pq10: 0 }" />
 <ClickBus name="bang" :click="1" />
 <!-- the click: the camera flies in to face the place over the FCC's middle where the collision crosses and the words gather -->
 <ClickPose :poses="{ 1: { at: [1027.99, -389.2, 30.56], dist: 22, yaw: 20, pitch: 5, flight: 2.2, ambient: 0 } }" />
@@ -590,7 +594,7 @@ The clip runs 54 s; the words run about 7 s past it, over the held map, and the 
 space: { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 0, dim: 0.7 }   # the credits page: the world dimmed far under the list
 ---
 
-<Grains :set="{ pq: 3, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 0 }" />
+<Grains :set="{ pq: 3, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 0, cavp: 0 }" />
 <Soundtrack src="audio/starfire_finale.m4a" tail="audio/starfire_finale.m4a" :level="0.33" keys />
 
 <div class="credits-page">
