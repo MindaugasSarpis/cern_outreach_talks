@@ -568,6 +568,53 @@ on the last slide (lint TEXT warnings, on purpose).
 
 ## Decisions
 
+- 2026-10-25 (late afternoon) — The owner: "go ahead implement these suggestions and deploy" (e8550d5), on
+  the list offered in this window:
+  - The flag on 16 keeps about the clip's own scale (the engraving is ~5 cm: at true scale, even at
+    4 times, it was a few pixels) and turns to face the viewer as the camera pulls out (it lay edge-on from
+    the eye-level poses), a small flag on its module through the collision; the rest of the picture
+    shrinks and fades. The floor, roof, shaft and beams come once the camera is 6 units out (`cavp`, set by
+    <LisFlag>): at once, they stood in front of the flag's frame.
+  - Slide 10, a second press: the Ωc⁰'s three quarks go and a five-quark form like the cover's
+    (`pq10`) gathers in their place for „O 2015 metais … dalelę iš penkių kvarkų“; „5 naujos dalelės“ and
+    c, s, s go with the three (story item C). The notes got one „→ spausk“ before that sentence, nothing else.
+  - Slide 13: the flight in 1,3 s (2): about 1 s of empty blue less; the names at 1,9 and 2,5 s.
+  - A faint roof round the shaft's foot (`roof`), so its ring reads as an opening.
+  - setup/slideHooks.js: Slidev's onSlideEnter is a watchEffect (slides.ts: `watchEffect(() =>
+    isActive.value && cb())`), so whatever its callback read (the slide's $clicks, a prop) ran it again on a
+    press: <InsideLhcb> (the redrawn LHCb), the music's arrival, the data sounds. All the talk's components
+    now use one that runs when the slide becomes the current one; likely also the owner's "something weird
+    with the last click" on 13 (the music's arrival ran on every press there).
+
+- 2026-10-25 (afternoon) — The owner's round in this window (f034fe2, ff5e276):
+  - "the detector in slide 15 should move into LHCb as in innoday, with lithuanian flag": <LisFlag>
+    (setup/LisFlag.vue; Innoday's LisTakeover at 22efcef cut to the hand-over, its lisGrains.js, lis.json,
+    lis_last.jpg and depth; the clip's last frame checked against lis_flag_50's, SSIM 0,986): 16 opens on
+    the flag on the cold box, which turns to grains at its place in LHCb's SciFi and shrinks to the
+    detector's scale as the camera pulls out (Innoday's first keys, x + 1000) to the 12 s eye-level pose;
+    from there the path and the music's sync are as before.
+  - "the lhcb should be pointcloud like now but not sparkling before the collision": `steady` on `detp`
+    (no twinkle until its collision crosses).
+  - "slide 16 click 1 LHCb is redrawn again underground": Slidev runs onSlideEnter again on a click, and
+    <InsideLhcb> restarted the detector under the map (seen in a probe: `detp` → 1 on the press). It starts
+    once a visit now; <LisFlag> the same.
+  - "The LHC FCC zoomout can be orbiting a bit quicker, zooming out so FCC is visible as a whole but 3D":
+    from 50 s both rings whole at about 30° (each key's look point and distance fitted so the rings fill
+    about 80 % of the frame at its angle), an orbit of 1,2° a second (0,5); the FCC label moved to the
+    ring's south-west side, inside the safe box all orbit.
+  - "the map with my travels is not very smooth, the path appears first only then the text, quite a slow
+    animation, something weird with the last click": names with their trail (Vilnius 2,8 s and CERN
+    3,4 s, not 8,5; a click's 0,15 s, not 1,2), legs 0,9 s (1,5), the arrival's draw 0,6 s after landing
+    (1,2; `arriveDelay`), 0,05 s after a press (0,3); the accelerator map only while `accel` is on (16):
+    the flight up from the inventions, which stand by the cavern, flashed it for half a second on 13.
+    "The last click" is not pinned down: in real time the five presses and the step to 14 draw as
+    written; asked.
+  - "Maybe for the finale give lhcb a floor and indicate the schaft"; "could also indicate that LHCb is
+    connected to lhc somehow": the close's own brighter floor (`floorp`), the cradles with `detp` too, the
+    access shaft at Point 8 (`shaft`, from the cavern's roof to the surface, where the camera climbs and
+    the map's own shaft is), the LHC's two beams through the detector and out both ways (`beamline`);
+    all fade with the detector at 38,5 s (let go at 41,2 s, LHCb showed through the map: tried, reverted).
+
 - 2026-10-25 — The close, second round (the owner: "The resolved LHCb mesh somehow has lesser effect than
   the pointcloud. Can we keep it pointcloud but resolve better", "spend a little bit more time (like before)
   at eye level … Maximize effect, keeping the soundtrack in mind", "the text was a bit jumping", "this blue

@@ -174,75 +174,75 @@ name      = "01-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 1"]
 generated = true
-notes     = "the world of slide 1 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 1 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "03-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 3"]
 generated = true
-notes     = "the world of slide 3 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 3 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "04-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 4"]
 generated = true
-notes     = "the world of slide 4 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 4 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "08-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 8"]
 generated = true
-notes     = "the world of slide 8 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 8 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "10-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 10"]
 generated = true
-notes     = "the world of slide 10 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 10 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "11-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 11"]
 generated = true
-notes     = "the world of slide 11 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 11 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "12-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 12"]
 generated = true
-notes     = "the world of slide 12 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 12 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "13-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 13"]
 generated = true
-notes     = "the world of slide 13 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 13 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "14-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 14"]
 generated = true
-notes     = "the world of slide 14 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 14 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "16-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 16"]
 generated = true
-notes     = "the world of slide 16 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 16 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "17-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 17"]
 generated = true
-notes     = "the world of slide 17 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 17 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 # <<< plates
