@@ -31,9 +31,10 @@ from scipy.ndimage import gaussian_filter1d, maximum_filter1d, minimum_filter1d
 SRC_FPS, OUT_FPS = 60, 50
 W, H = 1920, 1080
 END_SRC = 253.42
-TOTAL, HOLD = 25.0, 1.0
+TOTAL, HOLD = 49.0, 1.0
 # 24 Oct (the owner: "the zoomout could be a little bit slower as well"): the same flight, its
-# landmarks (MAP) and the warp's speeds stretched from 19 s of run to 24
+# landmarks (MAP) and the warp's speeds stretched from 19 s of run to 24; 25 Oct ("The first slide
+# (zoomout) can be a bit slower (even twice as long)"): to 48
 SLOW = (TOTAL - HOLD) / 19.0
 # the joins, seconds: two Earth views dissolve quickly; the jumps in scale (the Earth to the galaxy,
 # the galaxy to the web) are zoom-dissolves (owner, 23 Oct: "This immediate switch from galaxy to
