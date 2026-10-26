@@ -16,9 +16,11 @@ only decks and per-talk config.
 | 2026-07-18 | `talks/2026_07_18_Yaga/`               | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_07_18_Yaga/) |
 | 2026-09-10 | `talks/2026_09_10_WorldOfParticles/`   | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_09_10_WorldOfParticles/) |
 | 2026-09-15 | `talks/2026_09_15_Startertalk/`        | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_09_15_Startertalk/) |
-| 2026-10-23 | `talks/2026_10_23_Innoday/`            | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/) |
-| 2026-10-21 | `talks/2026_10_21_OpenData/`           | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_21_OpenData/) |
-| 2026-10-26 | `talks/2026_10_26_UzsikraukKarjerai/`  | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/) |
+| 2026-10-21 | `talks/2026_10_21_OpenData/`           | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_21_OpenData/) · given |
+| 2026-10-23 | `talks/2026_10_23_Innoday/`            | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/) · given |
+| 2026-10-26 | `talks/2026_10_26_UzsikraukKarjerai/`  | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/) · filmed |
+| 2026-11-18 | `talks/2026_11_18_Tokyo/`              | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/) |
+| (no date)  | `talks/2026_00_00_MasterTalk/`         | [link](https://mindaugassarpis.github.io/cern_outreach_talks/2026_00_00_MasterTalk/) |
 
 Index of all talks: https://mindaugassarpis.github.io/cern_outreach_talks/
 

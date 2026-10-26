@@ -51,9 +51,11 @@ library are the package **`slidev-videos`** (the checkout beside this one,
 | `2026_07_18_Yaga` | Yaga crash course (Lithuanian); 4K, 16:9 |
 | `2026_09_10_WorldOfParticles` | World of Particles opening lecture: ParticleHero and 32 clips |
 | `2026_09_15_Startertalk` | "Pentaquarks at LHCb", a 30-min seminar in the hadron space |
-| `2026_10_23_Innoday` | Innoday (Lithuanian), a business audience; the stage |
-| `2026_10_21_OpenData` | "Opening LHCb's data", a 6½-minute award talk; the stage |
-| `2026_10_26_UzsikraukKarjerai` | „Vadovėlio gale atsakymo nėra“, a Lithuanian TV talk; the stage |
+| `2026_10_21_OpenData` | "Opening LHCb's data", a 6½-min award talk; the stage; given |
+| `2026_10_23_Innoday` | Innoday (Lithuanian), a business audience; the stage; given |
+| `2026_10_26_UzsikraukKarjerai` | Užsikrauk karjerai, a Lithuanian TV talk; the stage; filmed |
+| `2026_11_18_Tokyo` | the Lithuania–Japan project, Embassy in Tokyo, 30 min; the stage |
+| `2026_00_00_MasterTalk` | placeholder keynote, "one collision, one shot"; the v0.9.0 pilot |
 
 A `00` day is a placeholder: once known, rename the dir, its `videos.toml`
 release_tag and the deck's `videos.release`.
@@ -85,8 +87,7 @@ capture goes through `pnpm talk render -- <command>`. `bootstrap.sh
 ├── components/               # shared Vue components (ParticleHero, …)
 │   ├── particle-hero/        # three.js scene behind ParticleHero
 │   └── hadron-space/         # Startertalk's world (its CLAUDE.md)
-├── scripts/                  # talk.py (`pnpm talk`), bootstrap.sh, new_talk.py, render_lib.py
-│                             # talk_lint.py, talk_map.py, facts.py, photo_fetch.py, talk_copy.py
+├── scripts/                  # talk.py (`pnpm talk`), bootstrap.sh and the helpers talk.py runs
 ├── research/facts.jsonl      # FACTS BANK: one checked claim per line (research/README.md)
 ├── assets/photos/photos.toml # photos with checked licence and credit
 ├── docs/authoring.md         # the long form of the sections below
@@ -104,9 +105,8 @@ capture goes through `pnpm talk render -- <command>`. `bootstrap.sh
     └── videos/manifest.toml  # talk-OWNED clips (library clips go by name)
 ```
 
-**Raw bank.** Originals live once per machine in `<repo>/videos/raw/`
-(each talk's `videos.toml` `raw_dir`); `videos:sync` fetches only the raws
-the talk's manifest names.
+**Raw bank.** Originals live once per machine in `videos/raw/`;
+`videos:sync` fetches only the raws the talk's manifest names.
 
 **Theme** is `theme: ../../theme` in each deck's frontmatter, never a
 symlink: Vite's glob scanner does not traverse one and silently drops
@@ -197,18 +197,13 @@ Talk-owned builders register from `setup/main.ts` (`registerBuilder`), and
 `.github/workflows/deploy.yml` builds every `talks/<name>/` with base
 `/<repo>/<name>/` onto GH Pages (Settings → Pages → Source: "GitHub
 Actions"); an index at the root links each talk. A deploy is `pnpm
-talk deploy NAME` from the talk's worktree (README's "Deploying").
-
-## Git remotes
-
-The GitHub remote is `origin` here, `github` in some clones: `git remote -v`.
+talk deploy NAME` from the talk's worktree (README's "Deploying"). The
+GitHub remote is `origin` here, `github` in some clones (`git remote -v`).
 
 ## Where notes live
 
-- `talks/<name>/CLAUDE.md`: a talk's Brief, Status, Decisions, Figures and
-  own code; a talk's notes go there, not here.
-- `components/hadron-space/CLAUDE.md`: Startertalk's world.
-- `docs/authoring.md`: videos, ParticleHero and QuizCard, the stage, aspect
-  ratio, embedded sites.
-- `docs/claude-md-split.md`: where the old root file's paragraphs went.
-- `$OUTREACH_STATE/status.md`: one line per session (`pnpm talk sessions`).
+A talk's Brief, Status, Decisions and own code: `talks/<name>/CLAUDE.md`
+(a delivered talk's full log: its `notes/history.md`). Startertalk's world:
+`components/hadron-space/CLAUDE.md`. The long form: `docs/authoring.md`;
+the old root file's paragraphs: `docs/claude-md-split.md`. One line per
+session: `$OUTREACH_STATE/status.md` (`pnpm talk sessions`).
