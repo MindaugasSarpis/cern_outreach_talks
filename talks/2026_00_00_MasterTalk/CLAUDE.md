@@ -116,6 +116,20 @@ storyboard).
   parts, the venue cuts) and the spine question (A, B or C), for the owner.
   Next: the owner's answers; then the strands, InsideLhcb, the data and the
   answer slides, and an English take of the close (master.md "Next").
+- 27 Oct night, iteration 2 (the Scheduler's provisional answers: spine A,
+  ~40 min): the crossing's slides set up their own run (`<Crossing :lead>`);
+  words past a unit cut; parts II–V begun from the newest copies: LHCb's
+  people (lhcb.mp4) after the detector; the open data's piles (OpenData's, as
+  Karjera last had them, bc19a39^); the road round Europe and the dive to
+  Vilnius (Karjera 13–14); Tokyo's two recipes and the 1964 papers; Karjera's
+  trial plots ("how you know", 8f8eef8^); the flag (Innoday's 20 s
+  lis_flag.mp4) and a credits page. Spine A's inventions are **prototyped on
+  two slides only** (Timepix out of the VELO, dense; the first website out of
+  CERN's store, sparse; `setup/offshoot.js`), held for the owner before the
+  others are built (talk-quality §4 rule 2). 31 slides, 36.1 min timed. The
+  close is planned, not recorded (v0.11's recorded mode). Clips on the release:
+  vilnius_zoom, the tunnel cut, the dipole cut, lhcb (Karjera's cut), lis_flag
+  (Innoday's 20 s).
 
 ## Arc
 
@@ -188,6 +202,20 @@ A piece a second talk needs moves to the shared kit instead of being copied.
   public/audio, `+`/`-`), `slideHooks.js` (an onSlideEnter that does not re-run on
   a click), `view.js`. public/figures: `opener_last.jpg`, the CMB pictures.
   public/video-frames: Karjera's strips for the four clips.
+- 27 Oct, more from Karjera on the kit's bus: `kgrains.js` is Karjera's
+  setup/grains.js with its bus mapped onto the kit's (`setGrains` = `setStep`,
+  `listen` = `onStep`, `tick` = `tickSteps`, …), so `<StageSteps>` drives every
+  copied form; its histogram registers as `khistogram` (this talk's `histogram`
+  keeps `focus`). From it: `path` and `map` (the Europe route, station
+  `europe`), `khistogram` (the trial, station `trial`). `piles.js` (`floor`,
+  `lineup`, station `store`, without Karjera's dataspace and sun), `Count.vue`,
+  `FillClock.vue` (English units: `unit="day,days"`). Tokyo's `families` and
+  `paper` stations are the kit's own builders, moved to y 300.
+- `setup/offshoot.js` (27 Oct): spine A's inventions, Innoday's `strands` cut to
+  one arc from a part to a product, named, step ≥ 1 shown; the picture is a
+  StagePhoto place (`group="inventions"`, `places:` in the frontmatter).
+- `setup/Crossing.vue` + `setup/slideNav.js` (27 Oct): `:lead` restarts the run
+  `lead` engine-s in unless the deck stepped forward from the slide before.
 - `styles/index.css`: `.nums` (numbers low left, white with light-blue
   words, staggered by `--d1…--d3`) and the clock.
 - `package.json`: both addons pinned v0.9.0; `stage:check --types
@@ -275,6 +303,15 @@ Kept current; each item is also under Decisions or in `notes/master.md`.
 4. The three cut phrases (slides 11, 12, 14): restore any he wants.
 5. The close: an English take of Karjera's live close, after v0.11.
 6. Faces at the pull-back to Vilnius: who, with whose consent (storyboard).
+7. **The inventions' prototype** (slides 12 and 18): a strand grows out of the
+   part that forced the invention to its picture standing in the world. Does
+   each element carry meaning on the dense slide (Timepix over the lit
+   detector)? A yes rolls it out to the rest (superconducting lines at the
+   dipole, White Rabbit at the crossing, PET at the calorimeters, the first
+   server beside the web; the touchscreen and hadron therapy as one press).
+8. Licences carried over: Tokyo's Gell-Mann and Zweig portraits and passage
+   scans (open in Tokyo); the funnel's CMB colours and the flag clip's warm
+   copper are not white or light blue (inherited as they were).
 
 ## Verify
 

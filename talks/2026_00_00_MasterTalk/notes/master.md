@@ -117,6 +117,15 @@ The order is cover → prologue → dive → way in → beam pipe, so the dive a
 the cover and the way in answers the dive ("where did this point come
 from?").
 
+## What iteration 2 built (27 Oct night, spine A provisional)
+
+Slides 12 (people), 18–19 (the piles, three slides), the route and the dive
+(two), Tokyo's two recipes and the 1964 papers, the trial, the flag and a
+credits page; the two invention prototypes (Timepix out of the VELO, the
+first website out of CERN's store). Not yet: InsideLhcb's person and cavern,
+the Ωc⁰ peaks, Tokyo's interiors, the remaining inventions (after the owner
+judges the prototype), the recorded close (after v0.11).
+
 ## Next, once the owner has answered
 
 1. Option A's strands (Innoday's `strands.js` and photos) at 8, 9, 11, 16.
