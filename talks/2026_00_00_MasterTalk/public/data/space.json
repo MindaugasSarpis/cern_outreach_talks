@@ -163,8 +163,8 @@
             0
           ],
           "from": [
-            0.8,
-            0.5,
+            1.1,
+            1.3,
             0
           ],
           "to": [
@@ -308,7 +308,7 @@
           ],
           "to": [
             -9,
-            7.25,
+            7.7,
             3.1
           ],
           "color": "#cfe2ff",
@@ -812,9 +812,9 @@
             "#ffffff"
           ],
           "grains": 600,
-          "gluon": 520,
-          "gluonSize": 1.4,
-          "gluonAlpha": 0.75
+          "gluon": 420,
+          "gluonSize": 1.2,
+          "gluonAlpha": 0.6
         },
         {
           "type": "triplet",
