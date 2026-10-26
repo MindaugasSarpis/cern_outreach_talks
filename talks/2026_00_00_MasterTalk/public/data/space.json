@@ -703,6 +703,239 @@
           "armWait": 2.5
         }
       ]
+    },
+    {
+      "id": "families",
+      "pos": [
+        135,
+        300,
+        0
+      ],
+      "look": {
+        "dist": 9.5,
+        "yaw": 0,
+        "pitch": 3,
+        "sway": 1.5
+      },
+      "objects": [
+        {
+          "type": "pentaquark",
+          "pos": [
+            -3.8,
+            0,
+            0
+          ],
+          "radius": 1.6,
+          "quarkRadius": 0.7,
+          "quarks": [
+            {
+              "flavour": "u",
+              "pos": [
+                0.7,
+                0.3,
+                0
+              ]
+            },
+            {
+              "flavour": "dbar",
+              "pos": [
+                -0.7,
+                -0.3,
+                0.1
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pentaquark",
+          "pos": [
+            3.8,
+            0,
+            0
+          ],
+          "radius": 2.0,
+          "quarkRadius": 0.7,
+          "quarks": [
+            {
+              "flavour": "u",
+              "pos": [
+                0.9,
+                0.5,
+                0.1
+              ]
+            },
+            {
+              "flavour": "d",
+              "pos": [
+                -0.9,
+                0.4,
+                -0.2
+              ]
+            },
+            {
+              "flavour": "s",
+              "pos": [
+                0.05,
+                -1.0,
+                0.25
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paper",
+      "pos": [
+        165,
+        300,
+        0
+      ],
+      "look": {
+        "target": [
+          5.55,
+          1.5,
+          0
+        ],
+        "dist": 11,
+        "yaw": 0,
+        "pitch": 2,
+        "sway": 0.8
+      },
+      "objects": [
+        {
+          "type": "page",
+          "src": "/figures/GellMannPhoto.png",
+          "pos": [
+            0,
+            3.99,
+            0
+          ],
+          "width": 1.6,
+          "height": 2.42,
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "page",
+          "src": "/figures/Gell-Mann.png",
+          "pos": [
+            4.9,
+            3.4625,
+            0
+          ],
+          "width": 7.6,
+          "height": 3.475,
+          "paper": "#f4f1ea",
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "page",
+          "src": "/figures/ZweigPhoto.png",
+          "pos": [
+            0,
+            -0.585,
+            0
+          ],
+          "width": 1.6,
+          "height": 2.27,
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "page",
+          "src": "/figures/Zweig.png",
+          "pos": [
+            4.9,
+            -0.4825,
+            0
+          ],
+          "width": 7.6,
+          "height": 2.065,
+          "paper": "#f4f1ea",
+          "tone": "#6c7076",
+          "halo": false
+        },
+        {
+          "type": "pentaquark",
+          "pos": [
+            10.4,
+            -1.0,
+            0.6
+          ],
+          "radius": 1.6,
+          "quarkRadius": 0.45,
+          "quarks": [
+            {
+              "flavour": "c",
+              "pos": [
+                0.6000000000000001,
+                0.44000000000000006,
+                0.16000000000000003
+              ]
+            },
+            {
+              "flavour": "u",
+              "pos": [
+                0.2,
+                -0.76,
+                -0.44000000000000006
+              ]
+            },
+            {
+              "flavour": "d",
+              "pos": [
+                0.76,
+                -0.16000000000000003,
+                -0.6000000000000001
+              ]
+            },
+            {
+              "flavour": "u",
+              "pos": [
+                -0.44000000000000006,
+                0.6400000000000001,
+                -0.48
+              ]
+            },
+            {
+              "flavour": "cbar",
+              "pos": [
+                -0.6400000000000001,
+                -0.27999999999999997,
+                0.32000000000000006
+              ]
+            }
+          ]
+        },
+        {
+          "type": "label",
+          "text": "Gell-Mann",
+          "pos": [
+            -0.5,
+            2.3,
+            0
+          ],
+          "height": 0.65,
+          "color": "#cfeaff",
+          "upper": false,
+          "tracking": 0.06
+        },
+        {
+          "type": "label",
+          "text": "Zweig",
+          "pos": [
+            0,
+            -2.2,
+            0
+          ],
+          "height": 0.65,
+          "color": "#cfeaff",
+          "upper": false,
+          "tracking": 0.06
+        }
+      ]
     }
   ],
   "poses": {

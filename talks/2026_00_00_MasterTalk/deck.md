@@ -533,7 +533,7 @@ space:
 <div class="nums" style="--d1: 6s; --d2: 7.2s; --d3: 8.4s">
   <p><b>30</b><span>PB</span></p>
   <p><b>10</b><span>GB/s</span></p>
-  <p><b>1/500</b><span>bytes</span></p>
+  <p><b>1 in 500</b><span>bytes</span></p>
 </div>
 
 <!-- facts: lhcb-trigger-5tbs-10gbs, lhcb-buffer-80-hours, lhcb-upgrade1-trigger -->
@@ -730,6 +730,44 @@ Picture: the last legs draw (Manchester, 2 s in), the names go at 4.4 s, the cam
 -->
 
 ---
+space: { at: families, dim: 0.15, ambient: 0 }   # Tokyo's slide 6 (its station 300 up here)
+---
+
+<!-- Part IV's five quarks (master.md 22), from Tokyo's slides 6–7 (kit builders only): the two recipes, then the 1964 papers that already allow five. -->
+<StageSteps :set="{ th1: 0, th2: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<!-- facts: quark-model-1964-papers -->
+
+<!--
+Message: every hadron known for fifty years followed one of two recipes: a quark and an antiquark (a meson, left) or three quarks (a baryon, right). Does nature allow more?
+Picture: Tokyo's two particles in colour charge, u d̄ and u d s.
+
+(~1.25 min)
+-->
+
+---
+space: { at: paper, dim: 0.06, ambient: 0 }   # Tokyo's slide 7
+---
+
+<StageSteps :set="{ th1: 0, th2: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<div class="nums" style="--d1: 2s">
+  <p><b>1964</b><span>quarks</span></p>
+</div>
+
+<!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
+
+<!--
+Message: the quark idea came in 1964 from Gell-Mann and, independently, Zweig at CERN; both papers already allow four quarks and an antiquark, a pentaquark. Whether one exists took the rest of the century, and a false alarm (next).
+Picture: Tokyo's two portraits with their papers' passages, the five-quark cluster beside them.
+Sources: M. Gell-Mann, Phys. Lett. 8 (1964) 214; G. Zweig, CERN-TH-401 (1964). The portraits' and scans' licence is open (Tokyo's Figures; Open for the owner).
+
+(~1.5 min)
+-->
+
+---
 space: { at: [1500, 2.4, 0], dist: 19.8, yaw: 0, pitch: 3, sway: 0.4, dim: 0.05, ambient: 0 }   # Karjera's trial slide (24 Oct, before it was cut there for time), its pose
 clicks: 2
 ---
@@ -916,6 +954,7 @@ space: { at: [0, 4.2, 0], dist: 52, yaw: 18, pitch: 10, dim: 0.7, ambient: 0 }
   Planck CMB map: ESA and the Planck Collaboration, CC BY-NC 3.0 IGO (reprojected, smoothed, recoloured) ·
   cosmic web: NCSA Advanced Visualization Lab ("Cosmic Bubble Bath", NSF) · Earth imagery: Google Earth ·
   music: Scott Buckley, "Starfire" (scottbuckley.com.au), CC BY 4.0 (sections joined)
+  · maps: Natural Earth (public domain); © OpenStreetMap contributors (ODbL)
 </div>
 
 <!--
