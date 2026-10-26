@@ -270,6 +270,32 @@
        "core": "#eef4fa"
       }
      ]
+    },
+    {
+     "type": "page",
+     "src": "/figures/yukawa.jpg",
+     "pos": [
+      -5.8,
+      0.4,
+      0
+     ],
+     "width": 1.95,
+     "height": 2.6,
+     "tone": "#6c7076",
+     "halo": false
+    },
+    {
+     "type": "label",
+     "text": "Yukawa",
+     "pos": [
+      -5.8,
+      -1.45,
+      0
+     ],
+     "height": 0.6,
+     "color": "#cfeaff",
+     "upper": false,
+     "tracking": 0.06
     }
    ]
   },
@@ -403,6 +429,48 @@
        ]
       }
      ]
+    }
+   ]
+  },
+  {
+   "id": "sakata",
+   "pos": [
+    150,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 8,
+    "yaw": 0,
+    "pitch": 2,
+    "sway": 0.8
+   },
+   "objects": [
+    {
+     "type": "page",
+     "src": "/figures/sakata.jpg",
+     "pos": [
+      0,
+      0.35,
+      0
+     ],
+     "width": 2.4,
+     "height": 3.2,
+     "tone": "#6c7076",
+     "halo": false
+    },
+    {
+     "type": "label",
+     "text": "Sakata",
+     "pos": [
+      0,
+      -1.75,
+      0
+     ],
+     "height": 0.6,
+     "color": "#cfeaff",
+     "upper": false,
+     "tracking": 0.06
     }
    ]
   },
@@ -553,6 +621,74 @@
       0
      ],
      "height": 0.65,
+     "color": "#cfeaff",
+     "upper": false,
+     "tracking": 0.06
+    }
+   ]
+  },
+  {
+   "id": "km",
+   "pos": [
+    182,
+    0,
+    0
+   ],
+   "look": {
+    "dist": 9.5,
+    "yaw": 0,
+    "pitch": 2,
+    "sway": 0.8
+   },
+   "objects": [
+    {
+     "type": "page",
+     "src": "/figures/kobayashi.jpg",
+     "pos": [
+      -1.55,
+      0.35,
+      0
+     ],
+     "width": 2.4,
+     "height": 3.2,
+     "tone": "#6c7076",
+     "halo": false
+    },
+    {
+     "type": "page",
+     "src": "/figures/maskawa.jpg",
+     "pos": [
+      1.55,
+      0.35,
+      0
+     ],
+     "width": 2.4,
+     "height": 3.2,
+     "tone": "#6c7076",
+     "halo": false
+    },
+    {
+     "type": "label",
+     "text": "Kobayashi",
+     "pos": [
+      -1.55,
+      -1.75,
+      0
+     ],
+     "height": 0.6,
+     "color": "#cfeaff",
+     "upper": false,
+     "tracking": 0.06
+    },
+    {
+     "type": "label",
+     "text": "Maskawa",
+     "pos": [
+      1.55,
+      -1.75,
+      0
+     ],
+     "height": 0.6,
      "color": "#cfeaff",
      "upper": false,
      "tracking": 0.06
@@ -1096,6 +1232,32 @@
      "color": "#cfeaff",
      "upper": false,
      "tracking": 0.06
+    },
+    {
+     "type": "page",
+     "src": "/figures/vilnius_p.jpg",
+     "pos": [
+      -8.5,
+      4.9,
+      0
+     ],
+     "width": 4.8,
+     "height": 2.7,
+     "tone": "#6c7076",
+     "halo": false
+    },
+    {
+     "type": "page",
+     "src": "/figures/nagoya_p.jpg",
+     "pos": [
+      8.5,
+      4.9,
+      0
+     ],
+     "width": 4.8,
+     "height": 2.7,
+     "tone": "#6c7076",
+     "halo": false
     }
    ]
   }

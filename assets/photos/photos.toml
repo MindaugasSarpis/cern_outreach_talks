@@ -288,3 +288,93 @@ licence = "CERN terms (non-commercial)"
 credit = "Photo: Piotr Traczyk/CERN"
 verified_on = "2026-10-12"
 px = [1440, 960]
+
+[[photo]]
+subject = "Nobel prize winner Hideki Yukawa"
+file = "yukawa.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:Yukawa.jpg"
+licence = "Public domain"
+credit = "Photo: Nobel Foundation archive, public domain, via Wikimedia Commons"
+verified_on = "2026-10-26"
+px = [1280, 1792]
+
+[[photo]]
+subject = "Shōichi Sakata & Mitsuo Taketani ."
+file = "sakata_taketani.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:Shoichi_Sakata_%26_Mitsuo_Taketani_by_Ken_Domon.jpg"
+licence = "Public domain"
+credit = "Photo: Ken Domon, public domain, via Wikimedia Commons"
+verified_on = "2026-10-26"
+px = [3094, 4480]
+
+[[photo]]
+subject = "Japanese as 'Rice Growers' in Big Science | Toshihide Maskawa | Nobel Prize in Physics, 2008 | 益川敏英 | 稲作民族としての日本人と巨大科学 | 2008年ノーベル物理学賞受賞"
+file = "maskawa.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:Maskawa_(33258491213).jpg"
+licence = "CC BY 2.0"
+credit = "Photo: OIST from Onna Village, Japan, CC BY 2.0, via Wikimedia Commons"
+verified_on = "2026-10-26"
+px = [1920, 2880]
+
+[[photo]]
+subject = "Nicola Cabibbo and Makoto Kobayashi at the CKM Workshop 2006, Nagoya, Japan"
+file = "cabibbo_kobayashi.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:Cabibbo_Kobayashi_2.jpg"
+licence = "CC BY-SA 2.0"
+credit = "Photo: Marcella Bona from Geneva, Switzerland, CC BY-SA 2.0, via Wikimedia Commons"
+verified_on = "2026-10-26"
+px = [1880, 2820]
+
+[[photo]]
+subject = "BELLE Detector, KEKB. KEK (High Energy Accelerator Research Organization), Tsukuba city, Japan."
+file = "belle.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:The_BELLE_Detector.jpg"
+licence = "CC BY-SA 2.0"
+credit = "Photo: yellow_bird_woodstock, CC BY-SA 2.0, via Wikimedia Commons"
+verified_on = "2026-10-26"
+px = [1424, 2144]
+
+[[photo]]
+subject = "The Great Courtyard of Vilnius University in Vilnius, Lithuania, looking east. On the left is St John's Church and the tower on the right is the bell tower."
+file = "vilnius.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:Vilnius_University_Great_Courtyard_2,_Vilnius,_Lithuania_-_Diliff.jpg"
+licence = "CC BY-SA 3.0"
+credit = "Photo: Diliff, CC BY-SA 3.0, via Wikimedia Commons"
+verified_on = "2026-10-26"
+px = [3840, 3125]
+
+[[photo]]
+subject = "Nagoya, Higashiyama Campus of Nagoya University. Toyoda Auditorium."
+file = "nagoya.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:Nagoya_University_dk4497.jpg"
+licence = "CC BY-SA 3.0"
+credit = "Photo: DrKssn, CC BY-SA 3.0, via Wikimedia Commons"
+verified_on = "2026-10-26"
+px = [3840, 2562]
+
+[[photo]]
+subject = "Shōichi Sakata & Mitsuo Taketani ."
+file = "sakata.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:Shoichi_Sakata_(cropped).jpg"
+licence = "Public domain"
+credit = "Photo: Ken Domon, public domain, via Wikimedia Commons"
+verified_on = "2026-10-26"
+px = [593, 890]
+
+[[photo]]
+subject = "小林誠 （こばやし まこと）"
+file = "kobayashi.jpg"
+source_url = "https://commons.wikimedia.org/wiki/File:Makoto_Kobayashi_20101223.jpg"
+licence = "CC BY 4.0"
+credit = "Photo: 日本学士院, CC BY 4.0, via Wikimedia Commons"
+verified_on = "2026-10-26"
+px = [320, 426]
+
+[[photo]]
+subject = "LHCb's new scintillating fibre (SciFi) tracker"
+file = "scifi.jpg"
+source_url = "https://cds.cern.ch/images/CERN-PHOTO-201911-373-4"
+licence = "CERN terms (non-commercial)"
+credit = "Photo: Maximilien Brice/CERN"
+verified_on = "2026-10-26"
+px = [1440, 1038]

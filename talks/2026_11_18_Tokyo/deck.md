@@ -22,7 +22,7 @@ title: "Lithuania and Japan: pentaquarks"
 lang: en                  # slides and notes; `pnpm talk lint` reads it
 htmlAttrs:
   lang: en
-duration: 15min
+duration: 30min
 layout: cover
 space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.15 }
 ---
@@ -43,7 +43,7 @@ Your Excellency, ladies and gentlemen, thank you for having me. I am
 Mindaugas Šarpis, and together with Yasuhiro Yamaguchi I lead the project
 named on the screen. I lead the LHCb group at Vilnius University, which works
 on one of the four large experiments at CERN, near Geneva. In the next
-fifteen minutes I would like to show you what this object behind me is, why
+thirty minutes I would like to show you what this object behind me is, why
 physicists waited half a century to find it, and why Lithuanian and Japanese
 scientists are now studying it together. (~1 min)
 -->
@@ -52,7 +52,9 @@ scientists are now studying it together. (~1 min)
 space: { at: lhc, dim: 0.25 }
 ---
 
+<StagePhoto src="figures/tunnel.jpg" alt="The LHC tunnel: blue dipole magnets with the letters LHC" focus="50% 50%" class="g-tr" arrive="camera">
 <div class="num tr">27 km<span class="name">LHC</span></div>
+</StagePhoto>
 
 <!-- facts: cern-lhc-size-cost, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
 
@@ -87,6 +89,24 @@ out of the collisions." It condenses out of the dust and leaves the same way.
 -->
 
 ---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22, dim: 0.6 }
+---
+
+<StagePhoto src="figures/collaboration.jpg" alt="The LHCb collaboration's group photo in front of the detector, June 2022" focus="50% 85%" class="g-tl">
+<div class="num tl">1 891<span class="name">members</span></div>
+</StagePhoto>
+
+<!-- facts: lhcb-collaboration-sep-2026, lhcb-vilnius-joined -->
+
+<!--
+The LHCb collaboration in front of its detector (group photo, June 2022); 1891
+members from 112 institutes in 28 countries (September 2026). Vilnius
+University joined in September 2024.
+Sources: T. Gershon, LHCb report to the CERN
+SPC, 22 September 2026; Vilnius University. (~1 min)
+-->
+
+---
 space: { at: atom, dim: 0.15 }
 ---
 
@@ -103,13 +123,24 @@ Source: M. Strassler, "The nuclei of atoms" (profmattstrassler.com). (~1 min)
 -->
 
 ---
-space: { at: nucleus, dim: 0.15 }
+space: { at: nucleus, dist: 12, yaw: -6, pitch: 5, dim: 0.15 }
 ---
+
+<div class="num tr">1935<span class="name">meson</span></div>
+
+<!-- facts: yukawa-meson-announced-1934, yukawa-meson-1935, yukawa-meson-200-electron, yukawa-nobel-1949, yukawa-first-japanese-laureate -->
 
 <!--
 Come closer, and the nucleus is a tight bundle of protons and neutrons, held
 together by the strong force. At these distances it is far stronger than the
-electric force that pushes the protons apart. (~0.75 min)
+electric force that pushes the protons apart. 
+
+At the left, Hideki Yukawa, at Osaka: proposed in 1934, published in 1935,
+that this force is carried by a new particle about 200 times heavier than
+the electron, the meson (Nobel Prize 1949, Japan's first).
+Sources:
+H. Yukawa, Proc. Phys.-Math. Soc. Japan 17 (1935) 48; nobelprize.org;
+Osaka University. (~1.5 min)
 -->
 
 ---
@@ -150,6 +181,22 @@ The question is whether nature allows more: four quarks, five, six. (~1.25 min)
 -->
 
 ---
+space: { at: sakata, dim: 0.15 }
+---
+
+<div class="num tr">1956<span class="name">Nagoya</span></div>
+
+<!-- facts: sakata-model-1956, sakata-nagoya-1956 -->
+
+<!--
+Shoichi Sakata at Nagoya University: in 1956, every such particle built from
+three basic ones; in the Nobel Committee's words, "the Sakata particles
+finally became the quarks of Gell-Mann".
+Sources: S. Sakata, Prog. Theor.
+Phys. 16 (1956) 686; nobelprize.org (Scientific Background 2008). (~1.25 min)
+-->
+
+---
 space: { at: paper, dim: 0.06 }
 ---
 
@@ -177,13 +224,49 @@ Sources: M. Gell-Mann, Phys. Lett. 8 (1964) 214; G. Zweig, CERN-TH-401
 -->
 
 ---
+space: { at: km, dim: 0.15 }
+---
+
+<div class="num tr">1973<span class="name">six quarks</span></div>
+
+<!-- facts: kobayashi-maskawa-1973, kobayashi-maskawa-nagoya-phd, kobayashi-maskawa-nobel-2008, b-quark-1977, lhcb-b-for-beauty -->
+
+<!--
+Makoto Kobayashi and Toshihide Maskawa, both from Sakata's school in Nagoya:
+in 1972-73, three families of quarks (six) when three quarks were known; the fifth, b, found in 1977, is the
+"b" in LHCb (Nobel Prize 2008).
+Sources: Prog. Theor. Phys. 49 (1973) 652;
+nobelprize.org; home.cern. (~1.5 min)
+-->
+
+---
+space: { at: km, dim: 0.6 }
+---
+
+<StagePhoto src="figures/belle.jpg" alt="The Belle detector at KEK, Tsukuba" focus="50% 55%" class="g-tr">
+<div class="num tr">2003<span class="name">KEK</span></div>
+</StagePhoto>
+
+<!-- facts: belle-cpv-2001, belle-x3872-2003, x3872-started-exotic-searches, theta-plus-leps-japan-19-events, leps-theta-not-confirmed -->
+
+<!--
+Belle at KEK, Tsukuba: in 2001 it confirmed Kobayashi and Maskawa's
+prediction; in 2003 it found the X(3872), whose discovery started the hunt
+for exotic hadrons. The same year LEPS at SPring-8 reported a five-quark
+candidate; more sensitive experiments did not confirm it.
+Sources: Belle,
+PRL 87 (2001) 091802 and PRL 91 (2003) 262001; nobelprize.org; LEPS,
+PRL 91 (2003) 012002; PDG. (~1.5 min)
+-->
+
+---
 space: { at: lhcb, dim: 0.06 }
 ---
 
 <div class="num tl">2015<span class="name">discovery</span></div>
 <div class="num bl">2019<span class="name">precision</span></div>
 
-<!-- facts: lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
+<!-- facts: lambda-b-contains-b, lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
 
 <!--
 Many experiments looked, and several claims did not survive. Then in July
@@ -196,8 +279,26 @@ each black point counts the particles we found at a given mass, the red line
 is the fit, and the three narrow peaks are three pentaquarks. Where we had seen one bump in 2015, there were in fact
 two, and a third appeared beside them.
 
+The pentaquarks came out of the decays of the Λb, a baryon that carries a b
+quark: Kobayashi and Maskawa's quark.
+
 Sources: LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001; CERN
 press release, 14 July 2015. (~1.75 min)
+-->
+
+---
+space: { at: lhcb, dist: 15, yaw: -12, pitch: 4, dim: 0.3 }
+---
+
+<div class="num tr">76<span class="name">hadrons</span></div>
+
+<!-- facts: lhcb-figure-2026-010-hadrons, lhcb-particle-zoo-2022 -->
+
+<!--
+LHCb's hadron discoveries by experiment (LHCb-FIGURE-2026-010, September 2026):
+76 at LHCb, 14 of them exotic; Belle is next with 34.
+Sources:
+cds.cern.ch/record/2970971 (CC BY 4.0); home.cern, 5 July 2022. (~1.25 min)
 -->
 
 ---
@@ -219,6 +320,69 @@ The narrow peaks of 2019 point toward the molecule, but the question is
 open. To settle it, we need precise measurements and precise theory that
 predicts what each picture should look like in the data, worked out
 together. (~1.5 min)
+-->
+
+---
+space: { at: [229.3, 0, 0], dist: 7.5, yaw: -10, pitch: 6, dim: 0.15 }
+---
+
+<!-- facts: pc-molecule-deuteron-like, deuteron-one-pion-exchange, pion-yukawa-carrier-1947, pc-molecule-pion-exchange -->
+
+<!--
+The molecule up close: a three-quark particle and a quark–antiquark pair,
+read as deuteron-like; Yukawa's pion exchange, which binds the deuteron, is
+one of the glues theorists use for it, beside a short-range five-quark part.
+Sources: PDG review "Pentaquarks" (2026); Y. Yamaguchi et al., PRD 96 (2017)
+114031. (~1 min)
+-->
+
+---
+space: { at: project, dim: 0.6 }
+---
+
+<StagePhoto src="figures/vilnius.jpg" alt="The Great Courtyard of Vilnius University" focus="50% 45%" class="g-bl g-br">
+<div class="num bl">2024<span class="name">LHCb</span></div>
+<div class="num br">13<span class="name">students at CERN</span></div>
+</StagePhoto>
+
+<!-- facts: lhcb-vilnius-joined, lhcb-vilnius-students -->
+
+<!--
+Vilnius University: an LHCb institute since September 2024; most of the group
+are students, and 13 VU students did CERN summer placements in 2026.
+Sources: Vilnius University news. (~1.25 min)
+-->
+
+---
+space: { at: project, dim: 0.6 }
+---
+
+<StagePhoto src="figures/cavern.jpg" alt="The LHCb detector in its cavern, 2024" focus="50% 50%" class="g-bl">
+<div class="num bl">524 288<span class="name">Hamamatsu sensors</span></div>
+</StagePhoto>
+
+<!-- facts: lhcb-scifi-channels, hamamatsu-japanese, hamamatsu-lhcb-scifi-sipm, lhcb-vilnius-scifi-lis -->
+
+<!--
+LHCb in its cavern (2024); inside it, the SciFi tracker, whose fibres are read by 524 288 channels of Hamamatsu
+(Japan) sensors; the Vilnius group's service work includes the SciFi and its
+light injection system.
+Sources: arXiv:2305.10515; hamamatsu.com; CERN Indico
+(LHCb Vilnius, 3 October 2024). (~1 min)
+-->
+
+---
+space: { at: lhcb, dist: 9, yaw: 8, pitch: 2, dim: 0.2 }
+---
+
+<div class="num bl">38.3 TB<span class="name">open data</span></div>
+
+<!-- facts: stonkus-bsc-2026 -->
+
+<!--
+A Vilnius bachelor's thesis (2026) found the pentaquark signal again in LHCb's
+open data (38.3 TB filtered), a reproduction, not an independent observation.
+Source: D. Stonkus, BSc thesis, Vilnius University (2026). (~1 min)
 -->
 
 ---
@@ -245,14 +409,27 @@ Sources: Vilnius University (LHCb Vilnius, 2024). (~2 min)
 -->
 
 ---
-space: { at: hero, dist: 8, yaw: 20, pitch: -6, dim: 0.1 }
+space:
+  path: [[0, { at: [270, 0, 0], dist: 17, yaw: 0, pitch: 8 }], [3, { at: [250, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [6, { at: [220, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [9, { at: [190, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [12, { at: [160, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [15, { at: [130, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [18, { at: [100, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [21, { at: [70, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [24, { at: [40, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [27, { at: [10, 0, 0], dist: 22, yaw: 40, pitch: 12 }], [30.5, { at: [-26, 0, 0], dist: 14, yaw: -20, pitch: 12 }], [33, { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14 }]]
+  ambient: [[0, 1], [31, 1], [33.4, 0.12], [35.2, 0.12], [37, 1]]
+  dim: 0.1
 ---
 
+<Regather :at="35" />
+
+<div class="credits credit">Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped.</div>
+
 <!--
+The finale's take (2026-10-26; recorded after the toolkit bump, then this slide plays the
+clip, muted, with Starfire's peak on the regathering: talks/…/CLAUDE.md, Decisions). From
+the two teams the camera runs back along the whole route, pentaquark to collider, to the
+cover's pose; the world falls dark for a moment, and on 35 s the five quarks fly in again
+as on the cover.
+
 Close. Back at the pentaquark from the start; the hum returns.
 
 Five quarks were allowed on paper in 1964 and found in 2015. What they are
 made of is the question that Lithuanian and Japanese physicists now answer
 together. Thank you, and thank you to the Embassy for bringing us together
-today. (~0.5 min)
+today. (~1.25 min)
 -->
