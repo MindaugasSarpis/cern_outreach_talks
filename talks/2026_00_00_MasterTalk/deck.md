@@ -29,7 +29,7 @@ info: |
 lang: en                  # slides and notes; `pnpm talk lint` reads it
 htmlAttrs:
   lang: en
-duration: 45min           # provisional (26 Oct): the master deck holds every element (notes/master.md, ~45 min); venue talks are cut from it with their own duration. The Brief assumed 25; the owner decides
+duration: 40min           # provisional (26 Oct): the master deck holds every element (notes/master.md, ~40 min); venue talks are cut from it with their own duration. The Brief assumed 25; the owner decides
 sources: notes
 layout: cover
 space:
@@ -126,7 +126,7 @@ space:
     - [16, { at: [30, 39.3, -120.5], dist: 23.5, yaw: -78, pitch: 7 }]
 ---
 
-<AfterFlight :delay="9"><div class="nums" style="--d1: 0s"><p><b>13.8</b><span>billion years</span></p></div></AfterFlight>
+<AfterFlight :delay="9"><div class="nums" style="--d1: 0s"><p><b>13 800 000 000</b><span>years</span></p></div></AfterFlight>
 <Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 <StageSteps :set="{ jp: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
 <Clock off />
@@ -135,7 +135,7 @@ space:
 
 <!--
 Message: the funnel is the Universe's 13.8-billion-year history; everything in it is made of atoms, their nuclei of protons and neutrons, each of three quarks; the peak on the cover is where particles of five quarks showed up.
-Picture: Innoday's funnel as Karjera last cut it: the web's grains fly into the funnel's shape (4.4 s), then the funnel's own grains and the CMB disk resolve over them and its mesh comes in; the Big Bang at the narrow end, the Planck disk, the dark ages, the first galaxies, today at the mouth. "13.8 billion years" once the funnel stands (9 s). Shown on this slide only: the peak's slides look towards it.
+Picture: Innoday's funnel as Karjera last cut it: the web's grains fly into the funnel's shape (4.4 s), then the funnel's own grains and the CMB disk resolve over them and its mesh comes in; the Big Bang at the narrow end, the Planck disk, the dark ages, the first galaxies, today at the mouth. "13 800 000 000 years" (written out, as the deck's other numbers) once the funnel stands (9 s). Shown on this slide only: the peak's slides look towards it.
 Sources: Planck 2018 results VI, A&A 641, A6 (13.787 ± 0.020 billion years); the CMB picture: Planck 2018 SMICA-noSZ map, ESA and the Planck Collaboration, CC BY-NC 3.0 IGO (reprojected, smoothed, recoloured), credited on the last slide.
 
 (~0.6 min)
@@ -206,7 +206,7 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 <StageSteps :set="{ jp: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
 <Clock off />
 
-<div class="nums" style="--d1: 1.6s">
+<div class="nums scrim" style="--d1: 1.6s">   <!-- the scrim: the tunnel wall behind the number is pale concrete (review 26 Oct) -->
   <p><b>27</b><span>km</span></p>
 </div>
 

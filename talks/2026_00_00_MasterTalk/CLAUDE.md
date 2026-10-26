@@ -29,6 +29,10 @@ makes them, Figures as they are checked. The repo is public: private context
   the real geometry; two or three offline-rendered hero shots arriving as
   dust; timing set to a recorded rehearsal; every station reachable by a jump.
 - Private brief: ~/.local/share/outreach_talks/briefs/mastertalk.md
+- 26 Oct (the owner, through the Scheduler): the **master deck**, "inheriting
+  from all previous talks, introducing CERN, LHCb and everything": the best
+  version of each element of the earlier talks; venue talks are cut from it.
+  The plan, the spine question and the venue cuts: `notes/master.md`.
 
 Open questions: the takeaway; what is off limits (defaults in the
 storyboard).
@@ -100,6 +104,19 @@ storyboard).
   with the VELO's per-part alpha, a stage-data log line and the sheet under
   `shots --changed`; nothing to test here until that tag.
 
+- 26 Oct, iteration 1 of the master deck (merged origin/main 12f5bae; 26bf0f4):
+  the prologue and the way in copied from Užsikrauk karjerai, the newest copy
+  (slides 2–4: the 49 s zoom from Saulėtekis to the cosmic web, the web
+  breaking into grains, the funnel with "13.8 billion years"; slides 6–8: CERN
+  from above, the tunnel with "27 km", the dipole), Starfire's bed under them;
+  order cover → prologue → dive → way in → beam pipe. 18 slides, 26.5 min
+  timed. The three talk-owned cuts are Karjera's encodes, unchanged, on this
+  talk's new release videos-2026-00-00-mastertalk. Lint 0/0, check ok, review
+  shots taken. `notes/master.md` proposes the whole master (~40 min, five
+  parts, the venue cuts) and the spine question (A, B or C), for the owner.
+  Next: the owner's answers; then the strands, InsideLhcb, the data and the
+  answer slides, and an English take of the close (master.md "Next").
+
 ## Arc
 
 The timeline is in `notes/storyboard.md` (12 stations, 25 min); this
@@ -160,6 +177,17 @@ A piece a second talk needs moves to the shared kit instead of being copied.
   2 rich1 #7fa9ff, 3 ut #cfe2ff, 4 magnet #5b93ff at the lowest alpha, 5
   scifi #dce9ff, 6 rich2 #7fa9ff, 7 ecal #b8d2ff, 8 hcal #8fb6ff, 9 muon
   #cfe2ff (the collision's own muon tone); hits stay `hot` white.
+- Inherited 26 Oct from Užsikrauk karjerai (its setup/, the newest copies; the
+  toolkit takes them over in v0.11, so nothing is reworked here):
+  `WebTakeover.vue` + `takeover.js` (the web still into grains, then a web round
+  it: here 220 000 + 300 000 grains, under the ~600 000 a slide), `funnel.js`
+  (registered as `funnel`, station `funnel` in space.json; `funnelSeq.span`, new
+  here, hides it again past its own slide, since the peak's slides look its way),
+  `afterCover.js` (the CMB decode waits until slide 4), `AfterFlight.vue`,
+  `Soundtrack.vue` + `soundLevel.js` (Innoday's player, Starfire's bed in
+  public/audio, `+`/`-`), `slideHooks.js` (an onSlideEnter that does not re-run on
+  a click), `view.js`. public/figures: `opener_last.jpg`, the CMB pictures.
+  public/video-frames: Karjera's strips for the four clips.
 - `styles/index.css`: `.nums` (numbers low left, white with light-blue
   words, staggered by `--d1…--d3`) and the clock.
 - `package.json`: both addons pinned v0.9.0; `stage:check --types
@@ -208,6 +236,17 @@ The owner's decisions, dated, newest last.
   lifting off of all of the other talks in storytelling, visuals, effects,
   impact" (owner). When a move works in another talk, consider bringing it
   here; the house rules still hold.
+
+- 2026-10-26 (provisional, for the owner): `duration: 40min`, the master's
+  length (`notes/master.md`); the Brief's 25 min is a venue cut. Undo: the
+  headmatter's `duration`.
+- 2026-10-26 (provisional, for the owner): the order cover → prologue → dive
+  → way in → beam pipe, so the dive answers the cover and the way in answers
+  the dive. Holds under any answer to the spine question. Undo: move slides
+  2–4 and 6–8.
+- 2026-10-26: the three talk-owned cuts (zoom, tunnel, dipole) are Karjera's
+  encodes published unchanged on this talk's release (`generated`, no raw
+  here), until the library takes them (v0.11).
 
 ## Verify
 

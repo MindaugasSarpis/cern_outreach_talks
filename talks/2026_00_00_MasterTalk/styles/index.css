@@ -11,6 +11,9 @@ html[data-stage] .nums span { font-size: 22px; font-weight: 500; letter-spacing:
 html[data-stage] .nums p:nth-child(1) { animation-delay: var(--d1, 2s); }
 html[data-stage] .nums p:nth-child(2) { animation-delay: var(--d2, 3.2s); }
 html[data-stage] .nums p:nth-child(3) { animation-delay: var(--d3, 4.4s); }
+/* Over a bright picture (the tunnel's concrete): a soft dark ground under the block, as Karjera's .age. */
+html[data-stage] .nums.scrim::before { content: ''; position: absolute; inset: -70px -140px -60px -80px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0, 2, 6, 0.78) 0%, rgba(0, 2, 6, 0.55) 45%, rgba(0, 2, 6, 0.2) 75%, rgba(0, 2, 6, 0) 100%); }
+html[data-stage] .nums.scrim p { text-shadow: 0 0 18px rgba(0, 0, 0, 0.95), 0 2px 4px rgba(0, 0, 0, 0.9); }
 @keyframes nums-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
 /* The running clock (setup/clock.js): one element outside the slides. */

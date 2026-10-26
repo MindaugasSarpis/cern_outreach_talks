@@ -1,3 +1,32 @@
+# Review — the master deck, iteration 1 (26 Oct 2026)
+
+HEAD 26bf0f4, 18 slides; shots by `pnpm talk review` (d3d12 on the RTX 5080),
+judged by a subagent from the contact sheet and five frames. No page or HTTP
+errors, no overflow; all three clips load; no funnel or other prologue object
+on the peak's slides (1, 5, 16–18).
+
+1. **Slide 7, "27 km" over the tunnel's pale concrete** (illegible, high).
+   Fixed: a dark scrim under the block (`.nums.scrim`) and a heavier shadow.
+2. **Slide 10, the crossing, deep-linked** (render, high for a jump). Opened
+   directly (the shots reload there), the frame is black: slide 9's `<Crossing
+   start>` begins the run and slide 10 only continues it. Open: `Crossing.vue`
+   should start the run at the slide's offset when none is running (the Brief
+   wants every station reachable by a jump). Before this round as well.
+3. **Slide 4, the funnel's number** (unverified, medium): the shot came before
+   `<AfterFlight>`'s 9 s. Written out as "13 800 000 000 years" (the deck's
+   style); reshot with a longer settle.
+4. **Slide 8, the dipole clip's burned-in labels** (words, medium): CERN's
+   small schematic and labels at top right. Karjera kept them (its owner's
+   "ok"); under this deck's no-words rule, a crop of the cut is the fix if
+   the owner wants it. Question for the owner.
+5. **Slides 11, 12, 14: words past a unit** (medium, before this round): "km
+   of fibre", "3 % of the internet", "1 in 500 bytes kept". Open.
+6. **The clock's unit** (low, before this round): 2.6vh ≈ 14 canvas px. Open.
+7. **Slide 2's first frame** (low): a sunlit aerial after the black cover;
+   no change.
+
+---
+
 # Review — the v0.9.0 pilot's shots
 
 HEAD bb030e7 (snapshot the same: clean tree). Shots of 20 Oct 2026 04:19,
