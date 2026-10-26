@@ -300,7 +300,7 @@ px = [1280, 1792]
 
 [[photo]]
 subject = "Shōichi Sakata & Mitsuo Taketani ."
-file = "sakata_taketani.jpg"
+file = "sakata-taketani.jpg"
 source_url = "https://commons.wikimedia.org/wiki/File:Shoichi_Sakata_%26_Mitsuo_Taketani_by_Ken_Domon.jpg"
 licence = "Public domain"
 credit = "Photo: Ken Domon, public domain, via Wikimedia Commons"
@@ -318,7 +318,7 @@ px = [1920, 2880]
 
 [[photo]]
 subject = "Nicola Cabibbo and Makoto Kobayashi at the CKM Workshop 2006, Nagoya, Japan"
-file = "cabibbo_kobayashi.jpg"
+file = "cabibbo-kobayashi.jpg"
 source_url = "https://commons.wikimedia.org/wiki/File:Cabibbo_Kobayashi_2.jpg"
 licence = "CC BY-SA 2.0"
 credit = "Photo: Marcella Bona from Geneva, Switzerland, CC BY-SA 2.0, via Wikimedia Commons"
