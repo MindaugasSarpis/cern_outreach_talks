@@ -92,6 +92,8 @@ function buildOffshoot(o) {
   const off_ = onStep(o.name, (k) => { goal = (k ?? 0) >= 1 ? 1 : 0 })
   return {
     group: g, labels: [],
+    // busy while it fades in or out (the flow itself never stops, as Innoday's strands)
+    api: { busy: () => Math.abs(goal - mat.uniforms.uOn.value) > 0.01 },
     update(t) {
       const u = mat.uniforms
       if (last != null) u.uOn.value += Math.sign(goal - u.uOn.value) * Math.min(Math.abs(goal - u.uOn.value), (t - last) / 1.5)
