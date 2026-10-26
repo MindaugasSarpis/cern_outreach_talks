@@ -15,7 +15,7 @@ videos:
   dust: '#5b93ff'
 stage:
   space: data/space.json
-  plugins: [lhcb, hadron]   # hadron: the kit's pentaquark, for Tokyo's two recipes and the 1964 papers (27 Oct); LHCb's Run 3 geometry as grains (the detector), fetched from the kit's geometry-lhcb release
+  plugins: [lhcb]           # LHCb's Run 3 geometry as grains (the detector), fetched from the kit's geometry-lhcb release
   palette: { base: blue, bg: '#000206' }   # a true black ground, as OpenData's
   sound: { hum: false, flight: false, clip: false }   # no hum, no transition sounds (house rule); the collision's own sound plays
   options: { reach: 30, nebula: 0.12, exposure: 1.1, vignette: 0.7, grain: 0.012, aberration: 0, bloom: 0.42 }
@@ -416,10 +416,10 @@ space: { at: [-0.8, -398.0, 0.9], dist: 15.5, yaw: -15, pitch: 5, flight: 2.2, d
   <p><b>2006</b><span>Timepix</span></p>
 </div>
 
-<!-- facts: gave-timepix-artemis, ktbest-advacam, gave-timepix-2006 -->
+<!-- facts: gave-timepix-artemis, ktbest-advacam, gave-timepix-2006, lhcb-velopix -->
 
 <!--
-Message: the detector's pixel chips (the VELO's family) left CERN as Timepix (2006), which now flies on NASA's Artemis to count radiation.
+Message: the hybrid pixel chips CERN's collaborations made for particle tracking (the Medipix family) gave Timepix (2006), which now flies on NASA's Artemis to count radiation; and it came back: the VELO's own chip, VeloPix, is built on Timepix3. The strand leaves the VELO as that family's place in LHCb, a simplification the notes say once (Open for the owner).
 Picture: a strand of light-blue grains grows from the VELO at the vertex up to a slow cluster where the picture stands as a sheet in the world; one wide frame holds the VELO, the strand and the picture; "2006 Timepix" low left. The detector stays lit behind.
 Sources: the facts above (Innoday's notes hold them). Picture credit: NASA (public domain).
 
@@ -779,14 +779,14 @@ space: { at: families, dim: 0.15, ambient: 0 }   # Tokyo's slide 6 (its station 
 ---
 
 <!-- Part IV's five quarks (master.md 22), from Tokyo's slides 6–7 (kit builders only): the two recipes, then the 1964 papers that already allow five. -->
-<StageSteps :set="{ th1: 0, th2: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<StageSteps :set="{ meson: 1, baryon: 1, th1: 0, th2: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
 <Clock off />
 
 <!-- facts: quark-model-1964-papers -->
 
 <!--
 Message: every hadron known for fifty years followed one of two recipes: a quark and an antiquark (a meson, left) or three quarks (a baryon, right). Does nature allow more?
-Picture: Tokyo's two particles in colour charge, u d̄ and u d s.
+Picture: two particles in the colour-charge picture Karjera's Ωc⁰ used (setup/triplet.js): a quark and an antiquark held by one gluon (left), three quarks held by three (right), standing still.
 
 (~1.25 min)
 -->
@@ -795,7 +795,7 @@ Picture: Tokyo's two particles in colour charge, u d̄ and u d s.
 space: { at: paper, dim: 0.06, ambient: 0 }   # Tokyo's slide 7
 ---
 
-<StageSteps :set="{ th1: 0, th2: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<StageSteps :set="{ pq5: 1, meson: 0, baryon: 0, th1: 0, th2: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
 <Clock off />
 
 <div class="nums tr" style="--d1: 2s">
@@ -806,7 +806,7 @@ space: { at: paper, dim: 0.06, ambient: 0 }   # Tokyo's slide 7
 
 <!--
 Message: the quark idea came in 1964 from Gell-Mann and, independently, Zweig at CERN; both papers already allow four quarks and an antiquark, a pentaquark. Whether one exists took the rest of the century, and a false alarm (next).
-Picture: Tokyo's two portraits with their papers' passages, the five-quark cluster beside them.
+Picture: Tokyo's two portraits with their papers' passages, and beside them Karjera's cover particle (uudc c̄ in colour charge, setup/pentaquark.js) gathering.
 Sources: M. Gell-Mann, Phys. Lett. 8 (1964) 214; G. Zweig, CERN-TH-401 (1964). The portraits' and scans' licence is open (Tokyo's Figures; Open for the owner).
 
 (~1.5 min)

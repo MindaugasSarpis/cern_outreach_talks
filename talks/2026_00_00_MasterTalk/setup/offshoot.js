@@ -14,7 +14,7 @@ import { POINT_GLSL, viewScale } from './view.js'
 //
 //   { type: offshoot, name, pos, from: [x,y,z], to: [x,y,z], grains?: 1400, node?: 600,
 //     nodeRadius?: 0.5, lift?: 0.3, speed?: 0.12, size?: 1, alpha?: 0.55, color?: '#cfe2ff',
-//     photo?: { src, width: 4, at?: `to`, yaw?: 0 } }
+//     photo?: { src, width: 4, at?: `to`, yaw?: 0, crop?: [x0, y0, x1, y1], edge?: true } }
 //
 // `photo`: the invention's picture as a sheet at the product, `width` units wide (its height
 // from the image), facing `yaw`, fading with the strand: the slide's wide pose keeps the part,
@@ -101,7 +101,10 @@ function buildOffshoot(o, ctx) {
     sheet = new Mesh(new PlaneGeometry(w, w * 9 / 16), sm)
     new TextureLoader().load(ctx.asset ? ctx.asset(o.photo.src) : o.photo.src, (tex) => {
       tex.colorSpace = SRGBColorSpace; sm.map = tex; sm.needsUpdate = true
-      const im = tex.image; if (im?.width) sheet.scale.y = (im.height / im.width) / (9 / 16)
+      // `crop: [x0, y0, x1, y1]`, shares of the image from its top left: the part shown
+      const [x0, y0, x1, y1] = o.photo.crop || [0, 0, 1, 1]
+      tex.repeat.set(x1 - x0, y1 - y0); tex.offset.set(x0, 1 - y1)
+      const im = tex.image; if (im?.width) sheet.scale.y = ((im.height * (y1 - y0)) / (im.width * (x1 - x0))) / (9 / 16)
     })
     const at = o.photo.at || e
     sheet.position.set(at[0], at[1], at[2]); sheet.rotation.y = ((o.photo.yaw ?? 0) * Math.PI) / 180
