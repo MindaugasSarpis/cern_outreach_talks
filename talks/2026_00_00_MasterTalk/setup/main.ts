@@ -25,6 +25,8 @@ import FillClock from './FillClock.vue'
 // OpenData's piles of terabytes as Karjera last had them (setup/piles.js: `floor`, `lineup`) and <Count>
 import { installPiles } from './piles.js'
 import Count from './Count.vue'
+// the inventions under spine A: a strand from the part that forced each one to its picture (setup/offshoot.js)
+import { installOffshoot } from './offshoot.js'
 // The talk's one collision: a real 2012 LHCb crossing from the DIMUON stream
 // (CERN Open Data record 28040, CC0; run 124143, event 39463039) holding an
 // anti-Λb⁰ → J/ψ p̄ K⁺ candidate, m(J/ψ p̄) = 4437.5 MeV. Provenance and the
@@ -47,6 +49,7 @@ export default ({ app, router }) => {
   installGrains(registerBuilder)
   installKGrains(registerBuilder)   // Karjera's forms (setup/kgrains.js)
   installPiles(registerBuilder)   // the piles of data (setup/piles.js)
+  installOffshoot(registerBuilder)   // the inventions' strands (setup/offshoot.js)
   installFunnel(registerBuilder)   // the Universe's history in grains (setup/funnel.js)
   installOpening({ app, registerBuilder, event: EVENT_LB })
   installRoute(registerBuilder)   // the data's route, the grid, the dot (setup/route.js)

@@ -153,6 +153,26 @@
             0,
             0
           ]
+        },
+        {
+          "type": "offshoot",
+          "name": "timepix",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "from": [
+            0.3,
+            0.1,
+            0
+          ],
+          "to": [
+            -3,
+            5,
+            7
+          ],
+          "color": "#cfe2ff"
         }
       ]
     },
@@ -256,6 +276,26 @@
           ],
           "color": "#9cc4ff",
           "hot": "#ffffff"
+        },
+        {
+          "type": "offshoot",
+          "name": "web",
+          "pos": [
+            0,
+            0,
+            0
+          ],
+          "from": [
+            0,
+            1.5,
+            0
+          ],
+          "to": [
+            -9,
+            8,
+            9
+          ],
+          "color": "#cfe2ff"
         }
       ]
     },

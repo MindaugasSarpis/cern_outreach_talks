@@ -58,3 +58,11 @@ html[data-stage] .city.dive { animation-delay: 7.8s; }
 
 /* <Count> inside a .nums number: the number's own type, not the unit's */
 html[data-stage] .nums b .count { font-size: inherit; font-weight: inherit; color: inherit; margin: 0; letter-spacing: inherit; }
+
+/* An invention's name and year on its picture (a name of a thing shown), as Karjera's .kk-invention at a projector's size */
+html[data-stage] .hero .invention {
+  position: absolute; z-index: 2; left: 56px; bottom: 96px; margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 30px; font-weight: 600; line-height: 1.2; color: #fff; white-space: nowrap;
+  background: rgba(4, 6, 16, 0.72); padding: 6px 16px; border-radius: 6px; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+html[data-stage] .hero .invention span { color: #9cc4ff; font-weight: 500; margin-left: 0.4em; }
