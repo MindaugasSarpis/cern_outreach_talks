@@ -237,9 +237,9 @@ The owner's decisions, dated, newest last.
   impact" (owner). When a move works in another talk, consider bringing it
   here; the house rules still hold.
 
-- 2026-10-26 (provisional, for the owner): `duration: 40min`, the master's
-  length (`notes/master.md`); the Brief's 25 min is a venue cut. Undo: the
-  headmatter's `duration`.
+- 2026-10-26, provisional (Scheduler, 27 Oct night), owner to confirm:
+  `duration: 40min`, the master's length (`notes/master.md`); the Brief's 25,
+  15 and 7 min are venue cuts. Undo: the headmatter's `duration`.
 - 2026-10-26 (provisional, for the owner): the order cover → prologue → dive
   → way in → beam pipe, so the dive answers the cover and the way in answers
   the dive. Holds under any answer to the spine question. Undo: move slides
@@ -247,6 +247,34 @@ The owner's decisions, dated, newest last.
 - 2026-10-26: the three talk-owned cuts (zoom, tunnel, dipole) are Karjera's
   encodes published unchanged on this talk's release (`generated`, no raw
   here), until the library takes them (v0.11).
+- 2026-10-27, provisional (Scheduler, 27 Oct night), owner to confirm: the
+  spine is **A** (`notes/master.md`): one collision is the thread, "one shot"
+  the camera's rule (it always follows something; joins in dust or black), the
+  inventions hang off the stations whose problems forced them. B (strict one
+  shot, no clips) and C (two halves) stay described there.
+- 2026-10-27, provisional (Scheduler, 27 Oct night), owner to confirm: the
+  words left past a unit cut to a number and its unit (root rule). Slide 11
+  "11 000 km of fibre" → "11 000 km"; slide 12 "3 % of the internet" → "3 %";
+  slide 14 "1 in 500 bytes kept" → "1/500 bytes". Undo: the old spans.
+- 2026-10-27 (Scheduler): the dipole clip keeps CERN's burned-in labels; the
+  close is planned (an English take of Karjera's live close, muted, Soundtrack's
+  drop slaving it to Starfire) but not recorded until v0.11's recorded mode.
+- 2026-10-27 (Scheduler: "a slide must set up its own state when entered
+  directly or out of order"): `<Crossing :lead>` restarts the collision `lead`
+  engine-s in unless the deck stepped forward from the slide before (slide 10
+  was black opened directly); `setup/slideNav.js` keeps the slide the deck came
+  from.
+
+## Open for the owner
+
+Kept current; each item is also under Decisions or in `notes/master.md`.
+
+1. The spine: A taken provisionally (B and C in `notes/master.md`).
+2. The length: 40 min provisional for the master; the 25/15/7 cuts.
+3. The dipole clip's burned-in labels (slide 8): kept; crop if he wants.
+4. The three cut phrases (slides 11, 12, 14): restore any he wants.
+5. The close: an English take of Karjera's live close, after v0.11.
+6. Faces at the pull-back to Vilnius: who, with whose consent (storyboard).
 
 ## Verify
 

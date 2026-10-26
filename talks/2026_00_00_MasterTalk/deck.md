@@ -306,7 +306,7 @@ space:
     - [10, { at: [3.4, -400.9, 0], dist: 8.4, yaw: -32, pitch: 13 }]
 ---
 
-<Crossing name="crossing" />
+<Crossing name="crossing" :lead="3.05" />
 <StageSteps :set="{ dot: 0, det: 0, data: 0, grid: 0 }" />
 <Clock :keys="[[0, -25], [1.5, 0], [5.8, 0], [8.5, 63]]" unit="ns" />
 
@@ -365,13 +365,13 @@ space:
     - [7, { at: [4.0, -400.8, 0], dist: 19, yaw: -20, pitch: 12 }]
 ---
 
-<Crossing name="crossing" />
+<Crossing name="crossing" :lead="40" />
 <StageSteps :set="{ dot: 0, det: 1, data: 0, grid: 0 }" />
 <Clock :from="63" unit="ns" />
 
 <div class="nums" style="--d1: 7.5s; --d2: 8.7s">
   <p><b>5.1</b><span>mm</span></p>
-  <p><b>11 000</b><span>km of fibre</span></p>
+  <p><b>11 000</b><span>km</span></p>
 </div>
 
 <!-- facts: lhcb-velo-distance, lhcb-scifi, lhcb-muon-m5-18p8m -->
@@ -418,13 +418,13 @@ space:
     - [9, { at: [12, -402, 0], dist: 17, yaw: -42, pitch: 10 }]
 ---
 
-<Crossing name="crossing" />
+<Crossing name="crossing" :lead="40" />
 <StageSteps :set="{ dot: 0, det: 2, data: 1, grid: 0 }" />
 <Clock :from="1" :to="900" :run="105" unit="µs" />
 
 <div class="nums" style="--d1: 9.5s; --d2: 10.7s">
   <p><b>4</b><span>TB/s</span></p>
-  <p><b>3 %</b><span>of the internet</span></p>
+  <p><b>3</b><span>%</span></p>
 </div>
 
 <!-- facts: lhcb-run3-readout-4tbs, internet-intl-bandwidth-2022 -->
@@ -514,7 +514,7 @@ space:
 <div class="nums" style="--d1: 6s; --d2: 7.2s; --d3: 8.4s">
   <p><b>30</b><span>PB</span></p>
   <p><b>10</b><span>GB/s</span></p>
-  <p><b>1 in 500</b><span>bytes kept</span></p>
+  <p><b>1/500</b><span>bytes</span></p>
 </div>
 
 <!-- facts: lhcb-trigger-5tbs-10gbs, lhcb-buffer-80-hours, lhcb-upgrade1-trigger -->

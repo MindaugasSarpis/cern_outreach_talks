@@ -17,6 +17,7 @@ import WebTakeover from './WebTakeover.vue'
 import AfterFlight from './AfterFlight.vue'
 import Soundtrack from './Soundtrack.vue'
 import { installSoundKeys } from './soundLevel.js'
+import { trackSlides } from './slideNav.js'
 // The talk's one collision: a real 2012 LHCb crossing from the DIMUON stream
 // (CERN Open Data record 28040, CC0; run 124143, event 39463039) holding an
 // anti-Λb⁰ → J/ψ p̄ K⁺ candidate, m(J/ψ p̄) = 4437.5 MeV. Provenance and the
@@ -35,6 +36,7 @@ import EVENT_LB from './data/event-lb.json'
 // @slidev/types is not a dependency of the talk.)
 export default ({ app, router }) => {
   armAfterCover(router)
+  trackSlides(router)   // the slide the deck came from (<Crossing :lead>)
   installGrains(registerBuilder)
   installFunnel(registerBuilder)   // the Universe's history in grains (setup/funnel.js)
   installOpening({ app, registerBuilder, event: EVENT_LB })
