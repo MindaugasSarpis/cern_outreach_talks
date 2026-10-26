@@ -29,7 +29,7 @@ info: |
 lang: en                  # slides and notes; `pnpm talk lint` reads it
 htmlAttrs:
   lang: en
-duration: 25min
+duration: 45min           # provisional (26 Oct): the master deck holds every element (notes/master.md, ~45 min); venue talks are cut from it with their own duration. The Brief assumed 25; the owner decides
 sources: notes
 layout: cover
 space:
@@ -60,6 +60,85 @@ peaks lit, but the bins' steps and the narrow spike still show through
 (`focus` 0.55). The grains fall into place as the slide opens.
 
 (~0.75 min)
+-->
+
+---
+space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0, dim: 0, ambient: 0 }   # a cut to the takeover's pose under the clip (Karjera's): the next slide stands exactly here
+---
+
+<!-- Inherited 26 Oct from Užsikrauk karjerai (its slide 2, the newest copy): the zoom out from NFTMC in Saulėtekis past the Earth and our galaxy to the cosmic web, 49 s (Karjera's remap of Innoday's SpaceEngine edit). It ends on the frame the next slide's still is (public/figures/opener_last.jpg) and holds it; no advance-on-end. -->
+<VideoPlayer src="vilnius_zoom.mp4" transition="fade" :volume="0.25" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.45" start keys />
+<StageSteps :set="{ jp: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<!-- facts: nftmc-opened-2016 -->
+
+<!--
+Message: where we are, then out past everything to the largest scale.
+Picture: the owner's SpaceEngine zoom (Karjera's 49 s cut, stabilised): the NFTMC building in Saulėtekis, Vilnius, the Earth from space, our galaxy (a slow flight past its stars), the cosmic web, held on its last frame until the press. Its low hum at 0.25; Starfire's bed starts here.
+Footage: the owner's SpaceEngine edit (Google Earth for the Earth part, its attribution in the footage); the web, NCSA's Advanced Visualization Lab ("Cosmic Bubble Bath"), credited on the last slide.
+
+(~0.1 min: the clip runs 49 s)
+-->
+
+---
+space:
+  dim: 0
+  sway: 0
+  hum: false
+  ambient: 0
+  cameraRate: [[0, 0], [4, 0], [6, 1]]   # still for the dissolve (WebTakeover restarts this when it places the grains), then into the path
+  path:   # Karjera's flight through the web in depth (24 Oct), 23 s, back to the picture's own viewpoint
+    - [0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]
+    - [5.5, { at: [30.6, 40.8, -86], dist: 40, yaw: 30, pitch: 10 }]
+    - [9.5, { at: [30.6, 40.8, -86], dist: 30, yaw: 70, pitch: 4 }]
+    - [13.5, { at: [10, 36, -112], dist: 34.5, yaw: 60.5, pitch: 2.5 }]
+    - [17.5, { at: [-10, 38, -128], dist: 33, yaw: 61.4, pitch: -6.8 }]
+    - [23, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]
+    - [46, { at: [30, 40, -70], dist: 19.5, yaw: 0, pitch: 0 }]
+---
+
+<!-- Karjera's slide 3 with fewer grains: 220 000 in the frame and 300 000 round it (360 000 and 380 000 there, 740 000 in all; the MasterTalk keeps every slide under ~600 000 since Karjera's finale went white on the owner's M2), a little more gain for the light they lose. -->
+<WebTakeover :grains="220000" :cosmos="300000" :gain="2.0" :cosmos-gain="2.6" :size="0.48" :cosmos-size="1.55" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
+<StageSteps :set="{ jp: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<!-- facts: cosmic-web-simulation-filaments-voids -->
+
+<!--
+Message: the Universe at its largest scale, as a picture that breaks into grains.
+Picture: the zoom's own last frame as a still, so the cut from the clip does not show; its dark lets go and its filaments break into grains (3 s), each on its pixel's line of sight; then the camera turns and flies through the web in depth and comes back to the picture's viewpoint. The grains make the funnel on the next step.
+The picture: a cosmological simulation's visualisation (NCSA Advanced Visualization Lab, "Cosmic Bubble Bath", NSF), as Innoday and Karjera credit it.
+
+(~0.5 min)
+-->
+
+---
+space:
+  dim: 0
+  ambient: 0
+  path:   # Karjera's slide 4 (24 Oct): held down the funnel's axis while the web's grains fly in, then out to the side and in low beside it
+    - [1, { at: [30, 40, -70], dist: 19.5, yaw: 0, pitch: 0 }]
+    - [4.4, { at: [30, 40, -70], dist: 21, yaw: 0, pitch: 0 }]
+    - [8.5, { at: [30, 40, -116], dist: 50, yaw: -58, pitch: 12 }]
+    - [16, { at: [30, 39.3, -120.5], dist: 23.5, yaw: -78, pitch: 7 }]
+---
+
+<AfterFlight :delay="9"><div class="nums" style="--d1: 0s"><p><b>13.8</b><span>billion years</span></p></div></AfterFlight>
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
+<StageSteps :set="{ jp: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<!-- facts: universe-age-planck-2018, cmb-oldest-light-planck-2018, cmb-formed-380000-years-esa, atom-nucleus-protons-neutrons, proton-neutron-three-quarks, lhcb-pentaquark-2015 -->
+
+<!--
+Message: the funnel is the Universe's 13.8-billion-year history; everything in it is made of atoms, their nuclei of protons and neutrons, each of three quarks; the peak on the cover is where particles of five quarks showed up.
+Picture: Innoday's funnel as Karjera last cut it: the web's grains fly into the funnel's shape (4.4 s), then the funnel's own grains and the CMB disk resolve over them and its mesh comes in; the Big Bang at the narrow end, the Planck disk, the dark ages, the first galaxies, today at the mouth. "13.8 billion years" once the funnel stands (9 s). Shown on this slide only: the peak's slides look towards it.
+Sources: Planck 2018 results VI, A&A 641, A6 (13.787 ± 0.020 billion years); the CMB picture: Planck 2018 SMICA-noSZ map, ESA and the Planck Collaboration, CC BY-NC 3.0 IGO (reprojected, smoothed, recoloured), credited on the last slide.
+
+(~0.6 min)
 -->
 
 ---
@@ -95,6 +174,70 @@ is the fade. To come: the grain unfolds backwards
 into its tracks (storyboard).
 
 (~0.5 min)
+-->
+
+---
+space: { at: opening, dim: 1, ambient: 0, hum: false }
+---
+
+<!-- Inherited 26 Oct from Karjera (its slides 5–7, as OpenData's way in): CERN from above, the library clip cern_overview_short.mp4 (11 s, no sound), the LHC ring drawn over the fields. At the press after its end the camera pushes on into the ring, where the tunnel follows. -->
+<VideoPlayer src="cern_overview_short.mp4" exit="push" exit-at="0.72,0.45" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
+<StageSteps :set="{ jp: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<!-- facts: cern-largest-particle-physics-lab, lhc-geneva-27km-100m-four-experiments -->
+
+<!--
+Message: where that one point came from: CERN near Geneva, and 100 m under its fields the 27 km ring.
+Picture: CERN from above (11 s), the LHC ring drawn over the fields with its four experiments named; it holds its last frame; at the press the camera pushes into the ring.
+Sources: home.cern, "The Large Hadron Collider".
+
+(~0.1 min: the clip runs 11 s)
+-->
+
+---
+space: { at: opening, dim: 1, ambient: 0, hum: false }
+---
+
+<!-- The real LHC tunnel, CERN-FOOTAGE-2022-013-001, Karjera's 18 s cut (videos/manifest.toml), muted under the music (Karjera, 25 Oct). At the press after its end it pushes on into the magnet. -->
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" muted exit="push" exit-at="0.45,0.53" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
+<StageSteps :set="{ jp: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<div class="nums" style="--d1: 1.6s">
+  <p><b>27</b><span>km</span></p>
+</div>
+
+<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lhc-speed, cern-lhc-collisions, lhc-ls3-restart-2028 -->
+
+<!--
+Message: the LHC's ring, 27 km round, 100 m under the border; when it runs, protons fly in it at almost the speed of light.
+Picture: the real tunnel, the magnets on the right, "27 km" low on the left. At the press after its end the camera goes on into the magnet. Tense: the LHC is in Long Shutdown 3 since 29 June 2026, back in 2028.
+Source: CERN-FOOTAGE-2022-013-001 (CERN); home.cern.
+
+(~0.1 min: the clip runs 18 s)
+-->
+
+---
+space: { at: opening, dim: 1, ambient: 0, hum: false }
+---
+
+<!-- The LHC dipole, CERN-VIDEO-2019-050-008, Karjera's first 10.8 s (videos/manifest.toml): a cutaway of the blue cryostat into the two beam pipes, its small English/French labels kept. Silent. It lands where the tunnel's push went in; the beam pipe follows. -->
+<VideoPlayer src="cern_video_2019_050_008.mp4" muted :controls="false" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
+<StageSteps :set="{ jp: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<!-- facts: lhc-two-beam-pipes-opposite, cern-lhc-magnets, cern-lhc-cold -->
+
+<!--
+Message: inside the ring two beams fly in opposite directions in two pipes; 1 232 superconducting dipoles bend them round at −271 °C.
+Picture: CERN's animation of an LHC dipole: the cryostat cut open, then the two beam pipes (10.8 s, silent). The beam pipe station follows, inside one of them.
+Sources: home.cern, "The Large Hadron Collider"; CERN-VIDEO-2019-050-008 (CERN).
+
+(~0.15 min: the clip runs 10.8 s)
 -->
 
 ---
@@ -566,7 +709,10 @@ space:
 
 <div class="credits credit">
   LHCb geometry: LHCb Collaboration, DD4hep (GPL-3.0), via HSF Phoenix (Apache-2.0) ·
-  the collision: CERN Open Data, LHCb 2012 (CC0) · the spectrum: LHCb, HEPData ins1728691
+  the collision: CERN Open Data, LHCb 2012 (CC0) · the spectrum: LHCb, HEPData ins1728691 ·
+  Planck CMB map: ESA and the Planck Collaboration, CC BY-NC 3.0 IGO (reprojected, smoothed, recoloured) ·
+  cosmic web: NCSA Advanced Visualization Lab ("Cosmic Bubble Bath", NSF) · Earth imagery: Google Earth ·
+  music: Scott Buckley, "Starfire" (scottbuckley.com.au), CC BY 4.0 (sections joined)
 </div>
 
 <!--

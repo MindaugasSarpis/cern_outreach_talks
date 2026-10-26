@@ -14,3 +14,43 @@
 # profile = "standard"
 # used_in = ["deck"]
 # notes   = "What this clip is and where it came from."
+
+# Inherited 26 Oct from Užsikrauk karjerai (the master deck takes the best copy of each
+# element from the earlier talks). These three are Karjera's encodes, downloaded from its
+# release videos-2026-10-26-uzsikraukkarjerai byte for byte and published here unchanged
+# (`generated`: no raw, no encode in this talk; never videos:sync them). Their raws, cuts and
+# credits are in Karjera's manifest. Candidates for the slidev-videos library (v0.11), after
+# which these entries go.
+
+[[videos]]
+name      = "vilnius_zoom.mp4"
+profile   = "remux"
+used_in   = ["deck"]
+generated = true
+notes     = """\
+The zoom out from NFTMC in Saulėtekis past the Earth and our galaxy to the cosmic web, \
+49 s at 50 fps: Karjera's remap (its scripts/remap_zoom.py, 25 Oct) of the owner's \
+SpaceEngine edit for Innoday, stabilised, Google Earth's attribution kept over 0-5.4 s; \
+the web: NCSA Advanced Visualization Lab ("Cosmic Bubble Bath"). Ends on the frame \
+public/figures/opener_last.jpg is (<WebTakeover>'s still on the next slide)."""
+
+[[videos]]
+name      = "cern_footage_2022_013_001_1080p_lhc.mp4"
+profile   = "remux"
+used_in   = ["deck"]
+generated = true
+notes     = """\
+The real LHC tunnel, CERN-FOOTAGE-2022-013-001 (CERN), the 18 s cut 2:35-2:53 that \
+OpenData and Karjera use: the travelling shot with the magnets on the right; on its last \
+frame the magnet string vanishes at (0.45, 0.53), where the push goes on. The tunnel's own \
+ventilation hum (the slide plays it muted under the music)."""
+
+[[videos]]
+name      = "cern_video_2019_050_008.mp4"
+profile   = "remux"
+used_in   = ["deck"]
+generated = true
+notes     = """\
+The LHC dipole, CERN-VIDEO-2019-050-008 (CERN), its first 10.8 s: a cutaway of the \
+cryostat into the two beam pipes, its small English/French labels kept. Silent. Same name \
+as the library clip (full length), so this talk's release wins the chain."""
