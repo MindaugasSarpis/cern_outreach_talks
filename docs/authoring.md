@@ -144,6 +144,68 @@ the package.
 - **Check and look.** `pnpm stage:check`; `pnpm build --base / && pnpm
   stage:shots` photographs every slide into `shots/` (needs
   `playwright-chromium` in the workspace).
+- **Where the world cannot run** (no WebGL2, no float render targets, a
+  context lost for good, a plugin or data load that failed) the stage plays
+  a recorded plate of the slide, the world alone, over the slide's committed
+  still; without a plate the still itself drifts and breathes (the living
+  still); under `prefers-reduced-motion` the world runs with its motion
+  floored when the headmatter says `stage.motion: floor` (talks set it; the
+  library default `respect` holds the still). `stage.plates: false` turns
+  plates off. Plates are `NN-plate.mp4` on the talk's videos release,
+  pulled local-first into `public/videos/` (gitignored) like the clips, as
+  `generated = true` entries the manifest's `# >>> plates` block lists; the
+  stills in `public/stills/` stay committed as each plate's poster and the
+  no-network floor. Adopting it, in order: the toolkit release that carries
+  it installed as the env's editable `slidev-videos` CLI (the main checkout
+  beside this repo, `SLIDEV_VIDEOS_DIR`; it is not pinned per talk, and a
+  CLI that does not know `generated` entries reports the plates block
+  `UNUSED MANIFEST`, failing `ready` and `deploy`; `record --plates` asks it
+  first and refuses) → `pnpm talk pin <t> <tag>` (the same release, for the
+  addons) → `stage.motion: floor` in the headmatter → `pnpm talk record <t>
+  --plates` (the render slot, about an hour on a CPU renderer; 1080p25, a
+  20 s hold, `--max 120` since a deck's close can take 50 s to settle, no
+  click segments, each flag overridden by the recorder's own after `--`;
+  writes `videos/plates.json` with each plate's bytes, settle time and
+  whether `--max` cut it off, and the manifest block, commit both;
+  `-- --slides N-M` re-records those slides and keeps the rest, `-- --max N`
+  for a plate it reports cut off) → `pnpm videos:publish --only <the plates
+  it prints>` → `pnpm talk ready` (the plates step lists the release: each
+  plate on it, or local only (a Pages build has no `public/videos/`, so not
+  published means the living still), or missing; the take current by
+  content, so another checkout or a pull does not make it stale; no plate
+  cut off unsettled at the recorder's `--max`; within 40 MB a plate and
+  600 MB a deck; warnings unless `--strict-plates`, an unreadable
+  `plates.json` included) → `pnpm talk deploy`. The venue zip (`pnpm venue`)
+  pulls the plates with the clips. A clip slide has no plate: the clip ends
+  and waits for the press, so no `advance-on-end` unless the owner asks for
+  that clip by name (lint `ADVANCE`).
+- **The PPTX** (every stage talk from Innoday on): the deck as a PowerPoint,
+  one video per slide and click that starts on entry and holds its last
+  frame, the notes in the Notes pane; no editable variant. In order: the
+  env's `slidev-videos` with the `pptx` subcommand (`talk pptx` asks `pptx
+  --help` first and refuses) → `<PptxButton />` on the cover, after the
+  byline (the scaffold has it; it renders nothing until `videos/pptx.json`
+  is there, and never in the presenter view, print, export or a tool's
+  browser: `navigator.webdriver`, `window.__rec`, `window.__shots`) →
+  `pnpm talk pptx <t>` (the render slot: `slidev-videos pull
+  --include-shared`, so no clip slide records without its clip; the takes
+  at 1080p50, an 8 s hold, every click, `--max` the longest clip + 60 s
+  (120 s at least, 600 s when a clip's length is unknown) into
+  `$TALK_TMP/talk-<slug>/pptx/rec`, kept while `rec/take.json`'s content
+  fingerprint and recorder args match, `--rerecord` to record again, `--
+  --slides N-M` for some slides, the recorder's flags after `--`; then
+  `slidev-videos pptx rec --deck deck.md --out <talk>.pptx` and `gh release
+  upload <tag> <talk>.pptx --clobber` onto the talk's videos release;
+  `--dry-run` prints the plan, `--no-publish` builds only) → commit
+  `videos/pptx.json` (`fingerprint`, `asset`, `repo`, `tag`, `url`,
+  `bytes`, `slides`, `segments`, `deck_slides`, `skipped`, `fps`, `hold`,
+  `max`, `cap`, `cli`, `recorded_at`) → `pnpm talk ready` (the pptx step:
+  the asset on the release at that size, the take current by content,
+  under 1.5 GB; warnings unless `--strict-pptx`, `--skip pptx` leaves it
+  out) → `pnpm talk deploy` (the site index's "PPTX · size" link comes
+  from the committed file). `$TALK_TMP` does not survive a reboot: the
+  release keeps the asset and `pptx.json` the fingerprint, and a stale take
+  records again.
 - Both addons and the CLI are pinned to slidev-videos `v0.4.0`: the talk's
   `package.json`, `scripts/new_talk.py` (`ADDONS_REF`) and env.yaml's pip
   entry move together on a release. The `frames` subcommand is new in 0.4.0;
@@ -245,6 +307,9 @@ wants a `.src` line; a deck that keeps its sources in the notes says
 Open marks are `[CHECK…]`, `[PATIKSLINTI…]` (a question for the owner),
 `[ASR…]` (a quote from an automatic transcript, not re-listened yet) and
 `[TODO…]`, anywhere below the headmatter: warnings, errors with `--release`.
+`advance-on-end` on a `<VideoPlayer>` is a warning (`ADVANCE`): a clip ends
+and waits for the press unless the owner asked for that clip by name
+(2026-10-21); `:advance-on-end="false"` is not flagged.
 A question the talk can go without says so right after the mark,
 `[CHECK, optional: …]` or `[PATIKSLINTI, neprivaloma: …]`, and stays a
 warning with `--release` (`CHECK-OPTIONAL`) in the notes or another

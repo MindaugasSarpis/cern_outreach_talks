@@ -121,6 +121,8 @@ title: {title}
 
 First slide.
 
+<PptxButton />
+
 ---
 layout: section
 hideInToc: true
@@ -166,6 +168,8 @@ space:
 ## A subtitle
 
 <div class="mt-md">Name · Affiliation</div>
+
+<PptxButton />
 
 <!--
 Speaker: the hero station builds itself behind the title; `c` replays it.

@@ -12,12 +12,33 @@ Pictures (from Innoday, feat/innoday-cern d80ea9a)
 - The funnel's form follows NASA/WMAP's "timeline of the universe" figure (drawn anew in grains, no part of the image used).
 
 Data
-- Slide 9: LHCb collaboration, Phys. Rev. Lett. 118, 182001 (2017), arXiv:1703.04639, CC BY 4.0: the m(Ξc⁺K⁻) of Fig. 2 (3.3 fb⁻¹), its 1 MeV bin contents read from the vector figure (LHCb-PAPER-2017-002/Fig2.pdf) and summed to 2 MeV (they equal the paper's Fig. 3 bins), 2960–3300 MeV, 59 453 candidates, drawn one grain per two candidates.
-- LHCb collaboration, Phys. Rev. Lett. 122, 222001 (2019): the m(J/ψ p) bins drawn on slides 10 and 11, from HEPData ins1728691, Table 2 (doi:10.17182/hepdata.89271.v1/t2).
-- Slide 8 and the left plot of slide 11: an illustration generated for this talk (no measured data; public/data/theta-toy.json).
-- Slide 6, the collision: one real CMS crossing from CERN Open Data record 300 (CC0), run 195099, event 137440354 (27 May 2012, 8 TeV, a Higgs boson candidate); its provenance is in components/lhc-opening/README.md. The energy line is hidden in this talk (styles/index.css).
-- Slide 17, the sun of plots: made by LHCb Vilnius for OpenData from two public LHCb files, CERN Open Data records 401 and 24506 (public/figures/opendata/, copied from talks/2026_10_21_OpenData).
-- Slides 14–16, the piles: drawn for OpenData; the volumes are in each slide's notes.
+- Slide 11: LHCb collaboration, Phys. Rev. Lett. 118, 182001 (2017), arXiv:1703.04639, CC BY 4.0: the m(Ξc⁺K⁻) of Fig. 2 (3.3 fb⁻¹), its 1 MeV bin contents read from the vector figure (LHCb-PAPER-2017-002/Fig2.pdf) and summed to 2 MeV (they equal the paper's Fig. 3 bins), 2960–3300 MeV, 59 453 candidates, drawn one grain per two candidates.
+- LHCb collaboration, Phys. Rev. Lett. 122, 222001 (2019): the m(J/ψ p) bins drawn on slides 12 and 13, from HEPData ins1728691, Table 2 (doi:10.17182/hepdata.89271.v1/t2).
+- Slide 10 (both of its plots) and the left plot of slide 13: illustrations generated for this talk (no measured data; public/data/theta-toy.json).
+- Slide 7, the collision: one real CMS crossing from CERN Open Data record 300 (CC0), run 195099, event 137440354 (27 May 2012, 8 TeV, a Higgs boson candidate); its provenance is in components/lhc-opening/README.md. The energy line is hidden in this talk (styles/index.css).
+- Slide 21, the sun of plots: made by LHCb Vilnius for OpenData from two public LHCb files, CERN Open Data records 401 and 24506 (public/figures/opendata/, copied from talks/2026_10_21_OpenData).
+- Slides 17–19, the piles: drawn for OpenData; the volumes are in each slide's notes.
 
 Map
-- Coastlines and borders: Natural Earth 1:50m, public domain. Lithuania's outline (slide 13): Natural Earth 1:50m admin 0 countries (v5.1.2), public domain.
+- Coastlines and borders: Natural Earth 1:50m, public domain. Lithuania's outline (slide 15): Natural Earth 1:50m admin 0 countries (v5.1.2), public domain.
+
+Added 21 Oct (the 15-minute round)
+- Slide 9, LHCb as a 3D model: public/data/lhcb-mesh.glb, from LHCb's DD4hep detector description (© CERN for the benefit of the LHCb Collaboration, GPL-3.0) through HSF Phoenix's glTF (Apache-2.0), decimated by Innoday's hero/export_mesh.py; the person for scale from Blender's Human Base Meshes (CC0). Notice kept in public/data/lhcb-mesh.NOTICE.txt. Its collision: LHCb's own 2012 event from CERN Open Data (run 133488, event 2028034058), as components/lhc-opening/README.md gives it.
+- Slide 16: lis_flag.mp4 (the slidev-videos library), a Blender render for Innoday after the SciFi drawing; no photograph; the Lithuanian flag on the cold box is Innoday's own touch.
+- Slide 20: CERN-FOOTAGE-2022-013-006, the CERN data centre and its tape robot (CERN; the owner, 10 Oct: "it's cern license, I'm CERN user").
+- Slide 6: CERN-VIDEO-2019-050-008, an LHC dipole magnet (CERN), its first 10,8 s.
+
+Added 23 Oct (the zoom)
+- Slide 2: vilnius_zoom.mp4, the owner's own SpaceEngine edit for Innoday (spaceengine/nftmc_zoom.mp4), time-remapped to 20 s. The Earth part is Google Earth, its attribution in the footage (the "Google Earth" logo; imagery Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies). The cosmic web: NCSA Advanced Visualization Lab ("Cosmic Bubble Bath", NSF), as for slide 3. The slide numbers above are the 19-slide deck's: from slide 2 on, add one.
+- Slide 2 since the stabilised cut: six stretches of the same edit joined by dissolves (scripts/remap_zoom.py); the Google Earth attribution is kept whole and readable in the footage.
+
+Added 23 Oct (the ending, from Innoday)
+- Slide 19: lis_flag.mp4, Innoday's 20 s Blender render of a SciFi module after the SciFi drawing (no photograph); the flag is Innoday's own touch.
+- Slide 20: close_lhc_fcc.mp4, Innoday's recorded close (its slide 30, cut at 57,2 s): the LHCb point cloud from the DD4hep description through HSF Phoenix (as slide 10's model: © CERN for the benefit of the LHCb Collaboration, GPL-3.0; Apache-2.0), LHCb's own collision from CERN Open Data, and the map: Natural Earth (public domain) and © OpenStreetMap contributors (ODbL: city positions, the accelerator tunnels, the ridges), as Innoday credits them. [ODbL asks for the OpenStreetMap credit where the map is shown: the owner to say whether it goes in tiny print on „Ačiū“.]
+
+Added 24 Oct
+- Slide 2: the zoom is one continuous stabilised flight with a warp effect and a synthesised whoosh (scripts/remap_zoom.py, zoom_swoosh.py); its earlier music (the SpaceEngine edit's own track, title and licence unknown) is no longer used.
+- Music: Scott Buckley, „Aphelion“ (slides 2–5) and „Born Of The Sky“ (the data slide), scottbuckley.com.au, CC BY 4.0; „Starfire“ as before. (Replaced the same day, below.)
+- The touchscreen slide: B. Stumpe, photo S. E. Bennett / CERN, CC BY 4.0 (from Innoday). The first website: a capture of info.cern.ch (CERN).
+- Later on 24 Oct: one piece for the whole deck, Scott Buckley, „Starfire“ (scottbuckley.com.au/library/starfire), CC BY 4.0, adapted: sections joined into a longer bed and a cut for the close (scripts/starfire_bed.py); „Aphelion“ and „Born Of The Sky“ no longer used. Slide 2's whoosh replaced by a synthesised low hum (scripts/zoom_hum.py), the zoom 25 s.
+- Slide numbers above are older decks'; the credits page (the last slide) lists all.

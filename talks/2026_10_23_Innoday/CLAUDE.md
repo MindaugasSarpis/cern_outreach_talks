@@ -28,7 +28,7 @@ brings the next round, and Lithuanian firms can solve it.
 
 - **Opening.** The title (owner, 12 Oct: back), then the zoom-out from
   NFTMC in Saulėtekis to the cosmic web (the owner's SpaceEngine edit,
-  `nftmc_zoom_web.mp4`, advance-on-end) → the takeover (its last frame, the web, becomes the world's
+  `nftmc_zoom_web.mp4`; it waits for the press at its end) → the takeover (its last frame, the web, becomes the world's
   grains) → the web's grains fly into a funnel, which resolves into the history
   of the Universe as a funnel of grains, its mesh coming in last, seen from outside
   (Big Bang, CMB, dark ages, a band of hot proto-galaxies, then colder, sparser
@@ -52,11 +52,10 @@ brings the next round, and Lithuanian firms can solve it.
   +14 % apyvartos, the FCC (CERN's 2025 map clip).
 - **„Lietuvos istorija CERN“** (no section slide since 13 Oct: owner, "don't
   need the 'Lietuvos istorija' cover slide"; the camera flies from the FCC
-  clip straight to the first photo). Photos only (owner, 13 Oct), from
-  the LHCb Week in Vilnius (14–18 Sept 2026): the rector under the „LHCb WEEK
-  VILNIUS“ screens, the President's video greeting on both screens, the
-  opening panel with the vice-minister, the full hall; the membership facts
-  (associate since 2018, the full-membership bid) are in their notes;
+  clip straight to it). Since 20 Oct the whole LHCb Week Vilnius aftermovie
+  (owner: "Don't worry about photos show the entire aftermovie"; 2:28, its own
+  music, nothing said over it; the Lithuania lines before or after it), in
+  place of the four photos; the membership facts are in its notes;
   then (19 Oct) the light injection clip, a SciFi module's end where a laser
   writes the flag on the cold box, whose last frame becomes grains at its place
   in LHCb, the camera pulling back to the whole detector in grains and LHCb's
@@ -169,6 +168,178 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-22 (21:15, deployed): 4bc29fa (Pages run 39827057266, green, URL 200, live walk clean).
+Slide 30's close now flies in to NFTMC over the dive's last 10 s and, under „Ačiū“, very slowly
+zooms out again (close_home.mp4, 111.6 s). The venue zip is rebuilt from 88f60de (the same deck;
+4bc29fa adds only venue.json), 899 061 992 bytes; the landing page shows "ZIP · 857 MB". Open as
+below.
+
+2026-10-22 (20:50, deployed): efba698 (Pages run 39824423357, green, URL 200, live walk clean;
+`ready` passed on it, nothing skipped). Live: slide 30 is close_home.mp4, the close re-recorded at
+4K with the whole LHCb logo and the flight home (the complex gone as the clouds appear, a 14 s
+dive into Vilnius, „Ačiū“ over NFTMC on Starfire's 2:54.85 at 79.8 s; the owner on the review:
+"Otherwise all really good, go for final deploy and zip available in the list of talks on the
+web"). The venue zip is rebuilt from 6ee27ad (the same deck; efba698 adds only venue.json),
+877 165 607 bytes on the release; the landing page shows "ZIP · 837 MB". The talk now times at
+~27.5 min (slide 30: 2 min). Open: plates 30–31 stale (30 a clip, 31 a still); the old close.mp4
+and the PPTX stay on the release unused; the toolkit's cut clip (no cover) told to the Scheduler.
+
+2026-10-22 (19:00, deployed): 4744b0d (origin/main merged at acc0993; Pages run 39808661599,
+green, URL 200, live walk clean). Live: slide 30 is the recorded close (close.mp4), faded in so
+the world rests under it (a cut clip never rested it: the M2 Mac's lag, owner "MacPro M2 can't
+quite handle the final slide"); slide 31 the clip's last frame as a still (CloseStill); the SciFi
+module lands in the cloud's SciFi; the logo cropped to its upper half (a mistake: undone at night); the buffer at most 1920 wide;
+no PowerPoint. The landing page shows "ZIP · 742 MB"; the zip on the release is rebuilt from
+4744b0d (778 514 435 bytes). Open: the owner to retry the final slide on the M2; plates 30–31
+stale (30 a clip, 31 a still; neither drawn live); the toolkit's cut clip told to the Scheduler.
+
+2026-10-22 (00:45, deployed): the fresh-eyes review of all 31 slides found nothing high; its fixes
+are in (White Rabbit darker, 19 and 22 dimmed, „8 TeV“/„290 dalelių“ at bottom 96 px, slides 5–6
+further back, the units light blue, the cover's lines shadowed, the sun's cards stepping back at a
+touch, slide 4's notes point at the Big Bang); the plates re-recorded and published (--only, 8
+changed); the Scheduler's lockfile fix merged (path keys of the v0.8.1/v0.9.0 tarballs). `ready`
+passed with nothing skipped (plates: 03-plate 45 MB over budget; "stale" only because the merged
+lockfile entered the fingerprint, no file the talk builds from changed). Deployed 8e44020 —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ — Pages run 39680747326
+green, URL 200, the live walk 31/31. The venue zip rebuilt from it.
+
+2026-10-22 (00:10, deployed overnight; the owner asleep: "Continue working, I'm going to sleep.
+Implement all said improvements"): v0.8.2 adopted (merged origin/main and origin/chore/live-fallback,
+`pnpm talk pin … v0.8.2`, `stage.motion: floor`), 24 plates recorded (`talk record --plates`) and
+published with --only with the cold-box lis_flag.mp4; the forced no-webgl2 walk passed (2→3 onto a
+playing plate, 8 waits for the press, 30's still fades and „Ačiū“ by ~50 s); `ready` passed with
+nothing skipped (one plates warning: 03-plate.mp4 45 MB, over the 40 MB budget: the ~80 s flight).
+Deployed 5c93455 — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ —
+Pages run 39675192178: Innoday's build and deploy jobs green, URL 200, the live walk 31/31; the run
+as a whole red because UzsikraukKarjerai, OpenData and MasterTalk no longer build ("Failed to resolve
+entry for package slidev-addon-stage", after the merged LhcOpening.vue; their live pages still 200;
+reported to the Scheduler). Since: the paper count 878 (INSPIRE, 22 Oct; fact lhcb-papers-2026-10-22).
+Open for the owner (morning): his notes on the three review MP4s (the close, slide 3, slide 29),
+the 21 Oct visual round; slide 11 was the recommended option, taken without his answer.
+
+2026-10-21 (night, deployed): the owner wrote "Publish". lis_flag.mp4 (20 s) published
+with --only; `ready` passed with nothing skipped; deployed 3da294a —
+https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/ — Pages run
+39645262547 (green), URL 200, the live walk passed. Live: the round below (the close as
+grains to the LHC ring, the CMS cover, the funnel's eras, Europe for Part III, slide 27's
+question, the 20 s light-injection clip, the music at 0,6). The new raw is hard-linked into
+the main checkout's raw bank. Wednesday: the paper count (878 on INSPIRE on 21 Oct), the
+owner's notes if any, then v0.8.2 (pin, plates, ready, redeploy) and the venue zip.
+
+2026-10-21 (night): the round below is built, committed (c1a826e, 7667e69) and pushed on
+talk/innoday, not deployed; the owner has the close's review MP4 (53 s, with the music), the
+new 20 s light-injection clip and stills of the cover, the funnel and Part III. Not yet
+published: lis_flag.mp4 (the release still holds the 10 s clip; `videos:publish --only
+lis_flag.mp4` with the deploy, after his yes). The new raw is in this worktree's
+videos/raw only. Next: his yes or notes Wednesday morning, the paper count, then v0.8.2.
+The owner's new round, all approved in this window: „Ačiū“'s music 0,9 → 0,6 (done); the close back to grains with the person as 3D grains
+(part 10, bake_grains.py; done, unreviewed) and a new path "to really reveal the vast scale",
+ending in a pull-out to the full LHC ring ("can show the accelerator as well, so this doesn't look
+isolated … panning out at the very last second to full accelerator and then ačiū appears"); the
+light-injection clip ~20 s (the whole module, a pan down, the boards glowing, the same last frame;
+publish --only lis_flag.mp4 after); the cover a slow silent looping CMS collision; slides 4–6 the
+funnel as the Universe's history, brighter, no floor grid; Part III a Europe map in grains
+(CERN → member states, Lithuania lit) for the "weird" sphere; slide 27 „O kokį vaidmenį atliks
+Lietuva?“ at the clip's end (done). Order: these → the owner's review MP4 of the close tonight →
+his yes Wednesday morning → v0.8.2 adoption → plates → ready → deploy → venue zip, by Wed evening.
+
+2026-10-21 (review): owner, via the Scheduler: "Innoday is next, so focus on that, carefully
+review." Review of fe3fb1a in notes/review.md (checks, sound levels, 12 visual findings for the
+owner, none applied). Applied: the press notes on slides 2 and 8, the film's notes (it plays at full
+level from 0:03; say the Lithuania lines on the FCC slide or over its held last frame), the stale
+`places` Decisions. Open for the owner: which visual findings to fix; the paper count (878 on
+INSPIRE today, 875 on slide 12; refresh on 22 Oct); the talk's start time on 23 Oct (not in the
+calendar); the earlier open items below (the CAD never came; the three CERN CC credits; the
+iPhone retest; the film's rights).
+Venue checklist (23 Oct): (1) on the venue PC open the URL with `?stage-debug` first: a
+`data-stage-fallback` reason means no world (after Thursday's bump the plates play; before it the
+stills; either way both clips wait for the press); then reload without it at slide 1. (2) Sound:
+the PC's audio to the hall; set the hall gain once on the opener's first seconds (every clip and
+Starfire are at -16 LUFS). (3) Clicker: forward and back; the first press on the title goes to the
+opener and unlocks sound (opened cold on slide 2, the first press starts the clip). (4) With
+/presenter, click the audience window once first. (5) The offline zip on a USB stick
+(`pnpm venue`, rebuilt after the bump). (6) At the close, the frame-rate guard (below).
+Timeline (Scheduler, 21 Oct: the calendar has the talk inside a 09:00–14:00 block on Thu 23 Oct, so
+everything lands on Wed 22 Oct, deploy and the USB zip included; Thursday morning is only a last live
+walk before he leaves). Paper count refreshed on 22 Oct. Cut-off Wed 19:00: without v0.8.2 by then,
+the clip change and the review fixes he approved deploy alone under the standing rule and the fallback
+is dropped for this talk (the Scheduler gives main at 19:00 either way). The adoption, from the
+release's relay on Wednesday (T): T+0 merge origin/main, `pnpm talk pin v0.8.2`,
+commit; T+5 `stage.motion: floor`, check, lint; T+10 `pnpm talk record --plates` (~15 min on the
+GPU, render-lock priority); T+25 `videos:publish --only <plates>`; T+35 force the fallbacks
+(reduced motion, no WebGL) and walk 2→3, 8→9, 9→10→9 (a back-step onto a held plate), 28, 30, and test the takeovers on the plate
+layer under `--force no-webgl2` (prepared 21 Oct: on html[data-stage-layer="plate"], once
+html[data-stage-plate] is `playing`, WebTakeover's still goes at once and LisTakeover's fades after
+`hold`, with „Ačiū“ at the path's end + 0,6 s; `held` (a back-step or jump) shows the end at once;
+`living` keeps the photo and the word; inert on v0.8.1, which never sets the attributes; the Scheduler
+read StagePlate: the state is this slide's within ~50 ms of the route, so the observer stays); T+45 `talk ready` (plates step); T+55
+deploy under the standing rule; T+65 the venue zip rebuilt and onto the USB stick, hand-off. About
+75 min.
+
+2026-10-21 (later): the owner, via the Scheduler: "Can we not mark clips to advance, in
+innoday as well.... I will specifically ask if it's needed". `advance-on-end` removed
+from slides 2 and 8, notes say the press is his (Decisions, "No clip moves on by
+itself"). Not deployed: Thursday morning's redeploy with the fallback carries it; if the
+toolkit release has not been relayed by Thu 23 Oct 09:00, this change deploys alone under
+the standing rule (`ready` with nothing skipped; the Scheduler gives main then).
+
+2026-10-21: the owner asked (via the Scheduler) to renew the talk for the toolkit's
+non-static fallback, now being released by Tools: a floor tier of the world where the browser lacks only a
+feature or asks for reduced motion, per-slide MP4 plates where the world cannot run, and
+a GPU-free "living still" under both. The trigger was OpenData's "it seemed like the
+slides autoclick" on a Windows machine that had fallen back to the stills. No renders
+until the release is on GitHub. Audit (no changes yet): the deck moves on by itself only
+through `advance-on-end` on two clips, the opener (slide 2 → 3, the web takeover) and the
+tunnel (slide 8 → 9, the collision); `VideoPlayer`'s `onEnded` calls `next()` whatever
+the stage's state, so in the fallback each clip still ends and moves on, onto a still
+whose flight never comes. Everything else is visual only: `AfterFlight` (a 2,4 s fade),
+`LisTakeover` (rate and emblem timers, `wordBy`), `ShortHum` and `Soundtrack` (audio),
+`OpenerStart` (takes the first press on a cold open; never advances). The talk's
+`<Grains>` has no `later`. Slide 9's "8 TeV" and "290 dalelių" (components/lhc-opening)
+appear only on the world's `cross` and `flyout` events, so in the fallback they never
+show (OpenData's collision slide is the same). The plan once the release is out, all before 23 Oct: `pnpm talk pin
+<vX.Y.Z>` from the worktree root, `pnpm talk check`, `pnpm talk record --plate` for
+every slide (render lock), the fallbacks forced and walked (slides 2→3, 8→9, 9, 30),
+`talk ready`, deploy under the standing rule.
+
+2026-10-20 (night, deployed): the owner's three items and his detector choices are live
+(Decisions: "The slower, bigger close", the aftermovie, "LHCb on „Ačiū“ is a 3D model").
+Deployed 404f3a7 — https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/
+— Pages run 39485774569 (green), URL 200, the live walk passed; `ready` passed with nothing
+skipped. 31 slides, 25,0 min. The aftermovie's credit on the credits page: „LHCb savaitės
+Vilniuje filmas: Nebula Moments (R. Unkevičius)“. Rights: asked whether the organisers and
+Nebula Moments agree to the film on the public release and Pages, and about its music's
+licence, the owner answered "Don't worry about photos show the entire aftermovie" and then
+"Deploy"; no separate permission was recorded. The photos' „VU nuotr.“ question no longer
+applies to the deck (they left it). This worktree needs `pnpm videos:pull -- --include-shared`
+and lhcb.mp4 fetched from the shared release (`gh release download videos-shared --repo
+MindaugasSarpis/slidev-videos -p lhcb.mp4`) before `talk check` passes; the aftermovie's
+raw is also hard-linked into the main checkout's raw bank.
+
+2026-10-20 (late): three items from the owner via the Scheduler. (1) The stripe on
+„Ačiū“ ("lhcb logo has a weird vertical stripe") was in figures/lhcb_logo_grains.png:
+column 0 opaque from the mirror axis down, and the axis's hairline lit across rows
+325–330; both cleared (letters, reflection and the red slash kept), still 33 retaken.
+(2) "Make it even more spectacular? don't need to rush to zoom out": built (Decisions,
+"The slower, bigger close"), checked on four headless recordings of slide 33; a review
+copy with the music went to the owner. Not deployed: the owner reviews first.
+(3) The LHCb Week video for „Lietuvos istorija CERN“ is the aftermovie (owner's
+correction; not the President's greeting; then "show the entire aftermovie": built,
+ee790f1, published with --only; Decisions): „CERN Aftermovie_4K_HQ_final.mp4“ (2:28,
+4K25, its own music at -15,3 LUFS; film by Nebula Moments, R. Unkevičius), uploaded to
+the LHCb Week Drive folder on 20 Oct, now in the raw bank; the cut is proposed to the
+owner, not built. Open for the owner: the cut, its audio against Starfire, and the
+credit and permission for the film (the photos' „VU nuotr.“ question still open too).
+
+2026-10-20 (night): the owner's notes on the eye-level close ("lhcb seems 3m high",
+"horizontally squished", "chopped in half ... full 16x9 frame filling view ... then
+slowly panning out, showing this person for scale", "do the Lithuanian flag at the
+bottom of scifi") are built (Decisions, "The close at eye level"): true proportions,
+the close-up 16 m back with the whole detector in frame, the pull-back to 28 m with
+the person at the muon wall's foot, the clip re-rendered with the module's lower
+readout end (57 min on gluon) and republished with --only, the hand-over's anchor at
+the lower cold box. Stills 31–34 retaken. Not yet deployed at this entry.
+
 2026-10-20 (later): the owner's notes on the deployed close ("Looks amazing" — the
 eye-level view, the logo and the flag, more solid grains, the soundtrack, no CAD for
 now) are built (Decisions, "The close at eye level"): five visual review rounds, a
@@ -177,7 +348,9 @@ the music's two files measured (-15,9 and -14,1 LUFS, the arrival at the cut's
 67–70 s) and its flow tested headless (forward, back, a direct open, the overview).
 Stills 31–34 retaken. Then (the owner: LHCb looked 3 m high and squashed) true
 proportions on „Ačiū“ and the end side on from the middle at the owner's eye level
-(Decisions); three more visual rounds. Deployed 897b30c — Pages run 39339958890 (green), URL 200,
+(Decisions); three more visual rounds, deployed dafb7eb — Pages run 39342886481
+(green), URL 200, live walk 34/34; `ready` passed with nothing skipped. Before it:
+897b30c — Pages run 39339958890 (green), URL 200,
 live walk 34/34, the music files served; `ready` passed with nothing skipped.
 Nobody has listened to the music in a session: the owner hears it first.
 
@@ -219,16 +392,188 @@ the public repo and their credit („VU nuotr.“), any minister photos at LHCb,
 lhcb.mp4's music (probably a commercial film score), the opener's music and
 the NCSA web's licence, the CERN CC credits, the paper count on 22 Oct, the
 iPhone retest. For a PDF: `pnpm talk export innoday --format pdf -- --wait
-12000`. For the offline zip, until the env's slidev-videos is past v0.4 (not
-before 26 Oct): `VITE_VIDEOS_LOCAL_FIRST=1 pnpm venue` in the talk dir. The
-old CLI's venue runs `pnpm build:portable` without it (847244e fixes that),
-and the zip's player would then try GitHub over the venue's Wi-Fi before its
-own copies; the variable reaches the build through the environment.
+12000`. For the offline zip: `pnpm venue` in the talk dir (the env's slidev-videos is
+v0.8.1 since 20 Oct and builds the zip local-first itself).
 
 ## Decisions
 
+- **The close is a recording (22 Oct, evening).** The owner: "the very last frame is laggy even in
+  zip" — "Maybe worth prerecording a video? So it doesn't lag?" — "For both SciFi module (which
+  then would all go into the SciFi detector and become the point cloud aligned with the scifi)".
+  Slide 30 plays close.mp4 (slidev-stage-record of the live slide at 22efcef, `--slides 30 --fps
+  50 --hold 16 --clicks none`, x264 slow CRF 17 under 10 Mbit/s, 73 s, a generated manifest
+  entry); the music stays live and `<Soundtrack keys>` gives it + and − over the muted clip. To
+  change the close: restore slide 30 from 22efcef, record, encode, publish `--only close.mp4`.
+  The LIS anchor is LHCb (0.8, −2.00, 7.95) m (the cold box's true −2.55 m sat 0.11 m under the
+  cloud's lowest SciFi grain). The PowerPoint is dropped ("not going to work for this"); the old
+  PPTX asset stays on the release unused.
+- **Nothing live under the close (22 Oct, night).** The owner: "Looks good on this RTX5080
+  workstation, but MacPro M2 can't quite handle the final slide". Slide 30's clip is
+  `transition="fade"`, never `cut`: in slidev-addon-videos v0.8.3 a cut clip never sends
+  `slidev-videos:cover`, so the world drew 160–430 draw calls a second under the whole
+  recording (a headless count; fade: 0). Slide 31 (credits) is `<CloseStill>` (setup/CloseStill.vue):
+  the clip's last frame (figures/close_end.jpg, from close.mp4) with the world resting, not the
+  complex drawn live. Toolkit: a cut clip should announce cover too (told the Scheduler).
+- **The bookend: „…ir atgal“ (22 Oct, night).** The owner, on the Scheduler's proposal (the
+  title promises „…ir atgal“, the opener flies out from NFTMC, the close ended on the LHC
+  ring): "Go ahead and do it"; on the first cut (a fade from the ring to NFTMC): "shouldn't
+  there be world zooming out and so on to Vilnius? Also, for the video could we get better
+  resolved sharper pointcloud?". Slide 30 plays close_home.mp4 (~110 s; the manifest's notes,
+  hero/bookend.py): the take re-recorded at 3840×2160 and taken down to 1080p; at 57.4 s the map
+  flies away into the Earth, then the opener's first 56 s backwards down into Vilnius, landing
+  on NFTMC from above (~92 s); the take's „Ačiū“ collision lifted off the map crosses over
+  Vilnius at 95.5 s. Starfire's peak, measured in the file: the downbeat at 2:54.85 after the
+  drum fill (the piece's biggest onset, +7 dB); the music's quiet middle plays under the flight
+  and its drum build on the approach. The `drop` on the slide's <Soundtrack>: the music falls
+  to 6 % from 92.7 s, a third file (audio/starfire_close_peak.m4a, the track from 2:52.85)
+  starts quiet and opens on the downbeat, the clip's rate nudged to stay on it. close.mp4 (the
+  4744b0d close) stays on the release for that deploy. Limits: the opener's Earth is a CG limb
+  with no readable coastline, so the map goes down on its lit side, not on Geneva; the dive
+  passes the opener's Google Earth to CG change (~29 s of it).
+  The owner on that cut: "Make this going back to vilnius quicker, but all good otherwise apart
+  from LHCb Logo only showing half": the dive is 14 s (62.5–76.5 s, the opener at 4×), the
+  crossing at 79.8 s (the `drop` brings the peak there out of the music's quiet middle). The
+  logo is the whole official one again (figures/lhcb_logo_grains.png: the light „LHCb“ over the
+  dark inverted one and the red track): its lower half is the logo, not a reflection, and the
+  22 Oct crop (figures/lhcb_logo.png, gone) had cut it; the take re-recorded with it.
+  Then: "The complex should fade out as soon as clouds appear" (gone by ~58 s); "NFTMC should
+  be static, better to fly in to it for the last 10 seconds and then very slowly start zooming
+  out again" (read as: not a still): the dive fast through space and the clouds, its last 10 s
+  a fly-in easing onto NFTMC (~76.5 s), and under „Ačiū“ the opener forwards at 0.12× (the clip
+  ~111.5 s, then held).
+  Then: "looks choppy... because of framerate ... need the video to be smooth around NFTMC, so
+  start ACIU as soon as it's visible (can still be around vilnius) maintain original or at least
+  decent framerate": the fly-in at about the opener's own pace (at most 1.33×), every slower
+  pass a blend of neighbouring frames (no held frames), the word's bunches from 66.55 s (NFTMC
+  in view), the crossing and the peak at 69.8 s, the landing at 76.55 s.
+  And "and collision full frame": the collision is a close-up of the 4K take (4.5×: its spray
+  fills the frame), easing back to the whole word as it gathers (the take's 64–68 s).
+
 Dated detail in `HANDOFF.md`. The ones a later session must not undo:
 
+- The 22 Oct afternoon round (owner, in this window; "This is the last of the comments"):
+  - Slide 11 waits for a click on the photo ("can we do on click transfer to the globe view? I
+    might stay for a minute or so one the photo"): `clicks: 1`; CollabGlobe holds the photo until
+    `$clicks` ≥ 1, then the globe starts 1,05 s into its sequence; the recorders (`window.__rec`)
+    never wait, so the plate and the PPTX take play it through.
+  - The Web (and its server) visited last of the inventions ("Pasaulinis žiniatinklis we visit
+    last"): now slides 21–22, the Part's opening line names information last.
+  - Slide 16's caption „3D rentgenogramos su spalvine audinių indikacija“ (owner's words).
+  - Slides 23–26: the islands are back (Douglas–Peucker on a closed ring kept nothing: Great
+    Britain, Ireland, Iceland, Sicily; "why is UK not rendered") and the coastlines beyond, to
+    the frames' edges ("and other continents"), sparse and border-faint (europe.json `far`).
+  - Slide 27's hum steady ("repeating / puslating.. can we just have more constant one").
+  - `+` / `-` show nothing to the audience ("invisible, but -+ to control"): the badge only in
+    the presenter's window.
+  - Slide 30: down to eye level side on, LHCb filling the frame side to side; a slow drift back
+    as the collisions merge into the glow; then one slow pull-out to the map, no pause (path 33–54
+    s) ("first zoom out untill you reach the eye level, so lhcb is full frame side to side, then
+    slowly move out until the beams run at full speed, only then zoom out to lhc fcc"; "slow and
+    continuous"). The SPS, the PS and the transfer lines are gone ("the inner ring of the lhc
+    doesn't make sense... don't show it"). A small flag (`ltMap`) rides from the SciFi's place to
+    just below LHCb's point on the map and stays ("Still need lithuanian flag on 30"). The map's
+    still grains 86k → 53k and the logo's 80k → 55k ("lags on zooming out to lhc / fcc" on a Mac).
+  - The LHCb logo is a solid image, not grains ("logos could even be baked in", "so not particle
+    like"): the emblem's `solid: true` draws `src` on one plane that fades in over `dur` and rides
+    as before. The glow before the pull-out merges sooner (cascade 4 s after the crossing, rate
+    0,34) and the drift lasts to path 36 s, so the beams are at full rate before the zoom.
+- The 22 Oct round (owner, in this window):
+  - „Ačiū“'s music at 0,3, half of 0,6 ("And the last soundtrack 50% quieter"); `+` / `-` step
+    the music and slide 27's hum on a slide without a clip, 0–200 % of the written level, kept in
+    the browser and crossing to the audience window ("would be good to have control over sound as
+    well"; setup/soundLevel.js); on a clip's slide the same keys stay the clip's own.
+  - The close ends on a map after CERN's FCC schematic ("For the last one, can you use something
+    like this? Now the SPS is weirdly connected to lhc"): straight down, north up, the LHC and the
+    whole FCC in frame; the SPS, the PS and TI 2, TI 8, TT2/TT10 are the tunnels' own lines from
+    OpenStreetMap (they meet the LHC at Points 2 and 8), the FCC a dashed orange 90,7 km circle
+    fitted to its eight sites (cern-fcc-sites), Lake Geneva, the border, the Rhône, the Jura's
+    crest and four ridges (hero/ring_map.py → public/data/ring_map.json; credited). The logo rides
+    to the top left.
+  - „Ačiū“ comes out of a collision ("aciu should appear out of particle collision now it's a bit
+    flat"), with the Lithuanian flag under it ("Also Lithuanian flag should appear with aciu"): a
+    CMS crossing (`aciuCol`, scale 10) in the FCC's middle as the camera stops; 0,9 s after its
+    crossing the word and the flag (`aciu`, `ltAciu`: emblems with `text` / `flag` and `burst`)
+    gather out of it on curling tracks; the collision lets go after 5 s. The slot's HTML word is
+    hidden wherever the world or its plate runs; it stays for the still, living layer and print.
+- The 21 Oct round (owner, in this window; each answered by him):
+  - The music goes on after „Ačiū“ ("sountrack has to continue"): both Starfire files now run
+    to the track's own end (src 0:30–5:41, tail 1:19–5:41, 311 s and 262 s, the master from
+    scottbuckley.com.au at −0,5 dB as before), about four minutes under the questions.
+  - „Ačiū“'s music at 0,6, not 0,9 ("Sound on the aciu slide is a bit too loud"): its peaks
+    now sit at the film's level (−16 LUFS), not 3 dB over it. The credits page matches.
+  - The close is a point cloud again ("let's get back to point cloud"; supersedes "LHCb on
+    „Ačiū“ is a 3D model"): the blue grains with their edges and lit faces, the person as
+    3D grains (part 10 of lhcb-grains.bin, hero/bake_grains.py's sixth argument, the same
+    body and place as the hologram person; its own colour, never lit by the collision).
+    hero/export_mesh.py and lhcb-mesh.glb stay, unused.
+  - The close reveals the scale ("we want to really reveal the vast scale of it") and ends
+    on the LHC ("can show the accelerator as well, so this doesn't look isolated, it's a
+    part of huge infrastructure. Maybe panning out at the very last second to full
+    accelerator and then ačiū appears"): eye level 7,6 m from the person, a walk upstream,
+    the pull-back to the whole detector, then a scale cross-fade into the ring (`ring`
+    object `lhcRing`, emblems.js; not at true scale), Point 8 marked, „Ačiū“ inside the
+    ring at 49 s (hero/close_path.py). The flag's grains turn to face the camera
+    (lisGrains.js): side on, the cold box's flag was seen edge-on.
+  - The light-injection clip is ~20 s: the whole SciFi module, a slow pan down, the cold box's
+    blue outline glow while he names the system (no text; owner: "The light injection system is
+    within this black coldbox, no need for blue cables": no boards or fibres on the mats), the engraving, today's last frame
+    ("show the full SciFi module panning slowly … on the bottom I indicate the light
+    injection system"; chose "Re-rendered clip" and "Glow outline, no text").
+  - The cover is the real CMS collision (record 300, the 2012 Higgs candidate), filling the
+    frame, slow, silent, looping (~23 s a round) ("Cover slide can be more substantial, say
+    the cms collision full frame slowly"; chose "Slow loop"). The pentaquark is gone
+    (setup/coverCollision.js, CoverCollision.vue; the `hero` station).
+  - Slides 3–6, the funnel as the Universe's history, its eras in their own colours (white-hot
+    Big Bang, orange CMB ring, red-black dark ages, blue-white first stars and cyan bubbles,
+    the bright galaxies band, today's red galaxies on violet filaments), ~220 000 grains, no
+    floor grid ("no grid on the bottom so it doesn't exist in some other space"; chose
+    "Read as the Universe's history", "Brighter, richer look"). `floor: true` brings it back.
+  - Part III's world is a Europe map in grains (setup/europe.js, public/data/europe.json from
+    Natural Earth 1:50m v5.1.2, public domain; hero/europe_map.py converts it): CERN lit on
+    23, threads to the 25 Member States on 24, to the associates too and Lithuania lit on 25,
+    a steady glow on 26 (owner on the old seed and shells: "this is a weird one..."; chose
+    "Europe map: CERN → Lithuania"). The thread ends are a picture of flow, not data.
+  - Slide 3 flies through the web ("Slide 2-3 auto move on, and also rotate, fly through this
+    point cloud universe, can be more substantial, busy, better resolved, and then I will
+    manually switch to the funnel"): the opener advances by itself (his named exception); the
+    frame's 360 000 grains are given coherent depth round the picture's knot (takeover.js
+    placeWeb) and ~380 000 generated web grains (buildCosmos: clusters, bowed filaments, gas
+    clumps, in the frame's colours) fade in as the camera leaves the clip's pose; a ~52 s turn
+    and flight, then a drift; he presses → into the funnel at any moment. The web is the
+    cosmic web's form, not a map (notes say so). Lower `cosmos` first on a weak PC.
+  - The Big Bang is a small bright point beside the CMB disk, off the neck ("don't like this
+    fuzzy big bang should be a bit displaced, and point-like but bright"; funnel.js `bigBang`
+    −5,8); grains behind the disk are dropped (funnel and web shaders); the funnel shows on any
+    arrival (funnelSeq.sync), not only after slide 3.
+  - Slide 11, the collaboration photo dissolves onto a turning globe of LHCb's institutes ("Slide
+    11 is a bit of a step back from the first few very cool slides"; offered three options, no
+    answer: the recommended one, taken overnight): CERN Greybook's 111 LHCb teams in 28
+    countries at 92 city points (hero/lhcb_institutes_greybook.json, hero/globe_map.py; Natural
+    Earth, 15 OpenStreetMap coordinates credited); the screen says LHCb's 112; Vilnius brighter.
+    setup/globe.js, CollabGlobe.vue, the `collab` station.
+  - Slide 12, a sun of LHCb's results after OpenData's ("Slide 12 can be more dynamic, there is
+    a similar cool slide in open data talks"): a blue-white core, rays to the eight plots, which
+    turn in 3D (setup/sun.js, adapted from OpenData's; the `plot` builder kept, unused).
+  - Slide 8's tunnel starts at 5 % volume ("start 8 slide at 5% audio"); slide 27 has a
+    synthesised low hum, swelling under the question ("deep cool hum sounds"; setup/Drone.vue,
+    about −29 LUFS).
+  - Taken overnight (owner: "Implement all said improvements"), from the 21 Oct review: the
+    near-white photos dimmed (15 with a darker page filter, 14, 16, 17, 20; print too), Part II's
+    captions at bottom 96 px on a 0,78 ground and the stats at 112 px (clear of a flat room's
+    heads), the cover's small type at 18 px, slide 9's notes tie its collision to the cover's,
+    slide 13's notes name the photos at the strands' ends.
+  - Slide 27: „O kokį vaidmenį atliks Lietuva?“ fades in as the FCC clip ends, over its held
+    last frame (setup/ClipEnd.vue; owner: "At the end of slide 27 text appears "o kokią rolę
+    turės Lietuva?"" — written with „vaidmuo“, the standard word; his own wording on request).
+- No clip moves on by itself (owner, 21 Oct, via the Scheduler: "Can we not mark
+  clips to advance, in innoday as well.... I will specifically ask if it's needed"; a
+  standing rule for every talk). `advance-on-end` is off the opener (slide 2) and the
+  tunnel (slide 8): each holds its last frame until the owner presses →, and the tunnel's
+  push into the collision runs on that press. Never add `advance-on-end` (or
+  `videos.advanceOnEnd`) to a clip unless the owner asks for that clip by name. He did for the
+  opener (21 Oct: "Slide 2-3 auto move on"): slide 2 has `advance-on-end` again; the tunnel
+  (slide 8) still waits for his press. The
+  trigger: OpenData "seemed like the slides autoclick" on a machine in the stills fallback.
 - The new ending (owner, 19 Oct, via the Scheduler: "need a much stronger
   finishing aspect. Can we show photorealistic 3D rendering of SciFi light
   injection system, then "laser" inscribe Lithuanian flag on it and then
@@ -284,18 +629,40 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   its collision in true proportions (1,2 units a metre every way: `scale 1.2, stretch 1`
   on `det` and `thanks`; the event-display convention, 0,5 along the beam and 2,4×
   across, which the rest of the deck and MasterTalk keep, made it look squashed), the
-  cold box's anchor at (9.54, -476.94, 0.96). The path holds the whole detector in a
-  3/4 view 3 s (10–13 s), then comes down by 19 s to the owner's eye level (1,71 m of
-  his 1,83 m, above a floor at the muon stations' foot, y = -5,6 m in LHCb's frame),
-  side on from the detector's middle, 16,5 m from the beam, 15° up: the 10 m wall from
-  the floor to its top with black above (6,8 m back, where the earlier figure stood, it
-  pressed against the near faces). No figure: the viewer is the person. LHCb stands on
-  a faint grain floor grid, on grain legs (`supports`, legs and foot rails: the magnet,
-  SciFi, RICH2 and calorimeters do not reach the floor in the geometry). Then the LHCb logo (the collaboration's own, its marks
+  cold box's anchor at (9.54, -476.94, 0.96), then (owner, 20 Oct: "So do the Lithuanian
+  flag at the bottom of scifi", confirmed as the engraved one) the module's LOWER
+  readout end: `hero/lis_scene.py --end bottom` turns the module a half turn about the
+  view axis through the flag (the cold box below the mats, the flex cables hanging
+  down; the camera and lights keep their place relative to the flag, the
+  establishing shot centred on the module; the flag's v flipped so yellow stays on
+  top), the anchor at (9.54, -483.06, 0.96): LHCb (0.8, -2.55, 7.95) m, 3 m above the
+  floor, near eye level. Then (owner: "You only show lhcb up to
+  scifi, it's chopped in half need a full 16x9 frame filling view of how it would look
+  like standing up close (entire detector) then slowly panning out, showing this
+  person for scale") the path comes down from the cold box by 16 s to the owner's eye
+  level (1,71 m of his 1,83 m, above a floor at the muon stations' foot, y = -5,6 m in
+  LHCb's frame), side on, 18 m from the beam and centred on the whole detector (the
+  camera at x 13.50, found by projecting the geometry: both ends inside ±0,76 of the
+  width, the muon wall's top at 0,83; the grains' sprites and bloom add a few percent
+  at the sides and about 0,08 at the muon tops, so at 15 and 16 m they spilled past
+  the top edge, at 17 m they grazed it, and only 18 m leaves a clean margin above
+  with the figure's feet off the bottom edge), 13° up: the entire detector fills the
+  16:9 frame, 10 % of it black at each side; lingers there (since the slower close
+  below: from 17,5 to 31 s, drifting 5° round to side on); then dollies straight back along
+  the same line to 28 m (31–48 s, slow at both ends), 8° up, where LHCb spans about half the
+  width and a 1,83 m person in grains (`emblem` of `det`, figures/person_grains.png)
+  stands at the muon wall's near foot, 9 % of the frame high against the detector's
+  ~45 % (in the close view it is at the bottom right, 26 % high). Earlier tries, for
+  the record: a side view from the detector's middle 16,5 m back (the calorimeters
+  and muon stations ran off the right edge: "up to scifi"), 6,8 m back (pressed
+  against the near faces), and a 3/4 hold. LHCb stands on a faint grain floor grid,
+  on grain legs (`supports`, legs and foot rails: the magnet, SciFi, RICH2 and
+  calorimeters do not reach the floor in the geometry). Then the LHCb logo (the collaboration's own, its marks
   only, `figures/lhcb_logo_grains.png`) and the Lithuanian flag (waving, its yellow
   given as #FFC800: at the frame's top the finish dulled #FDB913) gather side by side
   over the dark upstream space (`emblem`, setup/emblems.js, drawn last with normal
-  blending: added on, the detector's blue tinted them), in the dark above the detector;
+  blending: added on, the detector's blue tinted them), in the dark above the detector
+  in the wide view;
   the collision fades and the small flag at the module goes (its clearing in the
   detector a soft 25 % dimming, not a hole); then the word. Every pose was searched against the
   geometry's projection. LHCb re-baked with 4,8× the grains (446 400, hero/bake_grains.py
@@ -311,6 +678,51 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   (2:10–2:22 of the track), and fades if the deck goes back before 31; „Ačiū“ opened
   directly starts the second file; levels through Web Audio gain (iOS ignores an
   element's volume); only the audience's window plays it. Credited on the credits page.
+- The slower, bigger close (owner, 20 Oct, via the Scheduler: "In general, the ending
+  looks good, but can we make it even more spectacular? don't need to rush to zoom out").
+  Everything above stays; „Ačiū“ now runs 48 s to the word (was ~34) and is sequenced to
+  the music's second file (its loudness measured per second: the build 9–17 s, the
+  arrival 17–19 s at -10,6 LUFS momentary, a dip at 33–35, the second, larger climax at
+  42–44 at -10,4, the fade from 51). The path is written by `hero/close_path.py` (keys
+  every 1,5 s: the stage runs each segment at a constant pace, so a slow landing and an
+  easing dolly need dense keys): out of the module as before, the crane down and round
+  slowing to a drift as it lands at eye level at 17,5 s; the drift 5° round to side on
+  until 31 s; the dolly back to 28 m from 31 to 48 s, slow at both ends. LHCb's collision
+  starts at 12,6 s (camera 16 units from the flag) so its bunches cross on the landing
+  and the music's arrival; on the collision's `cross` event `<LisTakeover>` slows the
+  world to 0,15 for a second (the flash blooms; at 0,08, keyed to the slide's clock, the
+  crossing drifted seconds late and the flash took three seconds to bloom), then runs it
+  at 0,6. The debris then crosses the detector in ~10 s while the camera lingers: each
+  station flares as the debris front reaches it (`pulse: thanks`, `light 4.0` on `det`,
+  setup/detector.js; the flare capped for the calorimeters and muon walls, which at
+  their doubled weight flared to a white slab) and the grains its tracks pass through
+  (the hits) light and stay lit, weighted like their part (the VELO's at a quarter: at
+  full strength they stayed a white blob at the vertex). The emblems gather on the dolly
+  (camera 26 units out, 38,5 s), whole by the second climax; the collision and the small
+  flag at the module fade with them, as before; „Ačiū“ 0,6 s after the camera stops
+  (~48,6 s); `wordBy` 62 s. Checked on headless recordings of slide 33 (llvmpipe,
+  1280×720, three rounds).
+- LHCb on „Ačiū“ is a 3D model, not grains (owner, 20 Oct: "improve the 3d detector at
+  the end"; of four offers he took a sharper, more solid form and "40 million collisions a
+  second", tried colour by sub-detector and dropped it, "The blue one i like better";
+  "Doesn't have to be point cloud if that looks better"; of two blue versions recorded,
+  A sharper grains and B the model, "B"). `det` draws `mesh: data/lhcb-mesh.glb`
+  (hero/export_mesh.py, Blender 4.5.14 LTS; the source .glb is Phoenix's LHCb.glb.zip, kept
+  in ~/.cache/outreach_talks/, out of git) with `grains: false`: per part a decimated
+  surface, faint faces, a rim glow by the view angle and the feature edges as lines, all
+  in the detector's blue, added on; per-part gains (`meshLook.gain`, `lineGain`) because
+  SciFi's stacked mats and the muon walls' tiles summed to white. The same front reveals
+  it, and the debris flare and the crossings light it. The person for scale is in the same
+  file, a 3D figure in the same light (Blender's Human Base Meshes v1.4.1, CC0,
+  `GEO-body_male_realistic` as authored, 1,83 m, facing the camera at the muon wall's
+  foot), replacing the flat grain cut-out ("the person is weird…"). The crossings after the
+  event (`cascade` on `det`, from 7 world-s after the crossing, ~30 s): fronts down the
+  detector from 0,35 a second, faster and faster, merging into a steady glow by the second
+  climax; no distinct flare more than about twice a second, and the glow does not flicker
+  (the broadcast flash rule). Variant A stays one switch away: drop `mesh` and `grains:
+  false` (the grains were re-baked the same day, 3,8× on faces and 0,3 more along feature
+  edges, with each grain's normal in lhcb-grains.shape.bin, and look good: lit faces,
+  crisp edges; hero/bake_grains.py reproduced the old bake byte for byte first).
 - The cover's pentaquark reads as five quarks (owner, 20 Oct: "the pentaquark
   (far too many quarks and some orbits)"): headless frames showed five nodes, but
   each a loose sparkle of grains with a weak core, pairs drifting together on
@@ -392,7 +804,16 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   boot but Slidev's own ~40 ms mount of every slide at 3 s (headless trace).
   If it still stutters on the venue machine, press `c` on the cover once the
   page has settled (replays the assembly).
-- „Lietuvos istorija CERN“ is photos only (owner, 13 Oct: "just have some
+- „Lietuvos istorija CERN“ is the LHCb Week aftermovie since 20 Oct (owner: "show a
+  video from the LHCb Week instead of the four photos"; "Don't worry about photos show the
+  entire aftermovie"): `lhcb_week_aftermovie.mp4`, the whole film (2:28, high-motion,
+  1080p, 123 MB, its own music at -16 LUFS; on the release with `--only`), film by
+  Nebula Moments (R. Unkevičius), credited on the credits page; its 0:25–0:31 holds
+  what the four photos showed. Starfire now starts on the light injection clip
+  (slide 30), so it is still before its 49 s on „Ačiū“. The four photos' notes,
+  facts and sources are merged into the film slide's. The talk times at 25,0 min. The
+  photo decision below is kept for the record (the figures stay in the repo).
+- (Superseded 20 Oct) „Lietuvos istorija CERN“ is photos only (owner, 13 Oct: "just have some
   pictures about LHCb visits from the ministers and LHCb week"): four from the
   LHCb Week's opening in Vilnius, StagePhotos at `kt`, the camera turning a
   little between them. CERN's photo archive has no Lithuanian minister at LHCb
@@ -435,7 +856,10 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   700+ sutarčių, +14 % apyvartos, 91 km, 613 mln. CHF). `talk lint`'s TEXT
   still flags those (expected until Tools' fix). The section slides' switches
   moved to the next slide: `places: { inventions: true }` on the touchscreen,
-  `false` and the strands off on 700+; their notes open those slides.
+  `false` and the strands off on 700+; their notes open those slides. (Since the
+  12 Oct restructure brought the section slides back, the switches are on them:
+  `true` on „O kur tai pritaikoma?“ (13), `false` and `<Strands :on="false" />`
+  on „O kaip komercializuoti?“ (23); review, 21 Oct.)
   Each removed credit and source is in its slide's notes. The credits a licence
   asks for stood in tiny print on the last slide (owner: "Credit on last slide
   tiny print"; CERN's material needs none) until 19 Oct; since then they are on
@@ -468,9 +892,10 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   so overlapping grains keep their colours.
 - Match cuts: none since 12 Oct (the tunnel is a clip; the 4 TB/s ring slide
   went into the LHCb numbers slide). Ring → CERN aerial and loop → FCC were weak.
-- Part II's photo places are one group, `group="inventions"`: the touchscreen
-  slide says `places: { inventions: true }`, 700+ `false`, so they are hidden
-  in the prologue, Part I and Part III (v0.5.2).
+- Part II's photo places are one group, `group="inventions"`: the section
+  slide 13 says `places: { inventions: true }`, slide 23 `false` (since 12 Oct;
+  first the touchscreen and 700+), so they are hidden in the prologue, Part I and
+  Part III (v0.5.2).
 - Data → White Rabbit (2012, Frankfurt exchange), the thing that left CERN;
   the grid figures are in the notes. The photo's credit („© CERN (KT
   ataskaita, 2024)“) is taken from the KT report page; the photographer is
@@ -527,7 +952,7 @@ Dated detail in `HANDOFF.md`. The ones a later session must not undo:
   `lhcb-logo-300dpi.tif`): its marks only, recoloured for a black ground
   (`figures/lhcb_logo_grains.png`; CERN's material, no credit). The music:
   Scott Buckley, „Starfire“ (scottbuckley.com.au/library/starfire), CC BY 4.0,
-  credited on the credits page; only an excerpt (0:30–2:25) is in the deck
+  credited on the credits page; the track from 0:30 to its end is in the deck
   (`public/audio/starfire_close.m4a`, -16 LUFS). Nobody has listened to it in
   this session: check once that 1:25–1:40 has no whoosh or riser.
 - The light injection system (facts lhcb-scifi-lis, -lis-vcsel, -channels,

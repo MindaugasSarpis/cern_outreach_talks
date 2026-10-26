@@ -132,7 +132,9 @@ several and nothing else, is none of theirs.
 | A review round | `pnpm talk review NAME` | talk-quality |
 | Check every figure's source | `pnpm talk facts check` | talk-verify |
 | Filmed for TV | `pnpm talk new … --broadcast` · `pnpm talk safe NAME` · `pnpm talk record NAME` | talk-broadcast |
-| Before the venue | `pnpm talk ready NAME`, then `pnpm venue` in the talk | talk-verify |
+| Plates for a venue PC without WebGL (stage talks) | `pnpm talk record NAME --plates`, then `pnpm videos:publish --only <plates>` in the talk | talk-broadcast, talk-verify |
+| The deck as a PPTX, one video per slide (stage talks) | `pnpm talk pptx NAME`, then commit `videos/pptx.json` | talk-broadcast, talk-verify |
+| Before the venue | `pnpm talk ready NAME` (lint, check, shots, preflight, the plates, the PPTX), then `pnpm venue` in the talk | talk-verify |
 | Deploy, when the owner asks | `pnpm talk deploy NAME` (`--dry-run` checks only) | talk-deploy |
 | A render: an encode, a capture, a probe | `pnpm talk render -- COMMAND` | talk-videos, talk-verify |
 | One talk onto a toolkit release | `pnpm talk pin vX.Y.Z`, in the talk's worktree | |
@@ -191,6 +193,7 @@ arrive and leave as particles):
 pnpm talk new 2026_10_15_SomeKeynote --title "My talk" --stage blue   # classic | blue | ember; --broadcast for TV
 pnpm talk check somekeynote   # after editing public/data/space.json or a slide's `space:`
 pnpm videos:frames            # in the talk, after adding clips; commit public/video-frames/
+pnpm talk record somekeynote --plates   # before the venue: the world alone per slide, played where WebGL is missing
 ```
 
 `talks/2026_10_23_Innoday/` (Innoday, in Lithuanian) is the worked example. The engine is
@@ -253,6 +256,46 @@ pnpm videos:preflight    # probes what each slide will actually serve: codec, si
 pnpm venue               # offline bundle <talk>-venue.zip (RUN_ME.txt inside)
 ```
 
+A stage talk also carries **plates**: the world alone for every non-clip
+slide, which the stage plays where WebGL is missing (a venue PC), over the
+committed still; without a plate the still drifts on its own. `pnpm talk
+record <name> --plates` (the render slot; about an hour on a CPU renderer)
+records them at 1080p25 with a 20 s hold and `--max 120` (a deck's close can
+take 50 s to settle, and the recorder's own 40 s cut it off mid-flight; the
+recorder's flags after `--` override these) into
+`$TALK_TMP/talk-<slug>/plates`, copies `NN-plate.mp4` into `public/videos/`
+(gitignored), writes `videos/plates.json` and a `# >>> plates … # <<< plates`
+block of `generated = true` entries in `videos/manifest.toml`, and prints the
+`pnpm videos:publish --only …` line to run in the talk. Commit `plates.json`
+and the manifest; the clips' `pull`, `venue` and `preflight` carry the plates
+along (the `slidev-videos` on the machine must know `generated` entries: the
+release with the live fallback, installed as the env's editable CLI; `record
+--plates` refuses otherwise). `pnpm talk ready` then lists the release and
+checks each plate is on it (a plate that is only local is not in a Pages
+build: the publish line again), or at least local, that the take is current
+(the talk's content), that no plate was cut off unsettled at the recorder's
+`--max` (the warning names the `-- --max N` to re-record with) and that the
+sizes are within 40 MB a plate and 600 MB a deck: warnings, since a
+re-record takes an hour; `--strict-plates` makes them fail; without
+`plates.json` the step is "skipped: no plates".
+
+From Innoday on, a stage talk also offers a **PPTX**: the deck as a
+PowerPoint of the stage's takes, one video per slide and click that plays on
+entry and holds its last frame, the speaker notes in the Notes pane. `pnpm
+talk pptx <name>` (the render slot; about half an hour for a 10-minute deck
+on this machine's GPU, an hour for 25 minutes) pulls the clips with
+`--include-shared`, records the takes at 1080p50 with an 8 s hold and every
+click into `$TALK_TMP/talk-<slug>/pptx/rec` (kept while the talk's content
+is unchanged; `--rerecord` records them again, `-- --slides N-M` those
+slides), with `--max` past the longest clip, builds `<talk>.pptx` with
+`slidev-videos pptx`, uploads it to the talk's videos release and writes
+`videos/pptx.json`: commit it. The cover's `<PptxButton />` and the site
+index link that asset; `pnpm talk ready` warns when it is missing from the
+release, of another size, stale or over 1.5 GB (`--strict-pptx` fails).
+`--dry-run` prints the plan, `--no-publish` builds only. The `slidev-videos`
+on the machine must have the `pptx` subcommand; `talk pptx` refuses
+otherwise.
+
 ## After the talk
 
 ```bash
@@ -274,13 +317,17 @@ already passed this very commit (the stamp ready leaves in
 skips; `--rerun-ready` runs it anyway), pushes the commit that ready passed
 to `main` (it stops if anything was committed or edited in the worktree while
 ready ran), watches the Pages run and checks the talk's URL before it says
-"deployed".
+"deployed". A stage talk whose plates are missing, stale or over budget
+deploys with ready's warnings: on a PC without WebGL it then shows the
+drifting still until the plates are recorded and published.
 
 The Pages workflow builds each talk on its own: a talk whose files did not
 change comes from the cache, and a talk that fails to build keeps its last
 good build on the site and turns the run red without holding the others
-back. The index lists each talk by its `package.json` description. Pull
-requests build the talks they change, as a check, without deploying.
+back. The index (`scripts/site_index.py`) lists each talk by its label in
+`talk-labels.toml`, and a talk whose `videos/pptx.json` is committed gets a
+"PPTX · size" download on the right of its line. Pull requests build the
+talks they change, as a check, without deploying.
 
 ## More detail
 

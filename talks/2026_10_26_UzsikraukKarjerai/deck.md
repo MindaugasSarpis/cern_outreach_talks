@@ -18,36 +18,43 @@ stage:
   space: data/space.json
   palette: { base: blue, bg: '#000206', accent: '#5b6fd6', dust: '#5b4fd6', dustBright: '#ebe6ff', nebula: '#3a2a9e', nebulaAlt: '#0f6e86', sky: '#9a8cff', fill: '#c9b8ff', highlight: '#fff0d0', dim: '#a39dc0' }   # a true black ground, as OpenData's
   sound: { hum: false, flight: false, clip: false }   # no hum and no transition sounds (owner, 13–14 Oct: "transitions were like driving sounds", "only 2-3s"); the clips' audio and the collision's own sound still play
-  options: { dustSize: 2.2, reach: 22, nebula: 0.12, grain: 0.012, aberration: 0, vignette: 0.7, bloom: 0.42 }   # OpenData's look: deep, crisp, not hazy
-title: Užsikrauk karjerai
-duration: 10min
+  motion: floor   # the owner's MacBook or a studio PC: its reduced-motion setting is not the audience's choice (v0.8.2; Scheduler, 21 Oct)
+  look: broadcast   # 23 Oct review: for the stream (no film grain, fewer and larger grains, the ground lifted off black so it does not band); dropped on 8 Oct when the talk was "not TV", back now it is filmed
+  options: { reach: 22, nebula: 0.12, aberration: 0, vignette: 0.45, bloom: 0.42 }   # OpenData's depth over the broadcast look (until 23 Oct: dustSize 2.2, grain 0.012, vignette 0.7)
+title: Kas vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po žeme
+duration: 15min
+broadcast: true            # a studio recording (owner, 21 Oct): talk ready runs the safe-area check, talk record the broadcast rules
 sources: notes
 info: |
-  „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement): a Lithuanian
-  talk for grades 9–12, filmed on 26 Oct 2026 and streamed on 27 Oct. About
-  10 minutes scripted, 19 slides (notes/blueprint.md, v2 of 20 Oct). One
-  dot: a particle of five quarks took 51 years to find, so how do you know
-  you have found something nobody has seen? The cover (the speaker's name over
-  the five-quark form gathering); Innoday's cosmic web as a still that breaks
-  into grains, which fly into the funnel of the Universe's history (atoms,
-  three quarks, five); the LHC opening it shares with OpenData and Innoday
-  (CERN from above, the real tunnel, one real 2012 CMS collision, the 3D LHCb
-  clip: one computed mass is one dot). The viewer judges a bump of 140 dots
-  and is fooled, as physicists were in 2003; LHCb's real Ωc⁰ spectrum fills to
-  five narrow peaks; the viewer judges LHCb's 2015 pentaquark peak, which held;
-  the two plots side by side and the rule. Then the dots are handed on: the
-  speaker's road round Europe (Glasgow, Heidelberg, Bonn: the pentaquark search
-  and the open-data release), the group now in Vilnius, OpenData's piles of
-  open data (800 TB, 4 000 TB, more than 100 000 TB in all), the sun of plots and
-  a VU student's check of the bump, the masterclass, and „Ačiū“ over the
-  five-quark form gathering again.
+  „Kas vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po žeme“:
+  „Užsikrauk karjerai“ (Delfi × Lietuvos Junior Achievement), a Lithuanian
+  talk for grades 9–12, recorded in the Delfi studio on 26 Oct 2026 (1080p50,
+  on a screen behind the speaker and the laptop's feed) and streamed on 27 Oct.
+  15 minutes, 19 slides (notes/blueprint.md v2 of 20 Oct, the owner's rounds of
+  21–23 Oct). One dot: a particle of five quarks took 51 years to find, so how
+  do you know you have found something nobody has seen? The cover; the zoom
+  from Saulėtekis to the cosmic web; Innoday's funnel; the LHC opening (CERN
+  from above, the real tunnel, the dipole, a real 2012 CMS collision, the 3D
+  LHCb clip); LHCb taking data (24 Oct): its own real collision and the 40 MHz
+  glow beside its Ωc⁰ spectrum, which fills from the detector as its years
+  tick, five narrow peaks, three quarks and their gluons, the rule, and the
+  pentaquark found the same way in 2015 (the zoom's music under it); two
+  things CERN made, Stumpe's touchscreen (1972) and the first website
+  (1990). Then the speaker's road round
+  Europe, the group in Vilnius, OpenData's piles of open data, the group's
+  SciFi module and its flag, and Innoday's close out to the LHC, „mano
+  greitintuvas“, and the FCC, „jūsų greitintuvas“ (Starfire under both); „Ačiū“.
 layout: cover
-space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
+space: { at: [594.9, 0, 0], dist: 10, yaw: -14, pitch: 8, sway: 1, dim: 0.12 }   # 25 Oct: dim 0,12 (0,25) so the new pentaquark's colours carry; 24 Oct review: closer (dist 13 at [593.2, 0, 0] until then), so the five-quark form is the cover's hero, not a fifth of the frame
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0 }" />
+<!-- 25 Oct (the owner: "the cover slide could be more substantial, maybe a colission from innoday, or something even more innovative"): Innoday's slow, silent CMS loop, far behind the particle on the camera's line through it, every ~34 s (`gap`); then "the pentaquark should be much more detailed, spectacular": the five gold clusters gave way to setup/pentaquark.js (u u d c c̄ in colour charge, gluon springs, the sea's pairs, a skin, turning), which gathers out of the first crossing's flash (<CoverCollision>) -->
+<CoverCollision />
+<Grains :set="{ pq: 0, route: -1, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0 }" />
 
-<div class="mt-md">Dr. Mindaugas Šarpis · <span class="nt">LHCb</span>&nbsp;Vilnius<br>Vilniaus universitetas</div>
+<div class="mt-md">Dr. Mindaugas Šarpis<br><span class="nt">LHCb</span>&nbsp;Vilnius<br>Vilniaus universitetas</div>
+
+<PptxButton />
 
 <!-- facts: pentaquark-idea-to-discovery-51-years, lhcb-pentaquark-2015, lhcb-vilnius-joined, pentaquark-idea-1964 -->
 
@@ -55,42 +62,91 @@ space: { at: [593.2, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }
 Message: who is speaking; the particle this story is about took 51 years to find; the question of the talk, and the promise: you will see how, dot by dot, and you judge; at the end, who does this work and where it starts.
 Picture: the cover, as OpenData's and Innoday's: the name line over the five-quark form gathering out of the dust (`quarks`, 2,4 s). The overview clip buffers behind it. → starts the way in; that key is also the gesture browsers ask for before any sound.
 
-Laba diena. Esu Mindaugas Šarpis, dalelių fizikas iš Vilniaus universiteto. Ekrane susidėlioja dalelė, kurios fizikai ieškojo penkiasdešimt vienerius metus. Kaip sužinoti, kad radai tai, ko dar niekas nematė?
+Laba diena. Esu Mindaugas Šarpis, dalelių fizikas iš Vilniaus universiteto. Ekrane susidėlioja dalelė, kurią rasti užtruko penkiasdešimt vienerius metus. Kaip sužinoti, kad radai tai, ko dar niekas nematė, ir neapsigavai?
 [pauzė 2 s]
-Šiandien pamatysi, kaip ją rado – taškas po taško. Ir spręsti bandysi tu. O pabaigoje pamatysi, kas tokį darbą dirba ir nuo ko jį galima pradėti.
-Bet pradėkime nuo visos Visatos.
+Šiandien nusileisime šimtą metrų po žeme ir pamatysi, kaip ją rado – taškas po taško. Ir spręsti bandysi tu. O pabaigoje pasakysiu, nuo ko tokį darbą galima pradėti.
+Pradėkime nuo Vilniaus.
 
-The question lands at about 0:20. „kvarkas“ and „pentakvarkas“ wait for slide 3. „spręsti bandysi tu“: the plain spoken order, and gender-neutral (never „pats“). The last line is said as the camera flies (4,5 s, hidden by the still).
+The question lands at about 0:20. „kvarkas“ and „pentakvarkas“ wait for slide 4. „spręsti bandysi tu“: the plain spoken order, and gender-neutral (never „pats“). The last line is said as the zoom fades in.
 If asked: the idea of five-quark particles is from 1964 (Gell-Mann and Zweig); LHCb announced the particle on 14 July 2015.
 
 (~0.6 min)
 -->
 
 ---
-space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0, dim: 0 }   # Innoday's takeover pose: it looks down the funnel's axis, so the picture's middle becomes the Big Bang on the next step
+space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0, dim: 0 }   # a cut to the takeover's pose under the clip, as Innoday's opener: the next slide stands exactly here
 ---
 
-<WebTakeover />
+<!-- The zoom out (the owner, 23 Oct: "a quick zoomout from vilnius straight to universe web - in 20s"): Innoday's opener, the owner's SpaceEngine edit, time-remapped to 20 s. It ends on the frame slide 3's still is (public/figures/opener_last.jpg) and holds it; the fade out shows the same picture underneath. -->
+<VideoPlayer src="vilnius_zoom.mp4" transition="fade" :volume="0.25" />   <!-- 25 Oct (the owner: "zoomout swoosh a bit too loud"): the hum 0,25 (0,4 until then) -->
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.45" start keys />
+
+<!-- facts: nftmc-opened-2016 -->
+
+<!--
+Message: where we are, then out past everything to the largest scale.
+Picture: the owner's SpaceEngine zoom for Innoday, 4:13 made 19 s (scripts/remap_zoom.py): the NFTMC building in Saulėtekis (Google Earth, 0–2,3 s), the Saulėtekis campus (to ~3,9 s), Vilnius and its region (~3,9–5,4 s), into the clouds (~5 s), a quick dissolve to the Earth from space (~5,5–8,4 s), then a zoom-dissolve (the Earth shrinking on into the centre as our galaxy comes in large and settles) to our galaxy whole (~9,5–11 s), turning and receding to a dot (~11–12,5 s), and a second zoom-dissolve into the cosmic web (from ~12,5 s), slowing to a stop, held from 18 s. Stabilised (the owner: the source's wobble "on speedup it doesn't look good"); the swaying stretches are left out, and the scale jumps are zoom-dissolves since the owner's "This immediate switch from galaxy to universe web and from earth to galaxy doesn't work" (23 Oct). No sound of its own. It waits on the web for the press (no advance-on-end).
+
+Čia – Saulėtekis Vilniuje. Čia dirba Vilniaus universiteto fizikai.
+[kai matosi Žemė iš kosmoso, ~6 s] Žemė. [~10,5 s] Mūsų galaktika.
+[tinklui pasirodžius tylėk; kai jis sustoja] → spausk
+
+The words follow the picture: say each name as it comes, not before; the first sentence is over by the time Vilnius is in sight (~4,5 s). „Čia dirba Vilniaus universiteto fizikai“: NFTMC houses units of the VU Faculty of Physics (nftmc-opened-2016). Lithuania as a country is not shown, so it is not named.
+The footage: the owner's SpaceEngine edit spaceengine/nftmc_zoom.mp4 (Google Earth for the Earth part: its logo is on every Earth frame and the imagery providers are named in the footage, as Innoday's notes say; at this speed the providers' line is up for well under a second); the web, NCSA's Advanced Visualization Lab („Cosmic Bubble Bath“), as on the next slide.
+
+The clip runs 19 s.
+
+(~0.35 min)
+-->
+
+---
+space:
+  dim: 0
+  sway: 0
+  hum: false
+  ambient: 0   # 24 Oct (the owner: "can we make the web universe darker? no blue in the back just clear visitble strands, monumental, vast"): the ground, nebula and dust off, the strands alone on black
+  cameraRate: [[0, 0], [4, 0], [6, 1]]   # Innoday's: the camera stands still for the dissolve (WebTakeover restarts this when it places the grains), then eases into the path
+  path:   # 24 Oct (the owner: "take from innoday and improve the point based universe web"): Innoday's flight through the web in depth, its 46 s cut to 23 s; the frame's knot stands at [30.6, 40.8, -86]
+    - [0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]          # the zoom's own pose: the frame is the picture
+    - [5.5, { at: [30.6, 40.8, -86], dist: 40, yaw: 30, pitch: 10 }]    # a turn round the knot: the strands stand in depth
+    - [9.5, { at: [30.6, 40.8, -86], dist: 30, yaw: 70, pitch: 4 }]    # side on to the frame's web
+    - [13.5, { at: [10, 36, -112], dist: 34.5, yaw: 60.5, pitch: 2.5 }] # in past the knot
+    - [17.5, { at: [-10, 38, -128], dist: 33, yaw: 61.4, pitch: -6.8 }] # past the web behind it (24 Oct review: dist 25,2 went through a strand: a grey cloud on a stream)
+    - [23, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]          # 24 Oct review: back to the picture's own viewpoint (the web a picture again), where funnel.js's morph is made to be seen (seen from 55 units its grains were specks); the path 27 s → 23 s (6–16 s changed little)
+    - [46, { at: [30, 40, -70], dist: 19.5, yaw: 0, pitch: 0 }]        # a slow drift back until the press
+---
+
+<WebTakeover :gain="1.75" :cosmos-gain="2.3" :size="0.46" :cosmos-size="1.5" />   <!-- 24 Oct: brighter, slightly larger strands on the black (gain 1,3, cosmos 1,65, size 0,4 and 1,3 until then) -->
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <!-- facts: cosmic-web-simulation-filaments-voids -->
 
 <!--
-Message: the Universe at its largest scale, as a picture that breaks into grains. No words: the cover's last line has named it.
-Picture: Innoday's cosmic web as a still (the owner, 18 Oct: "take the still cosmic web from the innoday"): the picture holds for half a second, then its dark lets go evenly and its bright filaments break into grains, each on its own pixel's line of sight (3 s). They make the funnel on the next step.
+Message: the Universe at its largest scale, as a picture that breaks into grains.
+Picture: Innoday's cosmic web as a still (the owner, 18 Oct: "take the still cosmic web from the innoday"), the zoom's own last frame, so the cut from the clip does not show: the picture holds for half a second, then its dark lets go evenly and its bright filaments break into grains, each on its own pixel's line of sight (3 s). They make the funnel on the next step.
 
-[tyla: leisk vaizdui subyrėti į grūdelius, maždaug 3,5 s] → spausk
+Maždaug taip atrodo Visata didžiausiu mastu – galaktikų gijos ir tuštumos tarp jų.
+[leisk vaizdui subyrėti į grūdelius, maždaug 3,5 s] → spausk
 
-If there is room (the slide lasts 3,5 s; hold it): „Maždaug taip atrodo Visata didžiausiu mastu – galaktikų gijos ir tuštumos tarp jų.“ (+0,1 min; the web is a cosmological simulation's visualisation).
-The picture: the last frame of the owner's SpaceEngine edit for Innoday (public/figures/opener_last.jpg), the cosmic web of NCSA's Advanced Visualization Lab („Cosmic Bubble Bath“, NSF), as Innoday credits it; no public page of that title was found on 20 Oct (NASA SVS 10663 is the closest NCSA AVL piece), so the still's own source is the owner's to name for the credit. If the NCSA or Planck licence is refused for the Delfi stream, cut slides 2 and 3: the cover flies straight to CERN and slide 3's quark ladder is said on slide 6 over the debris.
+The line is in the script since 21 Oct (the 15-minute round; the web is a cosmological simulation's visualisation, cosmic-web-simulation-filaments-voids); hold the slide for it.
+The picture: the last frame of the owner's SpaceEngine edit for Innoday (public/figures/opener_last.jpg), the cosmic web of NCSA's Advanced Visualization Lab („Cosmic Bubble Bath“, NSF), as Innoday credits it; no public page of that title was found on 20 Oct (NASA SVS 10663 is the closest NCSA AVL piece), so the still's own source is the owner's to name for the credit. If the NCSA or Planck licence is refused for the Delfi stream, cut slides 2, 3 and 4: the cover flies straight to CERN and slide 4's quark ladder is said on slide 8 over the debris.
 
-(~0.1 min)
+(~0.5 min)
 -->
 
 ---
-space: { at: [30, 39, -119], dist: 25, yaw: -72, pitch: 13, dim: 0, flight: 3.5 }   # Innoday's: the bell on its side, narrow end left, from three-quarters on the mouth side (the NASA/WMAP figure)
+space:
+  dim: 0
+  ambient: 0   # 24 Oct: the web's black carried on under the funnel
+  path:   # 24 Oct (the owner: "make slide 4 look more dramatic, and vast"): the flight out of the web ends far back, the funnel small in the web round it, then the camera swings in low along its side until its mouth looms (until then one pose: [30, 39, -119], dist 25, yaw -72, pitch 13)
+    - [1, { at: [30, 40, -70], dist: 19.5, yaw: 0, pitch: 0 }]          # 24 Oct review: slide 3's last pose, the picture's viewpoint down the funnel's axis, held while the web's grains fly into the funnel (funnel.js's morph, 0–4,4 s; seen from the side far off, they all but vanished)
+    - [4.4, { at: [30, 40, -70], dist: 21, yaw: 0, pitch: 0 }]
+    - [8.5, { at: [30, 40, -116], dist: 50, yaw: -58, pitch: 12 }]    # out to the side, far back: the whole funnel inside the web
+    - [16, { at: [30, 39.3, -120.5], dist: 23.5, yaw: -78, pitch: 7 }]    # in low beside it, the narrow end left, the mouth coming at the camera on the right
 ---
 
-<AfterFlight :delay="6.8"><div class="age"><span class="n">13,8</span> mlrd. metų</div></AfterFlight>
+<AfterFlight :delay="9"><div class="age"><span class="n">13,8</span> mlrd. metų</div></AfterFlight>
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <!-- facts: universe-age-planck-2018, human-body-atoms, atom-nucleus-protons-neutrons, proton-neutron-three-quarks, lhcb-pentaquark-2015, lhc-collisions-create-new-particles, lhc-worlds-largest-accelerator, cmb-oldest-light-planck-2018, cmb-formed-380000-years-esa -->
 
@@ -99,8 +155,8 @@ Message: the funnel is the Universe's 13,8-billion-year history; you and I are m
 Picture: Innoday's funnel (the owner, 18 Oct: "copy the funnel as well"): the web's grains fly into the funnel's shape (4,4 s), the middle of the picture first, as the camera swings round to the side; then the funnel's own grains and the CMB disk resolve over them, and last its mesh comes in underneath. The Universe's history in grains, the NASA/WMAP figure: the Big Bang at the narrow end (left), the Planck disk, the dark ages with no stars, a crowd of hot first galaxies, then ever fewer, cooler ones to the mouth, today. „13,8 mlrd. metų“ once the funnel stands (6,8 s). Wait for it before the first sentence.
 
 [palauk, kol piltuvas susiformuos]
-Šis piltuvas – Visatos istorija. Siaurasis galas – Didysis sprogimas prieš 13,8 milijardo metų, platusis – šiandiena. Šis diskas – seniausia šviesa, kurią galime matyti. Ir tu, ir aš sudaryti iš atomų. Atomo branduolys – protonai ir neutronai, o kiekvienas jų sudarytas iš trijų dar smulkesnių dalelių – kvarkų. Dalelė, kurią matei pradžioje, sudaryta iš penkių kvarkų. Ji vadinama pentakvarku. Tokias daleles pagamina greitintuvo susidūrimai.
-Tam CERN pastatė didžiausią pasaulyje dalelių greitintuvą.
+Šis piltuvas – Visatos istorija. Siaurasis galas – Didysis sprogimas prieš 13,8 milijardo metų, platusis – šiandiena. Šis diskas – seniausia šviesa, kurią galime matyti. O dabar – į mažiausią mastą. Ir Žemė, ir tu, ir aš sudaryti iš atomų. Atomo branduolys – protonai ir neutronai, o kiekvienas jų sudarytas iš trijų dar smulkesnių dalelių – kvarkų. Dalelė, kurią matei pradžioje, sudaryta iš penkių kvarkų. Ji vadinama pentakvarku. Tokios dalelės gimsta greitintuvo susidūrimuose.
+Tam CERN pastatė greitintuvą.
 
 The ladder goes atoms → nucleus → protons and neutrons → quarks, home.cern's own order. The last line is said as the clip condenses.
 If asked: strictly a pentaquark is four quarks and one antiquark; the three quarks of a proton are its valence quarks. The disk is the real cosmic microwave background, Planck's 2018 map (the one sentence spoken for it is in the script): „Ji išsiskyrė, kai Visatai buvo apie 380 000 metų.“
@@ -114,16 +170,17 @@ If asked: strictly a pentaquark is four quarks and one antiquark; the three quar
 space: { at: opening, dim: 1, ambient: 0, hum: false }
 ---
 
-<!-- The way in, as OpenData's: CERN from above, the library clip cern_overview_short.mp4 (11 s, no sound): from the Earth down to Geneva, then the LHC ring drawn over the fields with its four experiments named. It moves on by itself at its end, the camera pushing on into the ring (its right side, 0.72, 0.45 of the last frame), where the tunnel follows. -->
-<VideoPlayer src="cern_overview_short.mp4" advance-on-end exit="push" exit-at="0.72,0.45" />
+<!-- The way in, as OpenData's: CERN from above, the library clip cern_overview_short.mp4 (11 s, no sound): from the Earth down to Geneva, then the LHC ring drawn over the fields with its four experiments named. At the speaker's → after its end, the camera pushes on into the ring (its right side, 0.72, 0.45 of the last frame), where the tunnel follows. -->
+<VideoPlayer src="cern_overview_short.mp4" exit="push" exit-at="0.72,0.45" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
-<!-- facts: lhc-geneva-27km-100m-four-experiments -->
+<!-- facts: cern-largest-particle-physics-lab, lhc-geneva-27km-100m-four-experiments -->
 
 <!--
 Message: this is CERN near Geneva; 100 m under its fields runs the 27 km ring.
-Picture: CERN from above (11 s), the LHC ring drawn over the fields, its four experiments named; at its end the camera pushes on into the ring, where the tunnel follows (→ earlier). 16 words take about 8 s, 10 s at a slow delivery, inside the 11 s.
+Picture: CERN from above (11 s), the LHC ring drawn over the fields, its four experiments named; at → after its end (it holds its last frame; no auto-advance) the camera pushes on into the ring, where the tunnel follows. 20 words take about 10 s, 12 s at a slow delivery: about the 11 s; the clip holds its last frame if he runs over.
 
-Tai CERN, laboratorija prie Ženevos. Po šiais laukais, šimto metrų gylyje, – dvidešimt septynių kilometrų greitintuvo žiedas.
+Tai CERN prie Ženevos – didžiausia pasaulyje dalelių fizikos laboratorija. Po šiais laukais, šimto metrų gylyje, – dvidešimt septynių kilometrų greitintuvo žiedas.
 
 The accelerator's acronym is not spoken; „greitintuvas“ carries it and „LHC 27 km“ on the next slide shows it. If asked: four large experiments, LHCb one of them.
 
@@ -136,8 +193,11 @@ The line is said over the clip; its 11 s are counted from the clip.
 space: { at: opening, dim: 1, ambient: 0, hum: false }
 ---
 
-<!-- The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, an 18 s cut (videos/manifest.toml). It moves on by itself at its end, into the beam pipe. -->
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" advance-on-end :volume="0.5" exit="push" exit-at="0.45,0.53" />
+<!-- The opening (components/lhc-opening/): the real LHC tunnel, CERN-FOOTAGE-2022-013-001, an 18 s cut (videos/manifest.toml). At the speaker's → after its end, it pushes on into the beam pipe. -->
+<!-- 24 Oct: the dust stays on 6, 7 and 9 (a review round's `transition="fade"` left ~0,6 s of black after the push out of the clip before: the owner saw it flicker) -->
+<!-- 25 Oct (the owner: "slide 6 too loud … on slide 6 let's just have music, mute the video"): muted (0,05 until then) -->
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" muted exit="push" exit-at="0.45,0.53" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <LhcOpening part="tunnel" />
 
@@ -145,14 +205,37 @@ space: { at: opening, dim: 1, ambient: 0, hum: false }
 
 <!--
 Message: when the accelerator runs, protons at almost the speed of light collide over a billion times a second, and the collision energy becomes new particles.
-Picture: the real LHC tunnel, 100 m under the border, the magnets on the right; „LHC 27 km“ low on the left. Let it run: at its end the camera goes on into the beam pipe (it moves on by itself; → earlier). Its sound is the tunnel's own ventilation hum. 26 words take about 14 s, 17 s at a slow delivery, inside the 18 s; the last line as the push into the pipe begins.
+Picture: the real LHC tunnel, 100 m under the border, the magnets on the right; „LHC 27 km“ low on the left. Let it run, then → at its end: the camera goes on into the beam pipe (no auto-advance). Its sound is the tunnel's own ventilation hum. 26 words take about 14 s, 17 s at a slow delivery, inside the 18 s; the last sentence as the push into the pipe begins (into the magnet, slide 7, since 21 Oct).
 
 Kai greitintuvas veikia, protonai jame skrieja beveik šviesos greičiu ir susiduria daugiau nei milijardą kartų per sekundę. Susidūrimo energija virsta naujomis dalelėmis.
-Štai vienas toks susidūrimas.
 
 Tense for 26–27 Oct: the LHC has been in Long Shutdown 3 since 29 June 2026: „Kai greitintuvas veikia“, never present-tense data taking. If asked: „Dabar jis sustabdytas atnaujinimui, vėl veiks nuo 2028 metų.“
 
 Source: CERN-FOOTAGE-2022-013-001 (CERN). The line is said over the clip; its 18 s are counted from the manifest.
+-->
+
+---
+space: { at: opening, dim: 1, ambient: 0, hum: false }
+---
+
+<!-- 21 Oct (the owner: "can show magnet video from CERN"; "A, ok"): the LHC dipole, CERN-VIDEO-2019-050-008, its first 10,8 s (videos/manifest.toml): a cutaway of the blue cryostat into the two copper-lined beam pipes; its small English/French labels („LHC Dipole“, „Beam pipes“) kept, the owner's "ok". Silent. It lands where the tunnel's push went in; → moves on (no auto-advance). -->
+<VideoPlayer src="cern_video_2019_050_008.mp4" muted :controls="false" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
+
+<!-- facts: lhc-two-beam-pipes-opposite, cern-lhc-magnets, cern-lhc-cold, gave-cryo-lhc, lhc-ls3-restart-2028 -->
+
+<!--
+Message: inside the ring two beams fly in opposite directions in two pipes; 1 232 superconducting magnets bend them round, and when the accelerator runs they are cooled to −271 °C, colder than outer space.
+Picture: CERN's animation of an LHC dipole magnet: the blue cryostat cut open, then the camera turns to face its two beam pipes (10,8 s, silent). Under speech: 33 words take about 17 s, so say the first sentence over the clip and finish over its last frame, then →.
+
+Žiede protonai skrieja dviem vamzdžiais, priešingomis kryptimis. Kad protonai suktųsi ratu, juos lenkia tūkstantis du šimtai trisdešimt du superlaidieji magnetai. Kai greitintuvas veikia, jie atšaldomi iki minus dviejų šimtų septyniasdešimt vieno laipsnio – šalčiau nei kosmose.
+Štai kaip jie susiduria.
+
+Tense for 26–27 Oct: the LHC is warm in Long Shutdown 3 (since 29 June 2026), so „kai greitintuvas veikia“; if asked: „Dabar jis atnaujinamas, vėl veiks nuo 2028 metų.“ „superlaidieji magnetai“: the 1 232 are the main dipoles, 15 m long; the LHC has 9 593 magnets in all. −271,3 °C is 1,9 K; outer space is 2,7 K.
+
+Šaltiniai: home.cern, „The Large Hadron Collider“; CERN-VIDEO-2019-050-008 (CERN).
+
+(~0.3 min)
 -->
 
 ---
@@ -161,20 +244,22 @@ space:
   dim: 0
   ambient: 0
   hum: false
-  rate: [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.6, 1.0], [8.0, 1.0], [9.0, 1.8], [11, 1.8], [12, 1]]
+  # 24 Oct review: the whole timeline at 75 % (the crossing came ~6 s in, after a black frame and a thin streak: dead air on TV); the run-in's rate ×4/3 so the bunches still cross where the world freezes (until then [[0, 1.4], [2.0, 1.4], [2.7, 0.03], [5.6, 0.03], [6.6, 1.0], [8.0, 1.0], [9.0, 1.8], [11, 1.8], [12, 1]], the path's keys at 0, 2.6, 5.6, 6.5, 7.3, 8.3, 9.8, 11.5)
+  rate: [[0, 1.87], [1.5, 1.87], [2.03, 0.03], [4.2, 0.03], [4.95, 1.0], [6.0, 1.0], [6.75, 1.8], [8.25, 1.8], [9, 1]]
   cameraRate: 1
   path:
     - [0, { at: [0, -400, 0], dist: 4.2, yaw: 18, pitch: 5 }]
-    - [2.6, { at: [0, -400, 0], dist: 2.4, yaw: 32, pitch: 8 }]
-    - [5.6, { at: [0, -400, 0], dist: 1.5, yaw: 70, pitch: 14 }]
-    - [6.5, { at: [0, -400, 0], dist: 3.3, yaw: 58, pitch: 17 }]
-    - [7.3, { at: [0, -400, 0], dist: 5.6, yaw: 26, pitch: 20 }]
-    - [8.3, { at: [0, -400, 0], dist: 8.8, yaw: 9, pitch: 24 }]
-    - [9.8, { at: [0, -400, 0], dist: 11.2, yaw: 4, pitch: 26 }]
-    - [11.5, { at: [0, -400, 0], dist: 12, yaw: 2, pitch: 26 }]
+    - [1.95, { at: [0, -400, 0], dist: 2.4, yaw: 32, pitch: 8 }]
+    - [4.2, { at: [0, -400, 0], dist: 1.5, yaw: 70, pitch: 14 }]
+    - [4.9, { at: [0, -400, 0], dist: 3.3, yaw: 58, pitch: 17 }]
+    - [5.5, { at: [0, -400, 0], dist: 5.6, yaw: 26, pitch: 20 }]
+    - [6.2, { at: [0, -400, 0], dist: 8.8, yaw: 9, pitch: 24 }]
+    - [7.35, { at: [0, -400, 0], dist: 11.2, yaw: 4, pitch: 26 }]
+    - [8.6, { at: [0, -400, 0], dist: 12, yaw: 2, pitch: 26 }]
 ---
 
 <LhcOpening name="opening" :count="290" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <!-- facts: cms-195099-137440354-record-300, cms-195099-290-drawn-tracks, cms-195099-19-vertices, lhc-geneva-27km-100m-four-experiments, lhc-collisions-create-new-particles, particles-decay-detector-sees-products, lhcb-vilnius-joined -->
 
@@ -183,184 +268,173 @@ Message: one real collision: hundreds of particles fly out, among them new, heav
 Picture: one real collision in the black, OpenData's and Innoday's. Two bunches of protons run in along the beam pipe and cross; 19 collisions flash along the beam, the world nearly stops at the crossing while the camera moves round it, then runs on as the debris flies out to every side: 290 tracks curling in the magnet, the calorimeters' cells lighting all round, two muons running out. „290 dalelių“ as it flies apart („8 TeV“ is hidden for this talk, styles/index.css: a unit grade 9–12 do not know). A low swell, a thump at the crossing, a low drone that fades over four seconds as it flies apart: quiet enough to talk over. Start speaking as the debris flies out (about 6 s in). → for the LHCb clip.
 
 [palauk, kol dalelės išlėks]
-Štai tikras susidūrimas. Šiame vaizde išlekia šimtai dalelių. Tarp jų būna ir naujų, sunkių dalelių, kurios gyvuoja labai trumpai: jos beveik iš karto suskyla, ir detektorius mato tik jų skeveldras.
-O dabar – LHCb, detektorius, prie kurio dirbu aš.
+Štai tikras dviejų protonų paketų susidūrimas. Šiame vaizde išlekia šimtai dalelių. Tarp jų būna ir naujų, sunkių dalelių, kurios gyvuoja labai trumpai: jos beveik iš karto suskyla, ir detektorius mato tik jų skeveldras.
+Šį susidūrimą 2012 metais užfiksavo CMS – vienas iš keturių didžiųjų šio greitintuvo detektorių.
+O dabar – LHCb.
 
-The decay sentence follows cms.cern's own wording (most particles produced are unstable and transform rapidly; the detector measures the stable ones), so „skeveldros“ on slide 7 is heard a second time; the mass is taught on slides 7 and 8. No acronym in speech. If asked: CMS, one of the four LHC detectors, recorded it on 27 May 2012; 19 proton pairs collided in this crossing; the picture draws the 290 clearest tracks (not a number CMS reports); 8 TeV is the collision energy. If there is room: „Šį susidūrimą 2012 metais užfiksavo CMS – kitas to paties greitintuvo detektorius.“ (+0,1 min).
+The decay sentence follows cms.cern's own wording (most particles produced are unstable and transform rapidly; the detector measures the stable ones), so „skeveldros“ on slide 10 is heard a second time; the mass is taught on slide 10. No acronym in speech. If asked: CMS, one of the four LHC detectors, recorded it on 27 May 2012; 19 proton pairs collided in this crossing; the picture draws the 290 clearest tracks (not a number CMS reports); 8 TeV is the collision energy.
 
 The event: CMS Open Data record 300 (CC0), run 195099, event 137440354, a Higgs boson candidate. Provenance: components/lhc-opening/README.md.
 
-(~0.45 min)
+(~0.55 min)
 -->
 
 ---
+space: { path: [[0, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]], sway: 0.3, dim: 0, ambient: 0, hum: false }   # 24 Oct: under the clip, a cut to the next slide's pose (the world rests there unseen), so the data slide starts at once, with no flight
+---
 
-<!-- The shared opening's LHCb reel: the detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release. It condenses out of the dust and moves on by itself when it ends. -->
-<VideoPlayer src="lhcb.mp4" advance-on-end />
+<!-- The shared opening's LHCb reel: the detector in 3D, from the shafts above the cavern down to the detector, with music. This talk's own cut of the library clip lhcb.mp4 (0:08–0:47.1, 39 s; videos/manifest.toml), on its release. It condenses out of the dust; the speaker's → moves on. -->
+<!-- 24 Oct: muted, Starfire under it (the owner: "starfire for the entire deck … everything coherently connected"); the reel's own music was 0,45 -->
+<VideoPlayer src="lhcb.mp4" muted />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
 <!-- facts: lhcb-detector-size, lhcb-three-storey-worked, lhcb-collaboration-sep-2026, lhcb-vilnius-joined, particle-decay-reconstructed-mass, particles-decay-detector-sees-products -->
 
 <!--
-Message: this is LHCb, three storeys high; almost two thousand people work on it, our Vilnius group among them, and I am one of them. From the fragments the detector measures we compute the mass of the particle that broke apart. One computed mass is one dot.
-Picture: the LHCb detector in 3D, with music. Start about 3 s in; about 50 words take 26 s, 33 s at a slow delivery, so they end before the clip does (39 s). Then let the music run; the last line lands as the clip ends (it ends by itself; → moves on earlier).
+Message: this is LHCb, three storeys high; almost two thousand people work on it, our Vilnius group among them, and I am one of them.
+Picture: the LHCb detector in 3D, with music. Start about 3 s in; about 30 words take 16 s, 20 s at a slow delivery; then → about 3 s after „Aš – vienas iš jų.“ (the reel need not end; the next slide stands at the same detector).
 
-Tai LHCb. Jis dešimties metrų aukščio – kaip trijų aukštų namas. Čia dirba beveik du tūkstančiai žmonių iš viso pasaulio, tarp jų ir mūsų grupė iš Vilniaus universiteto. Aš – vienas iš jų.
-[pauzė]
-Detektorius išmatuoja, kur ir kaip greitai nulėkė suskilusios dalelės skeveldros. Iš to apskaičiuojame, kokios masės ji buvo.
-Viena apskaičiuota masė – vienas taškas.
+Tai LHCb. Jis dešimties metrų aukščio – kaip trijų aukštų namas. Šiame eksperimente dirba beveik du tūkstančiai žmonių iš viso pasaulio, tarp jų ir mūsų grupė iš Vilniaus universiteto. Aš – vienas iš jų.
+[palauk 3 s] → spausk
 
-„beveik du tūkstančiai“: 1 891 members in September 2026; never „daugiau nei“. „kaip trijų aukštų namas“ is our arithmetic (10 m at about 3 m a storey). The particle that split is named before its fragments, so „skeveldros“ has a referent when heard. „Same mass every time“ is said on slide 8 while the dots fall. If asked: 5 600 tonnes, 21 m long; VU joined LHCb in September 2024.
+„beveik du tūkstančiai“: 1 891 members in September 2026; never „daugiau nei“. „kaip trijų aukštų namas“ is our arithmetic (10 m at about 3 m a storey). If asked: 5 600 tonnes, 21 m long; VU joined LHCb in September 2024.
 
-The line is said over the clip; its 39 s are counted from the manifest.
+The line is said over the clip. The lint counts the clip's whole 39 s from the manifest; pressed 3 s after the line (22 Oct), the slide takes about 25 s.
 -->
 
 ---
-space: { at: trial, dim: 0.05 }
-clicks: 1
+space: { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4, sway: 0.3, dim: 0, ambient: 0, hum: false }   # 24 Oct: the cavern side on, LHCb (x 0–24 of the `cavern` station) left and the Ωc⁰ plot (`oc`, x 28–47, 5 nearer) right, both in frame; the labels are projected from this pose (sway 0.3)
+clicks: 1   # 25 Oct: a second press with a five-quark form for the 2015 line was tried and removed the same evening (the owner: "They are not quarks.. a bit confusing")
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 1, oc: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { th1: 2 } }" />
+<InsideLhcb :land-y="-470" :until="1" />
+<DataSfx />
+<ClickPose :poses="{ 1: { at: [1042.3, -481.9, 5], dist: 27, yaw: 0, pitch: 3, sway: 0.3, dim: 0, ambient: 0, hum: false, flight: 2.2 } }" />
+<Grains :set="{ pq: 3, route: -1, th2: 0, th1: 0, oc: 1, omega: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { oc: 2, omega: 1 } }" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
-<!-- facts: particle-decay-reconstructed-mass, theta-toy-140-entries, theta-plus-2003-false-alarm, theta-plus-leps-japan-19-events, theta-plus-clas-2006-null -->
+<AfterFlight :delay="2.5"><div v-click.hide="1" class="heap r late" style="left: 880px; top: 56px"><span class="n">LHCb duomenys</span></div><div v-click.hide="1" class="heap r axis late" style="left: 880px; top: 308px"><span class="n">masė&nbsp;→</span></div></AfterFlight>
+<AfterFlight :delay="4.6"><div v-click.hide="1" class="heap l late" style="left: 104px; top: 324px"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015], [1, '2011–2015']]" :delay="5" :fill="9" /></span></div></AfterFlight>
+<!-- 24 Oct (the owner: "Slide 10 indicate 4 TB/s"): LHCb's Run 3 readout, the whole detector every crossing, as its glow builds (lhcb-run3-readout-4tbs); top left, clear of the detector and the plot -->
+<AfterFlight :delay="6"><div v-click.hide="1" class="heap l late" style="left: 104px; top: 66px"><span class="n">4 TB/s</span></div></AfterFlight>
+<div v-click="1" class="heap l step" style="left: 390px; top: 66px; --step-delay: 2.2s"><span class="n">LHCb duomenys</span></div>
+<div v-click="1" class="heap l step" style="left: 154px; top: 340px; --step-delay: 2.2s"><span class="n"><FillClock name="oc" :years="[[0, 2011], [0.3, 2012], [0.91, 2015], [1, '2011–2015']]" :delay="5" :fill="9" /></span></div>
+<div v-click="1" class="heap r axis step" style="left: 600px; top: 340px; --step-delay: 2.2s"><span class="n">masė&nbsp;→</span></div>
+<div v-click="1" class="heap l step" style="left: 390px; top: 124px; --step-delay: 2.8s"><span class="n">5&nbsp;naujos dalelės</span></div>
+<div v-click="1" class="heap step" style="left: 769px; top: 144px; --step-delay: 3.2s"><span class="n">c</span></div><div v-click="1" class="heap step" style="left: 718px; top: 230px; --step-delay: 3.2s"><span class="n">s</span></div><div v-click="1" class="heap step" style="left: 816px; top: 230px; --step-delay: 3.2s"><span class="n">s</span></div>
+
+<!-- facts: lhcb-run3-readout-4tbs, lhcb-100m-below-ground, particles-decay-detector-sees-products, particle-decay-reconstructed-mass, lhcb-omegac-2017-fig2-candidates, lhcb-omegac-2017-sample, lhcb-omegac-2017-years, lhcb-omegac-five-2017, lhcb-omegac-2017-masses, omegac-quark-content, proton-neutron-three-quarks, chance-bumps-shrink-with-data, particle-physics-5-sigma-discovery, lhcb-pentaquark-2015, lhcb-pentaquark-2015-cross-checks, pentaquark-idea-to-discovery-51-years -->
 
 <!--
-Message: we work on questions nobody has answered, so you try: each dot falls into a column by its mass; a real particle keeps landing in one column and a bump rises; chance can make a bump too. Is this one a new particle? No: a computer made it from random numbers. In 2003 real physicists were fooled the same way, and more data wiped the bump out.
-Picture: a small gold plot fills dot by dot into its columns (140 dots, 7 s); at the click a tick lights over the one column that stands out (`th1` step 2). The first two sentences are said over the flight (4,5 s), the column sentences over the fill.
-Note: the plot is an illustration, not measured data: a random sample from a smooth spectrum with no particle in it, in which chance made the bump (public/data/theta-toy.json, seeds inside). Say „sudėliojo kompiuteris“, never „tikri duomenys“.
+Picture (24 Oct, the owner: "slide 11-12 a bit anticlimactic need maybe the detector besides showing we are taking data and a single histogram with peaks built up"; the toy plot cut): LHCb's 3D model in the cavern, left, and beside it LHCb's real Ωc⁰ spectrum, right. LHCb's own 2012 collision crosses in the detector (~3 s), then the crossings come faster until they merge into the 40 MHz glow; just after the first crossing the plot starts to fill (`lead` 3,4 world-s): grains rise out of the detector and arc into their mass bins (20 s), „LHCb duomenys“ over it, the year the landing data were taken under the detector („2011 m.“ → „2015 m.“, then „2011–2015 m.“), „masė →“ under the axis. → spausk: the camera moves in to the plot as the detector and its collisions fade (the data are in), the five peaks get ticks, „5 naujos dalelės“, and the Ωc⁰ as three quarks (c, s, s) with gluons gathers right of it. The zoom's music under it.
 
-Mes dirbame su klausimais, į kuriuos dar niekas neatsakė. Tokį darbą dabar išbandysi ir tu. Kiekvienas taškas krenta į stulpelį pagal masę. Kairėje – lengvesnės, dešinėje – sunkesnės. Lyg surikiuotum visus savo mokyklos mokinius pagal ūgį. Jei dalelė tikra, jos masė kaskart išeina beveik ta pati, ir taškai krenta į tą patį stulpelį. Taip iškyla kauburys. Bet kauburį gali sukurti ir atsitiktinumas – kaip kauliukas, kuris kelis kartus iš eilės išmeta šešetą.
+Detektorius renka duomenis. Iš skeveldrų apskaičiuojame suskilusios dalelės masę – vienas taškas grafike. Tai tikri LHCb duomenys, surinkti per penkerius metus.
 → spausk
-Kaip manai, ar šis kauburys – nauja dalelė?
-[pauzė 3 s]
-Ne. Šį grafiką kompiuteris sudėliojo iš atsitiktinių skaičių – jokios dalelės jame nėra. Iš šimto keturiasdešimties taškų tikros dalelės nuo atsitiktinumo neatskirsi. Panašų kauburį 2003 metais pamatė ir tikri fizikai. Eksperimentas Japonijoje pranešė apie kitą dalelę iš penkių kvarkų. Jo kauburį sudarė vos keliolika taškų. Kiti eksperimentai surinko daug daugiau duomenų ir tos dalelės nerado.
-Štai kaip atrodo, kai taškų – dešimtys tūkstančių.
+Čia penkios smailės – penkios naujos dalelės, kiekviena iš trijų kvarkų. Atradimu fizikai vadina tik tokią smailę, kurios atsitiktinumas beveik niekada nesukurtų. O 2015 metais lygiai taip pat LHCb rado dalelę iš penkių kvarkų, kurią matei pradžioje. Pentakvarkų ieškojau ir aš.
 
-The 2003 claim was Θ⁺, a different five-quark particle: „kitą dalelę iš penkių kvarkų“, never „ši dalelė“. „vos keliolika taškų“: LEPS's own peak was about 19 events above a background of about 17 (36 in the peak region). If asked: LEPS at SPring-8 reported „evidence“ at 4,6σ (Phys. Rev. Lett. 91, 012002 (2003)); CLAS and others with far more data found nothing; by 2008 the PDG review wrote the particle does not exist; the idea of five-quark particles dates from 1964.
+Data: LHCb, Phys. Rev. Lett. 118, 182001 (2017), Fig. 2, 2 960–3 300 MeV, 59 453 candidates (public/data/omegac.json), one grain per three candidates (`unit: 3`). The collision: CERN Open Data, LHCb 2012. The 40 MHz and the 2011–2015 years are not said together: the collision is Run 1's. If asked: the bar is 5σ, about 1 in 3,5 million; the five are at 10σ to 24σ.
 
-Šaltiniai: LEPS, Phys. Rev. Lett. 91, 012002 (2003), arXiv:hep-ex/0301020; CLAS, Phys. Rev. Lett. 96, 042001 (2006); PDG 2008, „Pentaquarks“ (C. G. Wohl).
+Šaltiniai: LHCb, Phys. Rev. Lett. 118, 182001 (2017), arXiv:1703.04639; LHCb, Phys. Rev. Lett. 115, 072001 (2015); CERN Open Data (LHCb 2012).
 
-(~1.3 min)
+(~1.4 min)
 -->
 
 ---
-space: { at: omegac, dim: 0.05 }
-clicks: 1
+space: { at: stumpe, flight: 1.6, dim: 0, hum: false }   # 24 Oct: the photo as a place (StagePhoto mode="place", as Innoday's): it stands in front of the data slide's camera, which pushes in to its front view
+places: { inventions: true }   # the two invention photos stand in the world from here (hidden before)
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, oc: 1, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { oc: 2 } }" />
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[1023.7, -482.5, 22]" :size="3" :yaw="0" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="kk-dim">
+<p class="kk-invention bl">Jutiklinis ekranas<br>1972</p>
+</StagePhoto>
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
-<AfterFlight :delay="6"><div class="heap late" style="left: 490px; top: 374px"><span class="n">59&nbsp;453&nbsp;masės</span></div></AfterFlight>
+<style>
+/* 24 Oct: the inventions' names (a name of a thing shown), 38 px, white on a dark pill, inside the broadcast safe box and clear of the lower third */
+:global(html[data-stage] .hero .kk-invention) { position: absolute; z-index: 2; margin: 0; font-size: 38px; font-weight: 600; line-height: 1.2; letter-spacing: 0.01em; color: #fff; white-space: nowrap; background: rgba(4, 6, 16, 0.72); padding: 6px 16px; border-radius: 6px; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5); opacity: 1; }
+:global(html[data-stage] .hero .kk-invention.bl) { left: var(--kk-x); bottom: var(--kk-floor); }
+:global(html[data-stage] .hero .kk-invention.tr) { right: var(--kk-x); top: 62px; }
+/* near-white pictures graded down for the camera (Innoday's .hero.dim) */
+:global(html[data-stage] .hero.kk-dim > img) { filter: brightness(0.8) contrast(1.05); }
+:global(html[data-stage] .hero.kk-dim.page > img) { filter: brightness(0.55) contrast(1.05); }
+</style>
 
-<!-- facts: lhcb-omegac-2017-fig2-candidates, lhcb-omegac-five-2017, lhcb-omegac-2017-masses, omegac-quark-content, proton-neutron-three-quarks, lhcb-omegac-confirmed, chance-bumps-shrink-with-data, poisson-fluctuation-sqrt-n -->
+<!-- facts: gave-touch-stumpe-1972, gave-touch-sps-1976, gave-touch-johnson-1965 -->
 
 <!--
-Message: real LHCb data with almost 60 000 computed masses: with this many, real particles rise as tall, narrow peaks; five here, five new particles, each of three quarks like a proton. Three quarks is usual.
-Picture: LHCb's real m(Ξc⁺K⁻) spectrum fills grain by grain in light blue, fast at first (about 20 s), until five narrow peaks stand clear of the rest (the owner, 18 Oct: "slide 7-8 just show such histogram with omega c resonances, nicely resolved"); „59 453 masės“ under it from 6 s, as the number is said. → spausk: white ticks light over the five peaks while the rest steps back (`oc` step 2). Light blue, so gold means the pentaquark family (the cover's form, the toy, the pentaquark plot).
-Data: LHCb, Phys. Rev. Lett. 118, 182001 (2017), Fig. 2 (3,3 fb⁻¹ at 7, 8 and 13 TeV): its 1 MeV bin contents read from the vector figure (no HEPData record) and summed to 2 MeV, where they equal the paper's own Fig. 3 bin for bin; 2 960–3 300 MeV, 59 453 candidates (public/data/omegac.json), drawn one grain per two candidates (`unit: 2`, so „masės“, not „taškai“). All candidates as the figure shows them, no background subtracted.
+Picture: Bent Stumpe in 2016 with one of his CERN touchscreen panels beside a smartphone (Innoday's photo); it forms out of the world's grains as the camera pushes in. „Jutiklinis ekranas“ and „1972“ under it, low left (two lines, so the dark ground stays off his face).
 
-Tai tikri LHCb duomenys – beveik šešiasdešimt tūkstančių apskaičiuotų masių.
-[leisk prisipildyti]
-Kai taškų daugėja, atsitiktiniai kauburiai išsilygina, o tikros dalelės iškyla aukštomis, siauromis smailėmis.
-→ spausk
-Čia jų penkios – penkios naujos dalelės. Kiekviena sudaryta iš trijų kvarkų, kaip ir protonas. Trys kvarkai – įprasta.
-O dalelė iš penkių kvarkų – ta, kurią matei pradžioje?
+CERN kuria ne tik mokslą. 1972 metais CERN inžinierius Bentas Stumpe pasiūlė greitintuvą valdyti paliečiant ekraną – tai vienas pirmųjų jutiklinių ekranų pasaulyje.
 
-„atsitiktiniai kauburiai išsilygina“: a chance fluctuation of N counts is about √N while a real peak grows with N; Lyons (CERN Courier, 2023): many 3σ and 4σ effects went away with more data, and the Higgs peaks grew. 2017 is not spoken. If asked: the Ωc⁰ states, seen decaying to a Ξc⁺ and a K⁻; LHCb announced all five at once in March 2017; one charm and two strange quarks (flavour names stay out of speech); masses 3000, 3050, 3066, 3090 and 3119 MeV; four of the five were later confirmed by Belle and by LHCb in Ωb⁻ decays; the broad rise near 3 190 MeV is not a sixth narrow particle. If there is room: „LHCb jas paskelbė iš karto, visas penkias. Keturias iš jų vėliau patvirtino ir kiti matavimai.“ (+0,15 min).
+Never „CERN išrado jutiklinį ekraną“: E. A. Johnson described one in 1965 (UK). The SPS control room used them from its start in 1976.
+Vaizdas: Bentas Stumpe, 2016; nuotr. Sophia Elizabeth Bennett / CERN, CC BY 4.0.
+Šaltiniai: cerncourier.com/a/the-first-capacitative-touch-screens-at-cern/.
 
-Šaltiniai: LHCb, Phys. Rev. Lett. 118, 182001 (2017), arXiv:1703.04639, Fig. 2 (bin contents read from the vector figure).
-
-(~0.6 min)
+(~0.3 min)
 -->
 
 ---
-space: { at: lhcb, dim: 0.05 }
-clicks: 1
+space: { at: firstweb, flight: 1.6, dim: 0, hum: false }   # place mode, beside the touchscreen
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, oc: 0, jp: 1, jx: 0, lietuva: 0 }" :clicks="{ 1: { jp: 2 } }" />
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="firstweb" :relief="0.05" :at="[1031, -482.5, 22]" :size="3" :yaw="0" src="figures/first_website_crt.jpg" alt="Pirmosios svetainės puslapis „World Wide Web“ žaliomis raidėmis terminalo ekrane" focus="50% 50%" class="">
+<p class="kk-invention" style="left: var(--kk-x); top: 62px">Pirmoji svetainė · 1990</p>
+</StagePhoto>
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
 
-<!-- facts: lhcb-pentaquark-2015, lhcb-pentaquark-2015-cross-checks, pentaquark-idea-to-discovery-51-years, lhcb-pentaquark-2019, lhcb-pentaquark-2019-data-2011-2018, lhcb-pentaquark-2019-27292-entries -->
+<!-- facts: gave-www-proposal-lhc, gave-www-next-server, gave-www-first-site-date, gave-www-first-site-text, gave-www-pellow-1991 -->
 
 <!--
-Message: LHCb's pentaquark plot, all its data up to 2019; the peak first rose in 2015. You judge again, and this time it is real: it survived the checks and was a pentaquark, 51 years on. Later, with nine times more data, there were three peaks.
-Picture: LHCb's real m(J/ψ p) spectrum (the published 2019 bins, 4,25–4,60 GeV, 27 292 candidates) fills candidate by candidate in gold, fast at first, until the narrow peaks stand out (about 20 s). The first two sentences over the flight and the fill; the question once the peaks stand. → spausk at „Vėliau…“: white ticks light over the three peaks while the rest of the plot steps back (`jp` step 2; at once if the fill is done, else when it ends).
-Data: LHCb, PRL 122, 222001 (2019), HEPData ins1728691 Table 2 (m(Kp) > 1,9 GeV): Run 1 and Run 2 together, so 2019 is named once, as the data's span; the 2015 peak is never placed „čia“.
+Picture: the first website's page as CERN restored it at info.cern.ch („World Wide Web“; captured at 1920×1080, 2× zoom, a margin added round the page so its heading is inside the TV safe box; 24 Oct); it forms out of the grains. „Pirmoji svetainė · 1990“ top right, beside the heading.
 
-Štai LHCb pentakvarkų grafikas – jame visi duomenys iki 2019 metų. Pirmą kartą smailė iškilo 2015 metais, kai LHCb tyrė, kaip skyla viena sunki dalelė.
-[leisk prisipildyti]
-Kaip manai, ar ši smailė tikra?
-[pauzė 2 s]
-Fizikai tikrino, ar smailė neatsiranda dėl kitų, jau žinomų dalelių, ir ar ji išlieka skirtingų metų duomenyse. Smailė liko. Tai pentakvarkas – po penkiasdešimt vienerių metų paieškų.
-→ spausk
-Vėliau, turint devynis kartus daugiau duomenų, smailių buvo jau trys.
-Padėkime šalia grafiką, kurį vertinai tu.
+1989 metais CERN programuotojas Timas Bernersas-Lee pasiūlė, kaip fizikams dalytis informacija. Taip gimė pasaulinis žiniatinklis. Štai pirmoji svetainė – CERN ji veikė jau 1990 metų pabaigoje.
 
-The checks are worded to the stored claim only (fits with other known particles alone; stability across the 2011 and 2012 data); never „viską“, „detektorius“ or „atranka“; never „netikėtai“. If asked: Λb → J/ψ p K⁻; in 2019, with Run 1 and Run 2 data, the 2015 peak split in two and a third appeared, Pc(4312)⁺ at 7,3σ.
+Never „CERN išrado internetą“: CERN made the web, which runs on the internet. The first site was live by Christmas 1990 (CERN's Web@30); it was announced publicly in August 1991. The page shown is the first website as CERN restored it in 2013.
+Vaizdas: info.cern.ch/hypertext/WWW/TheProject.html (CERN), ekrano kopija.
+Šaltiniai: w3.org/History/1989/proposal.html; home.cern, „A short history of the Web“; web30.web.cern.ch.
 
-Šaltiniai: LHCb, Phys. Rev. Lett. 115, 072001 (2015); CERN, 2015-07-14 (the checks); LHCb, Phys. Rev. Lett. 122, 222001 (2019), HEPData ins1728691.
-
-(~0.8 min)
+(~0.3 min)
 -->
 
 ---
-space: { at: [1797.6, 4.2, 0], dist: 21, yaw: 0, pitch: 3, sway: 0.3, dim: 0.05 }
+space: { at: [1199.83, 0, 1.06], dist: 29.07, yaw: 0, pitch: 60, sway: 0, dim: 0.05, flight: 1.3 }   # 25 Oct: `flight: 1.3` (2 until now: about 2 s of empty blue on the way up from the cavern); 24 Oct review: `flight: 2` (the default flight up from the inventions took ~5,5 s of empty blue, and the map waited for it); 23 Oct (the criss-cross): closer than the `whole` pose's [1201, 0, 2.5] at dist 36, so the seven stops spread out and every name fits inside the broadcast safe box off the trail; the seven names are projected from this pose
+clicks: 5
+places: { inventions: false }   # the invention photos are gone from here on
 ---
 
-<Grains :set="{ pq: 3, route: -1, th1: 0, oc: 0, jp: 2, jx: 1, lietuva: 0 }" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
+<Grains :set="{ pq: 3, route: 1, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 5 }, 3: { route: 7 }, 4: { route: 9 }, 5: { route: 10 } }" />
 
-<div class="heap" style="left: 557px; top: 404px"><span class="n">27&nbsp;292&nbsp;taškai</span></div>
-<div class="heap" style="left: 116px; top: 404px"><span class="n">140&nbsp;taškų</span></div>
-
-<!-- facts: theta-toy-140-entries, lhcb-pentaquark-2019-27292-entries, particle-physics-5-sigma-discovery, dice-eight-sixes-worked, lhcb-pentaquark-2015-cross-checks, lhcb-pentaquark-2019, sarpis-phd-bonn-2023, sarpis-glasgow-study-and-job -->
-
-<!--
-Message: at one scale, your 140 dots are a thin strip beside LHCb's more than 27 000. Physicists call a discovery only a peak that chance alone would make less than once in 3,5 million times, rarer than eight sixes in a row. LHCb's peaks passed that bar; that is how physicists know they have found something nobody has seen.
-Picture: the camera draws back to two plots at the same scale, one grain per entry and the same height per entry. Left, the 140-dot plot of slide 8 as a thin strip (an illustration, not LEPS's data); right, LHCb's 27 292 candidates with their three marked peaks. Under them, their counts. The last line is said as the camera flies to Europe (4,5 s).
-
-Abu grafikai tuo pačiu masteliu. Kairėje – tavo šimtas keturiasdešimt taškų. Dešinėje – daugiau nei dvidešimt septyni tūkstančiai. Atradimu fizikai vadina tik tokią smailę, kurią vien atsitiktinumas sukurtų rečiau nei kartą iš trijų su puse milijono. Tai rečiau, nei kauliukas aštuonis kartus iš eilės išmestų šešetą. LHCb smailės šią ribą peržengė. Taip fizikai ir sužino, kad rado tai, ko dar niekas nematė.
-[pauzė 2 s]
-Pentakvarkų ieškojau ir aš.
-
-The one spoken answer to the cover's question, in its words, said once. „Sigma“ is not said; if asked: five sigma; the 2015 states at 9σ and 12σ, Pc(4312)⁺ at 7,3σ; eight sixes in a row is (1/6)⁸, about 1 in 1,7 million; a 5σ fluke about 1 in 3,5 million.
-
-Šaltiniai: LHCb, Phys. Rev. Lett. 122, 222001 (2019), HEPData ins1728691; Physics World, 2007-05-01, „The tale of the blogs’ boson“ (5σ – atradimas).
-
-(~0.65 min)
--->
-
----
-space: { at: whole, sway: 0, dim: 0.05 }
-clicks: 4
----
-
-<Grains :set="{ pq: 3, route: 1, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 4 }, 3: { route: 6 }, 4: { route: 7 } }" />
-
-<div class="city late caption" style="left: 734px; top: 149px">Vilnius</div>
-<div class="city late caption" style="left: 360px; top: 452px">CERN</div>
-<div v-click="1" class="city step caption" style="left: 280px; top: 152px; --step-delay: 3.4s">Glazgas</div>
-<div v-click="3" class="city step caption" style="left: 470px; top: 357px; --step-delay: 2.2s">Heidelbergas</div>
-<div v-click="3" class="city r step caption" style="left: 394px; top: 250px; --step-delay: 3.6s">Bona</div>
+<!-- 25 Oct (the owner: "the map with my travels is not very smooth, the path appears first only then the text, quite a slow animation"): each name comes up with its trail, not after it (the arrival's at 8,5 s until now, the clicks' 1,2 s after the press); the legs drawn quicker (`draw` 0,9 s a leg, was 1,5) and started sooner (space.json) -->
+<div class="city late caption" style="left: 742px; top: 153px; animation-delay: 1.9s">Vilnius</div>
+<div class="city late caption" style="left: 421px; top: 344px; animation-delay: 2.5s">CERN</div>
+<div v-click="1" class="city step caption" style="left: 138px; top: 56px; --step-delay: 0.15s">Glazgas</div>
+<div v-click="2" class="city step caption" style="left: 102px; top: 116px; --step-delay: 0.15s">Airija</div>
+<div v-click="3" class="city step caption" style="left: 500px; top: 285px; --step-delay: 0.15s">Heidelbergas</div>
+<div v-click="4" class="city step caption" style="left: 337px; top: 180px; --step-delay: 0.15s">Bona</div>
 
 <!-- facts: sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn, sarpis-phd-bonn-2023, lhcb-run1-release-sarpis-lrt-2025, lhcb-vilnius-joined -->
 
 <!--
-Message: my road went through Europe: Glasgow; the doctorate begun in Heidelberg and finished in Bonn, where I searched for pentaquarks and prepared LHCb's data for everyone; then back to Lithuania, and now the LHCb group at Vilnius University. The personal touches are yours to tell, in three optional slots.
-Picture: the trail draws across Europe leg by leg as the stops are told (the owner, 15 Oct: "Show my path around europe"): Vilnius → CERN on arrival (the talk's own frame: home and the place of the work, not a dated trip), then Glasgow (click 1), home (2), Heidelberg and Bonn (3), home to Vilnius (4). Each city's name comes up as the trail reaches it. A click whose slot you skip just draws its leg (about 3 s).
+Message: my road went through Europe, back and forth: Glasgow; the doctorate begun in Heidelberg and finished in Bonn, where I searched for pentaquarks and prepared LHCb's data for everyone; then back to Lithuania, and now the LHCb group at Vilnius University. CERN is the place I kept coming back to. The personal touches are yours to tell, in three slots here (the first is the one to keep) and Manchester's on the next slide.
+Picture: the trail criss-crosses Europe leg by leg, in the owner's order (23 Oct: "Vilnius, CERN, Glasgow, CERN, Ireland, Vilnius, Heidelberg, CERN, Bonn, CERN, Vilnius and Manchester CERN - like a criss cross. a bit more snappy on clicks"): Vilnius → CERN on arrival, then → Glasgow → CERN (click 1), → Ireland → Vilnius (2), → Heidelberg → CERN (3), → Bonn → CERN (4), and home, CERN → Vilnius (5); the next slide goes on from here, Vilnius → CERN → Manchester → CERN → Vilnius (the owner, 24 Oct), before it dives to Lithuania. Each leg bows to its own side (`bends` on the route), so a return over the same pair is a second line, not the first one drawn over. A click draws its legs in about 2 s (1,5 s for the last, one leg), and each name comes up as the trail reaches it. Ireland is named as the country („Airija“): the owner named no city. A click whose slot you skip just draws its legs.
 
 Mano kelias iki šio darbo ėjo per Europą.
-[PATIKSLINTI, neprivaloma: savais žodžiais – kuo norėjai būti vaikystėje ir kaip 11 klasėje pirmą kartą apsilankei CERN]
+[PATIKSLINTI, neprivaloma, bet geriausia pasakyti: savais žodžiais – kaip 11 klasėje, žiūrovų amžiaus, pirmą kartą apsilankei CERN; ir kuo tada norėjai būti]
 → spausk
 Studijavau Glazgo universitete.
 → spausk
-[PATIKSLINTI, neprivaloma: savais žodžiais – darbai tarp studijų ir doktorantūros, Glazge ir Lietuvoje]
+Tarp studijų ir doktorantūros praėjo ketveri metai.
+[PATIKSLINTI, neprivaloma: savais žodžiais – ką veikei Airijoje ir ką tuos metus dirbai Glazge ir Lietuvoje]
 → spausk
-Doktorantūrą pradėjau Heidelberge, o baigiau Bonoje. Ten ieškojau pentakvarkų ir ruošiau LHCb duomenis, kad jais galėtų naudotis visi.
-[PATIKSLINTI, neprivaloma: savais žodžiais – kodėl doktorantūra iš Heidelbergo persikėlė į Boną]
+Doktorantūrą pradėjau Heidelberge.
+→ spausk
+Baigiau ją Bonoje. Ten ieškojau pentakvarkų ir ruošiau LHCb duomenis, kad jais galėtų naudotis visi.
+[PATIKSLINTI, neprivaloma: vienu sakiniu savais žodžiais – ką ta paieška parodė (ji atsako į „Pentakvarkų ieškojau ir aš“)]
 → spausk
 Tada grįžau į Lietuvą. Dabar Vilniaus universitete vadovauju LHCb grupei.
-Ir visa tai dabar galima daryti iš Lietuvos.
 
-Only the bank's lines are scripted: Glasgow 2011–2015 (study), the doctorate in Heidelberg 2019–2020 then Bonn 2020–2023, the pentaquark search and the open-data preparation in Bonn, the return and LHCb Vilnius. The three slots are yours: fill them in your own words (10–15 s each, outside the scripted time) or skip them; nothing is written in their place, and nothing on this slide claims anything the bank does not confirm. Skipped, slot 1 leaves the first sentence alone over the first leg, slot 2 lets click 2 just draw the leg home, slot 3 lets click 4 follow at once. The last line is said as the camera dives to Vilnius (4 s).
+Only the bank's lines are scripted: Glasgow 2011–2015 (study), the doctorate in Heidelberg 2019–2020 then Bonn 2020–2023, the pentaquark search and the open-data preparation in Bonn, the return and LHCb Vilnius; „ketveri metai“ is 2015 to 2019. Ireland and the trips back to CERN are not in the bank (nor Manchester, on the next slide): nothing is said about them unless you say it, and the returns to CERN are drawn without words. The slots are yours, in your own words (10–15 s each): the first (the CERN visit in 11th grade, at the viewers' age) is the one to tell, since the close (16) leans on „Mano kelias … nebuvo tiesus“; the second, what you did in Ireland and in the four years; the third, one sentence on what your pentaquark search showed, which answers „Pentakvarkų ieškojau ir aš“ (10). Nothing is written in their place: the bank does not hold them. The reason the doctorate moved to Bonn is no longer asked (23 Oct, for time). „Ir visa tai dabar galima daryti iš Lietuvos.“ moved to the next slide, where the camera dives to Vilnius.
 If asked: Glasgow 2011–2015; Heidelberg 2019–2020; Bonn 2020–2023 (the thesis, December 2023: a pentaquark search and the LHCb open-data release); the Run 1 release is over 100 000 files, about a petabyte by VU's count.
 
 Šaltiniai: INSPIRE-HEP author record; M. Šarpis, PhD thesis, University of Bonn, 2023; LRT.lt, 2025-01-08 (from a VU press release).
@@ -369,181 +443,168 @@ If asked: Glasgow 2011–2015; Heidelberg 2019–2020; Bonn 2020–2023 (the the
 -->
 
 ---
-space: { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62, sway: 0.3, dim: 0.3 }   # dim 0.2 until 20 Oct: the route head's bloom washed out the east of the outline in the still
+space: { path: [[0, { at: [1199.83, 0, 1.06], dist: 29.07, yaw: 0, pitch: 60 }], [4.4, { at: [1199.83, 0, 1.06], dist: 29.07, yaw: 0, pitch: 60 }], [8.2, { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62 }]], sway: 0.3, dim: 0.35 }   # 24 Oct: opens on slide 13's Europe pose and holds it while the route draws Vilnius → CERN → Manchester → CERN → Vilnius (3,6 s from 0,3 s, `stepDraw`), then dives to Vilnius as before (the last key: the old pose); dim 0.5 until 24 Oct (0.4 until 23 Oct, 0.2 until 20 Oct: the route head's bloom washed out the east of the outline), 0.35 so the held Europe view is not darkened as much
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 1 }" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
+<Grains :set="{ pq: 3, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 1 }" />
 
-<div class="city caption" style="left: 718px; top: 230px">Vilnius</div>
+<div class="city held caption" style="left: 742px; top: 153px">Vilnius</div>
+<div class="city held caption" style="left: 421px; top: 344px">CERN</div>
+<div class="city held caption" style="left: 138px; top: 56px">Glazgas</div>
+<div class="city held caption" style="left: 102px; top: 116px">Airija</div>
+<div class="city held caption" style="left: 500px; top: 285px">Heidelbergas</div>
+<div class="city held caption" style="left: 337px; top: 180px">Bona</div>
+<div class="city held manc caption" style="left: 282px; top: 113px">Mančesteris</div>
+<div class="city dive caption" style="left: 718px; top: 230px">Vilnius</div>
+
+<style>
+/* the Europe names stay from slide 13 (Mančesteris comes up as the trail reaches it, about 2 s in) and go before the dive at 4,4 s; Vilnius at the dive's end */
+html[data-stage] .city.held { animation: kk-held 4.4s linear both; }
+html[data-stage] .city.held.manc { animation-name: kk-held-manc; }
+html[data-stage] .city.dive { animation-delay: 7.8s; }
+@keyframes kk-held { 0%, 86% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes kk-held-manc { 0%, 42% { opacity: 0; } 54%, 86% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .city.held { display: none; } }
+</style>
 
 <!-- facts: cern-lithuania, lhcb-vilnius-students, lhcb-vilnius-work, lhcb-vilnius-racz, lhcb-open-data-coordinator-2026, lhcb-run1-release-sarpis-lrt-2025 -->
 
 <!--
-Message: all of it can now be done from Lithuania (the owner, 15 Oct: "then stress all of this can now be done in Lithuania"): a CERN associate member; a group of mostly students, on the detector, on software, or searching for particles; the first VU doctoral student on LHCb also searches for pentaquarks; 13 VU students at CERN this summer, a record.
-Picture: the camera dives from the whole of Europe down to Vilnius, and Lithuania's outline comes up in light blue round it (`lietuva`, Natural Earth); the route's arcs leave Vilnius westward out of frame. Only Vilnius is named. The last two lines are said as the camera flies to the store (4,5 s).
+Message: all of it can now be done from Lithuania (the owner, 15 Oct: "then stress all of this can now be done in Lithuania"): a CERN associate member; a group of mostly students, on the detector, on software, or searching for particles; the first VU doctoral student on LHCb also searches for pentaquarks; 13 VU students at CERN this summer, a record. Then my own job since August, LHCb's open-data coordinator.
+Picture: the slide opens on slide 13's Europe, its names still up, and the trail goes on at once (the owner, 24 Oct: "to cern from vilnius and from manchester and back to vilnius"): Vilnius → CERN → Manchester → CERN → Vilnius in about 3,6 s, „Mančesteris“ coming up as it is reached. At 4,4 s the names go and the camera dives from Europe down to Vilnius (about 4 s), and Lithuania's outline comes up in light blue round it (`lietuva`, Natural Earth); the route's arcs leave Vilnius westward out of frame. Then only Vilnius is named.
 
-Lietuva – asocijuotoji CERN narė, todėl lietuviai gali pretenduoti į darbą CERN. Didžioji mūsų grupės dalis – studentai. Vieni dirba su detektoriumi, kiti – su programomis, treti ieško naujų dalelių. Pirmoji VU doktorantė LHCb eksperimente irgi ieško pentakvarkų. O šią vasarą praktiką CERN atliko trylika VU studentų – daugiausia iki šiol.
-Nuo rugpjūčio esu LHCb atvirųjų duomenų koordinatorius. Prisimeni duomenis, kuriuos ruošiau Bonoje?
+[PATIKSLINTI, neprivaloma: savais žodžiais – ką veikei Mančesteryje]
+Ir visa tai dabar galima daryti iš Lietuvos.
+Lietuva – asocijuotoji CERN narė, todėl lietuviai gali pretenduoti į darbą CERN. Didžioji mūsų grupės dalis – studentai. Jie dirba ir su detektoriumi, ir su programomis, ir ieško naujų dalelių. Pirmoji VU doktorantė LHCb eksperimente irgi ieško pentakvarkų. O šią vasarą praktiką CERN atliko trylika VU studentų – daugiausia iki šiol.
+Nuo rugpjūčio esu ir LHCb atvirųjų duomenų koordinatorius.
 
-The doctoral student stays unnamed. „pretenduoti“, not „kandidatuoti“. If asked: Lithuania has been an associate member since 2018; VU joined LHCb in September 2024.
+The Manchester slot is yours, in your own words (10–15 s), while the trail draws: Manchester is not in the facts bank, so nothing is written in its place. „Ir visa tai dabar galima daryti iš Lietuvos.“ is said as the camera dives (from slide 12, 24 Oct). The question that bridged to the open-data piles went with them (24 Oct: "15-16-17 not needed"). The doctoral student stays unnamed. „pretenduoti“, not „kandidatuoti“. If asked: Lithuania has been an associate member since 2018; VU joined LHCb in September 2024.
 
 Šaltiniai: home.cern, 2018-01-08 (asocijuotoji narė); VU FF, 2024-09-02 (VU priimtas į LHCb); VU, 2026-08-20 (grupė ir 13 vasaros studentų); VU, R. Racz (pirmoji VU doktorantė LHCb); VU, 2026-07-30 (koordinatorius).
 
-(~0.55 min)
+(~0.7 min)
 -->
 
 ---
-space: { at: [2597.0, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8, dim: 0.15 }   # from the front, so the 1 TB sphere and its label stand in frame right of the 800 pile, nearly as far from the lens (OpenData's yaw-73 pose, its slide 7, left the sphere below the frame); the camera stays inside the vault's clear capsules
+space: { path: [[0, { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62 }]], sway: 0, dim: 0.35 }   # 24 Oct review: slide 14's last pose held under the two clips (until then a cut to the cover's pose, whose five-quark form showed beside „Vilnius“ before the flag faded in); the credits page flies to the cover
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 1, scale: [0, 1], 'scale:labels': 1, sun: 0, vilnius: 0 }" />
+<!-- The owner, 23 Oct: "Don't need second to last slide, better take 2 last slides from innoday just zoom out to lhc / fcc, not the globe". Innoday's lis_flag.mp4, here from its 3,5 s, 16,5 s (a Blender render of a whole SciFi module, then its light injection cold box and the Lithuanian flag lasered on it); its last frame is the first of the close. -->
+<VideoPlayer src="lis_flag_50.mp4" muted :controls="false" transition="fade" />
+<Soundtrack src="audio/starfire_bed.m4a" tail="audio/starfire_bed.m4a" :level="0.36" start keys />
+<Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 0, cavp: 0 }" />
 
-<div class="readout late">
-
-<div class="big"><Count name="open" :from="0" :to="800" :delay="2400" /><span class="unit">TB</span></div>
-
-</div>
-
-<!-- facts: laptop-stack-over-1km-worked, lhcb-run1-full-release-2023, lhcb-run1-volume-sources-differ, sarpis-interview-run1-1-5-years, lhcb-pentaquark-2015-run1-data, lhcb-open-data -->
+<!-- facts: lhcb-scifi, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
 
 <!--
-Message: the data I prepared in Bonn, in one picture: each sphere a terabyte, about a laptop's disk; LHCb's 2011 and 2012 data are 800 of them; every file found, checked and described, about a year and a half; the pentaquark peak first rose in exactly these data, and now they are open to everyone.
-Picture: OpenData's piles (the owner, 18 Oct: "Show something about open data"): the camera flies in to a single gold sphere and a pile of 800 like it, standing on a floor of grains in a space of data; „1 TB“ under the sphere, the count „800 TB“ low on the left (once: the pile's own label is gone).
+Message: one part of LHCb our group works on: the tracker of plastic fibres that light up when a particle passes, and the light injection system at the ends of its modules that sends short laser pulses into them to calibrate them. A computer-made picture, said so; the flag is ours.
+Picture: Innoday's clip from its 3,5 s (the dark start cut), 16,5 s, silent: 0–3,5 s the camera pans slowly down a whole SciFi module (two fibre mats of 2,4 m) from below; 3,1–6,5 s the cold box at its lower end is outlined in soft light blue (the light injection system is inside it); 6,5–8,5 s the camera closes in on the box; 8,5–14 s a laser engraves the Lithuanian flag on it; it holds from 16 s. The press goes on to the close, which starts from this frame.
 
-Štai jie. Kiekviena sfera – vienas terabaitas, maždaug nešiojamojo kompiuterio diskas. Čia LHCb 2011 ir 2012 metų duomenys – aštuoni šimtai terabaitų. Kiekvieną failą reikėjo surasti, patikrinti ir aprašyti. Net su tam parašytomis programomis tai užtruko apie pusantrų metų. Būtent šiuose duomenyse 2015 metais iškilo pentakvarko smailė. Dabar jie atviri visiems.
-Šiais metais atverta dar daugiau.
+Tai vienas LHCb sekiklio modulis – kompiuteriu sukurtas vaizdas. Jame – plastikinės skaidulos, kurios sužimba, kai pro jas praskrieja dalelė.
+[kamerai artėjant prie dėžės] Šioje dėžėje lazeriai siunčia į skaidulas trumpus šviesos impulsus – taip tikrinama, ar sekiklis matuoja tiksliai. Prie jo dirba ir mūsų grupė.
+[vėliavai išryškėjus] Vėliavą į šį vaizdą įpiešėme patys.
+[kai vaizdas sustoja] → spausk
 
-Terabytes only, never „petabaitas“. 800 TB is CERN's figure (VU: over 1 PB in all, of which 800 TB of physics data in over 100 000 files); the release holds the same 2011–2012 collisions the 2015 peak rose in (2019 used Run 1 and Run 2). The year-and-a-half line is the speaker's public interview (VU Library, 5 March 2026). If asked: the full Run 1 release was completed on 20 December 2023; a terabyte holds tens of millions of recorded collisions.
+The SciFi slide's words of 21 Oct, shortened to fit the 16,5 s clip (the final story pass, 23 Oct). If asked: the SciFi tracker holds more than 11 000 km of 250 µm fibre (lhcb-scifi) and records where the particles passed. Nothing more about Vilnius than the group's meeting agenda says (SciFi and the light injection system among its service tasks): never „mes sukūrėme“. The flag is not on the real module. If asked: 670 nm VCSEL lasers; 524 288 SiPM channels read the light.
 
-Šaltiniai: opendata.cern.ch, „LHCb releases entire Run 1 dataset“ (2023-12-20); VU biblioteka, interviu, 2026-03-05; LHCb, Phys. Rev. Lett. 115, 072001 (2015) (3 fb⁻¹, 2011–2012).
+Šaltiniai: LHCb Upgrade I, JINST 19 (2024) P05065, 6.5.7 sk.; indico.cern.ch/event/1461467 (VU LHCb grupės susitikimas, 2024-10-03).
 
-(~0.6 min)
+The clip runs 16,5 s (trimmed); the words run a few seconds past it, over its held frame.
+
+(~0.1 min)
 -->
 
 ---
-space: { at: [2591.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, flight: 5, dim: 0.15 }   # OpenData's 4 PB pose (its slide 8)
+space:
+  dim: 0
+  sway: 0
+  hum: false
+  ambient: 0   # deep black throughout (the owner, 25 Oct: "this blue on blue somehow diminished the effect a bit... maybe deep black is better")
+  path:   # 24–25 Oct (the owner: "make it vast, filling the entire screen"; "slowly orbit, indicate 3D fcc 300m underground"; then "keep it pointcloud but resolve better", "spend a little bit more time (like before) at eye level … Maximize effect, keeping the soundtrack in mind"): the close live, timed to Starfire (the finale file's 1:37,38 arrival at 16,36 s)
+    - [0, { at: [1009.54, -482.702, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]   # 25 Oct (the owner: "the detector in slide 15 should move into LHCb as in innoday, with lithuanian flag"): the clip's last view, the flag on the cold box (<LisFlag>, Innoday's path at 22efcef, LHCb 1000 units along x here) …
+    - [2, { at: [1009.54, -482.702, 0.96], dist: 2.236, yaw: -90, pitch: -29.74 }]   # … held while the frame turns to grains
+    - [5.5, { at: [1009.6, -482, 0.8], dist: 7, yaw: -80, pitch: 4 }]                # out of the module's end, the flag shrinking to the module's place in the SciFi
+    - [8.5, { at: [1010.6, -481.75, 1.6], dist: 14, yaw: -50, pitch: 4 }]
+    - [12, { at: [1012, -481.5, 2.5], dist: 24, yaw: -18, pitch: 4 }]     # drawn back: the whole detector at eye level, the 1,83 m person beside it, the flag a small mark on its module
+    - [16.4, { at: [1012, -481.5, 2.5], dist: 25, yaw: -12, pitch: 4 }]   # LHCb's collision crosses on the 1:37 arrival
+    - [26, { at: [1012, -481.5, 2.5], dist: 28, yaw: 0, pitch: 5 }]       # the crossings come faster (the cascade from ~20 s) …
+    - [33.8, { at: [1012, -481.5, 2.5], dist: 31, yaw: 10, pitch: 6 }]    # … until it glows evenly: 40 million a second; held at eye level to the breath at 1:54,8
+    - [38, { at: [1018, -470, 2.5], dist: 38, yaw: 10, pitch: 45 }]     # the climb, beside the shaft (the detector, floor and shaft let go at 38,5 s)
+    - [40.5, { at: [1023.7, -404, 2.5], dist: 32, yaw: 10, pitch: 76 }] # through the surface, over Point 8
+    - [42.8, { at: [1028, -407, 24], dist: 72, yaw: 2, pitch: 54 }]     # the accelerators on the 2:03,8 bar (the swell after the breath), north up
+    # 25 Oct (the owner: "The LHC FCC zoomout can be orbiting a bit quicker, zooming out so FCC is visible as a whole but 3D"): down to about 30° so the rings read in depth, both rings whole and filling about 80 % of the frame (each key's look point and distance fitted to the rings at its angle), and an orbit of 1,2° a second (0,5 until now)
+    - [50, { at: [1031.1, -410, 38.7], dist: 62, yaw: 12, pitch: 32 }]
+    - [60, { at: [1034.1, -410, 37.7], dist: 61, yaw: 24, pitch: 31.6 }]
+    - [70, { at: [1036.8, -410, 36.1], dist: 59, yaw: 36, pitch: 31.2 }]
+    - [80, { at: [1039.1, -410, 34.0], dist: 57, yaw: 48, pitch: 30.8 }]
+    - [90, { at: [1041.0, -410, 31.5], dist: 54, yaw: 60, pitch: 30.4 }]
+    - [100, { at: [1042.3, -410, 28.6], dist: 51, yaw: 72, pitch: 30 }]
+    - [110, { at: [1042.9, -410, 25.6], dist: 48, yaw: 84, pitch: 29.6 }]
+    - [120, { at: [1042.9, -410, 22.4], dist: 47, yaw: 96, pitch: 29.2 }]
+    - [130, { at: [1042.3, -410, 19.4], dist: 49, yaw: 108, pitch: 28.8 }]
+    - [140, { at: [1041.0, -410, 16.5], dist: 53, yaw: 120, pitch: 28.4 }]
+    - [150, { at: [1039.1, -410, 14.0], dist: 56, yaw: 132, pitch: 28 }]
+clicks: 1
 ---
 
-<Grains :set="{ pq: 3, route: 7, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 1, scale: [0, 1, 2], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
+<!-- 24 Oct: the close rebuilt live (setup/accel.js; until then Innoday's recorded close, close_quick.mp4). LHCb's cavern (slide 10's station): the collision waits 13,86 s so it crosses at 16,36 s (`delay`), the arrival of Starfire's 1:37 on it (the drop on the world's clock); at 23 s the detector is let go and the camera rises out of the cavern to the accelerator map above it (the `accel` station: Point 8's shaft stands over the detector), which then turns slowly. The depths are drawn ~20 times deeper than true so the two levels read; the FCC's eight shafts are evenly placed (indicative). On the click a CMS collision (`bang`) crosses over the FCC's middle 2,5 s later, on Starfire's 2:54,85 downbeat (starfire_downbeat.m4a starts 2,6 s before it), and its debris gathers into „Ačiū už dėmesį“ (`word`). -->
+<InsideLhcb det="detp" :land-y="-470" :delay="13.86" :fade-at="38.5" :sync-to="{ src: 'starfire_finale', at: 13.52 }" />
+<!-- 25 Oct: the clip's last frame (the flag on the cold box) turns to grains in LHCb's SciFi and shrinks to the detector's scale as the camera pulls back; it goes with the detector at 38,5 s. The point cloud no longer twinkles before the collision (`detp` steady, space.json). -->
+<!-- 25 Oct (the owner: "Maybe for the finale give lhcb a floor and indicate the schaft"): the cavern's floor and cradles (slide 10's) now come with `detp` too, and the access shaft (`shaft`, space.json) rises from the cavern's roof to the surface at Point 8, beside which the camera climbs; the detector, floor and shaft let go together at 38,5 s (later, the detector showed through the map). And ("could also indicate that LHCb is connected to lhc somehow"): the LHC's two beams through the detector and out of the cavern both ways (`beams`), as on the map that follows -->
+<LisFlag :fade-at="38.5" />
+<Grains :set="{ pq: 0, route: 14, th2: 0, th1: 0, oc: 0, omega: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 1 }" />
+<ClickBus name="bang" :click="1" />
+<!-- the click: the camera flies in to face the place over the FCC's middle where the collision crosses and the words gather -->
+<ClickPose :poses="{ 1: { at: [1027.99, -389.2, 30.56], dist: 22, yaw: 20, pitch: 5, flight: 2.2, ambient: 0 } }" />
+<Soundtrack src="audio/starfire_finale.m4a" tail="audio/starfire_finale.m4a" :level="0.5" keys :drop="{ clock: 'world', at: 16.36, file: 'audio/starfire_finale.m4a', hit: 16.02, duck: 99, xfade: 2000, quiet: 0.8 }" :on-click="{ click: 1, file: 'audio/starfire_downbeat.m4a', level: 0.62, xfade: 700 }" />
+<WorldLabel v-click.hide="1" :at="[1009.66, -408, -9.36]" :above="-440" :delay="44.5" align="left">LHC – mano<br>greitintuvas</WorldLabel>
+<!-- the FCC label on the ring's south-west side (25 Oct): it stays in the safe box through the faster orbit; on the east side it ran off the bottom -->
+<WorldLabel v-click.hide="1" :at="[1001.97, -416, 48.78]" :above="-440" :delay="47.5">FCC – jūsų<br>greitintuvas</WorldLabel>
+<WorldLabel v-click.hide="1" :at="[1023.7, -404, 2.5]" :above="-440" :delay="45.5" :dx="34" :dy="-30">100 m</WorldLabel>
+<WorldLabel v-click.hide="1" :at="[998.64, -408, 18.41]" :above="-440" :delay="49" align="left">~200 m</WorldLabel>
 
-<div class="readout last">
-
-<div class="big"><Count name="open" :from="800" :to="4000" :delay="5200" :ms="900" /><span class="unit">TB</span></div>
-
-<p class="caption">Atvirieji LHCb duomenys</p>
-
-</div>
-
-<!-- facts: lhcb-ntupling-service-4pb, lhcb-open-data -->
+<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-fcc-study, lt-fcc-unis, cern-ls3-hllhc, sarpis-glasgow-study-and-job, sarpis-phd-heidelberg-to-bonn -->
 
 <!--
-Message: this year part of the later data opened too; with the earlier data that is over 4 000 TB.
-Picture: the camera pulls back; five copies of the 800 pile merge into one gold pile of 4 000 spheres; the count runs from 800 to 4 000 TB (at 5,2 s). Say the line as the piles merge. The caption names what the count counts.
+Message: the last slide (the owner, 23 Oct: "we finish on slide 20 [now 19] FCC full frame - saying 'LHC - mano greitintuvas, FCC - jūsų greitintuvas'"): from our flag on one module, out to the whole detector and its collisions; the LHC runs till they are about thirty; the cover's promise kept (my road was not straight; you need not know now what you will be); then the LHC ring, mine, and the FCC, CERN's proposed next ring, whose study VU has joined: theirs. Thanks.
+Picture: Innoday's close, 54 s, no sound, at its own full framing (the FCC ring fills the height at the end): the flag's frame breaks into grains and dissolves (~2,5 s) into LHCb as a point cloud of its real geometry, the camera drawing back through it (3–14 s; the whole detector from ~12 s), the flag shrinking to where the module stands, a 1,83 m person for scale (~18 s); a real LHCb collision crosses at ~16 s, then the crossings come faster until the detector glows evenly (~18–33 s); then a slow climb until it looks straight down, north up (~35–42 s): LHCb shrinks to a point and the map comes up round it at true scale (the LHC ring from ~42 s, the FCC's whole circle ~49–52 s), the LHC ring (26,7 km) with its two beams, the proposed FCC ring (90,7 km) in orange dashes, Lake Geneva, the small flag at LHCb's point, the LHCb logo top left (its mirrored „LHCb“ is the logo's own CP mirror). „mano greitintuvas“ comes up beside the LHC ring as it appears, „jūsų greitintuvas“ beside the FCC ring once it is whole (deck text, <ClipCue>, following the rings as the camera settles); the licence credits are on slide 20, kept but not shown (the owner, 23 Oct). The music: Scott Buckley's „Starfire“, as Innoday's close, low under the speech; it goes on over the held frame.
 
-Šiais metais atverta ir dalis vėlesnių duomenų. Kartu su ankstesniais – daugiau nei keturi tūkstančiai terabaitų.
-O dabar pažiūrėk, kiek jų yra iš viso.
-
-Never „4 PB“ in speech. If asked: the Ntupling Service (February 2026) opens Run 1 and part of Run 2 without LHCb's software.
-
-Šaltiniai: LHCb outreach, 2026-03-03 („over 4 PB of data to explore“); CERN Open Data portalas, 2026-02-22.
-
-(~0.3 min)
--->
-
----
-space: { at: [2583.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0.15 }   # OpenData's 100 PB pose (its slide 9)
----
-
-<Grains :set="{ pq: 3, route: 7, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 1, scale: [0, 1, 2, 3], 'scale:labels': 0, sun: 0, vilnius: 0 }" />
-
-<div class="readout blue late">
-
-<div class="big"><span class="gt">></span><Count name="lhcb" :from="0" :to="100000" :delay="2400" /><span class="unit">TB</span></div>
-
-<p class="caption">Visi LHCb duomenys</p>
-
-</div>
-
-<!-- facts: lhcb-data-100pb, lhcb-data-total-2026, laptop-stack-over-1km-worked, lhcb-ntupling-service-4pb, lhcb-open-data-policy -->
-
-<!--
-Message: all the data LHCb has collected: more than 100 000 terabytes, a stack of laptops more than a kilometre high; the gold pile in front is open.
-Picture: the camera pulls far back; a blue pile of 100 000 spheres rises behind the gold one; „> 100 000 TB“ counts up low on the left (a lower bound: LHCb's 100 PB is its March 2025 figure), the caption names it. The first sentence as the blue pile rises.
-
-O tai visi LHCb surinkti duomenys – daugiau nei šimtas tūkstančių terabaitų. Šimtas tūkstančių nešiojamųjų kompiuterių, sukrautų vienas ant kito, būtų daugiau nei kilometro aukščio. Auksinė krūva priekyje jau atvira.
-O štai ką su atviraisiais duomenimis padarė vienas mūsų studentas.
-
-Scale, worked out: a 1 TB laptop of today is about 1,1 cm thick, so 100 000 of them stack to about 1,1 km: „daugiau nei kilometro“, never „dviejų kilometrų“. If asked: LHCb opens about half of a period's data five years after it ends and all of it after ten.
-
-Šaltiniai: B. Couturier, ISGC 2025 („more than 100 PB of data“); LHCb, arXiv:2504.00610 (atvirųjų duomenų politika).
-
-(~0.45 min)
--->
-
----
-space: { at: [2600, -0.3, 0], dist: 36, yaw: 0, pitch: 3, dim: 0.05 }   # OpenData's sun pose (its slide 11)
----
-
-<Grains :set="{ pq: 3, route: 7, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 1, vilnius: 0 }" />
-
-<!-- facts: opendata-sun-plots-from-records, stonkus-bsc-2026, stonkus-bsc-2026-yield, lhcb-pentaquark-2015, lhcb-open-data -->
-
-<!--
-Message: these plots were drawn from the open data; this year a VU bachelor student collected thousands of dots from them and checked whether the bump would rise where LHCb found the pentaquarks; it did, and he calls his work a check.
-Picture: OpenData's sun of plots: a sun turns slowly round the gold pile, rays of grains leaving it to every side, nineteen of them ending at plots made from LHCb's open data (the grains land on each plot's curves), seven at empty places, gold clouds waiting. No text: „everyone can use this“ is said, not shown (the owner, 18 Oct, through the Scheduler).
-
-Šie grafikai nubraižyti iš atvirųjų LHCb duomenų. Šiais metais mūsų bakalauro studentas Dominykas Stonkus paėmė atviruosius 2012 metų LHCb duomenis ir surinko iš jų tūkstančius taškų. Jis tikrino, ar kauburys iškils toje pačioje vietoje, kur LHCb rado pentakvarkus. Iškilo. Pats savo darbą jis vadina patikrinimu.
-Pradėti galima dar mokykloje.
-
-Do not say „atrado“, „pirmasis“, „savo kompiuteryje“ (38,3 TB filtered on CERN computing) or „pakartojo paiešką“ as if independent: the thesis calls itself a qualitative check. „tūkstančius taškų“ rests on the about 16 400 selected decays. No web address in speech. The plots, if asked: the masses of π⁰, D⁰, J/ψ, K⁰S and Λ, the D⁰ and K⁰S lifetimes, the magnet's field, the beam spot, spectra and multiplicities, all from CERN Open Data records 401 and 24506. If there is room: „Rugsėjį du Browno universiteto fizikai paskelbė išankstinį straipsnį, parengtą su atviraisiais LHCb duomenimis.“ (+0,1 min; a preprint).
-
-Šaltiniai: D. Stonkus, bakalauro darbas, VU, 2026, epublications.vu.lt/object/elaba:308118793/308118793.pdf; CERN Open Data, įrašai 401 ir 24506; arXiv:2609.09275.
-
-(~0.5 min)
--->
-
----
-space: { at: [2600.17, -1.03, 0], dist: 30.45, yaw: 0, pitch: 3, dim: 0.05 }   # OpenData's Vilnius pose (its slide 12)
----
-
-<Grains :set="{ pq: 3, route: 7, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 0, scale: [1, 2], 'scale:labels': 0, sun: 0, vilnius: 1 }" />
-
-<!-- facts: lhcb-masterclass-vilnius-2026, lhcb-masterclass-vilnius-2027, vu-masterclass-annual, stonkus-bsc-2026, vu-bsc-2026-cms-open-data-spukas -->
-
-<!--
-Message: you can start at school: pupils have measured a particle's lifetime in real LHCb data at VU's masterclass; later a bachelor's thesis from open data, as Dominykas did; the empty places are work nobody has done yet, and they wait for you. You need not know now what you will be.
-Picture: OpenData's second sun, round the same gold pile: rays end at two white clusters named „Meistriškumo pamoka“ and „Bakalauro darbai“ and at gold clouds breathing slowly, room for what comes next. The last line is said as the camera flies back to the particle (4,5 s).
-The masterclass is told without dates (the owner, 15 Oct: "No dates for masterclass") and in the past tense: no 2026–27 LHCb date was public on 20 Oct (two editions held, 2025 and 2026); VU's yearly masterclasses are the CMS ones, so never „kasmet“ of the LHCb one. Do not say it uses CERN Open Data files: no source shows it; it uses real LHCb data.
-
-Vilniaus universitete jau vyko LHCb meistriškumo pamokos. Mokiniai ten su tikrais LHCb duomenimis patys išmatavo, kiek laiko gyvuoja viena dalelė. Universitete iš atvirųjų duomenų gali parašyti bakalauro darbą, kaip Dominykas. O šios tuščios vietos – darbai, kurių dar niekas nepadarė. Jos laukia tavęs. Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
-Ir grįžkime prie dalelės, nuo kurios pradėjome.
-
-The organisers' point is said once, here, as advice; it claims nothing about you. Optional, after it, one sentence of your own about a moment you noticed something and followed it (nothing is written for it). If asked: the particle is the D⁰ meson; another VU bachelor's thesis of 2026 used CMS open data. If there is room: „Beje, pirmieji vieši LHCb failai buvo paskelbti būtent tokioms pamokoms.“ (+0,1 min; never as if the Vilnius masterclass uses them).
-
-Šaltiniai: VU FF, LHCb meistriškumo pamokos (indico.cern.ch/event/1648092); D. Stonkus, bakalauro darbas, VU, 2026; CERN Open Data, įrašas 401 (2014).
-
-(~0.6 min)
--->
-
----
-space: { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 1, dim: 0.25 }   # the cover's view and dim, the form a little nearer the middle (right half), „Ačiū“ beside it in the left half
----
-
-<Grains :set="{ pq: 3, route: 7, th1: 0, oc: 0, jp: 2, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0 }" />
-
-<div class="thanks beside">Ačiū</div>
-
-<!-- facts: lhcb-pentaquark-2015-cross-checks, lhcb-pentaquark-2015-run1-data, lhcb-run1-full-release-2023 -->
-
-<!--
-Message: the particle was found because physicists gathered a great many dots and checked carefully, and the data it first showed up in are now open to you. Thanks.
-Picture: back to the cover's five-quark particle, gathering again out of the dust (`pq` replays its gather on arrival: more than 5 s since its last step change); „Ačiū“ beside it. Whether the talk closes on „Ačiū“, and over what, is the owner's to say (the Scheduler asked, 18 Oct); built as the default.
-
-Ji rasta, nes fizikai surinko labai daug taškų ir kruopščiai tikrino. Duomenys, kuriuose ji pirmą kartą pasirodė, dabar atviri ir tau.
+[vėliavai byrant, kamerai traukiantis, nuo 0 s] Pradžioje žadėjau pasakyti, nuo ko tokį darbą galima pradėti. Mano kelias, kaip girdėjai, nebuvo tiesus. Nebūtina jau dabar žinoti, kuo būsi. Užtenka pastebėti, kas tau įdomu, ir pasidomėti giliau.
+[susidūrimams ėmus kartotis, ~19 s] Dabar greitintuvas atnaujinamas. Atnaujintas jis veiks iki 2041 metų. Tada tau bus apie trisdešimt.
+[tylėk, kol detektorius ima švytėti ir kamera kyla, ~27–42 s]
+[kai iškyla LHC žiedas, ~42 s; „mano greitintuvas“ pasirodo ~45 s] Šis žiedas – dvidešimt septynių kilometrų LHC. LHC – mano greitintuvas.
+[~47 s; „jūsų greitintuvas“ prie FCC žiedo pasirodo ~52 s] O šis – devyniasdešimt vieno kilometro FCC, kurį CERN siūlo statyti kitą. Prie jo tyrimų jau prisijungė Vilniaus universitetas.
+FCC – jūsų greitintuvas.
 [pauzė 2 s]
 Ačiū.
 
-The question is answered through the dots, without a third „51 metai“ and without repeating it.
+The order (the final story pass, 23 Oct): the advice over the wordless pull-back from the flag, so the 2041 line leads straight into „mano“ and „jūsų“ and the punchline is last, about 4 s after its label. „iki 2041 metų“: the HL-LHC is to run from June 2030 to 2041 (cern-ls3-hllhc); „apie trisdešimt“ is our arithmetic (15–18 now, plus 15). The organisers' advice is here since „Ačiū“'s slide went (23 Oct), where it closes the cover's promise; „Mano kelias … nebuvo tiesus“ leans on 13. „dvidešimt septynių kilometrų“ ties „LHC“, first said here, to slide 6's „LHC 27 km“. The two last lines are the owner's own („jūsų“, plural, as he said it). „Prie jo tyrimų jau prisijungė“: VU, KTU and LSMU signed a memorandum with CERN to join the FCC feasibility study (lt-fcc-unis, 22 Sept 2025). The collision is the same kind as slide 10's; its 40 MHz is not said again. If asked: the decision to build is hoped for about 2028 (the CERN Council, „possibly in 2028“, cern-fcc-council-2025); LHCb is 21 m long (lhcb-detector-size); FCC 90,7 km, about 200 m deep, its first stage an electron–positron collider of about 15 billion CHF (cern-fcc-study).
 
-(~0.4 min)
+Šaltiniai: home.cern (LHCb; the FCC, 2025-11); cerncourier.com/a/fcc-feasibility-study-complete/; ff.vu.lt (2025-09-22).
+
+The clip runs 54 s; the words run about 7 s past it, over the held map, and the music goes on after „Ačiū“.
+
+(~1.05 min)
 -->
+
+---
+space: { at: [595.5, 0, 0], dist: 13, yaw: -14, pitch: 8, sway: 0, dim: 0.7 }   # the credits page: the world dimmed far under the list
+---
+
+<Grains :set="{ pq: 3, route: 14, th2: 0, th1: 0, oc: 0, jp: 0, jx: 0, lietuva: 0, vault: 0, sun: 0, vilnius: 0, accel: 0, cavp: 0 }" />
+<Soundtrack src="audio/starfire_finale.m4a" tail="audio/starfire_finale.m4a" :level="0.33" keys />
+
+<div class="credits-page">
+
+Vaizdai ir duomenys: CERN (CERN iš oro, LHC tunelis CERN-FOOTAGE-2022-013-001, dipolis CERN-VIDEO-2019-050-008) · CMS susidūrimas: CERN atvirieji duomenys, įrašas 300 (CC0) · LHCb filmukas: LHCb kolaboracija · LHCb modelis: © CERN LHCb kolaboracijos naudai (GPL-3.0), HSF Phoenix (Apache-2.0); žmogaus modelis: Blender Human Base Meshes (CC0) · LHCb susidūrimas: CERN atvirieji duomenys · Ωc⁰ spektras: LHCb, Phys. Rev. Lett. 118, 182001 (2017), CC BY 4.0 · Jutiklinis ekranas: B. Stumpe, nuotr. S. E. Bennett / CERN, CC BY 4.0 · Pirmoji svetainė: A. Rao / CERN · Priartinimas: autoriaus SpaceEngine montažas; Žemė: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies) · Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF) · CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (pakeistas) · Žemėlapiai: Natural Earth (viešasis domenas); © OpenStreetMap bendraautoriai (ODbL) · SciFi modulis ir pabaigos įrašas: Innoday (Blender; LHCb geometrija) · Muzika: Scott Buckley, „Starfire“ (scottbuckley.com.au), CC BY 4.0, pakeista
+
+</div>
+
+<!--
+Kalbėtojui: šio puslapio nerodyti – pranešimas baigiasi 19-oje skaidrėje. Jis laikomas dėl licencijų reikalaujamų nuorodų (savininkas, 2026 10 23: „credits all go to slide 20 which I will make available but not show“); lieka žiniatinklio versijoje ir PDF. Muzika čia tęsiasi, jei puslapis būtų atvertas.
+The zoom music's own credit is unknown (its title and licence were never filed): add it here once known. Everything listed follows credits.txt.
+
+(~0 min)
+-->
+

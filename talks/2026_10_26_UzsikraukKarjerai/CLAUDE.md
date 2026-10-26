@@ -6,17 +6,55 @@
   Achievement, for grades 9–12 (LJA lists 8–12).
 - Filmed in the Delfi studio, Vilnius, on 26 Oct 2026, 16:00–18:00, with no
   audience; streamed to classrooms on 27 Oct 2026 at 12:00.
-- Lithuanian, 10–15 minutes (this deck: about 10).
+- Title (the owner, 21 Oct, through the Scheduler; his capitalisation): „Kas
+  vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po žeme“. No
+  title slide (16 Oct): it is the deck's `title:` (the tab) and goes to Delfi
+  with the notes. Hedge for the speaker: CERN is the world's largest
+  *particle physics* laboratory (`cern-largest-particle-physics-lab`; no
+  source ranks it among all science labs), and 100 m is LHCb's depth and the
+  LHC tunnel's (`lhcb-100m-below-ground`, `lhc-geneva-27km-100m-four-experiments`).
+  In speech: „didžiausia pasaulyje dalelių fizikos laboratorija“.
+- Lithuanian, **15 minutes** (the owner, 21 Oct: "school students oriented, so
+  more visuals, but 15 min we can cover quite a lot of content"; until then
+  10–15, and the 20 Oct deck is about 10).
 - The organisers' ask: real stories over conference talks; you don't need to
   know now what you will be; notice what interests you and dig; what working
   on questions with no textbook answer is like.
-- Delivery (owner, 2026-10-08, replaces the earlier broadcast brief): **a
-  private event delivered online, not TV.** No TV safe area, logo corners,
-  `safe` check, Delfi questions, per-slide MP4s for a broadcaster or a
-  2.5 Mbit/s gate. Keep: type readable on a laptop or a classroom
-  projector showing a stream, and no ultra-fine dust that video
-  compression smears. The normal stage look is allowed again. No sources
-  on slides and no reference lists required; facts must still be true.
+- Delivery (owner, 21 Oct, through the Scheduler: "15min talk, will be
+  recorded in a studio with good quality"): **a studio recording of good
+  quality**, filmed at Delfi on 26 Oct and streamed to classrooms on 27 Oct.
+  The broadcast path in full (skill talk-broadcast): `broadcast: true` in the
+  headmatter, so `talk ready` runs the safe-area check; per-slide MP4s and
+  text-free plates at the studio's frame and rate (`talk record --plates`,
+  Friday on v0.8.2); the stills PDF with cue lines, `credits.txt`, the source
+  clips; the venue zip (`pnpm venue`) as the fallback copy. Open with the
+  owner (asked 21 Oct): the frame and rate (1080p50 or 2160p), how the deck is
+  fed (a screen capture of the laptop or files), and the rest of the
+  broadcaster's list. The 8 Oct "not TV" meant no broadcast channel; it
+  replaced the earlier TV brief and is itself replaced by this. Kept from
+  then: the stage look, no sources on slides; facts must still be true.
+- The studio (the owner, 21 Oct, in this window): **1080p50**; the deck runs
+  on his MacBook and must also be available online (he will try the local
+  copy first) and wants a package that plays anywhere; shown **on a screen
+  behind him** (the camera films the screen, so no direct feed is known);
+  **he clicks**; the laptop's sound **goes into the mixer** (the clips at
+  −16 LUFS, the opening's swell, thump and drone, the tunnel at 0,5);
+  probably **no on-screen logo** of theirs (he is not sure). Ways to run it,
+  in order: the live URL; the venue zip on the MacBook (local HTTP); with
+  v0.8.2 either one falls back to recorded plates where the world cannot run;
+  the per-slide 1080p50 MP4s as the last copy (a Keynote/PowerPoint file of
+  them plays on any machine, if he wants it). The order is the Scheduler's
+  approved plan (21 Oct). v0.8.2 adds `RUN_ME.command` (macOS) and
+  `RUN_ME.bat` (Windows) to the venue zip: python3's http.server where it
+  exists, else what to install; a bundled server binary is put to the owner.
+- The feed (the owner, 23 Oct): "They will have the ability to switch between
+  room view (me in front of screen) and the presentation view": Delfi takes the
+  laptop's output into the mixer as well as filming the screen behind him, so the
+  slides also go out full frame at stream bitrate (the broadcast look and the safe
+  box matter for both; where he stands only in the room view). For the day: the
+  MacBook's HDMI at 1920×1080, 50 Hz, mirrored (a presenter window on the laptop
+  runs a second world and may stutter); ask whether the sound goes over HDMI or
+  a separate cable.
 - Owner's steers: "doesn't have to be my life story"; the first version was
   rejected for too many slides, AI-sounding lines and a broken story; the
   second for incoherent flow and washed-out visuals ("more striking but not
@@ -24,52 +62,299 @@
 - Banned: slogan cards, "X, not Y" antithesis, unsourced numbers, anything
   from the speaker's private documents in git.
 
-## Story (eighth version, 20 Oct: blueprint v2, the flow reworked for a 10–15 min talk: 19 slides, about 10 min)
+## Story (fifteenth version, 23 Oct night: the review round, then the owner's last cuts: 19 slides, 11,8 min by the lint's slide times; about 13–14 min delivered with the slots)
 
-The blueprint: `notes/blueprint.md` (v2, 20 Oct; v1 of 18 Oct is at
-f840ac0). One dot: a particle of five quarks took 51 years to find, so how do
-you know you have found something nobody has seen? The viewer sees how, dot by
-dot, and judges twice (a 140-dot bump that fools them, as physicists were fooled
-in 2003; LHCb's 2015 peak, which held); the rule is said once, in the cover's
-words. Then the dots are handed on through the speaker's road (Glasgow,
-Heidelberg, Bonn: the pentaquark search and the open-data release), the group in
-Vilnius, OpenData's piles, a VU student's check of the bump and the masterclass.
-Elements from Innoday (the web, the funnel) and OpenData (the way in, the LHCb
-clip, the piles, the suns) as built on 18 Oct; the owner's career path as a
-thread, scripted only from the facts bank, with three optional owner slots on
-the road slide. The old outline: `notes/outline-v5.md`.
+The owner, 21 Oct: "15 min we can cover quite a lot of content … more
+visuals", then "Build" on the proposal in this window; his rounds of 22–23 Oct
+reshaped the ends. Blueprint v2 (`notes/blueprint.md`, 20 Oct) stays the spine:
+one dot, a particle of five quarks that took 51 years to find, and how you know
+you have found something nobody has seen; the viewer judges; the rule said once;
+then the dots are handed on through the speaker's road, the group in Vilnius and
+the open data, to the group's own part of the detector and the close out to the
+LHC, „mano greitintuvas“, and the FCC, „jūsų greitintuvas“, where the cover's
+promise (where this work can start) is kept. The owner's three slots on 13 stay
+his (the first the one to tell).
 
 Pictures and numbers (owner, 2026-10-10): no titles, kickers, statements or
 section slides; the speaker narrates from the notes. A number carries the word
-that names it; a thing shown may carry its name (the map's cities, the sun's
-two clusters, the piles' two captions). Exceptions taken from OpenData and
-Innoday on 15 Oct: the cover's name line and „Ačiū“ (lint: TEXT warnings, on
-purpose).
+that names it; a thing shown may carry its name. Exceptions: the cover's name
+line, the plots' axis words, and the owner's two labels and the licence credits
+on the last slide (lint TEXT warnings, on purpose).
 
-| # | Screen | Picture |
-|---|---|---|
-| 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks`; the question and the promise |
-| 2 | — | Innoday's cosmic web, a still that dissolves into grains in place (`<WebTakeover>`); no words |
-| 3 | „13,8 mlrd. metų“ | the grains fly into Innoday's funnel; atoms → three quarks → five, a pentakvarkas |
-| 4 | — (clip) | CERN from above (`cern_overview_short.mp4`, 11 s), pushing into the ring |
-| 5 | „LHC 27 km“ | the real tunnel (18 s cut); collision energy becomes new particles |
-| 6 | „290 dalelių“ („8 TeV“ hidden by the talk's CSS) | one real 2012 CMS crossing in 4π |
-| 7 | — (clip) | `lhcb.mp4` (39 s); a mass from the fragments; one mass, one dot |
-| 8 | — (one click) | `th1` fills, 140 dots; the viewer judges; the tick at the click; chance, and 2003 |
-| 9 | „59 453 masės“ (one click) | `oc` fills in light blue; ticks over the five peaks at the click |
-| 10 | — (one click) | `jp` fills; the viewer judges LHCb's 2015 peak; three peaks at the click |
-| 11 | „140 taškų“ · „27 292 taškai“ | `jx` beside `jp` at one scale; the rule; the answer |
-| 12 | Vilnius, CERN; „Glazgas“ (click 1); „Heidelbergas“, „Bona“ (click 3) | the route (4 clicks): the bank's road, three optional owner slots |
-| 13 | Vilnius | the dive to Vilnius, Lithuania's outline; the group; the coordinator line as the bridge |
-| 14 | „1 TB“, „800 TB“ | OpenData's piles: the Run 1 data the speaker prepared; the peak rose in them |
-| 15 | „4 000 TB“, „Atvirieji LHCb duomenys“ | the gold pile of 4 PB |
-| 16 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's blue pile; a kilometre of laptops |
-| 17 | — | OpenData's sun of plots; Dominykas's check |
-| 18 | „Meistriškumo pamoka“, „Bakalauro darbai“ | the second sun; empty places; the advice |
-| 19 | „Ačiū“ | the five-quark form gathers again (the close is the default until the owner says) |
+| # | Screen | Picture | min |
+|---|---|---|---|
+| 1 | „Dr. Mindaugas Šarpis · LHCb Vilnius / Vilniaus universitetas“ | cover: the five-quark form gathers at `quarks` | 0,6 |
+| 2 | — (clip) | the zoom out from NFTMC in Saulėtekis past the Earth and our galaxy to the cosmic web, 19 s, stabilised, the scale jumps as zoom-dissolves (`vilnius_zoom.mp4`); four names spoken | 0,35 |
+| 3 | — | Innoday's cosmic web, a still that dissolves into grains (`<WebTakeover>`); one spoken line | 0,2 |
+| 4 | „13,8 mlrd. metų“ | Innoday's funnel; atoms → three quarks → five | 0,6 |
+| 5 | — (clip) | CERN from above (`cern_overview_short.mp4`, 11 s) | 0,19 |
+| 6 | „LHC 27 km“ | the real tunnel (18 s cut) | 0,3 |
+| 7 | — (clip) | **new**: an LHC dipole magnet cut open, its two beam pipes (`cern_video_2019_050_008.mp4`, 10,8 s, the owner's "A, ok"); 1 232 magnets at −271 °C | 0,3 |
+| 8 | „290 dalelių“ | one real 2012 CMS crossing in 4π; „užfiksavo CMS“ spoken | 0,55 |
+| 9 | — (clip) | `lhcb.mp4` (39 s): LHCb, its people; → 3 s after „Aš – vienas iš jų.“ (22 Oct), not at its end | 0,4 |
+| 10 | „100 m“, then „40 mln. per sekundę“ | **new**: inside LHCb, the 3D model beside a 1,83 m person (Innoday's), the camera craned down to the cavern floor; LHCb's own 2012 collision in it; the 40 MHz glow; one mass, one dot (`<InsideLhcb>`, station `cavern`) | 1,0 |
+| 11 | days ticking „0 dienų“ → „4 dienos“, then → „100 dienų“; „masė →“ (two clicks) | `th1` fills, 140 dots in four days („tarkime“); the viewer judges; the tick; click 2, `th2` 3 500 random dots in 100 days, no tick, the bump gone; 2003 | 1,6 |
+| 12 | „LHCb duomenys“, the year ticking „2011 m.“ → „2012 m.“ → „2015 m.“, then „2011–2015 m.“, „masė →“; „5 naujos dalelės“ (one click) | `oc` at a steady rate, five peaks; the rule (< 1 in 3,5 mln.) and the 2015 pentaquark spoken; „Pentakvarkų ieškojau ir aš.“; on the click an Ωc⁰ drawn as three quarks (c, s, s) and gluons beside it; the zoom's music under 11–12 | 1,2 |
+| 13 | Vilnius, CERN; „Glazgas“, „Airija“, „Heidelbergas“, „Bona“, „Mančesteris“ | the criss-cross route (the owner, 23 Oct): Vilnius → CERN → Glasgow → CERN → Ireland → Vilnius → Heidelberg → CERN → Bonn → CERN → Vilnius → Manchester → CERN, in 5 clicks of about 1 s a leg; four optional owner slots | 0,6 |
+| 14 | Vilnius | the dive to Vilnius; the group; the coordinator bridge | 0,65 |
+| 15 | „1 TB“, „800 TB“ | OpenData's piles: in close on the 1 TB sphere (the unit), then back to the Run 1 data the speaker prepared; „– ir tau“ | 0,6 |
+| 16 | „4 000 TB“, „Atvirieji duomenys“ | the gold pile | 0,3 |
+| 17 | „> 100 000 TB“, „Visi LHCb duomenys“ | LHCb's pale pile; a kilometre of laptops | 0,45 |
+| 18 | — (clip) | Innoday's `lis_flag.mp4` from 3,5 s (16,5 s): the SciFi module, its cold box, the flag; the group works on it; „Starfire“ starts low | 0,1 + clip |
+| 19 | „mano greitintuvas“, „jūsų greitintuvas“; the credits | the last: Innoday's close at full frame (`close_lhc_fcc.mp4`, 54 s): out from the flag to LHCb and its collisions, to the LHC and FCC rings; the HL-LHC to 2041, the cover's promise and the advice, „LHC – mano greitintuvas. FCC – jūsų greitintuvas.“, „Ačiū.“ | 1,2 |
+| 20 | the credits | kept, not shown: the licence credits (the owner, 23 Oct: "credits all go to slide 20 which I will make available but not show") | 0 |
+
 
 ## Status
 
+- 2026-10-25 (night, latest): **deployed 9882d6f** (Pages run 40226043005, green; the URL 200, the live walk
+  passed; `talk ready` passed, nothing skipped but the pptx): the cover and slide 10's one press. Then the zoom
+  (slide 2) 49 s (the owner: "can be a bit slower (even twice as long)", "there is really nice part where we
+  zoom past stars of the galaxy"): remap_zoom.py TOTAL 49, the star flight (source 128–158 s) held 6,6 s under
+  the warp; the hum remade to it; encoded, its strip and poster, on the release; the venue zip rebuilt from
+  fbe9feb (315.2 MB); venue.json. Deployed with it (the next entry names the run).
+  The notes' cue times on 2 are the 25 s clip's (Žemė ~6 s → ~14 s; galaktika ~10,5 s → ~30 s).
+- 2026-10-25 (night, latest): slide 10 back to one press (02d7433; the owner: "They are not quarks.. a bit
+  confusing", "Remove the 2nd click") and the new cover (7f0adfd: the pentaquark in colour charge out of
+  Innoday's CMS collision; Decisions); plates (11) and stills retaken and published; the venue zip rebuilt
+  from ed667ce on the release (292.8 MB); venue.json. Deployed with them (the next
+  entry names the run once made).
+- 2026-10-25 (evening, latest): **deployed d75c4fc** (Pages run 40206964670, green; the URL 200, the live walk
+  passed; `talk ready` passed, nothing skipped but the pptx): the beams' wait. The per-slide 1080p50 MP4s (the
+  Brief's last copy; never made before today) recorded from d75c4fc: 25 takes (17 slides and every click),
+  1,9 GB, silent, last frames checked; on the release as
+  https://github.com/MindaugasSarpis/cern_outreach_talks/releases/download/videos-2026-10-26-uzsikraukkarjerai/2026_10_26_UzsikraukKarjerai-slides-1080p50.zip
+  (with ORDER.txt; local copy in shots/record, gitignored). Open for the owner: a MacBook rehearsal from the
+  venue zip (16 is the heaviest scene); slide 10 now takes two presses (the second for the 2015 line).
+- 2026-10-25 (evening, latest): the beams wait for the close's one collision (352b409; the owner: "It was a bit
+  more dramatic when one collision happened … and them the speeding up ones after that"): plates (11) and
+  stills retaken and published, the venue zip rebuilt from b552f79 on the release (289.2 MB);
+  venue.json. Redeployed under the same "implement … and deploy" (the next entry names the run once made).
+- 2026-10-25 (evening, latest): **deployed 41dbe70** (the owner: "go ahead implement these suggestions and
+  deploy"; Pages run 40205027379, green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, nothing skipped but the pptx; plates three warnings:
+  the fingerprint, 16 capped at --max 120 and 55 MB, as the round before). The per-slide 1080p50 MP4s
+  recording after it (see the next entry).
+- 2026-10-25 (evening, latest): the owner's afternoon rounds (Decisions, 25 Oct afternoon and late afternoon:
+  the flag into LHCb, the steady cloud, the click fix, the FCC whole in 3D, the travel map, floor, shaft,
+  beams, slide 10's five quarks, the slide hooks) at e8550d5; plates (11) and stills retaken and published;
+  the venue zip rebuilt from 2fb4fc5 on the release (275,8 MB); venue.json. Deploy on the owner's
+  "implement these suggestions and deploy" (the next entry names the run once made). The per-slide 1080p50
+  MP4s (the Brief's last copy) were never recorded before: recorded after the deploy.
+- 2026-10-25 (latest): the close's second round and slide 6 muted / the zoom's hum lower (Decisions), plates
+  (11) and stills retaken and published, the venue zip rebuilt from f2373f6 on the release; venue.json;
+  deployed by the owner's "Implement and deploy" (the entry below names the run once made).
+- 2026-10-25 (night, latest): **deployed 9ef4113** (the owner: "DEPLOY"; Pages run 40135878779, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/ 200, the live walk passed;
+  `talk ready` passed on it, nothing skipped but the pptx): the live close, the flicker fix, „4 TB/s“.
+- 2026-10-25 (night, latest): the live close (Decisions, 25 Oct night) and the flicker fix and „4 TB/s“ (24 Oct
+  late night) on the branch; plates (11, 16's new) and stills retaken and published; the venue zip rebuilt
+  from 0046f36 on the release; venue.json. `talk ready` and the deploy follow (the classifier asks the
+  owner's word for each deploy). Live: df6fe11.
+- 2026-10-24 (late night, latest): the web on black (Decisions) at 1663c55, plates and stills retaken
+  and published, the venue zip rebuilt from it on the release; venue.json. Before it: **deployed
+  7bfce47** (the owner: "deploy"; Pages run 40129663772, green; the URL 200, the live walk passed):
+  the review round.
+- 2026-10-24 (night, latest): the review round (Decisions, 24 Oct night) at 8400bfa: plates (10) and
+  stills retaken and published; the venue zip rebuilt from 8400bfa on the release; venue.json. Live
+  until its deploy: 885b218 (below; its deploy entry is the next one when made).
+- 2026-10-24 (late): the finale's hit moved to Starfire's 1:37 arrival (Decisions, 24 Oct late), a12ccba;
+  the venue zip rebuilt from it on the release; venue.json. Its deploy follows (see the next entry when made).
+- 2026-10-24 (evening): **deployed 7586b41** (the owner: "DEPLOY"; Pages run 40122787406,
+  green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/ 200, the
+  live walk passed, 17 slides; `talk ready` passed on it, nothing skipped but the pptx; plates one
+  warning): the owner's round (Decisions, 24 Oct evening). A first deploy attempt was refused by
+  the auto-mode classifier until the owner's word. The new clips (vilnius_zoom 25 s,
+  lis_flag_50, close_quick), the 10 plates and the venue zip built from 75112aa (308 MB) are on the
+  release; venue.json points at it; stills retaken. 17 slides, 10,1 min timed. Open for the owner:
+  the terminal image's licence (CERN, non-commercial; as the Planck map); his ear on the Starfire
+  bed's joins, the hum and slide 10's effects (`+` / `-` scale all of them); his words for slide
+  13's slots; where he stands.
+- 2026-10-24 (about 2 am, latest): **deployed 26727ec** (Pages run 40036497924, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/ 200, the
+  live walk passed, 17 slides; `talk ready` passed on it, nothing skipped but the pptx). The
+  late rounds (Decisions): the warp-drive zoom with Aphelion, the data slide, the touchscreen
+  and first website, the route ending home and the Manchester legs, the levelled sound.
+  Plates (10, 30 s hold) and stills retaken and published; the venue zip rebuilt from 26727ec
+  (259 MB). Open for the owner: his words for slide 13's slots; where he stands; the
+  slide 10 camera lift; the credits page is one → after the close, so no extra press there.
+- 2026-10-24 (just after midnight, latest): **deployed f4ce1b5** (Pages run 40024556208,
+  green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed, 20 slides; `talk ready` passed on it, nothing skipped but the
+  pptx, plates one warning): the zoom's zoom-dissolves (19 s), slide 13's criss-cross route,
+  the close from the 4K take, the credits page (20, not shown). Plates (13) and stills 01–20
+  retaken and published; the venue zip rebuilt from f4ce1b5 (257 MB); venue.json. 19
+  slides spoken, 11,7 min timed, about 13–14 delivered with his slots. Open for the owner:
+  the zoom music's title and licence; his words for slide 13's four slots (11th grade,
+  Ireland and the years between, the pentaquark search's outcome, Manchester); slide 10's
+  camera lift (not applied); where he stands in the room view; a beat at each city on 13
+  if he wants one (now the head turns straight back). The release matches plates.json (the
+  Scheduler deleted 18- and 21-plate); the tape-robot clip stays. Fragile: the close's 4K
+  source (videos/raw/innoday/close_take_4k.mp4, 735 MB) is only in this machine's raw bank,
+  copied from an Innoday /tmp scratchpad; the rclone remote is read-only, so the owner should
+  copy it to his Drive with the other raws (without it, close_home.mp4 remakes a softer clip).
+- 2026-10-23 (night, latest): **deployed 2646fa4** (Pages run 40014341245, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, nothing skipped, plates one
+  warning, the fingerprint): the owner's last round (Decisions), 19 slides, 11,7 min
+  timed, about 13–14 delivered with his slots. The zoom's music under 11–12, Starfire
+  under 18–19; the Ωc⁰ on 12's click; old 18 and „Ačiū“ cut; the talk ends on the
+  close at full frame with „mano greitintuvas“ / „jūsų greitintuvas“ and the credits.
+  Reviewed after the changes by a visual pass (twice) and a story-and-facts pass; their
+  fixes are in. Plates (12) and stills 01–19 retaken and published; the close at full
+  frame on the release; the venue zip rebuilt from 2646fa4 (237 MB); venue.json. Open
+  for the owner: the zoom music's title and licence (unknown since Innoday); his
+  words for slide 13's slots; slide 10's camera lift (not applied); where he stands in
+  the room view; the release still holds 18- and 21-plate.mp4 and the tape-robot clip, which
+  no slide uses (a prune is his or the Scheduler's to run).
+- 2026-10-23 (evening, latest): **deployed 6f13fc3** (Pages run 39998140027, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, nothing skipped, plates one
+  warning, the fingerprint): the review round (Decisions), 21 slides, 12,7 min
+  timed, about 14–15 delivered with his slots. Plates (14) and stills 01–21 retaken
+  under the broadcast look and published; the zoom (17 s), the SciFi clip (16,5 s)
+  and the fitted close (54 s) on the release; the venue zip rebuilt from 6f13fc3
+  (236 MB); venue.json. Review copies of the zoom and the close in the window. Open
+  for the owner: silent or the swoosh; the OpenStreetMap credit on „Ačiū“; his
+  words for slide 13's slots (the 11th-grade visit, the four years, what his
+  pentaquark search showed); slide 10's camera lift (not applied); where he stands.
+- 2026-10-23: **deployed 1da3ab7** (Pages run 39944544983, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, nothing skipped, plates
+  one warning, the fingerprint): 21 slides, 12,9 min timed, about 14½–15½ delivered
+  with his slots. New: the 20 s zoom from Saulėtekis to the web (slide 2, silent,
+  stabilised), Innoday's SciFi flag (19) and its close cut at the LHC/FCC map (20);
+  the masterclass slide cut (Decisions). Plates (14) and stills 01–21 retaken and
+  published; the venue zip rebuilt from 1da3ab7 (263 MB) on the release; venue.json.
+  Review copies sent in the window: the zoom silent and with the swoosh, the close
+  at 720p. Open for the owner: silent or the swoosh; the OpenStreetMap credit for
+  the close's map (ODbL: tiny print on „Ačiū“?); whether the advice lines on 20 stay;
+  the time (at the slot's edge with his slots: the slots or the advice are the cuts).
+  Release clean-up done (the owner asked; the Scheduler ran it, 23 Oct): 02-, 07-,
+  09-, 19-, 20-, 22- and 23-plate.mp4 deleted, the 14 plates of plates.json remain;
+  cern_footage_2022_013_006.mp4 (the tape robot, no slide uses it) stays, as he
+  asked for plates only.
+- 2026-10-23: **deployed c30e7e8** (Pages run 39924390162, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, nothing skipped, plates
+  one warning, the fingerprint): the owner's 23 Oct cuts (Decisions), 19 slides,
+  11,6 min timed, about 13–14 min delivered with the slots. Plates retaken on
+  the GPU (15; 11–19 published with --only; 20–23-plate.mp4 left on the release,
+  unused, not pruned), stills 01–19. The venue zip rebuilt from c30e7e8
+  (203 MB) and on the release; venue.json. Open for the owner: whether to use
+  the 1–2 free minutes (his slots on 12 are the natural place); the road
+  slide's details (below) and the morning list (labels on 10–11, where he
+  stands, slides 9 and 19 on his MacBook, the drone at Delfi's sound check).
+- 2026-10-23: **deployed c81b29c** (Pages run 39855393262, green;
+  https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed on it, plates one warning, the
+  fingerprint). The landing page shows „ZIP · 226 MB“ (the venue zip from
+  3489ef5, the same deck). Main handed back to the Scheduler.
+- 2026-10-23 (night; the owner asleep, "finish the talk to completion
+  deploy, make zip availabe"): **the pre-filming round, 22 slides** (Decisions,
+  22 Oct; notes/review.md). The venue zip is rebuilt from 3489ef5 (226 MB, 22 slides, the new
+  plates and stills) and on the talk's release; `videos/venue.json` puts it on
+  the landing page. `talk ready` passed on 3489ef5 (plates: one warning, the
+  fingerprint counting the notes and manifest written after the take; the
+  world is the take's). **For the owner to look at before Monday:**
+  1. the histogram labels on 10–13 (his "totally without context"), worded by
+     the session: „masė →“, „140 taškų“ → „3 500 taškų“, „LHCb duomenys“,
+     „5 naujos dalelės“, „3 pentakvarkai“, „atsitiktinumas“ / „LHCb“,
+     „< 1 iš 3,5 mln.“ (13, 10 s in: timed to the sentence at 120 words a
+     minute; it may land early or late against his pace);
+  2. slide 20 (the tape robot) dropped and the cuts (Decisions): to put the
+     robot back, revert 7713925's slide and 3489ef5's manifest change;
+  3. slide 8: he presses 3 s after „Aš – vienas iš jų.“, not at the reel's end;
+  4. where he stands: the numbers sit low left (61–74 % down); stand
+     screen-right, or say so and they move up;
+  5. his MacBook: run slides 9 and 22 on it; slide 9 is Innoday's close scene
+     (the detector and the collision), which his M2 struggled with in the Innoday rehearsal (22 Oct)
+     („MacPro M2 can't quite handle the final slide“). If it stutters, it can
+     be recorded as a clip;
+  6. Delfi's sound check: the collision's drone on 9 is 30–60 Hz, synthesised.
+  Still open: the road slide 14 (the last stretch Bonn → Manchester → Vilnius?,
+  which Irish city, did the trail start in Vilnius, years and roles for the
+  notes); its three optional slots stay his.
+- 2026-10-22 (latest, evening): **deployed acc0993 on v0.8.3** (Pages run
+  39790852994, green after its deploy job sat queued about an hour on
+  GitHub's Actions incident; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed on 23 slides). `talk ready` had passed on acc0993
+  with nothing skipped ("pptx: skipped, no pptx"; plates one warning, the
+  fingerprint false positive). Live: the v0.8.3 pin and the cover's
+  `<PptxButton />`, which shows nothing until `videos/pptx.json` exists. No
+  PPTX: the owner said "no pptx" (Decisions), so the studio runs the live
+  URL with the venue zip as the fallback. No per-slide
+  `talk record` MP4s exist, only the plates. Main is Innoday's; this talk
+  pushes nothing until the Scheduler says.
+- 2026-10-22 (afternoon): **the second round on the branch, then
+  deployed as acc0993 (above)**: origin/main 5f0d669 merged (v0.8.3's talks side), pinned
+  v0.8.3 (the lockfile's v0.8.1/v0.9.0 entries restored from main's after
+  the pin; `talk lock` passes), `<PptxButton />` on the cover (it renders
+  nothing until `videos/pptx.json` is there); lint 0 errors, `talk check` ok,
+  `talk pptx --dry-run` plan ok. The PPTX waits: Innoday's take showed the
+  recorder films clip slides frame by frame at 1080p50 (53 min for a 4-min
+  opener), and Tools is changing `talk pptx` to embed the clip files and
+  record only the world slides. Next: `talk ready` and the deploy when the
+  Scheduler gives main after Innoday's (about 18:00); `talk pptx` after the
+  toolkit fix. Until then the studio's 1080p50 copy is the per-slide MP4s of
+  `talk record`. The plates were recorded on v0.8.2; `ready` will call them
+  stale (the fingerprint counts package.json and the lockfile), with no change
+  to what they show expected from a PPTX-only release.
+- 2026-10-22 (morning): **deployed 883560a on v0.8.2** (Pages run
+  39751672500, green; https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_26_UzsikraukKarjerai/
+  200, the live walk passed; `talk ready` passed with nothing skipped, its one
+  warning the plates' fingerprint counting this CLAUDE.md, the only change
+  after the take). Every label inside the broadcast safe box; plates on the
+  release; the venue zip built after the deploy (`pnpm venue`, 227,1 MB, all
+  23 clips venue-safe, RUN_ME.command for the MacBook and RUN_ME.bat, in the
+  talk dir, gitignored) (the owner, in this
+  window: "Deploy"; the Scheduler gave the render lock and main for v0.8.2,
+  the PptxButton and `talk pptx` in a second round once v0.8.3 is tagged).
+  On the branch: origin/main merged (8e44020); pinned v0.8.2 (the lockfile's
+  v0.8.1/v0.9.0 entries of other talks keep `path: /packages/stage`, restored
+  by hand from main's after the pin dropped them); `stage.motion: floor`;
+  `lis_flag.mp4` made talk-owned (the library's 10 s copy as-is, on this
+  talk's release: the env's CLI, 0.8.3, predates v0.9.0's registry and failed
+  `videos:check` on it). First shots of all 23 and a review by a subagent;
+  `talk safe` found 19 problems (the left edge at 72 px, readouts and labels
+  below y 408, type at 30–36 px), all fixed (Decisions, 22 Oct): `talk safe`
+  0 problems, lint 0 errors. Plates: 17 (every non-clip slide; 1080p25,
+  20 s hold) recorded at 6eda07d in 16 min, 180,7 MB (6,2–20,6 MB each),
+  published to the talk's release with --only. Not shot: the late text of 3 and 11 (judged from
+  geometry), 14's click states (checked by `talk safe`), 9's crane and
+  collision in motion. Left as they are, for the owner: 21's sun of plots is
+  unreadable in detail by design; 6's clip carries a small burned-in
+  „CERN Control Centre“ inset with an accelerator map, top right (cut A, its
+  English labels approved); 20's robot is small in the frame at the start.
+  Open owner questions (they do not block): the road (Bonn → Manchester and
+  Vilnius in order or together, which Irish city, whether the trail starts in
+  Vilnius, years or roles); drop 20 if long; where he stands; Delfi's flash
+  check.
+- 2026-10-21 (latest): **the 15-minute round built on the branch, not
+  rendered, not deployed** (the owner: "Build"; then the dipole magnet as
+  slide 6, encoded and published). 23 slides, 13,6 min by the
+  notes (lint: 0 errors; the open TODO on 19 and the three optional slots are
+  the warnings), so about 15 delivered with the slots. `talk check` ok
+  (videos, stage, build). Not yet seen in a browser: no shots or recordings
+  while Innoday holds the render lock (until its Thursday redeploy). Friday,
+  in one batch: pin v0.8.2; a frame sheet of `cern_footage_2022_013_006.mp4`
+  to cut the tape-robot shot (20's TODO: manifest trim, encode, publish);
+  shots of all 23 (9's crane, collision and glow at their seconds; 10's second
+  click; the clips on 6, 16 and 20), a review; `talk safe`; `talk record --plates` at
+  1080p50; the stills PDF; `pnpm venue`; the Keynote/PowerPoint copy of the
+  per-slide MP4s; `talk ready`; the deploy when the Scheduler gives main.
+- 2026-10-21 (latest): **live is the 20 Oct rebuild, not a60d0fa.** It went
+  out with main's Pages run 39485774569 at 404f3a7 (Innoday's deploy, green,
+  20 Oct 19:42 UTC), which builds every talk and contains 292181d…3c7c655.
+  Checked 21 Oct: URL 200, tab „Užsikrauk karjerai“, the live bundle carries
+  the rebuild's „59 453“ and „Bakalauro darbai“ and not the 18 Oct
+  „Magistro ir bakalauro darbai“. This talk's own `talk ready` was not run on
+  the rebuild (no ready or deploy record on this machine), so it is live
+  unverified by a walk. On the branch since: `advance-on-end` stripped from
+  the three clips (Decisions, 2026-10-21), the owner's title in the headmatter
+  and Brief, two facts filed. Next: the owner's answer to the 15-min proposal
+  (in this window), then build content; renders wait for Innoday's Thursday
+  redeploy; Friday: pin v0.8.2, stills, `talk record --plates`, `talk ready`.
 - 2026-10-18 (latest): **flow overhaul, blueprint written, not built.** The
   owner, in this window, on the deployed 20-slide deck: "This one still lacks
   coherence, now I can build some story telling around it ... but need a much
@@ -317,6 +602,470 @@ purpose).
 
 ## Decisions
 
+- 2026-10-25 (night) — The cover (the owner: "the cover slide could be more substantial, maybe a colission from
+  innoday, or something even more innovative"; "the pentaquark should be much more detailed, spectacular"):
+  setup/pentaquark.js replaces the five gold clusters (`pq`): uudcc̄ in colour charge (u red, u green, d blue;
+  c red, c̄ cyan, a little larger), gluon springs, the sea's pairs, a skin, turning slowly; Innoday's
+  `cover-collision` loop far behind it on the camera's line through it (setup/coverCollision.js, its new
+  `gap`: a burst holds 7 s, the next ~34 s later); the pentaquark gathers out of the first crossing's flash
+  (~4 s, <CoverCollision>). The cover's dim 0,12. Slide 10's second press (the gold form) removed the same
+  evening ("They are not quarks.. a bit confusing"). The notes' Picture lines on 1 still describe the old form.
+
+- 2026-10-25 (late afternoon) — The owner: "go ahead implement these suggestions and deploy" (e8550d5), on
+  the list offered in this window:
+  - The flag on 16 keeps about the clip's own scale (the engraving is ~5 cm: at true scale, even at
+    4 times, it was a few pixels) and turns to face the viewer as the camera pulls out (it lay edge-on from
+    the eye-level poses), a small flag on its module through the collision; the rest of the picture
+    shrinks and fades. The floor, roof, shaft and beams come once the camera is 6 units out (`cavp`, set by
+    <LisFlag>): at once, they stood in front of the flag's frame.
+  - Slide 10, a second press: the Ωc⁰'s three quarks go and a five-quark form like the cover's
+    (`pq10`) gathers in their place for „O 2015 metais … dalelę iš penkių kvarkų“; „5 naujos dalelės“ and
+    c, s, s go with the three (story item C). The notes got one „→ spausk“ before that sentence, nothing else.
+  - Slide 13: the flight in 1,3 s (2): about 1 s of empty blue less; the names at 1,9 and 2,5 s.
+  - A faint roof round the shaft's foot (`roof`), so its ring reads as an opening.
+  - setup/slideHooks.js: Slidev's onSlideEnter is a watchEffect (slides.ts: `watchEffect(() =>
+    isActive.value && cb())`), so whatever its callback read (the slide's $clicks, a prop) ran it again on a
+    press: <InsideLhcb> (the redrawn LHCb), the music's arrival, the data sounds. All the talk's components
+    now use one that runs when the slide becomes the current one; likely also the owner's "something weird
+    with the last click" on 13 (the music's arrival ran on every press there).
+
+- 2026-10-25 (afternoon) — The owner's round in this window (f034fe2, ff5e276):
+  - "the detector in slide 15 should move into LHCb as in innoday, with lithuanian flag": <LisFlag>
+    (setup/LisFlag.vue; Innoday's LisTakeover at 22efcef cut to the hand-over, its lisGrains.js, lis.json,
+    lis_last.jpg and depth; the clip's last frame checked against lis_flag_50's, SSIM 0,986): 16 opens on
+    the flag on the cold box, which turns to grains at its place in LHCb's SciFi and shrinks to the
+    detector's scale as the camera pulls out (Innoday's first keys, x + 1000) to the 12 s eye-level pose;
+    from there the path and the music's sync are as before.
+  - "the lhcb should be pointcloud like now but not sparkling before the collision": `steady` on `detp`
+    (no twinkle until its collision crosses).
+  - "slide 16 click 1 LHCb is redrawn again underground": Slidev runs onSlideEnter again on a click, and
+    <InsideLhcb> restarted the detector under the map (seen in a probe: `detp` → 1 on the press). It starts
+    once a visit now; <LisFlag> the same.
+  - "The LHC FCC zoomout can be orbiting a bit quicker, zooming out so FCC is visible as a whole but 3D":
+    from 50 s both rings whole at about 30° (each key's look point and distance fitted so the rings fill
+    about 80 % of the frame at its angle), an orbit of 1,2° a second (0,5); the FCC label moved to the
+    ring's south-west side, inside the safe box all orbit.
+  - "the map with my travels is not very smooth, the path appears first only then the text, quite a slow
+    animation, something weird with the last click": names with their trail (Vilnius 2,8 s and CERN
+    3,4 s, not 8,5; a click's 0,15 s, not 1,2), legs 0,9 s (1,5), the arrival's draw 0,6 s after landing
+    (1,2; `arriveDelay`), 0,05 s after a press (0,3); the accelerator map only while `accel` is on (16):
+    the flight up from the inventions, which stand by the cavern, flashed it for half a second on 13.
+    "The last click" is not pinned down: in real time the five presses and the step to 14 draw as
+    written; asked.
+  - "Maybe for the finale give lhcb a floor and indicate the schaft"; "could also indicate that LHCb is
+    connected to lhc somehow": the close's own brighter floor (`floorp`), the cradles with `detp` too, the
+    access shaft at Point 8 (`shaft`, from the cavern's roof to the surface, where the camera climbs and
+    the map's own shaft is), the LHC's two beams through the detector and out both ways (`beamline`);
+    all fade with the detector at 38,5 s (let go at 41,2 s, LHCb showed through the map: tried, reverted).
+
+- 2026-10-25 — The close, second round (the owner: "The resolved LHCb mesh somehow has lesser effect than
+  the pointcloud. Can we keep it pointcloud but resolve better", "spend a little bit more time (like before)
+  at eye level … Maximize effect, keeping the soundtrack in mind", "the text was a bit jumping", "this blue
+  on blue … maybe deep black is better"): LHCb on 16 is the point cloud again (`detp`: Innoday's
+  lhcb-grains.bin with its shape, grains 0,85 and alpha 0,8 for a crisper cloud, Innoday's faster cascade);
+  the camera starts close among the grains and draws back to the detector beside the person, holds at eye
+  level through the collision (1:37 arrival, 16,4 s) and the 40 MHz glow to the breath at 1:54,8 (33,8 s),
+  climbs, and shows the accelerators whole on the 2:03,8 bar (42,8 s); the slide is deep black throughout
+  (`ambient: 0`); <WorldLabel> smoothed and placed by a sub-pixel transform (no jumping).
+
+- 2026-10-25 — The owner: "slide 6 too loud, and zoomout swoosh a bit too loud, on slide 6 let's just have
+  music, mute the video": the tunnel clip muted (0,05 until then), the zoom's hum 0,25 (0,4).
+
+- 2026-10-25 (night) — The close rebuilt live (the owner: "Can we improve 16 somehow?", "why is this not
+  fullscreen, make it vast, filling the entire screen", "maybe slowly orbit, indicate 3D fcc 300m
+  underground", "Then, 'Ačiū už dėmesį' appears out of particle collision", the recorded point cloud "a
+  bit too fuzzy … or maybe a fine mesh", "a bit more expressed sound like in innoday on the last slide").
+  Slide 16 is now the world, not close_quick.mp4: LHCb in its cavern (slide 10's fine mesh); its
+  collision started by the music (`InsideLhcb sync-to`: when starfire_finale.m4a reaches 13,52 s, its run-in
+  of 2,5 s ends on the 1:37 arrival; measured in Chromium: the crossing at the file's 16,07 s against the
+  arrival at 16,02; `delay` 13,86 s + 1 s is the fallback without sound), the file cross-fading in on the
+  world's clock (`drop.clock: 'world'`); at 23 s the detector is let go and the camera rises
+  through the surface to the accelerators (setup/accel.js `accel`, the `accel` station over the cavern:
+  Innoday's OSM map as the surface, the LHC 100 m down with its two beams, the proposed FCC dashed at
+  200 m, shafts at Point 8 and the FCC's eight sites, depths drawn ~20× deeper than true), on black, the
+  camera orbiting slowly; labels on the map (<WorldLabel>): „LHC – mano / greitintuvas“, „FCC – jūsų /
+  greitintuvas“, „100 m“, „~200 m“ (cern-fcc-study: about 200 m on average, not the owner's 300). On the
+  click: the camera flies in over the FCC's middle, a CMS collision (`bang`) crosses 2,5 s later on
+  Starfire's 2:54,85 downbeat (starfire_downbeat.m4a, from 2:52,25, at 0,62; <Soundtrack on-click>) and
+  its debris gathers into „Ačiū už dėmesį“ (setup/accel.js `word`, Space Grotesk). The music on 16 at
+  0,5 (0,33 before). close_quick.mp4 and close_lhc_fcc.mp4 are kept in the raw bank (videos/raw/innoday/)
+  but no slide plays them. The notes' cue times on 16 still describe the recorded close.
+
+- 2026-10-24 (late night) — The owner: "some sort of flicker bug switching to slide 6", "and 7": the
+  review round's `transition="fade"` on 6, 7 and 9 left ~0,6 s of black after the push out of the clip
+  before (measured: the frame's mean 85 → 5 → 67); the dust is back on all three (the frame now
+  brightens straight through). "Slide 10 indicate 4 TB/s": „4 TB/s“ top left from 6 s, hidden on
+  the click (lhcb-run3-readout-4tbs: Run 3's average readout; the plot's years are Run 1's, so in
+  speech it is today's rate).
+
+- 2026-10-24 (late night) — The web darker (the owner: "can we make the web universe darker? no blue in
+  the back just clear visitble strands, monumental, vast"): slides 3 and 4 `ambient: 0` (the ground,
+  nebula and dust off: black), the web's grains brighter and a little larger (`gain` 1,75,
+  `cosmos-gain` 2,3, `size` 0,46, `cosmos-size` 1,5), the morph's in-flight lift halved so the vortex
+  on 4 is not blown out. Slide 5's clip covers the return of the blue ground.
+
+- 2026-10-24 (night) — The full review (three reviewers on the live walk's contact sheets; the owner:
+  "Do A, B where needed improve the visuals sound is really good now"). Done:
+  - **13:** `flight: 2` (the default flight up from the inventions took ~5,5 s of empty blue, and
+    Europe's map only condenses on arrival); the Europe map `assemble: false` and size 5 (it was
+    there all along, but formed ~9,5 s after the press); Lithuania's outline size 7, alpha 1,4 (it
+    never read at the end of the dive on 14).
+  - **15–16:** slide 14's last pose held under both clips (the cut to the cover's pose flashed the
+    five-quark form beside „Vilnius“ before the flag faded in).
+  - **3–4:** slide 3's flight 27 → 23 s, off the strand it passed through, ending back at the
+    picture's viewpoint; slide 4 holds that view while the web pours into the funnel (the morph's
+    grains swell and brighten in flight, setup/takeover.js; the funnel's body ~1 s sooner,
+    setup/funnel.js), then swings out and in. „13,8 mlrd. metų“ at 9 s.
+  - **8:** the timeline at 75 % (the crossing ~4,5 s in, not ~6).
+  - **10:** the detector's reveal flash a third (setup/detector.js), its flares light blue
+    (`hot` #b4ceff) and its alpha 0,42; the collision's flash 0,05; the five notes on the click
+    deep and low (B2–A3).
+  - **12:** the page cropped to its heading and first two paragraphs, large.
+  - **1:** the camera closer on the five-quark form (dist 10 at [594,9, 0, 0]).
+  - **6, 7, 9:** `transition="fade"` for the dust's blocks.
+  - Not done: the zoom's galaxy highlights (a gain or curve made it grey and flat: kept as it is);
+    10's click pose (its labels are placed by hand for that pose).
+
+- 2026-10-24 (late) — The finale's hit (the owner: "The finale (which is starfire 1:05) should only
+  be [heard] on LHCb Collision in the last slide"; "It was really nice in the innoday, but we didn't
+  have a soundtrack for all the slides"; "so have to reshuffle somehow, and on switch have a nice
+  transition to that one (like innoday)"). His 1:05 is the old close file's (it began at 0:30): the
+  track's 1:37 arrival, Innoday's ~18 s into the same close. Now: the bed is 0:00–1:21,8 and
+  2:27,8–5:00,9 in turn (18,7 min), so the crescendo, the arrival and the first climax are heard
+  only at the close; `starfire_finale.m4a` is the track from 1:21,38; on the press into 16 the bed
+  cross-fades into it over 2 s (`drop.xfade`, new) and its 1:37,38 arrival lands on LHCb's
+  collision at 16,36 s (Chromium: the file at 16,04 s when the clip is at 16,37 s). This replaces
+  the 2:54,85 downbeat and the fade-out of the entry below.
+
+- 2026-10-24 (evening) — The owner's round in this window ("Can we use Scott Buckley starfire for
+  the entire deck? …", then slides 3, 4, 9, 10, 12, 15, 16; "Has to be within 15min (aim for a
+  little less)"; "implement all of these"):
+  - **Music:** one piece, „Starfire“ (CC BY 4.0, credited as adapted). `public/audio/starfire_bed.m4a`
+    (scripts/starfire_bed.py): 17,6 min, the track's opening and rise (0:00–2:39,9) and its second
+    half (3:06,9–5:00,9) in turn, every join a one-bar cross-fade on its 80 bpm bar grid anchored
+    at the 2:54,85 downbeat, ridden even, −16 LUFS; on every slide 2–15 at 0,36 (0,45 on the zoom),
+    `start` on each so a reload picks it up. The 2:42,85–2:54,85 build and its downbeat are only in
+    `starfire_finale.m4a`: on the press into the close (16) the bed fades out (2,5 s), the finale
+    comes in at 4,34 s on the hit that opens its last four bars and its downbeat lands on LHCb's
+    first collision crossing at 16,36 s of the clip (measured; checked in Chromium: the file at
+    12,027 s when the clip is at 16,368 s); `<Soundtrack drop>` gained `out` and `fade`.
+    Aphelion and Born Of The Sky are gone; the LHCb reel (9) is muted, Starfire under it.
+  - **The zoom (2):** 25 s (was 20; remap_zoom.py `SLOW`, the warp's speeds scaled with it), the
+    whoosh replaced by a low hum (scripts/zoom_hum.py: E1 with harmonics and a rumble, nothing above
+    ~400 Hz, swelling at the warps; −16 LUFS in the file, played at 0,4).
+  - **The web (3) and the funnel (4):** Innoday's latest takeover.js, WebTakeover.vue and funnel.js
+    (the web in depth with the procedural cosmos round it; the eras in their own colours, no floor
+    grid); slide 3 flies through the web on Innoday's path cut from 46 s to 27 s; slide 4 arrives far
+    back (the funnel small in the web) and swings in low beside it until the mouth looms (13 s).
+  - **The axis (9 → 10):** the Ωc⁰ plot's axis stood at 0,5 from the build and showed under the
+    reel's dust and before the fill; it now comes in as the first grains land (setup/grains.js).
+  - **Sound on the data slide (10):** the collision's own sound on (`inside`), and `<DataSfx>`: the
+    cascade's fronts as soft low pulses merging into a quiet band (the 40 MHz glow), each landing
+    grain a tiny click toward the plot, and on the click five B-minor-pentatonic bells for the peaks
+    and a low swell as the Ωc⁰ gathers.
+  - **The first website (12):** CERN's line-mode rendering of the first page, green on black
+    (CERN-HOMEWEB-PHO-2019-004, Achintya Rao/CERN: "freely available for non-commercial use", not
+    CC BY: the same open question as the Planck map for a stream Delfi co-organises); the label
+    top left, the page lower right of it, undimmed.
+  - **The flag (15):** `lis_flag_50.mp4`, motion-interpolated from 25 to 50 fps (no Blender scene
+    here), the high-motion profile (was 1,4 Mbit/s).
+  - **The close (16):** `close_quick.mp4` (scripts/close_retime.py): the even glow and the climb
+    (24–44 s) in 10 s, eased up to 2,5x; 44,2 s; the labels 10 s earlier (35 and 42 s).
+  - **Time:** the lint's 8,6 min plus the web's flight (~0,3) and the owner's slots: well under 15.
+
+- 2026-10-24 (early hours) — The owner's late rounds:
+  - **The zoom (2):** one continuous, stabilised flight with two "warps" (a fisheye bulge,
+    radial zoom blur, dark edges; the corridor widened under them) and a synthesised whoosh
+    in the clip. Scott Buckley's „Aphelion“ starts as the web appears (13,6 s, `<Soundtrack
+    clip-at>`) and plays through slide 5.
+  - **Cut:** inside LHCb (old 10), the three pile slides; the zoom-out's unlicensed music.
+  - **The data slide (10):** LHCb with its own collisions; grains rise out of it into the
+    Ωc⁰ spectrum (fills in 9 s); the click marks the five peaks and draws the Ωc⁰. „Born Of
+    The Sky“ under it.
+  - **11–12:** the touchscreen (Stumpe, 1972) and the first website (a capture of
+    info.cern.ch), as photos out of the grains.
+  - **13–14:** the criss-cross route ending home; 14 draws Vilnius → CERN → Manchester → CERN →
+    Vilnius before the dive; Lithuania's outline waits for the dive (map `showDelay`).
+  - **The close (16):** „LHC – mano / greitintuvas“, „FCC – jūsų / greitintuvas“.
+  - **Sound:** levelled (see the entry below).
+  - **Reviewed:** a final visual review and a re-check; the redraw a recorded take shows on 14
+    is the recorder opening each slide fresh (the live deck carries the route on).
+  - **Plates:** recorded with a 30 s hold so the data slide's fill is in.
+
+- 2026-10-24 (night) — The sound, levelled (the owner: "2" of the proposals). Heard
+  loudness (the file's integrated LUFS plus the deck's level): the music beds under the
+  speech at about −24/−25 (Aphelion 0,35 on 2 and 0,3 on 3–5, −23/−25; Born Of The Sky
+  0,25, −25; Starfire 0,33, −25); the zoom's whoosh −20 integrated, −19 at its peak, with no
+  speech over the warps; the LHCb reel (slide 9) from 1 (−16, peaks −13) to 0,45 (−23, peaks
+  −20), so it no longer jumps 10 dB over the beds; the tunnel at the owner's 5 % (−44).
+  Delfi sets one gain at the sound check on the zoom's start or the reel.
+
+- 2026-10-23 (late night) — The owner, on the result: "This immediate switch from galaxy
+  to universe web and from earth to galaxy doesn't work"; "Slide 13 - sequence: Vilnius,
+  CERN, Glasgow, CERN, Ireland, Vilnius, Heidelberg, CERN, Bonn, CERN, Vilnius and
+  manchester CERN - like a criss cross. a bit more snappy on clicks"; "credits all go to
+  slide 20 which I will make available but not shiw"; "slide 19 is a bit fuzzy". So:
+  - **The zoom (2), 19 s:** the scale jumps are zoom-dissolves (1,4 s; one camera at a
+    steady log rate, the outgoing feathered and shrinking into the centre, the incoming
+    from 2,2× settling); the galaxy now turns and recedes to a dot before the web; the
+    Earth longer (about 2,9 s alone); the galaxy's core dimmed while drawn large, the
+    Earth's own Milky Way band faded, the web lifted as it comes in. Two review passes.
+  - **13:** the criss-cross route in 5 clicks, „Airija“ (the owner said only "Ireland": no
+    city) and „Mančesteris“ new, about 1 s a leg (`draw` 1,5, `delay` 0,3; the path builder's
+    new `bends`/`arcs` keep round trips apart); slides 14–17 show the whole route
+    (`route: 12`). His roles in Ireland and Manchester are slots (the bank holds neither).
+  - **19:** made from Innoday's 4K take of its close (taken down once with Lanczos), the
+    lines thickened 3 px not 5: about 27 % sharper (Laplacian variance); CRF 12 under the
+    9,5 Mbit/s cap.
+  - **20:** the credits page, kept but not shown; the credits left the close.
+
+- 2026-10-23 (night) — The owner's last round, in the window: "Need this soundtrack
+  spanning the histogram slides, what did we use in innoday zoomout?"; "On slide 12
+  after histogram is filled indicate schematically Omega particle (quarks, some
+  gluons..)"; "Slide 18 not needed, slide 19-20 has to have the same soundtrack like
+  in innoday"; "And we finish on slide 20 FCC full frame - saying 'LHC - mano
+  greitintuvas, FCC - jūsų greitintuvas'"; "mano appearing where LHC is and when FCC
+  is in view - jūsų greitintuvas"; "also should be better resolved now fuzzy";
+  "Slide 21 not needed"; "Go to completion now"; "implement all the suggestions,
+  carefully review"; "not that we are in a rush". So:
+  - **Music** (Innoday's `<Soundtrack>`, setup/Soundtrack.vue and soundLevel.js, with
+    `+`/`-` for its level):
+    - 11–12: the zoom-out's own music, the track of his SpaceEngine edit
+      (public/audio/zoom_music.m4a, its 4:13 at −16 LUFS, level 0,25 under the speech);
+    - 18–19: Innoday's „Starfire“ (Scott Buckley, CC BY 4.0), started low (0,3) on the
+      SciFi clip, cross-faded on the close to a second file from the track's 1:22
+      (public/audio/starfire_from52.m4a), so its 1:37 arrival lands where Innoday's
+      did, our close being 3 s shorter; it goes on over the held last frame.
+  - **12:** on the click, beside the plot, an Ωc⁰ as three quark balls (c, s, s) and
+    gluon curls (setup/triplet.js); the camera a step back to make room, the labels
+    moved; „Kvarkus kartu laiko gliuonai.“ added.
+  - **Cut:** old 18 (the sun and Dominykas's plot; 17's bridge is now „Mūsų grupė
+    dirba ir prie paties detektoriaus.“, his thesis no longer told) and old 21
+    („Ačiū“).
+  - **The talk ends on the close (19), at its own full framing** (scripts/close_fit.py
+    --no-fit: the dark gap cut, the lines thickened, CRF 16 under 9,5 Mbit/s,
+    remuxed). Over it, „mano greitintuvas“ beside the LHC ring from 43,3 s and „jūsų
+    greitintuvas“ beside the FCC ring from 52 s, deck text on the clip's clock
+    (setup/ClipCue.vue; the rings measured on the clip).
+  - **Words over the close:** the 21 m, the HL-LHC to 2041, the cover's promise and
+    the advice, then „Šis žiedas – … LHC. LHC – mano greitintuvas.“, the FCC, VU in its
+    study, „FCC – jūsų greitintuvas.“, „Ačiū.“
+  - **Credits:** the licence credits in tiny print over its last 1,5 s: Starfire,
+    OpenStreetMap and Natural Earth, Planck, with NCSA's web and Google Earth.
+
+  Decided without him: the zoom music's title and licence are still unknown
+  (Innoday never filed them), used as he asked, to be cleared before the stream; „Ačiū“
+  is said, not shown. Undo: revert the commits of 23 Oct night.
+
+- 2026-10-23 (evening) — The review round (the owner: "Condition workable but can be
+  improved. Review story telling, what can we do better? Also visuals?", then "Go
+  ahead and implement all"). Two reviewers, one on the story, one on the visuals.
+  Story, in the script:
+  - 1: the 51 years are from the idea („rasti užtruko"), with the doubt
+    („…ir neapsigavai?") and the 100 m promised;
+  - 4: the turn „O dabar – į mažiausią mastą", and one superlative only (5's);
+  - 8: „O dabar – LHCb." (no double „aš");
+  - 11: the dice line after the reveal, so the viewer judges first; the opener
+    „Mano darbe nėra vadovėlio su atsakymais gale.";
+  - 12: the pentaquark gets how LHCb convinced itself in 2015 (fitted without it
+    first, the 2011 and 2012 data checked apart; lhcb-pentaquark-2015-cross-checks);
+    the five Ωc's later confirmations cut;
+  - 13: „Tarp studijų ir doktorantūros praėjo ketveri metai."; slot 1 (11th grade)
+    the one to tell; slot 3 now the outcome of his own search (answers 12's last
+    line), the Bonn reason dropped;
+  - 14: the student triad as one sentence; 15 ends „– ir tau.";
+  - 18 → 19: „Mūsų grupė dirba ir prie paties detektoriaus.";
+  - 19: shorter, the flag „į šį vaizdą įpiešėme";
+  - 20: the HL-LHC to 2041, „Tada tau bus apie trisdešimt." (cern-ls3-hllhc);
+  - 21: the advice moved here to close the cover's promise („Pradžioje žadėjau…
+    Mano kelias … nebuvo tiesus.").
+
+  Visuals:
+  - `look: broadcast` (dropped on 8 Oct when the talk was "not TV");
+  - the readouts 50 px higher (`--kk-floor` 200 px);
+  - the funnel 8 rings and 10 lines (15 and 16);
+  - the cavern floor alpha 0,45, step 3;
+  - Lithuania's outline size 5, alpha 1, dim 0,5;
+  - 15 arrives close on the 1 TB sphere and draws back;
+  - the 100 000 TB ball lighter (#8fb2ff);
+  - no vault web on 15–17;
+  - the zoom 17 s without the Sun and the flight inside the galaxy, its cloud
+    whiteout toned down;
+  - the SciFi clip without its dark first 3,5 s;
+  - slide 18's sun closer, with Dominykas's own plot on its click;
+  - the close's ending reworked for the camera.
+
+  Not applied: slide 10's camera lift (pitch −13 → −8, the reviewer's unchecked
+  guess; it would undo the eye-level view); where he stands stays his to decide.
+  Undo: revert the commits of 23 Oct evening.
+
+- 2026-10-23 — The ending (the owner, in this window: "Don't need second to last
+  slide, better take 2 last slides from innoday just zoom out to lhc / fcc, not the
+  globe"). The masterclass slide (old 19, the second sun) is cut; in its place
+  Innoday's two last shown slides: its 20 s `lis_flag.mp4` (the whole SciFi module,
+  then the flag; not the library's 10 s copy this release held, because the close
+  starts from the 20 s cut's last frame, correlation 0,998) and its recorded close
+  `close_home.mp4` cut at 57,2 s, where the camera rests over the LHC/FCC map
+  (`close_lhc_fcc.mp4`; the fly-off to the globe starts at 57,5 s). Both fade, muted,
+  no advance-on-end. „Ačiū“ (the five-quark form) stays last: he named only the
+  second to last. Read as his ask, though he cut the SciFi clip from the middle of
+  the talk this morning. Decided without him: old 16's SciFi words on 19; on 20 the
+  LHC and FCC named, the FCC decision „apie 2028 metus“, VU's part in the FCC study
+  (lt-fcc-unis), and the organisers' advice from the cut masterclass slide
+  („Nebūtina jau dabar žinoti, kuo būsi …“); the masterclass itself is no longer
+  told; slide 18's bridge „Pradėti galima dar mokykloje.“ → „O štai dar viena
+  dalis, prie kurios dirba mūsų grupė.“ +0,9 min: 12,9 timed, about 14½–15½
+  delivered with his slots, at the slot's edge.
+- 2026-10-23 — The zoom, round 2 (the owner: "Silent, maybe some swoosh, also
+  needs stabilization"; "The source, but on speedup it doesn't look good"). The
+  edit's camera sways by screen widths over 10–20 s, a shake at 30–55×, more than any
+  crop can take out, so `scripts/remap_zoom.py` now plays six steadier stretches
+  joined by 0,4 s dissolves (Google Earth to the clouds; the Earth from space; the
+  Sun; inside the galaxy; the galaxy whole, ~1,8 s; the web) and stabilises each
+  onto a smooth path within a corridor of the real one (`scripts/zoom_motion.py`,
+  OpenCV; crop at most 1,12). Google Earth's logo and providers' line are filled out
+  of the frame before it moves and pasted back fixed, so they stay readable and
+  whole. Four review passes by a subagent over the frames and the measured motion.
+  Silent in the deck; a swoosh that follows the speed (`scripts/zoom_swoosh.py`) is
+  a review copy for him.
+- 2026-10-23 — The zoom (the owner, through the Scheduler: "Can we do a quick
+  zoomout from vilnius straight to universe web - in 20s"). New slide 2 after
+  the cover: Innoday's opener (his SpaceEngine edit spaceengine/nftmc_zoom.mp4,
+  its first 253,42 s) time-remapped to 19 s plus a 1 s hold on the web, 1080p50
+  (`scripts/remap_zoom.py`; the speed keys after two subagent passes over the
+  frames give Vilnius ~0,8 s, the Earth whole ~0,55 s, the galaxy whole ~1 s, the
+  web from 14,4 s; up to 55× through the dark). It ends on the source frame
+  slide 3's still is (correlation 0,998), so the clip's fade out (`transition="fade"`,
+  as Innoday's) shows the same picture underneath, and slide 2 cuts the camera to
+  the takeover pose. No advance-on-end. Decided without him: no sound (a review
+  copy with his edit's music at −24 LUFS under it is in this window: his call);
+  the cover's last line „Bet pradėkime nuo Vilniaus.“ (was „…nuo visos
+  Visatos.“); four spoken names over it (Saulėtekis with „Čia dirba Vilniaus
+  universiteto fizikai“, Žemė, Saulė, Mūsų galaktika; Lithuania is not shown as a
+  country, so not named); the Google Earth logo and providers left in the
+  footage, as Innoday's, though at this speed the providers' line is up for
+  well under a second (a tiny-print line on „Ačiū“ is his to say). The CMB
+  disk's decode latch (afterCover.js) now waits for slide 4, so it does not
+  stall the clip. +0,35 min: 12,0 timed. Undo: revert 3587200.
+
+- 2026-10-23 — The owner's cuts, in this window: "Don't need scifi module, a
+  bit too much histograms, just show one with not a lot of data (show days /
+  years of collection increasing) then show the 5 omega resonances also with
+  time ticking of when this was collected." Cut: the SciFi clip (old 16), the
+  pentaquark plot (old 12) and the two plots at one scale with the rule (old
+  13); 22 → 19 slides. The toy keeps its two clicks (the bump drowning is the
+  "collection increasing"); its counts give way to a clock of days, „0 dienų“ →
+  „4 dienos“, then „0 dienų“ → „100 dienų“ for the 3 500 (35 dots a day in
+  both, an illustration said with „tarkime“). The Ωc plot's count gives way to
+  the year the landing data were recorded, „2011 m.“ → „2012 m.“ → „2015 m.“,
+  then the span „2011–2015 m.“ once full (not a lone 2015 beside the five), switched at the sample's luminosity shares (1,0 / 2,0 / 0,3 fb⁻¹: 30 %, 91 %;
+  `lhcb-omegac-2017-years`), and it fills at a steady rate (`curve` 1, was 1,8)
+  so the years tick as the data came. The clock is `<FillClock>`
+  (setup/FillClock.vue), which reads the plot's landed share (grains.js
+  `fillShare`), so it cannot run ahead of the dots; without WebGL it keeps its
+  own time as the plate does. Decided without him, kept from the cut slides:
+  the discovery rule (spoken on 11, no on-screen number: "too much"), the 2015
+  pentaquark after 51 years and „Pentakvarkų ieškojau ir aš.“ (spoken on 11:
+  the cover's question and slides 14 and 19 lean on them), and the coordinator
+  line (moved to the Lithuania slide, 13). Undo: revert 4c848d7.
+
+- 2026-10-22 — The pre-filming round (notes/review.md). The owner, on the review:
+  "There might have been this rule about no captions, now the histogram slides
+  are totally without context", then "Focus on story telling take or add
+  anything you need having in mind the format and time contraints and
+  everything". So: the histogram slides 10–13 get naming labels (the axis word
+  „masė →“, the counts, „LHCb duomenys“ against the computer's dots, the peaks
+  counted at their click, the 5σ rule as „< 1 iš 3,5 mln.“ on 13): the
+  pictures-and-numbers rule stands, a name of a word or two for a thing shown
+  is within it. Slide 20 (the tape robot: the slots moiré on camera; 20 s)
+  dropped; cut for time: slide 8 moves on 3 s after his line (not at the reel's
+  end), the Brown preprint (21→20), the first-public-files aside (22→21), one
+  sentence on 10. The deck is 22 slides. The labels (subagent, checked by shots and `talk safe`) reframe 10 and 12 so the words fit under the axes, and slow the second sun (21) to a 450 s turn, drawn back to dist 45, so its names stay in the safe box. Undo: 7713925 and the label commit after it.
+- 2026-10-22 — No PPTX (the owner: "no pptx"). The studio runs the live URL,
+  the venue zip as the fallback; `talk pptx` is not run and the pin stays
+  v0.8.3. The cover's `<PptxButton />` stays: it shows nothing without
+  `videos/pptx.json`.
+- 2026-10-22 — The broadcast safe box (x 98–882, y 55–408 of the 980 canvas,
+  37 px type floor; `talk safe` for a talk marked `broadcast`): the text
+  area's edge `--kk-x` 72 → 104 px and floor `--kk-floor` 84 → 150 px, the
+  readouts and the shared opening's caption on it; names, units and the cover
+  line at 38 px. Labels projected from a pose re-projected after a reframe:
+  11 (drawn back, dist 23), 13 (dist 26), 14 (the `whole` pose moved 5,5
+  south: `[1201, 0, 2.5]`, dist 36, pitch 60; `whole` itself is unused now),
+  17 (the 1 TB sphere left of x 800, its label 0.12), 19 (13 west, the 100 PB
+  sphere clear of the readout), 22 (the sun's names at labelH 0.1, the camera
+  back to dist 37,5, and the sun turns at 300 s instead of 100, its items
+  started 219 s along their orbit: at the old turn no pose keeps
+  „Meistriškumo pamoka“ in the box; the sun is about 20 % smaller and slower).
+  Soft shades behind 9's readouts (they stand on the detector's wireframe now)
+  and a larger one behind 5's caption. Undo: the commit 6eda07d and 13c0b43.
+- 2026-10-22 — `lis_flag.mp4` talk-owned: the library's 10 s copy, byte for
+  byte, on this talk's release, so `videos:check` passes on any CLI and the
+  clip no longer depends on the library chain. Innoday's 20 s cut stays
+  Innoday's.
+- 2026-10-22 — The tape library cut (slide 20's TODO, cleared): from a frame
+  sheet, CERN-FOOTAGE-2022-013-006's last shot, 1:48–2:02 (14 s): the tape
+  library's aisle, the robot's carriage running down it. Silent (`silent-loop`;
+  under speech). Talk-owned, same name as the library copy; encoded from the
+  Drive raw, published to the talk's release, its dust strip committed.
+- 2026-10-21 — The LHC dipole magnet (the owner, through the Scheduler: "can
+  show magnet video from CERN (somewhere in google drive)", the file
+  cern_video_2019_050_008_1080ph265.mp4; then in this window "A, ok" to cut A
+  and to its labels; his third answer, whether to drop the data-centre slide if
+  the talk runs long, not given, so it stays). New slide 6, between the
+  tunnel's push and the collision: the first 10,8 s (a cutaway of the
+  cryostat into the two beam pipes; the film dissolves to its vacuum part at
+  11 s), its English/French labels kept, silent. Talk-owned, same name as the
+  library's full-length copy so this release wins; encoded from the Drive raw
+  (in the worktree's gitignored `videos/raw`), published to
+  `videos-2026-10-26-uzsikraukkarjerai`, its dust strip committed. The tunnel's
+  bridge „Štai vienas toks susidūrimas.“ moved to the magnet slide. New fact
+  `lhc-two-beam-pipes-opposite` (home.cern). Every later slide is one higher;
+  the notes, comments and credits renumbered. Undo: delete the slide and the
+  manifest entry.
+- 2026-10-21 — The 15-minute round (the owner, in this window: "Build", to the
+  proposal of the same day; his photos for the road and the Keynote copy were
+  not answered, so: no photos, the slots stay spoken; the Keynote/PowerPoint
+  copy is made on Friday with the recordings). Built:
+  - **8, inside LHCb** (new): Innoday's model of LHCb's Run 3 geometry with the
+    1,83 m person (main 404f3a7: `setup/detector.js` → this talk's, on its grain
+    bus and `disk` latch, grains file not fetched; its floor and cradles from
+    `emblems.js` → `setup/cavern.js`, `floor` renamed `cavern-floor`, since
+    OpenData's `floor` is this talk's); station `cavern` at [1000, −480, 0] with
+    Innoday's `thanks` objects (collision `inside`, LHCb's own 2012 event, the
+    default of components/lhc-opening); `<InsideLhcb>` starts it once the
+    camera has craned down (y < −482), and freezes the world at the crossing
+    as Innoday's; the 40 MHz glow is the detector's `cascade`. „100 m“ counts up
+    during the crane (the title's depth, `lhcb-100m-below-ground`), then „40 mln.
+    per sekundę“ on the dolly back. The mass lines moved here from 7, which now
+    lets the reel's music run. No magnet line: the outreach page did not answer.
+  - **9, click 2** (new): `th2`, the 3 500-dot sample of the same random
+    spectrum (theta-toy.json's `large`, back from before 18 Oct), fills where
+    `th1` was and lights the tick over the same column: the bump is gone. 10's
+    smoothing sentence now says only what real particles do (no repeat).
+  - **15, the group's part** (new): the library clip `lis_flag.mp4` (Innoday's
+    10 s render, the flag Innoday's touch, both said in the script); the
+    coordinator bridge moved here from 14. Not a real photograph: my proposal
+    called it real footage, corrected the same day.
+  - **19, the data centre** (new): `cern_footage_2022_013_006.mp4` whole until
+    Friday's cut (TODO mark, so `lint --release` stops a deploy without it);
+    about 60 000 tapes, over a million terabytes (`cern-exabyte`).
+  - Spoken now (the blueprint's "If there is room"): 2's web line, 6's CMS line,
+    10's five-at-once and the four confirmed, 20's Brown preprint, 21's first
+    LHCb files for masterclasses; held silences of 4 s on 12, 3 s on 22.
+  - `duration: 15min`, the `info` block, slide references renumbered.
+  Undo: `git revert` the round's commit; the 20 Oct deck is 3c7c655.
+- 2026-10-21 — No `advance-on-end` on any clip unless the owner asks for that
+  clip by name (his standing rule, 21 Oct, after OpenData's "autoclick";
+  through the Scheduler). Stripped from slides 4 (`cern_overview_short.mp4`),
+  5 (the tunnel) and 7 (`lhcb.mp4`); the notes now say → at the clip's end
+  (a clip holds its last frame; the push exits still run on the speaker's →).
+  `slidev-stage-record` drives the deck itself, so the recordings are
+  unchanged. Undo: none wanted; ask the owner per clip.
+- 2026-10-21 — The title back in the headmatter: `title:` is the owner's
+  „Kas vyksta didžiausioje Pasaulyje mokslo laboratorijoje 100 metrų po
+  žeme“ (the 16 Oct „Užsikrauk karjerai“ tab name replaced); still no title
+  slide or h1. Kept his capital „Pasaulyje“ as given.
 - 2026-10-20 — Blueprint v2 built (the owner, 20 Oct, on v1: "This will
   need to be reworked a bit…"; asked what is off: "10-15min talk"; then:
   "Taking elements from innoday and open data set up a good story telling
@@ -777,8 +1526,9 @@ purpose).
   with no nebula there are few gradients left; check a test encode at
   2.5 Mbit/s before the filming. Undo: drop the `options` overrides.
 - 2026-10-08 — City names on the map are HTML labels at positions projected
-  from the `whole` pose (target europe + [1, 0, −3], dist 36, yaw 0, pitch
-  60, sway 0). If that pose changes, recompute them.
+  from the slide's pose (until 22 Oct the `whole` pose, target europe +
+  [1, 0, −3]; since then `[1201, 0, 2.5]`, dist 36, yaw 0, pitch 60, sway 0,
+  in the slide's frontmatter). If that pose changes, recompute them.
 
 - 2026-10-08 — Real photographs where the story names something real: the
   LHCb cavern (Rosa Menkman, CC BY 2.0), Gell-Mann (Joi Ito, CC BY 2.5),
@@ -789,9 +1539,12 @@ purpose).
 
 ## Figures and open items (for the speaker)
 
-The owner's list after the 15 and 18 Oct rounds, each a yes/no or a fact only they
-have (the AFK default is built and deployed; each has an undo under Decisions):
-
+0. ~~TV or online?~~ Answered 21 Oct: "15min talk, will be recorded in a
+   studio with good quality" (Brief, Delivery); the studio's answers are in
+   the Brief (1080p50, a screen behind him, he clicks, sound to the mixer,
+   probably no logo). Still open: where he stands against the screen (what
+   his body hides), whether Delfi runs a flash check, the Keynote/PowerPoint
+   copy.
 1. ~~The cover's title~~ Answered 16 Oct: "Don't call it 'vadovelio gale
    atsakymo nera' don't need that". The name line stays (the Scheduler's
    reading); say if the cover should go too.

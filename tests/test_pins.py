@@ -71,6 +71,15 @@ def test_without_talks_only_env_and_scaffolder_move(tree, env):
     assert sorted({c["file"] for c in obj["changes"]}) == ["env.yaml", "scripts/new_talk.py"]
 
 
+def test_env_pin_with_an_extra_moves_and_keeps_it(tree, env):
+    # env.yaml pins the CLI with the pptx extra (python-pptx for `slidev-videos pptx`)
+    env_yaml = tree / "env.yaml"
+    env_yaml.write_text(env_yaml.read_text().replace("slidev-videos @", "slidev-videos[pptx] @"))
+    code, obj, _ = talk(tree, "bump-toolkit", "v0.6.0", env=env)
+    assert code == 0 and "env.yaml" in obj["written"]
+    assert '"slidev-videos[pptx] @ git+https://github.com/MindaugasSarpis/slidev-videos@v0.6.0"' in env_yaml.read_text()
+
+
 @pytest.mark.parametrize("ref", [SHA, SHA[:7]])
 def test_bare_shas_need_allow_sha(tree, env, ref):
     code, obj, _ = talk(tree, "bump-toolkit", ref, "--active", "--dry-run", env=env)

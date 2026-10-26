@@ -4,10 +4,10 @@ import { ref } from 'vue'
 // picture (funnel.js warmDisk: a 2048² decode and its upload) waits until the
 // cover is behind. The cover's five-quark form flies in over 3 s on a clock that
 // a long task freezes rather than skips, so a stall there shows (Innoday's owner,
-// 14 Oct: "slight lag on cover slide animation"), nor in the fade to the web's
-// slide (2): <WebTakeover> flips it once the still copy of the picture stands, in
+// 14 Oct: "slight lag on cover slide animation"), nor in the zoom clip (slide 2) or
+// the fade to the web's slide (3): <WebTakeover> flips it once the still copy of the picture stands, in
 // the 0.45 s it holds before the dissolve, so the stall does not show. The step to
-// slide 3 flips it if the takeover did not run; a page opened past the cover flips
+// slide 4 flips it if the takeover did not run; a page opened past the cover flips
 // it at once. router.beforeEach, not 'hashchange': Vue Router's hash mode moves
 // with pushState.
 function latch() {
@@ -33,5 +33,5 @@ const slideOf = (path) => Number((/^\/(?:presenter\/)?(\d+)/.exec(path || '') ||
 
 export function armAfterCover(router) {
   if (typeof window === 'undefined' || slideOf(location.hash.slice(1)) > 1) return disk.flip()
-  router?.beforeEach?.((to) => { if (slideOf(to.path) >= 3) disk.flip() })
+  router?.beforeEach?.((to) => { if (slideOf(to.path) >= 4) disk.flip() })
 }

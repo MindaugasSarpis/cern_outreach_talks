@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onUnmounted } from 'vue'
-import { onSlideEnter, onSlideLeave, useNav } from '@slidev/client'
+import { onSlideLeave, useNav } from '@slidev/client'
+import { onSlideEnter } from './slideHooks.js'
 
 // <AfterFlight :delay="4.6">…</AfterFlight>: what it wraps shows only after the
 // slide's flight has landed, so a point lands after the motion, never during

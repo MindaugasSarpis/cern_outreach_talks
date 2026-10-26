@@ -174,7 +174,9 @@ void main() {
   vRad = uRad * gs;
   float px = vRad * projectionMatrix[1][1] * uViewH / max(-mv.z, 1e-3);
   float grow = f >= 1.0 ? mix(2.4, 1.0, smoothstep(2.0, 8.0, px)) : 1.0;
-  gl_PointSize = clamp(px * grow, 1.0, min(uMaxPt, 0.2 * uViewH));
+  // a merging pile's spheres grow in over half a second, staggered, not all at once on the cut (23 Oct)
+  float pop = merging ? smoothstep(0.0, 0.5, uTime - st - 0.25 * aSeed) : 1.0;
+  gl_PointSize = clamp(px * grow * pop, 1.0, min(uMaxPt, 0.2 * uViewH));
   vPx = px;
   vCv = mv.xyz;
   // the pile read as one ball: its side toward the key light brighter, its far side
@@ -198,7 +200,9 @@ vec3 studioRough(vec3 d) {
 vec3 heap(vec3 N, vec3 V, vec3 F0) {
   float ndv = clamp(dot(N, V), 0.0, 1.0 - 1e-6);
   vec3 F = F0 + (1.0 - F0) * pow(1.0 - ndv, 5.0) * 0.4;
-  return mix(studioRough(N), studioRough(reflect(-V, N)), 0.55) * F;
+  // a pale pile (all channels high, as the 100 000 TB one since 23 Oct) keeps some of its own colour on its
+  // shadow side, so it reads as pale metal on the lifted ground; the gold piles are untouched
+  return mix(studioRough(N), studioRough(reflect(-V, N)), 0.55) * F + F0 * 0.35 * smoothstep(0.6, 0.72, min(F0.r, min(F0.g, F0.b)));
 }`
 const LINEUP_FRAG = /* glsl */ `
 uniform mat4 projectionMatrix;
@@ -452,7 +456,7 @@ function buildLineup(o, ctx) {
     // the arrival (and `c`): every pile up to the step gathers again
     assemble(t, onDone) {
       now = t; armed = false
-      for (let b = 0; b < NB; b++) { if (wants(b)) show(b, t); else hide(b, t) }
+      for (let b = 0; b < NB; b++) { if (wants(b)) { if (!shown(b)) show(b, t) } else hide(b, t) }   // a pile already up stays (a path's arrival comes at its end)
       if (onDone) doneCbs.push(onDone)
       doneAt = t + GROW()                             // engine clock; never sooner than a full growth
     },
@@ -462,7 +466,7 @@ function buildLineup(o, ctx) {
     update(t) {
       tick(t)
       now = t; mat.uniforms.uTime.value = t
-      if (armed && t - armedAt > 6) { armed = false; for (let b = 0; b < NB; b++) if (wants(b)) show(b, t) }   // the flight was turned away
+      if (armed && t - armedAt > (o.armWait ?? 6)) { armed = false; for (let b = 0; b < NB; b++) if (wants(b)) show(b, t) }   // the flight was turned away, or a path holds the camera here before its end (`armWait`)
       if (doneCbs.length && t >= doneAt) { const cbs = doneCbs; doneCbs = []; for (const cb of cbs) cb() }
       let count = 0
       for (let b = 0; b < NB; b++) {

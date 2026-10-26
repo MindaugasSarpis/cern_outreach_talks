@@ -40,3 +40,210 @@ right; on its last frame the magnet string vanishes at (0.45, 0.53), where the c
 into the beam pipe. Named as its raw on gdrive (released/cern_footage_2022_013_001_1080p_lhc.mp4) \
 so videos:sync finds it. Its sound is the tunnel's own ventilation hum, kept at the source's \
 level (loudnorm off)."""
+
+[[videos]]
+name    = "cern_video_2019_050_008.mp4"
+profile = "standard"
+used_in = ["deck"]
+trim    = ["0:00", "0:10.8"]
+notes   = """\
+The LHC dipole (owner, 21 Oct: "can show magnet video from CERN"; cut A, "A, ok"): \
+CERN-VIDEO-2019-050-008, its first 10,8 s (it dissolves into the next scene at 11 s), a cutaway of an LHC dipole magnet into its two \
+beam pipes (its small English/French labels kept, the owner's "ok"); the rest of the \
+film is the beam vacuum. Silent (no audio stream; two data tracks dropped). Same name as \
+the library clip (full length), so this talk's release wins the chain. Raw: the Drive \
+clip folder's cern_video_2019_050_008_1080ph265.mp4 (HEVC, 72 MB), copied into the raw \
+bank under this name."""
+
+[[videos]]
+name    = "vilnius_zoom.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+loudnorm = false
+notes   = """\
+The zoom out on slide 2 (the owner, 23 Oct, through the Scheduler: "Can we do a \
+quick zoomout from vilnius straight to universe web - in 20s"; then "Silent", "also \
+needs stabilization": the wobble is the source's, "but on speedup it doesn't look \
+good"): Innoday's opener, the owner's SpaceEngine edit spaceengine/nftmc_zoom.mp4 \
+(gdrive:work/outreach/resources/videos/spaceengine/, 4:27.6, 1080p60 HEVC), made 49 s at \
+50 fps by scripts/remap_zoom.py (25 Oct: twice as slow, lingering on the flight past the galaxy's \
+stars; see the script's MAP; what follows is the 23 Oct cut's description): four stretches at eased speeds joined by 0.4 s \
+dissolves (Google Earth from NFTMC out to the clouds, 0-32.4 s; the Earth from space, \
+37.6-62, its 95-degree roll dissolved over, the cloud tops toned down; the galaxy \
+whole, 186-196; the web, \
+226-253.42, braking to a stop, its last frame held 1 s), the camera's screen-wide \
+sways between them dissolved over; each stretch stabilised onto a smooth path within \
+a corridor of the real one (crop zoom at most 1.12), from zoom_motion.py's per-frame \
+motion (videos/raw/spaceengine/nftmc_zoom.motion.npy; OpenCV). It ends on the source's \
+frame at 253.42 s, Innoday's cut point, so it matches public/figures/opener_last.jpg \
+(slide 3's still). No audio (a swoosh for it, scripts/zoom_swoosh.py, is the owner's \
+"maybe"). Google Earth (NFTMC to the clouds, 0-5.4 s): its attribution, the logo and \
+the imagery providers ("Landsat / Copernicus", "Airbus, CNES / Airbus, Maxar \
+Technologies"), is put back over the moved frame unmoved and uncropped (a matte of \
+its letters only, so the picture round them stays stabilised); the web: NCSA \
+Advanced Visualization Lab ("Cosmic Bubble Bath"). The raw (videos/raw/vilnius_zoom.mp4) \
+is that output, not on gdrive released/: never run a plain videos:sync here (it would \
+delete it); make it again with the script."""
+
+[[videos]]
+name    = "lis_flag_50.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = """\
+Slide 15 since 24 Oct (the owner: "Slide 15 framerate could be better"): Innoday's lis_flag.mp4 \
+(its entry, with its notes, left this manifest on 24 Oct; git history has it), its 3,5-20 s motion-interpolated from its 25 fps render to 50 fps (no Blender \
+scene on this machine to render it again): ffmpeg -ss 3.5 -t 16.5 -i videos/raw/lis_flag.mp4 \
+-an -vf minterpolate=fps=50:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1 -crf 14; the \
+high-motion profile (the silent-loop copy was 1,4 Mbit/s). The raw (videos/raw/lis_flag_50.mp4) \
+is that output, not on gdrive released/: make it again with the command."""
+
+[[videos]]
+name      = "01-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 1"]
+generated = true
+notes     = "the world of slide 1 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "03-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 3"]
+generated = true
+notes     = "the world of slide 3 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "04-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 4"]
+generated = true
+notes     = "the world of slide 4 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "08-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 8"]
+generated = true
+notes     = "the world of slide 8 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "10-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 10"]
+generated = true
+notes     = "the world of slide 10 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "11-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 11"]
+generated = true
+notes     = "the world of slide 11 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "12-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 12"]
+generated = true
+notes     = "the world of slide 12 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "13-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 13"]
+generated = true
+notes     = "the world of slide 13 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "14-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 14"]
+generated = true
+notes     = "the world of slide 14 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "17-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 17"]
+generated = true
+notes     = "the world of slide 17 alone, recorded by slidev-stage-record at 1080p25 with a 30 s hold: the stage plays it where WebGL is missing"
+# <<< plates
+
+# >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
+
+[[videos]]
+name      = "01-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 1"]
+generated = true
+notes     = "the world of slide 1 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "03-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 3"]
+generated = true
+notes     = "the world of slide 3 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "04-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 4"]
+generated = true
+notes     = "the world of slide 4 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "08-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 8"]
+generated = true
+notes     = "the world of slide 8 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "10-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 10"]
+generated = true
+notes     = "the world of slide 10 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "11-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 11"]
+generated = true
+notes     = "the world of slide 11 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "12-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 12"]
+generated = true
+notes     = "the world of slide 12 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "13-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 13"]
+generated = true
+notes     = "the world of slide 13 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "14-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 14"]
+generated = true
+notes     = "the world of slide 14 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "16-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 16"]
+generated = true
+notes     = "the world of slide 16 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "17-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 17"]
+generated = true
+notes     = "the world of slide 17 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+# <<< plates

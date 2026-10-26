@@ -2,6 +2,8 @@ import { registerBuilder } from 'slidev-addon-stage'
 import { installStrands } from './strands.js'
 import { installFunnel } from './funnel.js'
 import { installPlots } from './plots.js'
+// slide 12's sun of LHCb's results (setup/sun.js, from OpenData's): `sun`
+import { installSun } from './sun.js'
 import Count from './Count.vue'
 import Strands from './Strands.vue'
 import AfterFlight from './AfterFlight.vue'
@@ -11,12 +13,24 @@ import CollisionStart from './CollisionStart.vue'
 import ShortHum from './ShortHum.vue'
 import AfterCover from './AfterCover.vue'
 import { armAfterCover } from './afterCover.js'
+// the cover's slow, silent CMS loop (owner, 21 Oct): `cover-collision` and <CoverCollision>
+import { installCoverCollision } from './coverCollision.js'
+import CoverCollision from './CoverCollision.vue'
 import { installOpening } from '../components/lhc-opening/index.js'
 import { installDetector } from './detector.js'
 import { installEmblems } from './emblems.js'
+import { installEurope } from './europe.js'
 import Grains from './Grains.vue'
 import LisTakeover from './LisTakeover.vue'
 import Soundtrack from './Soundtrack.vue'
+import ClipEnd from './ClipEnd.vue'
+import CloseStill from './CloseStill.vue'
+// slide 11: the collaboration photo → its grains → a globe of LHCb's institutes (setup/globe.js)
+import { installGlobe } from './globe.js'
+import CollabGlobe from './CollabGlobe.vue'
+import Drone from './Drone.vue'
+// `+` / `-` for the music and the hum (setup/soundLevel.js)
+import { installSoundKeys } from './soundLevel.js'
 // the LHCb event the shared collision draws by default (lhc-opening's own): the
 // close's detector marks the grains its tracks pass through
 import EVENT_LB from '../components/lhc-opening/event.json'
@@ -79,9 +93,18 @@ export default ({ app, router }) => {
   installStrands(registerBuilder)
   installFunnel(registerBuilder)
   installPlots(registerBuilder)
-  installOpening({ app, registerBuilder })
+  installSun(registerBuilder)
+  // a collision with `fixed: true` stays at its place over the ring as the close pulls out (the
+  // ring's zoom shrinks the rest of the station toward Point 8; setup/emblems.js): „Ačiū“'s
+  installOpening({ app, registerBuilder: (type: string, fn: any, opts: any) => registerBuilder(type, (o: any, ctx: any) => {
+    const b = fn(o, ctx)
+    if (o.fixed && b?.group) b.group.userData.travel = true
+    return b
+  }, opts) })
+  installCoverCollision(registerBuilder)   // the cover's loop (setup/coverCollision.js)
   installDetector(registerBuilder, { event: EVENT_LB })
   installEmblems(registerBuilder)   // the close's LHCb logo and Lithuanian flag in grains (setup/emblems.js)
+  installEurope(registerBuilder)   // Part III's map: CERN's threads out to the member states, Lithuania lit (setup/europe.js)
   app.component('Count', Count)
   app.component('Strands', Strands)
   app.component('AfterFlight', AfterFlight)
@@ -90,7 +113,14 @@ export default ({ app, router }) => {
   app.component('CollisionStart', CollisionStart)
   app.component('ShortHum', ShortHum)
   app.component('AfterCover', AfterCover)
+  app.component('CoverCollision', CoverCollision)
   app.component('Grains', Grains)
   app.component('LisTakeover', LisTakeover)
   app.component('Soundtrack', Soundtrack)   // the close's music across its slides
+  app.component('ClipEnd', ClipEnd)   // words over a clip's held last frame (slide 27)
+  app.component('CloseStill', CloseStill)   // the credits page on the close's last frame, the world resting (slide 31)
+  installGlobe(registerBuilder)   // slide 11's globe of institutes (setup/globe.js)
+  app.component('CollabGlobe', CollabGlobe)
+  app.component('Drone', Drone)   // a synthesised deep hum under a slide (slide 27)
+  installSoundKeys()   // `+` / `-`: the music and the hum louder or quieter
 }

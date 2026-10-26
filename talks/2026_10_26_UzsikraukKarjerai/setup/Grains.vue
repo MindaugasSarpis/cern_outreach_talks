@@ -1,6 +1,7 @@
 <script setup>
 import { watch } from 'vue'
-import { onSlideEnter, useIsSlideActive, useSlideContext } from '@slidev/client'
+import { useIsSlideActive, useSlideContext } from '@slidev/client'
+import { onSlideEnter } from './slideHooks.js'
 import { setGrains } from './grains.js'
 
 // <Grains :set="{ open: 2, run3: -1 }" />: when its slide becomes the

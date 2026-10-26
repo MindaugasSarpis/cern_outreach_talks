@@ -21,9 +21,12 @@ stage:
   plugins: [hadron]
   sound: { hum: true, flight: false, clip: false }   # no flight whoosh, no clip rise: they read as driving sounds (owner, 12-13 Oct: "don't use the driving away sound")
   humAt: all   # but every slide except the funnel's two flights says space.hum: false (owner, 12 Oct: the hum only while zooming into the funnel); there <ShortHum> lets it sound ~3 s (owner, 14 Oct: "only 2-3s")
+  motion: floor   # a venue PC's reduced-motion setting is the venue's, not the audience's choice (v0.8.2; Scheduler, 21 Oct)
   # deeper than the blue palette's own look: a black ground (fewer, dimmer dust
   # grains, little nebula, a firmer vignette), no film grain, no fringes
-  options: { nebula: 0.12, grain: 0.012, aberration: 0, bloom: 0.55, density: 0.6, dustGain: 1.45, vignette: 0.42 }
+  # the drawing buffer at most 1920 wide: a projector's 1080p in full, a Retina laptop's 2560 px
+  # screen drawn at a little over half the pixels (owner, 22 Oct: "the very last frame is laggy even in zip")
+  options: { nebula: 0.12, grain: 0.012, aberration: 0, bloom: 0.55, density: 0.6, dustGain: 1.45, vignette: 0.42, maxBufferWidth: 1920 }
 title: Nuo Vilniaus iki visatos pakraščių ir atgal prie novatoriškų mokslo pasiekimų pritaikymo privačiame sektoriuje
 info: |
   Innoday 2026, 23 October, in Lithuanian. One story: to see what the world is
@@ -49,8 +52,10 @@ info: |
   inventions' names; the notes carry what is said. Keys on a video slide:
   p play/pause, + / - volume; `c` builds what stands where the camera is.
 layout: cover
-space: { at: wide, hum: false }
+space: { at: wide, dim: 0, ambient: 0.35, hum: false }   # wide: the hero station's look, square to the CMS beam; little dust behind the burst
 ---
+
+<CoverCollision />
 
 # Innoday 2026
 
@@ -60,9 +65,14 @@ space: { at: wide, hum: false }
 
 <div class="mt-md">Dr. Mindaugas Šarpis · <span class="nc">LHCb</span> Vilnius · Vilniaus universitetas</div>
 
+
+<!-- facts: cms-195099-137440354-record-300, cms-195099-8tev, cms-195099-m4l-127-gev, cms-195099-290-drawn-tracks, cms-195099-523-tracks -->
+
 <!--
-Kalbėtojui. Pavadinimo skaidrė (savininkas, 2026 10 12). Pirmas paspaudimas pereina prie įžanginio klipo ir kartu leidžia skambėti garsui (naršyklė garsą įjungia tik po naudotojo veiksmo). Rodant per /presenter, prieš pradedant vieną kartą spustelėti auditorijos langą. Už pavadinimo iš dulkių susirenka penki kvarkai — pentakvarkas, vienas LHCb atradimų; „c“ jį surenka iš naujo. Kol ši skaidrė rodoma, grotuvas iš anksto įkelia įžanginį klipą.
-Sakyti: „Laba diena. Esu Mindaugas Šarpis, vadovauju Vilniaus universiteto grupei, kuri dirba CERN LHCb eksperimente. Už manęs iš dulkių susirenka pentakvarkas — penkių kvarkų dalelė, kurią 2015 m. atrado LHCb. Pradėsime nuo Saulėtekio.“
+Kalbėtojui. Pavadinimo skaidrė (savininkas, 2026 10 12). Pirmas paspaudimas pereina prie įžanginio klipo ir kartu leidžia skambėti garsui (naršyklė garsą įjungia tik po naudotojo veiksmo). Rodant per /presenter, prieš pradedant vieną kartą spustelėti auditorijos langą. Už pavadinimo per visą ekraną lėtai ir be garso kartojasi vienas tikras CMS susidūrimas (savininkas, 2026 10 21), kol renkasi žmonės: du protonų paketai susitinka, pėdsakai išsiskleidžia į visas puses iki kalorimetrų, vaizdas kelias sekundes pastovi, užgęsta, ir viskas prasideda iš naujo (vienas ratas ~23 s). Tas pats įvykis 9 skaidrėje rodomas su garsu ir skaičiais. Kol ši skaidrė rodoma, grotuvas iš anksto įkelia įžanginį klipą.
+Sakyti: „Laba diena. Esu Mindaugas Šarpis, vadovauju Vilniaus universiteto grupei, kuri dirba CERN LHCb eksperimente. Už manęs — vienas tikras protonų susidūrimas, kurį 2012 m. užfiksavo CMS eksperimentas. Pradėsime nuo Saulėtekio.“
+Faktai: įvykis — CERN atvirųjų duomenų įrašas 300 (CMS 2012, 8 TeV, CC0), paleidimas 195099, įvykis 137440354, 2012 m. gegužės 27 d.; Higso bozono kandidatas (du elektronai ir du miuonai, 127 GeV); nupiešta 290 iš 523 pėdsakų.
+Šaltiniai: opendata.cern.ch (įrašas 300); components/lhc-opening/README.md.
 (~0,5 min)
 -->
 
@@ -79,21 +89,39 @@ space: { path: [[0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]], sway: 0
 <!--
 Kalbėtojui. Klipas prasideda pats, kai skaidrė atsiveria. (Jei skaidrės atidaromos tiesiai šioje skaidrėje, rodomas pirmasis kadras, o pirmas paspaudimas paleidžia klipą su garsu, ne pereina toliau.)
 Nutolinimas nuo NFTMC (Nacionalinis fizinių ir technologijos mokslų centras Saulėtekio slėnyje, atidarytas 2016 m.; Google Earth) iki kosminio tinklo: Saulėtekis, Vilnius, Lietuva, Žemė (~0:30), Saulė ir Paukščių Takas (~1:00), skrydis per mūsų galaktiką ir iš jos (~2:20), mūsų galaktika iš šalies (~3:10), ~20 s beveik juodos tarpgalaktinės erdvės, tada kosminis tinklas (~3:47) (savininko SpaceEngine montažas, nukirptas ties kadru, nuo kurio prasideda kita skaidrė; muzika užgęsta per paskutines 3 s). Galima tylėti arba trumpai įvardyti etapus. Kosminis tinklas — NCSA Advanced Visualization Lab vizualizacija („Cosmic Bubble Bath“, pirmųjų ~1,2 mlrd. metų simuliacija).
-Spausti nereikia: klipui pasibaigus, skaidrės pačios pereina į kitą, kuri prasideda nuo to paties paskutinio kadro ir paverčia jį pasaulio grūdeliais. Paspaudus klipo metu, pereinama anksčiau (tada klipo pabaiga nieko nebedaro). Savaime pereinama tik auditorijos lange, ne /presenter.
+Spausti nereikia: klipui pasibaigus (po 4:13, kai pasirodo kosminis tinklas ir muzika nutyla), skaidrės pačios pereina į kitą (savininkas, 2026 10 21: „Slide 2-3 auto move on“), kuri prasideda nuo to paties kadro ir paverčia jį pasaulio grūdeliais. Paspaudus klipo metu, pereinama anksčiau, bet perėjimas nebebus sklandus. Savaime pereinama tik auditorijos lange, ne /presenter.
 (klipas 4:13, su savo muzika; ~4,2 min)
 -->
 
 ---
-space: { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0, sway: 0, dim: 0, hum: false }
+space:
+  dim: 0
+  sway: 0
+  hum: false
+  cameraRate: [[0, 0], [4, 0], [6, 1]]   # the camera stands still for the dissolve (WebTakeover restarts this when it places the grains), then eases into the path
+  path:   # owner, 21 Oct: "rotate, fly through this point cloud universe"; the frame's knot stands at [30.6, 40.8, -86]
+    - [0, { at: [30, 40, -70], dist: 18, yaw: 0, pitch: 0 }]          # the opener's own pose: the frame is the picture
+    - [8, { at: [30.6, 40.8, -86], dist: 40, yaw: 30, pitch: 10 }]    # a slow turn round the knot: the strands stand in depth
+    - [15, { at: [30.6, 40.8, -86], dist: 30, yaw: 70, pitch: 4 }]    # side on to the frame's web
+    - [22, { at: [10, 36, -112], dist: 34.5, yaw: 60.5, pitch: 2.5 }] # in past the knot
+    - [29, { at: [-10, 38, -128], dist: 25.2, yaw: 61.4, pitch: -6.8 }] # through the web behind it
+    - [36, { at: [30.6, 40.8, -86], dist: 34.2, yaw: -107.1, pitch: 5.4 }] # turned back to the knot from the far side
+    - [46, { at: [30.6, 40.8, -86], dist: 54.9, yaw: -9, pitch: 5.4 }]   # out in front: the whole web, looking down the funnel's axis again
+    - [72, { at: [30.6, 40.8, -86], dist: 50.3, yaw: -5.2, pitch: 4.2 }] # a slow drift until the press
 ---
 
 <WebTakeover />
 
+<!-- facts: cosmic-web-simulation-filaments-voids -->
+
 <!--
-Kalbėtojui. Skaidrė prasideda nuo paskutinio klipo kadro, todėl perėjimo nesimato. Po pusės sekundės tamsa tolygiai pereina į pasaulio foną, o šviesios vietos subyra į grūdelius. Kiekvienas grūdelis stovi savo pikselio regėjimo linijoje, todėl, kol kamera nejuda, grūdeliai sudaro tą patį vaizdą; kitoje skaidrėje jie susibėga į piltuvą.
+Kalbėtojui. Skaidrė atsiveria pati, kai baigiasi klipas, ir prasideda nuo paskutinio jo kadro, todėl perėjimo nesimato. Po pusės sekundės tamsa tolygiai pereina į pasaulio foną, o šviesios vietos subyra į grūdelius (iki ~4 s). Kiekvienas grūdelis stovi savo pikselio regėjimo linijoje, todėl iš čia jie sudaro tą patį vaizdą; gylis parinktas taip, kad gijos, išeinančios iš ryškaus mazgo vidury, ir erdvėje liktų gijomis — vienos artyn, kitos tolyn.
+Tada kamera skrenda pati (savininkas, 2026 10 21): ~6–14 s lėtai apsuka aplink mazgą, gijos atsiskiria gyliu, o aplink iš tamsos išnyra visas kosminis tinklas tomis pačiomis spalvomis — gijos, spiečiai, tuštumos tarp jų ir oranžinės dujų sankaupos; ~21 s tinklas matomas iš šono; ~28 s kamera praskrenda pro mazgą; ~35 s skrenda per tinklą už jo; ~42 s atsigręžia į mazgą iš kitos pusės; ~52 s atsitraukia priešais visą tinklą ir iki ~78 s dar labai lėtai slenka, tada stovi. Tinklas aplink kadrą sugeneruotas: jis rodo kosminio tinklo pavidalą, ne tikrą dangaus žemėlapį.
+Spausti →, kai būsite pasiruošę (galima ir skrydžio viduryje): kitoje skaidrėje kadro grūdeliai susibėga į piltuvą ir nusidažo jo erų spalvomis, o aplinkinis tinklas užgęsta.
 Sakyti (kol byra): „Visata didžiausiu mastu: galaktikų gijos ir tuštumos tarp jų. Kiekvienas šio vaizdo taškas dabar atsiskiria ir pakimba erdvėje.“
-Techniškai: kadras — public/figures/opener_last.jpg, išsitrauktas komanda pnpm takeover:frame public/videos/nftmc_zoom_web.mp4 (paskutinis klipo kadras — kosminis tinklas).
-(~0,3 min)
+Sakyti (kol skrendame): „Didžiausiu mastu medžiaga išsidėsčiusi gijomis, o tarp jų — beveik tuščios erdvės. Gijos susieina į mazgus, kur galaktikų tankiausia. Toks yra Visatos audinys.“
+Techniškai: kadras — public/figures/opener_last.jpg, išsitrauktas komanda pnpm takeover:frame public/videos/nftmc_zoom_web.mp4 (paskutinis klipo kadras — kosminis tinklas). Kameros kelias — šios skaidrės space.path; grūdeliai ir tinklas aplink — setup/takeover.js (placeWeb, buildCosmos).
+(~1 min)
 -->
 
 ---
@@ -103,37 +131,41 @@ space: { at: [30, 39, -119], dist: 25, yaw: -72, pitch: 13, dim: 0, flight: 3.5 
 <ShortHum />
 
 <AfterFlight :delay="6.8">
-<div class="world-caption narrow small">
+<div class="world-caption narrow small scrim">
 
 # 13,8 mlrd. metų
 
 </div>
 </AfterFlight>
 
+<!-- facts: universe-age-planck-2018, cmb-formed-380000-years-esa, cosmic-web-simulation-filaments-voids -->
+
 <!--
-Kalbėtojui. Kosminio tinklo grūdeliai susibėga į piltuvą (savininkas, 2026 10 13): pirmiausia vaizdo vidurys tampa Didžiuoju sprogimu ir foninės spinduliuotės skydu, tada grūdeliai išsidėsto piltuvu iki plačiojo galo; tada piltuvas išryškėja, o paskiausiai po juo atsiranda tinklelis. Kamera tuo metu apsuka ir parodo piltuvą iš šono: Visatos istorija iš grūdelių, nuo Didžiojo sprogimo (siauroji dalis) iki šiandienos (platusis galas, arčiau mūsų). Iš kairės į dešinę: Didysis sprogimas, foninė spinduliuotė, tamsieji amžiai be žvaigždžių, tanki karštų protogalaktikų ir pirmųjų žvaigždžių juosta, tada vis retesnės, šaltesnės ir toliau viena nuo kitos esančios galaktikos — Visata šąla ir tamsėja (savininkas, 2026 10 12). Žemas ūžesys skamba tik šios ir kitos skaidrės pradžioje, apie 3 s (savininkas, 2026 10 14). Skaičius pasirodo, kai piltuvas išryškėja (~7 s). Kitoje skaidrėje kamera įskrenda į piltuvą.
-Sakyti: „Šis piltuvas yra Visatos istorija: siaurasis galas — Didysis sprogimas prieš 13,8 mlrd. metų, platusis — šiandien. Visata plečiasi, o maždaug pastaruosius šešis milijardus metų — vis greičiau. Kuo toliau žiūrime, tuo senesnę šviesą matome.“
+Kalbėtojui. Parodyti: ryškus taškas kairėje nuo disko — Didysis sprogimas. Kosminio tinklo grūdeliai susibėga į piltuvą (savininkas, 2026 10 13): pirmiausia vaizdo vidurys tampa Didžiuoju sprogimu ir foninės spinduliuotės skydu, tada grūdeliai išsidėsto piltuvu iki plačiojo galo; tada piltuvas išryškėja savo erų spalvomis, o paskiausiai atsiranda jo žiedai ir linijos. Grindų tinklelio po piltuvu nebėra: piltuvas kabo tamsoje (savininkas, 2026 10 21). Kamera tuo metu apsuka ir parodo piltuvą iš šono: Visatos istorija iš grūdelių, nuo Didžiojo sprogimo (siauroji dalis, kairėje) iki šiandienos (platusis galas, arčiau mūsų). Kiekviena era atpažįstama iš savo spalvos — iš to, kas ją užpildo, ir kokia to temperatūra (savininkas, 2026 10 21). Iš kairės į dešinę: (1) Didysis sprogimas — mažas, ryškus baltas taškas kairėje, šiek tiek prieš piltuvo kaklelį (savininkas, 2026 10 21: ne didelis neryškus švytėjimas). (2) Kaklelis — karšta plazma, švyti nuo baltos iki oranžinės, kol atvėsta. (3) Foninė spinduliuotė — Planck žemėlapio skydas su oranžiškai baltu žiedu: šviesa, kuri išsilaisvino Visatai atvėsus iki maždaug 3000 K. (4) Tamsieji amžiai — ta šviesa ant piltuvo sienelės blėsta iš oranžinės į tamsiai raudoną ir užgęsta; viduje tik keli blankūs dujų grūdeliai, žvaigždžių nėra. (5) Kosminė aušra — pirmosios žvaigždės, melsvai baltos kibirkštys, kiekviena žydrame dujų burbule, kurį ji įšvietė; toliau burbulai didėja ir susilieja. (6) Galaktikos — ryškiausia juosta: baltai gelsvos galaktikos, daug spiralinių, tarp jų švytinčios dujos, tankiausios piltuvo viduryje. (7) Šiandiena — platusis galas: retesnės, senesnės, rausvesnės galaktikos išsirikiavusios violetinėmis gijomis, tarp jų tuštumos — tas pats kosminis tinklas, kuriuo baigėsi įžanginis klipas; galas platėja vis greičiau (spartėjantis plėtimasis). Kiekvienas žiedas nusidažęs savo eros spalva. Žemas ūžesys skamba tik šios ir kitos skaidrės pradžioje, apie 3 s (savininkas, 2026 10 14). Skaičius pasirodo, kai piltuvas išryškėja (~7 s). Kitoje skaidrėje kamera įskrenda į piltuvą.
+Sakyti: „Šis piltuvas yra Visatos istorija: siaurasis galas — Didysis sprogimas prieš 13,8 mlrd. metų, platusis — šiandien. Iš kairės: karšta plazma, seniausia šviesa, tamsieji amžiai be žvaigždžių, pirmosios žvaigždės, galaktikos ir šiandienos galaktikų tinklas. Visata plečiasi, o maždaug pastaruosius šešis milijardus metų — vis greičiau.“
 Faktai: Visatos amžius 13,787 ± 0,020 mlrd. m. (Planck 2018, A&A 641, A6); spartėjantis plėtimasis — 1998 m. atradimas (2011 m. Nobelio premija); plėtimasis spartėja maždaug pastaruosius 6 mlrd. metų (z ≈ 0,6), tamsioji energija vyrauja maždaug pastaruosius 3,5 mlrd. metų (z ≈ 0,3) (Planck 2018, ΛCDM).
 Šaltiniai: Planck 2018 results VI (A&A 641, A6).
-(~0,4 min)
+(~0,5 min)
 -->
 
 ---
-space: { at: [30, 40, -136], dist: 7.5, yaw: 0, pitch: 0, dim: 0.1, flight: 5 }   # in at the mouth and back down the funnel, past the galaxies, the first stars and the dark ages, to the CMB disk
+space: { at: [30, 40, -136], dist: 9.5, yaw: 0, pitch: 0, dim: 0.1, flight: 5 }   # in at the mouth and back down the funnel, past the galaxies, the first stars and the dark ages, to the CMB disk
 ---
 
 <ShortHum />
 
 <AfterFlight :delay="4.6">
-<div class="world-caption narrow">
+<div class="world-caption narrow scrim">
 
 # 380 000 metų
 
 </div>
 </AfterFlight>
 
+<!-- facts: cmb-formed-380000-years-esa -->
+
 <!--
-Kalbėtojui. Kamera skrenda piltuvu atgal laiku: pro galaktikas, pirmąsias žvaigždes, tamsiuosius amžius, ir sustoja prie švytinčio skydo — kosminės foninės spinduliuotės. Skydas — tikras Planck temperatūros žemėlapis, nupieštas toje pačioje plokštumoje.
+Kalbėtojui. Kamera skrenda piltuvu atgal laiku: pro šiandienos galaktikų gijas, pro galaktikas, pro pirmųjų žvaigždžių žydrus burbulus, pro tamsiuosius amžius, kur sienelės šviesa vis raudonesnė ir blankesnė, ir sustoja prie švytinčio skydo — kosminės foninės spinduliuotės, apjuostos jos pačios oranžiškai baltos šviesos žiedu. Skydas — tikras Planck temperatūros žemėlapis, nupieštas toje pačioje plokštumoje. Skaičius pasirodo kairėje apačioje (~4,6 s po skrydžio), ant tamsaus pagrindo, kad nesilietų su žemėlapiu.
 Sakyti: „Pro galaktikas, pro pirmąsias žvaigždes ir tamsiuosius amžius grįžtame iki seniausios šviesos, kurią įmanoma pamatyti. Tai kosminė foninė spinduliuotė: Visatai tada buvo apie 380 000 metų. Europos kosmoso agentūros palydovas Planck ją išmatavo visame danguje. Spalvos rodo temperatūros skirtumus, vos dešimttūkstantąsias kelvino dalis. Iš tokių nelygumų vėliau susiformavo galaktikos.“
 Faktai: foninės spinduliuotės temperatūra 2,725 K; skirtumai žemėlapyje ~±100–300 µK (iki ~1 mK). Paskutinė sklaida — ~380 000 m. po Didžiojo sprogimo (z ≈ 1090).
 Šaltiniai (ir vaizdas): Planck 2018 SMICA-noSZ žemėlapis (COM_CMB_IQU-smica-nosz_2048_R3.00_full, I_STOKES_INP — užpildytas ties Galaktikos plokštuma, apie 4 % skydo ploto), IRSA/ESA Planck Legacy Archive; ESA ir Planck kolaboracija; Planck 2018 results IV (A&A 641, A4). Skyde — šiaurinis Galaktikos pusrutulis (lygiaplotė projekcija, centre šiaurinis Galaktikos polius), išlyginta iki 1° (WMAP raiška), nuspalvinta WMAP stiliaus skale. Licencija CC BY-NC 3.0 IGO (nekomercinis naudojimas su nuoroda).
@@ -141,11 +173,11 @@ Faktai: foninės spinduliuotės temperatūra 2,725 K; skirtumai žemėlapyje ~±
 -->
 
 ---
-space: { at: [30, 40, -136], dist: 12, yaw: 24, pitch: 8, dim: 0.3, hum: false }   # pulled back from the CMB disk: the question stands over the oldest light
+space: { at: [28.6, 40, -135.5], dist: 11, yaw: 26, pitch: 8, dim: 0.3, hum: false }   # turned from the CMB disk, still in the dark ages (nothing hot near the camera): the disk to the right, the dark ages' fading wall to the left; the question stands over the oldest light
 ---
 
 <!--
-Kalbėtojui. Kamera atsitraukia nuo foninės spinduliuotės skydo, prieš seniausią šviesą. Klausimas „Iš ko visa tai sudaryta?“ — visos kalbos pradžia: kitos skaidrės rodo greitintuvą, kurį teko pastatyti, kad į jį atsakytume, ir ką davė jos problemos.
+Kalbėtojui. Kamera pasisuka nuo foninės spinduliuotės skydo, likdama tamsiuosiuose amžiuose: dešinėje seniausia šviesa, kairėje piltuvo sienelė, kurios raudona šviesa blėsta į tamsą. Klausimas „Iš ko visa tai sudaryta?“ — visos kalbos pradžia: kitos skaidrės rodo greitintuvą, kurį teko pastatyti, kad į jį atsakytume, ir ką davė jos problemos.
 Sakyti: „Žvaigždės, dujos, planetos ir mes patys sudaryti iš kelių rūšių dalelių. Norint pamatyti, kas yra jų viduje, daleles reikia sudaužyti labai didele energija. Tam reikia didžiausio pasaulyje dalelių greitintuvo. Jį pastatė CERN, Europos dalelių fizikos laboratorija prie Ženevos.“
 Pastaba: „žvaigždės, dujos, planetos ir mes“ — tyčia ne „galaktikos“: didžioji galaktikų masės dalis yra tamsioji materija, kurios sudėties nežinome.
 (~0,4 min)
@@ -171,7 +203,7 @@ Faktai: konvencija pasirašyta 1953 m., CERN oficialiai įsteigtas 1954 m. rug
 space: { at: collision, dim: 1, ambient: 0, hum: false }   # black under the clip; its push lands in the collision's dark
 ---
 
-<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" advance-on-end :volume="0.5" exit="push" exit-at="0.45,0.53" />
+<VideoPlayer src="cern_footage_2022_013_001_1080p_lhc.mp4" :volume="0.05" exit="push" exit-at="0.45,0.53" />
 
 <AfterFlight :delay="2.4">
 <div class="stats">
@@ -185,7 +217,7 @@ space: { at: collision, dim: 1, ambient: 0, hum: false }   # black under the cli
 <!-- facts: cern-lhc-size-cost, cern-lhc-cold, cern-lhc-speed, cern-lhc-collisions -->
 
 <!--
-Kalbėtojui. Kelionė LHC tuneliu (CERN-FOOTAGE-2022-013-001, 3:00–3:39,5), skaičiai virš jos. Klipui pasibaigus, kamera įlekia į tolį, kur dingsta magnetų eilė, ir prasideda susidūrimas (savaime, tik auditorijos lange). Šie skaičiai — II dalies problemos.
+Kalbėtojui. Kelionė LHC tuneliu (CERN-FOOTAGE-2022-013-001, 3:00–3:39,5), skaičiai virš jos. Klipas trunka 0:40, kalba — apie 0,9 min: klipui pasibaigus, ekrane lieka paskutinis jo kadras su skaičiais. Pabaigus kalbėti, paspausti → (pultelio „pirmyn“): tada kamera įlekia į tolį, kur dingsta magnetų eilė, ir prasideda susidūrimas. Pačios skaidrės toliau nepereina. Šie skaičiai — II dalies problemos.
 Sakyti: „Kad sužinotume, iš ko sudarytas pasaulis, greitintuvas turėjo būti toks. Jo žiedas yra 27 km ilgio ir 100 m po žeme. 1 232 superlaidūs magnetai atšaldomi iki minus 271 laipsnio Celsijaus, šalčiau nei erdvė tarp galaktikų. Protonai skrieja tik 2,85 m/s lėčiau už šviesą ir per sekundę apskrieja žiedą 11 245 kartus, o susidūrimų per tą pačią sekundę įvyksta apie pusantro milijardo, ir kiekvieną reikia pamatyti. Vaizdo plokštes galima nusipirkti parduotuvėje, o daugelio kitų dalykų niekas negamino, todėl juos teko sukurti. Su tokiomis problemomis per penkiasdešimt metų susidurta ir kuriant ankstesnius CERN greitintuvus.“
 Svarbu: nuo 2026 06 29 LHC neveikia — prasidėjo trečioji ilgoji techninė pertrauka (LS3), todėl skaičiai — darbo metu (3-iasis darbo etapas: 6,8 TeV, 99,99999905 % šviesos greičio). Dažnai cituojamas „99,9999991 %“ atitinka projektinę 7 TeV energiją. Kosminis fonas — 2,7 K.
 Faktai: 9 593 magnetai; vakuumas vamzdyje ~10⁻¹³ bar; pluošte sukaupta energija iki 490 MJ.
@@ -221,7 +253,7 @@ space:
 <!--
 Kalbėtojui. Vienas tikras susidūrimas (bendras modulis components/lhc-opening, kaip OpenData ir „Užsikrauk karjerai“ kalbose). Du protonų paketai atlekia iš abiejų vamzdžio galų, susiduria, pasaulis beveik sustoja, kamera apsuka ratą, tada nuolaužos išlekia. Ekrane: „8 TeV“ (susidūrimo energija) ir „290 dalelių“ (nupiešti įvykio pėdsakai).
 Savininko pasirinktas (2026 10 12) CMS 4π susidūrimas: 2012 m. Higso bozono kandidatas, visomis kryptimis aplink 3,8 T solenoidą.
-Sakyti: „Taip atrodo vienas susidūrimas. Tokių kas sekundę — pusantro milijardo.“
+Sakyti: „Tą patį susidūrimą matėte už manęs pačioje pradžioje. Taip jis atrodo iš arti. Tokių kas sekundę — pusantro milijardo.“
 Faktai: įvykis — CERN atvirųjų duomenų įrašas 300 (CMS 2012, 8 TeV, CC0), paleidimas 195099, įvykis 137440354, Higso bozono kandidatas; nupiešta 290 pėdsakų.
 Šaltiniai: opendata.cern.ch (įrašas 300); components/lhc-opening/README.md.
 (~0,3 min)
@@ -243,54 +275,50 @@ Faktai: LHCb sveria 5 600 t, 21 × 10 × 13 m, 100 m po žeme; artimiausias 
 -->
 
 ---
-space: { at: [21, 0, 0], dist: 5, yaw: 180, pitch: 22, dim: 0, hum: false }
+space: { at: [56.7, -80, 20], dist: 13, yaw: 0, pitch: 0, sway: 0, dim: 0, hum: false }   # the globe of institutes (station collab) right of the middle, the numbers on the dark left
+clicks: 1   # the photo holds until this click, then becomes the globe (owner, 22 Oct)
 ---
 
-<StagePhoto src="figures/lhcb_collaboration.jpg" alt="LHCb kolaboracija LHCb urve po LHCb ženklu, 2022 m. birželio kolaboracijos savaitė" class="frame" />
-
-<div class="stats top">
-<div class="stat"><div class="n">4<small>TB/s</small></div></div>
-<div class="stat"><div class="n">~1 900<small>narių</small></div></div>
-<div class="stat"><div class="n">112<small>institutų</small></div></div>
-<div class="stat"><div class="n">28<small>šalys</small></div></div>
+<CollabGlobe src="figures/lhcb_collaboration.jpg">
+<div class="globe-stats">
+<div class="gs"><span class="n"><Count :to="4" :ms="1200" :delay="0" /></span><span class="u">TB/s</span></div>
+<div class="gs"><span class="n">~<Count :to="1900" :ms="1800" :delay="150" /></span><span class="u">narių</span></div>
+<div class="gs"><span class="n"><Count :to="112" :ms="1800" :delay="300" /></span><span class="u">institutų</span></div>
+<div class="gs"><span class="n"><Count :to="28" :ms="1600" :delay="450" /></span><span class="u">šalys</span></div>
 </div>
+</CollabGlobe>
 
-<!-- facts: lhcb-upgrade1-trigger, lhcb-allen-gpu, lhcb-collaboration-sep-2026, lhcb-readout-32tbps-spc-2026 -->
+<!-- facts: lhcb-upgrade1-trigger, lhcb-allen-gpu, lhcb-collaboration-sep-2026, lhcb-readout-32tbps-spc-2026, lhcb-greybook-teams-2026-10-21 -->
 
 <!--
-Kalbėtojui. LHCb skaičiais, ant kolaboracijos nuotraukos (CERN-PHOTO-202206-112-6, 2022 m. birželio 17 d. kolaboracijos savaitė, LHCb urve). Ekrane: 4 TB/s, ~1 900 narių, 112 institutų, 28 šalys (LHCb ataskaita CERN Mokslo politikos komitetui, 2026 09 22: 1 891 narys).
+Kalbėtojui. Pirmiausia visu ekranu kolaboracijos nuotrauka (CERN-PHOTO-202206-112-6, 2022 m. birželio 17 d. kolaboracijos savaitė, LHCb urve). Ji laukia, kol paspausite: apie nuotrauką galite kalbėti kiek norite. Paspaudus ji subyra į šviesos grūdelius, kaip įžangos paskutinis kadras, ir per kelias sekundes jie suskrenda į lėtai besisukantį Žemės gaublį: pakrantės — blyškūs grūdeliai, LHCb institutų miestai — ryškūs taškai, Vilniaus taškas šiek tiek ryškesnis (be užrašų). Gaublys sukasi kaip Žemė: Europa slenka į dešinę, iš kairės ateina Amerika. Kairėje, tamsoje, suskaičiuoja skaičiai. Ekrane: 4 TB/s, ~1 900 narių, 112 institutų, 28 šalys (LHCb ataskaita CERN Mokslo politikos komitetui, 2026 09 22: 1 891 narys).
 Sakyti (pirmiausia): „Mus — beveik du tūkstančiai žmonių iš 112 institutų 28 šalyse.“
 Sakyti: „Šiandien mūsų eksperimento problema yra duomenų kiekis. LHCb detektorius kas sekundę pagamina apie 4 terabaitus. Tiek užrašyti neįmanoma, todėl reikia iš karto nuspręsti, ką pasilikti. Nuo 2022 m. tai daro vaizdo plokštės su tais pačiais lustais kaip žaidimų kompiuteriuose. LHCb — pirmasis eksperimentas, kurio visa pirmoji atrankos pakopa veikia vaizdo plokštėse. Į diską patenka maždaug vienas baitas iš keturių šimtų.“
 Faktai: GPU — NVIDIA RTX A5000 (profesionali žaidimų lusto versija); vietų ~500, bazinei HLT1 reikia ~200; antroji pakopa — >3 000 serverių; į diską ~10 GB/s.
 Šaltiniai: LHCb, JINST 19 (2024) P05065; CERN EP Newsletter (2020); T. Gershon, LHCb ataskaita CERN SPC, 2026 09 22 (32 Tb/s = 4 TB/s; tai apie 3 % pasaulio tarptautinio interneto pralaidumo, 997 Tb/s 2022 m., TeleGeography).
+Gaublys: pakrantės ir sausuma — Natural Earth 1:50 mln. ir 1:110 mln. (viešasis domenas). Institutai — CERN Greybook LHCb komandų sąrašas (greybook.cern.ch, 2026 10 21): 111 institutų 92 miestuose 28 šalyse (CERN — Šveicarijoje); kiekvienas taškas — instituto miestas (Natural Earth 1:10 mln. gyvenvietės; 15 mažesnių miestelių — OpenStreetMap). LHCb skaičiuoja 112 institutų, Greybook sąraše jų 111 (vieno nėra); ekrane — LHCb skaičius.
 Vaizdas: CERN-PHOTO-202206-112-6, nuotr. Piotr Traczyk / CERN (CERN sąlygos).
 Jei klausia apie atviruosius duomenis: visus 2011–2012 m. LHCb duomenis (800 TB) viešam naudojimui parengiau. Nuo 2023 m. gruodžio juos gali parsisiųsti bet kas, o nuo 2026 m. kovo per internetinę paslaugą galima gauti ir antrojo etapo duomenis, iš viso daugiau nei 4 PB.
 (~0,7 min)
 -->
 
 ---
-space:
-  at: [60, -30, 50]
-  dim: 0
-  hum: false
-  path:   # a slow drift over the middle of the cards (results station, space.json)
-    - [0, { at: [58.4, -31.4, 49], dist: 15, yaw: 9, pitch: 5 }]
-    - [24, { at: [61.2, -31.8, 49], dist: 13, yaw: -7, pitch: 2 }]   # aimed low: the cards ride above the count
+space: { at: [60, -30, 50], dist: 26, yaw: 0, pitch: 11, sway: 1.5, dim: 0, hum: false }   # the sun of results (results station, setup/sun.js): the pose its layout was searched for; pitch 11 keeps the cosmos station's galaxy above the frame
 ---
 
 <div class="readout right">
 
-<div class="big"><Count :from="0" :to="875" :ms="2200" /><span class="unit">straipsniai</span></div>
+<div class="big"><Count :from="0" :to="878" :ms="2200" /><span class="unit">straipsniai</span></div>
 
 </div>
 
-<!-- facts: lhcb-papers-2026-10, lhcb-figure-2026-010-hadrons -->
+<!-- facts: lhcb-papers-2026-10-22, lhcb-figure-2026-010-hadrons -->
 
 <!--
-Kalbėtojui. Kamera lėtai plaukia tarp LHCb rezultatų grafikų iš paskelbtų straipsnių (CC BY 4.0, apkarpyti, perspalvinti): pentakvarkai Pc(4312), Pc(4440), Pc(4457) (PRL 122, 2019), CP pažeidimas barionuose (Nature 643, 2025; rodoma tik Λb⁰ pusė: antibarionų pusė atrodė kaip pakartota, todėl nukirpta (savininkas, 2026 10 13); smailės aukštis nėra tas 2,45 % skirtumas — taip nesakyti), Bs⁰ osciliacijos (Nature Physics 18, 2022), Tcc⁺ tetrakvarkas (Nature Physics 18, 2022), Ωcc⁺ (arXiv:2609.21921, 2026), Bs⁰→μ⁺μ⁻ (PRL 118, 2017), R(K) ir R(K*) ant Standartinio modelio linijos (PRD 108, 2023) ir LHCb-FIGURE-2026-010: 76 LHCb atrasti hadronai.
-Sakyti: „Ką mes randame? Iki šiol LHCb paskelbė 875 mokslinius straipsnius. Tarp jų — penkių kvarkų dalelės, pentakvarkai, kuriuos atradome 2015 m., ir pernai pirmą kartą pamatytas materijos ir antimaterijos skirtumas barionuose. Iš viso LHCb atrado 76 naujas daleles — daugiau nei bet kuris kitas eksperimentas.“
+Kalbėtojui. LHCb rezultatai kaip saulė (savininkas, 2026 10 21: kaip OpenData kalboje): kamerai atskridus, viduryje susitelkia šviesus grūdelių branduolys — LHCb darbas, — ir iš jo į visas puses vienas po kito išbėga grūdelių spinduliai. Kiekvienas baigiasi rezultato grafiku iš paskelbto straipsnio; grūdeliai nusileidžia ant grafiko linijų ir trumpai sužiba. Visa saulė lėtai sukasi (vienas apsisukimas per 2,5 min): grafikai skrieja aplink branduolį, visada stati ir atsukti į salę, viršuje arčiau ir didesni, apačioje toliau, mažesni ir blankesni; kas priartėja prie skaičiaus, prigęsta. Grafikai (CC BY 4.0, apkarpyti, perspalvinti): pentakvarkai Pc(4312), Pc(4440), Pc(4457) (PRL 122, 2019), CP pažeidimas barionuose (Nature 643, 2025; rodoma tik Λb⁰ pusė: antibarionų pusė atrodė kaip pakartota, todėl nukirpta (savininkas, 2026 10 13); smailės aukštis nėra tas 2,45 % skirtumas — taip nesakyti), Bs⁰ osciliacijos (Nature Physics 18, 2022), Tcc⁺ tetrakvarkas (Nature Physics 18, 2022), Ωcc⁺ (arXiv:2609.21921, 2026), Bs⁰→μ⁺μ⁻ (PRL 118, 2017), R(K) ir R(K*) ant Standartinio modelio linijos (PRD 108, 2023) ir LHCb-FIGURE-2026-010: 76 LHCb atrasti hadronai.
+Sakyti: „Ką mes randame? Iki šiol LHCb paskelbė 878 mokslinius straipsnius. Tarp jų — penkių kvarkų dalelės, pentakvarkai, kuriuos atradome 2015 m., ir pernai pirmą kartą pamatytas materijos ir antimaterijos skirtumas barionuose. Iš viso LHCb atrado 76 naujas daleles — daugiau nei bet kuris kitas eksperimentas.“
 Skaičių prieš kalbą patikrinti (2026 10 22) LHCb viešųjų rezultatų sąraše ir pataisyti, jei pasikeitė.
-Šaltiniai: LHCb viešieji rezultatai (lhcbproject.web.cern.ch/Publications, LHCb Glance), INSPIRE (875: 860 su žurnalo nuoroda ir 15 recenzuojami, 2026 10 12); grafikai — LHCb kolaboracija, CC BY 4.0, apkarpyti ir perspalvinti (šviesūs ant juodo, kaip OpenData kalboje).
+Šaltiniai: LHCb viešieji rezultatai (lhcbproject.web.cern.ch/Publications, LHCb Glance), INSPIRE (878, 2026 10 22; 2026 10 12 buvo 875: 860 su žurnalo nuoroda ir 15 recenzuojami); grafikai — LHCb kolaboracija, CC BY 4.0, apkarpyti ir perspalvinti (šviesūs ant juodo, kaip OpenData kalboje).
 (~0,7 min)
 -->
 
@@ -306,8 +334,8 @@ places: { inventions: true }   # Part II's photos stand in the world from here (
 <div class="sub">O kur tai pritaikoma?</div>
 
 <!--
-Kalbėtojui. Dalies pertrauka (savininkas, 2026 10 12). Pasaulyje — greitintuvo žiedas ir iš jo išeinančios gijos. Šešios tekančių grūdelių gijos veda nuo greitintuvo dalių prie to, kas iš jų atsirado; kiekviena šios dalies skaidrė prasideda problema ir baigiasi tuo, kas iš jos išėjo į pasaulį. Tvarka: kas yra jūsų kišenėje, kas padeda gydytojams ir astronautams, kas vyksta pramonėje šiandien.
-Sakyti: „Šešios problemos: kaip valdyti greitintuvą, kaip tvarkyti informaciją, kaip pamatyti dalelę, kaip nukreipti pluoštą, kaip suderinti laikrodžius ir kaip atšaldyti. Iš kiekvienos atsirado kas nors, kas šiandien naudojama už CERN ribų. Pradėsiu nuo jutiklinio ekrano, kurį turite savo telefone.“
+Kalbėtojui. Dalies pertrauka (savininkas, 2026 10 12). Pasaulyje — greitintuvo žiedas ir iš jo išeinančios gijos. Šešios tekančių grūdelių gijos veda nuo greitintuvo dalių prie to, kas iš jų atsirado; jų galuose jau stovi šios dalies nuotraukos (pirmoji — jutiklinis ekranas), apie kurias kalbėsite; kiekviena šios dalies skaidrė prasideda problema ir baigiasi tuo, kas iš jos išėjo į pasaulį. Tvarka: kas yra jūsų kišenėje, kas padeda gydytojams ir astronautams, kas vyksta pramonėje šiandien, o paskutinis — pasaulinis žiniatinklis (savininkas, 2026 10 22).
+Sakyti: „Šešios problemos: kaip valdyti greitintuvą, kaip pamatyti dalelę, kaip nukreipti pluoštą, kaip suderinti laikrodžius, kaip atšaldyti ir kaip tvarkyti informaciją. Iš kiekvienos atsirado kas nors, kas šiandien naudojama už CERN ribų. Pradėsiu nuo jutiklinio ekrano, kurį turite savo telefone.“
 (Jutiklinio ekrano nevadinti CERN išradimu: CERN buvo vienas pirmųjų, ne pirmasis.)
 (~0,4 min)
 -->
@@ -319,7 +347,7 @@ space: { at: stumpe, dim: 0, flight: 1.6, hum: false }   # place mode: the photo
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="stumpe" :relief="0.25" :at="[19.5, 2.5, -9.53]" :size="3" :yaw="-30" src="figures/hero_stumpe.jpg" alt="Bentas Stumpe laiko savo CERN jutiklinio ekrano stiklinę plokštę šalia išmaniojo telefono" focus="50% 30%" class="dim">
 <p class="caption invention">Jutiklinis ekranas · 1972 · SPS</p>
 </StagePhoto>
 </AfterCover>
@@ -337,56 +365,13 @@ Vaizdas: Bentas Stumpe su jutiklinio ekrano plokšte, 2016; nuotr. Sophia Elizab
 -->
 
 ---
-space: { at: [25.0, 2.5, 0.0], dist: 9, yaw: -90, pitch: 30, dim: 0, flight: 1.6, hum: false }   # strand 0°: from its ring part, looking out along it to the product
----
-
-<Strands />
-
-<StagePhoto src="figures/hero_proposal.jpg" arrive="camera" :dust-ms="[800, 600]" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%">
-<p class="caption invention">Pasaulinis žiniatinklis · 1989 · LEP</p>
-</StagePhoto>
-
-<!--
-Kalbėtojui.
-Sakyti: „CERN dirba tūkstančiai žmonių, kurie atvyksta vidutiniškai dvejiems metams ir išvyksta, o jų žinios pasimeta. 1989 m. kovą CERN programuotojas Timas Bernersas-Lee pasiūlė, kaip tą informaciją sujungti. Pasiūlyme jis cituoja klausimą, kuriuo tada baigdavosi pokalbiai apie būsimąjį LHC: kaip susigaudyti tokiame dideliame projekte? Vadovas Mike'as Sendallas ant pirmojo puslapio užrašė tris žodžius: „Vague but exciting…“ — „Miglota, bet įdomu…“ Iš to pasiūlymo atsirado pasaulinis žiniatinklis.“
-Pasiūlymo įžanga: daugelis diskusijų apie CERN ateitį ir LHC erą baigiasi klausimu „Yes, but how will we ever keep track of such a large project?“ 1990 m. lapkričio 12 d. formaliame projekto pasiūlyme (su Robert'u Cailliau) prašyta 4 programinės įrangos inžinierių ir programuotojo maždaug pusmečiui.
-Vaizdas: T. Bernerso-Lee pasiūlymas su M. Sendallo pastaba, CERN ekspozicija; nuotr. Sailko, CC BY 3.0 (Wikimedia Commons).
-Šaltiniai: w3.org/History/1989/proposal.html; w3.org/Proposal.html.
-(~0,7 min)
--->
-
----
-space: { at: next, dim: 0, flight: 1.6, hum: false }   # place mode: the photo stands at its strand's product
----
-
-<Strands />
-
-<AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%">
-<p class="caption invention">Žiniatinklio serveris · 1990 · LEP</p>
-</StagePhoto>
-</AfterCover>
-
-<!-- facts: gave-www-next-server, gave-www-public-domain-1993, gave-www-sites-2026, gave-www-users-2025 -->
-
-<!--
-Kalbėtojui.
-Sakyti: „1990 m. pabaigoje šis NeXT kompiuteris tapo pirmuoju žiniatinklio serveriu, info.cern.ch. Ant jo lipdukas: „Šis kompiuteris — serveris, NEIŠJUNGTI!!“ Išjungus jį, būtų išjungtas visas tuometinis žiniatinklis. 1993 m. balandžio 30 d. CERN atsisakė visų teisių į žiniatinklio programinę įrangą, ir ja galėjo naudotis bet kas. Tai padėjo žiniatinkliui paplisti. Šiandien yra beveik pusantro milijardo svetainių, o internetu naudojasi apie 6 milijardai žmonių.“
-Nesakyti „CERN išrado internetą“: internetas egzistavo anksčiau; CERN sukūrė žiniatinklį (WWW), veikiantį internete.
-Faktai: pirmasis viešas paskelbimas — 1991 08 06 alt.hypertext grupėje; pirmasis serveris už Europos ribų — 1991 12 12, SLAC. 1994 m. pabaigoje — 10 000 serverių, 10 mln. naudotojų. Netcraft, 2026 m. liepa: 1 494 915 628 svetainės; ITU: ~6 mlrd. žmonių (74 %) internete 2025 m.
-Vaizdas: pirmasis žiniatinklio serveris, CERN, 1990; nuotr. Patrice Loïez / CERN, CC BY-SA 4.0.
-Šaltiniai: home.cern/science/computing/the-birth-of-the-web/; netcraft.com (2026 07); itu.int.
-(~0,7 min)
--->
-
----
 space: { at: pet, dim: 0, flight: 1.6, hum: false }   # place mode: the photo stands at its strand's product
 ---
 
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="pet" :relief="0.3" :at="[19.5, 2.5, 9.53]" :size="3" :yaw="-150" src="figures/hero_pet.jpg" alt="Šiuolaikinis PET/KT skeneris ligoninės kabinete" focus="60% 50%" class="dim">
 <p class="caption invention">PET tomografija · 1977</p>
 </StagePhoto>
 </AfterCover>
@@ -411,7 +396,7 @@ space: { at: mars, dim: 0, flight: 1.6, hum: false }   # place mode: the photo s
 
 <AfterCover>
 <StagePhoto mode="place" group="inventions" :grains="360" place-id="mars" :relief="0.25" :at="[16.6, 2.5, 13.51]" :size="3" :yaw="-150" src="figures/hero_mars.jpg" alt="Spalvotas 3D žmogaus riešo rentgeno vaizdas: kaulai balti, minkštieji audiniai raudoni, metaliniai varžtai mėlyni" focus="40% 50%">
-<p class="caption invention">Spalvotas rentgenas · 2018 · LHC</p>
+<p class="caption invention">3D rentgenogramos su spalvine audinių indikacija · 2018 · LHC</p>
 </StagePhoto>
 </AfterCover>
 
@@ -434,7 +419,7 @@ space: { at: artemis, dim: 0, flight: 1.6, hum: false }   # place mode: the phot
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="artemis" :relief="0.3" :at="[24.4, 2.5, 9.01]" :size="3" :yaw="-150" src="figures/hero_artemis.jpg" alt="NASA Artemis II raketa SLS kyla iš paleidimo aikštelės" focus="50% 40%" class="dim">
 <p class="caption invention">Timepix lustai · 2006 · LHC</p>
 </StagePhoto>
 </AfterCover>
@@ -457,7 +442,7 @@ space: { at: hadron, dim: 0, flight: 1.6, hum: false }   # place mode: the photo
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="hadron" :relief="0.3" :at="[8.5, 2.5, 9.53]" :size="3" :yaw="150" src="figures/hero_hadron.jpg" alt="Hadronų terapijos centro sinchrotronas" focus="50% 50%" class="dim">
 <p class="caption invention">Hadronų terapija · 1996–2000 · PIMMS</p>
 </StagePhoto>
 </AfterCover>
@@ -481,7 +466,7 @@ space: { at: whiterabbit, dim: 0, flight: 1.6, hum: false }   # place mode: the 
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="whiterabbit" :relief="0.3" :at="[3.0, 2.5, 0.0]" :size="3" :yaw="90" src="figures/white_rabbit.jpg" alt="White Rabbit jungiklis WRS-3/18 su šviesolaidžiais" focus="50% 50%" class="dim darker">
 <p class="caption invention">White Rabbit · 2008 · LHC</p>
 </StagePhoto>
 </AfterCover>
@@ -506,7 +491,7 @@ space: { at: cold, dim: 0, flight: 1.6, hum: false }   # place mode: the photo s
 <Strands />
 
 <AfterCover>
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%">
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="cold" :relief="0.3" :at="[8.5, 2.5, -9.53]" :size="3" :yaw="30" src="figures/hero_cold.jpg" alt="Superlaidi MgB₂ elektros linija bandymų stende" focus="50% 50%" class="dim">
 <p class="caption invention">Superlaidžios linijos · 2014 · HL-LHC</p>
 </StagePhoto>
 </AfterCover>
@@ -523,34 +508,79 @@ Vaizdas: CERN superlaidi MgB₂ linija HL-LHC greitintuvui (SM18); jos technolog
 -->
 
 ---
+space: { at: [25.0, 2.5, 0.0], dist: 9, yaw: -90, pitch: 30, dim: 0, flight: 1.6, hum: false }   # strand 0°: from its ring part, looking out along it to the product
+---
+
+<Strands />
+
+<StagePhoto src="figures/hero_proposal.jpg" arrive="camera" :dust-ms="[800, 600]" alt="1989 m. kovo pasiūlymo „Information Management: A Proposal“ pirmasis puslapis su ranka užrašyta pastaba „Vague but exciting…“" focus="50% 0%" class="dim page">
+<p class="caption invention">Pasaulinis žiniatinklis · 1989 · LEP</p>
+</StagePhoto>
+
+<!--
+Kalbėtojui.
+Sakyti: „CERN dirba tūkstančiai žmonių, kurie atvyksta vidutiniškai dvejiems metams ir išvyksta, o jų žinios pasimeta. 1989 m. kovą CERN programuotojas Timas Bernersas-Lee pasiūlė, kaip tą informaciją sujungti. Pasiūlyme jis cituoja klausimą, kuriuo tada baigdavosi pokalbiai apie būsimąjį LHC: kaip susigaudyti tokiame dideliame projekte? Vadovas Mike'as Sendallas ant pirmojo puslapio užrašė tris žodžius: „Vague but exciting…“ — „Miglota, bet įdomu…“ Iš to pasiūlymo atsirado pasaulinis žiniatinklis.“
+Pasiūlymo įžanga: daugelis diskusijų apie CERN ateitį ir LHC erą baigiasi klausimu „Yes, but how will we ever keep track of such a large project?“ 1990 m. lapkričio 12 d. formaliame projekto pasiūlyme (su Robert'u Cailliau) prašyta 4 programinės įrangos inžinierių ir programuotojo maždaug pusmečiui.
+Vaizdas: T. Bernerso-Lee pasiūlymas su M. Sendallo pastaba, CERN ekspozicija; nuotr. Sailko, CC BY 3.0 (Wikimedia Commons).
+Šaltiniai: w3.org/History/1989/proposal.html; w3.org/Proposal.html.
+(~0,7 min)
+-->
+
+---
+space: { at: next, dim: 0, flight: 1.6, hum: false }   # place mode: the photo stands at its strand's product
+---
+
+<Strands />
+
+<AfterCover>
+<StagePhoto mode="place" group="inventions" :grains="360" place-id="next" :relief="0.25" :at="[27.0, 2.5, 4.5]" :size="3" :yaw="-90" src="figures/hero_next.jpg" alt="NeXT kompiuteris su lipduku „This machine is a server. DO NOT POWER IT DOWN!!“" focus="35% 55%" class="dim">
+<p class="caption invention">Žiniatinklio serveris · 1990 · LEP</p>
+</StagePhoto>
+</AfterCover>
+
+<!-- facts: gave-www-next-server, gave-www-public-domain-1993, gave-www-sites-2026, gave-www-users-2025 -->
+
+<!--
+Kalbėtojui.
+Sakyti: „1990 m. pabaigoje šis NeXT kompiuteris tapo pirmuoju žiniatinklio serveriu, info.cern.ch. Ant jo lipdukas: „Šis kompiuteris — serveris, NEIŠJUNGTI!!“ Išjungus jį, būtų išjungtas visas tuometinis žiniatinklis. 1993 m. balandžio 30 d. CERN atsisakė visų teisių į žiniatinklio programinę įrangą, ir ja galėjo naudotis bet kas. Tai padėjo žiniatinkliui paplisti. Šiandien yra beveik pusantro milijardo svetainių, o internetu naudojasi apie 6 milijardai žmonių.“
+Nesakyti „CERN išrado internetą“: internetas egzistavo anksčiau; CERN sukūrė žiniatinklį (WWW), veikiantį internete.
+Faktai: pirmasis viešas paskelbimas — 1991 08 06 alt.hypertext grupėje; pirmasis serveris už Europos ribų — 1991 12 12, SLAC. 1994 m. pabaigoje — 10 000 serverių, 10 mln. naudotojų. Netcraft, 2026 m. liepa: 1 494 915 628 svetainės; ITU: ~6 mlrd. žmonių (74 %) internete 2025 m.
+Vaizdas: pirmasis žiniatinklio serveris, CERN, 1990; nuotr. Patrice Loïez / CERN, CC BY-SA 4.0.
+Šaltiniai: home.cern/science/computing/the-birth-of-the-web/; netcraft.com (2026 07); itu.int.
+(~0,7 min)
+-->
+
+---
 layout: section
 hideInToc: true
-space: { at: [120, -2.4, 0], dist: 14, yaw: -22, pitch: 22, dim: 0.4, hum: false }   # the gold seed
+space: { at: [119, 0, 3], dist: 20, yaw: 15, pitch: 70, sway: 1.5, dim: 0.15, hum: false }   # Europe in grains, CERN lit (setup/europe.js), above the title
 places: { inventions: false }   # and Part II's photos are gone again
 ---
 
 <Strands :on="false" />
+<Grains :set="{ eu: 1 }" />
 
 <div class="sub">O kaip komercializuoti?</div>
 
 <!--
-Kalbėtojui. Dalies pertrauka (savininkas, 2026 10 12; dalis ištisai: „Prie novatoriškų mokslo pasiekimų pritaikymo privačiame sektoriuje“). Pasaulyje — auksinė „sėkla“ ir aplink ją besisukantis mazgų ratas: žinios, išeinančios iš CERN.
-Sakyti: „Daugumoje šių pavyzdžių fizikų sprendimą produktu pavertė įmonė: Siemens — PET/KT skenerį, MARS — spalvotą rentgeną, ADVACAM — lustų modulius. O su Airbus CERN dabar bando superlaidžią liniją lėktuvams. Tokia įmonė galėtų būti ir lietuviška.“
+Kalbėtojui. Dalies pertrauka (savininkas, 2026 10 12; dalis ištisai: „Prie novatoriškų mokslo pasiekimų pritaikymo privačiame sektoriuje“). Pasaulyje — Europos žemėlapis iš grūdelių (krantai ir sienos), jis susidėlioja nuo Ženevos; ten šviečia CERN.
+Sakyti: „Daugumoje šių pavyzdžių fizikų sprendimą produktu pavertė įmonė: Siemens — PET/KT skenerį, MARS — spalvotas 3D rentgenogramas, ADVACAM — lustų modulius. O su Airbus CERN dabar bando superlaidžią liniją lėktuvams. Tokia įmonė galėtų būti ir lietuviška.“
 (~0,3 min)
 -->
 
 ---
-space: { at: kt, dist: 17, yaw: 4, pitch: 34, dim: 0.4, hum: false }
+space: { at: [108, 0, -1], dist: 26, yaw: 15, pitch: 75, sway: 1.5, dim: 0.15, hum: false }   # the map lower right, the number over the Atlantic
 ---
 
 <div class="payoff">
 <div class="big">700+<span class="unit">sutarčių</span></div>
 </div>
+<Grains :set="{ eu: 2 }" />
 
-<!-- facts: ktbest-kt2025-contracts, ktbest-socio-700contracts, ktnews-cvc-terms -->
+<!-- facts: ktbest-kt2025-contracts, ktbest-socio-700contracts, ktnews-cvc-terms, cern-members-2026 -->
 
 <!--
-Kalbėtojui.
+Kalbėtojui. Pasaulyje iš CERN į Europą pradeda tekėti grūdelių gijos — po vieną į kiekvieną iš 25 valstybių narių (artimiausios pirmos): žinios ir sutartys, išeinančios į įmones. Gijos — tėkmės vaizdas; jų galai šalyse parinkti atsitiktinai, sutarčių pasiskirstymo jie nerodo.
 Sakyti: „CERN turi žinių perdavimo grupę, kuri rūpinasi licencijomis, bendrais mokslinių tyrimų ir eksperimentinės plėtros projektais ir startuoliais. Nuo 2011 m. ji pasirašė daugiau nei 700 sutarčių, vien 2025 m. — 89; daugumos partneriai yra įmonės. CERN stebi apie šimtą su juo susijusių startuolių. Startuoliams per CERN Venture Connect programą CERN taiko paprastas sąlygas: akcijų neima, o 2 % licencinis mokestis mokamas tik tada, kai metinės pardavimo pajamos pasiekia milijoną frankų. Pasaulinė intelektinės nuosavybės organizacija šiemet šią programą aprašė savo Pasauliniame inovacijų indekse.“
 Faktai: 2025 m. — 32 bendri MTEP projektai, 28 licencijos, 15 paslaugų ir konsultavimo sutarčių, 8 startuolių sutartys; 63 partneriai — įmonės. CERN Venture Connect — nuo 2023 m. spalio; 2026 m. spalį: 9 licencijai paruoštos technologijos, 21 startuolis, >50 partnerių; 2025 m. CVC startuoliai pritraukė 5,6 mln. CHF. Licencija — 10 metų, pasaulinė, neišimtinė, viena taikymo sritis.
 Atsargiai: „27 su CERN susiję startuoliai pritraukė 3,2 mlrd. CHF“ — 2,4 mlrd. iš jų — vienas Novartis skolos pritraukimas; šio skaičiaus nevartoti. Paties CERN pajamos iš licencijų kuklios (2007–2024 m. vidutiniškai ~1,5 mln. CHF per metus): tikslas — poveikis, o ne honorarai.
@@ -559,17 +589,18 @@ Atsargiai: „27 su CERN susiję startuoliai pritraukė 3,2 mlrd. CHF“ — 2,
 -->
 
 ---
-space: { at: kt, dist: 18, yaw: 160, pitch: 14, dim: 0.45, hum: false }
+space: { at: [111.5, 0, -1.5], dist: 22, yaw: 15, pitch: 75, sway: 1.5, dim: 0.15, hum: false }   # closer: Lithuania in view as it lights
 ---
 
 <div class="payoff">
 <div class="big">613<span class="unit">mln. CHF</span></div>
 </div>
+<Grains :set="{ eu: 3 }" />
 
-<!-- facts: ktbest-procurement-howto, lt-procurement-total, lt-lightcon, lt-company-mous -->
+<!-- facts: ktbest-procurement-howto, lt-procurement-total, lt-lightcon, lt-company-mous, cern-members-2026, lt-econ-impact -->
 
 <!--
-Kalbėtojui. Kvietimas veikti.
+Kalbėtojui. Kvietimas veikti. Pasaulyje gijų iš CERN padaugėja — jos nubėga į visas valstybes nares ir asocijuotąsias nares žemėlapyje: CERN perka visoje Europoje (1999–2024 m. 94 % sutarčių vertės teko valstybėms narėms). Paskutinės dvi nusileidžia Lietuvoje (Vilniuje ir Kaune), ir maždaug po 4 s, kai jau ištarėte „Lietuvos įmonė…“, Lietuva nušvinta.
 Sakyti: „Lietuvos įmonė gali dirbti su CERN trimis būdais. Pirma, CERN yra klientas: 2024 m. jis pirko prekių ir paslaugų už 613 mln. frankų. Dešimt su viršum Lietuvos įmonių jau tiekia CERN elektroniką, radijo dažnių įrangą, optiką, fotoniką ir mechaniką. „Light Conversion“ — vienas pavyzdys. Šiemet Lietuva jau pasiekė asocijuotajai narei nustatytas lubas. Tos lubos bendros: ir CERN darbuotojams iš Lietuvos, ir sutartims su mūsų įmonėmis; pavyzdžiui, kandidatų iš Lietuvos į darbo vietas, kuriose pradėti dirbti reikėtų 2026 m., CERN nebesvarsto. Visateisė narystė šias lubas panaikintų. Todėl registruotis verta jau dabar, kad tada jūsų įmonė jau būtų CERN tiekėjų sąraše. Antra, FCC: šių metų sausį „Ekspla“, „Ostaralab“ ir „Sargasas“ pasirašė su CERN ketinimų memorandumus dėl FCC technologijų ir tiekimo. Trečia, CERN technologijų licencijos ir bendri projektai.“
 Light Conversion: 2021 m. birželį laimėjo atvirą CERN konkursą (atitiko specifikaciją, pasiūlė geresnę kainą); PHAROS pasirinktas fotokatodo lazeriu CLEAR greitintuvui (lightcon.com, 2021 06 18). Ar jis tebeveikia 2026 m., nepatvirtinta — nesakyti „dabar“. Nuo 2018 m. CERN iš Lietuvos įmonių pirko už ~2,5 mln. CHF (VU rektorius R. Petrauskas, LRT, 2026 m. birželis).
 Šaltiniai: 613 mln. CHF — CERN pirkimų pristatymas, FCC Week 2025; business-with-cern.web.cern.ch; inovacijuagentura.lt.
@@ -578,17 +609,18 @@ Faktai: pirkimai nuo 50 000 CHF siunčiami ir nacionaliniams pramonės ryšių
 -->
 
 ---
-space: { at: [118.5, -1.6, 0], dist: 13, yaw: -30, pitch: 14, dim: 0.45, hum: false }
+space: { at: [107, 0, 0], dist: 32, yaw: 30, pitch: 50, sway: 1.5, dim: 0.15, hum: false }   # lower: the threads' arcs over the map
 ---
 
 <div class="payoff">
 <div class="big">+<Count :from="0" :to="14" :ms="1800" /><span class="unit">% apyvartos</span></div>
 </div>
+<Grains :set="{ eu: 4 }" />
 
 <!-- facts: ktnews-socioeco-suppliers -->
 
 <!--
-Kalbėtojui. Pagrindinis skaičius verslui.
+Kalbėtojui. Pagrindinis skaičius verslui. Pasaulyje gijos sulėtėja ir ima švytėti tolygiai: penkeri metai po pirmojo CERN užsakymo.
 Sakyti: „Nepriklausomas 2026 m. tyrimas palygino įmones, kurios 2016–2024 m. pirmą kartą gavo CERN užsakymą, su panašiomis įmonėmis, kurios jo negavo. Per penkerius metus CERN tiekėjų apyvarta išaugo 14 % labiau nei panašių įmonių, darbuotojų skaičius — 13 % daugiau, patentų — 15 % daugiau. Daugiau nei pusė tiekėjų dėl darbo su CERN pateko į naujas rinkas. Maždaug trys iš keturių žmonių, išėjusių iš CERN, dirba ne mokslo ir ne švietimo srityse.“
 Jei laikas leidžia: „Visos visuomenės mastu CERN rugsėjį paskelbė, kad kiekvienas į atnaujintą LHC investuotas frankas visuomenei grąžins apie 1,8 franko, net neskaičiuojant galimų atradimų.“ (94 % iš 50 000 modeliavimų rodo teigiamą grąžą; 40 % naudos — žmonės, kuriuos CERN parengė, 38 % — pramonė ir nemokama programinė įranga.)
 Faktai: nematerialusis turtas +63 %, materialusis +27 %; 54 % tiekėjų pateko į naujas rinkas, 70 % įgijo pažangių kompetencijų. WIFO (2025): CERN pirkimai kasmet sukuria ~680 mln. CHF pridėtinės vertės. Alumni: 26 % lieka švietime ar moksle, didžiausias kitas sektorius — kompiuterinė įranga, programinė įranga ir paslaugos (23 %); taigi apie trys iš keturių dirba už mokslo ir švietimo ribų, o ne „pramonėje“ (CERN socioekonominė studija, 2026, 5.4 sk., 18 pav.; CERN Alumni Network duomenys, 2025 10).
@@ -602,10 +634,13 @@ space: { at: [22.5, 0, -14.7], dist: 70, yaw: -120, pitch: 58, dim: 0.15, hum: f
 
 <VideoPlayer src="cern_footage_2025_014_002.mp4" muted :controls="false" />
 
+<ClipEnd><div class="question">O kokį vaidmenį atliks Lietuva?</div></ClipEnd>
+<Drone :level="0.22" />
+
 <!-- facts: cern-fcc-study, cern-espp-2026, ktnews-fcc-donors, cern-run3-end -->
 
 <!--
-Kalbėtojui. Kitos mašinos problemos.
+Kalbėtojui. Kitos mašinos problemos. Po klipu skamba žemas, tolygus ūžesys (sintezuotas, savininkas, 2026 10 21: „deep cool hum sounds“; 2026 10 22: „can we just have more constant one“ — be pulsavimo); jis užgęsta, kai pereinama prie filmo. Klipui baigiantis, ant paskutinio jo kadro pasirodo klausimas „O kokį vaidmenį atliks Lietuva?“ (savininkas, 2026 10 21); paskutinis kadras su klausimu lieka, kol paspausite →, o kita skaidrė — LHCb savaitės filmas — į jį atsako.
 Vaizdas: CERN-FOOTAGE-2025-014-002 (2025 m. FCC žemėlapis, 18 s, be garso): kamera nusileidžia virš Ženevos baseino, 90,7 km FCC žiedas nusipiešia šalia LHC ir baigiasi pažymėtu vaizdu (LHC, FCC, Ženeva, Lemano ežeras, Alpės). © CERN.
 Sakyti: „Šių metų birželio 27 d. LHC žiede paskutinį kartą prieš ilgąją pertrauką skriejo protonai; iki 2030 m. jis pertvarkomas, kad duotų iki dešimties kartų daugiau susidūrimų. O gegužę CERN Taryba priėmė Europos dalelių fizikos strategiją: kitu greitintuvu siūlomas 91 km žiedas — Būsimasis žiedinis greitintuvas, sutrumpintai FCC. Sprendimas jį statyti laukiamas apie 2028 m. Jam reikės naujų magnetų, šaldymo ir vakuumo sistemų. Pernai gruodį pirmą kartą CERN istorijoje privatūs rėmėjai pažadėjo naujam greitintuvui apie 860 mln. eurų.“
 Faktai: FCC galimybių studija (2025 03 31): 90,7 km, vidutinis gylis ~200 m, FCC-ee kaina ~15 mlrd. CHF per ~12–15 metų. Strategija priimta 2026 05 22 Budapešte. Datos: 2026 06 27 05:52 — paskutiniai 3-iojo etapo protonai (CERN Courier); 06 29 — LHC išjungtas, prasidėjo LS3 (home.cern). Rėmėjai: Ericas ir Wendy Schmidtai, Johnas Elkannas, Breakthrough Prize fondas, Xavier'as Nielis; pažadai priklauso nuo valstybių narių sprendimo. HL-LHC fizika — nuo 2030 m. birželio iki 2041 m.
@@ -617,141 +652,86 @@ Faktai: FCC galimybių studija (2025 03 31): 90,7 km, vidutinis gylis ~200 m, 
 space: { at: kt, dist: 18, yaw: 120, pitch: 12, dim: 0, hum: false }
 ---
 
-<StagePhoto src="figures/lt_lhcb_week.jpg" arrive="camera" alt="LHCb savaitės Vilniuje atidarymas: Vilniaus universiteto rektorius Rimvydas Petrauskas kalba prie tribūnos, virš jo du ekranai „LHCb WEEK VILNIUS“" focus="50% 40%" />
+<VideoPlayer src="lhcb_week_aftermovie.mp4" :controls="false" />
+<Grains :set="{ det: 0, lhcbLogo: 0, ltMap: 0 }" />
 
-<!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources, cern-lithuania -->
-
-<!--
-Kalbėtojui. „Lietuvos istorija CERN“ — tik nuotraukos (savininkas, 2026 10 13: „just have some pictures about LHCb visits from the ministers and LHCb week“), be dalies pertraukos skaidrės (savininkas, 2026 10 13: „don't need the Lietuvos istorija cover slide“); kamera atskrenda čia tiesiai nuo FCC. LHCb savaitės Vilniuje atidarymas, 2026 m. rugsėjo 14 d., VU Gyvybės mokslų centras; kalba rektorius R. Petrauskas.
-Sakyti: „O dabar — apie Lietuvą ir CERN. Lietuva yra asocijuotoji CERN narė nuo 2018 m., pirmoji iš Baltijos šalių: lietuviai gali dirbti CERN, o mūsų įmonės — dalyvauti jo pirkimuose. Šių metų rugsėjį Vilniaus universitete pirmą kartą Lietuvoje vyko LHCb savaitė — viso LHCb eksperimento susitikimas. Tai didžiausias dalelių fizikų susitikimas Lietuvos istorijoje.“
-Faktai: 121-oji LHCb savaitė, 2026 09 14–18, pirmoji Lietuvoje. Dalyvių skaičiai — prognozės ir nesutampa (VU: ~200 gyvai, iš viso ~600; grupės puslapis: 300 gyvai ir 300 nuotoliu, 128 institutai iš 28 šalių); po renginio skaičiaus viešai nėra — skaičiaus nesakyti tiksliau nei „apie du šimtus“. LRT antraštė: „didžiausias dalelių fizikų susitikimas Lietuvos istorijoje“. Asocijuotoji narė nuo 2018 01 08 (susitarimas pasirašytas 2017 06 27 Vilniuje); įnašas 2026 m. — 1 000 000 CHF.
-Vaizdas: savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius / Opening_Ceremony, LHCB-47; autorius aplanke nenurodytas (greičiausiai VU fotografas), kreditas „VU nuotr.“ — kol savininkas nepatikslins.
-Šaltiniai: lrt.lt/naujienos/mokslas-ir-it/11/3052140; indico.cern.ch/event/1696594; lhcb-vilnius.web.cern.ch; home.cern/lithuania-becomes-associate-member-state-cern.
-(~0,5 min)
--->
-
----
-space: { at: kt, dist: 18, yaw: 135, pitch: 11, dim: 0, hum: false }
----
-
-<StagePhoto src="figures/lt_lhcb_week_president.jpg" arrive="camera" alt="LHCb savaitės atidarymas: Prezidentas Gitanas Nausėda sveikina dalyvius vaizdo įrašu abiejuose salės ekranuose, tarp Lietuvos vėliavos ir Vyčio vėliavos" focus="50% 30%" />
-
-<!-- facts: lhcb-week-vilnius, lt-full-decision, lt-member-interest-cern-visit-2026-09 -->
+<!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources, cern-lithuania, lt-full-decision, lt-member-interest-cern-visit-2026-09 -->
 
 <!--
-Kalbėtojui. LHCb savaitės atidarymas: Prezidentas G. Nausėda, savaitės globėjas, sveikina dalyvius vaizdo įrašu (LRT: sveikino nuotoliu).
-Sakyti: „Savaitę globojo Prezidentas — jis pasveikino fizikus iš ekrano. Rugpjūčio 21 d. Ministras Pirmininkas nusprendė oficialiai kreiptis dėl visateisės narystės CERN, o CERN patvirtino, kad procedūra jau pradėta.“
-Faktai: premjero sprendimas — 2026 08 21, oficialus laiškas CERN vadovybei paskelbtas 08 26; rugsėjo 4 d. Lietuvos nuolatinis atstovas Ženevoje ambasadorius R. Paulauskas lankėsi CERN dėl Lietuvos išreikšto noro tapti visateise nare (CERN nuotraukų įrašas CERN-PHOTO-202609-233, 2026 09 04). Visateisė narystė panaikintų asocijuotajai narei taikomas lubas (darbuotojams ir sutartims). Estija visateise nare tapo 2024 m. Ministrų vizitų būtent į LHCb CERN nuotraukų archyve nerasta (valstybės vizitai — į CMS ir LHC tunelį; 2026 01 19 Prezidentas — CMS urve) — jei yra ministrų nuotraukų LHCb, jos stotų šioje dalyje.
-Vaizdas: savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius / Opening_Ceremony, LHCB-59; autorius nenurodytas (kaip ir LHCB-47).
-Šaltiniai: lrt.lt/naujienos/mokslas-ir-it/11/3052140; lrv.lt (2026 08 26); lrt.lt/en (2026 09 20, Hamel de Monchenault: „The membership procedure has already started“).
+Kalbėtojui. „Lietuvos istorija CERN“: visas LHCb savaitės Vilniuje filmas su savo muzika, vietoj keturių nuotraukų (savininkas, 2026 10 20: „show a video from the LHCb Week instead of the four photos“; „Don't worry about photos show the entire aftermovie“). Kamera atskrenda čia tiesiai nuo FCC. Filme: 0:16 VU Saulėtekio miestelis iš oro, 0:19 laboratorijos, 0:25 pilna salė atidaryme, 0:26 Prezidento sveikinimas abiejuose ekranuose, 0:28 kalbėtojas prie tribūnos, 0:30 atidarymo diskusija, 0:51 senamiestis iš oro, 0:55 priėmimas Universiteto kieme, 1:15 ugnies šou, 1:27 vakarienė, 2:03 pabaigos užsklandos. Filmas prasideda vos skaidrei atsivėrus, jo muzika visu garsu nuo 3-iosios sekundės — per filmą nekalbėti. Pasibaigęs (2:28) jis nepereina toliau: lieka tamsus paskutinis kadras, kol paspausite →.
+Sakyti (dar FCC skaidrėje, prieš paspaudžiant, arba filmui pasibaigus, per jo paskutinį kadrą): „O dabar — apie Lietuvą ir CERN. Lietuva yra asocijuotoji CERN narė nuo 2018 m., pirmoji iš Baltijos šalių: lietuviai gali dirbti CERN, o mūsų įmonės — dalyvauti jo pirkimuose. Šių metų rugsėjį Vilniaus universitete pirmą kartą Lietuvoje vyko LHCb savaitė — viso LHCb eksperimento susitikimas, didžiausias dalelių fizikų susitikimas Lietuvos istorijoje: atvyko apie du šimtus fizikų iš viso pasaulio. Savaitę globojo Prezidentas, o rugpjūčio 21 d. Ministras Pirmininkas nusprendė oficialiai kreiptis dėl visateisės narystės CERN.“
+Faktai: 121-oji LHCb savaitė, 2026 09 14–18, pirmoji Lietuvoje. Dalyvių skaičiai — prognozės ir nesutampa (VU: ~200 gyvai, iš viso ~600; grupės puslapis: 300 gyvai ir 300 nuotoliu, 128 institutai iš 28 šalių); po renginio skaičiaus viešai nėra — nesakyti tiksliau nei „apie du šimtus“. LRT antraštė: „didžiausias dalelių fizikų susitikimas Lietuvos istorijoje“. Asocijuotoji narė nuo 2018 01 08 (susitarimas pasirašytas 2017 06 27 Vilniuje); įnašas 2026 m. — 1 000 000 CHF. Prezidentas G. Nausėda — savaitės globėjas, sveikino vaizdo įrašu (LRT: nuotoliu). Premjero sprendimas — 2026 08 21, oficialus laiškas CERN vadovybei paskelbtas 08 26; rugsėjo 4 d. nuolatinis atstovas Ženevoje ambasadorius R. Paulauskas lankėsi CERN dėl visateisės narystės (CERN-PHOTO-202609-233). Visateisė narystė panaikintų asocijuotajai narei taikomas lubas (darbuotojams ir sutartims). Estija visateise nare tapo 2024 m. CERN po savaitės: „The membership procedure has already started“ (Hamel de Monchenault, LRT, 2026 09 20). Atidarymo diskusija „Lithuania's AI Factory: Connecting Science, Industry and Global Research Infrastructures“: moderatorė prof. S. Mačiukaitė-Žvinienė, G. Hamel de Monchenault (CERN), T. Gershon (LHCb), prof. P. Treigys, švietimo, mokslo ir sporto viceministrė R. Valutytė, B. Girdvainis (Ekonomikos ir inovacijų ministerija); kas kur sėdi, nepatikrinta.
+Vaizdas: LHCb savaitės filmas, Nebula Moments (Rimantas Unkevičius), 2:28; savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius.
+Šaltiniai: lrt.lt/naujienos/mokslas-ir-it/11/3052140; indico.cern.ch/event/1696594; lhcb-vilnius.web.cern.ch; home.cern/lithuania-becomes-associate-member-state-cern; lrv.lt (2026 08 26); lrt.lt/en (2026 09 20); vu.lt (2026 09 08 ir 09 14); LHCb savaitės programa (Drive, LHCb_Week_Vilnius_2026_programa).
 (~0,4 min)
 -->
 
 ---
-space: { at: kt, dist: 18, yaw: 150, pitch: 10, dim: 0, hum: false }
----
-
-<StagePhoto src="figures/lt_lhcb_week_panel.jpg" arrive="camera" alt="LHCb savaitės atidarymo diskusija apie Lietuvos dirbtinio intelekto gamyklą: šeši dalyviai scenoje prie LHCb WEEK VILNIUS kubų" focus="50% 35%" />
-
-<!-- facts: lhcb-week-vilnius -->
-
-<!--
-Kalbėtojui. Atidarymo diskusija „Lithuania's AI Factory: Connecting Science, Industry and Global Research Infrastructures“. Dalyviai (pagal programą ir skaidrę, ne sėdėjimo tvarka): moderatorė prof. Saulė Mačiukaitė-Žvinienė, Gautier Hamel de Monchenault (CERN), Tim Gershon (LHCb), prof. Povilas Treigys, švietimo, mokslo ir sporto viceministrė Regina Valutytė, Benediktas Girdvainis (Ekonomikos ir inovacijų ministerija). Scenoje dvi moterys: moderatorė (kairėje, su užrašais) ir, matyt, viceministrė (balta striukė); kas kur sėdi, nepatikrinta — vardų pagal vietas nesakyti.
-Sakyti: „Atidaryme apie Lietuvos dirbtinio intelekto gamyklą kalbėjosi CERN ir LHCb fizikai, švietimo, mokslo ir sporto viceministrė ir Ekonomikos ir inovacijų ministerijos atstovas: mokslas ir valstybė prie vieno stalo.“
-Vaizdas: savininko Drive aplankas 2026-09-14_LHCb_Week_Vilnius / Opening_Ceremony, LHCB-172; autorius nenurodytas (kaip ir LHCB-47).
-Šaltiniai: LHCb savaitės programa (Drive, LHCb_Week_Vilnius_2026_programa); nuotraukos LHCB-170, LHCB-174 (skaidrė su dalyvių sąrašu).
-(~0,3 min)
--->
-
----
-space: { at: kt, dist: 18, yaw: 165, pitch: 10, dim: 0, hum: false }
----
-
-<Grains :set="{ det: 0, lhcbLogo: 0, ltFlag: 0 }" />
-<Soundtrack :level="0.3" start />
-<StagePhoto src="figures/lt_lhcb_week_hall.jpg" arrive="camera" alt="Pilna VU Gyvybės mokslų centro auditorija LHCb savaitės atidaryme, dalyviai su LHCb savaitės juostelėmis" focus="50% 50%" />
-
-<!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources -->
-
-<!--
-Kalbėtojui. Auditorija LHCb savaitės atidaryme. Nuo šios skaidrės tyliai groja muzika (Scott Buckley, „Starfire“, CC BY 4.0; savininkas, 2026 10 20: „crazy inspirational soundtrack for the last three slides“), per kalbą tyliau; „Ačiū“ skaidrėje ji sustiprėja ir pasiekia kulminaciją, kai kamera nusileidžia į žmogaus akių aukštį.
-Sakyti: „Į Vilnių atvyko apie du šimtus fizikų iš viso pasaulio, dar daugiau jungėsi nuotoliu. Savaitę jie aptarinėjo LHCb rezultatus, detektorių ir jo ateitį — Lietuvoje.“
-Faktai: dalyvių skaičiai — prognozės (VU: ~200 gyvai, ~600 iš viso; LRT: 200 gyvai); po renginio viešo skaičiaus nėra, todėl tik „apie du šimtus“.
-Vaizdas: nuotr. Tomas Laurinavičius / VU (vu.lt/en/all-news/cern-lh-cb-experiment-conference-starts-at-vu-for-the-first-time-in-lithuania, 2026 09 14).
-Šaltiniai: vu.lt (2026 09 08 ir 09 14); lrt.lt (2026 09 14).
-(~0,3 min)
--->
-
----
-space: { at: [9.54, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim: 0, hum: false }
+space: { at: [9.54, -482.702, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim: 0, hum: false }
 ---
 
 <VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
-<Grains :set="{ det: 0, lhcbLogo: 0, ltFlag: 0 }" />
-<Soundtrack :level="0.3" />
+<Grains :set="{ det: 0, lhcbLogo: 0, ltMap: 0 }" />
+<Soundtrack :level="0.3" start />
 
-<!-- facts: lhcb-scifi, lhcb-scifi-channels, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
+<!-- facts: lhcb-scifi, lhcb-scifi-layout, lhcb-scifi-channels, lhcb-scifi-lis, lhcb-scifi-lis-vcsel, lhcb-vilnius-scifi-lis -->
 
 <!--
-Kalbėtojui. SciFi sekiklio modulio galas su šviesos įvedimo sistema: dvi šviesos įvedimo plokštelės su lazeriniais diodais ir skaidulomis, šalia — šaltoji dėžė, ant kurios lazeris išgraviruoja Lietuvos vėliavą (savininkas, 2026 10 19). Vaizdas sukurtas Blender programa pagal SciFi brėžinį, ne nuotrauka. Klipas 10 s, be garso; paskutinis kadras lieka, kol paspaudžiama toliau, o tada virsta grūdeliais ir kamera atsitraukia į visą LHCb.
-Sakyti: „LHCb sekiklyje — daugiau nei 11 000 km scintiliacinių skaidulų ir 524 288 kanalai, kurie registruoja jose kilusią šviesą. Kad visi kanalai būtų sukalibruoti, kiekvieno modulio gale įrengta šviesos įvedimo sistema: lazeriniai diodai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupės darbai LHCb kolaboracijai apima ir šį sekiklį, ir šią sistemą.“
+Kalbėtojui. Visas SciFi sekiklio modulis, stovintis kaip LHCb: beveik 5 m ilgio ir apie 52 cm pločio scintiliacinių skaidulų kilimėlių lakštas (savininkas, 2026 10 21: „show the full SciFi module panning slowly (a long scifi sheet) and then on the bottom I indicate the light injection system“). Klipas 20 s, be garso: 0–7 s kamera iš apačios rodo visą modulį ir lėtai leidžiasi juo žemyn iki apatinio galo; 7–10 s ji stovi, o apatinio galo šaltoji dėžė, kurios viduje yra šviesos įvedimo sistema (plokštelės su lazeriniais diodais; savininkas, 2026 10 21: „The light injection system is within this black coldbox, no need for blue cables“), apsibrėžia švelniai šviečiančiu šviesiai mėlynu kontūru (nuo 6,6 iki 10 s, be užrašų) — tada, ties ~7 s, ją ir įvardykite; 10–12 s kamera priartėja prie apatinio modulio galo šaltosios dėžės (savininkas, 2026 10 20: „do the Lithuanian flag at the bottom of scifi“), 12–17,5 s lazeris ant jos išgraviruoja Lietuvos vėliavą (savininkas, 2026 10 19), paskui vėliava atvėsta iki savo spalvų, kamera šiek tiek atsitraukia ir nuo 19,4 s stovi. Vaizdas sukurtas Blender programa pagal SciFi brėžinį, ne nuotrauka. Paskutinis kadras lieka, kol paspaudžiama toliau, o tada virsta grūdeliais ir kamera atsitraukia į visą LHCb.
+Sakyti (per modulį, 0–7 s): „LHCb sekiklyje — daugiau nei 11 000 km scintiliacinių skaidulų ir 524 288 kanalai, kurie registruoja jose kilusią šviesą.“ Kai šaltoji dėžė nušvinta (~7 s): „Kad visi kanalai būtų sukalibruoti, kiekvieno modulio gale įrengta šviesos įvedimo sistema: lazeriniai diodai siunčia į skaidulas trumpus šviesos impulsus. Mūsų grupės darbai LHCb kolaboracijai apima ir šį sekiklį, ir šią sistemą.“
 Faktai: VCSEL lazeriai (670 nm), po du vienoje plokštelėje; kiekvienas SiPM kanalas pamato nuo vieno iki penkių fotoelektronų, pagal tai nustatomi PACIFIC lusto slenksčiai. Kiek iš viso plokštelių, nesakyti (viešai nepaskelbta). Apie Vilnių — ne daugiau, nei parašyta (grupės 2024 10 03 susitikimo darbotvarkė).
 Šaltiniai: LHCb Upgrade I, JINST 19 (2024) P05065, 6.5.7 sk.; D. Berninghoff, daktaro disertacija, Heidelbergo universitetas, 2022, 4.5 sk.; indico.cern.ch/event/1461467.
 (~0,4 min)
 -->
 
 ---
-layout: statement
-class: thanks-lhcb
-space:
-  at: thanks
-  dim: 0
-  ambient: 0
-  hum: false
-  rate: [[0, 0.7], [2.4, 0.5]]
-  cameraRate: 1
-  path:   # out of the module's end (the clip's last view, hero/lis_pose.py) to T1, then the whole detector
-    - [0, { at: [9.54, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
-    - [2.0, { at: [9.54, -477.242, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74 }]
-    - [5.5, { at: [9.6, -477.6, 0.8], dist: 7, yaw: -80, pitch: -6 }]
-    - [10, { at: [12.6, -479.6, 0], dist: 24, yaw: -30, pitch: 12 }]   # the whole detector, in its true proportions: its scale
-    - [13, { at: [12.6, -479.6, 0], dist: 24, yaw: -30, pitch: 12 }]
-    - [19, { at: [12, -479.54, 0.67], dist: 19.8, yaw: 0, pitch: -15 }]   # side on from its middle, 16,5 m from the beam, at the owner's eye level (1,71 m of his 1,83 m), looking up 15°: the 10 m wall from the floor to its top
+space: { at: [9.54, -482.702, 0.96], dist: 2.236, yaw: -90.0, pitch: -29.74, dim: 0, hum: false }   # the world idle under the recorded close (the clip slide's pose, its forms off)
 ---
 
-<LisTakeover><h1>Ačiū</h1></LisTakeover>
-<Soundtrack :level="0.9" resync />
+<!-- the close, recorded (owner, 22 Oct: "Maybe worth prerecording a video? So it doesn't lag?"): the live one is
+     LisTakeover on this slide at 22efcef (its path from hero/close_path.py); to change it, restore that
+     slide, `pnpm talk record NAME --out DIR -- --slides 30 --fps 50 --hold 6 --max 95 --clicks none`,
+     run hero/bookend.py on DIR/30.mp4 (the ring into NFTMC, „Ačiū“ over Vilnius) to close_home.mp4 (talks/…/CLAUDE.md, Decisions) and put this slide back -->
+<!-- fade, not cut: in slidev-addon-videos v0.8.3 a cut clip never announces that it covers the slide, so the
+     world went on drawing under the whole recording (owner, 22 Oct: "MacPro M2 can't quite handle the final slide") -->
+<VideoPlayer src="close_home.mp4" muted :controls="false" transition="fade" />
+<Grains :set="{ det: 0, lhcbLogo: 0, ltMap: 0 }" />
+<Soundtrack :level="0.3" resync keys :drop="{ at: 69.8, file: 'audio/starfire_close_peak.m4a', hit: 2.013, duck: 67.0, quiet: 0.06 }" />
 
-<!-- facts: lhcb-detector-size -->
+<!-- facts: lhcb-detector-size, lhcb-hlt1-30mhz, lhcb-trigger-5tbs-10gbs, cern-lhc-size-cost, cern-fcc-study -->
 
 <!--
-Kalbėtojui. Klipo paskutinis kadras (vėliava ant šaltosios dėžės) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių, sudarytą iš grūdelių pagal tikrąją jo geometriją; vėliava lieka ženklu ten, kur stovi SciFi modulis (savininkas, 2026 10 19: „position it in a 3D LHCb CAD (maybe as pointcloud)“). Tada detektorius įsižiebia, jame įvyksta tikras LHCb susidūrimas (savininkas: „LHCb collision within lhcb“); kamera kelias sekundes laiko visą detektorių tikrosiomis proporcijomis, tada nusileidžia ant ertmės grindų prieš jo vidurį, 16,5 m nuo pluošto, kalbėtojo akių aukštyje (1,71 m, ūgis 1,83 m) ir žiūri iš šono aukštyn: LHCb stovi visu 10 m aukščiu nuo grindų iki viršaus (savininkas, 2026 10 20: „see the huge scale of lhcb … first person view at eye level“; „look at it side on from the middle. From where that person stands. It can be me, 183cm in height“). Tada viršuje greta susirenka LHCb logotipas ir Lietuvos vėliava, ir pasirodo „Ačiū“; viskas lieka per klausimus. Muzika pasiekia kulminaciją akių aukštyje ir po minutės pati nutyla.
+Kalbėtojui. Ši skaidrė dabar — įrašas (close_home.mp4, 1080p50, ~1 min 52 s; savininkas, 2026 10 22: kad nestrigtų), muzika lieka gyva, + ir − keičia jos garsumą; klavišas P sustabdo ir vėl paleidžia įrašą. Klipo paskutinis kadras (vėliava ant apatinės šaltosios dėžės, SciFi apačioje) virsta grūdeliais, ir kamera atsitraukia iš modulio galo į visą LHCb detektorių — taškų debesį pagal tikrąją geometriją (savininkas, 2026 10 21: „let's get back to point cloud“); išgraviruota vėliava kartu su modulio vaizdu, kuriame ji yra, lieka ten, kur LHCb sekiklyje iš tikrųjų stovi tas SciFi modulis (apatinė šaltoji dėžė), modulio padėtimi, ir kamerai tolstant mažėja iki tikrojo detektoriaus mastelio (~15 s), kol tampa mažyčiu ženklu; iš šono ji matoma kampu (savininkas, 2026 10 21: „the inscribed flag (on one of the SciFi mats) along with the mat itself moves to a position where scifi is. and reduces in size accordingly (because it's far away)“). Kamera nusileidžia iki kalbėtojo akių aukščio (1,71 m) ir žiūri į detektorių iš šono: LHCb užpildo kadrą nuo krašto iki krašto, visi 21 m (savininkas, 2026 10 22: „first zoom out untill you reach the eye level, so lhcb is full frame side to side“); arčiau kameros, dešinėje, stovi žmogus mastui (1,83 m, toks pat taškų debesis). Kamerai nusileidus, kartu su muzikos kulminacija (~18 s), susidūrimo taške susikerta tikro LHCb susidūrimo protonų paketai (savininkas: „LHCb collision within lhcb“): laikas beveik sustoja, tada susidūrime gimusios dalelės lekia per detektorių, ir kiekviena jo dalis sušvinta, kai jos ją pasiekia. Paskui kamera lėtai traukiasi atgal, vis dar akių aukštyje (~18–36 s), o susidūrimai kartojasi vis dažniau, kol jų blyksniai susilieja ir detektorius ima švytėti tolygiai (savininkas, 2026 10 20: „40 million collisions a second“; 2026 10 22: „then slowly move out until the beams run at full speed, only then zoom out to lhc fcc“): ryšuliai LHCb susikerta 40 mln. kartų per sekundę, ir visas detektorius nuskaitomas kiekvieną kartą. Tada be sustojimo, lėtai (~36–57 kelio s, apie pusę minutės; savininkas, 2026 10 22: „The zoomout to FCC should be slow and continuous“) kamera traukiasi toliau ir kyla, kol žiūri tiesiai žemyn, šiaurė viršuje (savininkas, 2026 10 22, su CERN FCC žemėlapiu: „For the last one, can you use something like this?“): LHCb kartu su vėliava susitraukia į tašką, ir aplink jį išnyra žemėlapis tikrosiomis proporcijomis: LHC žiedas (26,7 km) su dviem priešpriešiais skriejančiais pluoštais (žydru ir baltu); SPS, PS ir pernešimo linijų nėra (savininkas, 2026 10 22: „the inner ring of the lhc doesn't make sense... don't show it“); oranžiniu punktyru — siūlomas FCC žiedas (90,7 km) per savo aštuonias antžemines vietas, Ženevos ežeras, Prancūzijos ir Šveicarijos siena, Rona, Jura ir Salève; logotipas pakyla į kadro viršų, o maža Lietuvos vėliava nuo SciFi vietos atkeliauja prie LHCb taško žemėlapyje, tiesiai po LHC žiedu, ir lieka ten iki galo (savininkas, 2026 10 22: „Still need lithuanian flag on 30“; 2026 10 21: „can show the accelerator as well, so this doesn't look isolated, it's a part of huge infrastructure“; „still want to see LHC, FCC, and 2 beams circulating“). Kamerai sustojus (~57 s), žemėlapis nuskrieja tolyn, ir aplink jį iškyla visa Žemė; tada kelionė namo — žemyn į Lietuvą ir Vilnių, tuo pačiu skrydžiu, kuriuo pranešimas prasidėjo, tik atgal, paskutines 10 s įskrendant į NFTMC Saulėtekyje (nusileidžiama ~77 s; „…ir atgal“; savininkas, 2026 10 22: „Go ahead and do it“; „shouldn't there be world zooming out and so on to Vilnius?“). Skrydžio metu muzika rimsta, paskui vėl kyla; prieš pat „Ačiū“ ji trumpam beveik nutyla, ir vos pasirodžius NFTMC, dar skrendant virš Vilniaus, ties jos kulminacija (~70 s; „Starfire“ 2:54,85, išmatuota garso faile) virš Vilniaus visu kadru susiduria protonų paketai, o iš susidūrimo išlėkusios dalelės vingiuotomis trajektorijomis sugula į „Ačiū“, po juo — į Lietuvos vėliavą (savininkas, 2026 10 22: „aciu should appear out of particle collision“; „Also Lithuanian flag should appear with aciu“). LHCb vieta LHC žiede (8-asis taškas) pažymėta šviesiu tašku. Pavadinimų ekrane nėra: žiedus įvardyti žodžiu, kol jie ekrane (~45–58 s); per skrydį namo nekalbėti (viršuje kairėje mažesnis — LHC, didysis oranžinis punktyrinis — FCC; ežeras — į dešinę nuo LHC). LHCb ir kompleksas nupiešti skirtingu masteliu (LHCb ilgis 21 m): kompleksas rodo, kur LHCb stovi. Po „Ačiū“ vaizdas labai lėtai vėl ima tolti nuo NFTMC (savininkas, 2026 10 22: „better to fly in to it for the last 10 seconds and then very slowly start zooming out again“); per klausimus lieka paskutinis įrašo kadras — Vilnius su „Ačiū“ ir vėliava. Muzika po minutės pati nutyla.
+Muzika čia tylesnė (0,3, kaip šviesos įvedimo skaidrėje; savininkas, 2026 10 22: „the last soundtrack 50% quieter“); garsumą galima keisti klavišais + ir − (skaidrėse be klipo jie keičia muziką ir gaudimą, su klipu — klipo garsumą; lygis trumpam parodomas tik pranešėjo lange, žiūrovai nieko nemato; savininkas, 2026 10 22: „invisible, but -+ to control“).
 Nuorodų ekrane nėra: licencijų reikalaujamos nuorodos — kitame puslapyje, kurio nerodyti (savininkas, 2026 10 19: „We don't need credits at the last slide“).
-Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotas rentgenas atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
+Sakyti: „Žiniatinklis, jutiklinis ekranas ir spalvotos 3D rentgenogramos atsirado iš problemų, kurias fizikams iškėlė klausimas, iš ko sudarytas pasaulis. FCC iškels naujų problemų. Jei jūsų įmonė nori tiekti CERN, užsiregistruokite CERN tiekėjų portale ir parašykite Inovacijų agentūros specialistei, kuri rūpinasi įmonių bendradarbiavimu su CERN. Ačiū, laukiu klausimų.“
+Faktai (jei paklaus apie švytėjimą): ryšuliai LHCb susikerta 40 MHz dažniu; 3-iajame etape vidutiniškai 30 mln. kartų per sekundę susikirtime būna susidūrimų, ir LHCb nuskaito visą detektorių kiekvieną kartą — apie 5 TB/s į programinį trigerį, saugoti lieka apie 10 GB/s (maždaug vienas baitas iš 500).
 Nuorodos (pasakyti, ekrane jų nėra): lhcb-vilnius.web.cern.ch — mūsų grupė; kt.cern — CERN žinių perdavimas; business-with-cern.web.cern.ch — kaip tapti CERN tiekėju.
-Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaidrių pastabų laikus, 2026 10 20): iš viso apie 23,5 min; klipai — įžanginis 4:13, CERN iš oro 0:11, LHC tunelis 0:40, LHCb animacija 0:48, FCC žemėlapis 0:18 ir šviesos įvedimo sistema 0:10 (per paskutinius penkis kalbama). Po šios — nuorodų puslapis (nerodyti), po jo paslėpta skaidrė (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
-(~0,4 min)
+Laikas: skirta ~25 min ar daugiau (savininkas, 2026 10 08). Trukmė (pagal skaidrių pastabų laikus, 2026 10 22): iš viso apie 27,5 min (uždarymas su skrydžiu namo — 1:52); klipai — įžanginis 4:13, CERN iš oro 0:11, LHC tunelis 0:40, LHCb animacija 0:48, FCC žemėlapis 0:18, LHCb savaitės filmas 2:28 ir šviesos įvedimo sistema 0:20 (per filmą nekalbama, per kitus penkis — taip). Po šios — nuorodų puslapis (nerodyti), po jo paslėpta skaidrė (Geant4, ROOT, Zenodo ir kt.) — tik paklausus.
+(~2 min: įrašas 1:52, baigiamieji žodžiai jam baigiantis)
 -->
 
 ---
 class: credits-page
-space: { at: [12, -479.54, 0.67], dist: 19.8, yaw: 0, pitch: -15, dim: 0.7, ambient: 0, hum: false }
+space: { at: [-18.33, -480, 43.373], dist: 191.56, yaw: -34.22, pitch: 89, dim: 0.7, ambient: 0, hum: false }   # the close's last view: the accelerator complex straight from above, north up; the world rests under the recording's last frame (CloseStill)
 ---
 
-<Grains :set="{ det: 1, lhcbLogo: 1, ltFlag: 1 }" />
-<Soundtrack :level="0.9" />
+<CloseStill src="figures/close_end.jpg" />
+<Grains :set="{ det: 0, lhcbLogo: 0, ltMap: 0 }" />
+<Soundtrack :level="0.3" />
 <div class="src credits credits-list">Planck CMB žemėlapis: ESA ir Planck kolaboracija, CC BY-NC 3.0 IGO (perprojektuotas, išlygintas, nuspalvintas)<br>
 1989 m. pasiūlymas: nuotr. Sailko, CC BY 3.0<br>
 Riešo vaizdas: MARS Bioimaging Ltd<br>
 B. Stumpe: S. E. Bennett / CERN, CC BY 4.0<br>
 NeXT serveris: P. Loïez / CERN, CC BY-SA 4.0<br>
 LHCb rezultatų grafikai: © CERN LHCb kolaboracijos naudai, CC BY 4.0 (apkarpyti, perspalvinti)<br>
-LHCb savaitė Vilniuje: VU nuotr. (salė — T. Laurinavičius)<br>
+LHCb savaitės Vilniuje filmas: Nebula Moments (R. Unkevičius)<br>
 Kosminis tinklas: NCSA Advanced Visualization Lab („Cosmic Bubble Bath“, NSF)<br>
+Žemėlapiai: Natural Earth (viešasis domenas); © OpenStreetMap bendraautoriai (ODbL): miestų koordinatės, greitintuvų tuneliai, kalnagūbriai<br>
 Muzika: Scott Buckley, „Starfire“ (scottbuckley.com.au), CC BY 4.0</div>
 
 <!--
-Kalbėtojui. Šio puslapio nerodyti: po „Ačiū“ nebespausti. Jis — licencijų reikalaujamoms nuorodoms (savininkas, 2026 10 19: „We don't need credits at the last slide“; pasirinkta „B“ — paveikslai lieka, nuorodos kitame puslapyje); lieka žiniatinklio versijoje ir PDF. Planck žemėlapiui (CC BY-NC 3.0 IGO) ir Sailko nuotraukai (CC BY 3.0) jų reikia; CERN medžiagai — ne.
+Kalbėtojui. Šio puslapio nerodyti: po „Ačiū“ nebespausti. Fone — paskutinis įrašo kadras (paveikslas), o gyvas pasaulis po juo sustabdytas, kad lėtesnis kompiuteris nestrigtų (savininkas, 2026 10 22: „MacPro M2 can't quite handle the final slide“). Jis — licencijų reikalaujamoms nuorodoms (savininkas, 2026 10 19: „We don't need credits at the last slide“; pasirinkta „B“ — paveikslai lieka, nuorodos kitame puslapyje); lieka žiniatinklio versijoje ir PDF. Planck žemėlapiui (CC BY-NC 3.0 IGO) ir Sailko nuotraukai (CC BY 3.0) jų reikia; CERN medžiagai — ne.
 (~0 min)
 -->
 

@@ -74,6 +74,10 @@ export function listen(name, fn) {
 }
 // a name's last step, for the forms kept in files of their own
 export const stepOf = (name) => state.get(name)
+// a histogram's share of entries landed so far (0 to 1), for <FillClock>; null while the
+// plot is not built (no WebGL: the clock then keeps its own time)
+const fills = new Map()
+export const fillShare = (name) => fills.get(name)?.() ?? null
 
 const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
@@ -268,7 +272,12 @@ function buildPairs(o, ctx) {
 //   { type: path, name, pos, points: [[x,y,z], …] (2–16), colors?: ['#…', …] per point,
 //     color?, grains?: 14000, node?: 700, nodeRadius?: 0.55, width?: 0.1, speed?: 0.35,
 //     size?: 1, alpha?: 0.55, delay?: 0.8, draw?: 2.8 (seconds to draw one leg),
-//     arc?: 0 (each leg rises off the ground between its places, by this times 0.12 of its length) }
+//     arc?: 0 (each leg rises off the ground between its places, by this times 0.12 of its length),
+//     arcs?: [per leg] (overrides `arc` leg by leg), bend?: 0, bends?: [per leg] (each leg bows
+//     sideways on the ground, to the right of its way for a positive bend, by the same measure:
+//     a return over the same pair bows to the other side, so a round trip reads as a loop),
+//     stepDraw?: { step: seconds } (a draw on to that step takes this long, whatever `draw` says),
+//     arriveDelay?: 1.2 (s after the camera's arrival before a waiting step draws) }
 // Step k (0 … points-1) draws the trail on to point k; -1 hides it. The head
 // travels there over `draw` seconds per leg, after `delay`; each point's
 // cluster gathers as the head reaches it. The cluster at the head burns
@@ -280,7 +289,8 @@ attribute vec3 aOff;
 uniform vec3 uP[${MAXP}];
 uniform vec3 uC[${MAXP}];
 uniform float uAlias[${MAXP}];   // the first point at the same place: a return lights the cluster already there
-uniform float uN, uFrom, uTo, uT0, uDur, uSpeed, uSize, uAlpha, uNodeR, uWidth, uArc;
+uniform float uArcs[${MAXP}], uBends[${MAXP}];   // per leg: rise off the ground, bow to the right of the way
+uniform float uN, uFrom, uTo, uT0, uDur, uSpeed, uSize, uAlpha, uNodeR, uWidth;
 uniform vec3 uColor;
 ${PLACE}
 vec3 pt(int i) { return uP[clamp(i, 0, int(uN) - 1)]; }
@@ -294,8 +304,11 @@ vec3 curve(float u) {
   if (i + 2 > int(m)) p3 = 2.0 * p2 - p1;
   float t2 = t * t, t3 = t2 * t;
   vec3 c = 0.5 * ((2.0 * p1) + (-p0 + p2) * t + (2.0 * p0 - 5.0 * p1 + 4.0 * p2 - p3) * t2 + (-p0 + 3.0 * p1 - 3.0 * p2 + p3) * t3);
-  // arc: each leg rises off the ground between its two places, by its length
-  c.y += uArc * 4.0 * t * (1.0 - t) * length(p2 - p1) * 0.12;
+  // arc: each leg rises off the ground between its two places, by its length; bend: it bows sideways
+  vec3 d = p2 - p1;
+  float bow = 4.0 * t * (1.0 - t) * length(d) * 0.12;
+  c.y += uArcs[i] * bow;
+  c += normalize(vec3(-d.z, 0.0, d.x) + vec3(1e-5, 0.0, 0.0)) * uBends[i] * bow;
   return c;
 }
 void main() {
@@ -374,7 +387,9 @@ function buildPath(o, ctx) {
     uAlias: { value: Array.from({ length: MAXP }, (_, i) => (i < np ? alias[i] : -10)) },
     uFrom: { value: -1 }, uTo: { value: -1 }, uT0: { value: 0 }, uDur: { value: 1 },
     uSpeed: { value: o.speed ?? 0.35 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.55 },
-    uNodeR: { value: o.nodeRadius ?? 0.55 }, uWidth: { value: o.width ?? 0.1 }, uArc: { value: o.arc ?? 0 },
+    uNodeR: { value: o.nodeRadius ?? 0.55 }, uWidth: { value: o.width ?? 0.1 },
+    uArcs: { value: Array.from({ length: MAXP }, (_, i) => +((o.arcs && o.arcs[i]) ?? o.arc ?? 0)) },
+    uBends: { value: Array.from({ length: MAXP }, (_, i) => +((o.bends && o.bends[i]) ?? o.bend ?? 0)) },
     uColor: { value: new Color(...rgb(base)) },
   })
   const g = pointsGroup(geo, mat, o.pos)
@@ -394,7 +409,7 @@ function buildPath(o, ctx) {
     const from = cur < 0 ? -0.55 : cur                 // from nothing: the first place gathers too
     u.uFrom.value = from; u.uTo.value = to
     u.uT0.value = now + (o.delay ?? 0.8)
-    u.uDur.value = legTime(to - from)
+    u.uDur.value = Number(o.stepDraw?.[to]) || legTime(to - from)
     played = now
   }
   // While the camera flies here (armed), a requested step waits and the path is drawn on
@@ -407,25 +422,26 @@ function buildPath(o, ctx) {
     u.uFrom.value = -0.55; u.uTo.value = to; u.uT0.value = now + delay; u.uDur.value = legTime(to + 0.55) * (quick ? 0.6 : 1)
   }
   const request = (k) => {
-    if (!armed) return go(k)
+    // a drawn route goes on from where it stands, even while the camera moves (slide 14's legs)
+    if (!armed || u.uTo.value >= 0) return go(k)
     pending = k; hide()
   }
   const arrive = () => {
     armed = false
     if (pending != null) {
       const k = Math.max(-1, Math.min(np - 1, pending)); pending = null
-      if (k >= 0) drawFromStart(k, 1.2, false)
+      if (k >= 0) drawFromStart(k, o.arriveDelay ?? 1.2, false)
       return
     }
     // an arrival from elsewhere, or `c`: the whole path is drawn again, quicker, from the start to where it stands
     const to = u.uTo.value
-    if (to >= 0 && now - played > 5) drawFromStart(to, 0.2, true)
+    if (to >= 0 && now - played > 5 && played < armT) drawFromStart(to, 0.2, true)   // not when it was drawn on this flight
   }
   const off = listen(o.name, request)
   mat.addEventListener('dispose', off)
   if (state.has(o.name)) pending = state.get(o.name)   // drawn by the station's first assembly
   const api = {
-    arm() { armed = true; armT = now; if (now - played < 1.5 && u.uTo.value >= 0) { pending = Math.round(u.uTo.value); hide() } },
+    arm() { armed = true; armT = now; if (now - played < 1.5 && u.uFrom.value < 0 && u.uTo.value >= 0) { pending = Math.round(u.uTo.value); hide() } },   // hold back only a draw from nothing
     assemble(t, onDone) { now = t; arrive(); onDone?.() },
     // waiting for its arrival, or still drawing (a step that waits at another station is not)
     busy: () => armed || (u.uTo.value >= 0 && headNow() < u.uTo.value - 1e-3),
@@ -698,10 +714,11 @@ function buildMap(o, ctx) {
     assemble(t, onDone) { t0 = t; u.uForm.value = 0; done = onDone || null },
   }
   const A = o.alpha ?? 0.5, B = o.borderAlpha ?? 0.18
-  let want = 1, shown = 1, last = -1, off = null
+  // `showDelay` (s): a step that turns the map on shows it that long after (Lithuania's outline waits for the dive)
+  let want = 1, shown = 1, last = -1, off = null, onT = -1
   if (o.name) {
     want = shown = (state.get(o.name) ?? 0) > 0 ? 1 : 0
-    off = listen(o.name, (k) => { want = k > 0 ? 1 : 0 })
+    off = listen(o.name, (k) => { const w = k > 0 ? 1 : 0; if (w && !want) onT = last; want = w })
     mat.addEventListener('dispose', off)
     u.uAlpha.value = A * shown; u.uBorderAlpha.value = B * shown
   }
@@ -710,9 +727,10 @@ function buildMap(o, ctx) {
     update(t) {
       u.uTime.value = t
       if (t0 >= 0) { const x = Math.min((t - t0) / 3.6, 1); u.uForm.value = x; if (x >= 1) { t0 = -1; const cb = done; done = null; cb?.() } }
-      if (o.name && shown !== want) {
+      const wantNow = want && o.showDelay && onT >= 0 && t - onT < o.showDelay ? 0 : want
+      if (o.name && shown !== wantNow) {
         const dt = last < 0 ? 0 : Math.min(t - last, 0.1)
-        shown = want > shown ? Math.min(want, shown + dt / 2) : Math.max(want, shown - dt / 1.2)
+        shown = wantNow > shown ? Math.min(wantNow, shown + dt / 2) : Math.max(wantNow, shown - dt / 1.2)
         u.uAlpha.value = A * shown; u.uBorderAlpha.value = B * shown
       }
       last = t
@@ -731,6 +749,7 @@ function buildMap(o, ctx) {
 // claimed find (half-held, dim), a retraction (scattered again, fading), the
 // discovery (held, bright). Default steps:
 //   0 scattered and faint · 1 half-held, dim · 2 scattered, fading · 3 held, bright
+// A step's light below about -0.28 hides it (slide 10's form: [{ hold: 0, light: -0.3 }, { hold: 1, light: 0.7 }]).
 // Each change eases over 2.4 s. Born scattered; on arrival it plays from
 // scattered to the current step.
 const QUINTET_VERT = /* glsl */ `
@@ -813,7 +832,10 @@ function buildQuintet(o, ctx) {
     arm() {},
     assemble(t, onDone) {
       now = t
-      if (now - played > 5) { played = now; goTo(steps[Math.max(0, Math.min(steps.length - 1, step))], { from: { hold: 0, light: 0.1 } }) }
+      const target = steps[Math.max(0, Math.min(steps.length - 1, step))]
+      // a step with negative light is hidden: it stays so (slide 10's `pq10` until its click), not a faint flash on arrival
+      if (target.light < 0) goTo(target, { instant: true })
+      else if (now - played > 5) { played = now; goTo(target, { from: { hold: 0, light: 0.1 } }) }
       onDone?.()
     },
     // still gathering (the headless tools' settle and the cover title wait for it)
@@ -832,18 +854,27 @@ function buildQuintet(o, ctx) {
 //     steps?: [0, 1] (the share of entries shown at each step), fill?: 20 (s for the whole set),
 //     fall?: 1.1 (s a grain takes to drop), size?: 1, alpha?: 0.35, color?, axis?: true,
 //     curve?: 1 (>1: the first entries drop faster, the last slower), marks?: [[lo, hi], …],
-//     tickSize?, tickAlpha? (the ticks over the marks; default size × 1,3 and 0,55) }
+//     tickSize?, tickAlpha? (the ticks over the marks; default size × 1,3 and 0,55),
+//     from?: [x, y, z] (in the station's frame: where the grains come from, instead of falling
+//     from above the plot), fromSpread?: [x, y, z] (the box round it they leave from),
+//     arc?: 4 (how high over the higher end their flight bows), flyColor? (their colour in flight),
+//     lead?: 0.6 (s from the step to the first grain, when it fills from empty) }
 // A measured distribution building up entry by entry: each grain is one
 // entry (one candidate) dropping into its bin in a random order, so the
 // shape grows the way the data came in. A step's share is reached at a
 // constant rate (`fill` seconds for all of it); going back shows the share
 // at once. Arrival from elsewhere (or `c`) refills from nothing to the
 // current share, unless a fill started under 5 s ago.
+// With `from` (24 Oct, the owner: "the detector besides showing we are taking data and a
+// single histogram with peaks built up"), each grain leaves from a point in that box (the
+// detector beside the plot) and flies on a bowed arc into its bin, `fall` seconds, so the
+// plot fills out of the detector. `lead` holds a fill from empty back until the collision
+// beside it has crossed (on the world's clock, so the recorder and the shots wait for it).
 const HIST_VERT = /* glsl */ `
 attribute vec3 aEnd;
 attribute float aRank, aSeed, aMark;
-uniform float uFrom, uTo, uT0, uDur, uFall, uTop, uSize, uAlpha, uCurve, uMarkT;
-uniform vec3 uColor, uHot;
+uniform float uFrom, uTo, uT0, uDur, uFall, uTop, uSize, uAlpha, uCurve, uMarkT, uSrcOn, uArc;
+uniform vec3 uColor, uHot, uSrc, uSrcSpread, uFly;
 ${PLACE}
 void main() {
   float span = uTo - uFrom;
@@ -855,7 +886,16 @@ void main() {
   if (k < 0.0) { hide(); return; }
   vec3 p = aEnd;
   float glow = 0.0;
-  if (k < 1.0) {
+  float fly = 0.0;
+  if (k < 1.0 && uSrcOn > 0.5) {
+    // out of the source's box, on a bowed arc (a quadratic Bézier) into the bin, slow to leave
+    // and quick to land, as a drop
+    vec3 s = uSrc + uSrcSpread * (vec3(hash(aSeed * 3.0), hash(aSeed * 17.0), hash(aSeed * 29.0)) - 0.5);
+    vec3 c = vec3(mix(s.x, aEnd.x, 0.55), max(s.y, aEnd.y) + uArc * (0.55 + 0.9 * hash(aSeed * 37.0)), mix(s.z, aEnd.z, 0.5));
+    float e = k * k * (1.6 - 0.6 * k);
+    p = (1.0 - e) * (1.0 - e) * s + 2.0 * (1.0 - e) * e * c + e * e * aEnd;
+    fly = 1.0 - smoothstep(0.75, 1.0, k);
+  } else if (k < 1.0) {
     p.y = mix(uTop + 2.0 * hash(aSeed * 3.0), aEnd.y, k * k);
     p.x += 0.15 * (1.0 - k) * (hash(aSeed * 5.0) - 0.5);
   } else glow = exp(-(k - 1.0) * uFall * 3.0);  // a short warm glow as it lands
@@ -864,10 +904,10 @@ void main() {
   m = m * m * (3.0 - 2.0 * m);
   // the peaks keep their light and warm slightly; the rest steps back (brightening a dense
   // additive column only burns it white under the bloom, a flash)
-  vec3 color = mix(uColor, uHot, clamp(0.8 * glow + 0.3 * m * aMark, 0.0, 1.0));
-  float alpha = uAlpha * (k < 1.0 ? 0.6 + 0.4 * k : 1.0 + 0.8 * glow) * (1.0 - 0.55 * m * (1.0 - aMark));
-  float size = uSize * (0.85 + 0.3 * hash(aSeed * 11.0)) * (1.0 + 0.5 * glow);
-  place(p, size, alpha, color, aSeed);
+  vec3 color = mix(mix(uColor, uFly, fly), uHot, clamp(0.8 * glow + 0.3 * m * aMark, 0.0, 1.0));
+  float alpha = uAlpha * (k < 1.0 ? (uSrcOn > 0.5 ? smoothstep(0.0, 0.12, k) * (0.7 + 0.3 * k) : 0.6 + 0.4 * k) : 1.0 + 0.8 * glow) * (1.0 - 0.55 * m * (1.0 - aMark));
+  float size = uSize * (0.85 + 0.3 * hash(aSeed * 11.0)) * (1.0 + 0.5 * glow) * (1.0 + 0.45 * fly);
+  place(p, size, alpha * (1.0 + 0.5 * fly), color, aSeed);
 }`
 // a short upright tick of grains over a marked peak, shown once the fill is complete
 const TICK_VERT = /* glsl */ `
@@ -891,11 +931,21 @@ function buildHistogram(o, ctx) {
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
   const W = o.width ?? 24, H = o.height ?? 10, unitN = o.unit ?? 1
   const steps = o.steps || [0, 1]
+  // the axis comes in with the first grains that land and goes with the set (the owner, 24 Oct:
+  // "in switching to slide 9 I see the axis of a histogram which is then later filled in": it
+  // stood at 0,5 from the build, seen under the reel's dust and before the data slide's fill)
+  let axU = null
+  const AXIS = 0.5
   const mat = material(HIST_VERT, {
     uFrom: { value: 0 }, uTo: { value: 0 }, uT0: { value: 0 }, uDur: { value: 1 }, uFall: { value: o.fall ?? 1.1 },
     uTop: { value: H * 1.25 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.35 },
     uCurve: { value: o.curve ?? 1 }, uMarkT: { value: 1e9 },
     uColor: { value: new Color(...rgb(o.color || '#ffc05a')) }, uHot: { value: new Color(...rgb(o.hot || '#fff4dc')) },
+    // `from` is in the station's frame, the grains in the plot's: the plot's own `pos` off it
+    uSrcOn: { value: o.from ? 1 : 0 }, uArc: { value: o.arc ?? 4 },
+    uSrc: { value: new Vector3(...(o.from || [0, 0, 0])).sub(new Vector3(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)) },
+    uSrcSpread: { value: new Vector3(...(o.fromSpread || [0, 0, 0])) },
+    uFly: { value: new Color(...rgb(o.flyColor || o.color || '#ffc05a')) },
   })
   const u = mat.uniforms
   const build = (counts, d = {}) => {
@@ -951,10 +1001,10 @@ function buildHistogram(o, ctx) {
       for (let i = 0; i < A; i++) { ap.set([-W / 2 - 0.3 + (W + 0.6) * i / (A - 1), -0.12, 0], i * 3); as[i] = Math.random() }
       const ag = new BufferGeometry()
       ag.setAttribute('position', new BufferAttribute(ap, 3)); ag.setAttribute('aSeed', new BufferAttribute(as, 1))
-      const am = material(AXIS_VERT, { uSize: { value: (o.size ?? 1) * 0.9 }, uAlpha: { value: 0.5 }, uColor: { value: new Color(...rgb(o.axisColor || '#cfd6ff')) } })
+      const am = material(AXIS_VERT, { uSize: { value: (o.size ?? 1) * 0.9 }, uAlpha: { value: 0 }, uColor: { value: new Color(...rgb(o.axisColor || '#cfd6ff')) } })
       am.uniforms.uTime = u.uTime; am.uniforms.uPixelRatio = u.uPixelRatio
       const ax = new Points(ag, am); ax.frustumCulled = false
-      g.add(ax)
+      g.add(ax); axU = am.uniforms
     }
   }
   if (o.counts) build(o.counts)
@@ -992,7 +1042,7 @@ function buildHistogram(o, ctx) {
       u.uMarkT.value = marksOn(to) ? u.uT0.value + u.uDur.value + u.uFall.value + 0.6 : 1e9
       return
     }
-    fill(cur, to)
+    fill(cur, to, cur <= 0 ? (o.lead ?? 0.6) : 0.6)
   }
   // While the camera flies here (armed), a requested step only records its share and the
   // fill starts on arrival, so it is seen from the first grain. A fill started by the same
@@ -1012,6 +1062,9 @@ function buildHistogram(o, ctx) {
   }
   const off = listen(o.name, request)
   mat.addEventListener('dispose', off)
+  // the share landed so far (a grain lands at its time in the fill, released `fall` before)
+  fills.set(o.name, shown)
+  mat.addEventListener('dispose', () => fills.delete(o.name))
   // a step set before the build is kept, but the set stays hidden until the station's first
   // assembly fills it (a reload on a plot slide: no full plot flashing before the fill)
   if (state.has(o.name)) { step = state.get(o.name); share = at(step) }
@@ -1021,11 +1074,17 @@ function buildHistogram(o, ctx) {
     // waiting for its arrival, still filling, or its marks still lighting
     busy: () => armed
       || (u.uTo.value > u.uFrom.value && now < u.uT0.value + u.uDur.value + u.uFall.value)
-      || (u.uMarkT.value < 1e8 && now < u.uMarkT.value + 2.4),
+      || (u.uMarkT.value < 1e8 && now < u.uMarkT.value + 2.4)
+      || (!!axU && Math.abs(axU.uAlpha.value - axisWant()) > 0.01),
   }
+  // landed: the share released `fall` ago (the first grains are down)
+  const axisWant = () => (u.uTo.value > 0 && now >= u.uT0.value + u.uFall.value ? AXIS : 0)
   return {
     group: g, labels: [], api, frameScale: u.uPixelRatio,
-    update(t) { now = t; u.uTime.value = t; if (armed && now - armT > 6) arrive() },
+    update(t) {
+      now = t; u.uTime.value = t; if (armed && now - armT > 6) arrive()
+      if (axU) { const a = axU.uAlpha.value, w = axisWant(); axU.uAlpha.value = Math.abs(w - a) < 0.005 ? w : a + (w - a) * 0.08 }
+    },
     dispose: off,
   }
 }

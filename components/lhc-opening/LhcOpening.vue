@@ -2,7 +2,8 @@
 // <LhcOpening name="opening" />: on the opening's collision slide. When the slide
 // becomes the current one the collision starts from its run-in (every visit plays
 // it again); leaving the slide lets it fade. Not in print, where every page is
-// "current": the still shows it.
+// "current": the still shows it. Nor without a world (the stage fell back to a
+// still or a plate): both captions show, as printed.
 //
 // Its captions name what is shown, a number and its word, nothing more (the house
 // rule): at the crossing the collision's energy, as the debris flies out the count
@@ -25,9 +26,18 @@ const { isPrintMode } = useNav()
 const printing = computed(() => !!isPrintMode.value)
 const shown = ref('')                               // '' | 'energy' | 'count'
 const offs = []
+// Without a world nothing crosses or flies out: both captions show, as printed.
+// The stage says so on <html> (data-stage-fallback) and by its events; an older
+// stage never does, and the captions are as they were.
+const noWorld = ref(!!document.documentElement.dataset.stageFallback)
 if (props.part === 'collision') {
   offs.push(bus.on('cross', (d) => { if (d.name === props.name) shown.value = 'energy' }))
   offs.push(bus.on('flyout', (d) => { if (d.name === props.name) shown.value = 'count' }))
+  for (const [type, on] of [['slidev-stage:fallback', true], ['slidev-stage:rebuilt', false]]) {
+    const h = () => { noWorld.value = on }
+    window.addEventListener(type, h)
+    offs.push(() => window.removeEventListener(type, h))
+  }
 }
 onBeforeUnmount(() => { for (const off of offs) off() })
 onSlideEnter(() => {
@@ -45,9 +55,9 @@ const c = computed(() => ({ ...captions, ...collisionCaptions({ tev: props.tev, 
   <div v-if="part === 'tunnel'" class="lhc-cap lhc-tunnel" aria-hidden="true">
     <span class="lhc-name">{{ c.tunnel.name }}</span><b>{{ c.tunnel.n }}</b><span class="lhc-unit">{{ c.tunnel.unit }}</span>
   </div>
-  <div v-else class="lhc-cap lhc-collision" :class="{ printing }" aria-hidden="true">
-    <div class="lhc-line" :class="{ on: printing || shown === 'energy' }"><b>{{ c.energy.n }}</b><span class="lhc-unit">{{ c.energy.unit }}</span></div>
-    <div class="lhc-line" :class="{ on: printing || shown === 'count' }"><b>{{ c.count.n }}</b><span class="lhc-unit">{{ c.count.unit }}</span></div>
+  <div v-else class="lhc-cap lhc-collision" :class="{ printing: printing || noWorld }" aria-hidden="true">
+    <div class="lhc-line" :class="{ on: printing || noWorld || shown === 'energy' }"><b>{{ c.energy.n }}</b><span class="lhc-unit">{{ c.energy.unit }}</span></div>
+    <div class="lhc-line" :class="{ on: printing || noWorld || shown === 'count' }"><b>{{ c.count.n }}</b><span class="lhc-unit">{{ c.count.unit }}</span></div>
   </div>
 </template>
 
