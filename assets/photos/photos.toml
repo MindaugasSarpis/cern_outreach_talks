@@ -371,10 +371,10 @@ verified_on = "2026-10-26"
 px = [320, 426]
 
 [[photo]]
-subject = "LHCb's new scintillating fibre (SciFi) tracker"
+subject = "A SciFi tracker frame with its fibre-mat modules lowered into the LHCb cavern during installation, May 2021 (Tokyo slide 18: a 16:9 crop of the 2730 px rendition, clear of the workers)"
 file = "scifi.jpg"
-source_url = "https://cds.cern.ch/images/CERN-PHOTO-201911-373-4"
+source_url = "https://cds.cern.ch/images/CERN-PHOTO-202105-062-12"
 licence = "CERN terms (non-commercial)"
-credit = "Photo: Maximilien Brice/CERN"
-verified_on = "2026-10-26"
-px = [1440, 1038]
+credit = "Photo: CERN"
+verified_on = "2026-10-27"
+px = [1712, 963]

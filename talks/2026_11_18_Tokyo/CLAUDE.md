@@ -46,6 +46,13 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 - Branch `talk/tokyo`, worktree `.claude/worktrees/tokyo` (`pnpm talk open tokyo`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/
+- 2026-10-27 (later): two review rounds done (subagents on the contact sheets;
+  Decisions). Lint 0/0, `talk check` ok, shots without page errors (the one
+  failed request is the local-first 404 of lhcb.mp4: no local encode; the
+  player falls back to the release, so `review` exits 1 until `videos:pull`).
+  The last nudges (slide 19 at x 203, the project labels at y -2.2) were
+  reshot but not looked at again. Waiting: v0.11 (Scheduler) for the finale
+  take; the owner's answers below.
 - 2026-10-27: 30-min iteration on talk/tokyo, not deployed (the live site is
   still the 15-min deck): 21 slides, 27.9 of 30 min, lint 0/0, `talk check`
   ok. Next: the review round's fixes; then, once the Scheduler relays v0.11:
@@ -93,8 +100,9 @@ The 30-min Arc's choices:
 9. The finale's music: Starfire again (Innoday, Karjera) or another Scott
    Buckley track? And the finale's idea: the route back and the cover's
    pentaquark gathering on the peak.
-10. Slide 18 is CERN's SciFi cabling photo (Nov 2019) cropped clear of the
-    technician's face. Keep, or another SciFi picture?
+10. Slide 18 is a CERN photo of a SciFi frame going into the cavern (May
+    2021), cropped clear of the workers; its sensors are too small to see.
+    Keep, or a SciFi readout close-up if you have one?
 11. The CC BY chart of LHCb's 76 hadrons beside Belle's 34
     (LHCb-FIGURE-2026-010): fetch it for slide 14? (CDS blocks the script.)
 
@@ -123,7 +131,7 @@ facts ids, sources and minutes in the notes (owner: no script writing).
 | 15 | interiors | molecule and compact ball | | the open question | 1.5 |
 | 16 | interiors | the molecule up close | | held by Yukawa's mesons? Nagoya's theory | 1 |
 | 17 | project | Vilnius University photo | 2024 LHCb, 13 students | the Vilnius group | 1.25 |
-| 18 | project | SciFi photo (cropped, no face) | 524 288 Hamamatsu sensors | Japanese sensors in the detector Vilnius serves | 1 |
+| 18 | project | SciFi frame going into the cavern (2021) | 524 288 Hamamatsu sensors | Japanese sensors in the detector Vilnius serves | 1 |
 | 19 | lhcb | the spectrum again | 38.3 TB open data | a VU student finds the pentaquark again | 1 |
 | 20 | project | two teams (VU, Nagoya photos), one pentaquark | | the project | 2 |
 | 21 | hero | finale: back along the route, dark, the five quarks gather on the peak | | close; thank you | 1.25 |
@@ -315,13 +323,16 @@ The owner's decisions, dated, newest last.
   is an element in StagePhoto's slot (`<div class="shade tr">`), because
   `.hero::after` showed no gradient in the shots; the Vilnius courtyard
   darkened whole (`class="darker"`); focus moved on the collaboration and
-  Belle photos; slide 18 the SciFi photo, cropped clear of the face; slide
+  Belle photos; slide 18 a SciFi frame going into the cavern (CERN, May
+  2021), cropped clear of the workers (the 2019 cabling photo read as
+  plumbing); slide
   14's "76 hadrons" over the two hadron families (it counted nothing on the
   spectrum); slide 19's number top left; `km` moved to x 188 (it showed at
   the paper station's edge); Yukawa's page as large as the other portraits;
-  the project's photo pages larger and its labels out of the lower third; a
-  pulsing track between the molecule's two parts at `interiors` (the binding
-  the notes name). Left as they were (low; slides the owner already saw):
+  the project's photo pages larger and its labels out of the lower third.
+  A pulsing track between the molecule's two parts was tried and dropped
+  (its glow hid a quark in each part). Second round: slide 19 at x 203
+  (clear of `km`), slide 4's shade stronger (`.shade.tl.strong`). Left as they were (low; slides the owner already saw):
   the Zweig passage's small type, the families' meson quarks close
   together.
 

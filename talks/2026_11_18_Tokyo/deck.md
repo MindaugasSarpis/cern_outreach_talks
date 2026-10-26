@@ -94,7 +94,7 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22, dim: 0.6 }
 ---
 
 <StagePhoto src="figures/collaboration.jpg" alt="The LHCb collaboration's group photo in front of the detector, June 2022" focus="50% 100%">
-<div class="shade tl"></div>
+<div class="shade tl strong"></div>
 <div class="num tl">1 891<span class="name">members</span></div>
 </StagePhoto>
 
@@ -362,7 +362,7 @@ Sources: Vilnius University news. (~1.25 min)
 space: { at: project, dim: 0.6 }
 ---
 
-<StagePhoto src="figures/scifi.jpg" alt="Cabling the LHCb SciFi tracker, November 2019" focus="50% 50%">
+<StagePhoto src="figures/scifi.jpg" alt="A SciFi tracker frame with its fibre modules lowered into the LHCb cavern, May 2021" focus="50% 50%">
 <div class="shade bl"></div>
 <div class="num bl">524 288<span class="name">Hamamatsu sensors</span></div>
 </StagePhoto>
@@ -370,8 +370,8 @@ space: { at: project, dim: 0.6 }
 <!-- facts: lhcb-scifi-channels, hamamatsu-japanese, hamamatsu-lhcb-scifi-sipm, lhcb-vilnius-scifi-lis -->
 
 <!--
-LHCb's SciFi tracker being cabled (CERN photo, November 2019; cropped clear of
-the technician's face): its fibres are read by 524 288 channels of Hamamatsu
+A SciFi tracker frame with its fibre modules going into the LHCb cavern (CERN
+photo, May 2021; cropped clear of the workers): its fibres are read by 524 288 channels of Hamamatsu
 (Japan) sensors; the Vilnius group's service work includes the SciFi and its
 light injection system.
 Sources: arXiv:2305.10515; hamamatsu.com; CERN Indico
@@ -379,7 +379,7 @@ Sources: arXiv:2305.10515; hamamatsu.com; CERN Indico
 -->
 
 ---
-space: { at: lhcb, dist: 12, yaw: 4, pitch: 2, dim: 0.2 }
+space: { at: [203, 0, 0], dist: 12, yaw: 4, pitch: 2, dim: 0.2 }
 ---
 
 <div class="num tl">38.3 TB<span class="name">open data</span></div>

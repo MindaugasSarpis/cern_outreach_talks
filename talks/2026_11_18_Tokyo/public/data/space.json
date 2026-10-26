@@ -911,33 +911,6 @@
        ]
       }
      ]
-    },
-    {
-     "type": "tracks",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "pulse": true,
-     "tracks": [
-      {
-       "points": [
-        [
-         -6.2,
-         0,
-         0
-        ],
-        [
-         -2.9,
-         0,
-         0
-        ]
-       ],
-       "color": "#9fe0ff",
-       "width": 2
-      }
-     ]
     }
    ]
   },
@@ -1239,7 +1212,7 @@
      "text": "Vilnius University",
      "pos": [
       -8.5,
-      -2.8,
+      -2.2,
       0
      ],
      "height": 0.9,
@@ -1252,7 +1225,7 @@
      "text": "Nagoya University",
      "pos": [
       8.5,
-      -2.8,
+      -2.2,
       0
      ],
      "height": 0.9,
