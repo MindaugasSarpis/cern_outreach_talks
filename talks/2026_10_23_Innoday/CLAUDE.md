@@ -168,6 +168,39 @@ Everything is grains; no solid shapes, no labels (LHCb's result figures are
 
 ## Status
 
+2026-10-23 (delivered, parked): the talk was given on Thu 23 Oct 2026 from the deployed 95ff916
+(https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/, Pages run 39831269167)
+and its venue zip (`2026_10_23_Innoday-venue.zip` on the release videos-2026-10-00-innoday,
+907 285 203 bytes, built from 73940ec). The owner, after the talk: "Innoday went great! And it's
+very good content". Nothing to deploy; the session is parked (`pnpm talk session innoday` reopens
+it from here). Leftovers for a later session:
+- Plates 30–31 are stale (30 is now a clip, 31 a still), and 03-plate.mp4 is 45 MB, over the
+  40 MB a plate may take; re-record with `pnpm talk record innoday --plates` before any reuse.
+- Unused assets on the release: close.mp4 (the first recorded close, 73 MB), the 644 MB PPTX,
+  the old plates. Prune them with `talk-videos` (never `--only` with `--prune`).
+- The release tag still says `10-00`; renaming it means the deck's `videos.release`,
+  `videos.toml` and the zip's URL in `videos/venue.json` together.
+- The full flight home (the ring, the collision full frame, „Ačiū“ over Vilnius, the dive into
+  NFTMC) can be reused in other talks: `hero/bookend.py` builds it from a 4K take of slide 30
+  (`pnpm talk record innoday --out DIR -- --slides 30 --fps 50 --size 3840x2160 --hold 16 --max
+  110 --clicks none`, `maxBufferWidth` 3840 for the take only) and the opener, reversed
+  (nftmc_zoom_web.mp4). The 4K take sat only in a session scratch dir: not kept.
+- Small artifacts in close_home.mp4: a few faint dashes in the flash for ~1 s, a stray particle
+  dot near the word, the CG/Google Earth flash in the dive, Geneva not placed geographically.
+- The toolkit's `transition="cut"` clip never announces cover, so the world draws under it
+  (reported to the Scheduler for v0.8.4); this deck works around it with `fade`.
+- On slide 30, P pauses the clip but not the music: a pause before 69.8 s throws the hit off.
+  Possible later: P pausing both, and a key to play the live close on a strong GPU.
+- The final form (95ff916) was not checked on the M2 Mac from this session.
+
+2026-10-22 (21:40, deployed): 95ff916 (Pages run 39831269167, green, URL 200, live walk clean).
+Slide 30's close: smooth round NFTMC (no held frames: slow passes blend neighbouring frames, the
+fly-in at the opener's pace), „Ačiū“ from NFTMC's first view, the collision full frame (a 4.5×
+close-up of the 4K take) crossing on Starfire's peak at 69.8 s, the slow zoom-out under the word
+(close_home.mp4, 111.6 s). The venue zip is rebuilt from 73940ec (the same deck; 95ff916 adds only
+venue.json), 907 285 203 bytes; the landing page shows "ZIP · 865 MB". Known leftovers: a few
+faint dashes in the flash for ~1 s, one stray particle dot near the word.
+
 2026-10-22 (21:15, deployed): 4bc29fa (Pages run 39827057266, green, URL 200, live walk clean).
 Slide 30's close now flies in to NFTMC over the dive's last 10 s and, under „Ačiū“, very slowly
 zooms out again (close_home.mp4, 111.6 s). The venue zip is rebuilt from 88f60de (the same deck;
