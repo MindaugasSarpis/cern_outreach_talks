@@ -54,3 +54,14 @@ notes     = """\
 The LHC dipole, CERN-VIDEO-2019-050-008 (CERN), its first 10.8 s: a cutaway of the \
 cryostat into the two beam pipes, its small English/French labels kept. Silent. Same name \
 as the library clip (full length), so this talk's release wins the chain."""
+
+[[videos]]
+name      = "lhcb.mp4"
+profile   = "remux"
+used_in   = ["deck"]
+generated = true
+notes     = """\
+The LHCb reel, OpenData's and Karjera's cut (0:08-0:47.1) of the library clip: from the \
+shafts above the cavern to the detector as the music fades, without the library copy's dark \
+tunnel at the start. Karjera's encode, byte for byte; same name as the library clip, so this \
+talk's release wins the chain."""

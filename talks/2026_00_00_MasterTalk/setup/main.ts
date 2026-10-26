@@ -18,6 +18,10 @@ import AfterFlight from './AfterFlight.vue'
 import Soundtrack from './Soundtrack.vue'
 import { installSoundKeys } from './soundLevel.js'
 import { trackSlides } from './slideNav.js'
+// Karjera's forms on the kit's step bus (setup/kgrains.js: `khistogram`, `path`, `map`, …),
+// and <FillClock>, the days or years of data on a plot as its grains land
+import { installKGrains } from './kgrains.js'
+import FillClock from './FillClock.vue'
 // The talk's one collision: a real 2012 LHCb crossing from the DIMUON stream
 // (CERN Open Data record 28040, CC0; run 124143, event 39463039) holding an
 // anti-Λb⁰ → J/ψ p̄ K⁺ candidate, m(J/ψ p̄) = 4437.5 MeV. Provenance and the
@@ -38,6 +42,7 @@ export default ({ app, router }) => {
   armAfterCover(router)
   trackSlides(router)   // the slide the deck came from (<Crossing :lead>)
   installGrains(registerBuilder)
+  installKGrains(registerBuilder)   // Karjera's forms (setup/kgrains.js)
   installFunnel(registerBuilder)   // the Universe's history in grains (setup/funnel.js)
   installOpening({ app, registerBuilder, event: EVENT_LB })
   installRoute(registerBuilder)   // the data's route, the grid, the dot (setup/route.js)
@@ -47,5 +52,6 @@ export default ({ app, router }) => {
   app.component('WebTakeover', WebTakeover)
   app.component('AfterFlight', AfterFlight)
   app.component('Soundtrack', Soundtrack)
+  app.component('FillClock', FillClock)
   installSoundKeys()
 }

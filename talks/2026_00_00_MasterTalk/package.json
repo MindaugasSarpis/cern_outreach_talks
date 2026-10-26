@@ -16,7 +16,7 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check . --types lhc-collision,stream,grid,spark,funnel"
+    "stage:check": "slidev-stage-check . --types lhc-collision,stream,grid,spark,funnel,khistogram"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2"

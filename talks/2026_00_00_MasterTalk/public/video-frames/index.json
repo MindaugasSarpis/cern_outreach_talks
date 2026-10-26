@@ -68,6 +68,40 @@
       "duration": 49.002,
       "poster": "vilnius_zoom.mp4.poster.jpg",
       "lit": 0.0
+    },
+    "lhcb.mp4": {
+      "file": "lhcb.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 8,
+      "count": 10,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 39.12,
+      "poster": "lhcb.mp4.poster.jpg",
+      "lit": 0.08
+    },
+    "lis_flag.mp4": {
+      "file": "lis_flag.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 5,
+      "count": 5,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 20.0,
+      "poster": "lis_flag.mp4.poster.jpg",
+      "lit": 0.0
     }
   }
 }

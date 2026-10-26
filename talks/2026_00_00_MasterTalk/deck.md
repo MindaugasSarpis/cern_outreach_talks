@@ -404,6 +404,25 @@ at 18.8 m).
 -->
 
 ---
+space: { at: opening, dim: 1, ambient: 0, hum: false }
+---
+
+<!-- Part II's people (master.md 12): the LHCb reel, Karjera's and OpenData's cut of the library's lhcb.mp4 (39 s, its own music): from the shafts above the cavern down to the detector. No advance-on-end. -->
+<VideoPlayer src="lhcb.mp4" :volume="0.7" />
+<StageSteps :set="{ dot: 0, det: 1, data: 0, grid: 0 }" />
+<Clock off />
+
+<!-- facts: lhcb-100m-below-ground -->
+
+<!--
+Message: the detector the collision just crossed, and the people who built it and run it.
+Picture: the LHCb reel (39 s, music), from the shafts down to the detector in its cavern; the speaker names the collaboration over it. The world rests at the crossing behind the clip; the readout station follows.
+Source: the library's lhcb.mp4 (CERN), cut as OpenData's and Karjera's.
+
+(~0.1 min: the clip runs 39 s)
+-->
+
+---
 space:
   at: [12, -402, 0]
   dist: 17
@@ -599,6 +618,28 @@ VU Library interview, 5 March 2026 (a year and a half).
 -->
 
 ---
+space: { at: [1500, 2.4, 0], dist: 19.8, yaw: 0, pitch: 3, sway: 0.4, dim: 0.05, ambient: 0 }   # Karjera's trial slide (24 Oct, before it was cut there for time), its pose
+clicks: 2
+---
+
+<!-- Part IV's "how you know" (master.md 20), from Užsikrauk karjerai's history (8f8eef8^, its slide 11): 140 dots in four days make a bump (th1); click 1 lights its bin; click 2, 3 500 dots in 100 days (th2): the bump is gone. In the master's blues. -->
+<StageSteps :set="{ th1: 1, th2: 0, dot: 0, det: 0, data: 0, grid: 0 }" :clicks="{ 1: { th1: 2 }, 2: { th1: 0, th2: 1 } }" />
+<Clock off />
+
+<AfterFlight :delay="4.6"><div v-click.hide="2" class="nums" style="--d1: 0s"><p><FillClock name="th1" :to="4" unit="day,days" :fill="7" /></p></div></AfterFlight>
+<div v-click="2" class="nums" style="--d1: 0.6s"><p><FillClock name="th2" :to="100" unit="day,days" :at="2" :delay="0.6" :fill="12" /></p></div>
+
+<!-- facts: particle-decay-reconstructed-mass, theta-toy-140-entries, chance-bumps-shrink-with-data, poisson-fluctuation-sqrt-n, theta-plus-2003-false-alarm, theta-plus-leps-japan-19-events, theta-plus-clas-2006-null -->
+
+<!--
+Message: how you know you have found something: a bump in four days of data can be chance; with a hundred days a chance bump goes away and a real one stays. The audience judges the first plot before the second.
+Picture: a toy mass plot fills grain by grain as its days tick (140 entries, 4 days); click 1 lights the bump's bin; click 2 empties it and a second plot fills with 3 500 entries in 100 days, flat where the bump was. The toy is shaped on the Θ⁺ of 2003 (LEPS, 19 events), which later data (CLAS, 2006) did not confirm.
+Sources: the facts above (Karjera's notes hold the toy's construction).
+
+(~1.6 min)
+-->
+
+---
 space:
   at: [-6.4, 4.44, 0]
   dist: 23
@@ -707,13 +748,6 @@ space:
 <StageSteps :set="{ jp: 2, dot: 1, det: 0, data: 0, grid: 0 }" />
 <Clock off />
 
-<div class="credits credit">
-  LHCb geometry: LHCb Collaboration, DD4hep (GPL-3.0), via HSF Phoenix (Apache-2.0) ·
-  the collision: CERN Open Data, LHCb 2012 (CC0) · the spectrum: LHCb, HEPData ins1728691 ·
-  Planck CMB map: ESA and the Planck Collaboration, CC BY-NC 3.0 IGO (reprojected, smoothed, recoloured) ·
-  cosmic web: NCSA Advanced Visualization Lab ("Cosmic Bubble Bath", NSF) · Earth imagery: Google Earth ·
-  music: Scott Buckley, "Starfire" (scottbuckley.com.au), CC BY 4.0 (sections joined)
-</div>
 
 <!--
 Station 11, the pull-back (21:00–23:30).
@@ -735,4 +769,45 @@ the group if they agree (storyboard, "For the owner to judge").
 Sources: those of stations 2–10 (the numbers said here are theirs).
 
 (~2.5 min)
+-->
+
+---
+space: { at: [0, 4.2, 0], dist: 52, yaw: 18, pitch: 10, dim: 0, ambient: 0 }   # the pull-back's last pose, resting under the clip
+---
+
+<!-- Part V's flag (master.md 27): the library's lis_flag.mp4 (Innoday's render, 20 s, silent): the whole SciFi module, its cold box with the light injection system, a laser writing the Lithuanian flag. The recorded close follows it once v0.11's recorded mode is out (the Scheduler, 27 Oct). -->
+<VideoPlayer src="lis_flag.mp4" muted :controls="false" transition="fade" />
+<StageSteps :set="{ jp: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<!-- facts: lhcb-scifi, lhcb-scifi-lis, lhcb-vilnius-scifi-lis -->
+
+<!--
+Message: the part of LHCb the group in Vilnius works on: the SciFi tracker's light injection system.
+Picture: a Blender render after the SciFi drawing (not a photograph): the module panning down, the cold box outlined (~7 s), the flag written on it (12–17.6 s), held on its last frame.
+Source: Innoday's notes (lis_flag.mp4 in its manifest).
+
+(~0.4 min)
+-->
+
+---
+class: credits-page
+space: { at: [0, 4.2, 0], dist: 52, yaw: 18, pitch: 10, dim: 0.7, ambient: 0 }
+---
+
+<StageSteps :set="{ jp: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<div class="credits credit">
+  LHCb geometry: LHCb Collaboration, DD4hep (GPL-3.0), via HSF Phoenix (Apache-2.0) ·
+  the collision: CERN Open Data, LHCb 2012 (CC0) · the spectrum: LHCb, HEPData ins1728691 ·
+  Planck CMB map: ESA and the Planck Collaboration, CC BY-NC 3.0 IGO (reprojected, smoothed, recoloured) ·
+  cosmic web: NCSA Advanced Visualization Lab ("Cosmic Bubble Bath", NSF) · Earth imagery: Google Earth ·
+  music: Scott Buckley, "Starfire" (scottbuckley.com.au), CC BY 4.0 (sections joined)
+</div>
+
+<!--
+The licence credits, kept on a page of their own after the close (as Innoday and Karjera do); not shown in the room.
+
+(~0 min)
 -->
