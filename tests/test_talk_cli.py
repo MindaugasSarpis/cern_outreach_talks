@@ -77,11 +77,21 @@ def test_list_is_one_json_object(repo, env):
     assert od["stage"] is True and od["pin"].startswith("640eaa5")
 
 
-def test_human_text_goes_to_stderr(repo, env):
+def test_status_json_is_the_object_alone(repo, env):
     r = subprocess.run([sys.executable, repo / "scripts" / "talk.py", "status", "--no-fetch", "--json"],
                        cwd=repo, env=env, capture_output=True, text=True)
-    json.loads(r.stdout)                        # stdout is exactly one object
-    assert "main checkout" in r.stderr          # the table went to stderr
+    assert json.loads(r.stdout)["verb"] == "status"     # stdout is exactly one object
+    assert "main checkout" not in r.stderr              # the table is the object's human form: not printed
+    # a shell that merges stderr into stdout (agents' tools do) still reads one object
+    m = subprocess.run([sys.executable, repo / "scripts" / "talk.py", "status", "--no-fetch", "--json"],
+                       cwd=repo, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    assert json.loads(m.stdout)["worktrees"][0]["main_checkout"] is True
+
+
+def test_status_without_json_prints_the_table(repo, env):
+    r = subprocess.run([sys.executable, repo / "scripts" / "talk.py", "status", "--no-fetch"],
+                       cwd=repo, env=env, capture_output=True, text=True)
+    assert "main checkout" in r.stdout and not r.stdout.lstrip().startswith("{")
 
 
 @pytest.mark.parametrize("args, needle", [

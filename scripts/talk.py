@@ -1631,26 +1631,29 @@ def cmd_status(repo: Repo, a, extra) -> tuple[int, dict]:
         deploys = [read_json(p) for p in sorted(sd.glob("*.json")) if not p.name.endswith(".ready.json")]
         readies = [read_json(p) for p in sorted(sd.glob("*.ready.json"))]
     pages = last_pages_run(repo)
+    # The table is the human form of the object: under --json it is not printed at all, so stdout,
+    # and a shell that merges stderr into it (as agents' tools do), carries the one object alone.
+    show = (lambda *_: None) if OUT.json else OUT.show
     for r in rows:
         name = "main checkout" if r["main_checkout"] else Path(r["path"]).name
         if r.get("missing"):
-            OUT.show(f"{name:<22} missing (git worktree prune)")
+            show(f"{name:<22} missing (git worktree prune)")
             continue
         ab = f"ahead {r.get('ahead', '?')}, behind {r.get('behind', '?')}"
         notes = f"notes of {len(r['notes'])} talk{'s' * (len(r['notes']) != 1)}" if r["notes"] else ""
-        OUT.show(f"{name:<22} {r['branch'] or '(detached)':<28} {ab:<22} dirty {r['dirty']:<4} "
-                 + " ".join(r["talks"] + ([notes] if notes else [])))
+        show(f"{name:<22} {r['branch'] or '(detached)':<28} {ab:<22} dirty {r['dirty']:<4} "
+             + " ".join(r["talks"] + ([notes] if notes else [])))
     for d in readies:
-        OUT.show(f"ready   {d.get('talk')}: {'passed' if d.get('ok') else 'FAILED'} {(d.get('sha') or '')[:12]} "
-                 f"{d.get('finished_at', '')}" + (f" (skipped {', '.join(d['skip'])})" if d.get("skip") else ""))
+        show(f"ready   {d.get('talk')}: {'passed' if d.get('ok') else 'FAILED'} {(d.get('sha') or '')[:12]} "
+             f"{d.get('finished_at', '')}" + (f" (skipped {', '.join(d['skip'])})" if d.get("skip") else ""))
     for d in deploys:
-        OUT.show(f"deploy  {d.get('talk')}: {'deployed' if d.get('deployed') else 'NOT deployed'} {d.get('sha', '')[:12]} "
-                 f"{d.get('finished_at', '')} {d.get('url', '')}")
+        show(f"deploy  {d.get('talk')}: {'deployed' if d.get('deployed') else 'NOT deployed'} {d.get('sha', '')[:12]} "
+             f"{d.get('finished_at', '')} {d.get('url', '')}")
     if pages.get("error"):
-        OUT.show(f"pages   unknown ({pages['error']})")
+        show(f"pages   unknown ({pages['error']})")
     elif pages:
-        OUT.show(f"pages   {pages.get('status')} {pages.get('conclusion') or ''} {pages.get('headSha', '')[:12]} "
-                 f"{pages.get('createdAt', '')} {pages.get('url', '')}")
+        show(f"pages   {pages.get('status')} {pages.get('conclusion') or ''} {pages.get('headSha', '')[:12]} "
+             f"{pages.get('createdAt', '')} {pages.get('url', '')}")
     for p in problems:
         OUT.say(f"problem: {p}")
     return (1 if problems else 0), {"worktrees": rows, "deploys": deploys, "ready": readies, "pages": pages,
