@@ -46,6 +46,15 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 - Branch `talk/tokyo`, worktree `.claude/worktrees/tokyo` (`pnpm talk open tokyo`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/
+- 2026-10-27 (night, Scheduler): v0.11 is green on slidev-videos feat/v0.11,
+  not tagged (waits on the owner). On the relayed tag: `pnpm talk pin tokyo
+  v0.11.0` from v0.8.1, then check `git diff pnpm-lock.yaml` for lost `path:`
+  keys on other talks' entries. The finale moves to the toolkit:
+  `space.recorded: {kind, music, at}` with `<StageSoundtrack>` in place of the
+  copied Soundtrack.vue/slideHooks.js/soundLevel.js/CloseStill.vue, and the
+  regather timed on `space.clock: music` in place of Regather.vue's engine
+  clock (README of the v0.11 stage addon for the fields). Then record, plates,
+  ready.
 - 2026-10-27 (later): two review rounds done (subagents on the contact sheets;
   Decisions). Lint 0/0, `talk check` ok, shots without page errors (the one
   failed request is the local-first 404 of lhcb.mp4: no local encode; the
