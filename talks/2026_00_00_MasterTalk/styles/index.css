@@ -37,3 +37,24 @@ html[data-stage] .credit {
   font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 9px; line-height: 1.35; color: rgba(207, 214, 255, 0.55);
   opacity: 0; animation: nums-in 1.5s ease 6s forwards;
 }
+
+/* City names on the Europe map (Karjera's .city, 26 Oct, at a projector's size): positions
+   projected from the europe station's pose; `late` after the flight in and the map gathering,
+   `step` at its click once the trail has drawn to it, `held` and `dive` on the dive to Vilnius. */
+html[data-stage] .city {
+  position: absolute; z-index: 30; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 26px; font-weight: 600; color: #eef1ff;
+  text-shadow: 0 0 22px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.6); white-space: nowrap; pointer-events: none;
+  animation: nums-in 0.8s ease 1.6s both;
+}
+html[data-stage] .city.late { animation-delay: 8.5s; }
+html[data-stage] .city.step { animation: none; transition: opacity 0.8s ease var(--step-delay, 2s); }
+html[data-stage] .city.step.slidev-vclick-hidden { opacity: 0 !important; transition-delay: 0s; }
+html[data-stage] .city.held { animation: city-held 4.4s linear both; }
+html[data-stage] .city.held.manc { animation-name: city-held-manc; }
+html[data-stage] .city.dive { animation-delay: 7.8s; }
+@keyframes city-held { 0%, 86% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes city-held-manc { 0%, 42% { opacity: 0; } 54%, 86% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce), print { html[data-stage] .city { animation: none !important; transition: none !important; } html[data-stage] .city.held { display: none; } }
+
+/* <Count> inside a .nums number: the number's own type, not the unit's */
+html[data-stage] .nums b .count { font-size: inherit; font-weight: inherit; color: inherit; margin: 0; letter-spacing: inherit; }

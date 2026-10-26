@@ -618,6 +618,118 @@ VU Library interview, 5 March 2026 (a year and a half).
 -->
 
 ---
+space: { path: [[3, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [7.5, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [11.5, { at: [2598.3, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8 }]], dim: 0.15, ambient: 0 }   # Karjera's (23 Oct): in close on the 1 TB sphere, held while it is named, then back to the 800 pile
+---
+
+<!-- Part III's open data (master.md 18): OpenData's piles as Karjera last had them (bc19a39^, its slides 15–17), the open data white and all of LHCb's blue (gold in both talks). One sphere is 1 TB. -->
+<StageSteps :set="{ scale: [0, 1], 'scale:labels': 1, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<div class="nums" style="--d1: 8s">
+  <p><b><Count name="open" :from="0" :to="800" :delay="8000" /></b><span>TB</span></p>
+</div>
+
+<!-- facts: laptop-stack-over-1km-worked, lhcb-run1-full-release-2023, sarpis-interview-run1-1-5-years, lhcb-pentaquark-2015-run1-data, lhcb-open-data -->
+
+<!--
+Message: data you can hold: one sphere is a terabyte; the pile is the 800 TB of Run 1 that LHCb opened in 2023, the data the 2015 pentaquarks were found in.
+Picture: in close on the 1 TB sphere (named "1 TB"), then drawn back to the pile of 800 such spheres as the count runs to 800 TB. The Run 1 volume differs between sources (Figures: CHECK); the notes keep "about 800 TB".
+
+(~0.6 min)
+-->
+
+---
+space: { at: [2591.5, 2.0, 1.5], dist: 20.8, yaw: 54.8, pitch: 2.8, flight: 5, dim: 0.15, ambient: 0 }   # OpenData's 4 PB pose (its slide 8)
+---
+
+<StageSteps :set="{ scale: [0, 1, 2], 'scale:labels': 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<div class="nums" style="--d1: 5.2s">
+  <p><b><Count name="open" :from="800" :to="4000" :delay="5200" :ms="900" /></b><span>TB open data</span></p>
+</div>
+
+<!-- facts: lhcb-ntupling-service-4pb, lhcb-open-data -->
+
+<!--
+Message: what LHCb has opened to anyone: about 4 000 TB, through its ntupling service.
+Picture: five copies of the pile merge into one of 4 000 spheres; the count runs from 800 to 4 000 TB.
+
+(~0.4 min)
+-->
+
+---
+space: { at: [2570.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0.15, ambient: 0 }   # OpenData's 100 PB pose (its slide 9), Karjera's x
+---
+
+<StageSteps :set="{ scale: [0, 1, 2, 3], 'scale:labels': 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<div class="nums" style="--d1: 2.4s">
+  <p><b>&gt; <Count name="lhcb" :from="0" :to="100000" :delay="2400" /></b><span>TB all LHCb data</span></p>
+</div>
+
+<!-- facts: lhcb-data-100pb, lhcb-data-total-2026, laptop-stack-over-1km-worked, lhcb-ntupling-service-4pb, lhcb-open-data-policy -->
+
+<!--
+Message: all the data LHCb has collected, more than 100 000 TB (a stack of 1 TB laptops over a kilometre high); the white pile in front is open.
+Picture: the camera pulls far back; a blue pile of 100 000 spheres rises behind the white one; "> 100 000 TB" counts up (a lower bound: LHCb's 100 PB is its March 2025 figure).
+Sources: B. Couturier, ISGC 2025; LHCb, arXiv:2504.00610 (the open data policy).
+
+(~0.45 min)
+-->
+
+---
+space: { at: [1199.83, 0, 1.06], dist: 29.07, yaw: 0, pitch: 60, sway: 0, dim: 0.05, flight: 1.3, ambient: 0 }   # Karjera's slide 13 (23–25 Oct): the Europe pose its names are projected from
+clicks: 5
+---
+
+<!-- Part III's Vilnius (master.md 19), from Užsikrauk karjerai's slides 13–14: the speaker's road round Europe, Vilnius → CERN → Glasgow → CERN → Ireland → Vilnius → Heidelberg → CERN → Bonn → CERN → Vilnius → Manchester → CERN, in 5 clicks; the trail in the master's light blue (gold in Karjera). -->
+<StageSteps :set="{ route: 1, lietuva: 0, th1: 0, th2: 0, dot: 0, det: 0, data: 0, grid: 0 }" :clicks="{ 1: { route: 3 }, 2: { route: 5 }, 3: { route: 7 }, 4: { route: 9 }, 5: { route: 10 } }" />
+<Clock off />
+
+<div class="city late" style="left: 742px; top: 153px; animation-delay: 1.9s">Vilnius</div>
+<div class="city late" style="left: 421px; top: 344px; animation-delay: 2.5s">CERN</div>
+<div v-click="1" class="city step" style="left: 138px; top: 56px; --step-delay: 0.15s">Glasgow</div>
+<div v-click="2" class="city step" style="left: 102px; top: 116px; --step-delay: 0.15s">Ireland</div>
+<div v-click="3" class="city step" style="left: 500px; top: 285px; --step-delay: 0.15s">Heidelberg</div>
+<div v-click="4" class="city step" style="left: 337px; top: 180px; --step-delay: 0.15s">Bonn</div>
+
+<!-- facts: lhcb-vilnius-joined -->
+
+<!--
+Message: the people behind the dot: the speaker's road through LHCb's institutes, out from Vilnius and back.
+Picture: Europe's outline in grains from above; the route draws from Vilnius to CERN, then one leg pair per click (Glasgow, Ireland, Heidelberg, Bonn); each place named as the trail reaches it. The owner's slots to tell are his (Karjera's notes).
+
+(~0.6 min)
+-->
+
+---
+space: { path: [[0, { at: [1199.83, 0, 1.06], dist: 29.07, yaw: 0, pitch: 60 }], [4.4, { at: [1199.83, 0, 1.06], dist: 29.07, yaw: 0, pitch: 60 }], [8.2, { at: [1210.6, 0.25, -6.5], dist: 15, yaw: 0, pitch: 62 }]], sway: 0.3, dim: 0.35, ambient: 0 }   # Karjera's slide 14: holds the Europe view while the last legs draw (Manchester), then dives to Vilnius
+---
+
+<StageSteps :set="{ route: 14, lietuva: 1, th1: 0, th2: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
+<Clock off />
+
+<div class="city held" style="left: 742px; top: 153px">Vilnius</div>
+<div class="city held" style="left: 421px; top: 344px">CERN</div>
+<div class="city held" style="left: 138px; top: 56px">Glasgow</div>
+<div class="city held" style="left: 102px; top: 116px">Ireland</div>
+<div class="city held" style="left: 500px; top: 285px">Heidelberg</div>
+<div class="city held" style="left: 337px; top: 180px">Bonn</div>
+<div class="city held manc" style="left: 282px; top: 113px">Manchester</div>
+<div class="city dive" style="left: 718px; top: 230px">Vilnius</div>
+
+<!-- facts: lhcb-vilnius-joined -->
+
+<!--
+Message: home: the group in Vilnius, where the open data's analysis that ends this story was done.
+Picture: the last legs draw (Manchester, 2 s in), the names go at 4.4 s, the camera dives to Vilnius and Lithuania's outline comes up.
+
+(~0.65 min)
+-->
+
+---
 space: { at: [1500, 2.4, 0], dist: 19.8, yaw: 0, pitch: 3, sway: 0.4, dim: 0.05, ambient: 0 }   # Karjera's trial slide (24 Oct, before it was cut there for time), its pose
 clicks: 2
 ---
