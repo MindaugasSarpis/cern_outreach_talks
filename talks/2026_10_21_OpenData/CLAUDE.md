@@ -4,6 +4,19 @@ The notes for this talk: Claude Code reads this file when it works in the
 talk's directory, and the root CLAUDE.md holds what every talk shares. Keep it
 current (Status, Decisions, Figures). The repo is public: nothing private here.
 
+## Status
+
+2026-10-21 (delivered, parked): given on 21 Oct 2026; the owner: "Open Data
+Award talk done, all good". The deck as delivered: 14 slides on the slidev-videos v0.8.1 pin, the
+18 Oct cover (6e51eaf; the talk's last deploy record is 7f89f2f, Pages run 38773017861, and main's
+Pages runs build every talk). On the day the venue's Windows PC could not run the world and the stage
+fell back to its stills; the three clips marked `advance-on-end` then advanced onto stills whose
+flights never came, so the deck seemed to click itself on. That led to v0.8.2's live fallback
+(recorded plates over a drifting still, `stage.motion: floor`) and the house rule: no
+`advance-on-end` unless the owner asks for that clip by name (root CLAUDE.md; lint ADVANCE). The
+deck still carries the three flags and the v0.8.1 pin: strip them and adopt the fallback before any
+reuse. The round-by-round log (8–18 Oct) and the owner's open questions: `notes/history.md`.
+
 ## The opening (components/lhc-opening/)
 
 Shared with Užsikrauk karjerai and Innoday; this talk is where it changes. LHCb's
@@ -32,7 +45,7 @@ copy.
 
 ## The deck now (r3, 2026-10-12)
 
-Fourteen slides (HANDOFF.md has the history and the owner's open questions):
+Fourteen slides (`notes/history.md` has the history and the owner's open questions):
 
 1. Cover: the date, „CERN LHCb: atvirieji duomenys“ (the owner's words, 18 Oct)
    and the name line, over the CMS crossing at full size (the owner, 18 Oct:

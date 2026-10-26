@@ -1,3 +1,10 @@
+# Opening LHCb's data: history
+
+The old `HANDOFF.md` (the round-by-round log, 8–18 Oct 2026), folded in verbatim on 26 Oct 2026; the
+file is removed.
+
+---
+
 # Open data talk: handoff
 
 **Language: Lithuanian** (owner, 2026-10-08). Title „CERN LHCb: atvirieji
