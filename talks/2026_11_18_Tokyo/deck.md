@@ -52,7 +52,8 @@ scientists are now studying it together. (~1 min)
 space: { at: lhc, dim: 0.25 }
 ---
 
-<StagePhoto src="figures/tunnel.jpg" alt="The LHC tunnel: blue dipole magnets with the letters LHC" focus="50% 50%" class="g-tr" arrive="camera">
+<StagePhoto src="figures/tunnel.jpg" alt="The LHC tunnel: blue dipole magnets with the letters LHC" focus="50% 50%" arrive="camera">
+<div class="shade tr"></div>
 <div class="num tr">27 km<span class="name">LHC</span></div>
 </StagePhoto>
 
@@ -92,7 +93,8 @@ out of the collisions." It condenses out of the dust and leaves the same way.
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22, dim: 0.6 }
 ---
 
-<StagePhoto src="figures/collaboration.jpg" alt="The LHCb collaboration's group photo in front of the detector, June 2022" focus="50% 85%" class="g-tl">
+<StagePhoto src="figures/collaboration.jpg" alt="The LHCb collaboration's group photo in front of the detector, June 2022" focus="50% 100%">
+<div class="shade tl"></div>
 <div class="num tl">1 891<span class="name">members</span></div>
 </StagePhoto>
 
@@ -243,7 +245,8 @@ nobelprize.org; home.cern. (~1.5 min)
 space: { at: km, dim: 0.6 }
 ---
 
-<StagePhoto src="figures/belle.jpg" alt="The Belle detector at KEK, Tsukuba" focus="50% 55%" class="g-tr">
+<StagePhoto src="figures/belle.jpg" alt="The Belle detector at KEK, Tsukuba" focus="50% 35%">
+<div class="shade tr"></div>
 <div class="num tr">2003<span class="name">KEK</span></div>
 </StagePhoto>
 
@@ -264,7 +267,7 @@ space: { at: lhcb, dim: 0.06 }
 ---
 
 <div class="num tl">2015<span class="name">discovery</span></div>
-<div class="num bl">2019<span class="name">precision</span></div>
+<div class="num tr">2019<span class="name">precision</span></div>
 
 <!-- facts: lambda-b-contains-b, lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
 
@@ -287,7 +290,7 @@ press release, 14 July 2015. (~1.75 min)
 -->
 
 ---
-space: { at: lhcb, dist: 15, yaw: -12, pitch: 4, dim: 0.3 }
+space: { at: families, dist: 16, yaw: 0, pitch: 3, dim: 0.3 }
 ---
 
 <div class="num tr">76<span class="name">hadrons</span></div>
@@ -295,7 +298,8 @@ space: { at: lhcb, dist: 15, yaw: -12, pitch: 4, dim: 0.3 }
 <!-- facts: lhcb-figure-2026-010-hadrons, lhcb-particle-zoo-2022 -->
 
 <!--
-LHCb's hadron discoveries by experiment (LHCb-FIGURE-2026-010, September 2026):
+Back at the two families of hadrons. LHCb's hadron discoveries by experiment
+(LHCb-FIGURE-2026-010, September 2026):
 76 at LHCb, 14 of them exotic; Belle is next with 34.
 Sources:
 cds.cern.ch/record/2970971 (CC BY 4.0); home.cern, 5 July 2022. (~1.25 min)
@@ -323,7 +327,7 @@ together. (~1.5 min)
 -->
 
 ---
-space: { at: [229.3, 0, 0], dist: 7.5, yaw: -10, pitch: 6, dim: 0.15 }
+space: { at: [229.3, 0, 0], dist: 7.5, yaw: 0, pitch: 6, dim: 0.15 }
 ---
 
 <!-- facts: pc-molecule-deuteron-like, deuteron-one-pion-exchange, pion-yukawa-carrier-1947, pc-molecule-pion-exchange -->
@@ -340,9 +344,10 @@ Sources: PDG review "Pentaquarks" (2026); Y. Yamaguchi et al., PRD 96 (2017)
 space: { at: project, dim: 0.6 }
 ---
 
-<StagePhoto src="figures/vilnius.jpg" alt="The Great Courtyard of Vilnius University" focus="50% 45%" class="g-bl g-br">
+<StagePhoto src="figures/vilnius.jpg" alt="The Great Courtyard of Vilnius University" focus="50% 45%" class="darker">
+<div class="shade bl br"></div>
 <div class="num bl">2024<span class="name">LHCb</span></div>
-<div class="num br">13<span class="name">students at CERN</span></div>
+<div class="num br">13<span class="name">students</span></div>
 </StagePhoto>
 
 <!-- facts: lhcb-vilnius-joined, lhcb-vilnius-students -->
@@ -357,14 +362,16 @@ Sources: Vilnius University news. (~1.25 min)
 space: { at: project, dim: 0.6 }
 ---
 
-<StagePhoto src="figures/cavern.jpg" alt="The LHCb detector in its cavern, 2024" focus="50% 50%" class="g-bl">
+<StagePhoto src="figures/scifi.jpg" alt="Cabling the LHCb SciFi tracker, November 2019" focus="50% 50%">
+<div class="shade bl"></div>
 <div class="num bl">524 288<span class="name">Hamamatsu sensors</span></div>
 </StagePhoto>
 
 <!-- facts: lhcb-scifi-channels, hamamatsu-japanese, hamamatsu-lhcb-scifi-sipm, lhcb-vilnius-scifi-lis -->
 
 <!--
-LHCb in its cavern (2024); inside it, the SciFi tracker, whose fibres are read by 524 288 channels of Hamamatsu
+LHCb's SciFi tracker being cabled (CERN photo, November 2019; cropped clear of
+the technician's face): its fibres are read by 524 288 channels of Hamamatsu
 (Japan) sensors; the Vilnius group's service work includes the SciFi and its
 light injection system.
 Sources: arXiv:2305.10515; hamamatsu.com; CERN Indico
@@ -372,10 +379,10 @@ Sources: arXiv:2305.10515; hamamatsu.com; CERN Indico
 -->
 
 ---
-space: { at: lhcb, dist: 9, yaw: 8, pitch: 2, dim: 0.2 }
+space: { at: lhcb, dist: 12, yaw: 4, pitch: 2, dim: 0.2 }
 ---
 
-<div class="num bl">38.3 TB<span class="name">open data</span></div>
+<div class="num tl">38.3 TB<span class="name">open data</span></div>
 
 <!-- facts: stonkus-bsc-2026 -->
 

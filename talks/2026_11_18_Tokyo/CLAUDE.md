@@ -48,8 +48,8 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/
 - 2026-10-27: 30-min iteration on talk/tokyo, not deployed (the live site is
   still the 15-min deck): 21 slides, 27.9 of 30 min, lint 0/0, `talk check`
-  ok. Next: the review round's shots (queued), then after the Scheduler
-  relays v0.10: pin, record the finale (Decisions, 26 Oct), plates, ready;
+  ok. Next: the review round's fixes; then, once the Scheduler relays v0.11:
+  pin, record the finale on its recorded mode (Decisions, 26 Oct), plates, ready;
   main from the Scheduler for a deploy.
 - 2026-10-11: v0.8.1 deployed: commit 8bd087b, Pages run 38090919117
   (success), URL 200, the live walk passed all 12 slides. Stills 01–12 in
@@ -66,6 +66,37 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
   meeting may be shown.
 - `pnpm talk deploy` records each deploy in `.git/talk-status/tokyo.json`;
   `pnpm talk status` shows it.
+
+### Open for the owner (one list, 2026-10-27)
+
+From the 10 Oct Brief questions, the ones that still matter (defaults in use):
+1. The project's dates, funders and the Nagoya meeting: may they be shown or
+   said? (Default: neither; the project slide shows the two teams only.)
+2. Affiliations under the two names on the cover: Yamaguchi's reads Nagoya in
+   the application and Tokyo Metropolitan University in the 2026 memo. Which?
+   (Default: none.)
+3. The time of day and the room's screen: 16:9 projector or TV? (Default:
+   16:9 projector.) Is Q&A outside the 30 min? (Default: yes.)
+4. Spoken English throughout, or a greeting in Japanese or Lithuanian?
+   (Default: English.)
+5. Photos of the Vilnius group or the Nagoya partner, with their consent?
+   (Default: no faces of living team members; places only.)
+
+The 30-min Arc's choices:
+6. The spine: the Japanese thread (Yukawa 1935, Sakata 1956 in Nagoya,
+   Kobayashi–Maskawa 1973, Belle 2003) into the project. Keep it, or less
+   history and more pentaquark physics?
+7. Name the LEPS (SPring-8) 2003 Θ⁺ claim at the embassy? It was not
+   confirmed. (Default: in the notes only, said with care, nothing on screen.)
+8. Is Yasuhiro Yamaguchi an author of the Pc molecule papers cited on slide 16
+   (Yamaguchi et al., PRD 96 (2017) 114031)? If so, slide 16 can say so.
+9. The finale's music: Starfire again (Innoday, Karjera) or another Scott
+   Buckley track? And the finale's idea: the route back and the cover's
+   pentaquark gathering on the peak.
+10. Slide 18 is CERN's SciFi cabling photo (Nov 2019) cropped clear of the
+    technician's face. Keep, or another SciFi picture?
+11. The CC BY chart of LHCb's 76 hadrons beside Belle's 34
+    (LHCb-FIGURE-2026-010): fetch it for slide 14? (CDS blocks the script.)
 
 ## Arc
 
@@ -88,11 +119,11 @@ facts ids, sources and minutes in the notes (owner: no script writing).
 | 11 | km | Kobayashi and Maskawa | 1973 six quarks | the third family; b is LHCb's "b" | 1.5 |
 | 12 | km | Belle photo (KEK) | 2003 KEK | CP violation confirmed; X(3872); LEPS | 1.5 |
 | 13 | lhcb | 2019 spectrum, pentaquark | 2015, 2019 | the discovery, from Λb (b quark) decays | 1.75 |
-| 14 | lhcb | LHCb-FIGURE-2026-010 | 76 hadrons | particle zoo 2.0; Belle 34 | 1.25 |
+| 14 | families | the two hadron families again | 76 hadrons | particle zoo 2.0; Belle 34 | 1.25 |
 | 15 | interiors | molecule and compact ball | | the open question | 1.5 |
 | 16 | interiors | the molecule up close | | held by Yukawa's mesons? Nagoya's theory | 1 |
-| 17 | project | Vilnius University photo | 2024 LHCb, 13 students at CERN | the Vilnius group | 1.25 |
-| 18 | project | SciFi photo | 524 288 Hamamatsu sensors | Japanese sensors in the detector Vilnius serves | 1 |
+| 17 | project | Vilnius University photo | 2024 LHCb, 13 students | the Vilnius group | 1.25 |
+| 18 | project | SciFi photo (cropped, no face) | 524 288 Hamamatsu sensors | Japanese sensors in the detector Vilnius serves | 1 |
 | 19 | lhcb | the spectrum again | 38.3 TB open data | a VU student finds the pentaquark again | 1 |
 | 20 | project | two teams (VU, Nagoya photos), one pentaquark | | the project | 2 |
 | 21 | hero | finale: back along the route, dark, the five quarks gather on the peak | | close; thank you | 1.25 |
@@ -260,7 +291,8 @@ The owner's decisions, dated, newest last.
   - The finale (slide 21) is built live now as the take's source: a `path`
     back along the whole route (project → hero, 0–33 s), the world dark at
     33.4–35.2 s (`ambient`), the cover's pentaquark gathering again at 35 s
-    (`<Regather>`). After the v0.10 bump it is recorded
+    (`<Regather>`). It is recorded on v0.11 (Scheduler, 27 Oct: its recorded mode
+    decides how the take is cut and the music slaved; no take before it), as planned here:
     (`pnpm talk record tokyo --out DIR -- --slides 21 --fps 50 --hold 16
     --clicks none`, 4K taken down to 1080p as Innoday), published `--only`,
     and slide 21 becomes `<VideoPlayer src="finale.mp4" muted
@@ -277,6 +309,21 @@ The owner's decisions, dated, newest last.
     LHCb-FIGURE-2026-010 is fetched (Figures, open).
   - Not used, kept for later: the SciFi photo; the SPring-8 aerial
     (attribution only) for the LEPS line.
+
+- 2026-10-27, first review round (a subagent on the contact sheet, 13
+  findings; the high and medium ones fixed): the photo slides' corner shade
+  is an element in StagePhoto's slot (`<div class="shade tr">`), because
+  `.hero::after` showed no gradient in the shots; the Vilnius courtyard
+  darkened whole (`class="darker"`); focus moved on the collaboration and
+  Belle photos; slide 18 the SciFi photo, cropped clear of the face; slide
+  14's "76 hadrons" over the two hadron families (it counted nothing on the
+  spectrum); slide 19's number top left; `km` moved to x 188 (it showed at
+  the paper station's edge); Yukawa's page as large as the other portraits;
+  the project's photo pages larger and its labels out of the lower third; a
+  pulsing track between the molecule's two parts at `interiors` (the binding
+  the notes name). Left as they were (low; slides the owner already saw):
+  the Zweig passage's small type, the families' meson quarks close
+  together.
 
 ## Verify
 
