@@ -66,3 +66,6 @@ html[data-stage] .hero .invention {
   background: rgba(4, 6, 16, 0.72); padding: 6px 16px; border-radius: 6px; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
 html[data-stage] .hero .invention span { color: #9cc4ff; font-weight: 500; margin-left: 0.4em; }
+
+/* the numbers top right, where a slide's picture fills the lower left (Tokyo's .num.tr) */
+html[data-stage] .nums.tr { left: auto; right: 56px; bottom: auto; top: 56px; text-align: right; }

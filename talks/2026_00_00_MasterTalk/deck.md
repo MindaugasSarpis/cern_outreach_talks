@@ -15,7 +15,7 @@ videos:
   dust: '#5b93ff'
 stage:
   space: data/space.json
-  plugins: [lhcb]           # LHCb's Run 3 geometry as grains (the detector), fetched from the kit's geometry-lhcb release
+  plugins: [lhcb, hadron]   # hadron: the kit's pentaquark, for Tokyo's two recipes and the 1964 papers (27 Oct); LHCb's Run 3 geometry as grains (the detector), fetched from the kit's geometry-lhcb release
   palette: { base: blue, bg: '#000206' }   # a true black ground, as OpenData's
   sound: { hum: false, flight: false, clip: false }   # no hum, no transition sounds (house rule); the collision's own sound plays
   options: { reach: 30, nebula: 0.12, exposure: 1.1, vignette: 0.7, grain: 0.012, aberration: 0, bloom: 0.42 }
@@ -404,8 +404,7 @@ at 18.8 m).
 -->
 
 ---
-space: { at: timepix, flight: 2.2, dim: 0, ambient: 0, hum: false }   # the photo as a place: the camera follows the strand up from the VELO to it
-places: { inventions: true }
+space: { at: [-2.2, -398.0, 0.9], dist: 10.5, yaw: -15, pitch: 5, flight: 2.2, dim: 0, ambient: 0, hum: false }   # wide: the VELO lower right, the strand climbing to the picture upper left (27 Oct review: the place's front view hid both)
 ---
 
 <!-- Spine A's inventions, PROTOTYPE 1 of 2 (dense: over the lit detector), for the owner before any other invention is built: a strand of grains grows out of the VELO's pixels to the Timepix chip's best-known use (setup/offshoot.js, `timepix` at the opening station). Innoday's Timepix slide's picture. -->
@@ -413,15 +412,15 @@ places: { inventions: true }
 <StageSteps :set="{ dot: 0, det: 1, timepix: 1, data: 0, grid: 0 }" />
 <Clock off />
 
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="timepix" :relief="0.3" :at="[-3, -394.6, 7.8]" :size="3" :yaw="-20" src="figures/hero_artemis.jpg" alt="NASA's Artemis rocket lifting off its launch pad" focus="50% 40%">
-<p class="invention">Timepix<span>2006</span></p>
-</StagePhoto>
+<div class="nums" style="--d1: 2.6s">
+  <p><b>2006</b><span>Timepix</span></p>
+</div>
 
 <!-- facts: gave-timepix-artemis, ktbest-advacam, gave-timepix-2006 -->
 
 <!--
 Message: the detector's pixel chips (the VELO's family) left CERN as Timepix (2006), which now flies on NASA's Artemis to count radiation.
-Picture: a strand of light-blue grains grows from the VELO at the vertex up to a slow cluster where the photo stands in the world; the camera follows it up and turns to face the photo; "Timepix 2006" on it. The detector stays lit behind.
+Picture: a strand of light-blue grains grows from the VELO at the vertex up to a slow cluster where the picture stands as a sheet in the world; one wide frame holds the VELO, the strand and the picture; "2006 Timepix" low left. The detector stays lit behind.
 Sources: the facts above (Innoday's notes hold them). Picture credit: NASA (public domain).
 
 (~0.5 min)
@@ -429,7 +428,6 @@ Sources: the facts above (Innoday's notes hold them). Picture credit: NASA (publ
 
 ---
 space: { at: opening, dim: 1, ambient: 0, hum: false }
-places: { inventions: false }
 ---
 
 <!-- Part II's people (master.md 12): the LHCb reel, Karjera's and OpenData's cut of the library's lhcb.mp4 (39 s, its own music): from the shafts above the cavern down to the detector. No advance-on-end. -->
@@ -463,7 +461,7 @@ space:
 ---
 
 <Crossing name="crossing" :lead="40" />
-<StageSteps :set="{ dot: 0, det: 2, data: 1, grid: 0 }" />
+<StageSteps :set="{ dot: 0, det: 2, data: 1, grid: 0, timepix: 0 }" />
 <Clock :from="1" :to="900" :run="105" unit="µs" />
 
 <div class="nums" style="--d1: 9.5s; --d2: 10.7s">
@@ -643,23 +641,22 @@ VU Library interview, 5 March 2026 (a year and a half).
 -->
 
 ---
-space: { at: firstweb, flight: 2.2, dim: 0, ambient: 0, hum: false }   # the photo as a place, over the grid
-places: { inventions: true }
+space: { at: [114.3, -395.8, 1.6], dist: 15, yaw: -20, pitch: 8, flight: 2.2, dim: 0, ambient: 0, hum: false }   # wide: CERN's store lower right, the strand climbing to the page upper left
 ---
 
 <!-- Spine A's inventions, PROTOTYPE 2 of 2 (sparse: the grid round CERN's store): a strand grows out of CERN's store to the first website, the problem the data's sharing forced (setup/offshoot.js, `web` at the grid station). Karjera's picture. -->
 <StageSteps :set="{ dot: 0, det: 0, data: 4, grid: 3, web: 1 }" />
 <Clock off />
 
-<StagePhoto mode="place" group="inventions" :grains="360" place-id="firstweb" :relief="0.05" :at="[109, -392, 9.8]" :size="3" :yaw="-30" src="figures/first_website_crt.jpg" alt="The first website, World Wide Web in green letters on a terminal screen" focus="50% 50%">
-<p class="invention">First website<span>1990</span></p>
-</StagePhoto>
+<div class="nums" style="--d1: 2.6s">
+  <p><b>1990</b><span>first website</span></p>
+</div>
 
 <!-- facts: gave-www-proposal-lhc, gave-www-next-server, gave-www-first-site-date, gave-www-first-site-text, gave-www-pellow-1991 -->
 
 <!--
 Message: sharing the data of a lab spread over the world was the problem the web was made for, at CERN: the first website went up in 1990.
-Picture: a strand of grains grows out of CERN's store at the grid's centre to the first website's page standing in the world; "First website 1990" on it.
+Picture: a strand of grains grows out of CERN's store at the grid's centre to the first website's page standing as a sheet in the world; one wide frame holds the store, the strand and the page; "1990 first website" low left.
 Sources: home.cern, "The birth of the web" and info.cern.ch (the facts above). The picture: a capture of info.cern.ch (CERN; no credit).
 
 (~0.5 min)
@@ -667,7 +664,6 @@ Sources: home.cern, "The birth of the web" and info.cern.ch (the facts above). T
 
 ---
 space: { path: [[3, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [7.5, { at: [2603.2, 0.1, 6.0], dist: 2.4, yaw: -10, pitch: 8 }], [11.5, { at: [2598.3, 0.6, 5.0], dist: 10, yaw: -10, pitch: 8 }]], dim: 0.15, ambient: 0 }   # Karjera's (23 Oct): in close on the 1 TB sphere, held while it is named, then back to the 800 pile
-places: { inventions: false }
 ---
 
 <!-- Part III's open data (master.md 18): OpenData's piles as Karjera last had them (bc19a39^, its slides 15–17), the open data white and all of LHCb's blue (gold in both talks). One sphere is 1 TB. -->
@@ -715,7 +711,7 @@ space: { at: [2570.5, 6.5, -7], dist: 65, yaw: 21.8, pitch: 7.1, sway: 4, dim: 0
 <Clock off />
 
 <div class="nums" style="--d1: 2.4s">
-  <p><b>&gt; <Count name="lhcb" :from="0" :to="100000" :delay="2400" /></b><span>TB all LHCb data</span></p>
+  <p><b>&gt;&thinsp;<Count name="lhcb" :from="0" :to="100000" :delay="2400" /></b><span>TB all LHCb data</span></p>
 </div>
 
 <!-- facts: lhcb-data-100pb, lhcb-data-total-2026, laptop-stack-over-1km-worked, lhcb-ntupling-service-4pb, lhcb-open-data-policy -->
@@ -802,7 +798,7 @@ space: { at: paper, dim: 0.06, ambient: 0 }   # Tokyo's slide 7
 <StageSteps :set="{ th1: 0, th2: 0, dot: 0, det: 0, data: 0, grid: 0 }" />
 <Clock off />
 
-<div class="nums" style="--d1: 2s">
+<div class="nums tr" style="--d1: 2s">
   <p><b>1964</b><span>quarks</span></p>
 </div>
 

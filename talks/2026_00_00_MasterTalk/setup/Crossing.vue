@@ -9,7 +9,7 @@
 // <Crossing name="crossing" stop /> lets it fade. The shared opening's own
 // <LhcOpening> carries Lithuanian captions; the MasterTalk shows its numbers on
 // the slides instead. Not in print.
-import { useNav, useSlideContext } from '@slidev/client'
+import { useNav, useSlideContext, onSlideLeave } from '@slidev/client'
 import { onSlideEnter } from './slideHooks.js'
 import { slideNav } from './slideNav.js'
 import { bus } from '../components/lhc-opening/bus.js'
@@ -22,6 +22,8 @@ const props = defineProps({
 })
 const { isPrintMode } = useNav()
 const { $page } = useSlideContext()
+let run = 0   // a newer entry or a leave ends an older one's wait
+onSlideLeave(() => { run++ })
 
 // the collision's shared uniforms (components/lhc-opening/collision.js): one
 // object per run, shared by its materials, so moving uStart and uTc moves the run
@@ -42,14 +44,16 @@ onSlideEnter(() => {
   if (forward) return
   // collisionRun answers the step with 'start' (uStart = now): at once in a running
   // world, or once a world that is still booting has built the collision (it replays
-  // the bus's last step); the run is moved back `lead` as soon as its uniforms are found
-  const lead = props.lead
-  let pending = false, tries = 0
-  const off = bus.on('start', (e) => { if (e?.name === props.name) { pending = true; off() } })
+  // the bus's last step; with the LHCb geometry to fetch that can take many seconds,
+  // so there is no frame cap: the wait ends when the shift is done or the slide is left)
+  const lead = props.lead, id = ++run
+  let pending = false
+  const off = bus.on('start', (e) => { if (e?.name === props.name) pending = true })
   const shift = () => {
+    if (id !== run) { off(); return }
     const u = pending && runUniforms()
-    if (u) { u.uStart.value -= lead; u.uTc.value -= lead; return }
-    if (++tries < 600) requestAnimationFrame(shift); else off()
+    if (u) { u.uStart.value -= lead; u.uTc.value -= lead; off(); return }
+    requestAnimationFrame(shift)
   }
   bus.set(props.name, 1)
   shift()

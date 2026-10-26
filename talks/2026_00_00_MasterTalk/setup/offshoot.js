@@ -1,5 +1,6 @@
 import {
   Group, Points, ShaderMaterial, BufferGeometry, BufferAttribute, AdditiveBlending, Color,
+  Mesh, PlaneGeometry, MeshBasicMaterial, TextureLoader, SRGBColorSpace, DoubleSide,
 } from 'three'
 import { onStep, stepOf } from 'slidev-addon-stage'
 import { POINT_GLSL, viewScale } from './view.js'
@@ -12,8 +13,13 @@ import { POINT_GLSL, viewScale } from './view.js'
 // Prototype on two slides (one sparse, one dense) for the owner before it spreads.
 //
 //   { type: offshoot, name, pos, from: [x,y,z], to: [x,y,z], grains?: 1400, node?: 600,
-//     nodeRadius?: 0.5, lift?: 0.3, speed?: 0.12, size?: 1, alpha?: 0.55, color?: '#cfe2ff' }
+//     nodeRadius?: 0.5, lift?: 0.3, speed?: 0.12, size?: 1, alpha?: 0.55, color?: '#cfe2ff',
+//     photo?: { src, width: 4, at?: `to`, yaw?: 0 } }
 //
+// `photo`: the invention's picture as a sheet at the product, `width` units wide (its height
+// from the image), facing `yaw`, fading with the strand: the slide's wide pose keeps the part,
+// the strand and the picture in one frame (27 Oct review: a StagePhoto place hands over to a
+// full-screen image on its slide, and the strand went out of frame).
 // Step 0 hidden, 1 shown (a 1.5 s fade on the engine clock).
 const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random(); return (s - 2) / 1.2 }
 const VERT = /* glsl */ `
@@ -55,7 +61,7 @@ void main() {
   gl_FragColor = vec4(pow(vColor * a, vec3(2.2)), 1.0);
 }`
 
-function buildOffshoot(o) {
+function buildOffshoot(o, ctx) {
   const per = Math.round(o.grains ?? 1400), node = Math.round(o.node ?? 600), N = per + node
   const f = o.from || [0, 0, 0], e = o.to || [0, 5, 5]
   const len = Math.hypot(e[0] - f[0], e[1] - f[1], e[2] - f[2])
@@ -88,6 +94,20 @@ function buildOffshoot(o) {
   pts.onBeforeRender = (r) => { mat.uniforms.uView.value = viewScale(r) }
   const g = new Group(); g.add(pts)
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
+  let sheet = null
+  if (o.photo?.src) {
+    const w = o.photo.width ?? 4
+    const sm = new MeshBasicMaterial({ transparent: true, opacity: 0, side: DoubleSide, depthWrite: false, toneMapped: false })
+    sheet = new Mesh(new PlaneGeometry(w, w * 9 / 16), sm)
+    new TextureLoader().load(ctx.asset ? ctx.asset(o.photo.src) : o.photo.src, (tex) => {
+      tex.colorSpace = SRGBColorSpace; sm.map = tex; sm.needsUpdate = true
+      const im = tex.image; if (im?.width) sheet.scale.y = (im.height / im.width) / (9 / 16)
+    })
+    const at = o.photo.at || e
+    sheet.position.set(at[0], at[1], at[2]); sheet.rotation.y = ((o.photo.yaw ?? 0) * Math.PI) / 180
+    sheet.renderOrder = 2
+    g.add(sheet)
+  }
   let goal = mat.uniforms.uOn.value, last = null
   const off_ = onStep(o.name, (k) => { goal = (k ?? 0) >= 1 ? 1 : 0 })
   return {
@@ -99,8 +119,9 @@ function buildOffshoot(o) {
       if (last != null) u.uOn.value += Math.sign(goal - u.uOn.value) * Math.min(Math.abs(goal - u.uOn.value), (t - last) / 1.5)
       last = t; u.uTime.value = t
       pts.visible = u.uOn.value > 0.002 || goal > 0
+      if (sheet) { sheet.material.opacity = u.uOn.value * (o.photo.alpha ?? 0.92); sheet.visible = pts.visible }
     },
-    dispose() { off_(); geo.dispose(); mat.dispose() },
+    dispose() { off_(); geo.dispose(); mat.dispose(); if (sheet) { sheet.geometry.dispose(); sheet.material.map?.dispose(); sheet.material.dispose() } },
   }
 }
 
