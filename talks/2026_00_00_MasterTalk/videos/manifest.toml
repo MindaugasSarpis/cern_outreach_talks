@@ -65,3 +65,14 @@ The LHCb reel, OpenData's and Karjera's cut (0:08-0:47.1) of the library clip: f
 shafts above the cavern to the detector as the music fades, without the library copy's dark \
 tunnel at the start. Karjera's encode, byte for byte; same name as the library clip, so this \
 talk's release wins the chain."""
+
+[[videos]]
+name      = "lis_flag.mp4"
+profile   = "remux"
+used_in   = ["deck"]
+generated = true
+notes     = """\
+The flag on the SciFi module (Part V): Innoday's 20 s render of 21 Oct (the whole module \
+panning down, the cold box outlined, the laser writing the flag; Blender 4.5, Cycles, after \
+the owner's SciFi drawing), Innoday's encode from videos-2026-10-00-innoday, byte for byte. \
+Same name as the library's 10 s version of 19-20 Oct, so this talk's release wins the chain."""
