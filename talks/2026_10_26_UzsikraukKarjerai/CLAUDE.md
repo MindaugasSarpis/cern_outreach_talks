@@ -105,8 +105,38 @@ on the last slide (lint TEXT warnings, on purpose).
 | 20 | the credits | kept, not shown: the licence credits (the owner, 23 Oct: "credits all go to slide 20 which I will make available but not show") | 0 |
 
 
+## Lessons (26 Oct, from the talk's code on the v0.8.3 pin)
+
+1. **The point cloud blinked from the start of 16.** setup/detector.js stores `uCrossT` / `uCascT` when a
+   collision starts and never clears them on stop, so slide 10's `inside` collision left 16's `steady`
+   gate off; LisFlag's grains (setup/lisGrains.js) twinkle on the wall clock outside `steady`. The plates
+   start each slide fresh, so they never showed it. Rule: a builder clears its event state on stop.
+2. **Slide 16 went white.** About 1.1M additive grains at tier 0 on the M2 (the detector ignores the grain
+   budget at tier 0); the stage has no fallback on slowness, and a crash of the GPU process sends no
+   context-lost, so nothing fell back. It was foreseen: Innoday's notes, 22 Oct, "MacPro M2 can't quite
+   handle the final slide"; Innoday's close was a recorded clip and played fine from the zip on the same
+   M2. Rule: a heavy finale is a recorded clip unless a rehearsal of that slide on the show laptop, from
+   the venue zip, is logged; a per-slide grain budget (~600k at tier 0).
+3. **The soundtrack's accent was missed.** Two clocks: the music on the audio clock; the world, its
+   collision and `drop clock: 'world'` on world time, which lags whenever a frame takes over 83 ms;
+   `sync-to` checks once; the fades run on rAF. On a struggling machine the collision drifts off the
+   1:37 arrival. Innoday's drop slaved the muted close clip's playbackRate to the music: one clock.
+   Rule: never time an accent off the world clock.
+
 ## Status
 
+- 2026-10-26 (final): **filmed** in the Delfi studio from the venue ZIP (the release's, the last built from
+  fbe9feb, 315.2 MB) in Chrome on the owner's MacBook Pro M2, on the v0.8.3 pin. The sound went choppy, then
+  slide 16 (the live close) went white; the stage's fallback did not trigger, and the studio captured the
+  white screen. The same evening the owner got per-slide recordings of slides 15–17 with the Starfire music
+  mixed in, as repair material for Delfi's edit before the stream (27 Oct, 12:00). Live: 9882d6f, the last
+  deploy this file records (Pages run 40226043005, green, the URL 200). On the talk's release
+  (`videos-2026-10-26-uzsikraukkarjerai`): the clips, the 11 plates, the venue zip from fbe9feb and the
+  per-slide 1080p50 MP4s from d75c4fc (`2026_10_26_UzsikraukKarjerai-slides-1080p50.zip`). The owner's
+  verdict on Innoday and this talk: "Innoday went really well, we improved quite a lot for uzsikrauk
+  karjerai, but missed the finale with the crash, pointcloud blinking from the start and missed soundtrack
+  accent. Other elements from those two are good." Why: Lessons. The toolkit's fixes go into slidev-videos
+  v0.11.
 - 2026-10-25 (night, latest): **deployed 9882d6f** (Pages run 40226043005, green; the URL 200, the live walk
   passed; `talk ready` passed, nothing skipped but the pptx): the cover and slide 10's one press. Then the zoom
   (slide 2) 49 s (the owner: "can be a bit slower (even twice as long)", "there is really nice part where we
