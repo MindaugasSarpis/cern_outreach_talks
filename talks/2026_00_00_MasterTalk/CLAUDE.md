@@ -130,6 +130,18 @@ storyboard).
   close is planned, not recorded (v0.11's recorded mode). Clips on the release:
   vilnius_zoom, the tunnel cut, the dipole cut, lhcb (Karjera's cut), lis_flag
   (Innoday's 20 s).
+- 27 Oct night, iteration 2's review rounds (shots of every new slide,
+  judged by subagents, `notes/review.md`): the crossing's direct entry fixed
+  (only the run's phase moves; a negative uStart hid it); the inventions'
+  prototypes reframed as one wide shot (the picture a sheet the strand grows
+  to); Tokyo's particles on Karjera's still forms (`triplet` with a meson,
+  `kpentaquark`); the hadron plugin not needed.
+- For the move to v0.11 (the Scheduler, 27 Oct: green, not tagged): a slide's
+  `steps:` frontmatter replays on every slide change, so `<Crossing :lead>`
+  and `slideNav.js` can give way to it; `<StageSoundtrack>` replaces the copied
+  `Soundtrack.vue`; `space.recorded: {kind, music, at}` plays the close;
+  `space.steady` and the grain-budget warning come with it. Bump only when
+  the Scheduler relays the tag.
 
 ## Arc
 
@@ -309,7 +321,10 @@ Kept current; each item is also under Decisions or in `notes/master.md`.
    detector)? A yes rolls it out to the rest (superconducting lines at the
    dipole, White Rabbit at the crossing, PET at the calorimeters, the first
    server beside the web; the touchscreen and hadron therapy as one press).
-8. Licences carried over: Tokyo's Gell-Mann and Zweig portraits and passage
+8. Timepix's strand leaves the VELO as its family's place in LHCb; the
+   lineage runs Medipix → Timepix (2006) → VeloPix (Timepix3-based), so the
+   strand simplifies it (the notes say so). Keep, or root it elsewhere?
+9. Licences carried over: Tokyo's Gell-Mann and Zweig portraits and passage
    scans (open in Tokyo); the funnel's CMB colours and the flag clip's warm
    copper are not white or light blue (inherited as they were).
 

@@ -1,3 +1,22 @@
+# Review — iteration 2 (27 Oct 2026, night)
+
+Rounds on HEADs 08a9460 → current, shots of every new slide judged by
+subagents (≤ 12 images each).
+
+- Fixed: the crossing (slides 10, 11) black when opened directly (first the
+  600-frame cap, then a negative uStart, the shader's "not started"); Tokyo's
+  particles (24, 25) black without the hadron plugin, then merging as the
+  kit's builder orbits them (now Karjera's `triplet`/`kpentaquark`); the
+  inventions' prototypes (12, 18) hidden behind a full-screen photo (now one
+  wide shot); "1/500 bytes" read as a fraction of a byte; "1964" over
+  Zweig's portrait; the gap after ">".
+- Open, low: the VELO's white glow on the detector slides (Tools, v0.9.x);
+  the funnel's CMB and the flag clip's warm colours (inherited); slide 17's
+  grid reads as one ball from afar; the trial's day count timing to be
+  checked live.
+
+---
+
 # Review — the master deck, iteration 1 (26 Oct 2026)
 
 HEAD 26bf0f4, 18 slides; shots by `pnpm talk review` (d3d12 on the RTX 5080),

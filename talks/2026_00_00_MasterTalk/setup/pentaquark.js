@@ -103,7 +103,10 @@ const unit = () => {
 function buildPentaquark(o, ctx) {
   const S = o.spread ?? 2.6, R = o.radius ?? 0.95, H = R * (o.heavy ?? 1.25)
   // u, u, d (a triangle a little to the left and back) and c, c̄ (a pair to the right and front)
-  const nodes = [[-0.55, 0.75, -0.35], [-0.95, -0.45, 0.15], [-0.1, -0.35, -0.75], [0.65, 0.3, 0.55], [0.95, -0.55, -0.05]].map((v) => v.map((x) => x * S))
+  // `flat` (MasterTalk, 27 Oct): the five balls on a pentagon facing the camera and no turn, so a
+  // still frame counts five (beside the 1964 papers; the 3D layout lined two up)
+  const P5 = [0, 1, 2, 3, 4].map((i) => [Math.sin(i * 1.2566) * 1.0, Math.cos(i * 1.2566) * 1.0, 0])
+  const nodes = (o.flat ? P5 : [[-0.55, 0.75, -0.35], [-0.95, -0.45, 0.15], [-0.1, -0.35, -0.75], [0.65, 0.3, 0.55], [0.95, -0.55, -0.05]]).map((v) => v.map((x) => x * S))
   const radii = [R, R, R, H, H]
   const cols = o.colors || ['#ff8378', '#72e09c', '#7fa6ff', '#ff9d6b', '#6fe6f0']
   const per = Math.round(o.grains ?? 1800), gl = Math.round(o.gluon ?? 900), sea = Math.round(o.sea ?? 5000), skin = Math.round(o.bag ?? 9000)
@@ -177,8 +180,8 @@ function buildPentaquark(o, ctx) {
     group: g, labels: [], api, frameScale: u.uPixelRatio,
     update(t) {
       now = t; u.uTime.value = t
-      spin.rotation.y = t * (o.spin ?? 0.09)
-      spin.rotation.x = 0.18 * Math.sin(t * 0.05)
+      spin.rotation.y = o.flat ? 0 : t * (o.spin ?? 0.09)
+      spin.rotation.x = o.flat ? 0 : 0.18 * Math.sin(t * 0.05)
       if (on) {
         u.uShow.value = Math.min(Math.max((now - t0) / dur, 0), 1)
         u.uFade.value = now >= t0 ? 1 : 0

@@ -25,7 +25,7 @@ const gauss = () => { let s = 0; for (let i = 0; i < 4; i++) s += Math.random();
 const VERT = /* glsl */ `
 attribute float aSeed, aKind;          // 0 a grain on the way, 1 a grain of the end cluster
 attribute vec3 aFrom, aEnd, aCtl, aOff;
-uniform float uTime, uSpeed, uSize, uAlpha, uNodeR, uOn;
+uniform float uTime, uSpeed, uSize, uAlpha, uNodeR, uNodeA, uOn;
 uniform vec3 uColor, uWhite;
 varying vec3 vColor; varying float vAlpha;
 float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
@@ -42,7 +42,7 @@ void main() {
     float w = uTime * (0.2 + 0.35 * hash(aSeed * 5.0));
     vec3 o = aOff * uNodeR;
     p = aEnd + vec3(cos(w) * o.x - sin(w) * o.z, o.y, sin(w) * o.x + cos(w) * o.z);
-    alpha = uAlpha * 1.4;
+    alpha = uAlpha * uNodeA;
     size = uSize * (0.9 + 0.9 * hash(aSeed * 29.0));
   }
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -86,7 +86,7 @@ function buildOffshoot(o, ctx) {
     uniforms: {
       uTime: { value: 0 }, uView: { value: 1 },
       uSpeed: { value: o.speed ?? 0.12 }, uSize: { value: o.size ?? 1 }, uAlpha: { value: o.alpha ?? 0.55 },
-      uNodeR: { value: o.nodeRadius ?? 0.5 }, uOn: { value: (stepOf(o.name) ?? 0) >= 1 ? 1 : 0 },
+      uNodeR: { value: o.nodeRadius ?? 0.5 }, uNodeA: { value: o.nodeAlpha ?? 1.4 }, uOn: { value: (stepOf(o.name) ?? 0) >= 1 ? 1 : 0 },
       uColor: { value: new Color(o.color || '#cfe2ff').convertLinearToSRGB() }, uWhite: { value: new Color(1, 1, 1) },
     },
   })
