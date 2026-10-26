@@ -404,7 +404,7 @@ at 18.8 m).
 -->
 
 ---
-space: { at: [-2.2, -398.0, 0.9], dist: 10.5, yaw: -15, pitch: 5, flight: 2.2, dim: 0, ambient: 0, hum: false }   # wide: the VELO lower right, the strand climbing to the picture upper left (27 Oct review: the place's front view hid both)
+space: { at: [-0.8, -398.0, 0.9], dist: 15.5, yaw: -15, pitch: 5, flight: 2.2, dim: 0, ambient: 0, hum: false }   # wide: the VELO lower right, the strand climbing to the picture upper left (27 Oct review: the place's front view hid both)
 ---
 
 <!-- Spine A's inventions, PROTOTYPE 1 of 2 (dense: over the lit detector), for the owner before any other invention is built: a strand of grains grows out of the VELO's pixels to the Timepix chip's best-known use (setup/offshoot.js, `timepix` at the opening station). Innoday's Timepix slide's picture. -->
@@ -641,11 +641,11 @@ VU Library interview, 5 March 2026 (a year and a half).
 -->
 
 ---
-space: { at: [114.3, -395.8, 1.6], dist: 15, yaw: -20, pitch: 8, flight: 2.2, dim: 0, ambient: 0, hum: false }   # wide: CERN's store lower right, the strand climbing to the page upper left
+space: { at: [113.5, -394.8, 1.8], dist: 19, yaw: -20, pitch: 8, flight: 2.2, dim: 0, ambient: 0, hum: false }   # wide: CERN's store lower right, the strand climbing to the page upper left
 ---
 
 <!-- Spine A's inventions, PROTOTYPE 2 of 2 (sparse: the grid round CERN's store): a strand grows out of CERN's store to the first website, the problem the data's sharing forced (setup/offshoot.js, `web` at the grid station). Karjera's picture. -->
-<StageSteps :set="{ dot: 0, det: 0, data: 4, grid: 3, web: 1 }" />
+<StageSteps :set="{ dot: 0, det: 0, data: 4, grid: 2, web: 1 }" />   <!-- grid 2: the sites without the thread to Vilnius, so one strand leaves the store -->
 <Clock off />
 
 <div class="nums" style="--d1: 2.6s">

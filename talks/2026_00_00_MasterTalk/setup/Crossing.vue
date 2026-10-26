@@ -52,7 +52,9 @@ onSlideEnter(() => {
   const shift = () => {
     if (id !== run) { off(); return }
     const u = pending && runUniforms()
-    if (u) { u.uStart.value -= lead; u.uTc.value -= lead; off(); return }
+    // only the phase moves: uStart < 0 is the shader's "not started" (a fresh page's
+    // engine time is under `lead`), so the start flag stays at 0 or above
+    if (u) { u.uTc.value -= lead; u.uStart.value = Math.max(0, u.uStart.value - lead); off(); return }
     requestAnimationFrame(shift)
   }
   bus.set(props.name, 1)

@@ -107,6 +107,12 @@ function buildOffshoot(o, ctx) {
     sheet.position.set(at[0], at[1], at[2]); sheet.rotation.y = ((o.photo.yaw ?? 0) * Math.PI) / 180
     sheet.renderOrder = 2
     g.add(sheet)
+    // a faint light-blue edge behind it, so a dark picture (a CRT page) reads as a sheet
+    if (o.photo.edge !== false) {
+      const em = new MeshBasicMaterial({ color: new Color('#9cc4ff'), transparent: true, opacity: 0, side: DoubleSide, depthWrite: false, blending: AdditiveBlending })
+      const edge = new Mesh(new PlaneGeometry(w * 1.05, w * 9 / 16 * 1.08), em)
+      edge.position.z = -0.04; sheet.add(edge); sheet.userData.edge = edge
+    }
   }
   let goal = mat.uniforms.uOn.value, last = null
   const off_ = onStep(o.name, (k) => { goal = (k ?? 0) >= 1 ? 1 : 0 })
@@ -119,7 +125,7 @@ function buildOffshoot(o, ctx) {
       if (last != null) u.uOn.value += Math.sign(goal - u.uOn.value) * Math.min(Math.abs(goal - u.uOn.value), (t - last) / 1.5)
       last = t; u.uTime.value = t
       pts.visible = u.uOn.value > 0.002 || goal > 0
-      if (sheet) { sheet.material.opacity = u.uOn.value * (o.photo.alpha ?? 0.92); sheet.visible = pts.visible }
+      if (sheet) { sheet.material.opacity = u.uOn.value * (o.photo.alpha ?? 0.92); sheet.visible = pts.visible; const ed = sheet.userData.edge; if (ed) ed.material.opacity = u.uOn.value * 0.22 }
     },
     dispose() { off_(); geo.dispose(); mat.dispose(); if (sheet) { sheet.geometry.dispose(); sheet.material.map?.dispose(); sheet.material.dispose() } },
   }
