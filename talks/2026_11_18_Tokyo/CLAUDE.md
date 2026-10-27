@@ -59,7 +59,10 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
   capped at 1920 wide (`maxBufferWidth`, Innoday's M2 fix). The four new
   clips are on the release videos-2026-11-18-tokyo. Not tested on a real Mac
   (none here): the known M2 failures (a live heavy close, additive overload)
-  are gone with the recordings. Deploy: below, once it runs.
+  are gone with the recordings. Deployed: commit 68f07c2, Pages run
+  40494150978 (success), URL 200, the live walk passed (`talk deploy`);
+  `talk ready` passed on that commit with nothing skipped (after
+  `videos:pull --include-shared` for the library clips' local copies).
 - 2026-10-27 (afternoon, the owner directly): the arc re-ordered to the
   owner's outline (Decisions, 27 Oct): Lithuania (the Vilnius zoom out) →
   CERN → Lithuania at CERN → LHCb (clip, detector, collaboration) → quarks →
