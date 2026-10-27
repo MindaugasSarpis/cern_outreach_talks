@@ -18,11 +18,14 @@ stage:
   palette: classic
   plugins: [hadron]
   lang: en
+  # the drawing buffer at most 1920 wide: a projector's 1080p in full, a Retina Mac's screen at a little over half
+  # its pixels (owner, 27 Oct: "make sure it works on a mac"; Innoday's fix for the M2's lag, 22 Oct)
+  options: { maxBufferWidth: 1920 }
 title: "Lithuania and Japan: pentaquarks"
 lang: en                  # slides and notes; `pnpm talk lint` reads it
 htmlAttrs:
   lang: en
-duration: 15min
+duration: 30min
 layout: cover
 space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.15 }
 ---
@@ -43,16 +46,49 @@ Your Excellency, ladies and gentlemen, thank you for having me. I am
 Mindaugas Šarpis, and together with Yasuhiro Yamaguchi I lead the project
 named on the screen. I lead the LHCb group at Vilnius University, which works
 on one of the four large experiments at CERN, near Geneva. In the next
-fifteen minutes I would like to show you what this object behind me is, why
+thirty minutes I would like to show you what this object behind me is, why
 physicists waited half a century to find it, and why Lithuanian and Japanese
 scientists are now studying it together. (~1 min)
+-->
+
+---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
+---
+
+<VideoPlayer src="vilnius_out.mp4" />
+
+<!-- facts: lhcb-vilnius-joined -->
+
+<!--
+Lithuania (owner, 27 Oct). Clip vilnius_out.mp4 (17.8 s, no sound): from NFTMC, Vilnius
+University's physics campus in Saulėtekio slėnis, out over Vilnius (Google Earth) to the
+clouds and the Earth's limb. It ends and waits for the press. The coming back is slide 20.
+Sources: the owner's SpaceEngine edit, stabilised for Užsikrauk karjerai (videos/manifest.toml).
+(~0.5 min)
+-->
+
+---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
+---
+
+<VideoPlayer src="cern_overview_short.mp4" />
+
+<!-- facts: lhc-geneva-27km-100m-four-experiments -->
+
+<!--
+CERN (owner, 27 Oct). Library clip cern_overview_short.mp4 (11 s, no sound): from the Earth
+down to Geneva, then the LHC ring drawn over the fields with its four experiments named.
+Sources: home.cern. (~0.5 min)
 -->
 
 ---
 space: { at: lhc, dim: 0.25 }
 ---
 
+<StagePhoto src="figures/tunnel.jpg" alt="The LHC tunnel: blue dipole magnets with the letters LHC" focus="50% 50%" arrive="camera">
+<div class="shade tr"></div>
 <div class="num tr">27 km<span class="name">LHC</span></div>
+</StagePhoto>
 
 <!-- facts: cern-lhc-size-cost, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
 
@@ -73,6 +109,26 @@ an additional 5 billion yen", 1998). (~1.25 min)
 -->
 
 ---
+space: { at: lhc, dist: 18, yaw: -10, pitch: 18, dim: 0.6 }
+---
+
+<StagePhoto src="figures/lithuania_cern.jpg" alt="President Gitanas Nausėda with the Lithuanian community at CERN, January 2026" focus="50% 40%">
+<div class="shade tr strong"></div>
+<div class="num tr">2018<span class="name">CERN</span></div>
+</StagePhoto>
+
+<!-- facts: cern-lithuania, lhcb-lithuania-membership, lt-member-interest-cern-visit-2026-09, lt-nauseda-visit, lt-consortium -->
+
+<!--
+Lithuania at CERN (owner, 27 Oct). Photo: President Gitanas Nausėda with the Lithuanian
+community at CERN, 19 January 2026 (CERN-PHOTO-202601-009-23). Associate Member State since
+8 January 2018, the first Baltic state; a letter seeking full membership at the end of August
+2026; the Lithuanian Particle Physics Consortium (CERN-LT) since 2022.
+Sources: home.cern (Lithuania becomes an Associate Member State, 2018; presidential visits,
+2026); LRT, 20 September 2026; cds.cern.ch CERN-PHOTO-202609-233-1; LMT. (~1 min)
+-->
+
+---
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
@@ -84,6 +140,44 @@ Let it play; at most one line over the music: "This is LHCb, the experiment
 my group works on: a detector the size of a house, built to catch what comes
 out of the collisions." It condenses out of the dust and leaves the same way.
 (~0.8 min)
+-->
+
+---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22, dim: 0.6 }
+---
+
+<StagePhoto src="figures/lhcb_detector.jpg" alt="The LHCb detector in its cavern under the LHCb banner, March 2024" focus="50% 50%">
+<div class="shade bl"></div>
+<div class="num bl">5 600 t<span class="name">LHCb</span></div>
+</StagePhoto>
+
+<!-- facts: lhcb-detector-size, lhcb-100m-below-ground, lhcb-three-storey-worked, lhcb-run3-readout-4tbs -->
+
+<!--
+What LHCb is (owner, 27 Oct). Photo: the LHCb detector in its cavern, March 2024
+(CERN-PHOTO-202403-050-3, M. Brice). 5 600 tonnes, 21 m long, 10 m high (about three
+storeys), 100 m under ground near Ferney-Voltaire; a forward spectrometer, its subdetectors one
+behind another; 4 TB/s read out in real time in Run 3.
+Sources: home.cern (LHCb); arXiv:2106.07701. (~1 min)
+-->
+
+---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22, dim: 0.6 }
+---
+
+<StagePhoto src="figures/collaboration.jpg" alt="The LHCb collaboration's group photo in front of the detector, June 2022" focus="50% 100%">
+<div class="shade tl strong"></div>
+<div class="num tl">1 891<span class="name">members</span></div>
+</StagePhoto>
+
+<!-- facts: lhcb-collaboration-sep-2026, lhcb-vilnius-joined -->
+
+<!--
+The LHCb collaboration in front of its detector (group photo, June 2022); 1891
+members from 112 institutes in 28 countries (September 2026). Vilnius
+University joined in September 2024.
+Sources: T. Gershon, LHCb report to the CERN
+SPC, 22 September 2026; Vilnius University. (~0.75 min)
 -->
 
 ---
@@ -103,13 +197,24 @@ Source: M. Strassler, "The nuclei of atoms" (profmattstrassler.com). (~1 min)
 -->
 
 ---
-space: { at: nucleus, dim: 0.15 }
+space: { at: nucleus, dist: 12, yaw: -6, pitch: 5, dim: 0.15 }
 ---
+
+<div class="num tr">1935<span class="name">meson</span></div>
+
+<!-- facts: yukawa-meson-announced-1934, yukawa-meson-1935, yukawa-meson-200-electron, yukawa-nobel-1949, yukawa-first-japanese-laureate -->
 
 <!--
 Come closer, and the nucleus is a tight bundle of protons and neutrons, held
 together by the strong force. At these distances it is far stronger than the
-electric force that pushes the protons apart. (~0.75 min)
+electric force that pushes the protons apart. 
+
+At the left, Hideki Yukawa, at Osaka: proposed in 1934, published in 1935,
+that this force is carried by a new particle about 200 times heavier than
+the electron, the meson (Nobel Prize 1949, Japan's first).
+Sources:
+H. Yukawa, Proc. Phys.-Math. Soc. Japan 17 (1935) 48; nobelprize.org;
+Osaka University. (~1.25 min)
 -->
 
 ---
@@ -150,6 +255,22 @@ The question is whether nature allows more: four quarks, five, six. (~1.25 min)
 -->
 
 ---
+space: { at: sakata, dim: 0.15 }
+---
+
+<div class="num tr">1956<span class="name">Nagoya</span></div>
+
+<!-- facts: sakata-model-1956, sakata-nagoya-1956 -->
+
+<!--
+Shoichi Sakata at Nagoya University: in 1956, every such particle built from
+three basic ones; in the Nobel Committee's words, "the Sakata particles
+finally became the quarks of Gell-Mann".
+Sources: S. Sakata, Prog. Theor.
+Phys. 16 (1956) 686; nobelprize.org (Scientific Background 2008). (~1.25 min)
+-->
+
+---
 space: { at: paper, dim: 0.06 }
 ---
 
@@ -177,13 +298,50 @@ Sources: M. Gell-Mann, Phys. Lett. 8 (1964) 214; G. Zweig, CERN-TH-401
 -->
 
 ---
+space: { at: km, dim: 0.15 }
+---
+
+<div class="num tr">1973<span class="name">six quarks</span></div>
+
+<!-- facts: kobayashi-maskawa-1973, kobayashi-maskawa-nagoya-phd, kobayashi-maskawa-nobel-2008, b-quark-1977, lhcb-b-for-beauty -->
+
+<!--
+Makoto Kobayashi and Toshihide Maskawa, both from Sakata's school in Nagoya:
+in 1972-73, three families of quarks (six) when three quarks were known; the fifth, b, found in 1977, is the
+"b" in LHCb (Nobel Prize 2008).
+Sources: Prog. Theor. Phys. 49 (1973) 652;
+nobelprize.org; home.cern. (~1.25 min)
+-->
+
+---
+space: { at: km, dim: 0.6 }
+---
+
+<StagePhoto src="figures/belle.jpg" alt="The Belle detector at KEK, Tsukuba" focus="50% 35%">
+<div class="shade tr"></div>
+<div class="num tr">2003<span class="name">KEK</span></div>
+</StagePhoto>
+
+<!-- facts: belle-cpv-2001, belle-x3872-2003, x3872-started-exotic-searches, theta-plus-leps-japan-19-events, leps-theta-not-confirmed -->
+
+<!--
+Belle at KEK, Tsukuba: in 2001 it confirmed Kobayashi and Maskawa's
+prediction; in 2003 it found the X(3872), whose discovery started the hunt
+for exotic hadrons. The same year LEPS at SPring-8 reported a five-quark
+candidate; more sensitive experiments did not confirm it.
+Sources: Belle,
+PRL 87 (2001) 091802 and PRL 91 (2003) 262001; nobelprize.org; LEPS,
+PRL 91 (2003) 012002; PDG. (~1.25 min)
+-->
+
+---
 space: { at: lhcb, dim: 0.06 }
 ---
 
 <div class="num tl">2015<span class="name">discovery</span></div>
-<div class="num bl">2019<span class="name">precision</span></div>
+<div class="num tr">2019<span class="name">precision</span></div>
 
-<!-- facts: lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
+<!-- facts: lambda-b-contains-b, lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
 
 <!--
 Many experiments looked, and several claims did not survive. Then in July
@@ -195,6 +353,9 @@ In 2019, with nine times more data, LHCb looked again. This is the result:
 each black point counts the particles we found at a given mass, the red line
 is the fit, and the three narrow peaks are three pentaquarks. Where we had seen one bump in 2015, there were in fact
 two, and a third appeared beside them.
+
+The pentaquarks came out of the decays of the Λb, a baryon that carries a b
+quark: Kobayashi and Maskawa's quark.
 
 Sources: LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001; CERN
 press release, 14 July 2015. (~1.75 min)
@@ -218,7 +379,109 @@ packed into one ball.
 The narrow peaks of 2019 point toward the molecule, but the question is
 open. To settle it, we need precise measurements and precise theory that
 predicts what each picture should look like in the data, worked out
-together. (~1.5 min)
+together. (~1.25 min)
+-->
+
+---
+space: { at: [229.3, 0, 0], dist: 7.5, yaw: 0, pitch: 6, dim: 0.15 }
+---
+
+<!-- facts: pc-molecule-deuteron-like, deuteron-one-pion-exchange, pion-yukawa-carrier-1947, pc-molecule-pion-exchange -->
+
+<!--
+The molecule up close: a three-quark particle and a quark–antiquark pair,
+read as deuteron-like; Yukawa's pion exchange, which binds the deuteron, is
+one of the glues theorists use for it, beside a short-range five-quark part.
+Sources: PDG review "Pentaquarks" (2026); Y. Yamaguchi et al., PRD 96 (2017)
+114031. (~1 min)
+-->
+
+---
+space: { at: globe }
+---
+
+<VideoPlayer src="vilnius_back.mp4" transition="fade" />
+
+<!--
+The coming back (owner, 27 Oct: "Show Nagoya / Vilnius on a globe indicate collaboration
+(maybe after zoomout video coming back)"). Clip vilnius_back.mp4 (12 s, no sound): slide 2's
+zoom run backwards from further out, the cosmic web, past the galaxy, back to the Earth's limb.
+It ends on that frame and waits for the press; the next slide starts from the same frame.
+(~0.3 min)
+-->
+
+---
+space: { at: globe }
+---
+
+<!-- recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy point cloud should be
+     pre-rendered as a video"): the live slide is CollabGlobe with figures/earth_back.jpg (setup/globe.js,
+     the `globe` station); to change it, put that component back, record it (videos/manifest.toml,
+     globe.mp4), encode, and put this player back. Fade, not cut: a cut clip never announces that it
+     covers the slide, so the world would draw on under it (Innoday, 22 Oct). -->
+<VideoPlayer src="globe.mp4" muted :controls="false" transition="fade" />
+
+<!-- facts: lhcb-vilnius-joined -->
+
+<!--
+The globe (owner, 27 Oct), recorded (globe.mp4, 20.1 s, no sound; it ends and holds the turning
+globe's last frame until the press). The clip's last frame breaks into grains, which fly onto a slowly
+turning globe of grains (coastlines, Natural Earth, public domain); Vilnius lights, then
+Nagoya, and a strand of light is drawn between them, a pulse running along it. No text.
+Vilnius University (LHCb data) and Nagoya University (theory): the project.
+Sources: Natural Earth; Vilnius University. (~1 min)
+-->
+
+---
+space: { at: project, dim: 0.6 }
+---
+
+<StagePhoto src="figures/vilnius.jpg" alt="The Great Courtyard of Vilnius University" focus="50% 45%" class="darker">
+<div class="shade bl br"></div>
+<div class="num bl">2024<span class="name">LHCb</span></div>
+<div class="num br">13<span class="name">students</span></div>
+</StagePhoto>
+
+<!-- facts: lhcb-vilnius-joined, lhcb-vilnius-students -->
+
+<!--
+Vilnius University: an LHCb institute since September 2024; most of the group
+are students, and 13 VU students did CERN summer placements in 2026.
+Sources: Vilnius University news. (~1.25 min)
+-->
+
+---
+space: { at: project, dim: 0.6 }
+---
+
+<StagePhoto src="figures/scifi.jpg" alt="A SciFi tracker frame with its fibre modules lowered into the LHCb cavern, May 2021" focus="50% 50%">
+<div class="shade bl"></div>
+<div class="num bl">524 288<span class="name">Hamamatsu sensors</span></div>
+</StagePhoto>
+
+<!-- facts: lhcb-scifi-channels, hamamatsu-japanese, hamamatsu-lhcb-scifi-sipm, lhcb-vilnius-scifi-lis -->
+
+<!--
+A SciFi tracker frame with its fibre modules going into the LHCb cavern (CERN
+photo, May 2021; cropped clear of the workers): its fibres are read by 524 288 channels of Hamamatsu
+(Japan) sensors; the Vilnius group's service work includes the SciFi and its
+light injection system.
+Sources: arXiv:2305.10515; hamamatsu.com; CERN Indico
+(LHCb Vilnius, 3 October 2024). (~1 min)
+-->
+
+---
+space: { at: [203, 0, 0], dist: 12, yaw: 4, pitch: 2, dim: 0.2 }
+---
+
+<div class="num tl">38.3 TB<span class="name">open data</span></div>
+
+<!-- facts: stonkus-bsc-2026 -->
+
+<!--
+A Vilnius bachelor's thesis (2026) found the pentaquark signal again in LHCb's
+open data (38.3 TB filtered), a reproduction, not an independent observation.
+Source: D. Stonkus, BSc thesis, Vilnius University (2026). (~1 min)
 -->
 
 ---
@@ -241,18 +504,54 @@ experiment and theory.
 (The project's dates, its funders and next week's meeting in Nagoya go on
 this slide once the owner confirms they may be shown.)
 
-Sources: Vilnius University (LHCb Vilnius, 2024). (~2 min)
+Sources: Vilnius University (LHCb Vilnius, 2024). (~1.5 min)
 -->
 
 ---
-space: { at: hero, dist: 8, yaw: 20, pitch: -6, dim: 0.1 }
+space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the take's last pose; the world rests under the clip
 ---
 
+<!-- recorded (owner, 27 Oct: "The heavy point cloud should be pre-rendered as a video"; Karjera's live close went
+     white on the owner's M2): finale.mp4 is the take of the live slide, whose frontmatter was
+       space:
+         path: [[0, { at: [270, 0, 0], dist: 17, yaw: 0, pitch: 8 }], [3, { at: [250, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [6, { at: [220, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [9, { at: [190, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [12, { at: [160, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [15, { at: [130, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [18, { at: [100, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [21, { at: [70, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [24, { at: [40, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [27, { at: [10, 0, 0], dist: 30, yaw: 40, pitch: 14 }], [31, { at: [-8, 0, 0], dist: 20, yaw: 20, pitch: 12 }], [34, { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14 }]]
+         ambient: [[0, 1], [29.5, 1], [31, 0.12], [32.5, 0.12], [35, 1]]
+         dim: 0.1
+     and whose body was empty: the camera's arrival at the cover's station (within `reach`, about 32 s)
+     gathers its pentaquark again, as on the cover (27 Oct: Regather at 35 s made them gather twice,
+     the arrival's and its own, so it left). To change it, put those back, record
+     (videos/manifest.toml, finale.mp4), encode, and put this back. The clip plays muted; Starfire plays
+     live and `drop` slaves the clip's rate to it so its peak lands on the quarks' landing (Innoday's
+     close, 22 Oct; Karjera, 26 Oct: world and audio clocks drift, so never time music off the world). -->
+<VideoPlayer src="finale.mp4" muted :controls="false" transition="fade" />
+<Soundtrack src="audio/starfire_close.m4a" start :level="0.5" keys :drop="{ at: 36.0, file: 'audio/starfire_close_peak.m4a', hit: 2.013, duck: 33.4, quiet: 0.06 }" />
+
 <!--
+The finale, recorded (finale.mp4, 53 s, muted; 27 Oct), Starfire live (+ and - set its
+level, seen only in the presenter window), its peak on the regathering. From
+the two teams the camera runs back along the whole route, pentaquark to collider, to the
+cover's pose; the world falls dark for a moment (31-32.6 s), and the five quarks fly in again
+as on the cover, landing at 36.0 s on Starfire's peak.
+
 Close. Back at the pentaquark from the start; the hum returns.
 
 Five quarks were allowed on paper in 1964 and found in 2015. What they are
 made of is the question that Lithuanian and Japanese physicists now answer
 together. Thank you, and thank you to the Embassy for bringing us together
-today. (~0.5 min)
+today. (~1.25 min)
+-->
+
+---
+space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the finale's last pose; the world rests under its last frame (CloseStill)
+---
+
+<CloseStill src="figures/finale_end.jpg" />
+<Soundtrack src="audio/starfire_close.m4a" :level="0.5" keys />
+<div class="credits credit">Music: Scott Buckley, "Starfire", CC BY 4.0. Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped. Zoom: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies), SpaceEngine; cosmic web: NCSA Advanced Visualization Lab. Globe: Natural Earth.</div>
+
+<!--
+Credits (house rule: the credits a licence asks for, tiny print, on the last page). The finale's
+last frame as a picture, the world resting under it (a Mac need not draw it live); the music
+goes on. Nothing to say here: questions.
+(~0 min)
 -->

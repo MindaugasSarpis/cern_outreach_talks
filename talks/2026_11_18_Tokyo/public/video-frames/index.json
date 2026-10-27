@@ -1,6 +1,23 @@
 {
   "version": 1,
   "clips": {
+    "cern_overview_short.mp4": {
+      "file": "cern_overview_short.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 3,
+      "count": 3,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 11.24,
+      "poster": "cern_overview_short.mp4.poster.jpg",
+      "lit": 0.0
+    },
     "lhcb.mp4": {
       "file": "lhcb.mp4.jpg",
       "tile": [
@@ -14,7 +31,26 @@
         1920,
         1080
       ],
-      "duration": 48.0
+      "duration": 48.0,
+      "poster": "lhcb.mp4.poster.jpg",
+      "lit": 7.32
+    },
+    "vilnius_out.mp4": {
+      "file": "vilnius_out.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 5,
+      "count": 5,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 17.8,
+      "poster": "vilnius_out.mp4.poster.jpg",
+      "lit": 0.0
     }
   }
 }

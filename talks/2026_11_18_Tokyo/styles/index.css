@@ -54,3 +54,36 @@ html[data-space-assembled] .slidev-layout .tokyo-title { opacity: 1; }
   color: #9fd8ff;
   text-transform: none;
 }
+
+/* StagePhoto slides (2026-10-26, the 30-min cut): the photograph is the slide, full bleed (after
+   Innoday's .hero), darkened only in the corner that carries the numbers, so they read on any photo. */
+html[data-stage] .hero { position: absolute; inset: 0; overflow: hidden; background: #03050c; }
+html[data-stage] .hero > img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  object-position: var(--focus, 50% 50%); filter: contrast(1.04) saturate(1.04);
+}
+html[data-stage] .hero > img.contain { object-fit: contain; }
+html[data-stage] .hero::after { content: ''; position: absolute; inset: 0; pointer-events: none; }
+/* the corner shade is an element in the photo's slot (`<div class="shade tr">`), not .hero::after:
+   StagePhoto hides ::after while the photo is held, and the review's shots showed no gradient */
+.slidev-layout .hero .shade { position: absolute; inset: 0; pointer-events: none;
+  background: var(--sh-tr, none), var(--sh-tl, none), var(--sh-bl, none), var(--sh-br, none); }
+.slidev-layout .hero .shade.tr { --sh-tr: radial-gradient(ellipse 60% 70% at 100% 0%, rgba(3, 5, 12, 0.94) 0%, rgba(3, 5, 12, 0.7) 40%, rgba(3, 5, 12, 0) 100%); }
+.slidev-layout .hero .shade.tl { --sh-tl: radial-gradient(ellipse 60% 70% at 0% 0%, rgba(3, 5, 12, 0.94) 0%, rgba(3, 5, 12, 0.7) 40%, rgba(3, 5, 12, 0) 100%); }
+.slidev-layout .hero .shade.bl { --sh-bl: radial-gradient(ellipse 60% 70% at 0% 100%, rgba(3, 5, 12, 0.94) 0%, rgba(3, 5, 12, 0.7) 40%, rgba(3, 5, 12, 0) 100%); }
+.slidev-layout .hero .shade.br { --sh-br: radial-gradient(ellipse 60% 70% at 100% 100%, rgba(3, 5, 12, 0.94) 0%, rgba(3, 5, 12, 0.7) 40%, rgba(3, 5, 12, 0) 100%); }
+/* a pale photo (the Vilnius courtyard) steps down whole */
+html[data-stage] .hero.darker > img { filter: brightness(0.62) contrast(1.06); }
+html[data-stage] .hero .num { z-index: 2; }
+
+/* the credits a licence asks for (house rule): tiny print on the last page (since 27 Oct its own, over the
+   finale's last frame), in a second after it opens */
+.slidev-layout .credit {
+  position: absolute; left: 40px; right: 40px; bottom: 14px; z-index: 30; pointer-events: none;
+  font-size: 9px; line-height: 1.35; color: rgba(207, 222, 240, 0.55); text-transform: none;
+  opacity: 0; animation: tokyo-credits-in 1.5s ease 1s forwards;
+}
+@keyframes tokyo-credits-in { to { opacity: 1; } }
+@media print { .slidev-layout .credit { animation: none; opacity: 1; } }
+.slidev-layout .hero .shade.tr.strong { --sh-tr: radial-gradient(ellipse 72% 82% at 100% 0%, rgba(3, 5, 12, 0.96) 0%, rgba(3, 5, 12, 0.8) 45%, rgba(3, 5, 12, 0) 100%); }
+.slidev-layout .hero .shade.tl.strong { --sh-tl: radial-gradient(ellipse 72% 82% at 0% 0%, rgba(3, 5, 12, 0.96) 0%, rgba(3, 5, 12, 0.8) 45%, rgba(3, 5, 12, 0) 100%); }

@@ -15,7 +15,8 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
   Embassy of the Republic of Lithuania in Japan, Tokyo. Project details
   (name, funders, dates, meetings) stay in the private brief until the owner
   says they may be shown: the site and its speaker notes are public.
-- Date and slot: 2026-11-18; 15 min assumed, time of day TBC
+- Date and slot: 2026-11-18; **30 min** (owner, 2026-10-26, via the Scheduler: "Tokyo is now a
+  30-minute talk"; it was built as 15), time of day TBC
 - Venue and screen: embassy room; 16:9 projector or TV assumed (TBC)
 - Audience: ambassadors and dignitaries, no physics background; Japanese and
   Lithuanian guests
@@ -23,11 +24,24 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 - Look: slidev-addon-stage, classic palette (TBC); the same particle effects
   as the other stage talks; pictures and numbers only, no words on screen
 - Story: the particle stage → what quarks are → what pentaquarks are → the
-  project. Startertalk (hadron space) as inspiration, much more generic and
+  project. Owner, 27 Oct: "Need to introduce CERN, Lithuania, what quarks are,
+  then what pentaquarks are (for Gell-Mann and Zweig). Show Nagoya / Vilnius
+  on a globe indicate collaboration (maybe after zoomout video coming back).
+  Then about the project itself from the Lithuanian side. Explain what LHCb
+  is..." (Arc, Decisions 27 Oct). Startertalk (hadron space) as inspiration, much more generic and
   schematic. Must be very impressive.
 - Takeaway (draft): Lithuania and Japan together are solving one of the open
   puzzles of matter, five quarks bound together, and training young
   scientists while doing it.
+- Spine (30 min, 2026-10-26; one line, Innoday's lesson): Japanese physics
+  named what holds matter together (Yukawa's force, 1935; Sakata's three
+  building blocks in Nagoya, 1956; Kobayashi and Maskawa's six quarks, 1973,
+  whose b quark is LHCb's "b"); LHCb found five quarks bound together in the
+  decays of a particle carrying that b quark; whether they are held by
+  Yukawa's force, as a molecule, is the question Vilnius (LHCb data) and
+  Nagoya (theory) now answer together. The finale closes the cover's loop:
+  the camera runs back along the whole route and the cover's pentaquark
+  gathers again on the music's peak.
 - Banned: fundraising amounts unless the owner says; unchecked citation counts.
 
 Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
@@ -36,6 +50,53 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 - Branch `talk/tokyo`, worktree `.claude/worktrees/tokyo` (`pnpm talk open tokyo`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/
+- 2026-10-27 (afternoon, the owner: "Deploy, make sure it works on a mac. The
+  heavy point cloud should be pre-rendered as a video"): the globe (slide 21)
+  and the finale (slide 26) are recorded clips now (globe.mp4 20.1 s,
+  finale.mp4 53 s; videos/manifest.toml), the finale muted with Starfire live,
+  its peak on the quarks' landing at 36.0 s (`drop`); a credits page (27) on
+  the finale's last frame (CloseStill), the world resting; the drawing buffer
+  capped at 1920 wide (`maxBufferWidth`, Innoday's M2 fix). The four new
+  clips are on the release videos-2026-11-18-tokyo. Not tested on a real Mac
+  (none here): the known M2 failures (a live heavy close, additive overload)
+  are gone with the recordings. Deploy: below, once it runs.
+- 2026-10-27 (afternoon, the owner directly): the arc re-ordered to the
+  owner's outline (Decisions, 27 Oct): Lithuania (the Vilnius zoom out) →
+  CERN → Lithuania at CERN → LHCb (clip, detector, collaboration) → quarks →
+  pentaquarks → the coming back onto a globe of Vilnius and Nagoya → the
+  Lithuanian side → the finale. 26 slides, 29.1 min by the notes; lint 0/0.
+  Two talk-owned clips cut from Karjera's stabilised zoom
+  (videos/manifest.toml), encoded locally, not yet on the release (publish
+  with `--only vilnius_out.mp4 vilnius_back.mp4` before a deploy). The globe
+  is Innoday's, copied (Talk-owned code). Still on v0.8.1; the v0.11 plan
+  below stands. Review: `talk check` ok, shots with no page errors; one failed
+  request per run, the library clip cern_overview_short.mp4 tried first on
+  the talk's own release (ERR_BLOCKED_BY_ORB), then played from the library
+  (lhcb.mp4's local-first 404 no longer shows). A subagent read the sheet:
+  slide 5's shade made stronger, the globe turned to centre on the two
+  cities, brightened, its strand lowered and dimmed. Slide 25's Nagoya photo
+  reads washed out beside Vilnius's (not touched).
+- 2026-10-27 (night, Scheduler): v0.11 is green on slidev-videos feat/v0.11,
+  not tagged (waits on the owner). On the relayed tag: `pnpm talk pin tokyo
+  v0.11.0` from v0.8.1, then check `git diff pnpm-lock.yaml` for lost `path:`
+  keys on other talks' entries. The finale moves to the toolkit:
+  `space.recorded: {kind, music, at}` with `<StageSoundtrack>` in place of the
+  copied Soundtrack.vue/slideHooks.js/soundLevel.js/CloseStill.vue, and the
+  regather timed on `space.clock: music` in place of Regather.vue's engine
+  clock (README of the v0.11 stage addon for the fields). Then record, plates,
+  ready.
+- 2026-10-27 (later): two review rounds done (subagents on the contact sheets;
+  Decisions). Lint 0/0, `talk check` ok, shots without page errors (the one
+  failed request is the local-first 404 of lhcb.mp4: no local encode; the
+  player falls back to the release, so `review` exits 1 until `videos:pull`).
+  The last nudges (slide 19 at x 203, the project labels at y -2.2) were
+  reshot but not looked at again. Waiting: v0.11 (Scheduler) for the finale
+  take; the owner's answers below.
+- 2026-10-27: 30-min iteration on talk/tokyo, not deployed (the live site is
+  still the 15-min deck): 21 slides, 27.9 of 30 min, lint 0/0, `talk check`
+  ok. Next: the review round's fixes; then, once the Scheduler relays v0.11:
+  pin, record the finale on its recorded mode (Decisions, 26 Oct), plates, ready;
+  main from the Scheduler for a deploy.
 - 2026-10-11: v0.8.1 deployed: commit 8bd087b, Pages run 38090919117
   (success), URL 200, the live walk passed all 12 slides. Stills 01–12 in
   `public/stills` for print and the fallback.
@@ -52,24 +113,90 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 - `pnpm talk deploy` records each deploy in `.git/talk-status/tokyo.json`;
   `pnpm talk status` shows it.
 
+### Open for the owner (one list, 2026-10-27)
+
+From the 10 Oct Brief questions, the ones that still matter (defaults in use):
+1. The project's dates, funders and the Nagoya meeting: may they be shown or
+   said? (Default: neither; the project slide shows the two teams only.)
+2. Affiliations under the two names on the cover: Yamaguchi's reads Nagoya in
+   the application and Tokyo Metropolitan University in the 2026 memo. Which?
+   (Default: none.)
+3. The time of day and the room's screen: 16:9 projector or TV? (Default:
+   16:9 projector.) Is Q&A outside the 30 min? (Default: yes.)
+4. Spoken English throughout, or a greeting in Japanese or Lithuanian?
+   (Default: English.)
+5. Photos of the Vilnius group or the Nagoya partner, with their consent?
+   (Default: no faces of living team members; places only.)
+
+The 30-min Arc's choices:
+6. (Answered 27 Oct: keep the Japanese thread.)
+7. Name the LEPS (SPring-8) 2003 Θ⁺ claim at the embassy? It was not
+   confirmed. (Default: in the notes only, said with care, nothing on screen.)
+8. Is Yasuhiro Yamaguchi an author of the Pc molecule papers cited on slide 16
+   (Yamaguchi et al., PRD 96 (2017) 114031)? If so, slide 16 can say so.
+9. The finale's music: Starfire again (Innoday, Karjera) or another Scott
+   Buckley track? And the finale's idea: the route back and the cover's
+   pentaquark gathering on the peak.
+10. Slide 18 is a CERN photo of a SciFi frame going into the cavern (May
+    2021), cropped clear of the workers; its sensors are too small to see.
+    Keep, or a SciFi readout close-up if you have one?
+11. The "76 hadrons" slide left the deck on 27 Oct to make room (its CC BY
+    chart, LHCb's 76 beside Belle's 34, LHCb-FIGURE-2026-010, could not be
+    fetched). Bring it back if you can send the chart?
+
+From your 27 Oct outline (built with the defaults below; say if not):
+12. Lithuania comes before CERN: the Vilnius zoom out ends at the Earth's
+    limb, and CERN's clip goes on from the Earth down to Geneva. Your list had
+    CERN first. Swap?
+13. The opening zoom stops at the Earth's limb (17.8 s); the space half of it
+    (galaxy, cosmic web) is seen only backwards, as the coming back before the
+    globe (12 s). Or the whole 49 s zoom out at the start?
+14. Lithuania at CERN (slide 5): the photo of the President with the
+    Lithuanian community at CERN (January 2026), "2018 CERN". Or the
+    President with the Director-General, or an LHCb Week Vilnius photo?
+15. The globe shows only Vilnius and Nagoya, joined by a strand. Add LHCb's
+    other institutes faintly (Innoday's globe), or Tokyo for the embassy?
+
 ## Arc
+
+27 Oct cut (the owner's outline). Pictures and numbers only; photos are
+full-bleed StagePhotos; world pages carry the portraits. New slides carry
+only their facts ids, sources and minutes in the notes (owner: no script
+writing).
 
 | # | Station | Picture | On screen | Spoken | Min |
 |---|---|---|---|---|---|
 | 1 | hero | five quarks fly in, the hum | project name, two names | thanks; who we are; what follows | 1 |
-| 2 | lhc | the collider of grains | 27 km LHC | the LHC; Lithuania and Japan at CERN | 1.25 |
-| 2b | lhc | clip lhcb.mp4 | | LHCb, my experiment | 0.8 |
-| 3 | atom | grain cloud, bright point | | atoms are empty; the nucleus | 1 |
-| 4 | nucleus | protons and neutrons, strings | | the strong force | 0.75 |
-| 5 | proton | u u d | 1 % | quarks; never alone; mass from energy | 1.5 |
-| 6 | families | meson and baryon | | the two recipes | 1.25 |
-| 7 | paper | Gell-Mann, Zweig, passages | 1964 | five quarks allowed on paper | 1.5 |
-| 8 | lhcb | 2019 spectrum, pentaquark | 2015, 2019 | the discovery | 1.75 |
-| 9 | interiors | molecule and compact ball | | the open question | 1.5 |
-| 10 | project | two teams, one pentaquark | (dates once confirmed) | the project | 2 |
-| 11 | hero | the pentaquark again | | close | 0.5 |
+| 2 | lhc | clip vilnius_out.mp4: NFTMC, Vilnius, out to the Earth's limb | | Lithuania; Vilnius University | 0.5 |
+| 3 | lhc | clip cern_overview_short.mp4: the Earth down to Geneva, the LHC drawn | | CERN | 0.5 |
+| 4 | lhc | the LHC tunnel | 27 km LHC | the LHC; Lithuania and Japan at CERN | 1.25 |
+| 5 | lhc | the President with the Lithuanian community at CERN (2026) | 2018 CERN | associate member since 2018; full membership asked, Aug 2026 | 1 |
+| 6 | lhc | clip lhcb.mp4 | | LHCb, my experiment | 0.8 |
+| 7 | lhc | the LHCb detector in its cavern (2024) | 5 600 t LHCb | what LHCb is | 1 |
+| 8 | lhc | LHCb collaboration photo (2022) | 1 891 members | the collaboration; Vilnius since 2024 | 0.75 |
+| 9 | atom | grain cloud, bright point | | atoms are empty; the nucleus | 1 |
+| 10 | nucleus | protons and neutrons; Yukawa's portrait | 1935 meson | the strong force; Yukawa's meson | 1.25 |
+| 11 | proton | u u d | 1 % mass | quarks; never alone; mass from energy | 1.5 |
+| 12 | families | meson and baryon | | the two recipes | 1.25 |
+| 13 | sakata | Sakata's portrait | 1956 Nagoya | three building blocks: the step before quarks | 1.25 |
+| 14 | paper | Gell-Mann, Zweig, passages | 1964 quarks | five quarks allowed on paper | 1.5 |
+| 15 | km | Kobayashi and Maskawa | 1973 six quarks | the third family; b is LHCb's "b" | 1.25 |
+| 16 | km | Belle photo (KEK) | 2003 KEK | CP violation confirmed; X(3872); LEPS | 1.25 |
+| 17 | lhcb | 2019 spectrum, pentaquark | 2015, 2019 | the discovery, from Λb (b quark) decays | 1.75 |
+| 18 | interiors | molecule and compact ball | | the open question | 1.25 |
+| 19 | interiors | the molecule up close | | held by Yukawa's mesons? Nagoya's theory | 1 |
+| 20 | globe | clip vilnius_back.mp4: the cosmic web back to the Earth's limb | | (the coming back) | 0.3 |
+| 21 | globe | that frame breaks into grains onto a globe; Vilnius, Nagoya, a strand between | | the two teams | 1 |
+| 22 | project | Vilnius University photo | 2024 LHCb, 13 students | the Vilnius group | 1.25 |
+| 23 | project | SciFi frame going into the cavern (2021) | 524 288 Hamamatsu sensors | Japanese sensors in the detector Vilnius serves | 1 |
+| 24 | lhcb | the spectrum again | 38.3 TB open data | a VU student finds the pentaquark again | 1 |
+| 25 | project | two teams (VU, Nagoya photos), one pentaquark | | the project | 1.5 |
+| 26 | hero | finale: back along the route, dark, the five quarks gather on the peak | | close; thank you | 1.25 |
 
-Total 14.8 min of 15 (numbers carry one word each; see Decisions).
+Total 29.1 min of 30 by the notes (`talk map`; the lhcb clip counts 1.6).
+On camera, speech ran 15–25 % over the script in the October talks: the
+first cuts if it runs long are slide 16 (Belle), 24 (open data) and 13
+(Sakata).
 
 ## Figures
 
@@ -79,19 +206,78 @@ Every number on a slide, with its source. Search the facts bank first
 
 | Value | Claim | Source (URL) | Accessed | Fact id | OK / CHECK |
 | ----- | ----- | ------------ | -------- | ------- | ---------- |
-| 27 km | LHC ring 26,659 m | home.cern | 2026-10-10 | cern-lhc-size-cost | OK |
+| 27 km | LHC ring 26,659 m (over the tunnel photo since 2026-10-26) | home.cern | 2026-10-10 | cern-lhc-size-cost | OK |
 | 1 % | quark masses ≈1 % of proton mass | BNL / PRL 121 212001 | | proton-mass-quarks-1-percent | OK |
 | 1964 | Gell-Mann, Zweig papers | Phys. Lett. 8 214; CERN-TH-401 | | quark-model-1964-papers | OK |
 | 2015, 2019 | LHCb pentaquarks | home.cern; lhcb-outreach | | lhcb-pentaquark-2015/-2019 | OK |
+| 1 891 | LHCb members, Sep 2026 | LHCb SPC report (Gershon) | 2026-09 | lhcb-collaboration-sep-2026 | OK |
+| 1935 | Yukawa's meson paper (proposed 1934) | J-STAGE; Osaka University | 2026-10-26 | yukawa-meson-1935, yukawa-meson-announced-1934 | OK |
+| 1956 | Sakata's model, Nagoya | PTP 16 (1956) 686; Nobel background 2008 | 2026-10-26 | sakata-model-1956, sakata-nagoya-1956 | OK |
+| 1973, six quarks | Kobayashi–Maskawa (submitted 1 Sep 1972) | PTP 49 (1973) 652; nobelprize.org | 2026-10-26 | kobayashi-maskawa-1973 | OK |
+| 2003 | Belle's X(3872) at KEK | PRL 91 (2003) 262001; PDG | 2026-10-26 | belle-x3872-2003, x3872-started-exotic-searches | OK |
+| 2018 | Lithuania a CERN Associate Member State (8 Jan 2018) | home.cern | 2026-10-27 | cern-lithuania | OK |
+| 5 600 t | LHCb detector's weight | home.cern | 2026-10-27 | lhcb-detector-size | OK |
+| 2024 | VU joins LHCb | VU | | lhcb-vilnius-joined | OK |
+| 13 | VU students at CERN, summer 2026 | VU news | | lhcb-vilnius-students | OK |
+| 524 288 | SciFi SiPM channels (Hamamatsu) | arXiv:2305.10515; hamamatsu.com | 2026-10-26 | lhcb-scifi-channels, hamamatsu-lhcb-scifi-sipm | OK |
+| 38.3 TB | open data filtered in a VU BSc thesis | VU epublications | | stonkus-bsc-2026 | OK |
+
+Speaker's caveats from the 26 Oct research lane (said, never on screen):
+- Yukawa: say "proposed in 1934, published in 1935"; a "received 17 Nov
+  1934" date was removed from J-STAGE as an erratum.
+- X(3872) (PDG now χc1(3872)): its discovery "initiated" the searches beyond
+  quark–antiquark; never "the first exotic". It lies within 200 keV of the
+  D⁰D̄*⁰ threshold.
+- Pion exchange in the Pc states: PDG reads them as deuteron-like, but single
+  pion exchange is impossible in Σc D̄ (the Pc(4312)); it can act in Σc D̄*
+  (Pc(4440), Pc(4457)). Models such as Yamaguchi et al. (PRD 96 (2017)
+  114031) add a short-range five-quark part. Say "one of the glues".
+- LEPS's 2003 Θ⁺ at SPring-8: later, more sensitive experiments did not
+  confirm it (PDG); it started the worldwide search. Said with care.
+- Kobayashi–Maskawa: written at Kyoto, both Nagoya PhDs from Sakata's school.
 
 Open: provenance and licence of `GellMannPhoto.png`, `ZweigPhoto.png` and
 the two passage scans (copied from Startertalk, not in photos.toml). If a
 licence asks for a credit, it goes in tiny print on the close slide.
+Open (26 Oct): LHCb-FIGURE-2026-010's image (CC BY 4.0) could not be fetched
+(CDS's bot check; `photo_fetch.py` reads only photo records), so slide 14 is
+"76 hadrons" over the 2019 spectrum; the chart (Belle 34 beside LHCb 76)
+would suit a Japanese audience. The new photos are in photos.toml; their
+credits are in tiny print on slide 21 (CERN's need none).
 
 ## Talk-owned code
 
 Files of this talk's own (setup/, styles/, vite.config.ts) and what each does.
 A piece a second talk needs moves to the shared kit instead of being copied.
+
+- `setup/Soundtrack.vue`, `slideHooks.js`, `soundLevel.js`: copied 2026-10-26
+  from Užsikrauk karjerai (the newest copies) for the finale's music: `drop`
+  times Starfire's peak off the recorded clip's clock; `+`/`-` set the level,
+  seen only in the presenter window. They move into the toolkit later.
+- `setup/CloseStill.vue`: copied from Innoday; the finale clip's last frame
+  on the page after it, with the world resting.
+- (`setup/Regather.vue` left on 27 Oct: in the take, the camera's arrival at
+  the cover's station had already gathered the pentaquark, and Regather at
+  35 s scattered and gathered it a second time. The arrival alone does it.)
+- `public/audio/starfire_close.m4a` (the track 0:30 to its end) and
+  `starfire_close_peak.m4a` (from 2:52.85; the peak, the downbeat at 2:54.85,
+  is 2.013 s in): Innoday's files, Scott Buckley „Starfire“, CC BY 4.0.
+- `styles/index.css` `.hero`: the full-bleed StagePhoto slides, with a dark
+  corner behind the numbers.
+- `setup/globe.js`, `CollabGlobe.vue`, `view.js` (copied 2026-10-27 from
+  Innoday) and `afterCover.js` (its `places` latch only): slide 21's globe.
+  `<CollabGlobe src="figures/earth_back.jpg" />` shows the coming-back
+  clip's last frame, dissolves it into grains that fly onto a turning globe
+  of grains (`collab-globe` builder, the `globe` station, data
+  `public/data/globe.json`: Innoday's Natural Earth coast and land, the two
+  cities and the `link` pairs). Tokyo's own: kind 5, the strand drawn
+  between the linked cities with a pulse running along it; the picture goes
+  on by itself (`click` false; Innoday's waited for a click); the photo
+  grains' share for the cities is 0.04 (Innoday's 0.22 was spread over 92).
+- `videos/manifest.toml`: `vilnius_out.mp4`, `vilnius_back.mp4`, both cut
+  from Karjera's `vilnius_zoom.mp4` raw (the commands in their notes). The
+  raws are in the worktree's `videos/raw/` (hard links to the main
+  checkout's raw bank); never a plain `videos:sync` (it would delete them).
 
 ## Decisions
 
@@ -167,6 +353,98 @@ The owner's decisions, dated, newest last.
   page by page, the title and numbers print, so the slide-1 dim print bug
   does not touch this deck (dim 0.15) and no `.scrim` workaround is added.
   The clip slide prints dark (a video has no print frame).
+
+- 2026-10-26 (owner, via the Scheduler: "Tokyo is now a 30-minute talk";
+  one iteration to that length; AFK-style hand-off, the 10 Oct defaults
+  kept): the 30-min Arc above, 21 slides, 27.9 min by `talk map`.
+  - The spine is the Japanese thread (Yukawa, Sakata, Kobayashi–Maskawa,
+    Belle) into the Vilnius–Nagoya project (Brief). Alternative: the 15-min
+    story stretched with more physics; rejected because one line a diplomat
+    can retell, with Japan in every chapter, suits the embassy.
+  - Real photos where the 15-min cut was schematic: the LHC tunnel (CC BY,
+    CERN) for 27 km, the LHCb collaboration photo, Belle, Vilnius University,
+    the LHCb cavern; portraits as world pages (Yukawa, Sakata, Kobayashi,
+    Maskawa). Dropped on a by-eye check: CERN's aerial (its ring and labels
+    are drawn in gold) and the SciFi installation photo (a recognisable
+    technician; the no-faces default). Undo: the slides' StagePhotos.
+  - New slides carry only facts ids, sources and minutes in their notes (the
+    owner's rule: no scripts); the old notes stay, "fifteen" made "thirty".
+  - The finale (slide 21) is built live now as the take's source: a `path`
+    back along the whole route (project → hero, 0–33 s), the world dark at
+    33.4–35.2 s (`ambient`), the cover's pentaquark gathering again at 35 s
+    (`<Regather>`). It is recorded on v0.11 (Scheduler, 27 Oct: its recorded mode
+    decides how the take is cut and the music slaved; no take before it), as planned here:
+    (`pnpm talk record tokyo --out DIR -- --slides 21 --fps 50 --hold 16
+    --clicks none`, 4K taken down to 1080p as Innoday), published `--only`,
+    and slide 21 becomes a VideoPlayer of finale.mp4, `muted
+    :controls="false" transition="fade"`, with `<Soundtrack
+    src="audio/starfire_close.m4a" start :level="0.5" keys :drop="{ at: 35,
+    file: 'audio/starfire_close_peak.m4a', hit: 2.013, duck: 32.4, quiet:
+    0.06 }" />`, then a credits page on `<CloseStill>`. That is Innoday's
+    pattern (the clip silent, the music live, its peak slaved to the clip's
+    clock), not Karjera's live close. Starfire is reused (CC BY 4.0;
+    credited once it plays). Alternative: another Scott Buckley track,
+    measured the same way. No renders now: the toolkit release is being
+    built.
+  - Slide 14 is "76 hadrons" over the spectrum until the CC BY chart
+    LHCb-FIGURE-2026-010 is fetched (Figures, open).
+  - Not used, kept for later: the SciFi photo; the SPring-8 aerial
+    (attribution only) for the LEPS line.
+
+- 2026-10-27, first review round (a subagent on the contact sheet, 13
+  findings; the high and medium ones fixed): the photo slides' corner shade
+  is an element in StagePhoto's slot (`<div class="shade tr">`), because
+  `.hero::after` showed no gradient in the shots; the Vilnius courtyard
+  darkened whole (`class="darker"`); focus moved on the collaboration and
+  Belle photos; slide 18 a SciFi frame going into the cavern (CERN, May
+  2021), cropped clear of the workers (the 2019 cabling photo read as
+  plumbing); slide
+  14's "76 hadrons" over the two hadron families (it counted nothing on the
+  spectrum); slide 19's number top left; `km` moved to x 188 (it showed at
+  the paper station's edge); Yukawa's page as large as the other portraits;
+  the project's photo pages larger and its labels out of the lower third.
+  A pulsing track between the molecule's two parts was tried and dropped
+  (its glow hid a quark in each part). Second round: slide 19 at x 203
+  (clear of `km`), slide 4's shade stronger (`.shade.tl.strong`). Left as they were (low; slides the owner already saw):
+  the Zweig passage's small type, the families' meson quarks close
+  together.
+
+- 2026-10-27 (the owner, directly): "Need to introduce CERN, Lithuania, what
+  quarks are, then what pentaquarks are (for Gell-Mann and Zweig). Show Nagoya
+  / Vilnius on a globe indicate collaboration (maybe after zoomout video
+  coming back). Then about the project itself from the Lithuanian side.
+  Explain what LHCb is..." Asked three things; the owner took the
+  recommended option each time:
+  - the globe: the bookend. Lithuania is introduced by the zoom out from
+    Vilnius (slide 2); the coming back (slide 20) lands on the Earth's limb,
+    and that frame turns into the globe of Vilnius and Nagoya (slide 21).
+  - LHCb: explained with CERN, before the quarks (clip, the detector photo
+    with "5 600 t", the collaboration), so it is known before the 2015
+    discovery.
+  - the Japanese thread (Yukawa, Sakata, Kobayashi–Maskawa, Belle): kept.
+  Taken by default (Open for the owner, 12–15): Lithuania before CERN, so
+  the zoom out to the Earth hands over to CERN's clip from the Earth down to
+  Geneva; the zoom split in two (out to the limb at the start, the space half
+  only backwards before the globe), because Karjera's stabilised zoom never
+  shows the whole Earth (13.4–18.6 s is the limb); the President with the
+  Lithuanian community at CERN for "2018 CERN"; only the two cities on the
+  globe. The "76 hadrons" slide left to keep the minutes (its chart was never
+  fetched). Minutes trimmed on slides 8, 10, 15, 16, 18 and 25.
+
+- 2026-10-27 (the owner: "Deploy, make sure it works on a mac. The heavy
+  point cloud should be pre-rendered as a video"): slide 21's globe and slide
+  26's finale are recorded (`pnpm talk record`, d3d12, 1080p50) and played as
+  clips with `transition="fade"` (a cut clip never tells the stage it covers
+  the slide; Innoday, 22 Oct). The finale is Innoday's pattern, not v0.11's
+  `space.recorded` (not tagged yet): muted, Soundtrack `drop` { at 36.0,
+  duck 33.4 } on Starfire's 2:54.85 peak; then a credits page with
+  CloseStill (the credits moved there, music credited). Two takes were
+  checked frame by frame by a subagent: the first gathered the quarks twice
+  (the arrival and Regather), so Regather left and the path's end was
+  retimed (the dark 31–32.6 s, the camera wider at 27 s); the globe take's
+  first 0.4 s (a dim blink) was cut. `stage.options.maxBufferWidth: 1920`
+  (Innoday's M2 fix). On v0.11: `space.recorded` and `<StageSoundtrack>`
+  replace Soundtrack/CloseStill (Status).
 
 ## Verify
 
