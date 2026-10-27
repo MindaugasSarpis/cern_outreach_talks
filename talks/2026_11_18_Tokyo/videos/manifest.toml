@@ -14,3 +14,35 @@
 # profile = "standard"
 # used_in = ["deck"]
 # notes   = "What this clip is and where it came from."
+
+# Both cut 2026-10-27 from Užsikrauk karjerai's vilnius_zoom.mp4 (its raw, the stabilised 49 s
+# zoom out from NFTMC in Saulėtekis to the cosmic web, made by that talk's
+# scripts/remap_zoom.py from the owner's SpaceEngine edit; see its manifest). Owner, 27 Oct:
+# introduce Lithuania; "Show Nagoya / Vilnius on a globe indicate collaboration (maybe after
+# zoomout video coming back)". The raws are these cuts, not on gdrive: never run a plain
+# videos:sync here (it would delete them); cut them again with the commands below.
+[[videos]]
+name    = "vilnius_out.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+loudnorm = false
+notes   = """\
+Slide 2, Lithuania: vilnius_zoom.mp4 0-17.8 s, from NFTMC in Saulėtekis out over Vilnius \
+(Google Earth; its logo and the imagery providers, "Landsat / Copernicus", "Airbus, CNES / \
+Airbus, Maxar Technologies", are in the footage to 12.5 s) to the clouds and the Earth's limb \
+(SpaceEngine), cut before the galaxy's band comes in. No audio. \
+ffmpeg -i vilnius_zoom.mp4 -t 17.8 -an -c:v libx264 -preset slow -crf 14 -pix_fmt yuv420p -r 50."""
+
+[[videos]]
+name    = "vilnius_back.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+loudnorm = false
+notes   = """\
+The coming back, before the globe: vilnius_zoom.mp4 40.0 s back to 16.0 s, reversed at twice \
+the speed (12.0 s, 50 fps; every second frame of the source, in reverse order), from the cosmic \
+web (NCSA Advanced Visualization Lab, "Cosmic Bubble Bath") past the galaxy back to the Earth's \
+limb (SpaceEngine). Its last frame is public/figures/earth_back.jpg, the picture <CollabGlobe> \
+dissolves onto the globe. No audio. ffmpeg -ss 16 -to 40 -i vilnius_zoom.mp4 -an -vf \
+"select='not(mod(n,2))'" -fps_mode vfr frames, then a concat list of them in reverse order at \
+0.02 s each, -vf fps=50,format=yuv420p, libx264 -preset slow -crf 14."""

@@ -915,6 +915,14 @@
    ]
   },
   {
+   "id": "globe",
+   "pos": [250, 70, 0],
+   "look": { "target": [0, 0, 0], "dist": 12.5, "yaw": 0, "pitch": 0, "sway": 0 },
+   "objects": [
+    { "type": "collab-globe", "name": "globe", "pos": [0, 0, 0], "src": "data/globe.json", "radius": 3.8, "lon": 92, "spin": 0.1, "tilt": 40, "roll": -6, "coast": 1.5, "land": 0.42 }
+   ]
+  },
+  {
    "id": "project",
    "pos": [
     270,

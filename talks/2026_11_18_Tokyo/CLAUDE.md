@@ -24,7 +24,11 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 - Look: slidev-addon-stage, classic palette (TBC); the same particle effects
   as the other stage talks; pictures and numbers only, no words on screen
 - Story: the particle stage → what quarks are → what pentaquarks are → the
-  project. Startertalk (hadron space) as inspiration, much more generic and
+  project. Owner, 27 Oct: "Need to introduce CERN, Lithuania, what quarks are,
+  then what pentaquarks are (for Gell-Mann and Zweig). Show Nagoya / Vilnius
+  on a globe indicate collaboration (maybe after zoomout video coming back).
+  Then about the project itself from the Lithuanian side. Explain what LHCb
+  is..." (Arc, Decisions 27 Oct). Startertalk (hadron space) as inspiration, much more generic and
   schematic. Must be very impressive.
 - Takeaway (draft): Lithuania and Japan together are solving one of the open
   puzzles of matter, five quarks bound together, and training young
@@ -46,6 +50,22 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 - Branch `talk/tokyo`, worktree `.claude/worktrees/tokyo` (`pnpm talk open tokyo`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/
+- 2026-10-27 (afternoon, the owner directly): the arc re-ordered to the
+  owner's outline (Decisions, 27 Oct): Lithuania (the Vilnius zoom out) →
+  CERN → Lithuania at CERN → LHCb (clip, detector, collaboration) → quarks →
+  pentaquarks → the coming back onto a globe of Vilnius and Nagoya → the
+  Lithuanian side → the finale. 26 slides, 29.1 min by the notes; lint 0/0.
+  Two talk-owned clips cut from Karjera's stabilised zoom
+  (videos/manifest.toml), encoded locally, not yet on the release (publish
+  with `--only vilnius_out.mp4 vilnius_back.mp4` before a deploy). The globe
+  is Innoday's, copied (Talk-owned code). Still on v0.8.1; the v0.11 plan
+  below stands. Review: `talk check` ok, shots with no page errors; one failed
+  request per run, the library clip cern_overview_short.mp4 tried first on
+  the talk's own release (ERR_BLOCKED_BY_ORB), then played from the library
+  (lhcb.mp4's local-first 404 no longer shows). A subagent read the sheet:
+  slide 5's shade made stronger, the globe turned to centre on the two
+  cities, brightened, its strand lowered and dimmed. Slide 25's Nagoya photo
+  reads washed out beside Vilnius's (not touched).
 - 2026-10-27 (night, Scheduler): v0.11 is green on slidev-videos feat/v0.11,
   not tagged (waits on the owner). On the relayed tag: `pnpm talk pin tokyo
   v0.11.0` from v0.8.1, then check `git diff pnpm-lock.yaml` for lost `path:`
@@ -99,9 +119,7 @@ From the 10 Oct Brief questions, the ones that still matter (defaults in use):
    (Default: no faces of living team members; places only.)
 
 The 30-min Arc's choices:
-6. The spine: the Japanese thread (Yukawa 1935, Sakata 1956 in Nagoya,
-   Kobayashi–Maskawa 1973, Belle 2003) into the project. Keep it, or less
-   history and more pentaquark physics?
+6. (Answered 27 Oct: keep the Japanese thread.)
 7. Name the LEPS (SPring-8) 2003 Θ⁺ claim at the embassy? It was not
    confirmed. (Default: in the notes only, said with care, nothing on screen.)
 8. Is Yasuhiro Yamaguchi an author of the Pc molecule papers cited on slide 16
@@ -112,41 +130,63 @@ The 30-min Arc's choices:
 10. Slide 18 is a CERN photo of a SciFi frame going into the cavern (May
     2021), cropped clear of the workers; its sensors are too small to see.
     Keep, or a SciFi readout close-up if you have one?
-11. The CC BY chart of LHCb's 76 hadrons beside Belle's 34
-    (LHCb-FIGURE-2026-010): fetch it for slide 14? (CDS blocks the script.)
+11. The "76 hadrons" slide left the deck on 27 Oct to make room (its CC BY
+    chart, LHCb's 76 beside Belle's 34, LHCb-FIGURE-2026-010, could not be
+    fetched). Bring it back if you can send the chart?
+
+From your 27 Oct outline (built with the defaults below; say if not):
+12. Lithuania comes before CERN: the Vilnius zoom out ends at the Earth's
+    limb, and CERN's clip goes on from the Earth down to Geneva. Your list had
+    CERN first. Swap?
+13. The opening zoom stops at the Earth's limb (17.8 s); the space half of it
+    (galaxy, cosmic web) is seen only backwards, as the coming back before the
+    globe (12 s). Or the whole 49 s zoom out at the start?
+14. Lithuania at CERN (slide 5): the photo of the President with the
+    Lithuanian community at CERN (January 2026), "2018 CERN". Or the
+    President with the Director-General, or an LHCb Week Vilnius photo?
+15. The globe shows only Vilnius and Nagoya, joined by a strand. Add LHCb's
+    other institutes faintly (Innoday's globe), or Tokyo for the embassy?
 
 ## Arc
 
-30-min cut (2026-10-26). Pictures and numbers only; photos are full-bleed
-StagePhotos; world pages carry the portraits. New slides carry only their
-facts ids, sources and minutes in the notes (owner: no script writing).
+27 Oct cut (the owner's outline). Pictures and numbers only; photos are
+full-bleed StagePhotos; world pages carry the portraits. New slides carry
+only their facts ids, sources and minutes in the notes (owner: no script
+writing).
 
 | # | Station | Picture | On screen | Spoken | Min |
 |---|---|---|---|---|---|
 | 1 | hero | five quarks fly in, the hum | project name, two names | thanks; who we are; what follows | 1 |
-| 2 | lhc | aerial photo, ring drawn (CERN) | 27 km LHC | the LHC; Lithuania and Japan at CERN | 1.25 |
-| 3 | lhc | clip lhcb.mp4 | | LHCb, my experiment | 0.8 |
-| 4 | lhc | LHCb collaboration photo (2022) | 1 891 members, 28 countries | the collaboration; Vilnius since 2024 | 1 |
-| 5 | atom | grain cloud, bright point | | atoms are empty; the nucleus | 1 |
-| 6 | nucleus | protons and neutrons; Yukawa's portrait | 1935 meson | the strong force; Yukawa's meson | 1.5 |
-| 7 | proton | u u d | 1 % mass | quarks; never alone; mass from energy | 1.5 |
-| 8 | families | meson and baryon | | the two recipes | 1.25 |
-| 9 | sakata | Sakata's portrait | 1956 Nagoya | three building blocks: the step before quarks | 1.25 |
-| 10 | paper | Gell-Mann, Zweig, passages | 1964 quarks | five quarks allowed on paper | 1.5 |
-| 11 | km | Kobayashi and Maskawa | 1973 six quarks | the third family; b is LHCb's "b" | 1.5 |
-| 12 | km | Belle photo (KEK) | 2003 KEK | CP violation confirmed; X(3872); LEPS | 1.5 |
-| 13 | lhcb | 2019 spectrum, pentaquark | 2015, 2019 | the discovery, from Λb (b quark) decays | 1.75 |
-| 14 | families | the two hadron families again | 76 hadrons | particle zoo 2.0; Belle 34 | 1.25 |
-| 15 | interiors | molecule and compact ball | | the open question | 1.5 |
-| 16 | interiors | the molecule up close | | held by Yukawa's mesons? Nagoya's theory | 1 |
-| 17 | project | Vilnius University photo | 2024 LHCb, 13 students | the Vilnius group | 1.25 |
-| 18 | project | SciFi frame going into the cavern (2021) | 524 288 Hamamatsu sensors | Japanese sensors in the detector Vilnius serves | 1 |
-| 19 | lhcb | the spectrum again | 38.3 TB open data | a VU student finds the pentaquark again | 1 |
-| 20 | project | two teams (VU, Nagoya photos), one pentaquark | | the project | 2 |
-| 21 | hero | finale: back along the route, dark, the five quarks gather on the peak | | close; thank you | 1.25 |
+| 2 | lhc | clip vilnius_out.mp4: NFTMC, Vilnius, out to the Earth's limb | | Lithuania; Vilnius University | 0.5 |
+| 3 | lhc | clip cern_overview_short.mp4: the Earth down to Geneva, the LHC drawn | | CERN | 0.5 |
+| 4 | lhc | the LHC tunnel | 27 km LHC | the LHC; Lithuania and Japan at CERN | 1.25 |
+| 5 | lhc | the President with the Lithuanian community at CERN (2026) | 2018 CERN | associate member since 2018; full membership asked, Aug 2026 | 1 |
+| 6 | lhc | clip lhcb.mp4 | | LHCb, my experiment | 0.8 |
+| 7 | lhc | the LHCb detector in its cavern (2024) | 5 600 t LHCb | what LHCb is | 1 |
+| 8 | lhc | LHCb collaboration photo (2022) | 1 891 members | the collaboration; Vilnius since 2024 | 0.75 |
+| 9 | atom | grain cloud, bright point | | atoms are empty; the nucleus | 1 |
+| 10 | nucleus | protons and neutrons; Yukawa's portrait | 1935 meson | the strong force; Yukawa's meson | 1.25 |
+| 11 | proton | u u d | 1 % mass | quarks; never alone; mass from energy | 1.5 |
+| 12 | families | meson and baryon | | the two recipes | 1.25 |
+| 13 | sakata | Sakata's portrait | 1956 Nagoya | three building blocks: the step before quarks | 1.25 |
+| 14 | paper | Gell-Mann, Zweig, passages | 1964 quarks | five quarks allowed on paper | 1.5 |
+| 15 | km | Kobayashi and Maskawa | 1973 six quarks | the third family; b is LHCb's "b" | 1.25 |
+| 16 | km | Belle photo (KEK) | 2003 KEK | CP violation confirmed; X(3872); LEPS | 1.25 |
+| 17 | lhcb | 2019 spectrum, pentaquark | 2015, 2019 | the discovery, from Λb (b quark) decays | 1.75 |
+| 18 | interiors | molecule and compact ball | | the open question | 1.25 |
+| 19 | interiors | the molecule up close | | held by Yukawa's mesons? Nagoya's theory | 1 |
+| 20 | globe | clip vilnius_back.mp4: the cosmic web back to the Earth's limb | | (the coming back) | 0.3 |
+| 21 | globe | that frame breaks into grains onto a globe; Vilnius, Nagoya, a strand between | | the two teams | 1 |
+| 22 | project | Vilnius University photo | 2024 LHCb, 13 students | the Vilnius group | 1.25 |
+| 23 | project | SciFi frame going into the cavern (2021) | 524 288 Hamamatsu sensors | Japanese sensors in the detector Vilnius serves | 1 |
+| 24 | lhcb | the spectrum again | 38.3 TB open data | a VU student finds the pentaquark again | 1 |
+| 25 | project | two teams (VU, Nagoya photos), one pentaquark | | the project | 1.5 |
+| 26 | hero | finale: back along the route, dark, the five quarks gather on the peak | | close; thank you | 1.25 |
 
-Total 27.0 min of 30 by the notes. On camera, speech ran 15–25 % over
-the script in the October talks, so this leaves room for that.
+Total 29.1 min of 30 by the notes (`talk map`; the lhcb clip counts 1.6).
+On camera, speech ran 15–25 % over the script in the October talks: the
+first cuts if it runs long are slide 16 (Belle), 24 (open data) and 13
+(Sakata).
 
 ## Figures
 
@@ -165,7 +205,8 @@ Every number on a slide, with its source. Search the facts bank first
 | 1956 | Sakata's model, Nagoya | PTP 16 (1956) 686; Nobel background 2008 | 2026-10-26 | sakata-model-1956, sakata-nagoya-1956 | OK |
 | 1973, six quarks | Kobayashi–Maskawa (submitted 1 Sep 1972) | PTP 49 (1973) 652; nobelprize.org | 2026-10-26 | kobayashi-maskawa-1973 | OK |
 | 2003 | Belle's X(3872) at KEK | PRL 91 (2003) 262001; PDG | 2026-10-26 | belle-x3872-2003, x3872-started-exotic-searches | OK |
-| 76 hadrons | LHCb's hadron discoveries | LHCb-FIGURE-2026-010 (CDS 2970971) | 2026-09-21 | lhcb-figure-2026-010-hadrons | OK |
+| 2018 | Lithuania a CERN Associate Member State (8 Jan 2018) | home.cern | 2026-10-27 | cern-lithuania | OK |
+| 5 600 t | LHCb detector's weight | home.cern | 2026-10-27 | lhcb-detector-size | OK |
 | 2024 | VU joins LHCb | VU | | lhcb-vilnius-joined | OK |
 | 13 | VU students at CERN, summer 2026 | VU news | | lhcb-vilnius-students | OK |
 | 524 288 | SciFi SiPM channels (Hamamatsu) | arXiv:2305.10515; hamamatsu.com | 2026-10-26 | lhcb-scifi-channels, hamamatsu-lhcb-scifi-sipm | OK |
@@ -214,6 +255,20 @@ A piece a second talk needs moves to the shared kit instead of being copied.
   is 2.013 s in): Innoday's files, Scott Buckley „Starfire“, CC BY 4.0.
 - `styles/index.css` `.hero`: the full-bleed StagePhoto slides, with a dark
   corner behind the numbers.
+- `setup/globe.js`, `CollabGlobe.vue`, `view.js` (copied 2026-10-27 from
+  Innoday) and `afterCover.js` (its `places` latch only): slide 21's globe.
+  `<CollabGlobe src="figures/earth_back.jpg" />` shows the coming-back
+  clip's last frame, dissolves it into grains that fly onto a turning globe
+  of grains (`collab-globe` builder, the `globe` station, data
+  `public/data/globe.json`: Innoday's Natural Earth coast and land, the two
+  cities and the `link` pairs). Tokyo's own: kind 5, the strand drawn
+  between the linked cities with a pulse running along it; the picture goes
+  on by itself (`click` false; Innoday's waited for a click); the photo
+  grains' share for the cities is 0.04 (Innoday's 0.22 was spread over 92).
+- `videos/manifest.toml`: `vilnius_out.mp4`, `vilnius_back.mp4`, both cut
+  from Karjera's `vilnius_zoom.mp4` raw (the commands in their notes). The
+  raws are in the worktree's `videos/raw/` (hard links to the main
+  checkout's raw bank); never a plain `videos:sync` (it would delete them).
 
 ## Decisions
 
@@ -312,8 +367,8 @@ The owner's decisions, dated, newest last.
     decides how the take is cut and the music slaved; no take before it), as planned here:
     (`pnpm talk record tokyo --out DIR -- --slides 21 --fps 50 --hold 16
     --clicks none`, 4K taken down to 1080p as Innoday), published `--only`,
-    and slide 21 becomes `<VideoPlayer src="finale.mp4" muted
-    :controls="false" transition="fade" />` with `<Soundtrack
+    and slide 21 becomes a VideoPlayer of finale.mp4, `muted
+    :controls="false" transition="fade"`, with `<Soundtrack
     src="audio/starfire_close.m4a" start :level="0.5" keys :drop="{ at: 35,
     file: 'audio/starfire_close_peak.m4a', hit: 2.013, duck: 32.4, quiet:
     0.06 }" />`, then a credits page on `<CloseStill>`. That is Innoday's
@@ -344,6 +399,28 @@ The owner's decisions, dated, newest last.
   (clear of `km`), slide 4's shade stronger (`.shade.tl.strong`). Left as they were (low; slides the owner already saw):
   the Zweig passage's small type, the families' meson quarks close
   together.
+
+- 2026-10-27 (the owner, directly): "Need to introduce CERN, Lithuania, what
+  quarks are, then what pentaquarks are (for Gell-Mann and Zweig). Show Nagoya
+  / Vilnius on a globe indicate collaboration (maybe after zoomout video
+  coming back). Then about the project itself from the Lithuanian side.
+  Explain what LHCb is..." Asked three things; the owner took the
+  recommended option each time:
+  - the globe: the bookend. Lithuania is introduced by the zoom out from
+    Vilnius (slide 2); the coming back (slide 20) lands on the Earth's limb,
+    and that frame turns into the globe of Vilnius and Nagoya (slide 21).
+  - LHCb: explained with CERN, before the quarks (clip, the detector photo
+    with "5 600 t", the collaboration), so it is known before the 2015
+    discovery.
+  - the Japanese thread (Yukawa, Sakata, Kobayashi–Maskawa, Belle): kept.
+  Taken by default (Open for the owner, 12–15): Lithuania before CERN, so
+  the zoom out to the Earth hands over to CERN's clip from the Earth down to
+  Geneva; the zoom split in two (out to the limb at the start, the space half
+  only backwards before the globe), because Karjera's stabilised zoom never
+  shows the whole Earth (13.4–18.6 s is the limb); the President with the
+  Lithuanian community at CERN for "2018 CERN"; only the two cities on the
+  globe. The "76 hadrons" slide left to keep the minutes (its chart was never
+  fetched). Minutes trimmed on slides 8, 10, 15, 16, 18 and 25.
 
 ## Verify
 

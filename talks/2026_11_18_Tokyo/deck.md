@@ -49,6 +49,36 @@ scientists are now studying it together. (~1 min)
 -->
 
 ---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
+---
+
+<VideoPlayer src="vilnius_out.mp4" />
+
+<!-- facts: lhcb-vilnius-joined -->
+
+<!--
+Lithuania (owner, 27 Oct). Clip vilnius_out.mp4 (17.8 s, no sound): from NFTMC, Vilnius
+University's physics campus in Saulėtekio slėnis, out over Vilnius (Google Earth) to the
+clouds and the Earth's limb. It ends and waits for the press. The coming back is slide 20.
+Sources: the owner's SpaceEngine edit, stabilised for Užsikrauk karjerai (videos/manifest.toml).
+(~0.5 min)
+-->
+
+---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
+---
+
+<VideoPlayer src="cern_overview_short.mp4" />
+
+<!-- facts: lhc-geneva-27km-100m-four-experiments -->
+
+<!--
+CERN (owner, 27 Oct). Library clip cern_overview_short.mp4 (11 s, no sound): from the Earth
+down to Geneva, then the LHC ring drawn over the fields with its four experiments named.
+Sources: home.cern. (~0.5 min)
+-->
+
+---
 space: { at: lhc, dim: 0.25 }
 ---
 
@@ -76,6 +106,26 @@ an additional 5 billion yen", 1998). (~1.25 min)
 -->
 
 ---
+space: { at: lhc, dist: 18, yaw: -10, pitch: 18, dim: 0.6 }
+---
+
+<StagePhoto src="figures/lithuania_cern.jpg" alt="President Gitanas Nausėda with the Lithuanian community at CERN, January 2026" focus="50% 40%">
+<div class="shade tr strong"></div>
+<div class="num tr">2018<span class="name">CERN</span></div>
+</StagePhoto>
+
+<!-- facts: cern-lithuania, lhcb-lithuania-membership, lt-member-interest-cern-visit-2026-09, lt-nauseda-visit, lt-consortium -->
+
+<!--
+Lithuania at CERN (owner, 27 Oct). Photo: President Gitanas Nausėda with the Lithuanian
+community at CERN, 19 January 2026 (CERN-PHOTO-202601-009-23). Associate Member State since
+8 January 2018, the first Baltic state; a letter seeking full membership at the end of August
+2026; the Lithuanian Particle Physics Consortium (CERN-LT) since 2022.
+Sources: home.cern (Lithuania becomes an Associate Member State, 2018; presidential visits,
+2026); LRT, 20 September 2026; cds.cern.ch CERN-PHOTO-202609-233-1; LMT. (~1 min)
+-->
+
+---
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
@@ -87,6 +137,25 @@ Let it play; at most one line over the music: "This is LHCb, the experiment
 my group works on: a detector the size of a house, built to catch what comes
 out of the collisions." It condenses out of the dust and leaves the same way.
 (~0.8 min)
+-->
+
+---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22, dim: 0.6 }
+---
+
+<StagePhoto src="figures/lhcb_detector.jpg" alt="The LHCb detector in its cavern under the LHCb banner, March 2024" focus="50% 50%">
+<div class="shade bl"></div>
+<div class="num bl">5 600 t<span class="name">LHCb</span></div>
+</StagePhoto>
+
+<!-- facts: lhcb-detector-size, lhcb-100m-below-ground, lhcb-three-storey-worked, lhcb-run3-readout-4tbs -->
+
+<!--
+What LHCb is (owner, 27 Oct). Photo: the LHCb detector in its cavern, March 2024
+(CERN-PHOTO-202403-050-3, M. Brice). 5 600 tonnes, 21 m long, 10 m high (about three
+storeys), 100 m under ground near Ferney-Voltaire; a forward spectrometer, its subdetectors one
+behind another; 4 TB/s read out in real time in Run 3.
+Sources: home.cern (LHCb); arXiv:2106.07701. (~1 min)
 -->
 
 ---
@@ -105,7 +174,7 @@ The LHCb collaboration in front of its detector (group photo, June 2022); 1891
 members from 112 institutes in 28 countries (September 2026). Vilnius
 University joined in September 2024.
 Sources: T. Gershon, LHCb report to the CERN
-SPC, 22 September 2026; Vilnius University. (~1 min)
+SPC, 22 September 2026; Vilnius University. (~0.75 min)
 -->
 
 ---
@@ -142,7 +211,7 @@ that this force is carried by a new particle about 200 times heavier than
 the electron, the meson (Nobel Prize 1949, Japan's first).
 Sources:
 H. Yukawa, Proc. Phys.-Math. Soc. Japan 17 (1935) 48; nobelprize.org;
-Osaka University. (~1.5 min)
+Osaka University. (~1.25 min)
 -->
 
 ---
@@ -238,7 +307,7 @@ Makoto Kobayashi and Toshihide Maskawa, both from Sakata's school in Nagoya:
 in 1972-73, three families of quarks (six) when three quarks were known; the fifth, b, found in 1977, is the
 "b" in LHCb (Nobel Prize 2008).
 Sources: Prog. Theor. Phys. 49 (1973) 652;
-nobelprize.org; home.cern. (~1.5 min)
+nobelprize.org; home.cern. (~1.25 min)
 -->
 
 ---
@@ -259,7 +328,7 @@ for exotic hadrons. The same year LEPS at SPring-8 reported a five-quark
 candidate; more sensitive experiments did not confirm it.
 Sources: Belle,
 PRL 87 (2001) 091802 and PRL 91 (2003) 262001; nobelprize.org; LEPS,
-PRL 91 (2003) 012002; PDG. (~1.5 min)
+PRL 91 (2003) 012002; PDG. (~1.25 min)
 -->
 
 ---
@@ -290,22 +359,6 @@ press release, 14 July 2015. (~1.75 min)
 -->
 
 ---
-space: { at: families, dist: 16, yaw: 0, pitch: 3, dim: 0.3 }
----
-
-<div class="num tr">76<span class="name">hadrons</span></div>
-
-<!-- facts: lhcb-figure-2026-010-hadrons, lhcb-particle-zoo-2022 -->
-
-<!--
-Back at the two families of hadrons. LHCb's hadron discoveries by experiment
-(LHCb-FIGURE-2026-010, September 2026):
-76 at LHCb, 14 of them exotic; Belle is next with 34.
-Sources:
-cds.cern.ch/record/2970971 (CC BY 4.0); home.cern, 5 July 2022. (~1.25 min)
--->
-
----
 space: { at: interiors, dim: 0.15 }
 ---
 
@@ -323,7 +376,7 @@ packed into one ball.
 The narrow peaks of 2019 point toward the molecule, but the question is
 open. To settle it, we need precise measurements and precise theory that
 predicts what each picture should look like in the data, worked out
-together. (~1.5 min)
+together. (~1.25 min)
 -->
 
 ---
@@ -338,6 +391,36 @@ read as deuteron-like; Yukawa's pion exchange, which binds the deuteron, is
 one of the glues theorists use for it, beside a short-range five-quark part.
 Sources: PDG review "Pentaquarks" (2026); Y. Yamaguchi et al., PRD 96 (2017)
 114031. (~1 min)
+-->
+
+---
+space: { at: globe }
+---
+
+<VideoPlayer src="vilnius_back.mp4" transition="fade" />
+
+<!--
+The coming back (owner, 27 Oct: "Show Nagoya / Vilnius on a globe indicate collaboration
+(maybe after zoomout video coming back)"). Clip vilnius_back.mp4 (12 s, no sound): slide 2's
+zoom run backwards from further out, the cosmic web, past the galaxy, back to the Earth's limb.
+It ends on that frame and waits for the press; the next slide starts from the same frame.
+(~0.3 min)
+-->
+
+---
+space: { at: globe }
+---
+
+<CollabGlobe src="figures/earth_back.jpg" />
+
+<!-- facts: lhcb-vilnius-joined -->
+
+<!--
+The globe (owner, 27 Oct). The clip's last frame breaks into grains, which fly onto a slowly
+turning globe of grains (coastlines, Natural Earth, public domain); Vilnius lights, then
+Nagoya, and a strand of light is drawn between them, a pulse running along it. No text.
+Vilnius University (LHCb data) and Nagoya University (theory): the project.
+Sources: Natural Earth; Vilnius University. (~1 min)
 -->
 
 ---
@@ -412,7 +495,7 @@ experiment and theory.
 (The project's dates, its funders and next week's meeting in Nagoya go on
 this slide once the owner confirms they may be shown.)
 
-Sources: Vilnius University (LHCb Vilnius, 2024). (~2 min)
+Sources: Vilnius University (LHCb Vilnius, 2024). (~1.5 min)
 -->
 
 ---
@@ -424,7 +507,7 @@ space:
 
 <Regather :at="35" />
 
-<div class="credits credit">Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped.</div>
+<div class="credits credit">Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped. Zoom: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies), SpaceEngine; cosmic web: NCSA Advanced Visualization Lab. Globe: Natural Earth.</div>
 
 <!--
 The finale's take (2026-10-26; recorded after the toolkit bump, then this slide plays the
