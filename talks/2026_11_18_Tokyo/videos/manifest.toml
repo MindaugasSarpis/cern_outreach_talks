@@ -46,3 +46,32 @@ limb (SpaceEngine). Its last frame is public/figures/earth_back.jpg, the picture
 dissolves onto the globe. No audio. ffmpeg -ss 16 -to 40 -i vilnius_zoom.mp4 -an -vf \
 "select='not(mod(n,2))'" -fps_mode vfr frames, then a concat list of them in reverse order at \
 0.02 s each, -vf fps=50,format=yuv420p, libx264 -preset slow -crf 14."""
+
+# The two heavy scenes, recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy
+# point cloud should be pre-rendered as a video"). Takes of the live slides by slidev-stage-record
+# on v0.8.1 (d3d12, 1080p50, h264_nvenc QP 16); the live sources stay in the deck's comments and
+# setup/. The raws are these takes, not on gdrive: never a plain videos:sync here; record them
+# again with the commands below.
+[[videos]]
+name    = "globe.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+loudnorm = false
+notes   = """\
+Slide 21: the globe of Vilnius and Nagoya (setup/globe.js, CollabGlobe.vue), 20.1 s, no sound: \
+vilnius_back.mp4's last frame dissolves into grains onto the globe; the cities light, the strand \
+is drawn, the globe turns. pnpm talk record tokyo --out DIR -- --slides 21 --fps 50 --hold 20 \
+--clicks none (the live slide: CollabGlobe with figures/earth_back.jpg at the `globe` station), its \
+first 0.4 s cut (a dim blink as the picture's copy took over): ffmpeg -ss 0.4, libx264 -crf 14."""
+
+[[videos]]
+name    = "finale.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+loudnorm = false
+notes   = """\
+Slide 26: the finale, 53 s, no sound: the camera back along the whole route to the cover's \
+pose, the world dark 31-32.6 s, the cover's pentaquark gathering again on the camera's arrival \
+(landing 36.0 s), then held. Played muted, Starfire live with its peak slaved to the clip (Soundtrack `drop`). \
+pnpm talk record tokyo --out DIR -- --slides 26 --fps 50 --hold 16 --max 70 --clicks none (the \
+live slide: its `space.path` and <Regather> as in the deck's comment on slide 26)."""

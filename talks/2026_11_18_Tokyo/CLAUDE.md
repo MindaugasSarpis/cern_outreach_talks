@@ -50,6 +50,16 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 - Branch `talk/tokyo`, worktree `.claude/worktrees/tokyo` (`pnpm talk open tokyo`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/
+- 2026-10-27 (afternoon, the owner: "Deploy, make sure it works on a mac. The
+  heavy point cloud should be pre-rendered as a video"): the globe (slide 21)
+  and the finale (slide 26) are recorded clips now (globe.mp4 20.1 s,
+  finale.mp4 53 s; videos/manifest.toml), the finale muted with Starfire live,
+  its peak on the quarks' landing at 36.0 s (`drop`); a credits page (27) on
+  the finale's last frame (CloseStill), the world resting; the drawing buffer
+  capped at 1920 wide (`maxBufferWidth`, Innoday's M2 fix). The four new
+  clips are on the release videos-2026-11-18-tokyo. Not tested on a real Mac
+  (none here): the known M2 failures (a live heavy close, additive overload)
+  are gone with the recordings. Deploy: below, once it runs.
 - 2026-10-27 (afternoon, the owner directly): the arc re-ordered to the
   owner's outline (Decisions, 27 Oct): Lithuania (the Vilnius zoom out) →
   CERN → Lithuania at CERN → LHCb (clip, detector, collaboration) → quarks →
@@ -246,10 +256,9 @@ A piece a second talk needs moves to the shared kit instead of being copied.
   seen only in the presenter window. They move into the toolkit later.
 - `setup/CloseStill.vue`: copied from Innoday; the finale clip's last frame
   on the page after it, with the world resting.
-- `setup/Regather.vue` (this talk's): `<Regather :at="35" />` re-runs the
-  assembly of the station the camera is at, `at` engine-seconds after the
-  slide opens (the finale's loop back to the cover). It is timed off the
-  engine clock, so a take lands it on the same frame each time.
+- (`setup/Regather.vue` left on 27 Oct: in the take, the camera's arrival at
+  the cover's station had already gathered the pentaquark, and Regather at
+  35 s scattered and gathered it a second time. The arrival alone does it.)
 - `public/audio/starfire_close.m4a` (the track 0:30 to its end) and
   `starfire_close_peak.m4a` (from 2:52.85; the peak, the downbeat at 2:54.85,
   is 2.013 s in): Innoday's files, Scott Buckley „Starfire“, CC BY 4.0.
@@ -421,6 +430,21 @@ The owner's decisions, dated, newest last.
   Lithuanian community at CERN for "2018 CERN"; only the two cities on the
   globe. The "76 hadrons" slide left to keep the minutes (its chart was never
   fetched). Minutes trimmed on slides 8, 10, 15, 16, 18 and 25.
+
+- 2026-10-27 (the owner: "Deploy, make sure it works on a mac. The heavy
+  point cloud should be pre-rendered as a video"): slide 21's globe and slide
+  26's finale are recorded (`pnpm talk record`, d3d12, 1080p50) and played as
+  clips with `transition="fade"` (a cut clip never tells the stage it covers
+  the slide; Innoday, 22 Oct). The finale is Innoday's pattern, not v0.11's
+  `space.recorded` (not tagged yet): muted, Soundtrack `drop` { at 36.0,
+  duck 33.4 } on Starfire's 2:54.85 peak; then a credits page with
+  CloseStill (the credits moved there, music credited). Two takes were
+  checked frame by frame by a subagent: the first gathered the quarks twice
+  (the arrival and Regather), so Regather left and the path's end was
+  retimed (the dark 31–32.6 s, the camera wider at 27 s); the globe take's
+  first 0.4 s (a dim blink) was cut. `stage.options.maxBufferWidth: 1920`
+  (Innoday's M2 fix). On v0.11: `space.recorded` and `<StageSoundtrack>`
+  replace Soundtrack/CloseStill (Status).
 
 ## Verify
 

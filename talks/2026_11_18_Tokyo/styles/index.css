@@ -76,11 +76,12 @@ html[data-stage] .hero::after { content: ''; position: absolute; inset: 0; point
 html[data-stage] .hero.darker > img { filter: brightness(0.62) contrast(1.06); }
 html[data-stage] .hero .num { z-index: 2; }
 
-/* the credits a licence asks for (house rule): tiny print on the last slide, in late (2026-10-26) */
+/* the credits a licence asks for (house rule): tiny print on the last page (since 27 Oct its own, over the
+   finale's last frame), in a second after it opens */
 .slidev-layout .credit {
   position: absolute; left: 40px; right: 40px; bottom: 14px; z-index: 30; pointer-events: none;
   font-size: 9px; line-height: 1.35; color: rgba(207, 222, 240, 0.55); text-transform: none;
-  opacity: 0; animation: tokyo-credits-in 1.5s ease 40s forwards;
+  opacity: 0; animation: tokyo-credits-in 1.5s ease 1s forwards;
 }
 @keyframes tokyo-credits-in { to { opacity: 1; } }
 @media print { .slidev-layout .credit { animation: none; opacity: 1; } }

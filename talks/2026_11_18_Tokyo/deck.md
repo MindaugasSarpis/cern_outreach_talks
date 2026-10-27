@@ -18,6 +18,9 @@ stage:
   palette: classic
   plugins: [hadron]
   lang: en
+  # the drawing buffer at most 1920 wide: a projector's 1080p in full, a Retina Mac's screen at a little over half
+  # its pixels (owner, 27 Oct: "make sure it works on a mac"; Innoday's fix for the M2's lag, 22 Oct)
+  options: { maxBufferWidth: 1920 }
 title: "Lithuania and Japan: pentaquarks"
 lang: en                  # slides and notes; `pnpm talk lint` reads it
 htmlAttrs:
@@ -411,12 +414,18 @@ It ends on that frame and waits for the press; the next slide starts from the sa
 space: { at: globe }
 ---
 
-<CollabGlobe src="figures/earth_back.jpg" />
+<!-- recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy point cloud should be
+     pre-rendered as a video"): the live slide is CollabGlobe with figures/earth_back.jpg (setup/globe.js,
+     the `globe` station); to change it, put that component back, record it (videos/manifest.toml,
+     globe.mp4), encode, and put this player back. Fade, not cut: a cut clip never announces that it
+     covers the slide, so the world would draw on under it (Innoday, 22 Oct). -->
+<VideoPlayer src="globe.mp4" muted :controls="false" transition="fade" />
 
 <!-- facts: lhcb-vilnius-joined -->
 
 <!--
-The globe (owner, 27 Oct). The clip's last frame breaks into grains, which fly onto a slowly
+The globe (owner, 27 Oct), recorded (globe.mp4, 20.1 s, no sound; it ends and holds the turning
+globe's last frame until the press). The clip's last frame breaks into grains, which fly onto a slowly
 turning globe of grains (coastlines, Natural Earth, public domain); Vilnius lights, then
 Nagoya, and a strand of light is drawn between them, a pulse running along it. No text.
 Vilnius University (LHCb data) and Nagoya University (theory): the project.
@@ -499,22 +508,30 @@ Sources: Vilnius University (LHCb Vilnius, 2024). (~1.5 min)
 -->
 
 ---
-space:
-  path: [[0, { at: [270, 0, 0], dist: 17, yaw: 0, pitch: 8 }], [3, { at: [250, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [6, { at: [220, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [9, { at: [190, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [12, { at: [160, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [15, { at: [130, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [18, { at: [100, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [21, { at: [70, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [24, { at: [40, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [27, { at: [10, 0, 0], dist: 22, yaw: 40, pitch: 12 }], [30.5, { at: [-26, 0, 0], dist: 14, yaw: -20, pitch: 12 }], [33, { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14 }]]
-  ambient: [[0, 1], [31, 1], [33.4, 0.12], [35.2, 0.12], [37, 1]]
-  dim: 0.1
+space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the take's last pose; the world rests under the clip
 ---
 
-<Regather :at="35" />
-
-<div class="credits credit">Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped. Zoom: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies), SpaceEngine; cosmic web: NCSA Advanced Visualization Lab. Globe: Natural Earth.</div>
+<!-- recorded (owner, 27 Oct: "The heavy point cloud should be pre-rendered as a video"; Karjera's live close went
+     white on the owner's M2): finale.mp4 is the take of the live slide, whose frontmatter was
+       space:
+         path: [[0, { at: [270, 0, 0], dist: 17, yaw: 0, pitch: 8 }], [3, { at: [250, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [6, { at: [220, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [9, { at: [190, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [12, { at: [160, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [15, { at: [130, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [18, { at: [100, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [21, { at: [70, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [24, { at: [40, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [27, { at: [10, 0, 0], dist: 30, yaw: 40, pitch: 14 }], [31, { at: [-8, 0, 0], dist: 20, yaw: 20, pitch: 12 }], [34, { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14 }]]
+         ambient: [[0, 1], [29.5, 1], [31, 0.12], [32.5, 0.12], [35, 1]]
+         dim: 0.1
+     and whose body was empty: the camera's arrival at the cover's station (within `reach`, about 32 s)
+     gathers its pentaquark again, as on the cover (27 Oct: Regather at 35 s made them gather twice,
+     the arrival's and its own, so it left). To change it, put those back, record
+     (videos/manifest.toml, finale.mp4), encode, and put this back. The clip plays muted; Starfire plays
+     live and `drop` slaves the clip's rate to it so its peak lands on the quarks' landing (Innoday's
+     close, 22 Oct; Karjera, 26 Oct: world and audio clocks drift, so never time music off the world). -->
+<VideoPlayer src="finale.mp4" muted :controls="false" transition="fade" />
+<Soundtrack src="audio/starfire_close.m4a" start :level="0.5" keys :drop="{ at: 36.0, file: 'audio/starfire_close_peak.m4a', hit: 2.013, duck: 33.4, quiet: 0.06 }" />
 
 <!--
-The finale's take (2026-10-26; recorded after the toolkit bump, then this slide plays the
-clip, muted, with Starfire's peak on the regathering: talks/…/CLAUDE.md, Decisions). From
+The finale, recorded (finale.mp4, 53 s, muted; 27 Oct), Starfire live (+ and - set its
+level, seen only in the presenter window), its peak on the regathering. From
 the two teams the camera runs back along the whole route, pentaquark to collider, to the
-cover's pose; the world falls dark for a moment, and on 35 s the five quarks fly in again
-as on the cover.
+cover's pose; the world falls dark for a moment (31-32.6 s), and the five quarks fly in again
+as on the cover, landing at 36.0 s on Starfire's peak.
 
 Close. Back at the pentaquark from the start; the hum returns.
 
@@ -522,4 +539,19 @@ Five quarks were allowed on paper in 1964 and found in 2015. What they are
 made of is the question that Lithuanian and Japanese physicists now answer
 together. Thank you, and thank you to the Embassy for bringing us together
 today. (~1.25 min)
+-->
+
+---
+space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the finale's last pose; the world rests under its last frame (CloseStill)
+---
+
+<CloseStill src="figures/finale_end.jpg" />
+<Soundtrack src="audio/starfire_close.m4a" :level="0.5" keys />
+<div class="credits credit">Music: Scott Buckley, "Starfire", CC BY 4.0. Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped. Zoom: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies), SpaceEngine; cosmic web: NCSA Advanced Visualization Lab. Globe: Natural Earth.</div>
+
+<!--
+Credits (house rule: the credits a licence asks for, tiny print, on the last page). The finale's
+last frame as a picture, the world resting under it (a Mac need not draw it live); the music
+goes on. Nothing to say here: questions.
+(~0 min)
 -->
