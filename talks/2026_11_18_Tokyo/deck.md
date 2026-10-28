@@ -147,8 +147,8 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22, dim: 0.6 }
 ---
 
 <StagePhoto src="figures/lhcb_detector.jpg" alt="The LHCb detector in its cavern under the LHCb banner, March 2024" focus="50% 50%">
-<div class="shade bl"></div>
-<div class="num bl">5 600 t<span class="name">LHCb</span></div>
+<div class="shade tl strong"></div>
+<div class="num tl">5 600 t<span class="name">LHCb</span></div>
 </StagePhoto>
 
 <!-- facts: lhcb-detector-size, lhcb-100m-below-ground, lhcb-three-storey-worked, lhcb-run3-readout-4tbs -->
@@ -318,7 +318,7 @@ space: { at: km, dim: 0.6 }
 ---
 
 <StagePhoto src="figures/belle.jpg" alt="The Belle detector at KEK, Tsukuba" focus="50% 35%">
-<div class="shade tr"></div>
+<div class="shade tr strong"></div>
 <div class="num tr">2003<span class="name">KEK</span></div>
 </StagePhoto>
 
@@ -436,10 +436,10 @@ Sources: Natural Earth; Vilnius University. (~1 min)
 space: { at: project, dim: 0.6 }
 ---
 
-<StagePhoto src="figures/vilnius.jpg" alt="The Great Courtyard of Vilnius University" focus="50% 45%" class="darker">
-<div class="shade bl br"></div>
-<div class="num bl">2024<span class="name">LHCb</span></div>
-<div class="num br">13<span class="name">students</span></div>
+<StagePhoto src="figures/vilnius.jpg" alt="The Great Courtyard of Vilnius University" focus="50% 65%" class="darker">
+<div class="shade tl tr strong"></div>
+<div class="num tl">2024<span class="name">LHCb</span></div>
+<div class="num tr">13<span class="name">students</span></div>
 </StagePhoto>
 
 <!-- facts: lhcb-vilnius-joined, lhcb-vilnius-students -->
@@ -455,8 +455,8 @@ space: { at: project, dim: 0.6 }
 ---
 
 <StagePhoto src="figures/scifi.jpg" alt="A SciFi tracker frame with its fibre modules lowered into the LHCb cavern, May 2021" focus="50% 50%">
-<div class="shade bl"></div>
-<div class="num bl">524 288<span class="name">Hamamatsu sensors</span></div>
+<div class="shade tl strong"></div>
+<div class="num tl">524 288<span class="name">Hamamatsu channels</span></div>
 </StagePhoto>
 
 <!-- facts: lhcb-scifi-channels, hamamatsu-japanese, hamamatsu-lhcb-scifi-sipm, lhcb-vilnius-scifi-lis -->

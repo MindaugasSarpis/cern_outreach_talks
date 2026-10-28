@@ -50,6 +50,14 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 - Branch `talk/tokyo`, worktree `.claude/worktrees/tokyo` (`pnpm talk open tokyo`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/
+- 2026-10-29: review round on 26ebf00 (the next review's `since`; notes/review.md):
+  lint 0/0, `talk review` ok, no page errors; a subagent on the sheet and on
+  strips of globe.mp4 and finale.mp4. Fixed, not deployed: slide 23's label
+  "Hamamatsu channels" (524 288 are SiPM channels, not sensors); the numbers on
+  slides 7, 22 and 23 moved to the top corners with strong shades, slide 16's
+  shade strong (reshot, checked). Open (review.md): the finale's route back
+  reads as empty starfield and its peak may be 0.7 s early, the globe's Nagoya
+  on the limb (both for the v0.11 re-take); slide 12's baryon reads as two blobs.
 - 2026-10-27 (afternoon, the owner: "Deploy, make sure it works on a mac. The
   heavy point cloud should be pre-rendered as a video"): the globe (slide 21)
   and the finale (slide 26) are recorded clips now (globe.mp4 20.1 s,
@@ -191,7 +199,7 @@ writing).
 | 20 | globe | clip vilnius_back.mp4: the cosmic web back to the Earth's limb | | (the coming back) | 0.3 |
 | 21 | globe | that frame breaks into grains onto a globe; Vilnius, Nagoya, a strand between | | the two teams | 1 |
 | 22 | project | Vilnius University photo | 2024 LHCb, 13 students | the Vilnius group | 1.25 |
-| 23 | project | SciFi frame going into the cavern (2021) | 524 288 Hamamatsu sensors | Japanese sensors in the detector Vilnius serves | 1 |
+| 23 | project | SciFi frame going into the cavern (2021) | 524 288 Hamamatsu channels | Japanese sensors in the detector Vilnius serves | 1 |
 | 24 | lhcb | the spectrum again | 38.3 TB open data | a VU student finds the pentaquark again | 1 |
 | 25 | project | two teams (VU, Nagoya photos), one pentaquark | | the project | 1.5 |
 | 26 | hero | finale: back along the route, dark, the five quarks gather on the peak | | close; thank you | 1.25 |
