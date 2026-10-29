@@ -47,6 +47,25 @@
    "z": 137.847787
   }
  },
+ "line5sigma": {
+  "about": "T2's close: the counted background in the window 1850-1880 is b = 0.75 x N_off (all 91 583 candidates); a window holding b + 5 sqrt(b) would be exactly 5 sigma, (N_on - b)/sqrt(b) = 5. Spread evenly over its 15 bins of 2 MeV that is `level` a bin. set is a dk-curve parameter set: f 'flat', a = level per bin of 2 MeV, drawn over range.",
+  "nOff": 28103,
+  "alpha": 0.75,
+  "b": 21077.25,
+  "sqrtB": 145.180061,
+  "total": 21803.1503,
+  "bins": 15,
+  "level": 1453.54335,
+  "zCheck": 5.0,
+  "nOn": 41090,
+  "onPerBin": 2739.33333,
+  "f": "flat",
+  "range": [1850.0,1880.0],
+  "set": {
+   "a": 1453.54335,
+   "bin": 2.0
+  }
+ },
  "source": {
   "title": "LHCb event file for real measurement",
   "url": "https://opendata.cern.ch/record/401",

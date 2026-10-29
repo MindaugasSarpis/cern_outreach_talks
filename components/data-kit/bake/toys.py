@@ -8,6 +8,10 @@
             roll; then the most alarming roll grown to 3 500 entries
   tail      normal-tail numbers: beyond 1, 3 and 5 sigma, the bell's expected
             grains out of 300 000, 1 in 3.5 million; 1 - 0.95^20
+  falling.curve      the expected count at 140 and 3 500 entries as dk-curve
+                     parameter sets (f 'exp')
+  falling-big.f32    the 3 500 grown entries as a rows source for dk-hist:
+  falling-big.json   roll 2's 140 values first, then the 3 360 added (GeV)
 
     python3 bake/toys.py
     python3 bake/toys.py --check
@@ -25,7 +29,7 @@ import json
 import numpy as np
 from scipy.stats import norm, poisson
 
-from common import DATA, emit, json_bytes
+from common import DATA, emit, f32_bytes, json_bytes
 
 SCRIPT = "toys.py"
 SEED_FLAT = 1461
@@ -106,6 +110,8 @@ def bake():
                      extraValues=np.round(more, 5)),
         bigN=FALL["big"],
     )
+    falling["curve"] = curve_sets(e, shares)
+    big = big_rows(e, feat, more, big_vals, cb)
 
     # --------------------------------------------------------------- tail
     tail = dict(
@@ -118,13 +124,69 @@ def bake():
                        "20looks_2sigmaTwoSided": 1 - (1 - 2 * norm.sf(2)) ** 20,
                        "20looks_2sigmaOneSided": 1 - (1 - norm.sf(2)) ** 20},
     )
-    out = {"toys.json": json_bytes(dict(flat=flat_out, falling=falling, tail=tail, source=SOURCE))}
+    out = {"toys.json": json_bytes(dict(flat=flat_out, falling=falling, tail=tail, source=SOURCE)),
+           "falling-big.f32": f32_bytes(big_vals), "falling-big.json": json_bytes(big)}
     ent = {"toys.json": dict(talks=[2], shape="object",
                              meaning="simulated toys: flat-bin Poisson re-rolls, the falling spectrum with its 2 sigma alarms "
-                                     "and the 3 500-entry growth, normal-tail numbers and 1 - 0.95^20")}
+                                     "and the 3 500-entry growth, its expectation at 140 and 3 500 entries as dk-curve sets "
+                                     "(falling.curve), normal-tail numbers and 1 - 0.95^20"),
+           "falling-big.f32": dict(talks=[2], shape=[FALL["big"], 1], dtype="float32 LE",
+                                   meaning="the falling spectrum grown to 3 500 entries (simulated, GeV): roll 2's 140 values, "
+                                           "then the 3 360 added; a dk-hist rows source (values falling-big.f32, key M)"),
+           "falling-big.json": dict(talks=[2], shape="object",
+                                    meaning="falling-big.f32's header: n, cols ['M'], units, order, the counts a builder bins")}
     summ = dict(level=level, spread=flat_out["rollSpread"], alarms=len(alarms), feat=feat["roll"], fbin=fb,
                 z140=feat["maxZ"], z3500=float(zb[fb]), max3500=float(zb.max()))
     return out, ent, summ
+
+
+def curve_sets(e, shares):
+    """The expected count per bin as a dk-curve 'exp' set: density a exp(slope (x - pivot)) / bin entries per GeV.
+
+    For n entries of the density proportional to exp(k (x - lo)/L) on [lo, lo + L], slope = k/L and
+    a = n bin (k/L) / (exp(k) - 1), so a is the expected count of a bin of `bin` at x = lo; dk-curve draws
+    density x the hist's bin, the expected count per bin at its centre (the bin integral, `expected140`,
+    differs from it by sinh(u)/u - 1 at most, u = slope bin / 2)."""
+    lo, hi, nb, k = FALL["lo"], FALL["hi"], FALL["bins"], FALL["slope"]
+    L, bw = hi - lo, (hi - lo) / nb
+    slope = k / L
+    xc = 0.5 * (e[:-1] + e[1:])
+    sets, checks = [], {}
+    for n in (FALL["n"], FALL["big"]):
+        a = n * bw * slope / np.expm1(k)
+        at_centre = a * np.exp(slope * (xc - lo))
+        exp_bin = n * shares
+        sets.append({"a": a, "slope": slope, "pivot": lo, "bin": bw, "n": n})
+        checks[str(n)] = dict(maxRelDiff=float(np.max(np.abs(at_centre / exp_bin - 1))),
+                              total=float(at_centre.sum()))
+    return dict(about=("The toy's own expectation as dk-curve parameter sets (f 'exp': a exp(slope (x - pivot)) per bin "
+                       "of `bin` GeV), set 0 for 140 entries and set 1 for 3 500. In a deck: dk-curve with src "
+                       "'toys.json', sets ['falling.curve.sets.0', 'falling.curve.sets.1'], f 'exp', range [1.45, 1.75], "
+                       "pull false. check: the curve at the bin centres against expected140 / expected3500 (the bin "
+                       "integrals)."),
+                f="exp", params=["a", "slope"], range=[lo, hi], sets=sets, check=checks)
+
+
+def big_rows(e, feat, more, big_vals, cb):
+    """falling-big.f32's header, and a check that a builder binning the float32 values gets the bake's counts."""
+    v32 = np.asarray(big_vals, "<f4").astype(np.float64)
+    lo, bw, nb = FALL["lo"], round((FALL["hi"] - FALL["lo"]) / FALL["bins"], 12), FALL["bins"]
+    js_bin = np.floor((v32 - lo) / bw).astype(int)       # dk-hist: Math.floor((v - lo) / bin), bin 0.01 as a deck writes it
+    c3500 = np.bincount(js_bin[(js_bin >= 0) & (js_bin < nb)], minlength=nb)
+    c140 = np.bincount(js_bin[:FALL["n"]][(js_bin[:FALL["n"]] >= 0) & (js_bin[:FALL["n"]] < nb)], minlength=nb)
+    return dict(about=("The falling spectrum of toys.json grown to 3 500 entries (simulated): row r < 140 is roll "
+                       f"{feat['roll']}'s value r (falling.rolls[{feat['roll']}].values, sorted), rows 140-3 499 are "
+                       "bigRoll.extraValues (sorted), all in GeV, rounded to 5 decimals then stored as float32. A dk-hist "
+                       "reads it as a rows source: values 'falling-big.f32', key 'M', lo 1.45, hi 1.75, bin 0.01, "
+                       "ours false; {n: 140} is roll 2, {n: 3500} the grown set when the rows fill in file order. "
+                       "counts140 / counts3500 are what such a builder bins (Math.floor((v - lo) / bin))."),
+                n=len(big_vals), cols=["M"], units={"M": "GeV (simulated)"},
+                layout="little-endian float32, one column, rows in the order above",
+                fromRoll=feat["roll"], nRoll=FALL["n"], nAdded=len(more),
+                counts140=c140, counts3500=c3500,
+                matchesBake={"140": bool(np.array_equal(c140, feat["counts"])), "3500": bool(np.array_equal(c3500, cb))},
+                alarmBin=feat["maxBin"], alarmEdges=[float(e[feat["maxBin"]]), float(e[feat["maxBin"] + 1])],
+                source=SOURCE)
 
 
 def main(argv=None) -> int:

@@ -26,6 +26,57 @@
    "meanErr": 0.0306654126
   }
  ],
+ "centredOnFit": {
+  "about": "The same means in windows centred on the fitted 1864.47 (d0-fit.json mu, rounded as the deck draws it), half-widths 25 / 15 / 10 / 5 MeV/c^2. nClosed and meanClosed use lo <= M <= hi, as dk-hist's {window} does.",
+  "centre": 1864.47,
+  "windows": [
+   {
+    "halfWidth": 25.0,
+    "window": [1839.47,1889.47],
+    "n": 56589,
+    "mean": 1864.3756,
+    "meanErr": 0.0520522503,
+    "nClosed": 56589,
+    "meanClosed": 1864.3756
+   },
+   {
+    "halfWidth": 15.0,
+    "window": [1849.47,1879.47],
+    "n": 41108,
+    "mean": 1864.46177,
+    "meanErr": 0.0381394112,
+    "nClosed": 41108,
+    "meanClosed": 1864.46177
+   },
+   {
+    "halfWidth": 10.0,
+    "window": [1854.47,1874.47],
+    "n": 31182,
+    "mean": 1864.42431,
+    "meanErr": 0.0306513989,
+    "nClosed": 31182,
+    "meanClosed": 1864.42431
+   },
+   {
+    "halfWidth": 5.0,
+    "window": [1859.47,1869.47],
+    "n": 17545,
+    "mean": 1864.43688,
+    "meanErr": 0.0213514713,
+    "nClosed": 17545,
+    "meanClosed": 1864.43688
+   }
+  ]
+ },
+ "narrow1865": {
+  "halfWidth": 5.0,
+  "window": [1860.0,1870.0],
+  "n": 17496,
+  "mean": 1864.92049,
+  "meanErr": 0.0213960285,
+  "nClosed": 17496,
+  "meanClosed": 1864.92049
+ },
  "pdg": {
   "m": 1864.84,
   "err": 0.04,
