@@ -1,0 +1,26 @@
+{
+ "about": "14 bins of 2 MeV on 1816-1844 MeV/c^2, below the peak. Three estimates of the bin-to-bin spread: raw sd (ddof 1); sd of the residuals about a straight line (ddof 2); sd of neighbour differences / sqrt(2) (ddof 1). A 14-bin spread is itself uncertain by about 1/sqrt(2 x 13) = 19 %.",
+ "edges": [1816.0,1818.0,1820.0,1822.0,1824.0,1826.0,1828.0,1830.0,1832.0,1834.0,1836.0,1838.0,1840.0,1842.0,1844.0],
+ "counts": [1433,1439,1443,1477,1419,1480,1426,1505,1430,1444,1534,1471,1456,1494],
+ "mean": 1460.78571,
+ "sqrtMean": 38.2202265,
+ "spread": {
+  "raw": 33.8848243,
+  "detrended": 31.3665555,
+  "neighbourDiff": 39.1166893
+ },
+ "slopePerBin": 3.7032967,
+ "spreadUncertainty": 0.196116135,
+ "source": {
+  "title": "LHCb event file for real measurement",
+  "url": "https://opendata.cern.ch/record/401",
+  "doi": "10.7483/OPENDATA.LHCb.E7EJ.JUWR",
+  "record": 401,
+  "file": "MasterclassData.root",
+  "fileBytes": 1289541,
+  "checksum": "sha256:8694a2ed518472b02994629154de3077fdff4aef1065691fa13ae9f6b23b039b (adler32:2ebf133a as the portal lists it)",
+  "licence": "CC0-1.0 (record page; the portal API record carries no licence field)",
+  "retrieved": "2026-10-29",
+  "note": "Read through the course's D0_KPi.csv (sha256 25c3c97299ea844f27308fde20a00ecaa87580868f3c767d7ade5621c1505136, 3 926 142 B), the four filled branches D0_MM, D0_PT, D0_TAU, D0_MINIPCHI2 of DecayTree, 91 583 entries; checked equal to the ROOT file value for value on 2026-10-29. Rows are D0 candidates: the portal's 53 948 counts events. runNumber, eventNumber and GpsTime are zero in the file, so the data-taking year cannot be read from it."
+ }
+}
