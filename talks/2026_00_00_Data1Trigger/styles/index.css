@@ -1,0 +1,46 @@
+/* Data1Trigger: the series' look (bible §3). */
+
+/* The cover keeps its plain title alone (no kicker): one h1, set as the stage's
+   cover title, rising as the bunches meet at the end of the 9 s fly-in. */
+html[data-stage] .slidev-layout.cover h1:only-of-type {
+  font-size: max(var(--stage-type-min, 0px), 66px * var(--stage-type-scale, 1)) !important;
+  font-weight: 700 !important; line-height: 0.98 !important; letter-spacing: -0.02em !important;
+  text-transform: uppercase; color: var(--stage-fg) !important; margin: 0 !important; max-width: 12ch;
+  font-family: 'Space Grotesk', system-ui, sans-serif !important;   /* the series' numbers' face */
+  animation: d1-title-in 1.6s ease 8.4s both;
+}
+@keyframes d1-title-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* The series' numbers (MasterTalk's .nums, in the bible's colours): a 46 px number,
+   a 22 px unit and name in light blue, on the left above the lower third (kept clear for
+   the recorded video: the canvas is 551 px tall, its lower third starts 184 px up), each
+   line fading in at its --dN once the camera holds. */
+html[data-stage] .nums {
+  position: absolute; left: 56px; bottom: 200px; z-index: 30; pointer-events: none;
+  font-family: 'Space Grotesk', system-ui, sans-serif; color: #e8f6ff;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.6);
+}
+html[data-stage] .nums p { margin: 0 0 10px; line-height: 1; white-space: nowrap; opacity: 0; animation: d1-nums-in 1s ease forwards; }
+html[data-stage] .nums b { font-size: 46px; font-weight: 700; letter-spacing: -0.01em; }
+html[data-stage] .nums .unit { font-size: 22px; font-weight: 500; letter-spacing: 0.04em; color: #9fd8ff; margin-left: 0.4em; }
+html[data-stage] .nums .name { font-size: 22px; font-weight: 400; letter-spacing: 0.02em; color: #9fd8ff; margin-left: 0.6em; }
+html[data-stage] .nums p:nth-child(1) { animation-delay: var(--d1, 2s); }
+html[data-stage] .nums p:nth-child(2) { animation-delay: var(--d2, 3.2s); }
+html[data-stage] .nums p:nth-child(3) { animation-delay: var(--d3, 4.4s); }
+/* a number a click brings in fades in (Slidev's own is 0.1 s) */
+html[data-stage] .nums .slidev-vclick-target { transition: opacity 0.9s ease; }
+/* one line that a click swaps for another in the same place (slide 9) */
+html[data-stage] .nums .swap { display: grid; }
+html[data-stage] .nums .swap > span { grid-area: 1 / 1; }
+@keyframes d1-nums-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* Licence credits, tiny print on the last slide (house rule; none for CERN's material). */
+html[data-stage] .credit {
+  position: absolute; right: 28px; bottom: 18px; z-index: 30; max-width: 62%; pointer-events: none; text-align: right;
+  font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 9px; line-height: 1.35; color: rgba(207, 228, 245, 0.55);
+  opacity: 0; animation: d1-nums-in 1.5s ease 8s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-stage] .nums p, html[data-stage] .credit, html[data-stage] .slidev-layout.cover h1:only-of-type { animation: none; opacity: 1; }
+}

@@ -1,123 +1,416 @@
 {
-  "hero": "hero",
-  "stations": [
+ "hero": "lhcb",
+ "stations": [
+  {
+   "id": "lhcb",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "target": [
+     -1.5,
+     1.4,
+     0
+    ],
+    "dist": 12,
+    "yaw": -24,
+    "pitch": 10,
+    "sway": 0.5
+   },
+   "objects": [
     {
-      "id": "hero",
-      "pos": [
-        -26,
-        0,
-        0
-      ],
-      "look": {
-        "target": [
-          -7.8,
-          0.4,
-          0
-        ],
-        "dist": 15,
-        "yaw": -22,
-        "pitch": 7,
-        "sway": 9
-      },
-      "gather": 3.6,
-      "pulse": 6,
-      "objects": [
-        {
-          "type": "constellation",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "radius": 3.1,
-          "nodeRadius": 0.72,
-          "nodes": [
-            {
-              "pos": [
-                1.2,
-                0.9,
-                0.3
-              ]
-            },
-            {
-              "pos": [
-                0.4,
-                -1.5,
-                -0.9
-              ],
-              "color": "#dfe6ee"
-            },
-            {
-              "pos": [
-                1.5,
-                -0.3,
-                -1.2
-              ]
-            },
-            {
-              "pos": [
-                -0.9,
-                1.3,
-                -1.0
-              ],
-              "color": "#dfe6ee"
-            },
-            {
-              "pos": [
-                -1.3,
-                -0.6,
-                0.6
-              ]
-            }
-          ]
-        }
-      ]
+     "type": "lhc-collision",
+     "name": "crossing",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "sound": false,
+     "approach": 8.3,
+     "tone": "#7dd3fc",
+     "muonTone": "#f2f5f9",
+     "splashTone": "#7dd3fc",
+     "bunchColor": "#f2f5f9",
+     "grains": 200000
     },
     {
-      "id": "first",
-      "pos": [
-        8,
+     "type": "detector",
+     "name": "det",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "src": "lhcb",
+     "parts": {
+      "preset": "lhcb",
+      "velo": {
+       "alpha": 0.25
+      },
+      "pipe": {
+       "alpha": 0
+      },
+      "magnet": {
+       "color": "#7dd3fc",
+       "alpha": 0.25
+      },
+      "rich1": {
+       "color": "#7dd3fc"
+      },
+      "rich2": {
+       "color": "#7dd3fc"
+      },
+      "hcal": {
+       "color": "#7dd3fc"
+      }
+     },
+     "alpha": 0.42,
+     "size": 1.3,
+     "out": [
+      16,
+      0,
+      0
+     ],
+     "hot": "#7dd3fc"
+    },
+    {
+     "type": "dk-glow",
+     "name": "glow",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "of": "det",
+     "src": "lhcb",
+     "grains": 46500,
+     "alpha": 0.75
+    },
+    {
+     "type": "dk-trigger",
+     "name": "lane",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 9200,
+     "from": 13,
+     "to": 112,
+     "lane": 0.7,
+     "speed": 7,
+     "packets": 600,
+     "per": 14,
+     "empty": 0.25,
+     "knot": 0.1,
+     "glide": 3.5,
+     "gates": [
+      {
+       "x": 30,
+       "keep": 0.0333
+      }
+     ],
+     "ours": [
+      13,
+      14,
+      {
+       "at": 34,
+       "lag": 0.4
+      }
+     ],
+     "alpha": 1.3,
+     "size": 1.6
+    },
+    {
+     "type": "dk-trigger",
+     "name": "trg",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 72000,
+     "from": 13,
+     "to": 112,
+     "lane": 0.7,
+     "speed": 7,
+     "packets": 4500,
+     "per": 14,
+     "empty": 0.25,
+     "knot": 0.08,
+     "glide": 3.5,
+     "gates": [
+      {
+       "x": 30,
+       "keep": 0.0333,
+       "off": [
+        4
+       ]
+      },
+      {
+       "x": 66,
+       "keep": 0.1,
+       "shrink": 0.75,
+       "step": 5
+      }
+     ],
+     "buffer": {
+      "at": 49,
+      "len": 12,
+      "r": 4.5,
+      "grains": 6000,
+      "hold": 3,
+      "spin": 0.08,
+      "step": 3
+     },
+     "ours": [
+      13,
+      14,
+      {
+       "at": 34,
+       "lag": 0.4
+      },
+      {
+       "at": [
+        49,
+        4.4,
+        0
+       ]
+      },
+      {
+       "at": [
+        49,
+        4.4,
+        0
+       ]
+      },
+      {
+       "at": 70,
+       "glide": 3,
+       "lag": 1.5
+      },
+      98,
+      {
+       "at": 98,
+       "fold": true,
+       "glide": 1.2
+      }
+     ],
+     "collapse": 8
+    },
+    {
+     "type": "dk-spark",
+     "name": "s1",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 221,
+     "steps": [
+      null,
+      {
+       "at": [
+        0,
         0,
         0
-      ],
-      "look": {
-        "dist": 10,
-        "yaw": -24,
-        "pitch": 7
+       ]
       },
-      "objects": [
-        {
-          "type": "ring",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "radius": 3,
-          "thickness": 0.01,
-          "tilt": 80,
-          "spin": 0
-        },
-        {
-          "type": "orbs",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "items": [
-            {
-              "id": "here",
-              "pos": [
-                0,
-                0,
-                0
-              ],
-              "label": "start here"
-            }
-          ]
-        }
-      ]
+      {
+       "on": "lane"
+      },
+      {
+       "on": "trg"
+      }
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "id": "bytes",
+   "pos": [
+    400,
+    0,
+    0
+   ],
+   "look": {
+    "target": [
+     0.45,
+     0.2,
+     0
+    ],
+    "dist": 2,
+    "yaw": -12,
+    "pitch": 6,
+    "sway": 0.3
+   },
+   "objects": [
+    {
+     "type": "dk-ground",
+     "name": "g1",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 14000,
+     "radius": 70,
+     "enterable": true,
+     "size": 1.4,
+     "alpha": 1.4
+    },
+    {
+     "type": "dk-lineup",
+     "name": "tb",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 91400,
+     "unit": 0.1,
+     "balls": [
+      {
+       "n": 1
+      },
+      {
+       "n": 4,
+       "wait": 1.6
+      },
+      {
+       "n": 345600,
+       "grain": 8,
+       "wait": 2.4,
+       "from": [
+        1,
+        0.3,
+        -0.2
+       ]
+      },
+      {
+       "n": 1300000,
+       "grain": 27,
+       "from": [
+        0.3,
+        0.25,
+        -1
+       ]
+      },
+      {
+       "n": 864,
+       "color": "sel",
+       "at": {
+        "beside": 2,
+        "side": -1,
+        "gap": 1.5
+       }
+      }
+     ],
+     "gaps": [
+      0.5,
+      1.6,
+      5
+     ],
+     "assemble": false,
+     "sets": {
+      "5": [
+       2,
+       4
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "floor",
+   "pos": [
+    100,
+    -9,
+    0
+   ],
+   "look": {
+    "target": [
+     0,
+     1.8,
+     0
+    ],
+    "dist": 16,
+    "yaw": -12,
+    "pitch": 12,
+    "sway": 1
+   },
+   "objects": [
+    {
+     "type": "dk-ground",
+     "name": "g2",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 14000,
+     "radius": 40,
+     "enterable": true
+    },
+    {
+     "type": "dk-heap",
+     "name": "heap",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "n": 91583,
+     "radius": 4,
+     "rain": 6,
+     "oursFrom": "fp",
+     "grains": 91583
+    },
+    {
+     "type": "dk-spark",
+     "name": "fp",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 1,
+     "alpha": 0,
+     "steps": [
+      null,
+      {
+       "at": [
+        -2,
+        9,
+        0
+       ],
+       "halo": false
+      }
+     ]
+    },
+    {
+     "type": "dk-spark",
+     "name": "s2",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 221,
+     "steps": [
+      null,
+      {
+       "on": "trg"
+      },
+      {
+       "on": "heap"
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }

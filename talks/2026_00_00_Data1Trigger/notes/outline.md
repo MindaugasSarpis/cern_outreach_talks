@@ -1,5 +1,10 @@
 # Data1Trigger: outline (label outline:data1trigger, 29 Oct 2026; revised revise:data1trigger)
 
+> **Superseded by the owner's 29 Oct decisions** (the series bible's top block): the stage,
+> decay and record names in the slide sections below (HLT1, HLT2, VELO, Turbo, GPU counts,
+> the decay and its fourth number's name) are not to be used on screen or in any Message or
+> Picture line. `deck.md` is the source; this outline is the history of how it was planned.
+
 Talk 1 of "Data analysis, the CERN way". This is the outline step of the house pipeline
 (talk-quality §2, step 3). It covers each slide's pose, its one picture, the numbers on
 screen and the notes, so the deck draft can be written from it. It does not change
@@ -650,3 +655,77 @@ row and T2's cover).
   may need `recorded: plate`.
 - **Claims to watch:** the 10 GB/s 2026 target (an unread 2025 LHCb talk), the 200-or-500
   GPU count, and the design-only 0.75 shrink against the 2024 event sizes.
+
+## Decisions (deck draft, draft:data1trigger, 29 Oct)
+
+Where the deck departs from the outline above, and why. The owner's decisions of 29 Oct
+(bible top block) win over the outline's text.
+
+- **No experiment internals, no named decay.** The outline predates the owner's 29 Oct
+  decisions. In the deck the trigger stages are "the first filter" and "the second
+  filter" in every Message, Picture, Caveat and Misconception line; the VELO caveat
+  (slide 5), the GPU count (slide 8: the `500` GPUs number is dropped, so slide 8 shows
+  `30` MHz "in", then `1` MHz "out"), the reconstructed-only format and the CPU farm
+  (slide 10) are gone or reworded without names. Record numbers stay in Sources only.
+  Slide 14 says "a short-lived particle", never its name.
+- **Slide 13: three numbers, not four.** The fourth number's name is banned on screen, so
+  the outline's own fallback is taken: `1 880.6` MeV/c² mass, `3 001` MeV/c pT,
+  `0.413` ps decay time at once; the fourth is said only, as "how far its path points
+  from the collision". The takeaway reads "What survives is a row of numbers".
+- **The collision is not stepped by `steps:`.** `lhc-collision` listens to the
+  lhc-opening bus, not the stage's step bus, so `crossing: 0/1` in frontmatter would do
+  nothing. `setup/Crossing.vue` (talk-owned, MasterTalk's without slideNav) starts it
+  when the cover opens and fades it (1.6 s) when the cover is left. The object's
+  `approach: 8.3` makes the bunches meet 8.3 s in, as the 9 s path lands and the rate
+  falls (8.6-9.2 s). stage:check counts the collision's 200k on every slide (no step
+  drives it): at most about 535k at tier 0, under its 600k budget.
+- **No Clock.** `Clock.vue` is not lifted: slide 2 shows `25` ns alone (the outline's
+  fallback). Lifting it into the kit is a kit request.
+- **Slide 9's flood click uses the kit's `off: [4]`** (gate 1 off at step 4, the buffer on),
+  as lab 1 does; slide 10 opens on step 3 (gate 1 long on) and its click jumps 3 → 5,
+  which fires gate 2 only. The `80` h line swaps for `2.1` h in place on the click.
+- **Slide 10's numbers come with the click** (`100` kHz, `10` GB/s), so click 0 is the
+  picture alone (gate 2 dark, whole knots passing).
+- **The hand-over from the fold to the heap** uses `dk-heap oursFrom` on `fp`, an invisible
+  dk-spark at the fold point ([98, 0, 0] world), not on `trg`: slide 14 hides the lane,
+  and a cold-opened slide 14 would otherwise start the glide wherever the hidden lane
+  puts its packet. `s2` rings our packet on slide 13 (`on: trg`) and our grain on 14
+  (`on: heap`). Slide 14's path starts at slide 13's pose (a flight down with the grain).
+- **Slide 12:** the kept pile carries no world label (`864 TB` shows once, in `.nums`).
+- **Slide 4's Message** names ATLAS for the 60 (the fact is ATLAS's figure only).
+- **The cover title** is one `# The trigger`, styled in `styles/index.css` as the stage's
+  cover title (no kicker), fading in at 8.4 s; the stage also holds it until the path
+  lands. The lint reads the headmatter's `onscreen: numbers` as slide 1's own, so it flags
+  the cover's title as TEXT (a false positive; open item for the main loop).
+- **Facts held off the deck:** what the first filter looked for (`lhcb-hlt1-selections`)
+  and which stream record 401's sample came from (`lhcb-record401-run1-trigger`), in
+  `notes/facts-needed.md`. Slide 8's notes say only that it is not said.
+- **The cover's landing moved** from `[3, 0.4, 0]` to `[-1.5, 1.4, 0]` (dist 12, yaw −24,
+  pitch 10), so the crossing sits right of and below the title with black round the
+  title (the first sheet had the title over the tracks). T5's close cranes back to this
+  pose; the `lhcb` station's look target matches it.
+- **Slide 14's count** runs on its own 6.5 s clock: `for="heap"` landed on 91 584 in the
+  shots (kit request 4).
+- **Fresh-eyes fixes (fix:data1trigger, 29 Oct).** The readout stream (slides 5, 8) is
+  light blue, the crowd (the detector's `hot: '#7dd3fc'`); slide 5 ends closer
+  (`[6, 0.5, 0]`, dist 16) with `dim: 0`. `.nums` sits 200 px up, clear of the lower third.
+  Slide 3 shows `40` MHz only and gets its own pose (a cut, yaw −60, dist 22); the 30 MHz is
+  said and comes on screen on slide 8; its white sparkle is kit request 5. Slide 6 ends from
+  the small piles' side (`[402.5, 2.8, 0]`, dist 15, yaw −42) so the 1 TB sphere and the
+  pile of 4 stay at 10 px or more (the day's sphere is cut by the frame's top; at dist 26
+  the small piles were 3-6 px); slide 7 keeps the day's
+  `345.6` PB/day as its first line. Slide 8 runs on a second, sparse dk-trigger (`lane`, 600
+  knots, gate 1 only) so knots stand apart, with dk-spark `s1` ringing ours (`on: lane`);
+  slides 9-10 return to the dense `trg` (slide 9 is now a cut) with `s1` on `trg`.
+  Slide 10 is framed at `[67.5, 0, 0]`, dist 10. Slide 13 says "momentum" (pT in the
+  Picture line only) and is posed at `[98, 0, 0]`, yaw −20 (slide 14 starts there);
+  slide 13 is 1.8 min and slide 1 1.2 min. The cover title is set in Space Grotesk.
+- **Slide 4's gold.** The ATLAS display's tracks are gold-olive: real footage, CERN's own,
+  the only gold in the talk; accepted as it is (the house look's "never gold" governs what
+  we draw). The alternative, a cut starting after the pull-back, would lose the pile-up
+  vertices the slide is about.
+- **Motion review fixes (final:data1trigger, 29 Oct).** Poses and timings changed on slides
+  2-8 and 11-14 (slide 8 now lands at the gate, dist 8, yaw −15, not dist 22; slide 6 ends at
+  `[403, 3.5, 0]`, dist 22, yaw −76; slide 13 at pitch 14; `trg` gains step 7 for the fold;
+  slide 4's cut starts at 22.4 s; the tape cut has a dim tail). The list and the reasons are
+  in the talk's CLAUDE.md, Decisions, 2026-10-29 final:data1trigger.

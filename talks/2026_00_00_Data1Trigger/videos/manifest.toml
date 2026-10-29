@@ -19,7 +19,7 @@
 name    = "atlas_footage_2024_001_001_pileup.mp4"
 profile = "high-motion"
 used_in = ["deck"]
-trim    = ["0:22", "0:34"]
+trim    = ["0:22.4", "0:34"]
 notes   = """\
 Forty million a second (bible T1): ATLAS's animated event display of a pile-up \
 bunch crossing, run 352514, event 1031263761, recorded 12 June 2018 (a di-muon \
@@ -27,9 +27,10 @@ Z candidate plus two dijet pile-up vertices). ATLAS's display, named as ATLAS in
 the slide notes. Record https://videos.cern.ch/record/2300480, \
 ATLAS-FOOTAGE-2024-001-001, dated 2024-08-06, licence "CERN" on the record, no \
 on-screen credit. Raw: the record's master mp4 (1920x1080 HEVC, 30 fps, 45.2 s, \
-40 MB) renamed to this name in videos/raw/. Cut 22.0-34.0 s: starts on the first \
-frame after the 21-21.9 s black-with-red-dots transition, inside the burst of \
-tracks; pulls back through the starburst of tracks and calorimeter deposits \
+40 MB) renamed to this name in videos/raw/. Cut 22.4-34.0 s: starts inside the \
+burst of tracks, on a lit frame (mean luma about 120; the raw is dark, 13, until \
+22.07 s, after the 21-21.9 s black-with-red-dots transition), so the dust gathers \
+into a lit picture (motion review, 29 Oct; 22.0 opened on black); pulls back through the starburst of tracks and calorimeter deposits \
 (25-29.5 s), out until the crossing is a speck inside the detector (30-31.5 s), \
 the whole ATLAS wireframe (32 s), then inside it along the beam (32.5-34 s), so \
 the last frame is the detector, not tracks, for the cut to the world. The small \
@@ -54,4 +55,6 @@ empty cartridge racks are aligned and closed up into one long wall, with fitters
 small and mostly turned away; two fitters come close for about one second around \
 18 s. The last frame (19 s) is the empty, finished row of racks with nobody in \
 it. Avoids the 'Data CERN' title and CERN logo burnt in from about 52 s and the \
-close masked faces of 33-42 s."""
+close masked faces of 33-42 s. The web copy's last 0.6 s are darkened to 30 % \
+(videos/dim_tail.sh, after the encode): the room is bright throughout, and its dust \
+flashed white as slide 12 opened (motion review, 29 Oct)."""
