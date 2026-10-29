@@ -126,3 +126,42 @@ edit trims); with the key it would stand from frame 0 on any arrival.
   0.7 s while the page boots. Today the edit starts the cover's take at 0.72 s
   (`01-trim.mp4` beside the takes); a recorder option to start after the boot fade would make
   that unnecessary.
+
+## After the kit steward's pass (polish:data4learn, 29 Oct 2026)
+
+The steward's answers (components/data-kit/notes/steward.md, "Data4Learn") and what the deck took:
+
+- 1 `replay: false`: taken; the cover's `fit` has `"replay": false`, `draw: 0.1` dropped.
+- 2, 6, 12 depth range, centred ticks, caption, camera timing: taken; `ev.depth` is
+  `{ "ticks": [1845, 1885], "size": 14, "word": "mass MeV/c²" }` (the 5-MeV-low ticks and the
+  1 920 text tick gone).
+- 3 `ball: 'start'`: taken as a click, not a split: slide 7 opens on the ball waiting on the
+  rim (0.693), click 1 rolls it (the count to 0.162). The slide count stays 17.
+- 5 dims-2 `words`: taken; the two built-in `label` objects at the valley are gone.
+- 8 `gather`: not taken; the valley still gathers off screen on slide 6 (that works and the cut
+  lands on a standing surface).
+- 9 `glow: false`: taken on slide 8's `show` step (`gather: true` dropped).
+- 10 dust keys: taken on slide 5's `{box: null}` step (1.2 / 0.4 / 1.5, untuned).
+- 11 `idle`: taken; the gate's ring back to 600 grains at `"idle": 0.8` (the lab found 0.6 faint).
+- 13 `collapseTime` 1.5 and `ball.gain` 1.4: taken.
+- LABEL 36: `tickPx` deleted on `h`. Ring white by default: nothing to change (`ours` core crowd).
+- Still open: 4 (clip a boundary to the data); 7 declined (the ring marks our grain only).
+
+## From the series review (fix:data4learn, 29 Oct 2026, second pass)
+
+14. **dk-trigger: a gate ring's colour** (`ringColor: 'sel'` on a gate, or a form-wide key).
+    - What: the first filter's ring drawn in the selected colour (white), as every boundary on
+      slides 3-15 is, instead of the crowd's light blue (trigger.js draws the ring with `uColor:
+      crowd`).
+    - Why: slide 16's Message is that the learned boundary *is* the gate; a light-blue ring among
+      light-blue packets breaks the talk's own colour grammar (boundary white, crowd light blue)
+      on the one slide that says the boundary is the gate (review: high).
+    - Slide: 16. Today: `idle` 1.2 (from 0.8), the slide's `dim` 0.25 (from 0.15) and the camera
+      at dist 9 (from 12), so the ring reads large and bright by density, but light blue.
+15. **dk-landscape dims 2: the x caption's place** (`words.align` or a `words.at`, e.g. the
+    edge's middle).
+    - What: the w₁ caption at the middle of its edge (under the middle tick), not past the near
+      corner's "3", where it reads as the far edge's.
+    - Why: review (low): a student cannot tell at once which edge is w₁ and which w₂.
+    - Slide: 7. Today: the far-end "0" on the w₁ edge is dropped (`ticks: [1, 2, 3]`), so only
+      the w₂ edge carries a 0 and the two edges no longer mirror each other.

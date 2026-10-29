@@ -34,10 +34,9 @@ htmlAttrs:
 duration: 15min
 onscreen: numbers
 sources: notes
-# T3's last frame exactly (its close pose): the whitened peak and its curve; the camera eases in a little while the title rises
+# T3's last frame exactly (its close pose): the whitened peak and its curve; the camera slides the plot right in 2.5 s while the title rises, so the series' title (left, mid-height) stands clear of the bars
 layout: cover
-class: dk-title
-space: { at: [-5, 3.2, -14], dist: 23, yaw: 6, pitch: 5, dim: 0.25, ambient: 0, steady: true, sway: 1, path: [[0, { at: [-5, 3.2, -14], dist: 26, yaw: -4, pitch: 5 }], [6, { at: [-5, 3.2, -14], dist: 23, yaw: 6, pitch: 5 }]] }
+space: { at: [-9.6, 3.2, -14], dist: 28, yaw: -4, pitch: 5, dim: 0.25, ambient: 0, steady: true, sway: 1, path: [[0, { at: [-5, 3.2, -14], dist: 26, yaw: -4, pitch: 5 }], [2.5, { at: [-9.6, 3.2, -14], dist: 28, yaw: -4, pitch: 5 }]] }
 steps: { h: 1, fit: 1, ev: 0, ours: 0, toy: 0, loss: 0, ring: 0, rare: 0, trg: 0, file: 0 }
 ---
 
@@ -47,7 +46,7 @@ steps: { h: 1, fit: 1, ev: 0, ours: 0, toy: 0, loss: 0, ring: 0, rare: 0, trg: 0
 
 <!--
 Message: last time the fit gave every candidate a signal share; today a machine learns to draw the line between signal and background by itself.
-Picture: Talk 3's last frame, standing at once: the short-lived particle's mass peak, one grain a candidate, each grain whitened by its signal share from the mass fit, with the fitted curve over it as a line of flowing white grains. Our grain sits on the right flank, in the 1 880-1 882 MeV/c² bin, with a share of 0.144 (said, not shown).
+Picture: Talk 3's last frame, standing at once (the plot and its curve, both `replay: false`): the short-lived particle's mass peak, one grain a candidate, each grain whitened by its signal share from the mass fit, with the fitted curve over it as a line of flowing white grains. Our grain sits on the right flank, in the 1 880-1 882 MeV/c² bin, with a share of 0.144 (said, not shown).
 Caveats: the whiteness is a property of the grain's bin, from the mass fit, and not a decision about the grain itself. The fit's 20 993 signal candidates are the sum of those shares over 1 820-1 910 MeV/c².
 Sources: CERN Open Data record 401 (LHCb, DOI 10.7483/OPENDATA.LHCb.E7EJ.JUWR); d0-psig.f32 and d0-fit.json from bake/d0.py.
 (~0.5 min)
@@ -56,7 +55,7 @@ Sources: CERN Open Data record 401 (LHCb, DOI 10.7483/OPENDATA.LHCb.E7EJ.JUWR); 
 ---
 # the 1D plot tips into a 2D cloud: each grain flies to its place in two other numbers, and the camera rises with them from the cover's settled pose.
 # The pose shows the same frame as slide 11 (camera at [-6.2, 7.31, 24.44]) along the same ray from 35 instead of 24.5, so it is not *at* the station: no arm, nothing hides, the tip plays at 0 s
-space: { at: [-6.2, 4.87, -10.48], dist: 35, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 1, path: [[0, { at: [-5, 3.2, -14], dist: 23, yaw: 6, pitch: 5 }], [2.5, { at: [-6.2, 4.87, -10.48], dist: 35, yaw: 0, pitch: 4 }]] }
+space: { at: [-6.2, 4.87, -10.48], dist: 35, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 1, path: [[0, { at: [-9.6, 3.2, -14], dist: 28, yaw: -4, pitch: 5 }], [2.5, { at: [-6.2, 4.87, -10.48], dist: 35, yaw: 0, pitch: 4 }]] }
 steps: { h: 2, fit: 0, ev: 1, ours: 1, toy: 0, loss: 0, ring: 0, rare: 0, trg: 0, file: 0 }
 ---
 
@@ -68,7 +67,7 @@ steps: { h: 2, fit: 0, ev: 1, ours: 1, toy: 0, loss: 0, ring: 0, rare: 0, trg: 0
 
 <!--
 Message: each candidate becomes a point in two of its other numbers, how far its track points from the collision (across) and how long it lived (up); we sort by these because the mass is what we fit afterwards.
-Picture: every grain of the mass plot leaves it and lands at its own place in the cloud, keeping its whiteness for a moment and then turning light blue; the mass leaves the picture. Our grain, ringed, lands far to the right, at 1 299 across and 0.41 ps up.
+Picture: every grain of the mass plot leaves it and lands at its own place in the cloud, keeping its whiteness for a moment and then turning light blue; the mass leaves the picture. The axes are captioned "how far from the collision" (across) and "decay time" (up), with the unit in the top tick, "50 ps". Our grain, ringed, lands far to the right, at 1 299 across and 0.41 ps up.
 Caveats: both axes are logarithmic, so equal steps are equal factors; this is new to the series, so say it. The number across is the track's distance from the collision squared over its uncertainty, with no unit. 52 of the 91 583 candidates have no positive decay time (49 missing, 3 at or below zero) and are left out, which is why the count says 91 531 plotted and the file on slide 17 holds 91 583. The cloud has a flat floor at 0.15 ps, which is where the decay-time axis starts: the file holds no candidate that lived shorter (its shortest is 0.1500 ps), so they were removed before the file was written (the data's own selection), not by us.
 Sources: CERN Open Data record 401 via bake/d0.py (d0-cuts.json, tauPositive 91 531).
 (~0.75 min)
@@ -115,15 +114,15 @@ Sources: CERN lessons course, figures/src/perceptron.py; train-perceptron.json (
 -->
 
 ---
-# one neuron: the cut dissolves, nothing stands while the weights are zero, then the line after one update draws on
-clicks: 2
+# one neuron: the cut dissolves as the slide opens (nothing stands while the weights are zero), then click 1 draws on the line after one update
+clicks: 1
 space: { at: [98.83, 1.6, 0], dist: 6.8, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 1 }
-steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 2, loss: 0, ring: 0, rare: 0, trg: 0, file: 0 }
+steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 3, loss: 0, ring: 0, rare: 0, trg: 0, file: 0 }
 ---
 
-<StageSteps :set="{ toy: 2 }" :clicks="{ 1: { toy: 3 }, 2: { toy: 4 } }" />
+<StageSteps :set="{ toy: 3 }" :clicks="{ 1: { toy: 4 } }" />
 
-<div class="nums" v-click="2" style="--d1: 1.4s; --d2: 1.6s; --d3: 1.8s">
+<div class="nums" v-click="1" style="--d1: 1.4s; --d2: 1.6s; --d3: 1.8s">
   <p><b><StageCount for="w1" :to="0.259" :decimals="3" /></b><span class="name">w₁</span></p>
   <p><b><StageCount for="w2" :to="0.255" :decimals="3" /></b><span class="name">w₂</span></p>
   <p><b>0</b><span class="name">b</span></p>
@@ -133,7 +132,7 @@ steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 2, loss: 0, ring: 0, rare: 0, trg: 0
 
 <!--
 Message: a neuron draws a line, w₁x₁ + w₂x₂ + b = 0, and gives each point a score from 0 to 1 by how far it lies across the line, 0.5 on the line itself; training starts with every weight at zero, and one update nudges the weights so that more points land on their own side.
-Picture: click 1, the threshold breaks into dust and no line stands: with all weights at zero every point scores 0.5. Click 2, the line after one update, x₁ + x₂ = 0 (w₁ 0.259, w₂ 0.255, b 0), draws on through the light-blue cloud. Training has to go on from here.
+Picture: as the slide opens, the threshold breaks into dust and no line stands: with all weights at zero every point scores 0.5. Click 1, the line after one update, x₁ + x₂ = 0 (w₁ 0.259, w₂ 0.255, b 0), draws on through the light-blue cloud. Training has to go on from here.
 Caveats: the course's "perceptron" is a sigmoid neuron trained by gradient descent on the cross-entropy (learning rate 0.5, all weights starting at 0). Rosenblatt's perceptron is a threshold unit with a different update rule, so name his paper as the origin of the idea and date the paper, not the invention. The weights appear on screen on this slide only.
 Sources: F. Rosenblatt, Psychol. Rev. 65 (1958) 386; train-perceptron.json epochs[0], epochs[1], after1 (bake/train.py).
 (~1 min)
@@ -142,47 +141,51 @@ Sources: F. Rosenblatt, Psychol. Rev. 65 (1958) 386; train-perceptron.json epoch
 ---
 # training: the line sweeps through 1 000 epochs on the form's own clock and settles
 space: { at: [98.83, 1.6, 0], dist: 6.8, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 1 }
-steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 5, loss: 1, ring: 0, rare: 0, trg: 0, file: 0 }   # loss 1: the valley gathers off screen, 100 units away, so slide 7 cuts to it standing
+steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 5, loss: 1, ring: 0, rare: 0, trg: 0, file: 0 }   # loss 1: the valley gathers off screen, 100 units away, its ball waiting on the rim, so slide 7 cuts to it standing
 ---
 
 <div class="nums" style="--d1: 0.4s; --d2: 7s">
-  <p><b><StageCount for="toy" :to="185" /></b><span class="unit">of 200</span></p>
-  <p><b>177</b><span class="unit">of 200</span><span class="name">cut</span></p>
+  <p><b><StageCount for="toy" :to="185" /></b><span class="name">neuron</span></p>
+  <p><b>177</b><span class="name">hand cut</span></p>
 </div>
 
 <!-- facts: perceptron-course-worked -->
 
 <!--
 Message: training moves the line until it settles, and the trained neuron gets 185 of 200 right against the hand cut's 177.
-Picture: the same line, epoch after epoch: 1 000 epochs in 6 s on a log clock, so the fast early moves and the slow late ones both show; the count follows the line as drawn and lands on 185. The 177 stands for the cut it replaced.
+Picture: the same line, epoch after epoch: 1 000 epochs in 6 s on a log clock, so the fast early moves and the slow late ones both show; the count follows the line as drawn and lands on 185 "neuron". The 177 "hand cut" stands for the cut it replaced; both out of slide 4's 200 (said).
 Caveats: one epoch is one update using all 200 points. The line ends at w₁ 2.10, w₂ 2.26, b −4.31, next to the exact boundary (2, 2, −4); that is the best line possible, known only because we made the clouds ourselves (two unit Gaussians at (0, 0) and (2, 2)). Simulated.
 Sources: train-perceptron.json epochs, line, bayes (bake/train.py).
 (~1.25 min)
 -->
 
 ---
-# a cut to the loss valley over the two weights, seen low along its floor from the trained end: it stands (gathered on slide 6), then the ball rolls the logged training path from the rim down to us.
+# a cut to the loss valley over the two weights, seen low along its floor from the trained end: it stands (gathered on slide 6) with the ball waiting on the far rim at 0.693; click 1 rolls the logged training path from the rim down to us.
 # The same frame as [196.6, -1.6, 1.4] at dist 25.5 (camera at [213.54, 7.12, 18.34]), looked at from 37.5 along the same ray, so the pose is not *at* the station: no arm, the standing surface is not hidden and regathered
+clicks: 1
 space: { at: [188.63, -5.70, -6.57], dist: 37.5, yaw: 45, pitch: 20, dim: 0.25, ambient: 0, steady: true, sway: 0.5, path: [[0, { at: [188.63, -5.70, -6.57], dist: 37.5, yaw: 45, pitch: 20 }]] }
-steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 0, loss: 2, ring: 0, rare: 0, trg: 0, file: 0 }
+steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 0, loss: 1, ring: 0, rare: 0, trg: 0, file: 0 }
 ---
 
-<div class="nums" style="--d1: 2.6s">
-  <p><b><StageCount for="loss" :to="0.162" :decimals="3" /></b><span class="name">loss</span></p>
+<StageSteps :set="{ loss: 1 }" :clicks="{ 1: { loss: 2 } }" />
+
+<div class="nums" style="--d1: 1.2s; --d2: 0.6s">
+  <p><b>0.693</b><span class="name">loss</span></p>
+  <p v-click="1"><b><StageCount for="loss" :to="0.162" :decimals="3" /></b><span class="name">trained</span></p>
 </div>
 
 <!-- facts: perceptron-course-loss-worked, d0-fit-valley-delta-chi2-worked -->
 
 <!--
 Message: training needs a number to make small, the loss, and over the two weights it is a valley; each training step moves the weights downhill, so training is a fit, and the ball rolls to the bottom as in Talk 3's χ² valley.
-Picture: the surface stands at the cut: its height is the lowest loss each pair of weights (w₁, w₂) can reach, with b at its best there, as Talk 3's bowl did with the signal count; the two near edges carry the weights, named w₁ and w₂, with ticks 0 to 3 (one 3 at the near corner). Seen low along the valley's floor from the trained end, the walls rise left and right of the ball and behind it toward zero weights. Then the ball starts at the untrained neuron, w = (0, 0) high on the far rim, where every point scored 0.5 and the loss is ln 2 = 0.693, and rolls the same descent as slide 6: the 1 000 epochs taken as 30 legs, each leg's height the surface's loss at that epoch's weights, so the ball stays on the surface. The count follows the ball from 0.693 down to 0.162 at the bottom, (2.10, 2.26), near us.
+Picture: the surface stands at the cut: its height is the lowest loss each pair of weights (w₁, w₂) can reach, with b at its best there, as Talk 3's bowl did with the signal count; the two near edges carry the weights, captioned w₁ and w₂, with ticks 1 to 3 on the w₁ edge and 0 to 2 on the w₂ edge (one 3 at the near corner; the w₁ edge has no 0, so the two edges do not mirror). Seen low along the valley's floor from the trained end, the walls rise left and right of the ball and behind it toward zero weights. The ball waits at the untrained neuron, w = (0, 0) high on the far rim, where every point scored 0.5 and the loss is ln 2 = 0.693 (the first number). At the click it rolls the same descent as slide 6: the 1 000 epochs taken as 30 legs, each leg's height the surface's loss at that epoch's weights, so the ball stays on the surface. The second number follows the ball from 0.693 down to 0.162 at the bottom, (2.10, 2.26), near us.
 Caveats: the loss is the average over the points of minus the log of the score given to the right answer. It has three parameters and the picture two, so b is set to its best at each point of the surface. χ² scores how far a curve misses the counts; this loss scores how far the scores miss the yes/no labels. Both are numbers to make small, so both are valleys. One line beyond the series, if wanted: both are minus a log-likelihood. No Δ = 1 ring is drawn, since this talk quotes no error on the weights. Past the bottom the valley rises only gently (0.162 to about 0.18 at weights of 3.4): larger weights make the scores more confident without moving the line much, so the valley is open toward large weights and steep toward zero. Loss heights above 0.76 (the corner of negative weights) are left out of the drawing.
 Sources: train-perceptron.json lossStart, lossEnd and lossProfile with its path (bake/train.py); Talk 3's valley, d0-chi2.json (bake/d0.py).
 (~1.5 min)
 -->
 
 ---
-# a cut back to the toy: the line trained on 150 points, then the 50 it never saw gather in; their numbers come once they have landed
+# a cut back to the toy: the line trained on 150 points, then the 50 it never saw drop in at their final size (no landing glow); their numbers come once they have landed
 clicks: 1
 space: { at: [98.83, 1.6, 0], dist: 6.8, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 1, path: [[0, { at: [98.83, 1.6, 0], dist: 6.8, yaw: 0, pitch: 4 }]] }
 steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 6, loss: 0, ring: 0, rare: 0, trg: 0, file: 0 }
@@ -190,17 +193,16 @@ steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 6, loss: 0, ring: 0, rare: 0, trg: 0
 
 <StageSteps :set="{ toy: 6 }" :clicks="{ 1: { toy: 7 } }" />
 
-<div class="nums" style="--d1: 3s; --d2: 2s; --d3: 2.2s">
+<div class="nums" style="--d1: 2s; --d2: 3s">
+  <p v-click="1"><b>92.0 ± 3.8</b><span class="unit">%</span><span class="name">test</span></p>
   <p><b><StageCount for="toyTrain" :to="93.3" :decimals="1" /></b><span class="unit">%</span><span class="name">train</span></p>
-  <p v-click="1"><b>92.0</b><span class="unit">%</span><span class="name">test</span></p>
-  <p v-click="1"><b>± 3.8</b><span class="unit">%</span></p>
 </div>
 
 <!-- facts: perceptron-course-split-worked -->
 
 <!--
 Message: a classifier is judged on points it did not train on.
-Picture: the line retrained on 150 of the points. At the click those 150 dim and the 50 held-out points gather in at full brightness, judged by a line that never saw them; 4 of them lie on the wrong side (said, not marked).
+Picture: the line retrained on 150 of the points. At the click those 150 dim and the 50 held-out points drop in at full brightness, judged by a line that never saw them; 4 of them lie on the wrong side (said, not marked).
 Misconception: training accuracy is the result. It is always the optimistic number.
 Caveats: ± 3.8 % is the binomial spread for 50 points, √(0.92 × 0.08 / 50), the same √N wobble as Talk 2's counts; over 20 different splits the test accuracy averages 93.6 %. This line differs slightly from slide 6's, since it learned from 150 points, not 200. Simulated.
 Sources: train-perceptron.json split (bake/train.py).
@@ -209,7 +211,7 @@ Sources: train-perceptron.json split (bake/train.py).
 
 ---
 # a cut to the ring: one class round the other, the best straight line, the test points bright
-space: { at: [298.83, 1.0, 0], dist: 8.2, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 1, path: [[0, { at: [298.83, 1.0, 0], dist: 8.2, yaw: 0, pitch: 4 }]] }
+space: { at: [298.23, 1.5, 0], dist: 6.4, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 1, path: [[0, { at: [298.23, 1.5, 0], dist: 6.4, yaw: 0, pitch: 4 }]] }
 steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 0, loss: 0, ring: 1, rare: 0, trg: 0, file: 0 }
 ---
 
@@ -221,7 +223,7 @@ steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 0, loss: 0, ring: 1, rare: 0, trg: 0
 
 <!--
 Message: when one class surrounds the other, no straight line separates them.
-Picture: a white cloud inside a light-blue ring, all 600 simulated points, so the ring's shape reads; the best straight line cuts through both. The 120 test points are the brightest grains (the other 480 dimmed to under a third), and the line gets 53.3 % of them right, close to guessing. Both inputs are rescaled to the same spread, so the set reads round and no axes are drawn.
+Picture: a white cloud inside a light-blue ring, all 600 simulated points, so the ring's shape reads; the best straight line cuts through both. The 120 test points are the brightest grains (the other 480 dimmed to half, so the ring's shape still reads), and the line gets 53.3 % of them right, close to guessing. Both inputs are rescaled to the same spread, so the set reads round and no axes are drawn.
 Caveats: simulated (the course's ml_two_class.py, seed 16; split 360 / 120 / 120). On its own training points the line gets 65.3 %, which is why the test number is the one shown.
 Sources: train-ring.json line (bake/train.py).
 (~0.75 min)
@@ -229,7 +231,7 @@ Sources: train-ring.json line (bake/train.py).
 
 ---
 # a bent boundary: the line's grains travel onto the network's 0.5 contour and close round the cloud
-space: { at: [298.83, 1.0, 0], dist: 8.2, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 1 }
+space: { at: [298.23, 1.5, 0], dist: 6.4, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 1 }
 steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 0, loss: 0, ring: 2, rare: 0, trg: 0, file: 0 }
 ---
 
@@ -265,7 +267,7 @@ steps: { h: 0, fit: 0, ev: 3, ours: 1, toy: 0, loss: 0, ring: 0, rare: 0, trg: 0
 
 <!--
 Message: on real candidates the labels come from the mass and the inputs from everything else; the classes overlap, and the network barely beats guessing, 61.3 % against 53.2 %.
-Picture: the same cloud recoloured by its label: white for a mass inside Talk 2's window, 1 845-1 885 MeV/c², light blue outside, overlapping almost everywhere. At the click, the bent boundary of a network trained on the two inputs drawn. Our grain, ringed, keeps its light-blue core in the overlap.
+Picture: the same cloud recoloured by its label: white for a mass inside the label window, 1 845-1 885 MeV/c² (a little wider than Talk 2's 1 850-1 880), light blue outside, overlapping almost everywhere. At the click, the bent boundary of a network trained on the two inputs drawn. Our grain, ringed, keeps its light-blue core in the overlap.
 Caveats: guessing means always answering the larger class (53.2 %). With the transverse momentum as a third input the network gets 62.9 %, and one neuron 60.1 %; the slide shows the two-input network's 61.3 % because its boundary is the one drawn. The label is weak by design: 49 225 candidates lie in the window, but the mass fit puts about 20 800 signal there, so about 58 % of the white rows are background, and no classifier can do much better on these labels. Our grain is labelled signal by the window; the mass fit gives it a signal share of 0.144, the three-input network a score of 0.462 and the two-input one 0.408, both under 0.5. Nobody can say whether one row is the particle. Its core stays light blue by the series' colour rule.
 Sources: train-d0.json and d0-score.f32 (bake/train.py, the course's Lecture 16 recipe); CERN Open Data record 401.
 (~0.75 min)
@@ -286,7 +288,7 @@ steps: { h: 0, fit: 0, ev: 5, ours: 1, toy: 0, loss: 0, ring: 0, rare: 0, trg: 0
 <!--
 Message: feed the mass back in and the network just reads the label: 99.9 %.
 Picture: the third axis opens into the depth and is the mass, captioned "mass MeV/c²" at its end; seen exactly from the side, the window's white band stands apart from the light-blue sidebands as vertical stripes, with 1 845 and 1 885 under its two walls.
-Caveats: this is leakage, the answer fed in as an input. The depth axis still runs over 1 810-1 920 MeV/c², the kit's default for this form, not the series' 1 816-1 912 (kit request 2); no range end is labelled on screen. It must never read as success, and the next slide undoes it. The music's peak in the edit.
+Caveats: this is leakage, the answer fed in as an input. The depth axis runs over the series' mass range, 1 816-1 912 MeV/c² (the kit's default since 29 Oct); rows outside it fade, and no range end is labelled on screen. It must never read as success, and the next slide undoes it. The music's peak in the edit.
 Sources: train-d0.json withM, 0.9989 (bake/train.py).
 (~0.75 min)
 -->
@@ -318,14 +320,14 @@ steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 0, loss: 0, ring: 0, rare: 1, trg: 0
 ---
 
 <div class="nums" style="--d1: 3.5s">
-  <p><b>99.9</b><span class="unit">%</span></p>
+  <p><b>99.9</b><span class="unit">%</span><span class="name">never yes</span></p>
 </div>
 
 <!-- facts: rare-signal-accuracy-trap-worked -->
 
 <!--
 Message: when signal is rare, a classifier that never says yes is 99.9 % right.
-Picture: 100 000 simulated candidates, one grain each; the 100 white ones are the signal.
+Picture: 100 000 simulated candidates, one grain each; the 100 white ones are the signal. The number is named "never yes": the accuracy of a classifier that answers no to every candidate, paired with slide 12's "with mass".
 Misconception: 99.9 % accuracy is good. Name the echo: this is the second 99.9 % that means nothing; slide 12's was the leak.
 Caveats: simulated, with abstract inputs (so no axes); the arithmetic is the course's Lecture 16 example.
 Sources: CERN lessons course, Lecture 16 (figures/src/ml.py); train-rare.json (bake/train.py).
@@ -333,8 +335,8 @@ Sources: CERN lessons course, Lecture 16 (figures/src/ml.py); train-rare.json (b
 -->
 
 ---
-# precision: the cut keeps most of the white grains, and far more light blue ones
-space: { at: [397, 5.8, 0], dist: 18, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 1 }
+# precision: the cut keeps most of the white grains, and far more light blue ones; everything else goes nearly black and the camera closes in on the kept corner
+space: { at: [398.5, 6.6, 0], dist: 14, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 1 }
 steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 0, loss: 0, ring: 0, rare: 2, trg: 0, file: 0 }
 ---
 
@@ -348,31 +350,27 @@ steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 0, loss: 0, ring: 0, rare: 2, trg: 0
 
 <!--
 Message: a classifier that finds 90 % of the signal (its recall) still keeps a set that is only 8.3 % signal; that share is the precision.
-Picture: the grains on the kept side of the cut stay lit, 90 white and 999 light blue; everything else dims. The lit set is mostly light blue.
+Picture: the grains on the kept side of the cut stay lit, 90 white and 999 light blue; everything else dims nearly to black (`litDim` 0.15). The lit set is mostly light blue.
 Caveats: 90 is the recall at work, 90 % of the 100 signal found; 999 is the false positives, 1 % of the 99 900 background let through; precision is 90 of the 1 089 kept. This classifier's accuracy is 98.99 %, lower than answering "background" every time.
 Sources: train-rare.json (bake/train.py), the course's Lecture 16 arithmetic.
 (~0.75 min)
 -->
 
 ---
-# a cut to Talk 1's data lane, framed close on the first filter's ring: everyone's crossings, no packet of ours; click 1 fires it
+# a cut to Talk 1's data lane, framed close on the first filter's ring, the boundary as a gate: everyone's crossings, no packet of ours; click 1 fires it (no number: Talk 1 counted the 1 in 30)
 clicks: 1
-space: { at: [30, 0, -300], dist: 12, yaw: -18, pitch: 12, dim: 0.15, ambient: 0, steady: true, sway: 0.4, path: [[0, { at: [30, 0, -300], dist: 12, yaw: -18, pitch: 12 }]] }
+space: { at: [30, 0, -300], dist: 9, yaw: -18, pitch: 12, dim: 0.25, ambient: 0, steady: true, sway: 0.4, path: [[0, { at: [30, 0, -300], dist: 9, yaw: -18, pitch: 12 }]] }
 steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 0, loss: 0, ring: 0, rare: 0, trg: 1, file: 0 }
 ---
 
 <StageSteps :set="{ trg: 1 }" :clicks="{ 1: { trg: 2 } }" />
 
-<div class="nums" v-click="1" style="--d1: 2s">
-  <p><b>1</b><span class="unit">in 30</span><span class="name">kept</span></p>
-</div>
-
 <!-- facts: lhcb-hlt1-drops-96p7pct-worked, lhcb-hlt1-30mhz, lhcb-run3-hlt1-1mhz-out, ml-in-lhcb-trigger -->
 
 <!--
-Message: a trigger is a classifier that answers before anyone looks, at a rate where signal is rare, and what it drops is gone: the first filter keeps 1 crossing in 30.
-Picture: Talk 1's data lane seen close and from above, one packet of grains a bunch crossing, now read as yes or no: the first filter's ring stands in the middle of the frame with the packets arriving from the left. At the click it fires: 29 of every 30 packets burst to dust at the ring, and the few that pass travel on to the right. No packet of ours here: the lane is everyone's crossings, not our row.
-Caveats: the Talk 1 callback, in the notes only: about 30 MHz of non-empty crossings go in and about 1 MHz comes out. The learned selections sit in the second filter: for the current run they were designed with neural networks built to respond monotonically to their inputs, replacing decision trees (papers of 2023-24). No source after 2024 was checked for what runs now, so say "was designed with", in the past tense. The first filter drawn here carries no machine-learning claim.
+Message: the boundary we learned to draw today is what a trigger is: a classifier whose line stands as a gate, answering yes or no for each crossing before anyone looks, at a rate where signal is rare; what it drops is gone.
+Picture: Talk 1's data lane seen close and from above, one packet of grains a bunch crossing, now read as yes or no: the first filter's ring, the boundary as a gate, stands large and bright in the middle of the frame (`idle` 1.2) with the packets arriving from the left. At the click it fires: most packets burst to dust at the ring (the "no" side), and the few on the "yes" side travel on to the right. Talk 1 counted the 1 in 30 kept; here no number, the gate itself is the point. No packet of ours here: the lane is everyone's crossings, not our row.
+Caveats: the Talk 1 callback, said if wanted (not on screen since 29 Oct: Talk 1 showed it): 1 crossing in 30 kept, about 30 MHz of non-empty crossings go in and about 1 MHz comes out. The learned selections sit in the second filter: for the current run they were designed with neural networks built to respond monotonically to their inputs, replacing decision trees (papers of 2023-24). No source after 2024 was checked for what runs now, so say "was designed with", in the past tense. The first filter drawn here carries no machine-learning claim.
 Sources: LHCb Starterkit, the dataflow page; Delaney et al., EPJ Web Conf. 295 (2024) 09005 (arXiv:2312.14265).
 (~0.75 min)
 -->
@@ -389,7 +387,7 @@ space:
   steady: true
   sway: 1
   path:
-    - [0, { at: [30, 0, -300], dist: 12, yaw: -18, pitch: 12 }]
+    - [0, { at: [30, 0, -300], dist: 9, yaw: -18, pitch: 12 }]
     - [2.2, { at: [106, 2.8, -300], dist: 21, yaw: -9, pitch: 7 }]
     - [6, { at: [118, 3.1, -300], dist: 11, yaw: -10, pitch: 6 }]
 steps: { h: 0, fit: 0, ev: 0, ours: 0, toy: 0, loss: 0, ring: 0, rare: 0, trg: 4, file: 1 }
