@@ -1,0 +1,155 @@
+{
+ "about": "Data files of components/data-kit, made by the scripts in bake/. Each entry: the script that writes it, the talks that load it (bake/sync.py copies those into talks/<t>/public/dk/), its shape and meaning. Decks load them at runtime with ctx.asset('/dk/<file>').",
+ "files": {
+  "code-lines.json": {
+   "talks": [5],
+   "shape": "per script: path, bytes, sha256, lines, longest, runs",
+   "meaning": "the real line structure of the series' scripts (course root_to_csv.py, the kit's bake/d0.py) for dk-pipeline's code stage; no source text",
+   "by": "code.py"
+  },
+  "d0-chi2.json": {
+   "talks": [3],
+   "shape": "grid 121x121 + path + contours + slice",
+   "meaning": "dk-landscape src: chi2 bowl over (mu, width), minimiser path, dchi2 = 1/4 rings, 1D slice",
+   "by": "d0.py"
+  },
+  "d0-cuts.json": {
+   "talks": [3,4],
+   "shape": "object",
+   "meaning": "IPchi2 < 9 counts with and without the TAU-missing rows; TAU > 0 count",
+   "by": "d0.py"
+  },
+  "d0-fit.json": {
+   "talks": [2,3,4,5],
+   "shape": "object",
+   "meaning": "the mass fit: start values, logged iterations (dk-curve params), result, pulls, window stability, PDG gap in sigma, mass/momentum scale shift, row 1 P(signal)",
+   "by": "d0.py"
+  },
+  "d0-flat.json": {
+   "talks": [2],
+   "shape": "object",
+   "meaning": "the 14 flat bins 1816-1844: counts, mean, sqrt(mean), three spread estimates",
+   "by": "d0.py"
+  },
+  "d0-hist.json": {
+   "talks": [1,2,3,5],
+   "shape": "object",
+   "meaning": "2 MeV mass histograms over the full range (all, IPchi2 < 9, sum of P(signal)), the 45-bin fit range, row 1's bin",
+   "by": "d0.py"
+  },
+  "d0-means.json": {
+   "talks": [3],
+   "shape": "object",
+   "meaning": "window means of M (all, 1840-1890, 1850-1880, 1855-1875) and PDG",
+   "by": "d0.py"
+  },
+  "d0-peaks.f32": {
+   "talks": [5],
+   "shape": [120],
+   "dtype": "float32 LE",
+   "meaning": "fitted peak mu (MeV/c^2) of each of d0-select.json's selections in selection order (0 = no cut); for a dk-hist of the peaks with cols ['MU'], key 'MU'",
+   "by": "peaks.py"
+  },
+  "d0-psig.f32": {
+   "talks": [3,4],
+   "shape": [91583],
+   "dtype": "float32 LE",
+   "meaning": "P(signal) = S/(S+B) per candidate from the Gaussian+line fit (d0-fit.json), file order; outside 1820-1910 the fitted line is extrapolated and S is negligible",
+   "by": "d0.py"
+  },
+  "d0-score.f32": {
+   "talks": [4],
+   "shape": [91583],
+   "dtype": "float32 LE",
+   "meaning": "the honest 2-4-1 network's output per candidate in file order (NaN where TAU <= 0 or missing)",
+   "by": "train.py"
+  },
+  "d0-select.json": {
+   "talks": [5],
+   "shape": "120 selections",
+   "meaning": "6 x 5 x 4 selections as cuts on d0.f32 columns (PT >, IPCHI2 <, TAU >) with the fitted peak of each",
+   "by": "d0.py"
+  },
+  "d0-significance.json": {
+   "talks": [2],
+   "shape": "object",
+   "meaning": "file-order significance: where z first passes 5 and from where it stays above 5",
+   "by": "d0.py"
+  },
+  "d0-split.f32": {
+   "talks": [4],
+   "shape": [91583],
+   "dtype": "float32 LE",
+   "meaning": "classifier role per candidate in file order: 0 train, 1 test, -1 not used (TAU <= 0)",
+   "by": "train.py"
+  },
+  "d0-tau.json": {
+   "talks": [3],
+   "shape": "object",
+   "meaning": "decay-time histograms in the window and sidebands (0.25 and 0.1 ps bins, with and without IPchi2 < 9), sideband-subtracted counts, the unbinned lifetime fit and its scans",
+   "by": "d0.py"
+  },
+  "d0-z.f32": {
+   "talks": [2],
+   "shape": [91583],
+   "dtype": "float32 LE",
+   "meaning": "z(k) = (N_on - b)/sqrt(b), b = 3/4 N_sidebands, after the first k candidates in file order (NaN while b = 0)",
+   "by": "d0.py"
+  },
+  "d0.f32": {
+   "talks": [1,2,3,4,5],
+   "shape": [91583,4],
+   "dtype": "float32 LE",
+   "meaning": "record 401 candidates in file order: M MeV/c2, PT MeV/c, TAU ps (NaN = missing), IPCHI2",
+   "by": "d0.py"
+  },
+  "d0.json": {
+   "talks": [1,2,3,4,5],
+   "shape": "object",
+   "meaning": "d0.f32's header: n, cols, units, row 1, value ranges, source block",
+   "by": "d0.py"
+  },
+  "h4l.json": {
+   "talks": [2],
+   "shape": "37 bins",
+   "meaning": "CMS record 5500 4-lepton mass: 2011 and 2012 data counts, expected ZZ / DY / ttbar / Higgs per bin, this sample's own significance",
+   "by": "h4l.py"
+  },
+  "portal.json": {
+   "talks": [5],
+   "shape": "object",
+   "meaning": "CERN Open Data portal record count (and by experiment / type / availability) with its date",
+   "by": "portal.py"
+  },
+  "toys.json": {
+   "talks": [2],
+   "shape": "object",
+   "meaning": "simulated toys: flat-bin Poisson re-rolls, the falling spectrum with its 2 sigma alarms and the 3 500-entry growth, normal-tail numbers and 1 - 0.95^20",
+   "by": "toys.py"
+  },
+  "train-d0.json": {
+   "talks": [4],
+   "shape": "object",
+   "meaning": "record 401 classifier: majority / neuron / network accuracies, with M added, score grids over (log10 IPCHI2, TAU ps)",
+   "by": "train.py"
+  },
+  "train-perceptron.json": {
+   "talks": [4],
+   "shape": "object",
+   "meaning": "course 200 points, per-epoch (loss, acc, w1, w2, b), threshold vs line, loss grid over (w1,w2) with path, train/test split",
+   "by": "train.py"
+  },
+  "train-rare.json": {
+   "talks": [4],
+   "shape": "object",
+   "meaning": "rare-signal arithmetic: precision 8.3 %, accuracy of always-background 99.9 %",
+   "by": "train.py"
+  },
+  "train-ring.json": {
+   "talks": [4],
+   "shape": "object",
+   "meaning": "600-point ring set, line vs 2-4-1 network, test accuracy and AUC, score grid",
+   "by": "train.py"
+  }
+ }
+}
