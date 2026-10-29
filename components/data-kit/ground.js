@@ -15,7 +15,9 @@
 // (1.0: the dim colour is dark once the fragment's (c·a)^2.2 is applied), size (0.7,
 // finer than a candidate's grain), tone ('axis', or 'crowd'), seed.
 // With a `name` it steps (0 hidden, ≥ 1 shown, 1.2 s fades). Without one it is always
-// there.
+// there. `alpha` may be a list by step ([0, 1, 1, 2.4]: step k takes entry k, the last
+// for any step past the list; entry 0 is ignored, the floor is hidden there): a floor that
+// must read from close on one slide (T1 slide 13) without changing another slide's frame.
 import { Group, Color } from 'three';
 import { FLOOR_Y, SEED, roles } from './style.js';
 import { mulberry32 } from './rng.js';
@@ -65,28 +67,42 @@ function buildGround(o, ctx, stage) {
   const seed = new Float32Array(n);
   for (let i = 0; i < n; i++) seed[i] = rnd();
   const tone = o.tone === 'crowd' ? P.crowd : P.axis;
+  const alphas = Array.isArray(o.alpha) ? o.alpha.map(Number) : null;
+  const alphaAt = (k) => (alphas ? alphas[Math.max(1, Math.min(alphas.length - 1, k || 1))] ?? 1 : Number(o.alpha ?? 1.0));
+  const st0 = 1;
   const frameScale = { value: 1 };
   const mat = stage.grainMaterial(vert(stage), {
     uPixelRatio: frameScale,
-    uShow: { value: o.name ? 0 : 1 }, uAlpha: { value: Number(o.alpha ?? 1.0) }, uSize: { value: Number(o.size ?? 0.7) },
+    uShow: { value: o.name ? 0 : 1 }, uAlpha: { value: alphaAt(st0) }, uSize: { value: Number(o.size ?? 0.7) },
     uRadius: { value: R }, uColor: { value: new Color(tone) },
   });
   const geo = stage.grainGeometry(n, { position: pos, aSeed: [seed, 1] });
   g.add(stage.grainPoints(geo, mat));
   const u = mat.uniforms;
   const st = o.name ? stage.stepper(String(o.name)) : null;
-  let from = u.uShow.value, to = from, t0 = -1;
+  let from = u.uShow.value, to = from, t0 = -1, aFrom = u.uAlpha.value, aTo = aFrom, aT0 = -1;
   const FADE = 1.2;
   return {
     group: g, labels: [], frameScale,
-    api: { busy: () => t0 >= 0, value: () => n },
+    api: { busy: () => t0 >= 0 || aT0 >= 0, value: () => n },
     update(t) {
       u.uTime.value = t;
-      if (st?.fresh) { st.fresh = false; from = u.uShow.value; to = st.step > 0 ? 1 : 0; t0 = from === to ? -1 : t; }
+      if (st?.fresh) {
+        st.fresh = false; from = u.uShow.value; to = st.step > 0 ? 1 : 0; t0 = from === to ? -1 : t;
+        // the step's alpha: at once while the floor is hidden, else eased with the fade
+        const a = alphaAt(st.step);
+        if (from < 0.01) { u.uAlpha.value = a; aFrom = aTo = a; aT0 = -1; }
+        else if (to > 0 && a !== aTo) { aFrom = u.uAlpha.value; aTo = a; aT0 = t; }
+      }
       if (t0 >= 0) {
         const k = Math.min(1, (t - t0) / FADE);
         u.uShow.value = from + (to - from) * k * k * (3 - 2 * k);
         if (k >= 1) t0 = -1;
+      }
+      if (aT0 >= 0) {
+        const k = Math.min(1, (t - aT0) / FADE);
+        u.uAlpha.value = aFrom + (aTo - aFrom) * k * k * (3 - 2 * k);
+        if (k >= 1) aT0 = -1;
       }
       g.visible = u.uShow.value > 0.001;
     },
