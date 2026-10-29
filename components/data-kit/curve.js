@@ -204,6 +204,7 @@ function buildCurve(o, ctx, stage, kit) {
   let fr = null, hist = null, attached = false;
   let want = sel.step ?? 0, cur = 0, shown = null;
   let pFrom = null, pTo = null, pT0 = -1e9, pDur = 1.4, pNow = null;
+  let pPath = null, pSeg = 1.4;                       // {through}: the logged sets between, one segment each
   let yScale = 0, drawT0 = -1e9, waitDraw = false, waitT = 0;
   const drawDur = Number(o.draw ?? 1.2);
   const show = fader(0), parts = fader(0), partB = fader(0), pull = fader(0);
@@ -248,6 +249,12 @@ function buildCurve(o, ctx, stage, kit) {
     if (k === 'last' || k < 0) k = sets.length - 1;
     return sets[Math.max(0, Math.min(sets.length - 1, Number(k) || 0))];
   };
+  const setIdx = (s) => {
+    if (!s) return -1;
+    let k = s.set ?? 0;
+    if (k === 'last' || k < 0) k = sets.length - 1;
+    return Math.max(0, Math.min(sets.length - 1, Number(k) || 0));
+  };
   const stepsList = Array.isArray(o.steps) && o.steps.length ? o.steps : null;
   // without `steps`, step k shows set k − 1
   const stateOf = (k) => (stepsList ? stateAt(stepsList, k) : k > 0 ? { set: k - 1 } : null);
@@ -262,11 +269,19 @@ function buildCurve(o, ctx, stage, kit) {
     const fresh = !shown || kind === 'arrive' || show.to === 0;
     if (fresh) {
       // draws on from the left once the hist has settled (an arrival replays its fill first)
-      pFrom = null; pTo = p; pT0 = -1e9; pNow = p;
+      pFrom = null; pTo = p; pT0 = -1e9; pNow = p; pPath = null;
       show.jump(1); waitDraw = true; waitT = t; drawT0 = 1e9;
       parts.jump(0); partB.jump(0); pull.jump(0);
     } else {
-      pFrom = pNow; pTo = p; pT0 = t; pDur = instant ? 0.35 : Number(o.ease ?? 1.4);
+      // a step's own `ease` (s a segment) and `after` (s before it starts: a camera move
+      // first); `through: true` steps through every logged set between the two, one
+      // segment each, so a fit is seen iterating (lab 3 slide 2), not leaping to the end
+      const a = setIdx(shown), b = setIdx(s);
+      const thr = !instant && (s.through ?? o.through) && b > a + 1 && a >= 0;
+      pSeg = instant ? 0.35 : Number(s.ease ?? o.ease ?? (thr ? 0.8 : 1.4));
+      pPath = thr ? [pNow, ...sets.slice(a + 1, b + 1)] : null;
+      pFrom = pNow; pTo = p; pT0 = t + (instant ? 0 : Math.max(0, Number(s.after ?? 0)));
+      pDur = pPath ? pSeg * (pPath.length - 1) : pSeg;
       show.set(t, 1, 0.35);
     }
     const dur = instant ? 0.35 : 0.8;
@@ -425,7 +440,14 @@ function buildCurve(o, ctx, stage, kit) {
       yScale += (ys - yScale) * (1 - Math.exp(-dt * 4));
       if (Math.abs(ys - yScale) <= 1e-4 * Math.abs(ys)) yScale = ys;
       if (waitDraw && (!histBusy() || t - waitT > 12)) { waitDraw = false; drawT0 = t; }
-      if (pTo) pNow = pFrom && t < pT0 + pDur ? lerpParams(pFrom, pTo, ease((t - pT0) / pDur)) : pTo;
+      if (pTo) {
+        if (!pFrom || t >= pT0 + pDur) pNow = pTo;
+        else if (t <= pT0) pNow = pFrom;
+        else if (pPath) {
+          const uu = (t - pT0) / pSeg, i = Math.min(pPath.length - 2, Math.floor(uu));
+          pNow = lerpParams(pPath[i], pPath[i + 1], ease(uu - i));
+        } else pNow = lerpParams(pFrom, pTo, ease((t - pT0) / pDur));
+      }
       const key = pNow ? `${Object.values(pNow).join(',')}|${yScale}|${fr.lo},${fr.hi}` : '';
       if (pNow && key !== lastKey) { curvesAt(pNow); lastKey = key; }
       const sAll = show.at(t);

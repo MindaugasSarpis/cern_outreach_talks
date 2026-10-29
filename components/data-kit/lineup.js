@@ -31,8 +31,15 @@
 //   pile first gathers as copies of a smaller pile, then flies together.
 // - unit (0.1): one sphere's lattice step. Its radius is 0.9 × unit.
 // - anchor (0): the pile at the origin. gaps: the spaces between neighbours (2).
+//   `wait` (s, 0): the pile gathers that long after its step, so piles shown together
+//   still come one after another (lab 1 slide 8: one sphere, then 4, then a day's). `from`
+//   ([x, y, z]): its spheres gather from that side (e.g. behind and below the piles, out
+//   of a close camera's way) instead of from all round.
 // - grow (3.2): seconds for a pile to gather. reach (3): how far out its spheres start.
-// - mergeAt (2.4), armWait (6), rest (true: on the floor), assemble (true).
+// - mergeAt (2.4), armWait (6), rest (true: on the floor), assemble (true). A slide that
+//   reaches the station on a `path` (the camera cuts to its first key) gets no assembly
+//   until the path ends, so the piles wait out armWait in the dark: give such a lineup
+//   `assemble: false`, and it gathers on its steps alone.
 //
 // Steps: k shows piles 0..k-1 (0 hides them all). An array [i, j, …] (from <StageSteps>)
 // shows exactly those. A pile that appears gathers out of the dust, inner spheres
@@ -136,6 +143,7 @@ uniform float uHideT[${MAXB}];
 uniform float uR[${MAXB}];
 uniform vec3 uCenter[${MAXB}];
 uniform vec3 uColor[${MAXB}];
+uniform vec3 uCome[${MAXB}];
 uniform vec3 uLight;
 varying vec3 vColor; varying vec3 vCv; varying float vShade; varying float vPx; varying vec3 vOut; varying float vF; varying float vRad;
 float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
@@ -162,8 +170,15 @@ void main() {
   vec3 side = normalize(cross(dir, vec3(0.0, 1.0, 0.0)) + 1e-4);
   float reach = (uReach + uR[b]) * (0.8 + 1.4 * hash(aSeed * 91.0));
   vec3 far = dir * (r + reach) + side * reach * 0.6 * (hash(aSeed * 17.0) - 0.5) + vec3(0.0, reach * 0.5 * (hash(aSeed * 53.0) - 0.5), 0.0);
-  float a = (1.0 - f) * 2.2;
-  far = vec3(cos(a) * far.x - sin(a) * far.z, far.y, sin(a) * far.x + cos(a) * far.z);
+  vec3 come = uCome[b];
+  if (dot(come, come) > 1e-6) {
+    // from one side only: a cloud beyond the pile on that side, no swirl through the camera
+    vec3 jit = (vec3(hash(aSeed * 17.0), hash(aSeed * 53.0), hash(aSeed * 29.0)) - 0.5) * reach * 0.9;
+    far = off * 0.4 + normalize(come) * (uR[b] + reach) + jit;
+  } else {
+    float a = (1.0 - f) * 2.2;
+    far = vec3(cos(a) * far.x - sin(a) * far.z, far.y, sin(a) * far.x + cos(a) * far.z);
+  }
   vec3 placed = c + mix(far, off, f);
   vec3 outw = dir;
   if (merging) {
@@ -373,6 +388,7 @@ function buildLineup(o, ctx, stage, kit) {
       uGs: { value: pad(balls.map((x) => x.gs), () => 1) },
       uCenter: { value: pad(C.map((c) => new Vector3(c[0], c[1], c[2])), () => new Vector3()) },
       uColor: { value: pad(balls.map((x) => colorOf(x.color)), () => new Color()) },
+      uCome: { value: pad(balls.map((x) => (Array.isArray(x.from) ? new Vector3(Number(x.from[0]) || 0, Number(x.from[1]) || 0, Number(x.from[2]) || 0) : new Vector3())), () => new Vector3()) },
       uMerge: { value: pad(balls.map((x) => (x.merge ? 1 : 0)), () => 0) },
       uFromColor: { value: pad(balls.map((x) => colorOf(x.merge ? balls[x.merge.from]?.color : x.color)), () => new Color()) },
       uMergeAt: { value: Number(o.mergeAt ?? 2.4) },
@@ -406,7 +422,7 @@ function buildLineup(o, ctx, stage, kit) {
   let doneAt = -1, doneCbs = [];
   const GROW = () => mat.uniforms.uGrow.value + 1.6;
   const shown = (b) => showT[b] >= 0 && hideT[b] < 0;
-  const show = (b, t) => { showT[b] = t; hideT[b] = -1; };
+  const show = (b, t) => { showT[b] = t + Math.max(0, Number(balls[b]?.wait ?? 0)); hideT[b] = -1; };
   const hide = (b, t) => { if (shown(b)) hideT[b] = t; };
   const wants = (b) => (Array.isArray(step) ? step.includes(b) : b < step);
   const go = (k) => {
