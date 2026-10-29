@@ -1,8 +1,8 @@
 {
   "version": 1,
   "clips": {
-    "cern_overview_short.mp4": {
-      "file": "cern_overview_short.mp4.jpg",
+    "lhcb_velo_installation_cut.mp4": {
+      "file": "lhcb_velo_installation_cut.mp4.jpg",
       "tile": [
         320,
         180
@@ -14,8 +14,8 @@
         1920,
         1080
       ],
-      "duration": 11.24,
-      "poster": "cern_overview_short.mp4.poster.jpg",
+      "duration": 12.0,
+      "poster": "lhcb_velo_installation_cut.mp4.poster.jpg",
       "lit": 0.0
     }
   }

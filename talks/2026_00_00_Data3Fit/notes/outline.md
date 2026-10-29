@@ -492,3 +492,63 @@ Until each is filed, its number stays off the slide (372 on slide 3, 1 864.42 on
    "signal" (needs a kit readout).
 9. The decay time and the lifetime get slide 10's first beat on the empty axis (+0.3 min), taken from slide 11
    (0.8 → 0.6). Alternative: narrate them over the 12 s clip only.
+
+## Decisions taken in the deck step (29 Oct, draft:data3fit)
+
+10. **The owner's decisions of 29 Oct applied over this outline.** Nothing names the particle, its
+    decay, the cut's quantity, the tracker or the record outside the notes' Sources lines: the
+    peak is "a short-lived particle's mass peak", the IPχ² cut is "a quality cut" (how far the
+    track points from the collision), the clip's tracker is "the silicon tracker around the
+    collision point". Slide 12's third number (< 9, "IPχ²") is dropped; its value lives in the
+    Caveats as "a χ² kept below 9". Slide 8's "LHCb syst" is named "uncertainty". The tracker's
+    pixel counts are dropped from slide 9's notes (experiment internals). Mass axis at the kit's
+    default 1 816-1 912 (no `lo`/`hi` on `h`). Alternative: none (binding).
+11. **Slide 2 split in two (deck slides 2 and 3).** A camera move on a click has no slide key
+    (only `stops`), so click 4's re-centre and close pose is its own slide (0.4 min, taken from
+    slide 2's 1.5). Both slides have the plot right of the numbers (`at` −6 and −3.5), so the
+    .nums block stands on black. Alternative: keep one slide and give up the close pose.
+12. **Slide 2's PDG mark is unlabelled in the world** (`label: 'none'`): its number is the .nums
+    line "1 864.84 PDG", so it appears once on screen. Slide 8's two marks keep their world labels
+    (the .nums there are the scale).
+13. **Slide 5 tilts without the pull row:** `fit` steps to set 5 without parts and pulls on the
+    bowl slide's arrival, so the tipping plot carries no row hanging under it.
+14. **Slide 13 (deck slide 14) reframed, the owner's weak spot:** close on the right flank
+    (`at` [3.5, 2.6, 0], dist 10), our grain's ring at the foot of the 1 880-1 882 column, and on
+    the click its core takes its own whiteness from the plot (dk-spark `color: 'follow'`, ring
+    white), so the 0.144 is the grain's own colour, mostly light blue. The close (deck slide 15)
+    pulls back to the whole peak. Alternative: lab 3 slide 7's pose with `color: 'crowd'`.
+15. **Slide 8 (deck slide 9) kept, pose dist 7:** the curve's bloom at dist 6 covered the
+    marks. Still gated on its motion check (below); kit-requests.md items 1-2.
+16. **The cover title is styled by the talk's CSS** (a lone cover h1 is a kicker in the kit):
+    `styles/index.css` gives it the title's size and moves it high on the left, over the black
+    above the plot's shoulder, since the cover pose is T2's last frame and cannot move.
+17. **Top-level `transition: fade`; the dust is `videos.transition`.** No dust slide transition
+    exists for DOM slides; the clips arrive and leave as dust.
+
+## Decisions taken in the fix step (29 Oct, fix:data3fit, from the fresh-eyes review)
+
+18. **Slide 2's third window moves to deck slide 3**, which opens on a cut to the summit pose:
+    the 20 MeV/c² window lands there with its mean tick on the world mark, and the click moves
+    it half an MeV/c² (deck slide 2 0.8 min, slide 3 0.7). At dist 24 the mean tick and the
+    world mark are one line. Alternative: labelled marks at the wide pose.
+19. **Slide 11 (deck) opens on the 2 000 landing** as the crane lands (`lead` 2.6 s); the
+    subtraction is the one click; 1.0 min. The empty-axis beat is narrated over the landing.
+    Alternative: a dk-vertex for beat 1 (an unprototyped pairing at the tau station).
+20. **Slide 13 (deck 14) shows the whole peak** right of the numbers, with a dotted near-white mark at
+    the fitted centre (h step 10) and a second marker `big` (core size 7), so the 16.2 MeV/c²
+    and the core's 0.144 both have something to point to. The close drops the mark (h step 12).
+21. **"PDG" on screen reads "world"** (the spoken "world value"). The rest: deck CLAUDE.md
+    Decisions, 29 Oct review fixes; kit-requests.md items 6-9.
+
+## Decisions taken in the final step (29 Oct, final:data3fit, from the motion review)
+
+22. **Outline slides 11 and 12 are one deck slide (deck 12, three clicks)**: every candidate, the
+    subtraction, the no-cut exponential, then the quality cut with the curve steepening (1.8 min). As two
+    slides, the second entry replayed the subtraction and drew the curve on again for 5 s. The two τ
+    numbers share one line: 0.421 ± 0.005 takes 0.509's place on click 3. The deck has 14 slides.
+23. **Cuts back to the mass plot find it standing**: while the camera is at the slice station (deck 7-8)
+    and the decay-time station (deck 10-12), the mass plot and its fitted curve stand out of view at the
+    state of the next mass slide, so a cut back opens on them at their scale (kit-requests 10-11).
+24. **The clip's arrival gathers over slide 9's last frame** and the camera cuts under it to the
+    decay-time station at 1.9 s; the clip breaks up as dust (1.7 s) while 2 000 grains drop from
+    0.3 s and the camera cranes down in 1.5 s. The dust stays (bible §3), not a cross-dissolve.
