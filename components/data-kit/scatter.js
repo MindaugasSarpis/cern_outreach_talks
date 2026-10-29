@@ -258,6 +258,9 @@ function buildScatter(o, ctx, stage, kit) {
   let scoreFn = null;
   const lineAlpha = Number(o.lineAlpha ?? 1.1);
   let frame = null, depthShow = 0, depthWant = 0, near = 1, far = 1;
+  let depthNext = 0, depthAt = -1;                      // a step's `after`: the depth changes then
+  let tipWait = null;                                   // a {tip} waiting for its hist to stand and let go
+  const camDir = new Vector3(), zAxis = new Vector3();
   const centre = new Vector3();
 
   // ---- data -------------------------------------------------------------------------
@@ -658,6 +661,14 @@ function buildScatter(o, ctx, stage, kit) {
   const v3 = new Vector3();
   function transition(k, kind) {
     const s = stateAt(steps, k);
+    // a {tip} waits until its hist stands and lets go (the hist fills its own state first on
+    // a fresh arrival, then tips): the histogram is seen before it pours (lab 4 slide 6)
+    if (s?.tip && kind !== 'back' && kind !== 'hide' && (!shown || kind === 'arrive' || !shown.tip)) {
+      const h = kit.form(String(s.tip));
+      const t0 = tipWait && tipWait.k === k ? tipWait.t0 : now;
+      if (h?.api?.tipReady && !h.api.tipReady() && now - t0 < 15) { tipWait = { k, kind, t0 }; return; }
+    }
+    tipWait = null;
     const prev = shown;
     const L = layout(s);
     const instant = kind === 'back' || kind === 'hide';
@@ -718,6 +729,10 @@ function buildScatter(o, ctx, stage, kit) {
           else { T[i2] = 0.3 * r; T[i2 + 1] = 1.2; }
         }
       }
+      // a step's `after` (s): everything it moves waits that long (lab 4 slide 10: the depth
+      // closes once the camera has turned off edge-on, not while the plane is seen side on)
+      const lag = instant ? 0 : Math.max(0, Number(s?.after ?? 0));
+      if (lag) { for (let i = 0; i < N; i++) T[2 * i] += lag; for (let a = 0; a < nA; a++) arrT[a] += lag; }
       const lv = new Float64Array(lt.length);
       lt.forEach((i, q) => { lv[q] = t + T[2 * i] + 0.6 * T[2 * i + 1]; });
       arrT.sort(); lv.sort();
@@ -729,7 +744,9 @@ function buildScatter(o, ctx, stage, kit) {
     morph.go(t, L, plan);
     counted = newCounted; playedAt = t;
     setBoundary(s, prev, instant, fresh);
-    depthWant = depthOf(s) > 0 ? 1 : 0;
+    depthNext = depthOf(s) > 0 ? 1 : 0;
+    depthAt = now + (instant ? 0 : Math.max(0, Number(s?.after ?? 0)));
+    if (depthAt <= now) depthWant = depthNext;
     shown = s; cur = s ? k : 0;
     version++; readCache = null;
   }
@@ -742,6 +759,9 @@ function buildScatter(o, ctx, stage, kit) {
     const map = new Map();
     const byTableRow = new Map();
     for (let i = 0; i < N; i++) byTableRow.set(rowCol[rowOf[i]], rowOf[i]);
+    // the tipped grains start as bright as the hist drew them (its alpha against ours), not
+    // at the scatter's full alpha: they stepped up in one frame as the pour began (lab 4 slide 6)
+    const va = (g) => Math.max(0.05, Math.min(1, Number(g?.alpha ?? morph.u.uAlpha.value) / Math.max(1e-3, morph.u.uAlpha.value)));
     const gr = h.api.grains?.();
     if (gr && gr.rows.length) {
       for (let q = 0; q < gr.rows.length; q++) {
@@ -749,7 +769,7 @@ function buildScatter(o, ctx, stage, kit) {
         if (k == null) continue;
         v3.set(gr.pos[3 * q], gr.pos[3 * q + 1], gr.pos[3 * q + 2]);
         plot.worldToLocal(v3);
-        map.set(k, [v3.x, v3.y, v3.z, 1, gr.white[q]]);
+        map.set(k, [v3.x, v3.y, v3.z, va(gr), gr.white[q]]);
       }
       if (map.size > 0.5 * N) return map;
     }
@@ -763,7 +783,7 @@ function buildScatter(o, ctx, stage, kit) {
         if (k == null) continue;
         v3.set(last.pos[3 * q], last.pos[3 * q + 1], last.pos[3 * q + 2]);
         plot.worldToLocal(v3);
-        map.set(k, [v3.x, v3.y, v3.z, 1, last.white[q]]);
+        map.set(k, [v3.x, v3.y, v3.z, va(last), last.white[q]]);
       }
       if (map.size > 0.5 * N) return map;
     }
@@ -813,6 +833,10 @@ function buildScatter(o, ctx, stage, kit) {
     bT0 = now; bDur = instant ? 0.35 : Number(s?.bendTime ?? (s?.bend && !prev?.bend ? 1.8 : 1.2));
     bShowFrom = was ? bShow : 0; bShowTo = first || sweep ? 1 : 0;
     if (!was) bShow = 0;
+    // on a fresh arrival the line comes in once half the cloud has gathered, not whole over
+    // an empty frame (lab 4 slide 4); a step's `after` holds it too
+    if (!instant && !sweep && !was && fresh && arrTimes.length) bT0 = Math.max(bT0, arrTimes[arrTimes.length >> 1] - 0.4 * bDur);
+    if (!instant && s?.after) bT0 += Math.max(0, Number(s.after));
   }
   function sweepEpoch() {
     if (!sweep) return epochNow;
@@ -862,7 +886,7 @@ function buildScatter(o, ctx, stage, kit) {
     counted = L.counted; shown = null; cur = 0;
     arrTimes = new Float64Array(0); leaveTimes = new Float64Array(0); baseCount = 0;
     sweep = null; bTarget = () => null; bShow = 0; bShowFrom = 0; bShowTo = 0; bCur = null; bFrom = null;
-    depthWant = 0; version++; readCache = null;
+    depthWant = 0; depthNext = 0; depthAt = -1; tipWait = null; version++; readCache = null;
   };
   const arrive = () => {
     const wasArmed = armed;
@@ -926,7 +950,7 @@ function buildScatter(o, ctx, stage, kit) {
     busy: () => (!ready && !failed && want > 0) || armed || pendingArrive
       || (!!morph && now < morph.end + 0.3)
       || !!sweep || now < bT0 + bDur + 0.1
-      || Math.abs(depthShow - depthWant) > 0.01
+      || Math.abs(depthShow - depthWant) > 0.01 || depthWant !== depthNext || !!tipWait
       || (!!frame && Math.abs(frame.show - (shown ? 1 : 0)) > 0.01),
     value: () => read(),
     read,
@@ -971,6 +995,8 @@ function buildScatter(o, ctx, stage, kit) {
       }
       morph.u.uTime.value = t;
       if (armed && now - armT > 6) arrive();
+      if (tipWait && !armed) transition(tipWait.k, tipWait.kind);
+      if (depthWant !== depthNext && now >= depthAt) depthWant = depthNext;
       // the frame stands while the plot is shown
       const fw = shown ? 1 : 0;
       frame.show += (fw - frame.show) * Math.min(1, dt * 3.5);
@@ -989,7 +1015,18 @@ function buildScatter(o, ctx, stage, kit) {
       // 401): seen from the side, the plot's x then adds no smear of its own (perspective
       // spread a 22-unit x extent into each mass band, lab 4 slide 9)
       if (depthCfg) {
-        const sx = 1 - depthShow * (1 - depthCfg.squeeze);
+        // the squeeze follows the camera round: none seen face on, all of it side on. Squeezed
+        // while still seen from the front, the plane collapsed into one white column of 91 k
+        // stacked grains (lab 4 slides 9 and 10)
+        let side = 1;
+        if (camPos) {
+          centre.set(0, H / 2, 0); plot.localToWorld(centre);
+          camDir.copy(camPos).sub(centre).normalize();
+          zAxis.setFromMatrixColumn(plot.matrixWorld, 2).normalize();
+          const q = Math.max(0, Math.min(1, (1 - Math.abs(camDir.dot(zAxis)) - 0.1) / 0.75));
+          side = q * q * (3 - 2 * q);
+        }
+        const sx = 1 - depthShow * side * (1 - depthCfg.squeeze);
         if (plot.scale.x !== sx) { plot.scale.x = sx; for (const l of labels) l.position.x = l.userData.x0 * sx; }
       }
       if (frame.dax) frame.dax.u.uShow.value = depthShow * frame.show * far;
