@@ -50,9 +50,24 @@ Drive.
 
 ## Arc
 
-One line per slide: what it shows, what is said, how long.
+One line per slide: what it shows, what is said, how long. From
+`notes/outline.md` (revised 29 Oct, revise:data1trigger); 13.6 min of notes plus
+24 s of clips = 14.0 min.
 
-1. Cover:
+1. Cover: a 9 s cold open into LHCb, a real 2012 crossing (record 24506) in bullet time, a white spark at the vertex, the plain title fading in at 8.6 s / each crossing is read out whole, like one camera frame; a track is one charged particle's path; the spark stands in for any crossing (row 1 comes from a different one) / 1.5 min
+2. Fronts: one light-blue front a crossing down the detector (the cover's crossing fades out), `25` ns / bunches crossed every 25 ns, the fronts slowed about 7 × 10⁷ times / 0.9 min
+3. Glow: the fronts merge into one glow, `40` MHz slots, `30` MHz non-empty / 40 million slots a second, about 30 million with colliding protons (LHCb's round design figure; the bunch count caps it at 28.1 MHz) / 0.9 min
+4. Clip: ATLAS pile-up display (CDS 2300480, 12 s), nothing on screen / one crossing holds several collisions; ATLAS in Run 3 up to about 60 / 0.2 min + 12 s
+5. Readout: from inside LHCb, a crane out as the hits stream out of the detector, `4` TB/s / about 5 collisions a crossing at LHCb; full readout made about 4 TB a second (the VELO, the pixel detector 5 mm from the beam, alone 2 Tbit/s) / 0.9 min
+6. One day: dk-lineup, 1 TB spheres, piles of 4 and 345 600, `345.6` PB/day / a day of full readout would have been 345.6 PB / 0.8 min
+7. CERN's tape: the 1.3 EB pile beside the day, `1.3` EB, `3.8` days / under four days of readout was as much as all of CERN's tape (size only) / 0.5 min
+8. Gate 1: the lane of knots, then HLT1 bursts 29 of 30 to dust; ours passes white, the rest light blue; `30` MHz in, then `1` MHz out and `500` GPUs / about 500 GPUs kept 1 crossing in 30 before anything was stored, keeping pace in batches; it kept tracks with large momentum across the beam or missing the collision point (fact pending) / 1.5 min
+9. Buffer: kept knots park on a turning shell, `30` PB and `80` h; click: gate 1 off, the lane floods it, `2.1` h replaces 80 h (kit key requested; fallback 30 PB and 2.1 h, no click) / only what HLT1 kept could wait; HLT2 decided later from 30 PB of disk; store everything and it fills in 2 h / 1.2 min
+10. Gate 2: close on HLT2, then it drops 9 of 10 knots and each kept knot loses a quarter, `100` kHz, `10` GB/s / HLT2 reconstructed (hits joined into tracks and particles) and kept about 1 in 10, about 10 GB a second; Turbo only in the caveats / 1.3 min
+11. Clip: CERN's TFinity tape library installed (CDS 2728761, 12 s), nothing on screen / what both gates kept went to tape / 0.2 min + 12 s
+12. Kept a day: a white 864 TB pile beside the 345 600 TB day, `864` TB, `345.6` PB / about 1 byte in 400 kept: 300 in crossings, and each kept crossing stored at about 100 kB instead of 133 kB / 1.1 min
+13. One row: our packet folds into one white grain, ringed, over the fading-in floor; `1 880.6` MeV/c², `3 001` MeV/c, `0.413` ps, `1 299` at once (requested `onscreen` exception, four numbers at once; fallback: the first three, IPχ² in the notes, takeaway "a row of numbers") / a kept crossing becomes rows of numbers: pair mass, pT, decay time, IPχ², each in one clause; record 401 is a different Run 1 (2011-12) crossing under a different trigger, a sample the guide calls randomly collected / 1.4 min
+14. The heap: 91 583 light-blue grains rain onto the floor, ours settles last on the summit (T2's cover pose), the count `91583` "candidates" / each row is a candidate (two tracks that may come from one D⁰ meson); this pile is what the next four talks work on; a row is not known to be a D⁰ / 1.2 min
 
 ## Figures
 
