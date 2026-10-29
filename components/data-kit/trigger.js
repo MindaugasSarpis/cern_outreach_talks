@@ -131,20 +131,38 @@ function verts(stage) {
 attribute vec3 aCtr, aJit, aBall;
 attribute vec4 aKeep;
 attribute float aPhase, aSeed, aCore, aEmpty;
-uniform float uShow, uAlpha, uSize, uNG, uWave, uCollT, uBallR, uSpin, uKeptX, uEmptyA;
+uniform float uShow, uAlpha, uSize, uNG, uWave, uCollT, uUnT, uCedeT, uBallR, uSpin, uKeptX, uEmptyA;
 uniform float uGX[${MAXG}], uGShrink[${MAXG}];
 uniform float uGOn0, uGOn1, uGOn2, uGOn3, uGOff0, uGOff1, uGOff2, uGOff3;
 uniform vec3 uBallC, uColor;
 float onOf(int k) { return k == 0 ? uGOn0 : k == 1 ? uGOn1 : k == 2 ? uGOn2 : uGOn3; }
 float offOf(int k) { return k == 0 ? uGOff0 : k == 1 ? uGOff1 : k == 2 ? uGOff2 : uGOff3; }
+// a kept packet's look past a shrinking gate: its grains pack by the cube root of the
+// share kept (the same bytes per volume), and only a hard shrink (Turbo's 1 in 13) packs
+// to half and is lifted, so it still reads as a knot; 0.75 is drawn as 0.75
+float packOf(float g) { float c = clamp((0.6 - g) / 0.525, 0.0, 1.0); return mix(pow(max(g, 1e-3), 0.3333), 0.5, c); }
+float gainOf(float g) { return mix(1.0, 1.7, clamp((0.6 - g) / 0.525, 0.0, 1.0)); }
 void main() {
   if (uShow < 0.01) { hide(); return; }
   // an empty crossing: a few grains of a fainter packet
   if (aEmpty > 0.5 && aCore < 0.5 && hash(aSeed * 3.7) > 0.35) { hide(); return; }
   bool coll = uCollT < 1e8;
-  float tt = coll ? min(uTime, uCollT) : uTime;
+  bool un = coll && uUnT < 1e8;                               // the ball unfolding back into the lane (a step back)
+  float tt = coll && !un ? min(uTime, uCollT) : uTime;
   float s = mod(tt * uSpeed + aPhase * uLt, uLt);
   float x = xOf(s);
+  // in the ball: kept by every active gate, past ball.from, at the moment of the collapse
+  float member = 0.0;
+  if (coll) {
+    float xc = xOf(mod(uCollT * uSpeed + aPhase * uLt, uLt));
+    member = aEmpty < 0.5 && xc >= uKeptX ? 1.0 : 0.0;
+    for (int k = 0; k < ${MAXG}; k++) {
+      if (float(k) >= uNG) break;
+      if (onOf(k) > 1e8 || offOf(k) < 1e8 || xc <= uGX[k]) continue;
+      if (aKeep[k] < 0.5) member = 0.0;
+      else if (uGShrink[k] < 0.999 && aCore < 0.5 && hash(aSeed * 31.0 + float(k) * 7.0) >= uGShrink[k]) member = 0.0;
+    }
+  }
   float sq = 1.0, dust = -1.0, dx = 0.0, gain = 1.0;
   for (int k = 0; k < ${MAXG}; k++) {
     if (float(k) >= uNG) break;
@@ -155,10 +173,11 @@ void main() {
     float shrinks = step(uGShrink[k], 0.999);
     float drop = aKeep[k] < 0.5 ? 1.0 : (shrinks > 0.5 && aCore < 0.5 && hash(aSeed * 31.0 + float(k) * 7.0) >= uGShrink[k] ? 1.0 : 0.0);
     float age = (s - sg) / uSpeed, crossed = tt - age;
+    float pk = mix(1.0, packOf(uGShrink[k]), shrinks), gk = mix(1.0, gainOf(uGShrink[k]), shrinks);
     if (crossed > on && crossed < off) {
       if (drop > 0.5) { dust = age; dx = gx; break; }       // burst at the gate as it crossed
-      sq *= mix(1.0, 0.5, shrinks);                         // the kept bytes pack tighter
-      gain *= mix(1.0, 1.7, shrinks);                       // and stay a visible knot
+      sq *= pk;                                             // the kept bytes pack tighter
+      gain *= gk;
     } else if (crossed <= on && tt > on) {
       // it was past the gate when the gate fired: the wave from the gate reaches it
       float sOn = s - (tt - on) * uSpeed;
@@ -166,8 +185,8 @@ void main() {
         float xOn = xOf(sOn), tw = on + (xOn - gx) / uWave;
         if (tt > tw) {
           if (drop > 0.5) { dust = tt - tw; dx = xOf(sOn + (tw - on) * uSpeed); break; }
-          sq *= mix(1.0, 0.5, shrinks);
-          gain *= mix(1.0, 1.7, shrinks);
+          sq *= pk;
+          gain *= gk;
         }
       }
     }
@@ -182,12 +201,18 @@ void main() {
     a *= 0.95 * exp(-dust * 0.9);                            // the dust lingers a second or two: the burst reads
   } else p = laneAt(x, aCtr, aJit, sq);
   if (coll) {
-    float kc = uTime - uCollT;
-    if (dust >= 0.0 || x < uKeptX || aEmpty > 0.5) a *= 1.0 - smoothstep(0.0, 0.8, kc);
+    // kc: how far the collapse got (frozen at the step back while the ball unfolds);
+    // back: how far the unfolding has got (the lane runs on underneath, so the grains
+    // fly out to where their packets are now)
+    float kc = (un ? uUnT : uTime) - uCollT;
+    float back = un ? ease((uTime - uUnT) / 2.0) : 0.0;
+    if (member < 0.5) a *= mix(1.0 - smoothstep(0.0, 0.8, kc), 1.0, back);
     else {
-      float e = ease((kc - 0.6 * hash(aSeed * 5.0)) / 2.2);
+      float e = ease((kc - 0.6 * hash(aSeed * 5.0)) / 2.2) * (1.0 - back);
       vec3 b = uBallC + turnY(aBall * uBallR, uSpin * uTime);
+      a = mix(a, gain * uAlpha * uShow, e);                  // in the ball, no lane-end fade
       p = mix(p, b, e);
+      if (uCedeT < 1e8) a *= 1.0 - smoothstep(0.0, 1.2, uTime - uCedeT);   // a dk-pipeline pile took over
     }
   }
   if (a <= 0.002) { hide(); return; }
@@ -195,7 +220,7 @@ void main() {
 }`;
   const RING = G + SIZE_GLSL + /* glsl */ `
 attribute float aSeed, aGate;
-uniform float uShow, uSize, uCollT;
+uniform float uShow, uSize, uCollT, uUnT;
 uniform float uGOn0, uGOn1, uGOn2, uGOn3, uGOff0, uGOff1, uGOff2, uGOff3;
 uniform vec3 uColor;
 void main() {
@@ -206,7 +231,7 @@ void main() {
   float lit = on > 1e8 ? 0.0 : smoothstep(0.0, 1.0, uTime - on) * (off > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.0, uTime - off));
   float fire = on > 1e8 || off < 1e8 ? 0.0 : exp(-max(uTime - on, 0.0) * 2.0) * step(on, uTime);
   float a = uShow * (0.25 + 0.3 * lit + 0.6 * fire) * (0.6 + 0.4 * hash(aSeed * 5.0));
-  if (uCollT < 1e8) a *= 1.0 - smoothstep(0.0, 0.8, uTime - uCollT);
+  if (uCollT < 1e8) a *= uUnT < 1e8 ? mix(1.0 - smoothstep(0.0, 0.8, uUnT - uCollT), 1.0, smoothstep(0.0, 0.8, uTime - uUnT)) : 1.0 - smoothstep(0.0, 0.8, uTime - uCollT);
   if (a <= 0.002) { hide(); return; }
   place(position, sizeAt(position, uSize), a, uColor, aSeed);
 }`;
@@ -214,28 +239,41 @@ void main() {
   // along the lane, aR the radius, aA the angle: the knots stay knots as it turns)
   const BUF = G + SIZE_GLSL + /* glsl */ `
 attribute float aSeed, aR, aA, aKnot;
-uniform float uShow, uOn, uSize, uAlpha, uSpin, uBufT, uLane;
-uniform vec3 uColor;
+attribute vec3 aBall;
+uniform float uShow, uOn, uSize, uAlpha, uSpin, uBufT, uLane, uCollT, uUnT, uCedeT, uBufFold, uBallR, uBallSpin;
+uniform vec3 uColor, uBallC;
 void main() {
   // filling (uBufT set): each parked packet rides out from the lane to its slot in turn
   float e = uBufT < 1e8 ? ease((uTime - uBufT - 2.2 * hash(aKnot * 13.1 + 0.37)) / 0.9) : 1.0;
   float v = uShow * (uBufT < 1e8 ? e : uOn);
+  // ball.buffer: the parked packets fold into the collapse's ball too (and unfold back to their slots)
+  bool fold = uBufFold > 0.5 && uCollT < 1e8;
+  float ef = 0.0;
+  if (fold) {
+    bool un = uUnT < 1e8;
+    float kc = (un ? uUnT : uTime) - uCollT;
+    ef = ease((kc - 0.6 * hash(aSeed * 5.0)) / 2.2) * (un ? 1.0 - ease((uTime - uUnT) / 2.0) : 1.0);
+    v = uShow;
+    if (uCedeT < 1e8) v *= 1.0 - smoothstep(0.0, 1.2, uTime - uCedeT);
+  }
   if (v < 0.01) { hide(); return; }
   float ang = aA + uTime * uSpin, rr = mix(min(uLane, aR) * 0.5, aR, e);
   vec3 p = vec3(position.x, cos(ang) * rr, sin(ang) * rr);
+  if (fold) p = mix(p, uBallC + turnY(aBall * uBallR, uBallSpin * uTime), ef);
   place(p, sizeAt(p, uSize), uAlpha * v * (0.75 + 0.25 * hash(aSeed * 3.0)), uColor, aSeed);
 }`;
   const OURSV = G + SIZE_GLSL + /* glsl */ `
 attribute float aSeed, aCore;
-uniform float uShow, uSize, uBig, uShrink, uFold;
+uniform float uShow, uSize, uBig, uShrink, uPack, uFold, uOursV;
 uniform vec3 uAt, uColor;
 void main() {
-  if (uShow < 0.01) { hide(); return; }
-  if (aCore > 0.5) { place(uAt, sizeAt(uAt, uBig), 1.5 * uShow, uColor, aSeed); return; }
+  float v = uShow * uOursV;
+  if (v < 0.01) { hide(); return; }
+  if (aCore > 0.5) { place(uAt, sizeAt(uAt, uBig), 1.5 * v, uColor, aSeed); return; }
   float keep = hash(aSeed * 31.0) < uShrink ? 1.0 : 0.0;
-  float a = uShow * (1.0 - uFold) * keep;
+  float a = v * (1.0 - uFold) * keep;
   if (a <= 0.002) { hide(); return; }
-  vec3 p = uAt + position * (1.0 + 0.15 * sin(uTime * 2.0 + aSeed * 6.0)) * (1.0 - uFold) * mix(1.0, 0.5, step(uShrink, 0.999));
+  vec3 p = uAt + position * (1.0 + 0.15 * sin(uTime * 2.0 + aSeed * 6.0)) * (1.0 - uFold) * uPack;
   place(p, sizeAt(p, uSize), a, uColor, aSeed);
 }`;
   VERTS = { PACKET, RING, BUF, OURSV };
@@ -251,7 +289,10 @@ function buildTrigger(o, ctx, stage, kit) {
   const seed = o.seed ?? SEED;
   const rnd = mulberry32(seed * 101 + 9);
   const from = Number(o.from ?? -27), to = Number(o.to ?? 75), lane = Number(o.lane ?? 1.1), speed = Number(o.speed ?? 7);
-  const gates = (o.gates || []).slice(0, MAXG).map((x, k) => ({ x: Number(x.x), keep: Number(x.keep ?? 1), shrink: Number(x.shrink ?? 1), ring: Number(x.ring ?? 600), step: Math.round(Number(x.step ?? 2 + k)) }));
+  const gates = (o.gates || []).slice(0, MAXG).map((x, k) => ({
+    x: Number(x.x), keep: Number(x.keep ?? 1), shrink: Number(x.shrink ?? 1), ring: Number(x.ring ?? 600), step: Math.round(Number(x.step ?? 2 + k)),
+    off: (Array.isArray(x.off) ? x.off : x.off != null ? [x.off] : []).map((v) => Math.round(Number(v))),
+  }));
   const NG = gates.length;
   const B = o.buffer || null;
   const bLen = B ? Number(B.len ?? 8) : 0;
@@ -271,14 +312,14 @@ function buildTrigger(o, ctx, stage, kit) {
 
   const frameScale = { value: 1 };
   const shared = {
-    uPixelRatio: frameScale, uShow: { value: 0 }, uCollT: { value: OFF }, uMinPx: { value: Number(o.minPx ?? 0) },
+    uPixelRatio: frameScale, uShow: { value: 0 }, uCollT: { value: OFF }, uUnT: { value: OFF }, uMinPx: { value: Number(o.minPx ?? 0) },
     uGOn0: { value: OFF }, uGOn1: { value: OFF }, uGOn2: { value: OFF }, uGOn3: { value: OFF },
     uGOff0: { value: OFF }, uGOff1: { value: OFF }, uGOff2: { value: OFF }, uGOff3: { value: OFF },
   };
   const crowd = new Color(P.crowd), sel = new Color(P.sel);
   const ballR = Number(o.ball?.r ?? 2.2);
   const ballC = new Vector3(...(o.ball?.at ?? [to + ballR + 2, 0, 0]));
-  const lastX = (k) => (k > 0 ? gates[Math.min(k, NG) - 1].x : from);
+  const keptX = o.ball?.from != null ? Number(o.ball.from) : NG ? gates[NG - 1].x : from;
 
   // ---- the packets ----
   const n = packets * per;
@@ -305,7 +346,7 @@ function buildTrigger(o, ctx, stage, kit) {
     uFrom: { value: from }, uTo: { value: to }, uSpeed: { value: speed }, uLt: { value: Lt }, uB0: { value: b0 }, uB1: { value: b1 },
     uHold: { value: hold }, uBufR: { value: B ? Number(B.r ?? 3.2) : lane }, uLane: { value: lane }, uBufSpin: { value: B ? Number(B.spin ?? 0.08) : 0 }, uBufOn: { value: 0 },
     uAlpha: { value: Number(o.alpha ?? 0.9) }, uSize: { value: Number(o.size ?? GRAIN) }, uNG: { value: NG }, uWave: { value: Number(o.wave ?? 30) },
-    uBallR: { value: ballR }, uSpin: { value: Number(o.ball?.spin ?? 0.12) }, uKeptX: { value: from }, uEmptyA: { value: 0.4 },
+    uBallR: { value: ballR }, uSpin: { value: Number(o.ball?.spin ?? 0.12) }, uKeptX: { value: keptX }, uEmptyA: { value: 0.4 }, uCedeT: { value: OFF },
     uGX: { value: Array.from({ length: MAXG }, (_, k) => (k < NG ? gates[k].x : 1e6)) },
     uGShrink: { value: Array.from({ length: MAXG }, (_, k) => (k < NG ? gates[k].shrink : 1)) },
     uBallC: { value: ballC }, uColor: { value: crowd },
@@ -334,7 +375,7 @@ function buildTrigger(o, ctx, stage, kit) {
   // ---- the buffer: parked packets on a slowly turning shell round the lane ----
   let bmat = null;
   if (B) {
-    const pos = new Float32Array(bufN * 3), s = new Float32Array(bufN), rr = new Float32Array(bufN), aa = new Float32Array(bufN), kn = new Float32Array(bufN);
+    const pos = new Float32Array(bufN * 3), s = new Float32Array(bufN), rr = new Float32Array(bufN), aa = new Float32Array(bufN), kn = new Float32Array(bufN), bb = new Float32Array(bufN * 3);
     const R = Number(B.r ?? 3.2), parked = Math.max(1, Math.floor(bufN / per));
     // the knots' centres: a Fibonacci sphere (even over the surface, no two knots on each
     // other) stretched to a prolate spheroid round the lane, `len` long and r wide, each
@@ -348,16 +389,22 @@ function buildTrigger(o, ctx, stage, kit) {
       for (let j = 0; j < m; j++, i++) {
         pos.set([cx + gauss(rnd) * knot * 1.6, 0, 0], i * 3);
         rr[i] = cr + gauss(rnd) * knot; aa[i] = ca + (gauss(rnd) * knot) / R; s[i] = rnd(); kn[i] = c;
+        let bx, by, bz;
+        do { bx = 2 * rnd() - 1; by = 2 * rnd() - 1; bz = 2 * rnd() - 1; } while (bx * bx + by * by + bz * bz > 1);
+        bb.set([bx, by, bz], i * 3);
       }
     }
-    bmat = link(stage.grainMaterial(V.BUF, { ...shared, uOn: { value: 0 }, uBufT: { value: OFF }, uLane: { value: lane }, uSize: { value: Number(o.size ?? GRAIN) }, uSpin: { value: Number(B.spin ?? 0.08) }, uAlpha: { value: Number(B.alpha ?? 0.7) }, uColor: { value: crowd } }));
-    const bgeo = stage.grainGeometry(bufN, { position: pos, aSeed: [s, 1], aR: [rr, 1], aA: [aa, 1], aKnot: [kn, 1] });
+    bmat = link(stage.grainMaterial(V.BUF, {
+      ...shared, uOn: { value: 0 }, uBufT: { value: OFF }, uLane: { value: lane }, uSize: { value: Number(o.size ?? GRAIN) }, uSpin: { value: Number(B.spin ?? 0.08) }, uAlpha: { value: Number(B.alpha ?? 0.7) }, uColor: { value: crowd },
+      uBufFold: { value: o.ball?.buffer ? 1 : 0 }, uCedeT: u.uCedeT, uBallC: u.uBallC, uBallR: u.uBallR, uBallSpin: u.uSpin,
+    }));
+    const bgeo = stage.grainGeometry(bufN, { position: pos, aSeed: [s, 1], aR: [rr, 1], aA: [aa, 1], aKnot: [kn, 1], aBall: [bb, 3] });
     g.add(stage.grainPoints(bgeo, bmat)); mats.push(bmat); geos.push(bgeo);
   }
 
   // ---- ours: a white packet, its core our grain ----
   const om = link(stage.grainMaterial(V.OURSV, {
-    ...shared, uSize: { value: GRAIN }, uBig: { value: OURS }, uShrink: { value: 1 }, uFold: { value: 0 },
+    ...shared, uSize: { value: GRAIN }, uBig: { value: OURS }, uShrink: { value: 1 }, uPack: { value: 1 }, uFold: { value: 0 }, uOursV: { value: o.ours === false ? 0 : 1 },
     uAt: { value: new Vector3() }, uColor: { value: sel },
   }));
   {
@@ -367,27 +414,41 @@ function buildTrigger(o, ctx, stage, kit) {
     const ogeo = stage.grainGeometry(no, { position: pos, aSeed: [s, 1], aCore: [c, 1] });
     g.add(stage.grainPoints(ogeo, om)); mats.push(om); geos.push(ogeo);
   }
-  const oursList = Array.isArray(o.ours) ? o.ours : [from];
+  // ours per step: x, [x, y, z], { at, fold, glide, lag }, or false / null (hidden: it
+  // fades where it stands, at the place of the nearest step before that has one).
+  // `ours: false` on the object: no packet of ours at all (T4's gate)
+  const oursList = o.ours === false ? [false] : Array.isArray(o.ours) ? o.ours : [from];
+  const hiddenE = (e) => e === false || e === null;
   const oursAt = (k) => {
-    const e = oursList[Math.max(0, Math.min(oursList.length - 1, k))];
+    const i = Math.max(0, Math.min(oursList.length - 1, k));
+    let j = i;
+    while (j > 0 && hiddenE(oursList[j])) j--;
+    const e = hiddenE(oursList[j]) ? from : oursList[j];
     const obj = e && typeof e === 'object' && !Array.isArray(e);
     const at = obj ? e.at : e;
     const v = Array.isArray(at) ? new Vector3(at[0] || 0, at[1] || 0, at[2] || 0) : new Vector3(Number(at ?? from), 0, 0);
-    return { v, fold: !!(obj && e.fold), glide: obj && e.glide != null ? Number(e.glide) : null, lag: obj ? Math.max(0, Number(e.lag ?? 0)) : 0 };
+    const own = oursList[i], ob = own && typeof own === 'object' && !Array.isArray(own);
+    return {
+      v, hidden: hiddenE(own), fold: !!(obj && e.fold),
+      glide: ob && own.glide != null ? Number(own.glide) : null, lag: ob ? Math.max(0, Number(own.lag ?? 0)) : 0,
+    };
   };
 
   // ---- steps ----
   const lastGateStep = NG ? Math.max(...gates.map((gt) => gt.step)) : 1;
-  const C = Math.round(Number(o.collapse ?? Math.max(lastGateStep, B && B.step != null ? Number(B.step) : 0) + 1));
+  const C = Math.round(Number(o.collapse ?? Math.max(lastGateStep, B && B.step != null ? Number(B.step) : 0, ...gates.flatMap((gt) => gt.off)) + 1));
   const latches = gates.map((gt, k) => stage.eventLatch(u, {
     start: `uGOn${k}`, hide: `uGOff${k}`,
     // until the last packet it burst has run off the lane
     fade: (Lt - sOf(gt.x)) / speed + 2,
   }));
+  const gateWants = (gt, k) => k >= gt.step && !gt.off.includes(k);
   const st = stage.stepper(name);
   let now = 0, show = 0, wantShow = 0, bufOn = 0;
   let o0 = oursAt(0).v.clone(), o1 = o0.clone(), oT = -OFF, fold0 = 0, fold1 = 0;
-  let shrinkNow = 1, waveTill = -OFF, collTill = -OFF;
+  let ov0 = oursAt(0).hidden || o.ours === false ? 0 : 1, ov1 = ov0, ovT = -OFF;
+  const OV = 0.8;   // seconds for ours to fade in or out
+  let shrinkNow = 1, waveTill = -OFF, collTill = -OFF, unTill = -OFF;
   const glide0 = Number(o.glide ?? 3.5);
   let glide = glide0;
   const passed = gates.map(() => false);   // the shrinking gates ours has crossed while on
@@ -398,60 +459,87 @@ function buildTrigger(o, ctx, stage, kit) {
     return out.copy(o0).lerp(o1, e);
   };
   const foldNow = (t) => { const f = Math.min(1, Math.max(0, (t - oT) / glide)); return fold0 + (fold1 - fold0) * f * f * (3 - 2 * f); };
+  const visNow = (t) => { const f = Math.min(1, Math.max(0, (t - ovT) / OV)); return ov0 + (ov1 - ov0) * f * f * (3 - 2 * f); };
   const tmp = new Vector3();
   const apply = () => {
-    const k = st.step, prev = st.prev;
-    const jump = prev <= 0 || Math.abs(k - prev) > 1;
-    // a jump onto a gate's step from a lane that was not running: that gate still fires, after the lag
-    const arrive = jump && prev <= 1 && k >= 2;
-    const back = !jump && k < prev;
-    const lag = (jump && !arrive) || back ? 0 : oursAt(Math.max(0, k)).lag;
+    const k = Number(st.step) || 0, prev = Number.isFinite(st.prev) ? st.prev : 0;
+    const running = prev >= 1;
+    // a step forward from a running lane, a jump included, or an arrival on a lane that was not
+    // running (step 0 or 1, a slide opened directly): the gate whose own step this is fires,
+    // after the step's lag; any other gate that turns on is shown as long on
+    const fwd = k > prev && k > 0;
+    const arrive = !running && k >= 2;
+    const back = k < prev && k > 0;
+    const lag = fwd ? oursAt(Math.max(0, k)).lag : 0;
     wantShow = k > 0 ? 1 : 0;
     if (k <= 0) {
       for (const l of latches) l.stop(now);
-      u.uCollT.value = OFF;
+      u.uCollT.value = OFF; u.uUnT.value = OFF; u.uCedeT.value = OFF;
     } else {
       gates.forEach((gt, i) => {
-        const want = k >= gt.step;
+        const want = gateWants(gt, k);
         const l = latches[i];
-        const fires = !jump || (arrive && gt.step === k);
+        const fires = fwd && gt.step === k;
         if (want && !l.on) { l.start(now, fires ? now + lag : now - 100); if (fires) waveTill = Math.max(waveTill, now + lag + (to - gt.x) / u.uWave.value + 4.5); }
         else if (!want && l.on) l.stop(now);
       });
       if (k >= C) {
-        if (u.uCollT.value > 1e8) { u.uCollT.value = jump ? now - 100 : now; collTill = jump ? now : now + 3.5; }
-        u.uKeptX.value = lastX(NG);
-      } else u.uCollT.value = OFF;
+        // the collapse plays when it is reached from a running lane (a jump too: T4's close),
+        // and stands at once on a slide opened directly
+        if (u.uCollT.value > 1e8 || u.uUnT.value < 1e8) {
+          const cold = !running && prev < C;
+          u.uCollT.value = cold ? now - 100 : now; u.uUnT.value = OFF; u.uCedeT.value = OFF;
+          collTill = cold ? now : now + 3.5;
+        }
+      } else if (u.uCollT.value < 1e8 && u.uUnT.value > 1e8) {
+        // a step back from the collapse: the ball unfolds into the running lane
+        u.uUnT.value = now; unTill = now + 2.4; collTill = -OFF; u.uCedeT.value = OFF;
+      }
     }
-    // the buffer fills from the lane on a step forward to it, stands at once otherwise
+    // the buffer fills from the lane whenever it turns on (a step forward to it, an arrival,
+    // a step back out of the collapse)
     const bufWant = st.step >= bufStep && st.step < C ? 1 : 0;
     if (bmat) {
-      if (bufWant && !bufWas) bmat.uniforms.uBufT.value = jump && !arrive ? now - 100 : now;
+      if (bufWant && !bufWas) bmat.uniforms.uBufT.value = o.ball?.buffer && u.uUnT.value < 1e8 ? now - 100 : now;
       else if (!bufWant) bmat.uniforms.uBufT.value = OFF;
     }
     bufWas = bufWant;
-    // ours: glide to this step's place (at once on a jump; from the step before on an
-    // arrival; held where it stands on a step back, so it never runs upstream through a gate)
-    const cur = oursNow(now, tmp).clone(), want = oursAt(Math.max(0, k));
-    if (back) {
+    // ours: glide to this step's place (from where it stands on a step forward; from the step
+    // before on an arrival); held where it stands on a step back, so it never runs upstream
+    // through a gate. A hidden entry fades it where it stands
+    const cur = oursNow(now, tmp).clone(), want = oursAt(Math.max(0, k)), vNow = visNow(now);
+    const vWant = o.ours === false || want.hidden || k <= 0 ? 0 : 1;
+    if (vWant !== ov1) { ov0 = vNow; ov1 = vWant; ovT = now + (vWant ? lag : 0); }
+    if (back || want.hidden) {
       o0.copy(cur); o1.copy(cur); fold0 = fold1 = foldNow(now); oT = -OFF;
       return;
     }
     glide = want.glide ?? glide0;
-    if (arrive) { const w0 = oursAt(k - 1); o0.copy(w0.v); fold0 = w0.fold ? 1 : 0; oT = now + lag; }
-    else if (jump) { o0.copy(want.v); fold0 = want.fold ? 1 : 0; oT = -OFF; }
+    if (arrive) { const w0 = oursAt(k - 1); o0.copy(w0.v); fold0 = w0.fold ? 1 : 0; oT = now + lag; if (ov0 < 0.01) { ov0 = 0; ovT = now; } }
+    else if (!fwd || vNow < 0.01) { o0.copy(want.v); fold0 = want.fold ? 1 : 0; oT = -OFF; }   // appearing: it stands at its place
     else { o0.copy(cur); fold0 = foldNow(now); oT = now + lag; }
     o1.copy(want.v); fold1 = want.fold ? 1 : 0;
   };
   // the bytes the active gates pass
-  const value = () => gates.reduce((a, gt, i) => (latches[i].on ? a * gt.keep * gt.shrink : a), 1);
+  const value = () => gates.reduce((a, gt, i) => (latches[i].on && now >= u[`uGOn${i}`].value ? a * gt.keep * gt.shrink : a), 1);
+  const packOf = (g) => { if (g >= 0.999) return 1; const c = Math.max(0, Math.min(1, (0.6 - g) / 0.525)); return Math.cbrt(Math.max(g, 1e-3)) * (1 - c) + 0.5 * c; };
+  const wB = new Vector3();
   const api = {
-    busy: () => Math.abs(show - wantShow) > 1e-3 || (now - oT < glide) || (bmat && bmat.uniforms.uBufT.value < 1e8 && now - bmat.uniforms.uBufT.value < 3.2) || now < waveTill || now < collTill
+    busy: () => Math.abs(show - wantShow) > 1e-3 || (now - oT < glide) || now - ovT < OV || (bmat && bmat.uniforms.uBufT.value < 1e8 && now - bmat.uniforms.uBufT.value < 3.2) || now < waveTill || now < collTill || now < unTill
       || (B ? Math.abs((st.step >= bufStep && st.step < C ? 1 : 0) - bufOn) > 0.01 : false),
     value,
     ready: () => true,
     // our packet's place now, in world coordinates (for a dk-spark to take over)
     ours(out = new Vector3()) { g.updateWorldMatrix(true, false); return oursNow(now, out).applyMatrix4(g.matrixWorld); },
+    // the collapse's ball, for a dk-pipeline pile to take over: its centre (world), radius and
+    // the world time it has formed; null while the lane is not collapsed
+    ball() {
+      if (u.uCollT.value > 1e8 || u.uUnT.value < 1e8) return null;
+      g.updateWorldMatrix(true, false);
+      return { at: wB.copy(ballC).applyMatrix4(g.matrixWorld).clone(), r: ballR, formedAt: u.uCollT.value + 2.8 };
+    },
+    // the pile has taken over: the ball fades from world time t (1.2 s); a step clears it
+    cede(t = now) { if (u.uCollT.value < 1e8) { u.uCedeT.value = t; collTill = Math.max(collTill, t + 1.3); } },
   };
   kit.register(name, { type: TYPE, api });
 
@@ -462,6 +550,8 @@ function buildTrigger(o, ctx, stage, kit) {
       now = t; u.uTime.value = t;
       if (st.fresh) { st.fresh = false; apply(); }
       for (const l of latches) l.tick(t);
+      // the unfolding has ended: the collapse's times go back to OFF (events end)
+      if (u.uUnT.value < 1e8 && t > unTill) { u.uCollT.value = OFF; u.uUnT.value = OFF; }
       show += Math.sign(wantShow - show) * Math.min(Math.abs(wantShow - show), dt / 1.2);
       u.uShow.value = show;
       const bufWant = st.step >= bufStep && st.step < C ? 1 : 0;
@@ -478,7 +568,9 @@ function buildTrigger(o, ctx, stage, kit) {
       });
       shrinkNow += (want - shrinkNow) * Math.min(1, dt * 2.5);
       om.uniforms.uShrink.value = shrinkNow;
+      om.uniforms.uPack.value = packOf(shrinkNow);
       om.uniforms.uFold.value = foldNow(t);
+      om.uniforms.uOursV.value = visNow(t);
       g.visible = show > 0.001;
     },
     dispose() { st.off(); kit.unregister(name); for (const x of geos) x.dispose(); for (const m of mats) m.dispose(); },

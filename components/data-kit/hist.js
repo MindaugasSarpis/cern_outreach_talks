@@ -12,7 +12,7 @@ import { Group, Vector3 } from 'three';
 import { GRAIN, OURS, OURS_ROW, SEED, MASS, HEIGHT, TICK_MASS, LABEL, roles, alphaFor, fmt } from './style.js';
 import { mulberry32, poisson, order as seriesOrder } from './rng.js';
 import { fixedLabel, shade, niceTicks } from './label.js';
-import { createMorph, staticGrains, OFF, MOTION } from './morph.js';
+import { createMorph, staticGrains, toneGrains, OFF, MOTION } from './morph.js';
 
 export const TYPE = 'dk-hist';
 export const FIELDS = ['pos', 'name', 'grains'];
@@ -33,6 +33,25 @@ export function files(o) {
   if (has('select')) out.push(o.selections ?? 'd0-select.json');
   if (o.model?.rolls?.file) out.push(o.model.rolls.file);
   return out.filter(Boolean);
+}
+
+// a dotted path into a bake file ('falling.rolls', 'flat.rolls.3')
+const getIn = (d, path) => { let v = d; for (const k of String(path ?? '').split('.').filter(Boolean)) { if (v == null) return undefined; v = v[/^\d+$/.test(k) ? Number(k) : k]; } return v; };
+// a baked roll's counts: an array of counts, or an object with `counts` (toys.json's
+// falling.rolls[r] = { values, counts, z, maxBin, maxZ, alarm, alarmAt })
+const rollCounts = (r) => (Array.isArray(r) ? r : Array.isArray(r?.counts) ? r.counts : null);
+// the bins a baked roll's own alarm lit: `alarmBins` (a list), `alarmBin`, the bins inside
+// `alarmAt` ([lo, hi] in data units), or `maxBin` when `alarm` is true; none otherwise
+export function bakedAlarmBins(r, lo, bin, nb) {
+  if (!r || Array.isArray(r)) return [];
+  if (Array.isArray(r.alarmBins)) return r.alarmBins.map(Number).filter((b) => b >= 0 && b < nb);
+  if (Number.isInteger(r.alarmBin)) return [r.alarmBin];
+  if (Array.isArray(r.alarmAt) && r.alarmAt.length === 2) {
+    const out = [];
+    for (let b = 0; b < nb; b++) { const c = lo + (b + 0.5) * bin; if (c >= r.alarmAt[0] && c <= r.alarmAt[1]) out.push(b); }
+    return out;
+  }
+  return r.alarm === true && Number.isInteger(r.maxBin) ? [r.maxBin] : [];
 }
 
 export function install(stage, kit) {
@@ -112,8 +131,11 @@ function buildHist(o, ctx, stage, kit) {
   const seed = o.seed ?? SEED;
   // a deterministic default (never Math.random: the same name on every load)
   const sel = stage.stepper(name ?? `dk-hist-${(o.pos || [0, 0, 0]).join(',')}-${o.key ?? 'M'}`);
-  // an arrival replays the fill from nothing, unless `replay: false` (it then stands at once)
-  const ARRIVE = o.replay === false ? 'settle' : 'arrive';
+  // an arrival replays the fill from nothing, unless `replay: false` (it then stands at
+  // once): on the object (every arrival) or as a step key (that step and the steps that
+  // inherit it: a plot that already stood on an earlier slide comes back standing)
+  const standsAt = (k) => o.replay === false || stateAt(steps, k)?.replay === false;
+  const arriveKind = (k) => (standsAt(k) ? 'settle' : 'arrive');
   const labels = [];
   const frameScale = { value: 1 };     // the engine keeps it at the buffer's height / 900 (read at build)
 
@@ -132,7 +154,8 @@ function buildHist(o, ctx, stage, kit) {
   let arrTimes = new Float64Array(0), leaveTimes = new Float64Array(0), baseCount = 0;
   let meanTarget = null, meanFrom = null, meanT0 = -OFF, meanTopY = 0, meanTopFrom = 0, lastMean = null;
   let tiltFrom = 0, tiltTo = 0, tiltT0 = -OFF, blur = 0, frameShow = 0;
-  let whisk = null, whiskShowT = OFF, whiskOn = false, whiskKey = '';
+  let whisk = null, whiskShowT = OFF, whiskOn = false, whiskKey = '', band = null, bandRnd = null;
+  let baseLabels = [], stepTk = null, stepLabels = new Map(), tickKey = '', ticksOn = false, tickFrom = 0, tickT0 = -OFF, ay = 0;
   let tick = null, peaks = null;
   let selFrom = 1.3, selTo = 1.3;                       // the white grains' alpha gain (uSelGain)
   let sw = null;                                        // a sweep: { key, a, b, every, start, idx, done }
@@ -143,6 +166,8 @@ function buildHist(o, ctx, stage, kit) {
   let everShown = false;                                // a state has stood once (an arrival then refills fast)
   let subK = 0, subAt = 0;                              // a fresh {subtract} or {tip}: its state without it first
   let restoreGone = false;                              // a cede(null) that came while this plot was hiding
+  let shownRoll = -1, shownAlarms = [];                 // a model's baked roll shown, and the bins its alarm lit
+  let rowT = new Float64Array(0), rowM = new Int32Array(0), rowsFrom = 0, rowsTo = 0;  // order 'file': rows read
   const centre = new Vector3();
 
   const ease = (x) => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
@@ -150,14 +175,22 @@ function buildHist(o, ctx, stage, kit) {
   // ---- data ---------------------------------------------------------------------
   async function load() {
     if (o.model) {
-      mode = 'model'; model = o.model;
+      mode = 'model'; model = { ...o.model };
       lo = o.lo ?? model.lo; hi = o.hi ?? model.hi; nb = model.bins ?? Math.round((hi - lo) / (o.bin ?? 2)); bin = (hi - lo) / nb;
       if (model.rolls?.file) {
-        // { file: 'toys.json', key: 'flat.rolls' }: {resample: k} (k ≥ 1) shows baked roll k − 1
-        let d = await kit.loadJSON(ctx, model.rolls.file);
-        for (const part of String(model.rolls.key ?? 'rolls').split('.')) d = d?.[part];
-        rolls = Array.isArray(d) ? d : null;
-        if (!rolls) console.warn(`dk-hist ${name}: no rolls at ${model.rolls.file}:${model.rolls.key}`);
+        // { file: 'toys.json', key: 'flat.rolls' }: {resample: k} (k ≥ 1) shows baked roll k − 1.
+        // A roll is an array of counts or an object with `counts` (falling.rolls). `expected`:
+        // a path in the same file to the expected count per bin (falling.expected140), so the
+        // scale, the band and a `{alarm: z}` test use the bake's expectation
+        const root = await kit.loadJSON(ctx, model.rolls.file);
+        const d = getIn(root, model.rolls.key ?? 'rolls');
+        rolls = Array.isArray(d) && d.every((r) => rollCounts(r)) ? d : null;
+        if (!rolls) console.warn(`dk-hist ${name}: no rolls of counts at ${model.rolls.file}:${model.rolls.key}`);
+        if (model.rolls.expected) {
+          const e = getIn(root, model.rolls.expected);
+          if (Array.isArray(e) && e.length === nb) model.expected = e.map(Number);
+          else console.warn(`dk-hist ${name}: no ${nb}-bin expectation at ${model.rolls.file}:${model.rolls.expected}`);
+        }
       }
     } else if (o.src) {
       mode = 'counts';
@@ -219,8 +252,11 @@ function buildHist(o, ctx, stage, kit) {
       rowOf = Int32Array.from(rows);
       valOf = new Float32Array(N);
       for (let i = 0; i < N; i++) valOf[i] = val[rowOf[i]];
-      // fill order: the reverse of the series' heap order (the top of a pile first, ours first)
-      fillOrder = Int32Array.from({ length: N }, (_, i) => i).sort((a, b) => heapRank[rowOf[b]] - heapRank[rowOf[a]]);
+      // fill order: the reverse of the series' heap order (the top of a pile first, ours first),
+      // or with `order: 'file'` the file's own order (row 1 first): then `n` counts rows of the
+      // file read so far, so "after 186 candidates in the file" is the picture's 186
+      fillOrder = o.order === 'file' ? Int32Array.from({ length: N }, (_, i) => i)
+        : Int32Array.from({ length: N }, (_, i) => i).sort((a, b) => heapRank[rowOf[b]] - heapRank[rowOf[a]]);
       oursG = ours == null ? -1 : rows.indexOf(ours);
       rowToGrain = new Int32Array(tab.n).fill(-1);
       for (let i = 0; i < N; i++) rowToGrain[rowOf[i]] = i;
@@ -264,7 +300,7 @@ function buildHist(o, ctx, stage, kit) {
     const share = morph.u;
     const A = Math.round(Math.min(1400, Math.max(300, W / 0.03)));
     const axis = staticGrains(stage, A, { color: P.axis, alpha: 0.9, size: GRAIN, share });
-    const ay = -0.012 * H;
+    ay = -0.012 * H;
     for (let i = 0; i < A; i++) axis.pos.set([-W / 2 - 0.015 * W + (W * 1.03 * i) / (A - 1), ay, 0], i * 3);
     axis.touch(); plot.add(axis.points);
     // ticks
@@ -277,7 +313,7 @@ function buildHist(o, ctx, stage, kit) {
       for (let j = 0; j < TM; j++) marks.pos.set([xOf(t.v), ay - (0.03 * H * j) / (TM - 1), 0], (k * TM + j) * 3);
       const l = fixedLabel(stage, t.text, { px: o.tickPx ?? LABEL.px, color: P.tick, align: 'center', hang: 0.5 });
       l.position.set(xOf(t.v), ay - 0.045 * H, 0);
-      plot.add(l); labels.push(l);
+      plot.add(l); labels.push(l); baseLabels.push(l);
     });
     marks.touch(); plot.add(marks.points);
     if (o.word) {
@@ -290,6 +326,16 @@ function buildHist(o, ctx, stage, kit) {
     const WM = 140, ec = typeof o.errors === 'object' && o.errors ? o.errors : {};
     whisk = staticGrains(stage, nb * WM, { color: P.axis, alpha: Number(ec.alpha ?? 0.9), size: GRAIN * Number(ec.size ?? 0.75), share });
     whisk.count(0); plot.add(whisk.points);
+    // {errors: 'band'}: the ±√N band as two bright edges and a faint fill between them, in
+    // the tick numbers' colour by default, so it reads in front of dense light-blue columns
+    const bandColor = ec.tone === 'axis' ? P.axis : ec.tone === 'sel' ? P.sel : ec.tone === 'crowd' ? P.crowd : P.tick;
+    band = toneGrains(stage, nb * 200, { crowd: P.crowd, sel: bandColor, axis: P.axis, alpha: Number(ec.alpha ?? 1), size: GRAIN * Number(ec.size ?? 1), share });
+    plot.add(band.points);
+    bandRnd = new Float32Array(nb * 200 * 2);
+    { const r = mulberry32(seed * 5 + 13); for (let i = 0; i < bandRnd.length; i++) bandRnd[i] = r(); }
+    // per-step ticks ({ticks: [...]} as a step key): their marks, each in its own tone
+    stepTk = toneGrains(stage, 2400, { crowd: P.crowd, sel: P.sel, axis: P.axis, alpha: 0.95, size: GRAIN, share });
+    plot.add(stepTk.points);
     tick = staticGrains(stage, 90, { color: P.sel, alpha: 0.8, size: GRAIN, share });
     plot.add(tick.points);
     if (selections) {
@@ -299,6 +345,9 @@ function buildHist(o, ctx, stage, kit) {
     frame = { axis, marks };
   }
   const decimalsOf = (v) => (Number.isInteger(v) ? 0 : String(v).split('.')[1]?.length ?? 1);
+  // order 'file': the rows of the file a state has read, and the grains of rows before r
+  const rowsOf = (s) => (!s ? 0 : s.n == null || s.n === 'all' ? (tab?.n ?? N) : Math.max(0, Math.min(tab?.n ?? N, Math.round(Number(s.n)))));
+  const upperRow = (r) => { let a = 0, b = N; while (a < b) { const m = (a + b) >> 1; if (rowOf[m] < r) a = m + 1; else b = m; } return a; };
   function niceStep(a, b, step) { const out = []; for (let v = Math.ceil(a / step) * step; v <= b + 1e-9; v += step) out.push(v); return out; }
 
   // ---- layout: where every grain stands in state s ---------------------------------
@@ -308,7 +357,12 @@ function buildHist(o, ctx, stage, kit) {
     const counts = new Int32Array(nb), fillCounts = new Int32Array(nb);
     const out = { pos, vis, white, reason, counted: cnt, partner, counts, colMax: 1, mean: null, meanBin: -1 };
     if (!s) return out;
-    const nShow = s.n == null || s.n === 'all' ? N : Math.min(N, Math.ceil(Number(s.n) / unit));
+    // `n`: entries of the fill order, or with `order: 'file'` rows of the file read (the
+    // grains of rows before n, whatever `where` or `split` left out of them)
+    const fileRows = rowsOf(s);
+    const nShow = s.n == null || s.n === 'all' ? N
+      : o.order === 'file' && mode === 'rows' ? upperRow(fileRows)
+        : Math.min(N, Math.ceil(Number(s.n) / unit));
     const shift = Number(s.shift ?? 1);
     const binOf = new Int32Array(N).fill(-1);
     const inFill = new Uint8Array(N);
@@ -318,7 +372,10 @@ function buildHist(o, ctx, stage, kit) {
       exp = expected(model, lo, bin, nb, Number(s.n ?? model.n ?? 1000));
       const rk = Number(s.resample ?? 0);
       const baked = rolls && rk >= 1 ? rolls[(rk - 1) % rolls.length] : null;
-      if (baked) modelCounts = exp.map((e, b) => Math.min(cap[b], Math.round((Number(baked[b]) || 0) / unit)));
+      out.roll = baked ? (rk - 1) % rolls.length : -1;
+      out.alarmBins = s.alarm === 'baked' ? bakedAlarmBins(baked, lo, bin, nb) : [];
+      const bc = rollCounts(baked);
+      if (bc) modelCounts = exp.map((e, b) => Math.min(cap[b], Math.round((Number(bc[b]) || 0) / unit)));
       else {
         const rr = mulberry32((model.seed ?? seed) + 7919 * rk + 31 * Math.round(Number(s.n ?? 0)));
         modelCounts = exp.map((e, b) => Math.min(cap[b], Math.round(poisson(rr, e) / unit)));
@@ -440,7 +497,13 @@ function buildHist(o, ctx, stage, kit) {
       if (fitR && (v < fitR[0] || v > fitR[1])) w = 0;
       white[i] = w;
     }
-    if (mode === 'model' && s.alarm != null) {
+    if (mode === 'model' && s.alarm === 'baked') {
+      // exactly the bins the bake's own test lit in the roll shown (its one-sided Poisson z,
+      // not the plot's (n − e)/√e)
+      const lit = new Uint8Array(nb);
+      for (const b of out.alarmBins) lit[b] = 1;
+      for (let i = 0; i < N; i++) if (vis[i] && lit[binOf[i]]) white[i] = 1;
+    } else if (mode === 'model' && s.alarm != null) {
       for (let i = 0; i < N; i++) if (vis[i]) { const b = binOf[i]; if ((counts[b] * unit - exp[b]) / Math.sqrt(Math.max(exp[b], 1e-9)) >= Number(s.alarm)) white[i] = 1; }
     }
     // leaving grains keep a position to leave from (their old one: go() snapshots it)
@@ -627,6 +690,14 @@ function buildHist(o, ctx, stage, kit) {
         for (let i = 0; i < N; i++) { T[2 * i] = Math.min(T[2 * i], 0.25 * cap * S[i]); T[2 * i + 1] = Math.min(T[2 * i + 1], cap); }
         for (let a = 0; a < nA; a++) { const i = arrivals[a]; arrT[a] = t + T[2 * i] + T[2 * i + 1]; }
       }
+      // order 'file': the rows read so far as the grains land (a running "in the file" count)
+      if (o.order === 'file' && mode === 'rows') {
+        const idx = Array.from({ length: nA }, (_, a) => a).sort((p, q) => arrT[p] - arrT[q]);
+        rowT = Float64Array.from(idx, (a) => arrT[a]);
+        rowM = new Int32Array(nA);
+        let mx = 0;
+        idx.forEach((a, q) => { mx = Math.max(mx, rowOf[arrivals[a]] + 1); rowM[q] = mx; });
+      }
       // when each grain stands ({over} hands the other hist's grain over at that moment)
       landAt = new Float64Array(N).fill(t);
       for (let a = 0; a < nA; a++) landAt[arrivals[a]] = arrT[a];
@@ -638,6 +709,8 @@ function buildHist(o, ctx, stage, kit) {
     let base = 0;
     for (let i = 0; i < N; i++) if (prevCounted[i] && newCounted[i]) base++;
     baseCount = base;
+    rowT = new Float64Array(0); rowM = new Int32Array(0);
+    rowsFrom = base > 0 ? Math.min(rowsTo, rowsOf(s)) : 0; rowsTo = rowsOf(s);
     morph.go(t, L, plan);
     counted = newCounted; lastReason = L.reason; playedAt = t;
     if (sw && sw.start == null) sw.start = morph.end + 0.2;
@@ -661,8 +734,10 @@ function buildHist(o, ctx, stage, kit) {
     } else { meanTarget = null; }
     tiltFrom = plot.rotation.x; tiltTo = (-Number(s?.tilt ?? 0) * Math.PI) / 180; tiltT0 = t;
     setWhiskers(s, L, t);
+    setTicks(s);
     setPeaks(s);
     shown = s; cur = s ? k : 0;
+    shownRoll = L.roll ?? -1; shownAlarms = L.alarmBins ?? [];
     if (s) everShown = true;
   }
 
@@ -707,7 +782,9 @@ function buildHist(o, ctx, stage, kit) {
     const on = !!(s && s.errors);
     if (!on) { whiskOn = false; return; }
     const ec = typeof o.errors === 'object' && o.errors ? o.errors : {};
-    const band = s.errors === 'band';
+    const isBand = s.errors === 'band';
+    if (isBand) { whisk.count(0); return setBand(s, L, t, ec); }
+    band.u.uShow.value = 0;
     const WM = 140, CAP = Math.max(0, Math.min(12, Number(ec.cap ?? 3))), bw = W / nb;
     let k = 0;
     const pts = whisk.pos;
@@ -716,21 +793,104 @@ function buildHist(o, ctx, stage, kit) {
       if (!(c > 0)) continue;
       const sq = Math.sqrt(c), y0 = ((c - sq) / unit) * L.dy, y1 = ((c + sq) / unit) * L.dy;
       const x = -W / 2 + (b + 0.5) * bw, z = 0.55 * D;
-      if (band) {
-        // two lines, edge to edge of the bin, so neighbouring bins join into one band
-        const nB = Math.max(4, Math.min(WM / 2, Math.round(bw / 0.03)));
-        for (const y of [y0, y1]) for (let j = 0; j < nB; j++) { pts[3 * k] = x + ((j + 0.5) / nB - 0.5) * bw; pts[3 * k + 1] = y; pts[3 * k + 2] = z; k++; }
-        continue;
-      }
       const nW = Math.max(5, Math.min(WM - 2 * CAP, Math.round((y1 - y0) / 0.012)));
       for (let j = 0; j < nW; j++) { pts[3 * k] = x; pts[3 * k + 1] = y0 + ((y1 - y0) * j) / (nW - 1); pts[3 * k + 2] = z; k++; }
       if (CAP > 1) for (const y of [y0, y1]) for (let j = 0; j < CAP; j++) { pts[3 * k] = x + (j / (CAP - 1) - 0.5) * 0.2 * bw; pts[3 * k + 1] = y; pts[3 * k + 2] = z; k++; }
     }
-    const key = `${band}:${k}:${pts[1]}:${pts[3 * Math.max(0, k - 1) + 1]}`;
+    const key = `w:${k}:${pts[1]}:${pts[3 * Math.max(0, k - 1) + 1]}`;
     whisk.count(k); whisk.touch();
     if (key !== whiskKey || !whiskOn) { whiskShowT = L.exp ? t + 0.3 : morph.end; whisk.u.uShow.value = whiskOn && key === whiskKey ? 1 : 0; }
     whiskKey = key; whiskOn = true;
   }
+
+  // {errors: 'band'}: c ± √c per bin (the expectation for a model, the count for data) as
+  // two edge lines, edge to edge of each bin so neighbours join into one band, and a fill
+  // of `fill` (0.3) alpha between them. Look (object `errors`): tone 'tick' (the tick
+  // numbers' near-white; 'axis' is the old dim look), alpha 1, size 1 (× GRAIN), fill 0.3.
+  // The owner's rollout condition (29 Oct): T2's √N band brighter, legible in dense columns.
+  function setBand(s, L, t, ec) {
+    const bw = W / nb, fill = Math.max(0, Number(ec.fill ?? 0.3));
+    let k = 0;
+    const pts = band.pos, vis = band.vis, tone = band.tone, cap = band.n;
+    for (let b = 0; b < nb; b++) {
+      const c = L.exp ? L.exp[b] : L.counts[b] * unit;
+      if (!(c > 0)) continue;
+      const sq = Math.sqrt(c), y0 = ((c - sq) / unit) * L.dy, y1 = ((c + sq) / unit) * L.dy;
+      const x = -W / 2 + (b + 0.5) * bw, z = 0.55 * D;
+      // a band thinner than half a grain is no band: its two edges would sit on each other
+      // as one bright line (the near-empty edge bins of a dense plot)
+      const gd = 0.0746 * GRAIN;
+      if (y1 - y0 < 0.5 * gd) continue;
+      const nB = Math.max(6, Math.min(60, Math.round(bw / 0.022)));
+      for (const y of [y0, y1]) for (let j = 0; j < nB && k < cap; j++, k++) {
+        pts[3 * k] = x + ((j + 0.5) / nB - 0.5) * bw; pts[3 * k + 1] = y; pts[3 * k + 2] = z; vis[k] = 1; tone[k] = 1;
+      }
+      if (fill > 0 && y1 - y0 >= 2 * gd) {
+        const nF = Math.max(0, Math.min(80, Math.round(((y1 - y0) * bw) / 0.0016)));
+        for (let j = 0; j < nF && k < cap; j++, k++) {
+          const r0 = bandRnd[2 * k], r1 = bandRnd[2 * k + 1];
+          pts[3 * k] = x + (r0 - 0.5) * bw; pts[3 * k + 1] = y0 + (y1 - y0) * r1; pts[3 * k + 2] = z + 0.02 * (r0 - r1);
+          vis[k] = fill; tone[k] = 1;
+        }
+      }
+    }
+    for (let j = k; j < cap; j++) vis[j] = 0;
+    band.touch();
+    const key = `b:${k}:${pts[1]}:${pts[3 * Math.max(0, k - 1) + 1]}`;
+    if (key !== whiskKey || !whiskOn) { whiskShowT = L.exp ? t + 0.3 : morph.end; whisk.u.uShow.value = whiskOn && key === whiskKey ? 1 : 0; }
+    whiskKey = key; whiskOn = true;
+  }
+
+  // {ticks: [...]} as a step key: that step's world ticks instead of the object's (null
+  // gives the object's back, [] none). An entry is a value, [value, 'text'], or
+  // { v, text, tone: 'tick' | 'axis' | 'sel' | 'crowd', y: [y0, y1] (shares of H; default
+  // the axis tick), label: 'below' | 'above' | false, align }. A tick that reaches into the
+  // plot (y1 > 0.05) stands in front of the columns with its number above it: T3's dim
+  // 1 864.84 and white 1 864.47 at the summit of the peak.
+  const tickOf = (t) => (Array.isArray(t) ? { v: Number(t[0]), text: String(t[1]) } : t && typeof t === 'object' ? { ...t, v: Number(t.v ?? t.at) } : { v: Number(t) });
+  function setTicks(s) {
+    const spec = s && Array.isArray(s.ticks) ? s.ticks : null;
+    const key = spec ? JSON.stringify(spec) : '';
+    if (key === tickKey) return;
+    const mixNow = tickMix();
+    tickKey = key; tickT0 = now;
+    if (!spec) { ticksOn = false; tickFrom = mixNow; return; }
+    ticksOn = true; tickFrom = 0;
+    for (const l of stepLabels.values()) l.userData.on = 0;
+    let i = 0;
+    const cap = stepTk.n;
+    for (const t0 of spec) {
+      const t = tickOf(t0);
+      if (!(t.v >= lo - 1e-9 && t.v <= hi + 1e-9)) continue;
+      const tone = String(t.tone ?? 'tick');
+      const tv = tone === 'sel' ? 1 : tone === 'crowd' ? 0 : -1;
+      const [y0s, y1s] = Array.isArray(t.y) ? t.y.map(Number) : [-0.03, 0];
+      const tall = y1s > 0.05;
+      const y0 = ay + y0s * H, y1 = ay + y1s * H, x = xOf(t.v), z = tall ? 0.6 * D : 0;
+      // a tall tick is a dotted line (a solid white line blooms into a bar at close range)
+      const nG = Math.max(14, Math.min(400, Math.round(Math.abs(y1 - y0) / (tall ? 0.035 : 0.02))));
+      for (let j = 0; j < nG && i < cap; j++, i++) {
+        stepTk.pos[3 * i] = x; stepTk.pos[3 * i + 1] = y0 + ((y1 - y0) * j) / (nG - 1); stepTk.pos[3 * i + 2] = z;
+        stepTk.tone[i] = tv; stepTk.vis[i] = tone === 'tick' || tone === 'axis' ? 1 : tall ? 0.6 : 0.9;
+      }
+      const where = t.label ?? (tall ? 'above' : 'below');
+      if (where === false || where === 'none') continue;
+      const color = tone === 'sel' ? P.sel : tone === 'crowd' ? P.crowd : tone === 'axis' ? P.axis : P.tick;
+      const text = t.text ?? fmt(t.v, decimalsOf(t.v));
+      const align = t.align ?? 'center';
+      const lk = `${text}|${color}|${align}|${where}`;
+      let l = stepLabels.get(lk);
+      if (!l) {
+        l = fixedLabel(stage, text, { px: o.tickPx ?? LABEL.px, color, align, hang: where === 'above' ? -0.6 : 0.5 });
+        plot.add(l); labels.push(l); stepLabels.set(lk, l);
+      }
+      l.position.set(x, where === 'above' ? y1 + 0.01 * H : ay - 0.045 * H, z);
+      l.userData.on = 1;
+    }
+    for (let j = i; j < cap; j++) stepTk.vis[j] = 0;
+    stepTk.touch();
+  }
+  function tickMix() { return tickFrom + ((ticksOn ? 1 : 0) - tickFrom) * ease((now - tickT0) / 0.5); }
 
   // the selections' fitted peaks, one grain each on a line under the axis, for
   // selections 0..i: { peaks: { y: 0.2 (share of H below the axis), zoom: 1, at: (MeV) } }.
@@ -763,7 +923,9 @@ function buildHist(o, ctx, stage, kit) {
     want = k;
     if (!ready || armed) return;
     const late = k > 0 && cur === 0 && now - arrivedAt < 1;
-    transition(k, k < cur ? (k === 0 ? 'hide' : 'back') : late ? ARRIVE : 'fwd');
+    // from hidden into a step with `replay: false`: it stands at once, arrival or not
+    const stand = k > 0 && cur === 0 && standsAt(k);
+    transition(k, k < cur ? (k === 0 ? 'hide' : 'back') : late || stand ? arriveKind(k) : 'fwd');
   };
   const arrive = () => {
     const wasArmed = armed;
@@ -773,7 +935,7 @@ function buildHist(o, ctx, stage, kit) {
     pendingArrive = false;
     // `c` (an assembly with no flight before it) replays from nothing, unless it just played
     if (!wasArmed && now - playedAt > 1.5) hideNow();
-    if (want > 0) transition(want, ARRIVE);
+    if (want > 0) transition(want, arriveKind(want));
   };
   const hideNow = () => {
     if (!ready) return;
@@ -785,6 +947,7 @@ function buildHist(o, ctx, stage, kit) {
     whiskOn = false; if (whisk) whisk.u.uShow.value = 0;
     meanTarget = null; lastMean = null;
     arrTimes = new Float64Array(0); leaveTimes = new Float64Array(0); baseCount = 0;
+    rowT = new Float64Array(0); rowM = new Int32Array(0); rowsFrom = 0; rowsTo = 0;
   };
 
   // ---- readouts -------------------------------------------------------------------
@@ -795,12 +958,20 @@ function buildHist(o, ctx, stage, kit) {
     const k = ease((now - meanT0) / 1.4);
     return meanFrom + (meanTarget - meanFrom) * k;
   };
+  // order 'file': rows of the file read so far (the last landed grain's row), then the
+  // step's n exactly once every grain of it stands
+  const rowsRead = () => {
+    if (!rowT.length || now >= rowT[rowT.length - 1]) return rowsTo;
+    const k = upper(rowT, now);
+    return Math.max(rowsFrom, k ? rowM[k - 1] : 0);
+  };
   const readout = () => {
     const m = meanNow();
-    if (m != null && o.readout !== 'count') return m;
+    const ro = o.readout ?? (o.order === 'file' && mode === 'rows' ? 'rows' : undefined);
+    if (m != null && ro !== 'count' && ro !== 'rows') return m;
+    if (ro === 'rows') return rowsRead();
     const c = landed();
     const total = Math.max(1, N);
-    const ro = o.readout;
     if (ro === 'share') return c / total;
     if (ro && typeof ro === 'object' && ro.count != null) return (c / total) * Number(ro.count);
     if (ro && typeof ro === 'object' && ro.share != null) return (c / total) * Number(ro.share);
@@ -817,8 +988,11 @@ function buildHist(o, ctx, stage, kit) {
       || (whiskOn && whisk && whisk.u.uShow.value < 0.99)
       || !!(sw && !sw.done) || subK > 0,
     value: readout,
-    values: () => ({ count: landed() * unit, mean: meanNow(), grains: N, unit, step: cur }),
+    values: () => ({ count: landed() * unit, mean: meanNow(), grains: N, unit, step: cur, rows: rowsRead(), roll: shownRoll, alarms: shownAlarms.slice() }),
     ready: () => ready,
+    // the shown state stands (its fill done; a sweep counts as standing once its first state
+    // does): a dk-curve over a re-rolling plot draws on then, not after the last roll
+    standing: () => ready && !!shown && !armed && subK === 0 && (sw ? sw.start != null && now >= sw.start : !(morph && now < morph.end)),
     // false while a {tip} is still to come (the plot filling, or standing before it lets go):
     // a dk-scatter tipping from this plot waits for it
     tipReady: () => ready && !sel.fresh && subK === 0 && (!!shown?.tip || !(morph && now < morph.end)),
@@ -835,6 +1009,15 @@ function buildHist(o, ctx, stage, kit) {
       return out.set(c[0], c[1], c[2]).applyMatrix4(plot.matrixWorld);
     },
     ours(out) { return oursG >= 0 ? api.pointOf(rowOf[oursG], out) : null; },
+    // how white a row's grain is now (0 crowd … 1 selected), or null when it is not drawn
+    // (a dk-spark with color 'follow' takes its core's colour from it)
+    whiteOf(row) {
+      if (!ready || mode !== 'rows') return null;
+      const i = row >= 0 && row < rowToGrain.length ? rowToGrain[row] : -1;
+      if (i < 0) return null;
+      const c = morph.sample(i, now, [0, 0, 0, 0, 0]);
+      return c[3] < 0.01 ? null : Math.max(0, Math.min(1, c[4]));
+    },
     // every drawn grain now (world positions), for a form that takes them over ({tip});
     // grains({ last: true }): where they stood in the last state shown that was not
     // {tip}, even after they have gone (a slide opened on the tip step)
@@ -874,7 +1057,7 @@ function buildHist(o, ctx, stage, kit) {
     },
   };
 
-  load().then(() => { if (pendingArrive) arrive(); else if (want > 0 && !armed) transition(want, ARRIVE); })
+  load().then(() => { if (pendingArrive) arrive(); else if (want > 0 && !armed) transition(want, arriveKind(want)); })
     .catch((e) => { failed = true; pendingArrive = false; console.warn(`dk-hist ${name}: data failed`, e); });
   if (name) kit.register(name, { type: TYPE, api });
 
@@ -911,7 +1094,12 @@ function buildHist(o, ctx, stage, kit) {
       const fw = shown && !shown.tip ? 1 : 0;
       frameShow += (fw - frameShow) * Math.min(1, dt * 3.5);
       if (Math.abs(fw - frameShow) < 0.003) frameShow = fw;
-      frame.axis.u.uShow.value = frameShow * far; frame.marks.u.uShow.value = frameShow * far;
+      // the object's ticks, or a step's own ({ticks}), crossfading over 0.5 s
+      const mix = tickMix();
+      frame.axis.u.uShow.value = frameShow * far; frame.marks.u.uShow.value = frameShow * far * (1 - mix);
+      stepTk.u.uShow.value = frameShow * far * mix;
+      for (const l of baseLabels) l.userData.show = 1 - mix;
+      for (const l of stepLabels.values()) l.userData.show = (l.userData.on ?? 0) * mix;
       shade(labels, frameShow * near);
       // tilt
       const kt = ease((t - tiltT0) / 1.6);
@@ -925,9 +1113,11 @@ function buildHist(o, ctx, stage, kit) {
       if (whisk) {
         const ws = whiskOn ? Math.max(0, Math.min(1, (t - whiskShowT) / 0.6)) : Math.max(0, whisk.u.uShow.value - dt * 3);
         whisk.u.uShow.value = whiskOn ? Math.max(whisk.u.uShow.value, ws) : ws;
+        // the band rides the same fader (a band step draws no whiskers: whisk.count(0))
+        band.u.uShow.value = whiskKey.startsWith('b:') ? whisk.u.uShow.value * far : 0;
       }
       // the window's mean tick, gliding to each new mean
-      const m = meanNow();
+      const m = (shown?.meanTick ?? o.meanTick) === false ? null : meanNow();
       if (tick) {
         if (m == null) tick.u.uShow.value = Math.max(0, tick.u.uShow.value - dt * 3);
         else {
@@ -945,6 +1135,7 @@ function buildHist(o, ctx, stage, kit) {
       sel.off(); if (name) kit.unregister(name); heapUsed?.api.release?.(claimer); if (ceded) ceded.api.cede?.(null);
       morph?.dispose();
       for (const sg of [frame?.axis, frame?.marks, whisk, tick, peaks]) if (sg) { sg.geo.dispose(); sg.mat.dispose(); }
+      band?.dispose(); stepTk?.dispose();
       for (const l of labels) { l.material.map?.dispose(); l.material.dispose(); }
     },
   };

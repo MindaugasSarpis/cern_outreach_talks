@@ -204,3 +204,35 @@ void main() {
   const points = stage.grainPoints(geo, mat);
   return { points, geo, mat, pos, u: mat.uniforms, touch() { geo.attributes.position.needsUpdate = true; }, count(k) { geo.setDrawRange(0, Math.max(0, Math.min(n, k))); } };
 }
+
+// Like staticGrains, but each grain has its own tone and alpha share: aTone −1 the axis
+// colour (dim), 0 … 1 crowd → selected, aVis 0 hides it (dk-hist's per-step ticks: a dim
+// tick and a white tick in one set).
+let TONED = null;
+export function toneGrains(stage, n, { crowd, sel, axis, alpha = 0.9, size = GRAIN, share = null } = {}) {
+  TONED ??= stage.GRAIN_GLSL + /* glsl */ `
+attribute float aSeed, aTone, aVis;
+uniform float uShow, uAlpha, uSize;
+uniform vec3 uCrowd, uSel, uAxis;
+void main() {
+  float v = aVis * uShow;
+  if (v <= 0.002) { hide(); return; }
+  vec3 c = aTone < -0.5 ? uAxis : mix(uCrowd, uSel, aTone);
+  place(position, uSize * (0.8 + 0.4 * hash(aSeed * 7.0)), uAlpha * v, c, aSeed);
+}`;
+  const pos = new Float32Array(n * 3), seed = new Float32Array(n), tone = new Float32Array(n), vis = new Float32Array(n);
+  const rnd = mulberry32(n * 7919 + 23);
+  for (let i = 0; i < n; i++) seed[i] = rnd();
+  const geo = stage.grainGeometry(n, { position: pos, aSeed: [seed, 1], aTone: [tone, 1], aVis: [vis, 1] });
+  const mat = stage.grainMaterial(TONED, {
+    uShow: { value: 0 }, uAlpha: { value: alpha }, uSize: { value: size },
+    uCrowd: { value: new Color(crowd) }, uSel: { value: new Color(sel) }, uAxis: { value: new Color(axis ?? crowd) },
+  });
+  if (share) { mat.uniforms.uTime = share.uTime; mat.uniforms.uPixelRatio = share.uPixelRatio; }
+  const points = stage.grainPoints(geo, mat);
+  return {
+    n, points, geo, mat, pos, tone, vis, u: mat.uniforms,
+    touch() { for (const k of ['position', 'aTone', 'aVis']) geo.attributes[k].needsUpdate = true; },
+    dispose() { points.parent?.remove(points); geo.dispose(); mat.dispose(); },
+  };
+}

@@ -131,8 +131,11 @@ vec3 metal(vec3 nW, vec3 vW, vec3 F0) {
 }`;
 
 const LINEUP_VERT = /* glsl */ `
-attribute float aSeed, aK, aBall;
+attribute float aSeed, aK, aBall, aOld;
 attribute vec3 aFrom, aFromDir;
+uniform float uGrowing[${MAXB}];
+uniform float uGrowK[${MAXB}];
+uniform vec3 uGrowOff[${MAXB}];
 uniform float uMerge[${MAXB}];
 uniform vec3 uFromColor[${MAXB}];
 uniform float uMergeAt;
@@ -153,10 +156,19 @@ void main() {
   int b = int(aBall + 0.5);
   float st = uShowT[b], ht = uHideT[b];
   bool merging = uMerge[b] > 0.5 && ht < 0.0;
-  float start = merging ? st : st + uGrow * (0.78 * pow(max(aK, 1e-6), 0.8) + 0.22 * aSeed);
+  // grown in place ({grow: {from}}): the earlier pile's spheres (aOld) stand from the first
+  // frame and lift with the pile's centre as it grows; the new ones gather round them
+  bool growing = uGrowing[b] > 0.5, old = growing && aOld > 0.5;
+  float k0 = growing ? uGrowK[b] : 0.0, kk = growing ? clamp((aK - k0) / max(1.0 - k0, 1e-3), 0.0, 1.0) : aK;
+  float start = merging ? st : st + uGrow * (0.78 * pow(max(kk, 1e-6), 0.8) + 0.22 * aSeed);
   float f = merging ? ease((uTime - st - uMergeAt - 0.5 * aSeed) / 2.2) : ease((uTime - start) / 1.6);
   bool on = st >= 0.0 && uTime >= start;
-  if (ht >= 0.0) { float g = 1.0 - ease((uTime - ht) / 1.1); f = min(f, g); on = on && g > 0.0; }
+  vec3 lift = vec3(0.0);
+  if (old) {
+    f = 1.0; on = st >= 0.0;
+    lift = uGrowOff[b] * (1.0 - ease((uTime - st) / (uGrow + 1.6)));
+    if (ht >= 0.0) { lift = uGrowOff[b] * ease((uTime - ht) / 1.1); on = on && uTime - ht < 1.2; }
+  } else if (ht >= 0.0) { float g = 1.0 - ease((uTime - ht) / 1.1); f = min(f, g); on = on && g > 0.0; }
   if (!on) { off_(); return; }
   vec3 c = uCenter[b];
   vec3 off = position - c;
@@ -166,7 +178,8 @@ void main() {
   float facingS = dot(dir, normalize(cameraPosition - wp));
   // a pile that stands is seen only by its skin: the buried spheres and its far side are never drawn
   float gs = uGs[b];
-  if (f >= 1.0 && ht < 0.0 && (r < uR[b] - uShell * gs || facingS < -0.3)) { off_(); return; }
+  bool settled = !old || (ht < 0.0 && uTime - st > uGrow + 1.6);
+  if (f >= 1.0 && ht < 0.0 && settled && (r < uR[b] - uShell * gs || facingS < -0.3)) { off_(); return; }
   vec3 side = normalize(cross(dir, vec3(0.0, 1.0, 0.0)) + 1e-4);
   float reach = (uReach + uR[b]) * (0.8 + 1.4 * hash(aSeed * 91.0));
   vec3 far = dir * (r + reach) + side * reach * 0.6 * (hash(aSeed * 17.0) - 0.5) + vec3(0.0, reach * 0.5 * (hash(aSeed * 53.0) - 0.5), 0.0);
@@ -179,7 +192,7 @@ void main() {
     float a = (1.0 - f) * 2.2;
     far = vec3(cos(a) * far.x - sin(a) * far.z, far.y, sin(a) * far.x + cos(a) * far.z);
   }
-  vec3 placed = c + mix(far, off, f);
+  vec3 placed = c + mix(far, off, f) + lift;
   vec3 outw = dir;
   if (merging) {
     float a1 = ease((uTime - st - 0.25 * aSeed) / 1.3);
@@ -301,11 +314,42 @@ function buildLineup(o, ctx, stage, kit) {
   }
   const lat = fccShells(Math.max(1, ...balls.map((x) => x.pts)), rnd);
   const R = balls.map(({ pts, gs }) => { const j = (pts - 1) * 3; return (Math.hypot(lat[j], lat[j + 1], lat[j + 2]) * s + unit) * gs; });
-  const gaps = o.gaps || [], A = Math.min(Math.max(0, o.anchor ?? 0), Math.max(0, NB - 1)), cx = new Array(NB).fill(0);
-  for (let b = A + 1; b < NB; b++) cx[b] = cx[b - 1] + R[b - 1] + (gaps[b - 1] ?? 2) + R[b];
-  for (let b = A - 1; b >= 0; b--) cx[b] = cx[b + 1] - R[b + 1] - (gaps[b] ?? 2) - R[b];
+  // `grow: { from: k }`: the pile grows out of pile k in place. It takes k's place (no slot
+  // of its own in the side-by-side row), and its first spheres are k's spheres
+  const growFrom = balls.map((x, b) => {
+    const f = Math.round(Number(x.grow?.from ?? -1));
+    return x.grow && f >= 0 && f < b && balls[f].n > 1 && x.n > 1 ? f : -1;
+  });
+  const slotOf = (b) => { let f = b; while (growFrom[f] >= 0) f = growFrom[f]; return f; };
+  // the side-by-side row: only the piles that take a slot, each as wide as the widest pile
+  // that grows in its place; `gaps` are the spaces between these neighbours, in order
+  const row = balls.map((x, b) => b).filter((b) => growFrom[b] < 0);
+  const wR = row.map((b) => Math.max(...balls.map((x, j) => (slotOf(j) === b ? R[j] : 0))));
+  const gaps = o.gaps || [], A = Math.min(Math.max(0, row.indexOf(slotOf(Math.max(0, Math.min(NB - 1, o.anchor ?? 0))))), Math.max(0, row.length - 1)), rx = new Array(row.length).fill(0);
+  for (let q = A + 1; q < row.length; q++) rx[q] = rx[q - 1] + wR[q - 1] + (gaps[q - 1] ?? 2) + wR[q];
+  for (let q = A - 1; q >= 0; q--) rx[q] = rx[q + 1] - wR[q + 1] - (gaps[q] ?? 2) - wR[q];
   const rest = o.rest !== false;
-  const C = balls.map((x, b) => (Array.isArray(x.at) ? x.at.slice(0, 3) : [cx[b], rest ? FLOOR_Y + R[b] : 0, 0]));
+  // a pile's place: side by side (no `at`); `at: [x, y, z]` exactly; `at: x` or `[x, z]` on
+  // the floor; `at: { beside: k, side (1: right, -1: left), gap (1), z (0) }` on the floor
+  // beside pile k (T1's day kept beside the day read out)
+  const C = new Array(NB).fill(null);
+  const floorY = (b, y) => (rest ? FLOOR_Y + R[b] : y);
+  const place = (b, depth = 0) => {
+    if (C[b]) return C[b];
+    const x = balls[b], a = x.at;
+    if (growFrom[b] >= 0 && a == null) { const c = place(growFrom[b], depth + 1); return (C[b] = [c[0], floorY(b, c[1]), c[2]]); }
+    if (Array.isArray(a) && a.length >= 3) return (C[b] = a.slice(0, 3).map(Number));
+    if (Array.isArray(a)) return (C[b] = [Number(a[0]) || 0, floorY(b, 0), Number(a[1]) || 0]);
+    if (typeof a === 'number') return (C[b] = [a, floorY(b, 0), 0]);
+    if (a && typeof a === 'object' && a.beside != null && depth < NB) {
+      const k = Math.max(0, Math.min(NB - 1, Math.round(Number(a.beside)))), c = place(k, depth + 1);
+      const side = a.side === 'left' || Number(a.side) < 0 ? -1 : 1, gap = Number(a.gap ?? 1);
+      return (C[b] = [c[0] + side * (R[k] + gap + R[b]), floorY(b, c[1]), c[2] + Number(a.z ?? 0)]);
+    }
+    const q = row.indexOf(slotOf(b));
+    return (C[b] = [rx[Math.max(0, q)], floorY(b, 0), 0]);
+  };
+  for (let b = 0; b < NB; b++) place(b);
 
   const g = new Group();
   g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0);
@@ -333,19 +377,33 @@ function buildLineup(o, ctx, stage, kit) {
   // the piles: one point per sphere, pile after pile
   const piles = balls.map((x, b) => b).filter((b) => balls[b].n > 1);
   const total = piles.reduce((acc, b) => acc + balls[b].pts, 0);
-  const pos = new Float32Array(total * 3), seed = new Float32Array(total), rank = new Float32Array(total), which = new Float32Array(total);
-  const end = new Array(NB).fill(0);
+  const pos = new Float32Array(total * 3), seed = new Float32Array(total), rank = new Float32Array(total), which = new Float32Array(total), oldA = new Float32Array(total);
+  const end = new Array(NB).fill(0), begin = new Array(NB).fill(0);
   const TILT = new Matrix4().makeRotationFromEuler(new Euler(0.37, 0.61, 0.23)), tv = new Vector3();
   let q = 0;
+  const growK = new Array(NB).fill(0);
   for (const b of piles) {
     // a pile of thousands is jittered more, so its rows do not beat against the pixel grid
     const n = balls[b].pts, gs = balls[b].gs, jit = unit * gs * Math.min(0.24, 0.12 + 0.05 * Math.max(0, Math.log10(n / 800)));
+    begin[b] = q;
+    // a pile grown from pile f (the same sphere size): its first spheres are f's own, at f's
+    // offsets from the centre, so they stand where f's stood while the new ones gather
+    const f = growFrom[b], same = f >= 0 && Math.abs(balls[f].gs - gs) < 1e-6 && end[f] > begin[f];
+    const nOld = same ? Math.min(n, end[f] - begin[f]) : 0;
+    growK[b] = same ? nOld / n : 0;
     for (let j = 0; j < n; j++, q++) {
-      tv.set(lat[j * 3], lat[j * 3 + 1], lat[j * 3 + 2]).multiplyScalar(s * gs).applyMatrix4(TILT);
-      pos[q * 3] = C[b][0] + tv.x + gauss(rnd) * jit;
-      pos[q * 3 + 1] = C[b][1] + tv.y + gauss(rnd) * jit;
-      pos[q * 3 + 2] = C[b][2] + tv.z + gauss(rnd) * jit;
-      seed[q] = rnd(); rank[q] = j / n; which[q] = b;
+      if (j < nOld) {
+        const p0 = begin[f] + j;
+        for (let c = 0; c < 3; c++) pos[q * 3 + c] = C[b][c] + pos[p0 * 3 + c] - C[f][c];
+        seed[q] = seed[p0]; oldA[q] = 1;
+      } else {
+        tv.set(lat[j * 3], lat[j * 3 + 1], lat[j * 3 + 2]).multiplyScalar(s * gs).applyMatrix4(TILT);
+        pos[q * 3] = C[b][0] + tv.x + gauss(rnd) * jit;
+        pos[q * 3 + 1] = C[b][1] + tv.y + gauss(rnd) * jit;
+        pos[q * 3 + 2] = C[b][2] + tv.z + gauss(rnd) * jit;
+        seed[q] = rnd();
+      }
+      rank[q] = j / n; which[q] = b;
     }
     end[b] = q;
   }
@@ -375,8 +433,9 @@ function buildLineup(o, ctx, stage, kit) {
   geo.setAttribute('aSeed', new BufferAttribute(seed, 1));
   geo.setAttribute('aK', new BufferAttribute(rank, 1));
   geo.setAttribute('aBall', new BufferAttribute(which, 1));
+  geo.setAttribute('aOld', new BufferAttribute(oldA, 1));
   geo.setDrawRange(0, 0);
-  const showT = new Array(MAXB).fill(-1), hideT = new Array(MAXB).fill(-1);
+  const showT = new Array(MAXB).fill(-1), hideT = new Array(MAXB).fill(-1), growing = new Array(MAXB).fill(0);
   const pad = (arr, f) => Array.from({ length: MAXB }, (_, i) => (i < arr.length ? arr[i] : f()));
   const mat = new ShaderMaterial({
     vertexShader: LINEUP_VERT, fragmentShader: LINEUP_FRAG, depthTest: true, depthWrite: true,
@@ -392,6 +451,9 @@ function buildLineup(o, ctx, stage, kit) {
       uMerge: { value: pad(balls.map((x) => (x.merge ? 1 : 0)), () => 0) },
       uFromColor: { value: pad(balls.map((x) => colorOf(x.merge ? balls[x.merge.from]?.color : x.color)), () => new Color()) },
       uMergeAt: { value: Number(o.mergeAt ?? 2.4) },
+      uGrowing: { value: growing },
+      uGrowK: { value: pad(growK, () => 0) },
+      uGrowOff: { value: pad(C.map((c, b) => (growFrom[b] >= 0 && growK[b] > 0 ? new Vector3(C[growFrom[b]][0] - c[0], C[growFrom[b]][1] - c[1], C[growFrom[b]][2] - c[2]) : new Vector3())), () => new Vector3()) },
       uLight: { value: new Vector3(-6, 9, 7).normalize() },
     },
   });
@@ -422,15 +484,32 @@ function buildLineup(o, ctx, stage, kit) {
   let doneAt = -1, doneCbs = [];
   const GROW = () => mat.uniforms.uGrow.value + 1.6;
   const shown = (b) => showT[b] >= 0 && hideT[b] < 0;
-  const show = (b, t) => { showT[b] = t + Math.max(0, Number(balls[b]?.wait ?? 0)); hideT[b] = -1; };
+  const show = (b, t) => { showT[b] = t + Math.max(0, Number(balls[b]?.wait ?? 0)); hideT[b] = -1; growing[b] = 0; };
   const hide = (b, t) => { if (shown(b)) hideT[b] = t; };
-  const wants = (b) => (Array.isArray(step) ? step.includes(b) : b < step);
+  // a numbered step can name its piles (`sets: { "5": [2, 4] }`): a slide's frontmatter
+  // `steps:` carries numbers only, so an array step works only from <StageSteps>
+  const sets = o.sets && typeof o.sets === 'object' ? o.sets : {};
+  const wants = (b) => { const sel = Array.isArray(step) ? step : sets[step]; return Array.isArray(sel) ? sel.map(Number).includes(b) : b < step; };
+  // a grown pile handing back to the pile it grew from (a step back): b → f, at b's hide end
+  const handBack = new Array(MAXB).fill(-1);
   const go = (k) => {
     step = k;
     if (armed) return;
+    // a pile that grows out of f in place, when f stands now and goes on this step: f's
+    // spheres become its first spheres in the same frame, so nothing flies apart
+    const hand = balls.map((x, b) => { const f = growFrom[b]; return f >= 0 && growK[b] > 0 && wants(b) && !shown(b) && shown(f) && !wants(f); });
     for (let b = 0; b < NB; b++) {
-      if (wants(b) && !shown(b)) show(b, now);
-      else if (!wants(b) && shown(b)) hide(b, now);
+      if (wants(b) || !shown(b)) continue;
+      if (hand.some((h, j) => h && growFrom[j] === b)) continue;     // handed over below, not flown apart
+      hide(b, now);
+      // a grown pile going back: its earlier spheres glide back onto f's place, and f stands there when they land
+      const f = growFrom[b];
+      handBack[b] = growing[b] && f >= 0 && wants(f) && !shown(f) ? f : -1;
+    }
+    for (let b = 0; b < NB; b++) {
+      if (!wants(b) || shown(b) || handBack.includes(b)) continue;
+      show(b, now);
+      if (hand[b]) { const f = growFrom[b]; growing[b] = 1; showT[b] = now; showT[f] = -1; hideT[f] = -1; }
     }
   };
   const settles = () => Math.max(GROW(), mat.uniforms.uMergeAt.value + 2.8);
@@ -461,7 +540,13 @@ function buildLineup(o, ctx, stage, kit) {
       if (doneCbs.length && t >= doneAt) { const cbs = doneCbs; doneCbs = []; for (const cb of cbs) cb(); }
       let count = 0;
       for (let b = 0; b < NB; b++) {
-        if (hideT[b] >= 0 && t - hideT[b] > 1.2) { showT[b] = -1; hideT[b] = -1; }
+        if (hideT[b] >= 0 && t - hideT[b] > 1.2) {
+          showT[b] = -1; hideT[b] = -1; growing[b] = 0;
+          const f = handBack[b];
+          handBack[b] = -1;
+          // standing at once: a show time far enough back that every sphere has gathered (never below 0: a negative time means hidden)
+          if (f >= 0 && wants(f) && !shown(f)) { showT[f] = Math.max(0, t - GROW() - 1); hideT[f] = -1; }
+        }
         if (showT[b] >= 0) count = Math.max(count, end[b]);
       }
       geo.setDrawRange(0, count);

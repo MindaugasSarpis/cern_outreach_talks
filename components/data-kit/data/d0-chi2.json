@@ -394,6 +394,13 @@
   "cross": [7.54171256,7.74962433],
   "halfWidth": 0.103955881
  },
+ "pdgOnSlice": {
+  "about": "chi2 - chi2min on the 1D slice in mu (width profiled too) at PDG 2026's 1864.84 and its edges 1864.80 / 1864.88, each minimised afresh (not read off the slice grid). sqrt(dchi2) is how many of our statistical errors each value lies from the fitted mu. interp: linear on the slice grid.",
+  "m": [1864.8,1864.84,1864.88],
+  "dchi2": [11.4985118,14.4715214,17.7839609],
+  "nErrors": [3.39094556,3.80414529,4.21710338],
+  "interp": [11.500447,14.4734526,17.7858877]
+ },
  "source": {
   "title": "LHCb event file for real measurement",
   "url": "https://opendata.cern.ch/record/401",

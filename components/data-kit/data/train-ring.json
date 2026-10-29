@@ -616,6 +616,10 @@
   "b": 0.0678143909,
   "trainAccuracy": 0.652777778,
   "testAccuracy": 0.533333333,
+  "trainRight": 235,
+  "nTrain": 360,
+  "testRight": 64,
+  "nTest": 120,
   "testAuc": 0.438318017
  },
  "net": {

@@ -82,6 +82,29 @@
  },
  "testAucWithoutM": 0.674237808,
  "testAucWithM": 0.999995746,
+ "row1": {
+  "about": "Row 1 (file index 0, our grain): its label (1845 < M < 1885), its role in the split, and the honest networks' scores (no mass input). score3 is the three-input network (log PT, log TAU, log IPCHI2; `withoutM`), the value d0-score.f32 holds at index 0; score2 the two-input network the picture draws (`twoInputs`).",
+  "M": 1880.649,
+  "label": 1,
+  "role": "train",
+  "score3": 0.462418156,
+  "score2": 0.407995846,
+  "side3": 0,
+  "side2": 0
+ },
+ "windowShare": {
+  "about": "The label-1 window 1845 < M < 1885 MeV/c^2 against the mass fit of d0-fit.json (Gaussian + line on all 91 583 candidates): sig and bkg are the fitted signal and line integrated over the window; nWindow counts the classifier's rows (TAU > 0) in it. backgroundShare = 1 - sig / nWindow. boundShare uses the whole fitted signal (nSig, over 1820-1910) instead: a lower bound.",
+  "window": [1845.0,1885.0],
+  "nWindow": 49225,
+  "nRows": 91531,
+  "sig": 20802.6657,
+  "bkg": 28281.7046,
+  "fitTotal": 49084.3703,
+  "backgroundShare": 0.577396329,
+  "nSigAll": 20992.8016,
+  "boundShare": 0.573533741,
+  "bkgAtLeast": 28232.1984
+ },
  "about": "Lecture 16's leakage example on record 401: rows with TAU > 0; label 1 if 1845 < M < 1885 MeV/c^2; inputs log PT, log TAU (TAU in ns as in the CSV), log IPCHI2, standardised on the train rows; split default_rng(0), 80 % train. Neuron: 2000 steps; network: 2-4-1, eta 1, 5000 full-batch steps, seed 0. withM adds M as a fourth input (leakage: the label is a cut on M). twoInputs: the same network on log IPCHI2 and log TAU only, the two the picture shows.",
  "source": {
   "title": "LHCb event file for real measurement",
