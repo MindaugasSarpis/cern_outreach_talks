@@ -1,0 +1,61 @@
+{
+ "about": "Copied by components/data-kit/bake/sync.py; see components/data-kit/data/manifest.json.",
+ "files": {
+  "d0-fit.json": {
+   "talks": [2,3,4,5],
+   "shape": "object",
+   "meaning": "the mass fit: start values, logged iterations (dk-curve params), result, pulls, window stability, PDG gap in sigma, mass/momentum scale shift, row 1 P(signal)",
+   "by": "d0.py"
+  },
+  "d0-flat.json": {
+   "talks": [2],
+   "shape": "object",
+   "meaning": "the 14 flat bins 1816-1844: counts, mean, sqrt(mean), three spread estimates",
+   "by": "d0.py"
+  },
+  "d0-hist.json": {
+   "talks": [1,2,3,5],
+   "shape": "object",
+   "meaning": "2 MeV mass histograms over the full range (all, IPchi2 < 9, sum of P(signal)), the 45-bin fit range, row 1's bin",
+   "by": "d0.py"
+  },
+  "d0-significance.json": {
+   "talks": [2],
+   "shape": "object",
+   "meaning": "file-order significance: where z first passes 5 and from where it stays above 5",
+   "by": "d0.py"
+  },
+  "d0-z.f32": {
+   "talks": [2],
+   "shape": [91583],
+   "dtype": "float32 LE",
+   "meaning": "z(k) = (N_on - b)/sqrt(b), b = 3/4 N_sidebands, after the first k candidates in file order (NaN while b = 0)",
+   "by": "d0.py"
+  },
+  "d0.f32": {
+   "talks": [1,2,3,4,5],
+   "shape": [91583,4],
+   "dtype": "float32 LE",
+   "meaning": "record 401 candidates in file order: M MeV/c2, PT MeV/c, TAU ps (NaN = missing), IPCHI2",
+   "by": "d0.py"
+  },
+  "d0.json": {
+   "talks": [1,2,3,4,5],
+   "shape": "object",
+   "meaning": "d0.f32's header: n, cols, units, row 1, value ranges, source block",
+   "by": "d0.py"
+  },
+  "h4l.json": {
+   "talks": [2],
+   "shape": "37 bins",
+   "meaning": "CMS record 5500 4-lepton mass: 2011 and 2012 data counts, expected ZZ / DY / ttbar / Higgs per bin, this sample's own significance",
+   "by": "h4l.py"
+  },
+  "toys.json": {
+   "talks": [2],
+   "shape": "object",
+   "meaning": "simulated toys: flat-bin Poisson re-rolls, the falling spectrum with its 2 sigma alarms and the 3 500-entry growth, normal-tail numbers and 1 - 0.95^20",
+   "by": "toys.py"
+  }
+ }
+}

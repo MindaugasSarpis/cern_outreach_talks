@@ -1,0 +1,41 @@
+{
+ "n": 91583,
+ "cols": ["M","PT","TAU","IPCHI2"],
+ "units": {
+  "M": "MeV/c^2",
+  "PT": "MeV/c",
+  "TAU": "ps (CSV ns x 1000; NaN where the CSV has -100)",
+  "IPCHI2": "dimensionless (chi2 of the impact parameter to the primary vertex)"
+ },
+ "layout": "little-endian float32, row-major, n rows x 4 columns in file order",
+ "row1": {
+  "M": 1880.64905,
+  "PT": 3000.95337,
+  "TAU": 0.412711531,
+  "IPCHI2": 1299.16748
+ },
+ "missingTau": 49,
+ "ranges": {
+  "M": [1766.20959,2453.65845],
+  "PT": [755.268616,64509.9492],
+  "TAU": [-137.152657,578.799427],
+  "IPCHI2": [1.36003409e-05,891711.062]
+ },
+ "source": {
+  "title": "LHCb event file for real measurement",
+  "url": "https://opendata.cern.ch/record/401",
+  "doi": "10.7483/OPENDATA.LHCb.E7EJ.JUWR",
+  "record": 401,
+  "file": "MasterclassData.root",
+  "fileBytes": 1289541,
+  "checksum": "sha256:8694a2ed518472b02994629154de3077fdff4aef1065691fa13ae9f6b23b039b (adler32:2ebf133a as the portal lists it)",
+  "licence": "CC0-1.0 (record page; the portal API record carries no licence field)",
+  "retrieved": "2026-10-29",
+  "note": "Read through the course's D0_KPi.csv (sha256 25c3c97299ea844f27308fde20a00ecaa87580868f3c767d7ade5621c1505136, 3 926 142 B), the four filled branches D0_MM, D0_PT, D0_TAU, D0_MINIPCHI2 of DecayTree, 91 583 entries; checked equal to the ROOT file value for value on 2026-10-29. Rows are D0 candidates: the portal's 53 948 counts events. runNumber, eventNumber and GpsTime are zero in the file, so the data-taking year cannot be read from it.",
+  "csv": {
+   "file": "D0_KPi.csv",
+   "bytes": 3926142,
+   "sha256": "25c3c97299ea844f27308fde20a00ecaa87580868f3c767d7ade5621c1505136"
+  }
+ }
+}
