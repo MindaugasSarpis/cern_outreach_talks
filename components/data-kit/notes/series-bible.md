@@ -1,5 +1,13 @@
 <!-- Filed 2026-10-29 from the data-series-design workflow (three proposals, two judges, one editor). -->
 
+> **The owner's decisions, 2026-10-29 (they win over everything below):**
+> - The prototypes: "Roll out all" the kit's forms into the five decks; the weak spots are fixed inside the decks (T1 gate 2 framed closer, T2's √N band brighter, T3's sparse weights slide reframed).
+> - Camera: cuts between stations (a one-key `path` at t = 0); a flight only where the travel is the story (T1's data lane, T5's route back).
+> - "No D0, will be confusing", then "Maybe it's ok… keep that": the record 401 peak stays the thread of every picture, but nothing names it. No "D⁰", "K⁻π⁺", "kaon", "pion", "IPχ²" or record numbers on screen or in the notes' Message and Picture lines; it is "a short-lived particle's mass peak", the cut is "a quality cut" (its quantity named only as "how far the track points from the collision"). Sources lines keep the provenance (the record, the papers). dk-vertex draws its two strands with no names.
+> - "No CERN specifics" / "Big picture only": CERN stays as context (the LHC, 40 MHz, the filters, real footage, the 2012 discovery as a story, 5 σ). No experiment internals in any talk: no record numbers, decay channels, sub-detector names (VELO, RICH, …), trigger-stage names (HLT1, HLT2, Turbo, Allen, GPUs: say "the first filter", "the second filter"), and no CMS/ATLAS analysis counts or channel histograms. Talk 2's four-lepton open-data slide is dropped; the 2012 clips stay.
+> - Mass axis 1 816-1 912 MeV in every talk (the recommended default; the owner's answer to that question was about D⁰ itself).
+
+
 > **Corrections since the bible was written (bakes and research, 2026-10-29), which win over the text below:**
 > - Momentum scale: the K⁻π⁺ mass moves by 0.856 of the momentum scale at rest (mean 0.77 over decays), so the shift that closes the 0.37 MeV/c² gap is about 0.026 %, not 0.02 % (the 0.02 % *mass* shift stays right). LHCb's momentum scale is calibrated to 0.03 % (`lhcb-momentum-scale-uncertainty`).
 > - The PDG gap is 3.52 σ fully unrounded (3.5 on screen; 3.44 from rounded inputs).

@@ -11,25 +11,25 @@ Outputs (data/, each listed in data/manifest.json with its shape and meaning):
 
   d0.f32 / d0.json   the 91 583 candidates (M, PT, TAU in ps, IPCHI2) and row 1
   d0-hist.json       2 MeV mass histograms (all, IPchi2 < 9, the fit range)
-  d0-means.json      the mass mean in shrinking windows
+  d0-means.json      the mass mean in shrinking and moved windows
   d0-fit.json        Gaussian + line binned chi2 fit, its logged iterations,
                      pulls, window stability, the PDG gap, the mass and
                      momentum scale shifts, row 1's P(signal)
   d0-chi2.json       the chi2 landscape over (mu, width), the minimiser path,
                      the Delta chi2 = 1 and 4 contours, the 1D slice in mu
   d0-psig.f32        P(signal) per candidate, file order
-  d0-z.f32 / d0-significance.json   file-order significance z(k)
+  d0-z.f32 / d0-significance.json   file-order significance z(k), 5 sigma line
   d0-flat.json       the 14 flat bins 1816-1844 MeV and three spread estimates
   d0-cuts.json       IPchi2 < 9 and TAU counts
   d0-tau.json        decay-time histograms (window / sidebands) and the
-                     unbinned lifetime fit with IPchi2 < 9
+                     unbinned lifetime fit with IPchi2 < 9, the plot's subtraction
   d0-select.json     the 120 selections (cut parameters and the fitted peak)
 
     python3 bake/d0.py                    # read the course CSV, write data/
     python3 bake/d0.py --cached D0_KPi.csv
     python3 bake/d0.py --check            # recompute, compare, exit 1 on a difference
 
-Deterministic: numpy and scipy only, fixed seeds, no timestamps.
+Deterministic: numpy and scipy, fixed seeds, no timestamps (d0-checks.json: two passes).
 """
 from __future__ import annotations
 
@@ -384,10 +384,18 @@ def bake(src: Path):
     out["d0-means.json"] = json_bytes({
         "about": "Mean of M over all candidates and inside open windows lo < M < hi (MeV/c^2). "
                  "meanErr is sd/sqrt(n), which ignores that the background shifts the mean.",
-        "means": means, "pdg": {"m": M_PDG, "err": M_PDG_ERR, "edition": "PDG 2026 (pdglive S032)"},
+        "means": means,
+        "centredOnFit": {"about": ("The same means in windows centred on the fitted 1864.47 (d0-fit.json mu, rounded as "
+                                   "the deck draws it), half-widths 25 / 15 / 10 / 5 MeV/c^2. nClosed and meanClosed use "
+                                   "lo <= M <= hi, as dk-hist's {window} does."),
+                         "centre": CENTRE_FIT, "windows": window_means(M, CENTRE_FIT, CENTRE_HALF)},
+        "narrow1865": window_means(M, 1865.0, [5.0])[0],
+        "pdg": {"m": M_PDG, "err": M_PDG_ERR, "edition": "PDG 2026 (pdglive S032)"},
         "source": SOURCE,
     })
-    ent["d0-means.json"] = dict(talks=[3], shape="object", meaning="window means of M (all, 1840-1890, 1850-1880, 1855-1875) and PDG")
+    ent["d0-means.json"] = dict(talks=[3], shape="object",
+                                meaning="window means of M (all, 1840-1890, 1850-1880, 1855-1875; centred on the fitted "
+                                        "1864.47 with half-widths 25/15/10/5; 1860-1870) and PDG")
 
     # ------------------------------------------------------------- chi2 grid
     nx = ny = 121
@@ -448,10 +456,12 @@ def bake(src: Path):
         "contours": {"1": c1, "4": c4},
         "slice": {"x": smu, "z": np.round(sl, 5), "cross": [lo1, hi1], "halfWidth": 0.5 * (hi1 - lo1)},
         "sliceWidth": {"cross": [slo, shi], "halfWidth": 0.5 * (shi - slo)},
+        "pdgOnSlice": pdg_on_slice(prof_mu, cmin, smu, sl),
         "source": SOURCE,
     })
     ent["d0-chi2.json"] = dict(talks=[3], shape=f"grid {nx}x{ny} + path + contours + slice",
-                               meaning="dk-landscape src: chi2 bowl over (mu, width), minimiser path, dchi2 = 1/4 rings, 1D slice")
+                               meaning="dk-landscape src: chi2 bowl over (mu, width), minimiser path, dchi2 = 1/4 rings, 1D slice, "
+                                       "dchi2 at PDG 1864.84 +- 0.04 on the slice")
 
     fit = {
         "about": ("Binned chi2 fit of M in 45 bins of 2 MeV on 1820-1910 MeV/c^2, model n_sig x 2 MeV x Gauss(mu, width) "
@@ -506,10 +516,12 @@ def bake(src: Path):
         "final": dict(k=n, on=int(Non[-1]), off=int(Noff[-1]), b=b[-1], z=z[-1]),
         "at": {str(kk): dict(on=int(Non[kk - 1]), off=int(Noff[kk - 1]), z=z[kk - 1])
                for kk in (100, 1000, 10000, n)},
+        "line5sigma": line_5sigma(int(Noff[-1]), int(Non[-1])),
         "source": SOURCE,
     }
     out["d0-significance.json"] = json_bytes(sig)
-    ent["d0-significance.json"] = dict(talks=[2], shape="object", meaning="file-order significance: where z first passes 5 and from where it stays above 5")
+    ent["d0-significance.json"] = dict(talks=[2], shape="object", meaning="file-order significance: where z first passes 5 and from where it stays above 5; "
+                                                                           "the 5 sigma line (b + 5 sqrt b)/15 a bin as a dk-curve set")
 
     # ------------------------------------------------------------- flat bins
     ef = np.arange(1816.0, 1844.0 + 1e-9, 2.0)
@@ -546,19 +558,24 @@ def bake(src: Path):
     ent["d0-cuts.json"] = dict(talks=[3, 4], shape="object", meaning="IPchi2 < 9 counts with and without the TAU-missing rows; TAU > 0 count")
 
     # ------------------------------------------------------- decay time, fit
-    out["d0-tau.json"] = json_bytes(lifetime(M, TAU, IP, tau_pos))
+    tau_doc = lifetime(M, TAU, IP, tau_pos)
+    tau_doc["plotSubtract"] = plot_subtract(M, TAU)
+    out["d0-tau.json"] = json_bytes(tau_doc)
     ent["d0-tau.json"] = dict(talks=[3], shape="object",
                               meaning="decay-time histograms in the window and sidebands (0.25 and 0.1 ps bins, with and "
-                                      "without IPchi2 < 9), sideband-subtracted counts, the unbinned lifetime fit and its scans")
+                                      "without IPchi2 < 9), sideband-subtracted counts, the unbinned lifetime fit and its scans; "
+                                      "plotSubtract: what dk-hist {subtract} leaves of the first 2 000 (and of all) in its seeded order")
 
     # ------------------------------------------------------- 120 selections
     out["d0-select.json"] = json_bytes(selections(M, PT, TAU, D["TAU_NS"], IP, missing, arr))
     ent["d0-select.json"] = dict(talks=[5], shape="120 selections",
-                                 meaning="6 x 5 x 4 selections as cuts on d0.f32 columns (PT >, IPCHI2 <, TAU >) with the fitted peak of each")
+                                 meaning="6 x 5 x 4 selections as cuts on d0.f32 columns (PT >, IPCHI2 <, TAU >) with the fitted peak of each; "
+                                         "the counts of selections 0 and 119; how many peaks lie near selection 0's")
 
     summary.update(mu=p[1], muErr=perr[1], width=p[2], widthErr=perr[2], chi2=chi2, ndf=ndf, nRange=in_range,
                    iters=len(log) - 1, eye=eye, psig1=row1_info["psig"], first=first, stays=stays,
                    gap=gaps["unrounded"]["z"], scale=scale["massShiftPct"], mom=scale["momentumShiftPct"])
+    summary["fitStart"] = fit_start(fit, x45, c45, err45)
     return out, ent, summary
 
 
@@ -696,8 +713,171 @@ def selections(M, PT, TAU, TAU_NS, IP, missing, arr):
         "sortedByMu": order,
         "min": rows[int(order[0])], "max": rows[int(order[-1])], "noCuts": plain,
         "spread": float(mus.max() - mus.min()),
+        "counts": {"0": rows[0]["n"], "119": rows[119]["n"]},
+        "nearSel0": near_sel0(rows),
         "source": SOURCE,
     }
+
+
+# =========================================================== deck numbers
+# Added 2026-10-29 (lane kit-bake): numbers the T3, T2 and T5 outlines cite. They live
+# here, below lm(), so that d0.py lines 87-208 (read to lm, the stretch T5's code stage
+# draws) keep their line numbers.
+CENTRE_FIT = 1864.47                # the fitted mu as the deck draws it (d0-fit.json 1864.4724)
+CENTRE_HALF = [25.0, 15.0, 10.0, 5.0]
+PDG_BAND = [M_PDG - M_PDG_ERR, M_PDG, M_PDG + M_PDG_ERR]
+# lab 3's decay-time plot (talks/2026_00_00_DataLab3/public/data/space.json, object "tau")
+TAU_PLOT = dict(key="TAU", lo=0.0, hi=5.0, bin=0.25, grains=70_000, budget=300_000, seed=SEED, ours=0,
+                win=WIN, sb=SBS, n=2000)
+
+
+def window_means(M, centre, halves):
+    rows = []
+    for h in halves:
+        lo, hi = centre - h, centre + h
+        m = M[(M > lo) & (M < hi)]
+        mc = M[(M >= lo) & (M <= hi)]
+        rows.append(dict(halfWidth=h, window=[lo, hi], n=len(m), mean=m.mean(), meanErr=m.std(ddof=1) / np.sqrt(len(m)),
+                         nClosed=len(mc), meanClosed=mc.mean()))
+    return rows
+
+
+def pdg_on_slice(prof_mu, cmin, smu, sl):
+    """Delta chi2 of the profiled slice (width, n_sig and the line refitted) at PDG and its +-0.04 edges."""
+    d = [float(prof_mu(m) - cmin) for m in PDG_BAND]
+    return dict(about=("chi2 - chi2min on the 1D slice in mu (width profiled too) at PDG 2026's 1864.84 and its edges "
+                       "1864.80 / 1864.88, each minimised afresh (not read off the slice grid). sqrt(dchi2) is how many "
+                       "of our statistical errors each value lies from the fitted mu. interp: linear on the slice grid."),
+                m=PDG_BAND, dchi2=d, nErrors=[float(np.sqrt(v)) for v in d],
+                interp=[float(np.interp(m, smu, sl)) for m in PDG_BAND])
+
+
+def line_5sigma(noff, non):
+    """The level a bin of the window would need for the window to sit exactly 5 sigma over its counted background."""
+    b = ALPHA * noff
+    nb = int(round((WIN[1] - WIN[0]) / BW))
+    total = b + 5 * np.sqrt(b)
+    level = total / nb
+    return dict(about=("T2's close: the counted background in the window 1850-1880 is b = 0.75 x N_off (all 91 583 "
+                       "candidates); a window holding b + 5 sqrt(b) would be exactly 5 sigma, (N_on - b)/sqrt(b) = 5. "
+                       "Spread evenly over its 15 bins of 2 MeV that is `level` a bin. set is a dk-curve parameter set: "
+                       "f 'flat', a = level per bin of 2 MeV, drawn over range."),
+                nOff=noff, alpha=ALPHA, b=b, sqrtB=np.sqrt(b), total=total, bins=nb, level=level,
+                zCheck=(total - b) / np.sqrt(b), nOn=non, onPerBin=non / nb,
+                f="flat", range=list(WIN), set={"a": level, "bin": BW})
+
+
+def plot_subtract(M32, T32, cfg=TAU_PLOT):
+    """What dk-hist {subtract} leaves on lab 3's decay-time plot, in the plot's own seeded order.
+
+    A port of hist.js setupGrains and layout (rows mode, split, subtract): the grains are the rows with a finite
+    TAU inside the window or a sideband (closed intervals, as cutTest 'in'); the fill order is the reverse of
+    rng.js order(91 583, 401, row 0); {n: k} shows the first k; {subtract} drops every sideband grain, and in each
+    bin pairs the sideband grains whose pick (the third draw per grain of mulberry32(401 x 31 + 7)) is below
+    30/40 with window grains at the same share of the way up the column. The count readout is the counted
+    window grains, including the few whose decay time is off the drawn 0-5 ps."""
+    from common import mulberry32, series_order
+    n_all = len(M32)
+    inw = (M32 >= cfg["win"][0]) & (M32 <= cfg["win"][1])
+    insb = np.zeros(n_all, bool)
+    for l, h in cfg["sb"]:
+        insb |= (M32 >= l) & (M32 <= h)
+    keep = np.where(np.isfinite(T32) & (inw | insb))[0]
+    budget = max(1000, min(cfg["budget"], cfg["grains"]))
+    unit = max(1, int(np.ceil(len(keep) / budget)))
+    rank = series_order(n_all, cfg["seed"], cfg["ours"])
+    rows = keep if unit == 1 else keep[(rank[keep] % unit == 0) | (keep == cfg["ours"])]
+    N = len(rows)
+    fill = np.argsort(-rank[rows], kind="stable")            # grain indices, first to land first
+    rnd = mulberry32(cfg["seed"] * 31 + 7)
+    pick = np.empty(N)
+    for i in range(N):
+        rnd(); rnd(); pick[i] = rnd()                         # jx, jz, pick
+    nb = int(round((cfg["hi"] - cfg["lo"]) / cfg["bin"]))
+    b_all = np.floor((T32[rows] - cfg["lo"]) / cfg["bin"]).astype(np.int64)
+    w_all = inw[rows]
+    scale = (cfg["win"][1] - cfg["win"][0]) / sum(h - l for l, h in cfg["sb"])
+
+    def state(n_show):
+        shown = fill[:min(N, int(np.ceil(n_show / unit)))]
+        inb = (b_all[shown] >= 0) & (b_all[shown] < nb)
+        slot = np.zeros(N, np.int64)
+        tmp = np.zeros(nb, np.int64)
+        for i in shown:                                       # pre-subtraction slots, in fill order
+            if 0 <= b_all[i] < nb:
+                slot[i] = tmp[b_all[i]]
+                tmp[b_all[i]] += 1
+        counted = np.zeros(N, bool)
+        counted[shown] = True
+        paired = np.zeros(N, bool)
+        wins = [[] for _ in range(nb)]
+        sbs = [[] for _ in range(nb)]
+        for i in np.sort(shown):                              # hist.js walks the grains in index order
+            b = b_all[i]
+            if w_all[i]:
+                if 0 <= b < nb:
+                    wins[b].append(i)
+            else:
+                counted[i] = False
+                if 0 <= b < nb and pick[i] < scale:
+                    sbs[b].append(i)
+        npairs = 0
+        for b in range(nb):
+            w = sorted(wins[b], key=lambda q: slot[q])
+            sb = sorted(sbs[b], key=lambda q: slot[q])
+            k_ = min(len(sb), len(w))
+            for k in range(k_):
+                x = (k + 0.5) * len(w) / k_ - 0.5
+                i = w[min(len(w) - 1, int(np.floor(x + 0.5)))]   # JS Math.round
+                if paired[i]:
+                    continue
+                paired[i] = True
+                counted[i] = False
+                npairs += 1
+        nw = int(w_all[shown].sum())
+        left = int(counted.sum())
+        drawn = int((counted & (b_all >= 0) & (b_all < nb)).sum())
+        return dict(nShown=len(shown) * unit, nWindow=nw, nSidebands=len(shown) - nw,
+                    nWindowDrawn=int((w_all[shown] & inb).sum()), nSidebandsDrawn=int((~w_all[shown] & inb).sum()),
+                    nSidebandsPicked=int(sum(len(x) for x in sbs)), pairs=npairs, left=left * unit, leftDrawn=drawn * unit,
+                    countedBackground=float(scale * (len(shown) - nw)),
+                    leftCounted=float(nw - scale * (len(shown) - nw)))
+
+    return dict(about=("Lab 3's decay-time plot (`plot`) as dk-hist draws it: its grains are the rows with a finite TAU in "
+                       "the window or a sideband, filled in the reverse of the series order (rng.js order(91 583, 401, "
+                       "row 0)). {subtract} drops every sideband grain and pairs, bin by bin, the sideband grains whose "
+                       "pick is below 30/40 with window grains. nShown, nWindow, nSidebands: the grains shown before it; "
+                       "pairs: the window grains taken; left: the count readout after it (window grains still counted, "
+                       "including those off the drawn 0-5 ps); leftDrawn: those standing in the columns; leftCounted: "
+                       "nWindow - 0.75 nSidebands, the statistical subtraction the pairing stands for."),
+                plot={k: (list(v) if isinstance(v, tuple) else v) for k, v in cfg.items()},
+                grains=N, unit=unit, keep=len(keep), scale=scale,
+                first2000=state(cfg["n"]), all=state(N * unit))
+
+
+def near_sel0(rows):
+    mu0 = rows[0]["mu"]
+    d = np.abs(np.array([r["mu"] for r in rows]) - mu0)
+    out = dict(about=("How many of the 120 fitted peaks lie within +-h of selection 0's (no cuts, TAU-missing rows "
+                      "dropped); selection 0 itself is counted. h = 0.10 (the rounded error), 0.0965 (the series fit's "
+                      "error, d0-fit.json), and selection 0's own muErr."),
+               mu0=mu0, muErr0=rows[0]["muErr"], of=len(rows))
+    out["within"] = {"0.10": int((d <= 0.10).sum()), "0.0965": int((d <= 0.0965).sum()),
+                     "muErr0": int((d <= rows[0]["muErr"]).sum())}
+    return out
+
+
+def fit_start(fit, x45, c45, err45):
+    """chi2 at the start values, as logged and as dk-curve's readout computes it (density at the bin centre x bin)."""
+    p0 = fit["iterations"][0]["p"]
+    nS, mu, w, a, b = p0
+    dens = nS * np.exp(-0.5 * ((x45 - mu) / w) ** 2) / (w * np.sqrt(2 * np.pi)) + (a + b * (x45 - REF)) / BW
+    c2 = float((((c45 - dens * BW) / err45) ** 2).sum())
+    logged = float(fit["iterations"][0]["chi2"])
+    assert abs(c2 - logged) < 1e-6 * logged, (c2, logged)
+    return dict(about="chi2 of the 45-bin fit at the start values read off the histogram (d0-fit.json iterations[0]); "
+                      "curveReadout recomputes it as dk-curve's live readout does (sum of pulls squared, model at the bin "
+                      "centre x 2 MeV).", p=p0, chi2=logged, curveReadout=c2, chi2End=float(fit["chi2"]))
 
 
 def main(argv=None) -> int:
@@ -707,6 +887,26 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     src = Path(a.cached) if a.cached else course_file("D0_KPi.csv")
     out, ent, s = bake(src)
+    # a second pass from scratch (the CSV read again, every fit redone): the outputs must be the same bytes
+    out2, _, _ = bake(src)
+    differ = sorted(k for k in out if out[k] != out2[k])
+    if differ:
+        raise SystemExit(f"two passes differ: {differ}")
+    import hashlib
+    digests = [hashlib.sha256(o["d0-fit.json"]).hexdigest() for o in (out, out2)]
+    out["d0-checks.json"] = json_bytes({
+        "about": ("Checks on the bake itself. fitStart: chi2 at the fit's start values. rerun: d0.py runs bake() twice "
+                  "from scratch in one process and refuses to write unless every output is byte-identical; sha256 is "
+                  "d0-fit.json's digest from each pass. `d0.py --check`, run later as its own process, recomputes it "
+                  "and fails on any difference. The digest holds for this file, code and package versions "
+                  "(numpy, scipy, Python): notes/bake.md names the versions it was made with."),
+        "fitStart": s["fitStart"],
+        "rerun": {"file": "d0-fit.json", "bytes": len(out["d0-fit.json"]), "passes": 2, "sha256": digests,
+                  "same": digests[0] == digests[1], "short": digests[0][:8]},
+        "source": SOURCE,
+    })
+    ent["d0-checks.json"] = dict(talks=[3, 5], shape="object",
+                                 meaning="chi2 at the fit's start values; sha256 of d0-fit.json from two passes of the bake")
     print(f"mu {s['mu']:.4f} +- {s['muErr']:.4f}, width {s['width']:.4f} +- {s['widthErr']:.4f}, "
           f"chi2 {s['chi2']:.2f}/{s['ndf']}, {s['nRange']} in range, {s['iters']} iterations from "
           f"FWHM {s['eye']['fwhm']:.2f}; P(sig) row 1 {s['psig1']:.4f}; z>5 first {s['first']}, stays {s['stays']}; "

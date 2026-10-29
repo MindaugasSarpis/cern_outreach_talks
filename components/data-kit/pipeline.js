@@ -138,9 +138,10 @@ function buildPipeline(o, ctx, stage, kit) {
 
   let now = 0, ready = false, failed = false, armed = false, armT = 0, pendingArrive = false, playedAt = -OFF;
   let kept = false;   // armed while it stood in view (a flight from a pose beside the station): it stays
+  let fromWait = null; // a pile gathering round another form's ball, waiting a frame or two for it to collapse
   let want = st.step ?? 0, cur = 0;
   let ball = null, flat = null, flows = null, pulses = null;
-  let ballN = 0, flatN = 0, flatStage = null, flatOrder = null;
+  let ballN = 0, flatN = 0, flatStage = null, flatOrder = null, pileN = 0, pileT0 = -OFF, pileT1 = -OFF;
   let sheetK = -1, nFile = 91583, rowsT0 = OFF, rowsDur = 0;
   // the run's times: an event (eventLatch), cleared once the run has passed
   const runU = { uRun0: { value: OFF }, uRunEnd: { value: OFF }, uRunDur: { value: D }, uUpTo: { value: -1 } };
@@ -264,6 +265,7 @@ function buildPipeline(o, ctx, stage, kit) {
     if (pileK >= 0) {
       const s = stages[pileK], G = geo[pileK], c = G.c, r = G.r;
       const n = Math.max(1, Math.round(Number(s.n ?? nFile)));
+      pileN = n;
       const others = items.length + fl.length / 12 + pl.length / 12;
       ballN = Math.min(n, Math.max(1000, (ctx.budget ?? 300000) - others));
       ball = createMorph(stage, ballN, { crowd: P.crowd, sel: P.sel, seed, uniforms: { uPixelRatio: frameScale } });
@@ -335,22 +337,46 @@ function buildPipeline(o, ctx, stage, kit) {
     return { pos: ball.home, vis, white };
   }
 
+  // the pile's `from`: a form whose collapsed ball the pile gathers round (T4's close: the
+  // trigger's kept lane folds into a ball, the file gathers round it, the ball fades)
+  const pileK0 = stages.findIndex((s) => s.kind === 'pile');
+  const pileFrom = pileK0 >= 0 && stages[pileK0].from ? String(stages[pileK0].from) : null;
+  // the stream tone of each run (run 1 is the step that reaches a sheet or the plot, run 2
+  // is S+1, run 3 S+2): T5 draws the first pass light blue and the second white
+  const tones = Array.isArray(run.tones) ? run.tones : [];
+  const toneOf = (k) => { const j = k > S ? k - S : 0, tn = tones[Math.min(j, tones.length - 1)]; return tn === 'sel' ? P.sel : tn === 'axis' ? P.axis : P.crowd; };
   function transition(k, kind) {
     const t = now;
-    const instant = kind === 'back' || kind === 'hide';
+    // `replay: false`: an arrival (a cold open, a flight in, `c`) shows the step's state at
+    // once, with no gather, typing or run (T5's cover: the file stands from frame 1)
+    const still = kind === 'arrive' && o.replay === false;
+    const instant = kind === 'back' || kind === 'hide' || still;
     const fresh = kind === 'arrive' || cur === 0;
+    // a pile gathering round another form's ball waits for that ball to form
+    let ballDelay = 0, src = null;
+    if (pileFrom && ball && !instant && cur === 0 && k > 0) {
+      src = kit.form(pileFrom);
+      const b = src?.api?.ball?.();
+      if (src && !b && (!fromWait || now - fromWait.t0 < 0.5)) { fromWait = { k, kind, t0: fromWait?.t0 ?? now }; return; }
+      if (b) ballDelay = Math.max(0, b.formedAt - t) + 0.2;
+    }
+    fromWait = null;
     const newest = k >= 1 && k <= S ? k - 1 : -1;        // the stage this step builds
     const chain = instant ? -1 : chainTo(k);
     const runT0 = t + LEAD;
     if (ball) {
+      // the gather's window, for value() (a pile alone): every grain that comes in, at once otherwise
+      const gathers = k > 0 && cur === 0;
+      pileT0 = gathers && !instant && fresh ? t + ballDelay + 0.1 : gathers ? t : pileT0;
+      pileT1 = gathers && !instant && fresh ? t + ballDelay + 2.4 : gathers ? t + (still ? 0.02 : 0.35) : pileT1;
       ball.go(t, ballTarget(k), (m) => {
         const { A, B, V, T, M, S: Sd } = m;
         for (let i = 0; i < ballN; i++) {
           const i2 = 2 * i, i3 = 3 * i, v0 = V[i2], v1 = V[i2 + 1];
           if (v0 < 0.01 && v1 > 0.01) {
             M[i] = MOTION.GLIDE;
-            if (instant || !fresh) { A[i3] = B[i3]; A[i3 + 1] = B[i3 + 1]; A[i3 + 2] = B[i3 + 2]; T[i2] = instant ? 0 : 0.3 * Sd[i]; T[i2 + 1] = instant ? 0.35 : 0.8; }
-            else { A[i3] = ball.scatter[i3]; A[i3 + 1] = ball.scatter[i3 + 1]; A[i3 + 2] = ball.scatter[i3 + 2]; T[i2] = 0.1 + 0.5 * Sd[i]; T[i2 + 1] = 1.8; }
+            if (instant || !fresh) { A[i3] = B[i3]; A[i3 + 1] = B[i3 + 1]; A[i3 + 2] = B[i3 + 2]; T[i2] = instant ? 0 : 0.3 * Sd[i]; T[i2 + 1] = still ? 0.02 : instant ? 0.35 : 0.8; }
+            else { A[i3] = ball.scatter[i3]; A[i3 + 1] = ball.scatter[i3 + 1]; A[i3 + 2] = ball.scatter[i3 + 2]; T[i2] = ballDelay + 0.1 + 0.5 * Sd[i]; T[i2 + 1] = 1.8; }
           } else if (v0 > 0.01 && v1 < 0.01) { B[i3] = A[i3]; B[i3 + 1] = A[i3 + 1]; B[i3 + 2] = A[i3 + 2]; M[i] = MOTION.GLIDE; T[i2] = 0; T[i2 + 1] = 0.35; }
           // a grain that stays: it stands where the turning ball has it (the default, at once)
         }
@@ -364,7 +390,7 @@ function buildPipeline(o, ctx, stage, kit) {
           if (v0 < 0.01 && v1 > 0.01) {
             A[i3] = B[i3]; A[i3 + 1] = B[i3 + 1]; A[i3 + 2] = B[i3 + 2];
             M[i] = MOTION.GLIDE;
-            if (instant) { T[i2] = 0; T[i2 + 1] = 0.35; }
+            if (instant) { T[i2] = 0; T[i2 + 1] = still ? 0.02 : 0.35; }
             else if (sk === newest && stages[sk].kind === 'sheet') { T[i2] = LEAD + flatOrder[i] * D; T[i2 + 1] = 0.25; }   // written as the stream arrives
             else if (sk === newest) { T[i2] = 0.2 + flatOrder[i] * Number(stages[sk].typing ?? 2.2); T[i2 + 1] = 0.3; }      // typed in, line by line
             else { T[i2] = 0.15 * sk + 0.4 * Sd[i]; T[i2 + 1] = 0.6; }                                                         // standing already: back at once
@@ -377,6 +403,8 @@ function buildPipeline(o, ctx, stage, kit) {
     else rowsT0 = shownStages(k) > sheetK ? -OFF : OFF;
     // the run: a fresh event each time (a run never carries into the next one)
     runU.uRun0.value = OFF; runU.uRunEnd.value = OFF; runEndsAt = -OFF;
+    if (src?.api?.cede && ballDelay > 0) src.api.cede(t + ballDelay + 0.9);   // the ball fades as the pile lands round it
+    if (flows) flows.mat.uniforms.uColor.value.set(toneOf(k));
     if (chain >= 0 && (flows || pulses)) {
       runU.uUpTo.value = chain;
       ev.start(t, runT0);
@@ -420,10 +448,12 @@ function buildPipeline(o, ctx, stage, kit) {
       if (kept) { kept = false; if (want !== cur) transition(want, want < cur ? (want === 0 ? 'hide' : 'back') : 'fwd'); onDone?.(); return; }
       arrive(); onDone?.();
     },
-    busy: () => (!ready && !failed && want > 0) || armed || pendingArrive
+    busy: () => (!ready && !failed && want > 0) || armed || pendingArrive || !!fromWait
       || !!(ball && now < ball.end + 0.3) || !!(flat && now < flat.end + 0.3) || now < runEndsAt,
     // the sheet's rows written so far, scaled to the file's (all of them once it stands)
     value() {
+      // no sheet (a pile alone, T4's close): the file's candidates as the pile gathers
+      if (sheetK < 0 && ball) return cur > 0 ? Math.round(pileN * Math.max(0, Math.min(1, (now - pileT0) / Math.max(1e-3, pileT1 - pileT0)))) : 0;
       if (sheetK < 0 || cur <= sheetK) return 0;
       if (rowsT0 <= -OFF / 2) return nFile;
       return Math.round(Math.max(0, Math.min(1, (now - rowsT0) / Math.max(1e-3, rowsDur))) * nFile);
@@ -456,6 +486,7 @@ function buildPipeline(o, ctx, stage, kit) {
       if (flows) flows.mat.uniforms.uTime.value = t;
       if (pulses) pulses.mat.uniforms.uTime.value = t;
       if (armed && now - armT > 6) arrive();
+      if (fromWait && !armed) transition(fromWait.k, fromWait.kind);
       // the run lets go once it has passed; the latch then clears its times
       if (ev.on && t > runEndsAt) ev.stop(t);
       ev.tick(t);

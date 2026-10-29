@@ -6,7 +6,8 @@
                          spread; simulated), the sigmoid neuron trained by gradient
                          descent (eta 0.5, 1000 epochs) with every epoch's weights,
                          the best threshold on x1 alone, the loss grid over (w1, w2)
-                         at the fitted b with the path, and the train/test split
+                         at the fitted b with the path, the loss with b profiled at
+                         each (w1, w2) (lossProfile) and the train/test split
   train-ring.json        the course's 600-point ring set (ml_two_class.py, seed 16;
                          simulated): the line's accuracy, the 2-4-1 network
                          (Lecture 16, figures/src/ml.py) with test accuracy, AUC
@@ -33,7 +34,9 @@ from pathlib import Path
 
 import numpy as np
 
-from common import course_file, emit, f32_bytes, json_bytes, sha256
+import json
+
+from common import DATA, course_file, emit, f32_bytes, json_bytes, sha256
 
 SCRIPT = "train.py"
 
@@ -134,11 +137,14 @@ def perceptron():
         "line": {"w": w, "b": b, "right": right_line, "of": 200, "loss": loss, "accuracy": acc},
         "bayes": {"w": [2.0, 2.0], "b": -4.0, "why": "log odds of two unit Gaussians at (0,0) and (2,2): 2 x1 + 2 x2 - 4"},
         "epochs": [[e[0], e[1], e[2][0], e[2][1], e[3]] for e in h],
-        "after1": {"w": h[1][2], "b": h[1][3], "loss": h[1][0]},
+        "after1": {"w": h[1][2], "b": h[1][3], "loss": h[1][0], "accuracy": h[1][1], "right": int(round(h[1][1] * 200)),
+                   "of": 200, "start": {"loss": h[0][0], "accuracy": h[0][1],
+                                        "note": "w = (0, 0), b = 0: every point scores 0.5, loss ln 2; accuracy counts p > 0.5"}},
         "lossStart": h[0][0], "lossEnd": h[-1][0],
         "lossGrid": {"x": [float(g1[0]), float(g1[-1]), len(g1)], "y": [float(g2[0]), float(g2[-1]), len(g2)],
                      "b": b, "z": np.round(L, 5).ravel(), "min": [float(W1.ravel()[np.argmin(L)]), float(W2.ravel()[np.argmin(L)])],
                      "path": [[e[2][0], e[2][1], pl] for e, pl in zip(h, path_loss)]},
+        "lossProfile": loss_profile(X, y, h),
         "split": {"train": acc_tr, "test": acc_te, "testErr": float(np.sqrt(acc_te * (1 - acc_te) / 50)),
                   "nTrain": 150, "nTest": 50, "w": ws, "b": bs,
                   "seeds20": accs, "mean20": mean, "band": band,
@@ -232,6 +238,8 @@ def ring():
         "points": {"x": X, "label": y.astype(int), "splitRole": role, "splitRoleNames": ["train", "validation", "test"]},
         "scaling": {"mean": mu, "sd": sd},
         "line": {"w": w, "b": b, "trainAccuracy": line_tr, "testAccuracy": acc(sig(Z[te] @ w + b), te),
+                 "trainRight": int(round(line_tr * 360)), "nTrain": 360,
+                 "testRight": int(round(acc(sig(Z[te] @ w + b), te) * 120)), "nTest": 120,
                  "testAuc": auc_pairs(y[te], sig(Z[te] @ w + b))},
         "net": {"H": 4, "V": p[0], "c": p[1], "w": p[2], "b": p[3],
                 "trainAccuracy": acc(predict(p, Z[tr]), tr), "validationAccuracy": acc(predict(p, Z[va]), va),
@@ -306,7 +314,95 @@ def d0_classifier(csv: Path):
     role[rows[te]] = 1
     res["testAucWithoutM"] = auc_sample(y[te], predict(p, Z[te]))
     res["testAucWithM"] = auc_sample(y[te], predict(nets["withM"][0], nets["withM"][3][te]))
+    # row 1 (file row 0, our grain): the honest networks' scores
+    assert ok[0]
+    s2_1 = float(predict(p2, Z2[:1])[0])
+    res["row1"] = dict(about=("Row 1 (file index 0, our grain): its label (1845 < M < 1885), its role in the split, and the "
+                              "honest networks' scores (no mass input). score3 is the three-input network (log PT, log TAU, "
+                              "log IPCHI2; `withoutM`), the value d0-score.f32 holds at index 0; score2 the two-input "
+                              "network the picture draws (`twoInputs`)."),
+                       M=float(M[0]), label=int(y[0]), role=["train", "test"][int(role[0])],
+                       score3=float(full[0]), score2=s2_1, side3=int(full[0] > 0.5), side2=int(s2_1 > 0.5))
+    res["windowShare"] = window_share(M, y, n_all)
     return res, full, role
+
+
+def loss_profile(X, y, h, lo=-0.6, hi=3.4, n=101):
+    """Mean cross-entropy over (w1, w2) with b at its best for each pair (Newton on the convex 1D loss in b).
+
+    The grid steps 0.04 from -0.6, so w = (0, 0) is a node; path[k] = [w1, w2, profiled loss, best b] at epoch k's
+    weights, so a ball on the surface stands on the path. `readout` emulates dk-landscape's bilinear Dat on this grid
+    at the path's first and last point (readout 'chi2' with no chi2min: the grid's minimum plus Delta)."""
+    g = np.linspace(lo, hi, n)
+    W1, W2 = np.meshgrid(g, g)
+
+    def best_b(z, b0):
+        b = np.array(b0, float)
+        for _ in range(60):
+            q = sig(z + b[..., None])
+            g1 = np.mean(q - y, axis=-1)
+            g2 = np.mean(q * (1 - q), axis=-1)
+            b = b - g1 / np.maximum(g2, 1e-12)
+        q = sig(z + b[..., None])
+        assert np.abs(np.mean(q - y, axis=-1)).max() < 1e-10
+        return b
+
+    def loss(z, b):
+        zz = z + b[..., None]
+        return np.mean(np.logaddexp(0, zz) - y * zz, axis=-1)
+
+    Z = X[:, 0][None, None, :] * W1[..., None] + X[:, 1][None, None, :] * W2[..., None]
+    B = best_b(Z, np.zeros(W1.shape))
+    L = loss(Z, B)
+    WP = np.array([[e[2][0], e[2][1]] for e in h])
+    ZP = WP @ X.T
+    BP = best_b(ZP, np.zeros(len(WP)))
+    LP = loss(ZP, BP)
+    logged = np.array([e[0] for e in h])
+    assert np.all(LP <= logged + 1e-12)
+    zr = np.round(L, 5)
+
+    def dat(x, yv):                                     # landscape.js Dat, plus the grid's minimum
+        D = zr.ravel() - zr.min()
+        fi = min(n - 1.0001, max(0.0, (x - lo) / (hi - lo) * (n - 1)))
+        fj = min(n - 1.0001, max(0.0, (yv - lo) / (hi - lo) * (n - 1)))
+        i, j = int(np.floor(fi)), int(np.floor(fj))
+        u, v = fi - i, fj - j
+        a, b_, c, e = D[j * n + i], D[j * n + i + 1], D[(j + 1) * n + i + 1], D[(j + 1) * n + i]
+        return float(zr.min() + (1 - v) * ((1 - u) * a + u * b_) + v * ((1 - u) * e + u * c))
+
+    im = int(np.argmin(L))
+    return {"about": ("lossProfile: mean cross-entropy of the course's 200 points over (w1, w2), b profiled (set to its "
+                      "best) at each node, as T3's chi2 bowl profiles n_sig. z[j*nx + i] at w1 = x[i], w2 = y[j]; "
+                      "path[k] = [w1, w2, profiled loss, best b] at the weights after k updates (the logged training "
+                      "loss, epochs[k][0], lies on or above it). dk-landscape: src 'train-perceptron.json', key "
+                      "'lossProfile', readout 'chi2' (with no chi2min the readout is the loss itself)."),
+            "x": [lo, hi, n], "y": [lo, hi, n], "xName": "w1", "yName": "w2", "z": zr.ravel(),
+            "gridMin": {"w": [float(W1.ravel()[im]), float(W2.ravel()[im])], "loss": float(L.ravel()[im])},
+            "path": [[float(w[0]), float(w[1]), float(l), float(b)] for w, l, b in zip(WP, LP, BP)],
+            "start": {"w": [0.0, 0.0], "loss": float(LP[0]), "bBest": float(BP[0]), "ln2": float(np.log(2))},
+            "end": {"w": WP[-1].tolist(), "loss": float(LP[-1]), "bBest": float(BP[-1]), "bTrained": h[-1][3],
+                    "loggedLoss": float(logged[-1]), "gap": float(logged[-1] - LP[-1])},
+            "readout": {"start": dat(*WP[0]), "end": dat(*WP[-1])}}
+
+
+def window_share(M, y, n_all):
+    """How much of the label-1 window (1845 < M < 1885) the mass fit calls background."""
+    from scipy.stats import norm
+    fit = json.loads((DATA / "d0-fit.json").read_text(encoding="utf-8"))
+    q = fit["params"]
+    lo, hi = 1845.0, 1885.0
+    piv, bw = fit["model"]["pivot"], fit["model"]["bin"]
+    S = q["nSig"] * (norm.cdf((hi - q["mu"]) / q["width"]) - norm.cdf((lo - q["mu"]) / q["width"]))
+    Bg = (q["a"] * (hi - lo) + q["b"] * 0.5 * ((hi - piv) ** 2 - (lo - piv) ** 2)) / bw
+    n_win = int(y.sum())
+    return dict(about=("The label-1 window 1845 < M < 1885 MeV/c^2 against the mass fit of d0-fit.json (Gaussian + line "
+                       "on all 91 583 candidates): sig and bkg are the fitted signal and line integrated over the window; "
+                       "nWindow counts the classifier's rows (TAU > 0) in it. backgroundShare = 1 - sig / nWindow. "
+                       "boundShare uses the whole fitted signal (nSig, over 1820-1910) instead: a lower bound."),
+                window=[lo, hi], nWindow=n_win, nRows=int(len(y)), sig=float(S), bkg=float(Bg), fitTotal=float(S + Bg),
+                backgroundShare=float(1 - S / n_win), nSigAll=q["nSig"], boundShare=float(1 - q["nSig"] / n_win),
+                bkgAtLeast=float(n_win - q["nSig"]))
 
 
 def auc_sample(y, s):
@@ -337,10 +433,11 @@ def bake(csv: Path):
     P = perceptron()
     out["train-perceptron.json"] = json_bytes(P)
     ent["train-perceptron.json"] = dict(talks=[4], shape="object",
-                                        meaning="course 200 points, per-epoch (loss, acc, w1, w2, b), threshold vs line, loss grid over (w1,w2) with path, train/test split")
+                                        meaning="course 200 points, per-epoch (loss, acc, w1, w2, b), threshold vs line, epoch 1 (150/200, loss 0.510), "
+                                                "loss grid over (w1,w2) at the final b with path, lossProfile (b profiled) with path, train/test split")
     R = ring()
     out["train-ring.json"] = json_bytes(R)
-    ent["train-ring.json"] = dict(talks=[4], shape="object", meaning="600-point ring set, line vs 2-4-1 network, test accuracy and AUC, score grid")
+    ent["train-ring.json"] = dict(talks=[4], shape="object", meaning="600-point ring set, line (train and test accuracy and counts) vs 2-4-1 network, test accuracy and AUC, score grid")
     D, score, role = d0_classifier(csv)
     out["train-d0.json"] = json_bytes(dict(D, about=(
         "Lecture 16's leakage example on record 401: rows with TAU > 0; label 1 if 1845 < M < 1885 MeV/c^2; inputs "
@@ -349,7 +446,8 @@ def bake(csv: Path):
         "fourth input (leakage: the label is a cut on M). twoInputs: the same network on log IPCHI2 and log TAU only, "
         "the two the picture shows."), source=SRC_401))
     ent["train-d0.json"] = dict(talks=[4], shape="object",
-                                meaning="record 401 classifier: majority / neuron / network accuracies, with M added, score grids over (log10 IPCHI2, TAU ps)")
+                                meaning="record 401 classifier: majority / neuron / network accuracies, with M added, score grids over (log10 IPCHI2, TAU ps), "
+                                        "row 1's scores, the window's background share from the mass fit")
     out["d0-score.f32"] = f32_bytes(score)
     ent["d0-score.f32"] = dict(talks=[4], shape=[len(score)], dtype="float32 LE",
                                meaning="the honest 2-4-1 network's output per candidate in file order (NaN where TAU <= 0 or missing)")
