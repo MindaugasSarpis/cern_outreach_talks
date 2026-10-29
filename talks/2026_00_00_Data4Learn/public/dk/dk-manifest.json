@@ -50,13 +50,13 @@
   "train-d0.json": {
    "talks": [4],
    "shape": "object",
-   "meaning": "record 401 classifier: majority / neuron / network accuracies, with M added, score grids over (log10 IPCHI2, TAU ps)",
+   "meaning": "record 401 classifier: majority / neuron / network accuracies, with M added, score grids over (log10 IPCHI2, TAU ps), row 1's scores, the window's background share from the mass fit",
    "by": "train.py"
   },
   "train-perceptron.json": {
    "talks": [4],
    "shape": "object",
-   "meaning": "course 200 points, per-epoch (loss, acc, w1, w2, b), threshold vs line, loss grid over (w1,w2) with path, train/test split",
+   "meaning": "course 200 points, per-epoch (loss, acc, w1, w2, b), threshold vs line, epoch 1 (150/200, loss 0.510), loss grid over (w1,w2) at the final b with path, lossProfile (b profiled) with path, train/test split",
    "by": "train.py"
   },
   "train-rare.json": {
@@ -68,7 +68,7 @@
   "train-ring.json": {
    "talks": [4],
    "shape": "object",
-   "meaning": "600-point ring set, line vs 2-4-1 network, test accuracy and AUC, score grid",
+   "meaning": "600-point ring set, line (train and test accuracy and counts) vs 2-4-1 network, test accuracy and AUC, score grid",
    "by": "train.py"
   }
  }
