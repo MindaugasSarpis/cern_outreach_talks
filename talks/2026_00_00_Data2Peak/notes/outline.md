@@ -415,7 +415,7 @@ Fallbacks are under each slide and in Open.
 ### 15. One Higgs-like event (clip, 11 s)
 
 - **Pose:** clip slide over `h4l`, no h1, no numbers, `<VideoPlayer
-  src="cms_hgg_candidate_2011.mp4" />` (proposed name; CDS 1406328, 11 s, licence
+  src="cern_video_2011_191_001_hgg.mp4" />` (the manifest's name; CDS 1406328, 11 s, licence
   "CERN", no credit). Never `advance-on-end`.
 - **Picture:** CERN's 11 s animation of a real 2011 CMS collision with two high-energy
   photons.
@@ -469,8 +469,8 @@ Fallbacks are under each slide and in Open.
 
 ### 17. Fourth of July 2012 (clip, 12 s, 0.3 min hold)
 
-- **Pose:** clip slide, no h1, `<VideoPlayer src="higgs_2012_announcement.mp4" />`
-  (proposed name; a ≤ 12 s cut of the 2012 announcement footage inside CDS 2296228,
+- **Pose:** clip slide, no h1, `<VideoPlayer src="cern_video_2022_016_001_2012_room.mp4" />`
+  (the manifest's name, trimmed 0:39.4-0:46.76 = 7.36 s; a ≤ 12 s cut of the 2012 announcement footage inside CDS 2296228,
   timecode still open), `.nums` fading in at `--dN` after the clip's last frame holds.
 - **Picture:** the CERN auditorium on 4 July 2012.
 - **On screen:** `5.0 σ` (.name "CMS"), `5.9 σ` (.name "ATLAS").
@@ -619,8 +619,8 @@ the narration (the caveats name "not a fit" only to rule it out).
 5. Bake `h4l.py`: `h4l-m4l.f32` (102 masses, 2011 first) and a flat-level parameter set
    for dk-curve over 121-130 GeV (or a binned expected curve over the full range).
    Needs the throwaway uproot venv again (bake.md).
-6. Clips: add `cms_hgg_candidate_2011.mp4` (CDS 1406328, 11 s, `standard`) and
-   `higgs_2012_announcement.mp4` (≤ 12 s of the 2012 footage in CDS 2296228; pick the
+6. Clips: add `cern_video_2011_191_001_hgg.mp4` (CDS 1406328, 11 s, `standard`) and
+   `cern_video_2022_016_001_2012_room.mp4` (≤ 12 s of the 2012 footage in CDS 2296228; pick the
    timecode on a contact sheet under the render slot and record the clip's real
    seconds in the timing table) to `videos/manifest.toml`; then `videos:frames` and
    commit `public/video-frames/index.json`.
@@ -655,3 +655,107 @@ the narration (the caveats name "not a fit" only to rule it out).
     `higgs-boson-what-cern`, `cms-h4l-5500-lumi-code`, `z-boson-4l-91-gev`,
     `higgs-atlas-2012-global-5p1-sigma`, `d0-window-5sigma-line-worked`. Dropped:
     `d0-row1-flight-0p2mm-worked` (slide 2 shows no number now).
+
+## Decisions (deck draft, 29 Oct, draft:data2peak)
+
+The deck (`deck.md`, `public/data/space.json`) follows this outline with these changes.
+The owner's decisions of 29 Oct (series bible, top block) win over the text above.
+
+1. **Slide 16 (the four-lepton count) is dropped** (the owner: no CMS/ATLAS channel
+   histograms). The deck has 17 slides: the γγ clip (15) is followed directly by the 2012
+   room clip (16), and the close is slide 17. The `h4l` station, `d4` and `b4` are not
+   built; `h4l.json` stays in `public/dk/` as the kit's sync leaves it.
+2. **Nothing names the particle.** Message and Picture lines say "a short-lived
+   particle", "two tracks", "the mass of the pair"; the vertex strands carry no names
+   (dk-vertex ignores them); the caption is `mass MeV/c²` (README, `named-decay`), not
+   `m(K⁻π⁺) MeV/c²` (Open 11 settled). Record numbers stay in Sources lines only.
+3. **Mass axis 1 816-1 912** (the kit default, no `lo`/`hi` on `h` or `hf`): x(m) =
+   −12 + 0.25 (m − 1 816), so the flat bins' centre 1 830 sits at x = −8.5 (slide 6's
+   pose is `[-8.5, 4.3, 0]`, not −8.75), the peak near 1 865 at x ≈ 0.25 (Open 12
+   settled).
+4. **Cuts between stations**: every station change (1→2, 2→3, 6→7, 7→8, 10→11, 12→13,
+   clips→17) is a one-key `path` at t = 0; the outline's cranes between stations are
+   gone. Moves inside a station stay (5→6 down the shoulder, 9→10 the dive, the close's
+   crane from the clips' pose).
+5. **Clips** are the manifest's `cern_video_2011_191_001_hgg.mp4` (11.32 s) and
+   `cern_video_2022_016_001_2012_room.mp4` (7.36 s), both `muted`; their slides rest the
+   world at the close's crane start (`[-1, 6, 0]`, dist 32, pitch 16).
+6. **Timing**: with slide 16's 1.5 min gone the deck is 13.80 min of notes + 18.7 s of
+   clips = 14.1 min: slide 3 0.8, slide 8 1.2, slide 12 1.2, slide 13 0.9, slide 14
+   0.9, the γγ clip's hold 0.5, the room clip's hold 0.5, the close 0.9.
+7. **Numbers** carry a unit or a `.name` inline after the unit (`.nums .name`, 22 px,
+   #9fd8ff); slide 8's 405 and slide 12's 1.1 σ come in on the click (`v-click`) with the
+   step they name. Slide 10 reads `1 in 3 500 000` with the name "chance" (Open 10). Slide
+   14's count follows `hf` (rows read): 186 at its step, 91 583 after the click.
+8. **Steps**: forms on stations the camera is away from are stepped to 0 (`h`, `heap`,
+   `v`, `s` from slide 7; the toys and the bell off their slides), so no ring or far plot
+   shows across the world and the budget stays at ~446k (stage:check). `v` goes to 0 from
+   slide 7, so the return to the floor on slide 13 does not replay the vertex. Each toy
+   station has its own named dk-ground (`g7`, `gz`, `gl`) on the series floor plane.
+9. **The cover title** is `# <span class="name">Counting</span>`: `talk lint` reads the
+   headmatter's `onscreen: numbers` as slide 1's own key and flags a plain cover title as
+   TEXT (tests/test_lint.py asserts that case), while the house rule keeps the title. The
+   span renders as the plain h1 (styles/index.css gives a lone cover h1 the title size).
+   A lint fix would let the span go.
+10. **Slide 1's trigger caveat** uses the bank's `lhcb-record401-year` (Run 1 data) and
+    `lhcb-upgrade1-trigger` (the newer trigger) instead of the missing
+    `lhcb-record401-run1-trigger`; slides 2-3 use `magnet-bends-tracks-momentum` instead of
+    the missing `lhcb-magnet-momentum-from-curvature`. ATLAS's global 5.1 σ is cut
+    (`higgs-atlas-2012-global-5p1-sigma` not filed); 104 σ is not said.
+11. **Poses moved for legibility after the first contact sheet**: slide 10 ends at
+    `[7.2, 1.6, 120]` (the tail right of the number); slide 11 at `[77.6, 1.6, 60]`,
+    dist 12 (the 140-entry toy is a short dot plot, about 2.5 units of its 8);
+    slide 12 at `[77, 3.6, 60]`, dist 17 (room for the grown plot's full height after
+    the click); slides 13-14 at `[-5.6, 2.6, 0]`, dist 22 (the bands right of the two
+    numbers and above them). The cover, slides 3-6 and the close keep the outline's
+    poses; the close is talk 3's cover pose `[-1, 3.2, 0]`, dist 25, yaw −4, pitch 5,
+    dim 0.3, steady.
+12. **Clicks**: slides 8, 12, 13, 14 and 17 carry `clicks: 1` in their frontmatter, since
+    `<StageSteps :clicks>` registers no click of its own.
+13. **Fixes from the fresh-eyes review (fix:data2peak, 29 Oct).** The γγ clip (slide 15)
+    burned in an event label (run and event number, decay channel) and a display logo: its
+    raw is now the record's 1080p zoomed 1.25x about the collision point (the ffmpeg line is
+    in videos/manifest.toml) and the cut starts at 5.7 s, as the two towers light (5.6 s).
+14. **Numbers at the top left** on every content slide (styles/index.css `top: 64px`): the
+    lower third stays clear for the recorded takes. Poses moved with it: 11 `[80, 1.8, 60]`
+    dist 10, 12 `[78, 4.4, 60]`, 13-14 `[-1, 3.4, 0]` dist 23, 9 `[2.5, 2.0, 120]` dist 17
+    (the 5 σ mark right of centre; its path starts at slide 8's pose), 10 ends at
+    `[4.8, 2.0, 120]` (the magnified tail right of the number).
+15. **The heap behind the axis** at `[-8.5, 0, -11]` (was −6), slides 3-4 at pitch 11, so the
+    pile reads as a source and not as masses on the axis; the cover pose moved with it
+    (`[-8.5, 1.8, -11]`), the same frame of the pile talk 1 closes on.
+16. **Slide 6** framed close on the tops (`[-8.9, 4.1, 0]`, dist 4.7: the rise from 1 844 out
+    of frame), a light-blue mean line (dk-curve `m6`, `@mean` of d0-flat.json) on arrival,
+    the ±38 lines (`m6u`, `m6d`) and `38 √N` on a click (`clicks: 1`). 1.2 min.
+17. **Slide 7**: the band light blue (`errors: { tone: 'crowd' }`), not near-white; one roll every
+    3 s (72 s); a timed crane at 12-16 s in to the tops (dist 4). 1.3 min.
+18. **Slides 11-12**: grains `alpha` 2.2, alarm white `selGain` 1.8, one roll every 2 s; the
+    toy's caption `mass MeV/c²` with ticks 1 500 / 1 600 / 1 700 (the toy's own GeV values
+    under MeV labels).
+19. **Slides 13, 14, 17 carry the background as a light-blue line** (dk-curves `bk` of `h`,
+    `bkf` of `hf`, both composed from d0-significance.json); slide 14 adds the white 5 σ
+    height for 186 rows (`b5f`, 5.236 a bin, typed until baked: notes/kit-requests.md) and
+    scales `hf` to its own height (`max: 10` at 186 rows, `lattice: false`); the click takes
+    both lines to the whole file's levels. Slide 13's window `selGain` 1.1.
+20. **Slide 16**: the held last frame dims to 40 % (`.hold-dim`, from 7.4 s) before the two
+    numbers. Slide 3's Message is the one step (two tracks make one number); momentum and
+    energy are an optional aside in its Caveats. Timing: 13.8 min + 13.0 s of clips = 14.0 min.
+21. **Motion fixes from the recorded takes (final:data2peak, 29 Oct).** Every slide's picture stands
+    within about 1-2.5 s of the cut and its numbers come after it. Cover: `ambient: [[0, 0]]` (black
+    from the first frame, not a 1 s ease from the ambient world) and the title fading in from about
+    1.5 s, once the pile stands. Slide 3: the vertex's `flightTime`/`landTime` 1.0 and the world at
+    1.6x for 3.2 s, so the grain lands by about 3 s; `1 880.6` at 3.2 s. Slide 7: the roll station's
+    centre 15 units behind its plot (the engine assembles a station at a timed path's last key: see
+    notes/kit-requests.md), whole columns from frame 0, the first re-draw at about 1.2 s, the crane in
+    at 8-12 s, the numbers at 1.5 and 2.5 s. Slide 11: a fast first fill, the expected line drawing at
+    about 1.2 s, grains `alpha` 1.7, the white bin `selGain` 1.3 and no white landing glow. Slide 12:
+    roll 2 standing within 1 s; on the click the new entries land light blue at `alpha` 0.9 (the alarm
+    bin alone white, `selGain` 1.4) and `1.1 σ` fades in 5.5 s after the click, as the count reaches
+    3 500 (a v-click line's delay now runs from its click). Slide 13: the band refill in 1.2 s, the
+    numbers at 1.5 and 2.5 s, the background line after them. Slide 14: the 186 rows land in under
+    1.5 s with both lines drawing after them; on the click the pour takes 2.4 s at `alpha` 0.38 with a
+    uniform landing rate, and the lines rise onto the window from 0.8 s (`after`), once the scale has settled. Clips: the γγ clip starts at the source's own
+    cut to the black event view (6.92 s, 4.4 s long, no cut inside it); the room clip is one shot
+    (42.68-46.76, the room from the front stairs), dimmed to 40 % over its last second inside the
+    clip, so the close's dust leaves from a dim frame (the CSS dim is gone); its numbers at 5.4 and
+    6 s. Timing: 13.8 min + 8.5 s of clips = 13.9 min.

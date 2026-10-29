@@ -19,25 +19,30 @@
 name    = "cern_video_2011_191_001_hgg.mp4"
 profile = "standard"
 used_in = ["deck"]
+trim    = ["6.92", ""]
 notes   = """\
-The Higgs part, slide a: one CMS H -> gamma gamma candidate (bible T2, "One event is also \
+The Higgs part, slide 15: one Higgs-like collision with two photons (bible T2, "One event is also \
 consistent with background"). https://videos.cern.ch/record/1406328, CERN-VIDEO-2011-191-001, \
 "LHC collision event at CMS showing two high energy photons (CMS Higgs search)", record date \
-2011-12-13, licence "CERN" (videos.cern.ch API; no on-screen credit). The whole 11.32 s, \
-untrimmed: 0-2.5 s fly-in through the red ECAL barrel, 2.5-6.5 s down the beam line as the \
-tracks and the two orange photon towers light up, 6.9-11.3 s the calorimeters fade and the \
-display turns end-on with the two photons and the hadronic hits. Kept from the source: the \
-event label at top right (CMS Experiment at the LHC, CERN; Sat 2011-Apr-23 06:05:17 CET; \
-Run 163302 Event 27907479; 7.00 TeV; H>GammaGamma candidate; CMS logo) and the FROG \
-event-display logo at bottom left; both sit in every frame, so no cut avoids them. Silent \
-(no audio stream; three data tracks). Raw: the record's 1080p.mp4 (H.264 1920x1080 25 fps, \
-8.5 MB), saved under this name."""
+2011-12-13, licence "CERN" (videos.cern.ch API; no on-screen credit). The source (11.32 s): \
+0-5.5 s fly-in through the red calorimeter walls, 5.7-6.9 s the tracks and the two orange \
+photon towers light up, 6.9-11.3 s the calorimeters fade and the display turns end-on with \
+the two photons and the hadronic hits. The source burns in an event label at top right (run \
+and event number, decay channel) and an event-display logo at bottom left, which the owner's \
+decision of 29 Oct bans on screen. Raw (2026-10-29, fix:data2peak): the record's 1080p.mp4 \
+(H.264 1920x1080 25 fps, 8.5 MB), zoomed 1.25x about the collision point so both burn-ins \
+fall outside the frame, saved under this name: \
+ffmpeg -i 1080p.mp4 -map 0:v:0 -vf "crop=iw/1.25:ih/1.25:(iw-iw/1.25)*0.62:(ih-ih/1.25)*0.54,\
+scale=1920:1080:flags=lanczos" -c:v libx264 -preset slow -crf 12 -pix_fmt yuv420p -an. \
+The cut starts at 6.92 s, one frame after the source's own cut (6.88 s, ffmpeg signalstats: \
+luma 53 to 21) from the red calorimeter fly-through to the black-background event view with the \
+two orange photon towers: 4.40 s with no cut inside it (the motion review of 29 Oct measured a \
+one-frame jump of 38 luma at the old start of 5.7 s). Silent."""
 
 [[videos]]
 name    = "cern_video_2022_016_001_2012_room.mp4"
 profile = "standard"
 used_in = ["deck"]
-trim    = ["0:39.4", "0:46.76"]
 notes   = """\
 The Higgs part, slide c: the CERN main auditorium on 4 July 2012 (bible T2, with 5.0 sigma \
 and 5.9 sigma on screen). https://videos.cern.ch/record/2296228, CERN-VIDEO-2022-016-001, \
@@ -48,6 +53,14 @@ auditorium, 39.28-42.60 from the side with the speaker in red at the lectern, 42
 from the front stairs with a photographer, both people too small to read as interview faces. \
 It ends 0.08 s before the cut to the speaker's close-up (46.84). Avoided: the "4 July 2012" \
 title card (0-3.3), the summary slides with burnt-in text (15-38, 65-75), the close-ups and \
-interviews (47-51, 54 on). Source scene cuts by ffmpeg scdet. Raw: the record's 2160p.mp4 \
-(H.264 3840x2160 25 fps, AAC, 436 MB), saved under this name; its applause is kept in the \
-encode (the deck plays it muted)."""
+interviews (47-51, 54 on). Source scene cuts by ffmpeg scdet. The record's 2160p.mp4 (H.264 \
+3840x2160 25 fps, AAC, 436 MB) is kept as videos/src/cern_video_2022_016_001_2012_room.2160p.mp4. \
+Raw (2026-10-29, final:data2peak): one shot, 42.68-46.76 (4.08 s, the room from the front stairs, \
+applauding: the motion review measured +14 luma at the 42.60 camera cut), scaled to 1080p, and dimmed \
+to 40 % over its last second (3.0-4.0 s) so the held frame and the dust that carries it to the close \
+are already dim (a CSS dim was dropped on leave and the close opened with a flash): \
+ffmpeg -ss 42.68 -t 4.08 -i <2160p.mp4> -filter_complex "[0:v]scale=1920:1080:flags=lanczos,\
+format=yuv420p[v];color=c=black:s=1920x1080:r=25:d=4.08,format=rgba,colorchannelmixer=aa=0.6,\
+fade=t=in:st=3.0:d=1.0:alpha=1[k];[v][k]overlay=shortest=1:format=auto,format=yuv420p[o]" \
+-map "[o]" -map 0:a:0 -c:v libx264 -preset slow -crf 12 -c:a aac -b:a 192k. No trim. Its applause \
+is kept in the encode (the deck plays it muted)."""

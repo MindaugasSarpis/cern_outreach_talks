@@ -16,7 +16,7 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check ."
+    "stage:check": "slidev-stage-check . --types dk-hist,dk-heap,dk-trigger,dk-glow,dk-lineup,dk-ground,dk-spark,dk-vertex,dk-bell,dk-curve,dk-landscape,dk-scatter,dk-pipeline"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2"

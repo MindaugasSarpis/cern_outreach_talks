@@ -17,6 +17,40 @@
       "duration": 11.24,
       "poster": "cern_overview_short.mp4.poster.jpg",
       "lit": 0.0
+    },
+    "cern_video_2011_191_001_hgg.mp4": {
+      "file": "cern_video_2011_191_001_hgg.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 2,
+      "count": 2,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 4.4,
+      "poster": "cern_video_2011_191_001_hgg.mp4.poster.jpg",
+      "lit": 0.0
+    },
+    "cern_video_2022_016_001_2012_room.mp4": {
+      "file": "cern_video_2022_016_001_2012_room.mp4.jpg",
+      "tile": [
+        320,
+        180
+      ],
+      "cols": 2,
+      "count": 2,
+      "interval": 4.0,
+      "size": [
+        1920,
+        1080
+      ],
+      "duration": 4.096,
+      "poster": "cern_video_2022_016_001_2012_room.mp4.poster.jpg",
+      "lit": 0.0
     }
   }
 }
