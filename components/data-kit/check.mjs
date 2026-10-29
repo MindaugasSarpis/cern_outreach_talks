@@ -15,7 +15,9 @@
 //   without "enterable", are warnings;
 // - the owner's decision of 29 Oct (the decay is never named, no experiment internals):
 //   a dk-vertex with names, and a caption (`word`) or tick text naming the particles or
-//   IPχ², are warnings; `order` other than 'file', and a dims-2 `band`, are warnings.
+//   IPχ², are warnings; `order` other than 'file', and a dims-2 `band`, are warnings;
+// - the series look (bible §3: no talk overrides style.js): `tickPx` on any dk object is
+//   a warning (`tick-px`), and a dk-hist `by` other than 'n' a warning.
 // Errors exit 1.
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -24,6 +26,7 @@ import { fileURLToPath } from 'node:url';
 process.removeAllListeners('warning');   // index.js is ESM in a typeless package: Node warns on import
 const here = dirname(fileURLToPath(import.meta.url));
 const { DK_TYPES, DK_TYPE_LIST, MODULES } = await import('./index.js');
+const { LABEL } = await import('./style.js');
 
 const args = process.argv.slice(2);
 if (args.includes('--types')) { console.log(DK_TYPE_LIST); process.exit(0); }
@@ -111,7 +114,12 @@ for (const { st, o } of objects) {
   if (o.type === 'dk-hist' && o.over != null && !objects.some(({ o: h }) => h.type === 'dk-hist' && String(h.name) === String(o.over))) add('error', 'unknown-over', `${where}: over "${o.over}" names no dk-hist`);
   if (o.type === 'dk-hist' && o.order != null && o.order !== 'file') add('warning', 'hist-order', `${where}: order "${o.order}": only 'file' changes the fill order (the default is the heap's)`);
   if (o.type === 'dk-hist' && o.order === 'file' && (o.src || o.model)) add('warning', 'hist-order', `${where}: order 'file' applies to a rows source only (values), not to src or model`);
-  if (o.type === 'dk-heap' && o.oursFrom != null && !objects.some(({ o: f }) => String(f.name) === String(o.oursFrom))) add('error', 'unknown-ours-from', `${where}: oursFrom "${o.oursFrom}" names no object`);
+  if (o.type === 'dk-heap' && o.oursFrom != null) {
+    if (typeof o.oursFrom === 'object') { if (!Array.isArray(o.oursFrom.at) || o.oursFrom.at.length !== 3 || !o.oursFrom.at.every((v) => Number.isFinite(Number(v)))) add('error', 'bad-ours-from', `${where}: oursFrom { at } needs a point [x, y, z]`); }
+    else if (!objects.some(({ o: f }) => String(f.name) === String(o.oursFrom))) add('error', 'unknown-ours-from', `${where}: oursFrom "${o.oursFrom}" names no object`);
+  }
+  if (typeof o.type === 'string' && o.type.startsWith('dk-') && o.tickPx != null) add('warning', 'tick-px', `${where}: tickPx ${o.tickPx} overrides the series' LABEL.px (style.js, ${LABEL.px} px since 29 Oct); no talk overrides style.js (bible §3): drop it`);
+  if (o.type === 'dk-hist' && Array.isArray(o.steps) && o.steps.some((s) => s && typeof s === 'object' && s.by != null && s.by !== 'n')) add('warning', 'hist-by', `${where}: a step's \`by\` is ${JSON.stringify(o.steps.find((s) => s && s.by != null && s.by !== 'n').by)}; only 'n' (the selections by kept count, falling) is known`);
   if (o.type === 'dk-landscape' && o.band != null && Number(o.dims ?? 2) !== 1) add('warning', 'band-dims', `${where}: band is drawn on a dims-1 slice only`);
   if (o.type === 'dk-vertex' && (o.names === true || o.namePx != null || (Array.isArray(o.tracks) && o.tracks.some((t) => t && t.name != null)))) add('warning', 'vertex-names', `${where}: dk-vertex draws no names any more (the owner's decision, 29 Oct: the decay is never named); names, namePx and tracks[].name are ignored`);
   // captions and tick texts that name the decay or its quantities (the owner's decision)

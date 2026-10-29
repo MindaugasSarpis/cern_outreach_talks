@@ -25,10 +25,11 @@
 // - speed (6): the fronts' speed down the beam, in units a second (1.6 s to cross).
 // - after (0): seconds from step 1 to the first front (a collision's debris first).
 // - sharp (16): the front's thinness (the pulse's power).
-// - alpha (0.9), size (1.2), seed.
+// - alpha (0.9), size (1.2), seed. sparkle ('crowd'): the sparkle of hits in the crowd's
+//   light blue; 'sel' whitens it (the look before 29 Oct).
 //
-// Colours: the fronts and the merged glow are the crowd (light blue); only the sparkle
-// of hits is white. The detector under it should be in the palette too, not the
+// Colours: the fronts, the merged glow and its sparkle are the crowd (light blue): they
+// stand for every crossing, and white is "ours / kept". The detector under it should be in the palette too, not the
 // engine's lhcb PART_COLORS (royal and navy blues at the pipe, magnet, RICH and HCAL).
 // In classic, give the detector object
 //   "parts": { "preset": "lhcb", "velo": { "alpha": 0.25 }, "pipe": { "alpha": 0 },
@@ -65,6 +66,7 @@ const vert = (stage) => (VERT ??= stage.GRAIN_GLSL + /* glsl */ `
 attribute float aX, aSeed, aW;
 uniform float uT0, uHideT, uT2, uF0, uR, uV, uAlpha, uSize, uSharp;
 uniform vec3 uCrowd, uSel;
+uniform float uSparkSel;
 void main() {
   if (uT0 > 1e8 || aW <= 0.0) { hide(); return; }
   // a hide is quick (0.4 s), so the glow has gone before a camera leaving on the slide change is far
@@ -94,8 +96,9 @@ void main() {
   float spark = merged * step(0.992, hash(aSeed * 57.0 + floor(uTime * 6.0)));
   // a front is every crossing, the crowd: it stays light blue and is lifted by its
   // alpha, never whitened (white is the selected in the series grammar). Only the
-  // sparse sparkle of hits goes white.
-  vec3 col = mix(uCrowd, uSel, clamp(0.25 * pulse + 0.1 * merged + spark, 0.0, 1.0));
+  // sparse sparkle of hits stays the crowd's colour too (sparkle: 'sel' whitens it, the
+  // old look): it stands for every crossing's hits, and white is "ours / kept".
+  vec3 col = mix(uCrowd, uSel, clamp(0.25 * pulse + 0.1 * merged + spark * uSparkSel, 0.0, 1.0));
   // the merged glow is at least as bright as one front: forty million crossings, one glow
   float a = uAlpha * aW * mix(1.0, 0.55, head) * (1.4 * pulse + 0.95 * merged + 0.9 * spark) * fade;
   if (a <= 0.002) { hide(); return; }
@@ -114,7 +117,7 @@ function buildGlow(o, ctx, stage, kit) {
     uT0: { value: OFF }, uHideT: { value: OFF }, uT2: { value: OFF },
     uF0: { value: Number(o.f0 ?? 0.6) }, uR: { value: Number(o.rate ?? 0.55) }, uV: { value: Number(o.speed ?? 6) },
     uAlpha: { value: Number(o.alpha ?? 0.9) }, uSize: { value: Number(o.size ?? 1.2) }, uSharp: { value: Number(o.sharp ?? 16) },
-    uCrowd: { value: new Color(P.crowd) }, uSel: { value: new Color(P.sel) },
+    uCrowd: { value: new Color(P.crowd) }, uSel: { value: new Color(P.sel) }, uSparkSel: { value: o.sparkle === 'sel' ? 1 : 0 },
   });
   const u = mat.uniforms;
   let alive = true, geo = null, drawn = 0;

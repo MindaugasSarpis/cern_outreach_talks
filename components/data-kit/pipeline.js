@@ -39,7 +39,13 @@
 // api: value() = the sheet's rows written so far, scaled to the file's (n once it
 // stands); busy; outlet(k) → { from, fromSpread } in the station's frame, for a dk-hist
 // fed by stage k (default: the last code stage); box(k) → a stage's { at, size } in the
-// station's frame; scripts() → what each code stage draws; ready(); step().
+// station's frame; scripts() → what each code stage draws; ready(); step(); ours(out) →
+// our row's grain (world) on the newest stage that draws it: the sheet's row 1 (its first
+// value's middle grain) once the sheet stands, else the ball's grain, else null (so a
+// dk-spark `on` the pipeline follows it).
+// stageAlpha { "<step>": { "<stage, 1-based>": a } }: on that step those stages' grains
+// stand at a × their brightness (T5 slide 9: the two scripts at 0.5, the file and the plot
+// to the fore); stages not named, and steps not listed, stand at 1.
 import { Group, Vector3, Color } from 'three';
 import { GRAIN, OURS, OURS_ROW, SEED, roles } from './style.js';
 import { mulberry32 } from './rng.js';
@@ -143,6 +149,9 @@ function buildPipeline(o, ctx, stage, kit) {
   let ball = null, flat = null, flows = null, pulses = null;
   let ballN = 0, flatN = 0, flatStage = null, flatOrder = null, pileN = 0, pileT0 = -OFF, pileT1 = -OFF;
   let sheetK = -1, nFile = 91583, rowsT0 = OFF, rowsDur = 0;
+  let oursFlat = -1, oursBall = -1;
+  const stageA = o.stageAlpha && typeof o.stageAlpha === 'object' ? o.stageAlpha : {};
+  const alphaOf = (k, sk) => { const m = stageA[String(k)]; const a = m ? m[String(sk + 1)] : null; return a == null ? 1 : Math.max(0, Number(a)); };
   // the run's times: an event (eventLatch), cleared once the run has passed
   const runU = { uRun0: { value: OFF }, uRunEnd: { value: OFF }, uRunDur: { value: D }, uUpTo: { value: -1 } };
   const ev = stage.eventLatch(runU, { start: 'uRun0', hide: 'uRunEnd', fade: 0.05 });
@@ -203,7 +212,10 @@ function buildPipeline(o, ctx, stage, kit) {
             const q = idx[c] >= 0 ? rank[c](tab.data[fr * wTab + idx[c]]) : NaN;
             if (!Number.isFinite(q)) continue;      // a missing value: its cell stays dark
             const b = 0.1 + 0.9 * q;      // a wide range: neighbouring rows differ at room size
-            for (let e = 0; e < cellN; e++) items.push({ k, x: xp + c * (cellW + colGap) + e * cp, y, z: G.at.z, b, row: r, build: sw(r, R), phase: sw(r, R) });
+            for (let e = 0; e < cellN; e++) {
+              if (fr === OURS_ROW && c === 0 && e === Math.floor(cellN / 2)) oursFlat = items.length;
+              items.push({ k, x: xp + c * (cellW + colGap) + e * cp, y, z: G.at.z, b, row: r, build: sw(r, R), phase: sw(r, R) });
+            }
           }
         }
       }
@@ -280,6 +292,7 @@ function buildPipeline(o, ctx, stage, kit) {
       }
       const ours = s.ours === false ? null : (s.ours ?? OURS_ROW);
       if (ours != null && ours < ballN) {
+        oursBall = ours;
         ball.home.set([c.x + 0.3 * r, c.y + 0.35 * r, c.z + 0.86 * r], 3 * ours);
         ball.Z[ours] = OURS / GRAIN; ball.sizes();
       }
@@ -328,7 +341,7 @@ function buildPipeline(o, ctx, stage, kit) {
   function flatTarget(k) {
     const n = shownStages(k);
     const vis = new Float32Array(flatN), white = new Float32Array(flatN);
-    for (let i = 0; i < flatN; i++) vis[i] = flatStage[i] < n ? flat.bright[i] : 0;
+    for (let i = 0; i < flatN; i++) vis[i] = flatStage[i] < n ? flat.bright[i] * alphaOf(k, flatStage[i]) : 0;
     return { pos: flat.home, vis, white };
   }
   function ballTarget(k) {
@@ -469,6 +482,16 @@ function buildPipeline(o, ctx, stage, kit) {
       return { from: [b.at[0] + b.size[0] + 0.4, b.at[1] + b.size[1] / 2, b.at[2]], fromSpread: [0.3, b.size[1], 0.3] };
     },
     scripts: () => geo.filter((G) => G.script).map((G) => ({ ...G.script, lines: G.lines, cols: G.cols })),
+    ours(out = new Vector3()) {
+      if (!ready || cur === 0) return null;
+      const c = [0, 0, 0, 0, 0];
+      let hit = false;
+      if (flat && oursFlat >= 0 && shownStages(cur) > sheetK) { flat.sample(oursFlat, now, c); hit = c[3] > 0.01; }
+      if (!hit && ball && oursBall >= 0) { ball.sample(oursBall, now, c); hit = c[3] > 0.01; }
+      if (!hit) return null;
+      g.updateWorldMatrix(true, false);
+      return out.set(c[0], c[1], c[2]).applyMatrix4(g.matrixWorld);
+    },
   };
   kit.register(name, { type: TYPE, api });
 

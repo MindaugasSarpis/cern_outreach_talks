@@ -13,7 +13,7 @@
 // is a target state per grain, and stepping back and forth leaves no state behind.
 // See README.md for the fields and steps.
 import { Group, Vector3 } from 'three';
-import { GRAIN, OURS, OURS_ROW, SEED, LABEL, roles, fmt } from './style.js';
+import { GRAIN, OURS, OURS_ROW, SEED, LABEL, MASS, roles, fmt } from './style.js';
 import { mulberry32, gauss, order as seriesOrder } from './rng.js';
 import { fixedLabel, shade, niceTicks } from './label.js';
 import { createMorph, staticGrains, OFF, MOTION } from './morph.js';
@@ -34,7 +34,9 @@ export const D0 = {
   y: { col: 'TAU', log: true, range: [Math.log10(0.08), Math.log10(50)] },
   where: [['TAU', '>', 0]],
   label: [['M', '>', 1845], ['M', '<', 1885]],
-  depth: { col: 'M', range: [1810, 1920], size: 9, squeeze: 0.04 },
+  // the series' mass range (style.js MASS, 1 816-1 912: the owner's decision of 29 Oct);
+  // rows outside it fade out of the open depth instead of piling onto its two ends
+  depth: { col: 'M', range: [MASS.lo, MASS.hi], size: 9, squeeze: 0.04 },
   score: { file: 'train-d0.json', net: 'twoInputs', inputs: [['IPCHI2', 1], ['TAU', 0.001]] },
 };
 // the course's JSON point sets (train-perceptron.json, train-ring.json):
@@ -245,7 +247,7 @@ function buildScatter(o, ctx, stage, kit) {
   let want = sel.step ?? 0, cur = 0, shown = null, playedAt = -OFF;
   // data: kept rows k, their raw axis values, display values, labels, roles
   let rawX, rawY, uX, uY, lab, role = null, roleNames = [], rowCol = null, srcJSON = null;
-  let ax, ay, W, H, xOf, yOf, depthCfg = null, depthVal = null;
+  let ax, ay, W, H, xOf, yOf, depthCfg = null, depthVal = null, sideK = 1;
   // grains
   let N = 0, rowOf, grainOf, morph = null, baseVis, sideVis = null, fillRank, jz, oursG = -1;
   let counted = new Uint8Array(0), arrTimes = new Float64Array(0), leaveTimes = new Float64Array(0), baseCount = 0;
@@ -260,6 +262,7 @@ function buildScatter(o, ctx, stage, kit) {
   let epochNow = 0, version = 0, readCache = null;
   let scoreFn = null;
   const lineAlpha = Number(o.lineAlpha ?? 1.1);
+  let dustHold = 0, dustGain = 1;
   let frame = null, depthShow = 0, depthWant = 0, near = 1, far = 1;
   let depthNext = 0, depthAt = -1;                      // a step's `after`: the depth changes then
   let tipWait = null;                                   // a {tip} waiting for its hist to stand and let go
@@ -340,7 +343,11 @@ function buildScatter(o, ctx, stage, kit) {
     // the leak axis: a third column across the depth
     const dc = o.depth === false ? null : (o.depth && typeof o.depth === 'object' ? { ...(pre.depth || {}), ...o.depth } : pre.depth || null);
     if (dc && col(dc.col)) {
-      depthCfg = { col: dc.col, range: dc.range, size: Number(dc.size ?? 9), ticks: dc.ticks ?? null, side: dc.side ?? 'right', reverse: !!dc.reverse, squeeze: Number(dc.squeeze ?? 1), crowd: dc.crowd };
+      depthCfg = { col: dc.col, range: dc.range, size: Number(dc.size ?? 9), ticks: dc.ticks ?? null, side: dc.side ?? 'right', reverse: !!dc.reverse, squeeze: Number(dc.squeeze ?? 1), crowd: dc.crowd,
+        // ticks centred under their value (`align: 'side'`: beside the axis line, the old look);
+        // `word`: one caption after the axis's end, as a hist's; `clip: false` keeps rows outside
+        // the range (clamped onto its ends) instead of fading them out as the depth opens
+        align: dc.align ?? 'center', word: dc.word ?? null, clip: dc.clip !== false };
       const c = col(dc.col);
       depthVal = new Float32Array(m);
       for (let k = 0; k < m; k++) depthVal[k] = c[keep[k]];
@@ -525,8 +532,19 @@ function buildScatter(o, ctx, stage, kit) {
       dax.touch(); plot.add(dax.points);
       for (const v of depthCfg.ticks || []) {
         const [val, text] = Array.isArray(v) ? v : [v, fmt(v, decs(v))];
-        const l = fixedLabel(stage, String(text), { px, color: P.tick, align: depthCfg.side === 'left' ? 'right' : 'left', hang: 0.5 });
-        l.position.set(xd + (depthCfg.side === 'left' ? -1 : 1) * 0.015 * W, y0, zOf(val)); addLabel(l, depthLabels);
+        if (depthCfg.align === 'side') {
+          const l = fixedLabel(stage, String(text), { px, color: P.tick, align: depthCfg.side === 'left' ? 'right' : 'left', hang: 0.5 });
+          l.position.set(xd + (depthCfg.side === 'left' ? -1 : 1) * 0.015 * W, y0, zOf(val)); addLabel(l, depthLabels);
+        } else {
+          // centred under its value on the axis line (seen side on, the depth runs across the screen)
+          const l = fixedLabel(stage, String(text), { px, color: P.tick, align: 'center', hang: 0.5 });
+          l.position.set(xd, y0 - 0.04 * H, zOf(val)); addLabel(l, depthLabels);
+        }
+      }
+      if (depthCfg.word) {
+        // under the tick row, ending at the axis's high-mass end (mass runs right, seen side on)
+        const l = fixedLabel(stage, String(depthCfg.word), { px: LABEL.captionPx, color: P.name, align: 'right', hang: 1.75 });
+        l.position.set(xd, y0 - 0.04 * H, zOf(depthCfg.range[1])); addLabel(l, depthLabels);
       }
     }
     frame = { axis, marks, dax, show: 0 };
@@ -634,7 +652,11 @@ function buildScatter(o, ctx, stage, kit) {
       // thinned by the crowd's density around them (× whiteVis; above 1 they bloom)
       if (white[i] && whiteVis != null) vis[i] = Math.max(vis[i], 1) * whiteVis;
       // open, the plane's thickness goes, so a band's edge in mass stays sharp from the side
-      if (dOpen) pos[3 * i + 2] = (1 - dOpen) * jz[i] + dOpen * zOf(depthVal[k]);
+      if (dOpen) {
+        pos[3 * i + 2] = (1 - dOpen) * jz[i] + dOpen * zOf(depthVal[k]);
+        // a row outside the depth's range fades out as it opens (it would stand clamped on an end)
+        if (depthCfg.clip && (depthVal[k] < depthCfg.range[0] || depthVal[k] > depthCfg.range[1])) vis[i] *= 1 - dOpen;
+      }
     }
     return out;
   }
@@ -746,6 +768,9 @@ function buildScatter(o, ctx, stage, kit) {
     baseCount = base;
     morph.go(t, L, plan);
     counted = newCounted; playedAt = t;
+    // the landing glow's strength (`glow`, object or step: false or 0 lands held-out rows at
+    // their final size and brightness, T4 slide 8)
+    morph.u.uGlow.value = s?.glow === false ? 0 : Math.max(0, Number(s?.glow ?? o.glow ?? 1));
     setBoundary(s, prev, instant, fresh);
     depthNext = depthOf(s) > 0 ? 1 : 0;
     depthAt = now + (instant ? 0 : Math.max(0, Number(s?.after ?? 0)));
@@ -841,7 +866,13 @@ function buildScatter(o, ctx, stage, kit) {
     // `{box: null}` (any boundary that goes with none after it): the edge breaks into dust
     // where it stands, rising and spreading as it fades (1.6 s). `dust: false` fades it
     bDust = !instant && !!was && !bShowTo && o.dust !== false && s?.dust !== false;
-    if (bDust) bDur = 1.6;
+    // `dustTime` (s, 1.6), `dustHold` (0..1, 0: the share of it the dust keeps the edge's
+    // brightness before fading) and `dustAlpha` (× the line's alpha while it rises), object or step
+    if (bDust) {
+      bDur = Math.max(0.2, Number(s?.dustTime ?? o.dustTime ?? 1.6));
+      dustHold = Math.max(0, Math.min(0.9, Number(s?.dustHold ?? o.dustHold ?? 0)));
+      dustGain = Math.max(0, Number(s?.dustAlpha ?? o.dustAlpha ?? 1));
+    }
     // a boundary with none before it draws on along its length instead of fading in whole
     // (`{epoch: 1}` after the cut has gone: no glide from the cut). `draw: false` fades it in
     bDraw = !instant && !was && !!bShowTo && o.draw !== false && s?.draw !== false;
@@ -867,7 +898,7 @@ function buildScatter(o, ctx, stage, kit) {
     const to = bTarget();
     const e = ease((t - bT0) / bDur);
     const k = Math.max(0, Math.min(1, (t - bT0) / bDur));
-    bShow = bDust ? bShowFrom * Math.pow(1 - k, 1.5) : bDraw ? (t >= bT0 ? Math.min(1, (t - bT0) / 0.15) : 0) : bShowFrom + (bShowTo - bShowFrom) * e;
+    bShow = bDust ? bShowFrom * (k < dustHold ? 1 : Math.pow((1 - k) / (1 - dustHold), 1.5)) : bDraw ? (t >= bT0 ? Math.min(1, (t - bT0) / 0.15) : 0) : bShowFrom + (bShowTo - bShowFrom) * e;
     if (to) {
       const from = bFrom || to;   // appearing: it fades in where it stands (and follows a sweep)
       bCur ??= new Float32Array(2 * K);
@@ -895,7 +926,7 @@ function buildScatter(o, ctx, stage, kit) {
       // K grains along a line of length L overlap (grain width / spacing) deep: set each
       // grain's alpha so the chain reads as one grain's white, not a blooming bar
       const overlap = Math.max(1, (0.8 * GRAIN * 0.0746 * 0.6) / Math.max(1e-4, L / K));
-      bnd.u.uAlpha.value = lineAlpha * Math.min(1, Math.pow(1 / overlap, 1 / 2.2));
+      bnd.u.uAlpha.value = lineAlpha * Math.min(1, Math.pow(1 / overlap, 1 / 2.2)) * (bDust ? dustGain : 1);
     }
     if (bShow <= 0.001 && bShowTo === 0 && (!bDust || k >= 1)) { bCur = null; bDust = false; }
     // no boundary in the plane while the mass axis stands open (seen from the side it is a line through the bands)
@@ -1048,18 +1079,23 @@ function buildScatter(o, ctx, stage, kit) {
         // while still seen from the front, the plane collapsed into one white column of 91 k
         // stacked grains (lab 4 slides 9 and 10)
         let side = 1;
+        sideK = 1;
         if (camPos) {
           centre.set(0, H / 2, 0); plot.localToWorld(centre);
           camDir.copy(camPos).sub(centre).normalize();
           zAxis.setFromMatrixColumn(plot.matrixWorld, 2).normalize();
           const q = Math.max(0, Math.min(1, (1 - Math.abs(camDir.dot(zAxis)) - 0.1) / 0.75));
           side = q * q * (3 - 2 * q);
+          sideK = side;
         }
         const sx = 1 - depthShow * side * (1 - depthCfg.squeeze);
         if (plot.scale.x !== sx) { plot.scale.x = sx; for (const l of labels) l.position.x = l.userData.x0 * sx; }
       }
-      if (frame.dax) frame.dax.u.uShow.value = depthShow * frame.show * far;
-      shade(depthLabels, depthShow * frame.show * near);
+      // the depth's axis, ticks and caption stand only once the plane has turned side on (no
+      // line streaking across, no caption beside the flat cloud while the camera turns: T4 12, 13)
+      const sideShow = o.depthAxisWithCamera === false ? 1 : Math.max(0, Math.min(1, (sideK - 0.5) / 0.4));
+      if (frame.dax) frame.dax.u.uShow.value = depthShow * frame.show * far * sideShow;
+      shade(depthLabels, depthShow * frame.show * near * sideShow);
       drawBoundary(t);
     },
     dispose() {
