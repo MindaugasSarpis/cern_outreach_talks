@@ -343,7 +343,10 @@ theme: ../../theme
     def test_older_decks_and_opt_outs(self):
         self.assertEqual(codes(self.lint_at("2026_09_10_Old", self.DECK.format(extra="")), "TEXT"), [])
         self.assertEqual(codes(self.lint_at("2026_11_01_New", self.DECK.format(extra="onscreen: words\n")), "TEXT"), [])
-        self.assertEqual(len(codes(self.lint_at("2026_09_10_Old", self.DECK.format(extra="onscreen: numbers\n")), "TEXT")), 2)
+        opted_in = codes(self.lint_at("2026_09_10_Old", self.DECK.format(extra="onscreen: numbers\n")), "TEXT")
+        self.assertEqual([f.slide for f in opted_in], [3])                     # the cover keeps its title
+        explicit = codes(self.lint_at("2026_11_01_New", self.DECK.format(extra="onscreen: numbers\n")), "TEXT")
+        self.assertEqual([f.slide for f in explicit], [3])                     # as without the line
 
     def test_a_slide_of_its_own(self):
         """An owner-granted title or „Ačiū“ keeps its words: `onscreen: words` in the slide's frontmatter."""
