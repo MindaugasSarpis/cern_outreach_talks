@@ -50,9 +50,21 @@ Drive.
 
 ## Arc
 
-One line per slide: what it shows, what is said, how long.
+One line per slide: what it shows, what is said, how long. From `notes/outline.md`
+(revised 2026-10-29, revise:data5open): 12 slides, 13.8 min plus 12 s of clip = 14.0.
 
-1. Cover:
+1. Cover: T4's ball of 91 583 grains already standing and turning, plain title "Open data"; the whole series came out of one open file, so can anyone redo its plot? (0.5)
+2. The series' plot: the D⁰ histogram fills out of the ball and T3's curve draws on, μ 1 864.47 MeV/c²; recap (a D⁰ candidate is a kaon-pion pair, its mass one grain) and everything shown is code applied to this file. (1.25)
+3. Delete it: the plot goes to dust and the ball stays, 1 289 541 B and checksum 2ebf133a; record 401 is fixed by DOI, CC0, and a checksum proves you hold the same bytes. (1.0)
+4. Clip: the CERN Data Centre, 12 s, no labels; open files are kept and served by data centres. (12 s)
+5. How much is open: one 1 TB sphere, then one pile of 800 TB (Run 1) that grows in place to 4 PB (Runs 1 and 2); LHCb opens half a campaign after 5 years and all of it after 10. (1.2)
+6. The file, the script, the sheet: the converter types in as real line shapes and the sheet fills, 91 583 rows; the first program makes the table (its course script is not public: a gap, in the notes). (1.0)
+7. First pass: the whole pipeline runs and rebuilds the deleted plot in light blue, 91 583 candidates; the file and two scripts put the plot back, and the fit has no randomness. (1.0)
+8. Second pass (hero): the rerun lands white grain for grain on the first, the curve draws on, μ 1 864.47 and hash d2ec0d08 on both passes; same grain, same bin, same hash, but on another machine only with the same package versions ("it works on my laptop"). (1.75)
+9. 120 reasonable choices: one histogram refills through the 120 selections (pT, IPχ², decay time), count 91 534 down to 2 803; each choice keeps a different sample. (1.75)
+10. The 120 peaks: one grain per selection's fitted peak on a 0.025 MeV/c² scale, spread 0.44 against stat. error 0.10; each choice gives a slightly different peak, so a choice made after looking could land it anywhere in that range. (1.6)
+11. Fix it before looking: the histogram refills once with selection 0 and holds, 1 selection; decide before looking, as a blind analysis does. (0.75)
+12. Close (recorded plate): a ~42 s crane from the held plot past the ball and the heap, where our packet fades, then through the gates to a crossing in LHCb at T1's cover landing, 91 583 then 1; the file makes table, code and plot redoable, but what the trigger dropped is gone and row 1's own crossing cannot be found ("a crossing, not row 1's"). (2.0)
 
 ## Figures
 
