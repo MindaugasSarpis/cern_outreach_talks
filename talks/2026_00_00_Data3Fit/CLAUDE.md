@@ -50,9 +50,23 @@ Drive.
 
 ## Arc
 
-One line per slide: what it shows, what is said, how long.
+One line per slide: what it shows, what is said, how long. Full plan:
+`notes/outline.md` (2026-10-29, revised from the critique). 14.4 min + 12 s clip = 14.6 min.
 
-1. Cover:
+1. Cover: T2's last frame (the D⁰ heap, our grain haloed), a line of grains draws across the peak under the title "Fitting"; "today we draw a line through this peak and measure it" (0.5).
+2. Means disagree: a lit window narrows three times, then shifts onto the fitted centre, mean 1 864.71 → 1 864.79 → 1 864.81 → 1 864.42 against PDG 1 864.84; a window's mean depends on its width and place, so it is not the mass (1.5).
+3. A model: start values: Gaussian on a line at eyeballed knobs with its pull row; a pull is one bin's miss in √N units, χ² adds them squared (372, gated) (1.5).
+4. A model: the fit: the curve glides through the logged steps onto the peak, pulls lose their pattern; μ 1 864.47, width 7.65, χ² 53.4 / 40, near the degrees of freedom as it should be (2.0).
+5. The valley: the bowl: the plot tilts back and the χ²(μ, width) bowl gathers under it, the ball rolls to the bottom, the Δχ² = 1 ring lights; the fit is the bottom of a valley (1.5).
+6. The valley: the slice: one cut along μ, the Δχ² = 1 bar from 1 864.38 to 1 864.57; the error ± 0.10 is how wide the valley is 1 above its bottom (1.0).
+7. Off by 0.37: the same slice drawn to Δχ² 20 with PDG's ± 0.04 band high on the wall; Δχ² 14.5 is 3.8 of our errors, with PDG's added in quadrature 3.5 σ (1.0).
+8. Off by 0.37: a scale: every grain slides by 0.02 %, the curve's summit glides from 1 864.47 onto 1 864.84; a 0.026 % momentum calibration closes the gap, LHCb's is 0.03 %, so value ± stat ± syst (1.0; gated on its `{shift}` burst strip).
+9. How long it lives: clip of the VELO going in (CDS 2295935); it sees where a D⁰ was made and where it decayed (12 s).
+10. Decay times, a few: the empty decay-time axis (decay time = flight over speed, τ 0.41 ps, cτ 123 µm), then 2 000 candidates and the sideband subtraction; three in four sideband grains take a window grain with them (1.3).
+11. Decay times, all: all candidates subtracted, an exponential from 0.5 ps; τ 0.509 ps against PDG 0.410, it lives too long (0.6).
+12. Decay times, cut: IPχ² < 9 lifts grains at every time, most from the tail, the slope steepens; D⁰s from B decays fake a long life, τ 0.421 ± 0.005 ps (1.2).
+13. Which are D⁰s: the peak whitens by P(signal), our grain's core turns light blue; its signal share is 0.144, 16.2 MeV/c² off centre (0.8).
+14. Close: pull back to the whitened peak with its curve (T4's cover pose); 20 993 signal, and next time a machine draws the line (0.5).
 
 ## Figures
 

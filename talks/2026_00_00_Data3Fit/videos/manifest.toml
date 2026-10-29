@@ -14,3 +14,20 @@
 # profile = "standard"
 # used_in = ["deck"]
 # notes   = "What this clip is and where it came from."
+
+[[videos]]
+name    = "lhcb_velo_installation_cut.mp4"
+profile = "standard"
+used_in = ["deck"]
+trim    = ["0:20.4", "0:32.4"]
+notes   = """LHCb VELO installation, CERN-FOOTAGE-2022-031-001, https://videos.cern.ch/record/2295935
+(dated 2022-05-20, 1:35, master 7680x4320; raw is the record's 2160p.mp4 subformat). Licence "CERN"
+on the record (http://copyright.web.cern.ch), CERN's own footage, no on-screen credit.
+Cut 0:20.4-0:32.4 (12.0 s), for "How long it lives" (bible section 5, the clip before the decay-time
+re-sort): the first VELO half being lowered into the LHCb cavern. It starts on a shot change and
+ends before the cut to the cavern floor (scdet cuts at 0:20.32, 0:24.2, 0:29.76, 0:33.4).
+0-3.8 s the half hangs from the surface-hall crane and lifts; 3.8-9.4 s seen through the shaft
+fence, far below; 9.4-12 s from the shaft rim, the half on the hook sinking into the dark shaft
+(a slow fall into the pit, good under a path cut down to the 123 um scale). No titles, captions
+or logos; the few people are distant, masked and small. The insertion shots (1:07-1:35) were
+passed over: helmeted heads and faces fill the frame, and the cryostat carries a logo."""
