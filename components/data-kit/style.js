@@ -32,8 +32,11 @@ export const TICK_MASS = 20;
 
 // ---- labels ---------------------------------------------------------------------
 // Tick numbers and the one axis caption: fixed-size world labels (label.js). px is
-// the font size on a 1080-high frame; 18 is the floor no label goes under.
-export const LABEL = { px: 24, minPx: 18, captionPx: 24 };
+// the font size on a 1080-high frame. The house floor is 18 px on the 980-wide canvas
+// (docs/talk-quality.md §9), whose 16:9 frame is 551 high: 18 × 1080 / 551 = 35.3, so 36
+// on a 1080 frame is the floor no label goes under, and the size every tick takes (29 Oct,
+// the series check: 24 drew 12 px ticks, and T3/T4 set `tickPx: 36` on their own).
+export const LABEL = { px: 36, minPx: 36, captionPx: 36 };
 
 // ---- colour roles over the palette ------------------------------------------------
 // crowd: every candidate, background, the unselected. sel: kept, signal, inside the

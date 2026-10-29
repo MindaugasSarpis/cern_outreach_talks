@@ -14,7 +14,9 @@
 // `oursFrom: '<form>'` (T1's close): in the rain, our grain does not fall from above
 // with the others: it starts where that form's api.ours() is (dk-trigger's folded
 // packet at the lane's end) and glides down on a bowed arc, `oursGlide` seconds (2.4),
-// landing last, on the summit.
+// landing last, on the summit. `oursFrom: { at: [x, y, z] }` starts it at a fixed point
+// instead, in the heap's station frame (`world: true`: world coordinates): a lane hidden
+// as the heap rains (T1 slide 14) then needs no stand-in form at the fold point.
 import { Group, Vector3 } from 'three';
 import { GRAIN, OURS, OURS_ROW, SEED, roles, alphaFor } from './style.js';
 import { mulberry32, order as seriesOrder } from './rng.js';
@@ -96,10 +98,15 @@ function buildHeap(o, ctx, stage, kit) {
     // our grain's start for the rain: the named form's api.ours() now, in the pile's frame
     let oursStart = null;
     if (k === 1 && fresh && !instant && o.oursFrom && ours != null && ours < N) {
-      const f = kit.form(String(o.oursFrom));
-      const p = f?.api?.ours?.(new Vector3());
+      let p = null;
+      if (typeof o.oursFrom === 'object' && Array.isArray(o.oursFrom.at)) {
+        p = new Vector3(...o.oursFrom.at.map(Number));
+        if (!o.oursFrom.world && g.parent) { g.parent.updateWorldMatrix(true, false); g.parent.localToWorld(p); }
+      } else p = kit.form(String(o.oursFrom))?.api?.ours?.(new Vector3()) ?? null;
       if (p) { g.updateWorldMatrix(true, false); oursStart = g.worldToLocal(p.clone()); }
     }
+    // the grains that land in this transition (counted by their arrival times, not in `base`)
+    const arriving = new Uint8Array(N);
     morph.go(t, L, (m) => {
       const { A, B, V, T, M, S } = m;
       for (let q = 0; q < N; q++) {
@@ -124,7 +131,7 @@ function buildHeap(o, ctx, stage, kit) {
             A[i3] = B[i3]; A[i3 + 1] = B[i3 + 1]; A[i3 + 2] = B[i3 + 2];
             M[i] = MOTION.GLIDE; T[i2] = (fresh ? 0.2 : 0.3) * r; T[i2 + 1] = 0.6;
           }
-          arr.push(t + T[i2] + T[i2 + 1]);
+          arr.push(t + T[i2] + T[i2 + 1]); arriving[i] = 1;
         } else if (v0 > 0.01 && v1 > 0.5) {
           const moved = Math.abs(A[i3] - B[i3]) + Math.abs(A[i3 + 1] - B[i3 + 1]) + Math.abs(A[i3 + 2] - B[i3 + 2]) > 1e-4;
           if (!moved && v0 > 0.99) continue;
@@ -141,7 +148,9 @@ function buildHeap(o, ctx, stage, kit) {
     arr.sort((a, b) => a - b);
     arrTimes = Float64Array.from(arr);
     base = 0;
-    if (k > 0) for (let i = 0; i < N; i++) if (morph.V[2 * i] > 0.5) base++;
+    // the grains already standing (our glided grain is shown at its start, V = 1, but it is
+    // still to land: counted once, by its arrival time; it was counted twice: 91 584)
+    if (k > 0) for (let i = 0; i < N; i++) if (morph.V[2 * i] > 0.5 && !arriving[i]) base++;
     cur = k; playedAt = t;
   }
   const request = (k) => { want = k; if (armed) return; if (k !== cur) transition(k, k < cur ? (k === 0 ? 'hide' : 'back') : 'fwd'); };
