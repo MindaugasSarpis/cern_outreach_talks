@@ -1,0 +1,55 @@
+{
+ "about": "Copied by components/data-kit/bake/sync.py; see components/data-kit/data/manifest.json.",
+ "files": {
+  "code-lines.json": {
+   "talks": [5],
+   "shape": "per script: path, bytes, sha256, lines, longest, runs",
+   "meaning": "the real line structure of the series' scripts (course root_to_csv.py, the kit's bake/d0.py) for dk-pipeline's code stage; no source text",
+   "by": "code.py"
+  },
+  "d0-fit.json": {
+   "talks": [2,3,4,5],
+   "shape": "object",
+   "meaning": "the mass fit: start values, logged iterations (dk-curve params), result, pulls, window stability, PDG gap in sigma, mass/momentum scale shift, row 1 P(signal)",
+   "by": "d0.py"
+  },
+  "d0-hist.json": {
+   "talks": [1,2,3,5],
+   "shape": "object",
+   "meaning": "2 MeV mass histograms over the full range (all, IPchi2 < 9, sum of P(signal)), the 45-bin fit range, row 1's bin",
+   "by": "d0.py"
+  },
+  "d0-peaks.f32": {
+   "talks": [5],
+   "shape": [120],
+   "dtype": "float32 LE",
+   "meaning": "fitted peak mu (MeV/c^2) of each of d0-select.json's selections in selection order (0 = no cut); for a dk-hist of the peaks with cols ['MU'], key 'MU'",
+   "by": "peaks.py"
+  },
+  "d0-select.json": {
+   "talks": [5],
+   "shape": "120 selections",
+   "meaning": "6 x 5 x 4 selections as cuts on d0.f32 columns (PT >, IPCHI2 <, TAU >) with the fitted peak of each",
+   "by": "d0.py"
+  },
+  "d0.f32": {
+   "talks": [1,2,3,4,5],
+   "shape": [91583,4],
+   "dtype": "float32 LE",
+   "meaning": "record 401 candidates in file order: M MeV/c2, PT MeV/c, TAU ps (NaN = missing), IPCHI2",
+   "by": "d0.py"
+  },
+  "d0.json": {
+   "talks": [1,2,3,4,5],
+   "shape": "object",
+   "meaning": "d0.f32's header: n, cols, units, row 1, value ranges, source block",
+   "by": "d0.py"
+  },
+  "portal.json": {
+   "talks": [5],
+   "shape": "object",
+   "meaning": "CERN Open Data portal record count (and by experiment / type / availability) with its date",
+   "by": "portal.py"
+  }
+ }
+}
