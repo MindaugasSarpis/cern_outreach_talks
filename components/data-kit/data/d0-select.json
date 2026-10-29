@@ -1609,6 +1609,21 @@
   "zPdg": 3.50070474
  },
  "spread": 0.435957618,
+ "counts": {
+  "0": 91534,
+  "119": 2803
+ },
+ "nearSel0": {
+  "about": "How many of the 120 fitted peaks lie within +-h of selection 0's (no cuts, TAU-missing rows dropped); selection 0 itself is counted. h = 0.10 (the rounded error), 0.0965 (the series fit's error, d0-fit.json), and selection 0's own muErr.",
+  "mu0": 1864.47449,
+  "muErr0": 0.0964450009,
+  "of": 120,
+  "within": {
+   "0.10": 69,
+   "0.0965": 65,
+   "muErr0": 65
+  }
+ },
  "source": {
   "title": "LHCb event file for real measurement",
   "url": "https://opendata.cern.ch/record/401",

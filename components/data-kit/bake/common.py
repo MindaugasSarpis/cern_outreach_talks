@@ -203,3 +203,39 @@ def emit(script: str, outputs: dict[str, bytes], entries: dict, check: bool) -> 
 
 def done(code: int) -> None:
     sys.exit(code)
+
+
+# ------------------------------------------------- the kit's seeded order (rng.js)
+# A port of components/data-kit/rng.js, so a bake can say what a builder draws in
+# the series' own order (dk-hist fills a rows source in the reverse of order(n, 401,
+# row 0)). Checked against rng.js under node on 2026-10-29: the same ranks and draws.
+_M32 = 0xFFFFFFFF
+
+
+def mulberry32(seed: int):
+    """rng.js mulberry32: a generator of floats in [0, 1), bit for bit as the JS one."""
+    a = (int(seed) & _M32) or 0x9E3779B9
+
+    def nxt() -> float:
+        nonlocal a
+        a = (a + 0x6D2B79F5) & _M32
+        t = ((a ^ (a >> 15)) * (1 | a)) & _M32
+        t = ((t + (((t ^ (t >> 7)) * (61 | t)) & _M32)) & _M32) ^ t
+        return ((t ^ (t >> 14)) & _M32) / 4294967296.0
+    return nxt
+
+
+def series_order(n: int, seed: int, ours: int | None = 0) -> np.ndarray:
+    """rng.js order(n, seed, ours): rank[row] of a seeded Fisher-Yates shuffle, ours last."""
+    rnd = mulberry32(seed)
+    perm = list(range(n))
+    for i in range(n - 1, 0, -1):
+        j = int(math.floor(rnd() * (i + 1)))
+        perm[i], perm[j] = perm[j], perm[i]
+    rank = np.empty(n, np.int64)
+    rank[np.asarray(perm)] = np.arange(n)
+    if ours is not None and 0 <= ours < n:
+        r = rank[ours]
+        rank[rank > r] -= 1
+        rank[ours] = n - 1
+    return rank

@@ -1,0 +1,30 @@
+{
+ "about": "Checks on the bake itself. fitStart: chi2 at the fit's start values. rerun: d0.py runs bake() twice from scratch in one process and refuses to write unless every output is byte-identical; sha256 is d0-fit.json's digest from each pass. `d0.py --check`, run later as its own process, recomputes it and fails on any difference. The digest holds for this file, code and package versions (numpy, scipy, Python): notes/bake.md names the versions it was made with.",
+ "fitStart": {
+  "about": "chi2 of the 45-bin fit at the start values read off the histogram (d0-fit.json iterations[0]); curveReadout recomputes it as dk-curve's live readout does (sum of pulls squared, model at the bin centre x 2 MeV).",
+  "p": [21121.5295,1863.0,7.16184703,1392.9,0.0],
+  "chi2": 371.523288,
+  "curveReadout": 371.523288,
+  "chi2End": 53.3632464
+ },
+ "rerun": {
+  "file": "d0-fit.json",
+  "bytes": 7331,
+  "passes": 2,
+  "sha256": ["d2ec0d089945513b30b4358d4e7dcc872c714fa238952173955037609c268abf","d2ec0d089945513b30b4358d4e7dcc872c714fa238952173955037609c268abf"],
+  "same": true,
+  "short": "d2ec0d08"
+ },
+ "source": {
+  "title": "LHCb event file for real measurement",
+  "url": "https://opendata.cern.ch/record/401",
+  "doi": "10.7483/OPENDATA.LHCb.E7EJ.JUWR",
+  "record": 401,
+  "file": "MasterclassData.root",
+  "fileBytes": 1289541,
+  "checksum": "sha256:8694a2ed518472b02994629154de3077fdff4aef1065691fa13ae9f6b23b039b (adler32:2ebf133a as the portal lists it)",
+  "licence": "CC0-1.0 (record page; the portal API record carries no licence field)",
+  "retrieved": "2026-10-29",
+  "note": "Read through the course's D0_KPi.csv (sha256 25c3c97299ea844f27308fde20a00ecaa87580868f3c767d7ade5621c1505136, 3 926 142 B), the four filled branches D0_MM, D0_PT, D0_TAU, D0_MINIPCHI2 of DecayTree, 91 583 entries; checked equal to the ROOT file value for value on 2026-10-29. Rows are D0 candidates: the portal's 53 948 counts events. runNumber, eventNumber and GpsTime are zero in the file, so the data-taking year cannot be read from it."
+ }
+}

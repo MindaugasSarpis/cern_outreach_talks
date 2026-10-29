@@ -20,9 +20,11 @@ export const OURS_ROW = 0;
 // plane y = FLOOR_Y in a station's frame, mass running to +x.
 export const FLOOR_Y = 0;
 // The mass axis: world units per MeV/c², the series' range and bin. A dk-hist on
-// mass (no `width` of its own) is drawn at this scale, so every D⁰ plot in every
-// talk has the same peak in the same place and the same size.
-export const MASS = { scale: 0.25, lo: 1810, hi: 1920, bin: 2 };
+// mass (no `width` of its own) is drawn at this scale, so every peak plot in every
+// talk has the same peak in the same place and the same size. The range is 1 816-1 912
+// (the owner's decision, 29 Oct): record 401's stripping window (about 1 813-1 915)
+// leaves the outer bins of 1 810-1 920 half empty, and they read as dips. 48 bins of 2.
+export const MASS = { scale: 0.25, lo: 1816, hi: 1912, bin: 2 };
 // A histogram's height in world units, unless an object gives `height`.
 export const HEIGHT = 11;
 // The tick spacing on the mass axis (MeV/c²); other axes take `ticks` or a nice step.
