@@ -50,9 +50,27 @@ Drive.
 
 ## Arc
 
-One line per slide: what it shows, what is said, how long.
+One line per slide: what it shows, what is said, how long. The full outline, with poses,
+steps, caveats and fact ids, is `notes/outline.md` (revised 2026-10-29; 14.0 min, no clips).
 
-1. Cover:
+1. Cover: T3's whitened D⁰ peak and its curve at T3's close pose, plain title "Machine learning"; last time the fit gave every candidate a signal share, today a machine learns to draw the line. 0.5 min
+2. Two numbers a candidate: the histogram tips into a 2D cloud, IPχ² against decay time (both log, raw ticks), 91 531 "plotted"; we sort by the other numbers because the mass is what we fit afterwards. 0.75 min
+3. A cut is a line: T3's IPχ² < 9 becomes a white edge, 53 194 "kept"; a cut is a boundary someone chose. 0.75 min
+4. One threshold: 200 simulated points in two clouds and the best cut on x₁, 177 of 200; one variable gets this far. 1.0 min
+5. One update: the edge dissolves, then the first line draws on, w₁ 0.259, w₂ 0.255, b 0; a neuron draws a line and scores each point 0 to 1, training starts at zero weights, and this first line (150 of 200) is worse than the cut. 1.0 min
+6. Training: the line sweeps through 1 000 epochs and settles, 185 of 200 against the cut's 177; the machine beats the hand cut. 1.25 min
+7. A loss: the loss bowl over (w₁, w₂), ball at the rim, 0.693 (needs the b-profiled bake, else dropped); the loss is the average −ln of the right answer's score, a number to make small. 1.0 min
+8. Down the valley: the ball rolls the logged path to the bottom, 0.162; each step moves the weights downhill, so training is a fit, like T3's χ² valley. 1.0 min
+9. Unseen points: the line retrained on 150 points judges 50 it never saw, 93.3 % train, 92.0 % test ± 3.8 %; a classifier is judged on points it did not train on. 1.0 min
+10. A ring: one class round the other, the best straight line gets 53.3 % of test points; no straight line separates them. 0.75 min
+11. A bent boundary: the line bends round the cloud, 95.0 %, 114 of 120; four neurons draw lines and a fifth combines them, which can close a ring. 0.5 min
+12. Real labels: record 401 coloured by the mass window, overlapping, guess 53.2 %, network 61.3 %; labels come from the mass, inputs from everything else, and the classes overlap. 0.75 min
+13. The leak: side on, the mass axis opens and the classes snap apart, 99.9 % "with mass"; feed the mass back in and the network just reads the label (music peak). 0.75 min
+14. Undo: the mass axis closes and the overlap returns, 61.3 % "network"; without the leak the honest number returns. 0.75 min
+15. Rare signal: 100 white grains among 99 900 light blue, 99.9 %; a classifier that never says yes is 99.9 % right, the second 99.9 % that means nothing. 0.5 min
+16. Precision: the cut lights 90 signal and 999 background, precision 8.3 %; finding most of the signal still keeps a set that is mostly background. 0.75 min
+17. The trigger decides first: T1's gate 1 fires and 29 of 30 packets burst, 1 in 30 "kept"; a trigger is a classifier that answers before anyone looks, and what it drops is gone. 0.5 min
+18. Close: the file: the kept lane folds into one turning ball of 91 583 "candidates", T5's cover pose; everything sorted today is one file, and next time we make the plot again from it. 0.5 min
 
 ## Figures
 
