@@ -50,9 +50,27 @@ Drive.
 
 ## Arc
 
-One line per slide: what it shows, what is said, how long.
+One line per slide: what it shows, what is said, how long. From
+`notes/outline.md` (revised 2026-10-29); 13.6 min of slides + 23 s of clips.
 
-1. Cover:
+1. Cover: T1's settled heap of 91 583 candidates, our grain's ring gathering on the summit, title "Counting"; last time the rows became this pile, today we count them (0.5 min).
+2. One decay alone: dk-vertex, a D⁰ flies and splits into K⁻ and π⁺ strands, no number; a charged track curves in the magnet, the less momentum the tighter, angles simulated (0.6 min).
+3. The landing: our grain lifts off the heap, decays, folds into one grain on the empty axis, `1 880.6 MeV/c²`; the bend gives momentum, calling them a kaon and a pion gives energies, together the pair's mass (0.6 min).
+4. The first 1 000: grains leap from the heap into 2 MeV bins as a dot plot, `1 000`; a histogram is counting (0.5 min).
+5. All 91 583: the rest pour in and the peak near 1 865 stands over a flat shoulder, `91 583`; no single grain could show it (0.8 min).
+6. Fourteen flat bins: close on the ragged shoulder tops, `1 461`, `38`; bins that should agree differ by about √N (1.0 min).
+7. Re-rolled: the same 14 bins at the same scale re-drawn 24 times inside ± √N lines, `24`, `2.6 %`; a count is one throw, about two in three land inside (1.5 min).
+8. The normal tail: 300 000 grains under the bell, the front to 1 σ then 3 σ, `300 000`, `405`; the re-rolled tops in units of 38 make this bell, σ, and the white share is the p-value (1.0 min).
+9. Five sigma, the hush: the front at 5 σ and nothing lights, `5 σ`, `0`; the discovery line, and p is not the chance the hypothesis is wrong (0.5 min).
+10. The empty tail: the tail drawn 54 times taller dies out before 5, `1 in 3 500 000`; rarer than eight sixes in a row (0.5 min).
+11. Twenty rolls of noise: a falling toy over its light-blue expected line, a white alarm bin wandering, `20`, `7`, `2.5 σ`; each roll looks in 30 places, 7 of 20 reach 2 σ, never the same bin (1.0 min).
+12. Grown to 3 500: roll 2's white bin sinks onto the rescaled line, `3 500`, `1.1 σ`; more data drowns a chance bump (the Θ⁺ at 4.6 σ, narrated) and a real one grows (the Higgs with 10× data) (1.0 min).
+13. Window and sidebands: the D⁰ histogram cut to three bands, our grain lifting with the dust from the gap, `41 090`, `21 077`; the sidebands count the background under the window (0.7 min).
+14. In file order: the three bands refill from empty, holding at 186, `186`, `5 σ`; the excess passes 5 σ and never falls back (0.8 min).
+15. One Higgs-like event: CERN's 11 s CMS γγ animation (CDS 1406328); what the Higgs boson is, and one event can still be background (11 s clip).
+16. The four-lepton count: record 5500's 102 four-lepton masses, the Z near 91, a light-blue expected level over 121-130 GeV, `12`, `4.7`; four leptons give one mass the same way, simulation expects 4.7 (1.5 min).
+17. Fourth of July 2012: the announcement footage (CDS 2296228), `5.0 σ` CMS, `5.9 σ` ATLAS; each experiment past 5 σ on its own (12 s clip + 0.3 min).
+18. Close: the full D⁰ histogram standing, a 5 σ line of grains across the window once, then the bare peak (T3's cover pose), no number; the takeaway, and next time where the peak stands (0.8 min).
 
 ## Figures
 

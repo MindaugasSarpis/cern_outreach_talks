@@ -14,3 +14,40 @@
 # profile = "standard"
 # used_in = ["deck"]
 # notes   = "What this clip is and where it came from."
+
+[[videos]]
+name    = "cern_video_2011_191_001_hgg.mp4"
+profile = "standard"
+used_in = ["deck"]
+notes   = """\
+The Higgs part, slide a: one CMS H -> gamma gamma candidate (bible T2, "One event is also \
+consistent with background"). https://videos.cern.ch/record/1406328, CERN-VIDEO-2011-191-001, \
+"LHC collision event at CMS showing two high energy photons (CMS Higgs search)", record date \
+2011-12-13, licence "CERN" (videos.cern.ch API; no on-screen credit). The whole 11.32 s, \
+untrimmed: 0-2.5 s fly-in through the red ECAL barrel, 2.5-6.5 s down the beam line as the \
+tracks and the two orange photon towers light up, 6.9-11.3 s the calorimeters fade and the \
+display turns end-on with the two photons and the hadronic hits. Kept from the source: the \
+event label at top right (CMS Experiment at the LHC, CERN; Sat 2011-Apr-23 06:05:17 CET; \
+Run 163302 Event 27907479; 7.00 TeV; H>GammaGamma candidate; CMS logo) and the FROG \
+event-display logo at bottom left; both sit in every frame, so no cut avoids them. Silent \
+(no audio stream; three data tracks). Raw: the record's 1080p.mp4 (H.264 1920x1080 25 fps, \
+8.5 MB), saved under this name."""
+
+[[videos]]
+name    = "cern_video_2022_016_001_2012_room.mp4"
+profile = "standard"
+used_in = ["deck"]
+trim    = ["0:39.4", "0:46.76"]
+notes   = """\
+The Higgs part, slide c: the CERN main auditorium on 4 July 2012 (bible T2, with 5.0 sigma \
+and 5.9 sigma on screen). https://videos.cern.ch/record/2296228, CERN-VIDEO-2022-016-001, \
+"VNR 10th Anniversary Higgs Boson Discovery" (6:32), record date 2022-06-29, licence "CERN" \
+(videos.cern.ch API; no on-screen credit). The cut is the room's applause right after the \
+ATLAS combined-excess slide (source 0:38, "5.0 sigma" local): two wide shots of the packed \
+auditorium, 39.28-42.60 from the side with the speaker in red at the lectern, 42.60-46.84 \
+from the front stairs with a photographer, both people too small to read as interview faces. \
+It ends 0.08 s before the cut to the speaker's close-up (46.84). Avoided: the "4 July 2012" \
+title card (0-3.3), the summary slides with burnt-in text (15-38, 65-75), the close-ups and \
+interviews (47-51, 54 on). Source scene cuts by ffmpeg scdet. Raw: the record's 2160p.mp4 \
+(H.264 3840x2160 25 fps, AAC, 436 MB), saved under this name; its applause is kept in the \
+encode (the deck plays it muted)."""
