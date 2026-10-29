@@ -1,122 +1,122 @@
 {
-  "hero": "hero",
+  "hero": "real",
   "stations": [
     {
-      "id": "hero",
-      "pos": [
-        -26,
-        0,
-        0
-      ],
-      "look": {
-        "target": [
-          -7.8,
-          0.4,
-          0
-        ],
-        "dist": 15,
-        "yaw": -22,
-        "pitch": 7,
-        "sway": 9
-      },
-      "gather": 3.6,
-      "pulse": 6,
+      "id": "real",
+      "pos": [0, 0, 0],
+      "look": { "target": [-6.2, 5.6, 0], "dist": 24.5, "yaw": 0, "pitch": 4, "sway": 1 },
+      "gather": 0.25,
+      "pulse": 30,
       "objects": [
-        {
-          "type": "constellation",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "radius": 3.1,
-          "nodeRadius": 0.72,
-          "nodes": [
-            {
-              "pos": [
-                1.2,
-                0.9,
-                0.3
-              ]
-            },
-            {
-              "pos": [
-                0.4,
-                -1.5,
-                -0.9
-              ],
-              "color": "#dfe6ee"
-            },
-            {
-              "pos": [
-                1.5,
-                -0.3,
-                -1.2
-              ]
-            },
-            {
-              "pos": [
-                -0.9,
-                1.3,
-                -1.0
-              ],
-              "color": "#dfe6ee"
-            },
-            {
-              "pos": [
-                -1.3,
-                -0.6,
-                0.6
-              ]
-            }
-          ]
-        }
+        { "type": "dk-hist", "name": "h", "pos": [0, 0, -14], "grains": 91583,
+          "values": "d0.f32", "key": "M", "word": "mass MeV/c²", "tickPx": 36,
+          "steps": [0, { "n": "all", "weights": "psig", "replay": false }, { "tip": "scatter" }] },
+        { "type": "dk-curve", "name": "fit", "of": "h", "pos": [0, 0, -14], "grains": 9000,
+          "src": "d0-fit.json", "pull": false, "draw": 0.1,
+          "steps": [0, { "set": "last" }] },
+        { "type": "dk-scatter", "name": "ev", "pos": [0, 0, 0], "grains": 95000, "src": "d0.f32",
+          "x": { "raw": true, "ticks": [[0.01, "0.01"], [1, "1"], [100, "100"], [10000, "10 000"]] },
+          "y": { "raw": true, "range": [-0.826, 1.699], "ticks": [[0.2, "0.2"], [0.5, "0.5"], [1, "1"], [2, "2"], [5, "5"], [10, "10"], [20, "20"], [50, "50 ps"]] },
+          "depth": { "ticks": [[1840, "1 845"], [1880, "1 885"], [1920, "mass MeV/c²"]], "size": 14 },
+          "lineAlpha": 1.8, "oursTone": "crowd", "readout": "count",
+          "steps": [0,
+            { "n": "all", "tip": "h", "color": "none" },
+            { "tip": null, "box": [[null, 0.9542], [null, null]], "color": "kept" },
+            { "box": null, "color": "truth" },
+            { "bend": true },
+            { "bend": null, "depth": 1 },
+            { "undo": true, "after": 1.2 },
+            { "bend": true }] },
+        { "type": "dk-scatter", "name": "evKept", "of": "ev", "readout": "kept", "pos": [0, 0, 0], "grains": 0 },
+        { "type": "dk-spark", "name": "ours", "pos": [0, 0, 0], "grains": 221, "color": "crowd",
+          "steps": [null, { "on": "ev", "color": "crowd" }] }
       ]
     },
     {
-      "id": "first",
-      "pos": [
-        8,
-        0,
-        0
-      ],
-      "look": {
-        "dist": 10,
-        "yaw": -24,
-        "pitch": 7
-      },
+      "id": "toy",
+      "pos": [100, 0, 0],
+      "look": { "target": [98.83, 1.6, 0], "dist": 6.8, "yaw": 0, "pitch": 4, "sway": 1 },
+      "gather": 0.25,
+      "pulse": 30,
       "objects": [
-        {
-          "type": "ring",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "radius": 3,
-          "thickness": 0.01,
-          "tilt": 80,
-          "spin": 0
-        },
-        {
-          "type": "orbs",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "items": [
-            {
-              "id": "here",
-              "pos": [
-                0,
-                0,
-                0
-              ],
-              "label": "start here"
-            }
-          ]
-        }
+        { "type": "dk-scatter", "name": "toy", "pos": [0, 0, 0], "grains": 2900, "src": "train-perceptron.json",
+          "range": [[-2.5, 5.5], [-2.5, 5.5]], "size": [4, 4], "alpha": 1.35, "word": "x₁", "wordY": "x₂",
+          "x": { "ticks": [-2, 0, 2, 4] }, "y": { "ticks": [-2, 0, 2, 4] }, "readout": "right", "fill": 0.5, "lead": 0,
+          "steps": [0,
+            { "n": "all", "color": "truth" },
+            { "box": [[1.386, null], [null, null]] },
+            { "box": null },
+            { "epoch": 1 },
+            { "epoch": 1000, "sweep": 6 },
+            { "epoch": null, "sweep": null, "line": "split", "show": "train" },
+            { "show": "all", "dim": "train", "gather": true }] },
+        { "type": "dk-scatter", "name": "w1", "of": "toy", "readout": "w1", "pos": [0, 0, 0], "grains": 0 },
+        { "type": "dk-scatter", "name": "w2", "of": "toy", "readout": "w2", "pos": [0, 0, 0], "grains": 0 },
+        { "type": "dk-scatter", "name": "b", "of": "toy", "readout": "b", "pos": [0, 0, 0], "grains": 0 },
+        { "type": "dk-scatter", "name": "toyTrain", "of": "toy", "readout": "accuracy:train", "pos": [0, 0, 0], "grains": 0 },
+        { "type": "dk-scatter", "name": "toyTest", "of": "toy", "readout": "accuracy:test", "pos": [0, 0, 0], "grains": 0 }
+      ]
+    },
+    {
+      "id": "valley",
+      "pos": [200, 0, 0],
+      "look": { "target": [196.6, -1.6, 1.4], "dist": 25.5, "yaw": 45, "pitch": 20, "sway": 0.5 },
+      "gather": 0.25,
+      "pulse": 30,
+      "objects": [
+        { "type": "dk-landscape", "name": "loss", "pos": [0, 0, 0], "grains": 40000, "src": "train-perceptron.json",
+          "key": "lossProfile", "readout": "path", "size": [12, 12], "height": 8,
+          "range": [[-0.2, 3.4], [-0.2, 3.4]], "zmax": 0.6,
+          "ticks": [0, 1, 2, 3], "yticks": [0, 1, 2], "roll": { "legs": 30 },
+          "steps": [0, {}, { "roll": true }] },
+        { "type": "label", "text": "w₁", "pos": [-0.3, -0.2, 7.6], "height": 0.62, "color": "#9fd8ff", "upper": false, "tracking": 0 },
+        { "type": "label", "text": "w₂", "pos": [7.6, -0.2, -0.3], "height": 0.62, "color": "#9fd8ff", "upper": false, "tracking": 0 }
+      ]
+    },
+    {
+      "id": "ring",
+      "pos": [300, 0, 0],
+      "look": { "target": [298.83, 1.0, 0], "dist": 8.2, "yaw": 0, "pitch": 4, "sway": 1 },
+      "gather": 0.25,
+      "pulse": 30,
+      "objects": [
+        { "type": "dk-scatter", "name": "ring", "pos": [0, 0, 0], "grains": 3300, "src": "train-ring.json",
+          "std": true, "axes": false, "range": [[-2.75, 2.75], [-2.75, 2.75]], "size": [4, 4], "alpha": 1.35, "roleDim": 0.3, "readout": "accuracy:test", "fill": 0.5, "lead": 0,
+          "steps": [0,
+            { "n": "all", "color": "truth", "line": "line", "show": "all", "dim": ["train", "validation"] },
+            { "line": null, "bend": true }] },
+        { "type": "dk-scatter", "name": "ringRight", "of": "ring", "readout": "right:test", "pos": [0, 0, 0], "grains": 0 }
+      ]
+    },
+    {
+      "id": "rare",
+      "pos": [400, 0, 0],
+      "look": { "target": [397, 5.8, 0], "dist": 18, "yaw": 0, "pitch": 4, "sway": 1 },
+      "gather": 0.25,
+      "pulse": 30,
+      "objects": [
+        { "type": "dk-scatter", "name": "rare", "pos": [0, 0, 0], "grains": 104000,
+          "rare": { "n": 100000, "signal": 100, "tp": 90, "fp": 999, "seed": 401 },
+          "size": [13, 12], "axes": false, "crowd": 24, "range": [[0.08, 0.96], [0.08, 0.96]], "readout": "kept",
+          "steps": [0, { "n": "all", "color": "truth", "fill": 0.8, "lead": 0 }, { "line": "cut", "lit": true }] },
+        { "type": "dk-scatter", "name": "rareSig", "of": "rare", "readout": "signalKept", "pos": [0, 0, 0], "grains": 0 },
+        { "type": "dk-scatter", "name": "rareBkg", "of": "rare", "readout": "bkgKept", "pos": [0, 0, 0], "grains": 0 },
+        { "type": "dk-scatter", "name": "rarePrec", "of": "rare", "readout": "precision", "pos": [0, 0, 0], "grains": 0 }
+      ]
+    },
+    {
+      "id": "gate",
+      "pos": [0, 0, -300],
+      "look": { "target": [30.1, -1.3, -0.6], "dist": 12, "yaw": -18, "pitch": 12, "sway": 0.4 },
+      "objects": [
+        { "type": "dk-trigger", "name": "trg", "pos": [0, 0, 0], "grains": 36500,
+          "from": 13, "to": 112, "lane": 0.7, "speed": 7, "packets": 1800, "per": 14, "empty": 0.25, "knot": 0.08,
+          "gates": [{ "x": 30, "keep": 0.0333, "ring": 4000 }, { "x": 66, "keep": 0.1, "shrink": 0.75, "step": 3 }],
+          "buffer": { "at": 49, "len": 12, "r": 4.5, "grains": 6000, "hold": 3, "spin": 0.08, "step": 3 },
+          "ours": false, "collapse": 4,
+          "ball": { "at": [118, 3.1, 0], "r": 2.8, "spin": 0.06, "buffer": true } },
+        { "type": "dk-pipeline", "name": "file", "pos": [0, 0, 0], "grains": 91583,
+          "stages": [{ "kind": "pile", "at": [118, 0, 0], "r": 2.8, "n": 91583, "spin": 0.06, "alpha": 0.6, "from": "trg" }] }
       ]
     }
   ]

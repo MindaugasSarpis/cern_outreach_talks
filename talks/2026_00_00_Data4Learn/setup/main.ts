@@ -1,8 +1,9 @@
-// The talk's own pieces join the stage here, before it boots. A form of the
-// talk's own: `import { registerBuilder } from 'slidev-addon-stage'`, then
-// registerBuilder(type, build, { fields: ['pos', ...] }); `pnpm talk check`
-// finds the type and validates the deck with it. A component:
-// app.component('Name', Component). (A plain function: Slidev's
-// defineAppSetup is the identity, and @slidev/types is not a dependency of
-// the talk.)
-export default ({ app }) => {}
+// Talk 4 of "Data analysis, the CERN way": the data kit's forms (components/data-kit,
+// reached through the talk's components symlink), given the engine from this talk's own
+// pinned slidev-addon-stage. The talk draws no collision, so no lhc-opening here.
+import * as stage from 'slidev-addon-stage'
+import { installDataKit } from '../components/data-kit/index.js'
+
+export default ({ app }) => {
+  installDataKit({ app, stage })
+}

@@ -1,5 +1,12 @@
 # Data4Learn: outline (talk 4 of "Data analysis, the CERN way")
 
+> **Read first (29 Oct 2026):** the slide specs below predate the owner's decisions of 29 Oct
+> and still use the old names (D⁰, IPχ², IPχ² < 9, record 401) and the outline's 18-slide
+> numbering. `deck.md` is authoritative: 17 slides, the peak never named ("the short-lived
+> particle's mass peak", "the quality cut", how far the track points from the collision),
+> and the poses, minutes and numbers as fixed after the fresh-eyes review (Decisions 12-21
+> at the end). Copy a picture spec from the deck's Picture lines, not from here.
+
 Outline step of the house pipeline (talk-quality §2, step 3). Written 2026-10-29 from the
 series bible §5 Talk 4 and the corrections at its top, the data-kit README (forms and steps
 as they work today), the prototype verdicts (`components/data-kit/notes/prototypes.md`),
@@ -565,3 +572,89 @@ leak), 16 (precision).
    past tense and "designed with" until then.
 10. T3: the cover copies T3's close pose with `sway` 1 and `steady` true. If T3 drops the
     sway instead, drop it here too; either way the two poses stay identical.
+
+## Decisions taken in the draft (29 Oct 2026, `draft:data4learn`)
+
+The deck follows this outline with the owner's decisions of 29 Oct (bible top block) on top.
+Each with its alternative.
+
+1. **Cuts between stations.** Slides 4, 7, 8, 9, 11, 14 and 16 of the deck enter their
+   station on a one-key `path` at t = 0, not the outline's flights. Inside a station the
+   camera still moves where the move is the picture: the cover's 6 s ease, slide 2's 3 s
+   rise with the tip, the side-on turn and back (slides 12-13, lab 4's three-key paths) and
+   the close's 7 s pull-back to T5's cover pose. Alternative: flights, as written above.
+2. **The peak unnamed.** No caption on the cloud's x axis (no "IPχ²", and "how far the track
+   points from the collision" is too long for a caption): raw ticks 0.01 to 10 000 only; y
+   keeps "20 ps" in its top tick. Every Message and Picture line is rewritten without the
+   particle's, the decay's or the record's names ("a short-lived particle's mass peak", "the
+   quality cut"); Sources keep the provenance. Alternative: a two-word caption such as
+   "track offset", which the owner has not seen.
+3. **No experiment internals.** Slide 16's notes say "the first filter" and "the second
+   filter", and drop the GPU count (`lhcb-hlt1-500-cards-89khz` is no longer cited).
+4. **Outline slide 7 dropped (drop order 2).** The b-profiled bake is in, but the kit draws
+   no ball standing at the path's start: at the gather step the ball is hidden and the
+   readout reads the minimum, 0.162 (first shots). The deck's slide 7 is a cut to the valley
+   that gathers, then rolls from 0.693 to 0.162, the count following the ball; 2.0 min, both
+   messages in its notes. Kit request 3 would bring the split back.
+5. **The cover has no dk-spark.** T3's close fades its ring (`ours: 0`), so the cut from T3
+   is seamless only without one; the ring comes in on slide 2, following the cloud's grain
+   of our row (`on: 'ev'`). The fitted curve draws on about 1.5 s after the plot stands
+   (dk-curve has no `replay: false`: kit request 1), under the title's rise.
+6. **Slide 5 does not say "150 of 200".** The amendment to `perceptron-course-worked` is not
+   filed (notes/facts-needed.md); the notes say only that training has to go on from the
+   first line. Slide 6's live count still starts at 150 as the sweep begins.
+7. **Fixed numbers where the form gives none:** 177 "cut" on slide 6, 0 for b on slide 5,
+   92.0 % test and ± 3.8 % on slide 8, 53.2 % guess and 61.3 % network on slides 11 and 13,
+   99.9 % on slides 12 and 14, 1 in 30 on slide 16. Every other number is a `<StageCount>`
+   reading its form.
+8. **The leak's depth range** stays dk-scatter's default 1 810-1 920 (kit request 2); only
+   the ticks 1 845 and 1 885 MeV/c² are drawn, so no range end shows.
+9. **The close** uses lab 4's proven gate (gate 2 at keep 0.1, shrink 0.75, and the buffer
+   from step 3; `ball.buffer: true`, so the ball reads) and cites
+   `lhcb-hlt2-keep-1-in-10-worked` for the second filter's keep.
+10. **No clips, no credits.** The talk's manifest lists no clip and the outline uses none; no
+    LHCb geometry is drawn, so the last slide carries no licence credit.
+11. **Open:** the lint flags the cover's title as TEXT. The headmatter's `onscreen: numbers`
+    (needed to turn the numbers-only rule on for a `2026_00` deck, bible §3) is read as
+    slide 1's own `onscreen`, which refuses the cover its title
+    (`scripts/talk_lint.py`, the `words_ok` line; `tests/test_lint.py`
+    `test_older_decks_and_opt_outs` expects that behaviour). The five data talks all meet
+    it; the fix belongs to the lint, not to a deck.
+
+## Decisions from the fresh-eyes review (29 Oct 2026, `fix:data4learn`)
+
+12. **The valley (deck slide 7)** is seen low along its floor from the trained end (yaw 45,
+    pitch 20, dist 25.5), over w from −0.2 to 3.4 with `zmax` 0.6 (loss heights above 0.76,
+    the negative-weight corner, are not drawn), so the walls rise left, right and behind the
+    ball. The bake's grid ends at 3.4, and past the minimum the loss rises only to about
+    0.18, so "ticks 0-4 so the far walls rise" was not possible; looking along the floor
+    gives the walls instead. Ticks 0-3 on the front edge, 0-2 on the right (one 3 at the near
+    corner), and the names w₁ and w₂ as two built-in world labels (kit request 5).
+    Alternative: T3's bowl angles (yaw −12, pitch 34), which read as a sloping sheet.
+13. **Minutes:** slide 7 2.0 → 1.5, slide 10 0.5 → 1.0 (the network is the talk's hardest
+    new idea), slide 16 0.5 → 0.75; total 14.25.
+14. **Toy and ring stations seen close:** plots 4 × 4 at dist 6.8 (toy) and 8.2 (ring), so a
+    grain draws about 1.3-1.5 times larger (the series grain size is unchanged); toy axes
+    named x₁ and x₂ (`word`, `wordY`); alpha 1.35. The ring shows all 600 points, the 480
+    training and validation points at 0.45 brightness, the 120 test points whole; its range
+    is ±2.75 and its frame sits higher, so the straight line ends nearer the data and above
+    the lower third (kit request 4 would clip it to the data).
+15. **Slide 8's errors** are said, not marked: dk-spark's ring is the series' marker for our
+    grain, and four more would blur it (kit request 7 asks for a separate mark).
+16. **The real plot's y axis** starts at the data's own 0.150 ps floor (range −0.826 to
+    1.699 in log10 ps) and closes with a 50 ps tick, so the network's boundary ends on the
+    axis instead of running through the empty corner below the cloud. Slide 2's Caveats now
+    explain the floor.
+17. **The leak's depth ticks** read "1 845" and "1 885", placed 5 MeV low so each
+    left-aligned label centres under its wall, and a third tick at the axis end carries
+    "mass MeV/c²" (kit request 6). The range stays the kit default (Decision 8, kit
+    request 2).
+18. **The gate (deck slide 16)** is framed close: dist 12, yaw −18, pitch 12, with the first
+    filter's ring in the middle of the frame and the lane above the number. Slide 17's path
+    starts from the same pose.
+19. **The cover title** stands in the empty top left (`justify-content: flex-start`,
+    padding-top 7.5 %), clear of the histogram's left flank; T3's close pose is unchanged.
+20. **`.nums` at bottom 190 px** (was 96): a three-line block ends above the lower third.
+    The other four talks should follow (series request in notes/kit-requests.md).
+21. **Slide 10** shows one number, 95.0 % test, against slide 9's 53.3 %; 114 of 120 moves
+    to the notes. Slide 15's Message names recall.

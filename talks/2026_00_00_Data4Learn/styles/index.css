@@ -1,0 +1,38 @@
+/* The series' number block (MasterTalk's .nums, in the bible's colours, §3 "Number type"):
+   a 46 px number, a 22 px unit or name, each line fading in at its --dN after the camera lands.
+   bottom 190 px: a three-line block ends above the lower third (canvas 551 high, lower third
+   from 367), which stays clear (talk-quality §3 rule 4; review of 29 Oct). */
+html[data-stage] .nums {
+  position: absolute; left: 56px; bottom: 190px; z-index: 30; pointer-events: none;
+  font-family: 'Space Grotesk', system-ui, sans-serif; color: #e8f6ff;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.6);
+}
+html[data-stage] .nums p { margin: 0 0 10px; line-height: 1; white-space: nowrap; opacity: 0; animation: dk-nums-in 1s ease forwards; }
+html[data-stage] .nums b { font-size: 46px; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: normal; }
+html[data-stage] .nums .unit,
+html[data-stage] .nums .name { font-size: 22px; font-weight: 500; letter-spacing: 0.04em; color: #9fd8ff; margin-left: 0.4em; }
+html[data-stage] .nums p:nth-child(1) { animation-delay: var(--d1, 2s); }
+html[data-stage] .nums p:nth-child(2) { animation-delay: var(--d2, 3.2s); }
+html[data-stage] .nums p:nth-child(3) { animation-delay: var(--d3, 4.4s); }
+@keyframes dk-nums-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* A number revealed by a click (a v-click <p>, or a v-click .nums block) rises at its --dN
+   counted from the click, not from the slide's opening: its own animation starts when Slidev
+   drops the hidden class, so the picture it scores lands first (motion review, slides 5, 8, 11, 16). */
+html[data-stage] .nums p.slidev-vclick-target:not(.slidev-vclick-hidden),
+html[data-stage] .nums.slidev-vclick-target:not(.slidev-vclick-hidden) p { animation-name: dk-nums-click; animation-fill-mode: both; }
+@keyframes dk-nums-click { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* The cover keeps one plain title, drawn at the title's size (the kit styles a lone h1 as a kicker).
+   It stands in the empty top left, above the histogram's left flank, so no letter lies over the bars. */
+html[data-stage] .slidev-layout.cover.dk-title { justify-content: flex-start !important; padding-top: 7.5% !important; }
+html[data-stage] .slidev-layout.cover.dk-title h1:first-of-type {
+  font-size: max(var(--stage-type-min, 0px), 66px * var(--stage-type-scale, 1)) !important;
+  font-weight: 700 !important; line-height: 0.98 !important; letter-spacing: -0.02em !important;
+  color: var(--stage-fg) !important; margin: 0 !important; max-width: 12ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-stage] .nums p,
+  html[data-stage] .nums p.slidev-vclick-target:not(.slidev-vclick-hidden),
+  html[data-stage] .nums.slidev-vclick-target:not(.slidev-vclick-hidden) p { animation: none; opacity: 1; }
+}
