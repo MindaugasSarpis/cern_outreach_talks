@@ -1,0 +1,62 @@
+{
+ "about": "Candidates read in file order (not time order). N_on counts 1850 < M < 1880, N_off counts 1820 < M < 1840 or 1890 < M < 1910 (MeV/c^2); the background expected in the window is b = (30/40) N_off, z = (N_on - b)/sqrt(b). k is 1-based.",
+ "window": [1850.0,1880.0],
+ "sidebands": [
+  [1820.0,1840.0],
+  [1890.0,1910.0]
+ ],
+ "alpha": 0.75,
+ "firstAbove5": {
+  "k": 27,
+  "on": 14,
+  "off": 5,
+  "z": 5.29307724
+ },
+ "staysAbove5From": {
+  "k": 186,
+  "on": 79,
+  "off": 60,
+  "z": 5.06842075
+ },
+ "final": {
+  "k": 91583,
+  "on": 41090,
+  "off": 28103,
+  "b": 21077.25,
+  "z": 137.847787
+ },
+ "at": {
+  "100": {
+   "on": 46,
+   "off": 31,
+   "z": 4.71813021
+  },
+  "1000": {
+   "on": 446,
+   "off": 316,
+   "z": 13.5760089
+  },
+  "10000": {
+   "on": 4675,
+   "off": 2989,
+   "z": 51.3917188
+  },
+  "91583": {
+   "on": 41090,
+   "off": 28103,
+   "z": 137.847787
+  }
+ },
+ "source": {
+  "title": "LHCb event file for real measurement",
+  "url": "https://opendata.cern.ch/record/401",
+  "doi": "10.7483/OPENDATA.LHCb.E7EJ.JUWR",
+  "record": 401,
+  "file": "MasterclassData.root",
+  "fileBytes": 1289541,
+  "checksum": "sha256:8694a2ed518472b02994629154de3077fdff4aef1065691fa13ae9f6b23b039b (adler32:2ebf133a as the portal lists it)",
+  "licence": "CC0-1.0 (record page; the portal API record carries no licence field)",
+  "retrieved": "2026-10-29",
+  "note": "Read through the course's D0_KPi.csv (sha256 25c3c97299ea844f27308fde20a00ecaa87580868f3c767d7ade5621c1505136, 3 926 142 B), the four filled branches D0_MM, D0_PT, D0_TAU, D0_MINIPCHI2 of DecayTree, 91 583 entries; checked equal to the ROOT file value for value on 2026-10-29. Rows are D0 candidates: the portal's 53 948 counts events. runNumber, eventNumber and GpsTime are zero in the file, so the data-taking year cannot be read from it."
+ }
+}

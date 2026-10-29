@@ -1,0 +1,25 @@
+{
+ "about": "Counts of candidates. TAU missing = the CSV's -100 (NaN in d0.f32).",
+ "n": 91583,
+ "tauMissing": 49,
+ "tauNonPositive": 3,
+ "tauPositive": 91531,
+ "ip9": 53194,
+ "ip9TauPositive": 53194,
+ "ip9TauKnown": 53194,
+ "ip9AmongMissingTau": 0,
+ "ipCut": 9.0,
+ "row1Ip": 1299.16748,
+ "source": {
+  "title": "LHCb event file for real measurement",
+  "url": "https://opendata.cern.ch/record/401",
+  "doi": "10.7483/OPENDATA.LHCb.E7EJ.JUWR",
+  "record": 401,
+  "file": "MasterclassData.root",
+  "fileBytes": 1289541,
+  "checksum": "sha256:8694a2ed518472b02994629154de3077fdff4aef1065691fa13ae9f6b23b039b (adler32:2ebf133a as the portal lists it)",
+  "licence": "CC0-1.0 (record page; the portal API record carries no licence field)",
+  "retrieved": "2026-10-29",
+  "note": "Read through the course's D0_KPi.csv (sha256 25c3c97299ea844f27308fde20a00ecaa87580868f3c767d7ade5621c1505136, 3 926 142 B), the four filled branches D0_MM, D0_PT, D0_TAU, D0_MINIPCHI2 of DecayTree, 91 583 entries; checked equal to the ROOT file value for value on 2026-10-29. Rows are D0 candidates: the portal's 53 948 counts events. runNumber, eventNumber and GpsTime are zero in the file, so the data-taking year cannot be read from it."
+ }
+}

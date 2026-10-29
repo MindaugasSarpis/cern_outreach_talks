@@ -1,0 +1,46 @@
+{
+ "about": "Mean of M over all candidates and inside open windows lo < M < hi (MeV/c^2). meanErr is sd/sqrt(n), which ignores that the background shifts the mean.",
+ "means": [
+  {
+   "window": null,
+   "n": 91583,
+   "mean": 1864.10458,
+   "meanErr": 0.084477295
+  },
+  {
+   "window": [1840,1890],
+   "n": 56577,
+   "mean": 1864.71151,
+   "meanErr": 0.0520627467
+  },
+  {
+   "window": [1850,1880],
+   "n": 41090,
+   "mean": 1864.79021,
+   "meanErr": 0.0381469313
+  },
+  {
+   "window": [1855,1875],
+   "n": 31132,
+   "mean": 1864.80787,
+   "meanErr": 0.0306654126
+  }
+ ],
+ "pdg": {
+  "m": 1864.84,
+  "err": 0.04,
+  "edition": "PDG 2026 (pdglive S032)"
+ },
+ "source": {
+  "title": "LHCb event file for real measurement",
+  "url": "https://opendata.cern.ch/record/401",
+  "doi": "10.7483/OPENDATA.LHCb.E7EJ.JUWR",
+  "record": 401,
+  "file": "MasterclassData.root",
+  "fileBytes": 1289541,
+  "checksum": "sha256:8694a2ed518472b02994629154de3077fdff4aef1065691fa13ae9f6b23b039b (adler32:2ebf133a as the portal lists it)",
+  "licence": "CC0-1.0 (record page; the portal API record carries no licence field)",
+  "retrieved": "2026-10-29",
+  "note": "Read through the course's D0_KPi.csv (sha256 25c3c97299ea844f27308fde20a00ecaa87580868f3c767d7ade5621c1505136, 3 926 142 B), the four filled branches D0_MM, D0_PT, D0_TAU, D0_MINIPCHI2 of DecayTree, 91 583 entries; checked equal to the ROOT file value for value on 2026-10-29. Rows are D0 candidates: the portal's 53 948 counts events. runNumber, eventNumber and GpsTime are zero in the file, so the data-taking year cannot be read from it."
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "about": "Lecture 16: 100 signal rows in 100 000; a classifier with recall 0.90 and 1 % false positives.",
+ "n": 100000,
+ "signal": 100,
+ "recall": 0.9,
+ "fpr": 0.01,
+ "TP": 90.0,
+ "FP": 999.0,
+ "precision": 0.0826446281,
+ "accuracy": 0.98991,
+ "alwaysBackground": 0.999,
+ "source": {
+  "title": "CERN lessons on data analysis, Lectures 11 and 16 (course data sets, simulated)",
+  "url": "https://github.com/MindaugasSarpis/CERN_lessons_on_data_analysis",
+  "doi": "",
+  "record": null,
+  "file": "figures/src/perceptron.py; lectures/workbook/docs/data/ml_two_class.py",
+  "fileBytes": null,
+  "checksum": null,
+  "licence": "course material (generated data)",
+  "retrieved": "2026-10-29",
+  "note": "Regenerated here from the course's seeds; every number is simulated."
+ }
+}
