@@ -13,7 +13,9 @@
 // the camera, Δ up. With `under` it sits in front of that dk-hist's axis line, dug into
 // the floor, its minimum under the hist's x of the same value (when the grid's x is the
 // hist's axis), and the plot can tilt back over it ({tilt} on the hist).
-// dims 1: the slice alone, a parabola of grains standing upright.
+// dims 1: the slice alone, a parabola of grains standing upright. `ticks` mark values
+// under it; `band: { x: [a, b] }` stands a dim band of grains from Δ = 0 up to the wall
+// over [a, b] (T3: PDG's 1 864.84 ± 0.04 high on the wall of our valley).
 import { Group } from 'three';
 import { GRAIN, OURS, LABEL, roles, fmt } from './style.js';
 import { mulberry32, gauss } from './rng.js';
@@ -85,6 +87,11 @@ function buildLandscape(o, ctx, stage, kit) {
   const slice = mk(nSlice, 0.95, seed + 2);
   const extra = mk(nExtra, 0.9, seed + 3);
   const trail = mk(nTrail, 0.55, seed + 4);
+  // dims 1: the band (a value ± its error standing against the wall) and the tick marks
+  const bandCfg = dims === 1 && o.band && Array.isArray(o.band.x) ? o.band : null;
+  const nBand = bandCfg ? Math.round(bandCfg.grains ?? 2400) : 0;
+  const bandG = nBand ? mk(nBand, Number(bandCfg.alpha ?? 1.0), seed + 6) : null;
+  const tickG = dims === 1 && Array.isArray(o.ticks) ? mk(Math.max(1, o.ticks.length) * 16, 0.9, seed + 7) : null;
   const ballG = new Group();
   body.add(ballG);
   const ball = dotGrains(stage, nBall, { crowd: P.crowd, sel: P.sel, axis: P.axis, alpha: 1, seed: seed + 5, share });
@@ -98,7 +105,8 @@ function buildLandscape(o, ctx, stage, kit) {
   // the slice: data points, its shown range, crossings
   let SXd = [], SDd = [], sliceZ = 9, xa = 0, xb = 1, cross = null, sliceTab = null;
   // timing
-  const surfF = fader(0), ballF = fader(0), ringF = fader(0), sliceF = fader(0), riseF = fader(0), extraF = fader(0);
+  const surfF = fader(0), ballF = fader(0), ringF = fader(0), sliceF = fader(0), riseF = fader(0), extraF = fader(0), bandF = fader(0);
+  let ballStill = false;
   let rollT0 = 1e9, legs = 0, legT = 0.6, legPts = [], drawT0 = -1e9;
   const drawDur = 1.2;
   let attached = !o.under, hist = null;
@@ -141,7 +149,9 @@ function buildLandscape(o, ctx, stage, kit) {
       const a = D[j * nx + i], b = D[j * nx + i + 1], c = D[(j + 1) * nx + i + 1], e = D[(j + 1) * nx + i];
       return (1 - v) * ((1 - u) * a + u * b) + v * ((1 - u) * e + u * c);
     };
-    path = clipPath((gd.path || []).map((p) => [Number(p[0]), Number(p[1])]));
+    // a path entry is [x, y] or [x, y, z]: z, the logged value at that step (a training
+    // run's loss, a profiled loss), is what `readout: 'path'` shows
+    path = clipPath((gd.path || []).map((p) => (p.length > 2 && Number.isFinite(Number(p[2])) ? [Number(p[0]), Number(p[1]), Number(p[2])] : [Number(p[0]), Number(p[1])])));
     const dPathMax = path.reduce((m, p) => Math.max(m, Dat(p[0], p[1])), 0);
     zmax = Number(o.zmax ?? (dPathMax > 0 ? Math.min(dmax, Math.max(1.12 * dPathMax, 4)) : dmax));
     below = o.below ?? !!o.under;
@@ -171,6 +181,7 @@ function buildLandscape(o, ctx, stage, kit) {
     placeSurface();
     placeRing();
     placeSlice();
+    placeBand();
     placePath();
     placeBall();
     placeLabels();
@@ -186,7 +197,9 @@ function buildLandscape(o, ctx, stage, kit) {
     const a = pts[k - 1], b = pts[k];
     let lo = 0, hi = 1;
     for (let it = 0; it < 40; it++) { const m = (lo + hi) / 2; if (inside([a[0] + (b[0] - a[0]) * m, a[1] + (b[1] - a[1]) * m])) hi = m; else lo = m; }
-    return [[a[0] + (b[0] - a[0]) * hi, a[1] + (b[1] - a[1]) * hi], ...pts.slice(k)];
+    const p = [a[0] + (b[0] - a[0]) * hi, a[1] + (b[1] - a[1]) * hi];
+    if (a.length > 2 && b.length > 2) p.push(a[2] + (b[2] - a[2]) * hi);
+    return [p, ...pts.slice(k)];
   }
   const Dslice = (x) => {
     if (x <= SXd[0]) return SDd[0];
@@ -326,6 +339,46 @@ function buildLandscape(o, ctx, stage, kit) {
     extra.u.uShow.value = 0;
   }
 
+  // ---- dims 1: the band against the wall, and the tick marks under the slice ------------
+  function placeBand() {
+    if (!bandG) return;
+    const [a, b] = bandCfg.x.map(Number);
+    const tone = bandCfg.tone === 'sel' ? 1 : bandCfg.tone === 'crowd' ? 0 : -1;
+    const top = bandCfg.to === 'top';
+    const [, Y0] = sliceFinal(xa, 0);
+    // its two edges as lines (a quarter of the grains, whole), the fill between at `fill`
+    // (0.45): a band reads by its edges, a dim fill alone was a haze (lab 3 slide 10)
+    const fill = Number(bandCfg.fill ?? 0.45), nEdge = Math.round(nBand * 0.25);
+    for (let i = 0; i < nBand; i++) {
+      const edge = i < nEdge;
+      const x = edge ? (i % 2 ? b : a) : a + (b - a) * rnd();
+      const [X, Yw] = sliceFinal(Math.max(xa, Math.min(xb, x)), top ? sliceZ : Dslice(x));
+      const inside = x >= xa && x <= xb;
+      const u = edge ? (Math.floor(i / 2) + 0.5) / Math.ceil(nEdge / 2) : rnd();
+      bandG.pos[3 * i] = X1d(x); bandG.pos[3 * i + 1] = Y0 + (Yw - Y0) * u; bandG.pos[3 * i + 2] = -0.04;
+      bandG.vis[i] = inside ? (edge ? 1 : fill) : 0; bandG.col[i] = tone;
+    }
+    bandG.touch(); bandG.paint();
+    bandG.u.uShow.value = 0;
+  }
+  function placeTicks1() {
+    if (!tickG) return;
+    const [, Y0] = sliceFinal(xa, 0);
+    let i = 0;
+    o.ticks.forEach((t0) => {
+      const t = Array.isArray(t0) ? { v: Number(t0[0]) } : t0 && typeof t0 === 'object' ? { ...t0, v: Number(t0.v) } : { v: Number(t0) };
+      const tone = t.tone === 'sel' ? 1 : t.tone === 'crowd' ? 0 : -1;
+      for (let j = 0; j < 16; j++, i++) {
+        const inside = t.v >= xa && t.v <= xb;
+        tickG.pos[3 * i] = X1d(t.v); tickG.pos[3 * i + 1] = Y0 - 0.02 - 0.012 * j; tickG.pos[3 * i + 2] = 0;
+        tickG.vis[i] = inside ? 1 : 0; tickG.col[i] = tone;
+      }
+    });
+    for (; i < tickG.n; i++) tickG.vis[i] = 0;
+    tickG.touch(); tickG.paint();
+    tickG.u.uShow.value = 0;
+  }
+
   // ---- the minimiser's path and the ball -------------------------------------------------
   const R = Number(ballCfg.r ?? (dims === 2 ? 0.17 : 0.16));
   function surfPoint(x, y, lift, out) {
@@ -382,6 +435,12 @@ function buildLandscape(o, ctx, stage, kit) {
     const p = legPts[k], r = legPts[k + 1];
     return surfPoint(p[0] + (r[0] - p[0]) * f, p[1] + (r[1] - p[1]) * f, R, bp);
   }
+  // the logged value along the path at progress q (null when the path has none)
+  const pathZ = (q) => {
+    if (!legs || legPts[0].length < 3) return null;
+    const k = Math.max(0, Math.min(legs - 1, Math.floor(q))), f = q >= legs ? 1 : ease(q - k);
+    return legPts[k][2] + (legPts[k + 1][2] - legPts[k][2]) * f;
+  };
   const ballData = (q) => {
     if (!legs) return [minX, minY];
     const k = Math.max(0, Math.min(legs - 1, Math.floor(q))), f = q >= legs ? 1 : ease(q - k);
@@ -390,7 +449,7 @@ function buildLandscape(o, ctx, stage, kit) {
   };
 
   // ---- labels: the bowl's x ticks on its front edge; the slice's crossings and level ----
-  const surfLabels = [], sliceLabels = [];
+  const surfLabels = [], sliceLabels = [], tickLabels = [];
   function placeLabels() {
     const px = Number(o.tickPx ?? LABEL.px);
     const lab = (text, x, y, z, list, align = 'center', hang = 0.5, color = P.tick) => {
@@ -413,6 +472,16 @@ function buildLandscape(o, ctx, stage, kit) {
     }
     const sdec = Number(slc.decimals ?? 2);
     const [, YB0] = sliceFinal(xa, 0);
+    // dims 1: tick values under the slice's foot (a value, [value, 'text'] or { v, text, tone })
+    if (dims === 1 && Array.isArray(o.ticks)) {
+      placeTicks1();
+      for (const t0 of o.ticks) {
+        const t = Array.isArray(t0) ? { v: Number(t0[0]), text: String(t0[1]) } : t0 && typeof t0 === 'object' ? { ...t0, v: Number(t0.v) } : { v: Number(t0) };
+        if (!(t.v >= xa && t.v <= xb)) continue;
+        const color = t.tone === 'sel' ? P.sel : t.tone === 'crowd' ? P.crowd : t.tone === 'axis' ? P.axis : P.tick;
+        lab(t.text ?? fmt(t.v, dec(t.v)), X1d(t.v), YB0 - 0.25, 0, tickLabels, 'center', 0.9, color);
+      }
+    }
     // each crossing's value at the foot of its drop line
     if (cross) for (const c of cross) { const [X] = sliceFinal(c, 1); lab(fmt(c, sdec), X, YB0 - 0.2, dims === 2 ? sZ : 0, sliceLabels, 'center', 0.9); }
     // the level's number at the left end of its line, and the one caption above it, both
@@ -427,6 +496,7 @@ function buildLandscape(o, ctx, stage, kit) {
   const stepsList = Array.isArray(o.steps) && o.steps.length ? o.steps
     : [0, {}, { roll: true }, { ring: true }];   // dims 2's {slice} is opt-in: give the error its own dims-1 slide
   const stateOf = (k) => stateAt(stepsList, k);
+  const bandSteps = stepsList.some((st) => st && typeof st === 'object' && st.band != null);
   const after = (f, t0) => { f.t0 = t0; };
   function apply(k, kind) {
     const s = stateOf(k);
@@ -436,7 +506,7 @@ function buildLandscape(o, ctx, stage, kit) {
     const fresh = !prev || kind === 'arrive';
     if (!s) {
       const dur = kind === 'hide' ? 0.5 : 0.35;
-      surfGo('hide'); for (const f of [surfF, ballF, ringF, sliceF, riseF, extraF]) f.set(t, 0, dur);
+      surfGo('hide'); for (const f of [surfF, ballF, ringF, sliceF, riseF, extraF, bandF]) f.set(t, 0, dur);
       rollT0 = 1e9; shown = null; cur = 0; return;
     }
     let at = t;
@@ -452,12 +522,22 @@ function buildLandscape(o, ctx, stage, kit) {
       sliceF.set(t, 1, 0.35);
       if (fresh || !prev) { drawT0 = t; at = t + drawDur + 0.1; } else if (instant) drawT0 = t - 10;
     }
-    // the roll
+    // the roll; or `ball: true` without a roll: the ball stands at the minimum
+    ballStill = !s.roll && !!s.ball;
     if (s.roll) {
       if (instant) { rollT0 = t - 1e4; ballF.set(t, 1, 0.35); }
       else if (fresh || !prev.roll) { rollT0 = at + 0.3; ballF.set(t, 1, 0.4); after(ballF, at); at = rollT0 + legs * legT + 0.3; }
       else ballF.set(t, 1, 0.35);
+    } else if (s.ball) {
+      rollT0 = 1e9;
+      if (!instant && (fresh || !prev.ball)) { ballF.set(t, 1, 0.5); after(ballF, at); } else ballF.set(t, 1, 0.35);
     } else { rollT0 = 1e9; ballF.set(t, 0, 0.35); }
+    // dims 1: the band (`band: true` as a step key; shown from step 1 if no step names it)
+    if (bandG) {
+      const bandOn = bandSteps ? !!s.band : true;
+      if (bandOn && (fresh || !(bandSteps ? prev.band : prev)) && !instant) { bandF.set(t, 1, 0.8); after(bandF, Math.max(t, at - 0.2)); }
+      else bandF.set(t, bandOn ? 1 : 0, 0.35);
+    }
     // the ring (dims 2: the Δ = 1 contour; dims 1: the level line, the crossings, the bar)
     const ringOn = !!s.ring;
     if (ringOn && (fresh || !prev.ring) && !instant) { ringF.set(t, 1, 0.9); after(ringF, at); at += 1.0; }
@@ -486,7 +566,7 @@ function buildLandscape(o, ctx, stage, kit) {
     if (!ready || !attached) return;
     shown = null; cur = 0;
     surfGo('off');
-    for (const f of [surfF, ballF, ringF, sliceF, riseF, extraF]) f.jump(0);
+    for (const f of [surfF, ballF, ringF, sliceF, riseF, extraF, bandF]) f.jump(0);
     rollT0 = 1e9;
     if (want > 0) apply(want, 'arrive');
   };
@@ -516,12 +596,14 @@ function buildLandscape(o, ctx, stage, kit) {
     const [x, y] = rollT0 >= 1e8 ? (pending ? ballData(0) : [minX, minY]) : ballData(progress());
     if (key === 'y') return y;
     if (key === 'd') return Dat(x, y);
+    // 'path': the path's own logged value under the ball (its third column), else chi2min + Δ
+    if (key === 'path') { const z = pathZ(rollT0 >= 1e8 ? (pending ? 0 : legs) : progress()); return z ?? chi2min + Dat(x, y); }
     if (key === 'chi2') return chi2min + Dat(x, y);
     return x;
   };
-  const anyMoving = () => [surfF, ballF, ringF, sliceF, riseF, extraF].some((f) => f.moving(now));
+  const anyMoving = () => [surfF, ballF, ringF, sliceF, riseF, extraF, bandF].some((f) => f.moving(now));
   const api = {
-    arm() { armed = true; armT = now; if (ready) { surfGo('off'); for (const f of [surfF, ballF, ringF, sliceF, riseF, extraF]) f.jump(0); rollT0 = 1e9; shown = null; cur = 0; } },
+    arm() { armed = true; armT = now; if (ready) { surfGo('off'); for (const f of [surfF, ballF, ringF, sliceF, riseF, extraF, bandF]) f.jump(0); rollT0 = 1e9; shown = null; cur = 0; } },
     assemble(t, onDone) { now = t; arrive(); onDone?.(); },
     busy: () => (!ready && !failed && want > 0) || armed || (want > 0 && ready && !attached)
       || (surf && now < surf.end + 0.2) || anyMoving()
@@ -587,10 +669,10 @@ function buildLandscape(o, ctx, stage, kit) {
       ball.points.visible = bv > 0.002;
       if (ball.points.visible) {
         const q = progress();
-        ballAt(q);
+        if (ballStill) surfPoint(minX, minY, R, bp); else ballAt(q);
         ballG.position.set(bp[0], bp[1], bp[2]);
         ball.u.uShow.value = bv;
-        for (let i = 0; i < nTrail; i++) trail.vis[i] = trail.U[i] <= q ? 1 : 0;
+        for (let i = 0; i < nTrail; i++) trail.vis[i] = !ballStill && trail.U[i] <= q ? 1 : 0;
         trail.touch();
       }
       trail.points.visible = ball.points.visible;
@@ -599,12 +681,16 @@ function buildLandscape(o, ctx, stage, kit) {
       // the bowl's ticks go while the slice stands in it: never two μ scales at once
       for (const l of surfLabels) l.userData.show = surfF.at(t) * (1 - riseF.at(t));
       for (const l of sliceLabels) l.userData.show = extraF.at(t);
+      // dims 1: the band and the ticks stand with the slice
+      if (bandG) { bandG.u.uShow.value = bandF.at(t) * sv; bandG.points.visible = bandG.u.uShow.value > 0.002; }
+      if (tickG) { tickG.u.uShow.value = sv; tickG.points.visible = sv > 0.002; }
+      for (const l of tickLabels) l.userData.show = sv;
       shade(labels, 1);
     },
     dispose() {
       sel.off(); if (name) kit.unregister(name);
       body.parent?.remove(body);
-      surf?.dispose(); ring?.dispose(); slice.dispose(); extra.dispose(); trail.dispose(); ball.dispose();
+      surf?.dispose(); ring?.dispose(); slice.dispose(); extra.dispose(); trail.dispose(); ball.dispose(); bandG?.dispose(); tickG?.dispose();
       for (const l of labels) { l.material?.map?.dispose?.(); l.material?.dispose?.(); }
     },
   };

@@ -10,6 +10,11 @@
 // Grain i is row i of d0.f32 (rank from rng.order(n, seed, ours): rank 0 lands first,
 // lowest; ours lands last, on top of the pile). Give the heap and the dk-hist the same
 // `seed` and `ours` (both default to the series' own).
+//
+// `oursFrom: '<form>'` (T1's close): in the rain, our grain does not fall from above
+// with the others: it starts where that form's api.ours() is (dk-trigger's folded
+// packet at the lane's end) and glides down on a bowed arc, `oursGlide` seconds (2.4),
+// landing last, on the summit.
 import { Group, Vector3 } from 'three';
 import { GRAIN, OURS, OURS_ROW, SEED, roles, alphaFor } from './style.js';
 import { mulberry32, order as seriesOrder } from './rng.js';
@@ -88,6 +93,13 @@ function buildHeap(o, ctx, stage, kit) {
     const fresh = kind === 'arrive' || prev === 0;
     const rainDur = Number(o.rain ?? 6);
     const arr = [];
+    // our grain's start for the rain: the named form's api.ours() now, in the pile's frame
+    let oursStart = null;
+    if (k === 1 && fresh && !instant && o.oursFrom && ours != null && ours < N) {
+      const f = kit.form(String(o.oursFrom));
+      const p = f?.api?.ours?.(new Vector3());
+      if (p) { g.updateWorldMatrix(true, false); oursStart = g.worldToLocal(p.clone()); }
+    }
     morph.go(t, L, (m) => {
       const { A, B, V, T, M, S } = m;
       for (let q = 0; q < N; q++) {
@@ -95,7 +107,15 @@ function buildHeap(o, ctx, stage, kit) {
         const v0 = V[i2], v1 = V[i2 + 1];
         if (instant) { if (v0 > 0.01 || v1 > 0.01) { if (v0 < 0.01) { A[i3] = B[i3]; A[i3 + 1] = B[i3 + 1]; A[i3 + 2] = B[i3 + 2]; } T[i2] = 0; T[i2 + 1] = 0.35; } continue; }
         if (v0 < 0.5 && v1 > 0.5) {
-          if (k === 1 && fresh) {
+          if (k === 1 && fresh && i === ours && oursStart) {
+            // ours: from the form it came out of, down onto the summit as the rain ends
+            A[i3] = oursStart.x; A[i3 + 1] = oursStart.y; A[i3 + 2] = oursStart.z;
+            const d = Math.hypot(B[i3] - A[i3], B[i3 + 1] - A[i3 + 1], B[i3 + 2] - A[i3 + 2]);
+            m.C[i3 + 1] = 0.12 * d;
+            const g2 = Number(o.oursGlide ?? 2.4);
+            // shown at its start from the first frame (it is the packet that folded there)
+            V[i2] = 1; M[i] = MOTION.GLIDE; T[i2] = Math.max(0, 0.3 + rainDur + 1.2 - g2); T[i2 + 1] = g2;
+          } else if (k === 1 && fresh) {
             // rain: in the series' order, from above the pile
             A[i3] = B[i3] + 0.2 * (r - 0.5); A[i3 + 1] = B[i3 + 1] + Hm + 6 + 4 * r; A[i3 + 2] = B[i3 + 2] + 0.2 * (S[(i + 3) % N] - 0.5);
             M[i] = MOTION.DROP; T[i2] = 0.3 + (q / Math.max(1, N - 1)) * rainDur; T[i2 + 1] = 1.2;
@@ -155,6 +175,15 @@ function buildHeap(o, ctx, stage, kit) {
       if (!(row >= 0 && row < N)) return null;
       g.updateWorldMatrix(true, false);
       return out.set(mound[3 * row], mound[3 * row + 1], mound[3 * row + 2]).applyMatrix4(g.matrixWorld);
+    },
+    // our grain where it is now (world): gliding in with `oursFrom`, on the summit, in the
+    // turning ball; null while hidden or claimed away (a dk-spark `on` the heap follows it)
+    ours(out = new Vector3()) {
+      if (ours == null || ours >= N || cur === 0 || now >= morph.G[ours]) return null;
+      const c = morph.sample(ours, now, [0, 0, 0, 0, 0]);
+      if (c[3] < 0.01) return null;
+      g.updateWorldMatrix(true, false);
+      return out.set(c[0], c[1], c[2]).applyMatrix4(g.matrixWorld);
     },
     // gone[row] = the world time the row leaves the pile (OFF: it stays). Claims merge:
     // each claimant (`who`, e.g. its form name) keeps its own array, and a row goes at the

@@ -311,5 +311,54 @@
   "licence": "CC0-1.0 (record page; the portal API record carries no licence field)",
   "retrieved": "2026-10-29",
   "note": "Read through the course's D0_KPi.csv (sha256 25c3c97299ea844f27308fde20a00ecaa87580868f3c767d7ade5621c1505136, 3 926 142 B), the four filled branches D0_MM, D0_PT, D0_TAU, D0_MINIPCHI2 of DecayTree, 91 583 entries; checked equal to the ROOT file value for value on 2026-10-29. Rows are D0 candidates: the portal's 53 948 counts events. runNumber, eventNumber and GpsTime are zero in the file, so the data-taking year cannot be read from it."
+ },
+ "plotSubtract": {
+  "about": "Lab 3's decay-time plot (`plot`) as dk-hist draws it: its grains are the rows with a finite TAU in the window or a sideband, filled in the reverse of the series order (rng.js order(91 583, 401, row 0)). {subtract} drops every sideband grain and pairs, bin by bin, the sideband grains whose pick is below 30/40 with window grains. nShown, nWindow, nSidebands: the grains shown before it; pairs: the window grains taken; left: the count readout after it (window grains still counted, including those off the drawn 0-5 ps); leftDrawn: those standing in the columns; leftCounted: nWindow - 0.75 nSidebands, the statistical subtraction the pairing stands for.",
+  "plot": {
+   "key": "TAU",
+   "lo": 0.0,
+   "hi": 5.0,
+   "bin": 0.25,
+   "grains": 70000,
+   "budget": 300000,
+   "seed": 401,
+   "ours": 0,
+   "win": [1850.0,1880.0],
+   "sb": [
+    [1820.0,1840.0],
+    [1890.0,1910.0]
+   ],
+   "n": 2000
+  },
+  "grains": 69159,
+  "unit": 1,
+  "keep": 69159,
+  "scale": 0.75,
+  "first2000": {
+   "nShown": 2000,
+   "nWindow": 1172,
+   "nSidebands": 828,
+   "nWindowDrawn": 1145,
+   "nSidebandsDrawn": 794,
+   "nSidebandsPicked": 588,
+   "pairs": 576,
+   "left": 596,
+   "leftDrawn": 569,
+   "countedBackground": 621.0,
+   "leftCounted": 551.0
+  },
+  "all": {
+   "nShown": 69159,
+   "nWindow": 41071,
+   "nSidebands": 28088,
+   "nWindowDrawn": 40099,
+   "nSidebandsDrawn": 26857,
+   "nSidebandsPicked": 20075,
+   "pairs": 20075,
+   "left": 20996,
+   "leftDrawn": 20024,
+   "countedBackground": 21066.0,
+   "leftCounted": 20005.0
+  }
  }
 }

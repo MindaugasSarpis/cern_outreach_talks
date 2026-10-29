@@ -4,13 +4,19 @@
   "code-lines.json": {
    "talks": [5],
    "shape": "per script: path, bytes, sha256, lines, longest, runs",
-   "meaning": "the real line structure of the series' scripts (course root_to_csv.py, the kit's bake/d0.py) for dk-pipeline's code stage; no source text",
+   "meaning": "the real line structure of the series' scripts (the kit's bake/root_to_csv.py and bake/d0.py) for dk-pipeline's code stage; no source text",
    "by": "code.py"
+  },
+  "d0-checks.json": {
+   "talks": [3,5],
+   "shape": "object",
+   "meaning": "chi2 at the fit's start values; sha256 of d0-fit.json from two passes of the bake",
+   "by": "d0.py"
   },
   "d0-chi2.json": {
    "talks": [3],
    "shape": "grid 121x121 + path + contours + slice",
-   "meaning": "dk-landscape src: chi2 bowl over (mu, width), minimiser path, dchi2 = 1/4 rings, 1D slice",
+   "meaning": "dk-landscape src: chi2 bowl over (mu, width), minimiser path, dchi2 = 1/4 rings, 1D slice, dchi2 at PDG 1864.84 +- 0.04 on the slice",
    "by": "d0.py"
   },
   "d0-cuts.json": {
@@ -40,7 +46,7 @@
   "d0-means.json": {
    "talks": [3],
    "shape": "object",
-   "meaning": "window means of M (all, 1840-1890, 1850-1880, 1855-1875) and PDG",
+   "meaning": "window means of M (all, 1840-1890, 1850-1880, 1855-1875; centred on the fitted 1864.47 with half-widths 25/15/10/5; 1860-1870) and PDG",
    "by": "d0.py"
   },
   "d0-peaks.f32": {
@@ -67,13 +73,13 @@
   "d0-select.json": {
    "talks": [5],
    "shape": "120 selections",
-   "meaning": "6 x 5 x 4 selections as cuts on d0.f32 columns (PT >, IPCHI2 <, TAU >) with the fitted peak of each",
+   "meaning": "6 x 5 x 4 selections as cuts on d0.f32 columns (PT >, IPCHI2 <, TAU >) with the fitted peak of each; the counts of selections 0 and 119; how many peaks lie near selection 0's",
    "by": "d0.py"
   },
   "d0-significance.json": {
    "talks": [2],
    "shape": "object",
-   "meaning": "file-order significance: where z first passes 5 and from where it stays above 5",
+   "meaning": "file-order significance: where z first passes 5 and from where it stays above 5; the 5 sigma line (b + 5 sqrt b)/15 a bin as a dk-curve set",
    "by": "d0.py"
   },
   "d0-split.f32": {
@@ -86,7 +92,7 @@
   "d0-tau.json": {
    "talks": [3],
    "shape": "object",
-   "meaning": "decay-time histograms in the window and sidebands (0.25 and 0.1 ps bins, with and without IPchi2 < 9), sideband-subtracted counts, the unbinned lifetime fit and its scans",
+   "meaning": "decay-time histograms in the window and sidebands (0.25 and 0.1 ps bins, with and without IPchi2 < 9), sideband-subtracted counts, the unbinned lifetime fit and its scans; plotSubtract: what dk-hist {subtract} leaves of the first 2 000 (and of all) in its seeded order",
    "by": "d0.py"
   },
   "d0-z.f32": {
@@ -109,6 +115,19 @@
    "meaning": "d0.f32's header: n, cols, units, row 1, value ranges, source block",
    "by": "d0.py"
   },
+  "falling-big.f32": {
+   "talks": [2],
+   "shape": [3500,1],
+   "dtype": "float32 LE",
+   "meaning": "the falling spectrum grown to 3 500 entries (simulated, GeV): roll 2's 140 values, then the 3 360 added; a dk-hist rows source (values falling-big.f32, key M)",
+   "by": "toys.py"
+  },
+  "falling-big.json": {
+   "talks": [2],
+   "shape": "object",
+   "meaning": "falling-big.f32's header: n, cols ['M'], units, order, the counts a builder bins",
+   "by": "toys.py"
+  },
   "h4l.json": {
    "talks": [2],
    "shape": "37 bins",
@@ -124,19 +143,19 @@
   "toys.json": {
    "talks": [2],
    "shape": "object",
-   "meaning": "simulated toys: flat-bin Poisson re-rolls, the falling spectrum with its 2 sigma alarms and the 3 500-entry growth, normal-tail numbers and 1 - 0.95^20",
+   "meaning": "simulated toys: flat-bin Poisson re-rolls, the falling spectrum with its 2 sigma alarms and the 3 500-entry growth, its expectation at 140 and 3 500 entries as dk-curve sets (falling.curve), normal-tail numbers and 1 - 0.95^20",
    "by": "toys.py"
   },
   "train-d0.json": {
    "talks": [4],
    "shape": "object",
-   "meaning": "record 401 classifier: majority / neuron / network accuracies, with M added, score grids over (log10 IPCHI2, TAU ps)",
+   "meaning": "record 401 classifier: majority / neuron / network accuracies, with M added, score grids over (log10 IPCHI2, TAU ps), row 1's scores, the window's background share from the mass fit",
    "by": "train.py"
   },
   "train-perceptron.json": {
    "talks": [4],
    "shape": "object",
-   "meaning": "course 200 points, per-epoch (loss, acc, w1, w2, b), threshold vs line, loss grid over (w1,w2) with path, train/test split",
+   "meaning": "course 200 points, per-epoch (loss, acc, w1, w2, b), threshold vs line, epoch 1 (150/200, loss 0.510), loss grid over (w1,w2) at the final b with path, lossProfile (b profiled) with path, train/test split",
    "by": "train.py"
   },
   "train-rare.json": {
@@ -148,7 +167,7 @@
   "train-ring.json": {
    "talks": [4],
    "shape": "object",
-   "meaning": "600-point ring set, line vs 2-4-1 network, test accuracy and AUC, score grid",
+   "meaning": "600-point ring set, line (train and test accuracy and counts) vs 2-4-1 network, test accuracy and AUC, score grid",
    "by": "train.py"
   }
  }

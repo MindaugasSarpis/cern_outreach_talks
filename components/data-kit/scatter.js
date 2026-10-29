@@ -253,6 +253,9 @@ function buildScatter(o, ctx, stage, kit) {
   const K = Math.round(o.boundaryGrains ?? 1800);
   let bnd = null, bFrom = null, bCur = null, bT0 = -OFF, bDur = 1.2, bShow = 0, bShowFrom = 0, bShowTo = 0;
   let bTarget = () => null;   // → Float32Array(2K) | null; moves while the line sweeps
+  // a boundary that goes with nothing after it dissolves to dust where it stands (bDust);
+  // one that comes with nothing before it draws on along its length (bDraw)
+  let bDust = false, bDraw = false, dustOff = null;
   let sweep = null;           // { e0, e1, t0, dur }
   let epochNow = 0, version = 0, readCache = null;
   let scoreFn = null;
@@ -811,7 +814,9 @@ function buildScatter(o, ctx, stage, kit) {
   // ---- the boundary's grains ----------------------------------------------------------
   const flip = (p) => { if (!p) return p; const q = new Float32Array(p.length); for (let i = 0; i < K; i++) { q[2 * i] = p[2 * (K - 1 - i)]; q[2 * i + 1] = p[2 * (K - 1 - i) + 1]; } return q; };
   function setBoundary(s, prev, instant, fresh) {
-    const was = bShow > 0.01 && bCur ? Float32Array.from(bCur) : null;
+    // a boundary still dissolving is not glided from: the next one draws on fresh
+    const was = bShow > 0.01 && bCur && bShowTo > 0 ? Float32Array.from(bCur) : null;
+    if (!was && bDust) { bCur = null; bShow = 0; }
     sweep = null;
     if (s && s.epoch != null && s.sweep && !instant) {
       const e0 = prev?.epoch != null && !fresh ? epochNow : Number(s.from ?? 0);
@@ -833,6 +838,16 @@ function buildScatter(o, ctx, stage, kit) {
     bT0 = now; bDur = instant ? 0.35 : Number(s?.bendTime ?? (s?.bend && !prev?.bend ? 1.8 : 1.2));
     bShowFrom = was ? bShow : 0; bShowTo = first || sweep ? 1 : 0;
     if (!was) bShow = 0;
+    // `{box: null}` (any boundary that goes with none after it): the edge breaks into dust
+    // where it stands, rising and spreading as it fades (1.6 s). `dust: false` fades it
+    bDust = !instant && !!was && !bShowTo && o.dust !== false && s?.dust !== false;
+    if (bDust) bDur = 1.6;
+    // a boundary with none before it draws on along its length instead of fading in whole
+    // (`{epoch: 1}` after the cut has gone: no glide from the cut). `draw: false` fades it in
+    bDraw = !instant && !was && !!bShowTo && o.draw !== false && s?.draw !== false;
+    // `{undo}` with a boundary: it comes once the mass axis has closed, not in the plane
+    // while the cloud still stands apart in depth
+    if (!instant && prev && depthOf(prev) > 0 && depthOf(s) === 0 && bShowTo) bT0 = Math.max(bT0, now + Math.max(0, Number(s?.after ?? 0)) + 1.0);
     // on a fresh arrival the line comes in once half the cloud has gathered, not whole over
     // an empty frame (lab 4 slide 4); a step's `after` holds it too
     if (!instant && !sweep && !was && fresh && arrTimes.length) bT0 = Math.max(bT0, arrTimes[arrTimes.length >> 1] - 0.4 * bDur);
@@ -851,16 +866,29 @@ function buildScatter(o, ctx, stage, kit) {
     }
     const to = bTarget();
     const e = ease((t - bT0) / bDur);
-    bShow = bShowFrom + (bShowTo - bShowFrom) * e;
+    const k = Math.max(0, Math.min(1, (t - bT0) / bDur));
+    bShow = bDust ? bShowFrom * Math.pow(1 - k, 1.5) : bDraw ? (t >= bT0 ? Math.min(1, (t - bT0) / 0.15) : 0) : bShowFrom + (bShowTo - bShowFrom) * e;
     if (to) {
       const from = bFrom || to;   // appearing: it fades in where it stands (and follows a sweep)
       bCur ??= new Float32Array(2 * K);
       for (let q = 0; q < 2 * K; q++) bCur[q] = from[q] + (to[q] - from[q]) * e;
     }
+    // drawing on: the first share of the chain stands, its front runs along the line
+    bnd.count(bDraw && k < 1 ? Math.ceil(K * (1 - Math.pow(1 - k, 2))) : K);
+    if (bDraw && k >= 1) bDraw = false;
     if (bCur && bShow > 0.001) {
       let L = 0;
+      if (bDust && !dustOff) {
+        // seeded per grain: a spread across the line, a rise, a drift out of the plane
+        const rr = mulberry32((Number(seed) || 401) * 13 + 5), R = 0.05 * Math.min(W, H);
+        dustOff = new Float32Array(3 * K);
+        for (let q = 0; q < K; q++) { const u = rr(); dustOff[3 * q] = (rr() - 0.5) * 2 * R; dustOff[3 * q + 1] = R * (0.4 + 1.2 * u); dustOff[3 * q + 2] = (rr() - 0.5) * 2 * R; }
+      }
+      const d = bDust ? 1 - (1 - k) * (1 - k) : 0;
       for (let q = 0; q < K; q++) {
-        bnd.pos[3 * q] = bCur[2 * q]; bnd.pos[3 * q + 1] = bCur[2 * q + 1]; bnd.pos[3 * q + 2] = 0.02;
+        bnd.pos[3 * q] = bCur[2 * q] + (bDust ? d * dustOff[3 * q] : 0);
+        bnd.pos[3 * q + 1] = bCur[2 * q + 1] + (bDust ? d * dustOff[3 * q + 1] : 0);
+        bnd.pos[3 * q + 2] = 0.02 + (bDust ? d * dustOff[3 * q + 2] : 0);
         if (q) L += Math.min(0.3, Math.hypot(bCur[2 * q] - bCur[2 * q - 2], bCur[2 * q + 1] - bCur[2 * q - 1]));
       }
       bnd.touch();
@@ -869,8 +897,9 @@ function buildScatter(o, ctx, stage, kit) {
       const overlap = Math.max(1, (0.8 * GRAIN * 0.0746 * 0.6) / Math.max(1e-4, L / K));
       bnd.u.uAlpha.value = lineAlpha * Math.min(1, Math.pow(1 / overlap, 1 / 2.2));
     }
-    if (bShow <= 0.001 && bShowTo === 0) bCur = null;
-    bnd.u.uShow.value = bShow * frame.show * far;
+    if (bShow <= 0.001 && bShowTo === 0 && (!bDust || k >= 1)) { bCur = null; bDust = false; }
+    // no boundary in the plane while the mass axis stands open (seen from the side it is a line through the bands)
+    bnd.u.uShow.value = bShow * frame.show * far * (1 - depthShow);
   }
 
   // ---- stepping, arrival ----------------------------------------------------------------
@@ -885,7 +914,7 @@ function buildScatter(o, ctx, stage, kit) {
     morph.jump(now, L);
     counted = L.counted; shown = null; cur = 0;
     arrTimes = new Float64Array(0); leaveTimes = new Float64Array(0); baseCount = 0;
-    sweep = null; bTarget = () => null; bShow = 0; bShowFrom = 0; bShowTo = 0; bCur = null; bFrom = null;
+    sweep = null; bTarget = () => null; bShow = 0; bShowFrom = 0; bShowTo = 0; bCur = null; bFrom = null; bDust = false; bDraw = false;
     depthWant = 0; depthNext = 0; depthAt = -1; tipWait = null; version++; readCache = null;
   };
   const arrive = () => {

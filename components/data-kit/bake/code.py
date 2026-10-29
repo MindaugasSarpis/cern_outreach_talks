@@ -4,7 +4,8 @@
 For each script: its bytes, sha256, line count and, per line, the character columns of its
 non-blank runs ([start, end) pairs; tabs expanded to 4), so a deck draws each line as a row of
 grains with its true indent, its true length and its true gaps between words. Only the line
-structure is kept, never the text (the course repository is not public). Deterministic, no
+structure is kept, never the text. The scripts are the kit's own public ones: bake/root_to_csv.py
+(record 401's ROOT file to the course CSV, byte for byte) and bake/d0.py. Deterministic, no
 timestamps. Adopted from lane t5's lab script (notes/requests-t5.md, request 1).
 
     python3 bake/code.py            # write data/code-lines.json and its manifest entry
@@ -17,7 +18,7 @@ import hashlib
 import re
 from pathlib import Path
 
-from common import KIT, course_file, emit
+from common import KIT, emit
 
 SCRIPT = "code.py"
 
@@ -42,8 +43,7 @@ def structure(path: Path, shown: str) -> dict:
 def bake() -> tuple[dict, dict]:
     import json
     scripts = {
-        "root_to_csv.py": structure(course_file("root_to_csv.py"),
-                                    "CERN_lessons_on_data_analysis: lectures/workbook/docs/data/root_to_csv.py"),
+        "root_to_csv.py": structure(KIT / "bake" / "root_to_csv.py", "components/data-kit/bake/root_to_csv.py"),
         "d0.py": structure(KIT / "bake" / "d0.py", "components/data-kit/bake/d0.py"),
     }
     doc = {"about": "Per script and per line, the [start, end) columns of the non-blank runs (tabs as 4). "
@@ -53,7 +53,7 @@ def bake() -> tuple[dict, dict]:
     out = {"code-lines.json": (json.dumps(doc, separators=(",", ":")) + "\n").encode("utf-8")}
     ent = {"code-lines.json": {
         "talks": [5], "shape": "per script: path, bytes, sha256, lines, longest, runs",
-        "meaning": "the real line structure of the series' scripts (course root_to_csv.py, the kit's bake/d0.py) "
+        "meaning": "the real line structure of the series' scripts (the kit's bake/root_to_csv.py and bake/d0.py) "
                    "for dk-pipeline's code stage; no source text"}}
     return out, ent
 

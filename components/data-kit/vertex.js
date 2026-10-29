@@ -22,17 +22,22 @@
 // a step back shows the step's end at once. Once the dk-hist draws its own grain of
 // our row where ours landed, ours hands over and fades.
 //
-// Look: `namePx` (28) for the K⁻ and π⁺ names, in the strands' light blue at full
-// opacity; `trailAlpha` (0.9) for the D⁰'s flight; `landSize` (2.2): our grain, landed
-// alone on an empty axis, is drawn that much larger (the brightest thing in the frame)
-// and shrinks back as the hist's own grain of our row takes over.
+// No names on the strands (the owner's decision, 29 Oct: the decay is never named, on
+// screen or in the notes' Message and Picture lines). The two strands read as two tracks
+// from one point by themselves: they leave the decay point together, bend apart in
+// opposite senses, and their roots are brighter, so the shared origin is the brightest
+// place in the pair. `names` and `tracks[].name` are ignored (check.mjs warns).
+//
+// Look: `trailAlpha` (0.9) for the flight; `root` (0.8): how much brighter a strand's
+// first grains are; `landSize` (2.2): our grain, landed alone on an empty axis, is drawn
+// that much larger (the brightest thing in the frame) and shrinks back as the hist's own
+// grain of our row takes over.
 //
 // `heap`: a dk-heap's name. The flight then starts from our row's grain on that pile
 // (its summit), and the heap gives that grain up while the vertex holds it.
 import { Group, Vector3, Color, Matrix4 } from 'three';
-import { GRAIN, OURS, OURS_ROW, SEED, LABEL, roles } from './style.js';
+import { GRAIN, OURS, OURS_ROW, SEED, roles } from './style.js';
 import { mulberry32, gauss } from './rng.js';
-import { fixedLabel, shade } from './label.js';
 
 export const TYPE = 'dk-vertex';
 export const FIELDS = ['pos', 'name', 'grains'];
@@ -106,17 +111,9 @@ function buildVertex(o, ctx, stage, kit) {
   const u = mat.uniforms;
   const geo = stage.grainGeometry(n, { position: pos, aSeed: [sd, 1], aSize: [aS, 1], aA: [aA, 1], aWhite: [aW, 1] });
   g.add(stage.grainPoints(geo, mat));
+  // no labels: the strands carry no names (see the head of this file)
   const labels = [];
-  // the particle names: 28 px, whole opacity, a little heavier than a tick number, so a
-  // strand's name reads from the back of the room, in its strand's light blue (P.crowd)
-  const names = o.names !== false;
-  const namePx = Math.max(LABEL.px, Number(o.namePx ?? 28));
-  const nameOpt = { px: namePx, color: P.crowd, align: 'left', hang: 0, weight: 600, opacity: 1 };
-  const lab = names ? [
-    fixedLabel(stage, o.tracks?.[0]?.name ?? 'K⁻', nameOpt),
-    fixedLabel(stage, o.tracks?.[1]?.name ?? 'π⁺', nameOpt),
-  ] : [];
-  for (const l of lab) { g.add(l); labels.push(l); }
+  const ROOT = Math.max(0, Number(o.root ?? 0.8));
 
   // ---- the decay ---------------------------------------------------------------------------
   let phys = null, geom = null, ready = false, failed = false;
@@ -293,17 +290,14 @@ function buildVertex(o, ctx, stage, kit) {
         const tr = geom.tracks[k], jj = 2 * (k * S + j);
         q.addScaledVector(tr.side, jit[jj]).addScaledVector(tr.nv, jit[jj + 1]);
         pos[3 * i] = q.x; pos[3 * i + 1] = q.y; pos[3 * i + 2] = q.z;
-        // the growing tip is brighter; the pair whitens as it folds into one grain
+        // the growing tip is brighter, and so are the roots (the one point both leave);
+        // the pair whitens as it folds into one grain
         const head = grow < 1 ? Math.exp(-Math.max(0, grow - s) * 14) : 0;
-        aA[i] = vis * (1.0 + 0.6 * head) * (1 - easeIn(fold));
+        const root = ROOT * Math.exp(-s * 9);
+        aA[i] = vis * (1.0 + 0.6 * head + root) * (1 - easeIn(fold));
+        aS[i] = 1 + 0.6 * root;
         aW[i] = Math.min(1, 0.6 * head + fold);
       }
-    }
-    // the names at the strands' ends
-    for (let k = 0; k < lab.length; k++) {
-      along(k, 1.04 * (1 - fold), dvp, q);
-      lab[k].position.copy(q).addScaledVector(geom.tracks[k].nv, 0.25);
-      lab[k].userData.show = ease((tau - TF - 0.5 * TD) / (0.5 * TD)) * (1 - ease((tau - FOLD) / (0.5 * TO)));
     }
     geo.attributes.position.needsUpdate = true; geo.attributes.aA.needsUpdate = true;
     geo.attributes.aWhite.needsUpdate = true; geo.attributes.aSize.needsUpdate = true;
@@ -352,10 +346,9 @@ function buildVertex(o, ctx, stage, kit) {
       else if (showTo < show) show = Math.max(0, show - dt / 0.35);
       if (armed) show = 0;
       u.uShow.value = show;
-      if (show <= 0 && cur <= 0) { claim(false); shade(labels, 0); return; }
+      if (show <= 0 && cur <= 0) { claim(false); return; }
       if (cur > 0 && !claimed) claim(true);
       draw();
-      shade(labels, show);
     },
     dispose() { st.off(); kit.unregister(name); claim(false); geo.dispose(); mat.dispose(); },
   };
