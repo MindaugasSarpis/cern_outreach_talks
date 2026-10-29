@@ -443,7 +443,9 @@ function buildLandscape(o, ctx, stage, kit) {
     // the surface (dims 2) or the standing slice (dims 1)
     const wantSurf = dims === 2 && s.surface !== false;
     const hadSurf = !!(prev && dims === 2 && prev.surface !== false) && !fresh;
-    if (wantSurf && !hadSurf) { at += instant ? surfGo('instant') : surfGo('gather') + 0.1; surfF.set(t, 1, 0.35); }
+    // the surface's tick labels come in as its gather ends, not before it (lab 3 slides 4, 9:
+    // the ticks stood alone in the black while the grains were still far out)
+    if (wantSurf && !hadSurf) { at += instant ? surfGo('instant') : surfGo('gather') + 0.1; surfF.set(t, 1, instant ? 0.35 : 0.5); if (!instant) after(surfF, Math.max(t, at - 0.4)); }
     else if (wantSurf && instant) { surfGo('instant'); surfF.set(t, 1, 0.35); }
     else if (!wantSurf && surf) { surfGo(fresh ? 'off' : 'hide'); surfF.set(t, 0, 0.5); }
     if (dims === 1) {
@@ -509,7 +511,9 @@ function buildLandscape(o, ctx, stage, kit) {
   const readout = () => {
     const key = o.readout ?? 'x';
     if (!ready) return 0;
-    const [x, y] = rollT0 >= 1e8 ? [minX, minY] : ballData(progress());
+    // a roll still to come (an arrival before its apply): the path's start, never the answer
+    const pending = rollT0 >= 1e8 && legs && !!stateOf(want)?.roll;
+    const [x, y] = rollT0 >= 1e8 ? (pending ? ballData(0) : [minX, minY]) : ballData(progress());
     if (key === 'y') return y;
     if (key === 'd') return Dat(x, y);
     if (key === 'chi2') return chi2min + Dat(x, y);
