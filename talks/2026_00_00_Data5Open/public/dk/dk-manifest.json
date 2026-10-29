@@ -4,8 +4,14 @@
   "code-lines.json": {
    "talks": [5],
    "shape": "per script: path, bytes, sha256, lines, longest, runs",
-   "meaning": "the real line structure of the series' scripts (course root_to_csv.py, the kit's bake/d0.py) for dk-pipeline's code stage; no source text",
+   "meaning": "the real line structure of the series' scripts (the kit's bake/root_to_csv.py and bake/d0.py) for dk-pipeline's code stage; no source text",
    "by": "code.py"
+  },
+  "d0-checks.json": {
+   "talks": [3,5],
+   "shape": "object",
+   "meaning": "chi2 at the fit's start values; sha256 of d0-fit.json from two passes of the bake",
+   "by": "d0.py"
   },
   "d0-fit.json": {
    "talks": [2,3,4,5],
@@ -29,7 +35,7 @@
   "d0-select.json": {
    "talks": [5],
    "shape": "120 selections",
-   "meaning": "6 x 5 x 4 selections as cuts on d0.f32 columns (PT >, IPCHI2 <, TAU >) with the fitted peak of each",
+   "meaning": "6 x 5 x 4 selections as cuts on d0.f32 columns (PT >, IPCHI2 <, TAU >) with the fitted peak of each; the counts of selections 0 and 119; how many peaks lie near selection 0's",
    "by": "d0.py"
   },
   "d0.f32": {
