@@ -1,31 +1,20 @@
-/* Data3Fit: the series' number block (MasterTalk's .nums pattern in the bible's
-   colours, §3: numbers #e8f6ff, units and names #9fd8ff) and the plain cover title.
-   Sizes are px against Slidev's 980-wide canvas. Bottom 190 px (as T4): a three-line block
-   ends above the lower third (canvas 551 high, lower third from 367). */
+/* Data3Fit: the series' number block is the kit's one copy (components/data-kit/nums.css,
+   the series check of 29 Oct); the deck keeps no .nums rules of its own. */
+@import '../components/data-kit/nums.css';
 
-html[data-stage] .nums {
-  position: absolute; left: 56px; bottom: 190px; z-index: 30; pointer-events: none;
-  font-family: 'Space Grotesk', system-ui, sans-serif; color: #e8f6ff;
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.6);
+/* The cover keeps one plain title: a lone h1 takes the title's size, not the kicker's
+   (the series' one cover rule, Data2Peak's block, the same in all five decks). */
+html[data-stage] .slidev-page .slidev-layout.cover h1:only-of-type {
+  font-size: max(var(--stage-type-min, 0px), 66px * var(--stage-type-scale, 1)) !important;
+  font-weight: 700 !important; line-height: 0.98 !important; letter-spacing: -0.02em !important;
+  color: var(--stage-fg) !important; margin: 0 !important; max-width: 12ch;
 }
-html[data-stage] .nums p { margin: 0 0 10px; line-height: 1; white-space: nowrap; opacity: 0; animation: dk-nums-in 1s ease forwards; }
-html[data-stage] .nums b { font-size: 46px; font-weight: 700; letter-spacing: -0.01em; }
-html[data-stage] .nums .unit { font-size: 22px; font-weight: 500; letter-spacing: 0.04em; color: #9fd8ff; margin-left: 0.4em; }
-html[data-stage] .nums .name { font-size: 22px; font-weight: 500; color: #9fd8ff; margin-left: 0.5em; }
-html[data-stage] .nums p:nth-child(1) { animation-delay: var(--d1, 2s); }
-html[data-stage] .nums p:nth-child(2) { animation-delay: var(--d2, 3.2s); }
-html[data-stage] .nums p:nth-child(3) { animation-delay: var(--d3, 4.4s); }
-@keyframes dk-nums-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { html[data-stage] .nums p { animation: none; opacity: 1; } }
+/* ...and lands once the plot stands (the stage sets data-space-assembled at about 0.6 s), not with it. */
+html[data-stage] .slidev-page .slidev-layout.cover h1:only-of-type { transition: opacity 1.2s ease 0.9s, transform 1.2s ease 0.9s; }
 
-/* The cover carries one heading, the talk's plain title: the kit styles a lone first
-   h1 as a small kicker, so give it the title's look instead (bible §3). */
-html[data-stage] .slidev-layout.cover h1:only-of-type {
-  font-size: 66px !important; font-weight: 700 !important; line-height: 0.98 !important;
-  letter-spacing: -0.02em !important; text-transform: none; color: var(--stage-fg) !important;
-  margin: 0 !important; max-width: 12ch;
+/* The stage's cover scrim (a 0.55 radial darkening centred at 32 % / 50 %, 60 % × 55 %) lies over the
+   plot and took about a quarter of its light, so the cut from Talk 2's close (no scrim) showed a drop.
+   Data2Peak's block, word for word: the scrim stays behind the title only, the same in all five covers. */
+html[data-stage] .slidev-page .slidev-layout.cover::after {
+  background: radial-gradient(26% 30% at 24% 50%, rgba(var(--stage-bg-rgb, 5, 5, 7), 0.55), transparent 70%);
 }
-
-/* The cover's world is T2's last frame, the peak in the middle: the title stands high
-   on the left, over the black above the plot's left shoulder, instead of on it. */
-html[data-stage] .slidev-layout.cover { justify-content: flex-start !important; padding-top: 84px !important; }

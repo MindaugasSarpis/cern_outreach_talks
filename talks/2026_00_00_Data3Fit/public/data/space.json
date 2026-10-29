@@ -10,7 +10,7 @@
       "objects": [
         {
           "type": "dk-hist", "name": "h", "pos": [0, 0, 0], "grains": 91583,
-          "values": "d0.f32", "key": "M", "word": "mass MeV/c²", "replay": false, "tickPx": 36,
+          "values": "d0.f32", "key": "M", "word": "mass MeV/c²", "replay": false, "oursSlot": 3,
           "steps": [
             0,
             { "n": "all" },
@@ -18,34 +18,32 @@
               "ticks": [1820, 1840, 1860, 1880, 1900,
                         { "v": 1864.84, "tone": "axis", "y": [0.86, 1.1], "label": "none" }] },
             { "window": [1850, 1880] },
-            { "window": [1855, 1875] },
+            { "window": [1855, 1875], "meanTick": false,
+              "ticks": [1820, 1840, 1860, 1880, 1900,
+                        { "v": 1864.84, "text": "1 864.84", "tone": "axis", "y": [0.9, 1.16], "align": "left" },
+                        { "v": 1864.81, "tone": "sel", "y": [0.9, 1.16], "label": "none" }] },
             { "window": [1854.47, 1874.47],
               "ticks": [1820, 1840, 1860, 1880, 1900,
-                        { "v": 1864.84, "tone": "axis", "y": [0.86, 1.1], "label": "none" },
-                        { "v": 1864.42, "tone": "sel", "y": [0.86, 1.1], "label": "none" }] },
-            { "window": null, "alpha": 0.72,
-              "ticks": [1820, 1840, 1860, 1880, 1900,
-                        { "v": 1817.6, "tone": "axis", "y": [-0.4933, -0.2667], "label": "none" },
-                        { "v": 1817.6, "text": "+2", "tone": "axis", "y": [-0.3267, -0.3267], "label": "above", "align": "right" },
-                        { "v": 1817.6, "text": "0", "tone": "axis", "y": [-0.44, -0.44], "label": "above", "align": "right" },
-                        { "v": 1817.6, "text": "−2", "tone": "axis", "y": [-0.5533, -0.5533], "label": "above", "align": "right" }] },
+                        { "v": 1864.84, "text": "1 864.84", "tone": "axis", "y": [0.9, 1.16], "align": "left" },
+                        { "v": 1864.42, "text": "1 864.42", "tone": "sel", "y": [0.9, 1.07], "align": "right" }] },
+            { "window": null, "meanTick": null, "alpha": 0.72, "ticks": [1820, 1840, 1860, 1880, 1900] },
             { "alpha": null, "ticks": null },
             { "tilt": null,
               "ticks": [1820, 1840, 1880, 1900,
-                        { "v": 1864.47, "text": "1 864.47", "tone": "axis", "y": [0.86, 1.1], "align": "right" },
+                        { "v": 1864.47, "text": "1 864.47", "tone": "axis", "y": [0.8, 1.02], "align": "right" },
                         { "v": 1864.84, "text": "1 864.84", "tone": "sel", "y": [0.86, 1.1], "align": "left" }] },
             { "shift": 1.00019716 },
             { "shift": null,
-              "ticks": [1820, 1840, 1880, 1900,
-                        { "v": 1864.47, "tone": "tick", "y": [0, 1.1], "label": "none" }] },
+              "ticks": [1820, 1840, 1860, 1880, 1900,
+                        { "v": 1864.47, "text": "1 864.47", "tone": "sel", "y": [0, 1.1] }] },
             { "weights": "psig" },
             { "ticks": null },
-            { "weights": null, "ticks": [], "tilt": 62 }
+            { "weights": null, "ticks": [], "tilt": 62, "axis": false, "cut": ["M", "<", 0] }
           ]
         },
         {
-          "type": "dk-curve", "name": "fit", "of": "h", "pos": [0, 0, 0], "grains": 12000,
-          "src": "d0-fit.json",
+          "type": "dk-curve", "name": "fit", "of": "h", "pos": [0, 0, 0], "grains": 14000,
+          "src": "d0-fit.json", "pull": { "guides": [-2, 2], "y": -0.46, "height": 0.15 }, "split": { "zero": 0.15 },
           "sets": [
             "iterations.0", "iterations.1", "iterations.2", "iterations.3", "iterations.4", "iterations.5",
             { "nSig": "@params.nSig", "mu": "@scale.refitMu", "width": "@params.width", "a": "@params.a", "b": "@params.b" }
@@ -57,29 +55,32 @@
             { "set": 1 },
             { "set": 2 },
             { "set": 5, "parts": "sig", "through": true, "ease": 0.7 },
-            { "parts": null, "pull": null, "through": null, "ease": null },
-            { "set": 6, "ease": 1.6 }
+            { "parts": null, "pull": null, "through": null, "ease": null, "replay": false },
+            { "set": 6, "ease": 1.6, "thick": 0.008, "alpha": 0.6 },
+            { "set": 5, "thick": 0.008, "alpha": 0.6 },
+            { "set": 5, "thick": null, "alpha": 0 }
           ]
         },
         {
           "type": "dk-landscape", "name": "bowl", "under": "h", "pos": [0, 0, 0], "grains": 60000,
           "src": "d0-chi2.json", "size": [14, 10], "height": 6, "range": [0.4, 0.3],
-          "ticks": [1864.3, 1864.5, 1864.7], "tickPx": 36
+          "ticks": [1864.3, 1864.5, 1864.7], "yticks": [7.6, 7.8],
+          "words": { "x": "μ MeV/c²", "y": "width MeV/c²", "z": "Δχ²" }
         },
         {
           "type": "dk-spark", "name": "ours", "pos": [0, 0, 0], "grains": 221,
           "steps": [
             null,
-            { "on": "h", "ringColor": "sel" },
-            { "on": "h", "core": true, "color": "follow", "ringColor": "sel" }
+            { "on": "h" },
+            { "on": "h", "core": true, "color": "follow" }
           ]
         },
         {
           "type": "dk-spark", "name": "big", "pos": [0, 0, 0], "grains": 221, "size": 7,
           "steps": [
             null,
-            { "on": "h", "core": true, "color": "sel", "ringColor": "sel" },
-            { "on": "h", "core": true, "color": "follow", "ringColor": "sel" }
+            { "on": "h", "core": true, "color": "crowd" },
+            { "on": "h", "core": true, "color": "follow" }
           ]
         }
       ]
@@ -91,15 +92,15 @@
       "objects": [
         {
           "type": "dk-landscape", "name": "s1", "pos": [0, 0, 0], "grains": 4000, "dims": 1,
-          "src": "d0-chi2.json", "size": [14, 0], "height": 7, "word": "Δχ²", "tickPx": 36,
+          "src": "d0-chi2.json", "size": [14, 0], "height": 7, "word": "Δχ²", "yticks": [1],
           "roll": { "leg": 0.18 }
         },
         {
           "type": "dk-landscape", "name": "s2", "pos": [0, 0, 0], "grains": 5000, "dims": 1,
           "src": "d0-chi2.json", "size": [14, 0], "height": 8,
-          "slice": { "zmax": 20 }, "band": { "x": [1864.8, 1864.88], "tone": "sel", "fill": 0.3 },
-          "ticks": [{ "v": 1864.84, "tone": "sel" }], "tickPx": 36,
-          "word": "Δχ²", "steps": [0, { "ball": true, "ring": true }]
+          "slice": { "zmax": 20 }, "band": { "x": [1864.8, 1864.88], "tone": "sel", "fill": 0.5, "grains": 4000 },
+          "ticks": [{ "v": 1864.47, "text": "1 864.47" }, { "v": 1864.84, "tone": "sel" }], "yticks": [1, 4, 9, 16],
+          "word": "Δχ²", "steps": [0, { "ball": true }]
         }
       ]
     },
@@ -112,20 +113,20 @@
           "type": "dk-hist", "name": "tau", "pos": [0, 0, 0], "grains": 70000,
           "values": "d0.f32", "key": "TAU", "lo": 0, "hi": 5, "bin": 0.25, "width": 20, "height": 9,
           "split": { "col": "M", "win": [1850, 1880], "sb": [[1820, 1840], [1890, 1910]] },
-          "word": "decay time ps", "tickPx": 36, "glowTint": 0,
+          "word": "decay time ps", "glowTint": 0,
           "steps": [
             0,
             { "n": 0 },
             { "n": 2000, "max": 900, "fill": 1.4, "fall": 0.8, "lead": 0.3, "alpha": 0.9, "selGain": 1.0 },
-            { "subtract": true, "max": 260 },
-            { "n": "all", "subtract": null, "max": null, "fill": 1.0, "fall": 0.6, "lead": 0, "alpha": null, "selGain": 1.3 },
+            { "subtract": true, "max": 260, "ghost": 0.15 },
+            { "n": "all", "subtract": null, "ghost": null, "max": null, "glow": 0.3, "fill": 1.0, "fall": 0.6, "lead": 0, "alpha": null, "selGain": 1.3 },
             { "subtract": true, "max": 9000, "fitRange": [0.5, 5], "fill": null, "fall": null, "lead": null, "selGain": 1.6 },
             { "cut": ["IPCHI2", "<", 9] }
           ]
         },
         {
           "type": "dk-curve", "name": "decay", "of": "tau", "pos": [0, 0, 0], "grains": 3000,
-          "src": "d0-tau.json", "f": "decay", "sets": ["scanT0.all.3", "fit"], "pull": false,
+          "src": "d0-tau.json", "f": "decay", "sets": ["scanT0.all.3", "fit"], "pull": false, "readout": "tau",
           "range": [0.5, 3], "alpha": 0.8,
           "steps": [0, { "set": 0 }, { "set": 1 }]
         }

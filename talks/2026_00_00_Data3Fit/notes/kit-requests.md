@@ -100,3 +100,43 @@ Toolkit (slidev-videos), for the record (no change in the deck can reach these):
     break-up a frame later: slide 11's take dips for one frame (luminance 59 → 42 → 56). Under `fade` the old
     slide stayed while it faded and there was no dip. Ask: hold the clip's last frame (or the overlay's first
     sheet) on the frame the slide changes.
+
+## The steward's answers (29 Oct, polish:data3fit)
+
+Items 1-11 and 16 applied in the kit (notes/steward.md, Data3Fit) and taken by the deck, except item
+3's `readout: 'window'` (declined in the deck: "signal" would name the 1 172 window grains before the
+subtraction) and item 11 (the out-of-view standing plot is kept until a take confirms the load-time
+frame). Item 12 declined by the steward; 13-15 and 17 are toolkit asks and stay open there.
+
+## From the review of 29 Oct (fix:data3fit, second pass)
+
+None blocks the deck; each has a stand-in in `public/data/space.json`.
+
+18. **dk-hist window, a mean tick's span and depth (slide 3).** The window's own mean tick stands at z 0
+    over the window's top (0.04-0.16 H above it), while a tall step tick stands at z 0.6 × depth from its
+    own `y`: at dist 7 the mean (1 864.81) and the world mark (1 864.84) stood about 20 px apart by
+    parallax and at different heights. The deck sets `meanTick: false` on h steps 4-5 and draws the mean
+    as a white step tick at the world mark's span (`y: [0.9, 1.16]`), so the two coincide as one line;
+    the mean no longer glides between the two windows of slide 3 (the step ticks crossfade). Ask:
+    `meanTick: { y, tone, z: 'tick' }`, a mean tick drawn like a step tick and still gliding.
+19. **dk-landscape dims 1, the ring without its crossing labels (slide 8).** `ring: true` always labels its
+    two crossings, so slide 8's bar ends (1 864.38, 1 864.57) stood 15 px apart and read as one string.
+    The deck drops the ring on s2 (no Δχ² = 1 bar) and labels the ball's value with `ticks`
+    (`{ v: 1864.47, text: '1 864.47' }`); the levels 1, 4, 9, 16 carry the error scale. Ask:
+    `ring: { labels: false }` (or a `crossLabels` field), so the one-error bar can stay unlabelled.
+20. **dk-curve pull guides, density and brightness (slides 4-5).** The zero line and the ±2 guides get
+    3 % of the grains (every other grain of a guide shown, alpha 0.55): at dist 22-28 they hardly showed.
+    The deck raises the share with the curve's undocumented `split: { zero: 0.15 }` and 14 000 grains.
+    Ask: `pull.guides` as an object (`{ at: [-2, 2], alpha, grains }`), documented.
+21. **dk-hist, a fade-out step (slide 6).** An `alpha` drop eases in 0.4 s and `h: 0` in 0.35 s; the
+    review asked the tipped plot to go during the camera's 1.5 s rise. The deck uses a `cut` that takes
+    every grain (`["M", "<", 0]`) with `axis: false`, so the grains lift away as dust by about 2.5 s,
+    and fades the curve with a fit step `{ alpha: 0 }` (0.8 s). Ask: `fade: seconds` as a step key (the
+    grains, frame and labels to 0 over that time), so a plot can leave without the dust reading as a cut.
+
+Toolkit (slidev-videos), for the record:
+
+22. **shots, `.nums.out` (slide 14).** `slidev-stage-shots` finishes every CSS animation, so a still of a
+    close with `.nums.out` shows the bare picture without its number (slide 14's 20 993). A take plays it
+    on the page's clock (in at 1.5 s, out at 11 s). Ask: finish the `dk-nums-in` animations but hold the
+    `dk-nums-out` ones at their start for stills, or a `--stills-at` that names the moment.

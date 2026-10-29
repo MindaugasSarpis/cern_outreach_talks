@@ -25,8 +25,8 @@ info: |
   Talk 3 of 5 of "Data analysis, the CERN way", for STEM students. One short-lived
   particle's mass peak in open data: window means wander; a model with five knobs is
   fitted to the counts; the fit is the bottom of a χ² valley and its error is the
-  valley's width; the world value sits 3.5 σ up the wall, and a 0.03 % scale would
-  close the gap; decay times, sideband subtraction and a quality cut give the
+  valley's width; the world value sits 3.5 σ up the wall, and a 0.026 % momentum-scale
+  shift would close the gap, inside the 0.03 % uncertainty; decay times, sideband subtraction and a quality cut give the
   lifetime; every grain gets a signal share. Pictures and numbers only on screen;
   sources and the said text live in the notes.
 lang: en                  # slides and notes; `pnpm talk lint` reads it
@@ -36,20 +36,19 @@ duration: 15min
 onscreen: numbers
 sources: notes
 layout: cover
-# T2's last frame exactly (its close pose and state: the full plot standing, our grain ringed white with no core of its own, as T2's spark step 2): a first-guess line draws on under the title once the plot stands
-space: { at: [-1, 3.2, 0], dist: 25, yaw: -4, pitch: 5, dim: 0.3, ambient: 0, steady: true, sway: 1 }
+# T2's last frame exactly (its close pose and state: the full plot standing, our grain ringed white with no core of its own, as T2's spark step 2): a first-guess line draws on once the plot stands,
+# and the camera slides the plot right in 2.5 s while the title rises (as T4's cover), so the title stands clear of the bars; the scrim stays behind the title only (styles/index.css)
+space: { at: [-7.5, 3.2, 0], dist: 27, yaw: -4, pitch: 5, dim: 0.3, ambient: 0, steady: true, sway: 1, path: [[0, { at: [-1, 3.2, 0], dist: 25, yaw: -4, pitch: 5 }], [2.5, { at: [-7.5, 3.2, 0], dist: 27, yaw: -4, pitch: 5 }]] }
 steps: { h: 1, fit: 1, bowl: 0, ours: 1, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 }
 ---
 
-<!-- the cover's plain title; the .name span only keeps `talk lint` from reading the headmatter's onscreen: numbers as this slide's own (it renders as a plain h1) -->
-
-# <span class="name">Fitting</span>
+# Fitting
 
 <!-- facts: record401-candidates-91583, d0-row1-values-worked -->
 
 <!--
 Message: last time we counted this peak and showed that it is real; today we draw a line through it and measure where it stands.
-Picture: the same heap as last time, one grain per candidate, all 91 583 of them; the white ring marks our grain in the 1 880-1 882 MeV/c² bin, the grain itself in the plot's light blue, as last talk left it; the line of grains drawing across the peak is the model we will fit, set at a first guess.
+Picture: the same heap as last time, one grain per candidate, all 91 583 of them; the white ring marks our grain in the 1 880-1 882 MeV/c² bin, standing a few grains up its column, the grain itself in the plot's light blue, as last talk left it; the line of grains drawing across the peak is the model we will fit, set at a first guess; as the title rises the plot slides right, clear of it.
 Caveats: always "candidates": the file holds 91 583, while the portal counts 53 948 events, and an event can hold more than one candidate. The axis runs 1 816-1 912 MeV/c², the series' range, inside the file's own pre-selection window.
 Sources: CERN Open Data record 401 (DOI 10.7483/OPENDATA.LHCb.E7EJ.JUWR), through the data kit's bake/d0.py (d0.f32, d0-fit.json).
 (~0.5 min)
@@ -57,7 +56,7 @@ Sources: CERN Open Data record 401 (DOI 10.7483/OPENDATA.LHCb.E7EJ.JUWR), throug
 
 ---
 # the mass plot right of the numbers, the window lit white; it narrows once here (the third width lands on the close pose, next slide); the dim dotted mark is the world value
-space: { at: [-8.5, 3.2, 0], dist: 26, yaw: -4, pitch: 5, dim: 0.25, ambient: 0, steady: true, sway: 0.5 }
+space: { at: [-8.7, 3.2, 0], dist: 28, yaw: -4, pitch: 5, dim: 0.25, ambient: 0, steady: true, sway: 0.5 }
 steps: { h: 2, fit: 0, bowl: 0, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 }
 clicks: 1
 ---
@@ -81,8 +80,10 @@ Sources: record 401 via bake/d0.py (d0-means.json); PDG 2026, pdgLive S032 (the 
 -->
 
 ---
-# cut close to the summit (right of the numbers, dist 7 so half an MeV/c² reads): the window narrows to 20 MeV/c² and its mean tick lands on the world mark; on the click the same window slides half an MeV/c² left, its mean drops below and a white dotted mark stands at it, apart from the dim world mark
-space: { at: [-2.7, 10.4, 0], dist: 7, yaw: -4, pitch: 3, dim: 0.25, ambient: 0, steady: true, sway: 0.3, path: [[0, { at: [-2.7, 10.4, 0], dist: 7, yaw: -4, pitch: 3 }]] }
+# cut closer to the peak (right of the numbers, dist 10.5: the white window, blue columns either side and the labelled world mark in one frame): the window narrows to 20 MeV/c² and its mean,
+# a white dotted mark at the world mark's height and depth (h step 4: `meanTick: false` and the mean as a step tick), lands on the world mark as one line; on the click the same window slides half
+# an MeV/c² left and the mean's mark, shorter and labelled 1 864.42, stands apart from the dim world mark labelled 1 864.84
+space: { at: [-2.4, 8.9, 0], dist: 10.5, yaw: -4, pitch: 3, dim: 0.25, ambient: 0, steady: true, sway: 0.3, path: [[0, { at: [-2.4, 8.9, 0], dist: 10.5, yaw: -4, pitch: 3 }]] }
 steps: { h: 4, fit: 0, bowl: 0, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 }
 clicks: 1
 ---
@@ -98,16 +99,16 @@ clicks: 1
 
 <!--
 Message: narrowed to 20 MeV/c², the window's mean lands on the world value; the same window moved half an MeV/c² to the left gives a mean 0.4 MeV/c² lower, below it, so a window's mean cannot be the mass.
-Picture: the cut lands close on the summit as the window narrows to 20 MeV/c² (1 855-1 875) and the white mean tick glides to 1 864.81 MeV/c², onto the dim dotted world mark (1 864.84); on the click the window slides 0.53 MeV/c² to the left, onto 1 864.47 MeV/c², where the fit will put the peak, and the mean tick drops to 1 864.42 MeV/c², where a white dotted mark rises beside the dim dotted world mark (1 864.84), clearly apart from it.
+Picture: the cut lands closer on the peak, the white window with light-blue columns either side, as the window narrows to 20 MeV/c² (1 855-1 875); its mean, a white dotted mark, stands at 1 864.81 MeV/c² on the dim dotted world mark labelled 1 864.84, and the two read as one line; on the click the window slides 0.53 MeV/c² to the left, onto 1 864.47 MeV/c², where the fit will put the peak, and the mean's mark, shorter now and labelled 1 864.42, stands to the left of the world mark, apart from it.
 Caveats: centred on 1 864.47, windows 50, 30, 20 and 10 MeV/c² wide give 1 864.38, 1 864.46, 1 864.42 and 1 864.44 MeV/c², below the world value whatever the width. The background under the peak is not flat, so every window's mean carries some of it. 1 864.47 is the fit's answer (slide 5); here it only places the window.
 Sources: record 401 via bake/d0.py (d0-means.json, centredOnFit); PDG 2026, pdgLive S032.
 (~0.7 min)
 -->
 
 ---
-# lab 3 slide 1, framed closer: the model at its start values over lighter columns, the pull row under the axis with its dim zero line and a ±2 ruler
-# a one-key cut from slide 3's close pose (a 1 s flight from dist 7 to 22 swung the plot through the frame)
-space: { at: [-7, 3.0, 0], dist: 22, yaw: -4, pitch: 5, dim: 0.15, ambient: 0, steady: true, sway: 1, path: [[0, { at: [-7, 3.0, 0], dist: 22, yaw: -4, pitch: 5 }]] }
+# lab 3 slide 1, framed closer: the model at its start values over lighter columns, the pull row under the axis with its zero line and dotted ±2 guides (fit `pull.y` −0.46, `height` 0.15:
+# the row clear of the caption; `split.zero` 0.15 of 14 000 grains: the zero line and the guides dense enough to read); a one-key cut from slide 3's pose; dist 25, so the plot stands between the numbers and the right edge
+space: { at: [-7.1, 2.6, 0], dist: 25, yaw: -4, pitch: 5, dim: 0.15, ambient: 0, steady: true, sway: 1, path: [[0, { at: [-7.1, 2.6, 0], dist: 25, yaw: -4, pitch: 5 }]] }
 steps: { h: 6, fit: 2, bowl: 0, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 }
 ---
 
@@ -120,42 +121,43 @@ steps: { h: 6, fit: 2, bowl: 0, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 
 
 <!--
 Message: a model is a curve with five knobs, set here by eye from the peak's height, centre and width; each pull is one bin's miss in units of its √N wobble, and χ² adds the pulls up, squared.
-Picture: the white line is a bell curve (last talk's) on a straight background line, over the 84 680 candidates between 1 820 and 1 910 MeV/c²; the row under the axis is each bin's pull, (count − model) / √count, standing up or down from its dim zero line, with a dim ruler at its left end from −2 to +2; the S of large pulls on the flanks, from −3 to +3.5, well past the ruler's ends, is what χ² 371.5 means.
+Picture: the white line is a bell curve (last talk's) on a straight background line, over the 84 680 candidates between 1 820 and 1 910 MeV/c²; the row under the axis is each bin's pull, (count − model) / √count, standing up or down from its zero line, with dim dotted guides across the row at +2 and −2 (their numbers at the row's left end); the S of large pulls on the flanks, from −3 to +3.5, well past the guides, is what χ² 371.5 means.
 Caveats: the start width comes from the full width at half maximum, 16.86 MeV/c² / 2.355 = 7.16 MeV/c², at the tallest bin's centre, 1 863.0 MeV/c². The five knobs are the signal count, the centre μ, the width, the background's level and its slope. "Width" is the bell's spread; σ keeps its meaning from last talk, the significance. χ² at the start values is 371.5 over 45 bins.
 Sources: record 401 via bake/d0.py (d0-fit.json start, iterations[0]).
 (~1.5 min)
 -->
 
 ---
-# lab 3 slide 2: the curve glides through the minimiser's logged steps onto the column tops; the pulls lose their pattern
-space: { at: [-11, 1.6, 0], dist: 28, yaw: -4, pitch: 4, dim: 0.15, ambient: 0, steady: true, sway: 1 }
+# lab 3 slide 2, slide 4's pose (the glide plays on the same frame, the pulls legible): the curve glides through the minimiser's logged steps onto the column tops; the pulls lose their pattern
+# the χ² line stays where slide 4 had it (the block's last line), μ and the width rise above it on click 2
+space: { at: [-7.1, 2.6, 0], dist: 25, yaw: -4, pitch: 5, dim: 0.15, ambient: 0, steady: true, sway: 1 }
 steps: { h: 6, fit: 2, bowl: 0, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 }
 clicks: 2
 ---
 
 <StageSteps :clicks="{ 1: { fit: 3 }, 2: { fit: 5 } }" />
 
-<div class="nums" style="--d1: 1.6s; --d2: 0.2s; --d3: 0.2s">
-  <p><b><StageCount for="fit" :to="53.4" :decimals="1" /></b><span class="name">χ²</span></p>
+<div class="nums" style="--d1: 0.2s; --d2: 0.6s; --d3: 1.6s">
   <p v-click="2"><b>1 864.47</b><span class="unit">MeV/c²</span><span class="name">μ</span></p>
   <p v-click="2"><b>7.65</b><span class="unit">MeV/c²</span><span class="name">width</span></p>
+  <p><b><StageCount for="fit" :to="53.4" :decimals="1" /></b><span class="name">χ²</span></p>
 </div>
 
 <!-- facts: course-d0-fit-mass-worked, d0-fit-chi2-ndf-worked, d0-mass-resolution-lhcb -->
 
 <!--
 Message: the fit moves the knobs, step by step, until the pulls are as small as they get. Each pull wobbles by about ± 1 by chance, so a model that matches has χ² near the number of bins minus the knobs, 45 − 5 = 40; 53 for 40 happens by chance about 8 % of the time.
-Picture: the clicks follow the minimiser's logged steps: the white curve slides onto the column tops and χ² falls from 371.5 to 56.6 (click 1), then glides through the last logged steps to 53.4 (click 2); on the last click the dashed curve is the signal part alone (the background is the curve's flat shoulders), and the pull row is small, inside the ±2 ruler, with no pattern left; the centre μ is 1 864.47 MeV/c² and the width 7.65 MeV/c². The 40 (45 bins minus 5 knobs, the degrees of freedom) is said, not shown.
+Picture: the clicks follow the minimiser's logged steps: the white curve slides onto the column tops and χ² falls from 371.5 to 56.6 (click 1), then glides through the last logged steps to 53.4 (click 2); on the last click the dashed curve is the signal part alone (the background is the curve's flat shoulders), and the pull row is small, inside the dotted ±2 guides, with no pattern left; the centre μ is 1 864.47 MeV/c² and the width 7.65 MeV/c². The 40 (45 bins minus 5 knobs, the degrees of freedom) is said, not shown.
 Caveats: χ²/ndf 1.33, p = 0.077 (last talk's p-value). The width is the detector's mass resolution, about 8 MeV/c² in the experiment's own papers; the particle's own width is far smaller (slide 13). Steps 3 to 5 of the log differ only in the fourth decimal, so two clicks show them: the first step, then the rest as one glide. The path is logged by the bake script, never drawn by hand. The error on μ comes on slide 7, where it is defined.
 Sources: record 401 via bake/d0.py (d0-fit.json); LHCb, JHEP 03 (2016) 159 (mass resolution).
 (~2 min)
 -->
 
 ---
-# lab 3 slide 4 (the bowl right of the number): the camera rises over 1.5 s while the plot, its curve and no tick numbers, tips back 62° over the χ² bowl gathering under
-# the floor (the screen is never empty); click 1 the plot goes and the ball rolls in, click 2 the Δχ² = 1 ring lights
-space: { at: [-4, -4.2, 6.2], dist: 19, yaw: -12, pitch: 34, dim: 0.25, ambient: 0, steady: true, sway: 0.5, path: [[0, { at: [-11, 1.6, 0], dist: 28, yaw: -4, pitch: 4 }], [1.5, { at: [-4, -4.2, 6.2], dist: 19, yaw: -12, pitch: 34 }]] }
-steps: { h: 13, fit: 6, bowl: 1, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 }
+# lab 3 slide 4 (the bowl centred right of the number, a margin all round): the camera rises over 1.5 s while the plot (no axis, ticks or caption: h step 13 `axis: false`) tips back 62° and its grains
+# lift away as dust (`cut` that takes them all, gone by about 2.5 s) and its curve fades (fit step 9, 0.8 s), as the χ² bowl gathers under the floor (the screen is never empty); click 1 the ball rolls in, click 2 the Δχ² = 1 ring lights
+space: { at: [-3, -2.8, 6.2], dist: 20, yaw: -12, pitch: 30, dim: 0.25, ambient: 0, steady: true, sway: 0.5, path: [[0, { at: [-7.1, 2.6, 0], dist: 25, yaw: -4, pitch: 5 }], [1.5, { at: [-3, -2.8, 6.2], dist: 20, yaw: -12, pitch: 30 }]] }
+steps: { h: 13, fit: 9, bowl: 1, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 }
 clicks: 2
 ---
 
@@ -169,17 +171,17 @@ clicks: 2
 
 <!--
 Message: every pair of knob values, centre and width, has its χ²; the fit is the bottom of that valley.
-Picture: as the camera rises the plot and its fitted curve tip back over the valley, which gathers under the floor where the plot stood (the plot carries no numbers now); on click 1 the plot fades; height is χ² above its minimum, μ runs along the front lip (its numbers 1 864.3, 1 864.5 and 1 864.7 MeV/c², the same units as the μ on the left) and the width across, from front to back (7.5 to 7.8 MeV/c², said, not labelled); on click 1 the ball, the minimiser, rolls in over the rim along the steps the last slide took; on click 2 the white ring lights where χ² stands 1 above the bottom, and the next slide turns it into a number.
-Caveats: the other three knobs are re-fitted at each point of the valley. The path starts at 1 863.0, outside the part drawn, so the ball rolls in over the rim. The tipped plot shows no tick numbers and goes on click 1, before the μ number and the ball: two μ scales on one screen would read as one.
+Picture: as the camera rises the plot tips back and its grains lift away as dust while its fitted curve fades, and the valley gathers under the floor where the plot stood (the plot carries no axis, numbers or caption now); height is χ² above its minimum (captioned Δχ² at the left rim's back corner), μ runs along the front lip (its numbers 1 864.3, 1 864.5 and 1 864.7, captioned "μ MeV/c²", the same units as the μ on the left) and the width across, from front to back (7.6 and 7.8 on the right edge, captioned "width MeV/c²"); on click 1 the ball, the minimiser, rolls in over the rim along the steps the last slide took; on click 2 the white ring lights where χ² stands 1 above the bottom, and the next slide turns it into a number.
+Caveats: the other three knobs are re-fitted at each point of the valley. The path starts at 1 863.0, outside the part drawn, so the ball rolls in over the rim. The tipped plot shows no axis, tick numbers or caption and is gone before the μ number and the ball: two μ scales on one screen would read as one.
 Sources: record 401 via bake/d0.py (d0-chi2.json).
 (~1.5 min)
 -->
 
 ---
 # cut to the slice station (lab 3 slide 3): one cut through the valley along μ; the ball rolls to the bottom (1.6-2.5 s); the Δχ² = 1 bar is the error
-# out of view at the mass station, the plot and its fitted curve stand ready for slide 9's cut back (h 8, fit 6), so that cut opens on them at their scale
+# out of view at the mass station, the plot and its fitted curve (thinned for the close pose) stand ready for slide 9's cut back (h 8, fit 8), so that cut opens on them at their scale
 space: { at: [64.5, 3.6, 0], dist: 18, yaw: 0, pitch: 3, dim: 0.25, ambient: 0, steady: true, sway: 0.5, path: [[0, { at: [64.5, 3.6, 0], dist: 18, yaw: 0, pitch: 3 }]] }
-steps: { h: 8, fit: 6, bowl: 0, ours: 0, big: 0, s1: 3, s2: 0, tau: 0, decay: 0 }
+steps: { h: 8, fit: 8, bowl: 0, ours: 0, big: 0, s1: 3, s2: 0, tau: 0, decay: 0 }
 ---
 
 <div class="nums" style="--d1: 2.4s; --d2: 3.2s">
@@ -191,16 +193,17 @@ steps: { h: 8, fit: 6, bowl: 0, ours: 0, big: 0, s1: 3, s2: 0, tau: 0, decay: 0 
 
 <!--
 Message: the error is how wide the valley is where it stands 1 above its bottom: ± 0.10 MeV/c².
-Picture: one cut through the valley along μ: the white parabola is χ² above its minimum; the ball rolls to the bottom; the dim line is Δχ² = 1, and the white bar along it runs from 1 864.38 to 1 864.57 MeV/c², a half-width of 0.0965 MeV/c², the fit's statistical error.
+Picture: one cut through the valley along μ: the white parabola is χ² above its minimum; the ball rolls to the bottom; the dim line is Δχ² = 1 (its level numbered at the slice's left end, under the Δχ² caption), and the white bar along it runs from 1 864.38 to 1 864.57 MeV/c², a half-width of 0.0965 MeV/c², the fit's statistical error.
 Caveats: "statistical" means from the counts' √N alone. The slice is drawn up to Δχ² = 4, so the ball's first leg starts at the slice's left end. The same cut along the width gives ± 0.10 MeV/c² for the width. Moving the 90 MeV/c² fit range by 4 MeV/c² moves μ by at most 0.03 MeV/c², inside its ± 0.10.
 Sources: record 401 via bake/d0.py (d0-chi2.json slice; d0-fit.json stability).
 (~1 min)
 -->
 
 ---
-# same station, a step back: the slice drawn to Δχ² 20, the ball at the bottom with its one-error bar along Δχ² = 1, the world value as a white band high on the right wall (the mass plot stands ready out of view, as on slide 7)
+# same station, a step back: the slice drawn to Δχ² 20, its levels 1, 4, 9 and 16 numbered, the ball at the bottom labelled 1 864.47 (no ring: slide 7 said the bar's ends), the world value as a white band
+# high on the right wall (fill 0.5, 4 000 grains), labelled 1 864.84 (the mass plot stands ready out of view, as on slide 7)
 space: { at: [64.5, 4.3, 0], dist: 19, yaw: 0, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 0.5 }
-steps: { h: 8, fit: 6, bowl: 0, ours: 0, big: 0, s1: 0, s2: 1, tau: 0, decay: 0 }
+steps: { h: 8, fit: 8, bowl: 0, ours: 0, big: 0, s1: 0, s2: 1, tau: 0, decay: 0 }
 ---
 
 <div class="nums" style="--d1: 2.4s; --d2: 3.4s">
@@ -208,11 +211,11 @@ steps: { h: 8, fit: 6, bowl: 0, ours: 0, big: 0, s1: 0, s2: 1, tau: 0, decay: 0 
   <p><b>3.5</b><span class="unit">σ</span></p>
 </div>
 
-<!-- facts: d0-pdg-gap-3p5-sigma-worked, d0-pdg-on-valley-wall-worked, pdg-d0-mass-2026 -->
+<!-- facts: d0-pdg-gap-3p5-sigma-worked, d0-pdg-on-valley-wall-worked, pdg-d0-mass-2026, course-d0-fit-mass-worked -->
 
 <!--
 Message: the world value lies high up the wall of our valley, 0.37 MeV/c² away. Δχ² = n² is n errors from the bottom (1 is one error, 4 is two, 9 is three); at the world value Δχ² is 14.5, so it is 3.8 of our errors away, and with its own ± 0.04 added in quadrature, √(0.0965² + 0.04²) = 0.104, the gap is 3.5 σ.
-Picture: the same valley as the last slide, drawn up to Δχ² 20; the ball rests at the bottom, at 1 864.47 MeV/c², with last slide's white bar along the dim Δχ² = 1 line (1 864.38 to 1 864.57, one error each way); the white band is the world value, 1 864.84 ± 0.04 MeV/c², its two edges white with a faint fill between, standing on the right wall where the wall runs from Δχ² 11.5 to 17.8; the white tick under it is 1 864.84. The band stands about three and a half bar half-widths right of the ball.
+Picture: the same valley as the last slide, drawn up to Δχ² 20, its levels 1, 4, 9 and 16 numbered at the left end (one, two, three, four errors); the ball rests at the bottom, its value 1 864.47 MeV/c² under it; the white band is the world value, 1 864.84 ± 0.04 MeV/c², a light band between two white edges, standing on the right wall where the wall runs from Δχ² 11.5 to 17.8; the white tick under it is 1 864.84. The band stands between the levels 9 and 16, between three and four errors from the bottom.
 Caveats: 3.5 σ is 0.368 / 0.1045 = 3.52 from unrounded values; the rounded 0.37 / √(0.10² + 0.04²) gives 3.44, and the course's ± 0.05 gives 3.3. Independent errors add in quadrature. σ here is last talk's significance.
 Misconception: "3.5 σ means the fit is wrong, or new physics". A statistical error says nothing about a scale error, which is the next slide.
 Sources: PDG 2026, pdgLive S032; record 401 via bake/d0.py (d0-fit.json gap; d0-chi2.json pdgOnSlice).
@@ -220,9 +223,10 @@ Sources: PDG 2026, pdgLive S032; record 401 via bake/d0.py (d0-fit.json gap; d0-
 -->
 
 ---
-# cut back to the mass plot, close on the summit (right of the numbers, which stand on black) between two marks (our fit dim, the world value white); every grain slides by the scale and the curve's summit glides onto the white mark
-space: { at: [-3.0, 9.6, 0], dist: 8, yaw: -4, pitch: 3, dim: 0.35, ambient: 0, steady: true, sway: 0.3, path: [[0, { at: [-3.0, 9.6, 0], dist: 8, yaw: -4, pitch: 3 }]] }
-steps: { h: 8, fit: 6, bowl: 0, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 }
+# cut back to the mass plot, close on the summit (dist 5: 0.37 MeV/c² is about 18 px; right of the numbers, which stand on black) between two marks of different heights (our fit dim and lower, the world
+# value white and higher, their labels staggered); the curve stands at once, thinned (fit 8) so its glow leaves the summit's columns and the marks clear; every grain slides by the scale and the summit glides onto the white mark
+space: { at: [-1.5, 10.3, 0], dist: 5, yaw: -4, pitch: 3, dim: 0.35, ambient: 0, steady: true, sway: 0.3, path: [[0, { at: [-1.5, 10.3, 0], dist: 5, yaw: -4, pitch: 3 }]] }
+steps: { h: 8, fit: 8, bowl: 0, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 }
 clicks: 1
 ---
 
@@ -237,7 +241,7 @@ clicks: 1
 
 <!--
 Message: each mass is computed from the two tracks' momenta (last talk), and each momentum from how far the magnet bends its track; if that bending is calibrated 0.026 % off, every mass moves by 0.02 % and the gap closes. The experiment's own uncertainty on its momentum scale is 0.03 %, so a result is quoted as value ± stat ± syst.
-Picture: the camera is close on the summit; the dim mark is our fit, 1 864.47 MeV/c², the white one the world value, 1 864.84; on the click every grain's mass is multiplied by 1.000197, the grains slide right by 0.37 MeV/c² and restack, and the curve moves its summit from the dim mark to the white one.
+Picture: the camera is close on the summit; the dim, lower mark is our fit, 1 864.47 MeV/c², the white, taller one the world value, 1 864.84; on the click every grain's mass is multiplied by 1.000197, the grains slide right by 0.37 MeV/c² and restack (those that change bin flash white for a moment), and the thin curve moves its summit from the dim mark to the white one.
 Caveats: a two-track mass moves by 0.86 of the momentum scale for a particle decaying at rest, and by 0.77 on average over simulated decay angles, so the momentum shift is about 0.026 % for a mass shift of 0.0197 %. The refit gives 1 864.85 ± 0.10 MeV/c²; the curve's other knobs are held at the fit's values. This shows only that a shift of the size the experiment quotes would close the gap; it does not show that the scale is the cause (energy loss, alignment and the open sample's own processing are others). 0.03 % is the momentum-scale systematic of the 2010-2012 data, an uncertainty rather than a calibration precision. The name on screen is "momentum", so it does not collide with slide 5's p-value.
 Sources: LHCb, Int. J. Mod. Phys. A 30 (2015) 1530022 (momentum scale); record 401 via bake/d0.py (d0-fit.json scale).
 (~1 min)
@@ -245,7 +249,7 @@ Sources: LHCb, Int. J. Mod. Phys. A 30 (2015) 1530022 (momentum scale); record 4
 
 ---
 # clip: real footage of the silicon tracker going in; the clip's grains gather over slide 9's last frame (the plot holds, h 9, fit 7), and once the clip covers it (1.9 s, the dust's arrival) the camera cuts under it to the decay-time station, which waits hidden
-space: { at: [140, 6, 0], dist: 30, yaw: -20, pitch: 18, dim: 0, ambient: 0, path: [[0, { at: [-3.0, 9.6, 0], dist: 8, yaw: -4, pitch: 3 }], [1.9, { at: [-3.0, 9.6, 0], dist: 8, yaw: -4, pitch: 3 }], [1.94, { at: [140, 6, 0], dist: 30, yaw: -20, pitch: 18 }]] }
+space: { at: [140, 6, 0], dist: 30, yaw: -20, pitch: 18, dim: 0, ambient: 0, path: [[0, { at: [-1.5, 10.3, 0], dist: 5, yaw: -4, pitch: 3 }], [1.9, { at: [-1.5, 10.3, 0], dist: 5, yaw: -4, pitch: 3 }], [1.94, { at: [140, 6, 0], dist: 30, yaw: -20, pitch: 18 }]] }
 steps: { h: 9, fit: 7, bowl: 0, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 }
 ---
 
@@ -281,7 +285,7 @@ clicks: 1
 <!--
 Message, beat 1 (as the grains land): a decay time is flight length over speed; these particles live on average 0.41 ps, which is 123 µm of flight in their own frame (cτ).
 Message, beat 2 (the click): under the peak sits background (last talk's sidebands); its decay times are known from the sidebands and are removed bin by bin.
-Picture: the axis is decay time, 0 to 5 ps; as the camera cranes down 2 000 candidates drop in (by about 3 s), white from the mass window 1 850-1 880 MeV/c², light blue from the sidebands 1 820-1 840 and 1 890-1 910 MeV/c², and the live count climbs to 2 000; on the click three of every four sideband grains take one window grain of their bin with them and the rest go alone, because the sidebands are 40 MeV/c² wide against the window's 30; what stays white is the particle's part, and the count falls to 596.
+Picture: the axis is decay time, 0 to 5 ps; as the camera cranes down 2 000 candidates drop in (by about 3 s), white from the mass window 1 850-1 880 MeV/c², light blue from the sidebands 1 820-1 840 and 1 890-1 910 MeV/c², and the live count climbs to 2 000; on the click three of every four sideband grains take one window grain of their bin with them and the rest go alone, leaving a faint ghost where they stood, because the sidebands are 40 MeV/c² wide against the window's 30; what stays white is the particle's part, and the count falls to 596.
 Caveats: the flight in the lab is longer than cτ by βγ = p/(Mc). The 2 000 are the first in the plot's seeded order (1 172 window, 828 sideband); the counted subtraction 1 172 − 0.75 × 828 gives 551, the pairing leaves 596. The subtraction is statistical, pairs within a bin, and decides nothing about any one grain. Our grain (1 880.65 MeV/c²) is just outside the window and in no sideband, so it is on none of the decay-time plots.
 Sources: record 401 via bake/d0.py (d0-tau.json plotSubtract); PDG 2026 summary tables (τ, cτ).
 (~1.0 min)
@@ -298,11 +302,11 @@ clicks: 3
 
 <StageSteps :clicks="{ 1: { tau: 5 }, 2: { decay: 1 }, 3: { tau: 6, decay: 2 } }" />
 
-<!-- the two τ lines share one place: the cut's 0.421 takes the 0.509's line as it fades -->
-<div class="nums" style="--d1: 0.2s; --d2: 0.2s; --d3: 0.4s">
-  <p v-click="[2, 3]"><b>0.509</b><span class="unit">ps</span><span class="name">τ</span></p>
-  <p v-click="3" style="margin-top: -56px"><b>0.421</b><span class="unit">± 0.005 ps</span><span class="name">τ</span></p>
+<!-- τ is the curve's own readout (decay `readout: tau`): 0.509 on click 2, gliding to 0.421 with the curve on click 3; the error is its own line, as on slide 7 -->
+<div class="nums" style="--d1: 0.2s; --d2: 0.6s; --d3: 1.4s">
+  <p v-click="2"><b><StageCount for="decay" :to="0.421" :decimals="3" /></b><span class="unit">ps</span><span class="name">τ</span></p>
   <p v-click="2"><b>0.410</b><span class="unit">ps</span><span class="name">world</span></p>
+  <p v-click="3"><b>± 0.005</b><span class="unit">ps</span><span class="name">error</span></p>
 </div>
 
 <!-- facts: d0-lifetime-without-ipchi2-cut-worked, d0-lifetime-fit-from-record401-worked, d0-from-b-ipchi2, d0-masterclass-ip-cut, pdg-d0-lifetime-2026, d0-natural-width-worked -->
@@ -310,14 +314,14 @@ clicks: 3
 <!--
 Message, beat 1 (arrival to click 2): all the candidates, subtracted the same way, fall as an exponential, but one that lives too long: 0.509 ps against the world value's 0.410.
 Message, beat 2 (click 3): a heavier particle that flies a few millimetres before it decays can produce ours, and one made that way starts away from the collision point and fakes a long life; a quality cut on how far the particle's track points from the collision removes most of them, and τ comes out at 0.421 ± 0.005 ps.
-Picture: on arrival every other candidate with a decay time drops in while the 596 that stood glide down to the full plot's scale, white from the window, light blue from the sidebands; click 1 is the same subtraction for all of them; on click 2 the white line is the exponential fitted from 0.5 ps, and the light-blue columns below 0.5 ps are the ones the fit does not use (the sideband grains are gone by then); on click 3 the grains that fail the cut lift away as dust at every decay time, most of them from the long tail (about a quarter to a third of the window's grains below 1 ps, half by 1.5 ps, nine in ten beyond 3 ps), the columns settle, the white curve steepens onto the new fit, and 0.421 takes the place of 0.509.
+Picture: on arrival every other candidate with a decay time drops in while the 596 that stood glide down to the full plot's scale, white from the window, light blue from the sidebands; click 1 is the same subtraction for all of them; on click 2 the white line is the exponential fitted from 0.5 ps, and the light-blue columns below 0.5 ps are the ones the fit does not use (the sideband grains are gone by then); on click 3 the grains that fail the cut lift away as dust at every decay time, most of them from the long tail (about a quarter to a third of the window's grains below 1 ps, half by 1.5 ps, nine in ten beyond 3 ps), the columns settle, the white curve steepens onto the new fit, and the τ number glides with it from 0.509 to 0.421, its error ± 0.005 ps below the world value.
 Caveats: the file's decay times start at 0.150 ps (a pre-selection), and the efficiency rises over the first tenths of a ps, so the fit starts at 0.5 ps (an exponential is memoryless); the acceptance is not modelled. Without the cut, moving the start from 0.25 to 1.0 ps moves τ from 0.482 to 0.571 ps: something long-lived is mixed in. The cut is itself a χ², (how far the track misses the collision point / its error)², kept below 9, so within 3 errors (the fourth number of each row in the first talk). Unbinned, sideband-weighted fit on 0.5-5 ps (8 129 window and 636 sideband candidates, net 7 652), statistical error only; moving the start or the cut (from 2 to 25) moves τ between about 0.416 and 0.427 ps, and particles from heavier decays that pass the cut remain and pull τ up. A teaching fit; the experiment measures this with far more care, and its own student exercise cuts on the distance itself. With τ measured, slide 5's 7.65 MeV/c² width is the detector's: the particle's natural width is ħ/τ = 6.582 × 10⁻²² MeV s / 4.103 × 10⁻¹³ s = 1.6 × 10⁻⁹ MeV. Our grain would fail the cut.
 Sources: record 401 via bake/d0.py (d0-tau.json scanT0.all, fit, scanIp, hist; IPχ² < 9 on the record's IPCHI2 column); LHCb, JHEP 03 (2016) 159 (D⁰ from b-hadron decays); the LHCb D⁰ lifetime masterclass (log₁₀ IP cut); PDG 2026 (τ, ħ).
 (~1.8 min)
 -->
 
 ---
-# cut back to the mass plot (the sparse weights slide, reframed per the owner and again from review): the peak right of the numbers, summit, fitted-centre mark and our ring in one frame; the grains whiten by signal share, our grain's large core takes its own 0.144
+# cut back to the mass plot (the sparse weights slide, reframed per the owner and again from review): the peak right of the numbers, summit, fitted-centre mark and our ring in one frame; the grains whiten by signal share, our grain's large light-blue core takes its own 0.144 and stays mostly light blue
 space: { at: [-6, 3.2, 0], dist: 24, yaw: -4, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 0.3, path: [[0, { at: [-6, 3.2, 0], dist: 24, yaw: -4, pitch: 4 }]] }
 steps: { h: 10, fit: 6, bowl: 0, ours: 0, big: 1, s1: 0, s2: 0, tau: 0, decay: 0 }
 clicks: 1
@@ -330,11 +334,11 @@ clicks: 1
   <p v-click="1"><b>0.144</b><span class="name">P(signal)</span></p>
 </div>
 
-<!-- facts: d0-row1-signal-share-worked, d0-row1-values-worked -->
+<!-- facts: d0-row1-signal-share-worked, d0-row1-values-worked, course-d0-fit-mass-worked -->
 
 <!--
 Message: the fit gives every grain a signal share; ours is 0.144, so it stays mostly light blue.
-Picture: the whole peak with its fitted curve; the dotted mark standing through the summit is the fitted centre, 1 864.47 MeV/c²; the ring on the right flank marks our grain, 16.2 MeV/c² (2.1 widths) right of that mark, its core drawn large and white as last talk left it; on the click each grain whitens by its signal share, left to right: white where the fitted signal stands high over the background, light blue out on the flanks; our grain's core takes its own share and turns mostly light blue, while the ring stays white.
+Picture: the whole peak with its fitted curve; the white dotted mark standing through the summit is the fitted centre, labelled 1 864.47 MeV/c² above it; the white ring on the right flank marks our grain, 16.2 MeV/c² (2.1 widths) right of that mark, its core drawn large in the light blue it has had since Talk 2's close; on the click each grain whitens by its signal share, left to right: white where the fitted signal stands high over the background, light blue out on the flanks; our grain's core takes its own share, 0.144, and stays mostly light blue while the summit whitens, and the ring stays white.
 Caveats: at 1 880.65 MeV/c² the fit has 233.6 signal and 1 390.5 background candidates per 2 MeV/c² bin, 233.6 / 1 624.0 = 0.144. Nobody can say whether one grain is the particle (the series' thread).
 Misconception: 0.144 is not "14 % of a particle" or a property of the grain; it is the share of signal among the candidates at that mass.
 Sources: record 401 via bake/d0.py (d0-fit.json row1, d0-psig.f32).
@@ -347,7 +351,7 @@ space: { at: [-5, 3.2, 0], dist: 26, yaw: -4, pitch: 5, dim: 0.25, ambient: 0, s
 steps: { h: 12, fit: 6, bowl: 0, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0 }
 ---
 
-<div class="nums" style="--d1: 1.5s">
+<div class="nums out" style="--d1: 1.5s; --o1: 11s">
   <p><b>20 993</b><span class="name">signal</span></p>
 </div>
 
@@ -355,7 +359,7 @@ steps: { h: 12, fit: 6, bowl: 0, ours: 0, big: 0, s1: 0, s2: 0, tau: 0, decay: 0
 
 <!--
 Message: a fit turns a heap into a measured peak, and gives every grain a signal share; next time a machine learns to draw the line between signal and background.
-Picture: the camera pulls back to the whole peak, white where it is signal, light blue on its flanks, with its fitted curve over it; the sum of the shares in the fit range is the fitted signal count, 20 993 ± 276.
+Picture: the camera pulls back to the whole peak, white where it is signal, light blue on its flanks, with its fitted curve over it; the sum of the shares in the fit range is the fitted signal count, 20 993 ± 276, which leaves at 11 s so the take's last second is the bare peak Talk 4's cover opens on.
 Caveats: 20 993 counts the 1 820-1 910 MeV/c² fit range only.
 Sources: record 401 via bake/d0.py (d0-fit.json params.nSig; d0-psig.f32).
 (~0.5 min)
