@@ -110,7 +110,18 @@
        "sel"
       ]
      },
-     "replay": false
+     "replay": false,
+     "stageAlpha": {
+      "5": {
+       "2": 0.5,
+       "4": 0.5
+      },
+      "6": {
+       "2": 0.3,
+       "3": 0.3,
+       "4": 0.3
+      }
+     }
     },
     {
      "type": "dk-hist",
@@ -152,9 +163,12 @@
         "<",
         0
        ],
-       "ticks": []
+       "ticks": [],
+       "axis": false
       }
-     ]
+     ],
+     "oursSlot": 360,
+     "axisWith": "grains"
     },
     {
      "type": "dk-curve",
@@ -207,10 +221,23 @@
       0,
       {
        "n": "all",
-       "alpha": 0.75
+       "alpha": 0.75,
+       "ticks": [
+        1820,
+        1860,
+        1900
+       ]
       },
-      {}
-     ]
+      {
+       "ticks": [
+        1820,
+        1860,
+        1900
+       ]
+      }
+     ],
+     "oursSlot": 360,
+     "axisWith": "grains"
     },
     {
      "type": "dk-hist",
@@ -238,7 +265,6 @@
      ],
      "arc": 3,
      "fill": 3.5,
-     "curve": 1.0,
      "over": "h1",
      "tone": "sel",
      "selGain": 1.0,
@@ -247,10 +273,18 @@
       {
        "n": "all",
        "alpha": 0.72,
-       "fill": 7
+       "fill": 7,
+       "fillBy": "x",
+       "glow": 0.4
       }
      ],
-     "glowTint": 0.1
+     "glowTint": 0.1,
+     "oursSlot": 360,
+     "ticks": [
+      1820,
+      1860,
+      1900
+     ]
     },
     {
      "type": "dk-curve",
@@ -283,15 +317,11 @@
      "steps": [
       null,
       {
-       "on": "h0"
+       "on": "h0",
+       "delay": 2.5
       },
       {
-       "at": [
-        -14.7,
-        11.04,
-        0
-       ],
-       "color": "crowd"
+       "on": "pipe"
       },
       {
        "on": "h1"
@@ -315,7 +345,22 @@
        "color": "crowd"
       },
       {
-       "on": "hp"
+       "on": "hp",
+       "halo": {
+        "alpha": 1.0
+       }
+      },
+      {
+       "from": "heap",
+       "at": [
+        -160,
+        0,
+        -40
+       ],
+       "glide": 11.5,
+       "halo": {
+        "alpha": 0.85
+       }
       }
      ]
     }
@@ -395,7 +440,7 @@
       }
      ],
      "gaps": [
-      0.5
+      0.3
      ],
      "sets": {
       "3": [
@@ -440,7 +485,7 @@
      "values": "d0.f32",
      "key": "M",
      "word": "mass MeV/c²",
-     "selections": "t5-select-falling.json",
+     "selections": "d0-select.json",
      "density": 0.3,
      "steps": [
       0,
@@ -456,19 +501,47 @@
         119
        ],
        "every": 0.4,
-       "rescale": true
+       "rescale": true,
+       "by": "n"
       },
       {
        "select": 0,
        "every": null,
        "rescale": null,
-       "n": 0
+       "n": 0,
+       "ticks": [
+        1820,
+        1840,
+        1860,
+        1880,
+        1900,
+        {
+         "v": 1816,
+         "tone": "axis",
+         "y": [
+          0,
+          1
+         ],
+         "label": false
+        },
+        {
+         "v": 1912,
+         "tone": "axis",
+         "y": [
+          0,
+          1
+         ],
+         "label": false
+        }
+       ]
       },
       {
        "n": "all",
-       "fill": 2.5
+       "fill": 2.5,
+       "ticks": null
       }
-     ]
+     ],
+     "oursSlot": 3
     },
     {
      "type": "dk-hist",
@@ -496,7 +569,7 @@
      ],
      "word": "peak mass MeV/c²",
      "ours": 0,
-     "alpha": 1.3,
+     "alpha": 0.9,
      "steps": [
       0,
       {
@@ -508,25 +581,26 @@
         1864.6,
         {
          "v": 1864.374,
-         "tone": "tick",
+         "tone": "axis",
          "y": [
           0,
-          0.95
+          0.6
          ],
          "label": false
         },
         {
          "v": 1864.574,
-         "tone": "tick",
+         "tone": "axis",
          "y": [
           0,
-          0.95
+          0.6
          ],
          "label": false
         }
        ]
       }
-     ]
+     ],
+     "oursLast": true
     }
    ]
   },
@@ -539,14 +613,14 @@
    ],
    "look": {
     "target": [
-     3,
-     0.4,
+     -1.5,
+     1.4,
      0
     ],
     "dist": 12,
     "yaw": -24,
     "pitch": 10,
-    "sway": 0.4
+    "sway": 0.5
    },
    "objects": [
     {
@@ -596,13 +670,14 @@
        "color": "#7dd3fc"
       }
      },
-     "alpha": 0.3,
+     "alpha": 0.42,
      "size": 1.3,
      "out": [
       16,
       0,
       0
-     ]
+     ],
+     "hot": "#7dd3fc"
     },
     {
      "type": "dk-trigger",
@@ -642,7 +717,9 @@
       "spin": 0.08,
       "step": 3
      },
-     "ours": false
+     "ours": false,
+     "minPx": 2.5,
+     "alpha": 1.2
     },
     {
      "type": "dk-heap",

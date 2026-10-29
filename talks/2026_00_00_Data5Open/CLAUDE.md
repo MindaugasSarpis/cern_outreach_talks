@@ -68,6 +68,45 @@ Drive.
   near-empty second on slide 14 (28.9-30.0 s, kit-requests 18); the 1 TB sphere on slide 6
   is about 12 px wide at 1280 (kit-requests 14); the low findings on slides 2, 3, 9, 12
   (kit-requests 15-17). Next: `pnpm talk record data5open --plates`, then `pnpm talk review data5open`.
+- 2026-10-29: polish (polish:data5open), the kit steward's pass, the series check and the
+  series' one look: styles/index.css imports the kit's `nums.css` (its own `.nums` block and
+  keyframes deleted; the block now stands at bottom 190 px, above the lower third) and takes
+  Data2Peak's cover-title rule (no uppercase, no position override); the cover's "larger grain"
+  sentence dropped (T4's file ball shows none); the old slide 5 (1 TB alone) folded into the
+  piles slide (13 slides, 13.8 min with the clip); the close lands on T1's cover (route look =
+  T1's landing, dim 0, sway 0.5, detector alpha 0.42 and `hot` as T1, lane off at 33.5 s, our
+  grain lifted out of the heap at 24 s and glided to the vertex: the white ringed point of
+  T1/01, checked side by side in a still); steward keys: `s` on: 'pipe', `stageAlpha` on slide 8,
+  `oursSlot` 3 and `axisWith` on h0/h1/h2/hs, the ring back on slide 8, `axis: false` on slide 3's
+  dust, h2 `fillBy: 'x'` + `glow` 0.4 (curve 1 dropped), hs `by: 'n'` over the bake's
+  d0-select.json (the talk-owned falling copy deleted), hp `oursLast`, trg `minPx` 2.5 + `alpha`
+  1.2; slide 8's ticks every 40 MeV/c². check ok (stage:check's one warning: slide 13 over the
+  live budget, recorded as a plate), check.mjs 0 warnings, lint 0 errors 0 warnings (the cover
+  waiver is gone), map 13 slides 13.8 min, shots 13 frames (13 "not settled": bullet time).
+  Open: the cover title overlaps the left edge of T4's centred ball (the series' one title
+  position against T4's close pose: T4 or the series to decide); the 1 TB sphere on slide 5 is
+  a dot at the piles' pose (kit-requests 14, 5); every motion is unseen in stills: re-record
+  1-3, 5, 8-13 (`pnpm talk record data5open`; slide 10 without `--hold 55`) and the plate for
+  slide 13 (`--plates`), then `pnpm videos:publish` by the main loop.
+- 2026-10-29: review fixes (fix:data5open, the still review): every high and medium finding and the
+  sound lows. Slide 7 shows what it draws, 122 lines (fact d0-fit-code-122-lines-worked; the 45 bins
+  said on slide 8), from a pull-back that holds the ball whole and keeps the number on black; the
+  numbers on 2, 8 and 9 lie on black or faint rows (lower targets; slide 9 wider, its scripts and
+  sheet at 0.3 by `stageAlpha` 6, h2 ticks every 40 as slide 8); our ring 360 grains up its column
+  on h0/h1/h2 (`oursSlot` counts grains: 3 and 6 sat on the axis line), clear of 1 880; the cover
+  eases from T4's closing pose to the ball right of the title by 3.2 s (the cut still matches;
+  Data2's title-only scrim); slide 5 lands close on the 1 TB sphere and pulls back by 5 s as the
+  pile gathers (gap 0.3); slide 11 moved right, peaks at alpha 0.9 and ring 1.0 (light-blue core,
+  no bloom), the ± 0.10 lines a dim bracket at 0.6 height; slide 12's empty plot draws its edges;
+  slide 13's ring at alpha 0.85 (ring band within 0.05 of T1's cover still); shots/14.png deleted.
+  check ok (stage:check's one warning, slide 13 over the live budget, a plate), check.mjs 0
+  warnings, lint 0 errors 0 warnings, map 13 slides 13.8 min; shots of 1, 2, 5 (+ click), 7-9,
+  11, 12 (+ click), 13 looked at (13 "not settled": bullet time).
+  Open: kit-requests 22-26 (code-lines.json stale against d0.py; axis alpha; ours alpha; the 1 TB
+  marble's light; T4 may end on T5's eased cover pose, T1's cover font); the 1 TB sphere is still a
+  dot in the slide 5 still (the close-up is in the motion only); the motions are unseen in stills.
+  Next: `pnpm talk record data5open` (slides 1, 2, 5, 7-9, 11-13; slide 12's click after 1.5-2 s),
+  then `pnpm talk record data5open --plates` for slide 13 and `pnpm videos:publish` by the main loop.
 - Branch `talk/data5open`, worktree `.claude/worktrees/data5open` (`pnpm talk open data5open`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_00_00_Data5Open/
 - Not deployed yet. `pnpm talk deploy` records each deploy in
@@ -76,7 +115,7 @@ Drive.
 ## Arc
 
 One line per slide: what it shows, what is said, how long. From `notes/outline.md` with its
-Decisions (draft and fix:data5open, 2026-10-29): 14 slides, 13.8 min plus 10.7 s of clip = 14.0.
+Decisions (draft and fix:data5open, 2026-10-29; polish:data5open folded 5 into 6): 13 slides, 13.6 min plus 10.7 s of clip = 13.8.
 The peak is never named on screen or in Message/Picture lines: "a short-lived particle's mass
 peak", "a pair of tracks", "the quality cut".
 
@@ -84,16 +123,15 @@ peak", "a pair of tracks", "the quality cut".
 2. The series' plot: the short-lived particle's mass peak fills out of the ball and T3's curve draws on, μ 1 864.47 MeV/c²; each candidate is a pair of tracks, its mass one grain, and everything shown is code applied to this file. (1.25)
 3. Delete it: the plot goes to dust and the ball stays, 1 289 541 B and checksum 2ebf133a; the file is fixed by DOI, free to reuse, and a checksum proves you hold the same bytes. (1.0)
 4. Clip: the CERN Data Centre, 10.7 s (0:28-0:38.7), no labels; open files are kept and served by data centres. (10.7 s)
-5. One terabyte: the one 1 TB sphere held close (a third of the frame's height), "1 TB" in the numbers block; the unit of the piles, about 775 000 copies of the file. (0.4)
-6. How much is open: cut to the pulled-back pose (dist 7.5), the 800 TB pile (Run 1) gathers from behind beside the sphere at honest volume (each sphere 27 TB), the click grows it in place to 4 PB (Runs 1 and 2), both numbers in the numbers block; LHCb opens half a campaign after 5 years and all of it after 10. (0.8)
-7. The file, the converter, the sheet: the converter types in as real line shapes and the sheet fills, 91 583 rows; the first program makes the table. (0.75)
-8. The fitting code: d0.py types in beside the sheet, the converter at the left, 45 bins; a second program reads, bins and fits, and it is in the folder too. (0.5)
-9. First pass: the whole pipeline runs and rebuilds the deleted plot in light blue, 91 583 candidates; the file and two scripts put the plot back, and the fit has no randomness. (0.75)
-10. Second pass (hero): the rerun lands white grain for grain on the first, the curve draws on, μ 1 864.47 and hash d2ec0d08 on both passes; same grain, same bin, same hash (the versions point, "it works on my laptop", is said aloud). (1.75)
-11. 120 reasonable choices: one histogram, selection 0 (91 534); the click brings "120 selections" and 48 s of refills (momentum, the quality cut, decay time) in order of kept count, so the count only falls, down to 2 803; each choice keeps a different sample. (1.75)
-12. The 120 peaks: one grain per selection's fitted peak on a 0.025 MeV/c² scale, selection 0 ringed between two dotted lines at ± 0.10, spread 0.44 against stat. error 0.10; a choice made after looking could land the peak anywhere in that range. (1.6)
-13. Fix it before looking: the empty axis with "1 selection" first, then the click fills selection 0 once and holds; decide before looking, as a blind analysis does. (0.75)
-14. Close (recorded plate): a 37 s crane from the held plot past the fitting code, the sheet and the converter to the ball (91 583 while it is held), up over it to the heap, wide over the lane, through the filters to a crossing in the detector at T1's cover landing (the crossing at 36.3 s, bullet time from 36.6 s, landing at 37 s, then 1 crossing); the file makes table, code and plot redoable, but what the filters dropped is gone and row 1's own crossing cannot be found ("a crossing, not row 1's"). (2.0)
+5. How much is open: cut to the pulled-back pose (dist 7.5), opening on the 1 TB sphere already standing (Talk 1's unit, gathered under the clip; about 775 000 copies of the file), the 800 TB pile (Run 1) gathers from behind beside it at honest volume (each sphere 27 TB), the click grows it in place to 4 PB (Runs 1 and 2), the three numbers in the numbers block; LHCb opens half a campaign after 5 years and all of it after 10. (1.0)
+6. The file, the converter, the sheet: the converter types in as real line shapes and the sheet fills, 91 583 rows; the first program makes the table. (0.75)
+7. The fitting code: a pull-back over the whole chain so far (ball, converter, sheet) as d0.py types in at the right, 122 lines; a second program reads, bins and fits, and it is in the folder too. (0.5)
+8. First pass: the whole pipeline runs and rebuilds the deleted plot in light blue, 91 583 candidates; the file and two scripts put the plot back, and the fit has no randomness. (0.75)
+9. Second pass (hero): the rerun lands white grain for grain on the first, the curve draws on, μ 1 864.47 and hash d2ec0d08 on both passes; same grain, same bin, same hash (the versions point, "it works on my laptop", is said aloud). (1.75)
+10. 120 reasonable choices: one histogram, selection 0 (91 534); the click brings "120 selections" and 48 s of refills (momentum, the quality cut, decay time) in order of kept count (`by: 'n'`), so the count only falls, down to 2 803; each choice keeps a different sample. (1.75)
+11. The 120 peaks: one grain per selection's fitted peak on a 0.025 MeV/c² scale, selection 0 ringed between two dotted lines at ± 0.10, spread 0.44 against stat. error 0.10; a choice made after looking could land the peak anywhere in that range. (1.6)
+12. Fix it before looking: the empty axis with "1 selection" first, then the click fills selection 0 once and holds; decide before looking, as a blind analysis does. (0.75)
+13. Close (recorded plate): a 37 s crane from the held plot past the fitting code, the sheet and the converter to the ball (91 583 while it is held), up over it to the heap, wide over the lane, through the filters to a crossing in the detector at T1's cover landing (our grain lifted out of the heap at 24 s and glided down the lane to the vertex by 35.5 s, the lane off from 33.5 s, the crossing at 36.3 s, bullet time from 36.6 s, landing at 37 s on T1's first frame: dim 0, sway 0.5, the ringed white point at the vertex, then 1 crossing); the file makes table, code and plot redoable, but what the filters dropped is gone and row 1's own crossing cannot be found ("a crossing, not row 1's"). (2.0)
 
 ## Figures
 
@@ -103,35 +141,34 @@ Every number on a slide, with its source. Search the facts bank first
 
 | Value | Claim | Source (URL) | Accessed | Fact id | OK / CHECK |
 | ----- | ----- | ------------ | -------- | ------- | ---------- |
-| 1 864.47 MeV/c² μ (slides 2, 10) | the series' fit puts the peak at 1 864.47 ± 0.10 | components/data-kit/bake/d0.py, d0-fit.json | 2026-10-29 | course-d0-fit-mass-worked | OK (confirmed) |
+| 1 864.47 MeV/c² μ (slides 2, 9) | the series' fit puts the peak at 1 864.47 ± 0.10 | components/data-kit/bake/d0.py, d0-fit.json | 2026-10-29 | course-d0-fit-mass-worked | OK (confirmed) |
 | 1 289 541 B (slide 3) | the size of record 401's file | https://opendata.cern.ch/record/401 | 2026-10-29 | record401-bytes-sha256 | OK (confirmed) |
 | 2ebf133a checksum (slide 3) | the portal's Adler-32 of that file | https://opendata.cern.ch/record/401 | 2026-10-29 | record401-bytes-sha256, record401-file-sha256-worked | OK (confirmed) |
-| 1 TB (slides 5, 6) | the unit sphere (Talk 1's unit); a definition, not a measurement | (unit) | – | – (775 000 copies in the notes: record401-bytes-sha256) | OK |
-| 800 TB Run 1 (slide 6) | LHCb's full Run 1 release, December 2023 | LHCb outreach, 2023-12-20 | 2026-10-29 | lhcb-run1-full-release-2023 (sources differ: lhcb-run1-volume-sources-differ) | OK (confirmed) |
-| 4 PB Runs 1–2 (slide 6) | over 4 PB through the Ntupling Service, 2026 | LHCb outreach, 2026-03-03 | 2026-10-29 | lhcb-ntupling-service-4pb | OK (confirmed) |
-| 91 583 rows / candidates (slides 7, 9, 14) | the file's tree holds 91 583 candidates (53 948 events) | https://opendata.cern.ch/record/401 | 2026-10-29 | record401-candidates-91583 | OK (corrected) |
-| 45 bins (slide 8) | the fit uses 45 bins of 2 MeV/c² on 1 820-1 910 | bake/d0.py | 2026-10-29 | d0-fit-chi2-ndf-worked, course-d0-fit-mass-worked | OK (confirmed) |
-| d2ec0d08 both passes (slide 10) | the first 8 hex digits of d0-fit.json's SHA-256, identical on two passes | bake/d0.py, d0-checks.json | 2026-10-29 | d0-fit-rerun-sha256-worked | OK (corrected) |
-| 91 534 → 2 803 candidates (slide 11, the count) | selection 0 keeps 91 534, selection 119 keeps 2 803 | d0-select.json | 2026-10-29 | d0-select-counts-worked | OK (confirmed) |
-| 120 selections (slide 11) | 6 × 5 × 4 reasonable selections | d0-select.json (the course's Lecture 14) | 2026-10-29 | d0-120-selections-worked | OK (confirmed) |
-| 0.44 MeV/c² spread (slide 12) | the 120 fitted peaks span 0.436 | d0-select.json | 2026-10-29 | d0-120-selections-worked | OK (confirmed) |
-| 0.10 MeV/c² stat. error (slide 12) | the fit's Δχ² = 1 half-width, 0.0965 | bake/d0.py | 2026-10-29 | d0-fit-valley-delta-chi2-worked | OK (corrected) |
-| 1 selection (slide 13) | one selection fixed before looking; a count, not a measurement | d0-select.json | 2026-10-29 | d0-120-selections-worked | OK |
-| 1 crossing (slide 14) | the one real crossing drawn (record 24506, 2012) | https://opendata.cern.ch/record/24506 | 2026-10-29 | record24506-licence | OK (confirmed) |
+| 1 TB (slide 5) | the unit sphere (Talk 1's unit); a definition, not a measurement | (unit) | – | – (775 000 copies in the notes: record401-bytes-sha256) | OK |
+| 800 TB Run 1 (slide 5) | LHCb's full Run 1 release, December 2023 | LHCb outreach, 2023-12-20 | 2026-10-29 | lhcb-run1-full-release-2023 (sources differ: lhcb-run1-volume-sources-differ) | OK (confirmed) |
+| 4 PB Runs 1–2 (slide 5) | over 4 PB through the Ntupling Service, 2026 | LHCb outreach, 2026-03-03 | 2026-10-29 | lhcb-ntupling-service-4pb | OK (confirmed) |
+| 91 583 rows / candidates (slides 6, 8, 13) | the file's tree holds 91 583 candidates (53 948 events) | https://opendata.cern.ch/record/401 | 2026-10-29 | record401-candidates-91583 | OK (corrected) |
+| 122 lines (slide 7) | the fitting code drawn is d0.py lines 87-208, 122 lines (the converter 34); the 45 bins are now narrated on slide 8 (d0-fit-chi2-ndf-worked) | bake/d0.py, code-lines.json | 2026-10-29 | d0-fit-code-122-lines-worked | OK (confirmed) |
+| d2ec0d08 both passes (slide 9) | the first 8 hex digits of d0-fit.json's SHA-256, identical on two passes | bake/d0.py, d0-checks.json | 2026-10-29 | d0-fit-rerun-sha256-worked | OK (corrected) |
+| 91 534 → 2 803 candidates (slide 10, the count) | selection 0 keeps 91 534, selection 119 keeps 2 803 | d0-select.json | 2026-10-29 | d0-select-counts-worked | OK (confirmed) |
+| 120 selections (slide 10) | 6 × 5 × 4 reasonable selections | d0-select.json (the course's Lecture 14) | 2026-10-29 | d0-120-selections-worked | OK (confirmed) |
+| 0.44 MeV/c² spread (slide 11) | the 120 fitted peaks span 0.436 | d0-select.json | 2026-10-29 | d0-120-selections-worked | OK (confirmed) |
+| 0.10 MeV/c² stat. error (slide 11) | the fit's Δχ² = 1 half-width, 0.0965 | bake/d0.py | 2026-10-29 | d0-fit-valley-delta-chi2-worked | OK (corrected) |
+| 1 selection (slide 12) | one selection fixed before looking; a count, not a measurement | d0-select.json | 2026-10-29 | d0-120-selections-worked | OK |
+| 1 crossing (slide 13) | the one real crossing drawn (record 24506, 2012) | https://opendata.cern.ch/record/24506 | 2026-10-29 | record24506-licence | OK (confirmed) |
 
 ## Talk-owned code
 
 Files of this talk's own (setup/, styles/, vite.config.ts) and what each does.
 A piece a second talk needs moves to the shared kit instead of being copied.
 
-- `setup/RouteCrossing.vue`: starts the close's collision on the bus when slide 14 is entered
-  (kit-requests 1).
-- `styles/index.css`: the series' `.nums` block, the cover title, the credit, and (29 Oct)
-  no load fade of the world's canvas, so the cover stands from frame 0 (kit-requests 13).
-- `public/dk/t5-select-falling.json`: the bake's `d0-select.json` selections sorted by kept
-  count, falling, for slide 11's sweep (kit-requests 11). Remade from the synced copy with
-  `python3 -c "import json;s=json.load(open('public/dk/d0-select.json'));f=json.load(open('public/dk/t5-select-falling.json'));f['selections']=sorted(s['selections'],key=lambda x:(-x['n'],x['i']));json.dump(f,open('public/dk/t5-select-falling.json','w'),indent=1,ensure_ascii=False)"`
-  after a re-bake (run in this directory).
+- `setup/RouteCrossing.vue`: starts the close's collision on the bus when slide 13 is entered
+  (kit-requests 1), and sets its `later` steps after so many seconds of world time
+  (setStepLater, cancelled on leave): `s` 8 and `s2` 0 at 24 s (our grain out of the heap and
+  down the lane to the vertex), `trg` 0 at 33.5 s (the lane off before the landing).
+- `styles/index.css`: imports the kit's `nums.css` (the series' `.nums` block, one copy for
+  all five), the series' cover-title rule (Data2Peak's), the credit, and (29 Oct) no load fade
+  of the world's canvas, so the cover stands from frame 0 (kit-requests 13).
 
 ## Decisions
 
@@ -162,12 +199,10 @@ The owner's decisions, dated, newest last.
   fitting-code slide; slide 10's Message claims only same file, same code, same hash (versions
   aloud; a drawn versions stage waits on kit request 7); slide 12's bracket and ring on
   selection 0; slide 13 fixes the selection over the empty axis before the fill.
-- 2026-10-29, waiver pending the lint fix (kit-requests 6): the cover's plain title "Open
-  data" is flagged TEXT by `pnpm talk lint` because the headmatter's `onscreen: numbers` is
-  read as slide 1's own; the bible requires both. `ready --release` will show this one warning
-  until scripts/talk_lint.py is fixed on main.
-- Open for the owner: the `.nums` block sits in the lower third on every content slide
-  (kit-requests 10): a series-wide move or a waiver.
+- 2026-10-29, waiver pending the lint fix (kit-requests 6), closed 29 Oct (polish): the lint
+  now exempts the cover title; `pnpm talk lint` is clean.
+- The `.nums` block in the lower third (kit-requests 10): closed 29 Oct by the kit's
+  `nums.css` (bottom 190 px), shared by all five talks.
 - 2026-10-29 (final:data5open, the motion review's high and medium findings; recommended
   options without the owner, each undoable in deck.md / public/data/space.json):
   - Slide 14's crane: the selection station moved from x 120 to x 60 (slides 11-13 keep their
@@ -196,6 +231,35 @@ The owner's decisions, dated, newest last.
     (kit-requests 13) instead of waiting for a toolkit change.
   - The low findings (slides 2, 3, 9, 12) are left as kit requests 15-17: each needs a kit
     step key the talk cannot add.
+
+
+- 2026-10-29 (polish:data5open; the series check and the steward's notes, recommended options
+  without the owner; each undoable in deck.md, public/data/space.json, styles/index.css):
+  - The series' one look: `nums.css` and Data2Peak's cover rule, plain `<h1>`, no `tickPx`, the
+    kit's mass range, white rings. The cover title now stands at the layout's own place and
+    overlaps the left edge of the ball (T4's last frame centres it); kept, as the one look
+    binds. Alternatives: T4's close pose moved right, or a series exception for T5.
+  - Slide 1: the sentence about our grain as "the larger grain on the near side" deleted
+    rather than giving T4's ball (another talk) and T5's cover a marked grain: neither frame
+    shows one, and the two talks stay consistent.
+  - Slide 5 folded into the piles slide (the series check, low): Talk 1 owns the 1 TB unit,
+    so the sphere stands as the slide opens (gathered under the clip, `tb: 1` on slide 4) and
+    "1 TB" is the first of three numbers. Cost: the sphere is a dot at the piles' pose.
+    Undo: restore the fix pass's slide 5 from git.
+  - Slides 8-9, the passes' colours (the series check, low): kept against the bible's "run 2
+    in light blue lands on run 1". The reason: white is the grammar's "ours / kept", and the
+    second pass is the one the talk keeps (the hash both passes print); the first pass in
+    light blue matches slide 2's plot, so the plot that was deleted returns in its own colour
+    and the rerun lands white on it. The kit's README documents this order (h1 crowd, h2 sel).
+  - The close lands on T1/01: the ring travels as `s` (pipe station, world frame) from the
+    heap to the vertex, because a spark in the route station replays its `from` move when the
+    camera reaches that station at 37 s (seen: no ring in the still); the timed steps live in
+    `<RouteCrossing :later>` until the stage keys steps by time (kit-requests 19).
+  - Slide 8's ticks every 40 MeV/c² at 1 820 / 1 860 / 1 900 (not 1 840 / 1 880): the ring
+    stands over 1 880.
+  - Steward deck changes not taken: the lineup's world labels (the `.nums` lines stay, the
+    series' type), slide 2's ring `delay` kept at 2.5 s, slide 8's dropped (a followed ring
+    shows only while its grain is drawn, and a 3 s delay kept it out of the still).
 
 ## Verify
 

@@ -120,3 +120,60 @@ deck's. Each was found in recorded takes (1280x720, 25 fps) by frame-mean luma a
    (28.9-30.0 s, luma 16.4) stays near-empty even with a wide (dist 34) key and a 3 s leg.
    Ask: a `laneAlpha`/`packetSize` (or denser `packets` that the budget allows), so the lane
    itself carries the crane between stops. Slide 14.
+
+Added 2026-10-29 by the polish pass (polish:data5open); slide numbers are the 13-slide deck's
+(the old slide 5 folded into 6).
+
+19. **Stage (toolkit, not kit): steps keyed by slide time.** The close needs steps that change
+   during one recorded slide: our grain lifted out of the heap and glided to the crossing at
+   24 s (`s` 8, with `s2` 0), the lane turned off at 33.5 s (`trg` 0) so the last frame is Talk 1's first.
+   T5 sets them from its talk-owned `<RouteCrossing :later>` with `setStepLater`. Ask: timed
+   steps in the frontmatter (e.g. `steps: { trg: [[0, 3], [33.5, 0]] }`, like `rate` keys),
+   so a still or a print shows the slide's end state too. Slide 13.
+20. **dk-spark (low): a multi-key glide.** A step's glide is one straight, eased line; the
+   ring's trip from the heap to the crossing (124 units) runs just above the lane rather than
+   rising off the heap and arcing back down it. A step with `from: '<heap>'` followed by a
+   second step drops the heap's claim (the grain would reappear on the summit), so the deck
+   cannot chain two moves. Ask: `path: [[t, [x, y, z]], …]` on a step, or a claim kept across
+   steps that name `keep: '<heap>'`. Slide 13.
+21. **dk-spark: a `from` step replayed on assembly.** A spark in the destination station
+   whose current step has `from: '<form>'` replays the whole move when the camera reaches the
+   station (`assemble` → apply 'arrive'), and resets `show` to 0, which at bullet time (rate
+   0.02) takes about 25 s to come back. Slide 13's ring, gliding from the heap to the vertex,
+   was missing from the landing still for this; T5 moved the gliding ring to a spark in the
+   pipe station. Ask: an arrival that keeps a move already played (or already ended), and a
+   ring that is not re-faded on assembly when it was already shown. Slide 13.
+
+Added 2026-10-29 by the review fixes (fix:data5open, second pass); slide numbers are the 13-slide
+deck's.
+
+22. **Kit data: `code-lines.json` is stale against `bake/d0.py`.** `python3 bake/code.py --check`
+   reports 4 differences: d0.py is now 927 lines (sha256 1b56015c…, 50 294 B) against the baked
+   918 (053d8070…). The drawn range 87-208 still runs from `def read` to the end of the
+   Levenberg-Marquardt fit (the new lines are below it), so slides 7-8 and 13 draw the right
+   shapes, but the notes can only cite the old hash. Ask: re-bake code-lines.json (bake/code.py)
+   and re-check every deck's `lines` range. Slides 6-9, 13.
+23. **dk-hist: the axis line's alpha as a step key.** Slide 12 opens on the empty plot (hs step 3,
+   `n: 0`), and the baseline (alpha 0.9 in the axis colour) barely reads, so the frame looked like
+   a plot that failed to load. T5 draws the plot's two edges as dim dotted step ticks at 1 816 and
+   1 912 (`y: [0, 1]`, tone axis) on that step and drops them on the fill (`ticks: null`). Ask: an
+   `axisAlpha` (object or step) so an empty plot's baseline can stand brighter. Slide 12.
+24. **dk-hist: our grain's own alpha and size.** On slide 11 (hp, 120 peaks at dist 7) our grain,
+   size 2.5 at the plot's alpha 1.3, bloomed into a white disc about 250 px across, swamping the
+   grains round it, although its tone is the crowd's. T5 lowers the whole plot to alpha 0.9 and the
+   ring to 1.0. Ask: `oursAlpha` / `oursSize` (object or step), so our grain keeps its light-blue
+   core in a close shot without dimming the others. Slide 11.
+25. **dk-lineup: the one-terabyte marble reads dark.** A ball of `n: 1` is drawn as a polished
+   marble under the hard studio light (`metalHard`), so at the pose that fits the 4 PB pile it is a
+   dark dot (about 12 px, request 14) while the pile's spheres shine. T5's path now lands close on
+   it (dist 2.4) and pulls back as the pile gathers. Ask: a `lit` (or `soft: true`) option that
+   draws the marble with the pile's soft studio light, so it holds its brightness at a distance.
+   Slide 5.
+26. **Cross-talk, not kit (T4 and T1 sessions).** (a) T4's close: T5's cover now eases from T4's
+   closing pose ([118, 3.1, -300] there, dist 11, yaw -10, pitch 6, the ball centred) to the ball
+   right of the title (T5 [-28.2, 3.1, 0], yaw -14: in T4's frame about [115.3, 3.1, -300], dist
+   11, yaw -14, pitch 6) over 0.7-3.2 s, so the cut still matches. If T4 ends on the second pose,
+   T5 drops its path's first two keys. (b) T1's cover shot sets "THE TRIGGER" in a fallback face
+   (Arial-like) while T5's "OPEN DATA" uses the stage face under the same rule: re-shoot T1's cover
+   after the webfont loads (or check that `d1-title-in` does not start before it) and compare the
+   two covers side by side. Slide 1.
