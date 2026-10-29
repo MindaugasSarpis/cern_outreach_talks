@@ -9,9 +9,13 @@
 // - every data file a dk object loads (files(o) in each module) is in the talk's
 //   public/dk/, and its size matches data/manifest.json (the bake's shape and dtype) and
 //   the bake's own copy in data/ (a mismatch: run bake/sync.py --to <talk>);
-// - a dk-hist {sort} names a dk-heap in the same space, and {over} a dk-hist; a stub type
-//   is a warning; a dk-glow without the lhcb plugin or a matching detector, and a
-//   dk-ground without "enterable", are warnings.
+// - a dk-hist {sort} names a dk-heap in the same space, and {over} a dk-hist; a dk-heap
+//   `oursFrom` names a form; `alarm: 'baked'` needs `model.rolls`; a stub type is a
+//   warning; a dk-glow without the lhcb plugin or a matching detector, and a dk-ground
+//   without "enterable", are warnings;
+// - the owner's decision of 29 Oct (the decay is never named, no experiment internals):
+//   a dk-vertex with names, and a caption (`word`) or tick text naming the particles or
+//   IPχ², are warnings; `order` other than 'file', and a dims-2 `band`, are warnings.
 // Errors exit 1.
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -77,6 +81,12 @@ for (const { st, o } of objects) {
       if (k === 0 || s === 0 || s == null) return;
       if (typeof s !== 'object' || Array.isArray(s)) add('error', 'bad-step', `${where}: step ${k} must be an object`);
       else if (o.type === 'dk-hist' && s.sort != null && !heaps.has(String(s.sort))) add('error', 'unknown-heap', `${where}: step ${k} sorts from "${s.sort}", no dk-heap of that name`);
+      if (s && typeof s === 'object' && o.type === 'dk-hist') {
+        if (s.alarm === 'baked' && !o.model?.rolls?.file) add('error', 'alarm-baked', `${where}: step ${k} has alarm 'baked' but the object has no model.rolls (the bake's rolls carry the alarms)`);
+        if (s.ticks != null && !Array.isArray(s.ticks)) add('error', 'bad-ticks', `${where}: step ${k} ticks must be a list (or null for the object's own)`);
+        if (Array.isArray(s.ticks)) for (const t of s.ticks) if (!Number.isFinite(Number(Array.isArray(t) ? t[0] : t && typeof t === 'object' ? (t.v ?? t.at) : t))) add('error', 'bad-ticks', `${where}: step ${k} has a tick without a numeric value: ${JSON.stringify(t)}`);
+        if (s.replay != null && s.replay !== false) add('warning', 'replay-key', `${where}: step ${k} replay is ${JSON.stringify(s.replay)}; only false changes anything (null drops an inherited false)`);
+      }
     });
   }
   for (const f of mod.files?.(o) || []) {
@@ -99,6 +109,15 @@ for (const { st, o } of objects) {
   }
   if (o.type === 'dk-ground' && o.enterable == null) add('warning', 'ground-enterable', `${where}: add "enterable": true (stage:check's camera-inside-form cannot see the kit's flag)`);
   if (o.type === 'dk-hist' && o.over != null && !objects.some(({ o: h }) => h.type === 'dk-hist' && String(h.name) === String(o.over))) add('error', 'unknown-over', `${where}: over "${o.over}" names no dk-hist`);
+  if (o.type === 'dk-hist' && o.order != null && o.order !== 'file') add('warning', 'hist-order', `${where}: order "${o.order}": only 'file' changes the fill order (the default is the heap's)`);
+  if (o.type === 'dk-hist' && o.order === 'file' && (o.src || o.model)) add('warning', 'hist-order', `${where}: order 'file' applies to a rows source only (values), not to src or model`);
+  if (o.type === 'dk-heap' && o.oursFrom != null && !objects.some(({ o: f }) => String(f.name) === String(o.oursFrom))) add('error', 'unknown-ours-from', `${where}: oursFrom "${o.oursFrom}" names no object`);
+  if (o.type === 'dk-landscape' && o.band != null && Number(o.dims ?? 2) !== 1) add('warning', 'band-dims', `${where}: band is drawn on a dims-1 slice only`);
+  if (o.type === 'dk-vertex' && (o.names === true || o.namePx != null || (Array.isArray(o.tracks) && o.tracks.some((t) => t && t.name != null)))) add('warning', 'vertex-names', `${where}: dk-vertex draws no names any more (the owner's decision, 29 Oct: the decay is never named); names, namePx and tracks[].name are ignored`);
+  // captions and tick texts that name the decay or its quantities (the owner's decision)
+  const NAMED = /K⁻|K\^-|π⁺|D⁰|D0\b|kaon|pion|IPχ²|IPCHI2/i;
+  const texts = [o.word, ...(Array.isArray(o.ticks) ? o.ticks.map((t) => (Array.isArray(t) ? t[1] : t?.text)) : []), ...(Array.isArray(o.steps) ? o.steps.flatMap((s) => (s && Array.isArray(s.ticks) ? s.ticks.map((t) => (Array.isArray(t) ? t[1] : t?.text)) : [])) : [])];
+  for (const t of texts) if (typeof t === 'string' && NAMED.test(t)) add('warning', 'named-decay', `${where}: "${t}" names the decay or its quantities on screen (the owner's decision, 29 Oct: "a short-lived particle's mass peak", "mass MeV/c²")`);
 }
 
 for (const [name, where] of filesUsed) {

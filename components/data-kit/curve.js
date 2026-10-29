@@ -191,7 +191,10 @@ function buildCurve(o, ctx, stage, kit) {
   for (let i = 0; i < N; i++) { U[i] = rnd(); J[i] = Math.max(-2.2, Math.min(2.2, gauss(rnd))); Jz[i] = rnd() - 0.5; }
   // colours: the model, its signal part and the pulls white (the selected: what the
   // curve says), the background part light blue (the crowd), the pulls' zero line dim
-  for (let i = 0; i < N; i++) dots.col[i] = i < o2 ? 1 : i < o3 ? 0 : i < o4 ? 1 : -1;
+  // `tone: 'crowd'`: the whole line light blue (T2's expectation of a noise toy: what the
+  // crowd gives on average, not a selected or fitted thing); its parts keep their colours
+  const lineTone = o.tone === 'crowd' ? 0 : 1;
+  for (let i = 0; i < N; i++) dots.col[i] = i < o1 ? lineTone : i < o2 ? 1 : i < o3 ? 0 : i < o4 ? 1 : -1;
   for (let i = o4; i < N; i++) dots.sz[i] = 0.85;
   dots.paint();
 
@@ -313,6 +316,9 @@ function buildCurve(o, ctx, stage, kit) {
     return true;
   }
   const histBusy = () => { const b = hist?.api?.busy; return typeof b === 'function' ? b() : !!b; };
+  // the curve draws on once its plot stands: dk-hist's standing() (a re-rolling or sweeping
+  // plot stands once its first state does), else once the plot is no longer busy
+  const histStands = () => (typeof hist?.api?.standing === 'function' ? hist.api.standing() : !histBusy());
 
   // ---- drawing -------------------------------------------------------------------------
   function curvesAt(p) {
@@ -439,7 +445,7 @@ function buildCurve(o, ctx, stage, kit) {
       const ys = fr.y(1);
       yScale += (ys - yScale) * (1 - Math.exp(-dt * 4));
       if (Math.abs(ys - yScale) <= 1e-4 * Math.abs(ys)) yScale = ys;
-      if (waitDraw && (!histBusy() || t - waitT > 12)) { waitDraw = false; drawT0 = t; }
+      if (waitDraw && (histStands() || t - waitT > 12)) { waitDraw = false; drawT0 = t; }
       if (pTo) {
         if (!pFrom || t >= pT0 + pDur) pNow = pTo;
         else if (t <= pT0) pNow = pFrom;

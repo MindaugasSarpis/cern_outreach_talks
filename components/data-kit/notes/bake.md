@@ -16,6 +16,9 @@ python3 bake/toys.py      # [--check]   reads data/d0-flat.json, so it runs afte
 python3 bake/train.py     # [--cached D0_KPi.csv] [--check]          about 35 s
 python3 bake/portal.py    # one live GET; --cached FILE / --check re-derive without the network
 <venv>/bin/python bake/h4l.py --cached DIR   # needs uproot + awkward; without --cached it fetches 18 files (1.2 MB)
+<venv>/bin/python bake/root_to_csv.py MasterclassData.root D0_KPi.csv   # needs uproot; the course CSV, byte for byte
+python3 bake/code.py      # [--check]   after any change to bake/d0.py or bake/root_to_csv.py
+python3 bake/peaks.py     # [--check]   reads data/d0-select.json, so it runs after d0.py
 python3 bake/sync.py --to talks/<talk> [--all] [--check]
 ```
 
@@ -357,3 +360,109 @@ Arithmetic-only bible numbers (T1). These are not bake outputs; they were recomp
 - 1.3 EB / 345.6 PB = 3.76 days
 - 1 − 1/30 = 96.67 %
 - 10 GB/s × 86 400 s = 864 TB
+
+## Second round (lane kit-bake, 29 Oct 2026)
+
+What the five outlines' open items asked of the bakes. Every number below is written by the
+script named and checked by its `--check` (all seven pass: d0 14 files, toys 3, train 6, code 1,
+peaks 1, portal 1; h4l was not touched). Made with Python 3.14.4, numpy 2.5.0, scipy 1.18.0
+(outreach_talks env); the converter with uproot 5.7.7, awkward 2.14.0, numpy 2.5.4 (a venv).
+`d0-fit.json` was deliberately left byte for byte as it was (sha256 d2ec0d08…, cited by T5):
+the new d0 numbers live in other files, and the new d0.py code sits below `lm()`, so the
+d0.py lines 87-208 that T5's code stage draws are unchanged (checked against the old
+`code-lines.json` runs).
+
+### toys.py
+| number | value | file, key |
+|---|---|---|
+| the grown falling spectrum as rows | 3 500 float32 values (GeV): roll 2's 140, then the 3 360 added, each sorted | `falling-big.f32` (+ header `falling-big.json`) |
+| binned as dk-hist bins them (`Math.floor((v − 1.45) / 0.01)`) | equal to the bake's roll-2 counts and `bigRoll.counts` (bin 8 = 1.53-1.54: 14 at 140, 172 at 3 500) | `falling-big.json` `counts140`, `counts3500`, `matchesBake` |
+| expectation at 140 entries, dk-curve `exp` set | a 15.568 a bin at 1.45 GeV, slope −10.667 /GeV, pivot 1.45, bin 0.01 | `toys.json` `falling.curve.sets[0]` |
+| expectation at 3 500 entries | a 389.198, same slope | `toys.json` `falling.curve.sets[1]` |
+| curve at the bin centres against the bin integrals | within 0.047 % (sinh(u)/u − 1, u = 0.0533) | `toys.json` `falling.curve.check` |
+
+Lab 2 slides 21-22 (another lane's test slides) already draw both: the set-0 curve runs along
+roll 2's falling columns with bin 8 white over it, and the 3 500 rows fill in file order.
+
+### d0.py
+| number | value | file, key |
+|---|---|---|
+| mean, window centred on 1 864.47, ± 25 | **1 864.376** (56 589) | `d0-means.json` `centredOnFit.windows[0]` |
+| ± 15 | **1 864.462** (41 108) | `[1]` |
+| ± 10 (1 854.47-1 874.47) | **1 864.424** (31 182) | `[2]` |
+| ± 5 | **1 864.437** (17 545) | `[3]` |
+| 1 860-1 870 (centred on 1 865) | **1 864.920** (17 496) | `d0-means.json` `narrow1865` |
+| closed windows (as dk-hist `{window}`) | the same n and means | `nClosed`, `meanClosed` |
+| Δχ² on the profiled slice at 1 864.80 / 1 864.84 / 1 864.88 | **11.499 / 14.472 / 17.784** (3.39 / 3.80 / 4.22 errors) | `d0-chi2.json` `pdgOnSlice.dchi2`, `nErrors` |
+| the same read linearly off the slice grid | 11.500 / 14.473 / 17.786 | `pdgOnSlice.interp` |
+| the plot's subtraction, first 2 000 in lab 3's seeded order | **1 172 window, 828 sidebands**; 588 sideband grains picked, **576 pairs**, **596 left** (the count readout; 569 of them stand in the 0-5 ps columns) | `d0-tau.json` `plotSubtract.first2000` |
+| the same as a statistical subtraction | 1 172 − 0.75 × 828 = 551 | `plotSubtract.first2000.leftCounted` |
+| the subtraction on all 69 159 plotted grains | 41 071 window, 28 088 sidebands, 20 075 pairs, **20 996 left** (20 024 standing) | `plotSubtract.all` |
+| the 5 σ line | b = 0.75 × 28 103 = 21 077.25, b + 5√b = 21 803.15, **1 453.54 a 2 MeV bin** over 1 850-1 880 (the window holds 2 739.3 a bin) | `d0-significance.json` `line5sigma` (`set` = `{a: 1453.54, bin: 2}`) |
+| χ² at the fit's start values | **371.52** (dk-curve's readout formula gives the same) | `d0-checks.json` `fitStart.chi2`, `curveReadout`; also `d0-fit.json` `iterations[0].chi2` |
+| selection 0 (no cuts, TAU known) | **91 534** | `d0-select.json` `counts.0` |
+| selection 119 (PT > 4 000, IPχ² < 5, TAU > 0.5 ps) | **2 803** | `counts.119` |
+| peaks within ± 0.10 of selection 0's 1 864.4745 | **69** of 120 (selection 0 counted) | `nearSel0.within.0.10` |
+| within ± 0.0965 | **65** of 120 (also 65 within selection 0's own 0.0964) | `nearSel0.within.0.0965`, `.muErr0` |
+| d0-fit.json sha256, two passes | **d2ec0d089945513b30b4358d4e7dcc872c714fa238952173955037609c268abf** both times | `d0-checks.json` `rerun.sha256` |
+
+How the subtraction is computed: `plot_subtract` ports hist.js (setupGrains, layout with
+`split` and `subtract`) and rng.js (mulberry32, `order`), the latter in `common.py`
+(`mulberry32`, `series_order`), checked against rng.js under node: the same first draws of
+mulberry32(12 438) and the same 91 583 ranks (sha256 of the rank array 28cee540… both
+ways). Lab 3's `{subtract}` slide counts down to 596 (`:to="596"` in its deck): the port
+reproduces it. The plot config is lab 3's `tau` object (grains 70 000, unit 1, 69 159 grains);
+another seed, `grains` or window changes the numbers.
+
+How the rerun works: `d0.py` calls `bake()` twice from scratch (the CSV read again, every
+fit redone) and refuses to write unless every output is byte-identical; `d0.py --check`, run
+later as its own process, recomputes and compares. It ran once more from the CSV the new
+converter wrote (`--check --cached`): 14 files match. No run in a second environment with
+other numpy/scipy versions exists (the uproot venv has no scipy).
+
+### train.py
+| number | value | file, key |
+|---|---|---|
+| lossProfile grid | 101 × 101 over w1, w2 ∈ [−0.6, 3.4] (step 0.04, so (0, 0) is a node), b profiled by Newton (gradient < 1e-10 at every node) | `train-perceptron.json` `lossProfile.z` |
+| start | w = (0, 0): **0.693147** = ln 2, best b 0 | `lossProfile.start` |
+| end (epoch 1 000) | profiled **0.161610** at (2.0999, 2.2566), best b −4.3225 against the trained −4.3146; logged loss 0.161612 | `lossProfile.end` |
+| grid minimum | 0.161596 at (2.12, 2.28) | `lossProfile.gridMin` |
+| path | 1 001 × [w1, w2, profiled loss, best b]; every profiled value ≤ the logged loss; epoch 1: 0.4775 (logged 0.5099) | `lossProfile.path` |
+| what dk-landscape's bilinear readout gives | 0.69315 at the start, **0.16163** at the end, so it reads 0.162 | `lossProfile.readout` |
+| epoch 1 | **150 of 200** right (accuracy 0.75), loss **0.510** (0.50985), w (0.2590, 0.2552), b 0; before it 100 of 200, ln 2 | `train-perceptron.json` `after1` |
+| the ring's line | train **65.3 %** (235 / 360), test **53.3 %** (64 / 120) | `train-ring.json` `line.trainAccuracy`, `trainRight`, `testAccuracy`, `testRight` |
+| row 1's three-input network score | **0.4624** (the honest 2-4-1 network on log PT, log TAU, log IPχ², `withoutM`; = d0-score.f32[0]); two-input network 0.4080; label 1; a train row | `train-d0.json` `row1.score3`, `score2`, `label`, `role` |
+| the window's background share | 49 225 rows in 1 845 < M < 1 885 (of 91 531); the mass fit puts 20 802.7 signal and 28 281.7 background in it (sum 49 084), so **57.7 %** is background; with the whole fitted signal (20 992.8) instead, at least 28 232 (57.4 %) | `train-d0.json` `windowShare` |
+
+Lab 3 slide 11 (another lane's test, `readout: 'path'`) shows the profiled bowl and reads
+0.162 at the end of the roll.
+
+### root_to_csv.py and code.py
+- `bake/root_to_csv.py` (52 lines, 1 975 B, sha256 20f056816e904fa4413d221fa4784c04d9ed2518549dc9fb77fd335a16eb7a77)
+  writes DecayTree's D0_MM, D0_PT, D0_TAU and D0_MINIPCHI2 as M, PT, TAU, IPCHI2, each value
+  `str()` of its float32. Run on record 401's `MasterclassData.root` (sha256 8694a2ed…) in
+  the venv, it wrote 3 926 142 B with sha256
+  25c3c97299ea844f27308fde20a00ecaa87580868f3c767d7ade5621c1505136, the course CSV byte for
+  byte. It needs uproot (not in the env). It is written for the kit, not copied from the
+  course's script.
+- `bake/code.py` now reads `bake/root_to_csv.py` (shown as `components/data-kit/bake/root_to_csv.py`)
+  instead of the course's file; `code-lines.json` regenerated (sha256 137b09b0…). d0.py is
+  now 918 lines (sha256 053d8070…); its runs for lines 87-208 are unchanged.
+- Lab 5's code stage draws the whole converter (52 lines at 6.9 units: a pitch of 0.13
+  against d0.py's 0.17). README (dk-pipeline) suggests `lines: [19, 52]` or a 9.0-unit stage.
+
+### Sync
+`sync.py --all` into DataLab1-5 only (28 files, 3.89 MB each; labs 1, 4 and 5 took 14 files,
+labs 2 and 3 two). `check.mjs`: 0 errors in all five (the warnings are the named-decay
+captions of other lanes' slides). `pnpm talk check datalab1..5`: all ok.
+
+### Open
+- The subtraction numbers hold for lab 3's plot config only; T3's deck must use the same
+  `tau` object (seed 401, grains 70 000, window and sidebands) or re-bake with its own.
+- The T3 outline's "Δχ² 14.5 at 1 864.84, 11.5 / 17.8 at the edges" is confirmed (14.47,
+  11.50, 17.78). Its window means (1 864.38 / 1 864.46 / 1 864.42 / 1 864.44, 1 864.92)
+  match to 0.01.
+- `d0-fit.json`'s digest is the same in two passes on one machine; another machine needs the
+  same numpy, scipy and Python. No pinned lockfile exists.
+- Lab 2 slide 22 shows a short white bar above the alarm bin at 3 500 entries (the hist's
+  `{window}` mean tick, not a bake output): for the dk-hist owner.
