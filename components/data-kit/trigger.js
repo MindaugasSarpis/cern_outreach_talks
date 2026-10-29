@@ -34,7 +34,8 @@
 //   packets, not merged clouds.
 // - empty (0.25): the share of crossings with no collision (40 MHz of crossings against
 //   about 30 MHz non-empty). They are fainter and fewer-grained, and every gate drops them.
-// - gates: up to 4 entries {x, keep (1), shrink (1), ring (600)}. `keep` is the share of
+// - gates: up to 4 entries {x, keep (1), shrink (1), ring (600), step (2 + its index)}.
+//   `step` is the step that fires it (so a buffer step can stand between two gates). `keep` is the share of
 //   non-empty packets the gate passes. `shrink` is the share of a kept packet's grains
 //   (bytes) that go on; the rest burst. keep × shrink is the gate's byte ratio. Put
 //   sourced numbers here only: the bible's 1 in 30 for HLT1, and a byte ratio such as
@@ -45,18 +46,26 @@
 //   inside it), and the shell turns slowly (spin rad/s). Packets in its span move `hold`
 //   times slower and, while the buffer is on, ride out onto the shell and back.
 // - ours: the white packet's place per step, by step index. Each entry is a number (x on
-//   the lane), [x, y, z], or { at, fold: true }. With fold the packet folds into its
-//   core grain: our row (T1's close). glide (3.5) is in seconds. Its core is the series'
-//   OURS size. Past a shrinking gate it loses the same share of grains.
-// - collapse (gates + 2): the step at which the kept packets (past the last active gate)
+//   the lane), [x, y, z], or { at, fold, glide, lag }. With fold the packet folds into its
+//   core grain: our row (T1's close). glide (3.5) is in seconds. `lag` (0) holds a step
+//   forward to this step for that many seconds: the gate it fires and our glide start
+//   then (a slide whose camera flies in fires its gate once the camera has landed). Its
+//   core is the series' OURS size. Past a shrinking gate it loses the same share of
+//   grains, and keeps the loss: a step back holds it where it stands, never gliding it
+//   upstream through a gate.
+// - collapse (the last gate's step + 1): the step at which the kept packets (past the last active gate)
 //   fold into a ball. ball: {at: [x, y, z] (beyond `to`, on the lane), r (2.2), spin (0.12)}.
 //   The rest fade.
 // - size (GRAIN), alpha (0.9). minPx (0): a floor on a grain's size in px (on a 900-high
 //   frame), so a wide shot never draws the lane in 1-px grains. 0 keeps the series size.
 //
-// Steps: 0 hidden · 1 runs · 1 + k gates 1..k on · `collapse`. A step forward fires a gate
-// now. A jump of more than one step, or a slide opened directly, shows the gates as long
-// on. A step back turns the gate off: what it dropped stays dust, and new crossings pass.
+// Steps: 0 hidden · 1 runs · 1 + k gates 1..k on (or each gate's `step`) · `collapse`. A
+// step forward fires a gate now (after its step's `lag`). A jump of more than one step
+// shows the gates before it as long on; a jump from a lane that was not running (0 or 1,
+// a slide opened directly) still fires the step's own gate, after its lag, so the burst
+// plays on arrival. The buffer fills from the lane on a step forward to it: each parked
+// packet rides out to its slot, staggered over about 2.5 s. A step back turns the gate
+// off: what it dropped stays dust, and new crossings pass.
 // Each gate's on and off times go through eventLatch, and they reset once the last
 // burst packet has left the lane.
 // api.value(): the share of bytes the active gates pass (Π keep·shrink). busy while
@@ -196,7 +205,7 @@ void main() {
   float off = k == 0 ? uGOff0 : k == 1 ? uGOff1 : k == 2 ? uGOff2 : uGOff3;
   float lit = on > 1e8 ? 0.0 : smoothstep(0.0, 1.0, uTime - on) * (off > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.0, uTime - off));
   float fire = on > 1e8 || off < 1e8 ? 0.0 : exp(-max(uTime - on, 0.0) * 2.0) * step(on, uTime);
-  float a = uShow * (0.1 + 0.45 * lit + 0.6 * fire) * (0.6 + 0.4 * hash(aSeed * 5.0));
+  float a = uShow * (0.25 + 0.3 * lit + 0.6 * fire) * (0.6 + 0.4 * hash(aSeed * 5.0));
   if (uCollT < 1e8) a *= 1.0 - smoothstep(0.0, 0.8, uTime - uCollT);
   if (a <= 0.002) { hide(); return; }
   place(position, sizeAt(position, uSize), a, uColor, aSeed);
@@ -204,14 +213,16 @@ void main() {
   // the buffer: parked packets on a shell round the lane, turning as one (position.x is
   // along the lane, aR the radius, aA the angle: the knots stay knots as it turns)
   const BUF = G + SIZE_GLSL + /* glsl */ `
-attribute float aSeed, aR, aA;
-uniform float uShow, uOn, uSize, uAlpha, uSpin;
+attribute float aSeed, aR, aA, aKnot;
+uniform float uShow, uOn, uSize, uAlpha, uSpin, uBufT, uLane;
 uniform vec3 uColor;
 void main() {
-  float v = uShow * uOn;
+  // filling (uBufT set): each parked packet rides out from the lane to its slot in turn
+  float e = uBufT < 1e8 ? ease((uTime - uBufT - 2.2 * hash(aKnot * 13.1 + 0.37)) / 0.9) : 1.0;
+  float v = uShow * (uBufT < 1e8 ? e : uOn);
   if (v < 0.01) { hide(); return; }
-  float ang = aA + uTime * uSpin;
-  vec3 p = vec3(position.x, cos(ang) * aR, sin(ang) * aR);
+  float ang = aA + uTime * uSpin, rr = mix(min(uLane, aR) * 0.5, aR, e);
+  vec3 p = vec3(position.x, cos(ang) * rr, sin(ang) * rr);
   place(p, sizeAt(p, uSize), uAlpha * v * (0.75 + 0.25 * hash(aSeed * 3.0)), uColor, aSeed);
 }`;
   const OURSV = G + SIZE_GLSL + /* glsl */ `
@@ -240,7 +251,7 @@ function buildTrigger(o, ctx, stage, kit) {
   const seed = o.seed ?? SEED;
   const rnd = mulberry32(seed * 101 + 9);
   const from = Number(o.from ?? -27), to = Number(o.to ?? 75), lane = Number(o.lane ?? 1.1), speed = Number(o.speed ?? 7);
-  const gates = (o.gates || []).slice(0, MAXG).map((x) => ({ x: Number(x.x), keep: Number(x.keep ?? 1), shrink: Number(x.shrink ?? 1), ring: Number(x.ring ?? 600) }));
+  const gates = (o.gates || []).slice(0, MAXG).map((x, k) => ({ x: Number(x.x), keep: Number(x.keep ?? 1), shrink: Number(x.shrink ?? 1), ring: Number(x.ring ?? 600), step: Math.round(Number(x.step ?? 2 + k)) }));
   const NG = gates.length;
   const B = o.buffer || null;
   const bLen = B ? Number(B.len ?? 8) : 0;
@@ -323,7 +334,7 @@ function buildTrigger(o, ctx, stage, kit) {
   // ---- the buffer: parked packets on a slowly turning shell round the lane ----
   let bmat = null;
   if (B) {
-    const pos = new Float32Array(bufN * 3), s = new Float32Array(bufN), rr = new Float32Array(bufN), aa = new Float32Array(bufN);
+    const pos = new Float32Array(bufN * 3), s = new Float32Array(bufN), rr = new Float32Array(bufN), aa = new Float32Array(bufN), kn = new Float32Array(bufN);
     const R = Number(B.r ?? 3.2), parked = Math.max(1, Math.floor(bufN / per));
     // the knots' centres: a Fibonacci sphere (even over the surface, no two knots on each
     // other) stretched to a prolate spheroid round the lane, `len` long and r wide, each
@@ -336,11 +347,11 @@ function buildTrigger(o, ctx, stage, kit) {
       const m = c === parked - 1 ? bufN - i : per;
       for (let j = 0; j < m; j++, i++) {
         pos.set([cx + gauss(rnd) * knot * 1.6, 0, 0], i * 3);
-        rr[i] = cr + gauss(rnd) * knot; aa[i] = ca + (gauss(rnd) * knot) / R; s[i] = rnd();
+        rr[i] = cr + gauss(rnd) * knot; aa[i] = ca + (gauss(rnd) * knot) / R; s[i] = rnd(); kn[i] = c;
       }
     }
-    bmat = link(stage.grainMaterial(V.BUF, { ...shared, uOn: { value: 0 }, uSize: { value: Number(o.size ?? GRAIN) }, uSpin: { value: Number(B.spin ?? 0.08) }, uAlpha: { value: Number(B.alpha ?? 0.7) }, uColor: { value: crowd } }));
-    const bgeo = stage.grainGeometry(bufN, { position: pos, aSeed: [s, 1], aR: [rr, 1], aA: [aa, 1] });
+    bmat = link(stage.grainMaterial(V.BUF, { ...shared, uOn: { value: 0 }, uBufT: { value: OFF }, uLane: { value: lane }, uSize: { value: Number(o.size ?? GRAIN) }, uSpin: { value: Number(B.spin ?? 0.08) }, uAlpha: { value: Number(B.alpha ?? 0.7) }, uColor: { value: crowd } }));
+    const bgeo = stage.grainGeometry(bufN, { position: pos, aSeed: [s, 1], aR: [rr, 1], aA: [aa, 1], aKnot: [kn, 1] });
     g.add(stage.grainPoints(bgeo, bmat)); mats.push(bmat); geos.push(bgeo);
   }
 
@@ -359,13 +370,15 @@ function buildTrigger(o, ctx, stage, kit) {
   const oursList = Array.isArray(o.ours) ? o.ours : [from];
   const oursAt = (k) => {
     const e = oursList[Math.max(0, Math.min(oursList.length - 1, k))];
-    const at = e && typeof e === 'object' && !Array.isArray(e) ? e.at : e;
+    const obj = e && typeof e === 'object' && !Array.isArray(e);
+    const at = obj ? e.at : e;
     const v = Array.isArray(at) ? new Vector3(at[0] || 0, at[1] || 0, at[2] || 0) : new Vector3(Number(at ?? from), 0, 0);
-    return { v, fold: !!(e && typeof e === 'object' && !Array.isArray(e) && e.fold) };
+    return { v, fold: !!(obj && e.fold), glide: obj && e.glide != null ? Number(e.glide) : null, lag: obj ? Math.max(0, Number(e.lag ?? 0)) : 0 };
   };
 
   // ---- steps ----
-  const C = Math.round(Number(o.collapse ?? NG + 2));
+  const lastGateStep = NG ? Math.max(...gates.map((gt) => gt.step)) : 1;
+  const C = Math.round(Number(o.collapse ?? Math.max(lastGateStep, B && B.step != null ? Number(B.step) : 0) + 1));
   const latches = gates.map((gt, k) => stage.eventLatch(u, {
     start: `uGOn${k}`, hide: `uGOff${k}`,
     // until the last packet it burst has run off the lane
@@ -375,8 +388,11 @@ function buildTrigger(o, ctx, stage, kit) {
   let now = 0, show = 0, wantShow = 0, bufOn = 0;
   let o0 = oursAt(0).v.clone(), o1 = o0.clone(), oT = -OFF, fold0 = 0, fold1 = 0;
   let shrinkNow = 1, waveTill = -OFF, collTill = -OFF;
-  const glide = Number(o.glide ?? 3.5);
+  const glide0 = Number(o.glide ?? 3.5);
+  let glide = glide0;
+  const passed = gates.map(() => false);   // the shrinking gates ours has crossed while on
   const bufStep = B ? Number(B.step ?? 3) : OFF;
+  let bufWas = 0;
   const oursNow = (t, out) => {
     const f = Math.min(1, Math.max(0, (t - oT) / glide)), e = f * f * (3 - 2 * f);
     return out.copy(o0).lerp(o1, e);
@@ -386,15 +402,20 @@ function buildTrigger(o, ctx, stage, kit) {
   const apply = () => {
     const k = st.step, prev = st.prev;
     const jump = prev <= 0 || Math.abs(k - prev) > 1;
+    // a jump onto a gate's step from a lane that was not running: that gate still fires, after the lag
+    const arrive = jump && prev <= 1 && k >= 2;
+    const back = !jump && k < prev;
+    const lag = (jump && !arrive) || back ? 0 : oursAt(Math.max(0, k)).lag;
     wantShow = k > 0 ? 1 : 0;
     if (k <= 0) {
       for (const l of latches) l.stop(now);
       u.uCollT.value = OFF;
     } else {
       gates.forEach((gt, i) => {
-        const want = k >= 2 + i;
+        const want = k >= gt.step;
         const l = latches[i];
-        if (want && !l.on) { l.start(now, jump ? now - 100 : now); if (!jump) waveTill = Math.max(waveTill, now + (to - gt.x) / u.uWave.value + 4.5); }
+        const fires = !jump || (arrive && gt.step === k);
+        if (want && !l.on) { l.start(now, fires ? now + lag : now - 100); if (fires) waveTill = Math.max(waveTill, now + lag + (to - gt.x) / u.uWave.value + 4.5); }
         else if (!want && l.on) l.stop(now);
       });
       if (k >= C) {
@@ -402,16 +423,30 @@ function buildTrigger(o, ctx, stage, kit) {
         u.uKeptX.value = lastX(NG);
       } else u.uCollT.value = OFF;
     }
-    // ours: glide to this step's place (at once on a jump)
+    // the buffer fills from the lane on a step forward to it, stands at once otherwise
+    const bufWant = st.step >= bufStep && st.step < C ? 1 : 0;
+    if (bmat) {
+      if (bufWant && !bufWas) bmat.uniforms.uBufT.value = jump && !arrive ? now - 100 : now;
+      else if (!bufWant) bmat.uniforms.uBufT.value = OFF;
+    }
+    bufWas = bufWant;
+    // ours: glide to this step's place (at once on a jump; from the step before on an
+    // arrival; held where it stands on a step back, so it never runs upstream through a gate)
     const cur = oursNow(now, tmp).clone(), want = oursAt(Math.max(0, k));
-    if (jump) { o0.copy(want.v); fold0 = want.fold ? 1 : 0; oT = -OFF; }
-    else { o0.copy(cur); fold0 = foldNow(now); oT = now; }
+    if (back) {
+      o0.copy(cur); o1.copy(cur); fold0 = fold1 = foldNow(now); oT = -OFF;
+      return;
+    }
+    glide = want.glide ?? glide0;
+    if (arrive) { const w0 = oursAt(k - 1); o0.copy(w0.v); fold0 = w0.fold ? 1 : 0; oT = now + lag; }
+    else if (jump) { o0.copy(want.v); fold0 = want.fold ? 1 : 0; oT = -OFF; }
+    else { o0.copy(cur); fold0 = foldNow(now); oT = now + lag; }
     o1.copy(want.v); fold1 = want.fold ? 1 : 0;
   };
   // the bytes the active gates pass
   const value = () => gates.reduce((a, gt, i) => (latches[i].on ? a * gt.keep * gt.shrink : a), 1);
   const api = {
-    busy: () => Math.abs(show - wantShow) > 1e-3 || (now - oT < glide) || now < waveTill || now < collTill
+    busy: () => Math.abs(show - wantShow) > 1e-3 || (now - oT < glide) || (bmat && bmat.uniforms.uBufT.value < 1e8 && now - bmat.uniforms.uBufT.value < 3.2) || now < waveTill || now < collTill
       || (B ? Math.abs((st.step >= bufStep && st.step < C ? 1 : 0) - bufOn) > 0.01 : false),
     value,
     ready: () => true,
@@ -436,7 +471,11 @@ function buildTrigger(o, ctx, stage, kit) {
       // ours: its place, its fold, and the bytes it keeps past the gates it has crossed
       const at = oursNow(t, om.uniforms.uAt.value);
       let want = 1;
-      gates.forEach((gt, i) => { if (latches[i].on && at.x > gt.x && gt.shrink < 1) want *= gt.shrink; });
+      gates.forEach((gt, i) => {
+        if (at.x <= gt.x) passed[i] = false;                     // upstream again (a jump back)
+        else if (latches[i].on && now >= u[`uGOn${i}`].value) passed[i] = true;
+        if (passed[i] && gt.shrink < 1) want *= gt.shrink;
+      });
       shrinkNow += (want - shrinkNow) * Math.min(1, dt * 2.5);
       om.uniforms.uShrink.value = shrinkNow;
       om.uniforms.uFold.value = foldNow(t);

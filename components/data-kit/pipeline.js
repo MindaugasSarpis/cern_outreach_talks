@@ -137,6 +137,7 @@ function buildPipeline(o, ctx, stage, kit) {
   };
 
   let now = 0, ready = false, failed = false, armed = false, armT = 0, pendingArrive = false, playedAt = -OFF;
+  let kept = false;   // armed while it stood in view (a flight from a pose beside the station): it stays
   let want = st.step ?? 0, cur = 0;
   let ball = null, flat = null, flows = null, pulses = null;
   let ballN = 0, flatN = 0, flatStage = null, flatOrder = null;
@@ -407,8 +408,18 @@ function buildPipeline(o, ctx, stage, kit) {
   };
 
   const api = {
-    arm() { armed = true; armT = now; hideNow(); },
-    assemble(t, onDone) { now = t; arrive(); onDone?.(); },
+    // a flight in from a pose beside the station, with the pipeline standing in view: it stays,
+    // and the slide's step plays on as a step (lab 5 slide 4: the ball, code and sheet were
+    // scattered and gathered again, 4.5 s of black before run 1); `keep: false` restores the replay
+    arm() {
+      if (ready && cur > 0 && o.keep !== false) { kept = true; return; }
+      armed = true; armT = now; hideNow();
+    },
+    assemble(t, onDone) {
+      now = t;
+      if (kept) { kept = false; if (want !== cur) transition(want, want < cur ? (want === 0 ? 'hide' : 'back') : 'fwd'); onDone?.(); return; }
+      arrive(); onDone?.();
+    },
     busy: () => (!ready && !failed && want > 0) || armed || pendingArrive
       || !!(ball && now < ball.end + 0.3) || !!(flat && now < flat.end + 0.3) || now < runEndsAt,
     // the sheet's rows written so far, scaled to the file's (all of them once it stands)
