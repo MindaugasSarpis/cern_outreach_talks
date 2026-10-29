@@ -1,0 +1,75 @@
+{
+ "about": "Copied by components/data-kit/bake/sync.py; see components/data-kit/data/manifest.json.",
+ "files": {
+  "d0-cuts.json": {
+   "talks": [3,4],
+   "shape": "object",
+   "meaning": "IPchi2 < 9 counts with and without the TAU-missing rows; TAU > 0 count",
+   "by": "d0.py"
+  },
+  "d0-fit.json": {
+   "talks": [2,3,4,5],
+   "shape": "object",
+   "meaning": "the mass fit: start values, logged iterations (dk-curve params), result, pulls, window stability, PDG gap in sigma, mass/momentum scale shift, row 1 P(signal)",
+   "by": "d0.py"
+  },
+  "d0-psig.f32": {
+   "talks": [3,4],
+   "shape": [91583],
+   "dtype": "float32 LE",
+   "meaning": "P(signal) = S/(S+B) per candidate from the Gaussian+line fit (d0-fit.json), file order; outside 1820-1910 the fitted line is extrapolated and S is negligible",
+   "by": "d0.py"
+  },
+  "d0-score.f32": {
+   "talks": [4],
+   "shape": [91583],
+   "dtype": "float32 LE",
+   "meaning": "the honest 2-4-1 network's output per candidate in file order (NaN where TAU <= 0 or missing)",
+   "by": "train.py"
+  },
+  "d0-split.f32": {
+   "talks": [4],
+   "shape": [91583],
+   "dtype": "float32 LE",
+   "meaning": "classifier role per candidate in file order: 0 train, 1 test, -1 not used (TAU <= 0)",
+   "by": "train.py"
+  },
+  "d0.f32": {
+   "talks": [1,2,3,4,5],
+   "shape": [91583,4],
+   "dtype": "float32 LE",
+   "meaning": "record 401 candidates in file order: M MeV/c2, PT MeV/c, TAU ps (NaN = missing), IPCHI2",
+   "by": "d0.py"
+  },
+  "d0.json": {
+   "talks": [1,2,3,4,5],
+   "shape": "object",
+   "meaning": "d0.f32's header: n, cols, units, row 1, value ranges, source block",
+   "by": "d0.py"
+  },
+  "train-d0.json": {
+   "talks": [4],
+   "shape": "object",
+   "meaning": "record 401 classifier: majority / neuron / network accuracies, with M added, score grids over (log10 IPCHI2, TAU ps)",
+   "by": "train.py"
+  },
+  "train-perceptron.json": {
+   "talks": [4],
+   "shape": "object",
+   "meaning": "course 200 points, per-epoch (loss, acc, w1, w2, b), threshold vs line, loss grid over (w1,w2) with path, train/test split",
+   "by": "train.py"
+  },
+  "train-rare.json": {
+   "talks": [4],
+   "shape": "object",
+   "meaning": "rare-signal arithmetic: precision 8.3 %, accuracy of always-background 99.9 %",
+   "by": "train.py"
+  },
+  "train-ring.json": {
+   "talks": [4],
+   "shape": "object",
+   "meaning": "600-point ring set, line vs 2-4-1 network, test accuracy and AUC, score grid",
+   "by": "train.py"
+  }
+ }
+}

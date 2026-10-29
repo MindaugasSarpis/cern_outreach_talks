@@ -18,7 +18,7 @@ Drive.
 - Topic: from a perceptron to machine learning: separating signal from background.
 - Series: the CERN lessons course's first-principles spine told through
   CERN, one idea per talk, a ladder (each talk assumes only the ones before).
-  The others: 1 `Data1Trigger` (a collision becomes data); 2 `Data2Peak` (counting and noise); 3 `Data3Fit` (fitting a model); 5 `Data5Open` (open data and reproducibility). The series bible is filed in `notes/series-bible.md`.
+  The others: 1 `Data1Trigger` (a collision becomes data); 2 `Data2Peak` (counting and noise); 3 `Data3Fit` (fitting a model); 5 `Data5Open` (open data and reproducibility). The series bible (with its corrections on top) is `components/data-kit/notes/series-bible.md`; the kit API is `components/data-kit/README.md`.
 - Event: none yet; an explainer series. Date `2026_00_00` (placeholder).
 - Duration: 15 min each (`duration: 15min`), no questions inside.
 - Delivery: recorded video (`pnpm talk record`: per-slide MP4s the owner
