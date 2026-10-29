@@ -67,6 +67,11 @@ series' light blue. space.json is JSON, so copy the literal (classic):
   "rich2": { "color": "#7dd3fc" }, "hcal": { "color": "#7dd3fc" } }
 ```
 
+The `.nums` block is the kit's `nums.css`: put `@import '../components/data-kit/nums.css';`
+first in the talk's `styles/index.css` and delete the talk's own `.nums` rules (left 56 px,
+bottom 190 px; `.unit` 22 px weight 500, `.name` 22 px weight 400; `.swap` and `.out` for
+numbers that leave at `--oN`). Lab 2 takes it this way.
+
 `Clock.vue`/`clock.js`, `Crossing.vue` + `slideNav.js` and `WorldLabel.vue` (bible §4,
 components row) are **not in the kit yet**: lift them with T1 (notes/integration.md says
 why). Lab 1 holds a lab-only `setup/Crossing.vue`. Name a lifted component so that its
@@ -123,7 +128,7 @@ Every form reads these, and no talk overrides them.
 | `MASS` | `{ scale: 0.25, lo: 1816, hi: 1912, bin: 2 }` | world units per MeV/c², and the series' mass range (the owner's decision of 29 Oct: 1 816-1 912 in every talk, 48 bins; the outer bins of 1 810-1 920 are half outside record 401's stripping window and read as dips) and bin: every peak plot has its peak in the same place at the same size. A dk-hist on mass without `lo`/`hi` draws this range; a deck gives no range of its own |
 | `HEIGHT` | 11 | a histogram's height in world units |
 | `TICK_MASS` | 20 | MeV/c² between mass ticks |
-| `LABEL` | `{ px: 24, minPx: 18, captionPx: 24 }` | font size on a 1080-high frame; labels never go below 18 px |
+| `LABEL` | `{ px: 36, minPx: 36, captionPx: 36 }` | font size on a 1080-high frame. 36 is the house floor of 18 px on the 980-wide canvas (551 high at 16:9): 18 × 1080 / 551 = 35.3. Since 29 Oct (the series check: 24 drew 12 px ticks); no deck sets `tickPx` (check.mjs warns `tick-px`). In a wide shot (dist ≳ 30) 36 px numbers every 20 MeV/c² nearly touch: give that plot `ticks` every 40 |
 | `roles(palette)` | crowd = accent, sel = fg, axis = dim, tick = ink, name = fill | the colour grammar over the deck's palette |
 | `alphaFor(n)` | clamp(1.3·(60/n)^0.25, 0.3, 1.5) | one grain's alpha for a tallest column of n grains: a lone grain is whole, a dense column a mid light blue, never a white bar |
 | `fmt(v, d)` | | digits grouped from 4 with U+202F (as `<StageCount lang="en">`) |
@@ -323,12 +328,13 @@ serves `stage-data/lhcb-grains.bin`.
 | `sharp`, `alpha`, `size` | 16, 0.9, 1.2 | the front's thinness, brightness, grain size |
 
 Steps: `0` off (fades in 1.2 s) · `1` fronts at `f0` · `2` the fronts come faster and merge
-into a steady light-blue glow with a fine white sparkle (other crossings' hits). A step back
+into a steady light-blue glow with a fine sparkle (other crossings' hits). A step back
 from 2 to 1 returns to single fronts at once. A slide opened directly at step 2 shows the
 glow at once. No grain flares more than about 2.2 times a second. The event times go
 through `eventLatch`, so nothing is left after a step back or on a later slide.
 `api.value()`: the fronts sent so far. `busy` while merging or fading. The fronts and the
-glow are the crowd (light blue, lifted by `alpha`); only the sparkle of hits is white. Put
+glow are the crowd (light blue, lifted by `alpha`), and so is the sparkle of hits since 29 Oct
+(`sparkle: 'sel'` whitens it; white means "ours / kept"). Put
 the detector in the palette (`detectorParts`, see Install).
 
 ```json
@@ -452,7 +458,11 @@ background-like). The marker is the ring, never a colour.
 | `halo` | `{ r: 0.028, n: 220, size: 0.95, ref: 13 }` | ring radius as a share of the frame's height, grains, grain size (× GRAIN); `ref`: the distance at which a ring grain is drawn at `size`, larger by d/ref further off, so the ring looks the same from 27 units as from 13; `false` on a step hides it |
 | `haloAlpha` | 1.35 | |
 | `color` | `'sel'` | the core's role colour unless a step gives one: `'sel'`, `'crowd'`, or `'follow'` |
-| `ringColor` | the core's | the ring's role colour (object or step). By default the ring takes the core's colour; give `'sel'` to keep the marker white while the core turns light blue |
+| `ringColor` | `'sel'` | the ring's role colour (object or step). Since 29 Oct the ring stays white whatever the core's colour (bible §3; T4 and T5 drew a light-blue ring with `color: 'crowd'`); `'follow'` makes it take the core's colour, the old default |
+| `halo` (step) | | `false` hides the ring; `{ r, alpha }` eases its radius (share of the frame height, 0.028) and alpha (1.35) over 0.6 s |
+| `haloIn`, `haloGather` | 0.5, false | object or step: the ring's fade-in seconds from hidden; `haloGather: true` gathers its grains in from 2.4 × its radius (T1's cover and slide 13: 0.6 s gathers) |
+| `delay` (step) | 0 | a step that shows the spark from hidden waits that long (the ring arrives with the grains it marks) |
+| `from: '<form>'` (step) | | the move starts at that form's grain of our row now and draws its own core; on a dk-heap (`take`, default true) our row leaves the pile as the spark lifts it (`api.claim`) and returns on a step back (T5's close: our grain rising out of the heap) |
 
 A step: `{ at | on, from, glide, color, colorAfter, colorTime, ringColor, core, halo, row }`.
 - `color` on a step changes the core's colour over `colorTime` (0.8 s) after `colorAfter`
@@ -814,7 +824,7 @@ Frame and look:
 | `where`, `label` | per source | a row filter and the class-1 rule, `[col, op, v]` or a list (ops `< <= > >= == != in finite`), or a column name |
 | `size` | `[22, 12.5]` | world width and height. A sparse set reads better small and close (lab 4: 200 points in 6.5 × 6.5 at dist 10.5) |
 | `word` | none | the one axis caption (x), at most five words. `wordY` exists, but the bible allows one caption: put the unit in a y tick instead (`'20 ps'`) |
-| `depth` | d0: `{ col: 'M', range: [1810, 1920], size: 9, squeeze: 0.04 }` | the leak axis: `{ col, range, size, ticks, side: 'right', reverse, squeeze, crowd }`. Mass runs right as seen from the plot's right side (yaw > 0); `reverse` for a camera on the left. While it is open the plane squeezes to `squeeze` of its width as far as the camera stands side on (none face on, all of it at yaw 90, so the plane never collapses into one stacked column while still seen from the front), its own axes fade, and each grain's alpha follows the density seen from the side (`crowd`, default the form's). View it exactly side-on (yaw 90): the bands are then vertical stripes over the depth ticks. `false` turns it off |
+| `depth` | d0: `{ col: 'M', range: [1816, 1912] (MASS), size: 9, squeeze: 0.04 }` | the leak axis: `{ col, range, size, ticks, word, align: 'center', clip: true, side: 'right', reverse, squeeze, crowd }`. Ticks stand centred under their value (`align: 'side'`: beside the axis line, the old look); `word` is one caption after the axis's high end; rows outside `range` fade out as the depth opens (`clip: false` clamps them onto the ends). The depth's axis, ticks and caption show only once the camera stands side on (`depthAxisWithCamera: false` on the object shows them with the depth alone). `size` is the depth's world extent, not a label size. Mass runs right as seen from the plot's right side (yaw > 0); `reverse` for a camera on the left. While it is open the plane squeezes to `squeeze` of its width as far as the camera stands side on (none face on, all of it at yaw 90, so the plane never collapses into one stacked column while still seen from the front), its own axes fade, and each grain's alpha follows the density seen from the side (`crowd`, default the form's). View it exactly side-on (yaw 90): the bands are then vertical stripes over the depth ticks. `false` turns it off |
 | `score` | per source | `{ file, net, inputs }` (a logged network: inputs `[col, scale]` → ln(col · scale)) or `{ file, grid, z, space }` (a score grid; `space: ['log10', 'lin']` says how the grid's axes relate to the columns); `level` 0.5 |
 | `alpha`, `selGain`, `crowd`, `cell`, `whiteVis` | 1.25 sparse / 1.05 dense; 1.0 sparse / 0.85 dense / 1.15 rare; 8; 0.12; none (1.25 rare) | brightness. Each grain's alpha also falls with the local density ((crowd / d)^(1/2.2) over cells of `cell` world units), so a dense core keeps one grain's colour: light blue stays light blue and white stays white. `whiteVis` lifts white grains to whole (× whiteVis) whatever the density around them, for a few white among many; above ~1.3 with selGain 1.3 they bloom into a halo |
 | `lineAlpha`, `boundaryGrains` | 1.1, 1800 | the boundary's brightness (scaled by its length, so a short edge does not bloom) and its grain count. Over a dense cloud use ~1.8 |
@@ -922,9 +932,74 @@ tip into the scatter, the leak's snap, the pipeline's run and run 2's hand-over)
 and 28 photograph alike), dk-heap `oursFrom` (the end state only), dk-spark's colour
 change and `follow`, dk-landscape's `band`, dims-1 `ticks`, `{ball}` and `readout:
 'path'`, dk-curve `tone`. White reads light grey in dense columns at the default `selGain`
-(raise it per plot). The series' mass range is 1 816-1 912 (`MASS`, 29 Oct); dk-scatter's
-default depth range still says 1 810-1 920 (scatter.js, another lane's file). A dk-curve or
+(raise it per plot). The series' mass range is 1 816-1 912 (`MASS`, 29 Oct), dk-scatter's
+default depth range too (since the steward pass of 29 Oct). The keys of "Added 29 Oct" below
+are seen as stills only where the list there says so; their motions are not seen. A dk-curve or
 dk-landscape added to a far dk-hist's group does not fade with it.
+
+## Added 29 Oct (the steward pass over the five decks' requests)
+
+Every key is optional; a deck that sets none of them looks as before, except the four
+defaults marked **changed**. `notes/steward.md` says which request each answers and what
+each deck changes.
+
+- **changed** `LABEL` 36 px (above). **changed** dk-spark's ring is white by default
+  (`ringColor: 'follow'` for the old look). **changed** dk-glow's sparkle is the crowd's
+  light blue (`sparkle: 'sel'` for white). **changed** dk-scatter's depth range is `MASS`,
+  ticks centred, rows outside faded.
+- dk-hist: `glow` (object or step, 1: the landing glow's strength; 0.3 lands a dense pour
+  quietly), `curve` as a step key, `fillBy: 'x'` (object or step: grains land column by
+  column left to right), `oursLast` (our grain lands last), `oursSlot: k` (our grain stands k
+  grains up its column, its ring clear of the axis and the tick numbers), `readout:
+  'window'` (white grains landed), `reroll: { every, rolls, end }` and a step's `end` beside
+  a `[a, b]` range (the sweep rests on that state), `by: 'n'` on a `{select}` step (the
+  selections by kept count, falling: the count falls steadily), `alarmMark` (object or
+  step, with `alarm: 'baked'`: a white mark under each lit bin), `shiftFlash` (1: grains a
+  `{shift}` moves to another bin start white and ease back), `ghost` (0..1 with
+  `{subtract}`: the removed sideband grains stay as a faint ghost), `axis: false` (step: the
+  frame fades), `axisWith: 'grains'` (object or step: on a fresh fill the frame comes with
+  the first grain). The plot's frame is computed at load, so a dk-curve's first arrival has
+  the right scale; `busy` is true from the bus's step until the form takes it.
+- dk-heap: `oursFrom: { at: [x, y, z], world }` (a fixed start point); `api.value()` no
+  longer counts the glided grain twice (91 584 → 91 583, lab 2 slide 27).
+- dk-curve: `replay: false` (object or step: from hidden it stands at once, drawn whole);
+  `alpha` and `thick` as step keys (eased 0.8 s); a step that changes the set takes the
+  plot's new scale at once (no overshoot above the frame); `pull: { guides: [-2, 2] }`
+  (dotted guides with "+2" "0" "−2" at the row's left end, a brighter zero line);
+  `api.standing()`.
+- dk-landscape: `ball: 'start'` (step: the ball waits at the path's first point; `readout:
+  'path'` reads it, lab 3 slide 14: 0.693), `gather` (s, object or step), `words: { x, y,
+  z }` (dims 2 captions in the name colour, with the surface's ticks), `yticks` on dims 1
+  (Δ levels at the slice's left end).
+- dk-scatter: `glow` (`false`/0 on a step: held-out rows land at their final size),
+  `dustTime`, `dustHold`, `dustAlpha` (the dissolving boundary), and the depth keys above.
+- dk-trigger: `idle` (0.25: a gate ring's brightness before it fires), `spray` (units: the
+  burst thrown outward in its first 0.4 s), `burstSpread` (s: the bursts staggered),
+  `collapseTime` (2.2 s), `ball.gain` (1: the ball's brightness as it forms).
+- dk-lineup: `wait` by step (`{ "3": 3.8, "5": 0, "default": 0 }`), `labelPx`.
+- dk-ground: `alpha` as a list by step (`[0, 1, 1, 2.4]`).
+- dk-vertex: `decayTime` (1.3), `holdTime` (0.6), `foldTime` (0.9).
+- dk-pipeline: `api.ours()` (our row's grain: the sheet's row 1 once written, else the
+  ball's; a dk-spark `on` the pipeline follows it, lab 5 slide 3), `stageAlpha: { "<step>":
+  { "<stage, 1-based>": a } }` (lab 5 slide 4: the scripts at 0.5).
+- Bake: `d0-flat.json` `band.set`, `band.hi.set`, `band.lo.set` (the flat bins' mean and
+  mean ± √mean as dk-curve `flat` sets) and `d0-significance.json` `staysAbove5From.set`
+  (the 5 σ height after 186 rows, 5.236 a bin).
+- `nums.css` (above). check.mjs warns `tick-px` and `hist-by`, and accepts `oursFrom: { at }`.
+
+Seen in the labs' stills (29 Oct): LABEL 36 everywhere; dk-curve guides (lab 3 slide 2);
+landscape `words` (lab 3 slide 4), dims-1 `yticks` (slide 10), `ball: 'start'` with
+`gather` (slide 14); `reroll.end` with `alarmMark` (lab 2 slide 21), the `band.hi.set`
+level (slide 25), `oursFrom { at }` and the 91 583 count with nums.css (slide 27); the
+depth's `MASS` range, centred ticks and `word` (lab 4 slide 9), the gate's `idle` (slide 17,
+faint at 0.6); pipeline `ours()` and `stageAlpha` (lab 5 slides 3, 4); the glow's light-blue
+sparkle, the trigger's `spray` and the lineup's per-step `wait` (lab 1 slides 3, 4, 13).
+Not seen (motions, or no lab slide): hist `glow`, `fillBy`, `oursLast`, `oursSlot`,
+`readout: 'window'`, `by: 'n'`, `shiftFlash`, `ghost`, `axis: false`, `axisWith`; curve
+`replay: false`, step `alpha`/`thick`, the scale snap; scatter `glow`, dust keys, the
+camera-timed depth labels; spark `halo` per step, `haloIn`, `haloGather`, `delay`, `from:
+'<heap>'`; trigger `burstSpread`, `collapseTime`, `ball.gain`; ground alpha by step;
+vertex durations.
 
 ## Writing a dk form
 

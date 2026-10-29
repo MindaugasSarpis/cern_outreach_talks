@@ -11,6 +11,24 @@
  },
  "slopePerBin": 3.7032967,
  "spreadUncertainty": 0.196116135,
+ "band": {
+  "set": {
+   "a": 1460.78571,
+   "bin": 2.0
+  },
+  "hi": {
+   "set": {
+    "a": 1499.00594,
+    "bin": 2.0
+   }
+  },
+  "lo": {
+   "set": {
+    "a": 1422.56549,
+    "bin": 2.0
+   }
+  }
+ },
  "source": {
   "title": "LHCb event file for real measurement",
   "url": "https://opendata.cern.ch/record/401",
