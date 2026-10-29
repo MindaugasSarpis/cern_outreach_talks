@@ -128,7 +128,7 @@ function buildHist(o, ctx, stage, kit) {
   let counted = null, claimedGone = null, heapUsed = null;
   let oursG = -1, rowToGrain = null, lastReason = null, playedAt = -OFF;
   // what is shown now
-  let dy = 1, colMax = 1, alphaFrom = 0.5, alphaTo = 0.5, alphaT0 = -OFF;
+  let dy = 1, colMax = 1, alphaFrom = 0.5, alphaTo = 0.5, alphaT0 = -OFF, alphaDur = 1.2;
   let arrTimes = new Float64Array(0), leaveTimes = new Float64Array(0), baseCount = 0;
   let meanTarget = null, meanFrom = null, meanT0 = -OFF, meanTopY = 0, meanTopFrom = 0, lastMean = null;
   let tiltFrom = 0, tiltTo = 0, tiltT0 = -OFF, blur = 0, frameShow = 0;
@@ -140,6 +140,9 @@ function buildHist(o, ctx, stage, kit) {
   let lastL = null;                                     // the last shown layout that was not {tip}
   let ceded = null;                                     // the dk-hist this one took over ({over})
   let near = 1, far = 1;                                // distance fades (labels, grains)
+  let everShown = false;                                // a state has stood once (an arrival then refills fast)
+  let subK = 0, subAt = 0;                              // a fresh {subtract} or {tip}: its state without it first
+  let restoreGone = false;                              // a cede(null) that came while this plot was hiding
   const centre = new Vector3();
 
   const ease = (x) => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
@@ -475,9 +478,30 @@ function buildHist(o, ctx, stage, kit) {
     return { ...st, [key]: a };
   }
   let landAt = new Float64Array(0);
-  function transition(k, kind) {
-    const s = sweepState(stateAt(steps, k), k, kind);
+  function transition(k, kind, pre = false) {
+    if (!pre) {
+      subK = 0;
+      // a {subtract} opened fresh (an arrival, a replay) fills its window and sidebands first,
+      // holds 0.5 s, then the pairs meet: the subtraction is seen, and the count climbs to the
+      // full set and falls to what is left (else only the survivors fell in, lab 3 slide 5)
+      // A {tip} opened fresh likewise stands as the histogram first, `tipHold` (1 s), then
+      // lets its grains go (lab 4 slide 6 opened on the tip: the plot was never seen)
+      const s0 = stateAt(steps, k);
+      const opened = (!shown || kind === 'arrive') && kind !== 'settle' && kind !== 'back' && kind !== 'hide' && mode === 'rows';
+      const preKey = !opened ? null
+        : s0?.subtract && o.split && o.subtractFirst !== false ? 'subtract'
+          : s0?.tip && o.tipFirst !== false ? 'tip' : null;
+      if (preKey) {
+        transition(k, kind, preKey);
+        subK = k; subAt = morph.end + (preKey === 'tip' ? Number(s0.tipHold ?? o.tipHold ?? 1) : 0.5);
+        return;
+      }
+    }
+    let s0 = stateAt(steps, k);
+    if (pre && s0) s0 = { ...s0, [pre]: null };
+    const s = sweepState(s0, k, kind);
     const prev = shown;
+    if (s && restoreGone) { restoreGone = false; morph.G.fill(OFF); morph.gone(); }
     const L = layout(s);
     if (s && !s.tip) lastL = L;
     const instant = kind === 'back' || kind === 'hide' || kind === 'settle';
@@ -505,10 +529,18 @@ function buildHist(o, ctx, stage, kit) {
       // arrivals, in the fill order
       for (let q = 0; q < N; q++) { const i = fillOrder[q]; if (!prevCounted[i] && newCounted[i]) arrivals.push(i); }
       const nA = arrivals.length;
-      const fd = Number(s?.fill ?? o.fill ?? Math.min(9, Math.max(1.6, 1.2 + 1.9 * Math.log10(Math.max(10, nA) / 30))));
+      // auto fill: 1.6 s for a few grains, up to 5.5 s for a dense set (9 s read as a take
+      // spent waiting, labs 2, 3 and 5). An arrival at a plot already seen refills in `refill`
+      // (2 s): the audience has watched it build once.
+      let fd = Number(s?.fill ?? o.fill ?? Math.min(5.5, Math.max(1.6, 1.2 + 1.9 * Math.log10(Math.max(10, nA) / 30))));
+      if (kind === 'arrive' && everShown) fd = Math.min(fd, Number(o.refill ?? 2));
       const curve = Number(o.curve ?? 1.4);
       const lead = Number(fresh ? (s?.lead ?? o.lead ?? 0.4) : 0.15);
       const arc = Number(o.arc ?? 4);
+      // {weights} on or off: the change runs left to right, as a window's does, not all at
+      // once (a whole plot whitening and landing together read as a pulse, lab 2 slide 7)
+      const weighting = !fresh && !instant && !!s?.weights !== !!prev?.weights;
+      const xs = (i3) => 1.2 * (B[i3] + W / 2) / W;   // 1.2 s across: thousands of returning landings, spread
       const src = o.from ? new Vector3(...o.from).sub(new Vector3(...(o.pos || [0, 0, 0]))) : null;
       const spread = o.fromSpread || [0, 0, 0];
       const arrT = new Float64Array(nA);
@@ -527,7 +559,9 @@ function buildHist(o, ctx, stage, kit) {
         if (lastReason[i] !== R_NONE && !fresh) {
           // back from a cut or another selection: a short drop onto its column
           A[i3] = B[i3]; A[i3 + 1] = B[i3 + 1] + 0.08 * H * (0.6 + r); A[i3 + 2] = B[i3 + 2];
-          M[i] = MOTION.DROP; T[2 * i] = 0.3 * r + (cutting ? 0.4 : 0); T[2 * i + 1] = 0.5; arrT[a] = t + T[2 * i] + 0.5; continue;
+          // a new selection's returning grains are spread over 0.8 s, so their landing glows do not flash together
+          const spreadR = s?.select !== prev?.select ? 0.8 : 0.3;
+          M[i] = MOTION.DROP; T[2 * i] = weighting ? xs(i3) + 0.25 * r : spreadR * r + (cutting ? 0.4 : 0); T[2 * i + 1] = 0.5; arrT[a] = t + T[2 * i] + 0.5; continue;
         }
         const delay = lead + Math.pow(a / Math.max(1, nA - 1), curve) * fd;
         T[2 * i] = delay;
@@ -582,6 +616,7 @@ function buildHist(o, ctx, stage, kit) {
           if (instant) { T[i2] = 0; T[i2 + 1] = 0.35; }
           else if (resampled) { T[i2] = 0.1 * r; T[i2 + 1] = 0.5; }
           else if (!moved) { T[i2] = 0.5 * (A[i3] + W / 2) / W; T[i2 + 1] = 0.8; }      // a sweep of colour, left to right
+          else if (weighting) { T[i2] = xs(i3) + 0.15 * r; T[i2 + 1] = 0.9; }
           else if (shifting) { T[i2] = 0.3 * r; T[i2 + 1] = 1.6; }
           else { T[i2] = settle + 0.3 * r; T[i2 + 1] = settle ? 1.1 : 1.0; }
         }
@@ -612,6 +647,9 @@ function buildHist(o, ctx, stage, kit) {
     // brightness, scale, extras
     colMax = L.colMax; dy = L.dy ?? dy;
     alphaFrom = morph.u.uAlpha.value; alphaTo = Number(s?.alpha ?? o.alpha ?? alphaFor(colMax * (o.density ?? 1))); alphaT0 = t;
+    // a plot getting denser drops its grain alpha quickly, before most new grains land: over
+    // 1.2 s they landed at the sparse plot's alpha and the plot swelled and dimmed (lab 5 slide 8)
+    alphaDur = alphaTo < 0.85 * alphaFrom ? 0.4 : 1.2;
     // the white grains' alpha gain: 1.3 unless the deck sets `selGain` (object or step).
     // A sparse or thin white set may want more (1.5-1.8) to read as fg, not grey; an
     // automatic lift (0.7 / alpha) was tried and bloomed dense narrow white columns into
@@ -625,6 +663,7 @@ function buildHist(o, ctx, stage, kit) {
     setWhiskers(s, L, t);
     setPeaks(s);
     shown = s; cur = s ? k : 0;
+    if (s) everShown = true;
   }
 
   const claimer = name ?? 'dk-hist';
@@ -716,14 +755,20 @@ function buildHist(o, ctx, stage, kit) {
   }
 
   // ---- stepping, arrival ------------------------------------------------------------
+  // the slide's steps can land a frame after the station's assembly (a cut on a `path`
+  // assembles on its first frame): a step up from nothing just after an arrival is that
+  // arrival, so `replay` and `refill` hold (lab 3 slide 7 refilled from nothing for 8 s)
+  let arrivedAt = -OFF;
   const request = (k) => {
     want = k;
     if (!ready || armed) return;
-    transition(k, k < cur ? (k === 0 ? 'hide' : 'back') : 'fwd');
+    const late = k > 0 && cur === 0 && now - arrivedAt < 1;
+    transition(k, k < cur ? (k === 0 ? 'hide' : 'back') : late ? ARRIVE : 'fwd');
   };
   const arrive = () => {
     const wasArmed = armed;
     armed = false;
+    arrivedAt = now;
     if (!ready) { pendingArrive = !failed; return; }
     pendingArrive = false;
     // `c` (an assembly with no flight before it) replays from nothing, unless it just played
@@ -736,7 +781,7 @@ function buildHist(o, ctx, stage, kit) {
     morph.jump(now, L);
     counted = L.counted; lastReason = L.reason; shown = null; cur = 0;
     if (heapUsed) { heapUsed.api.release?.(claimer); heapUsed = null; claimedGone = null; }
-    cedeTo(null); sw = null;
+    cedeTo(null); sw = null; subK = 0;
     whiskOn = false; if (whisk) whisk.u.uShow.value = 0;
     meanTarget = null; lastMean = null;
     arrTimes = new Float64Array(0); leaveTimes = new Float64Array(0); baseCount = 0;
@@ -770,10 +815,13 @@ function buildHist(o, ctx, stage, kit) {
       || (meanTarget != null && now < meanT0 + 1.4)
       || now < tiltT0 + 1.7 || Math.abs(blur - Number(shown?.focus ?? 0)) > 0.01
       || (whiskOn && whisk && whisk.u.uShow.value < 0.99)
-      || !!(sw && !sw.done),
+      || !!(sw && !sw.done) || subK > 0,
     value: readout,
     values: () => ({ count: landed() * unit, mean: meanNow(), grains: N, unit, step: cur }),
     ready: () => ready,
+    // false while a {tip} is still to come (the plot filling, or standing before it lets go):
+    // a dk-scatter tipping from this plot waits for it
+    tipReady: () => ready && !sel.fresh && subK === 0 && (!!shown?.tip || !(morph && now < morph.end)),
     // the frame other forms draw in (dk-curve, dk-vertex, dk-spark): add to `group` to tilt with the plot
     frame: () => ready && { lo, hi, bin, bins: nb, width: W, height: H, unit, perEntry: dy / unit, colMax, group: plot, x: xOf, y: (entries) => (entries / unit) * dy },
     // where a row's grain is now (world), or null when it is not drawn
@@ -809,12 +857,17 @@ function buildHist(o, ctx, stage, kit) {
         pos.push(e[0] * x + e[4] * y + e[8] * z + e[12], e[1] * x + e[5] * y + e[9] * z + e[13], e[2] * x + e[6] * y + e[10] * z + e[14]);
         white.push(c[4]);
       }
-      return { rows: Int32Array.from(rows), pos: Float32Array.from(pos), white: Float32Array.from(white) };
+      // alpha: the plot's grain alpha now, so a form taking the grains over starts them as bright as they were
+      return { rows: Int32Array.from(rows), pos: Float32Array.from(pos), white: Float32Array.from(white), alpha: morph.u.uAlpha.value };
     },
     // the other side of {over}: gone[row] = the world time this plot's grain of that row
     // goes (OFF stays); null gives every grain back
     cede(gone) {
       if (!ready || mode !== 'rows') return;
+      // given back while this plot is itself going (the bus says 0): its grains stay gone, or
+      // run 1 flashed back whole for the 0.35 s of its own fade (lab 5 slide 7). They come
+      // back at its next shown state.
+      if (!gone && (sel.step ?? 0) <= 0) { restoreGone = true; return; }
       const G = morph.G;
       for (let i = 0; i < N; i++) { const r = rowOf[i]; G[i] = gone && r < gone.length ? gone[r] : OFF; }
       morph.gone();
@@ -835,6 +888,7 @@ function buildHist(o, ctx, stage, kit) {
       if (!ready) return;
       morph.u.uTime.value = t;
       if (armed && now - armT > 6) arrive();
+      if (subK > 0 && now >= subAt && !armed) { const kk = subK; subK = 0; if (cur === kk) transition(kk, 'fwd'); }
       // a sweep's next index
       if (sw && !sw.done && sw.start != null && t >= sw.start && !armed) {
         const idx = Math.min(sw.b, sw.a + 1 + Math.floor((t - sw.start) / sw.every));
@@ -850,7 +904,7 @@ function buildHist(o, ctx, stage, kit) {
       }
       morph.u.uShow.value = far;
       // brightness
-      const ka = ease((t - alphaT0) / 1.2);
+      const ka = ease((t - alphaT0) / alphaDur);
       morph.u.uAlpha.value = alphaFrom + (alphaTo - alphaFrom) * ka;
       morph.u.uSelGain.value = selFrom + (selTo - selFrom) * ka;
       // the frame stands while the plot is shown

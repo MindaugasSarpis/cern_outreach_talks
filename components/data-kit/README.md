@@ -158,7 +158,7 @@ Frame and look:
 | `where` | none | a static row filter, `[col, op, v]` or a list of them |
 | `split: { col, win, sb }` | none | rows in the window `win` (white) and in the sidebands `sb` (light blue); every other row is left out. Needed by `{subtract}`. |
 | `from`, `fromSpread`, `arc` | none, 0, 4 | grains fill out of a box (e.g. a detector beside the plot) on a bowed arc instead of dropping from above (station frame) |
-| `fill`, `fall`, `curve`, `lead`, `leap` | auto, 1.1, 1.4, 0.4, 1.5 | fill seconds for the step's new grains (auto: 1.6 s for a few, 9 s for 90 000), drop seconds, front-loading, the first grain's delay, and the leap seconds from a heap |
+| `fill`, `fall`, `curve`, `lead`, `leap` | auto, 1.1, 1.4, 0.4, 1.5 | fill seconds for the step's new grains (auto: 1.6 s for a few, 5.5 s for 90 000), drop seconds, front-loading, the first grain's delay, and the leap seconds from a heap |
 | `alpha`, `density` | `alphaFor` | per-grain brightness override |
 | `lattice` | on | a sparse set (columns of tens) stands as a dot plot, its grains on a lattice up to 3 grain widths apart. `false` turns this off. |
 | `selections`, `peaks: { y, zoom, at }` | `d0-select.json` | the file `{select}` reads. `peaks` draws the selections' fitted peaks, one grain each, on a line `y`·H under the axis. **Avoid it**: the peaks span 0.43 MeV, a tenth of a world unit, and a `zoom` row under the mass ticks reads as a 20 MeV spread (lab 5 review). Draw the peaks as their own dk-hist of `d0-peaks.f32` on a printed scale instead (lab 5 slide 9). |
@@ -172,6 +172,9 @@ Frame and look:
 | `over` | none | a dk-hist's name: this plot takes over that one grain by grain. Each grain of the other plot of the same row goes at the moment this one's lands (same values, seed and ours, so the same slot): T5's run 2 (light blue) replacing run 1 (white) bin by bin with no change of shape. A step back or a hide gives the grains back. Rows sources only |
 | `oursFrom` | none | a form's name (a dk-vertex): our grain starts where that form's `api.ours()` is and glides into its slot, instead of leaping from the heap a second time. Also a step key |
 | `replay` | true | `false`: an arrival or `c` shows the step's state at once (0.35 s) instead of replaying the fill. For a plot that should stand while another animates on the same slide opened cold |
+| `refill` | 2 | an arrival at a plot that has already stood once replays its fill in at most this many seconds (the audience saw it build) |
+| `tipFirst`, `tipHold` | true, 1 | a `{tip}` step opened fresh stands as the histogram first, holds `tipHold` s, then lets its grains go; the dk-scatter that tips from it waits (`api.tipReady()`) |
+| `subtractFirst` | true | a `{subtract}` step opened fresh (an arrival, `c`) fills window and sidebands first, holds 0.5 s, then the pairs meet; `false` drops in only what is left |
 | `fade` | true | far from the camera the tick numbers fade (4 to 6 plot sizes away) and the grains too (8 to 12): another station's plot is otherwise legible numbers in mid-air or a bright point. `false` keeps both |
 
 Steps. Step k is the steps 1..k merged in order: a step keeps every key of the steps
@@ -193,7 +196,7 @@ replays the state from nothing.
 | `window: [lo, hi]` | entries inside turn white; a white tick glides to their mean; `api.value()` is that mean | 1.4 s |
 | `shift: k` | every value × k: the grains slide to their new bins and restack (T3's momentum scale: `d0-fit.json` `scale.massFactor`) | 1.6 s |
 | `cut: [col, op, v]` (or a list) | entries failing it lift away as dust and the columns settle; ops `< <= > >= == != in finite` | ~3 s |
-| `weights: 'psig'` | each grain whitens by its P(signal) | 1.3 s |
+| `weights: 'psig'` | each grain whitens by its P(signal), left to right across the plot (as a window does) | 1.3 s |
 | `subtract: true` (or `{ sb, win, col, scale }`) | with `split`: sideband grains (scale = window width / sideband width) meet a window grain of their bin pair by pair and both flash out; the remaining sideband grains go too; the window grains settle | ~3.5 s |
 | `select: i` | selection i of `d0-select.json`: grains outside lift out briefly and grains inside drop back. With `peaks`, the peak grains of selections 0..i stand under the axis. | ~1 s |
 | `tilt: deg` | the plot plane tips back about its axis line (T3's bowl beneath). Add other forms to `api.frame().group` to tip with it. | 1.6 s |
@@ -303,20 +306,24 @@ Required: `pos name grains`. One packet of grains is one bunch crossing, running
 | `lane`, `speed` | 1.1, 7 | the lane's radius; units a second |
 | `packets`, `per` | 340, 22 | crossings and grains a crossing (thinned to the budget) |
 | `empty` | 0.25 | the share of empty crossings: fainter, a few grains, dropped by every gate |
-| `gates` | none | up to 4 × `{ x, keep (1), shrink (1), ring (600) }`. `keep`: the share of non-empty packets that pass. `shrink`: the share of a kept packet's grains (bytes) that go on; the rest burst. No gate has a default keep: give sourced numbers (HLT1 1/30; HLT2 + Turbo a byte ratio such as 30/400) |
+| `gates` | none | up to 4 × `{ x, keep (1), shrink (1), ring (600), step (2 + index) }`; `step` is the step that fires the gate, so a buffer step can stand between two gates (lab 1: gate 1 at 2, buffer 3, gate 2 at 4). `keep`: the share of non-empty packets that pass. `shrink`: the share of a kept packet's grains (bytes) that go on; the rest burst. No gate has a default keep: give sourced numbers (HLT1 1/30; HLT2 + Turbo a byte ratio such as 30/400) |
 | `buffer` | none | `{ at, len (8), r (3.2), grains (6000), hold (3), step (3), spin (0.08), alpha (0.7) }`: from step `step`, parked packets (grains / per knots of per grains) on a prolate-spheroid shell round the lane, len long and r wide, never inside it, turning as one at spin rad/s; packets in its span move hold times slower and, while the buffer is on, ride out onto the shell and back. Call it "the buffer", not a disc |
 | `knot` | 0.1 | one packet's spread across the lane (σ; 1.6× along it): small keeps a dense lane reading as many packets |
 | `minPx` | 0 | a floor on a grain's size in px (900-high frame) for a wide shot; 0 keeps the series size |
-| `ours` | `[from]` | our white packet's place per step index: `x`, `[x, y, z]` or `{ at, fold: true }` (folds into its core grain: our row). Its core is the OURS size; past a shrinking gate it loses the same share of grains |
+| `ours` | `[from]` | our white packet's place per step index: `x`, `[x, y, z]` or `{ at, fold, glide, lag }` (`fold`: folds into its core grain, our row; `glide`: this step's glide seconds; `lag`: a step forward to this step waits that long before its gate fires and ours moves, so a slide whose camera flies in fires once it has landed). Its core is the OURS size; past a shrinking gate it loses the same share of grains and keeps the loss: a step back holds ours where it stands |
 | `glide` | 3.5 | seconds for ours to move |
-| `collapse` | gates + 2 | the step at which the kept packets (past the last gate) fold into a turning ball, `ball: { at (beyond to), r (2.2), spin (0.12) }`; the rest fade |
+| `collapse` | last gate's step + 1 | the step at which the kept packets (past the last gate) fold into a turning ball, `ball: { at (beyond to), r (2.2), spin (0.12) }`; the rest fade |
 | `wave`, `size`, `alpha`, `seed` | 30, GRAIN, 0.9, 401 | the burst wave's speed (units a second) |
 
-Steps: `0` hidden · `1` runs · `1 + k` gates 1..k on · `collapse`. A step forward fires a
-gate now: the packets it drops burst at the gate as they cross, and those already past
-it burst on a wave from the gate, so the lane past it empties at once. A jump of more than
-one step, or a slide opened directly, shows the gates as long on. A step back turns the
-gate off: what it dropped stays dust, and new crossings pass. On and off times go through
+Steps: `0` hidden · `1` runs · `1 + k` gates 1..k on (or each gate's `step`) · `collapse`.
+A step forward fires a gate (after its `lag`): the packets it drops burst at the gate as
+they cross, and those already past it burst on a wave from the gate, so the lane past it
+empties at once. A jump of more than one step shows the earlier gates as long on; a jump
+from a lane that was not running (step 0 or 1, a slide opened directly) still fires the
+step's own gate after its lag, so the burst plays on arrival. A step forward to the
+buffer's step fills it from the lane (each parked packet rides out to its slot, over
+about 2.5 s). A step back turns the gate off (the ring dims to a floor that still reads):
+what it dropped stays dust, and new crossings pass. On and off times go through
 `eventLatch`. `api.value()`: the bytes the active gates pass (Π keep·shrink).
 `api.ours()`: our packet's world position now. `busy` while showing, while ours glides,
 during a burst wave, and while collapsing.
@@ -326,7 +333,7 @@ during a burst wave, and while collapsing.
   "from": 13, "to": 112, "lane": 0.7, "knot": 0.08, "packets": 1800, "per": 14,
   "gates": [{ "x": 30, "keep": 0.0333 }, { "x": 66, "keep": 1, "shrink": 0.075 }],
   "buffer": { "at": 49, "len": 12, "r": 4.5, "grains": 6000, "hold": 3 },
-  "ours": [13, 14, 34, 70, 70] }
+  "ours": [13, 14, { "at": 34, "lag": 3.2 }, { "at": [49, 4.4, 0] }, { "at": 70, "glide": 3, "lag": 1.5 }, 70] }
 ```
 
 ### dk-lineup: piles of one terabyte spheres that keep their size
@@ -335,11 +342,11 @@ Required: `pos name grains balls`. Sphere impostors in KJ's metal (not additive 
 
 | field | default | meaning |
 |---|---|---|
-| `balls` | | up to 8 × `{ n, grain (1), color ('crowd' \| 'sel' \| 'axis'), at, label, merge }`. `n` spheres stand for n TB. With `grain`, each drawn sphere stands for `grain` of them, cbrt(grain) times as wide (the same volume). Without `at`, piles stand side by side along x, resting on the floor. `label`: a number with its unit, hung above the pile at a fixed size (≥ 18 px). `merge: { from, copiesAt }`: the pile first gathers as copies of a smaller pile |
+| `balls` | | up to 8 × `{ n, grain (1), color ('crowd' \| 'sel' \| 'axis'), at, label, merge, wait, from }`. `wait`: seconds after its step before the pile gathers, so piles shown together come one by one. `from` ([x, y, z]): the side its spheres gather from (behind and below, out of a close camera's way) instead of all round. `n` spheres stand for n TB. With `grain`, each drawn sphere stands for `grain` of them, cbrt(grain) times as wide (the same volume). Without `at`, piles stand side by side along x, resting on the floor. `label`: a number with its unit, hung above the pile at a fixed size (≥ 18 px). `merge: { from, copiesAt }`: the pile first gathers as copies of a smaller pile |
 | `unit` | 0.1 | one sphere's lattice step (radius 0.9 × unit) |
 | `anchor`, `gaps` | 0, 2 each | the pile at the origin; the spaces between neighbours |
 | `grow`, `reach`, `mergeAt`, `armWait` | 3.2, 3, 2.4, 6 | gather seconds, how far out spheres start, merge timing, the arm fallback |
-| `rest`, `assemble`, `seed` | true, true, 401 | piles on the floor; scatter on a flight and gather on arrival |
+| `rest`, `assemble`, `seed` | true, true, 401 | piles on the floor; scatter on a flight and gather on arrival. A slide that cuts in on a `path` gets its assembly only when the path ends, so the piles wait in the dark: give that lineup `assemble: false` and it gathers on its steps |
 
 Steps: `k` shows piles 0..k-1 (`0` hides all); an array `[i, j]` (from `<StageSteps>`)
 shows exactly those. `api.value()`: the spheres (TB) the shown piles stand for. The camera's
@@ -430,8 +437,10 @@ Steps: `0` hidden · `1` flight (1.8 s) · `2` decay (the D⁰ goes out, the str
 1.6 s). A step forward plays its own part; an arrival or `c` plays every part up to its
 step from nothing (about 6 s for step 3); a step back shows the step's end at once. Once
 the `land.of` hist draws its own grain of our row where ours landed, ours hands over and
-fades. `api.value()` is the pair's mass once the strands have folded (else 0), so
-`<StageCount for="v" :to="1880.6" :decimals="1">` lands with the grain; `api.ours()` is the
+fades. `api.value()` is the pair's mass once our grain has landed on its bin (with
+`land`; without, once the strands have folded), NaN before that (0 before step 3), so
+`<StageCount for="v" :to="1880.6" :decimals="1">` prints no wrong number mid-decay: give
+the deck's number a `--d` delay that reaches the landing; `api.ours()` is the
 D⁰, the decay point while the pair is apart, then the folded grain (for a dk-spark).
 `files(o)` is `['d0.json']` unless `m` and `pt` are given. Events: none. With `heap`, the
 vertex claims our row from the pile under its own name (claims merge, see dk-heap).
@@ -508,9 +517,12 @@ runs the data from the file into the plot · `S+1` run 2 · `S+2` the third run 
 white sweeps run down the scripts' lines, a white head writes and reads the sheet's rows,
 grains stream on into the next script. The plot is a dk-hist of its own, stepped by the
 deck on the same slide, filling out of the last script:
-`"from": [right edge + 0.4, middle of its height, z], "fromSpread": [0.3, h, 0.3], "fill": 7.5`
+`"from": [right edge + 0.4, middle of its height, z], "fromSpread": [0.3, h, 0.3], "fill": 3.5`
 (`api.outlet()` gives these). Run 2 is a second dk-hist with the same values, seed and
 ours and `tone` crowd, over run 1's `tone: "sel"`: it lands grain for grain on run 1.
+A flight to the station from a pose beside it, with the pipeline standing in view, keeps it
+standing (the slide's step plays as a step, not a replay from scatter); `keep: false`
+gives the replay back.
 Two coincident grain sets add up to a pale grey, so run 1 gives way grain by grain: run 2
 carries `"over": "h1"`, and each white run-1 grain goes at the moment its light-blue
 run-2 twin lands in its slot, so the plot turns blue from the bottom of each column up
@@ -581,7 +593,10 @@ start values too (`{ set: 0, pull: true }`): the start curve looks close, and it
 3-4 on the flanks are what χ² 372 means. Step 0 hidden. From hidden (or an
 arrival, or `c`) the curve waits until the hist stops being busy, then draws on from the
 left in 1.2 s. A step forward glides the parameters over 1.4 s (the pulls and the χ²
-readout follow); a step back takes 0.35 s. `busy` while waiting, drawing, gliding or
+readout follow); a step back takes 0.35 s. Per step: `ease` (the glide's seconds),
+`after` (seconds before it starts, e.g. once the camera has landed) and `through: true`
+(a step across several sets, say set 0 to set 5, glides through every logged set between,
+`ease` (0.8 s) each, so the fit is seen iterating). `busy` while waiting, drawing, gliding or
 fading; the flow itself is idle motion and never busy.
 
 `api`: `value()`, `values()` → `{ params, chi2, set, step }`, `params()`, `sets()`, `pulls()`,
@@ -679,7 +694,7 @@ Frame and look:
 | `where`, `label` | per source | a row filter and the class-1 rule, `[col, op, v]` or a list (ops `< <= > >= == != in finite`), or a column name |
 | `size` | `[22, 12.5]` | world width and height. A sparse set reads better small and close (lab 4: 200 points in 6.5 × 6.5 at dist 10.5) |
 | `word` | none | the one axis caption (x), at most five words. `wordY` exists, but the bible allows one caption: put the unit in a y tick instead (`'20 ps'`) |
-| `depth` | d0: `{ col: 'M', range: [1810, 1920], size: 9, squeeze: 0.04 }` | the leak axis: `{ col, range, size, ticks, side: 'right', reverse, squeeze, crowd }`. Mass runs right as seen from the plot's right side (yaw > 0); `reverse` for a camera on the left. While it is open the plane squeezes to `squeeze` of its width (edge-on), its own axes fade, and each grain's alpha follows the density seen from the side (`crowd`, default the form's). View it exactly side-on (yaw 90): the bands are then vertical stripes over the depth ticks. `false` turns it off |
+| `depth` | d0: `{ col: 'M', range: [1810, 1920], size: 9, squeeze: 0.04 }` | the leak axis: `{ col, range, size, ticks, side: 'right', reverse, squeeze, crowd }`. Mass runs right as seen from the plot's right side (yaw > 0); `reverse` for a camera on the left. While it is open the plane squeezes to `squeeze` of its width as far as the camera stands side on (none face on, all of it at yaw 90, so the plane never collapses into one stacked column while still seen from the front), its own axes fade, and each grain's alpha follows the density seen from the side (`crowd`, default the form's). View it exactly side-on (yaw 90): the bands are then vertical stripes over the depth ticks. `false` turns it off |
 | `score` | per source | `{ file, net, inputs }` (a logged network: inputs `[col, scale]` → ln(col · scale)) or `{ file, grid, z, space }` (a score grid; `space: ['log10', 'lin']` says how the grid's axes relate to the columns); `level` 0.5 |
 | `alpha`, `selGain`, `crowd`, `cell`, `whiteVis` | 1.25 sparse / 1.05 dense; 1.0 sparse / 0.85 dense / 1.15 rare; 8; 0.12; none (1.25 rare) | brightness. Each grain's alpha also falls with the local density ((crowd / d)^(1/2.2) over cells of `cell` world units), so a dense core keeps one grain's colour: light blue stays light blue and white stays white. `whiteVis` lifts white grains to whole (× whiteVis) whatever the density around them, for a few white among many; above ~1.3 with selGain 1.3 they bloom into a halo |
 | `lineAlpha`, `boundaryGrains` | 1.1, 1800 | the boundary's brightness (scaled by its length, so a short edge does not bloom) and its grain count. Over a dense cloud use ~1.8 |
@@ -693,7 +708,7 @@ back takes 0.35 s; an arrival or `c` replays from nothing):
 | step key | what happens | busy |
 |---|---|---|
 | `n` (`'all'` or a number) | the grains gather out of a wide seeded cloud and fade in (about 1.5-4 s) | while they move |
-| `tip: '<dk-hist name>'` | they gather from the hist's grains instead (its `{tip}` step), bowed toward the camera, sweeping left to right, keeping the hist's whiteness and fading to the step's colour. If the hist has already let its grains go (a slide opened on the tip step), each row starts where it would stand in the hist's `frame()` | ~3 s |
+| `tip: '<dk-hist name>'` | they gather from the hist's grains instead (its `{tip}` step), bowed toward the camera, sweeping left to right, keeping the hist's whiteness and fading to the step's colour. It waits while the hist is still to tip (`tipReady()`: a hist opened fresh on its tip step stands first), so the plot is seen before it pours. If the hist has already let its grains go (a slide opened on the tip step), each row starts where it would stand in the hist's `frame()` | ~3 s |
 | `color` | `'none'` (all light blue), `'truth'` (class 1 white), `'kept'` (the kept side of the step's boundary white), `'sel'` | 0.8 s sweep |
 | `box: [[x0, x1], [y0, y1]]` | a cut: display units, `null` = open (`[[null, 0.9542], [null, null]]` is IPχ² < 9; `[[1.386, null], [null, null]]` the perceptron's threshold) | 1.2 s |
 | `line` | `[w1, w2, b]` on raw values, or the name of a `{ w, b }` in the source (with its `scaling`, for the ring's standardised line) | 1.2 s |
@@ -702,6 +717,7 @@ back takes 0.35 s; an arrival or `c` replays from nothing):
 | `show` | `'all'`, `'train'`, `'test'`, `'validation'` (rows by `splitRole`): new rows drop in (held-out points arrive after training) | |
 | `dim: 'train'` | rows of that role (or list) dim to `roleDim` (0.2), so the rows arriving with them (`show: 'all'`) are the only bright ones: the test grains judged by the line | 0.8 s |
 | `lit: true` | grains on the cut side stay lit, the rest dim to `litDim` (rare mode) | |
+| `after` | seconds the step's motion, line and depth wait (lab 4's undo: the depth closes once the camera has turned off edge-on) | |
 | `depth: 1` | the leak: every grain snaps (0.55 s) to z = its mass, the plane turns edge-on, its axes and numbers step back and the depth axis's come in | ~2 s |
 | `undo: true` | the axis closes and the overlap returns (1.1 s); keeps `depth` in the merged state, so stepping back reopens it | |
 | `boundary: false` | hide the boundary but keep its cut for colours and readouts | |

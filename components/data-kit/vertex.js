@@ -318,8 +318,15 @@ function buildVertex(o, ctx, stage, kit) {
     },
     busy: () => armed || (!ready && !failed && want > 0) || (ready && cur > 0 && tauNow() < tauEnd) || Math.abs(show - showTo) > 0.01 || (handT >= 0 && now - handT < 0.5)
       || (ready && cur >= 3 && !!o.land?.of && !landOk && now - t0 < 6),
-    // the pair's mass once it has folded into one grain (the number the slide shows)
-    value: () => (ready && cur >= 3 && tauNow() >= FLY ? phys.m : 0),
+    // the pair's mass once our grain has landed on its bin (with `land`), or once the pair
+    // has folded into one grain (without). Before that NaN, so a <StageCount for> shows no
+    // number of its own: it printed 0.0 for the whole decay and then snapped to the mass
+    // (lab 2 slide 14). Give the deck's number a delay that reaches the landing.
+    value: () => {
+      if (!ready || cur < 3) return 0;
+      const at = o.land?.of ? END[3] - 1e-6 : FLY;
+      return tauNow() >= at ? phys.m : NaN;
+    },
     values: () => (ready ? { m: phys.m, pt: phys.pt, tau: phys.tau, pstar: phys.pstar, pK: phys.K.p, pPi: phys.P.p, open: phys.open, mass: phys.mass, flightMm: phys.flightMm, step: cur } : null),
     ready: () => ready,
     // our grain now (world): the D⁰, the decay point while the pair is apart, the folded grain

@@ -36,7 +36,7 @@
 //     "rich2": { "color": "#7dd3fc" }, "hcal": { "color": "#7dd3fc" } }
 // (#7dd3fc is classic's accent: write the deck palette's accent in another palette).
 //
-// Steps: 0 off (fades in 1.2 s) · 1 fronts at f0 · 2 the frequency grows until the
+// Steps: 0 off (fades out in 0.4 s) · 1 fronts at f0 · 2 the frequency grows until the
 // fronts merge into a glow with a fine sparkle. A step back from 2 to 1 returns to
 // single fronts at once. A slide opened directly at step 2 shows the glow at once.
 // Never more than about 2.2 distinct flares a second on any grain, and the merged glow
@@ -67,7 +67,8 @@ uniform float uT0, uHideT, uT2, uF0, uR, uV, uAlpha, uSize, uSharp;
 uniform vec3 uCrowd, uSel;
 void main() {
   if (uT0 > 1e8 || aW <= 0.0) { hide(); return; }
-  float fade = uHideT > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.2, uTime - uHideT);
+  // a hide is quick (0.4 s), so the glow has gone before a camera leaving on the slide change is far
+  float fade = uHideT > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 0.4, uTime - uHideT);
   // world-seconds since the first front reached this grain
   float tau = uTime - uT0 - aX / uV;
   if (tau < 0.0 || fade <= 0.0) { hide(); return; }
@@ -80,14 +81,23 @@ void main() {
     ph = uF0 * (tau - d2) + uF0 * (g - 1.0) / uR;
   }
   float merged = smoothstep(1.0, 2.2, f);
-  float pulse = pow(0.5 + 0.5 * cos(6.2831853 * ph), uSharp) * (1.0 - merged);
+  // the dense head (VELO, RICH1 round x = 0) lights all at once as a front starts: its
+  // rise is softer (about 5 frames, not 2) and its weight lower, so the front starts as a
+  // ramp, not a strobe at the vertex, and then runs down the detector at full strength
+  float head = 1.0 - smoothstep(0.8, 3.5, aX);
+  float rising = step(0.5, fract(ph - 0.25));
+  float sh = uSharp * mix(1.0, mix(1.0, 0.3, head), rising);
+  // a quarter period behind, so a grain's first front ramps up from dark (at tau = 0 the
+  // phase was at a peak: every grain switched on at full pulse in one frame)
+  float pulse = pow(0.5 + 0.5 * cos(6.2831853 * (ph - 0.25)), sh) * (1.0 - merged);
   // a different few grains each moment: hits of other crossings, fine, so no flash
   float spark = merged * step(0.992, hash(aSeed * 57.0 + floor(uTime * 6.0)));
   // a front is every crossing, the crowd: it stays light blue and is lifted by its
   // alpha, never whitened (white is the selected in the series grammar). Only the
   // sparse sparkle of hits goes white.
   vec3 col = mix(uCrowd, uSel, clamp(0.25 * pulse + 0.1 * merged + spark, 0.0, 1.0));
-  float a = uAlpha * aW * (1.4 * pulse + 0.4 * merged + 0.9 * spark) * fade;
+  // the merged glow is at least as bright as one front: forty million crossings, one glow
+  float a = uAlpha * aW * mix(1.0, 0.55, head) * (1.4 * pulse + 0.95 * merged + 0.9 * spark) * fade;
   if (a <= 0.002) { hide(); return; }
   place(position, uSize * (1.0 + 0.25 * pulse), a, col, aSeed);
 }`);
@@ -154,7 +164,7 @@ function buildGlow(o, ctx, stage, kit) {
     }
   };
 
-  const ev = stage.eventLatch(u, { start: 'uT0', hide: 'uHideT', also: ['uT2'], fade: 1.3 });
+  const ev = stage.eventLatch(u, { start: 'uT0', hide: 'uHideT', also: ['uT2'], fade: 0.5 });
   const st = stage.stepper(name);
   let now = 0;
   const after = Number(o.after ?? 0);
