@@ -97,6 +97,15 @@ The owner's decisions, dated, newest last.
   near-black; no live talk uses it; never gold). Alternative: `blue` (Tokyo's)
   or a series palette via `definePalette`.
 - 2026-10-28: names `2026_00_00_Data<N><Topic>` so the five sort in series order.
+- 2026-10-29, the owner (review page and chat): roll out all the kit's forms
+  (prototype pairs seen as recorded takes,
+  https://claude.ai/artifact/Ef62WwCznaTyo7MKcM8338); cuts between stations;
+  keep the record 401 peak as the thread but never name it (no D⁰, K⁻π⁺,
+  IPχ² or record numbers in Message/Picture notes or on screen; Sources keep
+  the provenance); big picture only: no experiment internals (sub-detector
+  and trigger-stage names, GPU counts, CMS/ATLAS analysis counts). Mass axis
+  1 816-1 912 MeV (default taken: the answer to that question was "No D0").
+  Undo: the series bible's top block (components/data-kit/notes/series-bible.md).
 
 ## Verify
 

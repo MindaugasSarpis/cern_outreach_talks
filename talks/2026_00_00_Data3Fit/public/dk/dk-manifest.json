@@ -1,10 +1,16 @@
 {
  "about": "Copied by components/data-kit/bake/sync.py; see components/data-kit/data/manifest.json.",
  "files": {
+  "d0-checks.json": {
+   "talks": [3,5],
+   "shape": "object",
+   "meaning": "chi2 at the fit's start values; sha256 of d0-fit.json from two passes of the bake",
+   "by": "d0.py"
+  },
   "d0-chi2.json": {
    "talks": [3],
    "shape": "grid 121x121 + path + contours + slice",
-   "meaning": "dk-landscape src: chi2 bowl over (mu, width), minimiser path, dchi2 = 1/4 rings, 1D slice",
+   "meaning": "dk-landscape src: chi2 bowl over (mu, width), minimiser path, dchi2 = 1/4 rings, 1D slice, dchi2 at PDG 1864.84 +- 0.04 on the slice",
    "by": "d0.py"
   },
   "d0-cuts.json": {
@@ -28,7 +34,7 @@
   "d0-means.json": {
    "talks": [3],
    "shape": "object",
-   "meaning": "window means of M (all, 1840-1890, 1850-1880, 1855-1875) and PDG",
+   "meaning": "window means of M (all, 1840-1890, 1850-1880, 1855-1875; centred on the fitted 1864.47 with half-widths 25/15/10/5; 1860-1870) and PDG",
    "by": "d0.py"
   },
   "d0-psig.f32": {
@@ -41,7 +47,7 @@
   "d0-tau.json": {
    "talks": [3],
    "shape": "object",
-   "meaning": "decay-time histograms in the window and sidebands (0.25 and 0.1 ps bins, with and without IPchi2 < 9), sideband-subtracted counts, the unbinned lifetime fit and its scans",
+   "meaning": "decay-time histograms in the window and sidebands (0.25 and 0.1 ps bins, with and without IPchi2 < 9), sideband-subtracted counts, the unbinned lifetime fit and its scans; plotSubtract: what dk-hist {subtract} leaves of the first 2 000 (and of all) in its seeded order",
    "by": "d0.py"
   },
   "d0.f32": {
