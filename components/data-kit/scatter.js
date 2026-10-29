@@ -413,7 +413,10 @@ function buildScatter(o, ctx, stage, kit) {
       }
       sm[y * gx + x] = a / wt;
     }
-    const K0 = crowd * (cs / 0.12) ** 2, gam = Number(o.gamma ?? 1 / 2.2), floor = Number(o.dimFloor ?? 0.06);
+    // `gamma` (1/2.2; the rare set 0.62): above 1/2.2 a dense core is dimmer per grain than one
+    // whole grain's colour, so 100 000 light-blue grains do not pile into a near-white core that
+    // competes with the white signal (T4 slide 14); the sparse edges are unchanged
+    const K0 = crowd * (cs / 0.12) ** 2, gam = Number(o.gamma ?? (o.rare ? 0.62 : 1 / 2.2)), floor = Number(o.dimFloor ?? (o.rare ? 0.03 : 0.06));
     const out = new Float32Array(N);
     for (let i = 0; i < N; i++) {
       let [x, y] = cell(i); x = Math.max(0, x - 0.5); y = Math.max(0, y - 0.5);

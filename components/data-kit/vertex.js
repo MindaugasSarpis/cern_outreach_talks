@@ -18,7 +18,8 @@
 // a faint trail behind it) · 2 decay (it goes out and the two strands grow from the
 // decay point) · 3 land (the strands fold back into one white grain, which arcs to
 // the dk-hist `land.of` and lands on its axis at M, in M's bin). A step forward plays
-// its own part; an arrival (or `c`) plays every part up to its step, from nothing;
+// its own part; an arrival (or `c`) plays every part up to its step, from nothing,
+// unless the vertex already shows (an arrival then keeps it: `arrival: 'replay'` replays);
 // a step back shows the step's end at once. Once the dk-hist draws its own grain of
 // our row where ours landed, ours hands over and fades.
 //
@@ -168,7 +169,7 @@ function buildVertex(o, ctx, stage, kit) {
   const FOLD = TF + TD + TH, FLY = FOLD + TO;
   const st = stage.stepper(name);
   let now = 0, want = st.step ?? 0, cur = 0, armed = false, armT = 0;
-  let tau0 = 0, tauEnd = 0, t0 = 0, show = 0, showTo = 0, fadeT0 = -OFFV, handT = -1, claimed = false;
+  let tau0 = 0, tauEnd = 0, t0 = 0, show = 0, showTo = 0, fadeT0 = -OFFV, handT = -1, claimed = false, kept = false;
   const tauNow = () => Math.min(tauEnd, tau0 + Math.max(0, now - t0));
 
   const heapForm = () => (o.heap ? kit.form(String(o.heap)) : null);
@@ -190,7 +191,10 @@ function buildVertex(o, ctx, stage, kit) {
     if (!fr) return null;
     const m = Number(o.land.m ?? phys.m);
     fr.group.updateWorldMatrix(true, false);
-    w.set(fr.x(m), 0.5 * fr.y(1) + 0.04, 0).applyMatrix4(fr.group.matrixWorld);
+    // `land.lift` (units, 0): our grain lands that far above the axis line, its ring clear of
+    // the tick numbers (T2 slides 3-4: the ring covered "1880"); the hist's `oursSlot` then
+    // puts its own grain of our row up its column the same way
+    w.set(fr.x(m), 0.5 * fr.y(1) + 0.04 + Math.max(0, Number(o.land.lift ?? 0)), 0).applyMatrix4(fr.group.matrixWorld);
     g.updateWorldMatrix(true, false); inv.copy(g.matrixWorld).invert();
     return out.copy(w).applyMatrix4(inv);
   };
@@ -305,9 +309,16 @@ function buildVertex(o, ctx, stage, kit) {
   }
 
   const api = {
-    arm() { armed = true; armT = now; show = 0; showTo = 0; u.uShow.value = 0; claim(false); },
+    // shown when its station is armed: it stays where its story stands (no replay from the
+    // flight: T2 slide 5's strands came back at the ring); `arrival: 'replay'` replays
+    arm() {
+      if (o.arrival !== 'replay' && ready && cur > 0 && show > 0.5) { kept = true; return; }
+      armed = true; armT = now; show = 0; showTo = 0; u.uShow.value = 0; claim(false);
+    },
     assemble(t, onDone) {
-      now = t; armed = false;
+      now = t;
+      if (kept) { kept = false; if (want !== cur) go(want, want < cur ? 'back' : 'fwd'); onDone?.(); return; }
+      armed = false;
       if (ready && want > 0) go(want, 'arrive'); else cur = 0;
       onDone?.();
     },

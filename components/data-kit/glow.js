@@ -27,6 +27,9 @@
 // - sharp (16): the front's thinness (the pulse's power).
 // - alpha (0.9), size (1.2), seed. sparkle ('crowd'): the sparkle of hits in the crowd's
 //   light blue; 'sel' whitens it (the look before 29 Oct).
+// - hideFade (0.4 s): how long step 0 takes to fade the overlay. 0: gone on the frame of
+//   the step, for a hide that comes with a camera cut or a clip (T1 slide 5 opened on 0.4 s
+//   of slide 3's glow at slide 5's pose).
 //
 // Colours: the fronts, the merged glow and its sparkle are the crowd (light blue): they
 // stand for every crossing, and white is "ours / kept". The detector under it should be in the palette too, not the
@@ -64,13 +67,14 @@ const OFF = 1e9;
 let VERT = null;
 const vert = (stage) => (VERT ??= stage.GRAIN_GLSL + /* glsl */ `
 attribute float aX, aSeed, aW;
-uniform float uT0, uHideT, uT2, uF0, uR, uV, uAlpha, uSize, uSharp;
+uniform float uT0, uHideT, uT2, uF0, uR, uV, uAlpha, uSize, uSharp, uHideF;
 uniform vec3 uCrowd, uSel;
 uniform float uSparkSel;
 void main() {
   if (uT0 > 1e8 || aW <= 0.0) { hide(); return; }
-  // a hide is quick (0.4 s), so the glow has gone before a camera leaving on the slide change is far
-  float fade = uHideT > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 0.4, uTime - uHideT);
+  // a hide is quick (0.4 s), so the glow has gone before a camera leaving on the slide change is far;
+  // hideFade 0: gone on the frame of the hide (a step change that comes with a cut or a clip)
+  float fade = uHideT > 1e8 ? 1.0 : uHideF <= 0.001 ? step(uTime, uHideT) : 1.0 - smoothstep(0.0, uHideF, uTime - uHideT);
   // world-seconds since the first front reached this grain
   float tau = uTime - uT0 - aX / uV;
   if (tau < 0.0 || fade <= 0.0) { hide(); return; }
@@ -117,6 +121,7 @@ function buildGlow(o, ctx, stage, kit) {
     uT0: { value: OFF }, uHideT: { value: OFF }, uT2: { value: OFF },
     uF0: { value: Number(o.f0 ?? 0.6) }, uR: { value: Number(o.rate ?? 0.55) }, uV: { value: Number(o.speed ?? 6) },
     uAlpha: { value: Number(o.alpha ?? 0.9) }, uSize: { value: Number(o.size ?? 1.2) }, uSharp: { value: Number(o.sharp ?? 16) },
+    uHideF: { value: Math.max(0, Number(o.hideFade ?? 0.4)) },
     uCrowd: { value: new Color(P.crowd) }, uSel: { value: new Color(P.sel) }, uSparkSel: { value: o.sparkle === 'sel' ? 1 : 0 },
   });
   const u = mat.uniforms;
@@ -167,7 +172,7 @@ function buildGlow(o, ctx, stage, kit) {
     }
   };
 
-  const ev = stage.eventLatch(u, { start: 'uT0', hide: 'uHideT', also: ['uT2'], fade: 0.5 });
+  const ev = stage.eventLatch(u, { start: 'uT0', hide: 'uHideT', also: ['uT2'], fade: Math.max(0.5, u.uHideF.value + 0.1) });
   const st = stage.stepper(name);
   let now = 0;
   const after = Number(o.after ?? 0);
@@ -187,7 +192,7 @@ function buildGlow(o, ctx, stage, kit) {
     else if (u.uT2.value > 1e8) u.uT2.value = now;
   };
   const api = {
-    busy: () => (u.uHideT.value < 1e8) || (u.uT2.value < 1e8 && now - u.uT2.value < mergeIn()),
+    busy: () => (u.uHideT.value < 1e8 && now - u.uHideT.value < u.uHideF.value + 0.05) || (u.uT2.value < 1e8 && now - u.uT2.value < mergeIn()),
     // fronts sent so far (at the vertex)
     value() {
       const t0 = u.uT0.value;

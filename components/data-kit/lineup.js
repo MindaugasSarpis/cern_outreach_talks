@@ -29,6 +29,9 @@
 //   side by side along x, resting on the floor. `label` is a number with its unit
 //   ("4 TB"), hung above the pile at a fixed size. `merge` is KJ's {from, copiesAt}: the
 //   pile first gathers as copies of a smaller pile, then flies together.
+//   A ball of `n: 1` is a polished marble under a hard key; `lit: 'soft'` (ball or object)
+//   draws it under the pile's soft studio light, so it holds its brightness from the
+//   distance that fits a pile (T5 slide 5), and `gain` (1) scales it.
 // - unit (0.1): one sphere's lattice step. Its radius is 0.9 × unit.
 // - anchor (0): the pile at the origin. gaps: the spaces between neighbours (2).
 //   `wait` (s, 0; or by step, { "3": 2.4, "5": 0, "default": 0 }): the pile gathers that long after its step, so piles shown together
@@ -288,11 +291,17 @@ void main() {
   vPW = wp.xyz; vNW = normalize(mat3(modelMatrix) * normal);
   gl_Position = projectionMatrix * viewMatrix * wp;
 }`;
+// uSoft: the pile's soft studio (broad key, fill, rim) instead of the hard key, so a lone
+// marble keeps its brightness from the distance that fits a pile (T5 slide 5); uGain × it
 const UNIT_FRAG = /* glsl */ `
 uniform vec3 uColor;
+uniform float uSoft, uGain;
 varying vec3 vNW; varying vec3 vPW;
 ${METAL}
-void main() { gl_FragColor = vec4(metalHard(normalize(vNW), normalize(cameraPosition - vPW), uColor), 1.0); }`;
+void main() {
+  vec3 n = normalize(vNW), v = normalize(cameraPosition - vPW);
+  gl_FragColor = vec4((uSoft > 0.5 ? metal(n, v, uColor) : metalHard(n, v, uColor)) * uGain, 1.0);
+}`;
 
 function buildLineup(o, ctx, stage, kit) {
   const P = roles(ctx.palette);
@@ -360,7 +369,9 @@ function buildLineup(o, ctx, stage, kit) {
   balls.forEach((x, b) => {
     if (x.n !== 1) return;
     const sg = new SphereGeometry(rad, 96, 64);
-    const sm = new ShaderMaterial({ vertexShader: UNIT_VERT, fragmentShader: UNIT_FRAG, uniforms: { uColor: { value: colorOf(x.color) } } });
+    // `lit: 'soft'` (ball or object): the marble under the pile's soft light; `gain` (1) × it
+    const soft = (x.lit ?? o.lit) === 'soft';
+    const sm = new ShaderMaterial({ vertexShader: UNIT_VERT, fragmentShader: UNIT_FRAG, uniforms: { uColor: { value: colorOf(x.color) }, uSoft: { value: soft ? 1 : 0 }, uGain: { value: Number(x.gain ?? o.marbleGain ?? 1) } } });
     const m = new Mesh(sg, sm);
     m.position.set(C[b][0], C[b][1], C[b][2]); m.scale.setScalar(1e-4); m.visible = false;
     const gu = { uRad: { value: rad }, uViewH: { value: 1080 }, uShow: { value: 0 }, uColor: { value: colorOf(x.color) } };

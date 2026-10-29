@@ -17,13 +17,19 @@
 // Steps merge as dk-hist's do (step k = steps 1..k; `key: null` drops one; 0 hidden):
 // - `lit: k`: a front sweeps to k σ (from the far tail on the first lighting); the
 //   grains beyond it turn white. A white mark stands on the axis at the front.
-// - `zoom: true | { from, gain }`: the tail beyond `from` σ (default 3) is redrawn
+// - `zoom: true | { from, gain, keep, after }`: the tail beyond `from` σ (default 3) is redrawn
 //   `gain` times taller (default: so the curve at `from` reaches 0.6 of the height; a
 //   magnified scale, to be said in the notes), the rest of the bell fades, and a line
 //   of flowing grains traces the curve on out to `sigmas`, over an empty tail. The
 //   magnified tail is white (the lit tail of {lit: 3}, continuous with it), and the axis
 //   left of `from` (its line and tick marks) fades with the bell.
 //
+//   `keep` (0.45): the share of the bell (grains, axis, ticks left of `from`) that stays as the
+//   reference while the tail grows (0: gone, the look before 30 Oct); `after` (s): the dive
+//   waits that long (for the camera).
+// Fill: the bell gathers up from its axis, low grains first (`fillFrom: 'drop'`: each grain
+// settles in place, the old fade). `frontGlow` (0.6): the front's glow in the sparse tail.
+// An arm keeps a standing bell (`arrival: 'replay'` fills it again).
 // Look: `size` (0.65 × GRAIN: at 300 000 the grains read as sand, a speckled light blue,
 // not a flat fill), `alphaGain` (1.5), `selGain` (1.7: the white gain of lit grains in
 // the dense body), `litSize` (1.9: lit grains past 2.5 σ, lone grains, are drawn this
@@ -82,7 +88,7 @@ export function beyond(x, k) {
 let VERT = null;
 const vert = (stage) => (VERT ??= stage.GRAIN_GLSL + /* glsl */ `
 attribute float aSeed, aA0, aA1;
-uniform float uShow, uShowT0, uFront, uLit, uSweep, uZoom, uZFrom, uZGain, uUnit, uSelGain, uSize, uFill, uLitSize;
+uniform float uShow, uShowT0, uFront, uLit, uSweep, uZoom, uZFrom, uZGain, uUnit, uSelGain, uSize, uFill, uLitSize, uHB, uRise, uKeep, uFrontGlow;
 uniform vec3 uCrowd, uSel;
 void main() {
   if (uShow <= 0.001) { hide(); return; }
@@ -90,17 +96,26 @@ void main() {
   float tail = step(uZFrom, z);
   float zt = uZoom * tail;
   vec3 p = vec3(position.x, position.y * mix(1.0, uZGain, zt), position.z);
-  float a = mix(aA0, aA1, zt) * mix(1.0, 1.0 - uZoom, 1.0 - tail);
-  // the fill on arrival: each grain settles a little way down into place, in a seeded order
-  float k = clamp((uTime - uShowT0 - uFill * aSeed) / 0.7, 0.0, 1.0);
+  // in a zoom the body stays as a faint reference (zoom.keep, 0.45: about a sixth of its light), not gone to black
+  float a = mix(aA0, aA1, zt) * mix(1.0, 1.0 - uZoom * (1.0 - uKeep), 1.0 - tail);
+  // the fill on arrival. uRise (default): the bell gathers up from its axis, each grain rising
+  // from the axis line to its place, the low grains first (a histogram filling, not a shape
+  // fading in whole: T2 slide 8). 0: each grain settles a little way down into place, in a
+  // seeded order (the look before 30 Oct)
+  float hz = uHB * exp(-0.5 * z * z);
+  float share = clamp(position.y / max(hz, 1e-4), 0.0, 1.0);
+  float dl = uRise > 0.5 ? uFill * (0.75 * share + 0.25 * aSeed) : uFill * aSeed;
+  float k = clamp((uTime - uShowT0 - dl) / 0.7, 0.0, 1.0);
   float e = k * k * (3.0 - 2.0 * k);
-  p.y += (1.0 - e) * 0.6;
-  a *= e;
+  if (uRise > 0.5) { p.y *= mix(0.0, 1.0, e); a *= smoothstep(0.0, 0.25, k); }
+  else { p.y += (1.0 - e) * 0.6; a *= e; }
   if (a <= 0.002) { hide(); return; }
   float w = uLit * step(uFront, z);
   // the front's glow: full in the sparse tail, a quarter in the dense body (at 1 sigma a
   // full glow over thousands of stacked grains bloomed into a white halo, lab 2 slide 16)
-  float glow = uLit * uSweep * exp(-abs(z - uFront) * 7.0) * mix(0.25, 1.0, smoothstep(1.6, 2.6, z));
+  // frontGlow (0.6) in the sparse tail: a lone tail grain lighting at full glow flashed as a
+  // stray speck (T2 slide 8, 2.8 s)
+  float glow = uLit * uSweep * exp(-abs(z - uFront) * 7.0) * mix(0.25, uFrontGlow, smoothstep(1.6, 2.6, z));
   // the zoomed tail stays white (it is the lit tail of {lit: 3}, magnified)
   float wz = max(w, zt);
   vec3 col = mix(uCrowd, uSel, clamp(wz + 0.6 * glow, 0.0, 1.0));
@@ -176,6 +191,7 @@ function buildBell(o, ctx, stage, kit) {
     uZoom: { value: 0 }, uZFrom: { value: 1e3 }, uZGain: { value: 1 }, uUnit: { value: unit },
     uSelGain: { value: Number(o.selGain ?? 1.7) }, uSize: { value: size }, uFill: { value: Number(o.fill ?? 1.6) },
     uLitSize: { value: Number(o.litSize ?? 1.9) },
+    uHB: { value: H }, uRise: { value: o.fillFrom === 'drop' ? 0 : 1 }, uKeep: { value: 0.45 }, uFrontGlow: { value: Number(o.frontGlow ?? 0.6) },
     uCrowd: { value: new Color(P.crowd) }, uSel: { value: new Color(P.sel) },
   });
   const u = mat.uniforms;
@@ -184,6 +200,7 @@ function buildBell(o, ctx, stage, kit) {
   let zoomKey = '';
   function setZoom(z) {
     const from = Number(z?.from ?? zf0);
+    u.uKeep.value = Math.max(0, Math.min(1, Number(z?.keep ?? 0.45)));
     const gainZ = Number(z?.gain ?? Math.round(0.6 * Math.exp(0.5 * from * from)));
     const key = `${from}:${gainZ}`;
     u.uZFrom.value = from; u.uZGain.value = gainZ;
@@ -260,7 +277,7 @@ function buildBell(o, ctx, stage, kit) {
   // ---- steps ------------------------------------------------------------------------------
   const st = stage.stepper(name);
   let now = 0, want = st.step ?? 0, cur = 0, armed = false, armT = 0;
-  let show = 0, showTo = 0;
+  let show = 0, showTo = 0, kept = false;
   let litOn = 0, frontFrom = sig + 0.5, frontTo = sig + 0.5, frontT0 = -1e9, frontDur = 1.3;
   let zoomFrom = 0, zoomTo = 0, zoomT0 = -1e9;
   const ZD = 1.8;
@@ -294,13 +311,22 @@ function buildBell(o, ctx, stage, kit) {
     if (z) setZoom(z);
     const zt = z ? 1 : 0;
     zoomFrom = instant ? zt : fresh ? 0 : zoomNow(); zoomTo = zt;
-    zoomT0 = fresh ? now + 0.4 : now;
+    // zoom.after (s): the dive waits for the camera (a slide that moves in on the tail)
+    zoomT0 = (fresh ? now + 0.4 : now) + (z && !instant ? Math.max(0, Number(z.after ?? 0)) : 0);
   }
   const request = (k) => { want = k; if (!armed) go(k, k < cur ? (k === 0 ? 'hide' : 'back') : 'fwd'); };
 
   const api = {
-    arm() { armed = true; armT = now; show = 0; u.uShow.value = 0; cur = 0; },
-    assemble(t, onDone) { now = t; armed = false; show = 0; cur = 0; if (want > 0) go(want, 'arrive'); onDone?.(); },
+    // a bell that stands when its station is armed stays (`arrival: 'replay'` fills it again)
+    arm() {
+      if (o.arrival !== 'replay' && cur > 0 && show > 0.5) { kept = true; return; }
+      armed = true; armT = now; show = 0; u.uShow.value = 0; cur = 0;
+    },
+    assemble(t, onDone) {
+      now = t;
+      if (kept) { kept = false; if (want !== cur) go(want, want < cur ? (want === 0 ? 'hide' : 'back') : 'fwd'); onDone?.(); return; }
+      armed = false; show = 0; cur = 0; if (want > 0) go(want, 'arrive'); onDone?.();
+    },
     busy: () => armed || Math.abs(show - showTo) > 0.01
       || (cur > 0 && now < u.uShowT0.value + Number(o.fill ?? 1.6) + 0.8)
       || (litOn && now < frontT0 + frontDur + 0.4) || now < zoomT0 + ZD,
@@ -342,9 +368,11 @@ function buildBell(o, ctx, stage, kit) {
         mark.u.uShow.value = show * Math.min(1, Math.max(0, (now - frontT0 + 0.2) / 0.4));
       } else mark.u.uShow.value = 0;
       curve.u.uShow.value = show * z;
-      axisL.u.uShow.value = show * (1 - z); marksL.u.uShow.value = show * (1 - z);
-      // tick labels: in the zoom, the ones left of the magnified tail fade with the bell
-      for (const l of tickLabels) l.userData.show = l.userData.v >= u.uZFrom.value - 1e-6 ? 1 : 1 - z;
+      const kz = 1 - z * (1 - u.uKeep.value);
+      axisL.u.uShow.value = show * kz; marksL.u.uShow.value = show * kz;
+      // tick labels: in the zoom, the ones left of the magnified tail fade with the bell (to
+      // its `keep` share: the reference stays)
+      for (const l of tickLabels) l.userData.show = l.userData.v >= u.uZFrom.value - 1e-6 ? 1 : kz;
       shade(labels, show);
     },
     dispose() {

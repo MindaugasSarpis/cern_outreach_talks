@@ -10,7 +10,8 @@
 // and m.A[3i] its start (to start somewhere else: a heap, a detector, above its bin).
 //
 // Motions (m.M): 0 glide (ease in-out; fades in place when appearing/leaving),
-// 1 drop (accelerating; arrives with a short glow, toward white by uGlowTint: 1 here,
+// 1 drop (accelerating; in flight a share uFlyD (0.6) of itself growing to whole as it
+// lands, uFlyL (0.7) for a leap; arrives with a glow that ramps in over 0.12 s, toward white by uGlowTint: 1 here,
 // 0.3 in dk-hist; its strength × uGlow, 1 here, a dk-hist's `glow`), 2 leap (a bowed arc; glow on
 // landing), 3 dust (lifts, flares once and fades), 4 annihilate (meets its partner at
 // B, flashes and is gone). A grain's colour is the palette's crowd → selected by white.
@@ -31,7 +32,7 @@ function vert(stage) {
 attribute vec3 aA, aC;
 attribute vec2 aVis, aWhite, aTime;
 attribute float aMode, aSeed, aSize, aGone;
-uniform float uT0, uAlpha, uSize, uBlur, uSpread, uShow, uSpin, uRotA, uRotB, uBig, uSelGain, uGlowTint, uGlow;
+uniform float uT0, uAlpha, uSize, uBlur, uSpread, uShow, uSpin, uRotA, uRotB, uBig, uBigA, uSelGain, uGlowTint, uGlow, uFlyD, uFlyL;
 uniform vec3 uCrowd, uSel, uSpinC;
 vec3 spun(vec3 p) { return uSpinC + turnY(p - uSpinC, uSpin * uTime); }
 float easeOf(float m, float k) {
@@ -55,8 +56,13 @@ void main() {
   if (aMode < 0.5) vis = mix(v0, v1, k);
   else if (aMode < 2.5) {
     if (v1 > v0) {
-      vis = before > 0.5 ? v0 : v1 * (aMode < 1.5 ? 0.6 + 0.4 * k : smoothstep(0.0, 0.12, k) * (0.7 + 0.3 * k));
-      if (k >= 1.0) glow = uGlow * exp(-(uTime - s0 - aTime.y) * 3.0);
+      // in flight a grain is a share of itself (uFlyD for a drop, uFlyL for a leap) that grows
+      // to whole as it lands: a fresh fill's rain reads as grains arriving, not a dim block
+      // standing in the box before anything lands (T5 slides 10, 12)
+      vis = before > 0.5 ? v0 : v1 * (aMode < 1.5 ? mix(uFlyD, 1.0, k * k) : smoothstep(0.0, 0.12, k) * mix(uFlyL, 1.0, k * k));
+      // the landing glow ramps in over 0.12 s, so a row landing together does not pop in one frame
+      float dl = uTime - s0 - aTime.y;
+      if (k >= 1.0) glow = uGlow * smoothstep(0.0, 0.12, dl) * exp(-dl * 3.0);
     } else vis = mix(v0, v1, k);
   } else if (aMode < 3.5) {
     vis = before > 0.5 ? v0 : v0 * pow(1.0 - k, 1.5);
@@ -70,7 +76,8 @@ void main() {
   vec3 col = mix(uCrowd, uSel, clamp(w + 0.7 * glow * uGlowTint, 0.0, 1.0));
   float alpha = uAlpha * vis * (1.0 + 0.8 * glow) * uShow * mix(1.0, uSelGain, clamp(w, 0.0, 1.0));
   float big = step(1.5, aSize);
-  alpha = mix(alpha, max(alpha, uBig * vis * uShow), big);
+  // our grain (size > 1.5): at least uBig; uBigA ≥ 0 sets it outright (a dk-hist's oursAlpha)
+  alpha = mix(alpha, uBigA >= 0.0 ? uBigA * vis * uShow * (1.0 + 0.8 * glow) : max(alpha, uBig * vis * uShow), big);
   float size = uSize * aSize * (0.85 + 0.3 * hash(aSeed * 11.0)) * (1.0 + 0.5 * glow);
   p += uBlur * uSpread * (vec3(hash(aSeed * 13.0), hash(aSeed * 17.0), hash(aSeed * 19.0)) - 0.5);
   alpha /= (1.0 + 2.0 * uBlur);
@@ -89,13 +96,15 @@ function easeOf(m, k) {
   if (m < 3.5) return 1 - (1 - k) * (1 - k);
   return easeQ(k);
 }
+const fly = [0.6, 0.7];
 function visOf(m, k, before, v0, v1) {
   if (m < 0.5) return v0 + (v1 - v0) * k;
   if (m < 2.5) {
     if (v1 > v0) {
       if (before) return v0;
       const s = Math.min(1, k / 0.12);
-      return v1 * (m < 1.5 ? 0.6 + 0.4 * k : s * s * (3 - 2 * s) * (0.7 + 0.3 * k));
+      const f = m < 1.5 ? fly[0] : fly[1];
+      return v1 * (m < 1.5 ? 1 : s * s * (3 - 2 * s)) * (f + (1 - f) * k * k);
     }
     return v0 + (v1 - v0) * k;
   }
@@ -115,7 +124,8 @@ export function createMorph(stage, n, { crowd, sel, seed = SEED, uniforms = {}, 
   const geo = stage.grainGeometry(n, { position: B, aA: [A, 3], aC: [C, 3], aVis: [V, 2], aWhite: [W, 2], aTime: [T, 2], aMode: [M, 1], aSeed: [S, 1], aSize: [Z, 1], aGone: [G, 1] });
   const mat = stage.grainMaterial(vert(stage), {
     uT0: { value: -OFF }, uAlpha: { value: 0.5 }, uSize: { value: GRAIN }, uBlur: { value: 0 }, uSpread: { value: spread },
-    uShow: { value: 1 }, uSpin: { value: 0 }, uRotA: { value: 0 }, uRotB: { value: 0 }, uBig: { value: 0.95 }, uSelGain: { value: 1.3 }, uGlowTint: { value: 1 }, uGlow: { value: 1 },
+    uShow: { value: 1 }, uSpin: { value: 0 }, uRotA: { value: 0 }, uRotB: { value: 0 }, uBig: { value: 0.95 }, uBigA: { value: -1 }, uSelGain: { value: 1.3 }, uGlowTint: { value: 1 }, uGlow: { value: 1 },
+    uFlyD: { value: 0.6 }, uFlyL: { value: 0.7 },
     uCrowd: { value: new Color(crowd) }, uSel: { value: new Color(sel) }, uSpinC: { value: new Vector3() },
     ...uniforms,
   });
@@ -147,6 +157,7 @@ export function createMorph(stage, n, { crowd, sel, seed = SEED, uniforms = {}, 
       if (rotB) spin(B[i3], B[i3 + 1], B[i3 + 2], t, tb); else { tb[0] = B[i3]; tb[1] = B[i3 + 1]; tb[2] = B[i3 + 2]; }
       const w0 = (1 - e) * (1 - e), w1 = 2 * (1 - e) * e, w2 = e * e;
       for (let j = 0; j < 3; j++) out[j] = w0 * ta[j] + w1 * (0.5 * (ta[j] + tb[j]) + C[i3 + j]) + w2 * tb[j];
+      fly[0] = u.uFlyD.value; fly[1] = u.uFlyL.value;
       out[3] = visOf(M[i], k, before, V[i2], V[i2 + 1]);
       out[4] = W[i2] + (W[i2 + 1] - W[i2]) * easeQ(k);
       return out;

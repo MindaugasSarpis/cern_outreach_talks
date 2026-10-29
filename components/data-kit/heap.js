@@ -17,6 +17,11 @@
 // landing last, on the summit. `oursFrom: { at: [x, y, z] }` starts it at a fixed point
 // instead, in the heap's station frame (`world: true`: world coordinates): a lane hidden
 // as the heap rains (T1 slide 14) then needs no stand-in form at the fold point.
+//
+// Since 30 Oct: the rain falls from a soft disc of emitters, each grain fading in as it
+// falls (`flight`, 0.15: the share of itself it shows as it leaves). `states` (a list by
+// step of 'off' | 'rain' | 'pile' | 'ball') and `alpha` as a list by step let a deck add a
+// dimmer pile step. An arm keeps a standing pile (`arrival: 'replay'` rains it again).
 import { Group, Vector3 } from 'three';
 import { GRAIN, OURS, OURS_ROW, SEED, roles, alphaFor } from './style.js';
 import { mulberry32, order as seriesOrder } from './rng.js';
@@ -76,17 +81,30 @@ function buildHeap(o, ctx, stage, kit) {
     ball[3 * i] = ballC.x + (x / l) * r; ball[3 * i + 1] = ballC.y + (y / l) * r; ball[3 * i + 2] = ballC.z + (z / l) * r;
   }
   const fillOrder = Int32Array.from({ length: N }, (_, i) => i).sort((a, b) => rank[a] - rank[b]);
+  // `states` (a list by step: 'off', 'rain', 'pile', 'ball'; default the four in that order):
+  // a deck may add steps, e.g. a dimmer pile with `alpha` by step (T2: the pile dims once our
+  // grain has left it, while the cover keeps T1's brightness)
+  const STATES = Array.isArray(o.states) ? o.states.map(String) : ['off', 'rain', 'pile', 'ball'];
+  const kindOf = (k) => (k <= 0 ? 'off' : STATES[Math.min(k, STATES.length - 1)] ?? 'pile');
+  const isBall = (k) => kindOf(k) === 'ball';
   const layout = (k) => {
-    const pos = k >= 3 ? ball : mound, vis = new Float32Array(N), white = new Float32Array(N);
-    if (k > 0) { vis.fill(1); white.fill(tone); }
+    const kd = kindOf(k);
+    const pos = kd === 'ball' ? ball : mound, vis = new Float32Array(N), white = new Float32Array(N);
+    if (kd !== 'off') { vis.fill(1); white.fill(tone); }
     return { pos, vis, white };
   };
 
   const st = stage.stepper(name);
-  let now = 0, cur = 0, want = st.step ?? 0, armed = false, armT = 0, playedAt = -OFF;
+  let now = 0, cur = 0, want = st.step ?? 0, armed = false, armT = 0, playedAt = -OFF, kept = false;
   let arrTimes = new Float64Array(0), base = 0;
-  const alpha = Number(o.alpha ?? Math.min(0.9, alphaFor(N / (3 * R))));
-  morph.u.uAlpha.value = alpha;
+  // `alpha`: a number, or a list by step (entry k for step k, the last for any step past it)
+  const alphas = Array.isArray(o.alpha) ? o.alpha.map(Number) : null;
+  const alpha0 = Math.min(0.9, alphaFor(N / (3 * R)));
+  const alphaAt = (k) => (alphas ? alphas[Math.max(1, Math.min(alphas.length - 1, k || 1))] ?? alpha0 : Number(o.alpha ?? alpha0));
+  let aFrom = alphaAt(st.step ?? 1), aTo = aFrom, aT0 = -OFF;
+  morph.u.uAlpha.value = aFrom;
+  // the rain's grains show this share of themselves as they leave (they fade in as they fall)
+  morph.u.uFlyD.value = Number(o.flight ?? 0.15);
 
   function transition(k, kind) {
     const L = layout(k);
@@ -97,7 +115,8 @@ function buildHeap(o, ctx, stage, kit) {
     const arr = [];
     // our grain's start for the rain: the named form's api.ours() now, in the pile's frame
     let oursStart = null;
-    if (k === 1 && fresh && !instant && o.oursFrom && ours != null && ours < N) {
+    const raining = kindOf(k) === 'rain' && fresh;
+    if (raining && !instant && o.oursFrom && ours != null && ours < N) {
       let p = null;
       if (typeof o.oursFrom === 'object' && Array.isArray(o.oursFrom.at)) {
         p = new Vector3(...o.oursFrom.at.map(Number));
@@ -114,7 +133,7 @@ function buildHeap(o, ctx, stage, kit) {
         const v0 = V[i2], v1 = V[i2 + 1];
         if (instant) { if (v0 > 0.01 || v1 > 0.01) { if (v0 < 0.01) { A[i3] = B[i3]; A[i3 + 1] = B[i3 + 1]; A[i3 + 2] = B[i3 + 2]; } T[i2] = 0; T[i2 + 1] = 0.35; } continue; }
         if (v0 < 0.5 && v1 > 0.5) {
-          if (k === 1 && fresh && i === ours && oursStart) {
+          if (raining && i === ours && oursStart) {
             // ours: from the form it came out of, down onto the summit as the rain ends
             A[i3] = oursStart.x; A[i3 + 1] = oursStart.y; A[i3 + 2] = oursStart.z;
             const d = Math.hypot(B[i3] - A[i3], B[i3 + 1] - A[i3 + 1], B[i3 + 2] - A[i3 + 2]);
@@ -122,9 +141,13 @@ function buildHeap(o, ctx, stage, kit) {
             const g2 = Number(o.oursGlide ?? 2.4);
             // shown at its start from the first frame (it is the packet that folded there)
             V[i2] = 1; M[i] = MOTION.GLIDE; T[i2] = Math.max(0, 0.3 + rainDur + 1.2 - g2); T[i2 + 1] = g2;
-          } else if (k === 1 && fresh) {
-            // rain: in the series' order, from above the pile
-            A[i3] = B[i3] + 0.2 * (r - 0.5); A[i3 + 1] = B[i3 + 1] + Hm + 6 + 4 * r; A[i3 + 2] = B[i3 + 2] + 0.2 * (S[(i + 3) % N] - 0.5);
+          } else if (raining) {
+            // rain: in the series' order, from a soft disc of emitters above the pile (a
+            // gaussian spread round each grain's own place, wider than the pile, and heights
+            // spread too), each grain fading in as it falls: no column with hard edges, no
+            // slab standing over the heap (T1 slide 14)
+            const ga = 2 * Math.PI * S[(i + 7) % N], gr = 0.45 * R * Math.sqrt(-2 * Math.log(Math.max(1e-6, S[(i + 11) % N])));
+            A[i3] = B[i3] + gr * Math.cos(ga); A[i3 + 1] = B[i3 + 1] + Hm + 4 + 7 * Math.pow(r, 0.7); A[i3 + 2] = B[i3 + 2] + gr * Math.sin(ga);
             M[i] = MOTION.DROP; T[i2] = 0.3 + (q / Math.max(1, N - 1)) * rainDur; T[i2 + 1] = 1.2;
           } else {
             // the pile (or the ball) at once: a soft fade in place
@@ -135,7 +158,7 @@ function buildHeap(o, ctx, stage, kit) {
         } else if (v0 > 0.01 && v1 > 0.5) {
           const moved = Math.abs(A[i3] - B[i3]) + Math.abs(A[i3 + 1] - B[i3 + 1]) + Math.abs(A[i3 + 2] - B[i3 + 2]) > 1e-4;
           if (!moved && v0 > 0.99) continue;
-          if (k === 3 && prev < 3) {
+          if (isBall(k) && !isBall(prev)) {
             // the collapse: the rim first, everything in over ~2.5 s
             const rho = Math.hypot(A[i3], A[i3 + 2]) / R;
             M[i] = MOTION.GLIDE; T[i2] = 0.6 * (1 - Math.min(1, rho)) + 0.2 * r; T[i2 + 1] = 2.2;
@@ -144,7 +167,7 @@ function buildHeap(o, ctx, stage, kit) {
           B[i3] = A[i3]; B[i3 + 1] = A[i3 + 1]; B[i3 + 2] = A[i3 + 2]; M[i] = MOTION.GLIDE; T[i2] = 0; T[i2 + 1] = 0.5;
         }
       }
-    }, { rotB: k >= 3 ? 1 : 0 });
+    }, { rotB: isBall(k) ? 1 : 0 });
     arr.sort((a, b) => a - b);
     arrTimes = Float64Array.from(arr);
     base = 0;
@@ -152,10 +175,12 @@ function buildHeap(o, ctx, stage, kit) {
     // still to land: counted once, by its arrival time; it was counted twice: 91 584)
     if (k > 0) for (let i = 0; i < N; i++) if (morph.V[2 * i] > 0.5 && !arriving[i]) base++;
     cur = k; playedAt = t;
+    if (k > 0) { const a = alphaAt(k); if (a !== aTo) { aFrom = instant || prev === 0 ? a : morph.u.uAlpha.value; aTo = a; aT0 = t; } }
   }
   const request = (k) => { want = k; if (armed) return; if (k !== cur) transition(k, k < cur ? (k === 0 ? 'hide' : 'back') : 'fwd'); };
   const hideNow = () => { morph.jump(now, layout(0)); cur = 0; arrTimes = new Float64Array(0); base = 0; };
   const arrive = () => {
+    if (kept) { kept = false; if (want !== cur) transition(want, want < cur ? (want === 0 ? 'hide' : 'back') : 'fwd'); return; }
     const wasArmed = armed; armed = false;
     if (!wasArmed && now - playedAt > 1.5) hideNow();
     if (want > 0 && want !== cur) transition(want, 'arrive');
@@ -172,9 +197,10 @@ function buildHeap(o, ctx, stage, kit) {
   }
 
   const api = {
-    arm() { armed = true; armT = now; hideNow(); },
+    // a pile that stands when its station is armed stays (no second rain); `arrival: 'replay'` rains again
+    arm() { if (o.arrival !== 'replay' && cur > 0) { kept = true; return; } armed = true; armT = now; hideNow(); },
     assemble(t, onDone) { now = t; arrive(); onDone?.(); },
-    busy: () => armed || now < morph.end + 0.3,
+    busy: () => armed || now < morph.end + 0.3 || now < aT0 + 0.8,
     // grains on the floor so far (all n when settled)
     value: () => (cur === 0 ? 0 : Math.round(((base + upper(arrTimes, now)) / N) * n)),
     ready: () => true,
@@ -208,6 +234,7 @@ function buildHeap(o, ctx, stage, kit) {
       now = t;
       morph.u.uTime.value = t;
       if (st.fresh) { st.fresh = false; request(st.step); }
+      { const q = Math.max(0, Math.min(1, (t - aT0) / 0.8)); morph.u.uAlpha.value = aFrom + (aTo - aFrom) * q * q * (3 - 2 * q); }
       if (armed && now - armT > 6) arrive();
       // another station's pile far off is one bright point: it fades from 8 to 12 pile
       // sizes away (`fade: false` keeps it)

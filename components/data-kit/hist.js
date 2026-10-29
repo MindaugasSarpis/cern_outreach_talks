@@ -172,9 +172,16 @@ function buildHist(o, ctx, stage, kit) {
   let frameFrom = -OFF;                                 // axisWith 'grains': the frame waits for the first grain
   let alarmMk = null;                                   // alarmMark: white marks under the lit bins
   let byN = null;                                       // `by: 'n'`: the selections by kept count, falling
+  let keptAt = -OFF;                                    // an arm that kept the standing plot (no replay)
+  let fadeT0 = -OFF, fadeDur = 0, fadeMul = 1;          // `fadeOut` (step, s): grains, frame and labels go
+  let glowGain = 1;                                     // the landing glow, scaled down for a dense landing
   const centre = new Vector3();
 
   const ease = (x) => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
+  // whiskers, the band and tall step ticks stand at this share of the depth: 0, the columns'
+  // own centre, so they meet the grains at any distance (at 0.55 the band and a mark stood
+  // about 14 px off the column tops by parallax at dist 4-7: T2 slides 6-7, T3 slide 3)
+  const markZ = Number(o.markZ ?? 0);
 
   // ---- data ---------------------------------------------------------------------
   async function load() {
@@ -652,6 +659,10 @@ function buildHist(o, ctx, stage, kit) {
       const weighting = !fresh && !instant && !!s?.weights !== !!prev?.weights;
       const xs = (i3) => 1.2 * (B[i3] + W / 2) / W;   // 1.2 s across: thousands of returning landings, spread
       const src = o.from ? new Vector3(...o.from).sub(new Vector3(...(o.pos || [0, 0, 0]))) : null;
+      // `flight` (object or step, 0..1, 0.3): how much of itself a dropping grain (or one from
+      // `from`) shows as it leaves; it grows to whole as it lands. Leaps out of a heap keep 0.7
+      const fly = Math.max(0, Math.min(1, Number(s?.flight ?? o.flight ?? 0.3)));
+      m.u.uFlyD.value = fly; m.u.uFlyL.value = heapOk ? 0.7 : fly;
       const spread = o.fromSpread || [0, 0, 0];
       const arrT = new Float64Array(nA);
       for (let a = 0; a < nA; a++) {
@@ -692,6 +703,9 @@ function buildHist(o, ctx, stage, kit) {
           M[i] = MOTION.DROP; T[2 * i + 1] = fall;
         }
         if (V[2 * i + 1] < 0.5) { M[i] = MOTION.GLIDE; T[2 * i + 1] = fromHeap ? 0.4 : 0.3; } // counted off the drawn range
+        // an arriving grain has its colour from the start: a white pass flies white, not
+        // light blue whitening as it lands (T5 slide 9 read the flight as blue grains leaving)
+        else if (V[2 * i] < 0.01) m.W[2 * i] = m.W[2 * i + 1];
         arrT[a] = t + T[2 * i] + T[2 * i + 1];
       }
       // leavers and movers
@@ -718,11 +732,16 @@ function buildHist(o, ctx, stage, kit) {
             B[i3] = 0.5 * (A[i3] + A[3 * p]); B[i3 + 1] = 0.5 * (A[i3 + 1] + A[3 * p + 1]); B[i3 + 2] = 0.5 * (A[i3 + 2] + A[3 * p + 2]);
             M[i] = MOTION.ANNIHILATE; T[i2] = 0.7 * rp; T[i2 + 1] = 1.0;
           } else {
-            const up = why === R_SEL ? 0.06 * H * (0.6 + r) : 0.12 * H + 0.25 * H * r;
-            B[i3] = A[i3] + 0.04 * W * (S[(i + 3) % N] - 0.5); B[i3 + 1] = A[i3 + 1] + up; B[i3 + 2] = A[i3 + 2] + 0.5 * (S[(i + 5) % N] - 0.5);
+            // `dust: { lift, spread, time }` (step): how far a cut's dust rises (share of H, 0.25
+            // over the first 0.12), spreads (share of W, 0.04) and how long it lasts (1.6 s): a cut
+            // that takes every row reads as the plot lifting away (T5 slide 3: 0.7, 0.15, 2)
+            const dz = why === R_CUT && s?.dust && typeof s.dust === 'object' ? s.dust : null;
+            const up = why === R_SEL ? 0.06 * H * (0.6 + r) : 0.12 * H + Number(dz?.lift ?? 0.25) * H * r;
+            const spr = Number(dz?.spread ?? 0.04);
+            B[i3] = A[i3] + spr * W * (S[(i + 3) % N] - 0.5); B[i3 + 1] = A[i3 + 1] + up; B[i3 + 2] = A[i3 + 2] + (dz ? 1 + 0.5 * spr * W : 0.5) * (S[(i + 5) % N] - 0.5);
             M[i] = MOTION.DUST;
             T[i2] = why === R_SEL ? 0.3 * r : why === R_SB ? 0.3 + 0.6 * r : 0.9 * r;
-            T[i2 + 1] = why === R_SEL ? 0.7 : 1.6;
+            T[i2 + 1] = why === R_SEL ? 0.7 : dz ? Math.max(0.4, Number(dz.time ?? 1.6)) : 1.6;
           }
         } else if (v0 > 0.01 && v1 > 0.5) {
           const moved = Math.abs(A[i3] - B[i3]) + Math.abs(A[i3 + 1] - B[i3 + 1]) + Math.abs(A[i3 + 2] - B[i3 + 2]) > 1e-4;
@@ -771,6 +790,12 @@ function buildHist(o, ctx, stage, kit) {
       lt.forEach((i, q) => { lv[q] = t + T[2 * i] + 0.6 * T[2 * i + 1]; });
       arrT.sort(); lv.sort();
       arrTimes = arrT; leaveTimes = lv;
+      // the summed landing glow: the most grains landing in any third of a second (the glow's
+      // e-fold) sets the gain, so a dense pour does not bloom (T2 slides 12-14, T5 slide 10);
+      // `glowCap: false` keeps every grain's whole glow
+      let peak = 0;
+      for (let a = 0, b = 0; a < nA; a++) { while (arrT[a] - arrT[b] > 0.33) b++; if (a - b + 1 > peak) peak = a - b + 1; }
+      glowGain = o.glowCap === false ? 1 : Math.max(0.2, Math.min(1, Math.sqrt(1500 / Math.max(1, peak))));
     };
     let base = 0, baseW = 0;
     for (let i = 0; i < N; i++) if (prevCounted[i] && newCounted[i]) { base++; if (L.white[i] > 0.5 && morph.W[2 * i + 1] > 0.5) baseW++; }
@@ -782,7 +807,19 @@ function buildHist(o, ctx, stage, kit) {
     morph.go(t, L, plan);
     counted = newCounted; lastReason = L.reason; playedAt = t;
     // the landing glow's strength (`glow`, object or step, 1): a dense pour lands quietly at 0.3
-    morph.u.uGlow.value = Math.max(0, Number(s?.glow ?? o.glow ?? 1));
+    morph.u.uGlow.value = Math.max(0, Number(s?.glow ?? o.glow ?? 1)) * glowGain;
+    // our grain's own size and alpha (object or step): `oursSize` (× the series' 2.5),
+    // `oursAlpha` (its alpha outright; else at least 0.95): a close shot keeps our light-blue
+    // core a grain, not a white disc (T5 slide 11)
+    if (oursG >= 0) {
+      const zs = (OURS / GRAIN) * Number(s?.oursSize ?? o.oursSize ?? 1);
+      if (morph.Z[oursG] !== zs) { morph.Z[oursG] = zs; morph.sizes(); }
+      const oa = s?.oursAlpha ?? o.oursAlpha;
+      morph.u.uBigA.value = oa == null ? -1 : Math.max(0, Number(oa));
+    }
+    // `fadeOut` (step, s): the plot's grains, frame and labels go over that time, in place
+    if (s?.fadeOut != null && !(prev?.fadeOut != null)) { fadeT0 = instant ? t - 100 : t; fadeDur = Math.max(0.05, Number(s.fadeOut)); }
+    else if (s?.fadeOut == null) { fadeT0 = -OFF; }
     // axisWith 'grains': on a fresh fill the axis, ticks and caption come in with the first grain
     frameFrom = s && (s.axisWith ?? o.axisWith) === 'grains' && fresh && !instant && firstStart < OFF ? t + firstStart : -OFF;
     if (sw && sw.start == null) sw.start = morph.end + 0.2;
@@ -876,7 +913,7 @@ function buildHist(o, ctx, stage, kit) {
       const c = L.exp ? L.exp[b] : L.counts[b] * unit;
       if (!(c > 0)) continue;
       const sq = Math.sqrt(c), y0 = ((c - sq) / unit) * L.dy, y1 = ((c + sq) / unit) * L.dy;
-      const x = -W / 2 + (b + 0.5) * bw, z = 0.55 * D;
+      const x = -W / 2 + (b + 0.5) * bw, z = markZ * D;
       const nW = Math.max(5, Math.min(WM - 2 * CAP, Math.round((y1 - y0) / 0.012)));
       for (let j = 0; j < nW; j++) { pts[3 * k] = x; pts[3 * k + 1] = y0 + ((y1 - y0) * j) / (nW - 1); pts[3 * k + 2] = z; k++; }
       if (CAP > 1) for (const y of [y0, y1]) for (let j = 0; j < CAP; j++) { pts[3 * k] = x + (j / (CAP - 1) - 0.5) * 0.2 * bw; pts[3 * k + 1] = y; pts[3 * k + 2] = z; k++; }
@@ -900,7 +937,7 @@ function buildHist(o, ctx, stage, kit) {
       const c = L.exp ? L.exp[b] : L.counts[b] * unit;
       if (!(c > 0)) continue;
       const sq = Math.sqrt(c), y0 = ((c - sq) / unit) * L.dy, y1 = ((c + sq) / unit) * L.dy;
-      const x = -W / 2 + (b + 0.5) * bw, z = 0.55 * D;
+      const x = -W / 2 + (b + 0.5) * bw, z = markZ * D;
       // a band thinner than half a grain is no band: its two edges would sit on each other
       // as one bright line (the near-empty edge bins of a dense plot)
       const gd = 0.0746 * GRAIN;
@@ -950,12 +987,15 @@ function buildHist(o, ctx, stage, kit) {
       const tv = tone === 'sel' ? 1 : tone === 'crowd' ? 0 : -1;
       const [y0s, y1s] = Array.isArray(t.y) ? t.y.map(Number) : [-0.03, 0];
       const tall = y1s > 0.05;
-      const y0 = ay + y0s * H, y1 = ay + y1s * H, x = xOf(t.v), z = tall ? 0.6 * D : 0;
-      // a tall tick is a dotted line (a solid white line blooms into a bar at close range)
-      const nG = Math.max(14, Math.min(400, Math.round(Math.abs(y1 - y0) / (tall ? 0.035 : 0.02))));
+      const y0 = ay + y0s * H, y1 = ay + y1s * H, x = xOf(t.v), z = tall ? markZ * D : 0;
+      // a tall tick is a dotted line (a solid white line blooms into a bar at close range);
+      // `dash` its grain spacing (units, 0.035), `alpha` its brightness share
+      const dash = Math.max(0.006, Number(t.dash ?? (tall ? 0.035 : 0.02)));
+      const nG = Math.max(14, Math.min(400, Math.round(Math.abs(y1 - y0) / dash)));
+      const va = t.alpha != null ? Number(t.alpha) : tone === 'tick' || tone === 'axis' ? 1 : tall ? 0.6 : 0.9;
       for (let j = 0; j < nG && i < cap; j++, i++) {
         stepTk.pos[3 * i] = x; stepTk.pos[3 * i + 1] = y0 + ((y1 - y0) * j) / (nG - 1); stepTk.pos[3 * i + 2] = z;
-        stepTk.tone[i] = tv; stepTk.vis[i] = tone === 'tick' || tone === 'axis' ? 1 : tall ? 0.6 : 0.9;
+        stepTk.tone[i] = tv; stepTk.vis[i] = va;
       }
       const where = t.label ?? (tall ? 'above' : 'below');
       if (where === false || where === 'none') continue;
@@ -1017,6 +1057,8 @@ function buildHist(o, ctx, stage, kit) {
     arrivedAt = now;
     if (!ready) { pendingArrive = !failed; return; }
     pendingArrive = false;
+    // kept at the arm: it went on to the slide's step as a plain step (request)
+    if (keptAt > -OFF) { keptAt = -OFF; if (want !== cur) transition(want, want < cur ? (want === 0 ? 'hide' : 'back') : 'fwd'); return; }
     // `c` (an assembly with no flight before it) replays from nothing, unless it just played
     if (!wasArmed && now - playedAt > 1.5) hideNow();
     if (want > 0) transition(want, arriveKind(want));
@@ -1067,7 +1109,13 @@ function buildHist(o, ctx, stage, kit) {
   };
 
   const api = {
-    arm() { armed = true; armT = now; hideNow(); },
+    // a plot that stands (any step but 0) when its station is armed stays standing: the slide's
+    // step then plays on from it (T2 slide 5 poured on from 1 000 instead of refilling from
+    // nothing; T3 slide 13 kept its grains under the curve). `arrival: 'replay'` replays it
+    arm() {
+      if (o.arrival !== 'replay' && ready && cur > 0 && shown) { keptAt = now; return; }
+      armed = true; armT = now; hideNow();
+    },
     assemble(t, onDone) { now = t; arrive(); onDone?.(); },
     // a step the bus has set but this form has not taken yet counts as busy (a recorder that
     // checks between the click and the next frame saw a sweep's plot as settled: T5 slide 11)
@@ -1076,7 +1124,7 @@ function buildHist(o, ctx, stage, kit) {
       || (meanTarget != null && now < meanT0 + 1.4)
       || now < tiltT0 + 1.7 || Math.abs(blur - Number(shown?.focus ?? 0)) > 0.01
       || (whiskOn && whisk && whisk.u.uShow.value < 0.99)
-      || !!(sw && !sw.done) || subK > 0,
+      || !!(sw && !sw.done) || subK > 0 || (fadeT0 > -OFF && now < fadeT0 + fadeDur),
     value: readout,
     values: () => ({ count: landed() * unit, mean: meanNow(), grains: N, unit, step: cur, rows: rowsRead(), roll: shownRoll, alarms: shownAlarms.slice() }),
     ready: () => ready,
@@ -1099,6 +1147,14 @@ function buildHist(o, ctx, stage, kit) {
       return out.set(c[0], c[1], c[2]).applyMatrix4(plot.matrixWorld);
     },
     ours(out) { return oursG >= 0 ? api.pointOf(rowOf[oursG], out) : null; },
+    // a row's grain stands (drawn, its motion over): a dk-spark `when: 'landed'` rings it only then
+    landed(row = rowOf?.[oursG]) {
+      if (!ready || mode !== 'rows') return false;
+      const i = row >= 0 && row < rowToGrain.length ? rowToGrain[row] : -1;
+      if (i < 0) return false;
+      const c = morph.sample(i, now, [0, 0, 0, 0, 0]);
+      return c[3] > 0.5 && now >= morph.t0 + morph.T[2 * i] + morph.T[2 * i + 1];
+    },
     // how white a row's grain is now (0 crowd … 1 selected), or null when it is not drawn
     // (a dk-spark with color 'follow' takes its core's colour from it)
     whiteOf(row) {
@@ -1178,7 +1234,8 @@ function buildHist(o, ctx, stage, kit) {
         near = Math.max(0, Math.min(1, (6 * R - d) / (2 * R)));
         far = Math.max(0, Math.min(1, (12 * R - d) / (4 * R)));
       }
-      morph.u.uShow.value = far;
+      fadeMul = fadeT0 > -OFF ? 1 - ease((t - fadeT0) / fadeDur) : 1;
+      morph.u.uShow.value = far * fadeMul;
       // brightness
       const ka = ease((t - alphaT0) / alphaDur);
       morph.u.uAlpha.value = alphaFrom + (alphaTo - alphaFrom) * ka;
@@ -1190,12 +1247,15 @@ function buildHist(o, ctx, stage, kit) {
       if (Math.abs(fw - frameShow) < 0.003) frameShow = fw;
       // the object's ticks, or a step's own ({ticks}), crossfading over 0.5 s
       const mix = tickMix();
-      frame.axis.u.uShow.value = frameShow * far; frame.marks.u.uShow.value = frameShow * far * (1 - mix);
-      stepTk.u.uShow.value = frameShow * far * mix;
-      if (alarmMk) alarmMk.u.uShow.value = frameShow * far;
+      // `axisAlpha` (object or step, 1): the axis line's brightness (an empty plot's baseline
+      // that must read as a plot waiting for its data, T5 slide 12: 2)
+      const fs = frameShow * fadeMul;
+      frame.axis.u.uShow.value = fs * far * Math.max(0, Number(shown?.axisAlpha ?? o.axisAlpha ?? 1)); frame.marks.u.uShow.value = fs * far * (1 - mix);
+      stepTk.u.uShow.value = fs * far * mix;
+      if (alarmMk) alarmMk.u.uShow.value = fs * far;
       for (const l of baseLabels) l.userData.show = 1 - mix;
       for (const l of stepLabels.values()) l.userData.show = (l.userData.on ?? 0) * mix;
-      shade(labels, frameShow * near);
+      shade(labels, fs * near);
       // tilt
       const kt = ease((t - tiltT0) / 1.6);
       plot.rotation.x = tiltFrom + (tiltTo - tiltFrom) * kt;
@@ -1212,17 +1272,29 @@ function buildHist(o, ctx, stage, kit) {
         band.u.uShow.value = whiskKey.startsWith('b:') ? whisk.u.uShow.value * far : 0;
       }
       // the window's mean tick, gliding to each new mean
-      const m = (shown?.meanTick ?? o.meanTick) === false ? null : meanNow();
+      const mt = shown?.meanTick ?? o.meanTick;
+      const m = mt === false ? null : meanNow();
       if (tick) {
         if (m == null) tick.u.uShow.value = Math.max(0, tick.u.uShow.value - dt * 3);
         else {
           lastMean = m;
           const kk = ease((t - meanT0) / 1.4);
-          const top = meanTopFrom + (meanTopY - meanTopFrom) * kk;
           const x = xOf(m), n = 90;
-          for (let j = 0; j < n; j++) { tick.pos[3 * j] = x; tick.pos[3 * j + 1] = top + 0.04 * H + (0.12 * H * j) / (n - 1); tick.pos[3 * j + 2] = 0; }
+          // `meanTick: { y: [y0, y1], tone }`: the mean drawn like a step tick, a dotted line over
+          // that span (shares of H from the axis line) in its tone, still gliding (T3 slide 3: the
+          // mean and the world mark on one line, no parallax)
+          const mo = mt && typeof mt === 'object' ? mt : null;
+          if (mo && Array.isArray(mo.y)) {
+            const y0 = ay + Number(mo.y[0]) * H, y1 = ay + Number(mo.y[1]) * H;
+            for (let j = 0; j < n; j++) { tick.pos[3 * j] = x; tick.pos[3 * j + 1] = y0 + ((y1 - y0) * j) / (n - 1); tick.pos[3 * j + 2] = 0; }
+          } else {
+            const top = meanTopFrom + (meanTopY - meanTopFrom) * kk;
+            for (let j = 0; j < n; j++) { tick.pos[3 * j] = x; tick.pos[3 * j + 1] = top + 0.04 * H + (0.12 * H * j) / (n - 1); tick.pos[3 * j + 2] = 0; }
+          }
+          const tc = mo?.tone === 'axis' ? P.axis : mo?.tone === 'crowd' ? P.crowd : mo?.tone === 'tick' ? P.tick : P.sel;
+          if (tick.u.uColor.value.getHexString() !== tc.replace('#', '').toLowerCase()) tick.u.uColor.value.set(tc);
           tick.touch();
-          tick.u.uShow.value = Math.min(1, Math.max(0, (t - meanT0 + 0.2) / 0.6));
+          tick.u.uShow.value = Math.min(1, Math.max(0, (t - meanT0 + 0.2) / 0.6)) * fadeMul;
         }
       }
     },

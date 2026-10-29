@@ -22,9 +22,14 @@
 // under the front lip's ticks at its right end, y beyond the right edge's far end, z up at
 // the back left corner; they come and go with the surface's ticks.
 // Steps also take `ball: 'start'` (the ball waits at the path's first point, no roll, and
-// `readout: 'path'` reads that point; a later `{roll: true}` rolls from there) and
-// `gather` (s, object or step: the surface's gather, 2.6 s by default, scaled as a whole).
-import { Group } from 'three';
+// `readout: 'path'` reads that point; a later `{roll: true}` rolls from there, the ball
+// standing, no fade) and `gather` (s, object or step: the surface's gather, 2.6 s by
+// default, scaled as a whole), `gatherFrom: '<dk-hist>'` (object or step: the surface
+// gathers out of that plot's grains where they stand). `roll: { by: 'distance', time }`:
+// legs timed by their length on the surface, an even speed. `crossLabels: false` (or a
+// step's `ring: { labels: false }`): dims 1's crossings unlabelled. `words.xAt: 'middle'`.
+// An arm keeps a standing landscape (`arrival: 'replay'` gathers it again).
+import { Group, Matrix4, Vector3 } from 'three';
 import { GRAIN, OURS, LABEL, roles, fmt } from './style.js';
 import { mulberry32, gauss } from './rng.js';
 import { stateAt } from './hist.js';
@@ -117,6 +122,7 @@ function buildLandscape(o, ctx, stage, kit) {
   // timing
   const surfF = fader(0), ballF = fader(0), ringF = fader(0), sliceF = fader(0), riseF = fader(0), extraF = fader(0), bandF = fader(0);
   let ballStill = false, ballStart = false;
+  let rollDur = 0, legCum = null;   // the roll's length (s), and with roll.by 'distance' each leg's end time
   let rollT0 = 1e9, legs = 0, legT = 0.6, legPts = [], drawT0 = -1e9;
   const drawDur = 1.2;
   let attached = !o.under, hist = null;
@@ -244,9 +250,29 @@ function buildLandscape(o, ctx, stage, kit) {
     surfTgt = { pos, vis, white };
     surfStart = { start, delay };
   }
-  function surfGo(kind, gather = null) {
+  const invB = new Matrix4(), wv = new Vector3();
+  function surfGo(kind, gather = null, fromName = null) {
     if (!surf) return 0;
     const t = now;
+    // `gatherFrom: '<dk-hist>'` (object or step): the surface gathers out of that plot's grains
+    // where they stand now (T3 slide 6: the valley is the fit, grains travel plot → bowl, the
+    // screen never empty); a grain of the plot per surface grain, cycling
+    const src = kind === 'gather' && fromName ? kit.form(String(fromName))?.api?.grains?.() : null;
+    if (src && src.rows.length) {
+      body.updateWorldMatrix(true, false); invB.copy(body.matrixWorld).invert();
+      const gk = gather != null && Number(gather) > 0 ? Number(gather) / 2.6 : 1;
+      const nS = src.rows.length, a0 = Math.min(1, Number(src.alpha ?? 0.6) / Math.max(0.05, surf.u.uAlpha.value));
+      const end = surf.go(t, surfTgt, (m) => {
+        const { A, V, T, M: Mo, S } = m;
+        for (let i = 0; i < nSurf; i++) {
+          const j = Math.floor((i * nS) / nSurf) % nS;
+          wv.set(src.pos[3 * j], src.pos[3 * j + 1], src.pos[3 * j + 2]).applyMatrix4(invB);
+          A[3 * i] = wv.x; A[3 * i + 1] = wv.y; A[3 * i + 2] = wv.z; V[2 * i] = Math.min(V[2 * i + 1], a0);
+          Mo[i] = MOTION.GLIDE; T[2 * i] = 0.5 * S[i] * gk; T[2 * i + 1] = 1.6 * gk;
+        }
+      });
+      return end - t;
+    }
     // `gather` (s): the whole gather (per-grain delay up to ~1.1 s + a 1.5 s glide) scaled to it
     const gk = gather != null && Number(gather) > 0 ? Number(gather) / 2.6 : 1;
     if (kind === 'hide' || kind === 'off') {
@@ -425,6 +451,22 @@ function buildLandscape(o, ctx, stage, kit) {
     legPts = pts;
     legs = Math.max(0, pts.length - 1);
     legT = Number(rollCfg.leg ?? Math.min(0.6, 8 / Math.max(1, legs)));
+    // `roll.by: 'distance'`: each leg takes time in proportion to its length on the surface
+    // (the total stays legs × leg, or `roll.time`), at an even speed: a log-epoch path's
+    // first legs carry most of the height, and equal legs dropped it in a quarter second
+    // (T4 slide 7). Default: equal legs, each eased
+    rollDur = Number(rollCfg.time ?? legs * legT);
+    legCum = null;
+    if (rollCfg.by === 'distance' && legs) {
+      const L = [];
+      let tot = 0;
+      for (let k = 0; k < legs; k++) {
+        const a = surfPoint(pts[k][0], pts[k][1], 0, [0, 0, 0]), b = surfPoint(pts[k + 1][0], pts[k + 1][1], 0, [0, 0, 0]);
+        const l = Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]) + 1e-4; L.push(l); tot += l;
+      }
+      legCum = new Float64Array(legs + 1);
+      for (let k = 0; k < legs; k++) legCum[k + 1] = legCum[k] + (L[k] / tot) * rollDur;
+    }
     // the trail: grains along the path on the surface, in order (revealed as the ball passes)
     const tmp = [0, 0, 0];
     const seg = [];
@@ -459,25 +501,25 @@ function buildLandscape(o, ctx, stage, kit) {
   const bp = [0, 0, 0];
   function ballAt(q) {
     if (!legs) return surfPoint(minX, minY, R, bp);
-    const k = Math.max(0, Math.min(legs - 1, Math.floor(q))), f = q >= legs ? 1 : ease(q - k);
+    const k = Math.max(0, Math.min(legs - 1, Math.floor(q))), f = q >= legs ? 1 : legCum ? q - k : ease(q - k);
     const p = legPts[k], r = legPts[k + 1];
     return surfPoint(p[0] + (r[0] - p[0]) * f, p[1] + (r[1] - p[1]) * f, R, bp);
   }
   // the logged value along the path at progress q (null when the path has none)
   const pathZ = (q) => {
     if (!legs || legPts[0].length < 3) return null;
-    const k = Math.max(0, Math.min(legs - 1, Math.floor(q))), f = q >= legs ? 1 : ease(q - k);
+    const k = Math.max(0, Math.min(legs - 1, Math.floor(q))), f = q >= legs ? 1 : legCum ? q - k : ease(q - k);
     return legPts[k][2] + (legPts[k + 1][2] - legPts[k][2]) * f;
   };
   const ballData = (q) => {
     if (!legs) return [minX, minY];
-    const k = Math.max(0, Math.min(legs - 1, Math.floor(q))), f = q >= legs ? 1 : ease(q - k);
+    const k = Math.max(0, Math.min(legs - 1, Math.floor(q))), f = q >= legs ? 1 : legCum ? q - k : ease(q - k);
     const p = legPts[k], r = legPts[k + 1];
     return [p[0] + (r[0] - p[0]) * f, p[1] + (r[1] - p[1]) * f];
   };
 
   // ---- labels: the bowl's x ticks on its front edge; the slice's crossings and level ----
-  const surfLabels = [], sliceLabels = [], tickLabels = [];
+  const surfLabels = [], sliceLabels = [], tickLabels = [], crossL = [];
   function placeLabels() {
     const px = Number(o.tickPx ?? LABEL.px);
     const lab = (text, x, y, z, list, align = 'center', hang = 0.5, color = P.tick) => {
@@ -501,7 +543,10 @@ function buildLandscape(o, ctx, stage, kit) {
     if (dims === 2 && o.words && typeof o.words === 'object') {
       const yFront = o.flip ? y0 : y1, yBack = o.flip ? y1 : y0, front = wz(yFront) + (o.flip ? -1 : 1) * 0.35;
       const cap = (text, x, y, z, align, hang) => { if (text) lab(String(text), x, y, z, surfLabels, align, hang, P.name); };
-      cap(o.words.x, wx(x1), rimY(x1, yFront) - 0.15, front, 'right', 2.2);
+      // `words.xAt: 'middle'`: the x caption centred under the front lip's middle, below its tick
+      // numbers (T4 slide 7: past the near corner it read as the far edge's)
+      if (o.words.xAt === 'middle') { const xm = (x0 + x1) / 2; cap(o.words.x, wx(xm), rimY(xm, yFront) - 0.15, front, 'center', 2.1); }
+      else cap(o.words.x, wx(x1), rimY(x1, yFront) - 0.15, front, 'right', 2.2);
       cap(o.words.y, wx(x1) + 0.45, rimY(x1, yBack) - 0.15, wz(yBack) - (o.flip ? -1 : 1) * 0.6, 'left', 0.5);
       cap(o.words.z, wx(x0) - 0.35, wy(zmax), wz(yBack), 'right', 0);
     }
@@ -524,7 +569,8 @@ function buildLandscape(o, ctx, stage, kit) {
       }
     }
     // each crossing's value at the foot of its drop line
-    if (cross) for (const c of cross) { const [X] = sliceFinal(c, 1); lab(fmt(c, sdec), X, YB0 - 0.2, dims === 2 ? sZ : 0, sliceLabels, 'center', 0.9); }
+    // (`crossLabels: false`, or a step's `ring: { labels: false }`: the one-error bar unlabelled)
+    if (cross) for (const c of cross) { const [X] = sliceFinal(c, 1); lab(fmt(c, sdec), X, YB0 - 0.2, dims === 2 ? sZ : 0, crossL, 'center', 0.9); }
     // the level's number at the left end of its line, and the one caption above it, both
     // right-aligned on the same edge with a gap (a y axis without a drawn axis)
     const lvl = Number((Array.isArray(o.levels) ? o.levels[0] : null) ?? 1);
@@ -556,7 +602,7 @@ function buildLandscape(o, ctx, stage, kit) {
     const hadSurf = !!(prev && dims === 2 && prev.surface !== false) && !fresh;
     // the surface's tick labels come in as its gather ends, not before it (lab 3 slides 4, 9:
     // the ticks stood alone in the black while the grains were still far out)
-    if (wantSurf && !hadSurf) { at += instant ? surfGo('instant') : surfGo('gather', s.gather ?? o.gather) + 0.1; surfF.set(t, 1, instant ? 0.35 : 0.5); if (!instant) after(surfF, Math.max(t, at - 0.4)); }
+    if (wantSurf && !hadSurf) { at += instant ? surfGo('instant') : surfGo('gather', s.gather ?? o.gather, s.gatherFrom ?? o.gatherFrom) + 0.1; surfF.set(t, 1, instant ? 0.35 : 0.5); if (!instant) after(surfF, Math.max(t, at - 0.4)); }
     else if (wantSurf && instant) { surfGo('instant'); surfF.set(t, 1, 0.35); }
     else if (!wantSurf && surf) { surfGo(fresh ? 'off' : 'hide'); surfF.set(t, 0, 0.5); }
     if (dims === 1) {
@@ -568,7 +614,10 @@ function buildLandscape(o, ctx, stage, kit) {
     ballStart = ballStill && s.ball === 'start';
     if (s.roll) {
       if (instant) { rollT0 = t - 1e4; ballF.set(t, 1, 0.35); }
-      else if (fresh || !prev.roll) { rollT0 = at + 0.3; ballF.set(t, 1, 0.4); after(ballF, at); at = rollT0 + legs * legT + 0.3; }
+      // from `ball: 'start'` the ball stands where it waits: it rolls from there, no fade (T4 slide 7's
+      // click: the ball blinked out and faded back in at the top)
+      else if (!fresh && prev && prev.ball === 'start' && !prev.roll) { rollT0 = t + 0.15; ballF.set(t, 1, 0.35); at = rollT0 + rollDur + 0.3; }
+      else if (fresh || !prev.roll) { rollT0 = at + 0.3; ballF.set(t, 1, 0.4); after(ballF, at); at = rollT0 + rollDur + 0.3; }
       else ballF.set(t, 1, 0.35);
     } else if (s.ball) {
       rollT0 = 1e9;
@@ -603,7 +652,9 @@ function buildLandscape(o, ctx, stage, kit) {
     if (!ready || armed || !attached) return;
     apply(k, k < cur ? (k === 0 ? 'hide' : 'back') : 'fwd');
   };
+  let keptL = false;
   const arrive = () => {
+    if (keptL) { keptL = false; if (want !== cur) apply(want, want < cur ? (want === 0 ? 'hide' : 'back') : 'fwd'); return; }
     armed = false;
     if (!ready || !attached) return;
     shown = null; cur = 0;
@@ -629,7 +680,17 @@ function buildLandscape(o, ctx, stage, kit) {
   }
 
   // ---- api ------------------------------------------------------------------------------
-  const progress = () => (rollT0 >= 1e8 ? 0 : Math.max(0, Math.min(legs, (now - rollT0) / legT)));
+  const progress = () => {
+    if (rollT0 >= 1e8) return 0;
+    const dt = now - rollT0;
+    if (!legCum) return Math.max(0, Math.min(legs, dt / legT));
+    if (dt <= 0) return 0;
+    if (dt >= legCum[legs]) return legs;
+    let k = 0;
+    while (k < legs - 1 && legCum[k + 1] <= dt) k++;
+    // within a leg: linear (an even speed), and a fraction just short of 1 keeps the leg index
+    return k + Math.min(0.999999, (dt - legCum[k]) / Math.max(1e-6, legCum[k + 1] - legCum[k]));
+  };
   const readout = () => {
     const key = o.readout ?? 'x';
     if (!ready) return 0;
@@ -645,11 +706,15 @@ function buildLandscape(o, ctx, stage, kit) {
   };
   const anyMoving = () => [surfF, ballF, ringF, sliceF, riseF, extraF, bandF].some((f) => f.moving(now));
   const api = {
-    arm() { armed = true; armT = now; if (ready) { surfGo('off'); for (const f of [surfF, ballF, ringF, sliceF, riseF, extraF, bandF]) f.jump(0); rollT0 = 1e9; shown = null; cur = 0; } },
+    // a landscape that stands when its station is armed stays (`arrival: 'replay'` gathers again)
+    arm() {
+      if (o.arrival !== 'replay' && ready && attached && shown && cur > 0) { keptL = true; return; }
+      armed = true; armT = now; if (ready) { surfGo('off'); for (const f of [surfF, ballF, ringF, sliceF, riseF, extraF, bandF]) f.jump(0); rollT0 = 1e9; shown = null; cur = 0; }
+    },
     assemble(t, onDone) { now = t; arrive(); onDone?.(); },
     busy: () => (!ready && !failed && want > 0) || armed || (want > 0 && ready && !attached)
       || (surf && now < surf.end + 0.2) || anyMoving()
-      || (rollT0 < 1e8 && now < rollT0 + legs * legT + 0.1)
+      || (rollT0 < 1e8 && now < rollT0 + rollDur + 0.1)
       || (dims === 1 && now < drawT0 + drawDur),
     value: readout,
     values: () => ({ x: readout(), d: ready ? Dat(...(rollT0 >= 1e8 ? [minX, minY] : ballData(progress()))) : null, min: ready ? [minX, minY] : null, cross, step: cur }),
@@ -723,6 +788,8 @@ function buildLandscape(o, ctx, stage, kit) {
       // the bowl's ticks go while the slice stands in it: never two μ scales at once
       for (const l of surfLabels) l.userData.show = surfF.at(t) * (1 - riseF.at(t));
       for (const l of sliceLabels) l.userData.show = extraF.at(t);
+      const crossOn = o.crossLabels === false || (shown?.ring && typeof shown.ring === 'object' && shown.ring.labels === false) ? 0 : 1;
+      for (const l of crossL) l.userData.show = extraF.at(t) * crossOn;
       // dims 1: the band and the ticks stand with the slice
       if (bandG) { bandG.u.uShow.value = bandF.at(t) * sv; bandG.points.visible = bandG.u.uShow.value > 0.002; }
       if (tickG) { tickG.u.uShow.value = sv; tickG.points.visible = sv > 0.002; }

@@ -57,14 +57,18 @@ A deck that draws the crossing (`components/lhc-opening`, T1 and T5) adds
 `lhc-collision` to the `--types` list (lab 1 does) and passes it palette colours (`tone`,
 `muonTone`, `splashTone`, `bunchColor`): its defaults are gold
 (`components/lhc-opening/collision.js:256-257`). A deck with the kit detector
-(`plugins: [lhcb]`, T1 and T4) writes `style.detectorParts(palette)` into the detector
-object's `parts`, because the engine's lhcb colours are royal and navy blues off the
-series' light blue. space.json is JSON, so copy the literal (classic):
+(`plugins: [lhcb]`, T1, T4 and T5's close) writes `style.detectorParts(palette)` into the
+detector object's `parts`, because the engine's lhcb colours are royal and navy blues off
+the series' light blue. Since 30 Oct every part takes the palette's `dust` (#4d8cb8 in
+classic), one step deeper than the crowd, so dk-glow's fronts, the hits and our white ring
+are the only bright things in the detector (T1's look; `detectorParts(p, 'accent')` gives
+the old accent parts). space.json is JSON, so copy the literal (classic):
 
 ```json
-"parts": { "preset": "lhcb", "velo": { "alpha": 0.25 }, "pipe": { "alpha": 0 },
-  "magnet": { "color": "#7dd3fc", "alpha": 0.25 }, "rich1": { "color": "#7dd3fc" },
-  "rich2": { "color": "#7dd3fc" }, "hcal": { "color": "#7dd3fc" } }
+"parts": { "preset": "lhcb", "velo": { "color": "#4d8cb8", "alpha": 0.25 }, "pipe": { "alpha": 0 },
+  "rich1": { "color": "#4d8cb8" }, "ut": { "color": "#4d8cb8" }, "magnet": { "color": "#4d8cb8", "alpha": 0.25 },
+  "scifi": { "color": "#4d8cb8" }, "rich2": { "color": "#4d8cb8" }, "ecal": { "color": "#4d8cb8" },
+  "hcal": { "color": "#4d8cb8" }, "muon": { "color": "#4d8cb8" } }
 ```
 
 The `.nums` block is the kit's `nums.css`: put `@import '../components/data-kit/nums.css';`
@@ -194,8 +198,10 @@ Frame and look:
 
 Steps. Step k is the steps 1..k merged in order: a step keeps every key of the steps
 before it, and `key: null` drops one. Step 0 is hidden. A step forward animates; a step
-back shows the state at once, in 0.35 s. An arrival from another station, or `c`,
-replays the state from nothing.
+back shows the state at once, in 0.35 s. An arrival from another station replays the
+state from nothing only if the plot was hidden; a plot that stands when its station is
+armed stays and plays on to the slide's step (since 30 Oct; `arrival: 'replay'` on the
+object replays every arrival, the old way). `c` replays from nothing.
 
 | step key | what happens | busy |
 |---|---|---|
@@ -935,7 +941,10 @@ change and `follow`, dk-landscape's `band`, dims-1 `ticks`, `{ball}` and `readou
 (raise it per plot). The series' mass range is 1 816-1 912 (`MASS`, 29 Oct), dk-scatter's
 default depth range too (since the steward pass of 29 Oct). The keys of "Added 29 Oct" below
 are seen as stills only where the list there says so; their motions are not seen. A dk-curve or
-dk-landscape added to a far dk-hist's group does not fade with it.
+dk-landscape added to a far dk-hist's group does not fade with it. The keys of "Added 30 Oct"
+were seen in the labs as listed there, stills and recorded takes (1280×720, 25 fps); not seen:
+dk-trigger `oursMaxPx` and `oursAlpha` (no lab pass of our packet near the camera), dk-bell
+`zoom.after`, dk-hist `glowCap` against a plot without it, and the five decks themselves.
 
 ## Added 29 Oct (the steward pass over the five decks' requests)
 
@@ -1000,6 +1009,67 @@ Not seen (motions, or no lab slide): hist `glow`, `fillBy`, `oursLast`, `oursSlo
 camera-timed depth labels; spark `halo` per step, `haloIn`, `haloGather`, `delay`, `from:
 '<heap>'`; trigger `burstSpread`, `collapseTime`, `ball.gain`; ground alpha by step;
 vertex durations.
+
+## Added 30 Oct (steward2: the motion review of the recorded takes, and the requests left open)
+
+`notes/steward2.md` says which finding or request each answers, what was declined and why,
+and the exact change each deck makes. Every key is optional; the defaults marked
+**changed** reach every deck without an edit.
+
+- **changed, every form that builds on arrival** (dk-hist, dk-heap, dk-vertex, dk-spark,
+  dk-curve, dk-landscape, dk-bell): a form that stands when its station is armed is kept,
+  and the slide's step plays on from it as a plain step (a pour continues from 1 000, the
+  strands do not come back, a ring is not re-faded, a `from` glide is not replayed).
+  `arrival: 'replay'` on the object restores the replay from nothing. Lab 2 slides 29-32
+  (recorded: slide 30 opens at slide 29's last luma, 17.4 against 17.5, no dip).
+- **changed, morph.js** (dk-hist, dk-heap, every grain that drops or leaps): a grain in
+  flight is a share of itself (`flight`, 0.3 in dk-hist, 0.15 in dk-heap's rain; heap leaps
+  keep 0.7) growing to whole as it lands, and the landing glow ramps in over 0.12 s. An
+  arriving grain has its colour from the start (a white pass flies white). dk-hist scales
+  the landing glow by the densest third of a second of landings (`glowCap: false` keeps
+  it whole). Lab 5 slide 4 (recorded: largest frame step 0.25).
+- **changed, dk-hist and dk-curve depth**: whiskers, the band, tall step ticks (`markZ`, 0)
+  and a dk-curve's line (`z`, 0) stand at the columns' own depth centre, not half a bin in
+  front: at dist 4-7 the lines stood about 14 px above the tops by parallax. `markZ: 0.55`
+  and `z: 0.27` give the old places.
+- **changed, dk-bell**: it gathers up from its axis, low grains first (`fillFrom: 'drop'`
+  for the old fade); the front's glow in the sparse tail is `frontGlow` (0.6); a zoom keeps
+  the bell, its axis and its ticks at `zoom.keep` (0.45) as the reference while the tail
+  grows out of the bell's own tail, and `zoom.after` (s) waits for the camera. Lab 2
+  slides 16, 19 (recorded: slide 19's darkest frame 17.9, against 16.7 at keep 0.2).
+- **changed, dk-heap rain**: the grains fall from a soft disc of emitters, wider than the
+  pile, fading in as they fall (no column with hard edges, no slab). Lab 2 slide 27.
+- **changed, dk-scatter rare set**: `gamma` 0.62 and `dimFloor` 0.03 by default (the dense
+  core light blue, not near white). Lab 4 slide 11.
+- **changed, `detectorParts`**: dust, above.
+- dk-hist: `oursAlpha`, `oursSize` (object or step), `axisAlpha` (object or step),
+  `fadeOut` (step, s), `meanTick: { y: [y0, y1], tone }` (the mean drawn like a step tick,
+  still gliding), a step tick's `dash` and `alpha`, a cut's `dust: { lift, spread, time }`
+  (step), `api.landed(row)`. Lab 3 slides 15-16, lab 5 slides 11-12.
+- dk-spark: `when: 'landed'` (object or step: the ring once the followed dk-hist grain
+  stands), `path: [[t, [x, y, z]], …]` (step: a smooth multi-key move, with `from` a form).
+  Lab 5 slide 4, lab 2 slide 33.
+- dk-vertex: `land.lift` (units above the axis). Lab 2 slide 31.
+- dk-heap: `states` (a list by step of 'off' | 'rain' | 'pile' | 'ball') and `alpha` as a
+  list by step. Lab 2 slide 34.
+- dk-ground: `size` as a list by step (from 10-20 units only larger grains read). Lab 1
+  slide 14.
+- dk-glow: `hideFade` (s, 0.4; 0 for a hide that comes with a cut). Lab 1 slide 4.
+- dk-trigger: `burstGain`, `burstLife` (the dropped packets' flash and dust life),
+  `oursAlpha`, `oursMaxPx`, `ringColor: 'sel'`; the existing `wave` (30 units/s) is now
+  documented (90 makes a drop one burst). Lab 1 slide 4, lab 4 slide 17.
+- dk-landscape: `ball: 'start'` → `{roll: true}` rolls from where the ball waits (no
+  fade), `roll: { by: 'distance', time }`, `gatherFrom: '<dk-hist>'`, `crossLabels: false`
+  or a step's `ring: { labels: false }`, `words.xAt: 'middle'`. Lab 3 slides 4, 17, 18
+  (click 1 recorded: the ball stands from frame 0).
+- dk-curve: `pull.guides` as an object `{ at, alpha, share, every }`. Lab 3 slide 2.
+- dk-lineup: a marble's `lit: 'soft'` and `gain` (ball or object). Lab 5 slide 10.
+- Bake: `d0-significance.json` `staysAbove5From10` (the 186 rows in the window and side
+  bands, in 10 MeV/c² bins from 1 820; a dk-hist `src` with `lo: 1820, bin: 10`), and
+  `code-lines.json` re-baked against `d0.py` (935 lines, sha256 8a955e73…; the drawn range
+  87-208 is unchanged). Lab 2 slide 35.
+- check.mjs: `gatherFrom` and a spark's `from` must name an object, a spark `path` must be
+  `[[t, [x, y, z]], …]`, `arrival` is 'replay' or 'keep'.
 
 ## Writing a dk form
 

@@ -23,6 +23,8 @@
    "bin": 2.0
   }
  },
+ "staysAbove5From10": [17,16,0,23,29,27,0,17,10],
+ "staysAbove5From10About": "rows 1..staysAbove5From.k in file order that fall in the window or a side band, counted in 10 MeV/c^2 bins from 1820 to 1910 (window rows = staysAbove5From.on, side-band rows = staysAbove5From.off)",
  "final": {
   "k": 91583,
   "on": 41090,

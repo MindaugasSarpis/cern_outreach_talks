@@ -518,6 +518,14 @@ def bake(src: Path):
                                 b=ALPHA * int(Noff[stays - 1]),
                                 set={"a": (ALPHA * int(Noff[stays - 1]) + 5 * np.sqrt(ALPHA * int(Noff[stays - 1])))
                                      / int(round((WIN[1] - WIN[0]) / BW)), "bin": BW}),
+        # the first k = staysAbove5From rows in the window and side bands, counted in 10 MeV/c^2
+        # bins from 1 820 (a dk-hist `src` reads it: key 'staysAbove5From10', lo 1820, bin 10;
+        # T2 slide 14's coarse picture, the deck's own t2.json first186 before 30 Oct)
+        "staysAbove5From10": [int(c) for c in np.histogram(M[:stays][((on[:stays] + off[:stays]) > 0)],
+                                                           np.arange(1820.0, 1910.0 + 1e-9, 10.0))[0]],
+        "staysAbove5From10About": ("rows 1..staysAbove5From.k in file order that fall in the window or a side band, "
+                                   "counted in 10 MeV/c^2 bins from 1820 to 1910 (window rows = staysAbove5From.on, "
+                                   "side-band rows = staysAbove5From.off)"),
         "final": dict(k=n, on=int(Non[-1]), off=int(Noff[-1]), b=b[-1], z=z[-1]),
         "at": {str(kk): dict(on=int(Non[kk - 1]), off=int(Noff[kk - 1]), z=z[kk - 1])
                for kk in (100, 1000, 10000, n)},

@@ -82,14 +82,23 @@ export function fmt(v, decimals = 0) {
 // navy blues. A T1/T4 deck writes this object (classic: accent #7dd3fc) into its
 // detector object's `parts` in space.json (JSON, so the deck copies the literal; print
 // it with `node -e "import('./components/data-kit/style.js').then(s => console.log(JSON.stringify(s.detectorParts({accent:'#7dd3fc'}))))"`).
-export function detectorParts(p) {
+// Since 30 Oct every part takes the palette's `dust` (classic #4d8cb8), one step deeper
+// than the crowd: dk-glow's light-blue fronts, the hits and our white ring are then the only
+// bright things in the detector (T1 request 16; with the accent the front ran over grains of
+// its own colour and the VELO read as a white blob). The old accent look: `detectorParts(p, 'accent')`.
+export function detectorParts(p, look = 'dust') {
+  if (look === 'accent') {
+    return {
+      preset: 'lhcb', velo: { alpha: 0.25 }, pipe: { alpha: 0 }, magnet: { color: p.accent, alpha: 0.25 },
+      rich1: { color: p.accent }, rich2: { color: p.accent }, hcal: { color: p.accent },
+    };
+  }
+  const c = p.dust ?? p.accent;
   return {
     preset: 'lhcb',
-    velo: { alpha: 0.25 },
+    velo: { color: c, alpha: 0.25 },
     pipe: { alpha: 0 },
-    magnet: { color: p.accent, alpha: 0.25 },
-    rich1: { color: p.accent },
-    rich2: { color: p.accent },
-    hcal: { color: p.accent },
+    rich1: { color: c }, ut: { color: c }, magnet: { color: c, alpha: 0.25 }, scifi: { color: c },
+    rich2: { color: c }, ecal: { color: c }, hcal: { color: c }, muon: { color: c },
   };
 }

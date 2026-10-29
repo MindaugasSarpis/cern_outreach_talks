@@ -180,7 +180,11 @@ function buildCurve(o, ctx, stage, kit) {
   const partsOf = (v) => (v === 'sig' ? [1, 0] : v === 'bkg' ? [0, 1] : v ? [1, 1] : [0, 0]);
   const hasSig = stepObjs.some((s) => partsOf(s.parts)[0]), hasBkg = stepObjs.some((s) => partsOf(s.parts)[1]);
   const hasPull = o.pull !== false && stepObjs.some((s) => s.pull);
-  const share = { line: 0.42, sig: hasSig ? 0.15 : 0, bkg: hasBkg ? 0.15 : 0, zero: hasPull ? 0.03 : 0, ...(o.split || {}) };
+  // `pull.guides` as an object { at, alpha, share, every }: the guides' pulls, their alpha
+  // (0.55), the share of the curve's grains for the zero line and the guides (0.03; the old
+  // `split.zero`), and every how many grains one shows (2: dotted; 1 solid)
+  const gObj = o.pull?.guides && typeof o.pull.guides === 'object' && !Array.isArray(o.pull.guides) ? o.pull.guides : null;
+  const share = { line: 0.42, sig: hasSig ? 0.15 : 0, bkg: hasBkg ? 0.15 : 0, zero: hasPull ? Number(gObj?.share ?? 0.03) : 0, ...(o.split || {}) };
   if (!hasPull) share.line = 1 - share.sig - share.bkg;
   const nLine = Math.round(total * share.line), nSig = Math.round(total * share.sig), nBkg = Math.round(total * share.bkg);
   const nZero = Math.round(total * share.zero), nPull = total - nLine - nSig - nBkg - nZero;
@@ -205,12 +209,13 @@ function buildCurve(o, ctx, stage, kit) {
   const thickF = fader(Number(o.thick ?? 0.02)), alphaF = fader(Number(o.alpha ?? 1));
   // `pull.guides` ([-2, 2]): dim dotted lines across the pull row at those pulls, each with
   // its number at the row's left end, and the zero line brighter (with its "0")
-  const guides = Array.isArray(o.pull?.guides) ? o.pull.guides.map(Number).filter(Number.isFinite) : [];
+  const guides = (Array.isArray(o.pull?.guides) ? o.pull.guides : Array.isArray(gObj?.at) ? gObj.at : []).map(Number).filter(Number.isFinite);
+  const guideA = Number(gObj?.alpha ?? 0.55), guideEvery = Math.max(1, Math.round(Number(gObj?.every ?? 2)));
   const labels = [], guideLabels = [];
   let snapUntil = -1e9;                        // a step that changes the set takes the plot's new scale at once
   const dashLen = Number(o.dash ?? 0.5);     // the parts are dashed, this long a period
 
-  let now = 0, ready = false, failed = false, armed = false, armT = 0;
+  let now = 0, ready = false, failed = false, armed = false, armT = 0, kept = false;
   let d = null, sets = [], F = null, domain = null, pullData = null;
   let fr = null, hist = null, attached = false;
   let want = sel.step ?? 0, cur = 0, shown = null;
@@ -389,7 +394,10 @@ function buildCurve(o, ctx, stage, kit) {
     // z ∈ ±depth/2), so a close fit touches the column tops it fits instead of riding
     // above them in perspective; the background part is light blue over light-blue
     // columns, so it stands a little in front of them and brighter
-    const zLine = Number(o.z ?? (fr.width / Math.max(1, fr.bins)) / 2) + 0.02;
+    // z: the line's depth in the plot (0, the columns' own centre since 30 Oct: half a bin in
+    // front, the line stood about 14 px above the column tops by parallax at dist 4-7, T2
+    // slides 6-7; `z: 0.27` restores the old place for a half-metre bin)
+    const zLine = Number(o.z ?? 0) + 0.02;
     const lines = [[0, o1, tabs[0], 1, false, zLine], [o1, o2, tabs[1], 0.9 * sPart, true, zLine], [o2, o3, tabs[2], 1.6 * sPartB, true, zLine + 0.3]];
     for (const [a, b, tb, alpha, dashed, zl] of lines) {
       const L = tb.L, phase = (flow * t) / L;
@@ -441,7 +449,7 @@ function buildCurve(o, ctx, stage, kit) {
           for (let c = 0; c < per; c++) {
             const j = o4 + nZero + gi * per + c, u = (c + 0.5) / per;
             pos[3 * j] = za + (zb - za) * u; pos[3 * j + 1] = base + q * scale; pos[3 * j + 2] = zLine;
-            vis[j] = Math.floor(u * 90) % 2 ? 0 : 0.55 * sPull * sAll;
+            vis[j] = Math.floor(u * 90) % guideEvery ? 0 : guideA * sPull * sAll;
           }
         });
         for (let j = o4 + nZero + guides.length * per; j < N; j++) vis[j] = 0;
@@ -460,9 +468,18 @@ function buildCurve(o, ctx, stage, kit) {
     return pNow ? Number(pNow[key] ?? 0) : 0;
   };
   const api = {
-    arm() { armed = true; armT = now; show.jump(0); waitDraw = false; },
+    // a curve that stands when its station is armed stays standing with its hist (which
+    // keeps too); `arrival: 'replay'` draws it on again
+    arm() {
+      if (o.arrival !== 'replay' && ready && shown && show.to > 0.5) { kept = true; return; }
+      armed = true; armT = now; show.jump(0); waitDraw = false;
+    },
     standing: () => ready && attached && !!shown && !waitDraw && now >= drawT0 + drawDur,
-    assemble(t, onDone) { now = t; arrive(); onDone?.(); },
+    assemble(t, onDone) {
+      now = t;
+      if (kept) { kept = false; if (want !== cur) apply(want, want < cur ? (want === 0 ? 'hide' : 'back') : 'fwd'); onDone?.(); return; }
+      arrive(); onDone?.();
+    },
     busy: () => (!ready && !failed && want > 0) || armed
       || (want > 0 && ready && !attached)
       || waitDraw || now < drawT0 + drawDur

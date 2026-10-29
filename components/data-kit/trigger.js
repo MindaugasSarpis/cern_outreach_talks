@@ -58,6 +58,12 @@
 //   The rest fade.
 // - size (GRAIN), alpha (0.9). minPx (0): a floor on a grain's size in px (on a 900-high
 //   frame), so a wide shot never draws the lane in 1-px grains. 0 keeps the series size.
+// - wave (30 units/s): how fast a firing gate's burst runs down the lane past it (90: the
+//   drop reads as one burst, not a 2.7 s thinning). burstGain (0): a flash as each dropped
+//   packet breaks (1.5 reads at narration distance); burstLife (1.1 s): the dust's e-fold.
+// - oursAlpha (1), oursMaxPx (0: none): our packet's brightness, and a cap on its grains'
+//   size in px (900-high frame; 30 keeps a close pass a knot, not a white bloom).
+// - ringColor ('crowd'): 'sel' draws the gate rings white (T4: the boundary is the gate).
 //
 // Steps: 0 hidden · 1 runs · 1 + k gates 1..k on (or each gate's `step`) · `collapse`. A
 // step forward fires a gate now (after its step's `lag`). A jump of more than one step
@@ -132,7 +138,7 @@ attribute vec3 aCtr, aJit, aBall;
 attribute vec4 aKeep;
 attribute float aPhase, aSeed, aCore, aEmpty;
 uniform float uShow, uAlpha, uSize, uNG, uWave, uCollT, uUnT, uCedeT, uBallR, uSpin, uKeptX, uEmptyA;
-uniform float uSpray, uBurstSpread, uCollDur, uBallGain;
+uniform float uSpray, uBurstSpread, uCollDur, uBallGain, uBurstGain, uBurstLife;
 uniform float uGX[${MAXG}], uGShrink[${MAXG}];
 uniform float uGOn0, uGOn1, uGOn2, uGOn3, uGOff0, uGOff1, uGOff2, uGOff3;
 uniform vec3 uBallC, uColor;
@@ -201,7 +207,9 @@ void main() {
     vec3 dir = normalize(vec3(aJit.x, q.y - 0.0, q.z) + vec3(0.0001, 0.0002, 0.0));
     // spray: the grains thrown outward in the burst's first ~0.4 s, then the slow drift
     p = q + dir * (dust * 1.3 + uSpray * (1.0 - exp(-dust * 6.0))) + vec3(dust * 0.45, dust * 0.3, 0.0);
-    a *= 0.95 * exp(-dust * 0.9);                            // the dust lingers a second or two: the burst reads
+    // the dust lingers a second or two (burstLife, 1.1 s e-fold), with a flash as it breaks
+    // (burstGain, 0: none): a gate's drop reads as a burst at the ring, not a thinning lane
+    a *= 0.95 * exp(-dust / uBurstLife) * (1.0 + uBurstGain * exp(-dust * 5.0));
   } else p = laneAt(x, aCtr, aJit, sq);
   if (coll) {
     // kc: how far the collapse got (frozen at the step back while the ball unfolds);
@@ -267,17 +275,27 @@ void main() {
 }`;
   const OURSV = G + SIZE_GLSL + /* glsl */ `
 attribute float aSeed, aCore;
-uniform float uShow, uSize, uBig, uShrink, uPack, uFold, uOursV;
+uniform float uShow, uSize, uBig, uShrink, uPack, uFold, uOursV, uOursA, uOursMaxPx;
 uniform vec3 uAt, uColor;
+// oursMaxPx: our packet's grains no larger than that (px on a 900-high frame), and dimmer
+// as they would grow past it: a close pass does not bloom into a white disc (T1 slide 8)
+float capped(vec3 p, float s, inout float a) {
+  if (uOursMaxPx <= 0.0) return s;
+  vec4 mv = modelViewMatrix * vec4(p, 1.0);
+  float px = s * 72.0 / max(-mv.z, 0.1);
+  if (px > uOursMaxPx) { a *= uOursMaxPx / px; return s * uOursMaxPx / px; }
+  return s;
+}
 void main() {
   float v = uShow * uOursV;
   if (v < 0.01) { hide(); return; }
-  if (aCore > 0.5) { place(uAt, sizeAt(uAt, uBig), 1.5 * v, uColor, aSeed); return; }
+  if (aCore > 0.5) { float ac = 1.5 * v * uOursA; float sc = capped(uAt, sizeAt(uAt, uBig), ac); place(uAt, sc, ac, uColor, aSeed); return; }
   float keep = hash(aSeed * 31.0) < uShrink ? 1.0 : 0.0;
-  float a = v * (1.0 - uFold) * keep;
+  float a = v * (1.0 - uFold) * keep * uOursA;
   if (a <= 0.002) { hide(); return; }
   vec3 p = uAt + position * (1.0 + 0.15 * sin(uTime * 2.0 + aSeed * 6.0)) * (1.0 - uFold) * uPack;
-  place(p, sizeAt(p, uSize), a, uColor, aSeed);
+  float sz = capped(p, sizeAt(p, uSize), a);
+  place(p, sz, a, uColor, aSeed);
 }`;
   VERTS = { PACKET, RING, BUF, OURSV };
   return VERTS;
@@ -354,6 +372,7 @@ function buildTrigger(o, ctx, stage, kit) {
     uAlpha: { value: Number(o.alpha ?? 0.9) }, uSize: { value: Number(o.size ?? GRAIN) }, uNG: { value: NG }, uWave: { value: Number(o.wave ?? 30) },
     uBallR: { value: ballR }, uSpin: { value: Number(o.ball?.spin ?? 0.12) }, uKeptX: { value: keptX }, uEmptyA: { value: 0.4 }, uCedeT: { value: OFF },
     uSpray: { value: Number(o.spray ?? 0) }, uBurstSpread: { value: Math.max(0, Number(o.burstSpread ?? 0)) }, uBallGain: { value: Number(o.ball?.gain ?? 1) },
+    uBurstGain: { value: Math.max(0, Number(o.burstGain ?? 0)) }, uBurstLife: { value: Math.max(0.1, Number(o.burstLife ?? 1.1)) },
     uGX: { value: Array.from({ length: MAXG }, (_, k) => (k < NG ? gates[k].x : 1e6)) },
     uGShrink: { value: Array.from({ length: MAXG }, (_, k) => (k < NG ? gates[k].shrink : 1)) },
     uBallC: { value: ballC }, uColor: { value: crowd },
@@ -374,7 +393,8 @@ function buildTrigger(o, ctx, stage, kit) {
         pos.set([gt.x + gauss(rnd) * 0.05, r * Math.cos(a), r * Math.sin(a)], m * 3); s[m] = rnd(); gi[m] = k;
       }
     });
-    const rmat = link(stage.grainMaterial(V.RING, { ...shared, uSize: { value: 0.9 }, uColor: { value: crowd } }));
+    // `ringColor` ('crowd', or 'sel': white, the colour every boundary of T4 is drawn in), object-wide
+    const rmat = link(stage.grainMaterial(V.RING, { ...shared, uSize: { value: 0.9 }, uColor: { value: o.ringColor === 'sel' ? sel.clone() : crowd } }));
     const rgeo = stage.grainGeometry(ringN, { position: pos, aSeed: [s, 1], aGate: [gi, 1] });
     g.add(stage.grainPoints(rgeo, rmat)); mats.push(rmat); geos.push(rgeo);
   }
@@ -412,6 +432,7 @@ function buildTrigger(o, ctx, stage, kit) {
   // ---- ours: a white packet, its core our grain ----
   const om = link(stage.grainMaterial(V.OURSV, {
     ...shared, uSize: { value: GRAIN }, uBig: { value: OURS }, uShrink: { value: 1 }, uPack: { value: 1 }, uFold: { value: 0 }, uOursV: { value: o.ours === false ? 0 : 1 },
+    uOursA: { value: Math.max(0, Number(o.oursAlpha ?? 1)) }, uOursMaxPx: { value: Math.max(0, Number(o.oursMaxPx ?? 0)) },
     uAt: { value: new Vector3() }, uColor: { value: sel },
   }));
   {

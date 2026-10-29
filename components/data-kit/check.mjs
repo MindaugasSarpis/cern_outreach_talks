@@ -18,6 +18,8 @@
 //   IPχ², are warnings; `order` other than 'file', and a dims-2 `band`, are warnings;
 // - the series look (bible §3: no talk overrides style.js): `tickPx` on any dk object is
 //   a warning (`tick-px`), and a dk-hist `by` other than 'n' a warning.
+//   Since 30 Oct: dk-landscape `gatherFrom` and dk-spark `from` must name an object, a
+//   dk-spark `path` must be [[t, [x, y, z]], …], and `arrival` is 'replay' or 'keep'.
 // Errors exit 1.
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -117,6 +119,17 @@ for (const { st, o } of objects) {
   if (o.type === 'dk-heap' && o.oursFrom != null) {
     if (typeof o.oursFrom === 'object') { if (!Array.isArray(o.oursFrom.at) || o.oursFrom.at.length !== 3 || !o.oursFrom.at.every((v) => Number.isFinite(Number(v)))) add('error', 'bad-ours-from', `${where}: oursFrom { at } needs a point [x, y, z]`); }
     else if (!objects.some(({ o: f }) => String(f.name) === String(o.oursFrom))) add('error', 'unknown-ours-from', `${where}: oursFrom "${o.oursFrom}" names no object`);
+  }
+  // since 30 Oct (steward2): names a form must resolve, and `arrival` takes one value
+  {
+    const named = (n) => objects.some(({ o: f }) => String(f.name) === String(n));
+    const stepList = Array.isArray(o.steps) ? o.steps.filter((x) => x && typeof x === 'object') : [];
+    for (const src of [o, ...stepList]) {
+      if (o.type === 'dk-landscape' && src.gatherFrom != null && !named(src.gatherFrom)) add('error', 'unknown-gather-from', `${where}: gatherFrom "${src.gatherFrom}" names no object`);
+      if (o.type === 'dk-spark' && typeof src.from === 'string' && !named(src.from)) add('error', 'unknown-spark-from', `${where}: from "${src.from}" names no object`);
+      if (o.type === 'dk-spark' && src.path != null && !(Array.isArray(src.path) && src.path.every((k) => Array.isArray(k) && k.length === 2 && Number.isFinite(Number(k[0])) && Array.isArray(k[1]) && k[1].length === 3))) add('error', 'bad-spark-path', `${where}: path needs [[t, [x, y, z]], …]`);
+    }
+    if (typeof o.type === 'string' && o.type.startsWith('dk-') && o.arrival != null && o.arrival !== 'replay' && o.arrival !== 'keep') add('warning', 'arrival', `${where}: arrival ${JSON.stringify(o.arrival)}: only 'replay' (or the default 'keep') is known`);
   }
   if (typeof o.type === 'string' && o.type.startsWith('dk-') && o.tickPx != null) add('warning', 'tick-px', `${where}: tickPx ${o.tickPx} overrides the series' LABEL.px (style.js, ${LABEL.px} px since 29 Oct); no talk overrides style.js (bible §3): drop it`);
   if (o.type === 'dk-hist' && Array.isArray(o.steps) && o.steps.some((s) => s && typeof s === 'object' && s.by != null && s.by !== 'n')) add('warning', 'hist-by', `${where}: a step's \`by\` is ${JSON.stringify(o.steps.find((s) => s && s.by != null && s.by !== 'n').by)}; only 'n' (the selections by kept count, falling) is known`);

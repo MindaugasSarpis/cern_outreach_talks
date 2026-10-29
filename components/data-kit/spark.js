@@ -38,7 +38,13 @@
 //   (object or step): the ring's grains gather in from outside (from 2.4 × its radius)
 //   instead of fading in place.
 // - `delay` (s): a step that shows the spark from hidden waits that long (the ring comes
-//   with the grains it marks, not on an empty axis).
+//   with the grains it marks, not on an empty axis). `when: 'landed'` (object or step): a
+//   spark `on` a dk-hist shows only once the followed grain stands, not while it falls.
+// - An arm (a flight to the spark's station) keeps a shown spark as it is; `arrival:
+//   'replay'` (object) replays its step from nothing on every arrival, the look before 30 Oct.
+// - `path: [[t, [x, y, z]], …]` (step): the move runs through those keys (s from the step's
+//   start, station frame) on a smooth curve, ending at `at` at the last key's time; with
+//   `from: '<heap>'` it starts at the lifted grain (T5 slide 13: up off the heap, an arc, down).
 // - `from` as a form's name (e.g. a dk-heap): the move starts at that form's grain of our
 //   row now, and the spark draws its own core; with a dk-heap (`take`, default true) our
 //   row leaves the pile as the spark lifts it (api.claim), and comes back on a step back.
@@ -88,6 +94,25 @@ export function install(stage, kit) {
   stage.registerBuilder(TYPE, (o, ctx) => buildSpark(o, ctx, stage, kit), { fields: FIELDS });
 }
 
+// a point on a timed path of keys [[t, Vector3], …] at time s: a Catmull-Rom curve through the
+// keys, the time eased in at the first key and out at the last (pure)
+export function pathAt(keys, s, out) {
+  const n = keys.length, T = keys[n - 1][0];
+  if (n === 1 || s <= 0) return out.copy(keys[0][1]);
+  if (s >= T) return out.copy(keys[n - 1][1]);
+  // ease the whole run (start and end at rest), then find the segment by key time
+  const q = s / T, sq = T * (q * q * (3 - 2 * q));
+  let k = 0;
+  while (k < n - 2 && keys[k + 1][0] <= sq) k++;
+  const t0 = keys[k][0], t1 = keys[k + 1][0], u = Math.max(0, Math.min(1, (sq - t0) / Math.max(1e-6, t1 - t0)));
+  const p0 = keys[Math.max(0, k - 1)][1], p1 = keys[k][1], p2 = keys[k + 1][1], p3 = keys[Math.min(n - 1, k + 2)][1];
+  const u2 = u * u, u3 = u2 * u;
+  for (const c of ['x', 'y', 'z']) {
+    out[c] = 0.5 * (2 * p1[c] + (-p0[c] + p2[c]) * u + (2 * p0[c] - 5 * p1[c] + 4 * p2[c] - p3[c]) * u2 + (-p0[c] + 3 * p1[c] - 3 * p2[c] + p3[c]) * u3);
+  }
+  return out;
+}
+
 function buildSpark(o, ctx, stage, kit) {
   const P = roles(ctx.palette);
   const g = new Group();
@@ -129,6 +154,8 @@ function buildSpark(o, ctx, stage, kit) {
   let rFrom = R0, rTo = R0, aFrom = A0, aTo = A0, hT0 = -1e9;
   let haloIn = Number(o.haloIn ?? 0.5), gatherOn = !!o.haloGather, showAt = -1e9;
   let taken = null;       // a form our row was lifted out of ({ from: '<heap>' }): released on the next step
+  let kept = false;       // an arm that found the spark shown: it stays (no replay of its move, no re-fade)
+  let pathK = null;       // a step's `path`: [[t, Vector3], …] after its start (a multi-key glide)
   const crowdC = new Color(P.crowd), selC = new Color(P.sel), tmpC = new Color();
 
   // where the followed form shows our grain now (station frame), or null
@@ -139,6 +166,9 @@ function buildSpark(o, ctx, stage, kit) {
       const f = kit.form(nm);
       if (!f) continue;
       const a = f.api;
+      // `when: 'landed'` (object or step): the ring only once the followed grain stands (a
+      // dk-hist's grain in flight is passed over: T5 slide 12's ring stood over the falling rain)
+      if ((s.when ?? o.when) === 'landed' && a.landed && !a.landed(row)) continue;
       const p = (a.ours && a.ours(v)) || (a.posOf && a.posOf(row, v)) || (a.pointOf && a.pointOf(row, v));
       if (p) {
         // the grain's own whiteness, for color 'follow' (a form without whiteOf: its tone)
@@ -203,13 +233,35 @@ function buildSpark(o, ctx, stage, kit) {
     if (!following) to.set(...(s.at || [0, 0, 0]));
     // a step with `from` always plays its move; one without glides on from where it stands
     glide = s.from ? Number(s.glide ?? 2.5) : Number.isNaN(from.x) ? 0.01 : Number(s.glide ?? (following ? 1.0 : 2.5));
+    // `path: [[t, [x, y, z]], …]` (s from the step's start, station frame): the move runs
+    // through those keys on a smooth curve (rising off the heap and arcing down to the
+    // crossing, T5 slide 13), ending at `at` (or the last key) at the last key's time
+    pathK = null;
+    if (Array.isArray(s.path) && s.path.length && !following && !instant) {
+      const keys = s.path.map(([tt, p]) => [Math.max(0, Number(tt)), new Vector3(...p.map(Number))]).sort((a, b) => a[0] - b[0]);
+      if (s.at) { const end = keys[keys.length - 1][0]; if (!(keys[keys.length - 1][1].distanceTo(to) < 1e-6)) keys.push([end + Math.max(0.5, Number(s.glide ?? 1.5)), to.clone()]); }
+      else to.copy(keys[keys.length - 1][1]);
+      const start = Number.isNaN(from.x) ? keys[0][1].clone() : from.clone();
+      if (keys[0][0] > 0) keys.unshift([0, start]); else keys[0][1] = start;
+      pathK = keys; glide = keys[keys.length - 1][0];
+    }
     t0 = now;
   }
   const request = (k) => { want = k; if (!armed) apply(k, k < lastK ? 'back' : 'fwd'); };
 
   const api = {
-    arm() { armed = true; armT = now; show = 0; u.uShow.value = 0; },
-    assemble(t, onDone) { now = t; armed = false; show = 0; apply(want, 'arrive'); onDone?.(); },
+    // a spark that shows when its station is armed stays: its move (a `from` glide) is not
+    // replayed and its ring not re-faded (T5 slide 13: at bullet time the replay took 25 s).
+    // `arrival: 'replay'` replays it as before
+    arm() {
+      if (o.arrival !== 'replay' && cur && show > 0.5) { kept = true; return; }
+      armed = true; armT = now; show = 0; u.uShow.value = 0;
+    },
+    assemble(t, onDone) {
+      now = t;
+      if (kept) { kept = false; if (want !== lastK) apply(want, want < lastK ? 'back' : 'fwd'); onDone?.(); return; }
+      armed = false; show = 0; apply(want, 'arrive'); onDone?.();
+    },
     busy: () => armed || now - t0 < glide || now < showAt || Math.abs(show - showTo * (found ? 1 : 0)) > 0.01 || (!followColor && now < colT0 + colDur) || now < hT0 + 0.6 || (showTo * (found ? 1 : 0) > 0 && Math.abs(haloV - haloTo) > 0.01),
     value: () => 0,
     ready: () => true,
@@ -239,7 +291,8 @@ function buildSpark(o, ctx, stage, kit) {
         if (p) target = p;
       }
       const f = Math.min(1, Math.max(0, (t - t0) / glide)), e = f * f * (3 - 2 * f);
-      if (cur && found) {
+      if (cur && found && pathK && f < 1) pathAt(pathK, t - t0, u.uAt.value);
+      else if (cur && found) {
         if (Number.isNaN(from.x) || f >= 1) u.uAt.value.copy(target);
         else u.uAt.value.lerpVectors(from, target, e);
       }
