@@ -1,0 +1,52 @@
+/* Open data: the series' type over the stage kit (bible §3). On screen only numbers, in
+   MasterTalk's .nums block: a 46 px number in #e8f6ff and its 22 px unit or name in
+   #9fd8ff, each line fading in at its --dN after the camera lands. White and light blue,
+   never gold. Sizes are px on Slidev's 980-wide canvas. */
+
+html[data-stage] .nums {
+  position: absolute; left: 56px; bottom: 96px; z-index: 30; pointer-events: none;
+  font-family: 'Space Grotesk', system-ui, sans-serif; color: #e8f6ff;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.6);
+}
+html[data-stage] .nums p { margin: 0 0 10px; line-height: 1; white-space: nowrap; opacity: 0; animation: dk-nums-in 1s ease forwards; }
+html[data-stage] .nums b { font-size: 46px; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: normal; }
+html[data-stage] .nums .unit { font-size: 22px; font-weight: 500; letter-spacing: 0.04em; color: #9fd8ff; margin-left: 0.4em; }
+html[data-stage] .nums .name { font-size: 22px; font-weight: 400; letter-spacing: 0.02em; color: #9fd8ff; margin-left: 0.6em; }
+html[data-stage] .nums p:nth-child(1) { animation-delay: var(--d1, 2s); }
+html[data-stage] .nums p:nth-child(2) { animation-delay: var(--d2, 3.2s); }
+html[data-stage] .nums p:nth-child(3) { animation-delay: var(--d3, 4.4s); }
+/* .swap: the lines take one spot in turn; the first leaves at --o1 as the second comes */
+html[data-stage] .nums.swap p { position: absolute; left: 0; bottom: 0; }
+html[data-stage] .nums.swap p:nth-child(1) { animation: dk-nums-in 1s ease var(--d1, 2s) forwards, dk-nums-out 0.6s ease var(--o1, 8s) forwards; }
+@keyframes dk-nums-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes dk-nums-out { from { opacity: 1; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  html[data-stage] .nums p { animation: none; opacity: 1; }
+  html[data-stage] .nums.swap p:nth-child(1) { animation: none; opacity: 0; }
+}
+
+/* The cover keeps its plain title alone (no kicker): the kit styles a lone h1 as the
+   small kicker, so the only h1 takes the title's size here (as T1 and T4 do). */
+html[data-stage] .slidev-layout.cover h1:only-of-type {
+  font-size: max(var(--stage-type-min, 0px), 66px * var(--stage-type-scale, 1)) !important;
+  font-weight: 700 !important; line-height: 0.98 !important; letter-spacing: -0.02em !important;
+  text-transform: uppercase; color: var(--stage-fg) !important; margin: 0 !important; max-width: 12ch;
+}
+
+/* The ball stands in the middle of T4's last frame, so the title sits low on the left,
+   clear of it, where the series' numbers sit. */
+html[data-stage] .slidev-layout.cover { justify-content: flex-end !important; padding-bottom: 6% !important; }
+
+/* Licence credits, tiny print on the last slide (house rule; none for CERN's material). */
+html[data-stage] .credit {
+  position: absolute; right: 28px; bottom: 18px; z-index: 30; max-width: 62%; pointer-events: none; text-align: right;
+  font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 9px; line-height: 1.35; color: rgba(207, 228, 245, 0.55);
+  opacity: 0; animation: dk-nums-in 1.5s ease 6s forwards;
+}
+@media print { html[data-stage] .nums p, html[data-stage] .credit { animation: none; opacity: 1; } }
+
+/* The cover stands from frame 1 as Talk 4's last frame (motion review, 29 Oct): the stage
+   fades its world canvas in over 1.2 s once ready, and the frames before show the stage's
+   lifted backdrop (a grey blink at the hand-off from T4). The world is drawn at once here.
+   Only the load is affected: the canvas fades nowhere else. Stage request: kit-requests 13. */
+html[data-stage] .stage > canvas.field { transition: none !important; }

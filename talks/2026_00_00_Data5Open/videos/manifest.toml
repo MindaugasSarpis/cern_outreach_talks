@@ -19,62 +19,68 @@
 name    = "cern_footage_2022_014_001_datacentre.mp4"
 profile = "standard"
 used_in = ["deck"]
-trim    = ["0:28", "0:40"]
+trim    = ["0:28", "0:38.7"]
 notes   = """\
-The record part: the CERN Data Centre, 12 s. Source: videos.cern.ch record 3020288 \
+The record part: the CERN Data Centre, 10.7 s. Source: videos.cern.ch record 3020288 \
 (https://videos.cern.ch/record/3020288), CERN-FOOTAGE-2022-014-001, "Data Centre Footage \
 2022", dated 2022-07-04, 44 s, licence "CERN" (copyright.web.cern.ch); no on-screen credit. \
 Raw: the record's 1080p.mp4 subformat (the master is a 1.3 GB 1080p .mov; same frame size), \
 as is. Why this cut: the source's dark, blue-lit stretch with nobody in frame (a person walks \
 the aisles at 0:04-0:09 and 0:22-0:27, so those are out): 0:28-0:31 rack fronts close up, \
-green and blue LEDs; 0:32-0:33 an aisle opening onto a lit corridor; 0:34-0:37 a rack row \
-with bright blue status bars; 0:38-0:40 a long dark aisle of LEDs, the last frame. Dark \
+green and blue LEDs; 0:32-0:33 an aisle opening onto a lit corridor; 0:34-0:38.7 a rack row \
+with bright blue status bars, the last frame. Cut at 0:38.7 (motion review, 2026-10-29): the \
+source cuts to a long dark aisle of LEDs at 0:38.84, a shot barely seen before the clip's dust \
+exit, which flashed as a pop (a 5.3 luma jump). Dark \
 frames sit on the classic palette's near-black and carry "a hall of disks", the scale the \
 piles of 1 TB stand for. No burnt-in titles, captions or logos."""
 
-[[videos]]
-name    = "atlas_video_2020_003_003_notebook.mp4"
-profile = "standard"
-used_in = ["deck"]
-trim    = ["0:04", "0:19"]
-notes   = """\
-The pipeline part: someone else's notebook rebuilds the Higgs plot, 15 s. Source: \
-videos.cern.ch record 2745513 (https://videos.cern.ch/record/2745513), \
-ATLAS-VIDEO-2020-003-003, "How to rediscover the Higgs boson - ATLAS Open Data Tutorial", \
-dated 2020-11-20, 9:56, licence "CERN" (copyright.web.cern.ch); no on-screen credit. Raw: a \
-derived file. The master mp4 (1920x1080, 2.5 Mbps; kept in the raw bank as sources/\
-atlas_video_2020_003_003_source.mp4) carries the presenter's webcam in the top right the \
-whole time and the browser bar with a binder URL; the derived raw is source 7:30-8:00, \
-cropped to the notebook body (crop 1392x783 at 180,290, below the toolbar and left of the \
-webcam), scaled to 1920x1080 (lanczos), x264 crf 12, audio dropped (the narration is not \
-ours; the takes are silent). Trim 0:04-0:19 here = source 7:34-7:49. Why this cut: no \
-cell is filmed while it runs (the presenter clicks Run All at 4:24 and talks through the \
-cells while they finish), and the histogram appears whole, it does not fill. The nearest \
-stretch is the output of the run arriving: 7:34-7:38 the processing cell and its \
-per-sample output (Processing data_A ... nIn, nOut, time taken), 7:39-7:45 scrolling \
-through plot_data's code (np.histogram over 80-250 GeV in 5 GeV bins), 7:46-7:49 the \
-finished 4-lepton mass histogram (data points over the Z/ttbar and ZZ* backgrounds, the \
-light-blue signal at 125 GeV), held as the last frame. The plot's own legend reads "ATLAS \
-Open Data, for education" (part of the plot, not a burnt-in credit). The notebook's UI is in \
-French ("Entrée [13]")."""
-
-[[videos]]
-name    = "open_video_2018_041_001_wlcg.mp4"
-profile = "standard"
-used_in = ["deck"]
-trim    = ["0:00", "0:12"]
-notes   = """\
-The versions part: the grid at work, 12 s. Source: videos.cern.ch record 2640380 \
-(https://videos.cern.ch/record/2640380), OPEN-VIDEO-2018-041-001, "The Worldwide LHC \
-Computing Grid activity captured live by the EGL application in August 2017", dated \
-2017-08-24, 1:05, licence "CERN" (copyright.web.cern.ch); no on-screen credit. Raw: a \
-derived file from the record's 2160p.mp4 (3840x2160 H.264, kept in the raw bank as sources/\
-open_video_2018_041_001_2160p_source.mp4), scaled to 1920x1080 (lanczos), x264 crf 12, \
-audio copied, with two black boxes over the starfield: the burnt-in live counters bottom \
-left ("Running jobs: 365644 / Active CPU cores: 807139 / Transfer rate: 21.54 GiB/sec", \
-August 2017 numbers that are not ours to show) and the EGL logo top left. Why this cut: the \
-source's opening globe, before it flattens into a map at 0:19: 0:00-0:04 the globe over \
-Europe, a dense knot of transfer arcs at CERN; 0:04-0:08 it turns, the arcs from Europe \
-swinging across the oceans to the other continents; 0:08-0:12 it keeps turning, arcs fanning \
-out from Europe to sites on the far side, the last frame. One frame shows "more than 170 \
-sites" as a live web of links."""
+# Dropped from the deck on 2026-10-29 (outline revise:data5open: the ATLAS notebook clip,
+# drop order 2, and the Versions part with its WLCG clip, drop order 4). Kept as comments for
+# their cuts and derivation notes; uncomment an entry to bring its clip back.
+#
+# [[videos]]
+# name    = "atlas_video_2020_003_003_notebook.mp4"
+# profile = "standard"
+# used_in = ["deck"]
+# trim    = ["0:04", "0:19"]
+# notes   = """\
+# The pipeline part: someone else's notebook rebuilds the Higgs plot, 15 s. Source: \
+# videos.cern.ch record 2745513 (https://videos.cern.ch/record/2745513), \
+# ATLAS-VIDEO-2020-003-003, "How to rediscover the Higgs boson - ATLAS Open Data Tutorial", \
+# dated 2020-11-20, 9:56, licence "CERN" (copyright.web.cern.ch); no on-screen credit. Raw: a \
+# derived file. The master mp4 (1920x1080, 2.5 Mbps; kept in the raw bank as sources/\
+# atlas_video_2020_003_003_source.mp4) carries the presenter's webcam in the top right the \
+# whole time and the browser bar with a binder URL; the derived raw is source 7:30-8:00, \
+# cropped to the notebook body (crop 1392x783 at 180,290, below the toolbar and left of the \
+# webcam), scaled to 1920x1080 (lanczos), x264 crf 12, audio dropped (the narration is not \
+# ours; the takes are silent). Trim 0:04-0:19 here = source 7:34-7:49. Why this cut: no \
+# cell is filmed while it runs (the presenter clicks Run All at 4:24 and talks through the \
+# cells while they finish), and the histogram appears whole, it does not fill. The nearest \
+# stretch is the output of the run arriving: 7:34-7:38 the processing cell and its \
+# per-sample output (Processing data_A ... nIn, nOut, time taken), 7:39-7:45 scrolling \
+# through plot_data's code (np.histogram over 80-250 GeV in 5 GeV bins), 7:46-7:49 the \
+# finished 4-lepton mass histogram (data points over the Z/ttbar and ZZ* backgrounds, the \
+# light-blue signal at 125 GeV), held as the last frame. The plot's own legend reads "ATLAS \
+# Open Data, for education" (part of the plot, not a burnt-in credit). The notebook's UI is in \
+# French ("Entrée [13]")."""
+#
+# [[videos]]
+# name    = "open_video_2018_041_001_wlcg.mp4"
+# profile = "standard"
+# used_in = ["deck"]
+# trim    = ["0:00", "0:12"]
+# notes   = """\
+# The versions part: the grid at work, 12 s. Source: videos.cern.ch record 2640380 \
+# (https://videos.cern.ch/record/2640380), OPEN-VIDEO-2018-041-001, "The Worldwide LHC \
+# Computing Grid activity captured live by the EGL application in August 2017", dated \
+# 2017-08-24, 1:05, licence "CERN" (copyright.web.cern.ch); no on-screen credit. Raw: a \
+# derived file from the record's 2160p.mp4 (3840x2160 H.264, kept in the raw bank as sources/\
+# open_video_2018_041_001_2160p_source.mp4), scaled to 1920x1080 (lanczos), x264 crf 12, \
+# audio copied, with two black boxes over the starfield: the burnt-in live counters bottom \
+# left ("Running jobs: 365644 / Active CPU cores: 807139 / Transfer rate: 21.54 GiB/sec", \
+# August 2017 numbers that are not ours to show) and the EGL logo top left. Why this cut: the \
+# source's opening globe, before it flattens into a map at 0:19: 0:00-0:04 the globe over \
+# Europe, a dense knot of transfer arcs at CERN; 0:04-0:08 it turns, the arcs from Europe \
+# swinging across the oceans to the other continents; 0:08-0:12 it keeps turning, arcs fanning \
+# out from Europe to sites on the far side, the last frame. One frame shows "more than 170 \
+# sites" as a live web of links."""

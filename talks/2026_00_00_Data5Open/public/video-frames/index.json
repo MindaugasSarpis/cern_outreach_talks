@@ -1,8 +1,8 @@
 {
   "version": 1,
   "clips": {
-    "cern_overview_short.mp4": {
-      "file": "cern_overview_short.mp4.jpg",
+    "cern_footage_2022_014_001_datacentre.mp4": {
+      "file": "cern_footage_2022_014_001_datacentre.mp4.jpg",
       "tile": [
         320,
         180
@@ -14,8 +14,8 @@
         1920,
         1080
       ],
-      "duration": 11.24,
-      "poster": "cern_overview_short.mp4.poster.jpg",
+      "duration": 10.72,
+      "poster": "cern_footage_2022_014_001_datacentre.mp4.poster.jpg",
       "lit": 0.0
     }
   }

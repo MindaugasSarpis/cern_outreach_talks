@@ -1,123 +1,679 @@
 {
-  "hero": "hero",
-  "stations": [
+ "hero": "pipe",
+ "stations": [
+  {
+   "id": "pipe",
+   "pos": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "target": [
+     -2.55,
+     5.0,
+     0
+    ],
+    "dist": 34.5,
+    "yaw": 0,
+    "pitch": 5,
+    "sway": 1
+   },
+   "gather": 0.25,
+   "pulse": 30,
+   "objects": [
     {
-      "id": "hero",
-      "pos": [
-        -26,
+     "type": "dk-pipeline",
+     "name": "pipe",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 120722,
+     "stages": [
+      {
+       "kind": "pile",
+       "at": [
+        -25.5,
         0,
         0
-      ],
-      "look": {
-        "target": [
-          -7.8,
-          0.4,
-          0
-        ],
-        "dist": 15,
-        "yaw": -22,
-        "pitch": 7,
-        "sway": 9
+       ],
+       "r": 2.8,
+       "n": 91583,
+       "spin": 0.06,
+       "alpha": 0.6
       },
-      "gather": 3.6,
-      "pulse": 6,
-      "objects": [
-        {
-          "type": "constellation",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "radius": 3.1,
-          "nodeRadius": 0.72,
-          "nodes": [
-            {
-              "pos": [
-                1.2,
-                0.9,
-                0.3
-              ]
-            },
-            {
-              "pos": [
-                0.4,
-                -1.5,
-                -0.9
-              ],
-              "color": "#dfe6ee"
-            },
-            {
-              "pos": [
-                1.5,
-                -0.3,
-                -1.2
-              ]
-            },
-            {
-              "pos": [
-                -0.9,
-                1.3,
-                -1.0
-              ],
-              "color": "#dfe6ee"
-            },
-            {
-              "pos": [
-                -1.3,
-                -0.6,
-                0.6
-              ]
-            }
-          ]
-        }
+      {
+       "kind": "code",
+       "at": [
+        -21.5,
+        0.6,
+        0
+       ],
+       "size": [
+        4.6,
+        5.85
+       ],
+       "src": "code-lines.json",
+       "script": "root_to_csv.py",
+       "lines": [
+        19,
+        52
+       ]
+      },
+      {
+       "kind": "sheet",
+       "at": [
+        -15.3,
+        0.6,
+        0
+       ],
+       "size": [
+        6.0,
+        10.5
+       ],
+       "values": "d0.f32",
+       "rows": 90,
+       "cell": 14
+      },
+      {
+       "kind": "code",
+       "at": [
+        -6.9,
+        0.6,
+        0
+       ],
+       "size": [
+        7.6,
+        10.5
+       ],
+       "src": "code-lines.json",
+       "script": "d0.py",
+       "lines": [
+        87,
+        208
+       ],
+       "cols": 2
+      },
+      {
+       "kind": "hist",
+       "of": "h1"
+      }
+     ],
+     "run": {
+      "seconds": 8,
+      "lead": 0.4,
+      "twice": true,
+      "tones": [
+       "crowd",
+       "sel"
       ]
+     },
+     "replay": false
     },
     {
-      "id": "first",
-      "pos": [
-        8,
-        0,
-        0
-      ],
-      "look": {
-        "dist": 10,
-        "yaw": -24,
-        "pitch": 7
+     "type": "dk-hist",
+     "name": "h0",
+     "pos": [
+      -10.5,
+      0,
+      0
+     ],
+     "grains": 91583,
+     "values": "d0.f32",
+     "key": "M",
+     "word": "mass MeV/c²",
+     "width": 20,
+     "height": 10.5,
+     "from": [
+      -25.5,
+      3.1,
+      0
+     ],
+     "fromSpread": [
+      2.8,
+      2.8,
+      2.8
+     ],
+     "arc": 3,
+     "fill": 6,
+     "curve": 0.75,
+     "selGain": 1.0,
+     "steps": [
+      0,
+      {
+       "n": "all",
+       "alpha": 0.75
       },
-      "objects": [
+      {
+       "cut": [
+        "M",
+        "<",
+        0
+       ],
+       "ticks": []
+      }
+     ]
+    },
+    {
+     "type": "dk-curve",
+     "name": "fit0",
+     "of": "h0",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 3000,
+     "src": "d0-fit.json",
+     "pull": false,
+     "steps": [
+      0,
+      {
+       "set": "last"
+      }
+     ]
+    },
+    {
+     "type": "dk-hist",
+     "name": "h1",
+     "pos": [
+      12.5,
+      0,
+      0
+     ],
+     "grains": 91583,
+     "values": "d0.f32",
+     "key": "M",
+     "word": "mass MeV/c²",
+     "width": 20,
+     "height": 10.5,
+     "from": [
+      1.1,
+      5.85,
+      0
+     ],
+     "fromSpread": [
+      0.3,
+      10.5,
+      0.3
+     ],
+     "arc": 3,
+     "fill": 3.5,
+     "curve": 0.75,
+     "selGain": 1.0,
+     "steps": [
+      0,
+      {
+       "n": "all",
+       "alpha": 0.75
+      },
+      {}
+     ]
+    },
+    {
+     "type": "dk-hist",
+     "name": "h2",
+     "pos": [
+      12.5,
+      0,
+      0
+     ],
+     "grains": 91583,
+     "values": "d0.f32",
+     "key": "M",
+     "word": "mass MeV/c²",
+     "width": 20,
+     "height": 10.5,
+     "from": [
+      1.1,
+      5.85,
+      0
+     ],
+     "fromSpread": [
+      0.3,
+      10.5,
+      0.3
+     ],
+     "arc": 3,
+     "fill": 3.5,
+     "curve": 1.0,
+     "over": "h1",
+     "tone": "sel",
+     "selGain": 1.0,
+     "steps": [
+      0,
+      {
+       "n": "all",
+       "alpha": 0.72,
+       "fill": 7
+      }
+     ],
+     "glowTint": 0.1
+    },
+    {
+     "type": "dk-curve",
+     "name": "fit1",
+     "of": "h2",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 3000,
+     "src": "d0-fit.json",
+     "pull": false,
+     "steps": [
+      0,
+      {
+       "set": "last"
+      }
+     ]
+    },
+    {
+     "type": "dk-spark",
+     "name": "s",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 221,
+     "steps": [
+      null,
+      {
+       "on": "h0"
+      },
+      {
+       "at": [
+        -14.7,
+        11.04,
+        0
+       ],
+       "color": "crowd"
+      },
+      {
+       "on": "h1"
+      },
+      {
+       "on": [
+        "h2",
+        "h1"
+       ]
+      },
+      {
+       "on": "hs"
+      },
+      {
+       "at": [
+        -24.66,
+        4.08,
+        2.41
+       ],
+       "glide": 5,
+       "color": "crowd"
+      },
+      {
+       "on": "hp"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "archive",
+   "pos": [
+    -60,
+    0,
+    -150
+   ],
+   "look": {
+    "target": [
+     2.2,
+     1.3,
+     0
+    ],
+    "dist": 9,
+    "yaw": -10,
+    "pitch": 6,
+    "sway": 0.3
+   },
+   "objects": [
+    {
+     "type": "dk-ground",
+     "name": "g5",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 8000,
+     "radius": 20,
+     "enterable": true
+    },
+    {
+     "type": "dk-lineup",
+     "name": "tb",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 200,
+     "unit": 0.1,
+     "assemble": false,
+     "balls": [
+      {
+       "n": 1,
+       "from": [
+        0.3,
+        0.6,
+        -1
+       ]
+      },
+      {
+       "n": 800,
+       "grain": 27,
+       "from": [
+        0.3,
+        0.6,
+        -1
+       ]
+      },
+      {
+       "n": 4000,
+       "grain": 27,
+       "grow": {
+        "from": 1
+       },
+       "from": [
+        0.3,
+        0.6,
+        -1
+       ]
+      }
+     ],
+     "gaps": [
+      0.5
+     ],
+     "sets": {
+      "3": [
+       0,
+       2
+      ]
+     },
+     "reach": 0.2
+    }
+   ]
+  },
+  {
+   "id": "sel",
+   "pos": [
+    60,
+    0,
+    0
+   ],
+   "look": {
+    "target": [
+     -3.5,
+     0.6,
+     0
+    ],
+    "dist": 25,
+    "yaw": 0,
+    "pitch": 4,
+    "sway": 1
+   },
+   "gather": 0.25,
+   "pulse": 30,
+   "objects": [
+    {
+     "type": "dk-hist",
+     "name": "hs",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 91583,
+     "values": "d0.f32",
+     "key": "M",
+     "word": "mass MeV/c²",
+     "selections": "t5-select-falling.json",
+     "density": 0.3,
+     "steps": [
+      0,
+      {
+       "n": "all",
+       "select": 0,
+       "fill": 2.5,
+       "lead": 0.2
+      },
+      {
+       "select": [
+        0,
+        119
+       ],
+       "every": 0.4,
+       "rescale": true
+      },
+      {
+       "select": 0,
+       "every": null,
+       "rescale": null,
+       "n": 0
+      },
+      {
+       "n": "all",
+       "fill": 2.5
+      }
+     ]
+    },
+    {
+     "type": "dk-hist",
+     "name": "hp",
+     "pos": [
+      45,
+      0,
+      0
+     ],
+     "grains": 120,
+     "values": "d0-peaks.f32",
+     "cols": [
+      "MU"
+     ],
+     "key": "MU",
+     "lo": 1864.15,
+     "hi": 1864.75,
+     "bin": 0.025,
+     "width": 6,
+     "height": 3.2,
+     "ticks": [
+      1864.2,
+      1864.4,
+      1864.6
+     ],
+     "word": "peak mass MeV/c²",
+     "ours": 0,
+     "alpha": 1.3,
+     "steps": [
+      0,
+      {
+       "n": "all",
+       "fill": 3,
+       "ticks": [
+        1864.2,
+        1864.4,
+        1864.6,
         {
-          "type": "ring",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "radius": 3,
-          "thickness": 0.01,
-          "tilt": 80,
-          "spin": 0
+         "v": 1864.374,
+         "tone": "tick",
+         "y": [
+          0,
+          0.95
+         ],
+         "label": false
         },
         {
-          "type": "orbs",
-          "pos": [
-            0,
-            0,
-            0
-          ],
-          "items": [
-            {
-              "id": "here",
-              "pos": [
-                0,
-                0,
-                0
-              ],
-              "label": "start here"
-            }
-          ]
+         "v": 1864.574,
+         "tone": "tick",
+         "y": [
+          0,
+          0.95
+         ],
+         "label": false
         }
-      ]
+       ]
+      }
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "id": "route",
+   "pos": [
+    -160,
+    0,
+    -40
+   ],
+   "look": {
+    "target": [
+     3,
+     0.4,
+     0
+    ],
+    "dist": 12,
+    "yaw": -24,
+    "pitch": 10,
+    "sway": 0.4
+   },
+   "objects": [
+    {
+     "type": "lhc-collision",
+     "name": "crossing",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "sound": false,
+     "approach": 36.3,
+     "tone": "#7dd3fc",
+     "muonTone": "#f2f5f9",
+     "splashTone": "#7dd3fc",
+     "bunchColor": "#f2f5f9",
+     "grains": 200000
+    },
+    {
+     "type": "detector",
+     "name": "det",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "src": "lhcb",
+     "parts": {
+      "preset": "lhcb",
+      "velo": {
+       "alpha": 0.25
+      },
+      "pipe": {
+       "alpha": 0
+      },
+      "magnet": {
+       "color": "#7dd3fc",
+       "alpha": 0.25
+      },
+      "rich1": {
+       "color": "#7dd3fc"
+      },
+      "rich2": {
+       "color": "#7dd3fc"
+      },
+      "hcal": {
+       "color": "#7dd3fc"
+      }
+     },
+     "alpha": 0.3,
+     "size": 1.3,
+     "out": [
+      16,
+      0,
+      0
+     ]
+    },
+    {
+     "type": "dk-trigger",
+     "name": "trg",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 36000,
+     "from": 13,
+     "to": 112,
+     "lane": 0.7,
+     "speed": 7,
+     "packets": 3000,
+     "per": 12,
+     "empty": 0.25,
+     "knot": 0.08,
+     "gates": [
+      {
+       "x": 30,
+       "keep": 0.0333
+      },
+      {
+       "x": 66,
+       "keep": 0.1,
+       "shrink": 0.75,
+       "step": 3
+      }
+     ],
+     "buffer": {
+      "at": 49,
+      "len": 12,
+      "r": 4.5,
+      "grains": 6000,
+      "hold": 3,
+      "spin": 0.08,
+      "step": 3
+     },
+     "ours": false
+    },
+    {
+     "type": "dk-heap",
+     "name": "heap",
+     "pos": [
+      124,
+      0,
+      0
+     ],
+     "n": 91583,
+     "grains": 91583,
+     "radius": 4,
+     "rain": 6
+    },
+    {
+     "type": "dk-spark",
+     "name": "s2",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 221,
+     "steps": [
+      null,
+      {
+       "on": "heap"
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }

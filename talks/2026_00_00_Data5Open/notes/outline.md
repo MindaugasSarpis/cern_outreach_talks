@@ -19,7 +19,7 @@ screen is the test another machine must pass).
 ## Series rules this outline keeps
 
 - On screen: the cover's plain title; elsewhere 1-3 numbers in `.nums`, each with its unit and at most a one- or
-  two-word `.name`. Axis tick labels and the one caption `m(K⁻π⁺) MeV` belong to the plots. Nothing else. A number
+  two-word `.name`. Axis tick labels and the one caption `mass MeV/c²` belong to the plots. Nothing else. A number
   goes on screen once; μ = 1 864.47 appears on slide 2 and again on slide 8 only, where the same digits are the point.
 - Colour grammar: light blue = the crowd, white = the selected, dim = the axis grains, never gold. Our grain (row 1)
   is size 2.5 with a dk-spark ring, and its core takes the slide's colour. One stated exception: on slides 7-8 the
@@ -67,7 +67,7 @@ Minutes and clip seconds add up to 14.0: slide minutes 13.8 plus clip seconds 12
   `steps: { pipe: 1, h0: 0, fit0: 0, h1: 0, h2: 0, fit1: 0, hs: 0, hp: 0 }`.
 - **On screen:** the title "Open data", nothing else.
 - **Notes.** Message: the whole series came out of one open file, and this talk asks whether anyone can make the same
-  plot from it. Picture: the ball is record 401's file, with one grain for each of its 91 583 D⁰ candidates. Our
+  plot from it. Picture: the ball is the file, with one grain for each of its 91 583 candidates. Our
   grain, the row followed since T1, sits on the near side. Caveats: the ball shows the candidates, not the file's
   bytes. Say "candidates", never "events". Sources: CERN Open Data record 401.
 - **Facts:** `record401-candidates-91583`
@@ -79,14 +79,14 @@ Minutes and clip seconds add up to 14.0: slide minutes 13.8 plus clip seconds 12
 
 - **Pose:** `pipe`, look [-19.5, 4.0, 3.0], dist 21, yaw -8, pitch 5, dim 0.25, ambient 0, `steady`. The ball sits on
   the left and the plot rises to its right.
-- **Picture:** dk-hist `h0` (91 583, the series' mass range and 2 MeV bins, tone crowd, `word` `m(K⁻π⁺) MeV`) beside
+- **Picture:** dk-hist `h0` (91 583, the series' mass range and 2 MeV bins, tone crowd, `word` `mass MeV/c²`) beside
   the ball. It fills out of the ball (`from` = the ball's centre, `fromSpread` [2.8, 2.8, 2.8], `fill` 6). Then dk-curve
   `fit0` (`of: h0`, `src: d0-fit.json`, set `last`) draws on once h0 settles. dk-spark `s` `on: h0` rings our grain in
   the 1 880-1 882 bin. `steps: { pipe: 1, h0: 1, fit0: 1, s: 1 }`.
 - **On screen:** `1 864.47` MeV/c² with `.name` μ (fades in after the curve settles).
-- **Notes.** Message: a D⁰ is a short-lived particle; each candidate is a kaon-pion pair, and its combined mass is one
-  grain; the fit (T3) puts the peak at 1 864.47 MeV/c². Everything the series showed is grains that code put into
-  bins, taken from this one file. Picture: the ball is the file, the histogram is T2's D⁰ peak, and the curve is T3's
+- **Notes.** Message: each candidate is a pair of tracks, and their combined mass is one grain; the grains pile up into a
+  short-lived particle's mass peak; the fit (T3) puts the peak at 1 864.47 MeV/c². Everything the series showed is grains that code put into
+  bins, taken from this one file. Picture: the ball is the file, the histogram is T2's mass peak, and the curve is T3's
   fit with its μ. The ring marks our grain in the bin where T2 landed it. Caveats: the numbers are the bake's
   (`bake/d0.py`, 45 bins of 2 MeV on 1 820-1 910 MeV/c², 84 680 candidates in the fit range). Sources: record 401; the
   kit's `bake/d0.py` → `d0-fit.json`.
@@ -102,7 +102,7 @@ Minutes and clip seconds add up to 14.0: slide minutes 13.8 plus clip seconds 12
   dust and the columns empty. `fit0` steps to 0 and fades. The ball turns on, unchanged. This is part 1's big move
   (the bible's): the plot goes to dust and the file remains. `steps: { pipe: 1, h0: 2, fit0: 0, s: 0 }`.
 - **On screen:** `1 289 541` B; `2ebf133a` with `.name` checksum.
-- **Notes.** Message: the plot can be deleted because the file stays: record 401 is 1 289 541 bytes under a fixed DOI,
+- **Notes.** Message: the plot can be deleted because the file stays: the file is 1 289 541 bytes under a fixed DOI,
   free to reuse (CC0), with a checksum that tells anyone they hold the same bytes. Picture: the dust is the deleted
   plot and the ball is the file. The two numbers are the file's size and its checksum. Introduce the hash here: a
   checksum is a short number computed from every byte, and changing one byte changes it. Caveats: the checksum shown
@@ -142,9 +142,9 @@ Minutes and clip seconds add up to 14.0: slide minutes 13.8 plus clip seconds 12
   it (T1 used the pull-back three times). `steps: { tb: 1 }` then `<StageSteps>` to 2 and 3.
 - **On screen:** the pile's label, `800` TB, then `4` PB as the pile grows (dk-lineup `label`, fixed size). No `.nums`
   block.
-- **Notes.** Message: record 401 is a tiny part of what LHCb has opened: all of Run 1, about 800 TB, in December 2023,
+- **Notes.** Message: the file is a tiny part of what LHCb has opened: all of Run 1, about 800 TB, in December 2023,
   and over 4 PB of Runs 1 and 2 through the Ntupling Service in 2026. LHCb publishes about half of a campaign 5 years
-  after the run ends and all of it after 10. Picture: each sphere is 1 TB, about 775 000 copies of record 401
+  after the run ends and all of it after 10. Picture: each sphere is 1 TB, about 775 000 copies of the file
   [computed: 10¹² / 1 289 541 = 775 470]. The pile is Run 1, then grows to Runs 1 and 2: the 4 PB includes Run 1's
   800 TB, so the total is about 4 PB, not 4.8. Caveats: sources give 800 TB, 900 TB and "over 1 PB" for Run 1; use
   800 TB. Never say 55 PB (no public source). The 50 % / 100 % schedule is LHCb's own; CERN's policy only aims to
@@ -238,7 +238,7 @@ Minutes and clip seconds add up to 14.0: slide minutes 13.8 plus clip seconds 12
   pinned yet: the repo's `env.yaml` is the toolkit's environment and names numpy and scipy without versions, so no
   check in a second environment exists. Do not say that another machine gets d2ec0d08; say what it needs. (Name the
   unpinned `env.yaml` aloud as an honest example only if the owner agrees.) The course's pendulum example (9.2
-  against 9.02 after a pandas update) is not a D⁰ result and never goes under a D⁰ picture: notes only, named
+  against 9.02 after a pandas update) is not this peak's result and never goes under its picture: notes only, named
   (`course-pandas-version-drift`, to file, or drop the sentence). Two plots that look the same are not proof; the
   hash and the digits are. Notes only, for the versions sentence: the WLCG has over 170 sites in 42 countries, and
   each must run the code the same way; CVMFS is "CERN's read-only software file system, served from web servers and
@@ -261,7 +261,7 @@ Minutes and clip seconds add up to 14.0: slide minutes 13.8 plus clip seconds 12
 
 - **Pose:** `sel`, look [-3.5, 0.6, 0] in the station's frame, dist 25, yaw 0, pitch 4, dim 0.2, ambient 0, `steady`
   (lab 5 slide 7: the plot sits up and to the right, clear of the `.nums`).
-- **Picture:** one D⁰ dk-hist `hs` (light blue) fills as selection 0 (91 534), then on the click it refills itself
+- **Picture:** one mass dk-hist `hs` (light blue) fills as selection 0 (91 534), then on the click it refills itself
   through the 120 baked selections in place: `{ select: [0, 119], every: 0.15, rescale: true }`, about 18 s. Each
   refill keeps a different, mostly smaller sample: the count falls and the grains thin (`density` 0.3, so the small
   late selections stay light blue), while `rescale` keeps each refill's shape readable. It holds at 119.
@@ -270,12 +270,12 @@ Minutes and clip seconds add up to 14.0: slide minutes 13.8 plus clip seconds 12
   end).
 - **Notes.** Message: there are 120 reasonable ways to choose the candidates, and each one keeps a different sample.
   Picture: each refill is one selection, made of three limits. pT is the candidate's momentum across the beam
-  (thresholds 0, 2 800, 3 000, 3 200, 3 500 and 4 000 MeV/c). IPχ² is T3's measure of how far the D⁰'s line misses
-  the collision point, over its error, squared (limits none, 50, 20, 10 and 5). The decay time is how long the
+  (thresholds 0, 2 800, 3 000, 3 200, 3 500 and 4 000 MeV/c). The quality cut is T3's: how far the track points from
+  the collision (limits none, 50, 20, 10 and 5). The decay time is how long the
   candidate lived before it decayed, from how far it flew (limits none, 0.2, 0.3 and 0.5 ps). 6 × 5 × 4 = 120, the
   course's Lecture 14 grid. Every selection gets the same 45-bin fit; slide 10 shows the peaks. Caveats: the sweep
   starts at 91 534, not the series' 91 583, because every selection needs a decay time and 49 rows have none.
-  Selection 119 (pT > 4 000 MeV/c, IPχ² < 5, decay time > 0.5 ps) keeps 2 803 (`d0-select-counts-worked`, to file).
+  Selection 119 (pT > 4 000 MeV/c, the quality cut at 5, decay time > 0.5 ps) keeps 2 803 (`d0-select-counts-worked`, to file).
   The fitted peaks span 0.44 MeV/c², about a fifth of one 2 MeV bin, so on this axis each refill looks like the same
   peak at a smaller count: do not say here that the peak moves. The world refills; the peaks come from the bake.
   Sources: `bake/d0.py` → `d0-select.json`.
@@ -326,7 +326,7 @@ Minutes and clip seconds add up to 14.0: slide minutes 13.8 plus clip seconds 12
 
 - **Pose:** a `path` crane over about 42 s: from the held selection (`sel`, hold about 3 s) → the pipeline's ball
   (`pipe`, hold about 6 s) → T1's heap on the floor (hold about 6 s) → the buffer → the gates → the detector → T1's
-  cover landing at the VELO (`route`). `rate` keyframes ease to 0.02 at the end (T1's bullet time, `cameraRate: 1`).
+  cover landing at the collision point (`route`). `rate` keyframes ease to 0.02 at the end (T1's bullet time, `cameraRate: 1`).
   dim 0.2, ambient 0. The slide is recorded as a plate: the T1 chain plus the collision is over the live grain budget,
   and a finale is a plate by default.
 - **Picture:** our grain travels back as the white packet: dk-spark glides from `hs` to the ball, and the heap's grain
@@ -377,15 +377,15 @@ Every idea used in this talk, and where it was introduced.
 
 | idea | introduced | used here |
 |---|---|---|
-| one grain = one D⁰ candidate, row 1 as our grain, the ring marker | T1 close (row of four numbers), T2 cover (dk-vertex) | 1, 2, 6, 7, 8, 11, 12 |
-| a D⁰ candidate as a kaon-pion pair, its mass | T1, T2 | 2 (one-sentence recap) |
-| a row of four numbers (mass, pT, decay time, IPχ²) | T1 close | 6 (the sheet's four columns), 9 (the three cut variables) |
+| one grain = one candidate, row 1 as our grain, the ring marker | T1 close (row of four numbers), T2 cover (dk-vertex) | 1, 2, 6, 7, 8, 11, 12 |
+| a candidate as a pair of tracks, its mass | T1, T2 | 2 (one-sentence recap) |
+| a row of four numbers (mass, pT, decay time, the quality-cut quantity) | T1 close | 6 (the sheet's four columns), 9 (the three cut variables) |
 | bunch crossing, trigger gates, the buffer, the heap of 91 583 | T1 | 12 |
 | 1 TB spheres that keep their size | T1 Bytes | 5 |
 | histogram, 2 MeV bins, the mass axis | T2 cover | 2, 7, 8, 9 |
 | fit, curve, μ = 1 864.47, Δχ² = 1 → ± 0.10 | T3 A model, The valley | 2, 8 (curve and μ), 10 (± 0.10 on screen) |
 | the 3.5 σ gap to PDG 1 864.84 | T3 Off by 0.37 | 10 (notes) |
-| IPχ² and decay-time cuts | T3 How long it lives (IPχ² defined there) | 9 (recalled in one sentence each) |
+| the quality cut and decay-time cuts | T3 How long it lives (the quality cut defined there) | 9 (recalled in one sentence each) |
 | pT | T1 slide 13 (name only); defined here | 9 |
 | train / test, tuning on what you test on | T4 Bending the line, Real rows | 11 (notes link) |
 | record, DOI, CC0, checksum / hash | **T5** slide 3 | 8 (`d2ec0d08` on screen) |
@@ -408,7 +408,7 @@ Nothing is used before its slide. σ means significance only (the gap, in the no
   the ball standing (no assemble), so the cut between talks is invisible.
 - **Close entrance:** the next talk's cover pose. Talk 5 is the last, so the next is Talk 1 again. The crane ends on
   T1's cover landing: `lhcb`, `{ at: [3, 0.4, 0], dist: 12, yaw: -24, pitch: 10 }` (T1 outline slide 1, "to be fixed
-  in framing"), `lhc-collision` (event.json, record 24506) inside the kit detector at the VELO, rate 0.02. If T1's
+  in framing"), `lhc-collision` (event.json, record 24506) inside the kit detector at the collision point, rate 0.02. If T1's
   deck refines the landing's framing, copy the final values from it.
 
 ## Drop order (if the timing gate fails, or a mechanic fails)
@@ -431,7 +431,7 @@ Taken on the recommended option without the owner; each with its alternative.
   its notes only. Alternative: the critique's option (a), the lockfile plus a filed `d0-rerun-second-env-worked`, which
   restores a slide "another machine, same pinned versions, same hash" after slide 8 (about 1.3 min, taken back from
   slides 9-10).
-- **The ATLAS notebook clip dropped** (old slide 9): clip after clip, off the D⁰ thread, and code text on screen. Its
+- **The ATLAS notebook clip dropped** (old slide 9): clip after clip, off the peak's thread, and code text on screen. Its
   sentence is in slide 8's notes. Alternative: keep it between two world slides, on a stretch with no readable code.
   The WLCG clip goes with the Versions slides (its label-free stretch is no longer needed).
 - **The timing departs from the bible's split:** part 1 is 2.75 min (the dissolve is now its slide 3, plus a recap on
@@ -446,3 +446,104 @@ Taken on the recommended option without the owner; each with its alternative.
   Alternative: one pile only (800 TB).
 - **The close's packet stops at the heap:** only the generic lane reaches a crossing, which the narration calls "a
   crossing, not row 1's". Alternative: none that the data supports.
+
+## Decisions (draft:data5open, 2026-10-29)
+
+The deck draft follows this outline with the owner's decisions of 29 Oct on top (the series
+bible's top block), and with these changes, each taken without the owner on the recommended
+option:
+
+- **The owner's 29 Oct decisions win over the text above.** No "D⁰", "K⁻π⁺", "kaon",
+  "pion", "IPχ²" or record numbers on screen or in the notes' Message and Picture lines (the
+  peak is "a short-lived particle's mass peak", the cut "the quality cut, how far the track
+  points from the collision"); Sources keep the provenance. Captions read `mass MeV/c²`; the
+  mass plots take the kit's 1 816-1 912 MeV/c² range and default ticks (the outline's
+  1 820-1 920 ticks are gone). No trigger-stage or sub-detector names: the close's stops are
+  "the first filter", "the buffer", "the second filter" and the detector, landing at the
+  collision point (not "the VELO").
+- **Slide 6's gap is closed:** the kit now ships the public converter
+  `bake/root_to_csv.py` (52 lines, sha256 20f05681…, byte for byte to the course CSV), and
+  `code-lines.json` draws it. The deck draws its code body, lines 19-52, in a stage 5.85
+  high, so its line pitch (0.172) equals d0.py's. d0.py is now 918 lines, sha256 053d8070…
+  (the outline's 6be00ecc… is stale); lines 87-208 still run from reading to the fit.
+- **Slide 2's plot stands beside the ball:** h0 at [-10.5, 0, 0], 20 wide and 10.5 high
+  (the pipeline plots' size, so the rebuilt plot looks like the deleted one), and the pose
+  look [-16.5, 4.6, 0], dist 23.5 frames both (the outline's dist 21 cut the plot's right
+  edge). h0 hides from slide 4 on so its empty frame does not stand in the pipeline.
+- **Slide 5's pull-back is on the opening path, not the grow click:** a click cannot move
+  the camera. The slide cuts in on the one sphere (dist 2.2, held 4 s) and pulls back to
+  the lab 5 framing (dist 9) by 10 s; click 1 brings the 800 TB pile, click 2 grows it in
+  place to 4 PB (dk-lineup `grow: { from: 1 }`, now in the kit). Alternative: a per-click
+  camera move (kit-requests 5).
+- **The archive station stands at [-60, 0, -150]**, not the proposed [-60, 0, 45]: from
+  there the camera looked back at the pipeline's ball, which stood in the frame as a large
+  sphere beside the 1 TB one (first contact sheet). The cover's title sits low on the left,
+  clear of the ball that T4's last frame centres.
+- **Pass alphas:** h1 (first pass, light blue) 0.75 as lab 5 recorded it, h2 (white) 0.72
+  as the outline asks (the kit's notes: 0.5 reads grey, 0.95 blooms).
+- **The pipeline never goes to 0 before slide 9,** so the arrival on slide 6 from the
+  archive keeps the standing ball and plays pipe 1 → 3 as a step (with the object's
+  `replay: false`, which the cover needs, a replay from 0 would stand at once and skip the
+  typing). From slide 9 on the pipeline stands at step 1 (the ball alone), which slide 12's
+  crane passes.
+- **Slide 12 (the close):** a 42 s `path` with `recorded: plate`. The route station
+  (the T1 chain: detector, lhc-collision, dk-trigger with both filters and the buffer on,
+  dk-heap settled) stands at [-160, 0, -40], so the heap is 40 units behind the ball. Our
+  grain's ring (dk-spark `s` step 6) glides from the held plot to the ball; a second ring
+  (`s2`) marks our grain on the heap's summit; the lane has no packet of ours at all
+  (`ours: false`), so from the heap on only the generic lane runs. The crossing is timed by
+  the collision's `approach: 38.3` to fall as the `rate` keys reach 0.02 at about 39 s, and a
+  talk-owned `setup/RouteCrossing.vue` starts it on entering (kit-requests 1). The numbers:
+  91 583 candidates over the heap (17-27 s), then 1 crossing at the detector (39 s), in one
+  spot (`.nums.swap`). The detector geometry's licence credit is the tiny `.credits` line,
+  T1's wording.
+- **The dropped clips (ATLAS notebook, WLCG)** are commented out of videos/manifest.toml
+  with their cut notes; their raws and web copies are parked in the raw bank's `sources/`
+  so videos:check is clean.
+- **The pendulum example** (`course-pandas-version-drift`) is dropped, not filed (notes
+  only, not this peak; see facts-needed.md).
+- **Open, for the owner or the main loop:** the plate of slide 12 is not recorded
+  (`pnpm talk record data5open --plates`, about an hour on the render slot); the motion of
+  the select sweep, the over hand-over with fit1 drawing on after it, the grow-in-place and
+  the close's crane are seen only as stills; the lint's cover TEXT finding (kit-requests 6).
+
+## Decisions (fix:data5open, 2026-10-29)
+
+From the fresh-eyes review of the draft; each taken on the recommended option without the
+owner. The deck now has 14 slides (13.8 min plus 12 s of clip = 14.0). Old → new numbers:
+1-4 → 1-4; 5 → 5 and 6 (split); 6 → 7; a new 8 (the fitting code); 7 → 9; 8 → 10; 9 → 11;
+10 → 12; 11 → 13; 12 → 14. The slide numbers in the sections above are the old ones.
+
+- **Slide 5 split in two** (a click cannot move the camera). 5: the one sphere held close
+  (one-key path, dist 1.4) with its own label `1 TB`. 6: a one-key cut to the pulled-back pose
+  (dist 9), where the 800 TB pile gathers beside the standing sphere on arrival and the one
+  click grows it in place to 4 PB. The pile is at honest volume: each drawn sphere is
+  cbrt(27) = 3 × the 1 TB sphere's radius (dk-lineup `grain: 27`), seen side by side in the
+  shots. Kit request 5 is answered by the split. Alternative: 6 opens on the sphere alone with
+  two clicks (the first frame is then nearly empty).
+- **The fitting code gets its own beat (new slide 8, 0.5 min):** pipe 3 → 4 types d0.py in
+  beside the sheet, framed with the converter at the left, so the two scripts are told apart
+  by shape (one short block, two tall columns) before the establishing shot; number `45` bins.
+  Slides 7 and 9 give 0.25 min each. The first-pass shot (9) drops its ring (it covered the
+  1880 tick); the ring is back on 10, where our grain's landing is the point. Dimming the code
+  stages on 9 needs a per-step stage alpha (kit request 8).
+- **Slide 10 (hero) claims only same file, same code, same hash:** the versions clause left
+  Message for the Misconception and Caveats (said aloud), since nothing draws a pinned
+  environment and no second-environment run exists. The pose is `at: [3.7, 2.0, 0], dist: 24`:
+  the plot right of the numbers and the code above them, both 40 px or more clear. (The review's
+  `at` x 10.5 moved the plot left, into the numbers.) Alternative: a versions stage with a
+  pinned third run (bible decision 19), after kit request 7.
+- **Slide 12 (peaks):** two dotted lines (hp step `ticks`, `label: false`) at 1 864.374 and
+  1 864.574 bracket selection 0's ± 0.10, and dk-spark `s` step 7 (`on: hp`) rings selection 0,
+  the plot's `ours`. The ring here marks the series' own selection, not row 1 (said in the
+  notes).
+- **Slide 13 shows the order:** hs step 3 is `{ select: 0, n: 0 }`, the empty axis with
+  `1 selection` on screen; the click (hs step 4, `n: 'all'`) fills it once. The close (14) holds
+  hs at step 4.
+- **Slide 11:** `120 selections` comes in on the click with the sweep (`v-click`); before it
+  only the count of selection 0 is on screen.
+- **Slide 2:** yaw 0 (level ticks) and `at: [-15.5, 3.8, 0]`, so the ball clears the number.
+- **Not changed, open for the owner:** the series' `.nums` block sits in the lower third
+  (y 561-727 of 900) on every content slide; lifting it is a series-wide change of the five
+  talks' styles (kit request 10), or an owner waiver. The cover's lint TEXT warning stands
+  (kit request 6, a lint fix for the main loop); the plain cover title is the bible's.

@@ -1,7 +1,7 @@
 {
   "name": "talk-2026-00-00-data5open",
   "private": true,
-  "description": "Data5Open (2026_00_00)",
+  "description": "Open data (2026_00_00), Talk 5 of \"Data analysis, the CERN way\"",
   "scripts": {
     "dev": "slidev deck.md",
     "build": "slidev build deck.md",
@@ -16,7 +16,7 @@
     "videos:preflight": "slidev-videos preflight",
     "venue": "slidev-videos venue",
     "videos:frames": "slidev-videos frames",
-    "stage:check": "slidev-stage-check ."
+    "stage:check": "slidev-stage-check . --types dk-hist,dk-heap,dk-trigger,dk-glow,dk-lineup,dk-ground,dk-spark,dk-vertex,dk-bell,dk-curve,dk-landscape,dk-scatter,dk-pipeline,lhc-collision"
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2"
