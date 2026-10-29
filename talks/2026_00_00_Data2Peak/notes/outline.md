@@ -759,3 +759,15 @@ The owner's decisions of 29 Oct (series bible, top block) win over the text abov
     (42.68-46.76, the room from the front stairs), dimmed to 40 % over its last second inside the
     clip, so the close's dust leaves from a dim frame (the CSS dim is gone); its numbers at 5.4 and
     6 s. Timing: 13.8 min + 8.5 s of clips = 13.9 min.
+22. **The second review's fixes (fix2:data2peak, 29 Oct).** Slide 14 shows the 186 rows in 10 MeV
+    bins (`hf10`, three window columns of 23, 29, 27 against a 5 σ line of 26.2 and a background of 15
+    a bin; the window a softer white, the line bright white at mid-depth), `hf` counting the same rows
+    invisibly and pouring the rest at 2 MeV on the click. Slides 6-7 framed level and square on the
+    tops (dist 4.2, pitch 0, yaw 0: ±38 about 65 px, the gaps open; slide 7's crane ends there), the
+    mean and band lines thin and faint. Slides 11-12's toy on the series' axis (1 816-1 912, 30 bins
+    of 3.2 MeV, `bake/remap.py`), width 12 so each bin is one dot column. Slide 17 in two beats
+    (background, then the 5 σ height on it, then the bare peak). The pile moved left of the axis's
+    1 816 end and back (`[-20, 0, -14]`, the cover pose following), so it reads as the source, not as
+    masses over 1 825-1 845. Slide 5's grain at slot 420 (ring clear of "1880"). Slide 16's numbers
+    on a soft scrim, their σ and names in the number's colour. Undo: the commit after this one's
+    parent.

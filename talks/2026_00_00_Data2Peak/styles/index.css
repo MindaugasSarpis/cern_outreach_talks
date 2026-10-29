@@ -1,27 +1,10 @@
-/* Data2Peak: the series' number type (bible §3, MasterTalk's .nums block in the
-   series colours: numbers #e8f6ff, units and names #9fd8ff). Each line fades in at
-   its --dN after the camera lands; a v-click line comes in on its click. The block
-   stands at the top left: the lower third stays clear for the recorded takes'
-   subtitles (talk-quality §5.4), and the plots' tick numbers sit low in the frame. */
-html[data-stage] .nums {
-  position: absolute; left: 56px; top: 64px; z-index: 30; pointer-events: none;
-  font-family: 'Space Grotesk', system-ui, sans-serif; color: #e8f6ff;
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.6);
-}
-html[data-stage] .nums p { margin: 0 0 10px; line-height: 1; white-space: nowrap; opacity: 0; animation: dk-nums-in 1s ease forwards; }
-html[data-stage] .nums b { font-size: 46px; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: lining-nums; }
-html[data-stage] .nums .unit { font-size: 22px; font-weight: 500; letter-spacing: 0.04em; color: #9fd8ff; margin-left: 0.4em; }
-html[data-stage] .nums .name { font-size: 22px; font-weight: 500; letter-spacing: 0.04em; color: #9fd8ff; opacity: 0.85; margin-left: 0.6em; }
-html[data-stage] .nums p:nth-child(1) { animation-delay: var(--d1, 2s); }
-html[data-stage] .nums p:nth-child(2) { animation-delay: var(--d2, 3.2s); }
-html[data-stage] .nums p:nth-child(3) { animation-delay: var(--d3, 4.4s); }
-/* A v-click line holds no animation while hidden, so its fade (and its --dN) starts at its click,
-   not at the slide's opening (slide 12's 1.1 σ waits for the count to reach 3 500). */
-html[data-stage] .nums p.slidev-vclick-hidden { animation: none; }
-@keyframes dk-nums-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { html[data-stage] .nums p { animation: none; opacity: 1; } }
+@import '../components/data-kit/nums.css';
 
-/* The cover keeps one plain title: a lone h1 takes the title's size, not the kicker's. */
+/* Data2Peak. The series' number block is the kit's nums.css (one copy for all five talks: left 56,
+   bottom 190, the lower third clear); this file keeps the cover and slide 16's scrim. */
+
+/* The cover keeps one plain title: a lone h1 takes the title's size, not the kicker's
+   (the series' one cover rule, the same in all five decks). */
 html[data-stage] .slidev-page .slidev-layout.cover h1:only-of-type {
   font-size: max(var(--stage-type-min, 0px), 66px * var(--stage-type-scale, 1)) !important;
   font-weight: 700 !important; line-height: 0.98 !important; letter-spacing: -0.02em !important;
@@ -30,3 +13,20 @@ html[data-stage] .slidev-page .slidev-layout.cover h1:only-of-type {
 /* ...and lands once the pile stands (the stage sets data-space-assembled at about 0.6 s; the pile
    fades in over 0.9 s), not with it. */
 html[data-stage] .slidev-page .slidev-layout.cover h1:only-of-type { transition: opacity 1.2s ease 0.9s, transform 1.2s ease 0.9s; }
+
+/* The stage's cover scrim (a 0.55 radial darkening centred at 32 % / 50 %, 60 % × 55 %) lies over the
+   pile and took about a quarter of its light: talk 1 closes on the same pile with no scrim, so the cut
+   between the talks showed a drop (series check, slide 14). Here it stays behind the title only. */
+html[data-stage] .slidev-page .slidev-layout.cover::after {
+  background: radial-gradient(26% 30% at 24% 50%, rgba(var(--stage-bg-rgb, 5, 5, 7), 0.55), transparent 70%);
+}
+
+/* Slide 16 only (`.nums.scrim`): the two numbers stand over the dimmed auditorium (the held frame measures luma 0.145 mean and
+   0.23 at the 90th percentile under the block: faces and shirts). A soft dark scrim fades in with the first line, and the σ and the
+   names take the number's colour, so "σ CMS" and "σ ATLAS" read at 22 px over a crowd. */
+html[data-stage] .nums.scrim::before {
+  content: ''; position: absolute; left: -90px; right: -140px; top: -70px; bottom: -60px; z-index: -1;
+  background: radial-gradient(closest-side, rgba(var(--stage-bg-rgb, 5, 5, 7), 0.6), rgba(var(--stage-bg-rgb, 5, 5, 7), 0.4) 55%, transparent);
+  opacity: 0; animation: dk-nums-in 1s ease var(--d1, 2s) forwards;
+}
+html[data-stage] .nums.scrim .unit, html[data-stage] .nums.scrim .name { color: #e8f6ff; }

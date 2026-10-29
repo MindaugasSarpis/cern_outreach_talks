@@ -36,14 +36,13 @@ sources: notes
 layout: cover
 # the cover: talk 1's last frame exactly (the settled pile, seen from its summit + 1.8 up); only our grain's ring gathers.
 # ambient as a keyframe at 0: black from the first frame (a plain 0 eases down from 1 over 1 s, a grey veil); the title fades in once the pile stands
-# The pile stands at z -11, behind the plot's axis, so on slides 3-4 it reads as a source, not as masses on the axis
-space: { at: [-8.5, 1.8, -11], dist: 16, yaw: -12, pitch: 12, dim: 0.2, ambient: [[0, 0]], steady: true, sway: 1 }
+# The pile stands at [-20, 0, -14]: behind the axis and left of its 1 816 end, so on slides 3-4 it reads as the source the grains
+# come from, not as masses piled over part of the axis (fix2:data2peak; the cover pose follows it, so talk 1's close frame is unchanged)
+space: { at: [-20, 1.8, -14], dist: 16, yaw: -12, pitch: 12, dim: 0.2, ambient: [[0, 0]], steady: true, sway: 1 }
 steps: { heap: 2, h: 0, s: 1 }
 ---
 
-<!-- the cover's plain title; the .name span only keeps `talk lint` from reading the headmatter's onscreen: numbers as this slide's own (it renders as a plain h1) -->
-
-# <span class="name">Counting</span>
+# Counting
 
 <!-- facts: record401-candidates-91583, record401-licence-cc0, lhcb-record401-year, lhcb-upgrade1-trigger -->
 
@@ -78,12 +77,14 @@ Sources: CERN Open Data record 401 row 1 (bake/d0.py); the kit's dk-vertex (seed
 
 ---
 # the landing (the dense vertex): a cut back to the floor; our grain lifts off the summit, splits, folds into one grain and lands on the empty axis
-# the world runs 1.6x for the first 3.2 s (the vertex's 4.8 s of world time, flightTime and landTime 1.0), so the grain lands by about 3 s
-space: { at: [-3, 2.5, -3], dist: 20, yaw: -6, pitch: 11, dim: 0.25, ambient: 0, steady: true, sway: 0.5, rate: [[0, 1.6], [3.2, 1.6], [4, 1]], path: [[0, { at: [-3, 2.5, -3], dist: 20, yaw: -6, pitch: 11 }]] }
+# the vertex's own durations (space.json v: 0.65 + 0.8 + 0.4 + 0.55 + 1.0 = 3.4 s) land the grain by about 3.4 s at the world's own speed;
+# the pile stands back and left of the axis (upper left, above the number block), the empty axis in the right two thirds, and the
+# grain flies right out of the pile, splits over the axis's left end and arcs down onto 1 880
+space: { at: [-6, 2.0, -3], dist: 24, yaw: -6, pitch: 14, dim: 0.25, ambient: 0, steady: true, sway: 0.5, path: [[0, { at: [-6, 2.0, -3], dist: 24, yaw: -6, pitch: 14 }]] }
 steps: { v1: 0, s1: 0, heap: 2, h: 1, v: 3, s: 2 }
 ---
 
-<div class="nums" style="--d1: 3.2s">
+<div class="nums" style="--d1: 3.6s">
   <p><b><StageCount for="v" :to="1880.6" :decimals="1" /></b><span class="unit">MeV/c²</span></p>
 </div>
 
@@ -91,15 +92,16 @@ steps: { v1: 0, s1: 0, heap: 2, h: 1, v: 3, s: 2 }
 
 <!--
 Message: two tracks make one number, the mass of the pair, which is where the grain lands.
-Picture: the two strands folding back into one grain ("two tracks make one number"); the grain on the axis at its tick ("1 880.6 MeV/c², the mass of this pair"); the pile behind ("every other grain has its own number").
-Caveats: an optional aside, only if there is time: the bend of each track gives its momentum, a guess of which particle each one is gives its energy, and the mass of the pair is M² = (E₁ + E₂)² − |p₁ + p₂|² with c = 1, each energy from E = √(p² + m²) for the mass the track is assumed to have (the mass hypothesis). The angles are simulated, as on the slide before. The pile stands behind the axis: it is where the grains come from, not a place on the mass axis.
+Picture: the two strands folding back into one grain ("two tracks make one number"); the grain on the axis at its tick ("1 880.6 MeV/c², the mass of this pair"); the pile back on the left ("every other grain has its own number").
+Caveats: an optional aside, only if there is time: the bend of each track gives its momentum, a guess of which particle each one is gives its energy, and the mass of the pair is M² = (E₁ + E₂)² − |p₁ + p₂|² with c = 1, each energy from E = √(p² + m²) for the mass the track is assumed to have (the mass hypothesis). The angles are simulated, as on the slide before. The pile stands back and left of the axis, beyond its 1 816 end: it is where the grains come from, not a place on the mass axis.
 Sources: PDG, Review of Particle Physics 2024, Kinematics, Eq. 49.2; CERN Open Data record 401 row 1 (bake/d0.py); LHCb outreach, "The magnet".
 (~0.8 min)
 -->
 
 ---
-# the first 1 000 (the sparse sort): grains leap from the top of the pile into 2 MeV bins; closer than lab 2, so the sparse dot plot reads
-space: { at: [2, 2.2, -1], dist: 16, yaw: -6, pitch: 11, dim: 0.25, ambient: 0, steady: true, sway: 1 }
+# the first 1 000 (the sparse sort): grains leap from the top of the pile (upper left, back) into 2 MeV bins; the plot stands right of
+# the series' number block (nums.css, lower left), its left end at about a third of the frame (slide 3's pose)
+space: { at: [-6, 2.0, -3], dist: 24, yaw: -6, pitch: 14, dim: 0.25, ambient: 0, steady: true, sway: 1 }
 steps: { h: 2 }
 ---
 
@@ -118,8 +120,9 @@ Sources: CERN Open Data record 401 (bake/d0.py).
 -->
 
 ---
-# all 91 583 (the dense sort): the rest pour in, the scale takes the full set, the peak stands over flat shoulders
-space: { at: [-1, 3.2, 0], dist: 25, yaw: -4, pitch: 5, dim: 0.25, ambient: 0, steady: true, sway: 1 }
+# all 91 583 (the dense sort): the rest pour in, the scale takes the full set, the peak stands over flat shoulders; our grain
+# stands 420 grains up its column (h oursSlot), so its ring clears the 1880 tick number
+space: { at: [-6.5, 3.2, 0], dist: 25, yaw: -4, pitch: 5, dim: 0.25, ambient: 0, steady: true, sway: 1 }
 steps: { h: 3 }
 ---
 
@@ -138,9 +141,11 @@ Sources: CERN Open Data record 401 (bake/d0.py); PDG 2026, mass 1 864.84 ± 0.04
 -->
 
 ---
-# fourteen flat bins: down the low shoulder to the tops of 1 816-1 844 (1 461 of 3 746 is 4.3 of the 11 units), framed
-# close so the rise from 1 844 up stays out of frame; the light-blue mean line draws on with the arrival, the click adds ±38
-space: { at: [-8.9, 4.1, 0], dist: 4.7, yaw: -4, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 0.5 }
+# fourteen flat bins: down the low shoulder to the tops of 1 816-1 844 (1 461 of 3 746 is 4.29 of the 11 units), framed on the
+# tops, level (pitch 0) and square on (yaw 0, the gaps between columns open): the first nine bins from 1 816 in the right two
+# thirds, the numbers left of 1 816, ±38 about 65 px; the thin, faint light-blue mean line (alpha 0.5) draws on with the arrival,
+# the tops above and below it; the click adds ±38
+space: { at: [-10.82, 4.29, 0], dist: 4.2, yaw: 0, pitch: 0, dim: 0.25, ambient: 0, steady: true, sway: 0.3 }
 steps: { m6: 1 }
 clicks: 1
 ---
@@ -156,9 +161,9 @@ clicks: 1
 
 <!--
 Message: fourteen bins with no peak in them should hold the same number, and they differ by about √N.
-Picture: the ragged tops ("1 419 to 1 534 a bin, no two alike"); the light-blue line across them ("their mean, 1 461 a bin"); [click] the two fainter lines ("1 461 ± 38, the square root of the count: the tops scatter about that much round the mean").
+Picture: the ragged tops, seen level ("1 419 to 1 534 a bin, no two alike"); the light-blue line across them ("their mean, 1 461 a bin"); [click] the two fainter lines ("1 461 ± 38, the square root of the count: the tops scatter about that much round the mean").
 Misconception: "a bin height is exact". It is one throw: the same physics gives a different count each time.
-Caveats: the band's lines are drawn at 1 460.8 ± 38.2 (d0-flat.json mean ± sqrtMean, typed into the deck's two curves until the bake carries them as sets: notes/kit-requests.md). Three estimates of the bin-to-bin spread, 33.9 raw, 31.4 about a line (the bins rise by about 3.7 a bin toward the peak) and 39.1 from neighbour differences, each uncertain by about 20 % for 14 bins: all consistent with 38, never a precise confirmation.
+Caveats: the mean and band lines are d0-flat.json's band sets, 1 460.8 ± 38.2 (mean ± sqrtMean). Three estimates of the bin-to-bin spread, 33.9 raw, 31.4 about a line (the bins rise by about 3.7 a bin toward the peak) and 39.1 from neighbour differences, each uncertain by about 20 % for 14 bins: all consistent with 38, never a precise confirmation.
 Sources: CERN Open Data record 401 (d0-flat.json, bake/d0.py); PDG, Review of Particle Physics 2024, Probability (a Poisson count's variance equals its mean).
 (~1.2 min)
 -->
@@ -166,9 +171,12 @@ Sources: CERN Open Data record 401 (d0-flat.json, bake/d0.py); PDG, Review of Pa
 ---
 # re-rolled: a cut to the same 14 bins at the same scale (1 461 at 4.3 units), whole columns first (the 2.6 % point), standing within
 # 1 s, re-drawn 24 times (the first at about 1.2 s, then one every 3 s) inside the light-blue ±√N band; from 8 s the camera cranes in to
-# the tops, where the jumps are big. The roll station's centre stands 15 units behind its plot, so this pose is not *at* it: the
+# the tops, where the jumps are big, ending as slide 6 framed them (level, square on, ±38 about 65 px), so the tops move inside the
+# band. Square on (yaw 0) throughout, the gaps between the columns open. The band is the model's own mean ± √mean (20 451 / 14 =
+# 1 460.8 ± 38.2: dk-hist draws errors 'band' round the expectation for a model), not the drawn columns.
+# The roll station's centre stands 15 units behind its plot, so this pose is not *at* it: the
 # engine assembles a station on a path's last key (12 s here), and the plot would wait for its 6 s fallback; out in the open it fills at once
-space: { at: [-80, 4.3, 60], dist: 4, yaw: -4, pitch: 2, dim: 0.25, ambient: 0, steady: true, sway: 0.3, path: [[0, { at: [-80, 4.3, 60], dist: 9.5, yaw: -4, pitch: 4 }], [8, { at: [-80, 4.3, 60], dist: 9.5, yaw: -4, pitch: 4 }], [12, { at: [-80, 4.3, 60], dist: 4, yaw: -4, pitch: 2 }]] }
+space: { at: [-82.32, 4.29, 60], dist: 4.2, yaw: 0, pitch: 0, dim: 0.25, ambient: 0, steady: true, sway: 0.3, path: [[0, { at: [-81.9, 4.3, 60], dist: 9.5, yaw: 0, pitch: 4 }], [8, { at: [-81.9, 4.3, 60], dist: 9.5, yaw: 0, pitch: 4 }], [12, { at: [-82.32, 4.29, 60], dist: 4.2, yaw: 0, pitch: 0 }]] }
 steps: { heap: 0, h: 0, v: 0, s: 0, m6: 0, m6u: 0, m6d: 0, g7: 1, roll: 1 }
 ---
 
@@ -189,8 +197,9 @@ Sources: toys.json flat.rolls (bake/toys.py), level from CERN Open Data record 4
 -->
 
 ---
-# the normal tail: a cut to the bell; the front sweeps to 1 σ on arrival, to 3 σ on the click
-space: { at: [-2.2, 2.0, 120], dist: 22, yaw: -4, pitch: 6, dim: 0.25, ambient: 0, steady: true, sway: 0.5, path: [[0, { at: [-2.2, 2.0, 120], dist: 22, yaw: -4, pitch: 6 }]] }
+# the normal tail: a cut to the bell; the front sweeps to 1 σ on arrival, to 3 σ on the click; the bell right and low, so both
+# number lines stand over its empty left tail, above the axis
+space: { at: [-5, 3.6, 120], dist: 22, yaw: -4, pitch: 6, dim: 0.25, ambient: 0, steady: true, sway: 0.5, path: [[0, { at: [-5, 3.6, 120], dist: 22, yaw: -4, pitch: 6 }]] }
 steps: { g7: 0, roll: 0, gz: 1, z: 2 }
 clicks: 1
 ---
@@ -214,9 +223,9 @@ Sources: PDG, Review of Particle Physics 2024, Statistics (section 40.3.2 for th
 
 ---
 # five sigma, the hush: the front sweeps on to 5 σ and nothing lights; the world stops once the front stands (the edit's music peak)
-# closer and right of the bell's centre, so the 5 σ mark stands right of centre and its tick numbers read
+# closer, the 5 σ mark right of centre and its tick numbers read; the bell a little right and low, so the numbers stand over its empty left tail
 # (the path starts at slide 8's pose, so a jump here never flies in from another station while the world slows)
-space: { at: [2.5, 2.0, 120], dist: 17, yaw: -4, pitch: 6, dim: 0.25, ambient: 0, steady: true, sway: 0.5, rate: [[0, 1], [4.5, 1], [5.5, 0]], path: [[0, { at: [-2.2, 2.0, 120], dist: 22, yaw: -4, pitch: 6 }], [1.8, { at: [2.5, 2.0, 120], dist: 17, yaw: -4, pitch: 6 }]] }
+space: { at: [0, 2.6, 120], dist: 17, yaw: -4, pitch: 6, dim: 0.25, ambient: 0, steady: true, sway: 0.5, rate: [[0, 1], [4.5, 1], [5.5, 0]], path: [[0, { at: [-5, 3.6, 120], dist: 22, yaw: -4, pitch: 6 }], [1.8, { at: [0, 2.6, 120], dist: 17, yaw: -4, pitch: 6 }]] }
 steps: { z: 4 }
 ---
 
@@ -238,7 +247,7 @@ Sources: PDG, Review of Particle Physics 2024, Statistics (Z = 5 and p = 2.87 ×
 
 ---
 # the empty tail: the camera dives into the tail, redrawn 54 times taller, while the curve runs on past 5 over an empty axis
-space: { at: [4.8, 2.0, 120], dist: 8.5, yaw: -4, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 0.5, path: [[0, { at: [2.5, 2.0, 120], dist: 17, yaw: -4, pitch: 6 }], [3, { at: [4.8, 2.0, 120], dist: 8.5, yaw: -4, pitch: 4 }]] }
+space: { at: [4.8, 2.0, 120], dist: 8.5, yaw: -4, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 0.5, path: [[0, { at: [0, 2.6, 120], dist: 17, yaw: -4, pitch: 6 }], [3, { at: [4.8, 2.0, 120], dist: 8.5, yaw: -4, pitch: 4 }]] }
 steps: { z: 5 }
 ---
 
@@ -257,10 +266,13 @@ Sources: PDG, Review of Particle Physics 2024, Statistics; toys.json tail (bake/
 -->
 
 ---
-# twenty rolls of noise: a cut to the falling toy over its light-blue expected line; the bake's own alarm bin turns white, roll by
-# roll, each roll held 2 s; brighter grains (alpha 1.7) and a closer camera so the bins read as columns; the first roll and its line
-# stand within about 1.5 s (a fast first fill), the white bin at selGain 1.3 and no white landing glow, so a roll reads as a bin moving
-space: { at: [80, 1.8, 60], dist: 10, yaw: -4, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 0.5, path: [[0, { at: [80, 1.8, 60], dist: 10, yaw: -4, pitch: 4 }]] }
+# twenty rolls of noise: a cut to the falling toy over its light-blue expected line, on the series' own mass axis (1 816-1 912,
+# ticks 1 820-1 900: t2.json, the kit bake's toy redrawn by bake/remap.py, 30 bins of 3.2 MeV; width 12 so each bin is one dot
+# column and the 140 entries stand about 5 units tall); the bake's own alarm bin turns white, roll by
+# roll, each roll held 2 s, with a white mark under each lit bin (alarmMark); brighter grains (alpha 1.7); the plot in the right two
+# thirds, clear of the three numbers (slide 12 keeps this pose); the first roll and its line stand within about 1.5 s (a fast first fill), the white bin at selGain 1.3 and
+# no white landing glow, so a roll reads as a bin moving; the sweep rests on roll 2 (reroll end 3), slide 12's first frame
+space: { at: [77.4, 3.4, 60], dist: 12.3, yaw: -4, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 0.5, path: [[0, { at: [77.4, 3.4, 60], dist: 12.3, yaw: -4, pitch: 4 }]] }
 steps: { gz: 0, z: 0, gl: 1, look: 1, e: 1 }
 ---
 
@@ -274,18 +286,19 @@ steps: { gz: 0, z: 0, gl: 1, look: 1, e: 1 }
 
 <!--
 Message: each roll of pure noise looks in 30 places, and in 7 of 20 rolls some bin reaches 2 σ, never the same one.
-Picture: the light-blue line ("what noise gives on average"); the white bin ("an alarm: noise reached 2 σ over the line here"); its jumps ("never in the same place").
+Picture: the light-blue line ("what noise gives on average"); the white bin and the white mark under it ("an alarm: noise reached 2 σ over the line here"); its jumps ("never in the same place"); the last roll, where the sweep rests ("this one, 2.5 σ: let us give it more data").
 Misconception: "one bump is a discovery". A bump has to be judged against every place it could have appeared.
-Caveats: simulated (seed 1540), 140 entries a roll in 30 bins of 10 MeV/c² on 1 450-1 750 MeV/c²; an alarm is a bin whose one-sided Poisson z against its expected count reaches 2; 7 of 20 rolls alarm, the largest at 2.55. 20 rolls of 30 bins are 600 looks, so the "twenty looks, 64 %" rule of thumb describes a different experiment: not narrated here. The p-value that counts every place is the global one, and it is larger than the local one.
+Caveats: simulated (seed 1540), 140 entries a roll in 30 bins; the kit bake draws it on 1.45-1.75 GeV, and the slide shows the same counts on the series' axis, 1 816-1 912 MeV/c² in bins of 3.2 MeV/c² (bake/remap.py: m' = 1 816 + 320 (m − 1.45); the falling shape depends only on the share of the range, so every count, z and alarm is the bake's own). It is still a toy with no particle in it: say "simulated noise on the same axis"; an alarm is a bin whose one-sided Poisson z against its expected count reaches 2; 7 of 20 rolls alarm, the largest at 2.55. 20 rolls of 30 bins are 600 looks, so the "twenty looks, 64 %" rule of thumb describes a different experiment: not narrated here. The p-value that counts every place is the global one, and it is larger than the local one.
 Sources: toys.json falling.rolls (bake/toys.py); PDG, Review of Particle Physics 2024, Statistics, section 40.3.2.2.
 (~1 min)
 -->
 
 ---
-# grown to 3 500: roll 2 with its alarm bin white over the expected line, standing within 1 s; on the click 3 360 more entries rain in
-# light blue (no white landing glow, the grains dimmed to alpha 0.9 as the columns grow), the line rescales, the white bin sinks onto it;
+# grown to 3 500: roll 2 with its alarm bin white over the expected line (slide 11's last frame), standing within 1 s; on the click
+# 3 360 more entries rain in light blue (a quiet landing glow, 0.3, the grains dimmed to alpha 0.9 as the columns grow), the line
+# rescales, the white bin sinks onto it;
 # 1.1 σ fades in 5.5 s after the click, as the count reaches 3 500 (a v-click line's delay runs from its click: styles/index.css)
-space: { at: [78, 4.4, 60], dist: 17, yaw: -4, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 0.5 }
+space: { at: [77.4, 3.4, 60], dist: 12.3, yaw: -4, pitch: 4, dim: 0.25, ambient: 0, steady: true, sway: 0.5 }
 steps: { look: 0, e: 0, grow: 1, eg: 1 }
 clicks: 1
 ---
@@ -303,7 +316,7 @@ clicks: 1
 Message: more data drowns a chance bump, while a real one grows.
 Picture: the white bin ("roll 2's 2.5 σ bump, over the line"); [click] its fall ("3 500 entries later it sits on the line at 1.1 σ: nothing").
 Narrated, not on screen: in 2003 a bump at 1.54 GeV reached 4.6 σ and was announced as a new particle; with more data it went away. And the other side: the real Higgs peaks of 2012 became much more visible with about ten times more data.
-Caveats: the toy is simulated and holds no particle; it sits at 1.54 GeV only to echo where that 2003 peak was, so no number of that experiment goes over it. The largest z anywhere at 3 500 entries is 2.04. The 2003 peak was 36 events over a background of 17.0; a 2006 search with far more data found nothing, and the 2008 PDG review saw overwhelming evidence against it. Lyons: 3-4 σ effects have often gone away with more data.
+Caveats: the toy is simulated and holds no particle; it is drawn on the series' axis (slide 11's caveat), and the 2003 peak's 1.54 GeV is narrated only: nothing on screen stands at it. The largest z anywhere at 3 500 entries is 2.04. The 2003 peak was 36 events over a background of 17.0; a 2006 search with far more data found nothing, and the 2008 PDG review saw overwhelming evidence against it. Lyons: 3-4 σ effects have often gone away with more data.
 Sources: toys.json falling.bigRoll, falling-big.f32 (bake/toys.py); LEPS, PRL 91 (2003) 012002; CLAS, PRL 96 (2006) 042001; PDG 2008 review; Physics World, 2 August 2010 (Lyons); CERN Courier, 3 July 2023 (Lyons).
 (~1.2 min)
 -->
@@ -312,7 +325,7 @@ Sources: toys.json falling.bigRoll, falling-big.f32 (bake/toys.py); LEPS, PRL 91
 # window and sidebands: a cut back to the floor; the plot refills, the grains outside three bands lift away as dust (ours with them),
 # the window turns a softer white (selGain 1.1); the bands stand by about 2 s (a fast refill), then a light-blue line across the window at the counted background
 # (b over the window's 15 bins, 1 405 a bin); the click takes the ring away
-space: { at: [-1, 3.4, 0], dist: 23, yaw: -4, pitch: 5, dim: 0.25, ambient: 0, steady: true, sway: 1, path: [[0, { at: [-1, 3.4, 0], dist: 23, yaw: -4, pitch: 5 }]] }
+space: { at: [-6.2, 3.4, 0], dist: 24, yaw: -4, pitch: 5, dim: 0.25, ambient: 0, steady: true, sway: 1, path: [[0, { at: [-6.2, 3.4, 0], dist: 24, yaw: -4, pitch: 5 }]] }
 steps: { gl: 0, grow: 0, eg: 0, h: 4, s: 2, bk: 1 }
 clicks: 1
 ---
@@ -335,16 +348,19 @@ Sources: CERN Open Data record 401; d0-significance.json (bake/d0.py).
 -->
 
 ---
-# in file order: the same three bands refill from empty in the file's own order, scaled to their own height (10 a bin full,
-# one grain a count, all landed by about 1.3 s); once the 186 stand, the light-blue background level (3.0 a bin) and the white 5 σ height (5.24 a bin)
-# draw across the window, which stands just at it; the click pours in the rest, the scale takes the full set and both lines
-# glide to the whole file's (1 405 and 1 453.5 a bin) while the window rises far above them, the pour (2.4 s, alpha 0.38, an even rate) and the glide done together within about 3 s
-space: { at: [-1, 3.4, 0], dist: 23, yaw: -4, pitch: 5, dim: 0.25, ambient: 0, steady: true, sway: 1 }
-steps: { h: 0, s: 0, bk: 0, hf: 1, bkf: 1, b5f: 1 }
+# in file order: the 186 first rows of the file, counted in 10 MeV bins (hf10: t2.json first186, 139 of them in the three
+# bands, 100 grains a count (unit 0.01) so each bin reads as a column, the scale 36 a bin, depth 0.5 like the 2 MeV plots, all
+# landed by about 1.3 s): three window columns of 23, 29 and 27 a softer white (selGain 0.8), the side bands light blue; once they stand, the light-blue background level (15 a bin) and the bright white 5 σ
+# height (26.2 a bin: 79 in the window against 78.5) draw across the window, the columns standing at it, one under and two over.
+# hf, the 2 MeV plot, reads the same 186 rows invisibly (alpha 0, no frame), so the count is its file-order rows readout.
+# The click: the coarse plot and its lines go (0.35 s) and hf pours in the rest at 2 MeV (2.4 s, alpha 0.38, a quiet landing
+# glow, 0.3), the frame back; the whole file's two lines (1 405 and 1 453.5 a bin) draw on once it stands, the window far above
+space: { at: [-6.2, 3.4, 0], dist: 24, yaw: -4, pitch: 5, dim: 0.25, ambient: 0, steady: true, sway: 1 }
+steps: { h: 0, s: 0, bk: 0, hf: 1, hf10: 1, bkf10: 1, b5f10: 1 }
 clicks: 1
 ---
 
-<StageSteps :clicks="{ 1: { hf: 2, bkf: 2, b5f: 2 } }" />
+<StageSteps :clicks="{ 1: { hf10: 0, bkf10: 0, b5f10: 0, hf: 2, bkf: 1, b5f: 1 } }" />
 
 <div class="nums" style="--d1: 0.8s; --d2: 2.4s">
   <p><b><StageCount for="hf" :to="186" /></b><span class="unit">candidates</span></p>
@@ -355,8 +371,8 @@ clicks: 1
 
 <!--
 Message: read in the file's order, the excess passes 5 σ after 186 candidates and never falls back.
-Picture: the 186 candidates read, one grain a count, the count climbing as they land; the light-blue line ("the background the side bands count under the window, 45 in all"); the white line ("the height the window needs for 5 σ"); the white window standing at it ("79 in the window: just past 5 σ"); [click] the pour of the rest, both lines move to the whole file's levels and the window rises far over them ("from here it only grows").
-Caveats: file order is not time order: say "in the file". At 186 rows b = 0.75 × 60 = 45 and the 5 σ height is (45 + 5√45)/15 = 5.236 a bin, typed into the deck's curve until the bake carries it as a set (notes/kit-requests.md); the background line reads 60 from d0-significance.json and spreads it over the side bands' 40 MeV/c². Of the 186 rows read, 139 fall in the three bands and are drawn. z first touches 5 at candidate 27 (14 in the window, 5 in the side bands) and dips again, so say only "stays above"; the end value is about 138 σ.
+Picture: the 186 candidates read, counted in wide bins of 10 MeV/c², the count climbing as they land; the light-blue line ("the background the side bands count under the window, 45 in all, 15 a bin"); the bright white line ("the height the window needs for 5 σ, about 26 a bin"); the three window columns standing at it, one just under, two just over ("79 in the window against 78.5: just past 5 σ"); [click] back to the fine bins, the rest pours in, and the two lines come back at the whole file's levels with the window far over them ("from here it only grows").
+Caveats: file order is not time order: say "in the file". At 186 rows b = 0.75 × 60 = 45 and the 5 σ height is (45 + 5√45)/3 = 26.2 a 10 MeV/c² bin (d0-significance.json staysAbove5From.set, 5.236 a 2 MeV/c² bin); the background line reads 60 from d0-significance.json and spreads it over the side bands' 40 MeV/c², 15 a 10 MeV/c² bin. Of the 186 rows read, 139 fall in the three bands and are drawn (t2.json first186: 17, 16 | 23, 29, 27 | 17, 10 by 10 MeV/c² from 1 820; bake/remap.py checks the window's 79 and the side bands' 60 against d0-significance.json). z first touches 5 at candidate 27 (14 in the window, 5 in the side bands) and dips again, so say only "stays above"; the end value is about 138 σ.
 Sources: CERN Open Data record 401; d0-significance.json, d0-z.f32 (bake/d0.py).
 (~0.9 min)
 -->
@@ -366,7 +382,7 @@ Sources: CERN Open Data record 401; d0-significance.json, d0-z.f32 (bake/d0.py).
 # black-background event view (the red calorimeter fly-through is left out, so the clip holds no cut inside it),
 # zoomed 1.25x so the source's burned-in event label and display logo are out of frame (videos/manifest.toml); the world rests at the close's crane start under the clip
 space: { at: [-1, 6, 0], dist: 32, yaw: -4, pitch: 16, dim: 0.3, ambient: 0, steady: true, sway: 0, path: [[0, { at: [-1, 6, 0], dist: 32, yaw: -4, pitch: 16 }]] }
-steps: { hf: 0, bkf: 0, b5f: 0 }
+steps: { hf: 0, bkf: 0, b5f: 0, hf10: 0, bkf10: 0, b5f10: 0 }
 ---
 
 <VideoPlayer src="cern_video_2011_191_001_hgg.mp4" muted />
@@ -384,13 +400,14 @@ Clip 4.4 s, then the hold.
 
 ---
 # Fourth of July 2012: the CERN auditorium, one shot (the room from the front stairs, applauding); the clip itself dims to 40 % over
-# its last second (baked into the raw: videos/manifest.toml), so the held frame and the dust that carries it out to the close are both dim
+# its last second (baked into the raw: videos/manifest.toml), so the held frame and the dust that carries it out to the close are both dim;
+# the numbers stand on a soft dark scrim (styles/index.css .nums.scrim, fading in with them) and their σ and names take the number's colour
 space: { at: [-1, 6, 0], dist: 32, yaw: -4, pitch: 16, dim: 0.3, ambient: 0, steady: true, sway: 0 }
 ---
 
 <VideoPlayer src="cern_video_2022_016_001_2012_room.mp4" muted />
 
-<div class="nums" style="--d1: 5.4s; --d2: 6s">
+<div class="nums scrim" style="--d1: 5.4s; --d2: 6s">
   <p><b>5.0</b><span class="unit">σ</span><span class="name">CMS</span></p>
   <p><b>5.9</b><span class="unit">σ</span><span class="name">ATLAS</span></p>
 </div>
@@ -407,21 +424,22 @@ Clip 4.1 s, then the hold.
 -->
 
 ---
-# close (talk 3's cover pose): a cut under the clip's last frame, a crane down onto the full plot already standing; the light-blue
-# background level (1 405 a bin) and the white 5 σ height just above it (1 453.5) draw across the window once, the peak far over
-# both; the click fades them to the bare peak
+# close (talk 3's cover pose): a cut under the clip's last frame, a crane down onto the full plot already standing; two beats, as
+# the two levels are 3 % apart (1 405 and 1 453.5 a bin) and draw as one line together: the arrival draws the light-blue
+# background level alone across the window, the first click lays the white 5 σ height on top of it, the second click takes
+# both away to the bare peak (talk 3's cover state)
 space: { at: [-1, 3.2, 0], dist: 25, yaw: -4, pitch: 5, dim: 0.3, ambient: 0, steady: true, sway: 1, path: [[0, { at: [-1, 6, 0], dist: 32, yaw: -4, pitch: 16 }], [4, { at: [-1, 3.2, 0], dist: 25, yaw: -4, pitch: 5 }]] }
-steps: { hf: 0, bkf: 0, b5f: 0, h: 5, s: 2, bk: 1, b5: 1 }
-clicks: 1
+steps: { hf: 0, bkf: 0, b5f: 0, hf10: 0, bkf10: 0, b5f10: 0, h: 5, s: 2, bk: 1, b5: 0 }
+clicks: 2
 ---
 
-<StageSteps :clicks="{ 1: { b5: 0, bk: 0 } }" />
+<StageSteps :clicks="{ 1: { b5: 1 }, 2: { b5: 0, bk: 0 } }" />
 
 <!-- facts: five-sigma-p-value-one-sided, look-elsewhere-effect-definition, d0-window-5sigma-line-worked, d0-peak-5sigma-file-order-worked -->
 
 <!--
 Message: a count wobbles by √N, and a bump is a discovery only when chance would make it less than once in 3.5 million tries after every place you looked is counted; this peak passed that line long ago, and next time we ask exactly where it stands.
-Picture: the light-blue line ("the background the side bands count under the window"); the white line just above it ("the height the window would need to be just 5 σ: only about 48 a bin over the background"); the peak far over both, about 1 300 a bin over the background ("counted, far past 5 σ"); the ring ("ours is back in its bin; still nobody can say whether our one grain is the particle"); [click] the line goes, and the bare peak is where next time starts.
+Picture: the light-blue line ("the background the side bands count under the window"); the peak far over it, about 1 300 a bin over the background ("counted, far past 5 σ"); the ring ("ours is back in its bin; still nobody can say whether our one grain is the particle"); [click] the white line lands on top of the light-blue one ("the height the window would need to be just 5 σ: only about 48 a bin over the background"); [click] both go, and the bare peak is where next time starts.
 Caveats: the white line is (b + 5√b)/15 = 1 453.5 a bin with b = 21 077.25 from the side bands, the light-blue one b/15 = 1 405.2, against 2 739 a bin in the window (1 334 over the background): counted levels, not a fit.
 Sources: CERN Open Data record 401; d0-significance.json line5sigma (bake/d0.py); PDG, Review of Particle Physics 2024, Statistics.
 (~0.9 min)

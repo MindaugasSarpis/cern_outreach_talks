@@ -36,9 +36,9 @@
      "type": "dk-heap",
      "name": "heap",
      "pos": [
-      -8.5,
+      -20,
       0,
-      -11
+      -14
      ],
      "n": 91583,
      "radius": 4,
@@ -68,7 +68,8 @@
        "oursFrom": "v"
       },
       {
-       "n": "all"
+       "n": "all",
+       "oursSlot": 420
       },
       {
        "cut": [
@@ -105,7 +106,8 @@
        "meanTick": null,
        "replay": false,
        "lead": null,
-       "fill": null
+       "fill": null,
+       "oursSlot": null
       }
      ]
     },
@@ -120,17 +122,20 @@
      "grains": 475,
      "heap": "heap",
      "dir": [
-      0.5,
       1,
+      0.6,
       0
      ],
-     "flight": 3,
+     "flight": 4,
      "track": 5,
      "land": {
       "of": "h"
      },
-     "flightTime": 1.0,
-     "landTime": 1.0
+     "flightTime": 0.65,
+     "landTime": 1.0,
+     "decayTime": 0.8,
+     "holdTime": 0.4,
+     "foldTime": 0.55
     },
     {
      "type": "dk-spark",
@@ -208,18 +213,21 @@
       0,
       {
        "n": 186,
-       "max": 10,
+       "alpha": 0,
+       "glow": 0,
+       "axis": false,
        "lead": 0,
        "fall": 0.5,
        "fill": 0.8
       },
       {
        "n": "all",
-       "max": null,
+       "alpha": 0.38,
+       "glow": 0.3,
+       "axis": null,
        "lead": 0.1,
        "fall": 0.3,
-       "fill": 2.4,
-       "alpha": 0.38
+       "fill": 2.4
       }
      ],
      "lattice": false,
@@ -265,10 +273,7 @@
      "grains": 600,
      "src": "d0-flat.json",
      "sets": [
-      {
-       "a": "@mean",
-       "bin": 2
-      }
+      "band.set"
      ],
      "f": "flat",
      "range": [
@@ -277,13 +282,14 @@
      ],
      "pull": false,
      "tone": "crowd",
-     "alpha": 0.9,
+     "alpha": 0.5,
      "steps": [
       0,
       {
        "set": 0
       }
-     ]
+     ],
+     "thick": 0.012
     },
     {
      "type": "dk-curve",
@@ -297,10 +303,7 @@
      "grains": 600,
      "src": "d0-flat.json",
      "sets": [
-      {
-       "a": 1499.006,
-       "bin": 2
-      }
+      "band.hi.set"
      ],
      "f": "flat",
      "range": [
@@ -309,13 +312,14 @@
      ],
      "pull": false,
      "tone": "crowd",
-     "alpha": 0.6,
+     "alpha": 0.45,
      "steps": [
       0,
       {
        "set": 0
       }
-     ]
+     ],
+     "thick": 0.012
     },
     {
      "type": "dk-curve",
@@ -329,10 +333,7 @@
      "grains": 600,
      "src": "d0-flat.json",
      "sets": [
-      {
-       "a": 1422.565,
-       "bin": 2
-      }
+      "band.lo.set"
      ],
      "f": "flat",
      "range": [
@@ -341,13 +342,14 @@
      ],
      "pull": false,
      "tone": "crowd",
-     "alpha": 0.6,
+     "alpha": 0.45,
      "steps": [
       0,
       {
        "set": 0
       }
-     ]
+     ],
+     "thick": 0.012
     },
     {
      "type": "dk-curve",
@@ -395,10 +397,6 @@
      "src": "d0-significance.json",
      "sets": [
       {
-       "a": "@staysAbove5From.off",
-       "bin": 40
-      },
-      {
        "a": "@final.off",
        "bin": 40
       }
@@ -415,11 +413,6 @@
       0,
       {
        "set": 0
-      },
-      {
-       "set": 1,
-       "ease": 1.4,
-       "after": 0.8
       }
      ],
      "draw": 0.8
@@ -436,10 +429,6 @@
      "grains": 900,
      "src": "d0-significance.json",
      "sets": [
-      {
-       "a": 5.23607,
-       "bin": 2
-      },
       "line5sigma.set"
      ],
      "f": "flat",
@@ -452,14 +441,110 @@
       0,
       {
        "set": 0
-      },
-      {
-       "set": 1,
-       "ease": 1.4,
-       "after": 0.8
       }
      ],
      "draw": 0.8
+    },
+    {
+     "type": "dk-hist",
+     "name": "hf10",
+     "pos": [
+      0.25,
+      0,
+      0
+     ],
+     "grains": 14000,
+     "src": "t2.json",
+     "key": "first186",
+     "lo": 1820,
+     "bin": 10,
+     "word": "mass MeV/c²",
+     "max": 36,
+     "lattice": false,
+     "selGain": 0.8,
+     "glowTint": 0,
+     "curve": 1,
+     "steps": [
+      0,
+      {
+       "n": "all",
+       "window": [
+        1850,
+        1880
+       ],
+       "meanTick": false,
+       "lead": 0,
+       "fall": 0.5,
+       "fill": 0.8
+      }
+     ],
+     "unit": 0.01,
+     "alpha": 0.75,
+     "depth": 0.5
+    },
+    {
+     "type": "dk-curve",
+     "name": "bkf10",
+     "of": "hf10",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 600,
+     "src": "d0-significance.json",
+     "sets": [
+      {
+       "a": "@staysAbove5From.off",
+       "bin": 40
+      }
+     ],
+     "f": "flat",
+     "range": [
+      1850,
+      1880
+     ],
+     "pull": false,
+     "tone": "crowd",
+     "alpha": 1.5,
+     "steps": [
+      0,
+      {
+       "set": 0
+      }
+     ],
+     "draw": 0.8,
+     "z": 0.27
+    },
+    {
+     "type": "dk-curve",
+     "name": "b5f10",
+     "of": "hf10",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "grains": 900,
+     "src": "d0-significance.json",
+     "sets": [
+      "staysAbove5From.set"
+     ],
+     "f": "flat",
+     "range": [
+      1850,
+      1880
+     ],
+     "pull": false,
+     "alpha": 1.4,
+     "steps": [
+      0,
+      {
+       "set": 0
+      }
+     ],
+     "draw": 0.8,
+     "z": 0.27
     }
    ]
   },
@@ -711,31 +796,17 @@
       0
      ],
      "grains": 900,
-     "width": 15,
+     "width": 12,
      "height": 8,
      "word": "mass MeV/c²",
-     "ticks": [
-      [
-       1.5,
-       "1500"
-      ],
-      [
-       1.6,
-       "1600"
-      ],
-      [
-       1.7,
-       "1700"
-      ]
-     ],
      "model": {
-      "lo": 1.45,
-      "hi": 1.75,
+      "lo": 1816,
+      "hi": 1912,
       "bins": 30,
       "n": 140,
       "seed": 1540,
       "rolls": {
-       "file": "toys.json",
+       "file": "t2.json",
        "key": "falling.rolls",
        "expected": "falling.expected140"
       }
@@ -746,12 +817,14 @@
        "n": 140,
        "reroll": {
         "every": 2.0,
-        "rolls": 20
+        "rolls": 20,
+        "end": 3
        },
        "alarm": "baked",
        "lead": 0,
        "fall": 0.5,
-       "fill": 0.5
+       "fill": 0.5,
+       "alarmMark": true
       }
      ],
      "alpha": 1.7,
@@ -768,15 +841,15 @@
       0
      ],
      "grains": 1500,
-     "src": "toys.json",
+     "src": "t2.json",
      "sets": [
       "falling.curve.sets.0",
       "falling.curve.sets.1"
      ],
      "f": "exp",
      "range": [
-      1.45,
-      1.75
+      1816,
+      1912
      ],
      "pull": false,
      "tone": "crowd",
@@ -797,39 +870,23 @@
       0
      ],
      "grains": 3500,
-     "width": 15,
+     "width": 12,
      "height": 8,
-     "values": "falling-big.f32",
+     "values": "t2-falling-big.f32",
      "key": "M",
-     "lo": 1.45,
-     "hi": 1.75,
-     "bin": 0.01,
+     "bin": 3.2,
      "ours": false,
      "order": "file",
      "meanTick": false,
      "selGain": 1.4,
      "word": "mass MeV/c²",
-     "ticks": [
-      [
-       1.5,
-       "1500"
-      ],
-      [
-       1.6,
-       "1600"
-      ],
-      [
-       1.7,
-       "1700"
-      ]
-     ],
      "steps": [
       0,
       {
        "n": 140,
        "window": [
-        1.53,
-        1.54
+        1841.6,
+        1844.8
        ],
        "lead": 0,
        "fall": 0.5,
@@ -839,11 +896,15 @@
        "n": 3500,
        "fall": 0.8,
        "fill": 4.2,
-       "alpha": 0.9
+       "alpha": 0.9,
+       "glow": 0.3
       }
      ],
      "alpha": 2.2,
-     "glowTint": 0
+     "glowTint": 0,
+     "cols": [
+      "M"
+     ]
     },
     {
      "type": "dk-curve",
@@ -855,15 +916,15 @@
       0
      ],
      "grains": 1500,
-     "src": "toys.json",
+     "src": "t2.json",
      "sets": [
       "falling.curve.sets.0",
       "falling.curve.sets.1"
      ],
      "f": "exp",
      "range": [
-      1.45,
-      1.75
+      1816,
+      1912
      ],
      "pull": false,
      "tone": "crowd",
