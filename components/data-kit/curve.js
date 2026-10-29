@@ -12,9 +12,10 @@
 // frame (a few thousand grains): the line is resampled by arc length, so a steep
 // flank is as dense as the flat background, and each grain drifts along it.
 import { Group, Color } from 'three';
-import { GRAIN, roles } from './style.js';
+import { GRAIN, LABEL, roles } from './style.js';
 import { mulberry32, gauss } from './rng.js';
 import { stateAt } from './hist.js';
+import { fixedLabel, shade } from './label.js';
 
 export const TYPE = 'dk-curve';
 export const FIELDS = ['pos', 'name', 'grains', 'of'];
@@ -199,7 +200,14 @@ function buildCurve(o, ctx, stage, kit) {
   dots.paint();
 
   const flow = Number(o.flow ?? 0.25);       // world units a second along the line
-  const thick = Number(o.thick ?? 0.02);     // world units across the line (1 sd)
+  // world units across the line (1 sd) and the grains' alpha: object fields, and step keys
+  // (`thick`, `alpha`, eased over 0.8 s): a close pose thins the line without a second curve
+  const thickF = fader(Number(o.thick ?? 0.02)), alphaF = fader(Number(o.alpha ?? 1));
+  // `pull.guides` ([-2, 2]): dim dotted lines across the pull row at those pulls, each with
+  // its number at the row's left end, and the zero line brighter (with its "0")
+  const guides = Array.isArray(o.pull?.guides) ? o.pull.guides.map(Number).filter(Number.isFinite) : [];
+  const labels = [], guideLabels = [];
+  let snapUntil = -1e9;                        // a step that changes the set takes the plot's new scale at once
   const dashLen = Number(o.dash ?? 0.5);     // the parts are dashed, this long a period
 
   let now = 0, ready = false, failed = false, armed = false, armT = 0;
@@ -261,6 +269,7 @@ function buildCurve(o, ctx, stage, kit) {
   const stepsList = Array.isArray(o.steps) && o.steps.length ? o.steps : null;
   // without `steps`, step k shows set k − 1
   const stateOf = (k) => (stepsList ? stateAt(stepsList, k) : k > 0 ? { set: k - 1 } : null);
+  const standsAt = (k) => o.replay === false || stateOf(k)?.replay === false;
 
   // ---- stepping -------------------------------------------------------------------
   function apply(k, kind) {
@@ -270,12 +279,25 @@ function buildCurve(o, ctx, stage, kit) {
     const p = setOf(s);
     const instant = kind === 'back';
     const fresh = !shown || kind === 'arrive' || show.to === 0;
+    thickF.set(t, Number(s.thick ?? o.thick ?? 0.02), instant || fresh ? 0.01 : 0.8);
+    alphaF.set(t, Number(s.alpha ?? o.alpha ?? 1), instant || fresh ? 0.01 : 0.8);
+    if (fresh && standsAt(k)) {
+      // `replay: false` (object or step, as dk-hist's): from hidden it stands at once with its
+      // hist, drawn whole at the hist's scale (T3 slides 9, 13; T4's cover)
+      pFrom = null; pTo = p; pT0 = -1e9; pNow = p; pPath = null;
+      show.jump(1); waitDraw = false; drawT0 = -1e9; snapUntil = t + 0.6;
+      parts.jump(partsOf(s.parts)[0]); partB.jump(partsOf(s.parts)[1]); pull.jump(s.pull ? 1 : 0);
+      shown = s; cur = k; return;
+    }
     if (fresh) {
       // draws on from the left once the hist has settled (an arrival replays its fill first)
       pFrom = null; pTo = p; pT0 = -1e9; pNow = p; pPath = null;
       show.jump(1); waitDraw = true; waitT = t; drawT0 = 1e9;
       parts.jump(0); partB.jump(0); pull.jump(0);
     } else {
+      // a step that changes the set: the plot may rescale on the same step (a far larger
+      // level), so the line takes the hist's scale at once, not over a second (T2 slide 14)
+      if (setIdx(s) !== setIdx(shown) && !instant) snapUntil = t + 1.0;
       // a step's own `ease` (s a segment) and `after` (s before it starts: a camera move
       // first); `through: true` steps through every logged set between the two, one
       // segment each, so a fit is seen iterating (lab 3 slide 2), not leaping to the end
@@ -313,6 +335,17 @@ function buildCurve(o, ctx, stage, kit) {
     fr.group.add(dots.points);
     attached = true;
     yScale = fr.y(1);
+    if (guides.length && hasPull) {
+      // the guides' numbers at the pull row's left end (and "0" on the zero line)
+      const H = fr.height, base = Number(pc.y ?? -0.38) * H, scale = (Number(pc.height ?? 0.17) * H) / 3;
+      const xl = fr.x(fr.lo) - 0.25;
+      for (const q of [0, ...guides.filter((x) => x !== 0)]) {
+        const text = q === 0 ? '0' : (q > 0 ? '+' : '−') + String(Math.abs(q));
+        const l = fixedLabel(stage, text, { px: LABEL.px, color: q === 0 ? P.tick : P.axis, align: 'right', hang: 0 });
+        l.position.set(xl, base + q * scale, 0.02);
+        fr.group.add(l); labels.push(l); guideLabels.push(l);
+      }
+    }
     return true;
   }
   const histBusy = () => { const b = hist?.api?.busy; return typeof b === 'function' ? b() : !!b; };
@@ -351,7 +384,7 @@ function buildCurve(o, ctx, stage, kit) {
     const X0 = tabs[0].x[0], X1 = tabs[0].x[M], span = Math.max(1e-6, X1 - X0);
     const rev = waitDraw ? 0 : Math.min(1.05, (t - drawT0) / drawDur);
     const sAll = show.at(t), sPart = parts.at(t), sPartB = partB.at(t), sPull = pull.at(t);
-    const pos = dots.pos, vis = dots.vis;
+    const pos = dots.pos, vis = dots.vis, thick = thickF.at(t);
     // the line runs along the columns' near face (a dense column's grains fill
     // z ∈ ±depth/2), so a close fit touches the column tops it fits instead of riding
     // above them in perspective; the background part is light blue over light-blue
@@ -394,10 +427,24 @@ function buildCurve(o, ctx, stage, kit) {
       }
       for (; i < o4; i++) vis[i] = 0;
       const za = fr.x(pullData[0].a), zb = fr.x(pullData[nb - 1].b);
-      for (let j = o4; j < N; j++) {
-        const u = (j - o4 + 0.5) / Math.max(1, N - o4);
+      // the zero line; with guides, it keeps 40 % of its grains (brighter) and each guide
+      // shares the rest as a dotted line (every other grain)
+      const nZ = N - o4, nZero = guides.length ? Math.round(0.4 * nZ) : nZ;
+      for (let j = o4; j < o4 + nZero; j++) {
+        const u = (j - o4 + 0.5) / Math.max(1, nZero);
         pos[3 * j] = za + (zb - za) * u; pos[3 * j + 1] = base; pos[3 * j + 2] = zLine;
-        vis[j] = 0.7 * sPull * sAll;
+        vis[j] = (guides.length ? 1.0 : 0.7) * sPull * sAll;
+      }
+      if (guides.length) {
+        const per = Math.floor((nZ - nZero) / guides.length);
+        guides.forEach((q, gi) => {
+          for (let c = 0; c < per; c++) {
+            const j = o4 + nZero + gi * per + c, u = (c + 0.5) / per;
+            pos[3 * j] = za + (zb - za) * u; pos[3 * j + 1] = base + q * scale; pos[3 * j + 2] = zLine;
+            vis[j] = Math.floor(u * 90) % 2 ? 0 : 0.55 * sPull * sAll;
+          }
+        });
+        for (let j = o4 + nZero + guides.length * per; j < N; j++) vis[j] = 0;
       }
     } else for (let i = o3; i < N; i++) vis[i] = 0;
     dots.touch();
@@ -414,11 +461,13 @@ function buildCurve(o, ctx, stage, kit) {
   };
   const api = {
     arm() { armed = true; armT = now; show.jump(0); waitDraw = false; },
+    standing: () => ready && attached && !!shown && !waitDraw && now >= drawT0 + drawDur,
     assemble(t, onDone) { now = t; arrive(); onDone?.(); },
     busy: () => (!ready && !failed && want > 0) || armed
       || (want > 0 && ready && !attached)
       || waitDraw || now < drawT0 + drawDur
-      || now < pT0 + pDur || show.moving(now) || parts.moving(now) || partB.moving(now) || pull.moving(now),
+      || now < pT0 + pDur || show.moving(now) || parts.moving(now) || partB.moving(now) || pull.moving(now)
+      || thickF.moving(now) || alphaF.moving(now),
     value: readout,
     values: () => ({ params: pNow && { ...pNow }, chi2: chi2Now, set: shown ? sets.indexOf(setOf(shown)) : -1, step: cur }),
     params: () => (pNow ? { ...pNow } : null),
@@ -432,17 +481,19 @@ function buildCurve(o, ctx, stage, kit) {
 
   let lastKey = '';
   return {
-    group: g, api, frameScale,
+    group: g, api, frameScale, labels,
     update(t) {
       const dt = Math.min(Math.max(t - now, 0), 0.1);
       now = t;
       dots.u.uTime.value = t;
+      dots.u.uAlpha.value = alphaF.at(t);
       if (sel.fresh) { sel.fresh = false; request(sel.step); }
       if (!ready || !attach()) return;
       if (armed && t - armT > 8) arrive();
       fr = hist.api.frame() || fr;
       // the plot's scale glides when the hist rescales
       const ys = fr.y(1);
+      if (t < snapUntil) yScale = ys;
       yScale += (ys - yScale) * (1 - Math.exp(-dt * 4));
       if (Math.abs(ys - yScale) <= 1e-4 * Math.abs(ys)) yScale = ys;
       if (waitDraw && (histStands() || t - waitT > 12)) { waitDraw = false; drawT0 = t; }
@@ -459,7 +510,8 @@ function buildCurve(o, ctx, stage, kit) {
       const sAll = show.at(t);
       dots.points.visible = sAll > 0.002 && !!pNow;
       if (dots.points.visible) place(t);
+      if (guideLabels.length) shade(guideLabels, sAll * pull.at(t) * (waitDraw ? 0 : Math.min(1, Math.max(0, (t - drawT0) / drawDur))));
     },
-    dispose() { sel.off(); if (name) kit.unregister(name); dots.dispose(); },
+    dispose() { sel.off(); if (name) kit.unregister(name); dots.dispose(); for (const l of labels) { l.parent?.remove(l); l.material?.map?.dispose?.(); l.material?.dispose?.(); } },
   };
 }

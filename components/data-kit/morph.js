@@ -11,7 +11,7 @@
 //
 // Motions (m.M): 0 glide (ease in-out; fades in place when appearing/leaving),
 // 1 drop (accelerating; arrives with a short glow, toward white by uGlowTint: 1 here,
-// 0.3 in dk-hist), 2 leap (a bowed arc; glow on
+// 0.3 in dk-hist; its strength × uGlow, 1 here, a dk-hist's `glow`), 2 leap (a bowed arc; glow on
 // landing), 3 dust (lifts, flares once and fades), 4 annihilate (meets its partner at
 // B, flashes and is gone). A grain's colour is the palette's crowd → selected by white.
 //
@@ -31,7 +31,7 @@ function vert(stage) {
 attribute vec3 aA, aC;
 attribute vec2 aVis, aWhite, aTime;
 attribute float aMode, aSeed, aSize, aGone;
-uniform float uT0, uAlpha, uSize, uBlur, uSpread, uShow, uSpin, uRotA, uRotB, uBig, uSelGain, uGlowTint;
+uniform float uT0, uAlpha, uSize, uBlur, uSpread, uShow, uSpin, uRotA, uRotB, uBig, uSelGain, uGlowTint, uGlow;
 uniform vec3 uCrowd, uSel, uSpinC;
 vec3 spun(vec3 p) { return uSpinC + turnY(p - uSpinC, uSpin * uTime); }
 float easeOf(float m, float k) {
@@ -56,7 +56,7 @@ void main() {
   else if (aMode < 2.5) {
     if (v1 > v0) {
       vis = before > 0.5 ? v0 : v1 * (aMode < 1.5 ? 0.6 + 0.4 * k : smoothstep(0.0, 0.12, k) * (0.7 + 0.3 * k));
-      if (k >= 1.0) glow = exp(-(uTime - s0 - aTime.y) * 3.0);
+      if (k >= 1.0) glow = uGlow * exp(-(uTime - s0 - aTime.y) * 3.0);
     } else vis = mix(v0, v1, k);
   } else if (aMode < 3.5) {
     vis = before > 0.5 ? v0 : v0 * pow(1.0 - k, 1.5);
@@ -115,7 +115,7 @@ export function createMorph(stage, n, { crowd, sel, seed = SEED, uniforms = {}, 
   const geo = stage.grainGeometry(n, { position: B, aA: [A, 3], aC: [C, 3], aVis: [V, 2], aWhite: [W, 2], aTime: [T, 2], aMode: [M, 1], aSeed: [S, 1], aSize: [Z, 1], aGone: [G, 1] });
   const mat = stage.grainMaterial(vert(stage), {
     uT0: { value: -OFF }, uAlpha: { value: 0.5 }, uSize: { value: GRAIN }, uBlur: { value: 0 }, uSpread: { value: spread },
-    uShow: { value: 1 }, uSpin: { value: 0 }, uRotA: { value: 0 }, uRotB: { value: 0 }, uBig: { value: 0.95 }, uSelGain: { value: 1.3 }, uGlowTint: { value: 1 },
+    uShow: { value: 1 }, uSpin: { value: 0 }, uRotA: { value: 0 }, uRotB: { value: 0 }, uBig: { value: 0.95 }, uSelGain: { value: 1.3 }, uGlowTint: { value: 1 }, uGlow: { value: 1 },
     uCrowd: { value: new Color(crowd) }, uSel: { value: new Color(sel) }, uSpinC: { value: new Vector3() },
     ...uniforms,
   });

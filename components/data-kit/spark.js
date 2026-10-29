@@ -28,8 +28,20 @@
 //   T2's white core turning the crowd's light blue on T3's weights click, timed to the
 //   whitening sweep reaching our grain. 'follow': the core takes the followed grain's own
 //   colour each frame (dk-hist `api.whiteOf(row)`: 0.144 white after `{weights}`).
-// - `ringColor` (object or step): the ring's role colour; by default it is the core's.
-// - `halo`: false hides the ring on that step.
+// - `ringColor` (object or step): the ring's role colour, 'sel' (white) by default whatever
+//   the core's colour (bible §3: our grain's ring stays white, only the core changes);
+//   'follow' makes the ring take the core's colour (the look before 29 Oct).
+// - `halo`: false hides the ring on that step; an object { r, alpha } eases the ring's
+//   radius (share of the frame's height, 0.028) and alpha (1.35) to those on that step
+//   (a smaller ring where our grain sits on the axis next to a tick number).
+// - `haloIn` (object or step, s, 0.5): how long the ring takes to come in; `haloGather`
+//   (object or step): the ring's grains gather in from outside (from 2.4 × its radius)
+//   instead of fading in place.
+// - `delay` (s): a step that shows the spark from hidden waits that long (the ring comes
+//   with the grains it marks, not on an empty axis).
+// - `from` as a form's name (e.g. a dk-heap): the move starts at that form's grain of our
+//   row now, and the spark draws its own core; with a dk-heap (`take`, default true) our
+//   row leaves the pile as the spark lifts it (api.claim), and comes back on a step back.
 import { Group, Vector3, Color, Matrix4 } from 'three';
 import { GRAIN, OURS, OURS_ROW, SEED, roles } from './style.js';
 import { mulberry32, gauss } from './rng.js';
@@ -49,7 +61,7 @@ let VERT = null;
 const vert = (stage) => (VERT ??= stage.GRAIN_GLSL + /* glsl */ `
 attribute float aKind, aAng, aRad, aSeed;
 uniform vec3 uAt, uColor, uRing;
-uniform float uShow, uCore, uHalo, uSize, uHaloSize, uR, uCoreA, uHaloA, uGlow, uRef;
+uniform float uShow, uCore, uHalo, uSize, uHaloSize, uR, uCoreA, uHaloA, uGlow, uRef, uGather;
 void main() {
   if (uShow <= 0.001) { hide(); return; }
   if (aKind < 0.5) {
@@ -65,7 +77,7 @@ void main() {
   vec4 c = modelViewMatrix * vec4(uAt, 1.0);
   float d = max(-c.z, 0.2);
   float breathe = 1.0 + 0.04 * uTwinkle * sin(uTime * 1.3 + aSeed * 3.0);
-  float r = uR * 2.0 * d / projectionMatrix[1][1] * (1.0 + 0.09 * aRad) * breathe * mix(1.0, 1.6, uGlow);
+  float r = uR * 2.0 * d / projectionMatrix[1][1] * (1.0 + 0.09 * aRad) * breathe * mix(1.0, 1.6, uGlow) * (1.0 + 1.4 * uGather);
   float a = aAng + 0.12 * uTime;
   vec3 p = uAt + (cos(a) * right + sin(a) * up) * r;
   float soft = exp(-0.5 * aRad * aRad);
@@ -94,8 +106,8 @@ function buildSpark(o, ctx, stage, kit) {
   }
   const colorOf = (c) => new Color(c === 'crowd' ? P.crowd : P.sel);
   const mat = stage.grainMaterial(vert(stage), {
-    uAt: { value: new Vector3() }, uColor: { value: colorOf(o.color) }, uRing: { value: colorOf(o.ringColor ?? o.color) },
-    uShow: { value: 0 }, uCore: { value: 1 }, uHalo: { value: 1 }, uGlow: { value: 0 },
+    uAt: { value: new Vector3() }, uColor: { value: colorOf(o.color) }, uRing: { value: colorOf(o.ringColor === 'follow' ? o.color : o.ringColor ?? 'sel') },
+    uShow: { value: 0 }, uCore: { value: 1 }, uHalo: { value: 1 }, uGlow: { value: 0 }, uGather: { value: 0 },
     uSize: { value: Number(o.size ?? OURS) }, uHaloSize: { value: Number(halo.size) * GRAIN },
     uR: { value: Number(halo.r) }, uRef: { value: Math.max(1, Number(halo.ref)) }, uCoreA: { value: Number(o.alpha ?? 1.0) }, uHaloA: { value: Number(o.haloAlpha ?? 1.35) },
   });
@@ -110,8 +122,13 @@ function buildSpark(o, ctx, stage, kit) {
   let now = 0, want = st.step ?? 0, lastK = 0, armed = false, armT = 0;
   let cur = null, t0 = -1e9, glide = 0.01, show = 0, showTo = 0, coreTo = 1, haloTo = 1, core = 1, haloV = 1;
   let following = false, found = true, colorA = colorOf(o.color), colorB = colorOf(o.color), colT0 = -1e9, colDur = 0.8;
-  let followColor = o.color === 'follow', followW = null, ringOwn = o.ringColor != null && o.ringColor !== 'follow';
-  let ringA = colorOf(o.ringColor ?? o.color), ringB = ringA.clone(), ringT0 = -1e9;
+  let followColor = o.color === 'follow', followW = null, ringOwn = o.ringColor !== 'follow';
+  let ringA = colorOf(o.ringColor === 'follow' ? o.color : o.ringColor ?? 'sel'), ringB = ringA.clone(), ringT0 = -1e9;
+  // the ring's radius and alpha per step ({ halo: { r, alpha } }), eased over 0.6 s
+  const R0 = Number(halo.r), A0 = Number(o.haloAlpha ?? 1.35);
+  let rFrom = R0, rTo = R0, aFrom = A0, aTo = A0, hT0 = -1e9;
+  let haloIn = Number(o.haloIn ?? 0.5), gatherOn = !!o.haloGather, showAt = -1e9;
+  let taken = null;       // a form our row was lifted out of ({ from: '<heap>' }): released on the next step
   const crowdC = new Color(P.crowd), selC = new Color(P.sel), tmpC = new Color();
 
   // where the followed form shows our grain now (station frame), or null
@@ -137,12 +154,27 @@ function buildSpark(o, ctx, stage, kit) {
     const s = stepAt(k);
     lastK = k;
     cur = s;
+    const wasShown = show > 0.05;
     showTo = s ? 1 : 0;
+    if (taken && !(s && typeof s.from === 'string' && s.from === taken.name)) { taken.api.release?.(name); taken = null; }
     if (!s) return;
     const instant = kind === 'back' || (kind === 'arrive' && !s.from);
     following = s.on != null;
+    const fromForm = typeof s.from === 'string' ? kit.form(s.from) : null;
     coreTo = s.core != null ? (s.core ? 1 : 0) : following ? 0 : 1;
     haloTo = s.halo === false ? 0 : 1;
+    haloIn = Math.max(0.05, Number(s.haloIn ?? o.haloIn ?? 0.5));
+    gatherOn = !!(s.haloGather ?? o.haloGather);
+    showAt = !wasShown && !instant && s.delay ? now + Math.max(0, Number(s.delay)) : -1e9;
+    // from hidden, the ring comes in over `haloIn` (with the core's fade, or gathering)
+    if (!wasShown && haloTo > 0) haloV = 0;
+    {
+      const hc = s.halo && typeof s.halo === 'object' ? s.halo : {};
+      const r = Number(hc.r ?? R0), a = Number(hc.alpha ?? A0);
+      if (r !== rTo || a !== aTo) {
+        rFrom = instant ? r : u.uR.value; aFrom = instant ? a : u.uHaloA.value; rTo = r; aTo = a; hT0 = instant ? -1e9 : now;
+      }
+    }
     const cw = s.color ?? o.color;
     followColor = cw === 'follow';
     if (!followColor) {
@@ -152,10 +184,20 @@ function buildSpark(o, ctx, stage, kit) {
         colT0 = instant ? -1e9 : now + Math.max(0, Number(s.colorAfter ?? 0)); colDur = Math.max(0.05, Number(s.colorTime ?? 0.8));
       }
     } else colorB = u.uColor.value.clone();
-    const rw = s.ringColor ?? o.ringColor;
-    ringOwn = rw != null && rw !== 'follow';
+    const rw = s.ringColor ?? o.ringColor ?? 'sel';
+    ringOwn = rw !== 'follow';
     if (ringOwn) { const c = colorOf(rw); if (!c.equals(ringB)) { ringA = u.uRing.value.clone(); ringB = c; ringT0 = instant ? -1e9 : now; } }
-    if (s.from) from.set(...s.from);
+    if (fromForm) {
+      // from a form's grain of our row (where it is now), lifted out of it
+      const p = (fromForm.api.ours && fromForm.api.ours(v)) || (fromForm.api.posOf && fromForm.api.posOf(s.row ?? OURS_ROW, v));
+      if (p) { g.updateWorldMatrix(true, false); inv.copy(g.matrixWorld).invert(); from.copy(p).applyMatrix4(inv); }
+      else from.set(NaN, NaN, NaN);
+      if (s.take !== false && fromForm.api.claim && !instant) {
+        const row = Number(s.row ?? OURS_ROW), gone = new Float32Array(row + 1).fill(1e9);
+        gone[row] = now; fromForm.api.claim(gone, name); taken = { name: s.from, api: fromForm.api };
+      }
+      if (s.core == null) coreTo = 1;
+    } else if (Array.isArray(s.from)) from.set(...s.from);
     else if (show > 0.05 && !instant) from.copy(u.uAt.value);
     else from.set(NaN, NaN, NaN);
     if (!following) to.set(...(s.at || [0, 0, 0]));
@@ -168,7 +210,7 @@ function buildSpark(o, ctx, stage, kit) {
   const api = {
     arm() { armed = true; armT = now; show = 0; u.uShow.value = 0; },
     assemble(t, onDone) { now = t; armed = false; show = 0; apply(want, 'arrive'); onDone?.(); },
-    busy: () => armed || now - t0 < glide || Math.abs(show - showTo * (found ? 1 : 0)) > 0.01 || (!followColor && now < colT0 + colDur),
+    busy: () => armed || now - t0 < glide || now < showAt || Math.abs(show - showTo * (found ? 1 : 0)) > 0.01 || (!followColor && now < colT0 + colDur) || now < hT0 + 0.6 || (showTo * (found ? 1 : 0) > 0 && Math.abs(haloV - haloTo) > 0.01),
     value: () => 0,
     ready: () => true,
     // where the marker is now (world), or null while hidden
@@ -202,12 +244,21 @@ function buildSpark(o, ctx, stage, kit) {
         else u.uAt.value.lerpVectors(from, target, e);
       }
       // show: fades with the step, and while a followed grain is not drawn
-      const visible = armed ? 0 : showTo * (found ? 1 : 0);
+      const visible = armed || t < showAt ? 0 : showTo * (found ? 1 : 0);
       show += Math.sign(visible - show) * Math.min(Math.abs(visible - show), dt / 0.5);
       u.uShow.value = show;
       core += Math.sign(coreTo - core) * Math.min(Math.abs(coreTo - core), dt / 0.4);
-      haloV += Math.sign(haloTo - haloV) * Math.min(Math.abs(haloTo - haloV), dt / 0.4);
-      u.uCore.value = core; u.uHalo.value = haloV;
+      // the ring's own fade: over `haloIn` (it starts once the spark shows), gathering in
+      // from outside with `haloGather` (its grains whole from the start, the radius closing)
+      const hv = visible > 0 ? haloTo : haloV;
+      haloV += Math.sign(hv - haloV) * Math.min(Math.abs(hv - haloV), dt / haloIn);
+      const ee = haloV * haloV * (3 - 2 * haloV);
+      u.uCore.value = core; u.uHalo.value = gatherOn ? Math.min(1, 0.3 + 0.7 * ee) * (haloTo > 0 || haloV > 0 ? 1 : 0) * Math.min(1, haloV * 4) : haloV;
+      u.uGather.value = gatherOn ? Math.pow(1 - ee, 2) : 0;
+      {
+        const kh = Math.min(1, Math.max(0, (t - hT0) / 0.6)), eh = kh * kh * (3 - 2 * kh);
+        u.uR.value = rFrom + (rTo - rFrom) * eh; u.uHaloA.value = aFrom + (aTo - aFrom) * eh;
+      }
       if (followColor && followW != null) {
         // the followed grain's own colour, eased so a recolour sweep reads as one change
         tmpC.copy(crowdC).lerp(selC, followW);
@@ -224,6 +275,6 @@ function buildSpark(o, ctx, stage, kit) {
       const since = t - (t0 + glide);
       u.uGlow.value = glide > 0.05 && since >= 0 && since < 1.2 ? Math.exp(-since * 4) : 0;
     },
-    dispose() { st.off(); kit.unregister(name); geo.dispose(); mat.dispose(); },
+    dispose() { st.off(); taken?.api.release?.(name); kit.unregister(name); geo.dispose(); mat.dispose(); },
   };
 }
