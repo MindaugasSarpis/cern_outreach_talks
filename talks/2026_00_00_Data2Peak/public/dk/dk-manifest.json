@@ -22,7 +22,7 @@
   "d0-significance.json": {
    "talks": [2],
    "shape": "object",
-   "meaning": "file-order significance: where z first passes 5 and from where it stays above 5",
+   "meaning": "file-order significance: where z first passes 5 and from where it stays above 5; the 5 sigma line (b + 5 sqrt b)/15 a bin as a dk-curve set",
    "by": "d0.py"
   },
   "d0-z.f32": {
@@ -45,6 +45,19 @@
    "meaning": "d0.f32's header: n, cols, units, row 1, value ranges, source block",
    "by": "d0.py"
   },
+  "falling-big.f32": {
+   "talks": [2],
+   "shape": [3500,1],
+   "dtype": "float32 LE",
+   "meaning": "the falling spectrum grown to 3 500 entries (simulated, GeV): roll 2's 140 values, then the 3 360 added; a dk-hist rows source (values falling-big.f32, key M)",
+   "by": "toys.py"
+  },
+  "falling-big.json": {
+   "talks": [2],
+   "shape": "object",
+   "meaning": "falling-big.f32's header: n, cols ['M'], units, order, the counts a builder bins",
+   "by": "toys.py"
+  },
   "h4l.json": {
    "talks": [2],
    "shape": "37 bins",
@@ -54,7 +67,7 @@
   "toys.json": {
    "talks": [2],
    "shape": "object",
-   "meaning": "simulated toys: flat-bin Poisson re-rolls, the falling spectrum with its 2 sigma alarms and the 3 500-entry growth, normal-tail numbers and 1 - 0.95^20",
+   "meaning": "simulated toys: flat-bin Poisson re-rolls, the falling spectrum with its 2 sigma alarms and the 3 500-entry growth, its expectation at 140 and 3 500 entries as dk-curve sets (falling.curve), normal-tail numbers and 1 - 0.95^20",
    "by": "toys.py"
   }
  }
