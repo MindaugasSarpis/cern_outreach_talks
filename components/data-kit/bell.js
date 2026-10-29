@@ -98,7 +98,9 @@ void main() {
   a *= e;
   if (a <= 0.002) { hide(); return; }
   float w = uLit * step(uFront, z);
-  float glow = uLit * uSweep * exp(-abs(z - uFront) * 7.0);
+  // the front's glow: full in the sparse tail, a quarter in the dense body (at 1 sigma a
+  // full glow over thousands of stacked grains bloomed into a white halo, lab 2 slide 16)
+  float glow = uLit * uSweep * exp(-abs(z - uFront) * 7.0) * mix(0.25, 1.0, smoothstep(1.6, 2.6, z));
   // the zoomed tail stays white (it is the lit tail of {lit: 3}, magnified)
   float wz = max(w, zt);
   vec3 col = mix(uCrowd, uSel, clamp(wz + 0.6 * glow, 0.0, 1.0));
@@ -301,7 +303,7 @@ function buildBell(o, ctx, stage, kit) {
     assemble(t, onDone) { now = t; armed = false; show = 0; cur = 0; if (want > 0) go(want, 'arrive'); onDone?.(); },
     busy: () => armed || Math.abs(show - showTo) > 0.01
       || (cur > 0 && now < u.uShowT0.value + Number(o.fill ?? 1.6) + 0.8)
-      || (litOn && now < frontT0 + frontDur) || now < zoomT0 + ZD,
+      || (litOn && now < frontT0 + frontDur + 0.4) || now < zoomT0 + ZD,
     // the count beyond the lit front, from all n draws (0 when nothing is lit)
     value: () => (cur > 0 && litOn ? beyond(x, frontNow()) : 0),
     values: () => ({ n: nAll, drawn: nDraw, lit: litOn ? frontTo : null, count: litOn ? beyond(x, frontTo) : 0, max: x[nAll - 1], gain: u.uZGain.value, zoom: zoomTo }),
@@ -324,7 +326,12 @@ function buildBell(o, ctx, stage, kit) {
       const f = frontNow(), z = zoomNow();
       u.uFront.value = litOn ? f : 1e3;
       u.uLit.value = litOn;
-      u.uSweep.value = litOn && now < frontT0 + frontDur + 0.3 && now > frontT0 ? 1 : 0;
+      // the sweep's glow eases in over 0.3 s and out over 0.4 s once the front stands (it
+      // switched in one frame: a white blink as the front stopped, and on the next slide's first frame)
+      {
+        const sm = (a, b, x) => { const q = Math.max(0, Math.min(1, (x - a) / (b - a))); return q * q * (3 - 2 * q); };
+        u.uSweep.value = litOn ? sm(frontT0, frontT0 + 0.3, now) * (1 - sm(frontT0 + frontDur, frontT0 + frontDur + 0.4, now)) : 0;
+      }
       u.uZoom.value = z;
       axis.u.uShow.value = show; marks.u.uShow.value = show;
       // the lit line: a short white mark standing on the axis at the front
