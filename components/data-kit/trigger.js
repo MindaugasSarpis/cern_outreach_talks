@@ -132,6 +132,7 @@ attribute vec3 aCtr, aJit, aBall;
 attribute vec4 aKeep;
 attribute float aPhase, aSeed, aCore, aEmpty;
 uniform float uShow, uAlpha, uSize, uNG, uWave, uCollT, uUnT, uCedeT, uBallR, uSpin, uKeptX, uEmptyA;
+uniform float uSpray, uBurstSpread, uCollDur, uBallGain;
 uniform float uGX[${MAXG}], uGShrink[${MAXG}];
 uniform float uGOn0, uGOn1, uGOn2, uGOn3, uGOff0, uGOff1, uGOff2, uGOff3;
 uniform vec3 uBallC, uColor;
@@ -182,7 +183,8 @@ void main() {
       // it was past the gate when the gate fired: the wave from the gate reaches it
       float sOn = s - (tt - on) * uSpeed;
       if (sOn > sg) {
-        float xOn = xOf(sOn), tw = on + (xOn - gx) / uWave;
+        // burstSpread: each packet's burst a little after the wave front (per packet, seeded)
+        float xOn = xOf(sOn), tw = on + (xOn - gx) / uWave + uBurstSpread * fract(aPhase * 97.31 + 0.17);
         if (tt > tw) {
           if (drop > 0.5) { dust = tt - tw; dx = xOf(sOn + (tw - on) * uSpeed); break; }
           sq *= pk;
@@ -197,7 +199,8 @@ void main() {
     if (dust > 5.5) { hide(); return; }
     vec3 q = laneAt(dx, aCtr, aJit, 1.0);
     vec3 dir = normalize(vec3(aJit.x, q.y - 0.0, q.z) + vec3(0.0001, 0.0002, 0.0));
-    p = q + dir * dust * 1.3 + vec3(dust * 0.45, dust * 0.3, 0.0);
+    // spray: the grains thrown outward in the burst's first ~0.4 s, then the slow drift
+    p = q + dir * (dust * 1.3 + uSpray * (1.0 - exp(-dust * 6.0))) + vec3(dust * 0.45, dust * 0.3, 0.0);
     a *= 0.95 * exp(-dust * 0.9);                            // the dust lingers a second or two: the burst reads
   } else p = laneAt(x, aCtr, aJit, sq);
   if (coll) {
@@ -208,9 +211,9 @@ void main() {
     float back = un ? ease((uTime - uUnT) / 2.0) : 0.0;
     if (member < 0.5) a *= mix(1.0 - smoothstep(0.0, 0.8, kc), 1.0, back);
     else {
-      float e = ease((kc - 0.6 * hash(aSeed * 5.0)) / 2.2) * (1.0 - back);
+      float e = ease((kc - 0.27 * uCollDur * hash(aSeed * 5.0)) / uCollDur) * (1.0 - back);
       vec3 b = uBallC + turnY(aBall * uBallR, uSpin * uTime);
-      a = mix(a, gain * uAlpha * uShow, e);                  // in the ball, no lane-end fade
+      a = mix(a, gain * uAlpha * uShow * uBallGain, e);      // in the ball, no lane-end fade
       p = mix(p, b, e);
       if (uCedeT < 1e8) a *= 1.0 - smoothstep(0.0, 1.2, uTime - uCedeT);   // a dk-pipeline pile took over
     }
@@ -220,7 +223,7 @@ void main() {
 }`;
   const RING = G + SIZE_GLSL + /* glsl */ `
 attribute float aSeed, aGate;
-uniform float uShow, uSize, uCollT, uUnT;
+uniform float uShow, uSize, uCollT, uUnT, uIdle;
 uniform float uGOn0, uGOn1, uGOn2, uGOn3, uGOff0, uGOff1, uGOff2, uGOff3;
 uniform vec3 uColor;
 void main() {
@@ -230,7 +233,7 @@ void main() {
   float off = k == 0 ? uGOff0 : k == 1 ? uGOff1 : k == 2 ? uGOff2 : uGOff3;
   float lit = on > 1e8 ? 0.0 : smoothstep(0.0, 1.0, uTime - on) * (off > 1e8 ? 1.0 : 1.0 - smoothstep(0.0, 1.0, uTime - off));
   float fire = on > 1e8 || off < 1e8 ? 0.0 : exp(-max(uTime - on, 0.0) * 2.0) * step(on, uTime);
-  float a = uShow * (0.25 + 0.3 * lit + 0.6 * fire) * (0.6 + 0.4 * hash(aSeed * 5.0));
+  float a = uShow * (uIdle + 0.3 * lit + 0.6 * fire) * (0.6 + 0.4 * hash(aSeed * 5.0));
   if (uCollT < 1e8) a *= uUnT < 1e8 ? mix(1.0 - smoothstep(0.0, 0.8, uUnT - uCollT), 1.0, smoothstep(0.0, 0.8, uTime - uUnT)) : 1.0 - smoothstep(0.0, 0.8, uTime - uCollT);
   if (a <= 0.002) { hide(); return; }
   place(position, sizeAt(position, uSize), a, uColor, aSeed);
@@ -240,7 +243,7 @@ void main() {
   const BUF = G + SIZE_GLSL + /* glsl */ `
 attribute float aSeed, aR, aA, aKnot;
 attribute vec3 aBall;
-uniform float uShow, uOn, uSize, uAlpha, uSpin, uBufT, uLane, uCollT, uUnT, uCedeT, uBufFold, uBallR, uBallSpin;
+uniform float uShow, uOn, uSize, uAlpha, uSpin, uBufT, uLane, uCollT, uUnT, uCedeT, uBufFold, uBallR, uBallSpin, uCollDur;
 uniform vec3 uColor, uBallC;
 void main() {
   // filling (uBufT set): each parked packet rides out from the lane to its slot in turn
@@ -252,7 +255,7 @@ void main() {
   if (fold) {
     bool un = uUnT < 1e8;
     float kc = (un ? uUnT : uTime) - uCollT;
-    ef = ease((kc - 0.6 * hash(aSeed * 5.0)) / 2.2) * (un ? 1.0 - ease((uTime - uUnT) / 2.0) : 1.0);
+    ef = ease((kc - 0.27 * uCollDur * hash(aSeed * 5.0)) / uCollDur) * (un ? 1.0 - ease((uTime - uUnT) / 2.0) : 1.0);
     v = uShow;
     if (uCedeT < 1e8) v *= 1.0 - smoothstep(0.0, 1.2, uTime - uCedeT);
   }
@@ -309,10 +312,13 @@ function buildTrigger(o, ctx, stage, kit) {
   if (packets * per + fixed > budget) packets = Math.max(10, Math.floor((budget - fixed) / per));
   const emptyShare = Number(o.empty ?? 0.25);
   const knot = Number(o.knot ?? 0.1);
+  const collDur = Math.max(0.3, Number(o.collapseTime ?? 2.2));
 
   const frameScale = { value: 1 };
   const shared = {
     uPixelRatio: frameScale, uShow: { value: 0 }, uCollT: { value: OFF }, uUnT: { value: OFF }, uMinPx: { value: Number(o.minPx ?? 0) },
+    // idle: a gate ring's brightness before it fires; collapseTime: the fold into the ball (s)
+    uIdle: { value: Number(o.idle ?? 0.25) }, uCollDur: { value: collDur },
     uGOn0: { value: OFF }, uGOn1: { value: OFF }, uGOn2: { value: OFF }, uGOn3: { value: OFF },
     uGOff0: { value: OFF }, uGOff1: { value: OFF }, uGOff2: { value: OFF }, uGOff3: { value: OFF },
   };
@@ -347,6 +353,7 @@ function buildTrigger(o, ctx, stage, kit) {
     uHold: { value: hold }, uBufR: { value: B ? Number(B.r ?? 3.2) : lane }, uLane: { value: lane }, uBufSpin: { value: B ? Number(B.spin ?? 0.08) : 0 }, uBufOn: { value: 0 },
     uAlpha: { value: Number(o.alpha ?? 0.9) }, uSize: { value: Number(o.size ?? GRAIN) }, uNG: { value: NG }, uWave: { value: Number(o.wave ?? 30) },
     uBallR: { value: ballR }, uSpin: { value: Number(o.ball?.spin ?? 0.12) }, uKeptX: { value: keptX }, uEmptyA: { value: 0.4 }, uCedeT: { value: OFF },
+    uSpray: { value: Number(o.spray ?? 0) }, uBurstSpread: { value: Math.max(0, Number(o.burstSpread ?? 0)) }, uBallGain: { value: Number(o.ball?.gain ?? 1) },
     uGX: { value: Array.from({ length: MAXG }, (_, k) => (k < NG ? gates[k].x : 1e6)) },
     uGShrink: { value: Array.from({ length: MAXG }, (_, k) => (k < NG ? gates[k].shrink : 1)) },
     uBallC: { value: ballC }, uColor: { value: crowd },
@@ -480,7 +487,7 @@ function buildTrigger(o, ctx, stage, kit) {
         const want = gateWants(gt, k);
         const l = latches[i];
         const fires = fwd && gt.step === k;
-        if (want && !l.on) { l.start(now, fires ? now + lag : now - 100); if (fires) waveTill = Math.max(waveTill, now + lag + (to - gt.x) / u.uWave.value + 4.5); }
+        if (want && !l.on) { l.start(now, fires ? now + lag : now - 100); if (fires) waveTill = Math.max(waveTill, now + lag + (to - gt.x) / u.uWave.value + u.uBurstSpread.value + 4.5); }
         else if (!want && l.on) l.stop(now);
       });
       if (k >= C) {
@@ -489,7 +496,7 @@ function buildTrigger(o, ctx, stage, kit) {
         if (u.uCollT.value > 1e8 || u.uUnT.value < 1e8) {
           const cold = !running && prev < C;
           u.uCollT.value = cold ? now - 100 : now; u.uUnT.value = OFF; u.uCedeT.value = OFF;
-          collTill = cold ? now : now + 3.5;
+          collTill = cold ? now : now + collDur + 1.3;
         }
       } else if (u.uCollT.value < 1e8 && u.uUnT.value > 1e8) {
         // a step back from the collapse: the ball unfolds into the running lane
@@ -536,7 +543,7 @@ function buildTrigger(o, ctx, stage, kit) {
     ball() {
       if (u.uCollT.value > 1e8 || u.uUnT.value < 1e8) return null;
       g.updateWorldMatrix(true, false);
-      return { at: wB.copy(ballC).applyMatrix4(g.matrixWorld).clone(), r: ballR, formedAt: u.uCollT.value + 2.8 };
+      return { at: wB.copy(ballC).applyMatrix4(g.matrixWorld).clone(), r: ballR, formedAt: u.uCollT.value + collDur + 0.6 };
     },
     // the pile has taken over: the ball fades from world time t (1.2 s); a step clears it
     cede(t = now) { if (u.uCollT.value < 1e8) { u.uCedeT.value = t; collTill = Math.max(collTill, t + 1.3); } },

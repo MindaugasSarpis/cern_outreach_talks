@@ -257,6 +257,10 @@ class Lint:
             self.check_words_and_sources(s, text)
             self.check_advance(s)
             own = str(s.frontmatter.get("onscreen") or "").strip().lower()
+            # Slide 1's frontmatter is the headmatter: its `onscreen` is the deck's
+            # setting, not a grant for the cover, which keeps its title either way.
+            if s is self.deck.slides[0] and own == str(self.deck.headmatter.get("onscreen") or "").strip().lower():
+                own = ""
             if self.numbers_only or own == "numbers":
                 self.check_numbers(s, self.numbers_text(s), words_ok=own == "words" or (s.layout == "cover" and own != "numbers"))
             self.check_inline_sizes(s)

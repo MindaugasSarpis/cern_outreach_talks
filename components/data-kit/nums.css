@@ -1,0 +1,53 @@
+/* The series' number block (bible §3 "Number type"; MasterTalk's .nums in the bible's colours),
+   one copy for all five talks. Import it first thing in a talk's styles/index.css:
+
+     @import '../components/data-kit/nums.css';
+
+   and delete the talk's own .nums rules (they differed in place and weight: the series check
+   of 29 Oct). A 46 px number, a 22 px .unit or .name, each line fading in at its --dN after
+   the camera lands. left 56 px, bottom 190 px: a three-line block ends above the lower third
+   (canvas 551 high, lower third from 367), which stays clear (talk-quality §3 rule 4).
+
+   Extras every talk may use:
+   - a v-click line or block rises at its --dN counted from the click, not from the slide's
+     opening (the picture it scores lands first);
+   - .nums.swap: the lines stack in one place, line 1 leaving at --o1 (a number replaced by
+     the next);
+   - .nums.out: every line also fades out at its --oN (a take's last second showing the bare
+     picture, e.g. T1's close handing over to T2's cover). */
+html[data-stage] .nums {
+  position: absolute; left: 56px; bottom: 190px; z-index: 30; pointer-events: none;
+  font-family: 'Space Grotesk', system-ui, sans-serif; color: #e8f6ff;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.6);
+}
+html[data-stage] .nums p { margin: 0 0 10px; line-height: 1; white-space: nowrap; opacity: 0; animation: dk-nums-in 1s ease forwards; }
+html[data-stage] .nums b { font-size: 46px; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: normal; }
+html[data-stage] .nums .unit { font-size: 22px; font-weight: 500; letter-spacing: 0.04em; color: #9fd8ff; margin-left: 0.4em; }
+html[data-stage] .nums .name { font-size: 22px; font-weight: 400; letter-spacing: 0.02em; color: #9fd8ff; margin-left: 0.6em; }
+html[data-stage] .nums p:nth-child(1) { animation-delay: var(--d1, 2s); }
+html[data-stage] .nums p:nth-child(2) { animation-delay: var(--d2, 3.2s); }
+html[data-stage] .nums p:nth-child(3) { animation-delay: var(--d3, 4.4s); }
+
+/* a number revealed by a click rises at its --dN counted from the click */
+html[data-stage] .nums p.slidev-vclick-target:not(.slidev-vclick-hidden),
+html[data-stage] .nums.slidev-vclick-target:not(.slidev-vclick-hidden) p { animation-name: dk-nums-in; animation-fill-mode: both; }
+html[data-stage] .nums p.slidev-vclick-hidden,
+html[data-stage] .nums.slidev-vclick-hidden p { animation: none; }
+
+/* .swap: one place, line 1 replaced by line 2 */
+html[data-stage] .nums.swap p { position: absolute; left: 0; bottom: 0; }
+html[data-stage] .nums.swap p:nth-child(1) { animation: dk-nums-in 1s ease var(--d1, 2s) forwards, dk-nums-out 0.6s ease var(--o1, 8s) forwards; }
+
+/* .out: every line leaves at its --oN */
+html[data-stage] .nums.out p:nth-child(1) { animation: dk-nums-in 1s ease var(--d1, 2s) forwards, dk-nums-out 1s ease var(--o1, 999s) forwards; }
+html[data-stage] .nums.out p:nth-child(2) { animation: dk-nums-in 1s ease var(--d2, 3.2s) forwards, dk-nums-out 1s ease var(--o2, 999s) forwards; }
+html[data-stage] .nums.out p:nth-child(3) { animation: dk-nums-in 1s ease var(--d3, 4.4s) forwards, dk-nums-out 1s ease var(--o3, 999s) forwards; }
+
+@keyframes dk-nums-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes dk-nums-out { from { opacity: 1; } to { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-stage] .nums p { animation: none; opacity: 1; }
+  html[data-stage] .nums.swap p:nth-child(1) { animation: none; opacity: 0; }
+}
+@media print { html[data-stage] .nums p { animation: none; opacity: 1; } }

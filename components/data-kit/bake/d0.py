@@ -512,7 +512,12 @@ def bake(src: Path):
                   "b = (30/40) N_off, z = (N_on - b)/sqrt(b). k is 1-based."),
         "window": WIN, "sidebands": SBS, "alpha": ALPHA,
         "firstAbove5": dict(k=first, on=int(Non[first - 1]), off=int(Noff[first - 1]), z=z[first - 1]),
-        "staysAbove5From": dict(k=stays, on=int(Non[stays - 1]), off=int(Noff[stays - 1]), z=z[stays - 1]),
+        # set: the 5 sigma height over the plot of the first k rows, (b + 5 sqrt b)/15 a bin
+        # with b = 0.75 x off (the counterpart of line5sigma.set for the full file; T2 slide 14)
+        "staysAbove5From": dict(k=stays, on=int(Non[stays - 1]), off=int(Noff[stays - 1]), z=z[stays - 1],
+                                b=ALPHA * int(Noff[stays - 1]),
+                                set={"a": (ALPHA * int(Noff[stays - 1]) + 5 * np.sqrt(ALPHA * int(Noff[stays - 1])))
+                                     / int(round((WIN[1] - WIN[0]) / BW)), "bin": BW}),
         "final": dict(k=n, on=int(Non[-1]), off=int(Noff[-1]), b=b[-1], z=z[-1]),
         "at": {str(kk): dict(on=int(Non[kk - 1]), off=int(Noff[kk - 1]), z=z[kk - 1])
                for kk in (100, 1000, 10000, n)},
@@ -537,6 +542,10 @@ def bake(src: Path):
         "spread": {"raw": cf.std(ddof=1), "detrended": resid.std(ddof=2),
                    "neighbourDiff": np.diff(cf).std(ddof=1) / np.sqrt(2)},
         "slopePerBin": sl_, "spreadUncertainty": 1 / np.sqrt(2 * (len(cf) - 1)),
+        # dk-curve f 'flat' sets: the mean line and the mean +- sqrt(mean) band's edges (T2 slide 6)
+        "band": {"set": {"a": cf.mean(), "bin": 2.0},
+                 "hi": {"set": {"a": cf.mean() + np.sqrt(cf.mean()), "bin": 2.0}},
+                 "lo": {"set": {"a": cf.mean() - np.sqrt(cf.mean()), "bin": 2.0}}},
         "source": SOURCE,
     }
     out["d0-flat.json"] = json_bytes(flat)

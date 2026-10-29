@@ -31,7 +31,7 @@
 //   pile first gathers as copies of a smaller pile, then flies together.
 // - unit (0.1): one sphere's lattice step. Its radius is 0.9 × unit.
 // - anchor (0): the pile at the origin. gaps: the spaces between neighbours (2).
-//   `wait` (s, 0): the pile gathers that long after its step, so piles shown together
+//   `wait` (s, 0; or by step, { "3": 2.4, "5": 0, "default": 0 }): the pile gathers that long after its step, so piles shown together
 //   still come one after another (lab 1 slide 8: one sphere, then 4, then a day's). `from`
 //   ([x, y, z]): its spheres gather from that side (e.g. behind and below the piles, out
 //   of a close camera's way) instead of from all round.
@@ -471,7 +471,7 @@ function buildLineup(o, ctx, stage, kit) {
   const labels = [];
   balls.forEach((x, b) => {
     if (!x.label) return;
-    const l = kit.label.make(String(x.label), { px: LABEL.px, color: P.tick, align: 'center', hang: -1.1 });
+    const l = kit.label.make(String(x.label), { px: Number(o.labelPx ?? LABEL.px), color: P.tick, align: 'center', hang: -1.1 });
     l.position.set(C[b][0], C[b][1] + (x.n === 1 ? rad : R[b]), C[b][2]);
     l.userData.show = 0; l.userData.ball = b;
     g.add(l); labels.push(l);
@@ -484,7 +484,13 @@ function buildLineup(o, ctx, stage, kit) {
   let doneAt = -1, doneCbs = [];
   const GROW = () => mat.uniforms.uGrow.value + 1.6;
   const shown = (b) => showT[b] >= 0 && hideT[b] < 0;
-  const show = (b, t) => { showT[b] = t + Math.max(0, Number(balls[b]?.wait ?? 0)); hideT[b] = -1; growing[b] = 0; };
+  // `wait` is seconds, or seconds by step ({ "3": 2.4, "5": 0 }; `default` for other steps)
+  const waitOf = (b) => {
+    const w = balls[b]?.wait;
+    if (w && typeof w === 'object' && !Array.isArray(w)) return Number(w[String(step)] ?? w.default ?? 0);
+    return Number(w ?? 0);
+  };
+  const show = (b, t) => { showT[b] = t + Math.max(0, waitOf(b) || 0); hideT[b] = -1; growing[b] = 0; };
   const hide = (b, t) => { if (shown(b)) hideT[b] = t; };
   // a numbered step can name its piles (`sets: { "5": [2, 4] }`): a slide's frontmatter
   // `steps:` carries numbers only, so an array step works only from <StageSteps>

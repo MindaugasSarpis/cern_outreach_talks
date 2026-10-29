@@ -162,7 +162,8 @@ function buildVertex(o, ctx, stage, kit) {
   // our grain once it has landed alone on an empty axis is drawn `landSize` times larger
   // (the brightest thing in the frame) until the hist draws its own grain there
   const LS = Math.max(1, Number(o.landSize ?? 2.2)), trailA = Number(o.trailAlpha ?? 0.9);
-  const TF = Number(o.flightTime ?? 1.8), TD = 1.3, TH = 0.6, TO = 0.9, TL = Number(o.landTime ?? 1.6);
+  // the five phases' lengths (s): flight, decay (lift-off and split), hold, fold, landing
+  const TF = Number(o.flightTime ?? 1.8), TD = Number(o.decayTime ?? 1.3), TH = Number(o.holdTime ?? 0.6), TO = Number(o.foldTime ?? 0.9), TL = Number(o.landTime ?? 1.6);
   const END = [0, TF, TF + TD, TF + TD + TH + TO + TL];
   const FOLD = TF + TD + TH, FLY = FOLD + TO;
   const st = stage.stepper(name);
