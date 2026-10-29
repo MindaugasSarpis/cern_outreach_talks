@@ -82,3 +82,40 @@ Toolkit (slidev-addon-stage, slidev-addon-videos, slidev-videos; for the toolkit
     after the slide's DOM has changed. Why: every take's frame 0 still shows the slide before
     it (its numbers, or the cover's title on slide 2: a 3.5 luma drop at 0.04 s), which the
     review read as numbers carried over at the cut.
+
+## The steward's answers (29 Oct) and what this deck did (polish:data1trigger)
+
+- 1 `oursFrom { at }`: used. `heap` takes `oursFrom: { at: [-2, 9, 0] }` (slide 13's fold point,
+  x 98 in world); the stand-in spark `fp` is gone from space.json and every slide's steps.
+- 2 Crossing.vue, 3 `lhc-collision` on the bus: declined (toolkit / lhc-opening). The talk-owned
+  `setup/Crossing.vue` stays; still open for the main loop.
+- 4 `value()` one over `n`: used. Slide 14's count is `<StageCount for="heap" :to="91583" />` again.
+- 5 sparkle colour: the default is light blue now; slide 3 needs nothing.
+- 6 lineup `wait` by step: used. The day's pile waits `{ "3": 2.4, "5": 0 }`: slide 6 keeps the
+  reviewed 2.4 s (the steward suggested 3.8; not taken unseen), slide 12 gathers both piles at
+  once, and slide 11 (the clip) no longer pre-sets `tb: 5`.
+- 7 spray, burstSpread: used on `lane` and `trg` (0.8, 0.4). Slides 8 and 10 need a motion retake.
+- 8 ring gather: used. `s1` step 1 (cover) `delay: 7.8, haloIn: 0.6, haloGather: true` (the point
+  and its ring gather as the bunches meet at 8.3 s); `s2` step 1 (slide 13) `haloIn: 0.6,
+  haloGather: true`. Not seen in motion.
+- 9 floor alpha by step: used. `g2` `alpha: [0, 2.4, 1]`: slide 13 is g2 step 1, slide 14 step 2
+  (alpha 1, T2's cover floor).
+- 10-14: declined (toolkit), still open.
+
+## fix:data1trigger (29 Oct, the second review)
+
+15. **A record-only mark on the page** (slidev-stage-record; slide 14). What: the recorder sets an
+    attribute on `<html>` (say `data-record`) while it takes a slide, so a deck can write
+    `html[data-record] .nums.out` and `html[data-record] .credit` fades for the take's last
+    1.5 s. Why: the review asks that slide 14's last recorded frame equal T2's bare cover (no
+    `91 583 candidates`, no credit line); `.nums.out` alone also fades the number in the shots,
+    the stills, the PPTX and the print (tried and reverted in polish:data1trigger). Until then
+    the number and the credit stay to the end of the take.
+16. **The detector against the fronts** (kit `detectorParts`, dk-glow; slides 1-5). What: a
+    series colour for the detector one step deeper than the crowd (this deck now writes the
+    palette's `dust` #4d8cb8 into every part), so dk-glow's light-blue fronts, the hits and the
+    white ring are the only bright things in it. Why: with `detectorParts` (accent on the magnet,
+    RICH and HCAL, the preset's near-white on the trackers and the VELO) the front was the same
+    light blue as the grains it ran over, and the VELO read as a white blob beside slide 2's and
+    slide 5's numbers. T4 and T5 (whose close lands on this cover) should take the same parts,
+    or the kit should change `detectorParts`.

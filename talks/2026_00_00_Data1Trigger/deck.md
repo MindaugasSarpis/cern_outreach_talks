@@ -24,10 +24,12 @@ stage:
   options: { aberration: 0 }   # tick numbers and labels are world sprites: no colour fringes
 title: The trigger
 info: |
-  Data analysis, the CERN way. Talk 1 of 5: a collision becomes data. The detector,
-  40 MHz of bunch crossings, the two filters, what is kept, and the row of numbers a
-  kept crossing becomes. Pictures and numbers on screen; sources and the script in
-  the notes.
+  Talk 1 of 5 of "Data analysis, the CERN way". A collision becomes data: bunches
+  crossed every 25 ns, 40 million crossing slots a second, and reading every crossing
+  out whole made 4 TB a second, 345.6 PB a day. Two filters kept about 1 byte in 400
+  (864 TB a day); a kept crossing becomes a row of numbers, and the rows a pile of
+  91 583 candidates. Opens on a real 2012 crossing (talk 5's last frame) and closes on
+  talk 2's first (the settled pile). Pictures and numbers on screen; sources in the notes.
 lang: en
 htmlAttrs:
   lang: en
@@ -45,7 +47,7 @@ space:
     - [0, { at: [40, 12, -30], dist: 260, yaw: -70, pitch: 25 }]
     - [5, { at: [6, 1, 0], dist: 60, yaw: -40, pitch: 16 }]
     - [9, { at: [-1.5, 1.4, 0], dist: 12, yaw: -24, pitch: 10 }]   # the landing, the crossing right of the title (T5's close cranes back to it)
-steps: { det: 1, glow: 0, trg: 0, lane: 0, s1: 1, g1: 0, tb: 0, g2: 0, heap: 0, fp: 0, s2: 0 }
+steps: { det: 1, glow: 0, trg: 0, lane: 0, s1: 1, g1: 0, tb: 0, g2: 0, heap: 0, s2: 0 }
 ---
 
 <!-- The collision starts when this slide opens; its bunches meet 8.3 s in (space.json approach), as the path lands. -->
@@ -179,14 +181,14 @@ space:
   sway: 0.3
   path:
     - [0, { at: [400.45, 0.2, 0], dist: 1.8, yaw: -12, pitch: 6 }]   # the 1 TB sphere stands from frame 0 (tb: 1 since slide 5)
-    - [1.5, { at: [400.45, 0.2, 0], dist: 1.8, yaw: -12, pitch: 6 }]
-    - [6, { at: [403, 3.5, 0], dist: 22, yaw: -76, pitch: 2 }]   # back, from the small piles' side: the whole day, with the 1 TB sphere (8 px) and the pile of 4 (15 px) in front of its foot
+    - [4.5, { at: [400.45, 0.2, 0], dist: 1.8, yaw: -12, pitch: 6 }]   # held while the pile of 4 gathers beside it (1.6 s + 3.2 s): one sphere, then one second
+    - [9, { at: [404, 5, 0], dist: 17, yaw: -70, pitch: -2 }]   # back, from the small piles' side: the whole day (it gathers from 5 s), the pile of 4 (about 40 px) and the 1 TB sphere (15 px) in the foreground below it
 steps: { det: 0, glow: 0, trg: 0, g1: 1, tb: 3 }
 ---
 
-<!-- dk-lineup piles 0..2: 1 TB, 4 TB (a second), 345 600 TB (a day, 8 to a sphere) -->
+<!-- dk-lineup piles 0..2: 1 TB, 4 TB (a second, from 1.6 s), 345 600 TB (a day, 8 to a sphere, from 5 s as the camera pulls back: wait { "3": 5 }) -->
 
-<div class="nums" style="--d1: 6s">
+<div class="nums" style="--d1: 8.5s">
   <p><b>345.6</b><span class="unit">PB/day</span></p>
 </div>
 
@@ -194,7 +196,7 @@ steps: { det: 0, glow: 0, trg: 0, g1: 1, tb: 3 }
 
 <!--
 Message: One day of full readout would have been 345.6 PB.
-Picture: Every sphere is one terabyte, a quarter of a second of readout. The pile of 4, in front at the lower left beside the single sphere, is one second. The big pile is one day, drawn 8 terabytes to a sphere at the same volume.
+Picture: Every sphere is one terabyte, a quarter of a second of readout. The pile of 4 that gathers beside the first sphere is one second; both stay in front, below the big pile, as the camera pulls back. The big pile is one day, drawn 8 terabytes to a sphere at the same volume.
 Caveats: This is arithmetic (4 TB/s × 86 400 s), not data anyone stored.
 Sources: LHCb, arXiv:2106.07701; worked (4 TB/s × 86 400 s).
 (~0.8 min)
@@ -207,13 +209,13 @@ space:
   ambient: 0
   sway: 0.3
   path:
-    - [0, { at: [403, 3.5, 0], dist: 22, yaw: -76, pitch: 2 }]
+    - [0, { at: [404, 5, 0], dist: 17, yaw: -70, pitch: -2 }]   # slide 6's last pose; the 1 TB sphere and the pile of 4 fade (tb sets[4] = piles 2, 3)
     - [2, { at: [409, 4, 0], dist: 50, yaw: -20, pitch: 8 }]   # pull back first, so the tape pile gathers in the distance (its spheres come from behind it)
     - [5, { at: [418, 7, 0], dist: 80, yaw: 0, pitch: 8 }]
 steps: { g1: 1, tb: 4 }
 ---
 
-<!-- dk-lineup pile 3: 1 300 000 TB, 27 to a sphere -->
+<!-- dk-lineup step 4 = sets[4] = piles [2, 3]: the day and the tape archive (1 300 000 TB, 27 to a sphere); the small piles leave -->
 
 <div class="nums" style="--d1: 0.3s; --d2: 3s; --d3: 3.8s">
   <p><b>345.6</b><span class="unit">PB/day</span></p>
@@ -243,7 +245,7 @@ space:
   sway: 0.4
   path:
     - [0, { at: [10, 0.4, 0], dist: 16, yaw: -30, pitch: 8 }]
-    - [5, { at: [31, -1.2, 0], dist: 8, yaw: -15, pitch: 6 }]   # the flight lands at the gate, so the click's burst fills the frame (the stage has no per-click camera key: kit request); the lane in the upper half, clear of the numbers
+    - [5, { at: [32, -1.8, 0], dist: 10, yaw: -50, pitch: 6 }]   # the flight lands at the gate, so the click's burst fills the frame (the stage has no per-click camera key: kit request); yaw -50 so the ring across the lane reads as a ring, not edge on; the lane above y 330 of 900, clear of the numbers
 steps: { det: 2, glow: 0, g1: 0, tb: 0, trg: 0, lane: 1, s1: 2 }
 ---
 
@@ -274,16 +276,20 @@ Sources: LHCb, JINST 19 (2024) P05065; LHCb Starterkit (Run 3 dataflow); arXiv:2
 ---
 # buffer: kept crossings park on a turning shell round the lane; click 1 switches the first filter off and the full lane floods it
 clicks: 1
-space: { dim: 0.2, ambient: 0, sway: 0.4, steady: true, path: [[0, { at: [50, 0, 0], dist: 20, yaw: -10, pitch: 8 }]] }
+space: { dim: 0.2, ambient: 0, sway: 0.4, steady: true, path: [[0, { at: [50, -2.5, 0], dist: 20, yaw: -10, pitch: 8 }]] }   # target 2.5 below the lane: the lane and the shell in the upper middle, the numbers on black
 steps: { det: 0, lane: 0, trg: 3, s1: 3 }
 ---
 
 <!-- dk-trigger: step 3 the buffer; step 4 the flood (gate 1 off: [4], the buffer on) -->
 <StageSteps :set="{ trg: 3 }" :clicks="{ 1: { trg: 4 } }" />
 
+<!-- the click swaps the second line in place: 80 h leaves, and the second block (one line, anchored at the same bottom) brings 2.1 h where it stood -->
 <div class="nums" style="--d1: 3s; --d2: 4.2s">
   <p><b>30</b><span class="unit">PB</span><span class="name">buffer</span></p>
-  <p class="swap"><span v-click.hide="1"><b>80</b><span class="unit">h</span><span class="name">at 1 MHz</span></span><span v-click="1"><b>2.1</b><span class="unit">h</span><span class="name">full readout</span></span></p>
+  <p v-click.hide="1"><b>80</b><span class="unit">h</span><span class="name">at 1 MHz</span></p>
+</div>
+<div class="nums" v-click="1" style="--d1: 0.2s">
+  <p><b>2.1</b><span class="unit">h</span><span class="name">full readout</span></p>
 </div>
 
 <!-- facts: lhcb-buffer-80-hours, lhcb-buffer-full-readout-2h-worked, lhcb-run3-hlt1-1mhz-out -->
@@ -302,14 +308,14 @@ Sources: LHCb, JINST 19 (2024) P05065; arXiv:2305.10515; worked (30 PB / 4 TB/s)
 -->
 
 ---
-# gate 2: close on the second filter's ring (whole knots pass it, the first filter long on again); click 1 fires it
+# gate 2: close on the second filter's ring (the first filter long on again); ours leaves the buffer and waits before the ring; click 1 fires it
 clicks: 1
-space: { at: [67.5, 0, 0], dist: 10, yaw: -12, pitch: 6, dim: 0.2, ambient: 0, sway: 0.4, steady: true }
-steps: { det: 0, lane: 0, trg: 3, s1: 3 }
+space: { at: [62, -2.5, 0], dist: 12, yaw: -38, pitch: 4, dim: 0.2, ambient: 0, sway: 0.4, steady: true }   # the buffer's exit at the upper left, ours waiting at x 62.5, the ring at x 66 seen at an angle (a ring, not a band); the lane in the upper half, the numbers on black
+steps: { det: 0, lane: 0, trg: 5, s1: 3 }
 ---
 
-<!-- dk-trigger: 3 → 5 jumps over the flood: gate 2 (keep 0.1, shrink 0.75) fires 1.5 s after the click, ours leaves the buffer -->
-<StageSteps :set="{ trg: 3 }" :clicks="{ 1: { trg: 5 } }" />
+<!-- dk-trigger: step 5 (from 3 or the flood's 4) turns gate 1 long on and glides ours out of the buffer to x 62.5 (3 s); the click's step 6 fires gate 2 (keep 0.1, shrink 0.75) 1.5 s after it, and ours goes through to x 70 -->
+<StageSteps :set="{ trg: 5 }" :clicks="{ 1: { trg: 6 } }" />
 
 <div class="nums" style="--d1: 1.5s; --d2: 2.3s">
   <p v-click="1"><b>100</b><span class="unit">kHz</span></p>
@@ -320,7 +326,7 @@ steps: { det: 0, lane: 0, trg: 3, s1: 3 }
 
 <!--
 Message: The second filter reconstructed each kept crossing in full and kept about 1 in 10, about 10 GB a second.
-Picture: The ring is the second filter. Reconstructing means joining the hits into tracks and particles. On the click it drops about 9 knots in 10 to dust, and each knot it keeps goes on a little smaller (it is stored smaller: the caveat's quarter). Our white knot, ringed, comes out of the buffer and goes through, a little smaller.
+Picture: The ring is the second filter. Reconstructing means joining the hits into tracks and particles. Our white knot, ringed, comes out of the buffer and waits before the ring. On the click the filter drops about 9 knots in 10 to dust, and each knot it keeps goes on a little smaller (it is stored smaller: the caveat's quarter). Ours goes through, a little smaller.
 Caveats:
 - 1 MHz in, about 100 kHz out: keep about 0.1. 10 GB/s ÷ 100 kHz = 100 kB a kept crossing, against 4 TB/s ÷ 30 MHz = 133 kB read out, so a kept crossing is stored about a quarter smaller (0.75). Our arithmetic, from design figures.
 - Many kept crossings were written as the reconstructed particles only (about 10 kB); the design average was about 100 kB. Never say "most of them compact" over this picture: the knots shrink by a quarter, not by 13 times.
@@ -332,7 +338,7 @@ Sources: SMARTHEP trigger summary, arXiv:2408.03881 §1.3; arXiv:2412.05041; hom
 ---
 # clip: under it the world waits at slide 12's first key, far out over the piles, so the clip's last frame becomes the world there
 space: { at: [404, 4, 0], dist: 70, yaw: -4, pitch: 10, dim: 0, ambient: 0, sway: 0, path: [[0, { at: [404, 4, 0], dist: 70, yaw: -4, pitch: 10 }]] }
-steps: { det: 0, trg: 5, s1: 0, g1: 1, tb: 5 }   # slide 12's piles gather under the clip's arrival (the world rests once the clip covers it)
+steps: { det: 0, trg: 6, s1: 0, g1: 1, tb: 0 }   # the floor only: slide 12's piles gather on slide 12 (the day's wait is 0 on step 5), not under the clip
 ---
 
 <VideoPlayer src="cern_footage_2020_042_001_tape_library.mp4" muted />
@@ -356,21 +362,21 @@ space:
   steady: true
   path:
     - [0, { at: [404, 4, 0], dist: 70, yaw: -4, pitch: 10 }]
-    - [6, { at: [404, 4, 0], dist: 28, yaw: -4, pitch: 10 }]
-steps: { det: 0, trg: 6, g1: 1, tb: 5 }   # trg 6: ours glides on to x 98, unseen, so slide 13 opens with it in frame
+    - [6, { at: [402, 4, 0], dist: 28, yaw: -4, pitch: 10 }]   # target 2 left of the clip's: the white kept pile stands clear of the second number line
+steps: { det: 0, trg: 7, g1: 1, tb: 5 }   # trg 7: ours glides on to x 98, unseen, so slide 13 opens with it in frame
 ---
 
-<!-- dk-lineup step 5 = sets[5] = piles [2, 4]: the day read out (345 600 TB) and the day kept (864 TB, white, beside it); set from slide 11, so they stand or finish gathering as the clip's dust clears -->
+<!-- dk-lineup step 5 = sets[5] = piles [2, 4]: the day read out (345 600 TB) and the day kept (864 TB, white, beside it) gather at once (the day's wait is 0 on step 5) as the clip's dust clears; numbers once they stand (grow 3.2 s) -->
 
-<div class="nums" style="--d1: 1.2s; --d2: 1.8s">
+<div class="nums" style="--d1: 2.6s; --d2: 3.2s">
   <p><b>864</b><span class="unit">TB</span><span class="name">kept</span></p>
-  <p><b>345.6</b><span class="unit">PB</span><span class="name">read out</span></p>
+  <p><b>345 600</b><span class="unit">TB</span><span class="name">read out</span></p>
 </div>
 
 <!-- facts: lhcb-kept-864tb-per-day-worked, lhcb-upgrade1-trigger, lhcb-raw-345pb-per-day-worked, lhcb-hlt2-keep-1-in-10-worked, lhcb-sprucing-rates, lhcb-run3-end -->
 
 <!--
-Message: The two filters kept about 1 byte in 400: 864 TB a day of the 345.6 PB read out.
+Message: The two filters kept about 1 byte in 400: 864 TB a day of the 345 600 TB (345.6 PB) read out.
 Picture: The small white pile is a day of what reached tape. The large light-blue pile is a day of readout, the same pile as on slide 6. The white pile is 400 times smaller by volume, about 7 times narrower.
 Caveats:
 - Said aloud: 30 × 10 = 300 in crossings; each kept crossing was also stored smaller, about 100 kB instead of 133 kB, so in bytes it is about 400.
@@ -384,10 +390,10 @@ Sources: LHCb, JINST 19 (2024) P05065; arXiv:2305.10515; LHCb data-processing ra
 ---
 # one row: a cut past the second filter at the lane's end; our kept knot folds into one white grain, ringed, as the floor fades in below
 space: { dim: 0.2, ambient: 0, sway: 0.4, steady: true, path: [[0, { at: [98, 0, 0], dist: 9, yaw: -20, pitch: 14 }]] }   # pitch 14: the floor below is in frame as it fades in (faint: the series floor)
-steps: { det: 0, g1: 0, tb: 0, trg: 7, g2: 1, fp: 1, s2: 1, heap: 0 }
+steps: { det: 0, g1: 0, tb: 0, trg: 8, g2: 1, s2: 1, heap: 0 }   # g2 step 1: the floor brighter than slide 14's (alpha by step), so it reads 9 units below
 ---
 
-<!-- dk-trigger step 7: ours, already at x 98 (step 6, slide 12), folds where it stands over 1.2 s from the cut ({ at: 98, fold: true, glide: 1.2 }); dk-spark s2 rings it (on: trg, a 0.5 s fade) -->
+<!-- dk-trigger step 8: ours, already at x 98 (step 7, slide 12), folds where it stands over 1.2 s from the cut ({ at: 98, fold: true, glide: 1.2 }); dk-spark s2 rings it (on: trg; the ring gathers in over 0.6 s, haloGather) -->
 
 <div class="nums" style="--d1: 1.5s; --d2: 2.1s; --d3: 2.7s">
   <p><b>1 880.6</b><span class="unit">MeV/c²</span><span class="name">mass</span></p>
@@ -420,13 +426,13 @@ space:
   path:
     - [0, { at: [98, 0, 0], dist: 9, yaw: -20, pitch: 14 }]
     - [8, { at: [100, -7.2, 0], dist: 16, yaw: -12, pitch: 12 }]   # heap + [0, 1.8, 0]: T2 opens here
-steps: { det: 0, trg: 0, g2: 1, fp: 1, heap: 1, s2: 2 }
+steps: { det: 0, trg: 0, g2: 2, heap: 1, s2: 2 }   # g2 step 2: the series floor (T2's cover's alpha)
 ---
 
-<!-- dk-heap step 1: the rain (6 s; the count keeps its own 6.5 s clock: `for="heap"` lands on 91 584, kit request 4); our grain starts at the fold point (oursFrom fp) and glides onto the summit last; s2 rings it (on: heap) -->
+<!-- dk-heap step 1: the rain (6 s; the count follows the heap, which lands on 91 583 since the steward's fix); our grain starts at the fold point (oursFrom { at: [-2, 9, 0] }, slide 13's x 98) and glides onto the summit last; s2 rings it (on: heap). -->
 
 <div class="nums" style="--d1: 1s">
-  <p><b><StageCount :to="91583" :delay="300" :ms="6500" /></b><span class="name">candidates</span></p>
+  <p><b><StageCount for="heap" :to="91583" /></b><span class="name">candidates</span></p>
 </div>
 
 <div class="credits credit">LHCb detector geometry: LHCb's DD4hep description, © CERN for the benefit of the LHCb Collaboration, GPL-3.0; converted by HSF Phoenix, Apache-2.0.</div>

@@ -31,7 +31,7 @@
      "sound": false,
      "approach": 8.3,
      "tone": "#7dd3fc",
-     "muonTone": "#f2f5f9",
+     "muonTone": "#9fd8ff",
      "splashTone": "#7dd3fc",
      "bunchColor": "#f2f5f9",
      "grains": 200000
@@ -48,26 +48,39 @@
      "parts": {
       "preset": "lhcb",
       "velo": {
+       "color": "#4d8cb8",
        "alpha": 0.25
       },
       "pipe": {
        "alpha": 0
       },
+      "rich1": {
+       "color": "#4d8cb8"
+      },
+      "ut": {
+       "color": "#4d8cb8"
+      },
       "magnet": {
-       "color": "#7dd3fc",
+       "color": "#4d8cb8",
        "alpha": 0.25
       },
-      "rich1": {
-       "color": "#7dd3fc"
+      "scifi": {
+       "color": "#4d8cb8"
       },
       "rich2": {
-       "color": "#7dd3fc"
+       "color": "#4d8cb8"
+      },
+      "ecal": {
+       "color": "#4d8cb8"
       },
       "hcal": {
-       "color": "#7dd3fc"
+       "color": "#4d8cb8"
+      },
+      "muon": {
+       "color": "#4d8cb8"
       }
      },
-     "alpha": 0.42,
+     "alpha": 0.6,
      "size": 1.3,
      "out": [
       16,
@@ -87,7 +100,8 @@
      "of": "det",
      "src": "lhcb",
      "grains": 46500,
-     "alpha": 0.75
+     "alpha": 0.9,
+     "size": 1.4
     },
     {
      "type": "dk-trigger",
@@ -97,7 +111,7 @@
       0,
       0
      ],
-     "grains": 9200,
+     "grains": 9700,
      "from": 13,
      "to": 112,
      "lane": 0.7,
@@ -110,7 +124,8 @@
      "gates": [
       {
        "x": 30,
-       "keep": 0.0333
+       "keep": 0.0333,
+       "ring": 1200
       }
      ],
      "ours": [
@@ -122,7 +137,10 @@
       }
      ],
      "alpha": 1.3,
-     "size": 1.6
+     "size": 1.6,
+     "spray": 0.8,
+     "burstSpread": 0.4,
+     "idle": 0.6
     },
     {
      "type": "dk-trigger",
@@ -154,7 +172,8 @@
        "x": 66,
        "keep": 0.1,
        "shrink": 0.75,
-       "step": 5
+       "step": 6,
+       "ring": 1200
       }
      ],
      "buffer": {
@@ -188,6 +207,10 @@
        ]
       },
       {
+       "at": 62.5,
+       "glide": 3
+      },
+      {
        "at": 70,
        "glide": 3,
        "lag": 1.5
@@ -199,7 +222,10 @@
        "glide": 1.2
       }
      ],
-     "collapse": 8
+     "collapse": 9,
+     "spray": 0.8,
+     "burstSpread": 0.4,
+     "idle": 0.6
     },
     {
      "type": "dk-spark",
@@ -217,7 +243,10 @@
         0,
         0,
         0
-       ]
+       ],
+       "delay": 7.8,
+       "haloIn": 0.6,
+       "haloGather": true
       },
       {
        "on": "lane"
@@ -283,7 +312,11 @@
       {
        "n": 345600,
        "grain": 8,
-       "wait": 2.4,
+       "wait": {
+        "3": 5,
+        "5": 0,
+        "default": 0
+       },
        "from": [
         1,
         0.3,
@@ -316,6 +349,10 @@
      ],
      "assemble": false,
      "sets": {
+      "4": [
+       2,
+       3
+      ],
       "5": [
        2,
        4
@@ -353,7 +390,12 @@
      ],
      "grains": 14000,
      "radius": 40,
-     "enterable": true
+     "enterable": true,
+     "alpha": [
+      0,
+      2.4,
+      1
+     ]
     },
     {
      "type": "dk-heap",
@@ -366,30 +408,14 @@
      "n": 91583,
      "radius": 4,
      "rain": 6,
-     "oursFrom": "fp",
+     "oursFrom": {
+      "at": [
+       -2,
+       9,
+       0
+      ]
+     },
      "grains": 91583
-    },
-    {
-     "type": "dk-spark",
-     "name": "fp",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "grains": 1,
-     "alpha": 0,
-     "steps": [
-      null,
-      {
-       "at": [
-        -2,
-        9,
-        0
-       ],
-       "halo": false
-      }
-     ]
     },
     {
      "type": "dk-spark",
@@ -403,7 +429,9 @@
      "steps": [
       null,
       {
-       "on": "trg"
+       "on": "trg",
+       "haloIn": 0.6,
+       "haloGather": true
       },
       {
        "on": "heap"
