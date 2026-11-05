@@ -38,7 +38,7 @@ looking each one up in the new files: everything not marked "rewritten" or
 | Aspect ratio and canvas | `docs/authoring.md`, verbatim; a root bullet summarises |
 | Embedded iframe slides | `docs/authoring.md`, verbatim; a root bullet points there |
 | Deployment | root, verbatim, plus `pnpm talk deploy` |
-| Git remotes | root, verbatim |
+| Git remotes | root, a sentence under Deployment (26 Oct) |
 
 ## Merging a branch that still edits the old root file
 

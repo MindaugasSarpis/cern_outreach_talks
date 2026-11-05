@@ -127,12 +127,47 @@ sheet with `lumMean` near white is an overexposure. An animated slide gets a
 burst of frames (`--burst`, from v0.6), because still frames cannot show a
 flicker.
 
+### The show machine (Užsikrauk karjerai, filmed 26 Oct 2026)
+
+"Innoday went really well, we improved quite a lot for uzsikrauk karjerai, but
+missed the finale with the crash, pointcloud blinking from the start and missed
+soundtrack accent." On the owner's MacBook Pro M2, from the venue zip, the live
+close went white mid-take; the stage's fallback never fired; the plates had
+not shown the blinking because each starts its slide fresh. Root causes:
+`talks/2026_10_26_UzsikraukKarjerai/CLAUDE.md`, Lessons.
+
+- A heavy finale is a recorded clip by default, its music slaved to the clip
+  (Innoday's `drop`: the muted clip's playbackRate follows the music). It runs
+  live only on a machine where a rehearsal of that slide is logged in the
+  talk's Status.
+- Accents are never timed off the world clock: it lags whenever a frame takes
+  over 83 ms, while the music keeps the audio clock.
+- A grain budget per slide, about 600k at tier 0, the forms on screen
+  together counted (the M2's white slide drew about 1.1M additive grains).
+- A builder clears its event state (a collision's start times) on stop, so a
+  form shown on a later slide does not inherit an earlier slide's events.
+- No presenter window on the show laptop: it runs a second world.
+
+Check: before the day, the heaviest slide on the actual laptop, from the venue
+zip, start to end and back, with the result in Status. `talk ready` and the
+plates do not catch any of these.
+
 ### What to repeat
 
 The owner's praise, for calibration: "Looks impressive", "Looks really good",
 "The first slide is super nice", "figure is nice", "slides 19 and 20 are
 nice", "This is nice". Each of these was about a slide with one dominant
 picture and a short plain title.
+
+What worked in October (Innoday "went great", OpenData "all good", and
+"Other elements from those two are good"): one spine retellable in a breath;
+real footage over synthetic stand-ins; a finale that closes the title's loop
+(Innoday's „…ir atgal“ back to NFTMC); one music bed with a measured peak and
+a beat of silence before it; the venue zip as the offline copy; plates and
+stills behind every live slide; clip → grains hand-overs (a clip's last frame
+becomes the world); dust transitions between world slides, not `fade` (a fade
+after a clip left ~0,6 s of black); deep black (`ambient: 0`) where the
+picture is light on dark.
 
 ## 2. The pipeline
 

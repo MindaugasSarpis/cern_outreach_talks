@@ -179,7 +179,9 @@ the package.
   pulls the plates with the clips. A clip slide has no plate: the clip ends
   and waits for the press, so no `advance-on-end` unless the owner asks for
   that clip by name (lint `ADVANCE`).
-- **The PPTX** (every stage talk from Innoday on): the deck as a PowerPoint,
+- **The PPTX** (on request only, `pnpm talk pptx`; not part of a talk by
+  default since 22 Oct 2026: the venue zip, `pnpm venue`, linked from
+  `videos/venue.json`, is the standard offline copy): the deck as a PowerPoint,
   one video per slide and click that starts on entry and holds its last
   frame, the notes in the Notes pane; no editable variant. In order: the
   env's `slidev-videos` with the `pptx` subcommand (`talk pptx` asks `pptx

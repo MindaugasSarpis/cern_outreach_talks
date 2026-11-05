@@ -38,6 +38,11 @@ one sparse and one dense slide before it spreads.
    broadcast look in [STAGE_QUICKSTART.md](STAGE_QUICKSTART.md)).
 7. Numbers in the world are real and sourced, baked into JSON with their
    source, and cited by fact id on their slide (`docs/talk-quality.md` §5).
+8. The show laptop sets the ceiling (26 Oct 2026: Užsikrauk karjerai's live
+   close went white on the owner's M2; Innoday's recorded close played on
+   it). A heavy finale is a recorded clip unless a rehearsal of that slide on
+   that laptop, from the venue zip, is logged; about 600k grains a slide at
+   tier 0; no presenter window on the show laptop.
 
 ## Openings
 
@@ -69,6 +74,12 @@ continuity between footage and story. Uses the player's `cover` and
 covers the world, and `assemble()` as it leaves. Status: today for the cut;
 the crane flight after it needs per-pose `seconds` (engine change). Present
 from the venue build, where the leaving sheet reads the live frame.
+
+**Clip → grains.** A clip's last frame becomes the world's grains at its
+place (Innoday's web and flag, Užsikrauk karjerai's `<LisFlag>`), then the
+camera pulls out. Carries "the footage is the world". Status: today,
+talk-owned. Between world slides the dust, not `fade`; deep black
+(`ambient: 0`) where the picture is light on dark.
 
 ## Scale and numbers
 
@@ -196,7 +207,23 @@ spectral peaks linger as quiet sines for a few seconds. Status: the fade is
 one line in the player; the lingering sound needs `videos:frames` to store
 peaks (engine and CLI change).
 
+**One bed, one measured peak, one clock.** One music bed for the whole
+talk, low under speech; its biggest onset found in the file (a loudness
+measure per second, not by ear), held back for the close, and a beat of
+near-silence before it (Innoday: the bed down to 6 %, then the peak file
+opening on the downbeat). Carries the talk's arrival. The picture follows the
+music, never the other way: a recorded close's playbackRate is slaved to the
+audio clock. An accent timed off the world clock lands late whenever a frame
+takes over 83 ms (Užsikrauk karjerai's missed accent). Status: today
+(`<Soundtrack drop>`, talk-owned).
+
 ## Closings
+
+**Close the title's loop.** The close returns to where the opener began
+(Innoday's „…ir atgal“: out from LHCb to the rings, then the opener's zoom
+backwards down into Vilnius onto NFTMC). Carries the promise the title made.
+Status: today; record it as a clip (`hero/bookend.py`) and play it with
+nothing live under it (`transition="fade"`, the next slide a still).
 
 **The whole route in one frame.** The close pulls back to a pose that shows
 every station at once, with every stream still running, and the names below.

@@ -87,8 +87,18 @@ storyboard).
   `parts: lhcb`, `setLhcbTracks`), its steps bus and `<StageSteps>`; the
   talk's detector, bus, Grains.vue, geometry files and hero/ scripts dropped.
   Lint 0/0, check ok (the build fetched the geometry into stage-data/).
-  Ready, then the Scheduler's main, then the deploy: this is the first real
-  test of the Pages workflow and of `pnpm venue` with the geometry fetch.
+  Deployed as bb030e7 (merged with main b7a2172; Pages run 39354502612,
+  green; the live walk clean: 12 slides, no failed requests, no lost
+  context): the first live run of the geometry fetch on Actions, which
+  emitted stage-data/ with the NOTICE; the venue zip (3.2 MB, 77 files)
+  carries both, built offline from the warm cache. The pilot is done; the
+  shots' review is `notes/review.md` (ship; mediums: the VELO block and the
+  pale downstream parts not on screen, both for Tools; the dot's size; the
+  store's dimness; the clock unit under the floor). Tools' answer the same
+  day: the pale parts are the shared grain shader's double gamma (pale
+  colours come out saturated), fixed as an opt-in option in v0.9.x along
+  with the VELO's per-part alpha, a stage-data log line and the sheet under
+  `shots --changed`; nothing to test here until that tag.
 
 ## Arc
 
