@@ -17,7 +17,7 @@ listening in a second language. Yamaguchi (Nagoya) speaks next, on the theory. P
 
 Everything around us is made of a few pieces. Japanese physicists named them step by step;
 LHCb, with Vilnius in it, found five of them bound together; Vilnius and Nagoya now find out
-how. The talk goes out from Vilnius at the start and comes back down to Tokyo at the end.
+how. The talk comes down from space to CERN at the start and back down to Tokyo at the end.
 
 ## Style (every slide)
 
@@ -33,7 +33,6 @@ how. The talk goes out from Vilnius at the start and comes back down to Tokyo at
 | # | Picture | Number | Caption | Min |
 |---|---|---|---|---|
 | 1 | cover: the pentaquark gathers; title, two names and universities | | (the title) | 0.5 |
-| 2 | clip: NFTMC zoom out to the Earth's limb (vilnius_out, 17.8 s) | | Vilnius University, Lithuania | 0.5 |
 | 3 | clip: CERN from the Earth down to Geneva (cern_overview_short, 11 s) | 2018 CERN | CERN, Geneva: Lithuania an Associate Member since 2018 | 0.4 |
 | 4 | clip: the LHC tunnel (cern_footage_2022_013_001_tunnel_cut, 18 s) | 27 km LHC | The Large Hadron Collider, 100 m underground | 0.75 |
 | 5 | clip: LHCb in 3D (lhcb.mp4, cut to ~25 s, muted) | | LHCb: built to study the b quark. Vilnius has been a member since 2024 | 0.8 |
@@ -50,9 +49,10 @@ how. The talk goes out from Vilnius at the start and comes back down to Tokyo at
 | 16 | the finale (below) | | at its end: Thank you · ありがとうございました · Ačiū | 1 |
 | 17 | credits (tiny print) | | | 0 |
 
-12.95 min by the notes. Hidden (kept, `hide: true`): the atom, Yukawa, Belle, the molecule close
+12.45 min by the notes (the owner, 5 Nov: the NFTMC zoom out dropped; slide numbers above are
+the draft's, one higher than the deck's from 3 on). Hidden (kept, `hide: true`): the atom, Yukawa, Belle, the molecule close
 up, Hamamatsu, open data, Lithuania at CERN, the collaboration photo, the detector photo,
-vilnius_back as its own slide.
+vilnius_back as its own slide, vilnius_out (the NFTMC zoom out).
 
 ## The finale (one recorded clip, ~35 s, with its sound)
 
