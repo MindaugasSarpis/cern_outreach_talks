@@ -71,13 +71,13 @@ const still = computed(() => $renderContext?.value !== 'slide' || !!nav.isPrintM
 const frameIn = ref(0)        // cells shown
 const topDim = ref(false)
 const bandsIn = reactive({ mesons: false, baryons: false, penta: false })
-const phase = ref('Six quarks')
+const phase = ref('Quarks: six flavours')
 
 let timers = []
 const at = (ms, fn) => timers.push(setTimeout(fn, ms))
 function reset() {
   timers.forEach(clearTimeout); timers = []
-  frameIn.value = 0; topDim.value = false; phase.value = 'Six quarks'
+  frameIn.value = 0; topDim.value = false; phase.value = 'Quarks: six flavours'
   for (const k in bandsIn) bandsIn[k] = false
   for (const h of hadrons) h.stage = 0
 }
@@ -85,7 +85,7 @@ function finish() {
   frameIn.value = 6; topDim.value = true
   for (const k in bandsIn) bandsIn[k] = true
   for (const h of hadrons) h.stage = 2
-  phase.value = '…and five quarks: a pentaquark'
+  phase.value = 'Pentaquark: five quarks'
 }
 function run() {
   reset()
@@ -96,7 +96,7 @@ function run() {
     const b = band.key
     at(t, () => {
       bandsIn[b] = true
-      phase.value = b === 'mesons' ? 'Mesons: a quark and an antiquark' : b === 'baryons' ? 'Baryons: three quarks' : '…and five quarks: a pentaquark'
+      phase.value = b === 'mesons' ? 'Mesons: a quark and an antiquark' : b === 'baryons' ? 'Baryons: three quarks' : 'Pentaquark: five quarks'
     })
     t += 700
     for (const h of hadrons.filter((x) => x.band === b)) {

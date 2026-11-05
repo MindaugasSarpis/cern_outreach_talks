@@ -102,6 +102,7 @@ html[data-stage] .hero .num { z-index: 2; }
 @media print { .slidev-layout .cap { animation: none; opacity: 1; } }
 /* a number over a clip: its corner darkened (the clip slides' answer to the photos' .shade) */
 .slidev-layout .veil { position: absolute; inset: 0; z-index: 25; pointer-events: none; }
+.slidev-layout .veil.tl { background: radial-gradient(ellipse 55% 65% at 0% 0%, rgba(3, 5, 12, 0.9) 0%, rgba(3, 5, 12, 0.6) 40%, rgba(3, 5, 12, 0) 100%); }
 .slidev-layout .veil.tr { background: radial-gradient(ellipse 55% 65% at 100% 0%, rgba(3, 5, 12, 0.9) 0%, rgba(3, 5, 12, 0.6) 40%, rgba(3, 5, 12, 0) 100%); }
 .slidev-layout .num { z-index: 26; }
 /* the last page's thanks, in the three languages of the room */
@@ -114,3 +115,7 @@ html[data-stage] .hero .num { z-index: 2; }
 }
 .slidev-layout .thanks .sep { color: #9fd8ff; padding: 0 0.4em; }
 @media print { .slidev-layout .thanks { animation: none; opacity: 1; } }
+/* a caption bottom right, where a world label holds the left (slide 7's Zweig) */
+.slidev-layout .cap.r { left: auto; right: 56px; }
+/* a number top centre, between two pictures in the corners (slide 14) */
+.slidev-layout .num.tc { top: 48px; left: 50%; transform: translateX(-50%); text-align: center; }

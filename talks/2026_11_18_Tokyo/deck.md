@@ -60,8 +60,8 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
 <VideoPlayer src="cern_overview_short.mp4" />
-<div class="veil tr"></div>
-<div class="num tr">2018<span class="name">Lithuania at CERN</span></div>
+<div class="veil tl"></div>
+<div class="num tl">2018<span class="name">Lithuania: associate member</span></div>
 <div class="cap">CERN, Geneva: the world’s largest particle physics laboratory</div>
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments -->
@@ -104,7 +104,7 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
 <VideoPlayer src="lhcb.mp4" muted />
-<div class="cap">LHCb: an LHC experiment built to study the b quark</div>
+<div class="cap">LHCb: one of the LHC’s four big experiments, and ours</div>
 
 <!--
 Clip: lhcb.mp4, the LHCb detector in 3D with music (0:47, library clip).
@@ -160,7 +160,7 @@ space: { at: paper, dim: 0.06 }
 ---
 
 <div class="num tr">1964<span class="name">quarks</span></div>
-<div class="cap">Gell-Mann and Zweig: the quarks</div>
+<div class="cap r">Gell-Mann and Zweig: quarks, and on paper already five</div>
 
 <!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
 
@@ -188,7 +188,7 @@ space: { at: km, dim: 0.15 }
 ---
 
 <div class="num tr">1973<span class="name">six quarks</span></div>
-<div class="cap">Kobayashi and Maskawa: six quarks. The b quark is LHCb’s “b”</div>
+<div class="cap">Kobayashi and Maskawa: six quarks, among them LHCb’s “b”</div>
 
 <!-- facts: kobayashi-maskawa-1973, kobayashi-maskawa-nagoya-phd, kobayashi-maskawa-nobel-2008, b-quark-1977, lhcb-b-for-beauty -->
 
@@ -224,7 +224,7 @@ space: { at: lhcb, dim: 0.06 }
 
 <div class="num tl">2015<span class="name">discovery</span></div>
 <div class="num tr">2019<span class="name">precision</span></div>
-<div class="cap">LHCb, 2015: five quarks bound together, a pentaquark</div>
+<div class="cap">LHCb: pentaquarks, five quarks bound together</div>
 
 <!-- facts: lambda-b-contains-b, lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
 
@@ -250,7 +250,7 @@ press release, 14 July 2015. (~1 min)
 space: { at: interiors, dim: 0.15 }
 ---
 
-<div class="cap">A molecule of two particles, or one ball of five quarks?</div>
+<div class="cap">The open question: a molecule of two particles, or one ball of five?</div>
 
 <!-- facts: lhcb-pentaquark-2019 -->
 
@@ -279,15 +279,14 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
      globe.mp4), encode, and put this player back. Fade, not cut: a cut clip never announces that it
      covers the slide, so the world would draw on under it (Innoday, 22 Oct). -->
 <VideoPlayer src="globe.mp4" muted :controls="false" transition="fade" />
-<div class="cap">Vilnius University: LHCb data · Nagoya University: theory</div>
+<div class="cap">Vilnius and Nagoya: LHCb data and theory</div>
 
 <!-- facts: lhcb-vilnius-joined -->
 
 <!--
-The globe (owner, 27 Oct), recorded (globe.mp4, 20.1 s, no sound; it ends and holds the turning
-globe's last frame until the press). The clip's last frame breaks into grains, which fly onto a slowly
-turning globe of grains (coastlines, Natural Earth, public domain); Vilnius lights, then
-Nagoya, and a strand of light is drawn between them, a pulse running along it. No text.
+The globe (globe.mp4, 16.2 s, no sound; 5 Nov): grains gather into a globe of grains framed on
+both cities (coastlines, Natural Earth, public domain; Japan's the brightest); Vilnius lights, then
+Nagoya, and a strand of light is drawn between them, a pulse running along it.
 Vilnius University (LHCb data) and Nagoya University (theory): the project.
 Sources: Natural Earth; Vilnius University. (~0.75 min)
 -->
@@ -298,8 +297,8 @@ space: { at: project, dim: 0.6 }
 
 <StagePhoto src="figures/vilnius_group.jpg" alt="The LHCb group at Vilnius University" focus="50% 50%">
 <div class="shade tl tr strong"></div>
-<div class="num tl">2024<span class="name">LHCb</span></div>
-<div class="num tr">13<span class="name">students</span></div>
+<div class="num tl">2024<span class="name">joined LHCb</span></div>
+<div class="num tr">13<span class="name">summer students at CERN</span></div>
 <div class="cap">The LHCb group at Vilnius University</div>
 </StagePhoto>
 
@@ -316,7 +315,8 @@ Sources: Vilnius University news. (~0.75 min)
 space: { at: project, dim: 0.15 }
 ---
 
-<div class="num bl">2026–2028<span class="name">Penta-Charm · LMT · JSPS</span></div>
+<div class="num tc">2026–2028<span class="name">Penta-Charm</span></div>
+<div class="cap">Funded by the Research Council of Lithuania and JSPS</div>
 
 <!-- facts: lhcb-vilnius-joined -->
 
@@ -568,10 +568,10 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <VideoPlayer src="finale.mp4" :controls="false" transition="fade" />
 
 <!--
-The finale (finale.mp4, 24 s, with its sound; 5 Nov, the tidy cut: one direction, outward): LHCb
-at eye level and one of its collisions, a low bang on the crossing (8 s); the camera dives into
-the flash, and a pentaquark gathers out of it (9-13 s); it closes into a glowing point that
-drifts into Japan's light (13-15 s); the camera draws back from Japan to the whole Earth (15-24 s).
+The finale (finale.mp4, 19.6 s, with its sound; 5 Nov, the tidy cut: one direction, outward):
+LHCb at eye level and one of its collisions, a low bang on the crossing (4 s); a white flash, and
+a pentaquark gathers out of it (5-8 s); it closes into a glowing point that drifts into Japan's
+light (9-10 s); the camera draws back from Japan to the whole Earth (10-19.6 s).
 
 Five quarks were allowed on paper in 1964 and found in 2015. What they are
 made of is the question that Lithuanian and Japanese physicists now answer
@@ -585,7 +585,7 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the 
 
 <CloseStill src="figures/finale_end.jpg" />
 <div class="thanks">Thank you<span class="sep">·</span>ありがとうございました<span class="sep">·</span>Ačiū</div>
-<div class="credits credit">Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Zoom: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies), SpaceEngine; cosmic web: NCSA Advanced Visualization Lab. Globe: Natural Earth.</div>
+<div class="credits credit">Photos: S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, the portraits cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Globe: Natural Earth.</div>
 
 <!--
 Credits (house rule: the credits a licence asks for, tiny print, on the last page). The finale's

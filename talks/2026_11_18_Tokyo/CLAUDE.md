@@ -52,6 +52,12 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 ## Status
 
+- 2026-11-05 (evening, the owner AFK: "review and finish this to completion … have a working tidy
+  version without [the Google Earth shot]. Carefully review the flow, story telling, effects"): a
+  fresh reviewer read the sheet, both clips frame by frame and the copy; its must-fixes and most
+  nice-to-haves are in (Decisions, 5 Nov evening). The finale 19.6 s, the globe 16.2 s, both
+  published and checked byte for byte.
+
 - 2026-11-05 (after the deploy): slide 13 has the group's own photo (cd67a1f, not deployed; the
   "13 students" label beside a 13-person photo may read as "these 13", to the owner). **Open, to
   work on with the owner:** the finale "was a bit weird"; he may record a Google Earth Studio shot
@@ -280,6 +286,31 @@ From your 27 Oct outline (built with the defaults below; say if not):
   (0.75, was 1.3) so Japan's contour, not their glow, is the brightest thing. Two over-bright
   tries (a white haze over Japan) were dialled back. The finale's end is this take, not a
   digital push-in.
+- 2026-11-05 (evening, AFK; the review's findings, taken):
+  - The finale, outward only (19.6 s): LHCb's collision (its near-still first 4 s cut), a white
+    flash, Karjera's pentaquark gathering, closing into a glowing point (a soft round mask) that
+    dissolves into Japan's light, the camera out to the whole Earth. No cosmic web, no Vilnius
+    half of the globe tour. Kept: the colour-charge colours of the finale's pentaquark (another
+    property than slide 9's flavours; noted, not changed).
+  - Slide 12's globe no longer ends where the finale does: framed on both cities (lon 84, tilt 52),
+    no tour, no zoom, its photo dissolve cut (it starts as the grains gather). The finale's globe
+    is the tour take, kept as videos/raw/globe_tour.mp4.
+  - Captions as "Subject: phrase", one clause: slide 2 back to "CERN, Geneva: the world's largest
+    particle physics laboratory" with "2018 / Lithuania: associate member" top left (the clip's own
+    CERN label lands top right); slide 4 "LHCb: one of the LHC's four big experiments, and ours" (b
+    waits for slide 8); slide 7 "Gell-Mann and Zweig: quarks, and on paper already five", bottom
+    right (`.cap.r`, clear of Zweig's name); slide 8 "…six quarks, among them LHCb's “b”"; slide 9's
+    phases "Quarks: six flavours" … "Pentaquark: five quarks"; slide 10 "LHCb: pentaquarks, five
+    quarks bound together" (the plot is 2019's, not 2015's); slide 11 "The open question: …"; slide
+    12 "Vilnius and Nagoya: LHCb data and theory"; slide 13 "2024 joined LHCb", "13 summer students
+    at CERN"; slide 14 "2026–2028 / Penta-Charm" top centre (`.num.tc`) and "Funded by the Research
+    Council of Lithuania and JSPS" (LMT means nothing to the Japanese guests).
+  - Credits: Yukawa, Belle, the zoom (Google Earth, SpaceEngine) and the cosmic web left with their
+    slides.
+  - No flight or clip sounds (`stage.sound: { flight: false, clip: false }`): the hum and the
+    finale's low bang only.
+  - Not taken: trimming lhcb.mp4 (47 s; the owner narrates over it and moves on with the press);
+    fewer hadrons on slide 9 (the owner asked for many).
 
 ## Arc
 
