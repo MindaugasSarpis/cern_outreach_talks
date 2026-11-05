@@ -52,6 +52,16 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 ## Status
 
+- 2026-11-05 (evening): **the 15-min blueprint built** (notes/blueprint-15min.md, the owner's
+  "yes"): 16 slides, 13.3 min by the notes; captions on every slide (`onscreen: words`); the LHC
+  tunnel and LHCb as footage; Sakata back; the six quarks and their recipes (`<QuarkRecipes>`);
+  the new finale (38.6 s, its own low bang) and thanks in three languages. Lint 0/0, `talk check`
+  ok, shots of all 16 at 1280 × 800 (one known failed request: cern_overview_short tried on the
+  talk's release first). finale.mp4 and globe.mp4 are encoded locally, **not published** (the
+  publish was refused by the session's permission check: the owner's call). Until they are on
+  the release videos-2026-11-18-tokyo, a deploy would play the old finale and globe. Live site:
+  0f15e9b (the first 15-min cut).
+
 - 2026-11-05: the **15-min cut** (Arc), the owner's pick of the proposed cut:
   17 slides (10 hidden with `hide: true`, not deleted), 12.8 min by the notes
   (speech ran 15–25 % over in October, so about 15 on the day); no music;
@@ -216,8 +226,36 @@ From your 27 Oct outline (built with the defaults below; say if not):
   waiting for the owner's pick. Lithuania after CERN (question 12): cover →
   CERN clip → 27 km LHC → vilnius_out → LHCb. Tokyo on the globe (question
   15): globe.json and a re-take of globe.mp4.
+- 2026-11-05 (the owner, reviewing 0f15e9b): "Sakata is there but just missed, story telling is
+  off, the LHCb presented by it's weight, need to carefully present quarks. The zoomout from NFTMC
+  and the space one was a bit out of place"; "Need more words on the slides"; "show a quick video
+  of LHC and LHCb, not only a photo. Innoday was nice as well as delphi one"; "Make the story
+  telling all uniform and the flow has to be solid". The blueprint (notes/blueprint-15min.md) took
+  all of it; the owner dropped the NFTMC zoom ("maybe we don't need?") and added "a frame of all
+  SM quarks, and then how they form baryons and mesons, with different combinations (like an
+  active slide, many of them)" ("just t quark doesn't hadronize"). Then "yes".
+  - Captions: one per slide, bottom left on a shade (`.cap`), a second after the slide opens; no
+    titles. Headmatter `onscreen: words`, `sources: notes`.
+  - The six quarks: `setup/QuarkRecipes.vue`, flat 2D (sharp at 1280 × 800, nothing for a slow
+    laptop): the frame (top dims: it decays before it binds), then 6 mesons, 7 baryons and Pc⁺
+    (uudcc̄), each from quarks flying out of the frame; ~25 s, once, then held.
+  - The finale (the owner: "this lhcb collision with low bang … then we zoomin, show pentaquark
+    being created, and then zoomout to Tokyo"; "make sure it doesn't crash / lag like the other
+    one (pre-record if needed)"; "do the low one"): one recorded clip, 38.6 s, unmuted:
+    Karjera's close (LHCb's point cloud, its collision) → into the flash → Karjera's cover
+    pentaquark gathering → out through the cosmic web (vilnius_back's raw) → the globe with
+    Tokyo, closing in on Japan. The sound is the shared opening's low bang rendered onto it
+    (`videos/finale/lowbang.py`, `segments.sh`). Credits for the LHCb model and collision added.
+  - Hidden: vilnius_out, vilnius_back (as a slide), the 5 600 t photo, the families station
+    slide (the recipes slide replaces it).
 
 ## Arc
+
+**15-min blueprint (5 Nov, evening; supersedes the cut below).** 1 cover · 2 CERN clip, 2018
+Lithuania at CERN · 3 LHC tunnel footage, 27 km · 4 lhcb.mp4 · 5 proton · 6 Sakata 1956 · 7 1964
+quarks · 8 1973 six quarks · 9 the six quarks and their recipes · 10 2015/2019 · 11 molecule or
+compact · 12 globe · 13 the Vilnius group · 14 the project, 2026–2028 Penta-Charm · LMT · JSPS ·
+15 finale · 16 thanks and credits. Captions: notes/blueprint-15min.md.
 
 **15-min cut (5 Nov).** 1 cover (0.5) · 2 CERN clip (0.69) · 3 27 km LHC
 (0.75) · 4 vilnius_out, Lithuania since 2018 said (0.8) · 5 5 600 t LHCb
@@ -319,18 +357,15 @@ credits are in tiny print on slide 21 (CERN's need none).
 Files of this talk's own (setup/, styles/, vite.config.ts) and what each does.
 A piece a second talk needs moves to the shared kit instead of being copied.
 
-- `setup/Soundtrack.vue`, `slideHooks.js`, `soundLevel.js`: copied 2026-10-26
-  from Užsikrauk karjerai (the newest copies) for the finale's music: `drop`
-  times Starfire's peak off the recorded clip's clock; `+`/`-` set the level,
-  seen only in the presenter window. They move into the toolkit later.
+- `setup/QuarkRecipes.vue` (5 Nov): the six quarks and their recipes, flat 2D.
+- `videos/finale/segments.sh`, `lowbang.py` (5 Nov): how finale.mp4 is cut from its takes, and
+  the opening's low bang (components/lhc-opening/sound.js) rendered offline as a WAV.
+- (`setup/Soundtrack.vue`, `slideHooks.js`, `soundLevel.js` left on 5 Nov with the music.)
 - `setup/CloseStill.vue`: copied from Innoday; the finale clip's last frame
   on the page after it, with the world resting.
 - (`setup/Regather.vue` left on 27 Oct: in the take, the camera's arrival at
   the cover's station had already gathered the pentaquark, and Regather at
   35 s scattered and gathered it a second time. The arrival alone does it.)
-- `public/audio/starfire_close.m4a` (the track 0:30 to its end) and
-  `starfire_close_peak.m4a` (from 2:52.85; the peak, the downbeat at 2:54.85,
-  is 2.013 s in): Innoday's files, Scott Buckley „Starfire“, CC BY 4.0.
 - `styles/index.css` `.hero`: the full-bleed StagePhoto slides, with a dark
   corner behind the numbers.
 - `setup/globe.js`, `CollabGlobe.vue`, `view.js` (copied 2026-10-27 from

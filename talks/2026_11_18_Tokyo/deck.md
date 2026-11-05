@@ -94,7 +94,7 @@ machine and its experiments. My group works on one of those
 experiments, LHCb.
 
 Sources: home.cern (LHC facts; member states; Lithuania; "Japan contributes
-an additional 5 billion yen", 1998). (~0.75 min)
+an additional 5 billion yen", 1998). (~0.5 min)
 -->
 
 ---
@@ -109,7 +109,7 @@ Clip: lhcb.mp4, the LHCb detector in 3D with music (0:47, library clip).
 Let it play; at most one line over the music: "This is LHCb, the experiment
 my group works on: a detector the size of a house, built to catch what comes
 out of the collisions." It condenses out of the dust and leaves the same way.
-(~0.8 min)
+(~0.5 min)
 -->
 
 ---
@@ -558,26 +558,18 @@ Source: D. Stonkus, BSc thesis, Vilnius University (2026). (~1 min)
 space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the take's last pose; the world rests under the clip
 ---
 
-<!-- recorded (owner, 27 Oct: "The heavy point cloud should be pre-rendered as a video"; Karjera's live close went
-     white on the owner's M2): finale.mp4 is the take of the live slide, whose frontmatter was
-       space:
-         path: [[0, { at: [270, 0, 0], dist: 17, yaw: 0, pitch: 8 }], [3, { at: [250, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [6, { at: [220, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [9, { at: [190, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [12, { at: [160, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [15, { at: [130, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [18, { at: [100, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [21, { at: [70, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [24, { at: [40, 0, 0], dist: 24, yaw: 55, pitch: 10 }], [27, { at: [10, 0, 0], dist: 30, yaw: 40, pitch: 14 }], [31, { at: [-8, 0, 0], dist: 20, yaw: 20, pitch: 12 }], [34, { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14 }]]
-         ambient: [[0, 1], [29.5, 1], [31, 0.12], [32.5, 0.12], [35, 1]]
-         dim: 0.1
-     and whose body was empty: the camera's arrival at the cover's station (within `reach`, about 32 s)
-     gathers its pentaquark again, as on the cover (27 Oct: Regather at 35 s made them gather twice,
-     the arrival's and its own, so it left). To change it, put those back, record
-     (videos/manifest.toml, finale.mp4), encode, and put this back. The clip plays muted, with no
-     music (owner, 5 Nov: the room's audio may be poor; the stage's own effects only). -->
-<VideoPlayer src="finale.mp4" muted :controls="false" transition="fade" />
+<!-- recorded (owner, 5 Nov: "we show this lhcb collision with low bang … then we zoomin, show pentaquark being
+     created, and then zoomout to Tokyo"; "make sure it doesn't crash / lag like the other one (pre-record if
+     needed)"): finale.mp4 is cut from recorded takes (videos/manifest.toml, videos/finale/), so nothing heavy
+     runs live. It carries its own sound, the low bang, so it plays unmuted; it ends on Japan and waits. -->
+<VideoPlayer src="finale.mp4" :controls="false" transition="fade" />
 
 <!--
-The finale, recorded (finale.mp4, 53 s, muted; 27 Oct), no music (5 Nov). From
-the two teams the camera runs back along the whole route, pentaquark to collider, to the
-cover's pose; the world falls dark for a moment (31-32.6 s), and the five quarks fly in again
-as on the cover, landing at 36.0 s.
-
-Close. Back at the pentaquark from the start; the hum returns.
+The finale (finale.mp4, 38.6 s, with its sound; 5 Nov): LHCb at eye level and one of its
+collisions, a low bang on the crossing (8 s); the camera dives into the flash, and a pentaquark
+gathers out of it (9-13 s); it shrinks to a point, and we come home from the cosmic web to the
+Earth (14-22 s); the Earth becomes the globe, Vilnius, Nagoya and Tokyo light up, and the camera
+closes in on Japan (22-38.6 s).
 
 Five quarks were allowed on paper in 1964 and found in 2015. What they are
 made of is the question that Lithuanian and Japanese physicists now answer
@@ -591,7 +583,7 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the 
 
 <CloseStill src="figures/finale_end.jpg" />
 <div class="thanks">Thank you<span class="sep">·</span>ありがとうございました<span class="sep">·</span>Ačiū</div>
-<div class="credits credit">Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped. Zoom: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies), SpaceEngine; cosmic web: NCSA Advanced Visualization Lab. Globe: Natural Earth.</div>
+<div class="credits credit">Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Zoom: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies), SpaceEngine; cosmic web: NCSA Advanced Visualization Lab. Globe: Natural Earth.</div>
 
 <!--
 Credits (house rule: the credits a licence asks for, tiny print, on the last page). The finale's

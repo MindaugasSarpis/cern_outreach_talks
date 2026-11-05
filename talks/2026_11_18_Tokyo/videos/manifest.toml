@@ -58,10 +58,11 @@ profile = "high-motion"
 used_in = ["deck"]
 loudnorm = false
 notes   = """\
-Slide 21: the globe of Vilnius and Nagoya (setup/globe.js, CollabGlobe.vue), 20.1 s, no sound: \
-vilnius_back.mp4's last frame dissolves into grains onto the globe; the cities light, the strand \
-is drawn, the globe turns. pnpm talk record tokyo --out DIR -- --slides 21 --fps 50 --hold 20 \
---clicks none (the live slide: CollabGlobe with figures/earth_back.jpg at the `globe` station), its \
+The globe of Vilnius and Nagoya (setup/globe.js, CollabGlobe.vue), 20.1 s, no sound: the Earth's \
+limb picture dissolves into grains onto the globe; the cities light (Vilnius, Nagoya, Tokyo: Tokyo \
+and Nagoya read as one light over Japan), the strand is drawn, the globe turns (lon 105, 5 Nov). \
+pnpm talk record tokyo --out DIR -- --slides N --fps 50 --hold 20 --clicks none (the live slide: \
+<CollabGlobe src="figures/earth_back.jpg" /> at the `globe` station in place of the player), its \
 first 0.4 s cut (a dim blink as the picture's copy took over): ffmpeg -ss 0.4, libx264 -crf 14."""
 
 [[videos]]
@@ -70,8 +71,16 @@ profile = "high-motion"
 used_in = ["deck"]
 loudnorm = false
 notes   = """\
-Slide 26: the finale, 53 s, no sound: the camera back along the whole route to the cover's \
-pose, the world dark 31-32.6 s, the cover's pentaquark gathering again on the camera's arrival \
-(landing 36.0 s), then held. Played muted, Starfire live with its peak slaved to the clip (Soundtrack `drop`). \
-pnpm talk record tokyo --out DIR -- --slides 26 --fps 50 --hold 16 --max 70 --clicks none (the \
-live slide: its `space.path` and <Regather> as in the deck's comment on slide 26)."""
+The finale (5 Nov, the owner: "we show this lhcb collision with low bang … then we zoomin, show \
+pentaquark being created, and then zoomout to Tokyo"; "pre-record if needed"), 38.6 s, with its \
+sound: LHCb's point cloud at eye level and its collision (Užsikrauk karjerai's close, slide 16, \
+11-20 s of its take), the camera pushing into the flash; a white dissolve into Karjera's cover \
+(slide 1, its plate: the world alone), whose pentaquark (u u d c c-bar in colour charge) gathers \
+out of a crossing's flash, then shrinks to a point; the cosmic web back to the Earth's limb \
+(vilnius_back's raw at 1.5x); the globe with Vilnius, Nagoya and Tokyo, its last 4 s pushing in on \
+Japan. The sound is the shared opening's low bang (components/lhc-opening/sound.js: swell, thump \
+on the crossing at 8.0 s, drone, its four-second letting go), rendered offline onto the clip so it \
+lands on the frame. Takes: pnpm talk record Karjer --out DIR -- --slides 16 --fps 50 --hold 4 \
+--max 32 --clicks none; pnpm talk record Karjer --no-build --out DIR -- --slides 1 --fps 50 --plate \
+--hold 14 --max 20 --clicks none; the globe as globe.mp4's take. Cut: videos/finale/segments.sh \
+and videos/finale/lowbang.py."""
