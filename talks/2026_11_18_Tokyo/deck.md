@@ -21,6 +21,7 @@ stage:
   # the drawing buffer at most 1920 wide: a projector's 1080p in full, a Retina Mac's screen at a little over half
   # its pixels (owner, 27 Oct: "make sure it works on a mac"; Innoday's fix for the M2's lag, 22 Oct)
   options: { maxBufferWidth: 1920 }
+  motion: floor   # v0.11 (owner, 5 Nov: "use the most up-to-date tools"): under reduced motion the world runs, floored; without WebGL the slides' recorded plates play
 title: "Lithuania and Japan: pentaquarks"
 lang: en                  # slides and notes; `pnpm talk lint` reads it
 sources: notes            # sources in the speaker notes
@@ -268,7 +269,7 @@ together. Yukawa's pion as the molecule's glue, and the theory, are Yasuhiro Yam
 -->
 
 ---
-space: { at: globe }
+space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the clip's settled end
 ---
 
 <!-- recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy point cloud should be
@@ -555,7 +556,7 @@ Source: D. Stonkus, BSc thesis, Vilnius University (2026). (~1 min)
 -->
 
 ---
-space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the take's last pose; the world rests under the clip
+space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded: clip }   # the world rests under the clip; v0.11: a back-step or a jump holds its end
 ---
 
 <!-- recorded (owner, 5 Nov: "we show this lhcb collision with low bang … then we zoomin, show pentaquark being
