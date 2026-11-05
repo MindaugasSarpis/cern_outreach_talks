@@ -1,5 +1,5 @@
 {
-  "fingerprint": "a897821b14280729e6e84a8b0d76270e1a76b1d5",
+  "fingerprint": "16ee135ee68475f1ba70898464060ca36a415b83",
   "fps": 25,
   "hold": 20,
   "slides": [
@@ -24,21 +24,21 @@
     "09-plate.mp4": 15977594,
     "10-plate.mp4": 13289397,
     "11-plate.mp4": 13630386,
-    "13-plate.mp4": 12947190,
-    "14-plate.mp4": 10294730,
-    "16-plate.mp4": 15531331
+    "13-plate.mp4": 12900816,
+    "14-plate.mp4": 10418887,
+    "16-plate.mp4": 20720841
   },
   "settle": {
-    "01-plate.mp4": null,
-    "05-plate.mp4": null,
-    "06-plate.mp4": null,
-    "07-plate.mp4": null,
-    "08-plate.mp4": null,
-    "09-plate.mp4": null,
-    "10-plate.mp4": null,
-    "11-plate.mp4": null,
-    "13-plate.mp4": null,
-    "14-plate.mp4": null,
+    "01-plate.mp4": 4.92,
+    "05-plate.mp4": 7.56,
+    "06-plate.mp4": 4.52,
+    "07-plate.mp4": 6.76,
+    "08-plate.mp4": 3.32,
+    "09-plate.mp4": 12.2,
+    "10-plate.mp4": 7.56,
+    "11-plate.mp4": 7.56,
+    "13-plate.mp4": 7.56,
+    "14-plate.mp4": 1.8,
     "16-plate.mp4": null
   },
   "capped": {
