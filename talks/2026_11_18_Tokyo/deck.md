@@ -132,7 +132,7 @@ Sources: home.cern (Lithuania becomes an Associate Member State, 2018; president
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
-<VideoPlayer src="lhcb.mp4" />
+<VideoPlayer src="lhcb.mp4" muted />
 
 <!--
 Clip: lhcb.mp4, the LHCb detector in 3D with music (0:47, library clip).
@@ -520,18 +520,15 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the 
      and whose body was empty: the camera's arrival at the cover's station (within `reach`, about 32 s)
      gathers its pentaquark again, as on the cover (27 Oct: Regather at 35 s made them gather twice,
      the arrival's and its own, so it left). To change it, put those back, record
-     (videos/manifest.toml, finale.mp4), encode, and put this back. The clip plays muted; Starfire plays
-     live and `drop` slaves the clip's rate to it so its peak lands on the quarks' landing (Innoday's
-     close, 22 Oct; Karjera, 26 Oct: world and audio clocks drift, so never time music off the world). -->
+     (videos/manifest.toml, finale.mp4), encode, and put this back. The clip plays muted, with no
+     music (owner, 5 Nov: the room's audio may be poor; the stage's own effects only). -->
 <VideoPlayer src="finale.mp4" muted :controls="false" transition="fade" />
-<Soundtrack src="audio/starfire_close.m4a" start :level="0.5" keys :drop="{ at: 36.0, file: 'audio/starfire_close_peak.m4a', hit: 2.013, duck: 33.4, quiet: 0.06 }" />
 
 <!--
-The finale, recorded (finale.mp4, 53 s, muted; 27 Oct), Starfire live (+ and - set its
-level, seen only in the presenter window), its peak on the regathering. From
+The finale, recorded (finale.mp4, 53 s, muted; 27 Oct), no music (5 Nov). From
 the two teams the camera runs back along the whole route, pentaquark to collider, to the
 cover's pose; the world falls dark for a moment (31-32.6 s), and the five quarks fly in again
-as on the cover, landing at 36.0 s on Starfire's peak.
+as on the cover, landing at 36.0 s.
 
 Close. Back at the pentaquark from the start; the hum returns.
 
@@ -546,12 +543,10 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the 
 ---
 
 <CloseStill src="figures/finale_end.jpg" />
-<Soundtrack src="audio/starfire_close.m4a" :level="0.5" keys />
-<div class="credits credit">Music: Scott Buckley, "Starfire", CC BY 4.0. Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped. Zoom: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies), SpaceEngine; cosmic web: NCSA Advanced Visualization Lab. Globe: Natural Earth.</div>
+<div class="credits credit">Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped. Zoom: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies), SpaceEngine; cosmic web: NCSA Advanced Visualization Lab. Globe: Natural Earth.</div>
 
 <!--
 Credits (house rule: the credits a licence asks for, tiny print, on the last page). The finale's
-last frame as a picture, the world resting under it (a Mac need not draw it live); the music
-goes on. Nothing to say here: questions.
+last frame as a picture, the world resting under it (a Mac need not draw it live). Nothing to say here: questions.
 (~0 min)
 -->

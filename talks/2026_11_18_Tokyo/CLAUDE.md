@@ -168,6 +168,21 @@ From your 27 Oct outline (built with the defaults below; say if not):
 15. The globe shows only Vilnius and Nagoya, joined by a strand. Add LHCb's
     other institutes faintly (Innoday's globe), or Tokyo for the embassy?
 
+- 2026-11-05 (owner): **15 min** again ("Looks like we only got 15 min for the
+  talk"); the 30-min Arc below is cut down (Arc, once the owner picks the cut).
+- 2026-11-05 (owner): the projector is **1280 × 800** (16:10), low resolution.
+  The deck stays 16:9: the scale is set by the width either way (1280/980,
+  so the type is the same size), the bars are black on a dark deck, and the
+  16:9 clips and recordings are not cropped. Undo: `aspectRatio: 16/10`
+  (the clips, under `fit: cover`, then lose about 5 % at each side).
+- 2026-11-05 (owner: "we shouldn't have soundtrack as well, the audio quality
+  might be low, maybe just some audio effects"): no music. Starfire left the
+  finale and the credits page (its files, Soundtrack.vue, soundLevel.js and
+  slideHooks.js deleted, its credit line removed); lhcb.mp4 plays muted. The
+  stage's own effects stay (`stage.sound` default: the hum on the cover and
+  the close, a whoosh on each flight, a rising tone as a clip condenses). The
+  v0.11 plan's `StageSoundtrack` and `space.clock: music` no longer apply.
+
 ## Arc
 
 27 Oct cut (the owner's outline). Pictures and numbers only; photos are

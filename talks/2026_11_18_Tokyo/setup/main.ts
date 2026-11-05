@@ -7,24 +7,20 @@
 // the talk.)
 //
 // Copied 2026-10-26 for the recorded finale, until the toolkit takes them over:
-// Soundtrack.vue, slideHooks.js and soundLevel.js from Užsikrauk karjerai (the newest
-// copies), CloseStill.vue from Innoday. (Regather.vue, the finale's second gathering, left on 27 Oct: the
+// CloseStill.vue from Innoday (Soundtrack.vue, slideHooks.js and soundLevel.js left on 5 Nov
+// with the music: the owner wants no soundtrack, only the stage's own effects). (Regather.vue, the finale's second gathering, left on 27 Oct: the
 // camera's arrival at the cover's station gathers the pentaquark itself.)
 // Copied 2026-10-27 for the Vilnius–Nagoya globe: globe.js, CollabGlobe.vue, view.js and
 // (its `places` latch only) afterCover.js from Innoday; the strand between the cities is Tokyo's.
 import { registerBuilder } from 'slidev-addon-stage'
-import Soundtrack from './Soundtrack.vue'
 import CloseStill from './CloseStill.vue'
 import CollabGlobe from './CollabGlobe.vue'
 import { installGlobe } from './globe.js'
 import { armAfterCover } from './afterCover.js'
-import { installSoundKeys } from './soundLevel.js'
 
 export default ({ app, router }) => {
   armAfterCover(router)                     // the globe's data and picture load once the cover is behind
   installGlobe(registerBuilder)             // `collab-globe`: the globe of grains, Vilnius and Nagoya joined
   app.component('CollabGlobe', CollabGlobe) // the coming-back clip's last frame dissolving onto the globe
-  app.component('Soundtrack', Soundtrack)   // the finale's music; `drop` times its peak off the recorded clip
   app.component('CloseStill', CloseStill)   // the finale's last frame on the credits page, the world resting
-  installSoundKeys()                        // `+` / `-` for the music's level, seen only in the presenter window
 }
