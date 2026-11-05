@@ -14,6 +14,7 @@
 // (its `places` latch only) afterCover.js from Innoday; the strand between the cities is Tokyo's.
 import { registerBuilder } from 'slidev-addon-stage'
 import CloseStill from './CloseStill.vue'
+import QuarkRecipes from './QuarkRecipes.vue'
 import CollabGlobe from './CollabGlobe.vue'
 import { installGlobe } from './globe.js'
 import { armAfterCover } from './afterCover.js'
@@ -22,5 +23,6 @@ export default ({ app, router }) => {
   armAfterCover(router)                     // the globe's data and picture load once the cover is behind
   installGlobe(registerBuilder)             // `collab-globe`: the globe of grains, Vilnius and Nagoya joined
   app.component('CollabGlobe', CollabGlobe) // the coming-back clip's last frame dissolving onto the globe
+  app.component('QuarkRecipes', QuarkRecipes) // the six quarks and their recipes, flat 2D (5 Nov)
   app.component('CloseStill', CloseStill)   // the finale's last frame on the credits page, the world resting
 }

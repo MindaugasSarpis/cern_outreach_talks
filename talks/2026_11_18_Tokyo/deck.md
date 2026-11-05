@@ -23,6 +23,8 @@ stage:
   options: { maxBufferWidth: 1920 }
 title: "Lithuania and Japan: pentaquarks"
 lang: en                  # slides and notes; `pnpm talk lint` reads it
+sources: notes            # sources in the speaker notes
+onscreen: words           # captions (the owner, 5 Nov: "Need more words on the slides … all of the captions also disappeared"); no titles
 htmlAttrs:
   lang: en
 duration: 15min
@@ -56,6 +58,9 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
 <VideoPlayer src="cern_overview_short.mp4" />
+<div class="veil tr"></div>
+<div class="num tr">2018<span class="name">Lithuania at CERN</span></div>
+<div class="cap">CERN, Geneva: the world’s largest particle physics laboratory</div>
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments -->
 
@@ -69,12 +74,12 @@ Sources: home.cern. (~0.5 min)
 space: { at: lhc, dim: 0.25 }
 ---
 
-<StagePhoto src="figures/tunnel.jpg" alt="The LHC tunnel: blue dipole magnets with the letters LHC" focus="50% 50%" arrive="camera">
-<div class="shade tr"></div>
+<VideoPlayer src="cern_footage_2022_013_001_tunnel_cut.mp4" muted />
+<div class="veil tr"></div>
 <div class="num tr">27 km<span class="name">LHC</span></div>
-</StagePhoto>
+<div class="cap">The Large Hadron Collider, 100 m underground</div>
 
-<!-- facts: cern-lhc-size-cost, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
+<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lhc-size-cost, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
 
 <!--
 This is the Large Hadron Collider at CERN: a ring 27 kilometres long, about
@@ -96,6 +101,245 @@ an additional 5 billion yen", 1998). (~0.75 min)
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
+<VideoPlayer src="lhcb.mp4" muted />
+<div class="cap">LHCb: an LHC experiment built to study the b quark</div>
+
+<!--
+Clip: lhcb.mp4, the LHCb detector in 3D with music (0:47, library clip).
+Let it play; at most one line over the music: "This is LHCb, the experiment
+my group works on: a detector the size of a house, built to catch what comes
+out of the collisions." It condenses out of the dust and leaves the same way.
+(~0.8 min)
+-->
+
+---
+space: { at: proton, dim: 0.2 }
+---
+
+<div class="cap">A proton: three quarks, never seen alone</div>
+
+<!-- facts: proton-mass-quarks-1-percent -->
+
+<!--
+Come closer again, into one proton, and we find three smaller particles:
+quarks. Two of one kind, called "up", and one called "down". They are bound
+by that same strong force, carried by particles called gluons.
+
+Two things about quarks are strange. First, no one has ever seen a quark on
+its own: pull two apart, and the energy you put in turns into new quarks.
+They only exist in groups. Second, the three quarks make up only about one
+percent of the proton's mass. The other ninety-nine percent is the energy of
+their motion and of the force that holds them. Most of the mass of your body
+comes from this energy.
+
+Source: Yang et al., PRL 121 (2018) 212001; Brookhaven National Laboratory
+news. (~1 min)
+-->
+
+---
+space: { at: sakata, dim: 0.15 }
+---
+
+<div class="num tr">1956<span class="name">Nagoya</span></div>
+<div class="cap">Shoichi Sakata: matter from three building blocks</div>
+
+<!-- facts: sakata-model-1956, sakata-nagoya-1956 -->
+
+<!--
+Shoichi Sakata at Nagoya University: in 1956, every such particle built from
+three basic ones; in the Nobel Committee's words, "the Sakata particles
+finally became the quarks of Gell-Mann".
+Sources: S. Sakata, Prog. Theor.
+Phys. 16 (1956) 686; nobelprize.org (Scientific Background 2008). (~0.75 min)
+-->
+
+---
+space: { at: paper, dim: 0.06 }
+---
+
+<div class="num tr">1964<span class="name">quarks</span></div>
+<div class="cap">Gell-Mann and Zweig: the quarks</div>
+
+<!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
+
+<!--
+The idea of quarks came in 1964, from two physicists working independently.
+Murray Gell-Mann, at the top, in a two-page letter titled "A schematic model
+of baryons and mesons", received by the journal on 4 January. George Zweig,
+below, at CERN, in a report dated 17 January, where he called the particles
+"aces".
+
+Both papers already allow more than the two recipes. Gell-Mann writes that
+baryons can be made of three quarks, or of four quarks and an antiquark.
+Zweig's footnote says the same in his words. That five-particle combination,
+four quarks and one antiquark, is what we now call a pentaquark.
+
+Neither paper could say whether such a particle really exists. The search
+took the rest of the century.
+
+Sources: M. Gell-Mann, Phys. Lett. 8 (1964) 214; G. Zweig, CERN-TH-401
+(1964). (~1 min)
+-->
+
+---
+space: { at: km, dim: 0.15 }
+---
+
+<div class="num tr">1973<span class="name">six quarks</span></div>
+<div class="cap">Kobayashi and Maskawa: six quarks. The b quark is LHCb’s “b”</div>
+
+<!-- facts: kobayashi-maskawa-1973, kobayashi-maskawa-nagoya-phd, kobayashi-maskawa-nobel-2008, b-quark-1977, lhcb-b-for-beauty -->
+
+<!--
+Makoto Kobayashi and Toshihide Maskawa, both from Sakata's school in Nagoya:
+in 1972-73, three families of quarks (six) when three quarks were known; the fifth, b, found in 1977, is the
+"b" in LHCb (Nobel Prize 2008).
+Sources: Prog. Theor. Phys. 49 (1973) 652;
+nobelprize.org; home.cern. (~0.75 min)
+-->
+
+---
+space: { at: families, dim: 0.97 }   # the world nearly dark: the flat slide carries it
+---
+
+<QuarkRecipes />
+
+<!-- facts: kaon-quark-content, lambda-b-contains-b, gellmann-1964-five-quark-sentence, exotic-hadrons-particle-zoo -->
+
+<!--
+The six quarks in the Standard Model's frame (owner, 5 Nov: "a frame of all SM quarks, and then
+how they form baryons and mesons, with different combinations"), then the recipes one after
+another: mesons (a quark and an antiquark: π⁺ u d̄, K⁺ u s̄, D⁰ c ū, J/ψ c c̄, B⁺ u b̄, Υ b b̄),
+baryons (three quarks: p uud, n udd, Λ uds, Ω⁻ sss, Λc⁺ udc, Ξcc⁺⁺ ucc, LHCb 2017, Λb⁰ udb),
+and last five, uudcc̄, a pentaquark. Top stays dim: it decays before it can bind (the owner:
+"just t quark doesn't hadronize"). setup/QuarkRecipes.vue; it runs once, about 30 s, and holds.
+Sources: PDG (quark model); LHCb, PRL 119 (2017) 112001 (Ξcc⁺⁺). (~1.25 min)
+-->
+
+---
+space: { at: lhcb, dim: 0.06 }
+---
+
+<div class="num tl">2015<span class="name">discovery</span></div>
+<div class="num tr">2019<span class="name">precision</span></div>
+<div class="cap">LHCb, 2015: five quarks bound together, a pentaquark</div>
+
+<!-- facts: lambda-b-contains-b, lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
+
+<!--
+Many experiments looked, and several claims did not survive. Then in July
+2015, LHCb reported the first convincing pentaquarks, fifty-one years after
+Gell-Mann's paper. They are made of two up quarks, a down quark, and a pair
+of a heavy "charm" quark and its antiquark.
+
+In 2019, with nine times more data, LHCb looked again. This is the result:
+each black point counts the particles we found at a given mass, the red line
+is the fit, and the three narrow peaks are three pentaquarks. Where we had seen one bump in 2015, there were in fact
+two, and a third appeared beside them.
+
+The pentaquarks came out of the decays of the Λb, a baryon that carries a b
+quark: Kobayashi and Maskawa's quark.
+
+Sources: LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001; CERN
+press release, 14 July 2015. (~1 min)
+-->
+
+---
+space: { at: interiors, dim: 0.15 }
+---
+
+<div class="cap">A molecule of two particles, or one ball of five quarks?</div>
+
+<!-- facts: lhcb-pentaquark-2019 -->
+
+<!--
+So pentaquarks exist. But we still do not know how they are built, and there
+are two main pictures.
+
+On the left, the five quarks are really two particles side by side, three
+quarks in one and a quark with an antiquark in the other, held loosely
+together like two atoms in a molecule. On the right, all five quarks are
+packed into one ball.
+
+The narrow peaks of 2019 point toward the molecule, but the question is
+open. To settle it, we need precise measurements and precise theory that
+predicts what each picture should look like in the data, worked out
+together. Yukawa's pion as the molecule's glue, and the theory, are Yasuhiro Yamaguchi's talk, next (15-min cut, 5 Nov). (~1 min)
+-->
+
+---
+space: { at: globe }
+---
+
+<!-- recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy point cloud should be
+     pre-rendered as a video"): the live slide is CollabGlobe with figures/earth_back.jpg (setup/globe.js,
+     the `globe` station); to change it, put that component back, record it (videos/manifest.toml,
+     globe.mp4), encode, and put this player back. Fade, not cut: a cut clip never announces that it
+     covers the slide, so the world would draw on under it (Innoday, 22 Oct). -->
+<VideoPlayer src="globe.mp4" muted :controls="false" transition="fade" />
+<div class="cap">Vilnius University: LHCb data · Nagoya University: theory</div>
+
+<!-- facts: lhcb-vilnius-joined -->
+
+<!--
+The globe (owner, 27 Oct), recorded (globe.mp4, 20.1 s, no sound; it ends and holds the turning
+globe's last frame until the press). The clip's last frame breaks into grains, which fly onto a slowly
+turning globe of grains (coastlines, Natural Earth, public domain); Vilnius lights, then
+Nagoya, and a strand of light is drawn between them, a pulse running along it. No text.
+Vilnius University (LHCb data) and Nagoya University (theory): the project.
+Sources: Natural Earth; Vilnius University. (~0.75 min)
+-->
+
+---
+space: { at: project, dim: 0.6 }
+---
+
+<StagePhoto src="figures/vilnius.jpg" alt="The Great Courtyard of Vilnius University" focus="50% 65%" class="darker">
+<div class="shade tl tr strong"></div>
+<div class="num tl">2024<span class="name">LHCb</span></div>
+<div class="num tr">13<span class="name">students</span></div>
+<div class="cap">The LHCb group at Vilnius University</div>
+</StagePhoto>
+
+<!-- facts: lhcb-vilnius-joined, lhcb-vilnius-students -->
+
+<!--
+Vilnius University: an LHCb institute since September 2024; most of the group
+are students, and 13 VU students did CERN summer placements in 2026.
+Sources: Vilnius University news. (~0.75 min)
+-->
+
+---
+space: { at: project, dim: 0.15 }
+---
+
+<div class="num bl">2026–2028<span class="name">Penta-Charm · LMT · JSPS</span></div>
+
+<!-- facts: lhcb-vilnius-joined -->
+
+<!--
+This is what our project does. On the left, the people of the LHCb group at
+Vilnius University, who analyse LHCb data. On the right, theorists in Japan,
+at Nagoya University, who specialise in the theory of these particles. In
+the middle, the pentaquark that both sides study.
+
+We work as one team: the theory predicts what each picture of the
+pentaquark should leave in the data, and we test those predictions with
+LHCb measurements. Young researchers on both sides learn to work across
+experiment and theory.
+
+The project runs from April 2026 to March 2028, funded by the Research Council
+of Lithuania (LMT) and the Japan Society for the Promotion of Science (JSPS)
+in their bilateral programme (the owner, 5 Nov: may be shown).
+
+Sources: Vilnius University (LHCb Vilnius, 2024); the project's application. (~0.75 min)
+-->
+
+---
+hide: true   # the 15-min blueprint (owner, 5 Nov); remove to bring it back
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
+---
+
 <VideoPlayer src="vilnius_out.mp4" />
 
 <!-- facts: lhcb-vilnius-joined -->
@@ -106,6 +350,41 @@ University's physics campus in Saulėtekio slėnis, out over Vilnius (Google Ear
 clouds and the Earth's limb. It ends and waits for the press. The coming back is slide 12.
 Sources: the owner's SpaceEngine edit, stabilised for Užsikrauk karjerai (videos/manifest.toml).
 (~0.5 min)
+-->
+
+---
+hide: true   # the 15-min blueprint (owner, 5 Nov); remove to bring it back
+space: { at: globe }
+---
+
+<VideoPlayer src="vilnius_back.mp4" transition="fade" />
+
+<!--
+The coming back (owner, 27 Oct: "Show Nagoya / Vilnius on a globe indicate collaboration
+(maybe after zoomout video coming back)"). Clip vilnius_back.mp4 (12 s, no sound): slide 2's
+zoom run backwards from further out, the cosmic web, past the galaxy, back to the Earth's limb.
+It ends on that frame and waits for the press; the next slide starts from the same frame.
+(~0.3 min)
+-->
+
+---
+hide: true   # the 15-min blueprint (owner, 5 Nov); remove to bring it back
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22, dim: 0.6 }
+---
+
+<StagePhoto src="figures/lhcb_detector.jpg" alt="The LHCb detector in its cavern under the LHCb banner, March 2024" focus="50% 50%">
+<div class="shade tl strong"></div>
+<div class="num tl">5 600 t<span class="name">LHCb</span></div>
+</StagePhoto>
+
+<!-- facts: lhcb-detector-size, lhcb-100m-below-ground, lhcb-three-storey-worked, lhcb-run3-readout-4tbs -->
+
+<!--
+What LHCb is (owner, 27 Oct). Photo: the LHCb detector in its cavern, March 2024
+(CERN-PHOTO-202403-050-3, M. Brice). 5 600 tonnes, 21 m long, 10 m high (about three
+storeys), 100 m under ground near Ferney-Voltaire; a forward spectrometer, its subdetectors one
+behind another; 4 TB/s read out in real time in Run 3.
+Sources: home.cern (LHCb); arXiv:2106.07701. (~0.75 min)
 -->
 
 ---
@@ -127,40 +406,6 @@ community at CERN, 19 January 2026 (CERN-PHOTO-202601-009-23). Associate Member 
 2026; the Lithuanian Particle Physics Consortium (CERN-LT) since 2022.
 Sources: home.cern (Lithuania becomes an Associate Member State, 2018; presidential visits,
 2026); LRT, 20 September 2026; cds.cern.ch CERN-PHOTO-202609-233-1; LMT. (~1 min)
--->
-
----
-hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
-space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
----
-
-<VideoPlayer src="lhcb.mp4" muted />
-
-<!--
-Clip: lhcb.mp4, the LHCb detector in 3D with music (0:47, library clip).
-Let it play; at most one line over the music: "This is LHCb, the experiment
-my group works on: a detector the size of a house, built to catch what comes
-out of the collisions." It condenses out of the dust and leaves the same way.
-(~0.8 min)
--->
-
----
-space: { at: lhc, dist: 22, yaw: 15, pitch: 22, dim: 0.6 }
----
-
-<StagePhoto src="figures/lhcb_detector.jpg" alt="The LHCb detector in its cavern under the LHCb banner, March 2024" focus="50% 50%">
-<div class="shade tl strong"></div>
-<div class="num tl">5 600 t<span class="name">LHCb</span></div>
-</StagePhoto>
-
-<!-- facts: lhcb-detector-size, lhcb-100m-below-ground, lhcb-three-storey-worked, lhcb-run3-readout-4tbs -->
-
-<!--
-What LHCb is (owner, 27 Oct). Photo: the LHCb detector in its cavern, March 2024
-(CERN-PHOTO-202403-050-3, M. Brice). 5 600 tonnes, 21 m long, 10 m high (about three
-storeys), 100 m under ground near Ferney-Voltaire; a forward spectrometer, its subdetectors one
-behind another; 4 TB/s read out in real time in Run 3.
-Sources: home.cern (LHCb); arXiv:2106.07701. (~0.75 min)
 -->
 
 ---
@@ -223,30 +468,7 @@ Osaka University. (~1.25 min)
 -->
 
 ---
-space: { at: proton, dim: 0.2 }
----
-
-<div class="num tr">1 %<span class="name">mass</span></div>
-
-<!-- facts: proton-mass-quarks-1-percent -->
-
-<!--
-Come closer again, into one proton, and we find three smaller particles:
-quarks. Two of one kind, called "up", and one called "down". They are bound
-by that same strong force, carried by particles called gluons.
-
-Two things about quarks are strange. First, no one has ever seen a quark on
-its own: pull two apart, and the energy you put in turns into new quarks.
-They only exist in groups. Second, the three quarks make up only about one
-percent of the proton's mass. The other ninety-nine percent is the energy of
-their motion and of the force that holds them. Most of the mass of your body
-comes from this energy.
-
-Source: Yang et al., PRL 121 (2018) 212001; Brookhaven National Laboratory
-news. (~1 min)
--->
-
----
+hide: true   # the 15-min blueprint (owner, 5 Nov); remove to bring it back
 space: { at: families, dim: 0.15 }
 ---
 
@@ -257,66 +479,6 @@ On the right, three quarks: a baryon, like the proton. Hundreds of such
 particles are known, and they all follow these two recipes.
 
 The question is whether nature allows more: four quarks, five, six. (~0.75 min)
--->
-
----
-hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
-space: { at: sakata, dim: 0.15 }
----
-
-<div class="num tr">1956<span class="name">Nagoya</span></div>
-
-<!-- facts: sakata-model-1956, sakata-nagoya-1956 -->
-
-<!--
-Shoichi Sakata at Nagoya University: in 1956, every such particle built from
-three basic ones; in the Nobel Committee's words, "the Sakata particles
-finally became the quarks of Gell-Mann".
-Sources: S. Sakata, Prog. Theor.
-Phys. 16 (1956) 686; nobelprize.org (Scientific Background 2008). (~1.25 min)
--->
-
----
-space: { at: paper, dim: 0.06 }
----
-
-<div class="num tr">1964<span class="name">quarks</span></div>
-
-<!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
-
-<!--
-The idea of quarks came in 1964, from two physicists working independently.
-Murray Gell-Mann, at the top, in a two-page letter titled "A schematic model
-of baryons and mesons", received by the journal on 4 January. George Zweig,
-below, at CERN, in a report dated 17 January, where he called the particles
-"aces".
-
-Both papers already allow more than the two recipes. Gell-Mann writes that
-baryons can be made of three quarks, or of four quarks and an antiquark.
-Zweig's footnote says the same in his words. That five-particle combination,
-four quarks and one antiquark, is what we now call a pentaquark.
-
-Neither paper could say whether such a particle really exists. The search
-took the rest of the century.
-
-Sources: M. Gell-Mann, Phys. Lett. 8 (1964) 214; G. Zweig, CERN-TH-401
-(1964). (~1 min)
--->
-
----
-space: { at: km, dim: 0.15 }
----
-
-<div class="num tr">1973<span class="name">six quarks</span></div>
-
-<!-- facts: kobayashi-maskawa-1973, kobayashi-maskawa-nagoya-phd, kobayashi-maskawa-nobel-2008, b-quark-1977, lhcb-b-for-beauty -->
-
-<!--
-Makoto Kobayashi and Toshihide Maskawa, both from Sakata's school in Nagoya:
-in 1972-73, three families of quarks (six) when three quarks were known; the fifth, b, found in 1977, is the
-"b" in LHCb (Nobel Prize 2008).
-Sources: Prog. Theor. Phys. 49 (1973) 652;
-nobelprize.org; home.cern. (~0.75 min)
 -->
 
 ---
@@ -342,54 +504,6 @@ PRL 91 (2003) 012002; PDG. (~1.25 min)
 -->
 
 ---
-space: { at: lhcb, dim: 0.06 }
----
-
-<div class="num tl">2015<span class="name">discovery</span></div>
-<div class="num tr">2019<span class="name">precision</span></div>
-
-<!-- facts: lambda-b-contains-b, lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
-
-<!--
-Many experiments looked, and several claims did not survive. Then in July
-2015, LHCb reported the first convincing pentaquarks, fifty-one years after
-Gell-Mann's paper. They are made of two up quarks, a down quark, and a pair
-of a heavy "charm" quark and its antiquark.
-
-In 2019, with nine times more data, LHCb looked again. This is the result:
-each black point counts the particles we found at a given mass, the red line
-is the fit, and the three narrow peaks are three pentaquarks. Where we had seen one bump in 2015, there were in fact
-two, and a third appeared beside them.
-
-The pentaquarks came out of the decays of the Λb, a baryon that carries a b
-quark: Kobayashi and Maskawa's quark.
-
-Sources: LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001; CERN
-press release, 14 July 2015. (~1 min)
--->
-
----
-space: { at: interiors, dim: 0.15 }
----
-
-<!-- facts: lhcb-pentaquark-2019 -->
-
-<!--
-So pentaquarks exist. But we still do not know how they are built, and there
-are two main pictures.
-
-On the left, the five quarks are really two particles side by side, three
-quarks in one and a quark with an antiquark in the other, held loosely
-together like two atoms in a molecule. On the right, all five quarks are
-packed into one ball.
-
-The narrow peaks of 2019 point toward the molecule, but the question is
-open. To settle it, we need precise measurements and precise theory that
-predicts what each picture should look like in the data, worked out
-together. Yukawa's pion as the molecule's glue, and the theory, are Yasuhiro Yamaguchi's talk, next (15-min cut, 5 Nov). (~1 min)
--->
-
----
 hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: [229.3, 0, 0], dist: 7.5, yaw: 0, pitch: 6, dim: 0.15 }
 ---
@@ -402,60 +516,6 @@ read as deuteron-like; Yukawa's pion exchange, which binds the deuteron, is
 one of the glues theorists use for it, beside a short-range five-quark part.
 Sources: PDG review "Pentaquarks" (2026); Y. Yamaguchi et al., PRD 96 (2017)
 114031. (~1 min)
--->
-
----
-space: { at: globe }
----
-
-<VideoPlayer src="vilnius_back.mp4" transition="fade" />
-
-<!--
-The coming back (owner, 27 Oct: "Show Nagoya / Vilnius on a globe indicate collaboration
-(maybe after zoomout video coming back)"). Clip vilnius_back.mp4 (12 s, no sound): slide 2's
-zoom run backwards from further out, the cosmic web, past the galaxy, back to the Earth's limb.
-It ends on that frame and waits for the press; the next slide starts from the same frame.
-(~0.3 min)
--->
-
----
-space: { at: globe }
----
-
-<!-- recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy point cloud should be
-     pre-rendered as a video"): the live slide is CollabGlobe with figures/earth_back.jpg (setup/globe.js,
-     the `globe` station); to change it, put that component back, record it (videos/manifest.toml,
-     globe.mp4), encode, and put this player back. Fade, not cut: a cut clip never announces that it
-     covers the slide, so the world would draw on under it (Innoday, 22 Oct). -->
-<VideoPlayer src="globe.mp4" muted :controls="false" transition="fade" />
-
-<!-- facts: lhcb-vilnius-joined -->
-
-<!--
-The globe (owner, 27 Oct), recorded (globe.mp4, 20.1 s, no sound; it ends and holds the turning
-globe's last frame until the press). The clip's last frame breaks into grains, which fly onto a slowly
-turning globe of grains (coastlines, Natural Earth, public domain); Vilnius lights, then
-Nagoya, and a strand of light is drawn between them, a pulse running along it. No text.
-Vilnius University (LHCb data) and Nagoya University (theory): the project.
-Sources: Natural Earth; Vilnius University. (~1 min)
--->
-
----
-space: { at: project, dim: 0.6 }
----
-
-<StagePhoto src="figures/vilnius.jpg" alt="The Great Courtyard of Vilnius University" focus="50% 65%" class="darker">
-<div class="shade tl tr strong"></div>
-<div class="num tl">2024<span class="name">LHCb</span></div>
-<div class="num tr">13<span class="name">students</span></div>
-</StagePhoto>
-
-<!-- facts: lhcb-vilnius-joined, lhcb-vilnius-students -->
-
-<!--
-Vilnius University: an LHCb institute since September 2024; most of the group
-are students, and 13 VU students did CERN summer placements in 2026.
-Sources: Vilnius University news. (~0.75 min)
 -->
 
 ---
@@ -495,32 +555,6 @@ Source: D. Stonkus, BSc thesis, Vilnius University (2026). (~1 min)
 -->
 
 ---
-space: { at: project, dim: 0.15 }
----
-
-<div class="num bl">2026–2028<span class="name">LMT · JSPS</span></div>
-
-<!-- facts: lhcb-vilnius-joined -->
-
-<!--
-This is what our project does. On the left, the people of the LHCb group at
-Vilnius University, who analyse LHCb data. On the right, theorists in Japan,
-at Nagoya University, who specialise in the theory of these particles. In
-the middle, the pentaquark that both sides study.
-
-We work as one team: the theory predicts what each picture of the
-pentaquark should leave in the data, and we test those predictions with
-LHCb measurements. Young researchers on both sides learn to work across
-experiment and theory.
-
-The project runs from April 2026 to March 2028, funded by the Research Council
-of Lithuania (LMT) and the Japan Society for the Promotion of Science (JSPS)
-in their bilateral programme (the owner, 5 Nov: may be shown).
-
-Sources: Vilnius University (LHCb Vilnius, 2024); the project's application. (~0.75 min)
--->
-
----
 space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the take's last pose; the world rests under the clip
 ---
 
@@ -556,6 +590,7 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the 
 ---
 
 <CloseStill src="figures/finale_end.jpg" />
+<div class="thanks">Thank you<span class="sep">·</span>ありがとうございました<span class="sep">·</span>Ačiū</div>
 <div class="credits credit">Photos: H. Yukawa, Nobel Foundation archive (public domain); S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Belle, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, Belle and the portraits cropped. Zoom: Google Earth (Landsat / Copernicus; Airbus, CNES / Airbus, Maxar Technologies), SpaceEngine; cosmic web: NCSA Advanced Visualization Lab. Globe: Natural Earth.</div>
 
 <!--
