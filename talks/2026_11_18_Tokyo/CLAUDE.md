@@ -15,10 +15,14 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
   Embassy of the Republic of Lithuania in Japan, Tokyo. Project details
   (name, funders, dates, meetings) stay in the private brief until the owner
   says they may be shown: the site and its speaker notes are public.
-- Date and slot: 2026-11-18; **30 min** (owner, 2026-10-26, via the Scheduler: "Tokyo is now a
-  30-minute talk"; it was built as 15), time of day TBC
-- Venue and screen: embassy room; 16:9 projector or TV assumed (TBC)
-- Audience: ambassadors and dignitaries, no physics background; Japanese and
+- Date and slot: 2026-11-18, 15:15–15:30: **15 min**, no Q&A slot (owner,
+  5 Nov, the program; it was 30 min from 26 Oct). Prof. Yasuhiro Yamaguchi
+  (Nagoya University) speaks next, 15 min, then RIKEN researchers; the
+  Ambassador's welcome and greetings come before (the full program: the
+  private brief).
+- Venue and screen: embassy room; projector **1280 × 800** (owner, 5 Nov);
+  the room's audio may be poor: no music, the stage's effects only
+- Audience: ambassadors and dignitaries, RIKEN researchers, Japanese and
   Lithuanian guests
 - Language: English for slides and notes (`lang: en`); spoken English (TBC)
 - Look: slidev-addon-stage, classic palette (TBC); the same particle effects
@@ -47,6 +51,16 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 ## Status
+
+- 2026-11-05: the **15-min cut** (Arc), the owner's pick of the proposed cut:
+  17 slides (10 hidden with `hide: true`, not deleted), 12.8 min by the notes
+  (speech ran 15–25 % over in October, so about 15 on the day); no music;
+  affiliations on the cover. Lint 0/0, `talk check` ok; shots of all 17 at
+  1280 × 800 clean (exit 0), the numbers, their names and the cover read at
+  that size; the credits are illegible there (tiny print, as the rule has
+  it). The finale clip's first frame cuts Nagoya University's label at the
+  right (the take; for the v0.11 re-take). Not deployed: the live site is
+  still 68f07c2 (30 min, Starfire).
 
 - Branch `talk/tokyo`, worktree `.claude/worktrees/tokyo` (`pnpm talk open tokyo`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_11_18_Tokyo/
@@ -183,7 +197,28 @@ From your 27 Oct outline (built with the defaults below; say if not):
   the close, a whoosh on each flight, a rising tone as a clip condenses). The
   v0.11 plan's `StageSoundtrack` and `space.clock: music` no longer apply.
 
+- 2026-11-05 (owner, the program): Yamaguchi's affiliation is Nagoya University
+  (question 2): the cover reads "Mindaugas Šarpis, Vilnius University" and
+  "Yasuhiro Yamaguchi, Nagoya University". Yamaguchi's own talk follows, so
+  the molecule's theory and Yukawa's pion are his: slide 11 hands over to it.
+- 2026-11-05 (owner picked the recommended cut): hidden, in this order of
+  return if time frees up: Lithuania at CERN (2018 said on the LHC slide),
+  the lhcb.mp4 clip, the collaboration photo, the atom, Yukawa's portrait,
+  Sakata, Belle, the molecule close-up, Hamamatsu channels, open data. Kept
+  on screen from the Japanese thread: Kobayashi–Maskawa (b is LHCb's "b").
+  Alternatives offered: Sakata (Nagoya) in place of Kobayashi–Maskawa; more
+  Japan, less CERN.
+
 ## Arc
+
+**15-min cut (5 Nov).** 1 cover (0.5) · 2 vilnius_out (0.8) · 3 CERN clip
+(0.69) · 4 27 km LHC, Lithuania since 2018 said (0.75) · 5 5 600 t LHCb
+(0.75) · 6 1 % mass (1) · 7 meson and baryon (0.75) · 8 1964 quarks (1) ·
+9 1973 six quarks (0.75) · 10 2015/2019 (1) · 11 molecule or compact, over
+to Yamaguchi (1) · 12 vilnius_back (0.3) · 13 globe (1) · 14 2024 LHCb,
+13 students (0.75) · 15 the project (0.75) · 16 finale (1) · 17 credits.
+12.8 min. The 30-min table below keeps the hidden slides' places.
+
 
 27 Oct cut (the owner's outline). Pictures and numbers only; photos are
 full-bleed StagePhotos; world pages carry the portraits. New slides carry

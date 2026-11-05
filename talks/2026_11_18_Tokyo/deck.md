@@ -25,14 +25,14 @@ title: "Lithuania and Japan: pentaquarks"
 lang: en                  # slides and notes; `pnpm talk lint` reads it
 htmlAttrs:
   lang: en
-duration: 30min
+duration: 15min
 layout: cover
 space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.15 }
 ---
 
 <div class="tokyo-title">
   <div class="t">Unraveling the Structure of P<sub>c</sub> Pentaquarks through Joint Experimental and Theoretical Effort between Lithuanian and Japanese scientists</div>
-  <div class="who">Mindaugas Šarpis · Yasuhiro Yamaguchi</div>
+  <div class="who">Mindaugas Šarpis, Vilnius University<br>Yasuhiro Yamaguchi, Nagoya University</div>
 </div>
 
 <!--
@@ -46,9 +46,9 @@ Your Excellency, ladies and gentlemen, thank you for having me. I am
 Mindaugas Šarpis, and together with Yasuhiro Yamaguchi I lead the project
 named on the screen. I lead the LHCb group at Vilnius University, which works
 on one of the four large experiments at CERN, near Geneva. In the next
-thirty minutes I would like to show you what this object behind me is, why
+fifteen minutes I would like to show you what this object behind me is, why
 physicists waited half a century to find it, and why Lithuanian and Japanese
-scientists are now studying it together. (~1 min)
+scientists are now studying it together. (~0.5 min)
 -->
 
 ---
@@ -62,7 +62,7 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 <!--
 Lithuania (owner, 27 Oct). Clip vilnius_out.mp4 (17.8 s, no sound): from NFTMC, Vilnius
 University's physics campus in Saulėtekio slėnis, out over Vilnius (Google Earth) to the
-clouds and the Earth's limb. It ends and waits for the press. The coming back is slide 20.
+clouds and the Earth's limb. It ends and waits for the press. The coming back is slide 12.
 Sources: the owner's SpaceEngine edit, stabilised for Užsikrauk karjerai (videos/manifest.toml).
 (~0.5 min)
 -->
@@ -105,10 +105,11 @@ machine and its experiments. My group works on one of those
 experiments, LHCb.
 
 Sources: home.cern (LHC facts; member states; Lithuania; "Japan contributes
-an additional 5 billion yen", 1998). (~1.25 min)
+an additional 5 billion yen", 1998). (~0.75 min)
 -->
 
 ---
+hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: lhc, dist: 18, yaw: -10, pitch: 18, dim: 0.6 }
 ---
 
@@ -129,6 +130,7 @@ Sources: home.cern (Lithuania becomes an Associate Member State, 2018; president
 -->
 
 ---
+hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
@@ -158,10 +160,11 @@ What LHCb is (owner, 27 Oct). Photo: the LHCb detector in its cavern, March 2024
 (CERN-PHOTO-202403-050-3, M. Brice). 5 600 tonnes, 21 m long, 10 m high (about three
 storeys), 100 m under ground near Ferney-Voltaire; a forward spectrometer, its subdetectors one
 behind another; 4 TB/s read out in real time in Run 3.
-Sources: home.cern (LHCb); arXiv:2106.07701. (~1 min)
+Sources: home.cern (LHCb); arXiv:2106.07701. (~0.75 min)
 -->
 
 ---
+hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22, dim: 0.6 }
 ---
 
@@ -181,6 +184,7 @@ SPC, 22 September 2026; Vilnius University. (~0.75 min)
 -->
 
 ---
+hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: atom, dim: 0.15 }
 ---
 
@@ -197,6 +201,7 @@ Source: M. Strassler, "The nuclei of atoms" (profmattstrassler.com). (~1 min)
 -->
 
 ---
+hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: nucleus, dist: 12, yaw: -6, pitch: 5, dim: 0.15 }
 ---
 
@@ -238,7 +243,7 @@ their motion and of the force that holds them. Most of the mass of your body
 comes from this energy.
 
 Source: Yang et al., PRL 121 (2018) 212001; Brookhaven National Laboratory
-news. (~1.5 min)
+news. (~1 min)
 -->
 
 ---
@@ -251,10 +256,11 @@ into one of two families. On the left, a quark with an antiquark: a meson.
 On the right, three quarks: a baryon, like the proton. Hundreds of such
 particles are known, and they all follow these two recipes.
 
-The question is whether nature allows more: four quarks, five, six. (~1.25 min)
+The question is whether nature allows more: four quarks, five, six. (~0.75 min)
 -->
 
 ---
+hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: sakata, dim: 0.15 }
 ---
 
@@ -294,7 +300,7 @@ Neither paper could say whether such a particle really exists. The search
 took the rest of the century.
 
 Sources: M. Gell-Mann, Phys. Lett. 8 (1964) 214; G. Zweig, CERN-TH-401
-(1964). (~1.5 min)
+(1964). (~1 min)
 -->
 
 ---
@@ -310,10 +316,11 @@ Makoto Kobayashi and Toshihide Maskawa, both from Sakata's school in Nagoya:
 in 1972-73, three families of quarks (six) when three quarks were known; the fifth, b, found in 1977, is the
 "b" in LHCb (Nobel Prize 2008).
 Sources: Prog. Theor. Phys. 49 (1973) 652;
-nobelprize.org; home.cern. (~1.25 min)
+nobelprize.org; home.cern. (~0.75 min)
 -->
 
 ---
+hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: km, dim: 0.6 }
 ---
 
@@ -358,7 +365,7 @@ The pentaquarks came out of the decays of the Λb, a baryon that carries a b
 quark: Kobayashi and Maskawa's quark.
 
 Sources: LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001; CERN
-press release, 14 July 2015. (~1.75 min)
+press release, 14 July 2015. (~1 min)
 -->
 
 ---
@@ -379,10 +386,11 @@ packed into one ball.
 The narrow peaks of 2019 point toward the molecule, but the question is
 open. To settle it, we need precise measurements and precise theory that
 predicts what each picture should look like in the data, worked out
-together. (~1.25 min)
+together. Yukawa's pion as the molecule's glue, and the theory, are Yasuhiro Yamaguchi's talk, next (15-min cut, 5 Nov). (~1 min)
 -->
 
 ---
+hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: [229.3, 0, 0], dist: 7.5, yaw: 0, pitch: 6, dim: 0.15 }
 ---
 
@@ -447,10 +455,11 @@ space: { at: project, dim: 0.6 }
 <!--
 Vilnius University: an LHCb institute since September 2024; most of the group
 are students, and 13 VU students did CERN summer placements in 2026.
-Sources: Vilnius University news. (~1.25 min)
+Sources: Vilnius University news. (~0.75 min)
 -->
 
 ---
+hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: project, dim: 0.6 }
 ---
 
@@ -471,6 +480,7 @@ Sources: arXiv:2305.10515; hamamatsu.com; CERN Indico
 -->
 
 ---
+hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: [203, 0, 0], dist: 12, yaw: 4, pitch: 2, dim: 0.2 }
 ---
 
@@ -504,7 +514,7 @@ experiment and theory.
 (The project's dates, its funders and next week's meeting in Nagoya go on
 this slide once the owner confirms they may be shown.)
 
-Sources: Vilnius University (LHCb Vilnius, 2024). (~1.5 min)
+Sources: Vilnius University (LHCb Vilnius, 2024). (~0.75 min)
 -->
 
 ---
@@ -535,7 +545,7 @@ Close. Back at the pentaquark from the start; the hum returns.
 Five quarks were allowed on paper in 1964 and found in 2015. What they are
 made of is the question that Lithuanian and Japanese physicists now answer
 together. Thank you, and thank you to the Embassy for bringing us together
-today. (~1.25 min)
+today. (~1 min)
 -->
 
 ---
