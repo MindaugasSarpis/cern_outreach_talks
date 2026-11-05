@@ -294,7 +294,7 @@ From your 27 Oct outline (built with the defaults below; say if not):
     property than slide 9's flavours; noted, not changed).
   - Slide 12's globe no longer ends where the finale does: framed on both cities (lon 84, tilt 52),
     no tour, no zoom, its photo dissolve cut (it starts as the grains gather). The finale's globe
-    is the tour take, kept as videos/raw/globe_tour.mp4.
+    is the tour take, kept as videos/takes/tokyo_globe_tour.mp4.
   - Captions as "Subject: phrase", one clause: slide 2 back to "CERN, Geneva: the world's largest
     particle physics laboratory" with "2018 / Lithuania: associate member" top left (the clip's own
     CERN label lands top right); slide 4 "LHCb: one of the LHC's four big experiments, and ours" (b

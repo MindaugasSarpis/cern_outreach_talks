@@ -76,7 +76,7 @@ Vilnius, Nagoya and Tokyo light, the strand is drawn; Japan's coastline (Natural
 brightest contour. pnpm talk record tokyo --out DIR -- --slides 12 --fps 50 --hold 20 --max 40 \
 --clicks none (the live slide: <CollabGlobe src="figures/earth_back.jpg" />, no caption, space: \
 { at: globe, sway: 0 }), then ffmpeg -ss 4.4 (the photo's dissolve left out), libx264 -crf 14. \
-The finale's globe is another take, kept as videos/raw/globe_tour.mp4 (videos/finale/segments.sh)."""
+The finale's globe is another take, kept as videos/takes/tokyo_globe_tour.mp4 (videos/finale/segments.sh)."""
 
 [[videos]]
 name    = "finale.mp4"

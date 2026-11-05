@@ -15,8 +15,8 @@ ZA="(1+if(gt(t,3.6),pow((t-3.6)/1.4,2)*3,0))"
 K="min(1,max(0,(t-5.0)/1.4))"
 Z="max(0.03,1-pow($K,1.5))"
 "$F/ffmpeg" -v error -y -ss 3.6 -t 6.4 -i "$S/karjera_cover/01-plate.mp4" -f lavfi -i color=c=black:s=1920x1080:r=50:d=6.4 -filter_complex "[0:v]format=yuva420p,geq=lum='lum(X,Y)':cb='cb(X,Y)':cr='cr(X,Y)':a='255*clip((if(lt(T,3.9),2,max(0.22,2-(T-3.9)*1.6))-hypot(X/W-0.83,(Y/H-0.48)*H/W))/0.12,0,1)',scale=w='trunc(1920*$Z/2)*2':h=-2:eval=frame,fade=t=out:st=5.7:d=0.7:alpha=1[s];[1:v][s]overlay=x='(1590-690*$K)-1590*w/1920':y='(520+30*$K)-520*h/1080':eval=frame:shortest=1[v]" -map "[v]" "${ENC[@]}" B.mp4
-# D: the globe tour take (videos/raw/globe_tour.mp4, kept from globe.mp4 of 5 Nov: space.json `tour` [[0, 25.3, 54.7], [2.5, 25.3, 54.7], [7.5, 139.8, 35.7], [12, 139.8, 35.7]] and the camera from dist 7 to 12.5 at 15.5-20.5 s) from 13 s: centred on Japan, its contour the brightest, then out to the whole Earth
-"$F/ffmpeg" -v error -y -ss 13 -t 10 -i "$W/videos/raw/globe_tour.mp4" -vf "fps=50" "${ENC[@]}" D.mp4
+# D: the globe tour take (videos/takes/tokyo_globe_tour.mp4, kept from globe.mp4 of 5 Nov: space.json `tour` [[0, 25.3, 54.7], [2.5, 25.3, 54.7], [7.5, 139.8, 35.7], [12, 139.8, 35.7]] and the camera from dist 7 to 12.5 at 15.5-20.5 s) from 13 s: centred on Japan, its contour the brightest, then out to the whole Earth
+"$F/ffmpeg" -v error -y -ss 13 -t 10 -i "$W/videos/takes/tokyo_globe_tour.mp4" -vf "fps=50" "${ENC[@]}" D.mp4
 for f in A B D; do echo "$f $("$F/ffprobe" -v error -show_entries format=duration -of csv=p=0 $f.mp4)"; done
 # Then: python3 -I lowbang.py bang.wav 20.0 4.0:7.9:1 (the swell from 1.4 s, the thump on the crossing at 4.0,
 # the drone letting go at 7.9 as the pentaquark has formed), and the join:
