@@ -88,13 +88,14 @@ used_in = ["deck"]
 loudnorm = false
 notes   = """\
 The finale (5 Nov, the owner: "we show this lhcb collision with low bang … then we zoomin, show \
-pentaquark being created, and then zoomout to Tokyo"; "pre-record if needed"), 45 s, with its \
+pentaquark being created, and then zoomout to Tokyo"; "pre-record if needed"), 24 s, with its \
 sound: LHCb's point cloud at eye level and its collision (Užsikrauk karjerai's close, slide 16, \
 11-20 s of its take), the camera pushing into the flash; a white dissolve into Karjera's cover \
 (slide 1, its plate: the world alone), whose pentaquark (u u d c c-bar in colour charge) gathers \
-out of a crossing's flash, then shrinks to a point; the cosmic web back to the Earth's limb \
-(vilnius_back's raw at 1.5x); the globe take (globe.mp4's raw): from Vilnius along the strand to \
-Japan, centred on Tokyo, out to the whole Earth. The sound is the shared opening's low bang (components/lhc-opening/sound.js: swell, thump \
+out of a crossing's flash, then closes into a glowing point (a soft round mask) that drifts into \
+Japan's light; globe.mp4's raw from 13 s: centred on Japan, out to the whole Earth. (The 45 s cut \
+with the cosmic web and the whole globe tour was "a bit weird", the owner, 5 Nov: four looks, \
+the direction flipping, the globe twice.) The sound is the shared opening's low bang (components/lhc-opening/sound.js: swell, thump \
 on the crossing at 8.0 s, drone, its four-second letting go), rendered offline onto the clip so it \
 lands on the frame. Takes: pnpm talk record Karjer --out DIR -- --slides 16 --fps 50 --hold 4 \
 --max 32 --clicks none; pnpm talk record Karjer --no-build --out DIR -- --slides 1 --fps 50 --plate \

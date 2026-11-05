@@ -21,6 +21,7 @@ stage:
   # the drawing buffer at most 1920 wide: a projector's 1080p in full, a Retina Mac's screen at a little over half
   # its pixels (owner, 27 Oct: "make sure it works on a mac"; Innoday's fix for the M2's lag, 22 Oct)
   options: { maxBufferWidth: 1920 }
+  sound: { flight: false, clip: false }   # the hum only (5 Nov: the room's audio may be poor; as Karjera and OpenData, "transitions were like driving sounds")
   motion: floor   # v0.11 (owner, 5 Nov: "use the most up-to-date tools"): under reduced motion the world runs, floored; without WebGL the slides' recorded plates play
 title: "Lithuania and Japan: pentaquarks"
 lang: en                  # slides and notes; `pnpm talk lint` reads it
@@ -567,12 +568,10 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <VideoPlayer src="finale.mp4" :controls="false" transition="fade" />
 
 <!--
-The finale (finale.mp4, 45 s, with its sound; 5 Nov): LHCb at eye level and one of its
-collisions, a low bang on the crossing (8 s); the camera dives into the flash, and a pentaquark
-gathers out of it (9-13 s); it shrinks to a point, and we come home from the cosmic web to the
-Earth (14-22 s); the Earth becomes the globe close over Vilnius, the strand runs to Japan, the
-globe turns to Tokyo, and the camera draws back to the whole Earth, Japan bright at its centre
-(22-45 s).
+The finale (finale.mp4, 24 s, with its sound; 5 Nov, the tidy cut: one direction, outward): LHCb
+at eye level and one of its collisions, a low bang on the crossing (8 s); the camera dives into
+the flash, and a pentaquark gathers out of it (9-13 s); it closes into a glowing point that
+drifts into Japan's light (13-15 s); the camera draws back from Japan to the whole Earth (15-24 s).
 
 Five quarks were allowed on paper in 1964 and found in 2015. What they are
 made of is the question that Lithuanian and Japanese physicists now answer
