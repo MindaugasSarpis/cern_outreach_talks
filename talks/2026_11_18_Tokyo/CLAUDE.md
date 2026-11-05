@@ -52,6 +52,15 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 ## Status
 
+- 2026-11-05 (after the deploy): slide 13 has the group's own photo (cd67a1f, not deployed; the
+  "13 students" label beside a 13-person photo may read as "these 13", to the owner). **Open, to
+  work on with the owner:** the finale "was a bit weird"; he may record a Google Earth Studio shot
+  (an orbit-to-Tokyo descent, 1920 × 1080, 15-20 s, no burned-in text, the attribution in a corner)
+  to replace the globe end. Suspects named to him: four looks in 45 s (Karjera's blue point cloud,
+  the colour-charged pentaquark, the photographic cosmic web, the grain globe), the direction
+  flipping (the space shot flies in, the globe zooms in then out), the globe repeating slide 12,
+  the length.
+
 - 2026-11-05 (late): **toolkit v0.11.0** (the owner: "use the most up-to-date tools … Integrate them
   now, rebuild talk"). `talk ready` passed on ea5cbe9 (lint 0/0, check, shots, pages, preflight,
   venue; plates ok with one warning: 16-plate.mp4, the credits page, never settles under its
