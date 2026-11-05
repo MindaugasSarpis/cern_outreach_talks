@@ -57,6 +57,11 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
   fresh reviewer read the sheet, both clips frame by frame and the copy; its must-fixes and most
   nice-to-haves are in (Decisions, 5 Nov evening). The finale 19.6 s, the globe 16.2 s, both
   published and checked byte for byte.
+  **Deployed:** commit ce7a9f7, Pages run 42058982384 (success), URL 200, the live walk passed;
+  `ready` passed on it (plates re-recorded on this deck and published; one warning, 16-plate.mp4
+  under the credits page's full-frame still). The venue zip: talks/2026_11_18_Tokyo/
+  2026_11_18_Tokyo-venue.zip in the worktree (246 MB, 18 clips with the plates, gitignored; copy it
+  to the presenting laptop, RUN_ME.txt inside). Open: the Google Earth shot, if the owner records one.
 
 - 2026-11-05 (after the deploy): slide 13 has the group's own photo (cd67a1f, not deployed; the
   "13 students" label beside a 13-person photo may read as "these 13", to the owner). **Open, to
