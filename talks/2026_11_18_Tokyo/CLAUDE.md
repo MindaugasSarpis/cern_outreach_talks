@@ -208,15 +208,23 @@ From your 27 Oct outline (built with the defaults below; say if not):
   on screen from the Japanese thread: Kobayashi–Maskawa (b is LHCb's "b").
   Alternatives offered: Sakata (Nagoya) in place of Kobayashi–Maskawa; more
   Japan, less CERN.
+- 2026-11-05 (owner's answers to the open list): the project's dates and
+  funders may be shown (question 1): slide 15 reads "2026–2028 / LMT · JSPS"
+  bottom left (April 2026 – March 2028, the LMT–JSPS bilateral programme).
+  A greeting in Japanese and in Lithuanian, spoken (question 4; nothing on
+  screen). Photos of the team may be used (question 5): none in the repo yet,
+  waiting for the owner's pick. Lithuania after CERN (question 12): cover →
+  CERN clip → 27 km LHC → vilnius_out → LHCb. Tokyo on the globe (question
+  15): globe.json and a re-take of globe.mp4.
 
 ## Arc
 
-**15-min cut (5 Nov).** 1 cover (0.5) · 2 vilnius_out (0.8) · 3 CERN clip
-(0.69) · 4 27 km LHC, Lithuania since 2018 said (0.75) · 5 5 600 t LHCb
+**15-min cut (5 Nov).** 1 cover (0.5) · 2 CERN clip (0.69) · 3 27 km LHC
+(0.75) · 4 vilnius_out, Lithuania since 2018 said (0.8) · 5 5 600 t LHCb
 (0.75) · 6 1 % mass (1) · 7 meson and baryon (0.75) · 8 1964 quarks (1) ·
 9 1973 six quarks (0.75) · 10 2015/2019 (1) · 11 molecule or compact, over
 to Yamaguchi (1) · 12 vilnius_back (0.3) · 13 globe (1) · 14 2024 LHCb,
-13 students (0.75) · 15 the project (0.75) · 16 finale (1) · 17 credits.
+13 students (0.75) · 15 the project, 2026–2028 LMT · JSPS (0.75) · 16 finale (1) · 17 credits.
 12.8 min. The 30-min table below keeps the hidden slides' places.
 
 

@@ -55,22 +55,6 @@ scientists are now studying it together. (~0.5 min)
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
-<VideoPlayer src="vilnius_out.mp4" />
-
-<!-- facts: lhcb-vilnius-joined -->
-
-<!--
-Lithuania (owner, 27 Oct). Clip vilnius_out.mp4 (17.8 s, no sound): from NFTMC, Vilnius
-University's physics campus in Saulėtekio slėnis, out over Vilnius (Google Earth) to the
-clouds and the Earth's limb. It ends and waits for the press. The coming back is slide 12.
-Sources: the owner's SpaceEngine edit, stabilised for Užsikrauk karjerai (videos/manifest.toml).
-(~0.5 min)
--->
-
----
-space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
----
-
 <VideoPlayer src="cern_overview_short.mp4" />
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments -->
@@ -106,6 +90,22 @@ experiments, LHCb.
 
 Sources: home.cern (LHC facts; member states; Lithuania; "Japan contributes
 an additional 5 billion yen", 1998). (~0.75 min)
+-->
+
+---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
+---
+
+<VideoPlayer src="vilnius_out.mp4" />
+
+<!-- facts: lhcb-vilnius-joined -->
+
+<!--
+Lithuania (owner, 27 Oct). Clip vilnius_out.mp4 (17.8 s, no sound): from NFTMC, Vilnius
+University's physics campus in Saulėtekio slėnis, out over Vilnius (Google Earth) to the
+clouds and the Earth's limb. It ends and waits for the press. The coming back is slide 12.
+Sources: the owner's SpaceEngine edit, stabilised for Užsikrauk karjerai (videos/manifest.toml).
+(~0.5 min)
 -->
 
 ---
@@ -498,6 +498,8 @@ Source: D. Stonkus, BSc thesis, Vilnius University (2026). (~1 min)
 space: { at: project, dim: 0.15 }
 ---
 
+<div class="num bl">2026–2028<span class="name">LMT · JSPS</span></div>
+
 <!-- facts: lhcb-vilnius-joined -->
 
 <!--
@@ -511,10 +513,11 @@ pentaquark should leave in the data, and we test those predictions with
 LHCb measurements. Young researchers on both sides learn to work across
 experiment and theory.
 
-(The project's dates, its funders and next week's meeting in Nagoya go on
-this slide once the owner confirms they may be shown.)
+The project runs from April 2026 to March 2028, funded by the Research Council
+of Lithuania (LMT) and the Japan Society for the Promotion of Science (JSPS)
+in their bilateral programme (the owner, 5 Nov: may be shown).
 
-Sources: Vilnius University (LHCb Vilnius, 2024). (~0.75 min)
+Sources: Vilnius University (LHCb Vilnius, 2024); the project's application. (~0.75 min)
 -->
 
 ---
