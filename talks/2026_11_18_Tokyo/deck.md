@@ -295,7 +295,7 @@ Sources: Natural Earth; Vilnius University. (~0.75 min)
 space: { at: project, dim: 0.6 }
 ---
 
-<StagePhoto src="figures/vilnius.jpg" alt="The Great Courtyard of Vilnius University" focus="50% 65%" class="darker">
+<StagePhoto src="figures/vilnius_group.jpg" alt="The LHCb group at Vilnius University" focus="50% 50%">
 <div class="shade tl tr strong"></div>
 <div class="num tl">2024<span class="name">LHCb</span></div>
 <div class="num tr">13<span class="name">students</span></div>
@@ -307,6 +307,7 @@ space: { at: project, dim: 0.6 }
 <!--
 Vilnius University: an LHCb institute since September 2024; most of the group
 are students, and 13 VU students did CERN summer placements in 2026.
+Photo: the group (the owner's, 5 Nov 2026; team photos allowed, question 5).
 Sources: Vilnius University news. (~0.75 min)
 -->
 
