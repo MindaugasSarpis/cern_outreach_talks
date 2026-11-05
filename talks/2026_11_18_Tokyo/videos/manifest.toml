@@ -58,12 +58,16 @@ profile = "high-motion"
 used_in = ["deck"]
 loudnorm = false
 notes   = """\
-The globe of Vilnius and Nagoya (setup/globe.js, CollabGlobe.vue), 20.1 s, no sound: the Earth's \
-limb picture dissolves into grains onto the globe; the cities light (Vilnius, Nagoya, Tokyo: Tokyo \
-and Nagoya read as one light over Japan), the strand is drawn, the globe turns (lon 105, 5 Nov). \
-pnpm talk record tokyo --out DIR -- --slides N --fps 50 --hold 20 --clicks none (the live slide: \
-<CollabGlobe src="figures/earth_back.jpg" /> at the `globe` station in place of the player), its \
-first 0.4 s cut (a dim blink as the picture's copy took over): ffmpeg -ss 0.4, libx264 -crf 14."""
+The globe (setup/globe.js, CollabGlobe.vue), 23 s, no sound (5 Nov, the owner: "the contour of \
+the Japan should be central and brightest"; "starting from vilnius to japan and then center on tokyo \
+and zoom out"): the Earth's limb picture dissolves into grains onto the globe, close, centred on \
+Vilnius; Vilnius, Nagoya and Tokyo light, the strand is drawn, the globe turns along it to Japan \
+(the builder's `tour`), centres on Tokyo, and the camera draws back to the whole Earth (the slide's \
+`space.path`, dist 7 to 12.5 from 15.5 to 20.5 s). Japan's coastline is Natural Earth 1:10m, the \
+brightest contour. pnpm talk record tokyo --out DIR -- --slides 12 --fps 50 --hold 6 --max 40 \
+--clicks none (the live slide: <CollabGlobe src="figures/earth_back.jpg" />, no caption, and \
+space: { path: [[0, { at: [250, 70, 0], dist: 7, yaw: 0, pitch: 0 }], [15.5, … dist: 7 …], \
+[20.5, … dist: 12.5 …]], sway: 0 }), then ffmpeg -ss 0.4 -t 23, libx264 -crf 14."""
 
 [[videos]]
 name    = "finale.mp4"
@@ -72,15 +76,95 @@ used_in = ["deck"]
 loudnorm = false
 notes   = """\
 The finale (5 Nov, the owner: "we show this lhcb collision with low bang … then we zoomin, show \
-pentaquark being created, and then zoomout to Tokyo"; "pre-record if needed"), 38.6 s, with its \
+pentaquark being created, and then zoomout to Tokyo"; "pre-record if needed"), 45 s, with its \
 sound: LHCb's point cloud at eye level and its collision (Užsikrauk karjerai's close, slide 16, \
 11-20 s of its take), the camera pushing into the flash; a white dissolve into Karjera's cover \
 (slide 1, its plate: the world alone), whose pentaquark (u u d c c-bar in colour charge) gathers \
 out of a crossing's flash, then shrinks to a point; the cosmic web back to the Earth's limb \
-(vilnius_back's raw at 1.5x); the globe with Vilnius, Nagoya and Tokyo, its last 4 s pushing in on \
-Japan. The sound is the shared opening's low bang (components/lhc-opening/sound.js: swell, thump \
+(vilnius_back's raw at 1.5x); the globe take (globe.mp4's raw): from Vilnius along the strand to \
+Japan, centred on Tokyo, out to the whole Earth. The sound is the shared opening's low bang (components/lhc-opening/sound.js: swell, thump \
 on the crossing at 8.0 s, drone, its four-second letting go), rendered offline onto the clip so it \
 lands on the frame. Takes: pnpm talk record Karjer --out DIR -- --slides 16 --fps 50 --hold 4 \
 --max 32 --clicks none; pnpm talk record Karjer --no-build --out DIR -- --slides 1 --fps 50 --plate \
---hold 14 --max 20 --clicks none; the globe as globe.mp4's take. Cut: videos/finale/segments.sh \
+--hold 14 --max 20 --clicks none. Cut: videos/finale/segments.sh \
 and videos/finale/lowbang.py."""
+
+# >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
+
+[[videos]]
+name      = "01-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 1"]
+generated = true
+notes     = "the world of slide 1 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "05-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 5"]
+generated = true
+notes     = "the world of slide 5 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "06-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 6"]
+generated = true
+notes     = "the world of slide 6 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "07-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 7"]
+generated = true
+notes     = "the world of slide 7 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "08-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 8"]
+generated = true
+notes     = "the world of slide 8 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "09-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 9"]
+generated = true
+notes     = "the world of slide 9 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "10-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 10"]
+generated = true
+notes     = "the world of slide 10 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "11-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 11"]
+generated = true
+notes     = "the world of slide 11 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "13-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 13"]
+generated = true
+notes     = "the world of slide 13 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "14-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 14"]
+generated = true
+notes     = "the world of slide 14 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "16-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 16"]
+generated = true
+notes     = "the world of slide 16 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+# <<< plates

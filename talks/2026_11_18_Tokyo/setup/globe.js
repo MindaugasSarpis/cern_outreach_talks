@@ -11,7 +11,12 @@
 //     tilt?: 26 (deg, north toward the camera), roll?: -8, lon?: 30 (the centre's longitude when
 //     the globe has formed), spin?: 1.5 (deg/s, west: the land moves right, as Earth turns),
 //     size?: 0.5, coast?: 1, land?: 0.24, ocean?: 0.06, color?: '#9cc4ff', hot?: '#dfe8ff',
-//     lit?: '#ffffff' }
+//     lit?: '#ffffff', tour?: [[s, lon, lat], …] }
+//
+// `tour` (Tokyo, 5 Nov; the owner: "starting from vilnius to japan and then center on tokyo"): the
+// centre's longitude and latitude by keys, in seconds from the moment the globe has formed, eased
+// between them; it takes the place of `lon`, `tilt` and `spin`, and keeps the world busy until its
+// last key. The slide's `space.path` does the zoom.
 //
 // Data (public/data/globe.json, its `about`): Natural Earth 1:50m coastlines and points on its
 // 1:110m land (public domain, Innoday's), the two cities, and the pairs the strand joins.
@@ -73,7 +78,12 @@ void main() {
   float k = aKind, a = 0.0, s = uSize;
   vec3 p = n * uR, col = uColor;
   float limb = mix(0.25, 1.0, smoothstep(0.0, 0.4, f));   // Tokyo: edge-on coasts (the Arctic's) bunched into bright clumps
-  if (k < 0.5) { a = uCoast * uShow * front * limb; p *= 1.003; }
+  // Japan, the brightest contour (owner, 5 Nov: "the contour of the Japan should be central and brightest"):
+  // lon 129.4-146, lat 30-45.6, less Korea's east coast (north of 34.6, west of 131) and Primorye's
+  // (north of 41.4, west of 139.5)
+  float lat = degrees(asin(clamp(position.y, -1.0, 1.0))), lon = degrees(atan(position.x, position.z));
+  float japan = (lon > 129.4 && lon < 146.0 && lat > 30.0 && lat < 45.6 && !(lat > 34.6 && lon < 131.0) && !(lat > 41.4 && lon < 139.5)) ? 1.0 : 0.0;
+  if (k < 0.5) { a = uCoast * uShow * front * limb * (1.0 + 0.6 * japan); p *= 1.003 + 0.002 * japan; s *= 1.0 + 0.15 * japan; col = mix(uColor, uLit, 0.6 * japan); }
   else if (k < 1.5) { a = uLand * uShow * front * limb * (0.6 + 0.8 * hash(aSeed * 3.0)); s *= 0.9; }
   else if (k < 2.5) {
     float rim = pow(1.0 - abs(f), 3.0);
@@ -99,7 +109,7 @@ void main() {
       col = mix(uHot, uLit, 0.4 + 0.6 * vil);
     } else {
       p = n * uR * 1.012;
-      a = (0.85 + 0.15 * vil) * e * front * (1.0 + 0.9 * vil); s *= (2.8 + 0.4 * sqrt(aW)) * (1.0 + 0.6 * vil) * 1.3;   // Tokyo: the lit cities the brightest things
+      a = (0.85 + 0.15 * vil) * e * front * (1.0 + 0.9 * vil); s *= (2.8 + 0.4 * sqrt(aW)) * (1.0 + 0.6 * vil) * 0.75;   // Tokyo: the lit cities small (5 Nov: Japan's contour the brightest)
       col = uLit;
     }
   }
@@ -169,10 +179,29 @@ function buildGlobe(o, ctx) {
   // the turn: the centre's longitude C(t) = lon - spin (t - tRef), tRef the moment the globe has
   // formed (or its first frame, when nothing started it)
   const tilt = (o.tilt ?? 26) * D2R, roll = (o.roll ?? -8) * D2R, lon0 = o.lon ?? 30, spin = o.spin ?? 1.5
+  const tour = Array.isArray(o.tour) && o.tour.length ? o.tour : null
+  const tourEnd = tour ? tour[tour.length - 1][0] : 0
   const m4 = new Matrix4(), mA = new Matrix4(), mB = new Matrix4()
-  const rotAt = (C, out) => {
-    m4.makeRotationZ(roll).multiply(mA.makeRotationX(tilt)).multiply(mB.makeRotationY(-C * D2R))
+  const rotAt = (C, out, tl = tilt) => {
+    m4.makeRotationZ(roll).multiply(mA.makeRotationX(tl)).multiply(mB.makeRotationY(-C * D2R))
     return out.setFromMatrix4(m4)
+  }
+  // the centre at s seconds from the globe's forming: [lon, lat] off the tour (smoothstep between keys)
+  const tourAt = (s) => {
+    if (s <= tour[0][0]) return [tour[0][1], tour[0][2]]
+    for (let i = 1; i < tour.length; i++) {
+      const [s1, l1, b1] = tour[i]
+      if (s <= s1) {
+        const [s0, l0, b0] = tour[i - 1]
+        let k = (s - s0) / Math.max(1e-6, s1 - s0); k = k * k * (3 - 2 * k)
+        return [l0 + (l1 - l0) * k, b0 + (b1 - b0) * k]
+      }
+    }
+    const l = tour[tour.length - 1]; return [l[1], l[2]]
+  }
+  const turn = (s, out) => {
+    if (!tour) return rotAt(lon0 - spin * s, out)
+    const [l, b] = tourAt(s); return rotAt(l, out, b * D2R)
   }
 
   const offLatch = places.when(() => {
@@ -196,6 +225,21 @@ function buildGlobe(o, ctx) {
             for (let k = 0; k < n; k++) {
               const t = Math.random(), j = 0.0025
               const q = [a[0] + (b[0] - a[0]) * t + (Math.random() - 0.5) * j, a[1] + (b[1] - a[1]) * t + (Math.random() - 0.5) * j, a[2] + (b[2] - a[2]) * t + (Math.random() - 0.5) * j]
+              const L = Math.hypot(...q); q[0] /= L; q[1] /= L; q[2] /= L
+              push(q, 0); targets.push(q)
+            }
+          }
+        }
+        // Japan's own coastline (Natural Earth 1:10m, hundredths of a degree), denser: the brightest contour
+        const spj = (o.japanSpacing ?? 0.2) / f
+        for (const l of d.japan || []) {
+          for (let i = 2; i < l.length; i += 2) {
+            const a = dir(l[i - 2] / 100, l[i - 1] / 100), b = dir(l[i] / 100, l[i + 1] / 100)
+            const ang = Math.acos(Math.min(1, a[0] * b[0] + a[1] * b[1] + a[2] * b[2])) / D2R
+            let n = ang / spj; n = Math.floor(n) + (Math.random() < n % 1 ? 1 : 0)
+            for (let k = 0; k < n; k++) {
+              const t = Math.random()
+              const q = [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]
               const L = Math.hypot(...q); q[0] /= L; q[1] /= L; q[2] /= L
               push(q, 0); targets.push(q)
             }
@@ -255,7 +299,7 @@ function buildGlobe(o, ctx) {
   })
 
   // ---- the sequence ----------------------------------------------------------------
-  let now = 0, last = null, t0 = null, startReq = false, skip = 0, tRef = null, done = true
+  let now = 0, last = null, t0 = null, startReq = false, skip = 0, tRef = null, done = true, touring = false
   const el = () => (t0 == null ? -1 : now - t0)
   const wp = new Vector3()
   const self = {
@@ -272,7 +316,7 @@ function buildGlobe(o, ctx) {
       const local = new Float32Array(n * 3)
       for (let i = 0; i < n; i++) { local[i * 3] = pos[i * 3] - c.x; local[i * 3 + 1] = pos[i * 3 + 1] - c.y; local[i * 3 + 2] = pos[i * 3 + 2] - c.z }
       // targets on the side that faces the camera when the grains land
-      const M = rotAt(lon0 - spin * (T.morph + T.fly * 0.75 - (T.globe + 1.2)), new Matrix3())
+      const M = turn(T.morph + T.fly * 0.75 - (T.globe + 1.2), new Matrix3())
       const toCam = new Vector3().subVectors(cam, c).normalize()
       const v = new Vector3()
       const facing = (q) => v.set(q[0], q[1], q[2]).applyMatrix3(M).dot(toCam)
@@ -338,13 +382,13 @@ function buildGlobe(o, ctx) {
 
   return {
     group: g, labels: [],
-    api: { busy: () => collab.pending || startReq || (!done && t0 != null && el() < T.hold + T.end) || (collab.pending && !loaded) },
+    api: { busy: () => collab.pending || startReq || (!done && t0 != null && el() < T.hold + T.end) || (collab.pending && !loaded) || (touring && now - tRef < tourEnd) },
     update(t, cam) {
       const dt = last == null ? 0 : Math.max(0, t - last); last = t; now = t
       u.uTime.value = t
       if (tRef == null) tRef = t
-      if (startReq) { startReq = false; t0 = t - skip; tRef = t0 + T.hold + T.globe + 1.2 }
-      rotAt(lon0 - spin * (t - tRef), uRot.value)
+      if (startReq) { startReq = false; t0 = t - skip; tRef = t0 + T.hold + T.globe + 1.2; touring = !!tour }
+      turn(t - tRef, uRot.value)
       if (cam) { g.getWorldPosition(wp); const dd = wp.distanceTo(cam); u.uFar.value = 1 - Math.min(1, Math.max(0, (dd - 40) / 25)) }
       if (pts) pts.visible = u.uFar.value > 0.002
       if (!done && t0 != null) {

@@ -566,11 +566,12 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <VideoPlayer src="finale.mp4" :controls="false" transition="fade" />
 
 <!--
-The finale (finale.mp4, 38.6 s, with its sound; 5 Nov): LHCb at eye level and one of its
+The finale (finale.mp4, 45 s, with its sound; 5 Nov): LHCb at eye level and one of its
 collisions, a low bang on the crossing (8 s); the camera dives into the flash, and a pentaquark
 gathers out of it (9-13 s); it shrinks to a point, and we come home from the cosmic web to the
-Earth (14-22 s); the Earth becomes the globe, Vilnius, Nagoya and Tokyo light up, and the camera
-closes in on Japan (22-38.6 s).
+Earth (14-22 s); the Earth becomes the globe close over Vilnius, the strand runs to Japan, the
+globe turns to Tokyo, and the camera draws back to the whole Earth, Japan bright at its centre
+(22-45 s).
 
 Five quarks were allowed on paper in 1964 and found in 2015. What they are
 made of is the question that Lithuanian and Japanese physicists now answer
