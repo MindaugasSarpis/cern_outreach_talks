@@ -52,6 +52,13 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 ## Status
 
+- 2026-11-05 (late): **toolkit v0.11.0** (the owner: "use the most up-to-date tools … Integrate them
+  now, rebuild talk"). `talk ready` passed on ea5cbe9 (lint 0/0, check, shots, pages, preflight,
+  venue; plates ok with one warning: 16-plate.mp4, the credits page, never settles under its
+  full-frame CloseStill, and nothing shows it). On the release videos-2026-11-18-tokyo, checked
+  byte for byte: finale.mp4 (45 s), globe.mp4 (23 s), 11 plates, the LHC tunnel cut. Stills 01-16
+  regenerated. Not deployed: the live site is 0f15e9b.
+
 - 2026-11-05 (evening): **the 15-min blueprint built** (notes/blueprint-15min.md, the owner's
   "yes"): 16 slides, 13.3 min by the notes; captions on every slide (`onscreen: words`); the LHC
   tunnel and LHCb as footage; Sakata back; the six quarks and their recipes (`<QuarkRecipes>`);
@@ -248,6 +255,21 @@ From your 27 Oct outline (built with the defaults below; say if not):
     (`videos/finale/lowbang.py`, `segments.sh`). Credits for the LHCb model and collision added.
   - Hidden: vilnius_out, vilnius_back (as a slide), the 5 600 t photo, the families station
     slide (the recipes slide replaces it).
+- 2026-11-05 (the owner: "use the most up-to-date tools, we have time. Integrate them now,
+  rebuild talk"): toolkit v0.8.1 → v0.11.0 (`talk pin`; pnpm dropped `path: /packages/stage` from
+  the v0.8.1 and v0.8.3 tarball blocks, restored from main's lockfile). Adopted: `stage.motion:
+  floor` and recorded plates (the no-WebGL fallback, `pnpm talk record tokyo --plates`), the
+  watchdog (default on), `space.recorded: clip` on the globe and the finale. The LHC tunnel cut is
+  a talk-owned copy of the library's encode on this release: v0.11.0's library list predates it.
+- 2026-11-05 (the owner: "On the world, the contour of the Japan should be central and brightest";
+  "can do a bit of an animation, starting from vilnius to japan and then center on tokyo and zoom
+  out"): the globe builder's `tour` ([s, lon, lat] keys from the globe's forming: Vilnius held
+  2.5 s, along the strand to Tokyo by 7.5 s), the slide's camera path drawing back from dist 7 to
+  12.5 (15.5-20.5 s); Japan's coastline from Natural Earth 1:10m (`japan` in globe.json, simplified
+  to 0.14°, grains every 0.2°), 1.6× as bright, the 1:50m coast without it; the lit cities smaller
+  (0.75, was 1.3) so Japan's contour, not their glow, is the brightest thing. Two over-bright
+  tries (a white haze over Japan) were dialled back. The finale's end is this take, not a
+  digital push-in.
 
 ## Arc
 
