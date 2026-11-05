@@ -47,6 +47,18 @@ dissolves onto the globe. No audio. ffmpeg -ss 16 -to 40 -i vilnius_zoom.mp4 -an
 "select='not(mod(n,2))'" -fps_mode vfr frames, then a concat list of them in reverse order at \
 0.02 s each, -vf fps=50,format=yuv420p, libx264 -preset slow -crf 14."""
 
+# The LHC tunnel's 18 s cut, on this talk's own release (5 Nov): the shared library lists it only after
+# v0.11.0, so the v0.11 player tries this release first and Chromium blocks the miss (ERR_BLOCKED_BY_ORB)
+# before it falls back to videos-shared. The raw is the library's own encode, remuxed.
+[[videos]]
+name     = "cern_footage_2022_013_001_tunnel_cut.mp4"
+profile  = "remux"
+used_in  = ["deck"]
+loudnorm = false
+notes    = """\
+Slide 3: CERN-FOOTAGE-2022-013-001, the 18 s cut of the LHC tunnel (2:35-2:53), the library's encode \
+(slidev-videos videos-shared, cern_footage_2022_013_001_tunnel_cut.mp4) copied here. Played muted."""
+
 # The two heavy scenes, recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy
 # point cloud should be pre-rendered as a video"). Takes of the live slides by slidev-stage-record
 # on v0.8.1 (d3d12, 1080p50, h264_nvenc QP 16); the live sources stay in the deck's comments and
