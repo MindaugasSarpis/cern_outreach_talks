@@ -57,7 +57,8 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
   venue; plates ok with one warning: 16-plate.mp4, the credits page, never settles under its
   full-frame CloseStill, and nothing shows it). On the release videos-2026-11-18-tokyo, checked
   byte for byte: finale.mp4 (45 s), globe.mp4 (23 s), 11 plates, the LHC tunnel cut. Stills 01-16
-  regenerated. Not deployed: the live site is 0f15e9b.
+  regenerated. **Deployed** (the owner: "deploy"): commit 2af7749, Pages run 42049866313 (success),
+  URL 200, the live walk passed (`talk deploy`, `ready` on the same commit).
 
 - 2026-11-05 (evening): **the 15-min blueprint built** (notes/blueprint-15min.md, the owner's
   "yes"): 16 slides, 13.3 min by the notes; captions on every slide (`onscreen: words`); the LHC
