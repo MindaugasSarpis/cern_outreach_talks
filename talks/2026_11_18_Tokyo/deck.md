@@ -31,8 +31,15 @@ htmlAttrs:
   lang: en
 duration: 15min
 layout: cover
-space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.15 }
+space: { at: [-32.2, 0.4, 0], dist: 12, yaw: -30, pitch: 14, sway: 1.5, dim: 0.12 }
 ---
+
+<!-- 10 Nov (the owner: "Need a very cool collision on the cover, like from the uzsikrauk karjerai. And only then a
+     pentaquark appears (could be more substantial, a bit more dynamic)"): Karjera's cover. The slow, silent CMS loop
+     (`cover-collision`) far behind the particle on the camera's line through it; the colour-charge pentaquark
+     (`pentaquark-cc`, u u d c c̄, gluon springs, the sea's pairs, a skin) gathers out of the first crossing's flash
+     (~4 s, <CoverCollision>), larger than Karjera's, its quarks moving inside it. -->
+<CoverCollision />
 
 <div class="tokyo-title">
   <div class="t">Unraveling the Structure of P<sub>c</sub> Pentaquarks through Joint Experimental and Theoretical Effort between Lithuanian and Japanese scientists</div>
@@ -42,9 +49,9 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.15 }
 <!--
 Title slide (the owner's exception to the no-title rule): the project's full
 name and the two project leaders, Mindaugas Šarpis (Vilnius) and Yasuhiro
-Yamaguchi (Japan). The five quarks fly in out of the dust and lock into one
-particle at the right while the low hum swells; the title fades in as they
-land; `c` replays it.
+Yamaguchi (Japan). A CMS collision replays slowly far behind; out of its first
+crossing's flash the pentaquark (u u d c c̄ in colour charge) gathers at the
+right while the low hum swells; the title fades in as it lands.
 
 Your Excellency, ladies and gentlemen, thank you for having me. I am
 Mindaugas Šarpis, and together with Yasuhiro Yamaguchi I lead the project
@@ -59,9 +66,8 @@ scientists are now studying it together. (~0.5 min)
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
-<VideoPlayer src="cern_overview_short.mp4" />
-<div class="veil tl"></div>
-<div class="num tl">2018<span class="name">Lithuania: associate member</span></div>
+<VideoPlayer src="cern_overview_swoosh.mp4" />
+<AtClipEnd :lead="0.6"><div class="veil tl"></div><div class="num tl">2018<span class="name">Lithuania: associate member</span></div></AtClipEnd>
 <div class="cap">CERN, Geneva: the world’s largest particle physics laboratory</div>
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments -->
@@ -77,11 +83,15 @@ space: { at: lhc, dim: 0.25 }
 ---
 
 <VideoPlayer src="cern_footage_2022_013_001_tunnel_cut.mp4" muted />
-<div class="veil tr"></div>
-<div class="num tr">27 km<span class="name">LHC</span></div>
+<div class="veil top"></div>
+<div class="nums3">
+  <div class="num">27 km<span class="name">LHC ring</span></div>
+  <div class="num">13.6 TeV<span class="name">collision energy</span></div>
+  <div class="num">−271.3 °C<span class="name">magnets</span></div>
+</div>
 <div class="cap">The Large Hadron Collider, 100 m underground</div>
 
-<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lhc-size-cost, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
+<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lhc-size-cost, cern-lhc-energy, cern-lhc-cold, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
 
 <!--
 This is the Large Hadron Collider at CERN: a ring 27 kilometres long, about
@@ -103,11 +113,12 @@ an additional 5 billion yen", 1998). (~0.5 min)
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
-<VideoPlayer src="lhcb.mp4" muted />
-<div class="cap">LHCb: one of the LHC’s four big experiments, and ours</div>
+<VideoPlayer src="lhcb.mp4" />
+<div class="cap">LHCb Experiment at CERN</div>
 
 <!--
-Clip: lhcb.mp4, the LHCb detector in 3D with music (0:47, library clip).
+Clip: lhcb.mp4, the LHCb detector in 3D with music (0:47, library clip), its music on (owner, 10 Nov:
+"can have the soundtrack here"; caption "LHCb Experiment at CERN").
 Let it play; at most one line over the music: "This is LHCb, the experiment
 my group works on: a detector the size of a house, built to catch what comes
 out of the collisions." It condenses out of the dust and leaves the same way.
@@ -118,7 +129,10 @@ out of the collisions." It condenses out of the dust and leaves the same way.
 space: { at: proton, dim: 0.2 }
 ---
 
-<div class="cap">A proton: three quarks, never seen alone</div>
+<!-- the owner, 10 Nov: "this slide should be replaced by the sped up zoomin video into the world of atoms";
+     the caption "A proton: three quarks, never seen alone" left (a marketing line). atoms_fast.mp4: the
+     library's atoms.mp4 (a hair down to the quarks of a proton) sped up; it ends on the proton and waits. -->
+<VideoPlayer src="atoms_fast.mp4" muted :controls="false" />
 
 <!-- facts: proton-mass-quarks-1-percent -->
 
@@ -143,7 +157,7 @@ space: { at: sakata, dim: 0.15 }
 ---
 
 <div class="num tr">1956<span class="name">Nagoya</span></div>
-<div class="cap">Shoichi Sakata: matter from three building blocks</div>
+<div class="cap">Shoichi Sakata proposes a precursor to the quark model</div>
 
 <!-- facts: sakata-model-1956, sakata-nagoya-1956 -->
 
@@ -160,7 +174,7 @@ space: { at: paper, dim: 0.06 }
 ---
 
 <div class="num tr">1964<span class="name">quarks</span></div>
-<div class="cap r">Gell-Mann and Zweig: quarks, and on paper already five</div>
+<div class="cap r">Gell-Mann and Zweig propose the quark model</div>
 
 <!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
 
@@ -188,7 +202,7 @@ space: { at: km, dim: 0.15 }
 ---
 
 <div class="num tr">1973<span class="name">six quarks</span></div>
-<div class="cap">Kobayashi and Maskawa: six quarks, among them LHCb’s “b”</div>
+<div class="cap">Kobayashi and Maskawa propose six quarks, including the b quark</div>
 
 <!-- facts: kobayashi-maskawa-1973, kobayashi-maskawa-nagoya-phd, kobayashi-maskawa-nobel-2008, b-quark-1977, lhcb-b-for-beauty -->
 
@@ -219,12 +233,14 @@ Sources: PDG (quark model); LHCb, PRL 119 (2017) 112001 (Ξcc⁺⁺). (~1.25 min
 -->
 
 ---
-space: { at: lhcb, dim: 0.06 }
+space: { at: lhcb, dim: 0.97 }   # the world nearly dark: the plot carries the slide
 ---
 
-<div class="num tl">2015<span class="name">discovery</span></div>
-<div class="num tr">2019<span class="name">precision</span></div>
-<div class="cap">LHCb: pentaquarks, five quarks bound together</div>
+<!-- 10 Nov (the owner: "show only the 2019 full curve (can be recreated, but with axes now it's just empty with not
+     annotations at all)"): the whole 2019 spectrum, drawn from HEPData (setup/Spectrum2019.vue); the 2015 and 2019
+     numbers and the world's pentaquark left with the old picture. -->
+<Spectrum2019 />
+<div class="cap">LHCb, 2019: the J/ψ p mass in Λ<sub>b</sub><sup>0</sup> → J/ψ p K<sup>−</sup> decays</div>
 
 <!-- facts: lambda-b-contains-b, lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
 
@@ -235,38 +251,69 @@ Gell-Mann's paper. They are made of two up quarks, a down quark, and a pair
 of a heavy "charm" quark and its antiquark.
 
 In 2019, with nine times more data, LHCb looked again. This is the result:
-each black point counts the particles we found at a given mass, the red line
-is the fit, and the three narrow peaks are three pentaquarks. Where we had seen one bump in 2015, there were in fact
+the line counts the particle pairs we found at each mass, about 250 000 in
+all, and the three narrow peaks, named in the close-up, are three pentaquarks. Where we had seen one bump in 2015, there were in fact
 two, and a third appeared beside them.
 
 The pentaquarks came out of the decays of the Λb, a baryon that carries a b
 quark: Kobayashi and Maskawa's quark.
 
-Sources: LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001; CERN
+The plot: HEPData ins1728691, Table 1 (all candidates, 2 MeV bins, 4034–5126 MeV; 250 781 entries),
+drawn as a line, with an inset on 4250–4600 MeV; the peaks' names at 4312, 4440 and 4457 MeV.
+Sources: LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001 (HEPData ins1728691, CC BY 4.0); CERN
 press release, 14 July 2015. (~1 min)
 -->
 
 ---
-space: { at: interiors, dim: 0.15 }
+space: { at: lhcb, dim: 0.97 }
 ---
 
-<div class="cap">The open question: a molecule of two particles, or one ball of five?</div>
+<!-- 10 Nov (the owner: "on the next slide dynamically build up a dalitz plot in 3D space from 2019 result"):
+     setup/Dalitz3D.vue, the paper's Dalitz plot digitised (public/data/dalitz-2019.json). -->
+<Dalitz3D />
+<div class="cap">LHCb, 2019: the Dalitz plot of Λ<sub>b</sub><sup>0</sup> → J/ψ p K<sup>−</sup> decays</div>
 
 <!-- facts: lhcb-pentaquark-2019 -->
 
 <!--
+The same 2019 decays, each one a point placed by two masses: across, the kaon with the proton; up, the
+J/ψ with the proton. Seen from above as the paper draws it, the candidates fall in; then it tilts and the
+columns rise to their counts. The tall ridge on the left is a known particle, the Λ(1520), made of the kaon
+and the proton; the band across is the pentaquarks, P_c(4440)⁺ and P_c(4457)⁺, made of the J/ψ and the
+proton (the P_c(4312)⁺ is a fainter band below it). A molecule and a compact particle leave different
+patterns here: this is the picture theory and experiment are compared on.
+The data: LHCb, PRL 122 (2019) 222001, the Dalitz-plot figure (CC BY 4.0), digitised from its colours into
+200 × 200 cells (bake/dalitz_digitise.py; counts approximate: ~252 000 against the paper's ~246 000),
+shown as 100 × 100 columns, height as √count.
+Sources: LHCb, PRL 122 (2019) 222001. (~0.75 min)
+-->
+
+---
+space: { at: interiors, dim: 0.15, sway: 24 }   # the camera swings slowly round the three (±24°, a 46 s period)
+---
+
+<!-- 10 Nov (the owner: "On slide 11 can also show hadroquarkonium, give this a bit more depth, maybe some slow
+     orbiting around them"): three pictures named under them; the rhetorical caption left. -->
+<div class="cap">Pentaquark: molecule, compact or hadroquarkonium</div>
+
+<!-- facts: lhcb-pentaquark-2019, pc-hadrocharmonium-picture -->
+
+<!--
 So pentaquarks exist. But we still do not know how they are built, and there
-are two main pictures.
+are three main pictures.
 
 On the left, the five quarks are really two particles side by side, three
 quarks in one and a quark with an antiquark in the other, held loosely
-together like two atoms in a molecule. On the right, all five quarks are
-packed into one ball.
+together like two atoms in a molecule. In the middle, all five quarks are
+packed into one ball. On the right, hadroquarkonium: a tight charm–anticharm
+pair, a J/ψ-like core, sitting inside a cloud of the three light quarks.
 
 The narrow peaks of 2019 point toward the molecule, but the question is
 open. To settle it, we need precise measurements and precise theory that
 predicts what each picture should look like in the data, worked out
-together. Yukawa's pion as the molecule's glue, and the theory, are Yasuhiro Yamaguchi's talk, next (15-min cut, 5 Nov). (~1 min)
+together. Yukawa's pion as the molecule's glue, and the theory, are Yasuhiro Yamaguchi's talk, next (15-min cut, 5 Nov).
+Hadroquarkonium: S. Dubynskiy and M. B. Voloshin, PLB 666 (2008) 344; M. I. Eides, V. Yu. Petrov and M. V. Polyakov,
+PRD 93 (2016) 054039 (the Pc as nucleon–ψ(2S) bound states). (~1 min)
 -->
 
 ---
@@ -279,7 +326,7 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
      globe.mp4), encode, and put this player back. Fade, not cut: a cut clip never announces that it
      covers the slide, so the world would draw on under it (Innoday, 22 Oct). -->
 <VideoPlayer src="globe.mp4" muted :controls="false" transition="fade" />
-<div class="cap">Vilnius and Nagoya: LHCb data and theory</div>
+<div class="cap">Lithuania and Japan</div>
 
 <!-- facts: lhcb-vilnius-joined -->
 
@@ -296,9 +343,6 @@ space: { at: project, dim: 0.6 }
 ---
 
 <StagePhoto src="figures/vilnius_group.jpg" alt="The LHCb group at Vilnius University" focus="50% 50%">
-<div class="shade tl tr strong"></div>
-<div class="num tl">2024<span class="name">joined LHCb</span></div>
-<div class="num tr">13<span class="name">summer students at CERN</span></div>
 <div class="cap">The LHCb group at Vilnius University</div>
 </StagePhoto>
 
@@ -561,17 +605,21 @@ Source: D. Stonkus, BSc thesis, Vilnius University (2026). (~1 min)
 space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded: clip }   # the world rests under the clip; v0.11: a back-step or a jump holds its end
 ---
 
-<!-- recorded (owner, 5 Nov: "we show this lhcb collision with low bang … then we zoomin, show pentaquark being
-     created, and then zoomout to Tokyo"; "make sure it doesn't crash / lag like the other one (pre-record if
-     needed)"): finale.mp4 is cut from recorded takes (videos/manifest.toml, videos/finale/), so nothing heavy
-     runs live. It carries its own sound, the low bang, so it plays unmuted; it ends on Japan and waits. -->
+<!-- recorded (owner, 10 Nov: "Reimagine the finale, now it's not good. Use the LHCb collision, use the world rendered,
+     maybe the world turns into a pentaquark when zoomed out and then thank you appears in japanese and lithuanian"):
+     finale.mp4 is cut from two takes (videos/finale/segments.sh): LHCb's collision into a white flash, then the
+     world of grains on Japan, drawing back, the Earth's grains gathering into the cover's pentaquark. It carries
+     its own sound, the low bang, so it plays unmuted; it ends on the pentaquark and waits, and the thanks come up
+     over its last second. -->
 <VideoPlayer src="finale.mp4" :controls="false" transition="fade" />
+<AtClipEnd :lead="2.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
 
 <!--
-The finale (finale.mp4, 19.6 s, with its sound; 5 Nov, the tidy cut: one direction, outward):
-LHCb at eye level and one of its collisions, a low bang on the crossing (4 s); a white flash, and
-a pentaquark gathers out of it (5-8 s); it closes into a glowing point that drifts into Japan's
-light (9-10 s); the camera draws back from Japan to the whole Earth (10-19.6 s).
+The finale (finale.mp4, 23 s, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
+on the crossing (4 s); a white flash, and the Earth in grains, Japan in the middle; the camera draws back to
+the whole Earth, and from 10.5 s its grains leave the globe and gather into a pentaquark (u u d c c̄), the
+cover's particle, which turns as the camera comes in (15.5 s on). The thanks, in Japanese and Lithuanian, come
+up over the last 2.5 s.
 
 Five quarks were allowed on paper in 1964 and found in 2015. What they are
 made of is the question that Lithuanian and Japanese physicists now answer
@@ -584,8 +632,8 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the 
 ---
 
 <CloseStill src="figures/finale_end.jpg" />
-<div class="thanks">Thank you<span class="sep">·</span>ありがとうございました<span class="sep">·</span>Ačiū</div>
-<div class="credits credit">Photos: S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, the portraits cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Globe: Natural Earth.</div>
+<div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div>
+<div class="credits credit">Photos: S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, the portraits cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Globe: Natural Earth. J/ψ p spectrum and Dalitz plot: LHCb, Phys. Rev. Lett. 122 (2019) 222001, CC BY 4.0 (HEPData ins1728691). CMS collision on the cover: CERN open data.</div>
 
 <!--
 Credits (house rule: the credits a licence asks for, tiny print, on the last page). The finale's

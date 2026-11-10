@@ -59,6 +59,32 @@ notes    = """\
 Slide 3: CERN-FOOTAGE-2022-013-001, the 18 s cut of the LHC tunnel (2:35-2:53), the library's encode \
 (slidev-videos videos-shared, cern_footage_2022_013_001_tunnel_cut.mp4) copied here. Played muted."""
 
+# Two clips of 10 Nov (the owner's review). The raws are made here from the library's masters
+# (slidev-videos videos/raw); never a plain videos:sync here; make them again with the commands below.
+[[videos]]
+name     = "cern_overview_swoosh.mp4"
+profile  = "standard"
+used_in  = ["deck"]
+notes    = """\
+Slide 2: the library's cern_overview_short.mp4 (11.24 s, silent; the Earth down to Geneva, the LHC drawn) with a \
+zooming swoosh (owner, 10 Nov: "Had have zooming swoosh here"), synthesised by videos/clips/swoosh.py: a soft \
+rush as the Earth comes in, the swoosh on the dive through the clouds (4.2-7.4 s). \
+python3 videos/clips/swoosh.py swoosh.wav; ffmpeg -i cern_overview_short.mp4 -i swoosh.wav -map 0:v -map 1:a \
+-c:v copy -c:a aac -b:a 192k -shortest cern_overview_swoosh.mp4."""
+
+[[videos]]
+name     = "atoms_fast.mp4"
+profile  = "high-motion"
+used_in  = ["deck"]
+loudnorm = false
+notes    = """\
+Slide 5 (owner, 10 Nov: "this slide should be replaced by the sped up zoomin video into the world of atoms"): \
+the library's atoms.mp4 (126 s, a hair down to the quarks of a proton) sped up to 26.5 s, no sound: 0-92 s \
+at 6x (three frames blended, 50 fps), 92-116.5 s (the nucleus, its protons and neutrons, the proton's quarks \
+labelled) at 2.2x; cut before its fade to black. ffmpeg -i atoms.mp4 -filter_complex \
+"[0:v]trim=0:92,setpts=(PTS-STARTPTS)/6,tmix=frames=3,fps=50[a];[0:v]trim=92:116.5,setpts=(PTS-STARTPTS)/2.2,fps=50[b];\
+[a][b]concat=n=2:v=1:a=0,format=yuv420p[v]" -map "[v]" -an -c:v libx264 -preset slow -crf 14 atoms_fast.mp4."""
+
 # The two heavy scenes, recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy
 # point cloud should be pre-rendered as a video"). Takes of the live slides by slidev-stage-record
 # on v0.8.1 (d3d12, 1080p50, h264_nvenc QP 16); the live sources stay in the deck's comments and
@@ -84,20 +110,14 @@ profile = "high-motion"
 used_in = ["deck"]
 loudnorm = false
 notes   = """\
-The finale (5 Nov, the owner: "we show this lhcb collision with low bang … then we zoomin, show \
-pentaquark being created, and then zoomout to Tokyo"; "pre-record if needed"), 19.6 s, with its \
-sound: LHCb's point cloud at eye level and its collision (Užsikrauk karjerai's close, slide 16, \
-15-20 s of its take), the camera pushing into the flash; a white dissolve into Karjera's cover \
-(slide 1, its plate: the world alone), whose pentaquark (u u d c c-bar in colour charge) gathers \
-out of a crossing's flash, then closes into a glowing point (a soft round mask) that drifts into \
-Japan's light; the globe tour take (globe_tour.mp4) from 13 s: centred on Japan, out to the whole Earth. (The 45 s cut \
-with the cosmic web and the whole globe tour was "a bit weird", the owner, 5 Nov: four looks, \
-the direction flipping, the globe twice.) The sound is the shared opening's low bang (components/lhc-opening/sound.js: swell, thump \
-on the crossing at 8.0 s, drone, its four-second letting go), rendered offline onto the clip so it \
-lands on the frame. Takes: pnpm talk record Karjer --out DIR -- --slides 16 --fps 50 --hold 4 \
---max 32 --clicks none; pnpm talk record Karjer --no-build --out DIR -- --slides 1 --fps 50 --plate \
---hold 14 --max 20 --clicks none. Cut: videos/finale/segments.sh \
-and videos/finale/lowbang.py."""
+The finale (10 Nov, the owner: "Reimagine the finale, now it's not good. Use the LHCb collision, use the world \
+rendered, maybe the world turns into a pentaquark when zoomed out and then thank you appears in japanese and \
+lithuanian"), 23 s, with its sound: LHCb at eye level and its collision (the 5 Nov finale's first 4.7 s, kept as \
+videos/takes/tokyo_finale_5nov.mp4), a white flash into the world of grains on Japan (recorded live in this deck: \
+the `finale` station, setup/globe.js's `tour` and `pq`; videos/takes/tokyo_finale_world.mp4), the camera drawing \
+back to the whole Earth, whose grains then gather into the cover's pentaquark. The sound is the shared opening's \
+low bang (lowbang.py: the thump on the crossing at 4.0 s, the drone held to 15.5 s). Cut: videos/finale/segments.sh \
+(the take's recording command is in its header). The thanks are the slide's, not the clip's."""
 
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 

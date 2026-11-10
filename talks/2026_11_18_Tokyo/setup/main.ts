@@ -14,15 +14,29 @@
 // (its `places` latch only) afterCover.js from Innoday; the strand between the cities is Tokyo's.
 import { registerBuilder } from 'slidev-addon-stage'
 import CloseStill from './CloseStill.vue'
+import AtClipEnd from './AtClipEnd.vue'
 import QuarkRecipes from './QuarkRecipes.vue'
+import Spectrum2019 from './Spectrum2019.vue'
+import Dalitz3D from './Dalitz3D.vue'
 import CollabGlobe from './CollabGlobe.vue'
 import { installGlobe } from './globe.js'
 import { armAfterCover } from './afterCover.js'
+// the cover (10 Nov, Karjera's): the slow CMS collision far behind, the colour-charge pentaquark gathering
+// out of its first crossing's flash
+import CoverCollision from './CoverCollision.vue'
+import { installCoverCollision } from './coverCollision.js'
+import { installPentaquark } from './pentaquark.js'
 
 export default ({ app, router }) => {
   armAfterCover(router)                     // the globe's data and picture load once the cover is behind
+  installCoverCollision(registerBuilder)    // `cover-collision`: the cover's slow, silent CMS loop
+  installPentaquark(registerBuilder)        // `pentaquark-cc`: the cover's particle, u u d c c̄ in colour charge
+  app.component('CoverCollision', CoverCollision)
   installGlobe(registerBuilder)             // `collab-globe`: the globe of grains, Vilnius and Nagoya joined
   app.component('CollabGlobe', CollabGlobe) // the coming-back clip's last frame dissolving onto the globe
-  app.component('QuarkRecipes', QuarkRecipes) // the six quarks and their recipes, flat 2D (5 Nov)
+  app.component('QuarkRecipes', QuarkRecipes) // the six quarks and their recipes, in 3D (10 Nov)
+  app.component('Spectrum2019', Spectrum2019) // LHCb's 2019 J/ψ p spectrum, drawn from HEPData (10 Nov)
+  app.component('Dalitz3D', Dalitz3D)         // the 2019 Dalitz plot built up in 3D (10 Nov)
+  app.component('AtClipEnd', AtClipEnd)     // what it wraps comes in as the slide's clip ends (slide 2's 2018)
   app.component('CloseStill', CloseStill)   // the finale's last frame on the credits page, the world resting
 }

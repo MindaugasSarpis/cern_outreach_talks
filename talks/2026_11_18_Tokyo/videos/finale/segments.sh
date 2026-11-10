@@ -1,25 +1,24 @@
 #!/usr/bin/env bash
-# The Tokyo finale (5 Nov 2026, the tidy cut: one direction, outward). Sources: Užsikrauk karjerai's close
-# (slide 16) and cover (slide 1, its plate) recorded with `pnpm talk record`, and Tokyo's globe raw.
-#   usage: segments.sh SCRATCH WORKTREE ENV_BIN  (takes in SCRATCH/karjera_close, SCRATCH/karjera_cover)
+# The Tokyo finale (10 Nov 2026; the owner: "Reimagine the finale, now it's not good. Use the LHCb collision, use the
+# world rendered, maybe the world turns into a pentaquark when zoomed out and then thank you appears in japanese and
+# lithuanian"). Two parts, outward all the way:
+#   A  the 5 Nov finale's first 4.7 s (videos/takes/tokyo_finale_5nov.mp4, kept): LHCb at eye level, its collision
+#      crossing at 4.0 s, the camera pushing into the white flash (Užsikrauk karjerai's close, slide 16, its take).
+#   C  the world, recorded live in this deck (videos/takes/tokyo_finale_world.mp4): the take slide was
+#      `space: { at: finale, path: … }` on the `finale` station (public/data/space.json: the collab-globe with
+#      `tour` on Japan and `pq`, setup/globe.js), recorded with
+#        slidev-stage-record /tmp/talk-tokyo/site DIR --slides 18 --fps 50 --size 1920x1080 --hold 22 --max 24 --clicks none
+#      then the take slide was removed from deck.md. Japan close, the camera drawing back to the whole Earth, its
+#      grains setting out at 6.5 s and gathering into the cover's pentaquark (u u d c c̄, the colours softened toward
+#      the globe's blue), which turns as the camera comes in a little.
+# The join: A dissolves through white into C at 4.0 s; C runs 19 s; 23 s in all. The sound is the shared opening's
+# low bang (lowbang.py): the swell, the thump on the crossing at 4.0 s, the drone held until the pentaquark has
+# formed (15.5 s) and let go. The thanks come up over its last frame on the slide (<AtClipEnd>), not in the clip.
+#   usage: segments.sh SCRATCH WORKTREE ENV_BIN
 set -euo pipefail
 S=$1; W=$2; F=$3; mkdir -p "$S/fin"; cd "$S/fin"
-ENC=(-c:v libx264 -preset slow -crf 14 -pix_fmt yuv420p -r 50 -an)
-# (crop's iw/ih stay at their first value when scale changes the frame size: z(t) is written out)
-# A: LHCb at eye level, the collision crosses at 19.0 (4.0 here); from 3.6 the camera pushes into the flash (580, 466)
-ZA="(1+if(gt(t,3.6),pow((t-3.6)/1.4,2)*3,0))"
-"$F/ffmpeg" -v error -y -ss 15 -t 5 -i "$S/karjera_close/16.mp4" -vf "scale=w='trunc(1920*$ZA/2)*2':h=-2:eval=frame:flags=bicubic,crop=1920:1080:x='580*($ZA-1)':y='466*($ZA-1)'" "${ENC[@]}" A.mp4
-# B: the cover's flash and the pentaquark gathering (at 1590, 520); from 5.0 it shrinks to a point that
-# travels to where Japan's light stands in the globe's first frame (900, 550); a soft round mask about
-# the pentaquark closes in from 3.9 s, so what shrinks is the particle and its glow, not the frame
-K="min(1,max(0,(t-5.0)/1.4))"
-Z="max(0.03,1-pow($K,1.5))"
-"$F/ffmpeg" -v error -y -ss 3.6 -t 6.4 -i "$S/karjera_cover/01-plate.mp4" -f lavfi -i color=c=black:s=1920x1080:r=50:d=6.4 -filter_complex "[0:v]format=yuva420p,geq=lum='lum(X,Y)':cb='cb(X,Y)':cr='cr(X,Y)':a='255*clip((if(lt(T,3.9),2,max(0.22,2-(T-3.9)*1.6))-hypot(X/W-0.83,(Y/H-0.48)*H/W))/0.12,0,1)',scale=w='trunc(1920*$Z/2)*2':h=-2:eval=frame,fade=t=out:st=5.7:d=0.7:alpha=1[s];[1:v][s]overlay=x='(1590-690*$K)-1590*w/1920':y='(520+30*$K)-520*h/1080':eval=frame:shortest=1[v]" -map "[v]" "${ENC[@]}" B.mp4
-# D: the globe tour take (videos/takes/tokyo_globe_tour.mp4, kept from globe.mp4 of 5 Nov: space.json `tour` [[0, 25.3, 54.7], [2.5, 25.3, 54.7], [7.5, 139.8, 35.7], [12, 139.8, 35.7]] and the camera from dist 7 to 12.5 at 15.5-20.5 s) from 13 s: centred on Japan, its contour the brightest, then out to the whole Earth
-"$F/ffmpeg" -v error -y -ss 13 -t 10 -i "$W/videos/takes/tokyo_globe_tour.mp4" -vf "fps=50" "${ENC[@]}" D.mp4
-for f in A B D; do echo "$f $("$F/ffprobe" -v error -show_entries format=duration -of csv=p=0 $f.mp4)"; done
-# Then: python3 -I lowbang.py bang.wav 20.0 4.0:7.9:1 (the swell from 1.4 s, the thump on the crossing at 4.0,
-# the drone letting go at 7.9 as the pentaquark has formed), and the join:
-#   ffmpeg -i A.mp4 -i B.mp4 -i D.mp4 -i bang.wav -filter_complex "[0:v][1:v]xfade=transition=fadewhite:
-#   duration=0.9:offset=4.1[ab];[ab][2:v]xfade=transition=fade:duration=0.9:offset=9.6,format=yuv420p[v]"
-#   -map "[v]" -map 3:a -c:v libx264 -preset slow -crf 14 -r 50 -c:a aac -b:a 192k -shortest videos/raw/finale.mp4
+python3 -I "$W/talks/2026_11_18_Tokyo/videos/finale/lowbang.py" bang.wav 23.0 4.0:15.5:1
+"$F/ffmpeg" -v error -y -t 4.7 -i "$W/videos/takes/tokyo_finale_5nov.mp4" -t 19 -i "$W/videos/takes/tokyo_finale_world.mp4" -i bang.wav \
+  -filter_complex "[0:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[a];[1:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[c];[a][c]xfade=transition=fadewhite:duration=0.7:offset=4.0,format=yuv420p[v]" \
+  -map "[v]" -map 2:a -c:v libx264 -preset slow -crf 14 -r 50 -c:a aac -b:a 192k -shortest "$W/videos/raw/finale.mp4"
+"$F/ffprobe" -v error -show_entries format=duration -of csv=p=0 "$W/videos/raw/finale.mp4"

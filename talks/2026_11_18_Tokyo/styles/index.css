@@ -119,3 +119,13 @@ html[data-stage] .hero .num { z-index: 2; }
 .slidev-layout .cap.r { left: auto; right: 56px; }
 /* a number top centre, between two pictures in the corners (slide 14) */
 .slidev-layout .num.tc { top: 48px; left: 50%; transform: translateX(-50%); text-align: center; }
+/* slide 3 (owner, 10 Nov: "LHC should also say the energy, the temperature"): three numbers in a row
+   across the top, each with its name, on a band darkened from the top edge */
+.slidev-layout .veil.top { background: linear-gradient(to bottom, rgba(3, 5, 12, 0.9) 0%, rgba(3, 5, 12, 0.62) 22%, rgba(3, 5, 12, 0) 46%); }
+.slidev-layout .nums3 { position: absolute; top: 44px; left: 56px; right: 56px; z-index: 26; display: flex; justify-content: space-between; pointer-events: none; }
+.slidev-layout .nums3 .num { position: static; font-size: 60px; }
+.slidev-layout .nums3 .num:nth-child(2) { text-align: center; }
+.slidev-layout .nums3 .num:nth-child(3) { text-align: right; }
+/* the finale's thanks (10 Nov): Japanese and Lithuanian, in the lower third, under the pentaquark */
+.slidev-layout .thanks.low { top: auto; bottom: 64px; font-size: 46px; }
+.slidev-layout .at-clip-end .thanks { animation: none; opacity: 1; }

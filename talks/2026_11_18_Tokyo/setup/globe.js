@@ -18,6 +18,11 @@
 // between them; it takes the place of `lon`, `tilt` and `spin`, and keeps the world busy until its
 // last key. The slide's `space.path` does the zoom.
 //
+// `pq` (Tokyo, 10 Nov; the owner on the finale: "use the world rendered, maybe the world turns into a pentaquark
+// when zoomed out"): { at, dur?: 4.5, spread?: 2.7, radius?: 1.05 }: `at` seconds after the camera arrives, every
+// grain of the globe sets out (staggered, on a swirl) for a place in a pentaquark u u d c c̄ in colour charge, the
+// cover's colours: five balls, hot in the middle, and the strands between them; the particle then turns slowly.
+//
 // Data (public/data/globe.json, its `about`): Natural Earth 1:50m coastlines and points on its
 // 1:110m land (public domain, Innoday's), the two cities, and the pairs the strand joins.
 import { BufferGeometry, BufferAttribute, Points, Group, Color, Vector3, Matrix3, Matrix4, ShaderMaterial, AdditiveBlending } from 'three'
@@ -67,6 +72,8 @@ attribute vec3 aOff;
 uniform mat3 uRot;
 uniform float uR, uShow, uInstT, uFar, uSize, uCoast, uLand, uOcean;
 uniform vec3 uColor, uHot, uLit;
+uniform float uPq, uPqS, uPqR, uJapan, uPqTint;
+uniform vec3 uPqN[5], uPqC[5];
 varying vec3 vColor; varying float vAlpha;
 void hide() { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = 1.0; vColor = vec3(0.0); vAlpha = 0.0; }
 void main() {
@@ -83,7 +90,7 @@ void main() {
   // (north of 41.4, west of 139.5)
   float lat = degrees(asin(clamp(position.y, -1.0, 1.0))), lon = degrees(atan(position.x, position.z));
   float japan = (lon > 129.4 && lon < 146.0 && lat > 30.0 && lat < 45.6 && !(lat > 34.6 && lon < 131.0) && !(lat > 41.4 && lon < 139.5)) ? 1.0 : 0.0;
-  if (k < 0.5) { a = uCoast * uShow * front * limb * (1.0 + 0.6 * japan); p *= 1.003 + 0.002 * japan; s *= 1.0 + 0.15 * japan; col = mix(uColor, uLit, 0.6 * japan); }
+  if (k < 0.5) { a = uCoast * uShow * front * limb * (1.0 + uJapan * japan); p *= 1.003 + 0.002 * japan; s *= 1.0 + 0.25 * uJapan * japan; col = mix(uColor, uLit, uJapan * japan); }
   else if (k < 1.5) { a = uLand * uShow * front * limb * (0.6 + 0.8 * hash(aSeed * 3.0)); s *= 0.9; }
   else if (k < 2.5) {
     float rim = pow(1.0 - abs(f), 3.0);
@@ -112,6 +119,43 @@ void main() {
       a = (0.85 + 0.15 * vil) * e * front * (1.0 + 0.9 * vil); s *= (2.8 + 0.4 * sqrt(aW)) * (1.0 + 0.6 * vil) * 0.75;   // Tokyo: the lit cities small (5 Nov: Japan's contour the brightest)
       col = uLit;
     }
+  }
+  // the world turning into a pentaquark (uPq 0 → 1): each grain to a ball (four in five) or a strand
+  if (uPq > 0.0) {
+    float k = clamp((uPq * 1.7 - 0.7 * hash(aSeed * 7.31)) , 0.0, 1.0);
+    k = k * k * (3.0 - 2.0 * k);
+    float h1 = hash(aSeed * 17.0), h2 = hash(aSeed * 29.0), h3 = hash(aSeed * 41.0), h4 = hash(aSeed * 53.0);
+    int qi = int(floor(h1 * 5.0));
+    vec3 cq = uPqN[0], colq = uPqC[0];
+    for (int m = 1; m < 5; m++) if (m == qi) { cq = uPqN[m]; colq = uPqC[m]; }
+    vec3 tgt; vec3 tcol; float ta;
+    float zz = 2.0 * h2 - 1.0, ph = 6.2832 * h3, rr = sqrt(1.0 - zz * zz);
+    vec3 dirv = vec3(rr * cos(ph), zz, rr * sin(ph));
+    if (h4 < 0.8) {
+      float rad = uPqR * (h4 < 0.14 ? 0.3 * pow(hash(aSeed * 61.0), 0.7) : 0.32 + 0.68 * pow(hash(aSeed * 67.0), 0.55));
+      rad *= 1.0 + 0.05 * sin(uTime * 1.3 + float(qi) * 2.1);
+      tgt = cq + dirv * rad;
+      float core = 1.0 - smoothstep(0.0, 0.4 * uPqR, rad);
+      tcol = mix(mix(uColor, colq, uPqTint), vec3(1.0), 0.55 * core);
+      ta = 0.75 + 0.5 * core;
+    } else {
+      // a strand from this ball to the next, a curl of grains with light running along it
+      vec3 cb = uPqN[0], colb = uPqC[0];
+      int qj = qi == 4 ? 0 : qi + 1;
+      for (int m = 1; m < 5; m++) if (m == qj) { cb = uPqN[m]; colb = uPqC[m]; }
+      float t = hash(aSeed * 71.0);
+      vec3 d = normalize(cb - cq), nn = normalize(cross(d, vec3(0.0, 1.0, 0.0)) + vec3(1e-4)), mm = cross(d, nn);
+      float th = 6.2832 * 4.0 * t - uTime * 1.7;
+      tgt = mix(cq, cb, t) + (nn * cos(th) + mm * sin(th)) * 0.22 * uPqR;
+      tcol = mix(mix(uColor, mix(colq, colb, t), uPqTint), vec3(1.0), 0.35);
+      ta = 0.55 * (0.6 + 0.4 * pow(0.5 + 0.5 * sin(6.2832 * t * 1.5 - uTime * 2.4), 3.0));
+    }
+    float sw = sin(3.14159 * k);
+    vec3 swirl = normalize(cross(p, vec3(0.0, 1.0, 0.0)) + vec3(1e-4)) * sw * uR * 0.45;
+    p = mix(p, tgt, k) + swirl;
+    col = mix(col, tcol, k);
+    a = mix(a, ta, k);
+    s = mix(s, uSize * 1.7, k);
   }
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = projectionMatrix * mv;
@@ -153,6 +197,13 @@ void main() {
   vAlpha = r * tw * coverage(ps) * smoothstep(0.5, 2.0, -mv.z) * uFade * mix(1.0, uDense * (1.0 - 0.6 * aInst), k) * back;
 }`
 
+// the cover's pentaquark (setup/pentaquark.js): u u d a triangle, c c̄ a pair, about their middle
+function pqNodes(S) {
+  const n = [[-0.55, 0.75, -0.35], [-0.95, -0.45, 0.15], [-0.1, -0.35, -0.75], [0.65, 0.3, 0.55], [0.95, -0.55, -0.05]]
+  const m = [0, 1, 2].map((k) => n.reduce((a, v) => a + v[k] / 5, 0))
+  return n.map((v) => new Vector3((v[0] - m[0]) * S, (v[1] - m[1]) * S, (v[2] - m[2]) * S))
+}
+
 function buildGlobe(o, ctx) {
   const g = new Group()
   const P = o.pos || [0, 0, 0]
@@ -169,9 +220,13 @@ function buildGlobe(o, ctx) {
       ...common, uShow: { value: 1 }, uInstT: { value: 1e4 }, uFar: { value: 1 }, uSize: { value: o.size ?? 0.5 },
       uCoast: { value: o.coast ?? 1.0 }, uLand: { value: o.land ?? 0.24 }, uOcean: { value: o.ocean ?? 0.06 },
       uColor: { value: new Vector3(...color) }, uHot: { value: new Vector3(...hot) }, uLit: { value: new Vector3(...litc) },
+      uPq: { value: 0 }, uPqS: { value: 1 }, uPqR: { value: (o.pq?.radius ?? 1.05) }, uJapan: { value: o.japan ?? 0.6 }, uPqTint: { value: o.pq?.tint ?? 1 },
+      uPqN: { value: pqNodes(o.pq?.spread ?? 2.7) }, uPqC: { value: ['#ff8378', '#72e09c', '#7fa6ff', '#ff9d6b', '#6fe6f0'].map((c) => new Vector3(...lin(c))) },
     },
   })
   const u = mat.uniforms
+  const pqBase = u.uPqN.value.map((v) => v.clone())
+  let tArr = null
   let pts = null, photo = null, alive = true, loaded = false, data = null, targets = null, inst = []
   let resolveReady
   const ready = new Promise((r) => { resolveReady = r })
@@ -382,7 +437,10 @@ function buildGlobe(o, ctx) {
 
   return {
     group: g, labels: [],
-    api: { busy: () => collab.pending || startReq || (!done && t0 != null && el() < T.hold + T.end) || (collab.pending && !loaded) || (touring && now - tRef < tourEnd) },
+    api: {
+      arm() {},
+      assemble(t, onDone) { if (tArr == null || t - tArr > 40) tArr = t; onDone?.() },   // once a visit: a path's end arrives again
+      busy: () => collab.pending || startReq || (!done && t0 != null && el() < T.hold + T.end) || (collab.pending && !loaded) || (touring && now - tRef < tourEnd) },
     update(t, cam) {
       const dt = last == null ? 0 : Math.max(0, t - last); last = t; now = t
       u.uTime.value = t
@@ -391,6 +449,13 @@ function buildGlobe(o, ctx) {
       turn(t - tRef, uRot.value)
       if (cam) { g.getWorldPosition(wp); const dd = wp.distanceTo(cam); u.uFar.value = 1 - Math.min(1, Math.max(0, (dd - 40) / 25)) }
       if (pts) pts.visible = u.uFar.value > 0.002
+      if (o.pq && tArr != null) {
+        const x = Math.min(1, Math.max(0, (t - tArr - o.pq.at) / (o.pq.dur ?? 4.5)))
+        u.uPq.value = x
+        // the particle turns slowly once it has formed, as the cover's does
+        const a = 0.16 * Math.max(0, t - tArr - o.pq.at), c = Math.cos(a), sn = Math.sin(a)
+        u.uPqN.value.forEach((v, i) => { const b = pqBase[i]; v.set(c * b.x + sn * b.z, b.y, -sn * b.x + c * b.z) })
+      }
       if (!done && t0 != null) {
         const e = el(), H = T.hold
         const sm = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k) }

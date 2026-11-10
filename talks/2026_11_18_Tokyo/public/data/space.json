@@ -18,56 +18,43 @@
    "pulse": 6,
    "objects": [
     {
-     "type": "pentaquark",
+     "type": "pentaquark-cc",
+     "name": "pq",
      "pos": [
       0,
       0,
       0
      ],
-     "radius": 3.1,
-     "quarkRadius": 0.72,
-     "quarks": [
-      {
-       "flavour": "c",
-       "pos": [
-        1.2,
-        0.9,
-        0.3
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        0.4,
-        -1.5,
-        -0.9
-       ]
-      },
-      {
-       "flavour": "d",
-       "pos": [
-        1.5,
-        -0.3,
-        -1.2
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        -0.9,
-        1.3,
-        -1.0
-       ]
-      },
-      {
-       "flavour": "cbar",
-       "pos": [
-        -1.3,
-        -0.6,
-        0.6
-       ]
-      }
-     ]
+     "spread": 2.9,
+     "radius": 1.05,
+     "heavy": 1.25,
+     "grains": 2000,
+     "gluon": 1000,
+     "loops": 4,
+     "sea": 6000,
+     "bag": 10000,
+     "size": 1.8,
+     "alpha": 0.6,
+     "gluonSize": 1.2,
+     "gluonAlpha": 0.8,
+     "spin": 0.16,
+     "tumble": 0.35,
+     "orbit": 1
+    },
+    {
+     "type": "cover-collision",
+     "name": "cover",
+     "pos": [
+      11.3,
+      -3.3,
+      -10.1
+     ],
+     "grain": 1.6,
+     "settled": 7,
+     "scale": 3.0,
+     "hold": 7,
+     "gap": 14,
+     "flash": 0.008
     }
    ]
   },
@@ -715,20 +702,6 @@
    },
    "objects": [
     {
-     "type": "page",
-     "src": "/figures/lhcb_2019_peaks.png",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "width": 6.8,
-     "height": 4.74,
-     "paper": "#ffffff",
-     "tone": "#6c7076",
-     "halo": false
-    },
-    {
      "type": "pentaquark",
      "pos": [
       6.0,
@@ -790,44 +763,49 @@
     0
    ],
    "look": {
-    "dist": 13,
-    "yaw": -6,
-    "pitch": 6,
-    "sway": 1.5
+    "target": [
+     0,
+     -0.2,
+     0
+    ],
+    "dist": 14.5,
+    "yaw": 0,
+    "pitch": 10,
+    "sway": 2
    },
    "objects": [
     {
      "type": "pentaquark",
      "pos": [
-      -6.2,
+      -8.6,
       0,
-      0
+      0.3
      ],
-     "radius": 1.8,
-     "quarkRadius": 0.5,
+     "radius": 1.55,
+     "quarkRadius": 0.46,
      "quarks": [
       {
        "flavour": "c",
        "pos": [
         0,
-        0.9,
+        0.85,
         0
        ]
       },
       {
        "flavour": "u",
        "pos": [
-        -0.85,
-        -0.5,
-        0.2
+        -0.8,
+        -0.45,
+        0.25
        ]
       },
       {
        "flavour": "d",
        "pos": [
-        0.85,
-        -0.5,
-        -0.2
+        0.8,
+        -0.45,
+        -0.25
        ]
       }
      ]
@@ -835,17 +813,17 @@
     {
      "type": "pentaquark",
      "pos": [
-      -2.9,
-      0,
-      0
+      -5.6,
+      -0.1,
+      -0.3
      ],
-     "radius": 1.4,
-     "quarkRadius": 0.5,
+     "radius": 1.2,
+     "quarkRadius": 0.46,
      "quarks": [
       {
        "flavour": "cbar",
        "pos": [
-        -0.6,
+        -0.55,
         0.1,
         0
        ]
@@ -853,7 +831,7 @@
       {
        "flavour": "u",
        "pos": [
-        0.6,
+        0.55,
         -0.1,
         0.05
        ]
@@ -863,12 +841,12 @@
     {
      "type": "pentaquark",
      "pos": [
-      5.6,
+      0,
       0,
       0
      ],
-     "radius": 2.4,
-     "quarkRadius": 0.5,
+     "radius": 2.15,
+     "quarkRadius": 0.46,
      "quarks": [
       {
        "flavour": "c",
@@ -911,15 +889,148 @@
        ]
       }
      ]
+    },
+    {
+     "type": "pentaquark",
+     "pos": [
+      7.6,
+      0,
+      0
+     ],
+     "radius": 0.78,
+     "quarkRadius": 0.4,
+     "quarks": [
+      {
+       "flavour": "c",
+       "pos": [
+        0.42,
+        0.12,
+        0
+       ]
+      },
+      {
+       "flavour": "cbar",
+       "pos": [
+        -0.42,
+        -0.12,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "type": "pentaquark",
+     "pos": [
+      7.6,
+      0,
+      0
+     ],
+     "radius": 2.55,
+     "quarkRadius": 0.46,
+     "quarks": [
+      {
+       "flavour": "u",
+       "pos": [
+        0.05,
+        0.9,
+        0.35
+       ]
+      },
+      {
+       "flavour": "u",
+       "pos": [
+        -0.85,
+        -0.45,
+        -0.3
+       ]
+      },
+      {
+       "flavour": "d",
+       "pos": [
+        0.85,
+        -0.5,
+        -0.25
+       ]
+      }
+     ]
+    },
+    {
+     "type": "label",
+     "text": "molecule",
+     "pos": [
+      -7.1,
+      -2.9,
+      0
+     ],
+     "height": 0.85,
+     "color": "#cfeaff",
+     "upper": false,
+     "tracking": 0.06
+    },
+    {
+     "type": "label",
+     "text": "compact",
+     "pos": [
+      0,
+      -2.9,
+      0
+     ],
+     "height": 0.85,
+     "color": "#cfeaff",
+     "upper": false,
+     "tracking": 0.06
+    },
+    {
+     "type": "label",
+     "text": "hadroquarkonium",
+     "pos": [
+      7.6,
+      -2.9,
+      0
+     ],
+     "height": 0.85,
+     "color": "#cfeaff",
+     "upper": false,
+     "tracking": 0.06
     }
    ]
   },
   {
    "id": "globe",
-   "pos": [250, 70, 0],
-   "look": { "target": [0, 0, 0], "dist": 12.5, "yaw": 0, "pitch": 0, "sway": 0 },
+   "pos": [
+    250,
+    70,
+    0
+   ],
+   "look": {
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 12.5,
+    "yaw": 0,
+    "pitch": 0,
+    "sway": 0
+   },
    "objects": [
-    { "type": "collab-globe", "name": "globe", "pos": [0, 0, 0], "src": "data/globe.json", "radius": 3.8, "lon": 84, "spin": 0.1, "tilt": 52, "roll": -6, "coast": 1.5, "land": 0.42 }
+    {
+     "type": "collab-globe",
+     "name": "globe",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "src": "data/globe.json",
+     "radius": 3.8,
+     "lon": 84,
+     "spin": 0.1,
+     "tilt": 52,
+     "roll": -6,
+     "coast": 1.5,
+     "land": 0.42
+    }
    ]
   },
   {
@@ -930,244 +1041,144 @@
     0
    ],
    "look": {
+    "target": [
+     0,
+     0.2,
+     0
+    ],
     "dist": 17,
     "yaw": 0,
-    "pitch": 8,
-    "sway": 2
+    "pitch": 5,
+    "sway": 1.5
    },
    "gather": 1.0,
    "objects": [
     {
-     "type": "constellation",
+     "type": "page",
+     "src": "/figures/vilnius_p.jpg",
      "pos": [
-      -8.5,
-      0,
+      -8.3,
+      0.9,
       0
      ],
-     "radius": 2.3,
-     "nodeRadius": 0.3,
-     "coreSize": 10,
-     "speed": 0.4,
-     "haze": "#3d7fa6",
-     "nodes": [
-      {
-       "pos": [
-        0.45,
-        0.88,
-        0.0
-       ],
-       "color": "#7dd3fc"
-      },
-      {
-       "pos": [
-        -0.72,
-        0.88,
-        0.66
-       ],
-       "color": "#7dd3fc"
-      },
-      {
-       "pos": [
-        0.13,
-        0.73,
-        -1.46
-       ],
-       "color": "#7dd3fc"
-      },
-      {
-       "pos": [
-        0.64,
-        0.24,
-        0.83
-       ],
-       "color": "#7dd3fc"
-      },
-      {
-       "pos": [
-        -1.37,
-        0.0,
-        -0.24
-       ],
-       "color": "#7dd3fc"
-      },
-      {
-       "pos": [
-        1.41,
-        -0.38,
-        -0.9
-       ],
-       "color": "#7dd3fc"
-      },
-      {
-       "pos": [
-        -0.27,
-        -0.51,
-        1.0
-       ],
-       "color": "#7dd3fc"
-      },
-      {
-       "pos": [
-        -0.51,
-        -0.98,
-        -0.98
-       ],
-       "color": "#7dd3fc"
-      },
-      {
-       "pos": [
-        0.77,
-        -1.6,
-        0.28
-       ],
-       "color": "#7dd3fc"
-      }
-     ]
+     "width": 6.6,
+     "height": 3.7,
+     "tone": "#6c7076",
+     "halo": false
     },
     {
-     "type": "constellation",
+     "type": "page",
+     "src": "/figures/nagoya_p.jpg",
      "pos": [
-      8.5,
-      0,
+      8.3,
+      0.9,
       0
      ],
-     "radius": 2.3,
-     "nodeRadius": 0.3,
-     "coreSize": 10,
-     "speed": 0.4,
-     "haze": "#a8505e",
-     "nodes": [
-      {
-       "pos": [
-        0.45,
-        0.88,
-        0.0
-       ],
-       "color": "#ff9aa8",
-       "core": "#fff0f2"
-      },
-      {
-       "pos": [
-        -0.72,
-        0.88,
-        0.66
-       ],
-       "color": "#ff9aa8",
-       "core": "#fff0f2"
-      },
-      {
-       "pos": [
-        0.13,
-        0.73,
-        -1.46
-       ],
-       "color": "#ff9aa8",
-       "core": "#fff0f2"
-      },
-      {
-       "pos": [
-        0.64,
-        0.24,
-        0.83
-       ],
-       "color": "#ff9aa8",
-       "core": "#fff0f2"
-      },
-      {
-       "pos": [
-        -1.37,
-        0.0,
-        -0.24
-       ],
-       "color": "#ff9aa8",
-       "core": "#fff0f2"
-      },
-      {
-       "pos": [
-        1.41,
-        -0.38,
-        -0.9
-       ],
-       "color": "#ff9aa8",
-       "core": "#fff0f2"
-      },
-      {
-       "pos": [
-        -0.27,
-        -0.51,
-        1.0
-       ],
-       "color": "#ff9aa8",
-       "core": "#fff0f2"
-      },
-      {
-       "pos": [
-        -0.51,
-        -0.98,
-        -0.98
-       ],
-       "color": "#ff9aa8",
-       "core": "#fff0f2"
-      },
-      {
-       "pos": [
-        0.77,
-        -1.6,
-        0.28
-       ],
-       "color": "#ff9aa8",
-       "core": "#fff0f2"
-      }
-     ]
+     "width": 6.6,
+     "height": 3.7,
+     "tone": "#6c7076",
+     "halo": false
+    },
+    {
+     "type": "label",
+     "text": "Vilnius University",
+     "pos": [
+      -8.3,
+      -1.65,
+      0
+     ],
+     "height": 0.62,
+     "color": "#e8f6ff",
+     "upper": false,
+     "tracking": 0.05
+    },
+    {
+     "type": "label",
+     "text": "LHCb data",
+     "pos": [
+      -8.3,
+      -2.45,
+      0
+     ],
+     "height": 0.5,
+     "color": "#9fd8ff",
+     "upper": false,
+     "tracking": 0.05
+    },
+    {
+     "type": "label",
+     "text": "Nagoya University",
+     "pos": [
+      8.3,
+      -1.65,
+      0
+     ],
+     "height": 0.62,
+     "color": "#e8f6ff",
+     "upper": false,
+     "tracking": 0.05
+    },
+    {
+     "type": "label",
+     "text": "theory",
+     "pos": [
+      8.3,
+      -2.45,
+      0
+     ],
+     "height": 0.5,
+     "color": "#9fd8ff",
+     "upper": false,
+     "tracking": 0.05
     },
     {
      "type": "pentaquark",
      "pos": [
       0,
-      0,
+      0.5,
       0
      ],
-     "radius": 3.0,
-     "quarkRadius": 0.75,
+     "radius": 2.2,
+     "quarkRadius": 0.55,
      "quarks": [
       {
        "flavour": "c",
        "pos": [
-        0.8999999999999999,
-        0.66,
-        0.24
+        0.75,
+        0.55,
+        0.2
        ]
       },
       {
        "flavour": "u",
        "pos": [
-        0.3,
-        -1.14,
-        -0.66
+        0.25,
+        -0.95,
+        -0.55
        ]
       },
       {
        "flavour": "d",
        "pos": [
-        1.14,
-        -0.24,
-        -0.8999999999999999
+        0.95,
+        -0.2,
+        -0.75
        ]
       },
       {
        "flavour": "u",
        "pos": [
-        -0.66,
-        0.96,
-        -0.72
+        -0.55,
+        0.8,
+        -0.6
        ]
       },
       {
        "flavour": "cbar",
        "pos": [
-        -0.96,
-        -0.42,
-        0.48
+        -0.8,
+        -0.35,
+        0.4
        ]
       }
      ]
@@ -1184,13 +1195,13 @@
       {
        "points": [
         [
-         -6.1,
-         0,
+         -4.9,
+         0.6,
          0
         ],
         [
-         -3.1,
-         0,
+         -2.45,
+         0.5,
          0
         ]
        ],
@@ -1200,72 +1211,76 @@
       {
        "points": [
         [
-         6.1,
-         0,
+         4.9,
+         0.6,
          0
         ],
         [
-         3.1,
-         0,
+         2.45,
+         0.5,
          0
         ]
        ],
-       "color": "#ffb3be",
+       "color": "#9fe0ff",
        "width": 2.5
       }
      ]
-    },
+    }
+   ]
+  },
+  {
+   "id": "finale",
+   "pos": [
+    330,
+    70,
+    0
+   ],
+   "look": {
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 12.5,
+    "yaw": 0,
+    "pitch": 0,
+    "sway": 0
+   },
+   "objects": [
     {
-     "type": "label",
-     "text": "Vilnius University",
+     "type": "collab-globe",
+     "name": "finale",
      "pos": [
-      -8.5,
-      -2.2,
+      0,
+      0,
       0
      ],
-     "height": 0.9,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
-    },
-    {
-     "type": "label",
-     "text": "Nagoya University",
-     "pos": [
-      8.5,
-      -2.2,
-      0
+     "src": "data/globe.json",
+     "radius": 3.8,
+     "tilt": 52,
+     "roll": -6,
+     "coast": 0.85,
+     "land": 0.3,
+     "tour": [
+      [
+       0,
+       139.8,
+       35.7
+      ],
+      [
+       40,
+       150,
+       35.7
+      ]
      ],
-     "height": 0.9,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
-    },
-    {
-     "type": "page",
-     "src": "/figures/vilnius_p.jpg",
-     "pos": [
-      -8.5,
-      5.4,
-      0
-     ],
-     "width": 6.4,
-     "height": 3.6,
-     "tone": "#6c7076",
-     "halo": false
-    },
-    {
-     "type": "page",
-     "src": "/figures/nagoya_p.jpg",
-     "pos": [
-      8.5,
-      5.4,
-      0
-     ],
-     "width": 6.4,
-     "height": 3.6,
-     "tone": "#6c7076",
-     "halo": false
+     "pq": {
+      "at": 6.5,
+      "dur": 5.5,
+      "spread": 3.0,
+      "radius": 1.45,
+      "tint": 0.55
+     },
+     "japan": 0.25
     }
    ]
   }
