@@ -52,12 +52,17 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 ## Status
 
-- 2026-11-10: **the owner's 14 changes** (Decisions, 10 Nov), on talk/tokyo, **not deployed** (live: ce7a9f7).
+- 2026-11-10 (the owner: "deploy"): **Deployed:** commit 13472fd, Pages run 42815338931 (success), URL 200, the
+  live walk passed all 17 slides (no failed requests, no lost context); `ready` passed on it with nothing skipped
+  (four plate warnings, all cleared by the publish or known: 17-plate unsettled under its full-frame still). On the
+  release videos-2026-11-18-tokyo, sizes checked against the local files: atoms_fast.mp4, cern_overview_swoosh.mp4,
+  finale.mp4 and the 11 plates (the first publish was refused by the session's permission check; the second, on
+  the owner's ask, went through).
+- 2026-11-10: **the owner's 14 changes** (Decisions, 10 Nov).
   17 slides (a new slide 11, the Dalitz plot), lint 0/0, `talk check` ok; shots of all 17 clean but one
   (slide 11's top-down view ran 72 px off the bottom; fixed and re-taken in motion). Each changed slide was
   checked in motion (`slidev-stage-record`, strips): the cover, 2, 9, 10, 11, 12, 15 and the finale. Plates
-  re-recorded. New clips encoded locally (atoms_fast, cern_overview_swoosh, finale); on the release only
-  once published (`pnpm videos:publish --only …`, see Verify). Open: the atoms clip's credit (the library
+  re-recorded. Open: the atoms clip's credit (the library
   says only "released/atoms.mov (outreach)").
 
 - 2026-11-05 (evening, the owner AFK: "review and finish this to completion … have a working tidy
