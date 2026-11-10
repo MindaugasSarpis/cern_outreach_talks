@@ -58,15 +58,15 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
-- 2026-11-10, second round (Decisions, 10 Nov, second round): **not deployed, not published.** The live deck is
-  still 13472fd. Made and encoded here, not on the release yet: data2019.mp4 (24 s, slide 10), globe.mp4
-  (20.6 s, slide 13), finale.mp4 (30 s) and ten plates (01, 06, 07, 08, 09, 11, 12, 14, 15, 17; slide 10 is
-  a clip now, so its plate left the manifest and stays on the release until a prune after the talk). The look,
-  slide 11's pose and its still, the tidy: in the tree. Lint 0/0, `talk check` ok, 17 slides at 14.9 of 15 min;
-  shots of all 17 from a build with `VITE_VIDEOS_LOCAL_FIRST=1`, each plate's last frame checked on a sheet
-  (17-plate "unsettled", as before). Next, on the owner's word, together (the publish changes the live deck's
-  globe and finale at once): publish the three clips and the ten plates, `pnpm talk ready tokyo`, `pnpm talk
-  deploy tokyo`.
+- 2026-11-10, second round (the owner: "Push and deploy"; Decisions, 10 Nov, second round): **Deployed:**
+  commit b109651, Pages run 42907009294 (success), URL 200, the live walk passed all 17 slides (no failed
+  requests, no lost context). On the release videos-2026-11-18-tokyo, each the size of its local encode:
+  data2019.mp4 (24 s, slide 10), globe.mp4 (20.6 s, slide 13), finale.mp4 (30 s) and ten plates (01, 06, 07,
+  08, 09, 11, 12, 14, 15, 17; slide 10 is a clip now, so 10-plate.mp4 left the manifest and stays on the
+  release until a prune after the talk). `ready` passed with one step skipped, `safe` (Decisions, second
+  round, 10), and two plate warnings: "stale" (only this file changed after the take) and 17-plate
+  "unsettled", as before. Before it: lint 0/0, `talk check` ok, 17 slides at 14.9 of 15 min, shots of all 17
+  from a build with `VITE_VIDEOS_LOCAL_FIRST=1`, each plate's last frame checked on a sheet.
 - 2026-11-10 (the owner: "deploy"): **Deployed:** commit 13472fd, Pages run 42815338931 (success), URL 200, the
   live walk passed all 17 slides (no failed requests, no lost context); `ready` passed on it with nothing skipped
   (four plate warnings, all cleared by the publish or known: 17-plate unsettled under its full-frame still). On the
@@ -283,17 +283,25 @@ tidy this talk up".
    from its ticks with the tilt. Checked in frames from 3 s to 64 s (the turn's period is 57 s): every label
    inside the frame, above the caption (its box starts at y = 460 of 551) and clear of the others. The still
    re-made from the new pose.
+10. `ready`'s `safe` step (the TV safe area) is skipped for this talk: `pnpm talk ready tokyo --skip safe`,
+    `pnpm talk deploy tokyo --ready-skip safe`. The CLI reads `stage.options.grain: 0` as the mark of a talk
+    made for television (`is_broadcast`, scripts/talk.py) and then holds the captions and the credits to the
+    broadcast margins and type sizes; this deck is for a projector, and the step never ran on it before the
+    grain went to 0 (point 4). A skipped step needs the owner's word for the deploy. For the CLI: a
+    headmatter `broadcast: false` that wins over the grain. The plates read "stale" after every edit of
+    this file, which is in the take's fingerprint though no plate shows it.
 
 ## Verify
 
 ```bash
 pnpm talk check tokyo     # videos:check, stage:check, a build into /tmp/talk-tokyo/site
 pnpm talk review tokyo    # check, then shots of the changed slides and a contact sheet
-pnpm talk ready tokyo     # before the venue: lint --release, check, shots, preflight, venue --dry-run
+pnpm talk ready tokyo --skip safe   # before the venue: lint --release, check, shots, pages, preflight, venue
+                                    # --dry-run, the plates; safe is TV's (Decisions, second round, 10)
 # a build and shots with the local encodes of the clips, not the release's (a re-cut not yet published):
 #   VITE_VIDEOS_LOCAL_FIRST=1 pnpm talk shots tokyo --sheet --rebuild
-# the second round's clips and the re-recorded plates onto the release (outward-facing: the owner's call;
-# it changes the live deck's globe and finale at once):
-#   pnpm -C talks/2026_11_18_Tokyo videos:publish -- --only data2019.mp4 globe.mp4 finale.mp4 <the plates>
+# a re-cut clip or re-recorded plates onto the release (outward-facing: the owner's call; a clip under a name
+# already on the release changes the live deck at once, so publish and deploy go together; never with --prune):
+#   pnpm -C talks/2026_11_18_Tokyo videos:publish -- --only <the clips> <the plates>
 # a change to a recorded scene: takes/README.md
 ```
