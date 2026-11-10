@@ -85,24 +85,36 @@ labelled) at 2.2x; cut before its fade to black. ffmpeg -i atoms.mp4 -filter_com
 "[0:v]trim=0:92,setpts=(PTS-STARTPTS)/6,tmix=frames=3,fps=50[a];[0:v]trim=92:116.5,setpts=(PTS-STARTPTS)/2.2,fps=50[b];\
 [a][b]concat=n=2:v=1:a=0,format=yuv420p[v]" -map "[v]" -an -c:v libx264 -preset slow -crf 14 atoms_fast.mp4."""
 
-# The two heavy scenes, recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy
-# point cloud should be pre-rendered as a video"). Takes of the live slides by slidev-stage-record
-# on v0.8.1 (d3d12, 1080p50, h264_nvenc QP 16); the live sources stay in the deck's comments and
-# setup/. The raws are these takes, not on gdrive: never a plain videos:sync here; record them
-# again with the commands below.
+# The three heavy scenes, recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy
+# point cloud should be pre-rendered as a video"). Takes of this talk's own stage by
+# slidev-stage-record (d3d12, 1080p50), from takes.md, a deck of the scenes alone: how to build it,
+# record it and cut the takes is takes/README.md. The raws are those cuts, not on gdrive: never a
+# plain videos:sync here.
+[[videos]]
+name     = "data2019.mp4"
+profile  = "high-motion"
+used_in  = ["deck"]
+loudnorm = false
+trim     = ["0:00", "0:24"]
+notes    = """\
+Slide 10 (owner, 10 Nov: "we want to have a peak from the fit. Also building up the histogram could be a bit more \
+substantial, maybe like in uzsikrauk karjerai, something like that (even involving the detector)"): 24 s, no \
+sound. LHCb whole, a collision in it, grains leaving the detector and landing as the histogram of the J/ψ p mass \
+(HEPData ins1728691, Table 3); the camera comes to the histogram (18.7 s), the fit is drawn and the three peaks \
+light. The data take, takes.md slide 2, from 0.8 s. The axis and the peaks' names are the slide's (HTML), placed \
+on this clip's last frame."""
+
 [[videos]]
 name    = "globe.mp4"
 profile = "high-motion"
 used_in = ["deck"]
 loudnorm = false
 notes   = """\
-Slide 12: the globe (setup/globe.js, CollabGlobe.vue), 16.2 s, no sound (5 Nov): grains gather into \
-the globe, framed on both cities (lon 84, tilt 52, the camera still at the station's pose); \
-Vilnius, Nagoya and Tokyo light, the strand is drawn; Japan's coastline (Natural Earth 1:10m) the \
-brightest contour. pnpm talk record tokyo --out DIR -- --slides 12 --fps 50 --hold 20 --max 40 \
---clicks none (the live slide: <CollabGlobe src="figures/earth_back.jpg" />, no caption, space: \
-{ at: globe, sway: 0 }), then ffmpeg -ss 4.4 (the photo's dissolve left out), libx264 -crf 14. \
-The finale's globe is another take, kept as videos/takes/tokyo_globe_tour.mp4 (videos/finale/segments.sh)."""
+Slide 13 (owner, 10 Nov: "Slide 13 could zoom in and rotate earth"): the globe (setup/globe.js, \
+CollabGlobe.vue), 20.6 s, no sound. Grains gather into the globe with Europe in the middle; Vilnius, Nagoya \
+and Tokyo light, the strand is drawn from Vilnius to Nagoya; the globe turns east as the camera comes in (to \
+15.1 s) and rests on Asia, both cities in the frame. Japan's coastline (Natural Earth 1:10m) is the brightest \
+contour. The globe take, takes.md slide 4, from 4.4 s (the photo's dissolve left out)."""
 
 [[videos]]
 name    = "finale.mp4"
@@ -112,12 +124,14 @@ loudnorm = false
 notes   = """\
 The finale (10 Nov, the owner: "Reimagine the finale, now it's not good. Use the LHCb collision, use the world \
 rendered, maybe the world turns into a pentaquark when zoomed out and then thank you appears in japanese and \
-lithuanian"), 23 s, with its sound: LHCb at eye level and its collision (the 5 Nov finale's first 4.7 s, kept as \
-videos/takes/tokyo_finale_5nov.mp4), a white flash into the world of grains on Japan (recorded live in this deck: \
-the `finale` station, setup/globe.js's `tour` and `pq`; videos/takes/tokyo_finale_world.mp4), the camera drawing \
-back to the whole Earth, whose grains then gather into the cover's pentaquark. The sound is the shared opening's \
-low bang (lowbang.py: the thump on the crossing at 4.0 s, the drone held to 15.5 s). Cut: videos/finale/segments.sh \
-(the take's recording command is in its header). The thanks are the slide's, not the clip's."""
+lithuanian"; then "just need a smoother transition from the collision (maybe show more of it, particles \
+propagating through detector, something like that)"), 30 s, with its sound: LHCb at eye level and its collision, \
+the particles going through the detector as the camera turns round it and draws back (the collision take, \
+takes.md slide 3, 1.5-15.1 s); a 1.6 s dissolve at 12.0 s into the world of grains on Japan (the world take, \
+takes.md slide 5, from 1.0 s), the camera drawing back to the whole Earth, whose grains leave it from 17.5 s and \
+gather into the cover's pentaquark (formed by 23 s). The sound is the shared opening's low bang (lowbang.py: the \
+thump on the crossing at 3.9 s, the drone held to 23 s). Cut: videos/finale/segments.sh. The thanks are the \
+slide's, not the clip's."""
 
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 
@@ -155,13 +169,6 @@ profile   = "remux"
 used_in   = ["slide 9"]
 generated = true
 notes     = "the world of slide 9 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
-
-[[videos]]
-name      = "10-plate.mp4"
-profile   = "remux"
-used_in   = ["slide 10"]
-generated = true
-notes     = "the world of slide 10 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "11-plate.mp4"

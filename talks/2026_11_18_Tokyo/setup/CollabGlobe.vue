@@ -13,6 +13,8 @@ import { places } from './afterCover.js'
 // (empty here: pictures and numbers only) comes in once the grains have left the picture.
 // Innoday's photo held for a click; Tokyo's goes on by itself (`click` false), as the clip
 // before it ends on this frame. The recorders (window.__rec) never wait.
+// Since 10 Nov the deck plays this slide as a clip (globe.mp4) and the component runs in the globe take
+// (takes.md slide 4). `globe` names the builder it starts: the takes' stations hold two globes.
 // Without a world (no WebGL, reduced motion, a boot slower than 8 s) the picture holds T.hold
 // and fades to the stage's still of this slide (the globe); on the plate layer the same, once
 // the plate plays. Printed: no picture, the slot over the still. Elsewhere (overview, presenter
@@ -25,6 +27,7 @@ const props = defineProps({
   near: { type: Number, default: 7 },
   far: { type: Number, default: 21 },
   gain: { type: Number, default: 1.45 },   // 100k grains carry the photo's light
+  globe: { type: String, default: 'globe' },   // the builder's `name` in the stations file (the takes hold two)
 })
 const { $renderContext, $frontmatter, $page, $clicks } = useSlideContext()
 const nav = useNav()
@@ -137,7 +140,7 @@ async function takeOver() {
     const s = await waitStage(id)
     places.flip()   // past the cover: the photo and the globe's data may load now (after an await: untracked)
     const img = s ? await load() : null
-    const g = collab.inst
+    const g = collab.all.get(props.globe)
     const ok = s && img && g && await g.ready
     if (id !== run || !live.value) return
     if (!ok) { collab.pending = false; return wallClock(id) }
@@ -257,7 +260,7 @@ onSlideLeave(() => {
   setTimeout(() => { if (id === run) releaseGl() }, 400)
   collab.pending = false
   // left before the globe formed: it stands whole
-  collab.inst?.finish()
+  collab.all.get(props.globe)?.finish()
 })
 onUnmounted(() => {
   window.removeEventListener('slidev-stage:rebuilt', onRebuilt)

@@ -78,7 +78,7 @@ export function listen(name, fn) {
 export const stepOf = (name) => state.get(name)
 // a histogram's share of entries landed so far (0 to 1), for <FillClock>; null while the
 // plot is not built (no WebGL: the clock then keeps its own time)
-const fills = new Map()
+export const fills = new Map()
 export const fillShare = (name) => fills.get(name)?.() ?? null
 
 const rgb = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }

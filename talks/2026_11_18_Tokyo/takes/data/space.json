@@ -1,0 +1,472 @@
+{
+ "hero": "globe",
+ "stations": [
+  {
+   "id": "globe",
+   "pos": [
+    250,
+    70,
+    0
+   ],
+   "look": {
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 12.5,
+    "yaw": 0,
+    "pitch": 0,
+    "sway": 0
+   },
+   "objects": [
+    {
+     "type": "collab-globe",
+     "name": "globe",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "src": "data/globe.json",
+     "radius": 3.8,
+     "roll": -6,
+     "coast": 1.25,
+     "land": 0.42,
+     "japan": 0.3,
+     "tourFrom": "cue",
+     "tour": [
+      [
+       0,
+       40,
+       50
+      ],
+      [
+       7.5,
+       40,
+       50
+      ],
+      [
+       19.5,
+       104,
+       44
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "finale",
+   "pos": [
+    330,
+    70,
+    0
+   ],
+   "look": {
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 12.5,
+    "yaw": 0,
+    "pitch": 0,
+    "sway": 0
+   },
+   "objects": [
+    {
+     "type": "collab-globe",
+     "name": "finale",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "src": "data/globe.json",
+     "radius": 3.8,
+     "tilt": 52,
+     "roll": -6,
+     "coast": 0.85,
+     "land": 0.3,
+     "tour": [
+      [
+       0,
+       139.8,
+       35.7
+      ],
+      [
+       40,
+       150,
+       35.7
+      ]
+     ],
+     "pq": {
+      "at": 6.5,
+      "dur": 5.5,
+      "spread": 3.0,
+      "radius": 1.45,
+      "tint": 0.55
+     },
+     "japan": 0.25,
+     "tourFrom": "cue"
+    }
+   ]
+  },
+  {
+   "id": "data",
+   "pos": [
+    1000,
+    -480,
+    0
+   ],
+   "look": {
+    "target": [
+     13.5,
+     0.19,
+     0.55
+    ],
+    "dist": 21.6,
+    "yaw": -5,
+    "pitch": -13,
+    "sway": 0
+   },
+   "objects": [
+    {
+     "type": "lhc-collision",
+     "name": "inside",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "light": 4.0,
+     "flash": 0.05,
+     "approach": 2.5,
+     "sound": true,
+     "tone": "#9cc4ff",
+     "muonTone": "#cfe2ff",
+     "splashTone": "#5b93ff",
+     "bunchColor": "#cfe6ff",
+     "pipe": 1.2,
+     "scale": 1.2,
+     "stretch": 1.0
+    },
+    {
+     "type": "detector",
+     "name": "det",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "sweep": 3.5,
+     "alpha": 0.42,
+     "size": 1.5,
+     "color": "#6fa4ff",
+     "hot": "#b4ceff",
+     "out": [
+      16,
+      0,
+      0
+     ],
+     "scale": 1.2,
+     "stretch": 1.0,
+     "pulse": "inside",
+     "light": 4.0,
+     "light3": [
+      -0.35,
+      0.75,
+      0.55
+     ],
+     "shade": 0.45,
+     "edgeGain": 0.8,
+     "cascade": {
+      "after": 7,
+      "rate": 0.28,
+      "speed": 12
+     },
+     "mesh": "takes/lhcb-mesh.glb",
+     "meshLook": {
+      "face": 0.003,
+      "rim": 0.04,
+      "lines": 0.08,
+      "angle": 25,
+      "gain": [
+       0.4,
+       0,
+       0.5,
+       1,
+       1,
+       0.08,
+       0.5,
+       1,
+       1,
+       0.6
+      ],
+      "lineGain": [
+       0.4,
+       0,
+       0.6,
+       1.5,
+       4,
+       0.15,
+       0.6,
+       1.2,
+       1.2,
+       0.6
+      ]
+     },
+     "grains": false
+    },
+    {
+     "type": "cavern-floor",
+     "name": "floor",
+     "of": "det",
+     "pos": [
+      13,
+      -6.72,
+      12
+     ],
+     "step": 3,
+     "grains": 44000,
+     "alpha": 0.45,
+     "color": "#7f9fd8",
+     "area": [
+      52,
+      64
+     ],
+     "size": 1.4
+    },
+    {
+     "type": "supports",
+     "name": "cradles",
+     "of": [
+      "det",
+      "detp"
+     ],
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "floor": -6.72,
+     "grains": 18000,
+     "alpha": 0.3,
+     "size": 1.2,
+     "color": "#6fa4ff",
+     "parts": [
+      [
+       3.32,
+       9.12,
+       4.0,
+       -3.61
+      ],
+      [
+       9.36,
+       11.32,
+       3.6,
+       -2.92
+      ],
+      [
+       11.44,
+       14.16,
+       5.4,
+       -4.48
+      ],
+      [
+       15.02,
+       18.07,
+       4.6,
+       -4.1
+      ]
+     ],
+     "frame": "legs"
+    },
+    {
+     "type": "detector",
+     "name": "detp",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "src": "takes/lhcb-grains.bin",
+     "shape": "takes/lhcb-grains.shape.bin",
+     "sweep": 3.5,
+     "alpha": 0.8,
+     "size": 0.85,
+     "color": "#6fa4ff",
+     "hot": "#e4eeff",
+     "out": [
+      16,
+      0,
+      0
+     ],
+     "scale": 1.2,
+     "stretch": 1.0,
+     "pulse": "inside",
+     "light": 4.0,
+     "light3": [
+      -0.35,
+      0.75,
+      0.55
+     ],
+     "shade": 0.45,
+     "edgeGain": 0.9,
+     "cascade": {
+      "after": 4,
+      "rate": 0.34,
+      "speed": 12
+     },
+     "steady": true,
+     "hole": [
+      9.54,
+      -2.4,
+      0.96,
+      0
+     ]
+    },
+    {
+     "type": "shaft",
+     "name": "shaft",
+     "of": "cavp",
+     "pos": [
+      23.7,
+      8,
+      2.5
+     ],
+     "height": 72,
+     "radius": 5,
+     "grains": 48000,
+     "ring": 6,
+     "lines": 16,
+     "alpha": 0.95,
+     "size": 1.4,
+     "color": "#7f9fd8"
+    },
+    {
+     "type": "cavern-floor",
+     "name": "floorp",
+     "of": "cavp",
+     "pos": [
+      13,
+      -6.72,
+      12
+     ],
+     "step": 3,
+     "grains": 44000,
+     "alpha": 1.0,
+     "color": "#9fb8f0",
+     "area": [
+      52,
+      64
+     ],
+     "size": 1.6
+    },
+    {
+     "type": "beamline",
+     "name": "beams",
+     "of": "cavp",
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "from": -90,
+     "to": 110,
+     "grains": 9000,
+     "alpha": 1.0,
+     "size": 1.6,
+     "color": "#9cc4ff",
+     "color2": "#ffffff",
+     "pulse": "inside",
+     "flow": {
+      "after": 4,
+      "speed": 3,
+      "rate": 0.34,
+      "max": 45
+     }
+    },
+    {
+     "type": "cavern-floor",
+     "name": "roof",
+     "of": "cavp",
+     "pos": [
+      23.7,
+      8,
+      2.5
+     ],
+     "area": [
+      30,
+      26
+     ],
+     "step": 3,
+     "grains": 14000,
+     "alpha": 0.55,
+     "color": "#9fb8f0",
+     "size": 1.4,
+     "hole": 5.3
+    },
+    {
+     "type": "histogram",
+     "name": "pc",
+     "pos": [
+      37.5,
+      -5,
+      5
+     ],
+     "src": "takes/jpsip-2019-fit.json",
+     "width": 19,
+     "height": 10.5,
+     "unit": 5,
+     "size": 2.0,
+     "alpha": 0.6,
+     "tickAlpha": 0.0,
+     "fill": 9,
+     "fall": 1.8,
+     "color": "#9fd0ff",
+     "hot": "#ffffff",
+     "curve": 1,
+     "marks": [
+      [
+       4302,
+       4322
+      ],
+      [
+       4430,
+       4450
+      ],
+      [
+       4452,
+       4462
+      ]
+     ],
+     "steps": [
+      0,
+      1
+     ],
+     "markStep": 1,
+     "from": [
+      16,
+      2,
+      0
+     ],
+     "fromSpread": [
+      10,
+      6,
+      5
+     ],
+     "arc": 3.5,
+     "flyColor": "#dff0ff",
+     "lead": 3.4,
+     "fitSize": 1.6,
+     "fitAlpha": 0.95,
+     "fitGrains": 2.4,
+     "peakColor": "#cfeaff",
+     "markBins": false,
+     "markDim": 0.4
+    }
+   ]
+  }
+ ]
+}

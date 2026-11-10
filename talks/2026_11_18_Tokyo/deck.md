@@ -15,12 +15,16 @@ videos:
   dust: '#7dd3fc'
 stage:
   space: data/space.json
-  palette: classic
+  # the look (owner, 10 Nov: "a bit less graininess a bit more fidelity, now some parts look like through a fog"):
+  # a deeper ground, no film grain or colour fringe, less bloom around bright things, fewer of the soft dust discs
+  # near the camera. With it: the paper texture off (styles/index.css), the ground's glows lowered and the dust
+  # nearest the camera capped in size (setup/look.js), the photographs at a lighter tone (space.json).
+  palette: { base: classic, bg: '#020203' }
   plugins: [hadron]
   lang: en
-  # the drawing buffer at most 1920 wide: a projector's 1080p in full, a Retina Mac's screen at a little over half
-  # its pixels (owner, 27 Oct: "make sure it works on a mac"; Innoday's fix for the M2's lag, 22 Oct)
-  options: { maxBufferWidth: 1920 }
+  # maxBufferWidth: the drawing buffer at most 1920 wide, a projector's 1080p in full, a Retina Mac's screen at a
+  # little over half its pixels (owner, 27 Oct: "make sure it works on a mac"; Innoday's fix for the M2's lag, 22 Oct)
+  options: { maxBufferWidth: 1920, grain: 0, aberration: 0, bloom: 0.32, density: 0.6 }
   sound: { flight: false, clip: false }   # the hum only (5 Nov: the room's audio may be poor; as Karjera and OpenData, "transitions were like driving sounds")
   motion: floor   # v0.11 (owner, 5 Nov: "use the most up-to-date tools"): under reduced motion the world runs, floored; without WebGL the slides' recorded plates play
 title: "Lithuania and Japan: pentaquarks"
@@ -70,11 +74,13 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 <AtClipEnd :lead="0.6"><div class="veil tl"></div><div class="num tl">2018<span class="name">Lithuania: associate member</span></div></AtClipEnd>
 <div class="cap">CERN, Geneva: the world’s largest particle physics laboratory</div>
 
-<!-- facts: lhc-geneva-27km-100m-four-experiments -->
+<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lithuania -->
 
 <!--
-CERN (owner, 27 Oct). Library clip cern_overview_short.mp4 (11 s, no sound): from the Earth
-down to Geneva, then the LHC ring drawn over the fields with its four experiments named.
+CERN (owner, 27 Oct). The clip is cern_overview_swoosh.mp4 (11 s): the library's cern_overview_short.mp4
+with a swoosh on its dive through the clouds (10 Nov; videos/manifest.toml): from the Earth down to Geneva,
+then the LHC ring drawn over the fields with its four experiments named. As it ends: 2018, the year
+Lithuania became an associate member of CERN.
 Sources: home.cern. (~0.5 min)
 -->
 
@@ -238,13 +244,17 @@ Sources: PDG (quark model); LHCb, PRL 119 (2017) 112001 (Ξcc⁺⁺). (~1.25 min
 -->
 
 ---
-space: { at: lhcb, dim: 0.97 }   # the world nearly dark: the plot carries the slide
+space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under the clip; a back-step or a jump holds the clip's end
 ---
 
-<!-- 10 Nov (the owner: "show only the 2019 full curve (can be recreated, but with axes now it's just empty with not
-     annotations at all)"): the whole 2019 spectrum, drawn from HEPData (setup/Spectrum2019.vue); the 2015 and 2019
-     numbers and the world's pentaquark left with the old picture. -->
-<Spectrum2019 />
+<!-- recorded (the owner, 10 Nov: "we want to have a peak from the fit. Also building up the histogram could be a bit
+     more substantial, maybe like in uzsikrauk karjerai … (even involving the detector)"): data2019.mp4 is the data
+     take of takes.md (takes/README.md): a collision in LHCb, its grains landing as the 2019 histogram, the fit drawn
+     over it, the three peaks lit. The axis and the names are HTML over the clip's settled end, so they stay sharp:
+     the positions are the histogram's in the clip's last frame, in slide units; move them if the take's camera moves. -->
+<VideoPlayer src="data2019.mp4" muted :controls="false" transition="fade" />
+<AtClipEnd :lead="5"><div class="spec-axis"><i style="left: 283.6px">4300</i><i style="left: 447.7px">4400</i><i style="left: 611.7px">4500</i><b>mass of J/ψ p (MeV)</b></div></AtClipEnd>
+<AtClipEnd :lead="4"><div class="spec-names"><i class="c" style="left: 300px; top: 112px">P<sub>c</sub>(4312)<sup>+</sup></i><i class="r" style="left: 498px; top: 44px">P<sub>c</sub>(4440)<sup>+</sup></i><i class="l" style="left: 556px; top: 22px">P<sub>c</sub>(4457)<sup>+</sup></i></div></AtClipEnd>
 <div class="cap">LHCb, 2019: the J/ψ p mass in Λ<sub>b</sub><sup>0</sup> → J/ψ p K<sup>−</sup> decays</div>
 
 <!-- facts: lambda-b-contains-b, lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
@@ -256,15 +266,19 @@ Gell-Mann's paper. They are made of two up quarks, a down quark, and a pair
 of a heavy "charm" quark and its antiquark.
 
 In 2019, with nine times more data, LHCb looked again. This is the result:
-the line counts the particle pairs we found at each mass, about 250 000 in
-all, and the three narrow peaks, named in the close-up, are three pentaquarks. Where we had seen one bump in 2015, there were in fact
-two, and a third appeared beside them.
+the histogram counts the particle pairs we found at each mass, the white
+line is the fit, and the three narrow peaks are three pentaquarks. Where we
+had seen one bump in 2015, there were in fact two, and a third appeared
+beside them.
 
 The pentaquarks came out of the decays of the Λb, a baryon that carries a b
 quark: Kobayashi and Maskawa's quark.
 
-The plot: HEPData ins1728691, Table 1 (all candidates, 2 MeV bins, 4034–5126 MeV; 250 781 entries),
-drawn as a line, with an inset on 4250–4600 MeV; the peaks' names at 4312, 4440 and 4457 MeV.
+The clip (data2019.mp4, 24 s, no sound; 10 Nov): LHCb's detector, a collision in it, grains leaving the
+detector and landing as the histogram of the J/ψ p mass, 4250–4600 MeV; the camera comes to the histogram
+(18.7 s), the fit is drawn over it in white and the three peaks light; then the axis and the names.
+The plot: HEPData ins1728691, Table 3 (the cos θ-weighted candidates of the paper's Fig. 6, 2 MeV bins), and a
+fit of it made here as the paper's (bake/fit_2019.py): three Breit–Wigner peaks over a polynomial background.
 Sources: LHCb, PRL 115 (2015) 072001; LHCb, PRL 122 (2019) 222001 (HEPData ins1728691, CC BY 4.0); CERN
 press release, 14 July 2015. (~1 min)
 -->
@@ -326,9 +340,10 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
 ---
 
 <!-- recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy point cloud should be
-     pre-rendered as a video"): the live slide is CollabGlobe with figures/earth_back.jpg (setup/globe.js,
-     the `globe` station); to change it, put that component back, record it (videos/manifest.toml,
-     globe.mp4), encode, and put this player back. Fade, not cut: a cut clip never announces that it
+     pre-rendered as a video"; 10 Nov: "Slide 13 could zoom in and rotate earth"): globe.mp4 is the globe
+     take, takes.md slide 4 (CollabGlobe with figures/earth_back.jpg, setup/globe.js); to change it, change
+     the take, record and cut it (takes/README.md) and encode. The `globe` station here is the take's end,
+     so the slide after rests on the clip's last view. Fade, not cut: a cut clip never announces that it
      covers the slide, so the world would draw on under it (Innoday, 22 Oct). -->
 <VideoPlayer src="globe.mp4" muted :controls="false" transition="fade" />
 <div class="cap">Lithuania and Japan</div>
@@ -336,9 +351,11 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
 <!-- facts: lhcb-vilnius-joined -->
 
 <!--
-The globe (globe.mp4, 16.2 s, no sound; 5 Nov): grains gather into a globe of grains framed on
-both cities (coastlines, Natural Earth, public domain; Japan's the brightest); Vilnius lights, then
-Nagoya, and a strand of light is drawn between them, a pulse running along it.
+The globe (globe.mp4, 20.6 s, no sound; 10 Nov): grains gather into a globe of grains with Europe in
+the middle (coastlines, Natural Earth, public domain; Japan's the brightest); Vilnius lights, then
+Nagoya and Tokyo at the right edge, and a strand of light is drawn from Vilnius to Nagoya, a pulse
+running along it. From 3 s the globe turns east and the camera comes in; from 15 s it rests on Asia,
+Vilnius upper left, Japan lower right.
 Vilnius University (LHCb data) and Nagoya University (theory): the project.
 Sources: Natural Earth; Vilnius University. (~0.75 min)
 -->
@@ -370,10 +387,10 @@ space: { at: project, dim: 0.15 }
 <!-- facts: lhcb-vilnius-joined -->
 
 <!--
-This is what our project does. On the left, the people of the LHCb group at
-Vilnius University, who analyse LHCb data. On the right, theorists in Japan,
-at Nagoya University, who specialise in the theory of these particles. In
-the middle, the pentaquark that both sides study.
+This is what our project does. On the left, Vilnius University, whose LHCb
+group analyses LHCb data. On the right, Nagoya University in Japan, whose
+theorists specialise in the theory of these particles. In the middle, the
+pentaquark that both sides study.
 
 We work as one team: the theory predicts what each picture of the
 pentaquark should leave in the data, and we test those predictions with
@@ -399,7 +416,7 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 <!--
 Lithuania (owner, 27 Oct). Clip vilnius_out.mp4 (17.8 s, no sound): from NFTMC, Vilnius
 University's physics campus in Saulėtekio slėnis, out over Vilnius (Google Earth) to the
-clouds and the Earth's limb. It ends and waits for the press. The coming back is slide 12.
+clouds and the Earth's limb. It ends and waits for the press. The coming back is vilnius_back.mp4, hidden too.
 Sources: the owner's SpaceEngine edit, stabilised for Užsikrauk karjerai (videos/manifest.toml).
 (~0.5 min)
 -->
@@ -612,19 +629,22 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 
 <!-- recorded (owner, 10 Nov: "Reimagine the finale, now it's not good. Use the LHCb collision, use the world rendered,
      maybe the world turns into a pentaquark when zoomed out and then thank you appears in japanese and lithuanian"):
-     finale.mp4 is cut from two takes (videos/finale/segments.sh): LHCb's collision into a white flash, then the
-     world of grains on Japan, drawing back, the Earth's grains gathering into the cover's pentaquark. It carries
-     its own sound, the low bang, so it plays unmuted; it ends on the pentaquark and waits, and the thanks come up
-     over its last second. -->
+     then, on the first cut, "just need a smoother transition from the collision (maybe show more of it, particles
+     propagating through detector, something like that)"): finale.mp4 is cut from two takes (videos/finale/segments.sh;
+     takes.md slides 3 and 5): LHCb's collision, its particles going through the detector as the camera turns round
+     it and draws back, a dissolve into the world of grains on Japan, drawing back, the Earth's grains gathering
+     into the cover's pentaquark. It carries its own sound, the low bang, so it plays unmuted; it ends on the
+     pentaquark and waits, and the thanks come up over its last 2.5 s. -->
 <VideoPlayer src="finale.mp4" :controls="false" transition="fade" />
 <AtClipEnd :lead="2.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
 
 <!--
-The finale (finale.mp4, 23 s, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
-on the crossing (4 s); a white flash, and the Earth in grains, Japan in the middle; the camera draws back to
-the whole Earth, and from 10.5 s its grains leave the globe and gather into a pentaquark (u u d c c̄), the
-cover's particle, which turns as the camera comes in (15.5 s on). The thanks, in Japanese and Lithuanian, come
-up over the last 2.5 s.
+The finale (finale.mp4, 30 s, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
+on the crossing (3.9 s); the particles go through the detector as the camera turns round it and draws back; at
+12 s the picture dissolves (1.6 s) into the Earth in grains, Japan in the middle; the camera draws back to the
+whole Earth, and from 17.5 s its grains leave the globe and gather into a pentaquark (u u d c c̄), the cover's
+particle (formed by 23 s), which turns as the camera comes in. The thanks, in Japanese and Lithuanian, come up
+over the last 2.5 s.
 
 Five quarks were allowed on paper in 1964 and found in 2015. What they are
 made of is the question that Lithuanian and Japanese physicists now answer

@@ -16,12 +16,18 @@
 // `tour` (Tokyo, 5 Nov; the owner: "starting from vilnius to japan and then center on tokyo"): the
 // centre's longitude and latitude by keys, in seconds from the moment the globe has formed, eased
 // between them; it takes the place of `lon`, `tilt` and `spin`, and keeps the world busy until its
-// last key. The slide's `space.path` does the zoom.
+// last key. The slide's `space.path` does the zoom. `tourFrom: 'cue'` (10 Nov, the owner: "Slide 13
+// could zoom in and rotate earth"): the keys' seconds count from the cue instead, so the turn and the
+// slide's camera path share a clock.
 //
 // `pq` (Tokyo, 10 Nov; the owner on the finale: "use the world rendered, maybe the world turns into a pentaquark
-// when zoomed out"): { at, dur?: 4.5, spread?: 2.7, radius?: 1.05 }: `at` seconds after the camera arrives, every
+// when zoomed out"): { at, dur?: 4.5, spread?: 2.7, radius?: 1.05 }: `at` seconds after the cue, every
 // grain of the globe sets out (staggered, on a swirl) for a place in a pentaquark u u d c c̄ in colour charge, the
 // cover's colours: five balls, hot in the middle, and the strands between them; the particle then turns slowly.
+//
+// The cue: the moment the camera sets out for this globe's station from another one (the stage's `arm`), or,
+// later, the moment <CollabGlobe> starts the photo's sequence (`start`). Not the stage's `assemble`: on a slide
+// with a `space.path` that comes at the path's end, which put the pentaquark 19 s late in a take.
 //
 // Data (public/data/globe.json, its `about`): Natural Earth 1:50m coastlines and points on its
 // 1:110m land (public domain, Innoday's), the two cities, and the pairs the strand joins.
@@ -42,9 +48,10 @@ export const T = {
   end: 8.4,        // after the hold: settled (the strand drawn)
 }
 
-// the live builder, for <CollabGlobe>; `pending` keeps the world busy from the slide's arrival
-// until the component has started the sequence (or given up)
-export const collab = { inst: null, pending: false }
+// the live builders by their `name`, for <CollabGlobe globe="…">; `pending` keeps the world busy from
+// the slide's arrival until the component has started the sequence (or given up). By name: the takes'
+// stations hold two globes, and with one slot the last built took the other's photo.
+export const collab = { all: new Map(), pending: false }
 
 const lin = (hex) => { const c = new Color(hex); return [c.r, c.g, c.b] }
 const D2R = Math.PI / 180
@@ -226,13 +233,14 @@ function buildGlobe(o, ctx) {
   })
   const u = mat.uniforms
   const pqBase = u.uPqN.value.map((v) => v.clone())
-  let tArr = null
+  const name = o.name ?? 'globe'
+  let tCue = null
   let pts = null, photo = null, alive = true, loaded = false, data = null, targets = null, inst = []
   let resolveReady
   const ready = new Promise((r) => { resolveReady = r })
 
   // the turn: the centre's longitude C(t) = lon - spin (t - tRef), tRef the moment the globe has
-  // formed (or its first frame, when nothing started it)
+  // formed (or its first frame, when nothing started it); a tour `from: 'cue'` counts from tCue
   const tilt = (o.tilt ?? 26) * D2R, roll = (o.roll ?? -8) * D2R, lon0 = o.lon ?? 30, spin = o.spin ?? 1.5
   const tour = Array.isArray(o.tour) && o.tour.length ? o.tour : null
   const tourEnd = tour ? tour[tour.length - 1][0] : 0
@@ -356,6 +364,9 @@ function buildGlobe(o, ctx) {
   // ---- the sequence ----------------------------------------------------------------
   let now = 0, last = null, t0 = null, startReq = false, skip = 0, tRef = null, done = true, touring = false
   const el = () => (t0 == null ? -1 : now - t0)
+  // the tour's seconds: from the cue (`tourFrom: 'cue'`, once there is one), else from the globe's forming
+  const fromCue = o.tourFrom === 'cue'
+  const tourS = () => now - (fromCue && tCue != null ? tCue : tRef)
   const wp = new Vector3()
   const self = {
     ready, R,
@@ -371,7 +382,8 @@ function buildGlobe(o, ctx) {
       const local = new Float32Array(n * 3)
       for (let i = 0; i < n; i++) { local[i * 3] = pos[i * 3] - c.x; local[i * 3 + 1] = pos[i * 3 + 1] - c.y; local[i * 3 + 2] = pos[i * 3 + 2] - c.z }
       // targets on the side that faces the camera when the grains land
-      const M = turn(T.morph + T.fly * 0.75 - (T.globe + 1.2), new Matrix3())
+      const land = T.hold + T.morph + T.fly * 0.75   // sequence seconds at which most grains have landed
+      const M = turn(fromCue ? land : land - (T.hold + T.globe + 1.2), new Matrix3())
       const toCam = new Vector3().subVectors(cam, c).normalize()
       const v = new Vector3()
       const facing = (q) => v.set(q[0], q[1], q[2]).applyMatrix3(M).dot(toCam)
@@ -433,27 +445,27 @@ function buildGlobe(o, ctx) {
       if (photo) photo.visible = false
     },
   }
-  collab.inst = self
+  collab.all.set(name, self)
 
   return {
     group: g, labels: [],
     api: {
-      arm() {},
-      assemble(t, onDone) { if (tArr == null || t - tArr > 40) tArr = t; onDone?.() },   // once a visit: a path's end arrives again
-      busy: () => collab.pending || startReq || (!done && t0 != null && el() < T.hold + T.end) || (collab.pending && !loaded) || (touring && now - tRef < tourEnd) },
+      arm() { tCue = now },                                          // the camera sets out for this station: the cue
+      assemble(t, onDone) { if (tCue == null) tCue = t; onDone?.() },   // a page opened on the station: no flight, no arm
+      busy: () => collab.pending || startReq || (!done && t0 != null && el() < T.hold + T.end) || (collab.pending && !loaded) || (touring && tourS() < tourEnd) },
     update(t, cam) {
       const dt = last == null ? 0 : Math.max(0, t - last); last = t; now = t
       u.uTime.value = t
       if (tRef == null) tRef = t
-      if (startReq) { startReq = false; t0 = t - skip; tRef = t0 + T.hold + T.globe + 1.2; touring = !!tour }
-      turn(t - tRef, uRot.value)
+      if (startReq) { startReq = false; t0 = t - skip; tCue = t0; tRef = t0 + T.hold + T.globe + 1.2; touring = !!tour }
+      turn(tourS(), uRot.value)
       if (cam) { g.getWorldPosition(wp); const dd = wp.distanceTo(cam); u.uFar.value = 1 - Math.min(1, Math.max(0, (dd - 40) / 25)) }
       if (pts) pts.visible = u.uFar.value > 0.002
-      if (o.pq && tArr != null) {
-        const x = Math.min(1, Math.max(0, (t - tArr - o.pq.at) / (o.pq.dur ?? 4.5)))
+      if (o.pq && tCue != null) {
+        const x = Math.min(1, Math.max(0, (t - tCue - o.pq.at) / (o.pq.dur ?? 4.5)))
         u.uPq.value = x
         // the particle turns slowly once it has formed, as the cover's does
-        const a = 0.16 * Math.max(0, t - tArr - o.pq.at), c = Math.cos(a), sn = Math.sin(a)
+        const a = 0.16 * Math.max(0, t - tCue - o.pq.at), c = Math.cos(a), sn = Math.sin(a)
         u.uPqN.value.forEach((v, i) => { const b = pqBase[i]; v.set(c * b.x + sn * b.z, b.y, -sn * b.x + c * b.z) })
       }
       if (!done && t0 != null) {
@@ -472,7 +484,7 @@ function buildGlobe(o, ctx) {
       }
       void dt
     },
-    dispose() { alive = false; offLatch(); if (collab.inst === self) collab.inst = null },
+    dispose() { alive = false; offLatch(); if (collab.all.get(name) === self) collab.all.delete(name) },
   }
 }
 

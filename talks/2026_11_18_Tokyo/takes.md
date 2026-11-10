@@ -1,0 +1,104 @@
+---
+theme: ../../theme
+colorSchema: dark
+transition: fade
+routerMode: hash
+aspectRatio: 16/9
+addons:
+  - slidev-addon-stage
+stage:
+  space: takes/space.json   # takes/data/space.json, copied beside the site by takes/build.sh
+  palette: { base: classic, bg: '#020203' }                                             # the deck's look: keep the
+  options: { maxBufferWidth: 1920, grain: 0, aberration: 0, bloom: 0.32, density: 0.6 }  # two lines as deck.md's
+  plugins: [hadron]
+  lang: en
+  sound: { flight: false, clip: false }
+title: "Tokyo: the takes"
+lang: en
+space: { at: [600, 300, 0], dist: 12, dim: 0.9 }
+---
+
+<!-- Not a talk: the scenes the deck plays as clips, one per slide, for the recorder. takes/README.md has the
+     commands (build, record, cut). Nothing here is deployed: tooling reads deck.md only. -->
+
+<div style="position: absolute; left: 56px; top: 48px; font: 500 20px/1.6 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #c9dcf0; text-transform: none;">
+The takes (takes/README.md)<br>
+2 · data: LHCb, a collision, the 2019 histogram and its fit → data2019.mp4 (slide 10)<br>
+3 · collision: LHCb's point cloud and a collision, drawing back → finale.mp4, first part<br>
+4 · globe: the globe forms, Vilnius and Nagoya, the turn east → globe.mp4 (slide 13)<br>
+5 · world: the Earth on Japan, drawing back, its grains into the pentaquark → finale.mp4, second part
+</div>
+
+---
+space:
+  dim: 0
+  sway: 0
+  ambient: 0
+  hum: false
+  path:
+    - [0, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]
+    - [15.5, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]
+    - [19.5, { at: [1037.6, -482.3, 5], dist: 19.5, yaw: 0, pitch: 3 }]
+---
+
+<!-- 2 · data: the detector whole, a collision, its grains arcing out and landing as the histogram (`pc`); the
+     camera comes to the histogram, the fit is drawn and the peaks light. Slide 10's axis and names sit on this
+     camera's last pose: move it and they move (deck.md, styles/index.css). -->
+<InsideLhcb :land-y="-470" />
+<Grains :set="{ pc: 1 }" />
+
+---
+space:
+  dim: 0
+  sway: 0
+  ambient: 0
+  hum: false
+  path:
+    - [0, { at: [1012, -481.5, 2.5], dist: 23, yaw: -20, pitch: 4 }]
+    - [3, { at: [1012, -481.5, 2.5], dist: 24, yaw: -14, pitch: 4 }]
+    - [10, { at: [1012, -481.5, 2.5], dist: 28, yaw: 2, pitch: 5 }]
+    - [13.5, { at: [1014, -479, 2.5], dist: 40, yaw: 12, pitch: 16 }]
+    - [17, { at: [1016, -474, 2.5], dist: 70, yaw: 18, pitch: 28 }]
+---
+
+<!-- 3 · collision: the point-cloud detector (`detp`), the collision 1.2 s in, its particles going through the
+     detector as the camera turns around it and draws back; the detector fades from 14.5 s (the cut's cross-fade
+     into the world take). -->
+<InsideLhcb det="detp" :land-y="-470" :delay="1.2" :fade-at="14.5" />
+
+---
+space:
+  at: globe
+  dim: 0
+  sway: 0
+  hum: false
+  path:
+    - [0, { at: globe, dist: 12.5, yaw: 0, pitch: 0 }]
+    - [6.5, { at: globe, dist: 12.5, yaw: 0, pitch: 0 }]
+    - [19.5, { at: globe, dist: 8.3, yaw: 0, pitch: 0 }]
+---
+
+<!-- 4 · globe (the owner, 10 Nov: "Slide 13 could zoom in and rotate earth"): the photograph dissolves into
+     grains, the globe forms on Europe, Vilnius lights, then Nagoya and Tokyo, the strand is drawn; the globe
+     turns east after it (the station's `tour`, its seconds and this path's both from the sequence's start:
+     `tourFrom: cue`) as the camera comes in, and rests with both cities in the frame. The deck's `globe`
+     station (public/data/space.json) is this take's end. -->
+<CollabGlobe src="figures/earth_back.jpg" />
+
+---
+space:
+  at: finale
+  dim: 0
+  sway: 0
+  hum: false
+  path:
+    - [0, { at: finale, dist: 6.2, yaw: 0, pitch: 0 }]
+    - [1.5, { at: finale, dist: 6.4, yaw: 0, pitch: 0 }]
+    - [6.5, { at: finale, dist: 13, yaw: 0, pitch: 0 }]
+    - [12.5, { at: finale, dist: 18, yaw: -8, pitch: 6 }]
+    - [19, { at: finale, dist: 13.5, yaw: -16, pitch: 9 }]
+---
+
+<!-- 5 · world: the Earth in grains with Japan in the middle; the camera draws back, and from 6.5 s the globe's
+     grains gather into the cover's pentaquark (the station's `pq`, its seconds from the camera setting out for
+     this station, as this path's), which turns as the camera comes in. No component: the stage's `arm` cues it. -->

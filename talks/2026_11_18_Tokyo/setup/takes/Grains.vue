@@ -1,0 +1,30 @@
+<script setup>
+// Copied 10 Nov 2026 from Užsikrauk karjerai (setup/Grains.vue) for Tokyo's data slide and the finale's collision (the owner: "building up the histogram could be a bit more substantial, maybe like in uzsikrauk karjerai … (even involving the detector)"; the finale: "show more of it, particles propagating through detector"); both are recorded as clips (the point cloud is heavy for a Mac).
+import { watch } from 'vue'
+import { useIsSlideActive, useSlideContext } from '@slidev/client'
+import { onSlideEnter } from '../slideHooks.js'
+import { setGrains } from '../grains.js'
+
+// <Grains :set="{ open: 2, run3: -1 }" />: when its slide becomes the
+// current one, each named form in the world goes to that step.
+// :clicks="{ 1: { jp: 2 } }": from that click on, these steps instead. A
+// slide entered at a later click (stepping back into it) starts there too.
+const props = defineProps({
+  set: { type: Object, default: () => ({}) },
+  clicks: { type: Object, default: () => ({}) },
+})
+const { $clicks, $renderContext } = useSlideContext()
+const active = useIsSlideActive()
+const apply = () => {
+  // only the live slide steers the world: the overview grid and the previews render
+  // their copies with every click done, which would light slide 10's peaks early
+  if (!['slide', 'presenter'].includes($renderContext?.value)) return
+  const steps = { ...props.set }
+  for (const [at, part] of Object.entries(props.clicks)) if ($clicks.value >= Number(at)) Object.assign(steps, part)
+  for (const [name, step] of Object.entries(steps)) setGrains(name, step)
+}
+onSlideEnter(apply)
+watch($clicks, () => { if (active.value) apply() })
+</script>
+
+<template><span class="grains-step" aria-hidden="true" /></template>

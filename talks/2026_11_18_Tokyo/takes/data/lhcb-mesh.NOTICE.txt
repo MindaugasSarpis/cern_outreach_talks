@@ -1,0 +1,19 @@
+lhcb-grains.bin: points sampled from the surfaces of LHCb's Run 3 detector geometry
+(hero/bake_grains.py in this talk; Int16 [x, y, z, part] in mm, LHCb's frame;
+Innoday's copy re-baked on 20 Oct 2026 with 4.8 times the grains, 446 400; again the same
+day at 3.8 times on the faces and 0.3 more along the feature edges, 459 420, with
+Blender 4.5.14 LTS).
+lhcb-grains.shape.bin: each grain's face normal and edge flag (the same bake).
+lhcb-mesh.glb: the same geometry as decimated surfaces, one object a sub-detector
+(hero/export_mesh.py).
+
+Source geometry: LHCb's DD4hep detector description, https://gitlab.cern.ch/lhcb/Detector
+  (c) Copyright CERN for the benefit of the LHCb Collaboration.
+  Licensed under the GNU General Public License, version 3: https://www.gnu.org/licenses/gpl-3.0.html
+Converted to glTF (LHCb.glb) by the HSF Phoenix project, https://github.com/HSF/phoenix
+  Licensed under the Apache License, version 2.0: https://www.apache.org/licenses/LICENSE-2.0
+These derived files are distributed under the GPL-3.0, with these notices kept.
+
+The person for scale in lhcb-mesh.glb (object `person`, 1,83 m): Blender's Human Base Meshes,
+CC0 (public domain dedication), added by Innoday's hero/export_mesh.py on 20 Oct 2026.
+Copied into this talk from Innoday (main 404f3a7) on 21 Oct 2026; the grains files are not used here.

@@ -149,8 +149,11 @@ function update(t) {
   const turn = t > T_RISE ? 0.32 * Math.sin((t - T_RISE) * 0.11) : 0
   // the camera: straight down at first (far up the screen), then 58° from the vertical, a little to the left
   const polar = 0.02 + tilt * 1.0, az = -0.42 * tilt + turn
-  const dist = 20.5 - 6 * tilt
-  const tgt = new Vector3(-0.8 * tilt, -0.15 * tilt, 1.5 * (1 - tilt) + 1.25 * tilt)   // from above, the plot stands high, clear of the caption
+  // every label stays inside the frame and above the caption (its box starts at y = 460 of 551): from above,
+  // through the tilt and round the whole turn (57 s). The coming closer lags the tilt (tilt²), or the plot
+  // grows before it foreshortens; the point looked at sits toward the viewer, which lifts the plot in the frame
+  const dist = 21.5 - 6.5 * tilt * tilt
+  const tgt = new Vector3(-1.2 * tilt, -0.15 * tilt, 1.7 + 0.6 * tilt ** 1.5)
   camera.position.set(tgt.x + dist * Math.sin(polar) * Math.sin(az), tgt.y + dist * Math.cos(polar), tgt.z + dist * Math.sin(polar) * Math.cos(az))
   camera.up.set(0, 1, 0)
   camera.lookAt(tgt)
@@ -193,7 +196,9 @@ function update(t) {
   const lab = (x, y, z, html, cls, op = 1) => { const p = proj(x, y, z); if (p) labels.push({ ...p, html, cls, op }) }
   for (const m of [2, 3, 4, 5, 6]) lab(wx(m), 0, wz(YL) + 0.35, String(m), 'tick')
   for (const m of [16, 18, 20, 22, 24, 26]) lab(wx(XL) - 0.35, 0, wz(m), String(m), 'tick r')
-  lab(0, 0, wz(YL) + 1.0, 'm<sup>2</sup>(K p) &nbsp;[GeV<sup>2</sup>]', 'axis')
+  // the x axis's name moves out from its ticks as the plot tilts: seen at a low angle the gap between the two
+  // rows closes, and in the turn's left half the "4" stood on the name
+  lab(0, 0, wz(YL) + 1.0 + 0.7 * tilt * tilt, 'm<sup>2</sup>(K p) &nbsp;[GeV<sup>2</sup>]', 'axis')
   lab(wx(XL) - 1.25, 0, wz(21.2), 'm<sup>2</sup>(J/ψ p)<br>[GeV<sup>2</sup>]', 'axis r')
   const nm = ease((t - T_NAME) / 1)
   if (nm > 0) {
