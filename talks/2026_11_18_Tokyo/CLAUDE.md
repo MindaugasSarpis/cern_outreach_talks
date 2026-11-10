@@ -52,6 +52,14 @@ Open questions: sent to the owner 2026-10-10 (see Decisions for the defaults).
 
 ## Status
 
+- 2026-11-10: **the owner's 14 changes** (Decisions, 10 Nov), on talk/tokyo, **not deployed** (live: ce7a9f7).
+  17 slides (a new slide 11, the Dalitz plot), lint 0/0, `talk check` ok; shots of all 17 clean but one
+  (slide 11's top-down view ran 72 px off the bottom; fixed and re-taken in motion). Each changed slide was
+  checked in motion (`slidev-stage-record`, strips): the cover, 2, 9, 10, 11, 12, 15 and the finale. Plates
+  re-recorded. New clips encoded locally (atoms_fast, cern_overview_swoosh, finale); on the release only
+  once published (`pnpm videos:publish --only …`, see Verify). Open: the atoms clip's credit (the library
+  says only "released/atoms.mov (outreach)").
+
 - 2026-11-05 (evening, the owner AFK: "review and finish this to completion … have a working tidy
   version without [the Google Earth shot]. Carefully review the flow, story telling, effects"): a
   fresh reviewer read the sheet, both clips frame by frame and the copy; its must-fixes and most
@@ -319,6 +327,13 @@ From your 27 Oct outline (built with the defaults below; say if not):
 
 ## Arc
 
+**10 Nov (the owner's 14 changes).** 1 cover: the CMS collision, the pentaquark out of its flash · 2 CERN
+clip with its swoosh, 2018 at its end · 3 LHC: 27 km, 13.6 TeV, −271.3 °C · 4 lhcb.mp4 with its music · 5
+atoms_fast.mp4 · 6 Sakata 1956 · 7 1964 · 8 1973 · 9 the recipes in 3D, the pentaquark full screen · 10
+the 2019 spectrum (HEPData) · 11 the 2019 Dalitz plot in 3D · 12 molecule, compact, hadroquarkonium,
+orbiting · 13 globe, "Lithuania and Japan" · 14 the Vilnius group · 15 the project · 16 finale · 17 thanks
+and credits.
+
 **15-min blueprint (5 Nov, evening; supersedes the cut below).** 1 cover · 2 CERN clip, 2018
 Lithuania at CERN · 3 LHC tunnel footage, 27 km · 4 lhcb.mp4 · 5 proton · 6 Sakata 1956 · 7 1964
 quarks · 8 1973 six quarks · 9 the six quarks and their recipes · 10 2015/2019 · 11 molecule or
@@ -421,6 +436,22 @@ would suit a Japanese audience. The new photos are in photos.toml; their
 credits are in tiny print on slide 21 (CERN's need none).
 
 ## Talk-owned code
+
+10 Nov:
+- `setup/CoverCollision.vue`, `coverCollision.js`, `pentaquark.js`, `grains.js` (lines 1-123 only),
+  `slideHooks.js`: Karjera's cover, copied; the pentaquark's type is `pentaquark-cc` here (the hadron plugin
+  owns `pentaquark`), larger, its quarks moving (`orbit`, `tumble`), its update ticking the grains' clock.
+- `setup/AtClipEnd.vue`: what it wraps comes in as the slide's clip ends (slide 2's 2018, the finale's thanks).
+- `setup/QuarkRecipes.vue` (rewritten): its own three.js scene, lit physical quarks (RoomEnvironment, ACES),
+  glass-edged shells; still: `public/figures/recipes_end.jpg`.
+- `setup/Spectrum2019.vue`: SVG of HEPData ins1728691 Table 1 (`public/data/jpsip-2019-all.json`,
+  `bake/hepdata_2019.py`), the inset on the peaks.
+- `setup/Dalitz3D.vue`: the paper's Dalitz figure digitised (`public/data/dalitz-2019.json`,
+  `bake/dalitz_digitise.py`, `bake/dalitz_check.png`) as instanced columns; still: `public/figures/dalitz_end.jpg`.
+  Both stills: a build with `.cap` hidden, `slidev-stage-record … --size 1920x1080`, the last frame.
+- `setup/globe.js`: `pq` (the globe's grains into a pentaquark), `japan` (Japan's extra brightness), an
+  `assemble` that sets the arrival once a visit. The `finale` station is the finale take's source.
+- `videos/clips/swoosh.py`: slide 2's swoosh. `videos/finale/segments.sh`: the 10 Nov finale.
 
 Files of this talk's own (setup/, styles/, vite.config.ts) and what each does.
 A piece a second talk needs moves to the shared kit instead of being copied.
@@ -618,10 +649,35 @@ The owner's decisions, dated, newest last.
   (Innoday's M2 fix). On v0.11: `space.recorded` and `<StageSoundtrack>`
   replace Soundtrack/CloseStill (Status).
 
+## Decisions, 10 Nov (the owner's review, 14 points)
+
+1. Cover: Karjera's collision; "only then a pentaquark appears (could be more substantial, a bit more dynamic)":
+   the colour-charge pentaquark gathers out of the first crossing (~4–6 s), 2.9 spread (Karjera 2.5), moving.
+2. 2018 only at the clip's end, "zooming swoosh": a talk-owned copy of cern_overview_short with a synthesised
+   swoosh on the dive. 3. LHC: 13.6 TeV (Run 3) and −271.3 °C magnets (the notes say: warm since LS3, 29 Jun 2026).
+4. "LHCb Experiment at CERN", the clip's music on (the one exception to 5 Nov's no-music).
+5. The proton slide is atoms.mp4 sped up (126 s → 26.5 s), no caption. 6. "Shoichi Sakata proposes a
+   precursor to the quark model". 7. No marketing lines, in any project (a global rule now, ~/.claude/CLAUDE.md):
+   "Gell-Mann and Zweig propose the quark model"; slide 8 "…propose six quarks, including the b quark".
+8. Slide 9 in 3D, then the pentaquark full screen in front; later "a bit too colorful, make photorealistic": lit
+   glossy balls, natural colours.
+9. Slide 10 the whole 2019 curve, drawn from HEPData, named peaks and an inset; slide 11 new, the Dalitz plot
+   built up in 3D from the 2019 figure (digitised; counts approximate, said in the notes).
+10. Slide 12: hadroquarkonium added (c c̄ core in a u u d cloud; Dubynskiy–Voloshin 2008, Eides et al. 2016),
+    names under the three, the camera swinging ±24°. 11. Globe caption "Lithuania and Japan".
+12. The group photo: the caption only, no top shade or numbers (2024 and 13 left the screen; notes keep them).
+13. The project: the two universities' pictures with "LHCb data" and "theory", one pentaquark, the strands; the
+    two nine-node "teams" left (they read as many-quark states).
+14. The finale: LHCb's collision → white → the Earth on Japan → drawing back → the Earth's grains into the
+    cover's pentaquark (tints softened toward the globe's blue) → ありがとうございました · Ačiū (no English, the
+    owner's two languages). 23 s, the low bang.
+
 ## Verify
 
 ```bash
 pnpm talk check tokyo     # videos:check, stage:check, a build into /tmp/talk-tokyo/site
 pnpm talk review tokyo    # check, then shots of the changed slides and a contact sheet
 pnpm talk ready tokyo     # before the venue: lint --release, check, shots, preflight, venue --dry-run
+# 10 Nov's new clips onto the release (outward-facing: the owner's call):
+#   cd talks/2026_11_18_Tokyo && pnpm videos:publish --only atoms_fast.mp4 cern_overview_swoosh.mp4 finale.mp4 <the plates>
 ```

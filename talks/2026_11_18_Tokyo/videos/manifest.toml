@@ -129,13 +129,6 @@ generated = true
 notes     = "the world of slide 1 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
-name      = "05-plate.mp4"
-profile   = "remux"
-used_in   = ["slide 5"]
-generated = true
-notes     = "the world of slide 5 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
-
-[[videos]]
 name      = "06-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 6"]
@@ -178,11 +171,11 @@ generated = true
 notes     = "the world of slide 11 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
-name      = "13-plate.mp4"
+name      = "12-plate.mp4"
 profile   = "remux"
-used_in   = ["slide 13"]
+used_in   = ["slide 12"]
 generated = true
-notes     = "the world of slide 13 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 12 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "14-plate.mp4"
@@ -192,9 +185,16 @@ generated = true
 notes     = "the world of slide 14 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
-name      = "16-plate.mp4"
+name      = "15-plate.mp4"
 profile   = "remux"
-used_in   = ["slide 16"]
+used_in   = ["slide 15"]
 generated = true
-notes     = "the world of slide 16 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 15 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "17-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 17"]
+generated = true
+notes     = "the world of slide 17 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 # <<< plates

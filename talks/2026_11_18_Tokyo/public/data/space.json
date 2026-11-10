@@ -1043,10 +1043,10 @@
    "look": {
     "target": [
      0,
-     0.2,
+     0.0,
      0
     ],
-    "dist": 17,
+    "dist": 13.2,
     "yaw": 0,
     "pitch": 5,
     "sway": 1.5
@@ -1087,7 +1087,7 @@
       -1.65,
       0
      ],
-     "height": 0.62,
+     "height": 0.775,
      "color": "#e8f6ff",
      "upper": false,
      "tracking": 0.05
@@ -1100,7 +1100,7 @@
       -2.45,
       0
      ],
-     "height": 0.5,
+     "height": 0.625,
      "color": "#9fd8ff",
      "upper": false,
      "tracking": 0.05
@@ -1113,7 +1113,7 @@
       -1.65,
       0
      ],
-     "height": 0.62,
+     "height": 0.775,
      "color": "#e8f6ff",
      "upper": false,
      "tracking": 0.05
@@ -1126,7 +1126,7 @@
       -2.45,
       0
      ],
-     "height": 0.5,
+     "height": 0.625,
      "color": "#9fd8ff",
      "upper": false,
      "tracking": 0.05

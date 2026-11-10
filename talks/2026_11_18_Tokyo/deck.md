@@ -91,7 +91,7 @@ space: { at: lhc, dim: 0.25 }
 </div>
 <div class="cap">The Large Hadron Collider, 100 m underground</div>
 
-<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lhc-size-cost, cern-lhc-energy, cern-lhc-cold, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
+<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lhc-size-cost, cern-lhc-energy, cern-lhc-cold, gave-cryo-lhc, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
 
 <!--
 This is the Large Hadron Collider at CERN: a ring 27 kilometres long, about
@@ -105,8 +105,13 @@ an observer for the LHC, and Japanese institutes helped build both the
 machine and its experiments. My group works on one of those
 experiments, LHCb.
 
+On screen (10 Nov, the owner: "LHC should also say the energy, the temperature"): 13.6 TeV, the
+collision energy of Run 3 (2022–2026, two 6.8 TeV beams); −271.3 °C (1.9 K), the superconducting magnets
+when running, colder than outer space (2.7 K). Since Long Shutdown 3 began on 29 June 2026 the LHC is warm
+for the HL-LHC upgrade: say "when it runs".
+
 Sources: home.cern (LHC facts; member states; Lithuania; "Japan contributes
-an additional 5 billion yen", 1998). (~0.5 min)
+an additional 5 billion yen", 1998; Long Shutdown 3). (~0.5 min)
 -->
 
 ---

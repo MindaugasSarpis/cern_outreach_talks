@@ -47,7 +47,9 @@ function grid() {
     const n = s / 4
     if (n <= 0) continue
     const x = wx(DZ.x.lo + (i + 0.5) * BX), z = wz(DZ.y.lo + (j + 0.5) * BY)
-    out.push({ i, j, n, h: Math.sqrt(n) * HK, x, z, jit: Math.random() })
+    // when its first candidate lands, as a share F of all of them: P(none by F) = exp(−n F), drawn once
+    const first = -Math.log(1 - Math.random() * 0.999) / Math.max(n, 0.2)
+    out.push({ i, j, n, h: Math.sqrt(n) * HK, x, z, first })
   }
   return out
 }
@@ -147,15 +149,19 @@ function update(t) {
   const turn = t > T_RISE ? 0.32 * Math.sin((t - T_RISE) * 0.11) : 0
   // the camera: straight down at first (far up the screen), then 58° from the vertical, a little to the left
   const polar = 0.02 + tilt * 1.0, az = -0.42 * tilt + turn
-  const dist = 18.5 - 4 * tilt
-  const tgt = new Vector3(0.2 * tilt, 0.6 * tilt, 0.6 * tilt)
+  const dist = 20.5 - 6 * tilt
+  const tgt = new Vector3(-0.8 * tilt, -0.15 * tilt, 1.5 * (1 - tilt) + 1.25 * tilt)   // from above, the plot stands high, clear of the caption
   camera.position.set(tgt.x + dist * Math.sin(polar) * Math.sin(az), tgt.y + dist * Math.cos(polar), tgt.z + dist * Math.sin(polar) * Math.cos(az))
   camera.up.set(0, 1, 0)
   camera.lookAt(tgt)
   // the cells: lit as their candidates arrive, then risen to their counts
-  const fill = ease((t - 0.5) / 8.5), rise = ease((t - T_RISE) / 6)
+  // F: the share of the sample that has landed, 0 → 1 over 0.5–9.5 s; a cell lights when its first candidate
+  // does (the dense ridge and band first, the thin edges last) and brightens as its count fills
+  const F = Math.min(1, Math.max(0, (t - 0.5) / 9)), rise = ease((t - T_RISE) / 6)
+  const cc = bars.instanceColor.array
   cells.forEach((c, k) => {
-    const f = Math.min(1, Math.max(0, fill * 1.25 - 0.25 * c.jit))
+    const f = F >= c.first ? Math.min(1, F * 1.05) : 0
+    if (F < 1 || !bars.userData.done) { const col = colourOf(Math.max(1, c.n * F)); cc[k * 3] = col.r; cc[k * 3 + 1] = col.g; cc[k * 3 + 2] = col.b }
     // a cell shows once its first candidates have landed: flat and lit, then risen to its count
     const hh = Math.max(0.006, c.h * rise * f)
     dummy.position.set(c.x, 0, c.z)
@@ -165,6 +171,7 @@ function update(t) {
     bars.setMatrixAt(k, dummy.matrix)
   })
   bars.instanceMatrix.needsUpdate = true
+  if (F < 1 || !bars.userData.done) { bars.instanceColor.needsUpdate = true; bars.userData.done = F >= 1 }
   // the falling candidates, at a rate that follows the filling
   const u = sparks.material.uniforms; u.uTime.value = t
   if (t > 0.4 && t < 10) {
@@ -211,7 +218,7 @@ function frame(now) {
 function start() {
   stop()
   if (!build()) return
-  lastSpawn = 0; nextSpark = 0
+  lastSpawn = 0; nextSpark = 0; bars.userData.done = false
   sparks.geometry.attributes.aT0.array.fill(-10); sparks.geometry.attributes.aT0.needsUpdate = true
   t0 = performance.now(); running = true
   raf = requestAnimationFrame(frame)
