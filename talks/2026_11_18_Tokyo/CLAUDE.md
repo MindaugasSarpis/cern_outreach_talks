@@ -58,18 +58,19 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-11 (the owner: "Deploy"): **Deployed:** commit 17dfc95, Pages run 43102870314 (success), URL 200,
+  the live walk passed all 18 slides (no failed requests, no lost context). Before it the 11 plates of the
+  new take went onto the release videos-2026-11-18-tokyo (7 uploaded, 01, 06, 07 and 08 were unchanged; a
+  second dry run reads all 11 "unchanged"); `ready` ran inside the deploy with `safe` skipped and passed
+  (plates: "stale", this file changed after the take, and 18-plate "unsettled", as before).
 - 2026-11-11 (the owner: the audience is Japanese and Lithuanian scientists, from Nagoya, Tokyo and RIKEN;
-  "Yes, also make sure the flow and talk is good"; Decisions, 11 Nov): **not deployed, the owner has not
-  asked.** Commit 2e4c9b6 on `talk/tokyo`: 18 slides, 14.6 of 15 min, lint 0/0, `ready --skip safe` passed on
+  "Yes, also make sure the flow and talk is good"; Decisions, 11 Nov): the round the entry above deployed.
+  Commit 2e4c9b6 on `talk/tokyo`: 18 slides, 14.6 of 15 min, lint 0/0, `ready --skip safe` passed on
   it (the Pages walk included; plates: 18-plate local only and "unsettled", as 17-plate was). A subagent
   judged the contact sheet of all 18 and fresh captures of slides 9, 14 (the clip at its end, the names up)
-  and 16; its findings are applied or listed under Open. The live deck is still b109651 (17 slides).
-  **Before the deploy, publish the 11 plates** (the owner's word covers both; never `--prune`):
-  `pnpm -C talks/2026_11_18_Tokyo videos:publish -- --only 01-plate.mp4 06-plate.mp4 07-plate.mp4 08-plate.mp4
-  09-plate.mp4 10-plate.mp4 12-plate.mp4 13-plate.mp4 15-plate.mp4 16-plate.mp4 18-plate.mp4`. The release
-  holds older takes under the same names (its 09 is the recipes' world, the new 09 is Belle's), and `ready`
-  checks names only: without the publish a screen without WebGL shows another slide's world on 9 to 16.
-  Then `pnpm talk deploy tokyo --ready-skip safe`.
+  and 16; its findings are applied or listed under Open. A new take of the plates is published with
+  `pnpm -C talks/2026_11_18_Tokyo videos:publish -- --only <the plates the record prints>` before its deploy:
+  `ready` checks a plate's name only, and the release keeps older takes under the same names.
 - 2026-11-10, second round (the owner: "Push and deploy"; Decisions, 10 Nov, second round): **Deployed:**
   commit b109651, Pages run 42907009294 (success), URL 200, the live walk passed all 17 slides (no failed
   requests, no lost context). On the release videos-2026-11-18-tokyo, each the size of its local encode:
