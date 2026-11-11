@@ -333,7 +333,9 @@ proton (the P_c(4312)⁺ is a fainter band below it). A molecule and a compact p
 patterns here: this is the picture theory and experiment are compared on.
 The data: LHCb, PRL 122 (2019) 222001, the Dalitz-plot figure (CC BY 4.0), digitised from its colours into
 200 × 200 cells (bake/dalitz_digitise.py; counts approximate: ~252 000 against the paper's ~246 000),
-shown as 100 × 100 columns, height as √count.
+shown as 100 × 100 columns, height as √count. As the names come in, the columns of the P_c(4312)⁺ band and
+of the P_c(4440)⁺ and P_c(4457)⁺ band are lit toward white where m(K⁻ p) > 1.9 GeV, the paper's cut: colour
+only, every height is its count (11 Nov, the owner: "Dalitz should be 2019 data").
 Sources: LHCb, PRL 122 (2019) 222001. (~0.75 min)
 -->
 

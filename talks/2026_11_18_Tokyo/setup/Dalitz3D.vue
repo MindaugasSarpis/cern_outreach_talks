@@ -5,9 +5,10 @@
 // bake/dalitz_digitise.py; counts approximate, ~252 000 in all against the paper's ~246 000), drawn here as
 // 100 × 100 columns (2 × 2 cells averaged). Seen first from above, as the paper draws it, the candidates fall in
 // and the cells light up; then the plot tilts and the columns rise to their counts (height as the square root,
-// so the many small cells still show beside the Λ(1520) ridge), the band of the P_c(4440)⁺ and P_c(4457)⁺
-// across it, and it turns slowly. Runs once on entering (~16 s) and holds; off the live slide, or without WebGL,
-// its end as a picture (public/figures/dalitz_end.jpg).
+// so the many small cells still show beside the Λ(1520) ridge), the bands of the P_c(4312)⁺ and of the
+// P_c(4440)⁺ with the P_c(4457)⁺ light up across it with their names, and it turns slowly. Runs once on
+// entering (~16 s) and holds; off the live slide, or without WebGL, its end as a picture
+// (public/figures/dalitz_end.jpg).
 import { ref, reactive, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useIsSlideActive, useNav, useSlideContext } from '@slidev/client'
 import {
@@ -35,10 +36,16 @@ const wx = (m2) => (m2 - (XL + XH) / 2) * SX
 const wz = (m2) => -(m2 - (YL + YH) / 2) * SZ
 const NX = 100, NY = 100, BX = DZ.x.bin * 2, BY = DZ.y.bin * 2
 const HK = 0.19                       // height per √count
+// the P_c bands, lit when the names come in: their rows in m²(J/ψ p), the P_c(4312)⁺ and, 1.5 columns apart and
+// so one band at this binning, the P_c(4440)⁺ with the P_c(4457)⁺; only where m²(K p) ≥ 3.61 GeV² (m(Kp) >
+// 1.9 GeV, the paper's own cut: below it the Λ* ridges cover them), to the kinematic edge.
+// The bands' columns are lit by colour only: every height is the count, a band's as any other's.
+const BANDS = [[18.52, 18.73], [19.57, 19.99]], BAND_KP = 3.61
+const LIT = new Color(1.2, 1.2, 1.2), LIT_K = 0.85   // toward a white a little over 1: Lambert's shade dulls a plain one
 
 const root = ref(null), cv = ref(null)
 let renderer, scene, camera, world, bars, sparks, raf = 0, t0 = 0, running = false
-let cells = []                        // { i, j, n, h, x, z, jit }
+let cells = []                        // { i, j, n, h, x, z, first, band }
 
 function grid() {
   const out = []
@@ -47,10 +54,11 @@ function grid() {
     for (let dj = 0; dj < 2; dj++) for (let di = 0; di < 2; di++) s += DZ.counts[2 * j + dj]?.[2 * i + di] || 0
     const n = s / 4
     if (n <= 0) continue
-    const x = wx(DZ.x.lo + (i + 0.5) * BX), z = wz(DZ.y.lo + (j + 0.5) * BY)
+    const mx = DZ.x.lo + (i + 0.5) * BX, my = DZ.y.lo + (j + 0.5) * BY
+    const x = wx(mx), z = wz(my), band = mx >= BAND_KP && BANDS.some(([lo, hi]) => my > lo && my < hi)
     // when its first candidate lands, as a share F of all of them: P(none by F) = exp(−n F), drawn once
     const first = -Math.log(1 - Math.random() * 0.999) / Math.max(n, 0.2)
-    out.push({ i, j, n, h: Math.sqrt(n) * HK, x, z, first })
+    out.push({ i, j, n, h: Math.sqrt(n) * HK, x, z, first, band })
   }
   return out
 }
@@ -141,9 +149,16 @@ function resize() {
 
 const ease = (x) => { x = Math.min(Math.max(x, 0), 1); return x * x * (3 - 2 * x) }
 // the timeline (s): the candidates fall 0.5–9 (seen from above, the cells lighting flat); the tilt 6–10; the
-// columns rise 7–13; the names at 12.5; then a slow turn
+// columns rise 7–13; the names and the bands' light at 12.5; then a slow turn
 const T_TILT = 6, T_RISE = 7, T_NAME = 12.5
-const PC_NAME = 0.85, PC_TOP = 0.45   // the P_c name's foot and the top of its band's columns (world units)
+// the P_c names: at m²(K p), m²(J/ψ p); the top of the band's columns there and the name's foot (over the band)
+// or head (under it), in world units. On the screen the bands rise to the right through the whole turn, so
+// the upper name sits up and left of its line and the lower name down and right of its own (.nw, .se):
+// centred on the line, a name's far end met its own band in the turn's left half
+const PC = [
+  [5.7, 19.82, 0.43, 0.9, 'P<sub>c</sub>(4440)<sup>+</sup>, P<sub>c</sub>(4457)<sup>+</sup>', 'feat nw'],
+  [4.3, 18.625, 0.44, -0.05, 'P<sub>c</sub>(4312)<sup>+</sup>', 'feat se'],
+]
 const dummy = new Object3D()
 let nextSpark = 0, lastSpawn = 0
 function update(t) {
@@ -163,10 +178,17 @@ function update(t) {
   // F: the share of the sample that has landed, 0 → 1 over 0.5–9.5 s; a cell lights when its first candidate
   // does (the dense ridge and band first, the thin edges last) and brightens as its count fills
   const F = Math.min(1, Math.max(0, (t - 0.5) / 9)), rise = ease((t - T_RISE) / 6)
+  // nm: the names and the bands' light, 0 → 1 from T_NAME; the colours are painted while either changes
+  const nm = ease((t - T_NAME) / 1)
+  const paint = F < 1 || !bars.userData.done || bars.userData.nm !== nm
   const cc = bars.instanceColor.array
   cells.forEach((c, k) => {
     const f = F >= c.first ? Math.min(1, F * 1.05) : 0
-    if (F < 1 || !bars.userData.done) { const col = colourOf(Math.max(1, c.n * F)); cc[k * 3] = col.r; cc[k * 3 + 1] = col.g; cc[k * 3 + 2] = col.b }
+    if (paint) {
+      const col = colourOf(Math.max(1, c.n * F))
+      if (c.band && nm > 0) col.lerp(LIT, LIT_K * nm)
+      cc[k * 3] = col.r; cc[k * 3 + 1] = col.g; cc[k * 3 + 2] = col.b
+    }
     // a cell shows once its first candidates have landed: flat and lit, then risen to its count
     const hh = Math.max(0.006, c.h * rise * f)
     dummy.position.set(c.x, 0, c.z)
@@ -176,7 +198,7 @@ function update(t) {
     bars.setMatrixAt(k, dummy.matrix)
   })
   bars.instanceMatrix.needsUpdate = true
-  if (F < 1 || !bars.userData.done) { bars.instanceColor.needsUpdate = true; bars.userData.done = F >= 1 }
+  if (paint) { bars.instanceColor.needsUpdate = true; bars.userData.done = F >= 1; bars.userData.nm = nm }
   // the falling candidates, at a rate that follows the filling
   const u = sparks.material.uniforms; u.uTime.value = t
   if (t > 0.4 && t < 10) {
@@ -193,7 +215,7 @@ function update(t) {
       g.attributes.aFrom.needsUpdate = true; g.attributes.aTo.needsUpdate = true; g.attributes.aT0.needsUpdate = true
     }
   }
-  // the labels: the axes' names and ticks, the two features once risen
+  // the labels: the axes' names and ticks, the features once risen
   labels.length = 0; leads.length = 0
   const lab = (x, y, z, html, cls, op = 1) => { const p = proj(x, y, z); if (p) labels.push({ ...p, html, cls, op }) }
   for (const m of [2, 3, 4, 5, 6]) lab(wx(m), 0, wz(YL) + 0.35, String(m), 'tick')
@@ -202,15 +224,16 @@ function update(t) {
   // rows closes, and in the turn's left half the "4" stood on the name
   lab(0, 0, wz(YL) + 1.0 + 0.7 * tilt * tilt, 'm<sup>2</sup>(K<sup>−</sup> p) &nbsp;[GeV<sup>2</sup>]', 'axis')
   lab(wx(XL) - 1.25, 0, wz(21.2), 'm<sup>2</sup>(J/ψ p)<br>[GeV<sup>2</sup>]', 'axis r')
-  const nm = ease((t - T_NAME) / 1)
   if (nm > 0) {
     lab(wx(2.31), 2.25, wz(24.6), 'Λ(1520)', 'feat', nm)
-    // the band is low (its columns stand ~0.45, those before it ~0.4 and behind it ~0.3; the Λ(1520) ridge
-    // 2.4), so its name stands close over it and a thin line joins the name to the band's top
-    const bx = wx(5.4), bz = wz(19.82)
-    lab(bx, PC_NAME, bz, 'P<sub>c</sub>(4440)<sup>+</sup>, P<sub>c</sub>(4457)<sup>+</sup>', 'feat', nm)
-    const a = proj(bx, PC_NAME, bz), b = proj(bx, PC_TOP, bz)
-    if (a && b) leads.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, op: nm })
+    // the bands are low (their columns stand ~0.4, the Λ(1520) ridge 2.4), so each name is close to its band
+    // with a thin line to the band's top: the upper band's name stands over it, the lower band's hangs under
+    // it, and neither name covers the other band
+    for (const [mx, my, top, at, html, cls] of PC) {
+      const x = wx(mx), z = wz(my), a = proj(x, at, z), b = proj(x, top, z)
+      lab(x, at, z, html, cls, nm)
+      if (a && b) leads.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, op: nm })
+    }
   }
 }
 const v3 = new Vector3()
@@ -253,7 +276,7 @@ onBeforeUnmount(dispose)
 <template>
   <div ref="root" class="dz" :class="{ still }">
     <canvas v-show="!still" ref="cv" class="dz-gl" />
-    <img v-if="still" class="dz-still" :src="stillSrc" alt="LHCb 2019: the Dalitz plot of Λb⁰ → J/ψ p K⁻ in 3D, the Λ(1520) ridge and the P_c band" />
+    <img v-if="still" class="dz-still" :src="stillSrc" alt="LHCb 2019: the Dalitz plot of Λb⁰ → J/ψ p K⁻ in 3D, the Λ(1520) ridge and the P_c bands" />
     <template v-if="!still">
       <svg class="dz-leads"><line v-for="(l, i) in leads" :key="i" :x1="l.x1" :y1="l.y1" :x2="l.x2" :y2="l.y2" :opacity="l.op" /></svg>
       <div v-for="(l, i) in labels" :key="i" :class="['dl', l.cls]" :style="{ transform: `translate(${l.x}px, ${l.y}px)`, opacity: l.op }" v-html="l.html" />
@@ -273,4 +296,6 @@ onBeforeUnmount(dispose)
 .dl.axis { font-size: 19px; color: #e8f6ff; font-weight: 500; translate: -50% -50%; text-align: center; }
 .dl.axis.r { translate: -100% -50%; text-align: right; }
 .dl.feat { font-size: 20px; color: #ffffff; font-weight: 600; translate: -50% -100%; padding: 3px 8px; border-radius: 5px; background: rgba(3, 5, 12, 0.6); }
+.dl.feat.nw { translate: -92% -100%; }
+.dl.feat.se { translate: -8% 0; }
 </style>

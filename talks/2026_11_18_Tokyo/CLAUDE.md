@@ -203,8 +203,8 @@ needs moves to the shared kit instead of being copied.
   mesons, the baryons and the pentaquark made from them; still `public/figures/recipes_end.jpg`.
 - `setup/Dalitz3D.vue`: slide 11, the 2019 paper's Dalitz figure digitised (`public/data/dalitz-2019.json`,
   `bake/dalitz_digitise.py`, `bake/dalitz_check.png`) as instanced columns; still
-  `public/figures/dalitz_end.jpg`. Its labels are HTML, projected each frame (and one SVG line, from the
-  P_c name to its band, 11 Nov); the camera's pose and the
+  `public/figures/dalitz_end.jpg`. Its labels are HTML, projected each frame (and two SVG lines, from the
+  P_c names to their bands, whose columns are lit by colour as the names come, 11 Nov); the camera's pose and the
   x-axis name's offset keep them in the frame and clear of the caption (Decisions, second round, 9). Both
   stills are frames of a build at 1920 × 1080 with `.cap` hidden: the recipes' last frame; the Dalitz plot
   21.3 s after the slide is entered (the turn's right extreme).
@@ -360,6 +360,17 @@ catch, RIKEN on the globe) and the owner answered: "Yes, also make sure the flow
    way (21.3 s, the caption hidden).
 5. Every slide from the old 9 on is one higher, so the plates were recorded again.
 6. The no-notes rule held: no script was written or changed; only minutes, sources and comments.
+7. After the deploy the owner: "Dalitz should be 2019 data". It is (the 2019 figure digitised, ~252 000
+   candidates; its rows for m(Kp) > 1.9 GeV peak at 4313, 4439 and 4456 MeV), but the plot did not show
+   it: the bands stood barely over their surroundings and one name covered two states, as 2015's single band.
+   Now, as the names come in (12.5 s), the columns of the two bands are lit toward white, by colour only
+   (every height stays its count): m²(J/ψ p) 18.52–18.73 GeV² for the P_c(4312)⁺ and 19.57–19.99 for the
+   P_c(4440)⁺ and P_c(4457)⁺ (1.5 columns apart, one band at this binning), where m²(K⁻ p) ≥ 3.61 GeV², the
+   paper's own m(Kp) > 1.9 GeV cut. The P_c(4312)⁺ has its own name, hung under its band on a line; the
+   other name moved to m²(K⁻ p) 5.7, clear of its lit band (`BANDS`, `PC` in Dalitz3D.vue). No dimming of the
+   rest. Read from the page each 0.5 s to 66 s: no label out of the frame, under the caption or touching
+   another; the two P_c names at least 166 px apart (at 1920). The still re-made (21.3 s). The plate of
+   slide 12 is the world alone, so it stays.
 
 ## Verify
 
