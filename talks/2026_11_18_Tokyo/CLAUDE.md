@@ -58,6 +58,18 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-11 (the owner: the audience is Japanese and Lithuanian scientists, from Nagoya, Tokyo and RIKEN;
+  "Yes, also make sure the flow and talk is good"; Decisions, 11 Nov): **not deployed, the owner has not
+  asked.** Commit 2e4c9b6 on `talk/tokyo`: 18 slides, 14.6 of 15 min, lint 0/0, `ready --skip safe` passed on
+  it (the Pages walk included; plates: 18-plate local only and "unsettled", as 17-plate was). A subagent
+  judged the contact sheet of all 18 and fresh captures of slides 9, 14 (the clip at its end, the names up)
+  and 16; its findings are applied or listed under Open. The live deck is still b109651 (17 slides).
+  **Before the deploy, publish the 11 plates** (the owner's word covers both; never `--prune`):
+  `pnpm -C talks/2026_11_18_Tokyo videos:publish -- --only 01-plate.mp4 06-plate.mp4 07-plate.mp4 08-plate.mp4
+  09-plate.mp4 10-plate.mp4 12-plate.mp4 13-plate.mp4 15-plate.mp4 16-plate.mp4 18-plate.mp4`. The release
+  holds older takes under the same names (its 09 is the recipes' world, the new 09 is Belle's), and `ready`
+  checks names only: without the publish a screen without WebGL shows another slide's world on 9 to 16.
+  Then `pnpm talk deploy tokyo --ready-skip safe`.
 - 2026-11-10, second round (the owner: "Push and deploy"; Decisions, 10 Nov, second round): **Deployed:**
   commit b109651, Pages run 42907009294 (success), URL 200, the live walk passed all 17 slides (no failed
   requests, no lost context). On the release videos-2026-11-18-tokyo, each the size of its local encode:
@@ -88,6 +100,18 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ### Open
 
+- From the 11 Nov review, for the owner, none of it done (each changes a slide the owner has reviewed):
+  slide 11 without the Σc⁺D̄⁰ and Σc⁺D̄*⁰ thresholds the 2019 figure marks (fact `pc-2019-near-thresholds`;
+  the molecule's case and the hand-over to the next talk); no slide says what the project measures or what
+  Nagoya computes (it needs public content from the owner); 2015 is only spoken; for experts slide 8's
+  caption could be "CP violation requires six quarks" and slide 3's −271.3 °C "1.9 K"; slides 4 and 5 are
+  elementary for this audience (47 s and 26.5 s of clip); slide 10 says "five quarks" beside "a quark and an
+  antiquark", and its Υ draws as a Latin Y; the last slide's still shows four of the pentaquark's five
+  quarks (a finale re-cut); slide 7's caption box cuts the five-quark bubble's lower third; slide 11's axis
+  is "mass of J/ψ p (MeV)" beside slide 12's "m²(J/ψ p) [GeV²]"; slide 16 spells one funder out and not the
+  other; from 9 to 10 to 11 the camera goes back to `families` and forward again under dim 0.97, as it did
+  from 8 before, not seen in motion.
+- RIKEN's name on the globe beside the project's cities (Decisions, 11 Nov, 3).
 - The atoms clip's credit: the library says only "released/atoms.mov (outreach)".
 - Provenance and licence of `GellMannPhoto.png`, `ZweigPhoto.png` and the two passage scans (Figures).
 - Not played on a real Mac (none here): the three heavy scenes are clips and the live slides have plates.
