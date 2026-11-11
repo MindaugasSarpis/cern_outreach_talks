@@ -160,7 +160,10 @@ their motion and of the force that holds them. Most of the mass of your body
 comes from this energy.
 
 Source: Yang et al., PRL 121 (2018) 212001; Brookhaven National Laboratory
-news. (~1 min)
+news.
+
+11 Nov (the audience is scientists): the clip runs with a line or two over it, so half a minute beside
+the clip's 26.5 s. (~0.5 min)
 -->
 
 ---
@@ -226,6 +229,32 @@ nobelprize.org; home.cern. (~0.75 min)
 -->
 
 ---
+space: { at: km, dim: 0.6 }
+---
+
+<!-- back from the hidden slides on 11 Nov (the owner: the audience is Japanese and Lithuanian scientists, from
+     Nagoya, Tokyo and RIKEN): the Japanese thread goes on from Kobayashi and Maskawa to the experiment that
+     confirmed them and then found the X(3872). The caption follows the facts bank: a candidate, never
+     "the first exotic hadron". -->
+<StagePhoto src="figures/belle.jpg" alt="The Belle detector at KEK, Tsukuba" focus="50% 50%">
+<div class="shade tr strong"></div>
+<div class="num tr">2003<span class="name">KEK</span></div>
+<div class="cap">Belle discovers the X(3872), an exotic hadron candidate</div>
+</StagePhoto>
+
+<!-- facts: belle-cpv-2001, belle-x3872-2003, x3872-started-exotic-searches, theta-plus-leps-japan-19-events, leps-theta-not-confirmed -->
+
+<!--
+Belle at KEK, Tsukuba: in 2001 it confirmed Kobayashi and Maskawa's
+prediction; in 2003 it found the X(3872), whose discovery started the hunt
+for exotic hadrons. The same year LEPS at SPring-8 reported a five-quark
+candidate; more sensitive experiments did not confirm it.
+Sources: Belle,
+PRL 87 (2001) 091802 and PRL 91 (2003) 262001; nobelprize.org; LEPS,
+PRL 91 (2003) 012002; PDG. (~0.75 min)
+-->
+
+---
 space: { at: families, dim: 0.97 }   # the world nearly dark: the flat slide carries it
 ---
 
@@ -240,7 +269,8 @@ another: mesons (a quark and an antiquark: π⁺ u d̄, K⁺ u s̄, D⁰ c ū, J
 baryons (three quarks: p uud, n udd, Λ uds, Ω⁻ sss, Λc⁺ udc, Ξcc⁺⁺ ucc, LHCb 2017, Λb⁰ udb),
 and last five, uudcc̄, a pentaquark. Top stays dim: it decays before it can bind (the owner:
 "just t quark doesn't hadronize"). setup/QuarkRecipes.vue; it runs once, about 30 s, and holds.
-Sources: PDG (quark model); LHCb, PRL 119 (2017) 112001 (Ξcc⁺⁺). (~1.25 min)
+Sources: PDG (quark model); LHCb, PRL 119 (2017) 112001 (Ξcc⁺⁺).
+11 Nov (the audience is scientists): the recipes run their 30 s and the talk goes on. (~0.75 min)
 -->
 
 ---
@@ -346,6 +376,15 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
      so the slide after rests on the clip's last view. Fade, not cut: a cut clip never announces that it
      covers the slide, so the world would draw on under it (Innoday, 22 Oct). -->
 <VideoPlayer src="globe.mp4" muted :controls="false" transition="fade" />
+<!-- 11 Nov (the audience comes from Nagoya, Tokyo and RIKEN): the lit cities named once the globe rests (the clip
+     from 15 s). The names are the slide's, over the clip's settled end, as slide 11's axis: the dots' places are
+     the clip's last frame in slide units (Vilnius 290.7, 55.1; Nagoya 692.9, 326.1; Tokyo 705.8, 316.1; RIKEN's
+     Wako campus is 15 km from Tokyo's dot, the same light at this scale, so the two names share a line and a
+     bracket). Vilnius's name stands west of its light: the strand leaves it eastward. Nagoya's and Tokyo's
+     lights are one white patch in the clip, so each is marked by a small dark dot where its line ends. Tokyo's
+     line meets the bracket at y = 292, clear of a star of the clip's last frame at (762, 308). Move them if
+     the take's end moves. -->
+<AtClipEnd :lead="4"><svg class="globe-names" viewBox="0 0 980 551.25" aria-hidden="true"><path class="case" d="M709.3 315.2 L778 292 M696.4 326.8 L778 344" /><path d="M277 55.5 H252 M709.3 315.2 L778 292 M778 280 V322 M696.4 326.8 L778 344" /><circle cx="705.8" cy="316.1" r="2.6" /><circle cx="692.9" cy="326.1" r="2.6" /><text x="246" y="62" text-anchor="end">Vilnius</text><text x="786" y="294">RIKEN</text><text x="786" y="318">Tokyo</text><text x="786" y="351">Nagoya</text></svg></AtClipEnd>
 <div class="cap">Lithuania and Japan</div>
 
 <!-- facts: lhcb-vilnius-joined -->
@@ -552,28 +591,6 @@ The question is whether nature allows more: four quarks, five, six. (~0.75 min)
 
 ---
 hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
-space: { at: km, dim: 0.6 }
----
-
-<StagePhoto src="figures/belle.jpg" alt="The Belle detector at KEK, Tsukuba" focus="50% 35%">
-<div class="shade tr strong"></div>
-<div class="num tr">2003<span class="name">KEK</span></div>
-</StagePhoto>
-
-<!-- facts: belle-cpv-2001, belle-x3872-2003, x3872-started-exotic-searches, theta-plus-leps-japan-19-events, leps-theta-not-confirmed -->
-
-<!--
-Belle at KEK, Tsukuba: in 2001 it confirmed Kobayashi and Maskawa's
-prediction; in 2003 it found the X(3872), whose discovery started the hunt
-for exotic hadrons. The same year LEPS at SPring-8 reported a five-quark
-candidate; more sensitive experiments did not confirm it.
-Sources: Belle,
-PRL 87 (2001) 091802 and PRL 91 (2003) 262001; nobelprize.org; LEPS,
-PRL 91 (2003) 012002; PDG. (~1.25 min)
--->
-
----
-hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
 space: { at: [229.3, 0, 0], dist: 7.5, yaw: 0, pitch: 6, dim: 0.15 }
 ---
 
@@ -658,7 +675,7 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the 
 
 <CloseStill src="figures/finale_end.jpg" />
 <div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div>
-<div class="credits credit">Photos: S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, the portraits cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Globe: Natural Earth. J/ψ p spectrum and Dalitz plot: LHCb, Phys. Rev. Lett. 122 (2019) 222001, CC BY 4.0 (HEPData ins1728691). CMS collision on the cover: CERN open data.</div>
+<div class="credits credit">Photos: S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; the Belle detector, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Globe: Natural Earth. J/ψ p spectrum and Dalitz plot: LHCb, Phys. Rev. Lett. 122 (2019) 222001, CC BY 4.0 (HEPData ins1728691). CMS collision on the cover: CERN open data.</div>
 
 <!--
 Credits (house rule: the credits a licence asks for, tiny print, on the last page). The finale's

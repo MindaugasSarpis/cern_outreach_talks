@@ -348,7 +348,7 @@ onBeforeUnmount(dispose)
 .hl { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; align-items: center; white-space: nowrap; line-height: 1.1; }
 .hl.left { align-items: flex-start; }
 .hl :deep(.n) { font-weight: 600; color: #f2f8ff; text-shadow: 0 0 8px rgba(0, 0, 0, 0.9); }
-.hl :deep(.c) { margin-top: 0.3em; font-size: 0.8em; color: #9fd8ff; letter-spacing: 0.08em; text-shadow: 0 0 8px rgba(0, 0, 0, 0.9); }
+.hl :deep(.c) { margin-top: 0.3em; font-size: max(18px, 0.8em); color: #9fd8ff; letter-spacing: 0.08em; text-shadow: 0 0 8px rgba(0, 0, 0, 0.9); }
 /* the antiquark's bar, drawn over its letter (an overline sat far above the letter at large sizes) */
 :deep(.bar) { position: relative; display: inline-block; }
 :deep(.bar)::before { content: ''; position: absolute; left: 0.04em; right: 0.04em; top: 0.02em; height: 0.075em; background: currentColor; border-radius: 0.04em; }

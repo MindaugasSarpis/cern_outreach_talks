@@ -26,6 +26,7 @@ const gl = ref(true)
 const still = computed(() => !live.value || !gl.value)
 const stillSrc = `${import.meta.env.BASE_URL}figures/dalitz_end.jpg`
 const labels = reactive([])
+const leads = reactive([])            // a thin line from a name down to what it names: { x1, y1, x2, y2, op }
 
 // the plot in the world: m²(Kp) 2…6.5 along x, m²(J/ψp) 16…26.5 along −z (far is up, seen from above)
 const XL = 2, XH = 6.5, YL = 16, YH = 26.5
@@ -142,6 +143,7 @@ const ease = (x) => { x = Math.min(Math.max(x, 0), 1); return x * x * (3 - 2 * x
 // the timeline (s): the candidates fall 0.5–9 (seen from above, the cells lighting flat); the tilt 6–10; the
 // columns rise 7–13; the names at 12.5; then a slow turn
 const T_TILT = 6, T_RISE = 7, T_NAME = 12.5
+const PC_NAME = 0.85, PC_TOP = 0.45   // the P_c name's foot and the top of its band's columns (world units)
 const dummy = new Object3D()
 let nextSpark = 0, lastSpawn = 0
 function update(t) {
@@ -192,18 +194,23 @@ function update(t) {
     }
   }
   // the labels: the axes' names and ticks, the two features once risen
-  labels.length = 0
+  labels.length = 0; leads.length = 0
   const lab = (x, y, z, html, cls, op = 1) => { const p = proj(x, y, z); if (p) labels.push({ ...p, html, cls, op }) }
   for (const m of [2, 3, 4, 5, 6]) lab(wx(m), 0, wz(YL) + 0.35, String(m), 'tick')
   for (const m of [16, 18, 20, 22, 24, 26]) lab(wx(XL) - 0.35, 0, wz(m), String(m), 'tick r')
   // the x axis's name moves out from its ticks as the plot tilts: seen at a low angle the gap between the two
   // rows closes, and in the turn's left half the "4" stood on the name
-  lab(0, 0, wz(YL) + 1.0 + 0.7 * tilt * tilt, 'm<sup>2</sup>(K p) &nbsp;[GeV<sup>2</sup>]', 'axis')
+  lab(0, 0, wz(YL) + 1.0 + 0.7 * tilt * tilt, 'm<sup>2</sup>(K<sup>−</sup> p) &nbsp;[GeV<sup>2</sup>]', 'axis')
   lab(wx(XL) - 1.25, 0, wz(21.2), 'm<sup>2</sup>(J/ψ p)<br>[GeV<sup>2</sup>]', 'axis r')
   const nm = ease((t - T_NAME) / 1)
   if (nm > 0) {
     lab(wx(2.31), 2.25, wz(24.6), 'Λ(1520)', 'feat', nm)
-    lab(wx(5.4), 1.25, wz(19.82), 'P<sub>c</sub>(4440)<sup>+</sup>, P<sub>c</sub>(4457)<sup>+</sup>', 'feat', nm)
+    // the band is low (its columns stand ~0.45, those before it ~0.4 and behind it ~0.3; the Λ(1520) ridge
+    // 2.4), so its name stands close over it and a thin line joins the name to the band's top
+    const bx = wx(5.4), bz = wz(19.82)
+    lab(bx, PC_NAME, bz, 'P<sub>c</sub>(4440)<sup>+</sup>, P<sub>c</sub>(4457)<sup>+</sup>', 'feat', nm)
+    const a = proj(bx, PC_NAME, bz), b = proj(bx, PC_TOP, bz)
+    if (a && b) leads.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, op: nm })
   }
 }
 const v3 = new Vector3()
@@ -248,6 +255,7 @@ onBeforeUnmount(dispose)
     <canvas v-show="!still" ref="cv" class="dz-gl" />
     <img v-if="still" class="dz-still" :src="stillSrc" alt="LHCb 2019: the Dalitz plot of Λb⁰ → J/ψ p K⁻ in 3D, the Λ(1520) ridge and the P_c band" />
     <template v-if="!still">
+      <svg class="dz-leads"><line v-for="(l, i) in leads" :key="i" :x1="l.x1" :y1="l.y1" :x2="l.x2" :y2="l.y2" :opacity="l.op" /></svg>
       <div v-for="(l, i) in labels" :key="i" :class="['dl', l.cls]" :style="{ transform: `translate(${l.x}px, ${l.y}px)`, opacity: l.op }" v-html="l.html" />
     </template>
   </div>
@@ -257,8 +265,10 @@ onBeforeUnmount(dispose)
 .dz { position: absolute; inset: 0; pointer-events: none; font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif; }
 .dz-gl { position: absolute; inset: 0; width: 100%; height: 100%; }
 .dz-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dz-leads { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
+.dz-leads line { stroke: #e8f6ff; stroke-width: 1; }
 .dl { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 1.15; text-shadow: 0 0 6px rgba(0, 0, 0, 0.95); }
-.dl.tick { font-size: 15px; color: #c9dcf0; translate: -50% -50%; }
+.dl.tick { font-size: 18px; color: #c9dcf0; translate: -50% -50%; }
 .dl.tick.r { translate: -100% -50%; }
 .dl.axis { font-size: 19px; color: #e8f6ff; font-weight: 500; translate: -50% -50%; text-align: center; }
 .dl.axis.r { translate: -100% -50%; text-align: right; }

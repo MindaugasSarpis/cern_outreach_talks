@@ -50,7 +50,7 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
   scientists while doing it.
 - Spine: CERN, the LHC and LHCb; matter down to quarks; the Japanese thread
   (Sakata in Nagoya, 1956; Kobayashi and Maskawa's six quarks, 1973, whose
-  b quark is LHCb's "b"); LHCb's pentaquarks in the decays of a particle
+  b quark is LHCb's "b"; Belle's X(3872) at KEK, 2003); LHCb's pentaquarks in the decays of a particle
   carrying that b quark (2019); how the five quarks are bound is the
   question Vilnius (LHCb data) and Nagoya (theory) answer together.
   Yukawa's pion and the molecule's theory are Yamaguchi's talk, next.
@@ -97,15 +97,19 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 1 cover: the CMS collision, the pentaquark out of its flash · 2 the CERN clip with its swoosh, 2018 at its
 end · 3 the LHC tunnel: 27 km, 13.6 TeV, −271.3 °C · 4 lhcb.mp4 with its music · 5 atoms_fast.mp4 · 6 Sakata,
-1956 · 7 Gell-Mann and Zweig, 1964 · 8 Kobayashi and Maskawa, 1973 · 9 the six quarks and their recipes in
-3D, the pentaquark full screen · 10 data2019.mp4: LHCb, a collision, the 2019 histogram, its fit and three
-peaks · 11 the 2019 Dalitz plot in 3D · 12 molecule, compact, hadroquarkonium · 13 globe.mp4, "Lithuania
-and Japan" · 14 the Vilnius group · 15 the project, 2026–2028 · 16 finale.mp4 · 17 thanks and credits.
+1956 · 7 Gell-Mann and Zweig, 1964 · 8 Kobayashi and Maskawa, 1973 · 9 Belle at KEK, 2003: the X(3872)
+(back on 11 Nov) · 10 the six quarks and their recipes in 3D, the pentaquark full screen · 11 data2019.mp4:
+LHCb, a collision, the 2019 histogram, its fit and three peaks · 12 the 2019 Dalitz plot in 3D · 13 molecule,
+compact, hadroquarkonium · 14 globe.mp4, "Lithuania and Japan", the cities and RIKEN named at its end ·
+15 the Vilnius group · 16 the project, 2026–2028 · 17 finale.mp4 · 18 thanks and credits.
 
-17 slides, 14.9 min by the notes and clips (`pnpm talk map tokyo`). Twelve more are hidden (`hide: true`,
-not deleted; remove the line to bring one back): the Vilnius zoom out and the coming back, the LHCb detector
-(5 600 t), Lithuania at CERN (2018), the collaboration (1 891), the atom, Yukawa (1935), the two hadron
-families, Belle (2003), the molecule close-up, the SciFi's Hamamatsu channels (524 288), open data (38.3 TB).
+18 slides, 14.6 min by the notes and clips (`pnpm talk map tokyo`). **Since 11 Nov every slide from the old 9
+on is one higher**: the Decisions of 10 Nov below, the code comments and `takes/README.md` keep the numbers
+of their day (their "slide 10" is the data clip, now 11; "slide 13" the globe, now 14). Eleven more are
+hidden (`hide: true`, not deleted; remove the line to bring one back): the Vilnius zoom out and the coming
+back, the LHCb detector (5 600 t), Lithuania at CERN (2018), the collaboration (1 891), the atom, Yukawa
+(1935), the two hadron families, the molecule close-up, the SciFi's Hamamatsu channels (524 288), open data
+(38.3 TB).
 
 ## Figures
 
@@ -174,7 +178,8 @@ needs moves to the shared kit instead of being copied.
   mesons, the baryons and the pentaquark made from them; still `public/figures/recipes_end.jpg`.
 - `setup/Dalitz3D.vue`: slide 11, the 2019 paper's Dalitz figure digitised (`public/data/dalitz-2019.json`,
   `bake/dalitz_digitise.py`, `bake/dalitz_check.png`) as instanced columns; still
-  `public/figures/dalitz_end.jpg`. Its labels are HTML, projected each frame; the camera's pose and the
+  `public/figures/dalitz_end.jpg`. Its labels are HTML, projected each frame (and one SVG line, from the
+  P_c name to its band, 11 Nov); the camera's pose and the
   x-axis name's offset keep them in the frame and clear of the caption (Decisions, second round, 9). Both
   stills are frames of a build at 1920 × 1080 with `.cap` hidden: the recipes' last frame; the Dalitz plot
   21.3 s after the slide is entered (the turn's right extreme).
@@ -290,6 +295,46 @@ tidy this talk up".
     grain went to 0 (point 4). A skipped step needs the owner's word for the deploy. For the CLI: a
     headmatter `broadcast: false` that wins over the grain. The plates read "stale" after every edit of
     this file, which is in the take's fingerprint though no plate shows it.
+
+## Decisions, 11 Nov (the audience)
+
+The owner: "it's japan and lithuania scientists, they will be from nagoya, tokyo, rikken". Four changes were
+offered for that audience (less time on the introduction, the Belle slide back, the wording an expert would
+catch, RIKEN on the globe) and the owner answered: "Yes, also make sure the flow and talk is good".
+
+1. The introduction's minutes: slide 5 (the atoms clip) half a minute beside its 26.5 s, the recipes
+   (slide 10) 0.75 min for their 30 s. The clips themselves stay as the owner chose them on 10 Nov.
+2. Belle is back as slide 9: the photo of the detector, "2003 / KEK", "Belle discovers the X(3872), an exotic
+   hadron candidate" (the facts bank: a candidate, never "the first exotic hadron"). After Kobayashi and
+   Maskawa, at their station: Belle was built to test them, so the Japanese thread runs 1956, 1973, 2003
+   unbroken, and the recipes still end on the pentaquark that the next slide's data shows. The other place,
+   after the recipes, would put a four-quark candidate between the pentaquark and its data. The photo's crop
+   is `focus="50% 50%"` (the detector's opened end above the caption; at 35 % it read as a hall of racks).
+   Its credit is on the last slide. Its notes still name LEPS's Θ⁺ at SPring-8 (RIKEN's site): with RIKEN in
+   the room that is said with care or left out (Figures, the speaker's caveats).
+3. The globe (slide 14) names its lit cities once the clip rests (from 15 s; `<AtClipEnd :lead="4">`):
+   Vilnius, and beside Japan RIKEN, Tokyo and Nagoya, each on a thin line from its light. The names are the
+   slide's own, an SVG in slide units over the clip's last frame (`.globe-names`, styles/index.css), as the
+   data slide's axis is: nothing was recorded again, and nothing needs publishing for it. RIKEN's Wako campus
+   is 15 km from Tokyo's light, the same light at this scale, so the two names share one line and a bracket.
+   Not chosen: a fourth light in the take (it would fall on Tokyo's) and a new take with Japan's contour
+   lowered until Nagoya and Tokyo resolve (the reviewer's root fix; the owner asked for the contour "central
+   and brightest" on 5 Nov). The lights' places in the last frame, slide units: Vilnius (290.7, 55.1), Nagoya
+   (692.9, 326.1), Tokyo (705.8, 316.1); they follow from the take's last pose (centre 104° E, 44° N, roll
+   −6°, dist 8.3, a focal length of 1155 px at 1920 wide). A new take with another end moves them.
+   Open for the owner: RIKEN is named beside the project's cities though the strand joins only Vilnius and
+   Nagoya; if that reads as a partner's role, the name goes (one `<text>` and the bracket).
+4. From the review of the shots (a subagent on the contact sheet, then on fresh captures of 9, 14 and 16):
+   the recipes' quark content never under 18 px (`.hl .c`, QuarkRecipes.vue); slide 16's "LHCb data" and
+   "theory" at height 0.75, lighter (space.json); the credits end "all via Wikimedia Commons, cropped" (the
+   Belle photo is cropped too). The Dalitz plot (slide 12): ticks at 18 px (were 15), the x axis "m²(K⁻ p)",
+   and the P_c name lowered from 1.25 to 0.85 over the plane with a thin line down to its band's top (0.45):
+   it stood about 42 slide units over a band that is itself low. Every label's box was read from the page
+   each 0.5 s from 0.5 to 66 s: none out of the frame, under the caption or touching another (closest: the
+   tick row 12 px over the x axis's name while seen from above). The still `dalitz_end.jpg` re-made the same
+   way (21.3 s, the caption hidden).
+5. Every slide from the old 9 on is one higher, so the plates were recorded again.
+6. The no-notes rule held: no script was written or changed; only minutes, sources and comments.
 
 ## Verify
 

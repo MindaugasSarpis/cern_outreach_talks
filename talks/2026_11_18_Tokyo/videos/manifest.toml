@@ -171,11 +171,11 @@ generated = true
 notes     = "the world of slide 9 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
-name      = "11-plate.mp4"
+name      = "10-plate.mp4"
 profile   = "remux"
-used_in   = ["slide 11"]
+used_in   = ["slide 10"]
 generated = true
-notes     = "the world of slide 11 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 10 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "12-plate.mp4"
@@ -185,11 +185,11 @@ generated = true
 notes     = "the world of slide 12 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
-name      = "14-plate.mp4"
+name      = "13-plate.mp4"
 profile   = "remux"
-used_in   = ["slide 14"]
+used_in   = ["slide 13"]
 generated = true
-notes     = "the world of slide 14 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 13 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "15-plate.mp4"
@@ -199,9 +199,16 @@ generated = true
 notes     = "the world of slide 15 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
-name      = "17-plate.mp4"
+name      = "16-plate.mp4"
 profile   = "remux"
-used_in   = ["slide 17"]
+used_in   = ["slide 16"]
 generated = true
-notes     = "the world of slide 17 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 16 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "18-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 18"]
+generated = true
+notes     = "the world of slide 18 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 # <<< plates

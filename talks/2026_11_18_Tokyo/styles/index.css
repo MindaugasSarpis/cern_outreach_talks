@@ -147,3 +147,17 @@ html[data-stage] .hero .num { z-index: 2; }
 .slidev-layout .spec-names i { font-size: 21px; font-weight: 600; color: #fff; text-shadow: 0 0 10px rgba(3, 5, 12, 0.9); }
 .slidev-layout .spec-names i.c { transform: translateX(-50%); }
 .slidev-layout .spec-names i.r { transform: translateX(-100%); }
+
+/* the globe slide (11 Nov: the audience comes from Nagoya, Tokyo and RIKEN): the lit cities named over the
+   clip's settled end, in the dark of the sea beside them, each on a thin line from its light. Slide units
+   (the SVG's viewBox is the slide, 980 × 551.25); the dots' places are measured on the clip's last frame. */
+.slidev-layout .globe-names { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.slidev-layout .globe-names path { fill: none; stroke: #cfeaff; stroke-opacity: 0.9; stroke-width: 1.5; }
+/* under the two lines that start inside Japan's glow: a dark casing, so they show on the white */
+.slidev-layout .globe-names path.case { stroke: #03050c; stroke-opacity: 0.7; stroke-width: 3.5; }
+.slidev-layout .globe-names circle { fill: #03050c; stroke: #e8f6ff; stroke-width: 1.2; }
+.slidev-layout .globe-names text {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  font-size: 20px; font-weight: 600; letter-spacing: 0.02em; fill: #e8f6ff; text-transform: none;
+  paint-order: stroke; stroke: rgba(3, 5, 12, 0.85); stroke-width: 4px; stroke-linejoin: round;
+}

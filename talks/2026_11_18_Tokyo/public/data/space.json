@@ -1102,11 +1102,11 @@
      "text": "LHCb data",
      "pos": [
       -7.7,
-      -2.45,
+      -2.55,
       0
      ],
-     "height": 0.625,
-     "color": "#9fd8ff",
+     "height": 0.75,
+     "color": "#cfeaff",
      "upper": false,
      "tracking": 0.05
     },
@@ -1128,11 +1128,11 @@
      "text": "theory",
      "pos": [
       7.7,
-      -2.45,
+      -2.55,
       0
      ],
-     "height": 0.625,
-     "color": "#9fd8ff",
+     "height": 0.75,
+     "color": "#cfeaff",
      "upper": false,
      "tracking": 0.05
     },
