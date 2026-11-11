@@ -30,8 +30,8 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
   bars are black on a dark deck, the 16:9 clips are not cropped. The room's
   audio may be poor: no music (5 Nov) but lhcb.mp4's own (10 Nov); the
   stage's hum and the finale's low bang.
-- Audience: ambassadors and dignitaries, RIKEN researchers, Japanese and
-  Lithuanian guests
+- Audience: Japanese and Lithuanian scientists, from Nagoya, Tokyo and
+  RIKEN (owner, 11 Nov), with the embassy's guests and dignitaries
 - Language: English for slides and notes (`lang: en`); a greeting in
   Japanese and in Lithuanian, spoken (owner, 5 Nov); the finale's thanks in
   Japanese and Lithuanian (10 Nov).
