@@ -58,6 +58,14 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13, early (the owner: "deploy when finished"; "is the talk now deployed"): **Deployed:** commit ab410ee
+  (the night rounds; Decisions, 12 Nov, night and late night), Pages run 43303375457 (success), URL 200, the
+  live walk passed. `ready` ran inside the deploy with `safe` skipped; lint 0 errors, 1 warning (slide 6's
+  WORDS). Onto the release before it: `atoms_fast.mp4` (47 s) and `finale.mp4` (the new collision take and
+  its boom); `finale_loop.mp4` unchanged. The plates were not recorded again (the interiors' world changed, so
+  slide 14's plate shows the old still forms; the others' worlds did not). Not heard by anyone: every sound
+  of 12 Nov (the cover's swell and thump, the bed's levels and joins, the finale's boom under the music).
+  The venue zip on the Mac is of fbc1267. The toolkit list is for the Scheduler (Decisions, late night).
 - 2026-11-12, night (the owner: "deploy when finished"): **Deployed:** commit 081f75f (the evening round;
   Decisions, 12 Nov, evening), Pages run 43298898403 (success), URL 200, the live walk passed. `ready` ran
   inside the deploy with `safe` skipped; lint 0 errors, 1 warning (slide 6's WORDS, the equations). Onto the
