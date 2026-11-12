@@ -62,7 +62,22 @@ def voice(n, tc, tf, rng):
     th_f = np.where(t < tc, 62, ramp_exp(t, tc, tc + 0.3, 62, 30))
     th_ph = 2 * np.pi * np.cumsum(np.where(t < tc, 0, th_f)) / SR
     th_g = np.where(t < tc, 0, np.where(t < tc + 0.02, ramp_exp(t, tc, tc + 0.02, 1e-4, 0.9), ramp_exp(t, tc + 0.02, tc + 1.4, 0.9, 1e-4)))
-    return swell + th_g * np.sin(th_ph)
+    if not BOOM:
+        return swell + th_g * np.sin(th_ph)
+    # --boom (Tokyo, 12 Nov; the owner: "on slide 17 the collision more dramatic, timed on a low sound"): a larger hit on
+    # the crossing, one a room's speakers carry: a body from 95 Hz down to 38 Hz with its octave, ringing for 2.6 s, and a
+    # burst of low noise in its first half second
+    bf = np.where(t < tc, 95, ramp_exp(t, tc, tc + 0.6, 95, 38))
+    bph = 2 * np.pi * np.cumsum(np.where(t < tc, 0, bf)) / SR
+    bg = np.where(t < tc, 0, np.where(t < tc + 0.012, ramp_exp(t, tc, tc + 0.012, 1e-4, 1.0), ramp_exp(t, tc + 0.012, tc + 2.6, 1.0, 1e-4)))
+    ng = np.where(t < tc, 0, ramp_exp(t, tc, tc + 0.5, 0.8, 1e-4))
+    boom = bg * (np.sin(bph) + 0.45 * np.sin(2 * bph)) + ng * onepole_lp(b, np.full(n, 220.0)) * 2.0
+    return 0.55 * swell + 0.6 * th_g * np.sin(th_ph) + 1.6 * boom
+
+
+BOOM = '--boom' in sys.argv
+if BOOM:
+    sys.argv.remove('--boom')
 
 
 def main():
@@ -75,7 +90,7 @@ def main():
         mix += gain * voice(n, tc, tf, rng)
     # the compressor's job, roughly: a soft knee, then -6 dBFS peak
     mix = np.tanh(1.5 * mix) / 1.5
-    mix *= 10 ** (-6 / 20) / max(np.abs(mix).max(), 1e-9)
+    mix *= 10 ** ((-2 if BOOM else -6) / 20) / max(np.abs(mix).max(), 1e-9)
     # fade the last 50 ms
     k = int(0.05 * SR); mix[-k:] *= np.linspace(1, 0, k)
     pcm = (np.clip(mix, -1, 1) * 32767).astype('<i2')

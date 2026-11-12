@@ -139,8 +139,8 @@
       0,
       0
      ],
-     "light": 4.0,
-     "flash": 0.05,
+     "light": 7.0,
+     "flash": 0.11,
      "approach": 2.5,
      "sound": true,
      "tone": "#9cc4ff",
@@ -305,7 +305,7 @@
      "scale": 1.2,
      "stretch": 1.0,
      "pulse": "inside",
-     "light": 4.0,
+     "light": 6.5,
      "light3": [
       -0.35,
       0.75,

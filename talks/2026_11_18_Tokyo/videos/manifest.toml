@@ -78,11 +78,13 @@ profile  = "high-motion"
 used_in  = ["deck"]
 loudnorm = false
 notes    = """\
-Slide 5 (owner, 10 Nov: "this slide should be replaced by the sped up zoomin video into the world of atoms"): \
-the library's atoms.mp4 (126 s, a hair down to the quarks of a proton) sped up to 26.5 s, no sound: 0-92 s \
-at 6x (three frames blended, 50 fps), 92-116.5 s (the nucleus, its protons and neutrons, the proton's quarks \
-labelled) at 2.2x; cut before its fade to black. ffmpeg -i atoms.mp4 -filter_complex \
-"[0:v]trim=0:92,setpts=(PTS-STARTPTS)/6,tmix=frames=3,fps=50[a];[0:v]trim=92:116.5,setpts=(PTS-STARTPTS)/2.2,fps=50[b];\
+Slide 2 (owner, 10 Nov: "this slide should be replaced by the sped up zoomin video into the world of atoms"; \
+12 Nov: "Second slide could be slower, maybe not full scale, but slower … or even full"): the library's atoms.mp4 \
+(126 s, a hair down to the quarks of a proton) at 47 s, no sound: 0-92 s at 3x (two frames blended, 50 fps), \
+92-116.5 s (the nucleus, its protons and neutrons, the proton's quarks labelled) at 1.5x; cut before its fade to \
+black. It was 26.5 s (6x and 2.2x) until 12 Nov; in full it is 116.5 s, a minute and a half more than the talk has. \
+ffmpeg -i atoms.mp4 -filter_complex \
+"[0:v]trim=0:92,setpts=(PTS-STARTPTS)/3,tmix=frames=2,fps=50[a];[0:v]trim=92:116.5,setpts=(PTS-STARTPTS)/1.5,fps=50[b];\
 [a][b]concat=n=2:v=1:a=0,format=yuv420p[v]" -map "[v]" -an -c:v libx264 -preset slow -crf 14 atoms_fast.mp4."""
 
 # The three heavy scenes, recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy

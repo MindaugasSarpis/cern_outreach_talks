@@ -76,9 +76,12 @@ space: { at: proton, dim: 0.2 }
      the caption "A proton: three quarks, never seen alone" left (a marketing line). atoms_fast.mp4: the
      library's atoms.mp4 (a hair down to the quarks of a proton) sped up; it ends on the proton and waits. -->
 <VideoPlayer src="atoms_fast.mp4" muted :controls="false" />
-<!-- 12 Nov (the owner: "Slide 5 some soundtrack (maybe this age of wonder)"): Scott Buckley's „Age of Wonder“ from
-     its top, started with the clip; it goes on under the speaker after the clip ends and fades on leaving. `+` / `-`. -->
-<StageSoundtrack src="audio/wonder_open.m4a" :level="0.6" :clip-at="0.05" keys />
+<!-- 12 Nov, night (the owner: "need some mild soundtrack for the theorists introduction … maybe just age of wonder
+     throughout"): Scott Buckley's „Age of Wonder“ starts here and runs under every slide to the finale
+     (audio/wonder_bed.m4a, 16 min: the piece to 3:35, then 1:00 to 3:35 five times more), 0.6 under the clips that
+     are watched, 0.3 to 0.35 under the slides that are spoken over; the finale cross-fades into the piece's last build.
+     `+` / `-` set the level in the talk. The cover has the collision's own sound and no music. -->
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.6" start keys />
 
 <!-- facts: proton-mass-quarks-1-percent -->
 
@@ -98,7 +101,7 @@ Source: Yang et al., PRL 121 (2018) 212001; Brookhaven National Laboratory
 news.
 
 11 Nov (the audience is scientists): the clip runs with a line or two over it, so half a minute beside
-the clip's 26.5 s. (~0.5 min)
+the clip, 47 s since 12 Nov. (~0.5 min)
 -->
 
 ---
@@ -107,6 +110,7 @@ space: { at: sakata, dim: 0.15 }
 
 <div class="num tr">1956<span class="name">Nagoya</span></div>
 <div class="cap">Shoichi Sakata proposes a precursor to the quark model</div>
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.3" start keys />
 
 <!-- facts: sakata-model-1956, sakata-nagoya-1956 -->
 
@@ -124,6 +128,7 @@ space: { at: paper, dim: 0.06 }
 
 <div class="num tr">1964<span class="name">quarks</span></div>
 <div class="cap r">Gell-Mann and Zweig propose the quark model</div>
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.3" start keys />
 
 <!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
 
@@ -152,6 +157,7 @@ space: { at: km, dim: 0.15 }
 
 <div class="num tr">1973<span class="name">six quarks</span></div>
 <div class="cap">Kobayashi and Maskawa propose six quarks, including the b quark</div>
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.3" start keys />
 
 <!-- facts: kobayashi-maskawa-1973, kobayashi-maskawa-nagoya-phd, kobayashi-maskawa-nobel-2008, b-quark-1977, lhcb-b-for-beauty -->
 
@@ -208,6 +214,7 @@ $$T^\mu_{\ \mu} = \frac{\beta(g_s)}{2 g_s}\, G^a_{\mu\nu}G^{a\,\mu\nu} + \sum_q 
 
 </QcdStorm>
 <div class="cap">Quantum chromodynamics</div>
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.35" start keys />
 
 <!-- facts: asymptotic-freedom-1973, alpha-s-world-average-2024, proton-mass-quarks-1-percent -->
 
@@ -233,6 +240,7 @@ space: { at: families, dim: 0.97 }   # the world nearly dark: the flat slide car
 ---
 
 <QuarkRecipes />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.3" start keys />
 
 <!-- facts: kaon-quark-content, lambda-b-contains-b, gellmann-1964-five-quark-sentence, exotic-hadrons-particle-zoo -->
 
@@ -261,6 +269,7 @@ space: { at: km, dim: 0.6 }
 <div class="num tr">2003<span class="name">KEK</span></div>
 <div class="cap">Belle discovers the X(3872), an exotic hadron candidate</div>
 </StagePhoto>
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.3" start keys />
 
 <!-- facts: belle-cpv-2001, belle-x3872-2003, x3872-started-exotic-searches, theta-plus-leps-japan-19-events, leps-theta-not-confirmed -->
 
@@ -284,6 +293,7 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 <VideoPlayer src="cern_overview_swoosh.mp4" />
 <AtClipEnd :lead="0.6"><div class="veil tl"></div><div class="num tl">2018<span class="name">Lithuania: associate member</span></div></AtClipEnd>
 <div class="cap">CERN, Geneva: the world’s largest particle physics laboratory</div>
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.3" start keys />
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lithuania -->
 
@@ -307,6 +317,7 @@ space: { at: lhc, dim: 0.25 }
   <div class="num">−271.3 °C<span class="name">magnets</span></div>
 </div>
 <div class="cap">The Large Hadron Collider, 100 m underground</div>
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.4" start keys />
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lhc-size-cost, cern-lhc-energy, cern-lhc-cold, gave-cryo-lhc, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
 
@@ -335,10 +346,7 @@ an additional 5 billion yen", 1998; Long Shutdown 3). (~0.5 min)
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
-<!-- 12 Nov, evening (the owner: "age of wonder should continue from slide 11 on to the very end"): „Age of Wonder“ starts
-     here and runs under every slide to the finale (audio/wonder_bed.m4a, about 8 min: the piece from 0:30 with its middle
-     repeated), lower under the slides that are spoken over; the finale cross-fades into the piece's last build. The clip's
-     own music is off, so two pieces do not play at once. -->
+<!-- the clip's own music is off since 12 Nov: „Age of Wonder“ runs under the whole talk (slide 2's comment) -->
 <VideoPlayer src="lhcb.mp4" muted />
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.6" start keys />
 <div class="cap">LHCb Experiment at CERN</div>
@@ -469,7 +477,12 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
      lights are one white patch in the clip, so each is marked by a small dark dot where its line ends. Tokyo's
      line meets the bracket at y = 292, clear of a star of the clip's last frame at (762, 308). Move them if
      the take's end moves. -->
-<AtClipEnd :lead="4"><svg class="globe-names" viewBox="0 0 980 551.25" aria-hidden="true"><path class="case" d="M709.3 315.2 L778 292 M696.4 326.8 L778 344" /><path d="M277 55.5 H252 M709.3 315.2 L778 292 M778 280 V322 M696.4 326.8 L778 344" /><circle cx="705.8" cy="316.1" r="2.6" /><circle cx="692.9" cy="326.1" r="2.6" /><text x="246" y="62" text-anchor="end">Vilnius</text><text x="786" y="294">RIKEN</text><text x="786" y="318">Tokyo</text><text x="786" y="351">Nagoya</text></svg></AtClipEnd>
+<!-- 12 Nov, night (the owner: "on slide 15 keep zooming int to japan"): 5 s after the clip has come to rest the picture
+     goes on in towards Japan, slowly, for a minute and a half (setup/ZoomOn.vue: the clip is scaled, to 1.6 times
+     about the point between Tokyo's and Nagoya's lights, so their names stay on them within 4 px); Vilnius leaves the
+     frame, and its name goes first (styles/index.css, `.vil`). -->
+<ZoomOn :at="[71.3, 58.2]" :to="1.6" :delay="5" :seconds="90" />
+<AtClipEnd :lead="4"><svg class="globe-names" viewBox="0 0 980 551.25" aria-hidden="true"><path class="case" d="M709.3 315.2 L778 292 M696.4 326.8 L778 344" /><path class="vil" d="M277 55.5 H252" /><path d="M709.3 315.2 L778 292 M778 280 V322 M696.4 326.8 L778 344" /><circle cx="705.8" cy="316.1" r="2.6" /><circle cx="692.9" cy="326.1" r="2.6" /><text class="vil" x="246" y="62" text-anchor="end">Vilnius</text><text x="786" y="294">RIKEN</text><text x="786" y="318">Tokyo</text><text x="786" y="351">Nagoya</text></svg></AtClipEnd>
 <!-- 12 Nov: the project's name, years and funders stand here since the project slide after the group photo left
      (the owner: "not just Nagoya, it's more institutes across japan now, maybe we should not show this at all"). -->
 <div class="cap">Lithuania and Japan: Penta-Charm, 2026–2028, funded by the Research Council of Lithuania and JSPS</div>

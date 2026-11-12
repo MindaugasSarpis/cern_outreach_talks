@@ -478,6 +478,43 @@ photo should have a slight pan / zoom effect so it's more dynamic"; "deploy when
 9. Recorded again: the data, collision and world takes (points 5 and 6); data2019.mp4, finale.mp4 and
    finale_loop.mp4 cut and encoded from them at the times they had; the plates for the new order.
 
+## Decisions, 12 Nov, night (after the deploy of 081f75f)
+
+The owner, in a run of messages: "low humm on cover slide with collision low sound (like in uzsikrauk karjerai,
+powerful)"; "Second slide could be slower, maybe not full scale, but slower … or even full"; "need some mild
+soundtrack for the theorists introduction … maybe just age of wonder throughout"; "slide 6 more dynamic, remains
+dynamic, they should appear and dissapears, pass through, more of them appear far away, appear close"; "just
+have to somehow match finale again"; "on slide 15 keep zooming int to japan"; "slide 16 something is wrong...
+it's stepping pixels rearraning"; "on slide 17 the collision more dramatic, timed on a low sound"; "flags more
+in focus, wawing, the pentaquark can become more blurry"; "antiquarks formatted weird, bar is too close".
+
+1. The cover's collision has the shared opening's voice (`sound: 0.5` on `cover-collision`, space.json;
+   coverCollision.js tells components/lhc-opening/sound.js of each round's start, crossing and speed): the swell
+   as the bunches run in, the thump on the crossing, the drone while the round runs slow. Every round (about
+   23 s apart) while the cover is shown; after the first key or click, as all the stage's sound.
+2. atoms_fast.mp4 is 47 s (3× then 1.5×; it was 26.5 s). In full it is 116.5 s, a minute and a half more than
+   the 15 minutes have; `talk map` still counts the notes' half minute beside it.
+3. „Age of Wonder“ runs from slide 2 to the end: `wonder_bed.m4a` (16 min 10 s: the piece to 3:35, then 1:00 to
+   3:35 five times, 4 s cross-fades), 0.6 under the clips that are watched, 0.3 to 0.45 under the rest; the
+   finale cross-fades into `wonder_close.m4a` (the last build, its arrival on the pentaquark formed), which now
+   starts at 0.3 of its level and opens over 3.4 to 8.5 s, so the collision's boom (3.9 s) is heard.
+   `wonder_open.m4a` left. Known: after a step back and forward again onto a slide the toolkit does not start
+   the music (its `G.prev` is stale); the next slide starts it.
+4. Slide 6 is a flight: each of 50 items (every equation and diagram twice) is born far away, grows along its
+   own line out of the middle (size S0·e^(g·p), 20 s from birth to passing), fades before its box reaches the
+   frame's edge and is born again on another line. One requestAnimationFrame loop while the slide is live.
+5. Slide 15: 5 s after the globe clip rests the picture goes on in towards Japan, to 1.6× over 90 s
+   (`setup/ZoomOn.vue`, a transform about the point between Tokyo's and Nagoya's lights); Vilnius's name goes.
+6. Slide 16's pan is a transform again, starting 4 s in (an `object-view-box` window moved in whole pixels:
+   the "stepping"). The layout check measures a slide about 2 s in, before the pan starts.
+7. The finale: the collision take recorded again with more light (`inside` light 7, flash 0.11; `detp` light
+   6.5) and a push in on the crossing; `lowbang.py --boom` adds a hit a room's speakers carry (95 → 38 Hz with
+   its octave and a burst of low noise), the clip's sound at −2 dBFS peak. The flags are a canvas now: one
+   cloth, laid down in 2 px columns moved by two travelling sines and shaded by the fold; 0.5 as light over the
+   clip, which goes soft (blur 3.5 px) as they come up.
+8. The antiquark's bar stands clear of the letter (QuarkRecipes.vue, `.bar`).
+9. Not recorded again: the plates (the worlds they show did not change; `ready` reads them as stale).
+
 ## Decisions, 11 Nov (the audience)
 
 The owner: "it's japan and lithuania scientists, they will be from nagoya, tokyo, rikken". Four changes were

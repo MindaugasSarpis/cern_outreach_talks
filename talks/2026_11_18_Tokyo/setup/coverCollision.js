@@ -12,7 +12,7 @@
 //     CMS options (tone, muonTone, ecalTone, hcalTone, bunchColor, light, …) }
 //
 // The drawing is components/lhc-opening's CMS collision (collision-cms.js, unchanged)
-// with the same 2012 CMS event (CERN Open Data record 300), built here with no sound
+// with the same 2012 CMS event (CERN Open Data record 300), built here with no sound of its own (the round's voice: `sound`, below)
 // and no captions, on a clock of its own: each round runs in at full speed, nearly
 // stops at the crossing, opens slowly while the tracks fan out and the calorimeters
 // light, holds the full burst, fades, and runs again. Rounds in the event's own
@@ -41,6 +41,7 @@
 // same reason): the fill runs in the world's boot, not in the cover's first seconds.
 import { buildCmsCollision } from '../components/lhc-opening/collision-cms.js'
 import { bus } from '../components/lhc-opening/bus.js'
+import { openingSound } from '../components/lhc-opening/sound.js'
 import EVENT_CMS from '../components/lhc-opening/event-cms.json'
 
 // [te, speed]: the round's speed against the crossing, in the event's seconds
@@ -72,8 +73,15 @@ export function installCoverCollision(registerBuilder) {
     bus.state.delete(run)   // a rebuilt world (a lost context) starts clean
     const built = buildCmsCollision({ ...o, name: run, approach, sound: false }, c, bus, () => Promise.resolve(EVENT_CMS))
 
-    const startRound = () => { tc = local + approach; hiddenAt = null; bus.set(run, 1) }
-    const hide = () => { if (tc != null && hiddenAt == null) { hiddenAt = local; bus.set(run, 0) } }
+    // `sound` (Tokyo, 12 Nov; the owner: "low humm on cover slide with collision low sound (like in uzsikrauk karjerai,
+    // powerful)"): the shared opening's voice (components/lhc-opening/sound.js: the sub-bass swell as the bunches run
+    // in, the deep thump on the crossing, the drone held while the round runs slow, let go as it speeds up), told of
+    // each round here: its start, its crossing, its speed. It needs the stage's audio, so a key or a click first.
+    const snd = o.sound ? `${run}-sound` : null
+    if (snd) openingSound(ctx, bus, { name: snd, level: typeof o.sound === 'number' ? o.sound : 0.5 })
+    let crossed = false, lastRate = 1
+    const startRound = () => { tc = local + approach; hiddenAt = null; bus.set(run, 1); crossed = false; lastRate = 1; if (snd) bus.emit('start', { name: snd }) }
+    const hide = () => { if (tc != null && hiddenAt == null) { hiddenAt = local; bus.set(run, 0); if (snd) bus.emit('stop', { name: snd }) } }
     const setOn = (k) => {
       const want = !!k
       if (want === on) return
@@ -90,6 +98,10 @@ export function installCoverCollision(registerBuilder) {
       speed = !on || hiddenAt != null || te == null ? 1 : speedAt(te)
       local += dt * speed
       built.update(local)
+      if (snd && on && hiddenAt == null && te != null) {
+        if (!crossed && te >= 0) { crossed = true; bus.emit('cross', { name: snd }) }
+        if (Math.abs(speed - lastRate) > 0.02) { lastRate = speed; bus.emit('rate', { name: snd, rate: speed }) }
+      }
       if (!on || tc == null) return
       if (hiddenAt == null && local - tc >= HOLD) { hide(); first = false }
       else if (hiddenAt != null && local - hiddenAt >= FADE + GAP) startRound()

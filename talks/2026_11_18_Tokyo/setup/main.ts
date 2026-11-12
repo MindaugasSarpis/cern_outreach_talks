@@ -25,6 +25,7 @@ import { installPentaquark } from './pentaquark.js'
 import { installLook } from './look.js'
 import QcdStorm from './QcdStorm.vue'
 import ClipLoop from './ClipLoop.vue'
+import ZoomOn from './ZoomOn.vue'
 import BehindFlags from './BehindFlags.vue'
 
 // 12 Nov: the music now runs across slides at different levels, and a press that comes while a fade is still
@@ -56,6 +57,7 @@ export default async ({ app, router }) => {
   app.component('QcdStorm', QcdStorm)         // QCD's equations and diagrams floating at different depths (slide 6)
   app.component('ClipLoop', ClipLoop)         // a looping clip that takes over as the slide's clip ends (the finale)
   app.component('BehindFlags', BehindFlags)   // Lithuania's and Japan's flags behind the finale's pentaquark
+  app.component('ZoomOn', ZoomOn)             // after the slide's clip ends, its picture goes on in towards a point (the globe)
   app.component('CloseStill', CloseStill)   // the finale's last frame on the credits page, the world resting
   // the takes' detector, collision and histogram: only in a takes build (takes/build.sh sets VITE_TAKES)
   if (import.meta.env.VITE_TAKES) (await import('./takes/index.js')).installTakes({ app, registerBuilder })

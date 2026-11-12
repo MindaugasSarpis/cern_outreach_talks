@@ -21,7 +21,7 @@
 #   usage: segments.sh SCRATCH WORKTREE ENV_BIN
 set -euo pipefail
 S=$1; W=$2; F=$3; mkdir -p "$S/fin"; cd "$S/fin"
-python3 -I "$W/talks/2026_11_18_Tokyo/videos/finale/lowbang.py" bang.wav 32.0 3.9:23.0:1
+python3 -I "$W/talks/2026_11_18_Tokyo/videos/finale/lowbang.py" bang.wav 32.0 3.9:23.0:1 --boom
 "$F/ffmpeg" -v error -y -ss 1.5 -t 13.6 -i "$W/videos/takes/tokyo_collision_take.mp4" -ss 1.0 -t 20 -i "$W/videos/takes/tokyo_finale_world.mp4" -i bang.wav \
   -filter_complex "[0:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[b];[1:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[c];[b][c]xfade=transition=fade:duration=1.6:offset=12.0,format=yuv420p[v]" \
   -map "[v]" -map 2:a -c:v libx264 -preset slow -crf 14 -r 50 -c:a aac -b:a 192k -shortest "$W/videos/raw/finale.mp4"

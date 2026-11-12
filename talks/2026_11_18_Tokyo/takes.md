@@ -56,6 +56,8 @@ space:
   path:
     - [0, { at: [1012, -481.5, 2.5], dist: 23, yaw: -20, pitch: 4 }]
     - [3, { at: [1012, -481.5, 2.5], dist: 24, yaw: -14, pitch: 4 }]
+    - [5.1, { at: [1012, -481.5, 2.5], dist: 24.6, yaw: -10.5, pitch: 4 }]
+    - [6.3, { at: [1012, -481.5, 2.5], dist: 19.5, yaw: -8, pitch: 4 }]   # 12 Nov: a push in on the crossing (5.4 s)
     - [10, { at: [1012, -481.5, 2.5], dist: 28, yaw: 2, pitch: 5 }]
     - [13.5, { at: [1014, -479, 2.5], dist: 40, yaw: 12, pitch: 16 }]
     - [17, { at: [1016, -474, 2.5], dist: 70, yaw: 18, pitch: 28 }]

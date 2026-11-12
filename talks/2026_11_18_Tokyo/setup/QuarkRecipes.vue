@@ -394,6 +394,8 @@ onBeforeUnmount(dispose)
 .hl :deep(.c) { margin-top: 0.3em; font-size: max(18px, 0.8em); color: #9fd8ff; letter-spacing: 0.08em; text-shadow: 0 0 8px rgba(0, 0, 0, 0.9); }
 /* the antiquark's bar, drawn over its letter (an overline sat far above the letter at large sizes) */
 :deep(.bar) { position: relative; display: inline-block; }
-:deep(.bar)::before { content: ''; position: absolute; left: 0.04em; right: 0.04em; top: 0.02em; height: 0.075em; background: currentColor; border-radius: 0.04em; }
+/* 12 Nov (the owner: "antiquarks formatted weird, bar is too close"): the bar stood on the letters' tops and ran into the
+   stems of b and d; it stands clear of them now */
+:deep(.bar)::before { content: ''; position: absolute; left: 0.06em; right: 0.06em; top: -0.17em; height: 0.07em; background: currentColor; border-radius: 0.04em; }
 .qr-cap { max-width: 330px; }
 </style>
