@@ -58,6 +58,8 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13 (the owner: "deploy"): **Deployed:** commit aa95c48 (the Japanese side, slide 17), Pages run 43309927472 (success), URL
+  200, the live walk passed; `ready` inside the deploy with `safe` skipped. 19 slides, 14.7 of 15 min.
 - 2026-11-13 (the owner's run of the morning; Decisions, 12 Nov late night, 4 and 5): **Deployed:** commit bd588b8,
   Pages run 43308606903 (success), URL 200, the live walk passed; before it 3a8796d (the cover's sound), run
   43306863408. `ready` inside each deploy with `safe` skipped; lint 0 errors, 1 warning (slide 6's WORDS).
