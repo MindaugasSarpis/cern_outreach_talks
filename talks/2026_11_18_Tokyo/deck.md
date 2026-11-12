@@ -482,7 +482,9 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
      goes on in towards Japan, slowly, for a minute and a half (setup/ZoomOn.vue: the clip is scaled, to 1.6 times
      about the point between Tokyo's and Nagoya's lights, so their names stay on them within 4 px); Vilnius leaves the
      frame, and its name goes first (styles/index.css, `.vil`). -->
-<ZoomOn :at="[71.3, 58.2]" :to="1.6" :delay="5" :seconds="90" />
+<!-- 13 Nov (the owner: "slide 15 shouldn't stop"): the zoom takes over as the clip's own camera comes to rest (15 s in), with
+     no pause, and keeps one steady pace for four minutes (to 2×), so the picture never stands still -->
+<ZoomOn :at="[71.3, 58.2]" :to="2" :from="15" :delay="0" :seconds="240" />
 <AtClipEnd :lead="4"><svg class="globe-names" viewBox="0 0 980 551.25" aria-hidden="true"><path class="case" d="M709.3 315.2 L778 292 M696.4 326.8 L778 344" /><path class="vil" d="M277 55.5 H252" /><path d="M709.3 315.2 L778 292 M778 280 V322 M696.4 326.8 L778 344" /><circle cx="705.8" cy="316.1" r="2.6" /><circle cx="692.9" cy="326.1" r="2.6" /><text class="vil" x="246" y="62" text-anchor="end">Vilnius</text><text x="786" y="294">RIKEN</text><text x="786" y="318">Tokyo</text><text x="786" y="351">Nagoya</text></svg></AtClipEnd>
 <!-- no caption (13 Nov, the owner, of "Lithuania and Japan: Penta-Charm, 2026–2028, funded by …": "don't need this"):
      the cities' names are the slide's words; the project's name is on the cover, its years and funders are said -->

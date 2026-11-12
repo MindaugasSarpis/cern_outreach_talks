@@ -164,6 +164,6 @@ html[data-stage] .hero .num { z-index: 2; }
 
 /* the globe goes on in towards Japan after its clip (ZoomOn): Vilnius leaves the frame, so its name and line go first,
    9 s after the names came (they come 4 s before the clip's end; the zoom starts 5 s after it) */
-.slidev-layout .at-clip-end.on .globe-names .vil { animation: tokyo-vil-out 4s ease 9s forwards; }
+.slidev-layout .at-clip-end.on .globe-names .vil { animation: tokyo-vil-out 2.5s ease 2.5s forwards; }
 @keyframes tokyo-vil-out { to { opacity: 0; } }
 @media print { .slidev-layout .at-clip-end.on .globe-names .vil { animation: none; } }
