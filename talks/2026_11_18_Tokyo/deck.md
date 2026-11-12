@@ -409,7 +409,7 @@ space: { at: lhcb, dim: 0.97 }
      setup/Dalitz3D.vue, the paper's Dalitz plot digitised (public/data/dalitz-2019.json). -->
 <Dalitz3D />
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.35" start keys />
-<div class="cap">LHCb, 2019: the Dalitz plot of Λ<sub>b</sub><sup>0</sup> → J/ψ p K<sup>−</sup> decays</div>
+<div class="cap">LHCb, 2019</div>
 
 <!-- facts: lhcb-pentaquark-2019 -->
 

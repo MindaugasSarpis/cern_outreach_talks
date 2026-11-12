@@ -516,6 +516,53 @@ in focus, wawing, the pentaquark can become more blurry"; "antiquarks formatted 
 8. The antiquark's bar stands clear of the letter (QuarkRecipes.vue, `.bar`).
 9. Not recorded again: the plates (the worlds they show did not change; `ready` reads them as stale).
 
+## Decisions, 12 Nov, late night (slides 13 and 14; the toolkit)
+
+The owner: "13 slide should be more impressive, maybe don't need a grid, should appear from different parts in
+space, fill in the bins, no caption just "LHCb, 2019...." fly through the dalitz plot itself in 3d then zoom out
+a little like now to show"; "14 should be more dynamic, molecule rotating around eachother indicate some
+interaction in the middle, the other ones the shell is too static"; "This talk is good, can we propagate
+something to tools? … There is a tools session and tools repo and a scheduler … maybe this is a task for the
+scheduler."
+
+1. Slide 13 (Dalitz3D.vue): no floor and no grid; 7 000 candidates come in from a wide shell all round the plot
+   and fill the bins, the columns rising as they fill, the camera circling at an angle (to 9.5 s); then it goes
+   in over the Λ(1520) ridge and flies along the P_c bands, lit, to four fifths of the way across (9.5 to
+   17.5 s); then it draws back to the view the slide always ended on, and only there the ticks and names come
+   (from 20 s), with the slow turn. Caption "LHCb, 2019". `dalitz_end.jpg` (the fallback still) is the old end
+   view with its floor: not re-made.
+2. Slide 14: `setup/interiors.js`, a talk-owned builder `interior` (kinds molecule, compact, hadroquarkonium) in
+   place of the hadron plugin's five still `pentaquark` forms: the molecule's baryon and meson circle their
+   middle with grains exchanged between them, every quark moves on its own loop, every skin ripples.
+3. For the toolkit, handed to the Scheduler (the list below). This session edits no toolkit file.
+
+### For the toolkit (for the Scheduler, 12 Nov)
+
+What this talk had to build or work round, and what it would be as a part of slidev-videos:
+- **A clip's hand-over to a loop** (`setup/ClipLoop.vue`): a `loopAfter="clip_loop.mp4"` on VideoPlayer, and a
+  recorder mode that cuts the loop from a take's settled tail (segments.sh's cross-faded cut).
+- **What follows a clip's end** (`AtClipEnd.vue`, `ZoomOn.vue`): a `<StageAtClipEnd lead>` wrapper, and a slow
+  zoom on a clip after it ends (a transform about a point).
+- **A photo's pan** (`PanCanvas.vue`): `pan` on StagePhoto, drawn so the element keeps its box (a scaled <img>
+  fails the shots' layout check; `object-view-box` moves in whole pixels).
+- **The shots' layout check**: a way to mark an element as full-bleed by design (today only `.video-player`
+  is), and a note that the shots run the page's clock ahead, so a delayed animation is already under way.
+- **StageSoundtrack**: (a) `release` in stage/soundtrack.js throws when a press interrupts a fade in Chromium
+  ("setValueCurveAtTime … overlaps"; this talk's guard: `holdOnOverlap`, setup/main.ts); (b) after a step back
+  and forward again `G.prev` is stale and `start` does not start; (c) a bed for a whole talk: `loop`, or a
+  builder that makes one from a track (Karjera's starfire_bed.py, this talk's ffmpeg line), and a level per
+  slide in headmatter in place of a tag on every slide.
+- **The recorder**: it comes to a take from the slide before it and carries that slide's running effects in
+  (the finale's stray grains); an option to open a take cold.
+- **The stage's look**: options for the ground's glow and the dust nearest the camera (`setup/look.js`).
+- **Forms**: the colour-charge pentaquark (`pentaquark.js`), the moving interiors (`interiors.js`), the cover's
+  collision loop with its sound (`coverCollision.js`), the globe (`globe.js`): a second talk that wants one
+  takes it from the kit, not a copy. The WebGL slides' renderer rule (keep the renderer while the component
+  lives; never `forceContextLoss()` on leaving) belongs in docs/authoring.md.
+- **Lint**: equations counted as words (slide 6's WORDS warning); a `broadcast: false` that wins over
+  `grain: 0` (the `safe` step); `talk map` counting a clip's seconds from the encode.
+- **The icon resolver**: a component named `Flags…` is read as the icon set `flag` (a note in authoring.md).
+
 ## Decisions, 11 Nov (the audience)
 
 The owner: "it's japan and lithuania scientists, they will be from nagoya, tokyo, rikken". Four changes were

@@ -79,17 +79,17 @@ uniform float uTime, uScale;
 varying float vA;
 void main() {
   float age = uTime - aT0;
-  float u = clamp(age / 0.7, 0.0, 1.0);
-  vec3 p = mix(aFrom, aTo, u * u);
-  vA = (age < 0.0 || age > 1.2) ? 0.0 : (u < 1.0 ? 0.9 : 1.0 - (age - 0.7) / 0.5);
+  float u = clamp(age / 1.3, 0.0, 1.0);
+  vec3 p = mix(aFrom, aTo, u * u * (3.0 - 2.0 * u));
+  vA = (age < 0.0 || age > 1.8) ? 0.0 : (u < 1.0 ? 0.25 + 0.65 * u : 1.0 - (age - 1.3) / 0.5);
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = projectionMatrix * mv;
-  gl_PointSize = uScale * (u < 1.0 ? 2.6 : 4.0) * (30.0 / -mv.z);
+  gl_PointSize = uScale * (u < 1.0 ? 3.2 : 4.6) * (30.0 / max(-mv.z, 1.0));
 }`
 const SPARK_F = /* glsl */ `
 varying float vA;
 void main() { float d = length(gl_PointCoord - 0.5); float a = smoothstep(0.5, 0.0, d) * vA; gl_FragColor = vec4(vec3(0.75, 0.92, 1.0) * a, a); }`
-const NSP = 2400
+const NSP = 7000
 let cdf = []
 function pick() {
   const r = Math.random() * cdf[cdf.length - 1]
@@ -111,14 +111,7 @@ function build() {
   const rim = new DirectionalLight(0x9fd8ff, 0.6); rim.position.set(6, 4, -8); scene.add(rim)
   cells = grid()
   let acc = 0; cdf = cells.map((c) => (acc += c.n))
-  // the floor: the plot's frame, a faint ground and its grid lines
-  const floor = new Mesh(new PlaneGeometry(9.3, 9.3), new MeshBasicMaterial({ color: 0x0a1426, transparent: true, opacity: 0.85 }))
-  floor.rotation.x = -Math.PI / 2; floor.position.y = -0.005; world.add(floor)
-  const lv = []
-  for (let m = 2; m <= 6.5 + 1e-6; m += 0.5) lv.push(wx(m), 0, wz(YL), wx(m), 0, wz(YH))
-  for (let m = 16; m <= 26 + 1e-6; m += 2) lv.push(wx(XL), 0, wz(m), wx(XH), 0, wz(m))
-  const lg = new BufferGeometry(); lg.setAttribute('position', new BufferAttribute(new Float32Array(lv), 3))
-  world.add(new LineSegments(lg, new LineBasicMaterial({ color: 0x5f7fa6, transparent: true, opacity: 0.45 })))
+  // no floor and no grid (12 Nov, the owner: "maybe don't need a grid"): the columns stand in the dark, the ticks name the axes
   // the columns
   const box = new BoxGeometry(1, 1, 1); box.translate(0, 0.5, 0)
   bars = new InstancedMesh(box, new MeshLambertMaterial({ color: 0xffffff }), cells.length)
@@ -150,7 +143,13 @@ function resize() {
 const ease = (x) => { x = Math.min(Math.max(x, 0), 1); return x * x * (3 - 2 * x) }
 // the timeline (s): the candidates fall 0.5–9 (seen from above, the cells lighting flat); the tilt 6–10; the
 // columns rise 7–13; the names and the bands' light at 12.5; then a slow turn
-const T_TILT = 6, T_RISE = 7, T_NAME = 12.5
+// 12 Nov, night (the owner: "13 slide should be more impressive, maybe don't need a grid, should appear from different
+// parts in space, fill in the bins … fly through the dalitz plot itself in 3d then zoom out a little like now to show"):
+// the candidates come in from all round the plot and fill the bins, the columns rising as they fill, the camera
+// circling at an angle (to T_FLY); then it goes down and flies along the P_c band, low, through the plot from the
+// Λ(1520) ridge to the far edge (T_FLY to T_OUT), the bands lit; then it draws back to the view the slide always
+// ended on, and the ticks and names come (T_NAME), with the slow turn.
+const T_RISE = 1.5, T_FLY = 9.5, T_OUT = 17.5, T_NAME = 21.5
 // the P_c names: at m²(K p), m²(J/ψ p); the top of the band's columns there and the name's foot (over the band)
 // or head (under it), in world units. On the screen the bands rise to the right through the whole turn, so
 // the upper name sits up and left of its line and the lower name down and right of its own (.nw, .se):
@@ -162,31 +161,46 @@ const PC = [
 const dummy = new Object3D()
 let nextSpark = 0, lastSpawn = 0
 function update(t) {
-  const tilt = ease((t - T_TILT) / 4)
-  const turn = t > T_RISE ? 0.32 * Math.sin((t - T_RISE) * 0.11) : 0
-  // the camera: straight down at first (far up the screen), then 58° from the vertical, a little to the left
-  const polar = 0.02 + tilt * 1.0, az = -0.42 * tilt + turn
-  // every label stays inside the frame and above the caption (its box starts at y = 460 of 551): from above,
-  // through the tilt and round the whole turn (57 s). The coming closer lags the tilt (tilt²), or the plot
-  // grows before it foreshortens; the point looked at sits toward the viewer, which lifts the plot in the frame
-  const dist = 21.5 - 6.5 * tilt * tilt
-  const tgt = new Vector3(-1.2 * tilt, -0.15 * tilt, 1.7 + 0.6 * tilt ** 1.5)
-  camera.position.set(tgt.x + dist * Math.sin(polar) * Math.sin(az), tgt.y + dist * Math.cos(polar), tgt.z + dist * Math.sin(polar) * Math.cos(az))
+  const tilt = 1
+  const turn = t > T_NAME ? 0.32 * Math.sin((t - T_NAME) * 0.11) : 0
+  // three poses, blended: A circling while it fills; B the flight along the band; C the end (58° from the vertical,
+  // a little to the left: the pose every label's place was checked on)
+  const pos = new Vector3(), tgt = new Vector3(), q = new Vector3(), qt = new Vector3()
+  const azA = -0.9 + 0.075 * t
+  pos.set(0.3 + 19.5 * Math.sin(0.92) * Math.sin(azA), 19.5 * Math.cos(0.92), 0.8 + 19.5 * Math.sin(0.92) * Math.cos(azA)); tgt.set(0.3, 0.2, 0.8)
+  const fly = ease((t - T_FLY) / 2.2), out = ease((t - T_OUT) / 3.8)
+  if (fly > 0) {
+    // along m²(J/ψ p) = 19.8 GeV²: in over the Λ(1520) ridge from outside the plot, down to twice the band's
+    // height, on along the band to four fifths of the way across (it never leaves the plot), looking ahead and down
+    const k = Math.min(1, Math.max(0, (t - T_FLY - 1.2) / (T_OUT - T_FLY - 1.2))), kk = k * k * (3 - 2 * k)
+    const x = wx(XL) - 4.5 + (wx(5.3) - (wx(XL) - 4.5)) * kk
+    const y = 3.7 - 2.3 * ease((kk - 0.5) / 0.36)   // over the ridge (2.4 high, at 0.46 of the way) before coming down
+    q.set(x, y, wz(19.8) + 0.9 - 0.7 * kk); qt.set(x + 4.5, 0.25, wz(19.8) - 0.2)
+    pos.lerp(q, fly); tgt.lerp(qt, fly)
+  }
+  if (out > 0) {
+    const polar = 1.02, az = -0.42 + turn, dist = 15
+    qt.set(-1.2, -0.15, 2.3)
+    q.set(qt.x + dist * Math.sin(polar) * Math.sin(az), qt.y + dist * Math.cos(polar), qt.z + dist * Math.sin(polar) * Math.cos(az))
+    pos.lerp(q, out); tgt.lerp(qt, out)
+  }
+  camera.position.copy(pos)
   camera.up.set(0, 1, 0)
   camera.lookAt(tgt)
   // the cells: lit as their candidates arrive, then risen to their counts
   // F: the share of the sample that has landed, 0 → 1 over 0.5–9.5 s; a cell lights when its first candidate
   // does (the dense ridge and band first, the thin edges last) and brightens as its count fills
-  const F = Math.min(1, Math.max(0, (t - 0.5) / 9)), rise = ease((t - T_RISE) / 6)
+  const F = Math.min(1, Math.max(0, (t - 0.5) / 8.5)), rise = ease((t - T_RISE) / 7)
   // nm: the names and the bands' light, 0 → 1 from T_NAME; the colours are painted while either changes
   const nm = ease((t - T_NAME) / 1)
-  const paint = F < 1 || !bars.userData.done || bars.userData.nm !== nm
+  const lit = ease((t - T_FLY) / 1.5)          // the bands' light: on for the flight along them
+  const paint = F < 1 || !bars.userData.done || bars.userData.nm !== lit
   const cc = bars.instanceColor.array
   cells.forEach((c, k) => {
     const f = F >= c.first ? Math.min(1, F * 1.05) : 0
     if (paint) {
       const col = colourOf(Math.max(1, c.n * F))
-      if (c.band && nm > 0) col.lerp(LIT, LIT_K * nm)
+      if (c.band && lit > 0) col.lerp(LIT, LIT_K * lit)
       cc[k * 3] = col.r; cc[k * 3 + 1] = col.g; cc[k * 3 + 2] = col.b
     }
     // a cell shows once its first candidates have landed: flat and lit, then risen to its count
@@ -198,26 +212,29 @@ function update(t) {
     bars.setMatrixAt(k, dummy.matrix)
   })
   bars.instanceMatrix.needsUpdate = true
-  if (paint) { bars.instanceColor.needsUpdate = true; bars.userData.done = F >= 1; bars.userData.nm = nm }
+  if (paint) { bars.instanceColor.needsUpdate = true; bars.userData.done = F >= 1; bars.userData.nm = lit }
   // the falling candidates, at a rate that follows the filling
   const u = sparks.material.uniforms; u.uTime.value = t
-  if (t > 0.4 && t < 10) {
-    const rate = 260 * (0.3 + Math.sin(Math.PI * Math.min(1, (t - 0.4) / 9.6)))
-    const n = Math.min(80, Math.floor((t - lastSpawn) * rate))
+  if (t > 0.4 && t < 9.4) {
+    const rate = 620 * (0.3 + Math.sin(Math.PI * Math.min(1, (t - 0.4) / 9.6)))
+    const n = Math.min(160, Math.floor((t - lastSpawn) * rate))
     if (n > 0) {
       lastSpawn = t
       const g = sparks.geometry, F = g.attributes.aFrom.array, To = g.attributes.aTo.array, T0 = g.attributes.aT0.array
       for (let s = 0; s < n; s++) {
         const c = pick(), k = nextSpark++ % NSP
         const x = c.x + (Math.random() - 0.5) * BX * SX, z = c.z + (Math.random() - 0.5) * BY * SZ
-        F.set([x, 4 + 3 * Math.random(), z], k * 3); To.set([x, c.h * rise + 0.02, z], k * 3); T0[k] = t
+        // each candidate comes in from somewhere round the plot: a point on a wide shell, over it and to every side
+        const th = Math.random() * Math.PI * 2, el = Math.asin(0.05 + 0.95 * Math.random()), R = 11 + 6 * Math.random()
+        F.set([R * Math.cos(el) * Math.cos(th), R * Math.sin(el) * 0.9 + 0.5, R * Math.cos(el) * Math.sin(th)], k * 3); To.set([x, c.h * rise + 0.02, z], k * 3); T0[k] = t
       }
       g.attributes.aFrom.needsUpdate = true; g.attributes.aTo.needsUpdate = true; g.attributes.aT0.needsUpdate = true
     }
   }
   // the labels: the axes' names and ticks, the features once risen
   labels.length = 0; leads.length = 0
-  const lab = (x, y, z, html, cls, op = 1) => { const p = proj(x, y, z); if (p) labels.push({ ...p, html, cls, op }) }
+  const shown = ease((t - T_OUT - 2.6) / 1.2)   // the ticks and names: only on the end's view
+  const lab = (x, y, z, html, cls, op = 1) => { const p = proj(x, y, z); if (p && shown > 0) labels.push({ ...p, html, cls, op: op * shown }) }
   for (const m of [2, 3, 4, 5, 6]) lab(wx(m), 0, wz(YL) + 0.35, String(m), 'tick')
   for (const m of [16, 18, 20, 22, 24, 26]) lab(wx(XL) - 0.35, 0, wz(m), String(m), 'tick r')
   // the x axis's name moves out from its ticks as the plot tilts: seen at a low angle the gap between the two
@@ -232,7 +249,7 @@ function update(t) {
     for (const [mx, my, top, at, html, cls] of PC) {
       const x = wx(mx), z = wz(my), a = proj(x, at, z), b = proj(x, top, z)
       lab(x, at, z, html, cls, nm)
-      if (a && b) leads.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, op: nm })
+      if (a && b && shown > 0) leads.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, op: nm * shown })
     }
   }
 }

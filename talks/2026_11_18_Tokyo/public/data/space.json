@@ -763,183 +763,30 @@
    },
    "objects": [
     {
-     "type": "pentaquark",
+     "type": "interior",
+     "kind": "molecule",
      "pos": [
-      -8.6,
+      -7.1,
       0,
-      0.3
-     ],
-     "radius": 1.55,
-     "quarkRadius": 0.46,
-     "quarks": [
-      {
-       "flavour": "c",
-       "pos": [
-        0,
-        0.85,
-        0
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        -0.8,
-        -0.45,
-        0.25
-       ]
-      },
-      {
-       "flavour": "d",
-       "pos": [
-        0.8,
-        -0.45,
-        -0.25
-       ]
-      }
+      0
      ]
     },
     {
-     "type": "pentaquark",
-     "pos": [
-      -5.6,
-      -0.1,
-      -0.3
-     ],
-     "radius": 1.2,
-     "quarkRadius": 0.46,
-     "quarks": [
-      {
-       "flavour": "cbar",
-       "pos": [
-        -0.55,
-        0.1,
-        0
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        0.55,
-        -0.1,
-        0.05
-       ]
-      }
-     ]
-    },
-    {
-     "type": "pentaquark",
+     "type": "interior",
+     "kind": "compact",
      "pos": [
       0,
       0,
       0
-     ],
-     "radius": 2.15,
-     "quarkRadius": 0.46,
-     "quarks": [
-      {
-       "flavour": "c",
-       "pos": [
-        0.75,
-        0.55,
-        0.2
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        0.25,
-        -0.95,
-        -0.55
-       ]
-      },
-      {
-       "flavour": "d",
-       "pos": [
-        0.95,
-        -0.2,
-        -0.75
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        -0.55,
-        0.8,
-        -0.6
-       ]
-      },
-      {
-       "flavour": "cbar",
-       "pos": [
-        -0.8,
-        -0.35,
-        0.4
-       ]
-      }
      ]
     },
     {
-     "type": "pentaquark",
+     "type": "interior",
+     "kind": "hadroquarkonium",
      "pos": [
       7.6,
       0,
       0
-     ],
-     "radius": 0.78,
-     "quarkRadius": 0.4,
-     "quarks": [
-      {
-       "flavour": "c",
-       "pos": [
-        0.42,
-        0.12,
-        0
-       ]
-      },
-      {
-       "flavour": "cbar",
-       "pos": [
-        -0.42,
-        -0.12,
-        0
-       ]
-      }
-     ]
-    },
-    {
-     "type": "pentaquark",
-     "pos": [
-      7.6,
-      0,
-      0
-     ],
-     "radius": 2.55,
-     "quarkRadius": 0.46,
-     "quarks": [
-      {
-       "flavour": "u",
-       "pos": [
-        0.05,
-        0.9,
-        0.35
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        -0.85,
-        -0.45,
-        -0.3
-       ]
-      },
-      {
-       "flavour": "d",
-       "pos": [
-        0.85,
-        -0.5,
-        -0.25
-       ]
-      }
      ]
     },
     {

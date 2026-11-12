@@ -23,6 +23,7 @@ import CoverCollision from './CoverCollision.vue'
 import { installCoverCollision } from './coverCollision.js'
 import { installPentaquark } from './pentaquark.js'
 import { installLook } from './look.js'
+import { installInteriors } from './interiors.js'
 import QcdStorm from './QcdStorm.vue'
 import ClipLoop from './ClipLoop.vue'
 import ZoomOn from './ZoomOn.vue'
@@ -48,6 +49,7 @@ export default async ({ app, router }) => {
   armAfterCover(router)                     // the globe's data loads once the cover is behind
   installLook()                             // the ground's glows lowered, the nearest dust capped (look.js)
   installCoverCollision(registerBuilder)    // `cover-collision`: the cover's slow, silent CMS loop
+  installInteriors(registerBuilder)         // `interior`: slide 14's molecule, compact particle and hadroquarkonium, moving
   installPentaquark(registerBuilder)        // `pentaquark-cc`: the cover's particle, u u d c c̄ in colour charge
   app.component('CoverCollision', CoverCollision)
   installGlobe(registerBuilder)             // `collab-globe`: the globe of grains, Vilnius and Nagoya joined
