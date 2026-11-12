@@ -58,6 +58,11 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-12, evening (the owner: "deploy"): **Deployed:** commit 1368cb5 (the 12 Nov round and the new order),
+  Pages run 43287039315 (success), URL 200, the live walk passed. `ready` ran inside the deploy with `safe`
+  skipped and passed. Before it, onto the release videos-2026-11-18-tokyo: `finale.mp4` (32 s),
+  `finale_loop.mp4` and the plates of the new take (03 to 08, 13, 14, 16; 01 unchanged). The entry below was
+  written before this deploy. Not yet heard or played by the owner on the Mac; the venue zip there is of fbc1267.
 - 2026-11-12, later (the owner's seven points; Decisions, 12 Nov): on `talk/tokyo`, **not deployed, nothing
   published**. 18 slides, 14.4 of 15 min, lint 0/0, `talk check` ok. Checked in a browser on a build with the
   local encodes (d3d12): the recipes draw on a first visit, a visit back and a reload; the QCD curve; the
