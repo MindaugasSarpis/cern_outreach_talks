@@ -612,6 +612,12 @@ scheduler."
    - A fault of mine on the way: 49dc7f6 (pushed, never deployed) had a broken line in ZoomOn.vue and did not
      build; fixed in the next commit.
 
+8. 13 Nov (the owner: "need low swoosh effect on 12 has to be really astonishing"): the data clip carries its own
+   sound and plays unmuted over the music (`videos/clips/data_swoosh.py`, synthesised, nothing pitched): a sub-bass
+   swell into the crossing's thump (2.9 s), a faint trickle while the histogram fills, a low swoosh from left to
+   right as the camera flies to the histogram (14.5 to 19.3 s, loudest at 17.4 s), a deep landing as it arrives,
+   three glints as the peaks light. Peak −2 dBFS. Not heard by anyone.
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

@@ -36,7 +36,9 @@ flock /tmp/slidev-stage-shots.lock node node_modules/slidev-addon-stage/bin/reco
 ```sh
 # 3. the cuts, into videos/raw/ (worktree root)
 X='-c:v libx264 -preset slow -crf 17 -maxrate 9500k -bufsize 19M -x264-params aq-mode=3:aq-strength=1.1 -pix_fmt yuv420p -r 50'   # the web encode itself (13 Nov)
-ffmpeg -ss 0.8 -t 24 -i videos/takes/tokyo_data_take.mp4 -an ${=X} videos/raw/data2019.mp4
+ffmpeg -ss 0.8 -t 24 -i videos/takes/tokyo_data_take.mp4 -an ${=X} SCRATCH/data_silent.mp4
+python3 -I talks/2026_11_18_Tokyo/videos/clips/data_swoosh.py SCRATCH/data.wav     # the clip's sound (13 Nov)
+ffmpeg -i SCRATCH/data_silent.mp4 -i SCRATCH/data.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest videos/raw/data2019.mp4
 ffmpeg -ss 4.4 -i videos/takes/tokyo_globe_tour.mp4 -an ${=X} videos/raw/globe.mp4
 talks/2026_11_18_Tokyo/videos/finale/segments.sh SCRATCH "$PWD" "$OUTREACH_ENV_BIN"     # finale.mp4 (32 s, with its sound) and finale_loop.mp4 (30 s)
 

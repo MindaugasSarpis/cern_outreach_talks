@@ -371,7 +371,11 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
      take of takes.md (takes/README.md): a collision in LHCb, its grains landing as the 2019 histogram, the fit drawn
      over it, the three peaks lit. The axis and the names are HTML over the clip's settled end, so they stay sharp:
      the positions are the histogram's in the clip's last frame, in slide units; move them if the take's camera moves. -->
-<VideoPlayer src="data2019.mp4" muted :controls="false" transition="fade" />
+<!-- 13 Nov (the owner: "need low swoosh effect on 12 has to be really astonishing"): the clip has its own sound now
+     (videos/clips/data_swoosh.py: the run-in's swell, the crossing's thump, the grains' trickle, a low swoosh from left to
+     right as the camera flies to the histogram, a deep landing as it arrives, three glints as the peaks light), so it
+     plays unmuted, over the music -->
+<VideoPlayer src="data2019.mp4" :controls="false" transition="fade" />
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.45" start keys />
 <AtClipEnd :lead="5"><div class="spec-axis"><i style="left: 283.6px">4300</i><i style="left: 447.7px">4400</i><i style="left: 611.7px">4500</i><b>mass of J/ψ p (MeV)</b></div></AtClipEnd>
 <AtClipEnd :lead="4"><div class="spec-names"><i class="c" style="left: 300px; top: 112px">P<sub>c</sub>(4312)<sup>+</sup></i><i class="r" style="left: 498px; top: 44px">P<sub>c</sub>(4440)<sup>+</sup></i><i class="l" style="left: 556px; top: 22px">P<sub>c</sub>(4457)<sup>+</sup></i></div></AtClipEnd>

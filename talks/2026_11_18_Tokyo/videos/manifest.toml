@@ -99,8 +99,8 @@ used_in  = ["deck"]
 loudnorm = false
 notes    = """\
 Slide 10 (owner, 10 Nov: "we want to have a peak from the fit. Also building up the histogram could be a bit more \
-substantial, maybe like in uzsikrauk karjerai, something like that (even involving the detector)"): 24 s, no \
-sound. LHCb whole, a collision in it, grains leaving the detector and landing as the histogram of the J/ψ p mass \
+substantial, maybe like in uzsikrauk karjerai, something like that (even involving the detector)"): 24 s, with \
+its own sound since 13 Nov (videos/clips/data_swoosh.py; the owner: "need low swoosh effect on 12 has to be really astonishing"). LHCb whole, a collision in it, grains leaving the detector and landing as the histogram of the J/ψ p mass \
 (HEPData ins1728691, Table 3); the camera comes to the histogram (18.7 s), the fit is drawn and the three peaks \
 light. The data take, takes.md slide 2, from 0.8 s. The axis and the peaks' names are the slide's (HTML), placed \
 on this clip's last frame."""
