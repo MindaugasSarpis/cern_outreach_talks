@@ -58,6 +58,11 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13, evening: **Deployed:** commit f782ee1 (Decisions, 12 Nov late night, 10), Pages run 43325786745 (success), URL 200,
+  the live walk passed; `ready` inside the deploy with `safe` skipped. data2019.mp4, data_loop.mp4 and finale.mp4 on
+  the release before it. (A first attempt stopped at videos:check: `<ClipLoop>`'s clip is not a player tag; the loop
+  is now named in a comment for it.) Open with the owner: which moment of the music is its peak (set at 284 s);
+  footage for slides 16 and 17; the talk's length (about 16 min by the clips' real lengths; lint counts 14.3).
 - 2026-11-13, later: **Deployed:** commit 709e2fb (Decisions, 12 Nov late night, 8 and 9: the data clip's opening and
   sound, the finale's build-up), Pages run 43319911910 (success), URL 200, the live walk passed; `ready` inside the deploy
   with `safe` skipped. data2019.mp4 and finale.mp4 on the release before it. The deploy between (the swoosh alone)
