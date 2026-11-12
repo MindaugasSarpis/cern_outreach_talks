@@ -58,6 +58,11 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13, later: **Deployed:** commit 709e2fb (Decisions, 12 Nov late night, 8 and 9: the data clip's opening and
+  sound, the finale's build-up), Pages run 43319911910 (success), URL 200, the live walk passed; `ready` inside the deploy
+  with `safe` skipped. data2019.mp4 and finale.mp4 on the release before it. The deploy between (the swoosh alone)
+  did not go out: preflight flagged its loudness. Open with the owner: footage for slides 16 and 17; the talk's
+  length (the three clips are about 45 s longer than on 12 Nov).
 - 2026-11-13 (the owner: "is the new one deployed?", taken as the word): **Deployed:** commit c7b2056 (Decisions, 12 Nov
   late night, 7), Pages run 43316332553 (success), URL 200, the live walk passed; `ready` inside the deploy with `safe`
   skipped. Onto the release before it: data2019, globe, finale, finale_loop (re-encoded) and the 11 plates of the
