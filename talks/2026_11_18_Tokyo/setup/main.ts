@@ -27,7 +27,22 @@ import QcdStorm from './QcdStorm.vue'
 import ClipLoop from './ClipLoop.vue'
 import BehindFlags from './BehindFlags.vue'
 
+// 12 Nov: the music now runs across slides at different levels, and a press that comes while a fade is still
+// running made the toolkit's cancelAndHoldAtTime throw in Chromium ("setValueCurveAtTime … overlaps"; v0.11.0,
+// stage/soundtrack.js `release`): an uncaught error, the level left where it was. Here the call falls back to
+// what it means: the schedule cancelled, the present value held. For the toolkit: the same catch in `release`.
+function holdOnOverlap() {
+  const P = globalThis.AudioParam?.prototype
+  if (!P?.cancelAndHoldAtTime || P.__tokyoHold) return
+  const hold = P.cancelAndHoldAtTime
+  P.__tokyoHold = true
+  P.cancelAndHoldAtTime = function (t) {
+    try { return hold.call(this, t) } catch { const v = this.value; try { this.cancelScheduledValues(0); this.setValueAtTime(v, t) } catch { /* no device */ } return this }
+  }
+}
+
 export default async ({ app, router }) => {
+  holdOnOverlap()
   armAfterCover(router)                     // the globe's data loads once the cover is behind
   installLook()                             // the ground's glows lowered, the nearest dust capped (look.js)
   installCoverCollision(registerBuilder)    // `cover-collision`: the cover's slow, silent CMS loop

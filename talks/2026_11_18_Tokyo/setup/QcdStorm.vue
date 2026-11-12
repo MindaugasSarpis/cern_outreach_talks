@@ -69,16 +69,16 @@ const items = computed(() => {
   const mixed = []; const E = list.filter((i) => i.kind === 'eq'), G = list.filter((i) => i.kind === 'dg')
   while (E.length || G.length) { if (E.length) mixed.push(E.shift()); if (E.length) mixed.push(E.shift()); if (G.length) mixed.push(G.shift()) }
   // a depth for each (0 far … 1 near), then a place: the near ones first, each tried at random until its box
-  // (estimated: an equation 330 × 64 at scale 1, a diagram 150 × 100) is inside the frame, clear of the caption
+  // (estimated: an equation 400 × 64 at scale 1, the longest's width, a diagram 150 × 100) is inside the frame, clear of the caption
   // and of every item near its own depth; a far one may pass behind a near one
   const W = 980, H = 551.25
   const its = mixed.map((it, i) => { const depth = r(); return { ...it, i, depth, sc: 0.55 + 0.75 * depth * depth } })
   const placed = []
   for (const it of [...its].sort((a, b) => b.depth - a.depth)) {
-    const w = (it.kind === 'eq' ? 330 : 150) * it.sc, hh = (it.kind === 'eq' ? 64 : 100) * it.sc
+    const w = (it.kind === 'eq' ? 400 : 150) * it.sc, hh = (it.kind === 'eq' ? 64 : 100) * it.sc
     let best = null
     for (let k = 0; k < 400; k++) {
-      const x = 12 + w / 2 + r() * (W - w - 24), y = 10 + hh / 2 + r() * (H - hh - 20)
+      const x = 34 + w / 2 + r() * (W - w - 68), y = 10 + hh / 2 + r() * (H - hh - 20)
       if (x - w / 2 < 470 && y + hh / 2 > 470) continue                       // the caption's corner
       const gap = k < 250 ? 0.4 : 0.2                                         // how near in depth counts as a clash
       const clash = placed.some((p) => Math.abs(p.depth - it.depth) < gap && Math.abs(p.x - x) < (p.w + w) / 2 + 8 && Math.abs(p.y - y) < (p.h + hh) / 2 + 6)

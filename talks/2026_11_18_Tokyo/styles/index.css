@@ -164,6 +164,8 @@ html[data-stage] .hero .num { z-index: 2; }
 
 /* the group photo (the owner, 12 Nov: "a slight pan / zoom effect so it's more dynamic"): a slow push in and a drift to
    the left over 40 s, then it rests; it starts again each time the slide is shown */
-html[data-stage] .hero.pan > img { transform-origin: 50% 55%; animation: tokyo-pan 40s ease-out both; }
-@keyframes tokyo-pan { from { transform: scale(1.0) translate(1.2%, 0); } to { transform: scale(1.1) translate(-1.2%, -0.6%); } }
+html[data-stage] .hero.pan > img { animation: tokyo-pan 40s ease-out both; }
+/* the picture's own window moves (object-view-box), not the element: its box stays the slide's, so nothing runs off the
+   frame for the layout check; a browser without the property (Safari) shows the photo still */
+@keyframes tokyo-pan { from { object-view-box: inset(0% 0% 0% 2.2%); } to { object-view-box: inset(4% 6.5% 5% 3.5%); } }
 @media print { html[data-stage] .hero.pan > img { animation: none; } }
