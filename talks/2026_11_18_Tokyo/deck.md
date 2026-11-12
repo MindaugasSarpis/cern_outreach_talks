@@ -524,6 +524,35 @@ Sources: Vilnius University news. (~0.75 min)
 -->
 
 ---
+space: { at: project, dim: 0.6 }
+---
+
+<!-- 13 Nov (the owner, asked what the talk still lacks, with the project's application: "we don't need the details.
+     Maybe just something about japanese side"): the Japanese side beside the Vilnius group's photo: how many, where,
+     and by what methods; no names (Yasuhiro Yamaguchi's is on the cover, and he speaks next). The photo is the one
+     the hidden project slide used. -->
+<StagePhoto src="figures/nagoya_p.jpg" alt="Nagoya University, Higashiyama campus: the Toyoda Auditorium" focus="50% 50%">
+<PanCanvas src="figures/nagoya_p.jpg" :focus="[50, 50]" :drift="[1.4, -0.5]" />
+<div class="shade tr strong"></div>
+<div class="num tr">10<span class="name">theorists in Japan</span></div>
+<div class="cap">Nagoya University, RIKEN and Institute of Science Tokyo: meson-exchange models, the quark model, lattice QCD</div>
+</StagePhoto>
+<StageSoundtrack src="audio/wonder_full.m4a" :level="0.42" start keys />
+
+<!-- facts: sakata-nagoya-1956, kobayashi-maskawa-nagoya-phd -->
+
+<!--
+The Japanese side: ten theorists, PhD and master's students among them, at Nagoya University (Sakata's university, and
+Kobayashi's and Maskawa's), at RIKEN and at the Institute of Science Tokyo, led by Prof. Yasuhiro Yamaguchi, who speaks
+next. They derive the interactions between the hadrons from meson-exchange models, from the quark model and from lattice
+QCD, and predict what each picture of the pentaquark leaves in the data that the Vilnius group analyses.
+Photo: Nagoya University, Higashiyama campus, the Toyoda Auditorium (DrKssn, CC BY-SA 3.0, Wikimedia Commons; credited
+on the last page).
+Sources: the project's application (the owner, 13 Nov: the Japanese side may be shown, without details); the event's
+program; nobelprize.org (Kobayashi and Maskawa: Nagoya University PhDs). (~0.3 min)
+-->
+
+---
 hide: true   # 12 Nov (the owner: "not just Nagoya, it's more institutes across japan now, maybe we should not show this at all"): its world shows Vilnius and Nagoya alone; the globe names the institutes, and its caption carries the project's name, years and funders
 space: { at: project, dim: 0.15 }
 ---

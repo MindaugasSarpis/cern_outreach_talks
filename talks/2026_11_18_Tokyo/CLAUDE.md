@@ -572,6 +572,13 @@ scheduler."
    - The finale: no blur on the pentaquark; the flags at 0.34, a third of that in the middle where it stands.
    Deployed before this: 3a8796d (the cover's sound), Pages run 43306863408.
 
+6. 13 Nov (the owner, with the project's application: "we don't need the details. Maybe just something about
+   japanese side"): a new slide 17 after the Vilnius group's photo: Nagoya University's campus (the hidden project
+   slide's photo, with the same slow pan), "10 / theorists in Japan", caption "Nagoya University, RIKEN and Institute
+   of Science Tokyo: meson-exchange models, the quark model, lattice QCD". From the application: the count, the
+   three institutions and the three methods; its names, budget and plans stay in the private brief. The finale is
+   slide 18 now, the last page 19; 19 slides, 14.7 of 15 min by the notes.
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:
