@@ -58,6 +58,10 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13 (the owner: "is the new one deployed?", taken as the word): **Deployed:** commit c7b2056 (Decisions, 12 Nov
+  late night, 7), Pages run 43316332553 (success), URL 200, the live walk passed; `ready` inside the deploy with `safe`
+  skipped. Onto the release before it: data2019, globe, finale, finale_loop (re-encoded) and the 11 plates of the
+  cleared world. Not heard by anyone: any of the sound; not seen in motion by anyone but in stills.
 - 2026-11-13 (the owner: "deploy"): **Deployed:** commit aa95c48 (the Japanese side, slide 17), Pages run 43309927472 (success), URL
   200, the live walk passed; `ready` inside the deploy with `safe` skipped. 19 slides, 14.7 of 15 min.
 - 2026-11-13 (the owner's run of the morning; Decisions, 12 Nov late night, 4 and 5): **Deployed:** commit bd588b8,
