@@ -618,6 +618,27 @@ scheduler."
    right as the camera flies to the histogram (14.5 to 19.3 s, loudest at 17.4 s), a deep landing as it arrives,
    three glints as the peaks light. Peak −2 dBFS. Not heard by anyone.
 
+9. 13 Nov, the owner's next run: "18 collision happens to fast, look at uzsikrauk karjerai has to be timed"; "18 flags
+   better resolved"; "12 needs to show hop massive LHCb is, a slow zoomout from close up at eye level, then past a
+   person looking at lhcb and then show the data taking"; of the histogram's end, "this we want better resolved not
+   blurry, high fidelity"; "have to make 16 and 17 photo slides more dynamic, can turn 3D or something, 17 has to be
+   flythrough of tokyo, not just nagoya university and 16 orbit of vilnius".
+   - The finale (slide 18): a 16 s build-up, the camera coming round and in on the standing detector, the crossing
+     on the music's arrival (wonder_close.m4a now starts 16 s before the piece's 4:16.5 and swells into it), then
+     the slow motion; 46.5 s (it was 34.4). The pentaquark has formed by 37.5 s, the flags from 37.0 s.
+   - The flags: the canvas twice the pixels each way, 0.46 of their light, less held back in the middle.
+   - The data clip (slide 12): 35 s (it was 24). It opens close on the detector at eye height and draws back past
+     the person for scale (visible again as a mesh, no bloom: `meshLook.person` on `det`), out to the whole
+     detector; then the collision and the histogram as before, 11.3 s later. Recorded at 3840 × 2160 and taken
+     down to 1080p, the histogram's grains finer (size 1.25, alpha 0.72, the fit 1.2). Its sound moved with it,
+     with a low hall tone under the opening, and set to −16 LUFS (the first version, −12.9 LUFS, failed
+     preflight, so the deploy of the swoosh on its own never went out).
+   - Slides 16 and 17 as an orbit of Vilnius and a flight through Tokyo: **not done, waiting for footage.**
+     Wikimedia Commons, NASA and CERN's archives (`slidev-videos discover`) hold no aerial video of either city
+     under a licence that allows it. Ways on: the owner's Google Earth Studio (as the Vilnius zoom was made), a
+     licensed stock clip, or the hidden Vilnius zoom-out for 16 alone.
+   - The talk is over its time by the notes: `talk map` after this round.
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

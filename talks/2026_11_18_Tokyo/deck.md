@@ -804,7 +804,7 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <ClipLoop src="finale_loop.mp4" />
 <!-- 12 Nov, evening (the owner: "japanese and lithuanian flags appearing in the background joined in the middle behind
      the pentaquark"): from 22.5 s, the pentaquark formed (setup/BehindFlags.vue); they stay over the loop and the last page -->
-<BehindFlags :at="24.9" />
+<BehindFlags :at="37.0" />
 <StageSoundtrack src="audio/wonder_bed.m4a" resync tail="audio/wonder_close.m4a" :tail-at="100000" :level="0.8" keys />
 <AtClipEnd :lead="4.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
 

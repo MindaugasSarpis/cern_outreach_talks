@@ -28,17 +28,19 @@ flock /tmp/slidev-stage-shots.lock node node_modules/slidev-addon-stage/bin/reco
 
 | Take | `--slides` | `--hold` | `--max` | Kept as (worktree root, gitignored) |
 | --- | --- | --- | --- | --- |
-| data | 2 | 26 | 28 | `videos/takes/tokyo_data_take.mp4` |
-| collision | 3 | 26 | 28 | `videos/takes/tokyo_collision_take.mp4` |
+| data | 2, at `--size 3840x2160` | 38 | 40 | `videos/takes/tokyo_data_take.mp4` |
+| collision | 3 | 38 | 40 | `videos/takes/tokyo_collision_take.mp4` |
 | globe | 4 | 23 | 25 | `videos/takes/tokyo_globe_tour.mp4` |
 | world | 6 (5 is an empty slide before it, 12 Nov) | 52 | 54 | `videos/takes/tokyo_finale_world.mp4` (12 Nov: the long hold is the loop's source) |
 
 ```sh
 # 3. the cuts, into videos/raw/ (worktree root)
 X='-c:v libx264 -preset slow -crf 17 -maxrate 9500k -bufsize 19M -x264-params aq-mode=3:aq-strength=1.1 -pix_fmt yuv420p -r 50'   # the web encode itself (13 Nov)
-ffmpeg -ss 0.8 -t 24 -i videos/takes/tokyo_data_take.mp4 -an ${=X} SCRATCH/data_silent.mp4
+# the data take is recorded at 3840x2160 (--size 3840x2160 --hold 38 --max 40) and taken down to 1080p here, so its grains are fine (13 Nov)
+ffmpeg -ss 1.5 -t 35 -i videos/takes/tokyo_data_take.mp4 -an -vf scale=1920:1080:flags=lanczos ${=X} SCRATCH/data_silent.mp4
 python3 -I talks/2026_11_18_Tokyo/videos/clips/data_swoosh.py SCRATCH/data.wav     # the clip's sound (13 Nov)
-ffmpeg -i SCRATCH/data_silent.mp4 -i SCRATCH/data.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest videos/raw/data2019.mp4
+# its loudness to -16 LUFS (preflight's target): measure SCRATCH/data.wav (ffmpeg -af loudnorm=print_format=json) and give the difference as G
+ffmpeg -i SCRATCH/data_silent.mp4 -i SCRATCH/data.wav -map 0:v -map 1:a -c:v copy -af volume=${G}dB -c:a aac -b:a 192k -shortest videos/raw/data2019.mp4
 ffmpeg -ss 4.4 -i videos/takes/tokyo_globe_tour.mp4 -an ${=X} videos/raw/globe.mp4
 talks/2026_11_18_Tokyo/videos/finale/segments.sh SCRATCH "$PWD" "$OUTREACH_ENV_BIN"     # finale.mp4 (32 s, with its sound) and finale_loop.mp4 (30 s)
 

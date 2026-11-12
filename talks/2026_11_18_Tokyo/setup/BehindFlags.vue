@@ -21,7 +21,7 @@ const root = ref(null), cv = ref(null)
 const up = ref(false)
 let video = null, timer = null, raf = 0, cloth = null
 
-const W = 980, H = 552, OVER = 26   // the canvas; the cloth is OVER px taller at top and bottom, for the wave
+const W = 1960, H = 1104, OVER = 52   // 13 Nov (the owner: "18 flags better resolved"): twice the pixels each way   // the canvas; the cloth is OVER px taller at top and bottom, for the wave
 function makeCloth() {
   const c = document.createElement('canvas'); c.width = W; c.height = H + 2 * OVER
   const g = c.getContext('2d'), h = c.height
@@ -46,8 +46,8 @@ function draw(t) {
   const g = c.getContext('2d')
   g.clearRect(0, 0, W, H)
   for (let x = 0; x < W; x += 2) {
-    const ph = x * 0.0125 - t * 1.5, ph2 = x * 0.031 - t * 2.3 + 1.0
-    const y = 9 * Math.sin(ph) + 4 * Math.sin(ph2), slope = Math.cos(ph) + 0.6 * Math.cos(ph2)
+    const ph = x * 0.00625 - t * 1.5, ph2 = x * 0.0155 - t * 2.3 + 1.0
+    const y = 18 * Math.sin(ph) + 8 * Math.sin(ph2), slope = Math.cos(ph) + 0.6 * Math.cos(ph2)
     g.drawImage(cloth, x, 0, 2, H + 2 * OVER, x, y - OVER, 2, H + 2 * OVER)
     // the fold: its far side in shade, its near side lit
     if (slope < 0) { g.fillStyle = `rgba(0,0,0,${(-0.2 * slope).toFixed(3)})`; g.fillRect(x, 0, 2, H) } else { g.fillStyle = `rgba(255,255,255,${(0.07 * slope).toFixed(3)})`; g.fillRect(x, 0, 2, H) }
@@ -80,15 +80,15 @@ onBeforeUnmount(() => { stop(); wave(false) })
 </script>
 
 <template>
-  <div ref="root" class="flags-behind" :class="{ on: shown }" aria-hidden="true"><canvas ref="cv" width="980" height="552" /></div>
+  <div ref="root" class="flags-behind" :class="{ on: shown }" aria-hidden="true"><canvas ref="cv" width="1960" height="1104" /></div>
 </template>
 
 <style>
 .slidev-layout .flags-behind { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; transition: opacity 3s ease; mix-blend-mode: screen;
   /* 13 Nov (the owner: "this we have to rethink... maybe don't blur the pentaquark"): the pentaquark stays sharp and the
      cloth is held back where it stands (a third of its light in the middle), full only round it, soft at the frame's edge */
-  -webkit-mask-image: radial-gradient(ellipse 78% 82% at 50% 47%, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.45) 26%, #000 50%, #000 66%, transparent 100%); mask-image: radial-gradient(ellipse 78% 82% at 50% 47%, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.45) 26%, #000 50%, #000 66%, transparent 100%); }
-.slidev-layout .flags-behind.on { opacity: 0.34; }
+  -webkit-mask-image: radial-gradient(ellipse 78% 82% at 50% 47%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.62) 24%, #000 46%, #000 80%, transparent 100%); mask-image: radial-gradient(ellipse 84% 88% at 50% 47%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.62) 24%, #000 46%, #000 80%, transparent 100%); }
+.slidev-layout .flags-behind.on { opacity: 0.46; }
 .slidev-layout .flags-behind canvas { display: block; width: 100%; height: 100%; }
-@media print { .slidev-layout .flags-behind { opacity: 0.34; } }
+@media print { .slidev-layout .flags-behind { opacity: 0.46; } }
 </style>
