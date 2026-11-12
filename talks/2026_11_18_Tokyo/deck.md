@@ -26,7 +26,7 @@ stage:
   # little over half its pixels (owner, 27 Oct: "make sure it works on a mac"; Innoday's fix for the M2's lag, 22 Oct)
   options: { maxBufferWidth: 1920, grain: 0, aberration: 0, bloom: 0.32, density: 0.6 }
   # 12 Nov (the owner: "we should have some soundtrack, effect across the board"): the rising tone as a clip condenses is on
-  # again, with the music on slides 5, 12 and 17 (<StageSoundtrack>). The flights' whoosh stays off: it is the sound the
+  # again, with the music on slides 2, 12 and 17 (<StageSoundtrack>). The flights' whoosh stays off: it is the sound the
   # owner heard as "driving sounds" at Karjera and OpenData (13 Oct).
   sound: { flight: false, clip: true }
   motion: floor   # v0.11 (owner, 5 Nov: "use the most up-to-date tools"): under reduced motion the world runs, floored; without WebGL the slides' recorded plates play
@@ -67,76 +67,6 @@ on one of the four large experiments at CERN, near Geneva. In the next
 fifteen minutes I would like to show you what this object behind me is, why
 physicists waited half a century to find it, and why Lithuanian and Japanese
 scientists are now studying it together. (~0.5 min)
--->
-
----
-space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
----
-
-<VideoPlayer src="cern_overview_swoosh.mp4" />
-<AtClipEnd :lead="0.6"><div class="veil tl"></div><div class="num tl">2018<span class="name">Lithuania: associate member</span></div></AtClipEnd>
-<div class="cap">CERN, Geneva: the world’s largest particle physics laboratory</div>
-
-<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lithuania -->
-
-<!--
-CERN (owner, 27 Oct). The clip is cern_overview_swoosh.mp4 (11 s): the library's cern_overview_short.mp4
-with a swoosh on its dive through the clouds (10 Nov; videos/manifest.toml): from the Earth down to Geneva,
-then the LHC ring drawn over the fields with its four experiments named. As it ends: 2018, the year
-Lithuania became an associate member of CERN.
-Sources: home.cern. (~0.5 min)
--->
-
----
-space: { at: lhc, dim: 0.25 }
----
-
-<VideoPlayer src="cern_footage_2022_013_001_tunnel_cut.mp4" muted />
-<div class="veil top"></div>
-<div class="nums3">
-  <div class="num">27 km<span class="name">LHC ring</span></div>
-  <div class="num">13.6 TeV<span class="name">collision energy</span></div>
-  <div class="num">−271.3 °C<span class="name">magnets</span></div>
-</div>
-<div class="cap">The Large Hadron Collider, 100 m underground</div>
-
-<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lhc-size-cost, cern-lhc-energy, cern-lhc-cold, gave-cryo-lhc, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
-
-<!--
-This is the Large Hadron Collider at CERN: a ring 27 kilometres long, about
-100 metres under the border between France and Switzerland. Two beams of
-protons go round it in opposite directions, more than eleven thousand times a
-second, and meet at four points. Where they meet, the detectors record what
-comes out of each collision.
-
-Lithuania has been an Associate Member State of CERN since 2018. Japan has
-an observer for the LHC, and Japanese institutes helped build both the
-machine and its experiments. My group works on one of those
-experiments, LHCb.
-
-On screen (10 Nov, the owner: "LHC should also say the energy, the temperature"): 13.6 TeV, the
-collision energy of Run 3 (2022–2026, two 6.8 TeV beams); −271.3 °C (1.9 K), the superconducting magnets
-when running, colder than outer space (2.7 K). Since Long Shutdown 3 began on 29 June 2026 the LHC is warm
-for the HL-LHC upgrade: say "when it runs".
-
-Sources: home.cern (LHC facts; member states; Lithuania; "Japan contributes
-an additional 5 billion yen", 1998; Long Shutdown 3). (~0.5 min)
--->
-
----
-space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
----
-
-<VideoPlayer src="lhcb.mp4" />
-<div class="cap">LHCb Experiment at CERN</div>
-
-<!--
-Clip: lhcb.mp4, the LHCb detector in 3D with music (0:47, library clip), its music on (owner, 10 Nov:
-"can have the soundtrack here"; caption "LHCb Experiment at CERN").
-Let it play; at most one line over the music: "This is LHCb, the experiment
-my group works on: a detector the size of a house, built to catch what comes
-out of the collisions." It condenses out of the dust and leaves the same way.
-(~0.5 min)
 -->
 
 ---
@@ -302,6 +232,79 @@ and last five, uudcc̄, a pentaquark. Top stays dim: it decays before it can bin
 "just t quark doesn't hadronize"). setup/QuarkRecipes.vue; it runs once, about 30 s, and holds.
 Sources: PDG (quark model); LHCb, PRL 119 (2017) 112001 (Ξcc⁺⁺).
 11 Nov (the audience is scientists): the recipes run their 30 s and the talk goes on. (~0.75 min)
+-->
+
+---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
+---
+
+<!-- 12 Nov, later (the owner: "the first three slides should go after qcd / quark model introduction and belle"):
+     CERN, the LHC and LHCb stand here, after the quarks' history and the recipes and before LHCb's data. -->
+
+<VideoPlayer src="cern_overview_swoosh.mp4" />
+<AtClipEnd :lead="0.6"><div class="veil tl"></div><div class="num tl">2018<span class="name">Lithuania: associate member</span></div></AtClipEnd>
+<div class="cap">CERN, Geneva: the world’s largest particle physics laboratory</div>
+
+<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lithuania -->
+
+<!--
+CERN (owner, 27 Oct). The clip is cern_overview_swoosh.mp4 (11 s): the library's cern_overview_short.mp4
+with a swoosh on its dive through the clouds (10 Nov; videos/manifest.toml): from the Earth down to Geneva,
+then the LHC ring drawn over the fields with its four experiments named. As it ends: 2018, the year
+Lithuania became an associate member of CERN.
+Sources: home.cern. (~0.5 min)
+-->
+
+---
+space: { at: lhc, dim: 0.25 }
+---
+
+<VideoPlayer src="cern_footage_2022_013_001_tunnel_cut.mp4" muted />
+<div class="veil top"></div>
+<div class="nums3">
+  <div class="num">27 km<span class="name">LHC ring</span></div>
+  <div class="num">13.6 TeV<span class="name">collision energy</span></div>
+  <div class="num">−271.3 °C<span class="name">magnets</span></div>
+</div>
+<div class="cap">The Large Hadron Collider, 100 m underground</div>
+
+<!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lhc-size-cost, cern-lhc-energy, cern-lhc-cold, gave-cryo-lhc, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
+
+<!--
+This is the Large Hadron Collider at CERN: a ring 27 kilometres long, about
+100 metres under the border between France and Switzerland. Two beams of
+protons go round it in opposite directions, more than eleven thousand times a
+second, and meet at four points. Where they meet, the detectors record what
+comes out of each collision.
+
+Lithuania has been an Associate Member State of CERN since 2018. Japan has
+an observer for the LHC, and Japanese institutes helped build both the
+machine and its experiments. My group works on one of those
+experiments, LHCb.
+
+On screen (10 Nov, the owner: "LHC should also say the energy, the temperature"): 13.6 TeV, the
+collision energy of Run 3 (2022–2026, two 6.8 TeV beams); −271.3 °C (1.9 K), the superconducting magnets
+when running, colder than outer space (2.7 K). Since Long Shutdown 3 began on 29 June 2026 the LHC is warm
+for the HL-LHC upgrade: say "when it runs".
+
+Sources: home.cern (LHC facts; member states; Lithuania; "Japan contributes
+an additional 5 billion yen", 1998; Long Shutdown 3). (~0.5 min)
+-->
+
+---
+space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
+---
+
+<VideoPlayer src="lhcb.mp4" />
+<div class="cap">LHCb Experiment at CERN</div>
+
+<!--
+Clip: lhcb.mp4, the LHCb detector in 3D with music (0:47, library clip), its music on (owner, 10 Nov:
+"can have the soundtrack here"; caption "LHCb Experiment at CERN").
+Let it play; at most one line over the music: "This is LHCb, the experiment
+my group works on: a detector the size of a house, built to catch what comes
+out of the collisions." It condenses out of the dust and leaves the same way.
+(~0.5 min)
 -->
 
 ---

@@ -154,6 +154,27 @@ generated = true
 notes     = "the world of slide 1 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
+name      = "03-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 3"]
+generated = true
+notes     = "the world of slide 3 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "04-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 4"]
+generated = true
+notes     = "the world of slide 4 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "05-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 5"]
+generated = true
+notes     = "the world of slide 5 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
 name      = "06-plate.mp4"
 profile   = "remux"
 used_in   = ["slide 6"]
@@ -173,27 +194,6 @@ profile   = "remux"
 used_in   = ["slide 8"]
 generated = true
 notes     = "the world of slide 8 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
-
-[[videos]]
-name      = "09-plate.mp4"
-profile   = "remux"
-used_in   = ["slide 9"]
-generated = true
-notes     = "the world of slide 9 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
-
-[[videos]]
-name      = "10-plate.mp4"
-profile   = "remux"
-used_in   = ["slide 10"]
-generated = true
-notes     = "the world of slide 10 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
-
-[[videos]]
-name      = "11-plate.mp4"
-profile   = "remux"
-used_in   = ["slide 11"]
-generated = true
-notes     = "the world of slide 11 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "13-plate.mp4"

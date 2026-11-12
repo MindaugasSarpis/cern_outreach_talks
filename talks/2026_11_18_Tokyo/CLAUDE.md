@@ -144,14 +144,18 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Arc
 
-1 cover: the CMS collision, the pentaquark out of its flash · 2 the CERN clip with its swoosh, 2018 at its
-end · 3 the LHC tunnel: 27 km, 13.6 TeV, −271.3 °C · 4 lhcb.mp4 with its music · 5 atoms_fast.mp4, music ·
-6 Sakata, 1956 · 7 Gell-Mann and Zweig, 1964 · 8 Kobayashi and Maskawa, 1973 · 9 QCD: the strong coupling
-against the energy scale (new, 12 Nov) · 10 Belle at KEK, 2003: the X(3872) · 11 the six quarks and their
-recipes in 3D, the pentaquark full screen · 12 data2019.mp4: LHCb, a collision, the 2019 histogram, its fit
-and three peaks, music · 13 the 2019 Dalitz plot in 3D · 14 molecule, compact, hadroquarkonium · 15 globe.mp4,
-the cities and RIKEN named at its end, the project's name, years and funders in the caption · 16 the Vilnius
-group · 17 finale.mp4, music, then its loop · 18 thanks and credits over the loop.
+1 cover: the CMS collision, the pentaquark out of its flash · 2 atoms_fast.mp4, music · 3 Sakata, 1956 ·
+4 Gell-Mann and Zweig, 1964 · 5 Kobayashi and Maskawa, 1973 · 6 QCD: the strong coupling against the energy
+scale · 7 Belle at KEK, 2003: the X(3872) · 8 the six quarks and their recipes in 3D, the pentaquark full
+screen · 9 the CERN clip with its swoosh, 2018 at its end · 10 the LHC tunnel: 27 km, 13.6 TeV, −271.3 °C ·
+11 lhcb.mp4 with its music · 12 data2019.mp4: LHCb, a collision, the 2019 histogram, its fit and three peaks,
+music · 13 the 2019 Dalitz plot in 3D · 14 molecule, compact, hadroquarkonium · 15 globe.mp4, the cities and
+RIKEN named at its end, the project's name, years and funders in the caption · 16 the Vilnius group ·
+17 finale.mp4, music, then its loop · 18 thanks and credits over the loop.
+
+**The order changed twice on 12 Nov** (Decisions, 12 Nov, 4 and 9): the Decisions of 10 and 11 Nov, the code
+comments and `takes/README.md` keep the slide numbers of their day, and so do points 1 to 8 of 12 Nov (their
+5, 9, 11 and 12 are now 2, 6, 8 and 12).
 
 18 slides, 14.4 min by the notes and clips (`pnpm talk map tokyo`). **Since 11 Nov every slide from the old 9
 on is one higher, and since 12 Nov every slide from Belle to the group photo one higher again**: the Decisions
@@ -404,6 +408,13 @@ there somewhere in space. not needed". The numbers are the deployed deck's (fbc1
    "since we have slide 17" is read as the globe. Open: whether the caption should stay "Lithuania and Japan"
    alone (the owner's of 10 Nov), with the funders only said.
 8. The plates were recorded again (the slides from 9 on moved).
+9. Later the same day (the owner: "the first three slides should go after qcd / quark model introduction and
+   belle"): CERN, the LHC and LHCb (the three after the cover) now stand after the quarks' history, as slides
+   9 to 11: cover, atoms, Sakata, Gell-Mann and Zweig, Kobayashi and Maskawa, QCD, Belle, the recipes, then
+   CERN, the LHC, LHCb, and LHCb's data. The recipes are kept with the quark model, before CERN, so LHCb's
+   clip is followed by LHCb's data clip; the other reading (CERN straight after Belle, the recipes between
+   LHCb and its data) is one block's move in deck.md. The cover stays first. lhcb.mp4's own music is now
+   followed at once by the data clip's. The plates recorded again for this order.
 
 ## Decisions, 11 Nov (the audience)
 
