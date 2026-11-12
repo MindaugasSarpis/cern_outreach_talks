@@ -505,9 +505,11 @@ Sources: Natural Earth; Vilnius University; the project's application. (~0.75 mi
 space: { at: project, dim: 0.6 }
 ---
 
-<!-- 12 Nov, evening (the owner: "group photo should have a slight pan / zoom effect so it's more dynamic"): `pan`, a slow
-     push in and drift over 40 s (styles/index.css) -->
-<StagePhoto src="figures/vilnius_group.jpg" alt="The LHCb group at Vilnius University" focus="50% 50%" class="pan">
+<!-- 12 Nov (the owner: "group photo should have a slight pan / zoom effect so it's more dynamic"; then "it's stepping
+     pixels rearraning"): the photo drawn again on a canvas over itself, pushing in and drifting for 44 s
+     (setup/PanCanvas.vue; why a canvas: its comment) -->
+<StagePhoto src="figures/vilnius_group.jpg" alt="The LHCb group at Vilnius University" focus="50% 50%">
+<PanCanvas src="figures/vilnius_group.jpg" :focus="[50, 50]" />
 <div class="cap">The LHCb group at Vilnius University</div>
 </StagePhoto>
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.35" start keys />

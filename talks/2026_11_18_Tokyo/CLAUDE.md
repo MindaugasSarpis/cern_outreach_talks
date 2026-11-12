@@ -505,8 +505,9 @@ in focus, wawing, the pentaquark can become more blurry"; "antiquarks formatted 
    frame's edge and is born again on another line. One requestAnimationFrame loop while the slide is live.
 5. Slide 15: 5 s after the globe clip rests the picture goes on in towards Japan, to 1.6× over 90 s
    (`setup/ZoomOn.vue`, a transform about the point between Tokyo's and Nagoya's lights); Vilnius's name goes.
-6. Slide 16's pan is a transform again, starting 4 s in (an `object-view-box` window moved in whole pixels:
-   the "stepping"). The layout check measures a slide about 2 s in, before the pan starts.
+6. Slide 16's pan is drawn on a canvas over the photo (`setup/PanCanvas.vue`): an `object-view-box` window moved
+   in whole pixels (the "stepping"), and a scaled <img> is an element off the slide, which the layout check
+   refuses even with a delay (the shots run the page's clock ahead).
 7. The finale: the collision take recorded again with more light (`inside` light 7, flash 0.11; `detp` light
    6.5) and a push in on the crossing; `lowbang.py --boom` adds a hit a room's speakers carry (95 → 38 Hz with
    its octave and a burst of low noise), the clip's sound at −2 dBFS peak. The flags are a canvas now: one

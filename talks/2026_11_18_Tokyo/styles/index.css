@@ -162,17 +162,6 @@ html[data-stage] .hero .num { z-index: 2; }
   paint-order: stroke; stroke: rgba(3, 5, 12, 0.85); stroke-width: 4px; stroke-linejoin: round;
 }
 
-/* the group photo (the owner, 12 Nov: "a slight pan / zoom effect so it's more dynamic"): a slow push in and a drift to
-   the left over 40 s, then it rests; it starts again each time the slide is shown */
-/* 12 Nov, night (the owner: "slide 16 something is wrong... it's stepping pixels rearraning"): the picture's window
-   (object-view-box) moved in whole pixels, so the photo crawled in steps. The element itself is scaled now, which the
-   compositor does between pixels. It starts 4 s after the photo is shown: the photo stands first, and the layout
-   check, which measures a slide two seconds in, sees it at rest inside the frame (a scaled element reads as running
-   off it; here that is the point, and .hero cuts it at the slide's edge). */
-html[data-stage] .hero.pan > img { transform-origin: 50% 55%; will-change: transform; animation: tokyo-pan 44s cubic-bezier(0.3, 0, 0.3, 1) 4s both; }
-@keyframes tokyo-pan { from { transform: scale(1) translate3d(0, 0, 0); } to { transform: scale(1.11) translate3d(-1.6%, -0.6%, 0); } }
-@media print { html[data-stage] .hero.pan > img { animation: none; } }
-
 /* the globe goes on in towards Japan after its clip (ZoomOn): Vilnius leaves the frame, so its name and line go first,
    9 s after the names came (they come 4 s before the clip's end; the zoom starts 5 s after it) */
 .slidev-layout .at-clip-end.on .globe-names .vil { animation: tokyo-vil-out 4s ease 9s forwards; }
