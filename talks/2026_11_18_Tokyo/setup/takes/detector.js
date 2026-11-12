@@ -144,7 +144,9 @@ void main() {
   // the reveal's flash a third of Innoday's (this talk, 24 Oct review: on the data slide every grain and face flashed at
   // once and the bloom made a white disc over a third of the frame)
   vec3 p = position, col = mix(base, uHot, 0.4 * flash);
-  float w = aPart == 1.0 ? 0.0 : (aPart == 0.0 ? 0.25 : (aPart >= 7.0 ? 1.4 : 1.0));   // (calorimeters and muon walls: 2.0 before their edges were drawn)
+  // 12 Nov (the owner: "the person is glowing in 17 and 12, we don't want that"): the person (part 10: 11 700 grains
+  // in a figure 1.83 m tall) took the muon walls' 1.4 and the bloom made a lamp of it; now a faint figure
+  float w = aPart == 1.0 ? 0.0 : (aPart == 0.0 ? 0.25 : (aPart > 9.5 ? 0.07 : (aPart >= 7.0 ? 1.4 : 1.0)));   // (calorimeters and muon walls: 2.0 before their edges were drawn)
   float a = (uAlpha * passed * (0.55 + 0.45 * hash(aSeed * 9.0)) + 0.16 * flash) * w;
   // the face's light and the edges (aShape: the normal in LHCb's frame, its x, y, z → the
   // world's z, y, x as the positions; w: 1 on a feature edge)
@@ -319,7 +321,8 @@ function buildDetector(o, ctx) {
     root.matrix.set(0, 0, m, 0, 0, m * T, 0, 0, m * T, 0, 0, 0, 0, 0, 0, 1)
     // the person for scale (hero/export_mesh.py's `person`): its own colour and gains, and every
     // fold of the body as a line (`personAngle`), a figure in the same light as the machine
-    const P = { color: '#d6e8ff', face: 0.02, rim: 0.3, lines: 0.085, angle: 12, ...(L.person || {}) }
+    // (12 Nov, the owner: no glow on the person: the gains of a quiet part of the machine, not ten times them)
+    const P = { color: '#9fc0ee', face: 0.002, rim: 0.035, lines: 0.03, angle: 12, ...(L.person || {}) }
     const mk = (part, line) => {
       const person = part === 'person'
       const mat = new ShaderMaterial({

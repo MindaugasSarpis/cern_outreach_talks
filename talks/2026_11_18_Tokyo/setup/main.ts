@@ -23,8 +23,9 @@ import CoverCollision from './CoverCollision.vue'
 import { installCoverCollision } from './coverCollision.js'
 import { installPentaquark } from './pentaquark.js'
 import { installLook } from './look.js'
-import QcdCoupling from './QcdCoupling.vue'
+import QcdStorm from './QcdStorm.vue'
 import ClipLoop from './ClipLoop.vue'
+import BehindFlags from './BehindFlags.vue'
 
 export default async ({ app, router }) => {
   armAfterCover(router)                     // the globe's data loads once the cover is behind
@@ -37,8 +38,9 @@ export default async ({ app, router }) => {
   app.component('QuarkRecipes', QuarkRecipes) // the six quarks and their recipes, in 3D
   app.component('Dalitz3D', Dalitz3D)         // the 2019 Dalitz plot built up in 3D
   app.component('AtClipEnd', AtClipEnd)     // what it wraps comes in as the slide's clip ends
-  app.component('QcdCoupling', QcdCoupling)   // the strong coupling against the energy scale (slide 9)
+  app.component('QcdStorm', QcdStorm)         // QCD's equations and diagrams floating at different depths (slide 6)
   app.component('ClipLoop', ClipLoop)         // a looping clip that takes over as the slide's clip ends (the finale)
+  app.component('BehindFlags', BehindFlags)   // Lithuania's and Japan's flags behind the finale's pentaquark
   app.component('CloseStill', CloseStill)   // the finale's last frame on the credits page, the world resting
   // the takes' detector, collision and histogram: only in a takes build (takes/build.sh sets VITE_TAKES)
   if (import.meta.env.VITE_TAKES) (await import('./takes/index.js')).installTakes({ app, registerBuilder })

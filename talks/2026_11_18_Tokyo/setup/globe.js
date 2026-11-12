@@ -128,7 +128,12 @@ void main() {
     }
   }
   // the world turning into a pentaquark (uPq 0 → 1): each grain to a ball (four in five) or a strand
-  if (uPq > 0.0) {
+  // 12 Nov (the owner: "finale has weird flick of particles before pentaquark appears"): the cities' lights (kinds 3
+  // and 4: few grains, large and white) used to fly with the rest, and for two seconds a string of bright dots ran
+  // out of Japan's light across the dark. They now go out where they are as the globe starts to dissolve.
+  bool light = aKind > 2.5 && aKind < 4.5;
+  if (uPq > 0.0 && light) a *= 1.0 - smoothstep(0.0, 0.1, uPq);
+  if (uPq > 0.0 && !light) {
     float k = clamp((uPq * 1.7 - 0.7 * hash(aSeed * 7.31)) , 0.0, 1.0);
     k = k * k * (3.0 - 2.0 * k);
     float h1 = hash(aSeed * 17.0), h2 = hash(aSeed * 29.0), h3 = hash(aSeed * 41.0), h4 = hash(aSeed * 53.0);

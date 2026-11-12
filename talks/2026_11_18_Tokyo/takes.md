@@ -86,6 +86,14 @@ space:
 <CollabGlobe src="figures/earth_back.jpg" />
 
 ---
+space: { at: [330, 70, 60], dist: 12, dim: 0 }
+---
+
+<!-- 5 · nothing (12 Nov): a slide between the globe take and the world take. The recorder comes to a take from the
+     slide before it; coming from the globe take it brought a string of bright grains across the world take's
+     first seconds (the owner: "finale has weird flick of particles before pentaquark appears"). -->
+
+---
 space:
   at: finale
   dim: 0

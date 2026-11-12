@@ -25,10 +25,9 @@ stage:
   # maxBufferWidth: the drawing buffer at most 1920 wide, a projector's 1080p in full, a Retina Mac's screen at a
   # little over half its pixels (owner, 27 Oct: "make sure it works on a mac"; Innoday's fix for the M2's lag, 22 Oct)
   options: { maxBufferWidth: 1920, grain: 0, aberration: 0, bloom: 0.32, density: 0.6 }
-  # 12 Nov (the owner: "we should have some soundtrack, effect across the board"): the rising tone as a clip condenses is on
-  # again, with the music on slides 2, 12 and 17 (<StageSoundtrack>). The flights' whoosh stays off: it is the sound the
-  # owner heard as "driving sounds" at Karjera and OpenData (13 Oct).
-  sound: { flight: false, clip: true }
+  # the hum only. 12 Nov: the clips' rising tone was put back on for "effect across the board" and taken off again the same
+  # day (the owner: 'No weird "scooter sound" in transitions'); the flights' whoosh was the "driving sounds" of 13 Oct.
+  sound: { flight: false, clip: false }
   motion: floor   # v0.11 (owner, 5 Nov: "use the most up-to-date tools"): under reduced motion the world runs, floored; without WebGL the slides' recorded plates play
 title: "Lithuania and Japan: pentaquarks"
 lang: en                  # slides and notes; `pnpm talk lint` reads it
@@ -168,51 +167,65 @@ nobelprize.org; home.cern. (~0.75 min)
 space: { at: proton, dim: 0.97 }   # the world nearly dark: the flat slide carries it
 ---
 
-<!-- 12 Nov (the owner: "After Kobayashi, Masakawaa, a slide just highlighting how difficult is QCD"): the strong
-     coupling against the energy scale, one curve drawn as the slide opens (setup/QcdCoupling.vue). -->
-<QcdCoupling />
-<div class="cap">QCD: at the scale of hadrons the coupling is no longer small</div>
+<!-- 12 Nov (the owner: "After Kobayashi, Masakawaa, a slide just highlighting how difficult is QCD"; then, the same
+     evening: "slide 6 should be reimagined, just floating QCD lagrangians, equations, diagrams to show how complicated it
+     is, full screen of all sorts of diagrams / equations floating at different depts appearing"): setup/QcdStorm.vue.
+     The equations are the blocks below, one a paragraph; the diagrams are the component's. The curve of the coupling
+     (QcdCoupling.vue) left with the first version. -->
+<QcdStorm>
 
-<!-- facts: alpha-s-world-average-2024, asymptotic-freedom-1973, proton-mass-quarks-1-percent -->
+$$\mathcal{L}_{\mathrm{QCD}} = \sum_f \bar\psi_f\left(i\gamma^\mu D_\mu - m_f\right)\psi_f - \tfrac14\, G^a_{\mu\nu}G^{a\,\mu\nu}$$
+
+$$D_\mu = \partial_\mu - i g_s T^a A^a_\mu$$
+
+$$G^a_{\mu\nu} = \partial_\mu A^a_\nu - \partial_\nu A^a_\mu + g_s f^{abc} A^b_\mu A^c_\nu$$
+
+$$\left[T^a, T^b\right] = i f^{abc}\, T^c$$
+
+$$\mu^2 \frac{d\alpha_s}{d\mu^2} = -\frac{\alpha_s^2}{4\pi}\left(11 - \tfrac23 n_f\right) + \mathcal{O}(\alpha_s^3)$$
+
+$$\alpha_s(Q^2) = \frac{12\pi}{(33 - 2n_f)\,\ln\!\left(Q^2/\Lambda^2\right)}$$
+
+$$\langle O\rangle = \frac1Z\int \mathcal{D}U\; \det M[U]\; O[U]\; e^{-S_g[U]}$$
+
+$$S_g = \beta \sum_{\square}\left(1 - \tfrac13\,\mathrm{Re}\,\mathrm{Tr}\, U_\square\right)$$
+
+$$V(r) = -\frac43\,\frac{\alpha_s}{r} + \sigma r$$
+
+$$\mathcal{L}_{3g} = -g_s f^{abc}\left(\partial_\mu A^a_\nu\right)A^{b\,\mu}A^{c\,\nu}$$
+
+$$\mathcal{L}_{4g} = -\tfrac14\, g_s^2\, f^{abe}f^{cde}\, A^a_\mu A^b_\nu A^{c\,\mu}A^{d\,\nu}$$
+
+$$\mathcal{L}_{\mathrm{gf}} = -\frac{1}{2\xi}\left(\partial^\mu A^a_\mu\right)^2 + \left(\partial^\mu \bar c^a\right) D^{ab}_\mu c^b$$
+
+$$\frac{\partial q(x,\mu^2)}{\partial \ln\mu^2} = \frac{\alpha_s}{2\pi}\int_x^1 \frac{dz}{z}\, P_{qq}(z)\, q\!\left(\frac{x}{z},\mu^2\right)$$
+
+$$P_{qq}(z) = \frac43\left[\frac{1+z^2}{(1-z)_+} + \frac32\,\delta(1-z)\right]$$
+
+$$m_\pi^2 f_\pi^2 = -(m_u + m_d)\,\langle \bar q q\rangle$$
+
+$$T^\mu_{\ \mu} = \frac{\beta(g_s)}{2 g_s}\, G^a_{\mu\nu}G^{a\,\mu\nu} + \sum_q m_q\, \bar q q$$
+
+</QcdStorm>
+<div class="cap">Quantum chromodynamics</div>
+
+<!-- facts: asymptotic-freedom-1973, alpha-s-world-average-2024, proton-mass-quarks-1-percent -->
 
 <!--
-Why hadrons are hard. In 1973, the year of Kobayashi and Maskawa's paper, Gross, Wilczek and Politzer showed that
-the strong coupling falls with energy (asymptotic freedom; Nobel Prize 2004). At the LHC's collision energies
-it is small, α_s = 0.118 at the Z mass, and QCD is computed as a series in it. Toward 1 GeV, the scale of the
-proton, it grows to about one half and the series stops converging: the masses and the structure of hadrons,
-the pentaquarks among them, come from lattice QCD and from models, which is where theory and experiment have
-to work together.
-The curve: two-loop running (MS-bar) from the PDG's world average α_s(M_Z) = 0.1180 ± 0.0009 (2024), drawn
-here from 1 TeV down to 1 GeV (0.44 there at two loops; 0.31 at the τ mass); it is not drawn below 1 GeV, where
-the formula has no meaning. The dashed line is the proton's mass, 0.938 GeV.
+Why hadrons are hard: the slide fills with QCD's own equations and diagrams. On it: the Lagrangian, the covariant
+derivative and the field strength, the colour algebra, the three- and four-gluon terms, the gauge-fixing and ghost
+terms; the one-loop running of the coupling and its solution; the lattice path integral and Wilson's plaquette
+action; the Cornell potential; the DGLAP equation and its quark splitting function; the Gell-Mann–Oakes–Renner
+relation; the trace anomaly (to leading order, the quark masses' anomalous dimension left out). The diagrams: the
+quark–gluon, three-gluon and four-gluon vertices, one- and two-gluon exchange, the quark's and the gluon's
+self-energies (a quark loop, a gluon loop), a vertex correction.
+In 1973, the year of Kobayashi and Maskawa's paper, Gross, Wilczek and Politzer showed that the coupling falls with
+energy (asymptotic freedom; Nobel Prize 2004): α_s = 0.118 at the Z mass, where QCD is computed as a series in it;
+toward 1 GeV, the scale of hadrons, the series stops converging, and the masses and structure of hadrons, the
+pentaquarks among them, come from lattice QCD and from models.
 Sources: PDG, Review of Particle Physics 2024, "Quantum Chromodynamics"; D. J. Gross and F. Wilczek, PRL 30
-(1973) 1343; H. D. Politzer, PRL 30 (1973) 1346. (~0.5 min)
--->
-
----
-space: { at: km, dim: 0.6 }
----
-
-<!-- back from the hidden slides on 11 Nov (the owner: the audience is Japanese and Lithuanian scientists, from
-     Nagoya, Tokyo and RIKEN): the Japanese thread goes on from Kobayashi and Maskawa to the experiment that
-     confirmed them and then found the X(3872). The caption follows the facts bank: a candidate, never
-     "the first exotic hadron". -->
-<StagePhoto src="figures/belle.jpg" alt="The Belle detector at KEK, Tsukuba" focus="50% 50%">
-<div class="shade tr strong"></div>
-<div class="num tr">2003<span class="name">KEK</span></div>
-<div class="cap">Belle discovers the X(3872), an exotic hadron candidate</div>
-</StagePhoto>
-
-<!-- facts: belle-cpv-2001, belle-x3872-2003, x3872-started-exotic-searches, theta-plus-leps-japan-19-events, leps-theta-not-confirmed -->
-
-<!--
-Belle at KEK, Tsukuba: in 2001 it confirmed Kobayashi and Maskawa's
-prediction; in 2003 it found the X(3872), whose discovery started the hunt
-for exotic hadrons. The same year LEPS at SPring-8 reported a five-quark
-candidate; more sensitive experiments did not confirm it.
-Sources: Belle,
-PRL 87 (2001) 091802 and PRL 91 (2003) 262001; nobelprize.org; LEPS,
-PRL 91 (2003) 012002; PDG. (~0.75 min)
+(1973) 1343; H. D. Politzer, PRL 30 (1973) 1346; M. E. Peskin and D. V. Schroeder, An Introduction to Quantum
+Field Theory, ch. 16 (the conventions of the Lagrangian's terms). (~0.5 min)
 -->
 
 ---
@@ -232,6 +245,33 @@ and last five, uudcc̄, a pentaquark. Top stays dim: it decays before it can bin
 "just t quark doesn't hadronize"). setup/QuarkRecipes.vue; it runs once, about 30 s, and holds.
 Sources: PDG (quark model); LHCb, PRL 119 (2017) 112001 (Ξcc⁺⁺).
 11 Nov (the audience is scientists): the recipes run their 30 s and the talk goes on. (~0.75 min)
+-->
+
+---
+space: { at: km, dim: 0.6 }
+---
+
+<!-- 12 Nov, evening (the owner: "belle should be shown after introduction to baryons and mezons in slide 8"): after the recipes.
+     back from the hidden slides on 11 Nov (the owner: the audience is Japanese and Lithuanian scientists, from
+     Nagoya, Tokyo and RIKEN): the Japanese thread goes on from Kobayashi and Maskawa to the experiment that
+     confirmed them and then found the X(3872). The caption follows the facts bank: a candidate, never
+     "the first exotic hadron". -->
+<StagePhoto src="figures/belle.jpg" alt="The Belle detector at KEK, Tsukuba" focus="50% 50%">
+<div class="shade tr strong"></div>
+<div class="num tr">2003<span class="name">KEK</span></div>
+<div class="cap">Belle discovers the X(3872), an exotic hadron candidate</div>
+</StagePhoto>
+
+<!-- facts: belle-cpv-2001, belle-x3872-2003, x3872-started-exotic-searches, theta-plus-leps-japan-19-events, leps-theta-not-confirmed -->
+
+<!--
+Belle at KEK, Tsukuba: in 2001 it confirmed Kobayashi and Maskawa's
+prediction; in 2003 it found the X(3872), whose discovery started the hunt
+for exotic hadrons. The same year LEPS at SPring-8 reported a five-quark
+candidate; more sensitive experiments did not confirm it.
+Sources: Belle,
+PRL 87 (2001) 091802 and PRL 91 (2003) 262001; nobelprize.org; LEPS,
+PRL 91 (2003) 012002; PDG. (~0.75 min)
 -->
 
 ---
@@ -295,7 +335,12 @@ an additional 5 billion yen", 1998; Long Shutdown 3). (~0.5 min)
 space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 ---
 
-<VideoPlayer src="lhcb.mp4" />
+<!-- 12 Nov, evening (the owner: "age of wonder should continue from slide 11 on to the very end"): „Age of Wonder“ starts
+     here and runs under every slide to the finale (audio/wonder_bed.m4a, about 8 min: the piece from 0:30 with its middle
+     repeated), lower under the slides that are spoken over; the finale cross-fades into the piece's last build. The clip's
+     own music is off, so two pieces do not play at once. -->
+<VideoPlayer src="lhcb.mp4" muted />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.6" start keys />
 <div class="cap">LHCb Experiment at CERN</div>
 
 <!--
@@ -317,9 +362,7 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
      over it, the three peaks lit. The axis and the names are HTML over the clip's settled end, so they stay sharp:
      the positions are the histogram's in the clip's last frame, in slide units; move them if the take's camera moves. -->
 <VideoPlayer src="data2019.mp4" muted :controls="false" transition="fade" />
-<!-- 12 Nov (the owner: "slide 11 need some soundtrack"): „Age of Wonder“ from 1:27.3, started with the clip, so
-     the piece's swell at 1:46 comes as the fit is drawn (18.7 s). -->
-<StageSoundtrack src="audio/wonder_build.m4a" :level="0.6" :clip-at="0.05" keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.6" start keys />
 <AtClipEnd :lead="5"><div class="spec-axis"><i style="left: 283.6px">4300</i><i style="left: 447.7px">4400</i><i style="left: 611.7px">4500</i><b>mass of J/ψ p (MeV)</b></div></AtClipEnd>
 <AtClipEnd :lead="4"><div class="spec-names"><i class="c" style="left: 300px; top: 112px">P<sub>c</sub>(4312)<sup>+</sup></i><i class="r" style="left: 498px; top: 44px">P<sub>c</sub>(4440)<sup>+</sup></i><i class="l" style="left: 556px; top: 22px">P<sub>c</sub>(4457)<sup>+</sup></i></div></AtClipEnd>
 <div class="cap">LHCb, 2019: the J/ψ p mass in Λ<sub>b</sub><sup>0</sup> → J/ψ p K<sup>−</sup> decays</div>
@@ -357,6 +400,7 @@ space: { at: lhcb, dim: 0.97 }
 <!-- 10 Nov (the owner: "on the next slide dynamically build up a dalitz plot in 3D space from 2019 result"):
      setup/Dalitz3D.vue, the paper's Dalitz plot digitised (public/data/dalitz-2019.json). -->
 <Dalitz3D />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.35" start keys />
 <div class="cap">LHCb, 2019: the Dalitz plot of Λ<sub>b</sub><sup>0</sup> → J/ψ p K<sup>−</sup> decays</div>
 
 <!-- facts: lhcb-pentaquark-2019 -->
@@ -382,6 +426,7 @@ space: { at: interiors, dim: 0.15, sway: 24 }   # the camera swings slowly round
 
 <!-- 10 Nov (the owner: "On slide 11 can also show hadroquarkonium, give this a bit more depth, maybe some slow
      orbiting around them"): three pictures named under them; the rhetorical caption left. -->
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.35" start keys />
 <div class="cap">Pentaquark: molecule, compact or hadroquarkonium</div>
 
 <!-- facts: lhcb-pentaquark-2019, pc-hadrocharmonium-picture -->
@@ -415,6 +460,7 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
      so the slide after rests on the clip's last view. Fade, not cut: a cut clip never announces that it
      covers the slide, so the world would draw on under it (Innoday, 22 Oct). -->
 <VideoPlayer src="globe.mp4" muted :controls="false" transition="fade" />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.45" start keys />
 <!-- 11 Nov (the audience comes from Nagoya, Tokyo and RIKEN): the lit cities named once the globe rests (the clip
      from 15 s). The names are the slide's, over the clip's settled end, as slide 11's axis: the dots' places are
      the clip's last frame in slide units (Vilnius 290.7, 55.1; Nagoya 692.9, 326.1; Tokyo 705.8, 316.1; RIKEN's
@@ -446,9 +492,12 @@ Sources: Natural Earth; Vilnius University; the project's application. (~0.75 mi
 space: { at: project, dim: 0.6 }
 ---
 
-<StagePhoto src="figures/vilnius_group.jpg" alt="The LHCb group at Vilnius University" focus="50% 50%">
+<!-- 12 Nov, evening (the owner: "group photo should have a slight pan / zoom effect so it's more dynamic"): `pan`, a slow
+     push in and drift over 40 s (styles/index.css) -->
+<StagePhoto src="figures/vilnius_group.jpg" alt="The LHCb group at Vilnius University" focus="50% 50%" class="pan">
 <div class="cap">The LHCb group at Vilnius University</div>
 </StagePhoto>
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.35" start keys />
 
 <!-- facts: lhcb-vilnius-joined, lhcb-vilnius-students -->
 
@@ -699,10 +748,13 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <VideoPlayer src="finale.mp4" :controls="false" transition="fade" />
 <!-- 12 Nov (the owner: "Slide 17 should continue playing, also we should have some soundtrack"): as the clip ends
      finale_loop.mp4 takes over, the pentaquark turning on (a 30 s loop that begins on the frame after the clip's
-     last; setup/ClipLoop.vue); „Age of Wonder“ from 3:54, started with the clip, its arrival at 4:16.5 on the
-     pentaquark formed (22.5 s), and on to the piece's end, over the next page too. -->
+     last; setup/ClipLoop.vue); the music cross-fades on arrival into „Age of Wonder“ from 3:54 (its arrival at 4:16.5 as the
+     pentaquark has formed, 22.5 s) and runs to the piece's end, over the next page too. -->
 <ClipLoop src="finale_loop.mp4" />
-<StageSoundtrack src="audio/wonder_close.m4a" :level="0.85" :clip-at="0.05" keys />
+<!-- 12 Nov, evening (the owner: "japanese and lithuanian flags appearing in the background joined in the middle behind
+     the pentaquark"): from 22.5 s, the pentaquark formed (setup/BehindFlags.vue); they stay over the loop and the last page -->
+<BehindFlags :at="22.5" />
+<StageSoundtrack src="audio/wonder_bed.m4a" resync tail="audio/wonder_close.m4a" :tail-at="100000" :level="0.85" keys />
 <AtClipEnd :lead="4.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
 
 <!--
@@ -726,6 +778,7 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the 
 
 <!-- 12 Nov: the loop of the turning pentaquark in place of the still (<CloseStill>), the music going on -->
 <VideoPlayer src="finale_loop.mp4" muted loop :controls="false" transition="fade" />
+<BehindFlags />
 <StageSoundtrack src="audio/wonder_close.m4a" :level="0.85" keys />
 <div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div>
 <div class="credits credit">Photos: S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; the Belle detector, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Globe: Natural Earth. Music: „Age of Wonder“ by Scott Buckley, released under CC-BY 4.0, www.scottbuckley.com.au. J/ψ p spectrum and Dalitz plot: LHCb, Phys. Rev. Lett. 122 (2019) 222001, CC BY 4.0 (HEPData ins1728691). CMS collision on the cover: CERN open data.</div>

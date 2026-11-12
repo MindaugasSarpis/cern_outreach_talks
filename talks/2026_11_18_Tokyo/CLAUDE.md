@@ -150,15 +150,16 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 ## Arc
 
 1 cover: the CMS collision, the pentaquark out of its flash · 2 atoms_fast.mp4, music · 3 Sakata, 1956 ·
-4 Gell-Mann and Zweig, 1964 · 5 Kobayashi and Maskawa, 1973 · 6 QCD: the strong coupling against the energy
-scale · 7 Belle at KEK, 2003: the X(3872) · 8 the six quarks and their recipes in 3D, the pentaquark full
-screen · 9 the CERN clip with its swoosh, 2018 at its end · 10 the LHC tunnel: 27 km, 13.6 TeV, −271.3 °C ·
-11 lhcb.mp4 with its music · 12 data2019.mp4: LHCb, a collision, the 2019 histogram, its fit and three peaks,
-music · 13 the 2019 Dalitz plot in 3D · 14 molecule, compact, hadroquarkonium · 15 globe.mp4, the cities and
-RIKEN named at its end, the project's name, years and funders in the caption · 16 the Vilnius group ·
-17 finale.mp4, music, then its loop · 18 thanks and credits over the loop.
+4 Gell-Mann and Zweig, 1964 · 5 Kobayashi and Maskawa, 1973 · 6 QCD: its equations and diagrams floating at
+different depths · 7 the six quarks and their recipes in 3D, the pentaquark full screen · 8 Belle at KEK, 2003:
+the X(3872) · 9 the CERN clip with its swoosh, 2018 at its end · 10 the LHC tunnel: 27 km, 13.6 TeV, −271.3 °C ·
+11 lhcb.mp4, muted; „Age of Wonder“ starts here and runs to the end · 12 data2019.mp4: LHCb, a collision, the
+2019 histogram, its fit and three peaks · 13 the 2019 Dalitz plot in 3D · 14 molecule, compact,
+hadroquarkonium · 15 globe.mp4, the cities and RIKEN named at its end, the project's name, years and funders
+in the caption · 16 the Vilnius group, a slow pan · 17 finale.mp4, the two flags behind the pentaquark, then
+its loop · 18 thanks and credits over the loop and the flags.
 
-**The order changed twice on 12 Nov** (Decisions, 12 Nov, 4 and 9): the Decisions of 10 and 11 Nov, the code
+**The order changed three times on 12 Nov** (Decisions, 12 Nov, 4, 9 and the evening's 1): the Decisions of 10 and 11 Nov, the code
 comments and `takes/README.md` keep the slide numbers of their day, and so do points 1 to 8 of 12 Nov (their
 5, 9, 11 and 12 are now 2, 6, 8 and 12).
 
@@ -255,13 +256,13 @@ needs moves to the shared kit instead of being copied.
 - `setup/look.js`: the ground's glows lowered, the dust nearest the camera capped (Decisions, second round).
 - `setup/CloseStill.vue` (Innoday's): the finale clip's last frame with the world resting; not in the deck
   since 12 Nov (the last page plays the loop), kept registered.
-- `setup/QcdCoupling.vue` (12 Nov): slide 9, the strong coupling against the energy scale, an SVG drawn as
-  the slide opens (the curve's 61 points are in the file, with how they were computed).
+- `setup/QcdStorm.vue` (12 Nov): slide 6, QCD's equations (the slide's markdown) and diagrams (its own SVG)
+  floating at different depths. `setup/BehindFlags.vue`: the two flags behind the finale's pentaquark.
 - `setup/ClipLoop.vue` (12 Nov): slide 17, `finale_loop.mp4` taking over as `finale.mp4` ends. The loop's
   address is the clip's own with the file's name changed, so it plays from wherever the player found the clip.
-- `public/audio/wonder_open.m4a`, `wonder_build.m4a`, `wonder_close.m4a` (12 Nov): Scott Buckley, „Age of
+- `public/audio/wonder_open.m4a`, `wonder_bed.m4a`, `wonder_close.m4a` (12 Nov): Scott Buckley, „Age of
   Wonder“ (CC BY 4.0; https://www.scottbuckley.com.au/library/age-of-wonder, the full mix's MP3), one gain for
-  the whole piece (−3.51 dB: −16 LUFS integrated) and three cuts: 0:00–1:35; 1:27.3–2:44; 3:54 to the end.
+  the whole piece (−3.51 dB: −16 LUFS integrated) and three files: 0:00–1:35; the bed (Decisions, 12 Nov evening, 4); 3:54 to the end.
   Played by the toolkit's `<StageSoundtrack>`, started by each slide's clip (`clip-at`).
 - `setup/takes/`, `takes.md`, `takes/`: the deck of the three recorded scenes, their code (LHCb's grains and
   mesh, its collision, the histogram) and data. `takes/README.md`: how to build, record and cut them, and what
@@ -420,6 +421,53 @@ there somewhere in space. not needed". The numbers are the deployed deck's (fbc1
    clip is followed by LHCb's data clip; the other reading (CERN straight after Belle, the recipes between
    LHCb and its data) is one block's move in deck.md. The cover stays first. lhcb.mp4's own music is now
    followed at once by the data clip's. The plates recorded again for this order.
+
+## Decisions, 12 Nov, evening (after the deploy of 1368cb5)
+
+The owner: "belle should be shown after introduction to baryons and mezons in slide 8. slide 6 should be
+reimagined, just floating QCD lagrangians, equations, diagrams to show how complicated it is, full screen of all
+sorts of diagrams / equations floating at different depts appearing. No weird "scooter sound" in transitions.
+age of wonder should continue from slide 11 on to the very end. finale has weird flick of particles before
+pentaquark appears"; then "the person is glowing in 17 and 12, we don't want that"; "for the finale we want
+japanese and lithuanian flags appearing in the background joined in the middle behind the pentaquark"; "group
+photo should have a slight pan / zoom effect so it's more dynamic"; "deploy when finished".
+
+1. Belle stands after the recipes: slide 7 the recipes, slide 8 Belle.
+2. Slide 6 is `setup/QcdStorm.vue`: sixteen equations (the slide's own `$$ … $$` blocks, set by Slidev's KaTeX:
+   the Lagrangian, the covariant derivative, the field strength, the colour algebra, the three- and four-gluon
+   terms, gauge fixing and ghosts, the one-loop running and its solution, the lattice path integral, Wilson's
+   action, the Cornell potential, DGLAP and its splitting function, Gell-Mann–Oakes–Renner, the trace anomaly)
+   and nine diagrams drawn by the component (the vertices, one- and two-gluon exchange, the self-energies, a
+   vertex correction), each at its own depth (far: small, dim, soft), coming in one after another over about
+   11 s and drifting. Places are found once from a fixed seed, each clear of the frame's edge, the caption and
+   the items near its own depth. Caption "Quantum chromodynamics". The curve of the coupling left
+   (QcdCoupling.vue, in git at eef71be). Lint's WORDS warning on slide 6 is this slide: it counts the equations'
+   letters as words (the second standing exception, after slide 1's title). The conventions are Peskin and
+   Schroeder's; an expert audience reads them, so a change to an equation is checked against the book.
+3. The clips' rising tone is off again (the "scooter sound"): `stage.sound: { flight: false, clip: false }`.
+4. Music: „Age of Wonder“ from slide 11 to the end, one bed (`public/audio/wonder_bed.m4a`, 8 min 7 s: the
+   piece from 0:30 to 3:35, then 1:00 to 3:35 twice more, 4 s cross-fades, the piece's one gain) at 0.6 under
+   the LHCb and data clips, 0.45 under the globe, 0.35 under the slides spoken over; on the finale it
+   cross-fades (1.5 s) into the piece's last build (`wonder_close.m4a`, level 0.85), which runs to its end over
+   the loop and the last page. Slide 11 is read as written, so lhcb.mp4 plays muted (its own music, the owner's
+   of 10 Nov, would run under the piece). Slide 2 keeps the piece's opening. `wonder_build.m4a` left. If the
+   talk reaches the finale later than 8 min after slide 11 the bed has ended and the finale starts the close
+   from silence.
+5. The finale's "flick": a string of bright grains across the frame as the globe began to dissolve. They were
+   the globe take's photo grains: the recorder comes to a take from the slide before it, and the world take
+   followed the globe take. `takes.md` has an empty slide between them (the world take is slide 6 now). On the
+   way: the cities' lights no longer fly with the globe's grains, they go out in place (`light` in globe.js's
+   shader); that alone did not remove the string.
+6. The person beside LHCb (slides 12 and 17): in the grains it took the muon walls' weight 1.4 and bloomed
+   (part 10, 11 700 grains): now 0.07; as a mesh its gains were about ten times the machine's: now the
+   machine's (detector.js). A faint figure in the data clip, hardly seen in the finale's.
+7. The flags (`setup/BehindFlags.vue`; the name `FlagsBehind` is taken by Slidev's icon resolver, set `flag`):
+   Lithuania's on the left, Japan's on the right, each fading into the other across the middle, added to the
+   clip as light (`mix-blend-mode: screen`, 0.26, blurred 7 px, held back in the middle and at the edges), from
+   22.5 s of the finale (the pentaquark formed), over the loop and on the last page.
+8. The group photo: `class="pan"`, a push in to 1.1 and a drift over 40 s (styles/index.css).
+9. Recorded again: the data, collision and world takes (points 5 and 6); data2019.mp4, finale.mp4 and
+   finale_loop.mp4 cut and encoded from them at the times they had; the plates for the new order.
 
 ## Decisions, 11 Nov (the audience)
 

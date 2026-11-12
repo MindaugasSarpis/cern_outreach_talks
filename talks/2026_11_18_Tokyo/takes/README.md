@@ -31,7 +31,7 @@ flock /tmp/slidev-stage-shots.lock node node_modules/slidev-addon-stage/bin/reco
 | data | 2 | 26 | 28 | `videos/takes/tokyo_data_take.mp4` |
 | collision | 3 | 26 | 28 | `videos/takes/tokyo_collision_take.mp4` |
 | globe | 4 | 23 | 25 | `videos/takes/tokyo_globe_tour.mp4` |
-| world | 5 | 52 | 54 | `videos/takes/tokyo_finale_world.mp4` (12 Nov: the long hold is the loop's source) |
+| world | 6 (5 is an empty slide before it, 12 Nov) | 52 | 54 | `videos/takes/tokyo_finale_world.mp4` (12 Nov: the long hold is the loop's source) |
 
 ```sh
 # 3. the cuts, into videos/raw/ (worktree root)
