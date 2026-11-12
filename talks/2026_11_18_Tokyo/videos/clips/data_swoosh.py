@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""The sound of slide 12's data clip (the owner, 13 Nov: "need low swoosh effect on 12 has to be really astonishing").
+"""The sound of slide 12's data clip (its times: the constants below, the clip's own seconds; the paragraph after this
+one tells the first version's, of a 24 s clip).
+
+The sound of slide 12's data clip (the owner, 13 Nov: "need low swoosh effect on 12 has to be really astonishing").
 
 data2019.mp4 (35 s since 13 Nov: 11.3 s on the detector first, then what is told here, each second 11.3 s later;
 it was 24 s, recorded silent): LHCb appears (0-1 s), a collision in it (the crossing at 2.9 s), its grains arc out
@@ -26,17 +29,22 @@ import numpy as np
 from scipy.signal import butter, sosfilt
 
 SR = 48000
-OFF = 11.3     # 13 Nov: the clip opens with 11.3 s on the detector (close at eye level, back past the person)
-DUR = 24.0 + OFF - 0.3
+# the clip's seconds (takes.md slide 2, cut from the take's 1.5 s; 13 Nov)
+DUR = 36.5
+TC = 15.9                 # the crossing's flash (read from the take's frames: its 17.4 s)
+FILL = (20.5, 31.0)       # the data landing
+FLY = (27.0, 31.0)        # the camera's flight to the histogram
+GLINTS = (33.8, 34.25, 34.7)
 rng = np.random.default_rng(12)
 n = int(SR * DUR)
-t = np.arange(n) / SR - OFF     # the old clip's seconds: everything below keeps its times
+t = np.arange(n) / SR
 sm = lambda x: np.clip(x, 0, 1) ** 2 * (3 - 2 * np.clip(x, 0, 1))
 env = lambda a, b, c, d: sm((t - a) / max(b - a, 1e-6)) * (1 - sm((t - c) / max(d - c, 1e-6)))   # up a→b, down c→d
 band = lambda x, lo, hi: sosfilt(butter(2, [lo, hi], btype='band', fs=SR, output='sos'), x)
 low = lambda x, fc: sosfilt(butter(2, fc, btype='low', fs=SR, output='sos'), x)
 white = lambda: rng.uniform(-1, 1, n)
 sine = lambda f: np.sin(2 * np.pi * np.cumsum(f) / SR)
+hit = lambda t0, rise, decay: np.where(t < t0, 0, np.exp(-(t - t0) / decay)) * sm((t - t0) / rise)
 
 
 def sweep(x, f_of_t, q=0.9, step=480):
@@ -50,47 +58,48 @@ def sweep(x, f_of_t, q=0.9, step=480):
     return out
 
 
-T0 = t + OFF                    # the new clip's seconds
 L = np.zeros(n); R = np.zeros(n)
 def add(x, pan=0.5):   # pan: 0 left … 1 right, a number or an array
     p = np.clip(pan, 0, 1) * np.pi / 2
     global L, R
     L += x * np.cos(p); R += x * np.sin(p)
 
-# the opening: the hall's low air, growing as the detector is seen whole
-room = (low(white(), 90) * 4 + 0.6 * sine(np.full(n, 41.0)) + 0.3 * sine(np.full(n, 61.5))) * sm(T0 / 3.0) * (1 - sm((T0 - 9.5) / 3.5)) * (0.55 + 0.45 * sm((T0 - 3) / 6))
-add(0.28 * room)
-# the run-in and the crossing
-swell = env(0.2, 2.9, 2.9, 3.6) * (sine(np.interp(t, [0, 2.9, 4], [34, 42, 31])) + 0.3 * sine(np.interp(t, [0, 2.9, 4], [68, 84, 62])) + 0.5 * low(white(), 130) * 3)
-add(0.5 * swell)
-th = np.where(t < 2.9, 0, np.exp(-(t - 2.9) / 0.45)) * sm((t - 2.9) / 0.015) * sine(np.where(t < 2.9, 60, 30 + 34 * np.exp(-(t - 2.9) / 0.12)))
-add(0.9 * th)
-# the grains
-trickle = band(white(), 1400, 5200) * (0.5 + 0.5 * low(np.abs(white()), 14) * 6) * env(3.0, 5.0, 9.0, 13.2)
-add(0.035 * trickle, pan=np.interp(t, [3, 13], [0.35, 0.8]))
-# the swoosh
-rise = env(14.5, 17.4, 17.4, 19.4)
-fc = np.interp(t, [14.5, 17.4, 19.3, 24], [70, 900, 110, 110])
-air = sweep(white(), fc) * rise ** 1.5
-pan = np.interp(t, [14.5, 17.4, 19.3], [0.15, 0.55, 0.85])
-add(0.9 * air, pan=pan)
-sub = sine(np.interp(t, [14.5, 17.4, 19.3], [34, 52, 36])) * rise + 0.35 * sine(np.interp(t, [14.5, 17.4, 19.3], [68, 104, 72])) * rise
-add(0.8 * sub)
-rumble = low(white(), 160) * 3 * env(14.8, 17.6, 17.8, 20.0)
-add(0.45 * rumble, pan=pan)
+# the opening: the hall's low air while the camera draws back from the detector, past the person
+room = (low(white(), 90) * 4 + 0.6 * sine(np.full(n, 41.0)) + 0.3 * sine(np.full(n, 61.5))) * sm(t / 3.0) * (1 - sm((t - (TC - 4.5)) / 3.0)) * (0.55 + 0.45 * sm((t - 3) / 6))
+add(0.22 * room)
+# the run-in: a swell into the crossing
+swell = env(TC - 3.2, TC, TC, TC + 0.5) * (sine(np.interp(t, [TC - 3.2, TC, TC + 1], [34, 44, 31])) + 0.3 * sine(np.interp(t, [TC - 3.2, TC, TC + 1], [68, 88, 62])) + 0.5 * low(white(), 130) * 3)
+add(0.55 * swell)
+# the crossing (13 Nov, the owner: "collision effect substantial, louder than the music"): the clip's loudest thing by
+# far: a hard low hit (62 -> 30 Hz), a body under it falling from 85 Hz to 29 Hz over 2 s and ringing 5 s (the picture
+# runs slow), a burst of low noise
+add(1.5 * hit(TC, 0.012, 0.5) * sine(np.where(t < TC, 62, 30 + 32 * np.exp(-(t - TC) / 0.12))))
+bf = np.where(t < TC, 85, 29 + 56 * np.exp(-(t - TC) / 0.7))
+add(1.7 * hit(TC, 0.012, 1.7) * (sine(bf) + 0.45 * sine(2 * bf)))
+add(0.9 * hit(TC, 0.01, 0.45) * low(white(), 240) * 3)
+# the data landing: a faint trickle, left to right, thinning as the histogram fills
+f0, f1 = FILL
+trickle = band(white(), 1400, 5200) * (0.5 + 0.5 * low(np.abs(white()), 14) * 6) * env(f0, f0 + 2.0, f1 - 4.0, f1)
+add(0.03 * trickle, pan=np.interp(t, [f0, f1], [0.35, 0.8]))
+# the swoosh: the camera's flight to the histogram
+a, b = FLY
+top = a + 0.72 * (b - a)
+rise = env(a - 0.3, top, top, b + 0.1)
+fc = np.interp(t, [a - 0.3, top, b, DUR], [70, 900, 110, 110])
+pan = np.interp(t, [a - 0.3, top, b], [0.15, 0.55, 0.85])
+add(0.75 * sweep(white(), fc) * rise ** 1.5, pan=pan)
+add(0.65 * (sine(np.interp(t, [a - 0.3, top, b], [34, 52, 36])) + 0.35 * sine(np.interp(t, [a - 0.3, top, b], [68, 104, 72]))) * rise)
+add(0.4 * low(white(), 160) * 3 * env(a, top + 0.2, top + 0.4, b + 0.8), pan=pan)
 # the landing
-ta = 19.3
-land = np.where(t < ta, 0, np.exp(-(t - ta) / 1.1)) * sm((t - ta) / 0.02) * (sine(np.where(t < ta, 70, 30 + 40 * np.exp(-(t - ta) / 0.5))) + 0.4 * sine(np.where(t < ta, 140, 60 + 80 * np.exp(-(t - ta) / 0.5))))
-add(1.0 * land)
-add(0.25 * low(white(), 220) * 3 * np.where(t < ta, 0, np.exp(-(t - ta) / 0.35)) * sm((t - ta) / 0.02))
+add(0.8 * hit(b, 0.02, 1.1) * (sine(np.where(t < b, 70, 30 + 40 * np.exp(-(t - b) / 0.5))) + 0.4 * sine(np.where(t < b, 140, 60 + 80 * np.exp(-(t - b) / 0.5)))))
+add(0.2 * hit(b, 0.02, 0.35) * low(white(), 220) * 3)
 # the peaks
-for k, tk in enumerate([17.05, 17.5, 17.85]):
-    g = np.where(t < tk, 0, np.exp(-(t - tk) / 0.28)) * sm((t - tk) / 0.01)
-    add(0.06 * band(white(), 3800 + 900 * k, 9000) * g, pan=0.4 + 0.15 * k)
+for k, tk in enumerate(GLINTS):
+    add(0.05 * band(white(), 3800 + 900 * k, 9000) * hit(tk, 0.01, 0.28), pan=0.4 + 0.15 * k)
 
 mix = np.stack([L, R], 1)
-mix = np.tanh(1.3 * mix) / 1.3
-mix *= 10 ** (-2 / 20) / np.abs(mix).max()
+mix = np.tanh(1.2 * mix) / 1.2
+mix *= 10 ** (-1.5 / 20) / np.abs(mix).max()
 k = int(0.3 * SR); mix[-k:] *= np.linspace(1, 0, k)[:, None]
 k = int(0.5 * SR); mix[:k] *= np.linspace(0, 1, k)[:, None]
 with wave.open(sys.argv[1], 'wb') as f:

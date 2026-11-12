@@ -22,6 +22,7 @@ import {
 } from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import { createInterior } from './interiors.js'
+import { heartbeat } from './heartbeat.js'
 
 // 10 Nov, later (the owner: "a bit too colorful, make photorealistic"): deeper, natural colours on lit, glossy
 // balls; `ui` a lighter tone of each for the letters in the frame.
@@ -262,7 +263,7 @@ function update(t) {
     const fr = easeIO((t - T_FRONT) / 4.2), k = ease((fr - 0.25) / 0.5)
     pin.points.position.copy(pq.g.position)
     pin.points.visible = k > 0.001
-    pin.uniforms.uAlpha.value = 0.8 * k
+    pin.uniforms.uAlpha.value = 0.86 * k
     pin.move(t)
     if (k > 0.05) {
       pin.points.updateMatrixWorld()
@@ -306,7 +307,9 @@ function build() {
   camera = new PerspectiveCamera(FOV, W / H, 0.1, 200)
   hadrons = [...MESONS.map((m) => makeHadron(m, 'meson')), ...BARYONS.map((b) => makeHadron(b, 'baryon'))]
   pq = makeHadron([...PENTA, W * 0.6, H * 0.5, 13], 'penta'); hadrons.push(pq)
-  pin = createInterior({ kind: 'spread', quark: 0.78, grains: 7000, shell: 12000, size: 1.6, alpha: 0, display: true })
+  // (13 Nov, the owner: "also needs to be better resolved": two and a half times the grains at well under two thirds the
+  // size, so each ball is made of fine points and not of soft discs)
+  pin = createInterior({ kind: 'spread', quark: 0.78, grains: 18000, shell: 30000, size: 0.92, alpha: 0, display: true })
   pin.points.scale.setScalar(PIN); pin.points.renderOrder = 1e4; pin.points.visible = false
   world.add(pin.points)
   schedule()
@@ -340,6 +343,7 @@ function start() {
   later(T_BAR, () => { phase.value = 'Baryons: three quarks' })
   later(T_PENTA, () => { phase.value = 'Pentaquark: five quarks' })
   later(T_FRONT + 0.6, () => { frameOut.value = true })
+  later(T_FRONT + 3.0, () => { if ($renderContext?.value === 'slide') heartbeat() })   // 13 Nov: one heartbeat as the pentaquark fills the screen
   t0 = performance.now(); running = true
   raf = requestAnimationFrame(frame)
 }

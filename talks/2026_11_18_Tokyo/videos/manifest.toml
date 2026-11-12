@@ -135,6 +135,17 @@ thump on the crossing at 3.9 s, the drone held to 23 s). Cut: videos/finale/segm
 slide's, not the clip's."""
 
 [[videos]]
+name    = "data_loop.mp4"
+profile = "remux"   # the raw is the web encode itself (takes/README.md)
+used_in = ["deck"]
+loudnorm = false
+notes   = """\
+Slide 12 (owner, 13 Nov: "histogram stays dynamic … line maybe running trough from time to time"): the histogram after \
+data2019.mp4's last frame, 12 s, a loop, no sound: the data take's 38.0-50.0 s (two runs of the light along the fit, \
+6 s apart; the peaks breathing), its last second cross-faded into the take's 37.0-38.0 s. <ClipLoop> starts it as the \
+clip ends; <EndDrift> then moves clip, loop and labels together."""
+
+[[videos]]
 name    = "finale_loop.mp4"
 profile = "remux"   # the raw is the web encode itself (videos/finale/segments.sh, takes/README.md): x264 crf 17, at most 9.5 Mbit/s
 used_in = ["deck"]

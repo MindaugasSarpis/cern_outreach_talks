@@ -100,12 +100,19 @@ void main() {
     float d = e / 1.8 - aT;
     if (d < 0.0) { hide(); return; }
     float head = exp(-d * 12.0);
+    // 13 Nov (the owner: "histogram stays dynamic … line maybe running trough from time to time"): once the curve and its
+    // peaks stand, a light runs along the curve from the left every 6 s (2.2 s to cross it)
+    float run = fract((e - 6.0) / 6.0) * (6.0 / 2.2);
+    float glint = e > 6.0 ? exp(-pow((aT - run) * 9.0, 2.0)) : 0.0;
+    head = max(head, 0.9 * glint);
     place(position, uSize * (1.0 + 0.8 * head), uAlpha * (0.9 + 1.2 * head), mix(uColor, vec3(1.0), head), aSeed);
   } else {
     float m = clamp((e - 1.6 - 0.45 * (aKind - 1.0) - 0.35 * aSeed) / 0.9, 0.0, 1.0);
     if (m <= 0.0) { hide(); return; }
     m = m * m * (3.0 - 2.0 * m);
-    place(position + vec3(0.0, 0.8 * (1.0 - m), 0.0), uSize * 0.9 * (0.8 + 0.4 * hash(aSeed * 13.0)), uAlpha * 0.7 * m, uPeak, aSeed);
+    // the peaks breathe a little, each on its own slow beat (they stood still once lit)
+    float br = 1.0 + 0.16 * sin(uTime * 1.05 + aKind * 2.1) * step(6.0, e);
+    place(position + vec3(0.0, 0.8 * (1.0 - m), 0.0), uSize * 0.9 * (0.8 + 0.4 * hash(aSeed * 13.0)), uAlpha * 0.7 * m * br, uPeak, aSeed);
   }
 }`
 function buildHistogram(o, ctx) {

@@ -172,7 +172,7 @@
      "scale": 1.2,
      "stretch": 1.0,
      "pulse": "inside",
-     "light": 4.0,
+     "light": 6.5,
      "light3": [
       -0.35,
       0.75,
@@ -464,7 +464,7 @@
      ],
      "arc": 3.5,
      "flyColor": "#dff0ff",
-     "lead": 15.4,
+     "lead": 18.7,
      "fitSize": 1.2,
      "fitAlpha": 0.95,
      "fitGrains": 2.4,

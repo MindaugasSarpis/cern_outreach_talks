@@ -81,7 +81,7 @@ space: { at: proton, dim: 0.2 }
      here to the end, building: one bed (audio/wonder_bed.m4a, 16 min; videos/music/wonder_bed.py: the piece played
      forward, stepping back whole four-bar phrases on its own bar grid where length is needed, never to its opening;
      the owner, 13 Nov: "the sountrack was just restarted … it went better in uzsikrauk karjerai"), its level a little
-     up from slide to slide (0.16 … 0.45). The finale cross-fades into the piece's last build (wonder_close.m4a, 0.8).
+     up from slide to slide (0.16 … 0.45). The finale times the piece's climax on its collision (wonder_peak.m4a; slide 18's comment).
      `+` / `-` set the level in the talk. The cover has the collision's own sound and no music. -->
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.3" start keys />
 
@@ -376,7 +376,12 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
      right as the camera flies to the histogram, a deep landing as it arrives, three glints as the peaks light), so it
      plays unmuted, over the music -->
 <VideoPlayer src="data2019.mp4" :controls="false" transition="fade" />
-<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.45" start keys />
+<!-- 13 Nov (the owner: "histogram stays dynamic, slowly zooming in line maybe running trough from time to time, orbiting"):
+     as the clip ends its loop takes over (data_loop.mp4: a light runs along the fit every 6 s, the peaks breathe), and
+     clip, loop and the labels over them drift together: a slow zoom in and a gentle turn to and fro (setup/EndDrift.vue) -->
+<ClipLoop src="data_loop.mp4" />
+<EndDrift :at="[50, 42]" :zoom="1.13" :sway="2.4" :seconds="100" />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.28" start keys />   <!-- low here: the collision is the loud thing (13 Nov: "louder than the music") -->
 <AtClipEnd :lead="5"><div class="spec-axis"><i style="left: 283.6px">4300</i><i style="left: 447.7px">4400</i><i style="left: 611.7px">4500</i><b>mass of J/ψ p (MeV)</b></div></AtClipEnd>
 <AtClipEnd :lead="4"><div class="spec-names"><i class="c" style="left: 300px; top: 112px">P<sub>c</sub>(4312)<sup>+</sup></i><i class="r" style="left: 498px; top: 44px">P<sub>c</sub>(4440)<sup>+</sup></i><i class="l" style="left: 556px; top: 22px">P<sub>c</sub>(4457)<sup>+</sup></i></div></AtClipEnd>
 <div class="cap">LHCb, 2019: the J/ψ p mass in Λ<sub>b</sub><sup>0</sup> → J/ψ p K<sup>−</sup> decays</div>
@@ -805,7 +810,12 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <!-- 12 Nov, evening (the owner: "japanese and lithuanian flags appearing in the background joined in the middle behind
      the pentaquark"): from 22.5 s, the pentaquark formed (setup/BehindFlags.vue); they stay over the loop and the last page -->
 <BehindFlags :at="37.0" />
-<StageSoundtrack src="audio/wonder_bed.m4a" resync tail="audio/wonder_close.m4a" :tail-at="100000" :level="0.8" keys />
+<!-- 13 Nov (the owner: "18 collision is not timed and the music is not timed to the correct peak"; "look at uzsikrauk
+     karjerai has to be timed"): the toolkit's `drop`, as that talk's close. The bed plays on, louder, under the
+     build-up; at 14.5 s it falls away; „Age of Wonder“ from its 282nd second comes in under it so that its climax, at its
+     284th second, where the low end enters (measured, not heard), lands on the collision's flash, 18.1 s into the clip (measured on the
+     take's frames), counted on the clip's own clock; on it the level opens. -->
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.8" start keys :drop="{ at: 18.1, file: 'audio/wonder_peak.m4a', hit: 2.0, duck: 14.5, quiet: 0.1, fade: 2500 }" />
 <AtClipEnd :lead="4.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
 
 <!--
@@ -830,7 +840,7 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the 
 <!-- 12 Nov: the loop of the turning pentaquark in place of the still (<CloseStill>), the music going on -->
 <VideoPlayer src="finale_loop.mp4" muted loop :controls="false" transition="fade" />
 <BehindFlags />
-<StageSoundtrack src="audio/wonder_close.m4a" :level="0.8" keys />
+<StageSoundtrack src="audio/wonder_peak.m4a" :level="0.8" keys />
 <div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div>
 <div class="credits credit">Photos: S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; the Belle detector, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Globe: Natural Earth. Music: „Age of Wonder“ by Scott Buckley, released under CC-BY 4.0, www.scottbuckley.com.au. J/ψ p spectrum and Dalitz plot: LHCb, Phys. Rev. Lett. 122 (2019) 222001, CC BY 4.0 (HEPData ins1728691). CMS collision on the cover: CERN open data.</div>
 

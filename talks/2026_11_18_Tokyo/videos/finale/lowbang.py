@@ -80,6 +80,21 @@ def voice(n, tc, tf, rng):
 BOOM = '--boom' in sys.argv
 if BOOM:
     sys.argv.remove('--boom')
+# --beat=SECONDS (13 Nov, the owner: "when pentaquark appears, a sound of a single heartbeat loud and slow"): one
+# heartbeat there, two low thumps 0.46 s apart (setup/heartbeat.js is the same voice, live)
+BEAT = [float(a.split('=')[1]) for a in sys.argv if a.startswith('--beat=')]
+sys.argv = [a for a in sys.argv if not a.startswith('--beat=')]
+
+
+def beat(n, at):
+    t = np.arange(n) / SR
+    out = np.zeros(n)
+    for t0, f0, f1, dur, g in [(at, 58, 36, 0.42, 1.0), (at + 0.46, 66, 42, 0.32, 0.72)]:
+        f = np.where(t < t0, f0, ramp_exp(t, t0, t0 + dur * 0.6, f0, f1))
+        ph = 2 * np.pi * np.cumsum(np.where(t < t0, 0, f)) / SR
+        env = np.where(t < t0, 0, np.where(t < t0 + 0.014, ramp_exp(t, t0, t0 + 0.014, 1e-4, g), ramp_exp(t, t0 + 0.014, t0 + dur, g, 1e-4)))
+        out += env * (np.sin(ph) + 0.38 * np.sin(2 * ph))
+    return out
 
 
 def main():
@@ -90,6 +105,8 @@ def main():
     for ev in sys.argv[3:]:
         tc, tf, gain = map(float, ev.split(':'))
         mix += gain * voice(n, tc, tf, rng)
+    for at in BEAT:
+        mix += 2.2 * beat(n, at)
     # the compressor's job, roughly: a soft knee, then -6 dBFS peak
     mix = np.tanh(1.5 * mix) / 1.5
     mix *= 10 ** ((-2 if BOOM else -6) / 20) / max(np.abs(mix).max(), 1e-9)

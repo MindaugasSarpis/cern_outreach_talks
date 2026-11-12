@@ -44,15 +44,22 @@ space:
     - [0, { at: [1011, -484.6, 2], dist: 8, yaw: 0, pitch: 0 }]
     - [5, { at: [1014, -484.4, 2], dist: 12.5, yaw: 0, pitch: 0 }]
     - [9, { at: [1018.5, -484, 2.5], dist: 20, yaw: 0, pitch: 1.5 }]
-    - [12.5, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]
-    - [27.5, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]
-    - [31.5, { at: [1037.6, -482.3, 5], dist: 19.5, yaw: 0, pitch: 3 }]
+    # 13 Nov, later (the owner: "data needs to start piling up only when LHCb ramps up, collision needs to substantial and
+    # centered, tracks appear after collision not before"): from the person the camera goes to the collision point and
+    # holds it in the middle of the frame, coming in, through the crossing (15.7 s) and its slow motion; then it draws
+    # back to the whole detector as the debris runs through, and only then (`lead` 18.7 s) the data starts to land.
+    - [12.8, { at: [1003, -481.5, 1.5], dist: 16, yaw: -6, pitch: 2 }]
+    - [15.7, { at: [1003, -481.5, 1.5], dist: 12.5, yaw: -4, pitch: 2 }]
+    - [18.4, { at: [1006, -481.5, 2], dist: 17, yaw: -2, pitch: 2.5 }]
+    - [22.5, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]
+    - [28.5, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]
+    - [32.5, { at: [1037.6, -482.3, 5], dist: 19.5, yaw: 0, pitch: 3 }]
 ---
 
 <!-- 2 · data: the detector whole, a collision, its grains arcing out and landing as the histogram (`pc`); the
      camera comes to the histogram, the fit is drawn and the peaks light. Slide 10's axis and names sit on this
      camera's last pose: move it and they move (deck.md, styles/index.css). -->
-<InsideLhcb :land-y="-470" :delay="12" />
+<InsideLhcb :land-y="-470" :delay="12" :freeze="[[0, 0.3], [0.3, 0.1], [2.2, 0.12], [3.6, 0.4], [5, 1]]" />
 <Grains :set="{ pc: 1 }" />
 
 ---

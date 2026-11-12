@@ -644,6 +644,31 @@ scheduler."
      licensed stock clip, or the hidden Vilnius zoom-out for 16 alone.
    - The talk is over its time by the notes: `talk map` after this round.
 
+10. 13 Nov, the owner's next run: of slide 12 "data needs to start piling up only when LHCb ramps up, collision needs
+   to substantial and centered, tracks appear after collision not before, histogram stays dynamic, slowly zooming in
+   line maybe running trough from time to time, orbiting"; "13 is cool, but need to show phasespace substantial, build
+   around, start flying through only then zoomout"; "when pentaquark appears, a sound of a single heartbeat loud and
+   slow"; of slide 7 "also needs to be better resolved"; "collision effect substantial, louder than the music"; "18
+   collision is not timed and the music is not timed to the correct peak".
+   - Slide 12's take again (4K): after the person the camera goes to the collision point and holds it mid-frame
+     through the crossing (the flash at the take's 17.4 s, the clip's 15.9 s) and a longer slow motion; the data
+     lands only from 20.5 s; data2019.mp4 is 36.5 s. Its end lives: `data_loop.mp4` (12 s, `<ClipLoop>`: a light
+     along the fit every 6 s, the peaks breathing) and `<EndDrift>` (clip, loop and the HTML labels under one
+     transform: a zoom to 1.13 and a turn of ±2.4° over 100 s). The sound's hit on the crossing is its loudest
+     thing by far; the bed under this slide at 0.28.
+   - Slide 13: the phase space's edge drawn at once (the border cells, bright points), the camera 250° round the
+     plot in 14 s while it fills, then the flight (14 to 22 s), the drawing back, the names from 24.6 s.
+   - The heartbeat (two thumps 0.46 s apart, `setup/heartbeat.js`): on the cover 2.6 s after the pentaquark
+     starts to gather, on slide 7 three seconds after it starts forward, and in the finale's clip at 37.3 s
+     (`lowbang.py --beat`). The cover's collision sound at 0.85.
+   - Slide 7's pentaquark: 18 000 grains a quark and 30 000 in the skin at size 0.92 (7 000, 12 000 and 1.6).
+   - Slide 18's timing, measured this time: the flash blooms at the clip's 18.1 s (the take's 19.1 s; the hit had
+     been put at 16.0 s), and the piece's climax, where its low end comes in, is at 4:44.0 (the cut had started
+     after an earlier, weaker rise). Now the toolkit's `drop`, as Karjera's close: the bed under the build-up at
+     0.8, falling away from 14.5 s; `wonder_peak.m4a` (4:42 on) entering quiet, its climax on 18.1 s by the clip's
+     clock; then to the piece's end over the loop and the last page. `wonder_close.m4a` left. Which moment of the
+     piece the owner calls its peak is my reading of its loudness curve: 4:44.0, to be confirmed by ear.
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

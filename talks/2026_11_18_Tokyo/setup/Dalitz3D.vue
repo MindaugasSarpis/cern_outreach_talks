@@ -14,7 +14,7 @@ import { useIsSlideActive, useNav, useSlideContext } from '@slidev/client'
 import {
   WebGLRenderer, Scene, PerspectiveCamera, Group, Mesh, BoxGeometry, MeshLambertMaterial, InstancedMesh,
   Object3D, Color, Vector3, AmbientLight, DirectionalLight, BufferGeometry, BufferAttribute, Points, ShaderMaterial,
-  AdditiveBlending, PlaneGeometry, MeshBasicMaterial, LineSegments, LineBasicMaterial, InstancedBufferAttribute,
+  AdditiveBlending, PlaneGeometry, MeshBasicMaterial, LineSegments, LineBasicMaterial, InstancedBufferAttribute, PointsMaterial,
 } from 'three'
 import DZ from '../public/data/dalitz-2019.json'
 
@@ -44,7 +44,7 @@ const BANDS = [[18.52, 18.73], [19.57, 19.99]], BAND_KP = 3.61
 const LIT = new Color(1.2, 1.2, 1.2), LIT_K = 0.85   // toward a white a little over 1: Lambert's shade dulls a plain one
 
 const root = ref(null), cv = ref(null)
-let renderer, scene, camera, world, bars, sparks, raf = 0, t0 = 0, running = false
+let renderer, scene, camera, world, bars, sparks, edge, raf = 0, t0 = 0, running = false
 let cells = []                        // { i, j, n, h, x, z, first, band }
 
 function grid() {
@@ -119,6 +119,12 @@ function build() {
   cells.forEach((c, k) => { const col = colourOf(c.n); cols.set([col.r, col.g, col.b], k * 3) })
   bars.instanceColor = new InstancedBufferAttribute(cols, 3)
   world.add(bars)
+  // the phase space's edge: every cell on the border of the allowed region, a bright point just over the ground
+  const has = new Set(cells.map((c) => c.i + ',' + c.j)), ev = []
+  for (const c of cells) if (![[1, 0], [-1, 0], [0, 1], [0, -1]].every(([a, b]) => has.has((c.i + a) + ',' + (c.j + b)))) ev.push(c.x, 0.03, c.z)
+  const eg = new BufferGeometry(); eg.setAttribute('position', new BufferAttribute(new Float32Array(ev), 3))
+  edge = new Points(eg, new PointsMaterial({ color: 0xcfeaff, size: 0.11, transparent: true, opacity: 0, depthWrite: false, blending: AdditiveBlending }))
+  world.add(edge)
   // the falling candidates
   const g = new BufferGeometry()
   g.setAttribute('position', new BufferAttribute(new Float32Array(NSP * 3), 3))
@@ -149,7 +155,11 @@ const ease = (x) => { x = Math.min(Math.max(x, 0), 1); return x * x * (3 - 2 * x
 // circling at an angle (to T_FLY); then it goes down and flies along the P_c band, low, through the plot from the
 // Λ(1520) ridge to the far edge (T_FLY to T_OUT), the bands lit; then it draws back to the view the slide always
 // ended on, and the ticks and names come (T_NAME), with the slow turn.
-const T_RISE = 1.5, T_FLY = 9.5, T_OUT = 17.5, T_NAME = 21.5
+// 13 Nov, later (the owner: "need to show phasespace substantial, build around, start flying through only then
+// zoomout"): the phase space first. Its edge is drawn at once, a bright line round the allowed region; the camera goes
+// most of the way round it, close and low, while the candidates fill it (to T_FLY, 14 s, where it was 9.5 s); only
+// then the flight along the bands, and the drawing back.
+const T_RISE = 2.0, T_FLY = 14.0, T_OUT = 22.0, T_NAME = 26.0
 // the P_c names: at m²(K p), m²(J/ψ p); the top of the band's columns there and the name's foot (over the band)
 // or head (under it), in world units. On the screen the bands rise to the right through the whole turn, so
 // the upper name sits up and left of its line and the lower name down and right of its own (.nw, .se):
@@ -166,8 +176,9 @@ function update(t) {
   // three poses, blended: A circling while it fills; B the flight along the band; C the end (58° from the vertical,
   // a little to the left: the pose every label's place was checked on)
   const pos = new Vector3(), tgt = new Vector3(), q = new Vector3(), qt = new Vector3()
-  const azA = -0.9 + 0.075 * t
-  pos.set(0.3 + 19.5 * Math.sin(0.92) * Math.sin(azA), 19.5 * Math.cos(0.92), 0.8 + 19.5 * Math.sin(0.92) * Math.cos(azA)); tgt.set(0.3, 0.2, 0.8)
+  // round the plot: 250° in 14 s, from high and wide to close and low, so its size and its edge are seen from every side
+  const kA = Math.min(1, t / T_FLY), azA = -2.6 + 4.4 * (kA * kA * (3 - 2 * kA)), poA = 0.72 + 0.34 * kA, dA = 21 - 6.5 * kA
+  pos.set(0.3 + dA * Math.sin(poA) * Math.sin(azA), dA * Math.cos(poA), 0.8 + dA * Math.sin(poA) * Math.cos(azA)); tgt.set(0.3, 0.3, 0.8)
   const fly = ease((t - T_FLY) / 2.2), out = ease((t - T_OUT) / 3.8)
   if (fly > 0) {
     // along m²(J/ψ p) = 19.8 GeV²: in over the Λ(1520) ridge from outside the plot, down to twice the band's
@@ -190,7 +201,7 @@ function update(t) {
   // the cells: lit as their candidates arrive, then risen to their counts
   // F: the share of the sample that has landed, 0 → 1 over 0.5–9.5 s; a cell lights when its first candidate
   // does (the dense ridge and band first, the thin edges last) and brightens as its count fills
-  const F = Math.min(1, Math.max(0, (t - 0.5) / 8.5)), rise = ease((t - T_RISE) / 7)
+  const F = Math.min(1, Math.max(0, (t - 1.2) / 11.5)), rise = ease((t - T_RISE) / 10)
   // nm: the names and the bands' light, 0 → 1 from T_NAME; the colours are painted while either changes
   const nm = ease((t - T_NAME) / 1)
   const lit = ease((t - T_FLY) / 1.5)          // the bands' light: on for the flight along them
@@ -215,8 +226,9 @@ function update(t) {
   if (paint) { bars.instanceColor.needsUpdate = true; bars.userData.done = F >= 1; bars.userData.nm = lit }
   // the falling candidates, at a rate that follows the filling
   const u = sparks.material.uniforms; u.uTime.value = t
-  if (t > 0.4 && t < 9.4) {
-    const rate = 620 * (0.3 + Math.sin(Math.PI * Math.min(1, (t - 0.4) / 9.6)))
+  if (edge) edge.material.opacity = 0.95 * ease(t / 1.6) * (1 - 0.55 * ease((t - T_OUT) / 3))
+  if (t > 1.0 && t < 13.2) {
+    const rate = 560 * (0.3 + Math.sin(Math.PI * Math.min(1, (t - 1.0) / 12.2)))
     const n = Math.min(160, Math.floor((t - lastSpawn) * rate))
     if (n > 0) {
       lastSpawn = t
