@@ -85,11 +85,10 @@ onBeforeUnmount(() => { stop(); wave(false) })
 
 <style>
 .slidev-layout .flags-behind { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; transition: opacity 3s ease; mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(ellipse 78% 82% at 50% 50%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 78% 82% at 50% 50%, #000 62%, transparent 100%); }
-.slidev-layout .flags-behind.on { opacity: 0.5; }
+  /* 13 Nov (the owner: "this we have to rethink... maybe don't blur the pentaquark"): the pentaquark stays sharp and the
+     cloth is held back where it stands (a third of its light in the middle), full only round it, soft at the frame's edge */
+  -webkit-mask-image: radial-gradient(ellipse 78% 82% at 50% 47%, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.45) 26%, #000 50%, #000 66%, transparent 100%); mask-image: radial-gradient(ellipse 78% 82% at 50% 47%, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.45) 26%, #000 50%, #000 66%, transparent 100%); }
+.slidev-layout .flags-behind.on { opacity: 0.34; }
 .slidev-layout .flags-behind canvas { display: block; width: 100%; height: 100%; }
-/* the clip under the flags goes soft as they come up (the pentaquark "can become more blurry") */
-.slidev-layout .video-player video, .slidev-layout .clip-loop video { transition: opacity 0.45s ease, filter 3s ease; }
-.slidev-layout.flags-up .video-player video, .slidev-layout.flags-up .clip-loop video { filter: blur(3.5px); }
-@media print { .slidev-layout .flags-behind { opacity: 0.5; } }
+@media print { .slidev-layout .flags-behind { opacity: 0.34; } }
 </style>

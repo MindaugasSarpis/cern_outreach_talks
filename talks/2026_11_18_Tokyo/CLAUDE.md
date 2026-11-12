@@ -550,6 +550,22 @@ scheduler."
    silent round and starts one at once: the swell about 2 s after the press, the thump about 5 s after it
    (coverCollision.js; checked by counting the oscillators a click starts).
 
+5. 13 Nov, the owner's next run: "Slide 7 pentaquark has to be much more substantial, now the letters are also
+   jittery, the sphere should be dynamic, not just round … slide 7 something like 14"; "the soundtrack should be a
+   bit milder throughout, a build-up mode"; of the globe's caption "don't need this"; of the finale's flags "this
+   we have to rethink... maybe don't blur the pentaquark".
+   - Slide 7: as the pentaquark comes to the front the glass balls give way to slide 14's form (`createInterior`,
+     kind `spread`: five balls of grains always apart, turning together, in a rippling skin), drawn in the
+     recipes' own scene in screen colours (`display`). The letters on the balls keep one type size and are
+     scaled (a type size changed every frame was set anew on the pixel grid: the jitter). `recipes_end.jpg`
+     (the fallback still) is the glass version: not re-made.
+   - Music: two beds. `wonder_mild.m4a` (the piece's first 100 s, looped, 11 min) under slides 2 to 10 at 0.16
+     rising to 0.28 (the atoms clip 0.3); slide 11 cross-fades into `wonder_full.m4a` (1:00 to 3:35, looped,
+     10 min), 0.34 to 0.45 to slide 16; the finale's close at 0.8. `wonder_bed.m4a` left.
+   - The globe slide has no caption (the project's years and funders are now only said; its name is on the cover).
+   - The finale: no blur on the pentaquark; the flags at 0.34, a third of that in the middle where it stands.
+   Deployed before this: 3a8796d (the cover's sound), Pages run 43306863408.
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

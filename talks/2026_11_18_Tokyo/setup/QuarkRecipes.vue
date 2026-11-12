@@ -21,6 +21,7 @@ import {
   AmbientLight, ACESFilmicToneMapping, BackSide, FrontSide,
 } from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
+import { createInterior } from './interiors.js'
 
 // 10 Nov, later (the owner: "a bit too colorful, make photorealistic"): deeper, natural colours on lit, glossy
 // balls; `ui` a lighter tone of each for the letters in the frame.
@@ -181,6 +182,12 @@ function makeHadron([name, content, x, y, depth], kind) {
 const FLY = 1.3
 const T_MES = 3.4, T_BAR = 11.2, T_PENTA = 20.4, T_FRONT = 24.0
 let pq = null
+// 13 Nov (the owner: "Slide 7 pentaquark has to be much more substantial, now the letters are also jittery, the sphere
+// should be dynamic, not just round … slide 7 something like 14"): as the pentaquark comes to the front the five glass
+// balls give way to slide 14's compact particle (setup/interiors.js): five balls of grains with hot cores, each on its
+// own loop, in a skin that ripples. `pin` is that form; PIN its size against the glass particle's.
+let pin = null
+const PIN = 0.72
 function schedule() {
   hadrons.forEach((h, i) => {
     if (h.kind === 'meson') h.born = T_MES + 0.6 + (i) * 0.95
@@ -209,7 +216,7 @@ function update(t) {
       p.lerp(near, front)
     }
     h.g.position.copy(p)
-    const dim = isP ? 1 : (1 - 0.8 * back) * (1 - 0.9 * front)
+    const dim = isP ? 1 - ease((front - 0.25) / 0.5) : (1 - 0.8 * back) * (1 - 0.9 * front)
     const formed = ease((age - FLY) / 0.6)
     h.bag.material.uniforms.uOp.value = formed * dim * (isP ? 0.7 : 0.6)
     h.bag.rotation.y = t * 0.2
@@ -250,6 +257,24 @@ function update(t) {
     }
   }
   // glass is see-through: the far balls are drawn first, the near ones over them
+  // the pentaquark in grains, in front
+  if (pin) {
+    const fr = easeIO((t - T_FRONT) / 4.2), k = ease((fr - 0.25) / 0.5)
+    pin.points.position.copy(pq.g.position)
+    pin.points.visible = k > 0.001
+    pin.uniforms.uAlpha.value = 0.8 * k
+    pin.move(t)
+    if (k > 0.05) {
+      pin.points.updateMatrixWorld()
+      pin.centres.forEach((c, i) => {
+        tmp.copy(c); pin.points.localToWorld(tmp)
+        const d = -tmp.z; if (d < 0.3) return
+        const v = tmp.clone().project(camera), f = pin.quarks[i]
+        const size = (pin.radius * PIN / (d * tanH)) * (H / 2)
+        labels.push({ html: f === 'cbar' ? '<span class="bar">c</span>' : f, x: (v.x + 1) / 2 * W, y: (1 - v.y) / 2 * H, size: Math.min(size * 0.8, 130), op: k, cls: 'ql' })
+      })
+    }
+  }
   for (const qb of hadrons.flatMap((h) => h.quarks)) qb.g.renderOrder = qb.g.position.z
 }
 const tmp = new Vector3()
@@ -281,6 +306,9 @@ function build() {
   camera = new PerspectiveCamera(FOV, W / H, 0.1, 200)
   hadrons = [...MESONS.map((m) => makeHadron(m, 'meson')), ...BARYONS.map((b) => makeHadron(b, 'baryon'))]
   pq = makeHadron([...PENTA, W * 0.6, H * 0.5, 13], 'penta'); hadrons.push(pq)
+  pin = createInterior({ kind: 'spread', quark: 0.78, grains: 7000, shell: 12000, size: 1.6, alpha: 0, display: true })
+  pin.points.scale.setScalar(PIN); pin.points.renderOrder = 1e4; pin.points.visible = false
+  world.add(pin.points)
   schedule()
   resize()
   return true
@@ -291,6 +319,7 @@ function resize() {
   const dpr = Math.min(window.devicePixelRatio || 1, 2)
   const w = Math.max(2, Math.round(r.width * dpr)), h = Math.max(2, Math.round(r.height * dpr))
   if (cv.value.width !== w || cv.value.height !== h) renderer.setSize(w, h, false)
+  if (pin) pin.uniforms.uPixelRatio.value = h / 900   // the grains' size follows the picture's height, as on the stage
 }
 function frame(now) {
   if (!running) return
@@ -329,6 +358,7 @@ function clear() {
   if (!renderer) return
   for (const h of hadrons) { h.bag.material.uniforms.uOp.value = 0; for (const q of h.quarks) { q.m.material.opacity = 0; q.back.material.opacity = 0; q.glow.material.opacity = 0 } }
   labels.length = 0
+  if (pin) { pin.uniforms.uAlpha.value = 0; pin.points.visible = false }
   try { renderer.render(scene, camera) } catch { /* the context is gone */ }
 }
 function dispose() {
@@ -363,7 +393,9 @@ onBeforeUnmount(dispose)
         </div>
       </template>
       <div class="qr-topnote" :class="{ on: topDim }" :style="{ left: CX + 'px', top: CY + 2 * CELL + GAP + 22 + 'px' }">top decays before it can bind</div>
-      <div v-for="(l, i) in labels" :key="i" :class="l.cls" :style="{ transform: `translate(${l.x}px, ${l.y}px) translate(${l.cls.includes('left') ? '0' : '-50%'}, ${l.cls === 'ql' ? '-50%' : '0'})`, fontSize: l.size + 'px', opacity: l.op }" v-html="l.html" />
+      <div v-for="(l, i) in labels" :key="i" :class="l.cls" :style="l.cls === 'ql'
+        ? { transform: `translate(${l.x}px, ${l.y}px) translate(-50%, -50%) scale(${(l.size / 48).toFixed(4)})`, fontSize: '48px', opacity: l.op }
+        : { transform: `translate(${l.x}px, ${l.y}px) translate(${l.cls.includes('left') ? '0' : '-50%'}, 0)`, fontSize: l.size + 'px', opacity: l.op }" v-html="l.html" />
       <div class="cap qr-cap">{{ phase }}</div>
     </template>
   </div>
@@ -387,7 +419,7 @@ onBeforeUnmount(dispose)
 .qr-topnote.on { opacity: 1; }
 /* the frame steps aside as the pentaquark fills the screen */
 .qr.out .qr-frame, .qr.out .qr-cell.on, .qr.out .qr-topnote.on { opacity: 0; transition: opacity 1.2s ease; }
-.ql { position: absolute; left: 0; top: 0; font-weight: 700; color: #fff; line-height: 1; text-shadow: 0 0 6px rgba(0, 0, 0, 0.95), 0 0 2px rgba(0, 0, 0, 1); white-space: nowrap; }
+.ql { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; will-change: transform; font-weight: 700; color: #fff; line-height: 1; text-shadow: 0 0 6px rgba(0, 0, 0, 0.95), 0 0 2px rgba(0, 0, 0, 1); white-space: nowrap; }
 .hl { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; align-items: center; white-space: nowrap; line-height: 1.1; }
 .hl.left { align-items: flex-start; }
 .hl :deep(.n) { font-weight: 600; color: #f2f8ff; text-shadow: 0 0 8px rgba(0, 0, 0, 0.9); }

@@ -64,6 +64,13 @@ void main() {
   }
   place(p, size, alpha, color, aSeed);
 }`
+const DISPLAY_FRAG = /* glsl */ `
+varying vec3 vColor; varying float vAlpha;
+void main() {
+  float d = length(gl_PointCoord - 0.5);
+  float a = (1.0 - smoothstep(0.04, 0.5, d)) * vAlpha;
+  gl_FragColor = vec4(vColor * a, a);
+}`
 const inBall = () => { for (;;) { const v = [Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1]; if (v[0] * v[0] + v[1] * v[1] + v[2] * v[2] <= 1) return v } }
 const onSphere = () => { const z = 2 * Math.random() - 1, ph = Math.random() * Math.PI * 2, q = Math.sqrt(1 - z * z); return [q * Math.cos(ph), z, q * Math.sin(ph)] }
 
@@ -93,6 +100,20 @@ const KINDS = {
       S[0].set(0, 0, 0, 2.15); S[1].set(0, 0, 0, 0)
     },
   },
+  // slide 7's pentaquark, full screen: the five always apart (a letter stands on each), turning together as one
+  // body, each on a small loop of its own
+  spread: {
+    quarks: ['u', 'u', 'd', 'c', 'cbar'], skins: 1,
+    move(t, N, S) {
+      const B = [[-1.05, 0.85, 0.35], [-1.2, -0.8, -0.3], [0.05, -0.1, -0.9], [1.1, 0.8, 0.2], [1.0, -0.9, 0.45]]
+      const a = t * 0.22, ca = Math.cos(a), sa = Math.sin(a), tip = 0.25 * Math.sin(t * 0.13)
+      B.forEach((b, i) => {
+        const x = ca * b[0] + sa * b[2], z = -sa * b[0] + ca * b[2], y = b[1] * Math.cos(tip) - z * Math.sin(tip)
+        N[i].set(x + 0.16 * Math.sin(t * 0.9 + i * 2.1), y + 0.14 * Math.cos(t * 0.75 + i), z * Math.cos(tip) + b[1] * Math.sin(tip) + 0.14 * Math.sin(t * 0.6 + i * 1.7))
+      })
+      S[0].set(0, 0, 0, 2.45); S[1].set(0, 0, 0, 0)
+    },
+  },
   hadroquarkonium: {
     quarks: ['c', 'cbar', 'u', 'u', 'd'], skins: 2,
     move(t, N, S) {
@@ -107,7 +128,9 @@ const KINDS = {
   },
 }
 
-function buildInterior(o) {
+// the form alone: its points, its uniforms, its quarks' places and the step that moves them (the stage's builder
+// below wraps it; slide 7's own scene takes it as it is: the pentaquark its recipes end on)
+export function createInterior(o) {
   const K = KINDS[o.kind] || KINDS.compact
   const per = Math.round(o.grains ?? 1500), perSkin = Math.round(o.shell ?? 4200), nEx = K.exchange ? Math.round(o.exchange ?? 220) : 0
   const N = 5 * per + K.skins * perSkin + nEx
@@ -126,15 +149,23 @@ function buildInterior(o) {
     uSh: { value: uSh }, uEx0: { value: uEx[0] }, uEx1: { value: uEx[1] },
     uSize: { value: o.size ?? 1.7 }, uAlpha: { value: o.alpha ?? 0.6 },
   })
+  // `display` (slide 7's own scene, which has no stage behind it to turn linear light into the screen's): the grain's
+  // colour as it is, not raised to 2.2
+  if (o.display) mat.fragmentShader = DISPLAY_FRAG
   const pts = new Points(geo, mat); pts.frustumCulled = false
-  const g = new Group(); g.add(pts)
-  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
   const u = mat.uniforms
   K.move(0, uN, uSh, uEx)
+  return { points: pts, uniforms: u, quarks: K.quarks, centres: uN, radius: o.quark ?? 0.46, move(t) { u.uTime.value = t; K.move(t, uN, uSh, uEx) } }
+}
+
+function buildInterior(o) {
+  const f = createInterior(o)
+  const g = new Group(); g.add(f.points)
+  g.position.set(o.pos?.[0] || 0, o.pos?.[1] || 0, o.pos?.[2] || 0)
   return {
-    group: g, labels: [], frameScale: u.uPixelRatio,
+    group: g, labels: [], frameScale: f.uniforms.uPixelRatio,
     api: { arm() {}, assemble(t, onDone) { onDone?.() }, busy: () => false },
-    update(t) { u.uTime.value = t; K.move(t, uN, uSh, uEx) },
+    update(t) { f.move(t) },
     dispose() {},
   }
 }
