@@ -544,6 +544,12 @@ scheduler."
    middle with grains exchanged between them, every quark moves on its own loop, every skin ripples.
 3. For the toolkit, handed to the Scheduler (the list below). This session edits no toolkit file.
 
+4. 13 Nov (the owner: "Cover slide has nothing on collision … in terms of sound"): the cover's first round starts
+   as the page opens, before any key or click has unlocked the audio, so its voice was never heard. A round's
+   voice now starts as soon as there is audio (before its crossing), and the first press on the cover ends the
+   silent round and starts one at once: the swell about 2 s after the press, the thump about 5 s after it
+   (coverCollision.js; checked by counting the oscillators a click starts).
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

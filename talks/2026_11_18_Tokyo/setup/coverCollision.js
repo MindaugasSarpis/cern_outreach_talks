@@ -79,8 +79,15 @@ export function installCoverCollision(registerBuilder) {
     // each round here: its start, its crossing, its speed. It needs the stage's audio, so a key or a click first.
     const snd = o.sound ? `${run}-sound` : null
     if (snd) openingSound(ctx, bus, { name: snd, level: typeof o.sound === 'number' ? o.sound : 0.5 })
-    let crossed = false, lastRate = 1
-    const startRound = () => { tc = local + approach; hiddenAt = null; bus.set(run, 1); crossed = false; lastRate = 1; if (snd) bus.emit('start', { name: snd }) }
+    // 13 Nov (the owner: "Cover slide has nothing on collision"): the stage's audio is locked until the first key or
+    // click, and the cover's first round starts as the page opens, so its voice found no audio, and the next round was
+    // 20 s on, after the talk had left the cover. Now a round's voice starts as soon as there is audio, any time before
+    // its crossing (`voiced`); and the first key or click on the cover ends the silent round and starts one at once
+    // (`soon`), so the collision is heard on the press that unlocks the sound.
+    let crossed = false, lastRate = 1, voiced = false, heard = false, soon = false
+    const audible = () => { try { return !!ctx.audio?.() } catch { return false } }
+    const voice = () => { if (snd && !voiced && audible()) { voiced = true; heard = true; bus.emit('start', { name: snd }) } }
+    const startRound = () => { tc = local + approach; hiddenAt = null; bus.set(run, 1); crossed = false; lastRate = 1; voiced = false; voice() }
     const hide = () => { if (tc != null && hiddenAt == null) { hiddenAt = local; bus.set(run, 0); if (snd) bus.emit('stop', { name: snd }) } }
     const setOn = (k) => {
       const want = !!k
@@ -89,6 +96,9 @@ export function installCoverCollision(registerBuilder) {
       if (on) { first = true; startRound() } else { hide(); first = false }
     }
     const off = bus.listen(name, setOn)
+    // the press that unlocks the audio (the stage unlocks it on the same event; a moment later it is there)
+    const onPress = () => { if (!snd || heard) return; setTimeout(() => { if (on && !heard && audible()) { if (hiddenAt == null) hide(); soon = true } }, 120) }
+    window.addEventListener('pointerdown', onPress); window.addEventListener('keydown', onPress)
     if (bus.state.has(name)) queueMicrotask(() => setOn(bus.state.get(name)))
 
     const update = (t) => {
@@ -99,18 +109,19 @@ export function installCoverCollision(registerBuilder) {
       local += dt * speed
       built.update(local)
       if (snd && on && hiddenAt == null && te != null) {
-        if (!crossed && te >= 0) { crossed = true; bus.emit('cross', { name: snd }) }
+        if (!crossed && te < -0.2) voice()
+        if (!crossed && te >= 0) { crossed = true; if (voiced) bus.emit('cross', { name: snd }) }
         if (Math.abs(speed - lastRate) > 0.02) { lastRate = speed; bus.emit('rate', { name: snd, rate: speed }) }
       }
       if (!on || tc == null) return
       if (hiddenAt == null && local - tc >= HOLD) { hide(); first = false }
-      else if (hiddenAt != null && local - hiddenAt >= FADE + GAP) startRound()
+      else if (hiddenAt != null && local - hiddenAt >= FADE + (soon ? 0.2 : GAP)) { soon = false; startRound() }
     }
     const busy = () => {
       if (on) return first && (tc == null || local - tc < SETTLED)
       return hiddenAt != null && local - hiddenAt < FADE
     }
-    const dispose = () => { off(); built.dispose?.() }
+    const dispose = () => { off(); window.removeEventListener('pointerdown', onPress); window.removeEventListener('keydown', onPress); built.dispose?.() }
     return { ...built, api: { busy }, update, dispose }
   }, { fields: ['pos', 'name'] })
 }
