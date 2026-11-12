@@ -58,6 +58,15 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-12, night (the owner: "deploy when finished"): **Deployed:** commit 081f75f (the evening round;
+  Decisions, 12 Nov, evening), Pages run 43298898403 (success), URL 200, the live walk passed. `ready` ran
+  inside the deploy with `safe` skipped; lint 0 errors, 1 warning (slide 6's WORDS, the equations). Onto the
+  release before it: `data2019.mp4`, `finale.mp4`, `finale_loop.mp4` (all re-cut from the new takes) and the
+  plates of the new order. A first deploy attempt stopped at `shots` (the pan's box off the frame, an equation
+  17 px off the right, a fade interrupted by a press throwing in the toolkit's soundtrack); fixed in 081f75f,
+  the last by a guard in `setup/main.ts` (`holdOnOverlap`; for the toolkit: the same catch in soundtrack.js's
+  `release`). Slide 2's dust transition stays (the owner, after asking about it: "ah no, that's ok"). Not yet
+  heard by anyone: the bed's levels and its two cross-fades. The venue zip on the Mac is of fbc1267.
 - 2026-11-12, evening (the owner: "deploy"): **Deployed:** commit 1368cb5 (the 12 Nov round and the new order),
   Pages run 43287039315 (success), URL 200, the live walk passed. `ready` ran inside the deploy with `safe`
   skipped and passed. Before it, onto the release videos-2026-11-18-tokyo: `finale.mp4` (32 s),
