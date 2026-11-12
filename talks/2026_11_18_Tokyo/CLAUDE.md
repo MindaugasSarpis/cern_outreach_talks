@@ -58,6 +58,16 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-12 (the owner, on the Mac the talk is given from: "deploy latest, build locally on mac"):
+  **Deployed:** commit fbc1267 (the Dalitz plot's 2019 bands), Pages run 43185259851 (success), URL 200, the
+  live walk passed. `ready --skip safe` passed on it on the Mac (plates: "stale" and 18-plate "unsettled", as
+  before; the plate of slide 12 is the world alone and stays). The offline copy: `pnpm venue` there made
+  `2026_11_18_Tokyo-venue.zip` (246.5 MB, all 20 clips local) and `dist-portable/`; not yet opened by the
+  owner. The Mac (M2 Pro) was set up by hand, `scripts/bootstrap.sh` being Linux-only (bash 4, GNU stat and
+  realpath, a Linux micromamba): the env with `conda env create -f env.yaml`, the settings file written by
+  hand. Its headless Chromium needs `SLIDEV_STAGE_CHROMIUM_ARGS='--use-angle=metal'`: with XQuartz's DISPLAY
+  the launcher takes its llvmpipe backend, ANGLE on Apple's OpenGL, and every screenshot times out ("no
+  picture in 60000 ms"); through Metal the 18 shots pass.
 - 2026-11-11 (the owner: "Deploy"): **Deployed:** commit 17dfc95, Pages run 43102870314 (success), URL 200,
   the live walk passed all 18 slides (no failed requests, no lost context). Before it the 11 plates of the
   new take went onto the release videos-2026-11-18-tokyo (7 uploaded, 01, 06, 07 and 08 were unchanged; a
@@ -115,7 +125,8 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 - RIKEN's name on the globe beside the project's cities (Decisions, 11 Nov, 3).
 - The atoms clip's credit: the library says only "released/atoms.mov (outreach)".
 - Provenance and licence of `GellMannPhoto.png`, `ZweigPhoto.png` and the two passage scans (Figures).
-- Not played on a real Mac (none here): the three heavy scenes are clips and the live slides have plates.
+- Not played by the owner on the Mac yet (12 Nov: built there, and headless Chromium drew all 18 slides
+  through Metal): the live URL and the venue bundle in Chrome, on the projector's 1280 × 800 if it can be had.
 - Questions 7, 8, 10 and 11 of the 27 Oct list are about slides now hidden (`notes/history.md`).
 
 ## Arc
