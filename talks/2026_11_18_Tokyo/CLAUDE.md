@@ -58,6 +58,12 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13 (the owner's run of the morning; Decisions, 12 Nov late night, 4 and 5): **Deployed:** commit bd588b8,
+  Pages run 43308606903 (success), URL 200, the live walk passed; before it 3a8796d (the cover's sound), run
+  43306863408. `ready` inside each deploy with `safe` skipped; lint 0 errors, 1 warning (slide 6's WORDS).
+  Nothing new on the release. Not recorded again: the plates; not re-made: `recipes_end.jpg`, `dalitz_end.jpg`.
+  Not heard by anyone: any of the sound. Offered to the owner and waiting for content: the funders' line on the
+  last page, a slide of what the project does in 2026–2028, a photo of the Japanese side.
 - 2026-11-13, early (the owner: "deploy when finished"; "is the talk now deployed"): **Deployed:** commit ab410ee
   (the night rounds; Decisions, 12 Nov, night and late night), Pages run 43303375457 (success), URL 200, the
   live walk passed. `ready` ran inside the deploy with `safe` skipped; lint 0 errors, 1 warning (slide 6's
