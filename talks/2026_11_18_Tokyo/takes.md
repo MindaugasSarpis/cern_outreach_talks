@@ -59,14 +59,17 @@ space:
     - [5.1, { at: [1012, -481.5, 2.5], dist: 24.6, yaw: -10.5, pitch: 4 }]
     - [6.3, { at: [1012, -481.5, 2.5], dist: 19.5, yaw: -8, pitch: 4 }]   # 12 Nov: a push in on the crossing (5.4 s)
     - [10, { at: [1012, -481.5, 2.5], dist: 28, yaw: 2, pitch: 5 }]
-    - [13.5, { at: [1014, -479, 2.5], dist: 40, yaw: 12, pitch: 16 }]
-    - [17, { at: [1016, -474, 2.5], dist: 70, yaw: 18, pitch: 28 }]
+    - [15.2, { at: [1014, -479, 2.5], dist: 40, yaw: 12, pitch: 16 }]
+    - [18.7, { at: [1016, -474, 2.5], dist: 70, yaw: 18, pitch: 28 }]
 ---
 
 <!-- 3 · collision: the point-cloud detector (`detp`), the collision 1.2 s in, its particles going through the
      detector as the camera turns around it and draws back; the detector fades from 14.5 s (the cut's cross-fade
      into the world take). -->
-<InsideLhcb det="detp" :land-y="-470" :delay="1.2" :fade-at="14.5" />
+<!-- 13 Nov (the owner: "finale collision has to be slow-mo low sound, more substantial"): `freeze`, the world's rate
+     from the crossing: down to a twelfth for three seconds, back to full by 7.5 s (it was 1.6 s). The camera's path
+     keeps its own time. -->
+<InsideLhcb det="detp" :land-y="-470" :delay="1.2" :fade-at="16.2" :freeze="[[0, 0.3], [0.3, 0.08], [3.2, 0.1], [5.5, 0.35], [7.5, 1]]" />
 
 ---
 space:

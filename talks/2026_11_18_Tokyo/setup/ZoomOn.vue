@@ -26,7 +26,7 @@ function check() {
   clearInterval(timer); timer = null
   video.style.transformOrigin = `${props.at[0]}% ${props.at[1]}%`
   video.parentElement.style.overflow = 'hidden'
-  try { anim = video.animate([{ transform: 'scale(1)' }, { transform: `scale(${props.to})` }], { duration: props.seconds * 1000, delay: props.delay * 1000, easing: 'cubic-bezier(0.3, 0, 1, 1)', fill: 'forwards' })   // a soft start, then one steady pace to the end: it never slows to a stop } catch { anim = null }
+  try { anim = video.animate([{ transform: 'scale(1)' }, { transform: `scale(${props.to})` }], { duration: props.seconds * 1000, delay: props.delay * 1000, easing: 'cubic-bezier(0.3, 0, 1, 1)', fill: 'forwards' }) } catch { anim = null }   // a soft start, then one steady pace to the end: it never slows to a stop
 }
 function stop() { clearInterval(timer); timer = null; try { anim?.cancel() } catch { /* gone */ } anim = null; video = null }
 watch([active, live], ([a, l]) => { stop(); if (a && l) timer = setInterval(check, 200) }, { immediate: true })

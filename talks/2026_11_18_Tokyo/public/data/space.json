@@ -73,17 +73,7 @@
     "sway": 2
    },
    "gather": 1.2,
-   "objects": [
-    {
-     "type": "collider",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "radius": 7
-    }
-   ]
+   "objects": []
   },
   {
    "id": "atom",
@@ -98,31 +88,7 @@
     "pitch": 8,
     "sway": 2
    },
-   "objects": [
-    {
-     "type": "constellation",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "radius": 5,
-     "nodeRadius": 0.22,
-     "coreSize": 9,
-     "nodes": [
-      {
-       "pos": [
-        0.02,
-        0,
-        0
-       ],
-       "color": "#ffffff",
-       "core": "#ffffff"
-      }
-     ],
-     "haze": "#3d7fa6"
-    }
-   ]
+   "objects": []
   },
   {
    "id": "nucleus",
@@ -137,142 +103,7 @@
     "pitch": 8,
     "sway": 2
    },
-   "objects": [
-    {
-     "type": "constellation",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "radius": 3,
-     "nodeRadius": 0.34,
-     "speed": 0.4,
-     "nodes": [
-      {
-       "pos": [
-        0.55,
-        1.25,
-        0.0
-       ],
-       "color": "#ff8f7a",
-       "core": "#ffe9e4"
-      },
-      {
-       "pos": [
-        -0.88,
-        1.35,
-        0.81
-       ],
-       "color": "#9fb4c8",
-       "core": "#eef4fa"
-      },
-      {
-       "pos": [
-        0.16,
-        1.31,
-        -1.82
-       ],
-       "color": "#ff8f7a",
-       "core": "#ffe9e4"
-      },
-      {
-       "pos": [
-        0.82,
-        0.61,
-        1.07
-       ],
-       "color": "#9fb4c8",
-       "core": "#eef4fa"
-      },
-      {
-       "pos": [
-        -1.82,
-        0.48,
-        -0.33
-       ],
-       "color": "#ff8f7a",
-       "core": "#ffe9e4"
-      },
-      {
-       "pos": [
-        1.99,
-        0.2,
-        -1.26
-       ],
-       "color": "#9fb4c8",
-       "core": "#eef4fa"
-      },
-      {
-       "pos": [
-        -0.4,
-        -0.13,
-        1.52
-       ],
-       "color": "#ff8f7a",
-       "core": "#ffe9e4"
-      },
-      {
-       "pos": [
-        -0.91,
-        -0.51,
-        -1.74
-       ],
-       "color": "#9fb4c8",
-       "core": "#eef4fa"
-      },
-      {
-       "pos": [
-        2.11,
-        -1.03,
-        0.77
-       ],
-       "color": "#ff8f7a",
-       "core": "#ffe9e4"
-      },
-      {
-       "pos": [
-        -1.27,
-        -0.99,
-        0.52
-       ],
-       "color": "#9fb4c8",
-       "core": "#eef4fa"
-      },
-      {
-       "pos": [
-        0.6,
-        -1.6,
-        -1.27
-       ],
-       "color": "#ff8f7a",
-       "core": "#ffe9e4"
-      },
-      {
-       "pos": [
-        0.17,
-        -1.25,
-        0.52
-       ],
-       "color": "#9fb4c8",
-       "core": "#eef4fa"
-      }
-     ]
-    },
-    {
-     "type": "label",
-     "text": "Yukawa",
-     "pos": [
-      -6.2,
-      -1.75,
-      0
-     ],
-     "height": 0.6,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.06
-    }
-   ]
+   "objects": []
   },
   {
    "id": "proton",
@@ -288,44 +119,7 @@
     "sway": 3
    },
    "gather": 1.5,
-   "objects": [
-    {
-     "type": "pentaquark",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "radius": 2.2,
-     "quarkRadius": 0.62,
-     "quarks": [
-      {
-       "flavour": "u",
-       "pos": [
-        1.0,
-        0.6,
-        0.2
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        -1.0,
-        0.5,
-        -0.3
-       ]
-      },
-      {
-       "flavour": "d",
-       "pos": [
-        0.1,
-        -1.1,
-        0.3
-       ]
-      }
-     ]
-    }
-   ]
+   "objects": []
   },
   {
    "id": "families",
@@ -340,72 +134,7 @@
     "pitch": 3,
     "sway": 1.5
    },
-   "objects": [
-    {
-     "type": "pentaquark",
-     "pos": [
-      -3.8,
-      0,
-      0
-     ],
-     "radius": 1.6,
-     "quarkRadius": 0.7,
-     "quarks": [
-      {
-       "flavour": "u",
-       "pos": [
-        0.7,
-        0.3,
-        0
-       ]
-      },
-      {
-       "flavour": "dbar",
-       "pos": [
-        -0.7,
-        -0.3,
-        0.1
-       ]
-      }
-     ]
-    },
-    {
-     "type": "pentaquark",
-     "pos": [
-      3.8,
-      0,
-      0
-     ],
-     "radius": 2.0,
-     "quarkRadius": 0.7,
-     "quarks": [
-      {
-       "flavour": "u",
-       "pos": [
-        0.9,
-        0.5,
-        0.1
-       ]
-      },
-      {
-       "flavour": "d",
-       "pos": [
-        -0.9,
-        0.4,
-        -0.2
-       ]
-      },
-      {
-       "flavour": "s",
-       "pos": [
-        0.05,
-        -1.0,
-        0.25
-       ]
-      }
-     ]
-    }
-   ]
+   "objects": []
   },
   {
    "id": "sakata",
@@ -688,60 +417,7 @@
     "pitch": 2,
     "sway": 0.8
    },
-   "objects": [
-    {
-     "type": "pentaquark",
-     "pos": [
-      6.0,
-      0,
-      0.5
-     ],
-     "radius": 2.1,
-     "quarkRadius": 0.5,
-     "quarks": [
-      {
-       "flavour": "c",
-       "pos": [
-        0.75,
-        0.55,
-        0.2
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        0.25,
-        -0.95,
-        -0.55
-       ]
-      },
-      {
-       "flavour": "d",
-       "pos": [
-        0.95,
-        -0.2,
-        -0.75
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        -0.55,
-        0.8,
-        -0.6
-       ]
-      },
-      {
-       "flavour": "cbar",
-       "pos": [
-        -0.8,
-        -0.35,
-        0.4
-       ]
-      }
-     ]
-    }
-   ]
+   "objects": []
   },
   {
    "id": "interiors",
@@ -848,30 +524,7 @@
     "pitch": 0,
     "sway": 0
    },
-   "objects": [
-    {
-     "type": "collab-globe",
-     "name": "globe",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "src": "data/globe.json",
-     "radius": 3.8,
-     "roll": -6,
-     "coast": 1.25,
-     "land": 0.42,
-     "japan": 0.3,
-     "tour": [
-      [
-       0,
-       104,
-       44
-      ]
-     ]
-    }
-   ]
+   "objects": []
   },
   {
    "id": "project",
@@ -892,181 +545,7 @@
     "sway": 1.5
    },
    "gather": 1.0,
-   "objects": [
-    {
-     "type": "page",
-     "src": "/figures/vilnius_p.jpg",
-     "pos": [
-      -7.7,
-      0.9,
-      0
-     ],
-     "width": 6.2,
-     "height": 3.475,
-     "tone": "#d0d4da",
-     "halo": false
-    },
-    {
-     "type": "page",
-     "src": "/figures/nagoya_p.jpg",
-     "pos": [
-      7.7,
-      0.9,
-      0
-     ],
-     "width": 6.2,
-     "height": 3.475,
-     "tone": "#b8bcc2",
-     "halo": false
-    },
-    {
-     "type": "label",
-     "text": "Vilnius University",
-     "pos": [
-      -7.7,
-      -1.65,
-      0
-     ],
-     "height": 0.775,
-     "color": "#e8f6ff",
-     "upper": false,
-     "tracking": 0.05
-    },
-    {
-     "type": "label",
-     "text": "LHCb data",
-     "pos": [
-      -7.7,
-      -2.55,
-      0
-     ],
-     "height": 0.75,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.05
-    },
-    {
-     "type": "label",
-     "text": "Nagoya University",
-     "pos": [
-      7.7,
-      -1.65,
-      0
-     ],
-     "height": 0.775,
-     "color": "#e8f6ff",
-     "upper": false,
-     "tracking": 0.05
-    },
-    {
-     "type": "label",
-     "text": "theory",
-     "pos": [
-      7.7,
-      -2.55,
-      0
-     ],
-     "height": 0.75,
-     "color": "#cfeaff",
-     "upper": false,
-     "tracking": 0.05
-    },
-    {
-     "type": "pentaquark",
-     "pos": [
-      0,
-      0.5,
-      0
-     ],
-     "radius": 2.2,
-     "quarkRadius": 0.55,
-     "quarks": [
-      {
-       "flavour": "c",
-       "pos": [
-        0.75,
-        0.55,
-        0.2
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        0.25,
-        -0.95,
-        -0.55
-       ]
-      },
-      {
-       "flavour": "d",
-       "pos": [
-        0.95,
-        -0.2,
-        -0.75
-       ]
-      },
-      {
-       "flavour": "u",
-       "pos": [
-        -0.55,
-        0.8,
-        -0.6
-       ]
-      },
-      {
-       "flavour": "cbar",
-       "pos": [
-        -0.8,
-        -0.35,
-        0.4
-       ]
-      }
-     ]
-    },
-    {
-     "type": "tracks",
-     "pos": [
-      0,
-      0,
-      0
-     ],
-     "pulse": true,
-     "tracks": [
-      {
-       "points": [
-        [
-         -4.45,
-         0.6,
-         0
-        ],
-        [
-         -2.45,
-         0.5,
-         0
-        ]
-       ],
-       "color": "#9fe0ff",
-       "width": 1.6
-      },
-      {
-       "points": [
-        [
-         4.45,
-         0.6,
-         0
-        ],
-        [
-         2.45,
-         0.5,
-         0
-        ]
-       ],
-       "color": "#9fe0ff",
-       "width": 1.6
-      }
-     ]
-    }
-   ]
+   "objects": []
   }
  ]
 }

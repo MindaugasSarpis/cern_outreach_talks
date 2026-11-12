@@ -35,11 +35,12 @@ flock /tmp/slidev-stage-shots.lock node node_modules/slidev-addon-stage/bin/reco
 
 ```sh
 # 3. the cuts, into videos/raw/ (worktree root)
-ffmpeg -ss 0.8 -i videos/takes/tokyo_data_take.mp4 -an -c:v libx264 -preset slow -crf 14 -pix_fmt yuv420p -r 50 videos/raw/data2019.mp4
-ffmpeg -ss 4.4 -i videos/takes/tokyo_globe_tour.mp4 -an -c:v libx264 -preset slow -crf 14 -pix_fmt yuv420p -r 50 videos/raw/globe.mp4
+X='-c:v libx264 -preset slow -crf 17 -maxrate 9500k -bufsize 19M -x264-params aq-mode=3:aq-strength=1.1 -pix_fmt yuv420p -r 50'   # the web encode itself (13 Nov)
+ffmpeg -ss 0.8 -t 24 -i videos/takes/tokyo_data_take.mp4 -an ${=X} videos/raw/data2019.mp4
+ffmpeg -ss 4.4 -i videos/takes/tokyo_globe_tour.mp4 -an ${=X} videos/raw/globe.mp4
 talks/2026_11_18_Tokyo/videos/finale/segments.sh SCRATCH "$PWD" "$OUTREACH_ENV_BIN"     # finale.mp4 (32 s, with its sound) and finale_loop.mp4 (30 s)
 
-# 4. encode (the manifest trims data2019.mp4 to 24 s)
+# 4. encode (profile remux: the raws are copied)
 pnpm talk render -- pnpm -C talks/2026_11_18_Tokyo videos:encode -- --only data2019.mp4 globe.mp4 finale.mp4 finale_loop.mp4
 ```
 

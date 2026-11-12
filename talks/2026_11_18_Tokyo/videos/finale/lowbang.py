@@ -67,10 +67,12 @@ def voice(n, tc, tf, rng):
     # --boom (Tokyo, 12 Nov; the owner: "on slide 17 the collision more dramatic, timed on a low sound"): a larger hit on
     # the crossing, one a room's speakers carry: a body from 95 Hz down to 38 Hz with its octave, ringing for 2.6 s, and a
     # burst of low noise in its first half second
-    bf = np.where(t < tc, 95, ramp_exp(t, tc, tc + 0.6, 95, 38))
+    # (13 Nov, the owner: "finale collision has to be slow-mo low sound, more substantial": the hit as slow as the
+    # picture, falling from 80 Hz to 29 Hz over 2 s and ringing for 6 s, its noise a second and a half long)
+    bf = np.where(t < tc, 80, ramp_exp(t, tc, tc + 2.0, 80, 29))
     bph = 2 * np.pi * np.cumsum(np.where(t < tc, 0, bf)) / SR
-    bg = np.where(t < tc, 0, np.where(t < tc + 0.012, ramp_exp(t, tc, tc + 0.012, 1e-4, 1.0), ramp_exp(t, tc + 0.012, tc + 2.6, 1.0, 1e-4)))
-    ng = np.where(t < tc, 0, ramp_exp(t, tc, tc + 0.5, 0.8, 1e-4))
+    bg = np.where(t < tc, 0, np.where(t < tc + 0.012, ramp_exp(t, tc, tc + 0.012, 1e-4, 1.0), ramp_exp(t, tc + 0.012, tc + 6.0, 1.0, 2e-3)))
+    ng = np.where(t < tc, 0, ramp_exp(t, tc, tc + 1.5, 0.8, 1e-4))
     boom = bg * (np.sin(bph) + 0.45 * np.sin(2 * bph)) + ng * onepole_lp(b, np.full(n, 220.0)) * 2.0
     return 0.55 * swell + 0.6 * th_g * np.sin(th_ph) + 1.6 * boom
 

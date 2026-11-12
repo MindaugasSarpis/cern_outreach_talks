@@ -18,16 +18,23 @@
 # turning with the camera at rest, its last 2 s cross-faded into the take's 19.0 to 21.0 s, so the loop's end runs
 # into its own beginning and its first frame is the one after finale.mp4's last. 30 s, no sound. <ClipLoop> and
 # the last page play it.
+# 13 Nov (the owner: "now it's a bit blocky"): the clips were 1080p already; the blocks were the web encode's (NVENC, cq 25,
+# at most 8 Mbit/s) in the dark between the grains. The cuts are now encoded here once, at the web tier's ceiling (x264 slow,
+# crf 17, at most 9.5 Mbit/s, aq-mode 3, which spends bits on dark flat areas), and the manifest's profile is `remux`.
 #   usage: segments.sh SCRATCH WORKTREE ENV_BIN
 set -euo pipefail
 S=$1; W=$2; F=$3; mkdir -p "$S/fin"; cd "$S/fin"
-python3 -I "$W/talks/2026_11_18_Tokyo/videos/finale/lowbang.py" bang.wav 32.0 3.9:23.0:1 --boom
-"$F/ffmpeg" -v error -y -ss 1.5 -t 13.6 -i "$W/videos/takes/tokyo_collision_take.mp4" -ss 1.0 -t 20 -i "$W/videos/takes/tokyo_finale_world.mp4" -i bang.wav \
-  -filter_complex "[0:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[b];[1:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[c];[b][c]xfade=transition=fade:duration=1.6:offset=12.0,format=yuv420p[v]" \
-  -map "[v]" -map 2:a -c:v libx264 -preset slow -crf 14 -r 50 -c:a aac -b:a 192k -shortest "$W/videos/raw/finale.mp4"
+# 13 Nov (the owner: "finale collision has to be slow-mo low sound, more substantial"): the slow motion is the take's
+# own (takes.md slide 3, `freeze`: the world at a twelfth of its rate for three seconds from the crossing), so B runs
+# 16.0 s from 1.5 s (the crossing at 3.9 s of the cut), dissolving over 1.6 s at 14.4 s into C from 1.0 s (20 s): 34.4 s.
+# The hit is on 3.9 s, long and low (lowbang.py --boom), the drone held until the pentaquark has formed (25.4 s).
+python3 -I "$W/talks/2026_11_18_Tokyo/videos/finale/lowbang.py" bang.wav 34.4 3.9:25.4:1 --boom
+"$F/ffmpeg" -v error -y -ss 1.5 -t 16.0 -i "$W/videos/takes/tokyo_collision_take.mp4" -ss 1.0 -t 20 -i "$W/videos/takes/tokyo_finale_world.mp4" -i bang.wav \
+  -filter_complex "[0:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[b];[1:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[c];[b][c]xfade=transition=fade:duration=1.6:offset=14.4,format=yuv420p[v]" \
+  -map "[v]" -map 2:a -c:v libx264 -preset slow -crf 17 -maxrate 9500k -bufsize 19M -x264-params aq-mode=3:aq-strength=1.1 -pix_fmt yuv420p -r 50 -c:a aac -b:a 192k -t 34.4 "$W/videos/raw/finale.mp4"
 "$F/ffprobe" -v error -show_entries format=duration -of csv=p=0 "$W/videos/raw/finale.mp4"
 T="$W/videos/takes/tokyo_finale_world.mp4"
 "$F/ffmpeg" -v error -y -ss 21.0 -t 30 -i "$T" -ss 19.0 -t 2 -i "$T" \
   -filter_complex "[0:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[a];[1:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[b];[a][b]xfade=transition=fade:duration=2:offset=28,format=yuv420p[v]" \
-  -map "[v]" -an -c:v libx264 -preset slow -crf 14 -r 50 "$W/videos/raw/finale_loop.mp4"
+  -map "[v]" -an -c:v libx264 -preset slow -crf 17 -maxrate 9500k -bufsize 19M -x264-params aq-mode=3:aq-strength=1.1 -pix_fmt yuv420p -r 50 "$W/videos/raw/finale_loop.mp4"
 "$F/ffprobe" -v error -show_entries format=duration -of csv=p=0 "$W/videos/raw/finale_loop.mp4"

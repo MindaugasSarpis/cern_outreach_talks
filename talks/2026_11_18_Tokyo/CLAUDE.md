@@ -581,6 +581,33 @@ scheduler."
    three institutions and the three methods; its names, budget and plans stay in the private brief. The finale is
    slide 18 now, the last page 19; 19 slides, 14.7 of 15 min by the notes.
 
+7. 13 Nov, the owner's next run: "slide 15 shouldn't stop"; "finale collision has to be slow-mo low sound, more
+   substantial"; "maybe render everything in 1080 it's still gonna look good on lower res projector, now it's a bit
+   blocky … and then can be reused"; "clear the space of object not shown"; "the sountrack was just restarted to
+   make the buildup last, it went better in uzsikrauk karjerai".
+   - The globe: the zoom towards Japan takes over as the clip's own camera rests (15 s in) and keeps one pace for
+     four minutes, to 2× (`ZoomOn`'s `from`).
+   - The finale's collision: the take's own slow motion (`freeze` on takes.md slide 3: the world at a twelfth of
+     its rate for three seconds from the crossing; the recorder takes at most 120 frames a second, so slowing a
+     take afterwards would repeat frames), the cut 34.4 s (the collision part 16 s, the crossing at 3.9 s, the
+     pentaquark formed by 25.4 s, the flags from 24.9 s); the hit long and low (lowbang.py --boom: 80 → 29 Hz over
+     2 s, ringing 6 s); the music's close cut from 3:51.6 so its arrival still lands on the pentaquark formed.
+   - "Blocky": the recorded clips were 1080p50 already; the blocks were the web encode's (NVENC cq 25, at most
+     8 Mbit/s) in the dark between the grains. data2019, globe, finale and finale_loop are now encoded once from
+     their takes at the web tier's ceiling (x264 slow, crf 17, at most 9.5 Mbit/s, aq-mode 3) and copied
+     (`profile = "remux"`). If the owner meant the live slides recorded as clips too (7, 13, 14, 6), that is a
+     further step, not done.
+   - The world holds only what a visible slide shows: the objects of `lhc`, `atom`, `nucleus`, `proton`,
+     `families`, `lhcb`, `globe` and `project` left public/data/space.json (their stations stay, as poses); `hero`,
+     `sakata`, `paper`, `km` and `interiors` keep theirs. A hidden slide brought back needs its objects from git
+     (before this commit). The plates recorded again.
+   - Music: one bed again, `wonder_bed.m4a` (17.5 min), built by `videos/music/wonder_bed.py` as Karjera's
+     starfire_bed.py: the piece forward, stepping back whole four-bar phrases on its own bar grid (82 bpm, a bar
+     2.925 s, measured), never to its opening; ridden toward one loudness; −16 LUFS. `wonder_mild.m4a` and
+     `wonder_full.m4a` left. Levels per slide as before (0.16 … 0.45, the finale 0.8).
+   - A fault of mine on the way: 49dc7f6 (pushed, never deployed) had a broken line in ZoomOn.vue and did not
+     build; fixed in the next commit.
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

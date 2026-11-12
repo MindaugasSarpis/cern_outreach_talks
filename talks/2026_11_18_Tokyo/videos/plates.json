@@ -1,5 +1,5 @@
 {
-  "fingerprint": "f8fdf0da34af0509edd33a2badc677ca67faa49e",
+  "fingerprint": "7ae4914c60e4b50757d5081ee9f657fabdf38244",
   "fps": 25,
   "hold": 20,
   "slides": [
@@ -12,31 +12,34 @@
     8,
     13,
     14,
-    16
+    16,
+    17
   ],
   "bytes": {
-    "01-plate.mp4": 9557569,
-    "03-plate.mp4": 3555734,
-    "04-plate.mp4": 11586627,
-    "05-plate.mp4": 5733832,
-    "06-plate.mp4": 14495550,
-    "07-plate.mp4": 10002705,
-    "08-plate.mp4": 6522481,
-    "13-plate.mp4": 7681578,
-    "14-plate.mp4": 12919230,
-    "16-plate.mp4": 19554583
+    "01-plate.mp4": 9594615,
+    "03-plate.mp4": 3028014,
+    "04-plate.mp4": 11374273,
+    "05-plate.mp4": 5670714,
+    "06-plate.mp4": 7830232,
+    "07-plate.mp4": 4192617,
+    "08-plate.mp4": 6143416,
+    "13-plate.mp4": 3818222,
+    "14-plate.mp4": 11547624,
+    "16-plate.mp4": 3058442,
+    "17-plate.mp4": 3204471
   },
   "settle": {
     "01-plate.mp4": 1.92,
     "03-plate.mp4": 4.52,
     "04-plate.mp4": 6.76,
     "05-plate.mp4": 3.32,
-    "06-plate.mp4": 12.2,
-    "07-plate.mp4": 7.56,
+    "06-plate.mp4": 4.52,
+    "07-plate.mp4": 4.52,
     "08-plate.mp4": 4.52,
-    "13-plate.mp4": 3,
-    "14-plate.mp4": 7.56,
-    "16-plate.mp4": 40
+    "13-plate.mp4": 1.8,
+    "14-plate.mp4": 4.52,
+    "16-plate.mp4": 4.52,
+    "17-plate.mp4": 2.4
   },
   "capped": {
     "01-plate.mp4": false,
@@ -48,6 +51,7 @@
     "08-plate.mp4": false,
     "13-plate.mp4": false,
     "14-plate.mp4": false,
-    "16-plate.mp4": false
+    "16-plate.mp4": false,
+    "17-plate.mp4": false
   }
 }

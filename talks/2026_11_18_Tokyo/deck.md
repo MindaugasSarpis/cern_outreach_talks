@@ -78,11 +78,12 @@ space: { at: proton, dim: 0.2 }
 <VideoPlayer src="atoms_fast.mp4" muted :controls="false" />
 <!-- The music (12 Nov: "need some mild soundtrack for the theorists introduction … maybe just age of wonder throughout";
      13 Nov: "the soundtrack should be a bit milder throughout, a build-up mode"): Scott Buckley's „Age of Wonder“ from
-     here to the end, building. Slides 2 to 10: the piece's quiet opening, looped (audio/wonder_mild.m4a), low, a little
-     up from slide to slide (0.16 … 0.28; this clip 0.3). Slide 11 cross-fades into its fuller middle
-     (audio/wonder_full.m4a; 0.34 … 0.45 to slide 16). The finale cross-fades into its last build (wonder_close.m4a, 0.8).
+     here to the end, building: one bed (audio/wonder_bed.m4a, 16 min; videos/music/wonder_bed.py: the piece played
+     forward, stepping back whole four-bar phrases on its own bar grid where length is needed, never to its opening;
+     the owner, 13 Nov: "the sountrack was just restarted … it went better in uzsikrauk karjerai"), its level a little
+     up from slide to slide (0.16 … 0.45). The finale cross-fades into the piece's last build (wonder_close.m4a, 0.8).
      `+` / `-` set the level in the talk. The cover has the collision's own sound and no music. -->
-<StageSoundtrack src="audio/wonder_mild.m4a" :level="0.3" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.3" start keys />
 
 <!-- facts: proton-mass-quarks-1-percent -->
 
@@ -111,7 +112,7 @@ space: { at: sakata, dim: 0.15 }
 
 <div class="num tr">1956<span class="name">Nagoya</span></div>
 <div class="cap">Shoichi Sakata proposes a precursor to the quark model</div>
-<StageSoundtrack src="audio/wonder_mild.m4a" :level="0.16" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.16" start keys />
 
 <!-- facts: sakata-model-1956, sakata-nagoya-1956 -->
 
@@ -129,7 +130,7 @@ space: { at: paper, dim: 0.06 }
 
 <div class="num tr">1964<span class="name">quarks</span></div>
 <div class="cap r">Gell-Mann and Zweig propose the quark model</div>
-<StageSoundtrack src="audio/wonder_mild.m4a" :level="0.16" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.16" start keys />
 
 <!-- facts: quark-model-1964-papers, pentaquark-idea-1964 -->
 
@@ -158,7 +159,7 @@ space: { at: km, dim: 0.15 }
 
 <div class="num tr">1973<span class="name">six quarks</span></div>
 <div class="cap">Kobayashi and Maskawa propose six quarks, including the b quark</div>
-<StageSoundtrack src="audio/wonder_mild.m4a" :level="0.18" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.18" start keys />
 
 <!-- facts: kobayashi-maskawa-1973, kobayashi-maskawa-nagoya-phd, kobayashi-maskawa-nobel-2008, b-quark-1977, lhcb-b-for-beauty -->
 
@@ -215,7 +216,7 @@ $$T^\mu_{\ \mu} = \frac{\beta(g_s)}{2 g_s}\, G^a_{\mu\nu}G^{a\,\mu\nu} + \sum_q 
 
 </QcdStorm>
 <div class="cap">Quantum chromodynamics</div>
-<StageSoundtrack src="audio/wonder_mild.m4a" :level="0.2" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.2" start keys />
 
 <!-- facts: asymptotic-freedom-1973, alpha-s-world-average-2024, proton-mass-quarks-1-percent -->
 
@@ -241,7 +242,7 @@ space: { at: families, dim: 0.97 }   # the world nearly dark: the flat slide car
 ---
 
 <QuarkRecipes />
-<StageSoundtrack src="audio/wonder_mild.m4a" :level="0.22" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.22" start keys />
 
 <!-- facts: kaon-quark-content, lambda-b-contains-b, gellmann-1964-five-quark-sentence, exotic-hadrons-particle-zoo -->
 
@@ -270,7 +271,7 @@ space: { at: km, dim: 0.6 }
 <div class="num tr">2003<span class="name">KEK</span></div>
 <div class="cap">Belle discovers the X(3872), an exotic hadron candidate</div>
 </StagePhoto>
-<StageSoundtrack src="audio/wonder_mild.m4a" :level="0.22" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.22" start keys />
 
 <!-- facts: belle-cpv-2001, belle-x3872-2003, x3872-started-exotic-searches, theta-plus-leps-japan-19-events, leps-theta-not-confirmed -->
 
@@ -294,7 +295,7 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 <VideoPlayer src="cern_overview_swoosh.mp4" />
 <AtClipEnd :lead="0.6"><div class="veil tl"></div><div class="num tl">2018<span class="name">Lithuania: associate member</span></div></AtClipEnd>
 <div class="cap">CERN, Geneva: the world’s largest particle physics laboratory</div>
-<StageSoundtrack src="audio/wonder_mild.m4a" :level="0.26" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.26" start keys />
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lithuania -->
 
@@ -318,7 +319,7 @@ space: { at: lhc, dim: 0.25 }
   <div class="num">−271.3 °C<span class="name">magnets</span></div>
 </div>
 <div class="cap">The Large Hadron Collider, 100 m underground</div>
-<StageSoundtrack src="audio/wonder_mild.m4a" :level="0.28" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.28" start keys />
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lhc-size-cost, cern-lhc-energy, cern-lhc-cold, gave-cryo-lhc, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
 
@@ -349,7 +350,7 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 
 <!-- the clip's own music is off since 12 Nov: „Age of Wonder“ runs under the whole talk (slide 2's comment) -->
 <VideoPlayer src="lhcb.mp4" muted />
-<StageSoundtrack src="audio/wonder_mild.m4a" resync tail="audio/wonder_full.m4a" :tail-at="100000" :level="0.4" keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.4" start keys />
 <div class="cap">LHCb Experiment at CERN</div>
 
 <!--
@@ -371,7 +372,7 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
      over it, the three peaks lit. The axis and the names are HTML over the clip's settled end, so they stay sharp:
      the positions are the histogram's in the clip's last frame, in slide units; move them if the take's camera moves. -->
 <VideoPlayer src="data2019.mp4" muted :controls="false" transition="fade" />
-<StageSoundtrack src="audio/wonder_full.m4a" :level="0.45" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.45" start keys />
 <AtClipEnd :lead="5"><div class="spec-axis"><i style="left: 283.6px">4300</i><i style="left: 447.7px">4400</i><i style="left: 611.7px">4500</i><b>mass of J/ψ p (MeV)</b></div></AtClipEnd>
 <AtClipEnd :lead="4"><div class="spec-names"><i class="c" style="left: 300px; top: 112px">P<sub>c</sub>(4312)<sup>+</sup></i><i class="r" style="left: 498px; top: 44px">P<sub>c</sub>(4440)<sup>+</sup></i><i class="l" style="left: 556px; top: 22px">P<sub>c</sub>(4457)<sup>+</sup></i></div></AtClipEnd>
 <div class="cap">LHCb, 2019: the J/ψ p mass in Λ<sub>b</sub><sup>0</sup> → J/ψ p K<sup>−</sup> decays</div>
@@ -409,7 +410,7 @@ space: { at: lhcb, dim: 0.97 }
 <!-- 10 Nov (the owner: "on the next slide dynamically build up a dalitz plot in 3D space from 2019 result"):
      setup/Dalitz3D.vue, the paper's Dalitz plot digitised (public/data/dalitz-2019.json). -->
 <Dalitz3D />
-<StageSoundtrack src="audio/wonder_full.m4a" :level="0.34" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.34" start keys />
 <div class="cap">LHCb, 2019</div>
 
 <!-- facts: lhcb-pentaquark-2019 -->
@@ -435,7 +436,7 @@ space: { at: interiors, dim: 0.15, sway: 24 }   # the camera swings slowly round
 
 <!-- 10 Nov (the owner: "On slide 11 can also show hadroquarkonium, give this a bit more depth, maybe some slow
      orbiting around them"): three pictures named under them; the rhetorical caption left. -->
-<StageSoundtrack src="audio/wonder_full.m4a" :level="0.34" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.34" start keys />
 <div class="cap">Pentaquark: molecule, compact or hadroquarkonium</div>
 
 <!-- facts: lhcb-pentaquark-2019, pc-hadrocharmonium-picture -->
@@ -469,7 +470,7 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
      so the slide after rests on the clip's last view. Fade, not cut: a cut clip never announces that it
      covers the slide, so the world would draw on under it (Innoday, 22 Oct). -->
 <VideoPlayer src="globe.mp4" muted :controls="false" transition="fade" />
-<StageSoundtrack src="audio/wonder_full.m4a" :level="0.42" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.42" start keys />
 <!-- 11 Nov (the audience comes from Nagoya, Tokyo and RIKEN): the lit cities named once the globe rests (the clip
      from 15 s). The names are the slide's, over the clip's settled end, as slide 11's axis: the dots' places are
      the clip's last frame in slide units (Vilnius 290.7, 55.1; Nagoya 692.9, 326.1; Tokyo 705.8, 316.1; RIKEN's
@@ -514,7 +515,7 @@ space: { at: project, dim: 0.6 }
 <PanCanvas src="figures/vilnius_group.jpg" :focus="[50, 50]" />
 <div class="cap">The LHCb group at Vilnius University</div>
 </StagePhoto>
-<StageSoundtrack src="audio/wonder_full.m4a" :level="0.42" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.42" start keys />
 
 <!-- facts: lhcb-vilnius-joined, lhcb-vilnius-students -->
 
@@ -539,7 +540,7 @@ space: { at: project, dim: 0.6 }
 <div class="num tr">10<span class="name">theorists in Japan</span></div>
 <div class="cap">Nagoya University, RIKEN and Institute of Science Tokyo: meson-exchange models, the quark model, lattice QCD</div>
 </StagePhoto>
-<StageSoundtrack src="audio/wonder_full.m4a" :level="0.42" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.42" start keys />
 
 <!-- facts: sakata-nagoya-1956, kobayashi-maskawa-nagoya-phd -->
 
@@ -799,8 +800,8 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <ClipLoop src="finale_loop.mp4" />
 <!-- 12 Nov, evening (the owner: "japanese and lithuanian flags appearing in the background joined in the middle behind
      the pentaquark"): from 22.5 s, the pentaquark formed (setup/BehindFlags.vue); they stay over the loop and the last page -->
-<BehindFlags :at="22.5" />
-<StageSoundtrack src="audio/wonder_full.m4a" resync tail="audio/wonder_close.m4a" :tail-at="100000" :level="0.8" keys />
+<BehindFlags :at="24.9" />
+<StageSoundtrack src="audio/wonder_bed.m4a" resync tail="audio/wonder_close.m4a" :tail-at="100000" :level="0.8" keys />
 <AtClipEnd :lead="4.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
 
 <!--

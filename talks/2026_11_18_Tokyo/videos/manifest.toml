@@ -94,10 +94,9 @@ ffmpeg -i atoms.mp4 -filter_complex \
 # plain videos:sync here.
 [[videos]]
 name     = "data2019.mp4"
-profile  = "high-motion"
+profile  = "remux"   # the raw is the web encode itself (videos/finale/segments.sh, takes/README.md): x264 crf 17, at most 9.5 Mbit/s
 used_in  = ["deck"]
 loudnorm = false
-trim     = ["0:00", "0:24"]
 notes    = """\
 Slide 10 (owner, 10 Nov: "we want to have a peak from the fit. Also building up the histogram could be a bit more \
 substantial, maybe like in uzsikrauk karjerai, something like that (even involving the detector)"): 24 s, no \
@@ -108,7 +107,7 @@ on this clip's last frame."""
 
 [[videos]]
 name    = "globe.mp4"
-profile = "high-motion"
+profile = "remux"   # the raw is the web encode itself (videos/finale/segments.sh, takes/README.md): x264 crf 17, at most 9.5 Mbit/s
 used_in = ["deck"]
 loudnorm = false
 notes   = """\
@@ -120,7 +119,7 @@ contour. The globe take, takes.md slide 4, from 4.4 s (the photo's dissolve left
 
 [[videos]]
 name    = "finale.mp4"
-profile = "high-motion"
+profile = "remux"   # the raw is the web encode itself (videos/finale/segments.sh, takes/README.md): x264 crf 17, at most 9.5 Mbit/s
 used_in = ["deck"]
 loudnorm = false
 notes   = """\
@@ -137,7 +136,7 @@ slide's, not the clip's."""
 
 [[videos]]
 name    = "finale_loop.mp4"
-profile = "high-motion"
+profile = "remux"   # the raw is the web encode itself (videos/finale/segments.sh, takes/README.md): x264 crf 17, at most 9.5 Mbit/s
 used_in = ["deck"]
 loudnorm = false
 notes   = """\
@@ -217,4 +216,11 @@ profile   = "remux"
 used_in   = ["slide 16"]
 generated = true
 notes     = "the world of slide 16 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+
+[[videos]]
+name      = "17-plate.mp4"
+profile   = "remux"
+used_in   = ["slide 17"]
+generated = true
+notes     = "the world of slide 17 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 # <<< plates
