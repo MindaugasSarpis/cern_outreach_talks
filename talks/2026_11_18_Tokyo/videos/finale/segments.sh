@@ -10,14 +10,24 @@
 #   C  videos/takes/tokyo_finale_world.mp4, takes.md slide 5: Japan close, the camera drawing back to the whole
 #      Earth, its grains gathering into the cover's pentaquark (from 6.5 s).
 # The join: B from 1.5 s (the crossing at 3.9 s of the cut) to its dark, dissolving over 1.6 s into C from 1.0 s at
-# 12.0 s; C runs 18 s: 30 s in all. The sound is the shared opening's low bang (lowbang.py): the swell, the thump
+# 12.0 s; C runs 20 s (to the take's 21.0 s, two seconds after its camera has come to rest): 32 s in all. The sound is the shared opening's low bang (lowbang.py): the swell, the thump
 # on the crossing at 3.9 s, the drone held until the pentaquark has formed (23 s) and let go. The thanks are the
 # slide's. After a new cut, slide 17's still: takes/README.md, "What depends on what".
+# 12 Nov (the owner: "Slide 17 should continue playing"): the world take is recorded with a 52 s hold (54 s), and
+# finale_loop.mp4 is cut from what follows the finale's last frame: the take's 21.0 to 51.0 s, the pentaquark
+# turning with the camera at rest, its last 2 s cross-faded into the take's 19.0 to 21.0 s, so the loop's end runs
+# into its own beginning and its first frame is the one after finale.mp4's last. 30 s, no sound. <ClipLoop> and
+# the last page play it.
 #   usage: segments.sh SCRATCH WORKTREE ENV_BIN
 set -euo pipefail
 S=$1; W=$2; F=$3; mkdir -p "$S/fin"; cd "$S/fin"
-python3 -I "$W/talks/2026_11_18_Tokyo/videos/finale/lowbang.py" bang.wav 30.0 3.9:23.0:1
-"$F/ffmpeg" -v error -y -ss 1.5 -t 13.6 -i "$W/videos/takes/tokyo_collision_take.mp4" -ss 1.0 -t 18 -i "$W/videos/takes/tokyo_finale_world.mp4" -i bang.wav \
+python3 -I "$W/talks/2026_11_18_Tokyo/videos/finale/lowbang.py" bang.wav 32.0 3.9:23.0:1
+"$F/ffmpeg" -v error -y -ss 1.5 -t 13.6 -i "$W/videos/takes/tokyo_collision_take.mp4" -ss 1.0 -t 20 -i "$W/videos/takes/tokyo_finale_world.mp4" -i bang.wav \
   -filter_complex "[0:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[b];[1:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[c];[b][c]xfade=transition=fade:duration=1.6:offset=12.0,format=yuv420p[v]" \
   -map "[v]" -map 2:a -c:v libx264 -preset slow -crf 14 -r 50 -c:a aac -b:a 192k -shortest "$W/videos/raw/finale.mp4"
 "$F/ffprobe" -v error -show_entries format=duration -of csv=p=0 "$W/videos/raw/finale.mp4"
+T="$W/videos/takes/tokyo_finale_world.mp4"
+"$F/ffmpeg" -v error -y -ss 21.0 -t 30 -i "$T" -ss 19.0 -t 2 -i "$T" \
+  -filter_complex "[0:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[a];[1:v]fps=50,format=yuv420p,setpts=PTS-STARTPTS[b];[a][b]xfade=transition=fade:duration=2:offset=28,format=yuv420p[v]" \
+  -map "[v]" -an -c:v libx264 -preset slow -crf 14 -r 50 "$W/videos/raw/finale_loop.mp4"
+"$F/ffprobe" -v error -show_entries format=duration -of csv=p=0 "$W/videos/raw/finale_loop.mp4"

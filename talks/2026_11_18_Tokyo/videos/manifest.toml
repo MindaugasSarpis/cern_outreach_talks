@@ -125,13 +125,24 @@ notes   = """\
 The finale (10 Nov, the owner: "Reimagine the finale, now it's not good. Use the LHCb collision, use the world \
 rendered, maybe the world turns into a pentaquark when zoomed out and then thank you appears in japanese and \
 lithuanian"; then "just need a smoother transition from the collision (maybe show more of it, particles \
-propagating through detector, something like that)"), 30 s, with its sound: LHCb at eye level and its collision, \
+propagating through detector, something like that)"), 32 s, with its sound: LHCb at eye level and its collision, \
 the particles going through the detector as the camera turns round it and draws back (the collision take, \
 takes.md slide 3, 1.5-15.1 s); a 1.6 s dissolve at 12.0 s into the world of grains on Japan (the world take, \
 takes.md slide 5, from 1.0 s), the camera drawing back to the whole Earth, whose grains leave it from 17.5 s and \
-gather into the cover's pentaquark (formed by 23 s). The sound is the shared opening's low bang (lowbang.py: the \
+gather into the cover's pentaquark (formed by 23 s); 32 s since 12 Nov, the last 2 s the pentaquark turning with the camera at rest, where finale_loop.mp4 takes over. The sound is the shared opening's low bang (lowbang.py: the \
 thump on the crossing at 3.9 s, the drone held to 23 s). Cut: videos/finale/segments.sh. The thanks are the \
 slide's, not the clip's."""
+
+[[videos]]
+name    = "finale_loop.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+loudnorm = false
+notes   = """\
+Slides 17 and 18 (owner, 12 Nov: "Slide 17 should continue playing"): the pentaquark turning on after the \
+finale, a 30 s loop, no sound. The world take (takes.md slide 5, recorded with a 52 s hold) from 21.0 s, the \
+frame after finale.mp4's last, to 51.0 s, its last 2 s cross-faded into the take's 19.0-21.0 s so the end runs \
+into the beginning. Cut: videos/finale/segments.sh. <ClipLoop> starts it as finale.mp4 ends; the last page loops it."""
 
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 
@@ -178,11 +189,11 @@ generated = true
 notes     = "the world of slide 10 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
-name      = "12-plate.mp4"
+name      = "11-plate.mp4"
 profile   = "remux"
-used_in   = ["slide 12"]
+used_in   = ["slide 11"]
 generated = true
-notes     = "the world of slide 12 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 11 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "13-plate.mp4"
@@ -192,11 +203,11 @@ generated = true
 notes     = "the world of slide 13 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
-name      = "15-plate.mp4"
+name      = "14-plate.mp4"
 profile   = "remux"
-used_in   = ["slide 15"]
+used_in   = ["slide 14"]
 generated = true
-notes     = "the world of slide 15 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
+notes     = "the world of slide 14 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 
 [[videos]]
 name      = "16-plate.mp4"
@@ -204,11 +215,4 @@ profile   = "remux"
 used_in   = ["slide 16"]
 generated = true
 notes     = "the world of slide 16 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
-
-[[videos]]
-name      = "18-plate.mp4"
-profile   = "remux"
-used_in   = ["slide 18"]
-generated = true
-notes     = "the world of slide 18 alone, recorded by slidev-stage-record at 1080p25 with a 20 s hold: the stage plays it where WebGL is missing"
 # <<< plates

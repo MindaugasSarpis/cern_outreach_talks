@@ -265,9 +265,12 @@ function dispose() {
   scene.traverse((o) => { o.geometry?.dispose?.(); o.material?.dispose?.() })
   renderer.dispose(); renderer.forceContextLoss?.(); renderer = null
 }
+// 12 Nov: the renderer is kept while the component lives (as QuarkRecipes.vue, where the owner saw it: "not
+// refreshable"). Ending it with forceContextLoss() on leaving left the <canvas> with a lost context, and the
+// renderer made on the next visit drew nothing. The context is given up only on unmount.
 watch([active, live], ([on, isLive]) => {
-  if (on && isLive) requestAnimationFrame(() => start())
-  else { stop(); if (!on) dispose() }
+  if (on && isLive) requestAnimationFrame(() => { if (active.value && live.value) start() })
+  else stop()
 })
 onMounted(() => { if (active.value && live.value) start() })
 onBeforeUnmount(dispose)

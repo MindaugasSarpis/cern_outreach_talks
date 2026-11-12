@@ -259,19 +259,6 @@
      ]
     },
     {
-     "type": "page",
-     "src": "/figures/yukawa.jpg",
-     "pos": [
-      -6.2,
-      0.4,
-      0
-     ],
-     "width": 2.4,
-     "height": 3.2,
-     "tone": "#d0d4da",
-     "halo": false
-    },
-    {
      "type": "label",
      "text": "Yukawa",
      "pos": [

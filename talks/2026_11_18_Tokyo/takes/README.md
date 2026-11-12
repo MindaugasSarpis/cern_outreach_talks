@@ -31,16 +31,16 @@ flock /tmp/slidev-stage-shots.lock node node_modules/slidev-addon-stage/bin/reco
 | data | 2 | 26 | 28 | `videos/takes/tokyo_data_take.mp4` |
 | collision | 3 | 26 | 28 | `videos/takes/tokyo_collision_take.mp4` |
 | globe | 4 | 23 | 25 | `videos/takes/tokyo_globe_tour.mp4` |
-| world | 5 | 22 | 24 | `videos/takes/tokyo_finale_world.mp4` |
+| world | 5 | 52 | 54 | `videos/takes/tokyo_finale_world.mp4` (12 Nov: the long hold is the loop's source) |
 
 ```sh
 # 3. the cuts, into videos/raw/ (worktree root)
 ffmpeg -ss 0.8 -i videos/takes/tokyo_data_take.mp4 -an -c:v libx264 -preset slow -crf 14 -pix_fmt yuv420p -r 50 videos/raw/data2019.mp4
 ffmpeg -ss 4.4 -i videos/takes/tokyo_globe_tour.mp4 -an -c:v libx264 -preset slow -crf 14 -pix_fmt yuv420p -r 50 videos/raw/globe.mp4
-talks/2026_11_18_Tokyo/videos/finale/segments.sh SCRATCH "$PWD" "$OUTREACH_ENV_BIN"     # finale.mp4, 30 s, with its sound
+talks/2026_11_18_Tokyo/videos/finale/segments.sh SCRATCH "$PWD" "$OUTREACH_ENV_BIN"     # finale.mp4 (32 s, with its sound) and finale_loop.mp4 (30 s)
 
 # 4. encode (the manifest trims data2019.mp4 to 24 s)
-pnpm talk render -- pnpm -C talks/2026_11_18_Tokyo videos:encode -- --only data2019.mp4 globe.mp4 finale.mp4
+pnpm talk render -- pnpm -C talks/2026_11_18_Tokyo videos:encode -- --only data2019.mp4 globe.mp4 finale.mp4 finale_loop.mp4
 ```
 
 Look at each take on a contact sheet before cutting it (`ffmpeg -i TAKE -vf "fps=1,scale=480:-1,tile=6x5"
@@ -60,7 +60,9 @@ The raws are these cuts, not on gdrive: never a plain `videos:sync` here.
   forms on Europe (`tour` from `[40, 50]`: Vilnius left of the middle, Tokyo just inside the right limb),
   holds until the strand is drawn (7.5 s), and turns east to `[104, 44]` by 19.5 s, the seconds counted
   from the photo sequence's start (`tourFrom: cue`), so the turn and the slide's camera path share a clock.
-- **`public/figures/finale_end.jpg`** (slide 17) is the finale clip's last frame. After a new cut:
+- **`finale_loop.mp4`** begins on the frame after `finale.mp4`'s last (the world take's 21.0 s): a new finale
+  cut means a new loop, which `segments.sh` makes with it. The last page plays the loop.
+- **`public/figures/finale_end.jpg`** (`<CloseStill>`, not in the deck since 12 Nov) is the finale clip's last frame. After a new cut:
   `ffmpeg -sseof -0.1 -i videos/raw/finale.mp4 -frames:v 1 -q:v 2 talks/2026_11_18_Tokyo/public/figures/finale_end.jpg`.
 - **The histogram's data** is `takes/data/jpsip-2019-fit.json`, made by `bake/fit_2019.py` from HEPData
   ins1728691, Table 3 (LHCb, PRL 122 (2019) 222001).

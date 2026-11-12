@@ -58,6 +58,16 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-12, later (the owner's seven points; Decisions, 12 Nov): on `talk/tokyo`, **not deployed, nothing
+  published**. 18 slides, 14.4 of 15 min, lint 0/0, `talk check` ok. Checked in a browser on a build with the
+  local encodes (d3d12): the recipes draw on a first visit, a visit back and a reload; the QCD curve; the
+  finale handing over to its loop (the clip ended at 32 s, the loop running, the thanks up) and the loop on the
+  last page; the music playing on 5, 12 and 17, silent on the slides after 5 and 12, carried from 17 onto 18.
+  Not heard by anyone: the music's levels (0.6 under the two clips, 0.85 on the finale; `+` / `-` in the talk)
+  and where its swells fall are set from the track's loudness curve, not by ear. Before a deploy: publish
+  `finale.mp4` (re-cut, 32 s), `finale_loop.mp4` (new) and the plates of the new take, `--only`, with the deploy
+  (Verify); until then the live deck plays the 30 s finale and has no loop (`<ClipLoop>` finds no file and
+  stays out). `public/stills/` (16, of 5 Nov) were not re-made.
 - 2026-11-12 (the owner, on the Mac the talk is given from: "deploy latest, build locally on mac"):
   **Deployed:** commit fbc1267 (the Dalitz plot's 2019 bands), Pages run 43185259851 (success), URL 200, the
   live walk passed. `ready --skip safe` passed on it on the Mac (plates: "stale" and 18-plate "unsettled", as
@@ -111,6 +121,9 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ### Open
 
+- From 12 Nov: the music's levels and cut points were not heard by anyone; "effect across the board" and the
+  globe's caption (Decisions, 12 Nov, 2 and 7); the 11 Nov list below keeps its slide numbers (its 9 to 16 are
+  now 10 to 17, its "slide 16" hidden).
 - From the 11 Nov review, for the owner, none of it done (each changes a slide the owner has reviewed):
   slide 11 without the Σc⁺D̄⁰ and Σc⁺D̄*⁰ thresholds the 2019 figure marks (fact `pc-2019-near-thresholds`;
   the molecule's case and the hand-over to the next talk); no slide says what the project measures or what
@@ -132,16 +145,19 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 ## Arc
 
 1 cover: the CMS collision, the pentaquark out of its flash · 2 the CERN clip with its swoosh, 2018 at its
-end · 3 the LHC tunnel: 27 km, 13.6 TeV, −271.3 °C · 4 lhcb.mp4 with its music · 5 atoms_fast.mp4 · 6 Sakata,
-1956 · 7 Gell-Mann and Zweig, 1964 · 8 Kobayashi and Maskawa, 1973 · 9 Belle at KEK, 2003: the X(3872)
-(back on 11 Nov) · 10 the six quarks and their recipes in 3D, the pentaquark full screen · 11 data2019.mp4:
-LHCb, a collision, the 2019 histogram, its fit and three peaks · 12 the 2019 Dalitz plot in 3D · 13 molecule,
-compact, hadroquarkonium · 14 globe.mp4, "Lithuania and Japan", the cities and RIKEN named at its end ·
-15 the Vilnius group · 16 the project, 2026–2028 · 17 finale.mp4 · 18 thanks and credits.
+end · 3 the LHC tunnel: 27 km, 13.6 TeV, −271.3 °C · 4 lhcb.mp4 with its music · 5 atoms_fast.mp4, music ·
+6 Sakata, 1956 · 7 Gell-Mann and Zweig, 1964 · 8 Kobayashi and Maskawa, 1973 · 9 QCD: the strong coupling
+against the energy scale (new, 12 Nov) · 10 Belle at KEK, 2003: the X(3872) · 11 the six quarks and their
+recipes in 3D, the pentaquark full screen · 12 data2019.mp4: LHCb, a collision, the 2019 histogram, its fit
+and three peaks, music · 13 the 2019 Dalitz plot in 3D · 14 molecule, compact, hadroquarkonium · 15 globe.mp4,
+the cities and RIKEN named at its end, the project's name, years and funders in the caption · 16 the Vilnius
+group · 17 finale.mp4, music, then its loop · 18 thanks and credits over the loop.
 
-18 slides, 14.6 min by the notes and clips (`pnpm talk map tokyo`). **Since 11 Nov every slide from the old 9
-on is one higher**: the Decisions of 10 Nov below, the code comments and `takes/README.md` keep the numbers
-of their day (their "slide 10" is the data clip, now 11; "slide 13" the globe, now 14). Eleven more are
+18 slides, 14.4 min by the notes and clips (`pnpm talk map tokyo`). **Since 11 Nov every slide from the old 9
+on is one higher, and since 12 Nov every slide from Belle to the group photo one higher again**: the Decisions
+of 10 and 11 Nov below, the code comments and `takes/README.md` keep the numbers of their day (10 Nov's
+"slide 10" is the data clip, now 12; its "slide 13" the globe, now 15). The project slide (2026–2028) is hidden
+since 12 Nov. Eleven more are
 hidden (`hide: true`, not deleted; remove the line to bring one back): the Vilnius zoom out and the coming
 back, the LHCb detector (5 600 t), Lithuania at CERN (2018), the collaboration (1 891), the atom, Yukawa
 (1935), the two hadron families, the molecule close-up, the SciFi's Hamamatsu channels (524 288), open data
@@ -167,6 +183,7 @@ Every number on a slide, with its source. Search the facts bank first
 | 1935 | Yukawa's meson paper (proposed 1934) | J-STAGE; Osaka University | 2026-10-26 | yukawa-meson-1935, yukawa-meson-announced-1934 | OK |
 | 1956 | Sakata's model, Nagoya | PTP 16 (1956) 686; Nobel background 2008 | 2026-10-26 | sakata-model-1956, sakata-nagoya-1956 | OK |
 | 1973, six quarks | Kobayashi–Maskawa (submitted 1 Sep 1972) | PTP 49 (1973) 652; nobelprize.org | 2026-10-26 | kobayashi-maskawa-1973 | OK |
+| α_s = 0.118 at 91 GeV; the curve | slide 9: the PDG's world average α_s(M_Z) = 0.1180 ± 0.0009 (2024); the curve is two-loop running from it (MS-bar; n_f steps at 4.18 and 1.27 GeV), 1 TeV to 1 GeV, computed here (0.444 at 1 GeV, 0.313 at the τ mass). The dashed line: the proton's mass, 0.938 GeV | pdg.lbl.gov (RPP 2024, QCD review); nobelprize.org (2004) | 2026-11-12 | alpha-s-world-average-2024, asymptotic-freedom-1973 | OK; the PDG value read from a 2025 summary of it and FLAG 2024, not from the PDG's own page |
 | 2003 | Belle's X(3872) at KEK | PRL 91 (2003) 262001; PDG | 2026-10-26 | belle-x3872-2003, x3872-started-exotic-searches | OK |
 | 2018 | Lithuania a CERN Associate Member State (8 Jan 2018) | home.cern | 2026-10-27 | cern-lithuania | OK |
 | 5 600 t | LHCb detector's weight | home.cern | 2026-10-27 | lhcb-detector-size | OK |
@@ -227,7 +244,16 @@ needs moves to the shared kit instead of being copied.
   `<CollabGlobe>` starting its photo's sequence. `afterCover.js`'s `places` latch keeps the heavy data off
   the cover.
 - `setup/look.js`: the ground's glows lowered, the dust nearest the camera capped (Decisions, second round).
-- `setup/CloseStill.vue` (Innoday's): slide 17, the finale clip's last frame with the world resting.
+- `setup/CloseStill.vue` (Innoday's): the finale clip's last frame with the world resting; not in the deck
+  since 12 Nov (the last page plays the loop), kept registered.
+- `setup/QcdCoupling.vue` (12 Nov): slide 9, the strong coupling against the energy scale, an SVG drawn as
+  the slide opens (the curve's 61 points are in the file, with how they were computed).
+- `setup/ClipLoop.vue` (12 Nov): slide 17, `finale_loop.mp4` taking over as `finale.mp4` ends. The loop's
+  address is the clip's own with the file's name changed, so it plays from wherever the player found the clip.
+- `public/audio/wonder_open.m4a`, `wonder_build.m4a`, `wonder_close.m4a` (12 Nov): Scott Buckley, „Age of
+  Wonder“ (CC BY 4.0; https://www.scottbuckley.com.au/library/age-of-wonder, the full mix's MP3), one gain for
+  the whole piece (−3.51 dB: −16 LUFS integrated) and three cuts: 0:00–1:35; 1:27.3–2:44; 3:54 to the end.
+  Played by the toolkit's `<StageSoundtrack>`, started by each slide's clip (`clip-at`).
 - `setup/takes/`, `takes.md`, `takes/`: the deck of the three recorded scenes, their code (LHCb's grains and
   mesh, its collision, the histogram) and data. `takes/README.md`: how to build, record and cut them, and what
   in the deck depends on them. None of it is in the deck's site.
@@ -331,6 +357,53 @@ tidy this talk up".
     grain went to 0 (point 4). A skipped step needs the owner's word for the deploy. For the CLI: a
     headmatter `broadcast: false` that wins over the grain. The plates read "stale" after every edit of
     this file, which is in the take's fingerprint though no plate shows it.
+
+## Decisions, 12 Nov (the owner's seven points)
+
+The owner: "Slide 17 should continue playing, also we should have some soundtrack, effect across the board.
+Slide 5 some soundtrack (maybe this age of wonder). On transition to 6 a photo of yukawa flashes. After
+Kobayashi, Masakawaa, a slide just highlighting how difficult is QCD. Slide 10 too colorful, need to be a bit
+more blue, dark blue, see through, photo realistic, and also it's not refreshable for some reason. slide 11
+need some soundtrack. Slide 16 not just Nagoya, it's more institutes across japan now, maybe we should not
+show this at all since we have slide 17". Then, on Yukawa: "Yukawa shouldn't flash that's the thing. it's just
+there somewhere in space. not needed". The numbers are the deployed deck's (fbc1267).
+
+1. The finale goes on moving. `finale.mp4` is 32 s (2 s more of the pentaquark with the camera at rest), and as
+   it ends `finale_loop.mp4` takes over (`<ClipLoop>`): 30 s of the same take, its end cross-faded into its
+   beginning, its first frame the one after the finale's last. The world take was recorded again with a 52 s
+   hold (`videos/takes/tokyo_finale_world.mp4`, 54 s; the 24 s one kept as `…_24s.mp4`). The last page plays
+   the loop in place of the still. Not chosen: the live world under the last page (the finale's pentaquark is
+   made of the globe's grains, softer in tint than the cover's, so the hand-over would show; and the Mac).
+2. Music: Scott Buckley's „Age of Wonder“ (the owner's "this age of wonder"; CC BY 4.0, credited on the last
+   page), one piece in three cuts: its top under the atoms clip (slide 5), 1:27 on under the data clip (slide
+   12; its swell at 1:46 as the fit is drawn), 3:54 on under the finale (its arrival at 4:16.5 as the
+   pentaquark has formed, 22.5 s) and to the piece's end over the loop and the last page. Each starts with its
+   slide's clip, goes on under the speaker after the clip ends and fades when the slide is left. This ends
+   5 Nov's "no music". "Effect across the board" is read as the stage's own sounds: the rising tone as a clip
+   condenses is on again (`stage.sound.clip`); the flights' whoosh stays off, the sound the owner called
+   "driving sounds" on 13 Oct. Open: whether more is meant (a sound on the cover's collision, the globe, the
+   recipes).
+3. Yukawa's portrait left the world. It was a page at the `nucleus` station (x 68.8), kept for a slide hidden
+   since 5 Nov, and the camera showed it on the way to Sakata. The hidden slide's `hide:` comment says how to
+   put it back. (First read as a request for a flash of the portrait; a component for that was written and
+   removed on the owner's correction.)
+4. A new slide 9 after Kobayashi and Maskawa: the strong coupling against the energy scale, one curve drawn
+   from 1 TeV down to 1 GeV, "α_s = 0.118 at 91 GeV", the proton's mass as a dashed line, "LHC collisions:
+   perturbation theory" and "hadrons: no expansion in α_s"; caption "QCD: at the scale of hadrons the coupling
+   is no longer small". Figures has the numbers. Its notes carry sources and the minutes, with one paragraph
+   of what the picture shows (asymptotic freedom, 1973, the year of slide 8).
+5. The recipes (now slide 11): every quark a ball of dark blue glass (see-through in the middle, dense at the
+   edge, a polished coat; hues from cyan to indigo, the flavour read from its letter), an antiquark the same
+   glass nearly empty. "Not refreshable": leaving the slide ended the renderer with `forceContextLoss()`, and
+   a canvas keeps its one WebGL context, so every later start drew into a lost one. The renderer is now kept
+   while the component lives; the Dalitz plot had the same fault and the same fix. `recipes_end.jpg` re-made.
+6. The data clip's music: point 2.
+7. The project slide (2026–2028, the two universities' pictures) is hidden. The globe names Vilnius, RIKEN,
+   Tokyo and Nagoya, and its caption now reads "Lithuania and Japan: Penta-Charm, 2026–2028, funded by the
+   Research Council of Lithuania and JSPS", so the name, years and funders stay on screen once. The owner's
+   "since we have slide 17" is read as the globe. Open: whether the caption should stay "Lithuania and Japan"
+   alone (the owner's of 10 Nov), with the funders only said.
+8. The plates were recorded again (the slides from 9 on moved).
 
 ## Decisions, 11 Nov (the audience)
 

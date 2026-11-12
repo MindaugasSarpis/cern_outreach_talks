@@ -25,7 +25,10 @@ stage:
   # maxBufferWidth: the drawing buffer at most 1920 wide, a projector's 1080p in full, a Retina Mac's screen at a
   # little over half its pixels (owner, 27 Oct: "make sure it works on a mac"; Innoday's fix for the M2's lag, 22 Oct)
   options: { maxBufferWidth: 1920, grain: 0, aberration: 0, bloom: 0.32, density: 0.6 }
-  sound: { flight: false, clip: false }   # the hum only (5 Nov: the room's audio may be poor; as Karjera and OpenData, "transitions were like driving sounds")
+  # 12 Nov (the owner: "we should have some soundtrack, effect across the board"): the rising tone as a clip condenses is on
+  # again, with the music on slides 5, 12 and 17 (<StageSoundtrack>). The flights' whoosh stays off: it is the sound the
+  # owner heard as "driving sounds" at Karjera and OpenData (13 Oct).
+  sound: { flight: false, clip: true }
   motion: floor   # v0.11 (owner, 5 Nov: "use the most up-to-date tools"): under reduced motion the world runs, floored; without WebGL the slides' recorded plates play
 title: "Lithuania and Japan: pentaquarks"
 lang: en                  # slides and notes; `pnpm talk lint` reads it
@@ -144,6 +147,9 @@ space: { at: proton, dim: 0.2 }
      the caption "A proton: three quarks, never seen alone" left (a marketing line). atoms_fast.mp4: the
      library's atoms.mp4 (a hair down to the quarks of a proton) sped up; it ends on the proton and waits. -->
 <VideoPlayer src="atoms_fast.mp4" muted :controls="false" />
+<!-- 12 Nov (the owner: "Slide 5 some soundtrack (maybe this age of wonder)"): Scott Buckley's „Age of Wonder“ from
+     its top, started with the clip; it goes on under the speaker after the clip ends and fades on leaving. `+` / `-`. -->
+<StageSoundtrack src="audio/wonder_open.m4a" :level="0.6" :clip-at="0.05" keys />
 
 <!-- facts: proton-mass-quarks-1-percent -->
 
@@ -229,6 +235,31 @@ nobelprize.org; home.cern. (~0.75 min)
 -->
 
 ---
+space: { at: proton, dim: 0.97 }   # the world nearly dark: the flat slide carries it
+---
+
+<!-- 12 Nov (the owner: "After Kobayashi, Masakawaa, a slide just highlighting how difficult is QCD"): the strong
+     coupling against the energy scale, one curve drawn as the slide opens (setup/QcdCoupling.vue). -->
+<QcdCoupling />
+<div class="cap">QCD: at the scale of hadrons the coupling is no longer small</div>
+
+<!-- facts: alpha-s-world-average-2024, asymptotic-freedom-1973, proton-mass-quarks-1-percent -->
+
+<!--
+Why hadrons are hard. In 1973, the year of Kobayashi and Maskawa's paper, Gross, Wilczek and Politzer showed that
+the strong coupling falls with energy (asymptotic freedom; Nobel Prize 2004). At the LHC's collision energies
+it is small, α_s = 0.118 at the Z mass, and QCD is computed as a series in it. Toward 1 GeV, the scale of the
+proton, it grows to about one half and the series stops converging: the masses and the structure of hadrons,
+the pentaquarks among them, come from lattice QCD and from models, which is where theory and experiment have
+to work together.
+The curve: two-loop running (MS-bar) from the PDG's world average α_s(M_Z) = 0.1180 ± 0.0009 (2024), drawn
+here from 1 TeV down to 1 GeV (0.44 there at two loops; 0.31 at the τ mass); it is not drawn below 1 GeV, where
+the formula has no meaning. The dashed line is the proton's mass, 0.938 GeV.
+Sources: PDG, Review of Particle Physics 2024, "Quantum Chromodynamics"; D. J. Gross and F. Wilczek, PRL 30
+(1973) 1343; H. D. Politzer, PRL 30 (1973) 1346. (~0.5 min)
+-->
+
+---
 space: { at: km, dim: 0.6 }
 ---
 
@@ -283,6 +314,9 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
      over it, the three peaks lit. The axis and the names are HTML over the clip's settled end, so they stay sharp:
      the positions are the histogram's in the clip's last frame, in slide units; move them if the take's camera moves. -->
 <VideoPlayer src="data2019.mp4" muted :controls="false" transition="fade" />
+<!-- 12 Nov (the owner: "slide 11 need some soundtrack"): „Age of Wonder“ from 1:27.3, started with the clip, so
+     the piece's swell at 1:46 comes as the fit is drawn (18.7 s). -->
+<StageSoundtrack src="audio/wonder_build.m4a" :level="0.6" :clip-at="0.05" keys />
 <AtClipEnd :lead="5"><div class="spec-axis"><i style="left: 283.6px">4300</i><i style="left: 447.7px">4400</i><i style="left: 611.7px">4500</i><b>mass of J/ψ p (MeV)</b></div></AtClipEnd>
 <AtClipEnd :lead="4"><div class="spec-names"><i class="c" style="left: 300px; top: 112px">P<sub>c</sub>(4312)<sup>+</sup></i><i class="r" style="left: 498px; top: 44px">P<sub>c</sub>(4440)<sup>+</sup></i><i class="l" style="left: 556px; top: 22px">P<sub>c</sub>(4457)<sup>+</sup></i></div></AtClipEnd>
 <div class="cap">LHCb, 2019: the J/ψ p mass in Λ<sub>b</sub><sup>0</sup> → J/ψ p K<sup>−</sup> decays</div>
@@ -387,7 +421,9 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
      line meets the bracket at y = 292, clear of a star of the clip's last frame at (762, 308). Move them if
      the take's end moves. -->
 <AtClipEnd :lead="4"><svg class="globe-names" viewBox="0 0 980 551.25" aria-hidden="true"><path class="case" d="M709.3 315.2 L778 292 M696.4 326.8 L778 344" /><path d="M277 55.5 H252 M709.3 315.2 L778 292 M778 280 V322 M696.4 326.8 L778 344" /><circle cx="705.8" cy="316.1" r="2.6" /><circle cx="692.9" cy="326.1" r="2.6" /><text x="246" y="62" text-anchor="end">Vilnius</text><text x="786" y="294">RIKEN</text><text x="786" y="318">Tokyo</text><text x="786" y="351">Nagoya</text></svg></AtClipEnd>
-<div class="cap">Lithuania and Japan</div>
+<!-- 12 Nov: the project's name, years and funders stand here since the project slide after the group photo left
+     (the owner: "not just Nagoya, it's more institutes across japan now, maybe we should not show this at all"). -->
+<div class="cap">Lithuania and Japan: Penta-Charm, 2026–2028, funded by the Research Council of Lithuania and JSPS</div>
 
 <!-- facts: lhcb-vilnius-joined -->
 
@@ -397,8 +433,10 @@ the middle (coastlines, Natural Earth, public domain; Japan's the brightest); Vi
 Nagoya and Tokyo at the right edge, and a strand of light is drawn from Vilnius to Nagoya, a pulse
 running along it. From 3 s the globe turns east and the camera comes in; from 15 s it rests on Asia,
 Vilnius upper left, Japan lower right.
-Vilnius University (LHCb data) and Nagoya University (theory): the project.
-Sources: Natural Earth; Vilnius University. (~0.75 min)
+Vilnius University (LHCb data) and the theorists in Japan, at Nagoya, Tokyo and RIKEN: the project.
+The project runs from April 2026 to March 2028, funded by the Research Council of Lithuania (LMT) and the Japan
+Society for the Promotion of Science (JSPS) in their bilateral programme (the owner, 5 Nov: may be shown).
+Sources: Natural Earth; Vilnius University; the project's application. (~0.75 min)
 -->
 
 ---
@@ -419,6 +457,7 @@ Sources: Vilnius University news. (~0.75 min)
 -->
 
 ---
+hide: true   # 12 Nov (the owner: "not just Nagoya, it's more institutes across japan now, maybe we should not show this at all"): its world shows Vilnius and Nagoya alone; the globe names the institutes, and its caption carries the project's name, years and funders
 space: { at: project, dim: 0.15 }
 ---
 
@@ -556,7 +595,7 @@ Source: M. Strassler, "The nuclei of atoms" (profmattstrassler.com). (~1 min)
 -->
 
 ---
-hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back
+hide: true   # the 15-min cut (owner, 5 Nov); remove to bring it back. 12 Nov: Yukawa's portrait left the world (the owner: "On transition to 6 a photo of yukawa flashes … it's just there somewhere in space, not needed"): the camera passed it on the way to Sakata. To bring this slide back, put the page back at the `nucleus` station of public/data/space.json: { "type": "page", "src": "/figures/yukawa.jpg", "pos": [-6.2, 0.4, 0], "width": 2.4, "height": 3.2, "tone": "#d0d4da", "halo": false }
 space: { at: nucleus, dist: 12, yaw: -6, pitch: 5, dim: 0.15 }
 ---
 
@@ -653,17 +692,24 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
      takes.md slides 3 and 5): LHCb's collision, its particles going through the detector as the camera turns round
      it and draws back, a dissolve into the world of grains on Japan, drawing back, the Earth's grains gathering
      into the cover's pentaquark. It carries its own sound, the low bang, so it plays unmuted; it ends on the
-     pentaquark and waits, and the thanks come up over its last 2.5 s. -->
+     pentaquark and waits, and the thanks come up over its last 4.5 s (from 27.5 s, as before the cut grew by 2 s). -->
 <VideoPlayer src="finale.mp4" :controls="false" transition="fade" />
-<AtClipEnd :lead="2.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
+<!-- 12 Nov (the owner: "Slide 17 should continue playing, also we should have some soundtrack"): as the clip ends
+     finale_loop.mp4 takes over, the pentaquark turning on (a 30 s loop that begins on the frame after the clip's
+     last; setup/ClipLoop.vue); „Age of Wonder“ from 3:54, started with the clip, its arrival at 4:16.5 on the
+     pentaquark formed (22.5 s), and on to the piece's end, over the next page too. -->
+<ClipLoop src="finale_loop.mp4" />
+<StageSoundtrack src="audio/wonder_close.m4a" :level="0.85" :clip-at="0.05" keys />
+<AtClipEnd :lead="4.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
 
 <!--
-The finale (finale.mp4, 30 s, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
+The finale (finale.mp4, 32 s since 12 Nov, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
 on the crossing (3.9 s); the particles go through the detector as the camera turns round it and draws back; at
 12 s the picture dissolves (1.6 s) into the Earth in grains, Japan in the middle; the camera draws back to the
 whole Earth, and from 17.5 s its grains leave the globe and gather into a pentaquark (u u d c c̄), the cover's
 particle (formed by 23 s), which turns as the camera comes in. The thanks, in Japanese and Lithuanian, come up
-over the last 2.5 s.
+over the last 4.5 s; as the clip ends its loop takes over (finale_loop.mp4, 30 s), the pentaquark turning on.
+Music: Scott Buckley, „Age of Wonder“, from 3:54 to its end (CC BY 4.0).
 
 Five quarks were allowed on paper in 1964 and found in 2015. What they are
 made of is the question that Lithuanian and Japanese physicists now answer
@@ -675,12 +721,14 @@ today. (~1 min)
 space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the finale's last pose; the world rests under its last frame (CloseStill)
 ---
 
-<CloseStill src="figures/finale_end.jpg" />
+<!-- 12 Nov: the loop of the turning pentaquark in place of the still (<CloseStill>), the music going on -->
+<VideoPlayer src="finale_loop.mp4" muted loop :controls="false" transition="fade" />
+<StageSoundtrack src="audio/wonder_close.m4a" :level="0.85" keys />
 <div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div>
-<div class="credits credit">Photos: S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; the Belle detector, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Globe: Natural Earth. J/ψ p spectrum and Dalitz plot: LHCb, Phys. Rev. Lett. 122 (2019) 222001, CC BY 4.0 (HEPData ins1728691). CMS collision on the cover: CERN open data.</div>
+<div class="credits credit">Photos: S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; the Belle detector, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Globe: Natural Earth. Music: „Age of Wonder“ by Scott Buckley, released under CC-BY 4.0, www.scottbuckley.com.au. J/ψ p spectrum and Dalitz plot: LHCb, Phys. Rev. Lett. 122 (2019) 222001, CC BY 4.0 (HEPData ins1728691). CMS collision on the cover: CERN open data.</div>
 
 <!--
 Credits (house rule: the credits a licence asks for, tiny print, on the last page). The finale's
-last frame as a picture, the world resting under it (a Mac need not draw it live). Nothing to say here: questions.
+loop goes on under them, and the music to its end. Nothing to say here: questions.
 (~0 min)
 -->

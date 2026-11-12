@@ -18,19 +18,22 @@ import { useIsSlideActive, useNav, useSlideContext } from '@slidev/client'
 import {
   WebGLRenderer, Scene, PerspectiveCamera, Group, Mesh, SphereGeometry, ShaderMaterial, AdditiveBlending,
   Color, Vector3, Sprite, SpriteMaterial, CanvasTexture, MeshPhysicalMaterial, PMREMGenerator, DirectionalLight,
-  AmbientLight, ACESFilmicToneMapping,
+  AmbientLight, ACESFilmicToneMapping, BackSide, FrontSide,
 } from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 
 // 10 Nov, later (the owner: "a bit too colorful, make photorealistic"): deeper, natural colours on lit, glossy
-// balls; `ui` a lighter tone of each for the letters in the frame
+// balls; `ui` a lighter tone of each for the letters in the frame.
+// 12 Nov (the owner: "too colorful, need to be a bit more blue, dark blue, see through, photo realistic"): every
+// flavour a dark blue glass ball, the six told apart by a step of hue inside blue (cyan to indigo) and by the
+// letter each carries; no red, amber, green or violet. See makeQuark for the glass.
 const FLAV = {
-  u: { name: 'up', col: '#b8322a', ui: '#e0776c', cell: [0, 0] },
-  c: { name: 'charm', col: '#c98a2c', ui: '#e6b56a', cell: [1, 0] },
-  t: { name: 'top', col: '#6b7380', ui: '#8c96a3', cell: [2, 0] },
-  d: { name: 'down', col: '#2d5aa8', ui: '#7c9fdc', cell: [0, 1] },
-  s: { name: 'strange', col: '#3b8a5a', ui: '#7cc29a', cell: [1, 1] },
-  b: { name: 'bottom', col: '#6d4a9e', ui: '#a68cd0', cell: [2, 1] },
+  u: { name: 'up', col: '#1c50b4', ui: '#8fbcf5', cell: [0, 0] },
+  c: { name: 'charm', col: '#12779c', ui: '#86d2ec', cell: [1, 0] },
+  t: { name: 'top', col: '#3a4660', ui: '#8c9ab3', cell: [2, 0] },
+  d: { name: 'down', col: '#102a7c', ui: '#7f9fe6', cell: [0, 1] },
+  s: { name: 'strange', col: '#17506f', ui: '#7fbbdc', cell: [1, 1] },
+  b: { name: 'bottom', col: '#282c92', ui: '#9a9ee8', cell: [2, 1] },
 }
 // the frame: cells 92 px, 10 px apart, from (56, 128), on the 980 × 551 slide
 const W = 980, H = 551.25
@@ -85,19 +88,41 @@ function glowTexture() {
 }
 const sphere = new SphereGeometry(1, 48, 32)
 
+// glass: the ball is see-through in its middle and dense at its edge, as a sphere of tinted glass is. Three's
+// physical material has one opacity for the whole surface, so its alpha is scaled here by the view angle:
+// `uCore` of it where the surface faces the camera, all of it at the grazing edge.
+function glass(mat, core) {
+  mat.onBeforeCompile = (sh) => {
+    sh.uniforms.uCore = { value: core }
+    sh.fragmentShader = sh.fragmentShader
+      .replace('#include <common>', '#include <common>\nuniform float uCore;')
+      .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
+        { float qf = 1.0 - clamp(abs(dot(normalize(normal), normalize(vViewPosition))), 0.0, 1.0);
+          diffuseColor.a *= mix(uCore, 1.0, qf * qf); }`)
+  }
+  mat.customProgramCacheKey = () => 'qr-glass'
+  return mat
+}
 function makeQuark(q, anti) {
-  // a glossy ball under a studio light: a clear coat over a satin body; an antiquark the same colour gone
-  // dark and polished, so the two read apart without a glow
+  // a ball of dark blue glass under a cool studio light: a polished clear coat that mirrors the room, the body
+  // tinted and see-through (the far wall drawn first, darker, then the near one), a faint light of its own so it
+  // does not go black against the dark. An antiquark is the same glass nearly emptied: a thin bright shell.
   const col = new Color(FLAV[q].col)
-  const m = new Mesh(sphere, new MeshPhysicalMaterial({
-    color: anti ? col.clone().multiplyScalar(0.3) : col, roughness: anti ? 0.2 : 0.38, metalness: anti ? 0.6 : 0.0,
-    clearcoat: 1, clearcoatRoughness: 0.08, envMapIntensity: anti ? 0.9 : 0.45,
-    emissive: col, emissiveIntensity: anti ? 0.04 : 0.06, transparent: true, opacity: 0,
-  }))
+  const base = anti ? 0.5 : 0.92
+  const back = new Mesh(sphere, glass(new MeshPhysicalMaterial({
+    color: col.clone().multiplyScalar(anti ? 0.25 : 0.45), roughness: 0.3, metalness: 0, side: BackSide,
+    envMapIntensity: 0.25, emissive: col, emissiveIntensity: anti ? 0.02 : 0.05, transparent: true, opacity: 0, depthWrite: false,
+  }), anti ? 0.15 : 0.55))
+  const m = new Mesh(sphere, glass(new MeshPhysicalMaterial({
+    color: anti ? col.clone().multiplyScalar(0.5) : col, roughness: 0.08, metalness: 0, side: FrontSide,
+    clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: anti ? 1.0 : 0.6, ior: 1.5, specularIntensity: 1,
+    emissive: col, emissiveIntensity: anti ? 0.03 : 0.07, transparent: true, opacity: 0, depthWrite: false,
+  }), anti ? 0.08 : 0.3))
+  back.renderOrder = 0; m.renderOrder = 1
   const glow = new Sprite(new SpriteMaterial({ map: glowTexture(), color: col, transparent: true, blending: AdditiveBlending, depthWrite: false, opacity: 0 }))
   glow.scale.setScalar(3.0)
-  const g = new Group(); g.add(glow); g.add(m)
-  return { g, m, glow, q, anti }
+  const g = new Group(); g.add(glow); g.add(back); g.add(m)
+  return { g, m, back, glow, q, anti, base }
 }
 const SHELL_V = /* glsl */ `
 varying vec3 vN, vV;
@@ -115,7 +140,7 @@ void main() {
   // a glass skin: its edge catches the light, its face nearly clear, a soft highlight up and to the left
   float hl = pow(max(dot(normalize(vN), normalize(vec3(-0.45, 0.6, 0.65))), 0.0), 40.0);
   float a = uOp * (0.65 * edge + 0.03 + 0.5 * hl);
-  gl_FragColor = vec4(vec3(0.82, 0.88, 0.95) * a, a);
+  gl_FragColor = vec4(vec3(0.62, 0.8, 1.0) * a, a);
 }`
 function makeBag() {
   // the hadron's skin: a thin glass shell that only shows where it catches the light
@@ -201,9 +226,9 @@ function update(t) {
       pos.y += Math.sin(Math.PI * u) * 1.2
       qb.g.position.copy(world.worldToLocal ? pos : pos)
       const vis = age < 0 ? 0 : Math.min(1, age / 0.25)
-      qb.m.material.opacity = vis * dim
-      qb.m.material.depthWrite = vis * dim > 0.98
-      qb.glow.material.opacity = 0.1 * vis * dim
+      qb.m.material.opacity = qb.base * vis * dim
+      qb.back.material.opacity = qb.base * vis * dim
+      qb.glow.material.opacity = 0.07 * vis * dim
       qb.m.rotation.y = t * 0.3 + qb.seed
       // the quark's letter on its ball
       if (vis > 0.05) {
@@ -224,7 +249,8 @@ function update(t) {
       }
     }
   }
-  for (const qb of hadrons.flatMap((h) => h.quarks)) qb.g.renderOrder = -qb.g.position.z
+  // glass is see-through: the far balls are drawn first, the near ones over them
+  for (const qb of hadrons.flatMap((h) => h.quarks)) qb.g.renderOrder = qb.g.position.z
 }
 const tmp = new Vector3()
 const Y_AXIS = new Vector3(0, 1, 0), X_AXIS = new Vector3(1, 0, 0), SPIN_AXIS = new Vector3(0.18, 0.3, 1).normalize()
@@ -242,15 +268,16 @@ function build() {
   try {
     renderer = new WebGLRenderer({ canvas: cv.value, antialias: true, alpha: true, premultipliedAlpha: true, powerPreference: 'high-performance' })
   } catch (e) { gl.value = false; return false }
+  cv.value.addEventListener('webglcontextlost', onLost); cv.value.addEventListener('webglcontextrestored', onRestored)
   renderer.setClearColor(0x000000, 0)
-  renderer.toneMapping = ACESFilmicToneMapping; renderer.toneMappingExposure = 0.92
+  renderer.toneMapping = ACESFilmicToneMapping; renderer.toneMappingExposure = 0.8
   scene = new Scene(); world = new Group(); scene.add(world)
   const pm = new PMREMGenerator(renderer)
   scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture
   pm.dispose()
-  const key = new DirectionalLight('#fff4e6', 2.4); key.position.set(-5, 6, 8); scene.add(key)
-  const rim = new DirectionalLight('#bcd4ff', 1.2); rim.position.set(6, 2, -6); scene.add(rim)
-  scene.add(new AmbientLight('#ffffff', 0.12))
+  const key = new DirectionalLight('#e6efff', 2.6); key.position.set(-5, 6, 8); scene.add(key)
+  const rim = new DirectionalLight('#8fb8ff', 1.6); rim.position.set(6, 2, -6); scene.add(rim)
+  scene.add(new AmbientLight('#9fc0ff', 0.14))
   camera = new PerspectiveCamera(FOV, W / H, 0.1, 200)
   hadrons = [...MESONS.map((m) => makeHadron(m, 'meson')), ...BARYONS.map((b) => makeHadron(b, 'baryon'))]
   pq = makeHadron([...PENTA, W * 0.6, H * 0.5, 13], 'penta'); hadrons.push(pq)
@@ -291,16 +318,32 @@ function stop() {
   running = false; cancelAnimationFrame(raf); raf = 0
   timers.forEach(clearTimeout); timers = []
 }
+// 12 Nov (the owner: "it's not refreshable for some reason"): leaving the slide used to end the renderer with
+// forceContextLoss(), and the next start() made a new renderer on the same <canvas>. A canvas keeps its one
+// WebGL context for life, so that renderer drew into a lost context: an empty slide on every visit after the
+// first, and after a reload whenever Slidev reported the slide inactive for a moment before it settled. Now the
+// renderer is kept while the component lives: leaving stops the clock and clears the picture, coming back
+// replays from the top on the same renderer; the context is given up only when the component is unmounted.
+// A context the browser takes away (a GPU reset) is asked back, and the picture stands in until it returns.
+function clear() {
+  if (!renderer) return
+  for (const h of hadrons) { h.bag.material.uniforms.uOp.value = 0; for (const q of h.quarks) { q.m.material.opacity = 0; q.back.material.opacity = 0; q.glow.material.opacity = 0 } }
+  labels.length = 0
+  try { renderer.render(scene, camera) } catch { /* the context is gone */ }
+}
 function dispose() {
   stop()
   if (!renderer) return
+  cv.value?.removeEventListener('webglcontextlost', onLost); cv.value?.removeEventListener('webglcontextrestored', onRestored)
   scene.traverse((o) => { o.material?.dispose?.() })
   scene.environment?.dispose?.()
   renderer.dispose(); renderer.forceContextLoss?.(); renderer = null
 }
+function onLost(e) { e.preventDefault(); stop(); gl.value = false }
+function onRestored() { gl.value = true; if (active.value && live.value) requestAnimationFrame(() => start()) }
 watch([active, live], ([on, isLive]) => {
-  if (on && isLive) requestAnimationFrame(() => start())
-  else { stop(); if (!on) dispose() }
+  if (on && isLive) requestAnimationFrame(() => { if (active.value && live.value) start() })
+  else { stop(); clear() }
 })
 onMounted(() => { if (active.value && live.value) start() })
 onBeforeUnmount(dispose)
