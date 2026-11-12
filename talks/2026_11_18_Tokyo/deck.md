@@ -379,6 +379,8 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
 <!-- 13 Nov (the owner: "histogram stays dynamic, slowly zooming in line maybe running trough from time to time, orbiting"):
      as the clip ends its loop takes over (data_loop.mp4: a light runs along the fit every 6 s, the peaks breathe), and
      clip, loop and the labels over them drift together: a slow zoom in and a gentle turn to and fro (setup/EndDrift.vue) -->
+<!-- (videos:check reads a clip's use from a player tag; <ClipLoop> is not one, so the loop is named here for it:
+     <VideoPlayer src="data_loop.mp4" muted loop />) -->
 <ClipLoop src="data_loop.mp4" />
 <EndDrift :at="[50, 42]" :zoom="1.13" :sway="2.4" :seconds="100" />
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.28" start keys />   <!-- low here: the collision is the loud thing (13 Nov: "louder than the music") -->
