@@ -20,7 +20,7 @@
   facts ...       scripts/facts.py, everything after `facts` passed as it is
   map NAME        scripts/talk_map.py
   ready NAME      before the venue: lint --release, check, shots, videos:preflight,
-                  venue --dry-run, the plates, the PPTX (and the safe-area check for a broadcast talk)
+                  venue --dry-run and the zip on the release, the plates, the PPTX (and the safe-area check for a broadcast talk)
   record NAME     slidev-stage-record of the build: one MP4 per slide; --plates: the
                   world alone for every non-clip slide (1080p25, a 20 s hold, 120 s at most) into
                   public/videos/NN-plate.mp4, videos/plates.json and the manifest's
@@ -29,6 +29,10 @@
                   record the takes (1080p50, an 8 s hold, every click) unless the take is current,
                   `slidev-videos pptx` into $TALK_TMP/talk-<slug>/pptx/, upload <talk>.pptx to
                   the talk's videos release, write videos/pptx.json (commit it: the site's PPTX link)
+  venue NAME      the offline venue zip (slidev-videos venue) into $TALK_TMP/talk-<slug>/venue/, the
+                  previous one there removed; upload <talk>-venue.zip to the talk's videos release and
+                  write videos/venue.json (commit it: the site's ZIP link). deploy runs it when the zip
+                  is missing or stale
   export NAME     slidev export (PDF; --format png|pptx) in the render slot, with
                   --wait-until load --wait 4000 (the stage never lets the network go idle),
                   into $TALK_TMP/talk-<slug>/ unless --out; more slidev args after --
@@ -96,7 +100,7 @@ import new_talk  # noqa: E402  (NAME_RE, REPO, PAGES, worktree_slug: one source 
 REPO_NAME = new_talk.REPO.split("/")[1]
 STAGE_BINS = {"shots": "slidev-stage-shots", "record": "slidev-stage-record", "safe": "slidev-stage-safe"}
 DELEGATES = {"lint": "talk_lint.py", "facts": "facts.py", "map": "talk_map.py"}
-PASSTHROUGH = {"dev", "build", "shots", "record", "safe", "export", "render", "pptx"}   # extra args go to the tool
+PASSTHROUGH = {"dev", "build", "shots", "record", "safe", "export", "render", "pptx", "venue"}   # extra args go to the tool
 SHA_RE = re.compile(r"^[0-9a-f]{7,40}$")
 TAG_RE = re.compile(r"^v\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$")
 PIN_RE = re.compile(r'("slidev-addon-(?:videos|stage)"\s*:\s*"github:MindaugasSarpis/slidev-videos#)([^"&]+)')
@@ -121,6 +125,7 @@ PLATES_BLOCK_RE = re.compile(r"\n*^# >>> plates.*?^# <<< plates[^\n]*\n?", re.S 
 PPTX_FPS, PPTX_HOLD, PPTX_MAX, PPTX_SETTLE, PPTX_MAX_UNKNOWN = 50, 8, 120, 60, 600
 PPTX_CAP = "6M"
 PPTX_MB = 1536
+VENUE_MAX = 2 * 1024 * MB      # GitHub's limit for one release asset (VENUE_MAX_BYTES overrides it, for the tests)
 VIDEO_SRC_RE = re.compile(r"<VideoPlayer\b[^>]*?\bsrc\s*=\s*\"([^\"]+)\"[^>]*>", re.S)
 
 
@@ -841,12 +846,30 @@ def take_fingerprint(root: Path, talk: str) -> str:
     after a merge or a pull, where every mtime is new and no byte is. Left out: public/videos* (the
     clips, published on their own, and the plates themselves) and what the takes write (plates.json,
     pptx.json, the manifest). The stills stay in: a plate drifts over its own."""
-    own = {Path("talks", talk, "videos", n) for n in ("plates.json", "pptx.json", "manifest.toml")}
+    own = {Path("talks", talk, "videos", n) for n in ("plates.json", "pptx.json", "venue.json", "manifest.toml")}
     public = ("talks", talk, "public")
 
     def skip(rel: Path) -> bool:
         return (rel in own or bool(PLATE_RE.match(rel.name))
                 or (rel.parts[:3] == public and len(rel.parts) > 4 and rel.parts[3].startswith("videos")))
+    return content_fingerprint(root, talk, skip)
+
+
+def venue_fingerprint(root: Path, talk: str) -> str:
+    """What the venue zip holds besides the clips, by path, size and content: the talk, the theme, the
+    components, the lockfile (and so the pins), the manifest and plates.json. Left out: public/videos*
+    (the clips and plates; venue.json records their sizes, checked against the release), what the
+    zip and the PPTX write (venue.json, pptx.json) and a zip `pnpm venue` left in the talk."""
+    own = {Path("talks", talk, "videos", n) for n in ("venue.json", "pptx.json")}
+    public = ("talks", talk, "public")
+
+    def skip(rel: Path) -> bool:
+        return (rel in own or rel.name.endswith("-venue.zip")
+                or (rel.parts[:3] == public and len(rel.parts) > 4 and rel.parts[3].startswith("videos")))
+    return content_fingerprint(root, talk, skip)
+
+
+def content_fingerprint(root: Path, talk: str, skip) -> str:
     h = hashlib.sha1()
     for rel, p in talk_files(root, talk, skip):
         try:
@@ -1906,8 +1929,15 @@ def cmd_ready(repo: Repo, a, extra) -> tuple[int, dict]:
     has_videos = (d / "videos.toml").exists()
     steps.append(step("preflight", [sv, "preflight"], d, env,
                       skip="--skip preflight" if "preflight" in skip else (None if has_videos else "no videos.toml")))
-    steps.append(step("venue", [sv, "venue", "--dry-run"], d, env,
-                      skip="--skip venue" if "venue" in skip else (None if has_videos else "no videos.toml")))
+    vstep = step("venue", [sv, "venue", "--dry-run"], d, env,
+                 skip="--skip venue" if "venue" in skip else (None if has_videos else "no videos.toml"))
+    if not vstep.get("skipped"):
+        # the zip on the release (talk venue): a warning each; deploy builds it when it is missing or stale
+        st = venue_status(repo.here, talk)
+        vstep.update(zip=st, warnings=st["reasons"])
+        for w in st["reasons"]:
+            OUT.say(f"   warning: {w}")
+    steps.append(vstep)
     # the plates the stage plays where WebGL is missing (record --plates): a warning each unless --strict-plates
     if "plates" in skip:
         steps.append(step("plates", None, d, skip="--skip plates"))
@@ -2425,6 +2455,138 @@ def pptx_step(repo: Repo, talk: str, strict: bool = False) -> dict:
     return res
 
 
+def venue_status(root: Path, talk: str) -> dict:
+    """Is the venue zip videos/venue.json records the one this tree would build? {current, reasons}: the
+    zip on the release at its size, each clip it holds at the size the release has now, the talk's
+    content unchanged since (venue_fingerprint). A release gh cannot list is a reason, not staleness."""
+    d = root / "talks" / talk
+    fix = f"(pnpm talk venue {wt_slug(talk)})"
+    path = d / "videos" / "venue.json"
+    if not path.exists():
+        return {"current": False, "reasons": [f"no venue zip yet {fix}"]}
+    data = read_json(path)
+    asset = data.get("asset") if isinstance(data, dict) else None
+    if not (isinstance(asset, str) and asset and isinstance(data.get("fingerprint"), str)):
+        return {"current": False, "reasons": [f"videos/venue.json is unreadable, or was written by hand before "
+                                              f"`talk venue` (no fingerprint) {fix}"]}
+    stale: list[str] = []
+    notes: list[str] = []
+    repo_name, tag = (data.get("repo"), data["tag"]) if data.get("tag") else videos_release(root, d)
+    assets = release_assets(repo_name, tag, d)
+    if assets is None:
+        notes.append(f"release {tag} could not be listed (gh): whether {asset} is on it is unknown")
+    elif asset not in assets:
+        stale.append(f"{asset} is not on release {tag} {fix}")
+    elif assets[asset] != data.get("bytes"):
+        stale.append(f"{asset} on release {tag} is {assets[asset]} bytes, not the {data.get('bytes')} "
+                     f"videos/venue.json records {fix}")
+    if assets:
+        for name, size in sorted((data.get("clips") or {}).items()):
+            if name in assets and assets[name] != size:
+                stale.append(f"{name} on release {tag} is {assets[name]} bytes, the zip has {size} {fix}")
+    if data["fingerprint"] != venue_fingerprint(root, talk):
+        stale.append(f"stale: the talk changed since the zip was built {fix}")
+    return {"current": not stale, "reasons": stale + notes, "asset": asset, "tag": tag, "url": data.get("url"),
+            "bytes": data.get("bytes"), "built_from": data.get("built_from")}
+
+
+def cmd_venue(repo: Repo, a, extra) -> tuple[int, dict]:
+    """The offline venue zip (owner, 13 Nov 2026: "always build zip and make it available …, but to also
+    clear previous versions from tmp"): `slidev-videos venue` in the talk (pull with the shared clips,
+    preflight, build:portable, zip), the zip moved out of the talk into $TALK_TMP/talk-<slug>/venue/ and
+    everything else there removed (the previous zip, a dist), the talk's dist-portable removed; uploaded
+    as <talk>-venue.zip to the talk's videos release (--clobber), and videos/venue.json written for the
+    site's ZIP link, ready's venue step and deploy (commit it). Args after -- go to slidev-videos venue."""
+    talk, d = resolve_talk(repo, a.name, invocation_dir())
+    slug = wt_slug(talk)
+    if not (d / "videos.toml").exists():
+        raise UsageError(f"{talk} has no videos.toml: slidev-videos venue has nothing to bundle")
+    env = tool_env()
+    sv = which("slidev-videos", env) or "slidev-videos"
+    repo_name, tag = videos_release(repo.here, d)
+    asset = f"{talk}-venue.zip"
+    w = build_dir(talk) / "venue"
+    out, made, vj_path = w / asset, d / asset, d / "videos" / "venue.json"
+    gh = which("gh", env) or "gh"
+    repo_args = ["--repo", repo_name] if repo_name else []
+    build = [sv, "venue", *extra]
+    upload = [gh, "release", "upload", tag, out, "--clobber", *repo_args]
+    LOG.begin(repo.here, slug, "venue")
+    data: dict = {"talk": talk, "out": str(out), "asset": asset, "tag": tag, "repo": repo_name,
+                  "dry_run": a.dry_run, "uploaded": False}
+
+    def fail(msg: str, code: int = 1, **more) -> tuple[int, dict]:
+        data.update(error=msg, **more)
+        OUT.say(f"error: {msg}")
+        return code, data
+
+    if a.dry_run:
+        plan = {"build": f"{shlex.join(map(str, build))}   # in {d}",
+                "keep": f"{out}, and nothing else in {w}",
+                "upload": "--no-publish" if a.no_publish else shlex.join(map(str, ["gh", *upload[1:]])),
+                "write": "--no-publish" if a.no_publish else str(vj_path)}
+        data["plan"] = plan
+        for k, v in plan.items():
+            OUT.show(f"{k:<8} {v}")
+        return 0, data
+    head = git_out(["rev-parse", "--short", "HEAD"], repo.here)
+    fp = venue_fingerprint(repo.here, talk)             # the tree the zip is built from
+    made.unlink(missing_ok=True)                      # a zip an earlier `pnpm venue` left in the talk
+    OUT.say("-- slidev-videos venue")
+    r = run(build, cwd=d, env=env, log=True)
+    if r.returncode or not made.is_file():
+        say_summary(summarize(r.stdout, False))
+        shutil.rmtree(d / "dist-portable", ignore_errors=True)
+        made.unlink(missing_ok=True)
+        return fail(f"slidev-videos venue failed (exit {r.returncode}); {w} is as it was",
+                    log=str(LOG.path) if LOG.path else None)
+    vids = d / "public" / "videos"
+    clips = {p.name: p.stat().st_size for p in sorted(vids.iterdir()) if p.is_file()} if vids.is_dir() else {}
+    # the previous versions go once the new one is there: the zip and anything else in venue/, the talk's dist
+    w.mkdir(parents=True, exist_ok=True)
+    removed = []
+    for p in sorted(w.iterdir()):
+        if p.name != asset:
+            shutil.rmtree(p) if p.is_dir() and not p.is_symlink() else p.unlink()
+            removed.append(str(p))
+    shutil.move(str(made), str(out))
+    shutil.rmtree(d / "dist-portable", ignore_errors=True)
+    size = out.stat().st_size
+    data.update(bytes=size, removed=removed, clips=clips, built_from=head)
+    limit = int(os.environ.get("VENUE_MAX_BYTES") or VENUE_MAX)
+    if size > limit:
+        return fail(f"{asset}: {size / MB:.1f} MB, over the {limit / MB:.0f} MB GitHub takes for one release asset: "
+                    f"not uploaded (it is in {w})")
+    if a.no_publish:
+        OUT.say(f"{out} ({size / MB:.1f} MB); not uploaded (--no-publish), videos/venue.json not written")
+        return 0, data
+    if not repo_name:
+        return fail("no GitHub repo for the release: videos.toml [defaults] repo, or origin on GitHub")
+    if not which("gh", env):
+        return fail(f"gh not found: the zip is in {w}, nothing uploaded (--no-publish to build only)")
+    if run([gh, "release", "view", tag, *repo_args], cwd=d, env=env, capture=True, quiet=True, timeout=60).returncode:
+        c = run([gh, "release", "create", tag, *repo_args, "--title", tag, "--notes", f"Videos for {talk}"],
+                cwd=d, env=env, log=True)
+        if c.returncode:
+            return fail(f"release {tag} is not there and gh release create failed (exit {c.returncode})")
+    u = run(upload, cwd=d, env=env, log=True)
+    if u.returncode:
+        say_summary(summarize(u.stdout, False))
+        return fail(f"gh release upload failed (exit {u.returncode}): videos/venue.json not written")
+    data["uploaded"] = True
+    url = f"https://github.com/{repo_name}/releases/download/{tag}/{asset}"
+    ver = run([sv, "--version"], env=env, capture=True, quiet=True, timeout=60)
+    vj = {"url": url, "bytes": size, "asset": asset, "repo": repo_name, "tag": tag, "fingerprint": fp,
+          "clips": clips, "built_from": head, "uploaded": dt.date.today().isoformat(),
+          "cli": (ver.stdout.strip().splitlines() or [None])[-1] if ver.returncode == 0 else None}
+    vj_path.parent.mkdir(exist_ok=True)
+    vj_path.write_text(json.dumps(vj, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    data.update(url=url, venue_json=str(vj_path))
+    OUT.say(f"{asset} ({size / MB:.1f} MB) on release {tag}: {url}")
+    OUT.say(f"wrote talks/{talk}/videos/venue.json: commit it (the site's ZIP link, ready's venue step and deploy go by it)")
+    return 0, data
+
+
 def not_own(repo: Repo, talk: str) -> str | None:
     """Why this worktree is not the talk's own (owns), or None when it is."""
     branch = git_out(["branch", "--show-current"], repo.here) or None
@@ -2492,6 +2654,34 @@ def cmd_deploy(repo: Repo, a, extra) -> tuple[int, dict]:
         fix = lock_fix(wt)
         OUT.say(LOCK_DRIFT_SAY + fix[0])
         return fail("pnpm-lock.yaml does not match the talk's package.json", drift=drift, fix=fix)
+    # the venue zip (owner, 13 Nov 2026: "always build zip and make it available"): built, uploaded and its
+    # videos/venue.json committed here when it is missing or stale, so ready checks and Pages links that commit
+    if (wt / "talks" / talk / "videos.toml").exists():
+        if a.no_zip:
+            data["zip"] = {"skipped": "--no-zip"}
+        else:
+            st = venue_status(wt, talk)
+            if st["current"]:
+                data["zip"] = {"current": True}
+            elif a.dry_run and not a.build_zip:
+                data["zip"] = {"would_build": True, "why": st["reasons"]}
+                OUT.say("dry run: would build and upload the venue zip and commit videos/venue.json ("
+                        + "; ".join(st["reasons"]) + ")")
+            else:
+                OUT.say("-- venue zip (" + "; ".join(st["reasons"]) + ")")
+                built_from = git_out(["rev-parse", "--short", "HEAD"], wt)
+                sub = Repo(main=repo.main, common=repo.common, here=wt)
+                code, vd = cmd_venue(sub, argparse.Namespace(name=talk, dry_run=False, no_publish=False), [])
+                data["zip"] = vd
+                if code:
+                    return fail(f"the venue zip failed: {vd.get('error')} (fix it, or --no-zip to deploy without it, "
+                                f"on the owner's word)")
+                rel = f"talks/{talk}/videos/venue.json"
+                c = git(["add", "--", rel], wt)
+                if c.returncode == 0:
+                    c = git(["commit", "-q", "-m", f"chore({wt_slug(talk)}): the venue zip, built from {built_from}", "--", rel], wt)
+                if c.returncode:
+                    return fail(f"could not commit {rel}: {c.stderr.strip()[:300]}")
     sha = git_out(["rev-parse", "HEAD"], wt)
     ahead = int(git_out(["rev-list", "--count", f"origin/main..{sha}"], wt) or 0)
     data.update(sha=sha, ahead=ahead)
@@ -3240,6 +3430,10 @@ def build_parser() -> argparse.ArgumentParser:
                     help="a clip slide with no take becomes a black slide (slidev-videos pptx --allow-skips)")
     sp.add_argument("--no-build", action="store_true", help="record from the build that is there")
     sp.add_argument("--rebuild", action="store_true")
+    sp = verb("venue", "the offline venue zip into $TALK_TMP/talk-<slug>/venue/ (the previous one removed), uploaded to "
+                       "the talk's videos release, and videos/venue.json (slidev-videos venue's args after --)")
+    sp.add_argument("--no-publish", action="store_true", help="build the zip only: no upload, no videos/venue.json")
+    sp.add_argument("--dry-run", action="store_true", help="print the plan; build and upload nothing")
     sp = verb("export", "slidev export in the render slot, --wait-until load --wait 4000 (more slidev args after --)")
     sp.add_argument("--format", choices=("pdf", "png", "pptx"))
     sp.add_argument("--out", help="the file (default $TALK_TMP/talk-<slug>/<slug>.<format>)")
@@ -3249,6 +3443,9 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--ready-skip", action="append", metavar="STEP", help="pass --skip STEP to ready")
     sp.add_argument("--rerun-ready", action="store_true", help="run ready even if it already passed this commit")
     sp.add_argument("--no-live-check", action="store_true", help="after the deploy, do not walk the live deck")
+    sp.add_argument("--no-zip", action="store_true", help="do not build the venue zip though it is missing or stale")
+    sp.add_argument("--build-zip", action="store_true",
+                    help="with --dry-run: build, upload and commit the venue zip all the same (nothing is pushed)")
     sp = verb("render", "run a command in the render slot: srun, condor_run, or under the render lock", talk=False)
     sp.add_argument("--gpu", dest="gpu", action="store_const", const=True, default=None,
                     help="ask the scheduler for a GPU (default: when the cluster has GPUs; RENDER_GPUS)")
@@ -3280,7 +3477,7 @@ VERBS = {
     "new": cmd_new, "open": cmd_open, "list": cmd_list, "status": cmd_status, "dev": cmd_dev,
     "build": cmd_build, "lock": cmd_lock, "check": cmd_check, "shots": cmd_shots, "review": cmd_review,
     "lint": cmd_delegate, "facts": cmd_delegate, "map": cmd_delegate, "ready": cmd_ready,
-    "record": cmd_stage, "safe": cmd_stage, "pptx": cmd_pptx, "export": cmd_export, "deploy": cmd_deploy, "doctor": cmd_doctor, "bump-toolkit": cmd_bump,
+    "record": cmd_stage, "safe": cmd_stage, "pptx": cmd_pptx, "venue": cmd_venue, "export": cmd_export, "deploy": cmd_deploy, "doctor": cmd_doctor, "bump-toolkit": cmd_bump,
     "render": cmd_render, "pin": cmd_pin, "session": cmd_session, "sessions": cmd_sessions, "config": cmd_config,
 }
 

@@ -30,6 +30,12 @@ Run them from the root of the talk's own worktree (the path
 
 - refuses a dirty tree, untracked files included, and a branch that does
   not contain `origin/main`;
+- builds the venue zip first when `videos/venue.json` is missing or stale
+  (`pnpm talk venue`: the zip in `$TALK_TMP/talk-<slug>/venue/`, the previous
+  one removed, uploaded as `<talk>-venue.zip` to the talk's videos release)
+  and commits `videos/venue.json` on the talk's branch, so the site gets its
+  ZIP link (owner, 13 Nov 2026). `--dry-run` says it would; `--dry-run
+  --build-zip` does it without pushing; `--no-zip` only on the owner's word;
 - runs `ready` first, unless `ready` already passed this commit on a clean
   tree (it stamps it) or it is told to skip it, so run `deploy` straight
   after `ready`, with no commit between them;
@@ -78,6 +84,7 @@ base fails there, as it does on Pages.
   branch, or merge another talk's branch;
 - force-push, or push anything other than the talk's own commits;
 - publish or prune video release assets as part of a deploy (`talk-videos`);
+  the venue zip, `<talk>-venue.zip`, is the one asset a deploy uploads;
 - write "deployed" into a memory note, the talk's CLAUDE.md or a summary
   before the run is green.
 

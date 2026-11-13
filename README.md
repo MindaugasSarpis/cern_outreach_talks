@@ -136,7 +136,8 @@ several and nothing else, is none of theirs.
 | Filmed for TV | `pnpm talk new … --broadcast` · `pnpm talk safe NAME` · `pnpm talk record NAME` | talk-broadcast |
 | Plates for a venue PC without WebGL (stage talks) | `pnpm talk record NAME --plates`, then `pnpm videos:publish --only <plates>` in the talk | talk-broadcast, talk-verify |
 | The deck as a PPTX, on request only (stage talks) | `pnpm talk pptx NAME`, then commit `videos/pptx.json` | talk-broadcast, talk-verify |
-| Before the venue | `pnpm talk ready NAME` (lint, check, shots, preflight, the plates; the PPTX only if there is one), then `pnpm venue` in the talk | talk-verify |
+| Before the venue | `pnpm talk ready NAME` (lint, check, shots, preflight, the plates, the venue zip; the PPTX only if there is one) | talk-verify |
+| The offline venue zip | `pnpm talk venue NAME`, then commit `videos/venue.json`; `pnpm talk deploy` does both when the zip is missing or stale | talk-deploy |
 | Deploy, when the owner asks | `pnpm talk deploy NAME` (`--dry-run` checks only) | talk-deploy |
 | A render: an encode, a capture, a probe | `pnpm talk render -- COMMAND` | talk-videos, talk-verify |
 | One talk onto a toolkit release | `pnpm talk pin vX.Y.Z`, in the talk's worktree | |
@@ -255,8 +256,17 @@ slides or notes, except optional questions in the notes such as
 ```bash
 pnpm videos:check
 pnpm videos:preflight    # probes what each slide will actually serve: codec, size, bitrate, audio, loudness
-pnpm venue               # offline bundle <talk>-venue.zip (RUN_ME.txt inside)
+pnpm venue               # offline bundle <talk>-venue.zip (RUN_ME.txt inside), by hand
 ```
+
+`pnpm talk venue NAME` (from the repo root or the worktree) runs `pnpm venue` and keeps
+the zip out of the talk: in `$TALK_TMP/talk-<slug>/venue/`, where the previous zip is
+removed once the new one is built, and the talk's `dist-portable/` goes too. It uploads
+the zip as `<talk>-venue.zip` to the talk's videos release and writes
+`videos/venue.json` (commit it): the site's ZIP link, ready's venue step and deploy go by
+it. `pnpm talk deploy` builds, uploads and commits it by itself when it is missing or
+stale (the talk changed, or a clip on the release has another size); `--no-zip` only on
+the owner's word.
 
 A stage talk also carries **plates**: the world alone for every non-clip
 slide, which the stage plays where WebGL is missing (a venue PC), over the
@@ -281,8 +291,8 @@ sizes are within 40 MB a plate and 600 MB a deck: warnings, since a
 re-record takes an hour; `--strict-plates` makes them fail; without
 `plates.json` the step is "skipped: no plates".
 
-The venue zip (`pnpm venue`, uploaded to the talk's release, linked from
-`videos/venue.json`) is every talk's standard offline copy. A **PPTX** is
+The venue zip (`pnpm talk venue`, uploaded to the talk's release, linked from
+`videos/venue.json`; deploy keeps it current) is every talk's standard offline copy. A **PPTX** is
 made only on request, not as part of a talk by default (the owner dropped it
 for Innoday and Užsikrauk karjerai on 22 Oct 2026): the deck as a
 PowerPoint of the stage's takes, one video per slide and click that plays on

@@ -21,6 +21,7 @@ pnpm videos:check       # manifest vs files vs slide refs; library refs reported
 pnpm videos:preflight   # VENUE LINT — probe what each ref will serve (codec/size/bitrate/audio/loudness)
 pnpm videos:clean       # delete local files whose remote copy is verified (dry-run; -- --yes)
 pnpm venue              # pull --include-shared -> preflight -> build:portable -> <talk>-venue.zip
+                        # (pnpm talk venue NAME: the same, kept in $TALK_TMP, uploaded, videos/venue.json)
 ```
 
 From the repo root: `pnpm videos:check-all`, `pnpm new-talk <YYYY_MM_DD_Name>`.

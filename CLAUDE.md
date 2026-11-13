@@ -127,6 +127,7 @@ a talk's directory name. README's "Day to day" pairs each step with its skill.
 | `lint`, `map`, `facts …` | the deck lint; the slide map; the facts bank (`search`, `show`, `add`, `check`) |
 | `ready`, `deploy` | before the venue (lint --release, check, shots, preflight, plates); deploy, when asked |
 | `record`, `safe` | MP4s per slide, or `--plates`; the TV safe area |
+| `venue` | the offline zip in `$TALK_TMP` (the old one removed), on the release, `videos/venue.json`; deploy runs it when stale |
 | `render -- CMD` | the render slot: srun, condor_run, or this machine's lock |
 | `pin [NAME] REF`, `bump-toolkit` | one talk's two addon pins; all pins, env.yaml and the scaffolder |
 | `session`, `sessions` | Claude in a window of the tmux session `talks`; the windows, status lines |
