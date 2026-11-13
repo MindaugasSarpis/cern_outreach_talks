@@ -58,6 +58,11 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13, night: **Deployed:** commit 766807f (Decisions, 12 Nov late night, 11), Pages run 43406996482 (success), URL 200, the
+  live walk passed; `ready` inside the deploy with `safe` skipped. On the release before it: data2019b, data_loopb,
+  globeb, globe_loop, finaleb and the 11 plates (the old names' files stay there until a prune after the talk). Open
+  with the owner: the music's arrival by ear (now the piece's 230th second); the Japanese names' spelling (read from
+  a scan); footage for slides 16 and 17; the talk's length.
 - 2026-11-13, evening: **Deployed:** commit f782ee1 (Decisions, 12 Nov late night, 10), Pages run 43325786745 (success), URL 200,
   the live walk passed; `ready` inside the deploy with `safe` skipped. data2019.mp4, data_loop.mp4 and finale.mp4 on
   the release before it. (A first attempt stopped at videos:check: `<ClipLoop>`'s clip is not a player tag; the loop
