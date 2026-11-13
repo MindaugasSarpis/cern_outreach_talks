@@ -58,6 +58,10 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-14, later: **Deployed:** commit 72c59c4 (Decisions, 12 Nov late night, 13 and 14), Pages run 43416467648 (success), URL
+  200, the live walk passed; `ready` inside the deploy with `safe` skipped. data2019c.mp4 and finalec.mp4 on the
+  release before it. Open with the owner: Starfire on the finale after „Age of Wonder“ to there (his word on it);
+  the Japanese names' spelling; the talk's length.
 - 2026-11-14: **Deployed:** commit 918d794 (Decisions, 12 Nov late night, 12: the two photo slides hidden, the Dalitz
   plot whole from the start), Pages run 43410721362 (success), URL 200, the live walk passed; `ready` inside the deploy with
   `safe` skipped. 17 slides. Open with the owner: the music's arrival by ear; the Japanese names' spelling.
