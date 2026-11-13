@@ -152,7 +152,7 @@ function buildPentaquark(o, ctx) {
     uShow: { value: 0 }, uFade: { value: 0 }, uLoops: { value: o.loops ?? 4 },
     uSize: { value: o.size ?? 1.5 }, uAlpha: { value: o.alpha ?? 0.45 },
     uGSize: { value: o.gluonSize ?? 1.1 }, uGAlpha: { value: o.gluonAlpha ?? 0.6 },
-  })
+  }, { crisp: !!o.crisp })
   const pts = new Points(geo, mat); pts.frustumCulled = false
   const spin = new Group(); spin.add(pts)
   spin.position.set(...mid); pts.position.set(-mid[0], -mid[1], -mid[2])   // it turns about its own middle

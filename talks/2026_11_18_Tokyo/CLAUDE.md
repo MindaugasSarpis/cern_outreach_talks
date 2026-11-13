@@ -749,6 +749,11 @@ scheduler."
      `wonder_peak*.m4a` left.
    - Names again for what changed under a name (data2019c, finalec, the new audio file).
 
+15. 14 Nov (the owner: "This Pc on the cover, can we also make it better resolved? the blurry points I don't like"): the
+   cover's `pentaquark-cc` from hard-edged grains (`crisp`, grains.js's `material`), four times as many at under half
+   the size: 8 000 a quark at 0.8 (2 000 at 1.8), 2 800 a gluon at 0.55, 12 000 in the sea, 26 000 in the skin, alpha
+   0.7. Slide 14's interiors keep the soft grain (not asked).
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

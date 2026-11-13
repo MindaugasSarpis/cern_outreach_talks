@@ -115,9 +115,11 @@ void main() {
   gl_FragColor = vec4(pow(vColor * a, vec3(2.2)), 1.0);
 }`
 
-export function material(vertexShader, uniforms) {
+// `crisp` (14 Nov, the owner, of the cover's pentaquark: "can we also make it better resolved? the blurry points I
+// don't like"): a grain with an edge, not a soft disc that fades from its middle
+export function material(vertexShader, uniforms, { crisp = false } = {}) {
   return new ShaderMaterial({
-    vertexShader, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
+    vertexShader, fragmentShader: crisp ? FRAG.replace('smoothstep(0.04, 0.5, d)', 'smoothstep(0.32, 0.5, d)') : FRAG, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending,
     // uPixelRatio carries the frame scale (the buffer's height / 900; each builder returns it as
     // `frameScale`), so a grain is the same share of the picture at 1600×900 and on a phone
     uniforms: { uTime: { value: 0 }, uPixelRatio: { value: 1 }, ...uniforms },

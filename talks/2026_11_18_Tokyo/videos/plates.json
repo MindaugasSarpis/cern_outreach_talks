@@ -1,5 +1,5 @@
 {
-  "fingerprint": "a9a8b15262a7e358bfbe0a7a35fa4eb22b1562eb",
+  "fingerprint": "12ec57075dc52b1a93fefdd6d3b4c6f6a25a8be7",
   "fps": 25,
   "hold": 20,
   "slides": [
@@ -14,15 +14,15 @@
     14
   ],
   "bytes": {
-    "01-plate.mp4": 9795873,
-    "03-plate.mp4": 3028014,
-    "04-plate.mp4": 11374273,
-    "05-plate.mp4": 5670714,
-    "06-plate.mp4": 7830232,
-    "07-plate.mp4": 4192617,
-    "08-plate.mp4": 6000008,
-    "13-plate.mp4": 3818222,
-    "14-plate.mp4": 11547624
+    "01-plate.mp4": 9903255,
+    "03-plate.mp4": 3070143,
+    "04-plate.mp4": 11379825,
+    "05-plate.mp4": 5752533,
+    "06-plate.mp4": 7929195,
+    "07-plate.mp4": 4425885,
+    "08-plate.mp4": 5968937,
+    "13-plate.mp4": 3966339,
+    "14-plate.mp4": 11564261
   },
   "settle": {
     "01-plate.mp4": 1.92,
