@@ -58,6 +58,9 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13, evening, later: **Deployed:** commit 44f5e76 (Decisions 19), Pages run 43433277299 (success), URL 200,
+  the live walk passed; `safe` skipped. finale_g.mp4 on the release before it. The venue zip on this workstation is
+  of this commit (457.9 MB); not yet on the Mac. Not heard on speakers here.
 - 2026-11-13, evening: **Deployed:** commit 30a171f (Decisions 18), Pages run 43432442635 (success), URL 200, the live
   walk passed; `safe` skipped. finale_f.mp4 on the release before it.
 - 2026-11-13, later: **Deployed:** commit 9b1e120 (Decisions, 12 Nov late night, 17), Pages run 43425878551 (success),
