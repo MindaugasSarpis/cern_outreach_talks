@@ -58,6 +58,9 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-14: **Deployed:** commit 918d794 (Decisions, 12 Nov late night, 12: the two photo slides hidden, the Dalitz
+  plot whole from the start), Pages run 43410721362 (success), URL 200, the live walk passed; `ready` inside the deploy with
+  `safe` skipped. 17 slides. Open with the owner: the music's arrival by ear; the Japanese names' spelling.
 - 2026-11-13, night: **Deployed:** commit 766807f (Decisions, 12 Nov late night, 11), Pages run 43406996482 (success), URL 200, the
   live walk passed; `ready` inside the deploy with `safe` skipped. On the release before it: data2019b, data_loopb,
   globeb, globe_loop, finaleb and the 11 plates (the old names' files stay there until a prune after the talk). Open
