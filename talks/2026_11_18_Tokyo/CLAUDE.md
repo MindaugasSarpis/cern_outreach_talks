@@ -58,6 +58,8 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13, evening: **Deployed:** commit 30a171f (Decisions 18), Pages run 43432442635 (success), URL 200, the live
+  walk passed; `safe` skipped. finale_f.mp4 on the release before it.
 - 2026-11-13, later: **Deployed:** commit 9b1e120 (Decisions, 12 Nov late night, 17), Pages run 43425878551 (success),
   URL 200, the live walk passed; `ready` inside the deploy with `safe` skipped. finale_e.mp4 and the nine plates on
   the release before it. Not heard on speakers here.
@@ -787,6 +789,11 @@ scheduler."
     `starfire_finale_tokyo.m4a` again, entered by a 7 s cross-fade (2 s: "a jump in sound, needs to fade in - out
     smoothly"), `quiet: 1` (no step of level at the arrival); the bed 0.38 on slide 14, 0.42 on 15, 0.46 on the finale
     and the last page. The people's lists are on the last page only, on the flags, not on the globe slide.
+
+19. 13 Nov, evening, after 30a171f (the owner: "breath sounds like a good idea, but needs to be implemented smoothly"):
+    the breath again, on a raised cosine over 1.2 s to a third of the level, 0.2 s held, in the clip's swell
+    (`finale_g.mp4`, lowbang.py) and in the music (`starfire_finale_tokyo_c.m4a`, videos/music/starfire_breath.py, set
+    sample by sample; the first try fell in 0.15 s, a frame at a time, almost to nothing). Deployed 30a171f had no breath.
 
 ### For the toolkit (for the Scheduler, 12 Nov)
 

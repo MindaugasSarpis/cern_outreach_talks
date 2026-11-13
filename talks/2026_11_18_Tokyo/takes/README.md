@@ -8,9 +8,9 @@ globe (13) and the finale (16). The scenes are the slides of `takes.md`, one per
 | takes.md | Scene | Clip |
 | --- | --- | --- |
 | 2 · data | LHCb whole, a collision, its grains arcing out and landing as the 2019 histogram, the fit drawn, the three peaks lit | `data2019d.mp4` (slide 10) |
-| 3 · collision | LHCb's point cloud, a collision, its particles going through the detector, the camera drawing back | `finale_f.mp4`, to 13.6 s |
+| 3 · collision | LHCb's point cloud, a collision, its particles going through the detector, the camera drawing back | `finale_g.mp4`, to 13.6 s |
 | 4 · globe | the globe forms on Europe, Vilnius, Nagoya and Tokyo light, the strand is drawn, the globe turns east as the camera comes in | `globeb.mp4` (slide 13) |
-| 5 · world | the Earth with Japan in the middle, the camera drawing back, the grains gathering into the cover's pentaquark | `finale_f.mp4`, from 12.0 s |
+| 5 · world | the Earth with Japan in the middle, the camera drawing back, the grains gathering into the cover's pentaquark | `finale_g.mp4`, from 12.0 s |
 
 ## Build, record, cut
 
@@ -46,10 +46,10 @@ ffmpeg -i SCRATCH/data_silent.mp4 -i SCRATCH/data.wav -map 0:v -map 1:a -c:v cop
 ffmpeg -ss 4.4 -t 20.6 -i videos/takes/tokyo_globe_tour.mp4 -an ${=X} videos/raw/globeb.mp4
 # its loop (36 s: the take's 25-61 s, the last second cross-faded into 24-25 s)
 ffmpeg -ss 25 -t 36 -i videos/takes/tokyo_globe_tour.mp4 -ss 24 -t 1 -i videos/takes/tokyo_globe_tour.mp4 -an -filter_complex "[0:v]fps=50,setpts=PTS-STARTPTS[a];[1:v]fps=50,setpts=PTS-STARTPTS[b];[a][b]xfade=transition=fade:duration=1:offset=35,format=yuv420p[v]" -map "[v]" ${=X} videos/raw/globe_loop.mp4
-talks/2026_11_18_Tokyo/videos/finale/segments.sh SCRATCH "$PWD" "$OUTREACH_ENV_BIN"     # finale_f.mp4 (32 s, with its sound) and finale_loop.mp4 (30 s)
+talks/2026_11_18_Tokyo/videos/finale/segments.sh SCRATCH "$PWD" "$OUTREACH_ENV_BIN"     # finale_g.mp4 (32 s, with its sound) and finale_loop.mp4 (30 s)
 
 # 4. encode (profile remux: the raws are copied)
-pnpm talk render -- pnpm -C talks/2026_11_18_Tokyo videos:encode -- --only data2019d.mp4 globeb.mp4 finale_f.mp4 finale_loop.mp4
+pnpm talk render -- pnpm -C talks/2026_11_18_Tokyo videos:encode -- --only data2019d.mp4 globeb.mp4 finale_g.mp4 finale_loop.mp4
 ```
 
 Look at each take on a contact sheet before cutting it (`ffmpeg -i TAKE -vf "fps=1,scale=480:-1,tile=6x5"
@@ -69,10 +69,10 @@ The raws are these cuts, not on gdrive: never a plain `videos:sync` here.
   forms on Europe (`tour` from `[40, 50]`: Vilnius left of the middle, Tokyo just inside the right limb),
   holds until the strand is drawn (7.5 s), and turns east to `[104, 44]` by 19.5 s, the seconds counted
   from the photo sequence's start (`tourFrom: cue`), so the turn and the slide's camera path share a clock.
-- **`finale_loop.mp4`** begins on the frame after `finale_f.mp4`'s last (the world take's 21.0 s): a new finale
+- **`finale_loop.mp4`** begins on the frame after `finale_g.mp4`'s last (the world take's 21.0 s): a new finale
   cut means a new loop, which `segments.sh` makes with it. The last page plays the loop.
 - **`public/figures/finale_end.jpg`** (`<CloseStill>`, not in the deck since 12 Nov) is the finale clip's last frame. After a new cut:
-  `ffmpeg -sseof -0.1 -i videos/raw/finale_f.mp4 -frames:v 1 -q:v 2 talks/2026_11_18_Tokyo/public/figures/finale_end.jpg`.
+  `ffmpeg -sseof -0.1 -i videos/raw/finale_g.mp4 -frames:v 1 -q:v 2 talks/2026_11_18_Tokyo/public/figures/finale_end.jpg`.
 - **The histogram's data** is `takes/data/jpsip-2019-fit.json`, made by `bake/fit_2019.py` from HEPData
   ins1728691, Table 3 (LHCb, PRL 122 (2019) 222001).
 - **The look** (`palette`, `options`) is two lines of `takes.md`'s headmatter: keep them as `deck.md`'s.

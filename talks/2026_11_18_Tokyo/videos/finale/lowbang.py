@@ -81,6 +81,10 @@ def voice(n, tc, tf, rng):
     mid = np.where(t < tc, 0, np.where(t < tc + 0.008, ramp_exp(t, tc, tc + 0.008, 1e-4, 1.0), ramp_exp(t, tc + 0.008, tc + 1.6, 1.0, 1e-4))) * np.sin(2 * np.pi * np.cumsum(np.where(t < tc, 0, mf)) / SR)
     # (13 Nov: a 0.45 s breath before the hit was tried here and in the music, and taken out the same day: the owner heard it
     # as "sounds jitters, quiets down, then the low sound is heard, then volume increases")
+    # 13 Nov, evening: the breath again, smoothly (the owner: "breath sounds like a good idea, but needs to be implemented
+    # smoothly"): the swell eases down on a raised cosine over 1.2 s to a third, 0.2 s before the hit
+    u = np.clip((t - (tc - 1.4)) / 1.2, 0, 1)
+    swell = swell * np.where(t < tc, 0.33 + 0.67 * 0.5 * (1 + np.cos(np.pi * u)), 1.0)
     # 13 Nov, evening (the owner: "the collission should be a low longer sound"): the crack and the upper body are out,
     # the low body rings 12 s (6 s) and its low noise 3.5 s (1.5 s)
     return 0.3 * swell + 0.6 * th_g * np.sin(th_ph) + 2.0 * boom
