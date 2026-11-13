@@ -781,6 +781,13 @@ scheduler."
     32.5 s (37 s); the two lists of people at the top corners of the last page. Not done: the clips of slides 2 and
     11 are not trimmed (a press ends a clip, and the owner asked for slide 2 at full length).
 
+18. 13 Nov, evening (the owner, after 9b1e120): the finale, `finale_f.mp4`: no flash on the crossing; no breath before
+    the hit, in the clip or in the music (he heard it as "sounds jitters, quiets down, then the low sound is heard, then
+    volume increases"); the hit low and long (the crack and the upper body out, the low body ringing 12 s); the music is
+    `starfire_finale_tokyo.m4a` again, entered by a 7 s cross-fade (2 s: "a jump in sound, needs to fade in - out
+    smoothly"), `quiet: 1` (no step of level at the arrival); the bed 0.38 on slide 14, 0.42 on 15, 0.46 on the finale
+    and the last page. The people's lists are on the last page only, on the flags, not on the globe slide.
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

@@ -472,7 +472,7 @@ space:   # 13 Nov (the owner: "Slide 14 maybe orbit around these"): the camera g
 
 <!-- 10 Nov (the owner: "On slide 11 can also show hadroquarkonium, give this a bit more depth, maybe some slow
      orbiting around them"): three pictures named under them; the rhetorical caption left. -->
-<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.34" start keys />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.38" start keys />
 <!-- 13 Nov: no caption (the three labels say it, and the lowest label crossed it on the side passes) -->
 
 <!-- facts: lhcb-pentaquark-2019, pc-hadrocharmonium-picture -->
@@ -529,7 +529,7 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
      participants and the three the owner named on 13 Nov ("Lithuanian also: Rūta Racz, Šarūnas Jacevičius, Dominykas
      Stonkus"). The Japanese list stands at the top right, clear of the cities' names ("Maybe japanese names higher
      … at the top of the frame"). -->
-<AtClipEnd :lead="3"><div class="people l"><b>Lithuania</b>Mindaugas Šarpis<br>Oleg Kravcov<br>Adam Morris<br>Rūta Racz<br>Šarūnas Jacevičius<br>Dominykas Stonkus</div><div class="people r"><b>Japan</b>Yasuhiro Yamaguchi<br>Takumi Doi<br>Tomona Kinugawa<br>Yan Lyu<br>Kotaro Murakami<br>Manato Sakai<br>Shota Ampuku<br>Zhibo Liu<br>Gento Yoshikawa<br>Kotaro Miyake</div></AtClipEnd>
+<!-- 13 Nov, evening (the owner: "The names of participants should appear not in the world view but with last slide, on the flags"): the two lists are on the last page only -->
 <!-- no caption (13 Nov, the owner, of "Lithuania and Japan: Penta-Charm, 2026–2028, funded by …": "don't need this"):
      the cities' names are the slide's words; the project's name is on the cover, its years and funders are said -->
 
@@ -832,12 +832,12 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <!-- recorded (owner, 10 Nov: "Reimagine the finale, now it's not good. Use the LHCb collision, use the world rendered,
      maybe the world turns into a pentaquark when zoomed out and then thank you appears in japanese and lithuanian"):
      then, on the first cut, "just need a smoother transition from the collision (maybe show more of it, particles
-     propagating through detector, something like that)"): finale_e.mp4 is cut from two takes (videos/finale/segments.sh;
+     propagating through detector, something like that)"): finale_f.mp4 is cut from two takes (videos/finale/segments.sh;
      takes.md slides 3 and 5): LHCb's collision, its particles going through the detector as the camera turns round
      it and draws back, a dissolve into the world of grains on Japan, drawing back, the Earth's grains gathering
      into the cover's pentaquark. It carries its own sound, the low bang, so it plays unmuted; it ends on the
      pentaquark and waits, and the thanks come up over its last 4.5 s (from 27.5 s, as before the cut grew by 2 s). -->
-<VideoPlayer src="finale_e.mp4" :controls="false" transition="fade" />
+<VideoPlayer src="finale_f.mp4" :controls="false" transition="fade" />
 <!-- 12 Nov (the owner: "Slide 17 should continue playing, also we should have some soundtrack"): as the clip ends
      finale_loop.mp4 takes over, the pentaquark turning on (a 30 s loop that begins on the frame after the clip's
      last; setup/ClipLoop.vue); the music cross-fades on arrival into „Age of Wonder“ from 3:54 (its arrival at 4:16.5 as the
@@ -851,14 +851,14 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
      Buckley's „Starfire“: its collision crosses 16.36 s in, on the piece's arrival at 1:37.38, the 16 s of crescendo
      before it played under the build-up at half level, entered by a 2 s cross-fade from the bed (`drop` with no duck).
      „Age of Wonder“ has no such crescendo into an arrival, and three of its moments were tried here. So this finale has
-     Starfire's, as that one: starfire_finale_tokyo_b.m4a is Karjera's starfire_finale.m4a from 1.72 s in, so its arrival is
+     Starfire's, as that one: starfire_finale_tokyo.m4a is Karjera's starfire_finale.m4a from 1.72 s in, so its arrival is
      14.3 s from its start, and the two bunches meet 14.3 s into the clip (read frame by frame); `drop` counts on the
      clip's own clock. „Age of Wonder“ runs up to this slide and cross-fades out here. -->
-<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.5" start keys :drop="{ at: 14.3, file: 'audio/starfire_finale_tokyo_b.m4a', hit: 14.3, duck: 99, xfade: 2000, quiet: 0.8 }" />
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.46" start keys :drop="{ at: 14.3, file: 'audio/starfire_finale_tokyo.m4a', hit: 14.3, duck: 99, xfade: 7000, quiet: 1 }" />
 <AtClipEnd :lead="4.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
 
 <!--
-The finale (finale_e.mp4, 32 s since 12 Nov, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
+The finale (finale_f.mp4, 32 s since 12 Nov, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
 on the crossing (3.9 s); the particles go through the detector as the camera turns round it and draws back; at
 12 s the picture dissolves (1.6 s) into the Earth in grains, Japan in the middle; the camera draws back to the
 whole Earth, and from 17.5 s its grains leave the globe and gather into a pentaquark (u u d c c̄), the cover's
@@ -879,7 +879,7 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the 
 <!-- 12 Nov: the loop of the turning pentaquark in place of the still (<CloseStill>), the music going on -->
 <VideoPlayer src="finale_loop.mp4" muted loop :controls="false" transition="fade" />
 <BehindFlags />
-<StageSoundtrack src="audio/starfire_finale_tokyo_b.m4a" :level="0.5" keys />
+<StageSoundtrack src="audio/starfire_finale_tokyo.m4a" :level="0.46" keys />
 <div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div>
 <!-- 13 Nov: the project's people again on the last page (slide 15's two lists), at the top corners -->
 <div class="people tl"><b>Lithuania</b>Mindaugas Šarpis<br>Oleg Kravcov<br>Adam Morris<br>Rūta Racz<br>Šarūnas Jacevičius<br>Dominykas Stonkus</div><div class="people r"><b>Japan</b>Yasuhiro Yamaguchi<br>Takumi Doi<br>Tomona Kinugawa<br>Yan Lyu<br>Kotaro Murakami<br>Manato Sakai<br>Shota Ampuku<br>Zhibo Liu<br>Gento Yoshikawa<br>Kotaro Miyake</div>

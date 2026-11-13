@@ -71,17 +71,19 @@ def voice(n, tc, tf, rng):
     # picture, falling from 80 Hz to 29 Hz over 2 s and ringing for 6 s, its noise a second and a half long)
     bf = np.where(t < tc, 80, ramp_exp(t, tc, tc + 2.0, 80, 29))
     bph = 2 * np.pi * np.cumsum(np.where(t < tc, 0, bf)) / SR
-    bg = np.where(t < tc, 0, np.where(t < tc + 0.012, ramp_exp(t, tc, tc + 0.012, 1e-4, 1.0), ramp_exp(t, tc + 0.012, tc + 6.0, 1.0, 2e-3)))
-    ng = np.where(t < tc, 0, ramp_exp(t, tc, tc + 1.5, 0.8, 1e-4))
+    bg = np.where(t < tc, 0, np.where(t < tc + 0.012, ramp_exp(t, tc, tc + 0.012, 1e-4, 1.0), ramp_exp(t, tc + 0.012, tc + 12.0, 1.0, 2e-3)))
+    ng = np.where(t < tc, 0, ramp_exp(t, tc, tc + 3.5, 0.8, 1e-4))
     boom = bg * (np.sin(bph) + 0.45 * np.sin(2 * bph)) + ng * onepole_lp(b, np.full(n, 220.0)) * 2.0
     # 13 Nov (the owner: "the colission sound has to be much more substantial, louder"): a crack over it (a burst of mid
     # noise, 140 Hz to 1.6 kHz) and a body an octave up, so it carries on a room's speakers; the swell under it lower
     crack = np.where(t < tc, 0, np.where(t < tc + 0.004, ramp_exp(t, tc, tc + 0.004, 1e-4, 1.0), ramp_exp(t, tc + 0.004, tc + 0.6, 1.0, 1e-4))) * (onepole_lp(b, np.full(n, 1600.0)) - onepole_lp(b, np.full(n, 140.0))) * 6.0
     mf = np.where(t < tc, 170, ramp_exp(t, tc, tc + 0.9, 170, 58))
     mid = np.where(t < tc, 0, np.where(t < tc + 0.008, ramp_exp(t, tc, tc + 0.008, 1e-4, 1.0), ramp_exp(t, tc + 0.008, tc + 1.6, 1.0, 1e-4))) * np.sin(2 * np.pi * np.cumsum(np.where(t < tc, 0, mf)) / SR)
-    # 13 Nov: a breath before the hit: the swell falls away over the last 0.45 s, so the hit comes out of near-silence
-    swell = swell * np.where((t > tc - 0.45) & (t < tc), np.clip((tc - 0.3 - t) / 0.15, 0.05, 1.0), 1.0)
-    return 0.3 * swell + 0.6 * th_g * np.sin(th_ph) + 1.8 * boom + 1.1 * crack + 0.9 * mid
+    # (13 Nov: a 0.45 s breath before the hit was tried here and in the music, and taken out the same day: the owner heard it
+    # as "sounds jitters, quiets down, then the low sound is heard, then volume increases")
+    # 13 Nov, evening (the owner: "the collission should be a low longer sound"): the crack and the upper body are out,
+    # the low body rings 12 s (6 s) and its low noise 3.5 s (1.5 s)
+    return 0.3 * swell + 0.6 * th_g * np.sin(th_ph) + 2.0 * boom
 
 
 BOOM = '--boom' in sys.argv
