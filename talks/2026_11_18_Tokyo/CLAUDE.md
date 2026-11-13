@@ -719,6 +719,9 @@ scheduler."
    turning a little while it fills and while the bands light; then the draw-back to the labelled view. The question
    of footage for the two photo slides is closed with them.
 
+13. 14 Nov (the owner: "quantum chromodynamics - the very frontier of human knowledge"): slide 6's caption, his own
+   words and his exception to the no-marketing-lines rule of 10 Nov; with a colon, as the other captions.
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

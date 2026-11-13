@@ -215,7 +215,9 @@ $$m_\pi^2 f_\pi^2 = -(m_u + m_d)\,\langle \bar q q\rangle$$
 $$T^\mu_{\ \mu} = \frac{\beta(g_s)}{2 g_s}\, G^a_{\mu\nu}G^{a\,\mu\nu} + \sum_q m_q\, \bar q q$$
 
 </QcdStorm>
-<div class="cap">Quantum chromodynamics</div>
+<!-- 14 Nov, the owner's own caption ("quantum chromodynamics - the very frontier of human knowledge"), his exception to
+     his rule of 10 Nov against such lines; set with a colon as the deck's other captions -->
+<div class="cap">Quantum chromodynamics: the very frontier of human knowledge</div>
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.2" start keys />
 
 <!-- facts: asymptotic-freedom-1973, alpha-s-world-average-2024, proton-mass-quarks-1-percent -->
