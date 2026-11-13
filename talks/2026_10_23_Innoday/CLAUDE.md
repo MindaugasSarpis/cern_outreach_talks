@@ -64,7 +64,7 @@ brings the next round, and Lithuanian firms can solve it.
 ## Status
 
 - 2026-11-13: no ZIP on the landing page any more (`videos/venue.json` removed; the owner: "keep just web versions,
-  don't need zips anymore"). The zip itself is still an asset of the talk's release.
+  don't need zips anymore"). The venue zip was deleted from the talk's release the same day, on his word.
 2026-10-23 (delivered, parked): the talk was given on Thu 23 Oct 2026 from the deployed 95ff916
 (https://mindaugassarpis.github.io/cern_outreach_talks/2026_10_23_Innoday/, Pages run 39831269167)
 and its venue zip (`2026_10_23_Innoday-venue.zip` on the release videos-2026-10-00-innoday,
