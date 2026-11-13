@@ -95,7 +95,7 @@ ffmpeg -i atoms.mp4 -filter_complex \
 # record it and cut the takes is takes/README.md. The raws are those cuts, not on gdrive: never a
 # plain videos:sync here.
 [[videos]]
-name     = "data2019c.mp4"
+name     = "data2019d.mp4"
 profile  = "remux"   # the raw is the web encode itself (videos/finale/segments.sh, takes/README.md): x264 crf 17, at most 9.5 Mbit/s
 used_in  = ["deck"]
 loudnorm = false
@@ -120,7 +120,7 @@ and Tokyo light, the strand is drawn from Vilnius to Nagoya; the globe turns eas
 contour. The globe take, takes.md slide 4, from 4.4 s (the photo's dissolve left out)."""
 
 [[videos]]
-name    = "finalec.mp4"
+name    = "finaled.mp4"
 profile = "remux"   # the raw is the web encode itself (videos/finale/segments.sh, takes/README.md): x264 crf 17, at most 9.5 Mbit/s
 used_in = ["deck"]
 loudnorm = false
@@ -143,7 +143,7 @@ used_in = ["deck"]
 loudnorm = false
 notes   = """\
 Slide 12 (owner, 13 Nov: "histogram stays dynamic … line maybe running trough from time to time"): the histogram after \
-data2019c.mp4's last frame, 12 s, a loop, no sound: the data take's 38.0-50.0 s (two runs of the light along the fit, \
+data2019d.mp4's last frame, 12 s, a loop, no sound: the data take's 38.0-50.0 s (two runs of the light along the fit, \
 6 s apart; the peaks breathing), its last second cross-faded into the take's 37.0-38.0 s. <ClipLoop> starts it as the \
 clip ends; <EndDrift> then moves clip, loop and labels together."""
 
@@ -166,8 +166,8 @@ loudnorm = false
 notes   = """\
 Slides 17 and 18 (owner, 12 Nov: "Slide 17 should continue playing"): the pentaquark turning on after the \
 finale, a 30 s loop, no sound. The world take (takes.md slide 5, recorded with a 52 s hold) from 21.0 s, the \
-frame after finalec.mp4's last, to 51.0 s, its last 2 s cross-faded into the take's 19.0-21.0 s so the end runs \
-into the beginning. Cut: videos/finale/segments.sh. <ClipLoop> starts it as finalec.mp4 ends; the last page loops it."""
+frame after finaled.mp4's last, to 51.0 s, its last 2 s cross-faded into the take's 19.0-21.0 s so the end runs \
+into the beginning. Cut: videos/finale/segments.sh. <ClipLoop> starts it as finaled.mp4 ends; the last page loops it."""
 
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 

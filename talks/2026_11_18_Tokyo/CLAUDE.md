@@ -716,17 +716,17 @@ scheduler."
      the flash is 18.1 s into the clip; `drop` on the clip's clock. Which arrival of the piece the owner means is
      still my reading of its loudness (tried: 256.5 s, 284 s, now 230 s).
 
-12. 14 Nov (the owner: "Don't need group photo and Nagoya university photo slides, also dalitz now shows the edge for a
+12. 13 Nov (the owner: "Don't need group photo and Nagoya university photo slides, also dalitz now shows the edge for a
    long time, should show the entire space zoomed in somehow"): the group photo and the Nagoya slide are hidden
    (`hide: true`; the people are named on the globe slide); 17 slides, the finale 16, the last page 17. Slide 13:
    the whole phase space from above from the first frame, close enough to fill the frame, the camera tipping and
    turning a little while it fills and while the bands light; then the draw-back to the labelled view. The question
    of footage for the two photo slides is closed with them.
 
-13. 14 Nov (the owner: "quantum chromodynamics - the very frontier of human knowledge"): slide 6's caption, his own
+13. 13 Nov (the owner: "quantum chromodynamics - the very frontier of human knowledge"): slide 6's caption, his own
    words and his exception to the no-marketing-lines rule of 10 Nov; with a colon, as the other captions.
 
-14. 14 Nov, the owner's run: slide 7 "delay to hearbear 5s, also do 4 slow (ar slightly slowing) hearbeats … also better
+14. 13 Nov, the owner's run: slide 7 "delay to hearbear 5s, also do 4 slow (ar slightly slowing) hearbeats … also better
    resolve, I don't like the fuzzyness but the overall view is good"; "KEK picture should zoom out slowly"; "Slide 10
    captions appear, dissapear and appear again, only need to appear some time after video starts"; "on slide 12 the low
    boom is in the wrong place, not on particle collission but on colliison with first detector plane. It needs to be
@@ -749,10 +749,19 @@ scheduler."
      `wonder_peak*.m4a` left.
    - Names again for what changed under a name (data2019c, finalec, the new audio file).
 
-15. 14 Nov (the owner: "This Pc on the cover, can we also make it better resolved? the blurry points I don't like"): the
+15. 13 Nov (the owner: "This Pc on the cover, can we also make it better resolved? the blurry points I don't like"): the
    cover's `pentaquark-cc` from hard-edged grains (`crisp`, grains.js's `material`), four times as many at under half
    the size: 8 000 a quark at 0.8 (2 000 at 1.8), 2 800 a gluon at 0.55, 12 000 in the sea, 26 000 in the skin, alpha
    0.7. Slide 14's interiors keep the soft grain (not asked).
+
+16. 13 Nov (the owner's six points after the cover): (a) slides 9, 11 and 12 show their caption once, 2.5 s into the
+    clip, inside `<AtClipEnd>` as slide 10's ("same captions issue with slide 11"); (b) `data2019d.mp4` is the data take
+    from 3.8 s (it was 1.5 s: the first seconds flickered while the detector was drawn), 34.2 s, the crossing at 10.65 s;
+    its hit has a crack (mid noise) and a body an octave up, the histogram's filling four times the level with ticks and
+    a low bed, the clip at −14.3 LUFS ("as loud as the music"); (c) slides 12 and 13 have `dim: 1, ambient: 0`, so no
+    flight shows behind the Dalitz plot; (d) slide 14's camera goes once round the three in 96 s (`path`, eight keys),
+    higher and farther on the side passes where they stand in a line; (e) `finaled.mp4`: the same picture, the hit with
+    the crack and the body, the swell under it lower (`lowbang.py --boom`); the crossing stays at 14.3 s.
 
 ### For the toolkit (for the Scheduler, 12 Nov)
 

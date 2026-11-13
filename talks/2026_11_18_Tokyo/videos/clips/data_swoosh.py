@@ -30,13 +30,13 @@ from scipy.signal import butter, sosfilt
 
 SR = 48000
 # the clip's seconds (takes.md slide 2, cut from the take's 1.5 s; 13 Nov)
-DUR = 36.5
-TC = 12.95                # the crossing: the two bunches meet (read frame by frame, 14 Nov; 15.9 s, used before, is the
+DUR = 34.2                # 13 Nov: the clip starts 2.3 s later in the take (its first seconds flickered as the detector was drawn)
+TC = 10.65                # the crossing: the two bunches meet (read frame by frame, 13 Nov; 15.9 s, used before, is the
                           # debris reaching the first detector plane: the owner, "not on particle collission but on colliison
                           # with first detector plane. It needs to be more expressed and on particle collision and slower")
-FILL = (20.5, 31.0)       # the data landing
-FLY = (26.0, 31.0)        # the last of the camera's way to the histogram (it moves from 21 s on)
-GLINTS = (33.8, 34.25, 34.7)
+FILL = (18.2, 28.7)       # the data landing
+FLY = (23.7, 28.7)        # the last of the camera's way to the histogram (it moves from 21 s on)
+GLINTS = (31.5, 31.95, 32.4)
 rng = np.random.default_rng(12)
 n = int(SR * DUR)
 t = np.arange(n) / SR
@@ -79,10 +79,21 @@ add(1.6 * hit(TC, 0.012, 0.8) * sine(np.where(t < TC, 62, 30 + 32 * np.exp(-(t -
 bf = np.where(t < TC, 85, 28 + 57 * np.exp(-(t - TC) / 1.3))     # slower: the fall takes three seconds, the ring nine
 add(2.0 * hit(TC, 0.012, 3.0) * (sine(bf) + 0.45 * sine(2 * bf)))
 add(1.0 * hit(TC, 0.01, 0.9) * low(white(), 240) * 3)
+# 13 Nov (the owner: "slide 12 boom … more expressed … as loud as the music"): a crack over it, so the hit is heard on a
+# room's speakers and not only felt: a burst of mid noise and a body an octave up
+add(1.3 * hit(TC, 0.004, 0.55) * band(white(), 140, 1600))
+mb = np.where(t < TC, 170, 58 + 112 * np.exp(-(t - TC) / 0.35))
+add(0.9 * hit(TC, 0.008, 1.3) * sine(mb))
 # the data landing: a faint trickle, left to right, thinning as the histogram fills
 f0, f1 = FILL
-trickle = band(white(), 1400, 5200) * (0.5 + 0.5 * low(np.abs(white()), 14) * 6) * env(f0, f0 + 2.0, f1 - 4.0, f1)
-add(0.03 * trickle, pan=np.interp(t, [f0, f1], [0.35, 0.8]))
+# (13 Nov, "sound of collecting histogram more expressed": four times the level, a grain to it (each landing a tick), a low
+# bed under it that swells as the plot grows)
+trickle = band(white(), 1400, 5200) * (0.5 + 0.5 * low(np.abs(white()), 14) * 6) * env(f0, f0 + 2.0, f1 - 3.0, f1)
+add(0.12 * trickle, pan=np.interp(t, [f0, f1], [0.35, 0.8]))
+ticks = (rng.uniform(0, 1, n) < 1 / 900.0) * rng.uniform(0.3, 1.0, n)
+ticks = band(np.convolve(ticks, np.exp(-np.arange(400) / 60.0), 'same'), 900, 6000) * env(f0, f0 + 1.5, f1 - 2.0, f1)
+add(0.55 * ticks, pan=np.interp(t, [f0, f1], [0.4, 0.85]))
+add(0.3 * (sine(np.interp(t, [f0, f1], [46, 62])) + 0.4 * low(white(), 110) * 3) * env(f0, f1 - 2.0, f1 - 1.0, f1 + 0.6))
 # the swoosh: the camera's flight to the histogram
 a, b = FLY
 top = a + 0.72 * (b - a)

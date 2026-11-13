@@ -215,7 +215,7 @@ $$m_\pi^2 f_\pi^2 = -(m_u + m_d)\,\langle \bar q q\rangle$$
 $$T^\mu_{\ \mu} = \frac{\beta(g_s)}{2 g_s}\, G^a_{\mu\nu}G^{a\,\mu\nu} + \sum_q m_q\, \bar q q$$
 
 </QcdStorm>
-<!-- 14 Nov, the owner's own caption ("quantum chromodynamics - the very frontier of human knowledge"), his exception to
+<!-- 13 Nov, the owner's own caption ("quantum chromodynamics - the very frontier of human knowledge"), his exception to
      his rule of 10 Nov against such lines; set with a colon as the deck's other captions -->
 <div class="cap">Quantum chromodynamics: the very frontier of human knowledge</div>
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.2" start keys />
@@ -268,7 +268,7 @@ space: { at: km, dim: 0.6 }
      Nagoya, Tokyo and RIKEN): the Japanese thread goes on from Kobayashi and Maskawa to the experiment that
      confirmed them and then found the X(3872). The caption follows the facts bank: a candidate, never
      "the first exotic hadron". -->
-<!-- 14 Nov (the owner: "KEK picture should zoom out slowly"): the photo drawn on a canvas over itself, from 1.16 times back
+<!-- 13 Nov (the owner: "KEK picture should zoom out slowly"): the photo drawn on a canvas over itself, from 1.16 times back
      to its full frame over 40 s (setup/PanCanvas.vue) -->
 <StagePhoto src="figures/belle.jpg" alt="The Belle detector at KEK, Tsukuba" focus="50% 50%">
 <PanCanvas src="figures/belle.jpg" :from="1.16" :to="1" :drift="[0, 0]" :focus="[50, 50]" :delay="0.5" :seconds="40" />
@@ -299,7 +299,8 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 
 <VideoPlayer src="cern_overview_swoosh.mp4" />
 <AtClipEnd :lead="0.6"><div class="veil tl"></div><div class="num tl">2018<span class="name">Lithuania: associate member</span></div></AtClipEnd>
-<div class="cap">CERN, Geneva: the world’s largest particle physics laboratory</div>
+<!-- 13 Nov: the caption once, 2.5 s into the clip (as slide 10's; the owner: "same captions issue") -->
+<AtClipEnd :lead="8.7"><div class="cap">CERN, Geneva: the world’s largest particle physics laboratory</div></AtClipEnd>
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.26" start keys />
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lithuania -->
@@ -317,7 +318,7 @@ space: { at: lhc, dim: 0.25 }
 ---
 
 <VideoPlayer src="cern_footage_2022_013_001_tunnel_cut.mp4" muted />
-<!-- 14 Nov (the owner: "Slide 10 captions appear, dissapear and appear again, only need to appear some time after video
+<!-- 13 Nov (the owner: "Slide 10 captions appear, dissapear and appear again, only need to appear some time after video
      starts"): they stood over the world, went under the clip as it condensed and came back. Now they come once, 2.5 s
      into the clip (<AtClipEnd> counts from the clip's end: 18 s less 15.5 s) -->
 <AtClipEnd :lead="15.5">
@@ -361,7 +362,8 @@ space: { at: lhc, dist: 22, yaw: 15, pitch: 22 }
 <!-- the clip's own music is off since 12 Nov: „Age of Wonder“ runs under the whole talk (slide 2's comment) -->
 <VideoPlayer src="lhcb.mp4" muted />
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.4" start keys />
-<div class="cap">LHCb Experiment at CERN</div>
+<!-- 13 Nov (the owner: "same captions issue with slide 11"): the caption once, 2.5 s into the clip -->
+<AtClipEnd :lead="45.5"><div class="cap">LHCb Experiment at CERN</div></AtClipEnd>
 
 <!--
 Clip: lhcb.mp4, the LHCb detector in 3D with music (0:47, library clip), its music on (owner, 10 Nov:
@@ -373,11 +375,11 @@ out of the collisions." It condenses out of the dust and leaves the same way.
 -->
 
 ---
-space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under the clip; a back-step or a jump holds the clip's end
+space: { at: lhcb, dim: 1, ambient: 0, recorded: clip }   # the world dark under the clip (13 Nov: nothing of it shows on the way to the next slide); a back-step or a jump holds the clip's end
 ---
 
 <!-- recorded (the owner, 10 Nov: "we want to have a peak from the fit. Also building up the histogram could be a bit
-     more substantial, maybe like in uzsikrauk karjerai … (even involving the detector)"): data2019c.mp4 is the data
+     more substantial, maybe like in uzsikrauk karjerai … (even involving the detector)"): data2019d.mp4 is the data
      take of takes.md (takes/README.md): a collision in LHCb, its grains landing as the 2019 histogram, the fit drawn
      over it, the three peaks lit. The axis and the names are HTML over the clip's settled end, so they stay sharp:
      the positions are the histogram's in the clip's last frame, in slide units; move them if the take's camera moves. -->
@@ -385,7 +387,7 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
      (videos/clips/data_swoosh.py: the run-in's swell, the crossing's thump, the grains' trickle, a low swoosh from left to
      right as the camera flies to the histogram, a deep landing as it arrives, three glints as the peaks light), so it
      plays unmuted, over the music -->
-<VideoPlayer src="data2019c.mp4" :controls="false" transition="fade" />
+<VideoPlayer src="data2019d.mp4" :controls="false" transition="fade" />
 <!-- 13 Nov (the owner: "histogram stays dynamic, slowly zooming in line maybe running trough from time to time, orbiting"):
      as the clip ends its loop takes over (data_loopb.mp4: a light runs along the fit every 6 s, the peaks breathe), and
      clip, loop and the labels over them drift together: a slow zoom in and a gentle turn to and fro (setup/EndDrift.vue) -->
@@ -396,7 +398,7 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.28" start keys />   <!-- low here: the collision is the loud thing (13 Nov: "louder than the music") -->
 <AtClipEnd :lead="5"><div class="spec-axis"><i style="left: 283.6px">4300</i><i style="left: 447.7px">4400</i><i style="left: 611.7px">4500</i><b>mass of J/ψ p (MeV)</b></div></AtClipEnd>
 <AtClipEnd :lead="4"><div class="spec-names"><i class="c" style="left: 300px; top: 112px">P<sub>c</sub>(4312)<sup>+</sup></i><i class="r" style="left: 498px; top: 44px">P<sub>c</sub>(4440)<sup>+</sup></i><i class="l" style="left: 556px; top: 22px">P<sub>c</sub>(4457)<sup>+</sup></i></div></AtClipEnd>
-<div class="cap">LHCb, 2019: the J/ψ p mass in Λ<sub>b</sub><sup>0</sup> → J/ψ p K<sup>−</sup> decays</div>
+<AtClipEnd :lead="31.5"><div class="cap">LHCb, 2019: the J/ψ p mass in Λ<sub>b</sub><sup>0</sup> → J/ψ p K<sup>−</sup> decays</div></AtClipEnd>
 
 <!-- facts: lambda-b-contains-b, lhcb-pentaquark-2015, lhcb-pentaquark-2019, pentaquark-idea-to-discovery-51-years -->
 
@@ -415,7 +417,7 @@ beside them.
 The pentaquarks came out of the decays of the Λb, a baryon that carries a b
 quark: Kobayashi and Maskawa's quark.
 
-The clip (data2019c.mp4, 24 s, no sound; 10 Nov): LHCb's detector, a collision in it, grains leaving the
+The clip (data2019d.mp4, 24 s, no sound; 10 Nov): LHCb's detector, a collision in it, grains leaving the
 detector and landing as the histogram of the J/ψ p mass, 4250–4600 MeV; the camera comes to the histogram
 (18.7 s), the fit is drawn over it in white and the three peaks light; then the axis and the names.
 The plot: HEPData ins1728691, Table 3 (the cos θ-weighted candidates of the paper's Fig. 6, 2 MeV bins), and a
@@ -425,7 +427,7 @@ press release, 14 July 2015. (~1 min)
 -->
 
 ---
-space: { at: lhcb, dim: 0.97 }
+space: { at: lhcb, dim: 1, ambient: 0 }   # 13 Nov (the owner: "when going to slide 13 there is some traveling in 3d space in the background, not needed"): the world dark, so no flight shows behind the plot
 ---
 
 <!-- 10 Nov (the owner: "on the next slide dynamically build up a dalitz plot in 3D space from 2019 result"):
@@ -452,7 +454,20 @@ Sources: LHCb, PRL 122 (2019) 222001. (~0.75 min)
 -->
 
 ---
-space: { at: interiors, dim: 0.15, sway: 24 }   # the camera swings slowly round the three (±24°, a 46 s period)
+space:   # 13 Nov (the owner: "Slide 14 maybe orbit around these"): the camera goes once round the three in 96 s (it swung ±24°), rising and backing off on the side passes, where they stand in a line
+  at: interiors
+  dim: 0.15
+  sway: 0
+  path:
+    - [0, { at: interiors, dist: 16.5, yaw: 0, pitch: 10 }]
+    - [12, { at: interiors, dist: 20, yaw: 45, pitch: 26 }]
+    - [24, { at: interiors, dist: 25, yaw: 90, pitch: 44 }]
+    - [36, { at: interiors, dist: 20, yaw: 135, pitch: 26 }]
+    - [48, { at: interiors, dist: 16.5, yaw: 180, pitch: 10 }]
+    - [60, { at: interiors, dist: 20, yaw: 225, pitch: 26 }]
+    - [72, { at: interiors, dist: 25, yaw: 270, pitch: 44 }]
+    - [84, { at: interiors, dist: 20, yaw: 315, pitch: 26 }]
+    - [96, { at: interiors, dist: 16.5, yaw: 360, pitch: 10 }]
 ---
 
 <!-- 10 Nov (the owner: "On slide 11 can also show hadroquarkonium, give this a bit more depth, maybe some slow
@@ -533,7 +548,7 @@ Sources: Natural Earth; Vilnius University; the project's application. (~0.75 mi
 -->
 
 ---
-hide: true   # 14 Nov (the owner: "Don't need group photo and Nagoya university photo slides"); remove the line to bring it back
+hide: true   # 13 Nov (the owner: "Don't need group photo and Nagoya university photo slides"); remove the line to bring it back
 space: { at: project, dim: 0.6 }
 ---
 
@@ -556,7 +571,7 @@ Sources: Vilnius University news. (~0.75 min)
 -->
 
 ---
-hide: true   # 14 Nov (the owner: "Don't need group photo and Nagoya university photo slides"); remove the line to bring it back
+hide: true   # 13 Nov (the owner: "Don't need group photo and Nagoya university photo slides"); remove the line to bring it back
 space: { at: project, dim: 0.6 }
 ---
 
@@ -817,12 +832,12 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <!-- recorded (owner, 10 Nov: "Reimagine the finale, now it's not good. Use the LHCb collision, use the world rendered,
      maybe the world turns into a pentaquark when zoomed out and then thank you appears in japanese and lithuanian"):
      then, on the first cut, "just need a smoother transition from the collision (maybe show more of it, particles
-     propagating through detector, something like that)"): finalec.mp4 is cut from two takes (videos/finale/segments.sh;
+     propagating through detector, something like that)"): finaled.mp4 is cut from two takes (videos/finale/segments.sh;
      takes.md slides 3 and 5): LHCb's collision, its particles going through the detector as the camera turns round
      it and draws back, a dissolve into the world of grains on Japan, drawing back, the Earth's grains gathering
      into the cover's pentaquark. It carries its own sound, the low bang, so it plays unmuted; it ends on the
      pentaquark and waits, and the thanks come up over its last 4.5 s (from 27.5 s, as before the cut grew by 2 s). -->
-<VideoPlayer src="finalec.mp4" :controls="false" transition="fade" />
+<VideoPlayer src="finaled.mp4" :controls="false" transition="fade" />
 <!-- 12 Nov (the owner: "Slide 17 should continue playing, also we should have some soundtrack"): as the clip ends
      finale_loop.mp4 takes over, the pentaquark turning on (a 30 s loop that begins on the frame after the clip's
      last; setup/ClipLoop.vue); the music cross-fades on arrival into „Age of Wonder“ from 3:54 (its arrival at 4:16.5 as the
@@ -831,7 +846,7 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <!-- 12 Nov, evening (the owner: "japanese and lithuanian flags appearing in the background joined in the middle behind
      the pentaquark"): from 22.5 s, the pentaquark formed (setup/BehindFlags.vue); they stay over the loop and the last page -->
 <BehindFlags :at="37.0" />
-<!-- The finale's music (14 Nov, the owner: "examine uzsikrauk karjerai finale … we still miss the soundtrack on this
+<!-- The finale's music (13 Nov, the owner: "examine uzsikrauk karjerai finale … we still miss the soundtrack on this
      finale"; before it, three times, "see what timing was used in uzsikrauk karjerai"). That talk's close is Scott
      Buckley's „Starfire“: its collision crosses 16.36 s in, on the piece's arrival at 1:37.38, the 16 s of crescendo
      before it played under the build-up at half level, entered by a 2 s cross-fade from the bed (`drop` with no duck).
@@ -843,7 +858,7 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <AtClipEnd :lead="4.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
 
 <!--
-The finale (finalec.mp4, 32 s since 12 Nov, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
+The finale (finaled.mp4, 32 s since 12 Nov, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
 on the crossing (3.9 s); the particles go through the detector as the camera turns round it and draws back; at
 12 s the picture dissolves (1.6 s) into the Earth in grains, Japan in the middle; the camera draws back to the
 whole Earth, and from 17.5 s its grains leave the globe and gather into a pentaquark (u u d c c̄), the cover's

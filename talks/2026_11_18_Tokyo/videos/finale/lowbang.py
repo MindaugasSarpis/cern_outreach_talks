@@ -74,7 +74,12 @@ def voice(n, tc, tf, rng):
     bg = np.where(t < tc, 0, np.where(t < tc + 0.012, ramp_exp(t, tc, tc + 0.012, 1e-4, 1.0), ramp_exp(t, tc + 0.012, tc + 6.0, 1.0, 2e-3)))
     ng = np.where(t < tc, 0, ramp_exp(t, tc, tc + 1.5, 0.8, 1e-4))
     boom = bg * (np.sin(bph) + 0.45 * np.sin(2 * bph)) + ng * onepole_lp(b, np.full(n, 220.0)) * 2.0
-    return 0.55 * swell + 0.6 * th_g * np.sin(th_ph) + 1.6 * boom
+    # 13 Nov (the owner: "the colission sound has to be much more substantial, louder"): a crack over it (a burst of mid
+    # noise, 140 Hz to 1.6 kHz) and a body an octave up, so it carries on a room's speakers; the swell under it lower
+    crack = np.where(t < tc, 0, np.where(t < tc + 0.004, ramp_exp(t, tc, tc + 0.004, 1e-4, 1.0), ramp_exp(t, tc + 0.004, tc + 0.6, 1.0, 1e-4))) * (onepole_lp(b, np.full(n, 1600.0)) - onepole_lp(b, np.full(n, 140.0))) * 6.0
+    mf = np.where(t < tc, 170, ramp_exp(t, tc, tc + 0.9, 170, 58))
+    mid = np.where(t < tc, 0, np.where(t < tc + 0.008, ramp_exp(t, tc, tc + 0.008, 1e-4, 1.0), ramp_exp(t, tc + 0.008, tc + 1.6, 1.0, 1e-4))) * np.sin(2 * np.pi * np.cumsum(np.where(t < tc, 0, mf)) / SR)
+    return 0.3 * swell + 0.6 * th_g * np.sin(th_ph) + 1.8 * boom + 1.1 * crack + 0.9 * mid
 
 
 BOOM = '--boom' in sys.argv
