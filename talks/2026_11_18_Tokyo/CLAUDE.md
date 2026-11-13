@@ -58,6 +58,8 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13: the owner on the finale's music: "It was starfire... maybe starfire". Starfire stays on the finale
+  (slides 16 and 17), „Age of Wonder“ to there. No longer open.
 - 2026-11-13: **Deployed:** commit ab2b5dc (Decisions, 12 Nov late night, 15 and 16), Pages run 43420851513 (success),
   URL 200, the live walk passed; `ready` inside the deploy with `safe` skipped. data2019d.mp4 and finaled.mp4 on the
   release before it. Not heard on speakers here: the owner listens to slide 12's and the finale's hit on the Mac.
