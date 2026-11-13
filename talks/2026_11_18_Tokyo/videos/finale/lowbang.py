@@ -87,7 +87,17 @@ def voice(n, tc, tf, rng):
     swell = swell * np.where(t < tc, 0.33 + 0.67 * 0.5 * (1 + np.cos(np.pi * u)), 1.0)
     # 13 Nov, evening (the owner: "the collission should be a low longer sound"): the crack and the upper body are out,
     # the low body rings 12 s (6 s) and its low noise 3.5 s (1.5 s)
-    return 0.3 * swell + 0.6 * th_g * np.sin(th_ph) + 2.0 * boom
+    # 14 Nov (the owner: "the low sound could be without vibration, a bit smoother"): the vibration was three low voices
+    # close in pitch beating against each other (the swell's 42 to 31 Hz, the thump's 62 to 30 Hz, the body's 80 to 29 Hz),
+    # low noise under them, and the soft clipper on a mix that loud. Now one voice after the crossing: a sine gliding
+    # from 64 Hz to 34 Hz over 3 s and staying there, a little of its octave, up in 60 ms, ringing 20 s; the swell is
+    # gone 0.3 s after the crossing, no thump, no noise, and the mix is not clipped (main)
+    sf = np.where(t < tc, 64, ramp_exp(t, tc, tc + 3.0, 64, 34))
+    sph = 2 * np.pi * np.cumsum(np.where(t < tc, 0, sf)) / SR
+    sg = np.where(t < tc, 0, np.where(t < tc + 0.06, 0.5 * (1 - np.cos(np.pi * (t - tc) / 0.06)), ramp_exp(t, tc + 0.06, tc + 20.0, 1.0, 2e-3)))
+    smooth = sg * (np.sin(sph) + 0.22 * np.sin(2 * sph))
+    swell = swell * np.where(t < tc, 1.0, np.exp(-np.maximum(t - tc, 0) / 0.08))
+    return 0.3 * swell + 1.0 * smooth
 
 
 BOOM = '--boom' in sys.argv
@@ -121,7 +131,8 @@ def main():
     for at in BEAT:
         mix += 2.2 * beat(n, at)
     # the compressor's job, roughly: a soft knee, then -6 dBFS peak
-    mix = np.tanh(1.5 * mix) / 1.5
+    if not BOOM:
+        mix = np.tanh(1.5 * mix) / 1.5
     mix *= 10 ** ((-2 if BOOM else -6) / 20) / max(np.abs(mix).max(), 1e-9)
     # fade the last 50 ms
     k = int(0.05 * SR); mix[-k:] *= np.linspace(1, 0, k)

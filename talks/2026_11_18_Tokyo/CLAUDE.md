@@ -798,6 +798,12 @@ scheduler."
     (`finale_g.mp4`, lowbang.py) and in the music (`starfire_finale_tokyo_c.m4a`, videos/music/starfire_breath.py, set
     sample by sample; the first try fell in 0.15 s, a frame at a time, almost to nothing). Deployed 30a171f had no breath.
 
+20. 14 Nov (the owner): the people's two lists come with the thanks on the finale slide (16), on the flags ("last I am
+    not going to show"); they stay on the last page too. The finale's low sound, `finale_h.mp4`: one voice after the
+    crossing (a sine from 64 Hz to 34 Hz over 3 s, a little octave, up in 60 ms, ringing 20 s), the swell gone 0.3 s
+    after it, no thump, no noise, no clipper ("without vibration, a bit smoother": three low voices close in pitch had
+    been beating). The smooth breath before it stays.
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

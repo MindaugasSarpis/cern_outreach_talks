@@ -832,12 +832,12 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <!-- recorded (owner, 10 Nov: "Reimagine the finale, now it's not good. Use the LHCb collision, use the world rendered,
      maybe the world turns into a pentaquark when zoomed out and then thank you appears in japanese and lithuanian"):
      then, on the first cut, "just need a smoother transition from the collision (maybe show more of it, particles
-     propagating through detector, something like that)"): finale_g.mp4 is cut from two takes (videos/finale/segments.sh;
+     propagating through detector, something like that)"): finale_h.mp4 is cut from two takes (videos/finale/segments.sh;
      takes.md slides 3 and 5): LHCb's collision, its particles going through the detector as the camera turns round
      it and draws back, a dissolve into the world of grains on Japan, drawing back, the Earth's grains gathering
      into the cover's pentaquark. It carries its own sound, the low bang, so it plays unmuted; it ends on the
      pentaquark and waits, and the thanks come up over its last 4.5 s (from 27.5 s, as before the cut grew by 2 s). -->
-<VideoPlayer src="finale_g.mp4" :controls="false" transition="fade" />
+<VideoPlayer src="finale_h.mp4" :controls="false" transition="fade" />
 <!-- 12 Nov (the owner: "Slide 17 should continue playing, also we should have some soundtrack"): as the clip ends
      finale_loop.mp4 takes over, the pentaquark turning on (a 30 s loop that begins on the frame after the clip's
      last; setup/ClipLoop.vue); the music cross-fades on arrival into „Age of Wonder“ from 3:54 (its arrival at 4:16.5 as the
@@ -856,9 +856,11 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
      clip's own clock. „Age of Wonder“ runs up to this slide and cross-fades out here. -->
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.46" start keys :drop="{ at: 14.3, file: 'audio/starfire_finale_tokyo_c.m4a', hit: 14.3, duck: 99, xfade: 7000, quiet: 1 }" />
 <AtClipEnd :lead="4.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
+<!-- 14 Nov (the owner: "Names of participants should be on second to last slide, last I am not going to show"): the two lists here, on the flags, coming with the thanks -->
+<AtClipEnd :lead="4.5"><div class="people tl"><b>Lithuania</b>Mindaugas Šarpis<br>Oleg Kravcov<br>Adam Morris<br>Rūta Racz<br>Šarūnas Jacevičius<br>Dominykas Stonkus</div><div class="people r"><b>Japan</b>Yasuhiro Yamaguchi<br>Takumi Doi<br>Tomona Kinugawa<br>Yan Lyu<br>Kotaro Murakami<br>Manato Sakai<br>Shota Ampuku<br>Zhibo Liu<br>Gento Yoshikawa<br>Kotaro Miyake</div></AtClipEnd>
 
 <!--
-The finale (finale_g.mp4, 32 s since 12 Nov, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
+The finale (finale_h.mp4, 32 s since 12 Nov, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
 on the crossing (3.9 s); the particles go through the detector as the camera turns round it and draws back; at
 12 s the picture dissolves (1.6 s) into the Earth in grains, Japan in the middle; the camera draws back to the
 whole Earth, and from 17.5 s its grains leave the globe and gather into a pentaquark (u u d c c̄), the cover's

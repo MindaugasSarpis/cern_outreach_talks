@@ -120,7 +120,7 @@ and Tokyo light, the strand is drawn from Vilnius to Nagoya; the globe turns eas
 contour. The globe take, takes.md slide 4, from 4.4 s (the photo's dissolve left out)."""
 
 [[videos]]
-name    = "finale_g.mp4"
+name    = "finale_h.mp4"
 profile = "remux"   # the raw is the web encode itself (videos/finale/segments.sh, takes/README.md): x264 crf 17, at most 9.5 Mbit/s
 used_in = ["deck"]
 loudnorm = false
@@ -166,8 +166,8 @@ loudnorm = false
 notes   = """\
 Slides 17 and 18 (owner, 12 Nov: "Slide 17 should continue playing"): the pentaquark turning on after the \
 finale, a 30 s loop, no sound. The world take (takes.md slide 5, recorded with a 52 s hold) from 21.0 s, the \
-frame after finale_g.mp4's last, to 51.0 s, its last 2 s cross-faded into the take's 19.0-21.0 s so the end runs \
-into the beginning. Cut: videos/finale/segments.sh. <ClipLoop> starts it as finale_g.mp4 ends; the last page loops it."""
+frame after finale_h.mp4's last, to 51.0 s, its last 2 s cross-faded into the take's 19.0-21.0 s so the end runs \
+into the beginning. Cut: videos/finale/segments.sh. <ClipLoop> starts it as finale_h.mp4 ends; the last page loops it."""
 
 # >>> plates: written by `pnpm talk record NAME --plates` and replaced by every take; edits here are lost
 
