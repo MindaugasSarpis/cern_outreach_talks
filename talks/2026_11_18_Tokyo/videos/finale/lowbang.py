@@ -79,6 +79,8 @@ def voice(n, tc, tf, rng):
     crack = np.where(t < tc, 0, np.where(t < tc + 0.004, ramp_exp(t, tc, tc + 0.004, 1e-4, 1.0), ramp_exp(t, tc + 0.004, tc + 0.6, 1.0, 1e-4))) * (onepole_lp(b, np.full(n, 1600.0)) - onepole_lp(b, np.full(n, 140.0))) * 6.0
     mf = np.where(t < tc, 170, ramp_exp(t, tc, tc + 0.9, 170, 58))
     mid = np.where(t < tc, 0, np.where(t < tc + 0.008, ramp_exp(t, tc, tc + 0.008, 1e-4, 1.0), ramp_exp(t, tc + 0.008, tc + 1.6, 1.0, 1e-4))) * np.sin(2 * np.pi * np.cumsum(np.where(t < tc, 0, mf)) / SR)
+    # 13 Nov: a breath before the hit: the swell falls away over the last 0.45 s, so the hit comes out of near-silence
+    swell = swell * np.where((t > tc - 0.45) & (t < tc), np.clip((tc - 0.3 - t) / 0.15, 0.05, 1.0), 1.0)
     return 0.3 * swell + 0.6 * th_g * np.sin(th_ph) + 1.8 * boom + 1.1 * crack + 0.9 * mid
 
 

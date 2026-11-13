@@ -78,7 +78,10 @@ export function installCoverCollision(registerBuilder) {
     // in, the deep thump on the crossing, the drone held while the round runs slow, let go as it speeds up), told of
     // each round here: its start, its crossing, its speed. It needs the stage's audio, so a key or a click first.
     const snd = o.sound ? `${run}-sound` : null
-    if (snd) openingSound(ctx, bus, { name: snd, level: typeof o.sound === 'number' ? o.sound : 0.5 })
+    const sndQ = snd ? `${run}-sound-q` : null, lvl = typeof o.sound === 'number' ? o.sound : 0.5
+    if (snd) { openingSound(ctx, bus, { name: snd, level: lvl }); openingSound(ctx, bus, { name: sndQ, level: lvl * 0.3 }) }
+    // 13 Nov: the first two rounds heard at the level, the later ones at a third of it (the cover stands while a room sits down)
+    let rounds = 0, cur = snd
     // 13 Nov (the owner: "Cover slide has nothing on collision"): the stage's audio is locked until the first key or
     // click, and the cover's first round starts as the page opens, so its voice found no audio, and the next round was
     // 20 s on, after the talk had left the cover. Now a round's voice starts as soon as there is audio, any time before
@@ -86,9 +89,9 @@ export function installCoverCollision(registerBuilder) {
     // (`soon`), so the collision is heard on the press that unlocks the sound.
     let crossed = false, lastRate = 1, voiced = false, heard = false, soon = false
     const audible = () => { try { return !!ctx.audio?.() } catch { return false } }
-    const voice = () => { if (snd && !voiced && audible()) { voiced = true; heard = true; bus.emit('start', { name: snd }) } }
+    const voice = () => { if (snd && !voiced && audible()) { voiced = true; heard = true; cur = rounds++ < 2 ? snd : sndQ; bus.emit('start', { name: cur }) } }
     const startRound = () => { tc = local + approach; hiddenAt = null; bus.set(run, 1); crossed = false; lastRate = 1; voiced = false; voice() }
-    const hide = () => { if (tc != null && hiddenAt == null) { hiddenAt = local; bus.set(run, 0); if (snd) bus.emit('stop', { name: snd }) } }
+    const hide = () => { if (tc != null && hiddenAt == null) { hiddenAt = local; bus.set(run, 0); if (snd) bus.emit('stop', { name: cur }) } }
     const setOn = (k) => {
       const want = !!k
       if (want === on) return
@@ -110,8 +113,8 @@ export function installCoverCollision(registerBuilder) {
       built.update(local)
       if (snd && on && hiddenAt == null && te != null) {
         if (!crossed && te < -0.2) voice()
-        if (!crossed && te >= 0) { crossed = true; if (voiced) bus.emit('cross', { name: snd }) }
-        if (Math.abs(speed - lastRate) > 0.02) { lastRate = speed; bus.emit('rate', { name: snd, rate: speed }) }
+        if (!crossed && te >= 0) { crossed = true; if (voiced) bus.emit('cross', { name: cur }) }
+        if (Math.abs(speed - lastRate) > 0.02) { lastRate = speed; bus.emit('rate', { name: cur, rate: speed }) }
       }
       if (!on || tc == null) return
       if (hiddenAt == null && local - tc >= HOLD) { hide(); first = false }

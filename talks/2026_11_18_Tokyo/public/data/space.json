@@ -430,7 +430,7 @@
    "pos": [
     235,
     0,
-    0
+    500
    ],
    "look": {
     "target": [
@@ -438,9 +438,9 @@
      -0.2,
      0
     ],
-    "dist": 16.5,
+    "dist": 18.5,
     "yaw": 0,
-    "pitch": 10,
+    "pitch": 28,
     "sway": 2
    },
    "objects": [
@@ -448,9 +448,9 @@
      "type": "interior",
      "kind": "molecule",
      "pos": [
-      -7.1,
+      -5.8,
       0,
-      0
+      -3.4
      ]
     },
     {
@@ -459,25 +459,25 @@
      "pos": [
       0,
       0,
-      0
+      6.7
      ]
     },
     {
      "type": "interior",
      "kind": "hadroquarkonium",
      "pos": [
-      7.6,
+      5.8,
       0,
-      0
+      -3.4
      ]
     },
     {
      "type": "label",
      "text": "molecule",
      "pos": [
-      -7.1,
+      -5.8,
       -2.9,
-      0
+      -3.4
      ],
      "height": 0.85,
      "color": "#cfeaff",
@@ -490,7 +490,7 @@
      "pos": [
       0,
       -2.9,
-      0
+      6.7
      ],
      "height": 0.85,
      "color": "#cfeaff",
@@ -501,9 +501,9 @@
      "type": "label",
      "text": "hadroquarkonium",
      "pos": [
-      7.6,
+      5.8,
       -2.9,
-      0
+      -3.4
      ],
      "height": 0.85,
      "color": "#cfeaff",

@@ -768,6 +768,16 @@ scheduler."
     higher and farther on the side passes where they stand in a line; (e) `finaled.mp4`: the same picture, the hit with
     the crack and the body, the swell under it lower (`lowbang.py --boom`); the crossing stays at 14.3 s.
 
+17. 13 Nov, later (the owner's "ok" to the list after the whole-talk look, and "Go ahead and implement polish
+    suggestions"): (a) slide 6's storm falls to half strength from 15 s; (b) slide 14 has no caption, its station stands
+    500 units from the others (their photos showed far behind), and the three stand in a triangle (5.8/6.7 units out),
+    the camera going round at 28° above, 18.5 away, 96 s a turn (the owner: "they shouldn't be in a line... looks
+    weird"); (c) the cover's first two heard rounds at the level, later ones at 0.3 of it; (d) the finale,
+    `finale_e.mp4`: the swell falls away over the last 0.45 s before the hit, one flash on the crossing frame (eq, gone
+    in 0.25 s), and Starfire as `starfire_finale_tokyo_b.m4a` with the same breath before its arrival; the flags from
+    32.5 s (37 s); the two lists of people at the top corners of the last page. Not done: the clips of slides 2 and
+    11 are not trimmed (a press ends a clip, and the owner asked for slide 2 at full length).
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

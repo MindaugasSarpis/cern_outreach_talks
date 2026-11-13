@@ -110,7 +110,9 @@ function draw(fadeIn = 1) {
 function frame(now) {
   const dt = Math.min(0.1, (now - last) / 1000); last = now; t += dt
   for (const o of st) { o.p += dt / PERIOD; if (o.p >= 1) { o.p -= 1; o.off = line(); o.rot = (r() - 0.5) * 4 } }
-  draw(Math.min(1, t / 1.8))
+  // 13 Nov: from 15 s the storm falls to half strength over 5 s, so a room that has seen it listens (the owner's ok to the list)
+  const k = Math.max(0, Math.min(1, (t - 15) / 5))
+  draw(Math.min(1, t / 1.8) * (1 - 0.5 * k * k * (3 - 2 * k)))
   raf = requestAnimationFrame(frame)
 }
 function stop() { cancelAnimationFrame(raf); raf = 0 }
