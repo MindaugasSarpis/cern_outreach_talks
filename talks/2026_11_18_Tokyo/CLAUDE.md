@@ -58,6 +58,9 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13, late: the venue zip of ac57d57 (458 MB) is on the release `videos-2026-11-18-tokyo` and on the landing page
+  (`videos/venue.json`; the owner: "Add a zip to the landing page"). A re-cut means a new zip, upload and venue.json.
+  Never `videos:publish --prune` on this release without listing the zip: prune drops what the manifest does not name.
 - 2026-11-13, late: **Deployed:** commit ac57d57 (Decisions 20), Pages run 43436947038 (success), URL 200, the live
   walk passed; `safe` skipped. finale_h.mp4 on the release before it. The venue zip on this workstation is of this
   commit (458.0 MB); not on the Mac and not up for download (a new public release was refused; the owner chooses).
