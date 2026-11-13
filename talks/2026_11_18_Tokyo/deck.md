@@ -81,7 +81,7 @@ space: { at: proton, dim: 0.2 }
      here to the end, building: one bed (audio/wonder_bed.m4a, 16 min; videos/music/wonder_bed.py: the piece played
      forward, stepping back whole four-bar phrases on its own bar grid where length is needed, never to its opening;
      the owner, 13 Nov: "the sountrack was just restarted … it went better in uzsikrauk karjerai"), its level a little
-     up from slide to slide (0.16 … 0.45). The finale times the piece's climax on its collision (wonder_peak.m4a; slide 18's comment).
+     up from slide to slide (0.16 … 0.45). The finale times the piece's climax on its collision (wonder_peak.m4a; the finale's comment).
      `+` / `-` set the level in the talk. The cover has the collision's own sound and no music. -->
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.3" start keys />
 
@@ -523,6 +523,7 @@ Sources: Natural Earth; Vilnius University; the project's application. (~0.75 mi
 -->
 
 ---
+hide: true   # 14 Nov (the owner: "Don't need group photo and Nagoya university photo slides"); remove the line to bring it back
 space: { at: project, dim: 0.6 }
 ---
 
@@ -545,6 +546,7 @@ Sources: Vilnius University news. (~0.75 min)
 -->
 
 ---
+hide: true   # 14 Nov (the owner: "Don't need group photo and Nagoya university photo slides"); remove the line to bring it back
 space: { at: project, dim: 0.6 }
 ---
 

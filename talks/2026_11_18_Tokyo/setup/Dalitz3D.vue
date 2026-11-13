@@ -151,9 +151,9 @@ const ease = (x) => { x = Math.min(Math.max(x, 0), 1); return x * x * (3 - 2 * x
 // ended on, and the ticks and names come (T_NAME), with the slow turn.
 // 13 Nov, night (the owner: "13 broke, it was better before, don't need a contour, should be already close to dalitz plot
 // when start filling it up, then Pcs are indicated, then zoomed out"): no edge line and no circling. The camera is close
-// from the first frame, low over the plot and gliding along where the P_c bands will stand, while the candidates fill it
-// (to T_LIT); then the bands light and their names come (T_LIT), the glide going on; then it draws back to the whole plot
-// (T_OUT), where the ticks and the axes' names come.
+// from the first frame (since 14 Nov over the whole plot, filling the frame: the pose below) while the candidates fill it
+// (to T_LIT); then the bands light and their names come (T_LIT); then it draws back to the labelled view (T_OUT), where
+// the ticks and the axes' names come.
 const T_RISE = 1.5, T_LIT = 10.5, T_OUT = 16.0, T_NAME = 16.6
 const T_FLY = 0
 // the P_c names: at m²(K p), m²(J/ψ p); the top of the band's columns there and the name's foot (over the band)
@@ -172,10 +172,13 @@ function update(t) {
   // three poses, blended: A circling while it fills; B the flight along the band; C the end (58° from the vertical,
   // a little to the left: the pose every label's place was checked on)
   const pos = new Vector3(), tgt = new Vector3(), q = new Vector3(), qt = new Vector3()
-  // close from the start: over the plot past the Λ(1520) ridge, along m²(J/ψ p) = 19.8 GeV², coming down a little and on
-  const k = Math.min(1, t / T_OUT), kk = k * (2 - k)
-  const x = wx(2.75) + (wx(4.9) - wx(2.75)) * kk
-  pos.set(x, 3.3 - 1.5 * kk, wz(19.8) + 1.5 - 0.9 * kk); tgt.set(x + 4.6, 0.3, wz(19.8) - 0.3)
+  // 14 Nov (the owner: "dalitz now shows the edge for a long time, should show the entire space zoomed in somehow"): the
+  // whole phase space from the first frame, seen from above and close enough to fill the frame, the camera tipping a
+  // little and turning slowly while it fills and while the bands light
+  const kA = Math.min(1, t / T_OUT), eA = kA * kA * (3 - 2 * kA)
+  const poA = 0.26 + 0.3 * eA, azA = -0.38 + 0.5 * kA, dA = 12.4 + 0.8 * eA
+  tgt.set(0.1, 0, 0.35)
+  pos.set(tgt.x + dA * Math.sin(poA) * Math.sin(azA), tgt.y + dA * Math.cos(poA), tgt.z + dA * Math.sin(poA) * Math.cos(azA))
   const fly = 0, out = ease((t - T_OUT) / 4.2)
   if (out > 0) {
     const polar = 1.02, az = -0.42 + turn, dist = 15

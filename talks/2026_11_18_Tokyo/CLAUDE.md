@@ -709,6 +709,13 @@ scheduler."
      the flash is 18.1 s into the clip; `drop` on the clip's clock. Which arrival of the piece the owner means is
      still my reading of its loudness (tried: 256.5 s, 284 s, now 230 s).
 
+12. 14 Nov (the owner: "Don't need group photo and Nagoya university photo slides, also dalitz now shows the edge for a
+   long time, should show the entire space zoomed in somehow"): the group photo and the Nagoya slide are hidden
+   (`hide: true`; the people are named on the globe slide); 17 slides, the finale 16, the last page 17. Slide 13:
+   the whole phase space from above from the first frame, close enough to fill the frame, the camera tipping and
+   turning a little while it fills and while the bands light; then the draw-back to the labelled view. The question
+   of footage for the two photo slides is closed with them.
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:
