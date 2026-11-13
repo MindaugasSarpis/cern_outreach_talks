@@ -52,7 +52,10 @@ space:
     - [15.7, { at: [1003, -481.5, 1.5], dist: 12.5, yaw: -4, pitch: 2 }]
     - [18.4, { at: [1006, -481.5, 2], dist: 17, yaw: -2, pitch: 2.5 }]
     - [22.5, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]
-    - [28.5, { at: [1023.7, -483, 2.5], dist: 35, yaw: 0, pitch: 4 }]
+    # 13 Nov, night (the owner: "should be some zooming in, panning of the histogram now it's too static"): no standing
+    # still while it fills: from the whole detector the camera goes on at once, along the stream of data and in on
+    # the histogram, for the whole ten seconds of the fill
+    - [27.5, { at: [1031.5, -482.6, 3.8], dist: 26.5, yaw: 4, pitch: 3.5 }]
     - [32.5, { at: [1037.6, -482.3, 5], dist: 19.5, yaw: 0, pitch: 3 }]
 ---
 

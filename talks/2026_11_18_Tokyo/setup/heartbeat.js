@@ -1,7 +1,7 @@
 // One heartbeat, slow and loud (the owner, 13 Nov: "when pentaquark appears, a sound of a single heartbeat loud and
 // slow"): two low thumps 0.46 s apart, the first the heavier (58 -> 36 Hz), each with its octave so a small speaker
-// carries it. Synthesised (Web Audio), nothing to load. Heard on the cover as the pentaquark gathers and on slide 7
-// as it comes to the front; the finale's is in its clip's own sound (videos/finale/lowbang.py --beat). Only the
+// carries it. Synthesised (Web Audio), nothing to load. Heard on slide 7 as the pentaquark comes to the front, and nowhere else (the owner, 13 Nov, after it was on the
+// cover and in the finale too: "Heartbeat should be only on slide 7"). Only the
 // audience's window plays it, and only once a key or a click has unlocked the audio.
 let ctx = null
 function audio() {

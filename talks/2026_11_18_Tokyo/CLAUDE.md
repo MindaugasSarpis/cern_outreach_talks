@@ -674,6 +674,36 @@ scheduler."
      clock; then to the piece's end over the loop and the last page. `wonder_close.m4a` left. Which moment of the
      piece the owner calls its peak is my reading of its loudness curve: 4:44.0, to be confirmed by ear.
 
+11. 13 Nov, night, the owner: "cover: the collision should fill up the entire screen. Heartbeat should be only on slide
+   7. slide 12 low boom was not timed to collission, should be some zooming in, panning of the histogram now it's too
+   static. 13 broke, it was better before, don't need a contour, should be already close to dalitz plot when start
+   filling it up, then Pcs are indicated, then zoomed out. 15 definitely shouldn't freeze, slowly rotate earth, pulse
+   the line connecting japan and lithuania"; "for the finale, see what timing was used in uzsikrauk karjerai, the
+   collission not timed with low sound as well"; "on slide 15 show names of Lithuanian and Japanese participants,
+   Margarita got deplaced by Dominykas … Lithuanian also: Rūta Racz, Šarūnas Jacevičius, Dominykas Stonkus"; "Maybe
+   japanese names higher … at the top of the frame".
+   - **Clips re-cut take new names** (data2019b, data_loopb, globeb, finaleb): in the files as built the hit sat on
+     the flash's frame both on slide 12 and in the finale, so the likeliest cause of "not timed" is the browser's
+     cached copy of the earlier cut under the same release name. A re-cut never reuses a name from here on.
+   - The cover: the collision 8 units in front of the camera on its axis (it was 31 behind the particle and came
+     out small), its light running at 4 units a second, held 9 s, blue-white (its tracks were the builder's
+     default gold); the title has a dark shadow under it. The heartbeat: slide 7 only.
+   - Slide 12: the take again (4K): the camera moves through the whole fill (from the whole detector along the
+     stream and in on the histogram, 22.5 to 32.5 s); `<EndDrift>` to 1.3× and ±4.5°. The flash at the clip's
+     15.9 s, the hit there.
+   - Slide 13: no edge line, no circling: close over the plot from the first frame, gliding along where the bands
+     will stand, while it fills (to 10.5 s); the bands light and the P_c names come (in the frame only); from 16 s
+     it draws back to the whole plot, where the ticks and axes' names come.
+   - Slide 15: `globe_loop.mp4` (36 s) after the clip: six seconds on its last view, then the globe turns 9° on
+     east and back, the strand's pulse three times as bright; the cities' names show only on that view
+     (`<AtLoopRest>`). The people: the Lithuanian six at the lower left (the application's three main
+     participants and the owner's three), the Japanese ten at the top right (the application's list). `<ZoomOn>`
+     is no longer on the slide.
+   - The finale's music as Karjera's close: on arrival a 2 s cross-fade from the bed into `wonder_peak.m4a`, which
+     is the piece from 18.1 s before its 230th second (the arrival after its quiet middle), played without a duck;
+     the flash is 18.1 s into the clip; `drop` on the clip's clock. Which arrival of the piece the owner means is
+     still my reading of its loudness (tried: 256.5 s, 284 s, now 230 s).
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

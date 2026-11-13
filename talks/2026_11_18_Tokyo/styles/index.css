@@ -37,6 +37,7 @@
   transition: opacity 1.4s ease;
 }
 html[data-space-assembled] .slidev-layout .tokyo-title { opacity: 1; }
+.slidev-layout .tokyo-title .t, .slidev-layout .tokyo-title .who { text-shadow: 0 0 10px rgba(2, 2, 3, 0.95), 0 0 3px rgba(2, 2, 3, 1); }   /* the collision's tracks cross the whole cover behind it (13 Nov) */
 .slidev-layout .tokyo-title .t {
   font-size: 29px;
   font-weight: 600;
@@ -162,8 +163,10 @@ html[data-stage] .hero .num { z-index: 2; }
   paint-order: stroke; stroke: rgba(3, 5, 12, 0.85); stroke-width: 4px; stroke-linejoin: round;
 }
 
-/* the globe goes on in towards Japan after its clip (ZoomOn): Vilnius leaves the frame, so its name and line go first,
-   9 s after the names came (they come 4 s before the clip's end; the zoom starts 5 s after it) */
-.slidev-layout .at-clip-end.on .globe-names .vil { animation: tokyo-vil-out 2.5s ease 2.5s forwards; }
-@keyframes tokyo-vil-out { to { opacity: 0; } }
-@media print { .slidev-layout .at-clip-end.on .globe-names .vil { animation: none; } }
+/* the globe slide's people (13 Nov): two short lists, the Lithuanian side at the lower left, the Japanese at the top
+   right (clear of the cities' names at the lower right); 18 px, the house floor */
+.slidev-layout .people { position: absolute; z-index: 27; max-width: 300px; font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  font-size: 18px; line-height: 1.22; color: #e8f6ff; text-transform: none; text-shadow: 0 0 8px rgba(3, 5, 12, 0.95), 0 0 2px rgba(3, 5, 12, 1); }
+.slidev-layout .people b { display: block; margin-bottom: 3px; font-size: 18px; font-weight: 600; letter-spacing: 0.04em; color: #9fd8ff; }
+.slidev-layout .people.l { left: 48px; bottom: 30px; }
+.slidev-layout .people.r { right: 44px; top: 24px; text-align: right; }

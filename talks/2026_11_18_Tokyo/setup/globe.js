@@ -111,7 +111,8 @@ void main() {
     float fr = mix(0.07, 1.0, smoothstep(-0.18, 0.12, fs));
     float pulse = pow(0.5 + 0.5 * cos(6.2832 * (t * 2.5 - uTime * 0.3 + aSeed * 0.08)), 6.0);
     p = n * uR;
-    a = drawn * fr * (0.3 + 0.3 * pulse); s *= 0.75 + 0.2 * pulse;   // the pulse stays under the cities' brightness
+    // 13 Nov (the owner: "pulse the line connecting japan and lithuania"): the pulse three times as bright and larger
+    a = drawn * fr * (0.3 + 0.95 * pulse); s *= 0.75 + 0.75 * pulse;
     col = mix(uHot, uLit, pulse);
   } else {
     float e = smoothstep(aStart, aStart + 0.8, uInstT);

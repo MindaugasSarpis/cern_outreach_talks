@@ -45,17 +45,22 @@
      "type": "cover-collision",
      "name": "cover",
      "pos": [
-      11.3,
-      -3.3,
-      -10.1
+      -8.1,
+      1.36,
+      3.38
      ],
-     "grain": 1.6,
+     "grain": 1.8,
      "settled": 7,
-     "scale": 3.0,
-     "hold": 7,
+     "scale": 9.5,
+     "hold": 9,
      "gap": 14,
      "flash": 0.008,
-     "sound": 0.85
+     "sound": 0.85,
+     "tone": "#9cc4ff",
+     "muonTone": "#cfe2ff",
+     "splashTone": "#5b93ff",
+     "bunchColor": "#cfe6ff",
+     "light": 4.0
     }
    ]
   },

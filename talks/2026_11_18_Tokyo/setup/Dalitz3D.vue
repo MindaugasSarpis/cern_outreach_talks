@@ -44,7 +44,7 @@ const BANDS = [[18.52, 18.73], [19.57, 19.99]], BAND_KP = 3.61
 const LIT = new Color(1.2, 1.2, 1.2), LIT_K = 0.85   // toward a white a little over 1: Lambert's shade dulls a plain one
 
 const root = ref(null), cv = ref(null)
-let renderer, scene, camera, world, bars, sparks, edge, raf = 0, t0 = 0, running = false
+let renderer, scene, camera, world, bars, sparks, raf = 0, t0 = 0, running = false
 let cells = []                        // { i, j, n, h, x, z, first, band }
 
 function grid() {
@@ -119,12 +119,6 @@ function build() {
   cells.forEach((c, k) => { const col = colourOf(c.n); cols.set([col.r, col.g, col.b], k * 3) })
   bars.instanceColor = new InstancedBufferAttribute(cols, 3)
   world.add(bars)
-  // the phase space's edge: every cell on the border of the allowed region, a bright point just over the ground
-  const has = new Set(cells.map((c) => c.i + ',' + c.j)), ev = []
-  for (const c of cells) if (![[1, 0], [-1, 0], [0, 1], [0, -1]].every(([a, b]) => has.has((c.i + a) + ',' + (c.j + b)))) ev.push(c.x, 0.03, c.z)
-  const eg = new BufferGeometry(); eg.setAttribute('position', new BufferAttribute(new Float32Array(ev), 3))
-  edge = new Points(eg, new PointsMaterial({ color: 0xcfeaff, size: 0.11, transparent: true, opacity: 0, depthWrite: false, blending: AdditiveBlending }))
-  world.add(edge)
   // the falling candidates
   const g = new BufferGeometry()
   g.setAttribute('position', new BufferAttribute(new Float32Array(NSP * 3), 3))
@@ -155,11 +149,13 @@ const ease = (x) => { x = Math.min(Math.max(x, 0), 1); return x * x * (3 - 2 * x
 // circling at an angle (to T_FLY); then it goes down and flies along the P_c band, low, through the plot from the
 // Λ(1520) ridge to the far edge (T_FLY to T_OUT), the bands lit; then it draws back to the view the slide always
 // ended on, and the ticks and names come (T_NAME), with the slow turn.
-// 13 Nov, later (the owner: "need to show phasespace substantial, build around, start flying through only then
-// zoomout"): the phase space first. Its edge is drawn at once, a bright line round the allowed region; the camera goes
-// most of the way round it, close and low, while the candidates fill it (to T_FLY, 14 s, where it was 9.5 s); only
-// then the flight along the bands, and the drawing back.
-const T_RISE = 2.0, T_FLY = 14.0, T_OUT = 22.0, T_NAME = 26.0
+// 13 Nov, night (the owner: "13 broke, it was better before, don't need a contour, should be already close to dalitz plot
+// when start filling it up, then Pcs are indicated, then zoomed out"): no edge line and no circling. The camera is close
+// from the first frame, low over the plot and gliding along where the P_c bands will stand, while the candidates fill it
+// (to T_LIT); then the bands light and their names come (T_LIT), the glide going on; then it draws back to the whole plot
+// (T_OUT), where the ticks and the axes' names come.
+const T_RISE = 1.5, T_LIT = 10.5, T_OUT = 16.0, T_NAME = 16.6
+const T_FLY = 0
 // the P_c names: at m²(K p), m²(J/ψ p); the top of the band's columns there and the name's foot (over the band)
 // or head (under it), in world units. On the screen the bands rise to the right through the whole turn, so
 // the upper name sits up and left of its line and the lower name down and right of its own (.nw, .se):
@@ -176,19 +172,11 @@ function update(t) {
   // three poses, blended: A circling while it fills; B the flight along the band; C the end (58° from the vertical,
   // a little to the left: the pose every label's place was checked on)
   const pos = new Vector3(), tgt = new Vector3(), q = new Vector3(), qt = new Vector3()
-  // round the plot: 250° in 14 s, from high and wide to close and low, so its size and its edge are seen from every side
-  const kA = Math.min(1, t / T_FLY), azA = -2.6 + 4.4 * (kA * kA * (3 - 2 * kA)), poA = 0.72 + 0.34 * kA, dA = 21 - 6.5 * kA
-  pos.set(0.3 + dA * Math.sin(poA) * Math.sin(azA), dA * Math.cos(poA), 0.8 + dA * Math.sin(poA) * Math.cos(azA)); tgt.set(0.3, 0.3, 0.8)
-  const fly = ease((t - T_FLY) / 2.2), out = ease((t - T_OUT) / 3.8)
-  if (fly > 0) {
-    // along m²(J/ψ p) = 19.8 GeV²: in over the Λ(1520) ridge from outside the plot, down to twice the band's
-    // height, on along the band to four fifths of the way across (it never leaves the plot), looking ahead and down
-    const k = Math.min(1, Math.max(0, (t - T_FLY - 1.2) / (T_OUT - T_FLY - 1.2))), kk = k * k * (3 - 2 * k)
-    const x = wx(XL) - 4.5 + (wx(5.3) - (wx(XL) - 4.5)) * kk
-    const y = 3.7 - 2.3 * ease((kk - 0.5) / 0.36)   // over the ridge (2.4 high, at 0.46 of the way) before coming down
-    q.set(x, y, wz(19.8) + 0.9 - 0.7 * kk); qt.set(x + 4.5, 0.25, wz(19.8) - 0.2)
-    pos.lerp(q, fly); tgt.lerp(qt, fly)
-  }
+  // close from the start: over the plot past the Λ(1520) ridge, along m²(J/ψ p) = 19.8 GeV², coming down a little and on
+  const k = Math.min(1, t / T_OUT), kk = k * (2 - k)
+  const x = wx(2.75) + (wx(4.9) - wx(2.75)) * kk
+  pos.set(x, 3.3 - 1.5 * kk, wz(19.8) + 1.5 - 0.9 * kk); tgt.set(x + 4.6, 0.3, wz(19.8) - 0.3)
+  const fly = 0, out = ease((t - T_OUT) / 4.2)
   if (out > 0) {
     const polar = 1.02, az = -0.42 + turn, dist = 15
     qt.set(-1.2, -0.15, 2.3)
@@ -201,10 +189,10 @@ function update(t) {
   // the cells: lit as their candidates arrive, then risen to their counts
   // F: the share of the sample that has landed, 0 → 1 over 0.5–9.5 s; a cell lights when its first candidate
   // does (the dense ridge and band first, the thin edges last) and brightens as its count fills
-  const F = Math.min(1, Math.max(0, (t - 1.2) / 11.5)), rise = ease((t - T_RISE) / 10)
+  const F = Math.min(1, Math.max(0, (t - 0.6) / 9.2)), rise = ease((t - T_RISE) / 8)
   // nm: the names and the bands' light, 0 → 1 from T_NAME; the colours are painted while either changes
   const nm = ease((t - T_NAME) / 1)
-  const lit = ease((t - T_FLY) / 1.5)          // the bands' light: on for the flight along them
+  const lit = ease((t - T_LIT) / 1.5)          // the bands' light
   const paint = F < 1 || !bars.userData.done || bars.userData.nm !== lit
   const cc = bars.instanceColor.array
   cells.forEach((c, k) => {
@@ -226,9 +214,8 @@ function update(t) {
   if (paint) { bars.instanceColor.needsUpdate = true; bars.userData.done = F >= 1; bars.userData.nm = lit }
   // the falling candidates, at a rate that follows the filling
   const u = sparks.material.uniforms; u.uTime.value = t
-  if (edge) edge.material.opacity = 0.95 * ease(t / 1.6) * (1 - 0.55 * ease((t - T_OUT) / 3))
-  if (t > 1.0 && t < 13.2) {
-    const rate = 560 * (0.3 + Math.sin(Math.PI * Math.min(1, (t - 1.0) / 12.2)))
+  if (t > 0.4 && t < 10.2) {
+    const rate = 620 * (0.3 + Math.sin(Math.PI * Math.min(1, (t - 0.4) / 9.8)))
     const n = Math.min(160, Math.floor((t - lastSpawn) * rate))
     if (n > 0) {
       lastSpawn = t
@@ -245,23 +232,25 @@ function update(t) {
   }
   // the labels: the axes' names and ticks, the features once risen
   labels.length = 0; leads.length = 0
-  const shown = ease((t - T_OUT - 2.6) / 1.2)   // the ticks and names: only on the end's view
-  const lab = (x, y, z, html, cls, op = 1) => { const p = proj(x, y, z); if (p && shown > 0) labels.push({ ...p, html, cls, op: op * shown }) }
+  const shown = ease((t - T_OUT - 3.0) / 1.2)   // the ticks and the axes' names: only on the end's view
+  const inFrame = (p) => p && p.x > 60 && p.x < W - 60 && p.y > 30 && p.y < H - 110
+  const lab = (x, y, z, html, cls, op = 1, always = false) => { const p = proj(x, y, z), k = always ? 1 : shown; if (p && k > 0 && (!always || inFrame(p))) labels.push({ ...p, html, cls, op: op * k }) }
   for (const m of [2, 3, 4, 5, 6]) lab(wx(m), 0, wz(YL) + 0.35, String(m), 'tick')
   for (const m of [16, 18, 20, 22, 24, 26]) lab(wx(XL) - 0.35, 0, wz(m), String(m), 'tick r')
   // the x axis's name moves out from its ticks as the plot tilts: seen at a low angle the gap between the two
   // rows closes, and in the turn's left half the "4" stood on the name
   lab(0, 0, wz(YL) + 1.0 + 0.7 * tilt * tilt, 'm<sup>2</sup>(K<sup>−</sup> p) &nbsp;[GeV<sup>2</sup>]', 'axis')
   lab(wx(XL) - 1.25, 0, wz(21.2), 'm<sup>2</sup>(J/ψ p)<br>[GeV<sup>2</sup>]', 'axis r')
-  if (nm > 0) {
-    lab(wx(2.31), 2.25, wz(24.6), 'Λ(1520)', 'feat', nm)
+  const nmP = ease((t - T_LIT - 0.8) / 1.0)     // the P_c names: as the bands light
+  if (nm > 0) lab(wx(2.31), 2.25, wz(24.6), 'Λ(1520)', 'feat', nm)
+  if (nmP > 0) {
     // the bands are low (their columns stand ~0.4, the Λ(1520) ridge 2.4), so each name is close to its band
     // with a thin line to the band's top: the upper band's name stands over it, the lower band's hangs under
     // it, and neither name covers the other band
     for (const [mx, my, top, at, html, cls] of PC) {
       const x = wx(mx), z = wz(my), a = proj(x, at, z), b = proj(x, top, z)
-      lab(x, at, z, html, cls, nm)
-      if (a && b && shown > 0) leads.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, op: nm * shown })
+      lab(x, at, z, html, cls, nmP, true)
+      if (a && b && inFrame(a)) leads.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, op: nmP })
     }
   }
 }

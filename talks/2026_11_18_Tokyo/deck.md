@@ -367,7 +367,7 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
 ---
 
 <!-- recorded (the owner, 10 Nov: "we want to have a peak from the fit. Also building up the histogram could be a bit
-     more substantial, maybe like in uzsikrauk karjerai … (even involving the detector)"): data2019.mp4 is the data
+     more substantial, maybe like in uzsikrauk karjerai … (even involving the detector)"): data2019b.mp4 is the data
      take of takes.md (takes/README.md): a collision in LHCb, its grains landing as the 2019 histogram, the fit drawn
      over it, the three peaks lit. The axis and the names are HTML over the clip's settled end, so they stay sharp:
      the positions are the histogram's in the clip's last frame, in slide units; move them if the take's camera moves. -->
@@ -375,14 +375,14 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
      (videos/clips/data_swoosh.py: the run-in's swell, the crossing's thump, the grains' trickle, a low swoosh from left to
      right as the camera flies to the histogram, a deep landing as it arrives, three glints as the peaks light), so it
      plays unmuted, over the music -->
-<VideoPlayer src="data2019.mp4" :controls="false" transition="fade" />
+<VideoPlayer src="data2019b.mp4" :controls="false" transition="fade" />
 <!-- 13 Nov (the owner: "histogram stays dynamic, slowly zooming in line maybe running trough from time to time, orbiting"):
-     as the clip ends its loop takes over (data_loop.mp4: a light runs along the fit every 6 s, the peaks breathe), and
+     as the clip ends its loop takes over (data_loopb.mp4: a light runs along the fit every 6 s, the peaks breathe), and
      clip, loop and the labels over them drift together: a slow zoom in and a gentle turn to and fro (setup/EndDrift.vue) -->
 <!-- (videos:check reads a clip's use from a player tag; <ClipLoop> is not one, so the loop is named here for it:
-     <VideoPlayer src="data_loop.mp4" muted loop />) -->
-<ClipLoop src="data_loop.mp4" />
-<EndDrift :at="[50, 42]" :zoom="1.13" :sway="2.4" :seconds="100" />
+     <VideoPlayer src="data_loopb.mp4" muted loop />) -->
+<ClipLoop src="data_loopb.mp4" />
+<EndDrift :at="[50, 42]" :zoom="1.3" :sway="4.5" :period="20" :seconds="100" />
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.28" start keys />   <!-- low here: the collision is the loud thing (13 Nov: "louder than the music") -->
 <AtClipEnd :lead="5"><div class="spec-axis"><i style="left: 283.6px">4300</i><i style="left: 447.7px">4400</i><i style="left: 611.7px">4500</i><b>mass of J/ψ p (MeV)</b></div></AtClipEnd>
 <AtClipEnd :lead="4"><div class="spec-names"><i class="c" style="left: 300px; top: 112px">P<sub>c</sub>(4312)<sup>+</sup></i><i class="r" style="left: 498px; top: 44px">P<sub>c</sub>(4440)<sup>+</sup></i><i class="l" style="left: 556px; top: 22px">P<sub>c</sub>(4457)<sup>+</sup></i></div></AtClipEnd>
@@ -405,7 +405,7 @@ beside them.
 The pentaquarks came out of the decays of the Λb, a baryon that carries a b
 quark: Kobayashi and Maskawa's quark.
 
-The clip (data2019.mp4, 24 s, no sound; 10 Nov): LHCb's detector, a collision in it, grains leaving the
+The clip (data2019b.mp4, 24 s, no sound; 10 Nov): LHCb's detector, a collision in it, grains leaving the
 detector and landing as the histogram of the J/ψ p mass, 4250–4600 MeV; the camera comes to the histogram
 (18.7 s), the fit is drawn over it in white and the three peaks light; then the axis and the names.
 The plot: HEPData ins1728691, Table 3 (the cos θ-weighted candidates of the paper's Fig. 6, 2 MeV bins), and a
@@ -475,12 +475,12 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
 ---
 
 <!-- recorded (owner, 27 Oct: "Deploy, make sure it works on a mac. The heavy point cloud should be
-     pre-rendered as a video"; 10 Nov: "Slide 13 could zoom in and rotate earth"): globe.mp4 is the globe
+     pre-rendered as a video"; 10 Nov: "Slide 13 could zoom in and rotate earth"): globeb.mp4 is the globe
      take, takes.md slide 4 (CollabGlobe with figures/earth_back.jpg, setup/globe.js); to change it, change
      the take, record and cut it (takes/README.md) and encode. The `globe` station here is the take's end,
      so the slide after rests on the clip's last view. Fade, not cut: a cut clip never announces that it
      covers the slide, so the world would draw on under it (Innoday, 22 Oct). -->
-<VideoPlayer src="globe.mp4" muted :controls="false" transition="fade" />
+<VideoPlayer src="globeb.mp4" muted :controls="false" transition="fade" />
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.42" start keys />
 <!-- 11 Nov (the audience comes from Nagoya, Tokyo and RIKEN): the lit cities named once the globe rests (the clip
      from 15 s). The names are the slide's, over the clip's settled end, as slide 11's axis: the dots' places are
@@ -490,21 +490,28 @@ space: { at: globe, recorded: clip }   # v0.11: a back-step or a jump holds the 
      lights are one white patch in the clip, so each is marked by a small dark dot where its line ends. Tokyo's
      line meets the bracket at y = 292, clear of a star of the clip's last frame at (762, 308). Move them if
      the take's end moves. -->
-<!-- 12 Nov, night (the owner: "on slide 15 keep zooming int to japan"): 5 s after the clip has come to rest the picture
-     goes on in towards Japan, slowly, for a minute and a half (setup/ZoomOn.vue: the clip is scaled, to 1.6 times
-     about the point between Tokyo's and Nagoya's lights, so their names stay on them within 4 px); Vilnius leaves the
-     frame, and its name goes first (styles/index.css, `.vil`). -->
-<!-- 13 Nov (the owner: "slide 15 shouldn't stop"): the zoom takes over as the clip's own camera comes to rest (15 s in), with
-     no pause, and keeps one steady pace for four minutes (to 2×), so the picture never stands still -->
-<ZoomOn :at="[71.3, 58.2]" :to="2" :from="15" :delay="0" :seconds="240" />
-<AtClipEnd :lead="4"><svg class="globe-names" viewBox="0 0 980 551.25" aria-hidden="true"><path class="case" d="M709.3 315.2 L778 292 M696.4 326.8 L778 344" /><path class="vil" d="M277 55.5 H252" /><path d="M709.3 315.2 L778 292 M778 280 V322 M696.4 326.8 L778 344" /><circle cx="705.8" cy="316.1" r="2.6" /><circle cx="692.9" cy="326.1" r="2.6" /><text class="vil" x="246" y="62" text-anchor="end">Vilnius</text><text x="786" y="294">RIKEN</text><text x="786" y="318">Tokyo</text><text x="786" y="351">Nagoya</text></svg></AtClipEnd>
+<!-- 13 Nov (the owner: "15 definitely shouldn't freeze, slowly rotate earth, pulse the line connecting japan and
+     lithuania"): as the clip ends its loop takes over (globe_loop.mp4, 36 s: six seconds on the clip's last view, then
+     the globe turns 9° on east and comes back, the strand's pulse running all the while); the cities' names, which sit
+     on that last view's lights, go while it is turned away and come back with it (setup/AtLoopRest.vue). The zoom of
+     12 Nov (<ZoomOn>) left: the turning is the motion now. (For videos:check, which reads a clip's use from a player
+     tag: <VideoPlayer src="globe_loop.mp4" muted loop />) -->
+<ClipLoop src="globe_loop.mp4" />
+<AtLoopRest :lead="4" :rest="5.6" :again="35.3"><svg class="globe-names" viewBox="0 0 980 551.25" aria-hidden="true"><path class="case" d="M709.3 315.2 L778 292 M696.4 326.8 L778 344" /><path class="vil" d="M277 55.5 H252" /><path d="M709.3 315.2 L778 292 M778 280 V322 M696.4 326.8 L778 344" /><circle cx="705.8" cy="316.1" r="2.6" /><circle cx="692.9" cy="326.1" r="2.6" /><text class="vil" x="246" y="62" text-anchor="end">Vilnius</text><text x="786" y="294">RIKEN</text><text x="786" y="318">Tokyo</text><text x="786" y="351">Nagoya</text></svg></AtLoopRest>
+<!-- 13 Nov (the owner: "on slide 15 show names of Lithuanian and Japanese participants, Margarita got deplaced by
+     Dominykas"): the project's people, the Lithuanian side at the left, the Japanese at the right, from the clip's end
+     on. The Japanese ten are the application's list; the Lithuanian six are its three main
+     participants and the three the owner named on 13 Nov ("Lithuanian also: Rūta Racz, Šarūnas Jacevičius, Dominykas
+     Stonkus"). The Japanese list stands at the top right, clear of the cities' names ("Maybe japanese names higher
+     … at the top of the frame"). -->
+<AtClipEnd :lead="3"><div class="people l"><b>Lithuania</b>Mindaugas Šarpis<br>Oleg Kravcov<br>Adam Morris<br>Rūta Racz<br>Šarūnas Jacevičius<br>Dominykas Stonkus</div><div class="people r"><b>Japan</b>Yasuhiro Yamaguchi<br>Takumi Doi<br>Tomona Kinugawa<br>Yan Lyu<br>Kotaro Murakami<br>Manato Sakai<br>Shota Ampuku<br>Zhibo Liu<br>Gento Yoshikawa<br>Kotaro Miyake</div></AtClipEnd>
 <!-- no caption (13 Nov, the owner, of "Lithuania and Japan: Penta-Charm, 2026–2028, funded by …": "don't need this"):
      the cities' names are the slide's words; the project's name is on the cover, its years and funders are said -->
 
 <!-- facts: lhcb-vilnius-joined -->
 
 <!--
-The globe (globe.mp4, 20.6 s, no sound; 10 Nov): grains gather into a globe of grains with Europe in
+The globe (globeb.mp4, 20.6 s, no sound; 10 Nov): grains gather into a globe of grains with Europe in
 the middle (coastlines, Natural Earth, public domain; Japan's the brightest); Vilnius lights, then
 Nagoya and Tokyo at the right edge, and a strand of light is drawn from Vilnius to Nagoya, a pulse
 running along it. From 3 s the globe turns east and the camera comes in; from 15 s it rests on Asia,
@@ -798,12 +805,12 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <!-- recorded (owner, 10 Nov: "Reimagine the finale, now it's not good. Use the LHCb collision, use the world rendered,
      maybe the world turns into a pentaquark when zoomed out and then thank you appears in japanese and lithuanian"):
      then, on the first cut, "just need a smoother transition from the collision (maybe show more of it, particles
-     propagating through detector, something like that)"): finale.mp4 is cut from two takes (videos/finale/segments.sh;
+     propagating through detector, something like that)"): finaleb.mp4 is cut from two takes (videos/finale/segments.sh;
      takes.md slides 3 and 5): LHCb's collision, its particles going through the detector as the camera turns round
      it and draws back, a dissolve into the world of grains on Japan, drawing back, the Earth's grains gathering
      into the cover's pentaquark. It carries its own sound, the low bang, so it plays unmuted; it ends on the
      pentaquark and waits, and the thanks come up over its last 4.5 s (from 27.5 s, as before the cut grew by 2 s). -->
-<VideoPlayer src="finale.mp4" :controls="false" transition="fade" />
+<VideoPlayer src="finaleb.mp4" :controls="false" transition="fade" />
 <!-- 12 Nov (the owner: "Slide 17 should continue playing, also we should have some soundtrack"): as the clip ends
      finale_loop.mp4 takes over, the pentaquark turning on (a 30 s loop that begins on the frame after the clip's
      last; setup/ClipLoop.vue); the music cross-fades on arrival into „Age of Wonder“ from 3:54 (its arrival at 4:16.5 as the
@@ -812,16 +819,18 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <!-- 12 Nov, evening (the owner: "japanese and lithuanian flags appearing in the background joined in the middle behind
      the pentaquark"): from 22.5 s, the pentaquark formed (setup/BehindFlags.vue); they stay over the loop and the last page -->
 <BehindFlags :at="37.0" />
-<!-- 13 Nov (the owner: "18 collision is not timed and the music is not timed to the correct peak"; "look at uzsikrauk
-     karjerai has to be timed"): the toolkit's `drop`, as that talk's close. The bed plays on, louder, under the
-     build-up; at 14.5 s it falls away; „Age of Wonder“ from its 282nd second comes in under it so that its climax, at its
-     284th second, where the low end enters (measured, not heard), lands on the collision's flash, 18.1 s into the clip (measured on the
-     take's frames), counted on the clip's own clock; on it the level opens. -->
-<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.8" start keys :drop="{ at: 18.1, file: 'audio/wonder_peak.m4a', hit: 2.0, duck: 14.5, quiet: 0.1, fade: 2500 }" />
+<!-- The music's timing (13 Nov, the owner: "18 collision is not timed and the music is not timed to the correct peak";
+     "for the finale, see what timing was used in uzsikrauk karjerai"). That talk's close: on arriving, a 2 s cross-fade
+     from the bed into the piece's own run-up, cut so many seconds before its arrival as the collision is into the slide,
+     played on without a duck, the arrival on the crossing. Here the same: wonder_peak.m4a is „Age of Wonder“ from 18.1 s
+     before the arrival after its quiet middle (the piece's 230th second: the hush from its 214th, the pick-up, the low
+     end coming in; read from its loudness, not heard), and the collision's flash is 18.1 s into the clip (read from the
+     take's frames); `drop` counts on the clip's own clock, so the two stay together whatever the frames do. -->
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.8" start keys :drop="{ at: 18.1, file: 'audio/wonder_peak.m4a', hit: 18.1, duck: 99, xfade: 2000, quiet: 0.85 }" />
 <AtClipEnd :lead="4.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
 
 <!--
-The finale (finale.mp4, 32 s since 12 Nov, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
+The finale (finaleb.mp4, 32 s since 12 Nov, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
 on the crossing (3.9 s); the particles go through the detector as the camera turns round it and draws back; at
 12 s the picture dissolves (1.6 s) into the Earth in grains, Japan in the middle; the camera draws back to the
 whole Earth, and from 17.5 s its grains leave the globe and gather into a pentaquark (u u d c c̄), the cover's

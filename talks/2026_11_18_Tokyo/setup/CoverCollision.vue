@@ -13,7 +13,6 @@ import { onSlideLeave, useNav, useSlideContext } from '@slidev/client'
 import { onSlideEnter } from './slideHooks.js'
 import { bus } from '../components/lhc-opening/bus.js'
 import { setGrains, setGrainsLater } from './grains.js'
-import { heartbeat } from './heartbeat.js'
 
 const props = defineProps({
   name: { type: String, default: 'cover' },
@@ -23,19 +22,17 @@ const props = defineProps({
 const { isPrintMode } = useNav()
 const { $renderContext } = useSlideContext()
 const live = () => ['slide', 'presenter'].includes($renderContext?.value)
-let cancel = null, beat = 0
+let cancel = null
 onSlideEnter(() => {
   if (!live() || isPrintMode.value) return
   cancel?.()
   setGrains(props.form, 0)
   cancel = setGrainsLater(props.form, 3, props.gatherAt)
-  // 13 Nov: one heartbeat as the pentaquark has gathered (about 2.6 s after it starts to; wall seconds)
-  clearTimeout(beat); beat = setTimeout(() => heartbeat(), (props.gatherAt + 2.6) * 1000)
   bus.set(props.name, 1)
 })
 onSlideLeave(() => {
   if (!live()) return
-  cancel?.(); cancel = null; clearTimeout(beat)
+  cancel?.(); cancel = null
   setGrains(props.form, 3)   // the form stays whole for the slides that keep it
   bus.set(props.name, 0)
 })

@@ -28,6 +28,7 @@ import QcdStorm from './QcdStorm.vue'
 import ClipLoop from './ClipLoop.vue'
 import ZoomOn from './ZoomOn.vue'
 import EndDrift from './EndDrift.vue'
+import AtLoopRest from './AtLoopRest.vue'
 import PanCanvas from './PanCanvas.vue'
 import BehindFlags from './BehindFlags.vue'
 
@@ -64,6 +65,7 @@ export default async ({ app, router }) => {
   app.component('ZoomOn', ZoomOn)             // after the slide's clip ends, its picture goes on in towards a point (the globe)
   app.component('PanCanvas', PanCanvas)       // a photograph pushing in and drifting, on a canvas (the group photo)
   app.component('EndDrift', EndDrift)         // after a clip ends, the picture and its labels drift together (the data slide)
+  app.component('AtLoopRest', AtLoopRest)     // shown while a loop stands on the view its content was drawn for (the globe's names)
   app.component('CloseStill', CloseStill)   // the finale's last frame on the credits page, the world resting
   // the takes' detector, collision and histogram: only in a takes build (takes/build.sh sets VITE_TAKES)
   if (import.meta.env.VITE_TAKES) (await import('./takes/index.js')).installTakes({ app, registerBuilder })
