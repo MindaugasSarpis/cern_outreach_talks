@@ -58,6 +58,9 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-13, late: **Deployed:** commit ac57d57 (Decisions 20), Pages run 43436947038 (success), URL 200, the live
+  walk passed; `safe` skipped. finale_h.mp4 on the release before it. The venue zip on this workstation is of this
+  commit (458.0 MB); not on the Mac and not up for download (a new public release was refused; the owner chooses).
 - 2026-11-13, evening, later: **Deployed:** commit 44f5e76 (Decisions 19), Pages run 43433277299 (success), URL 200,
   the live walk passed; `safe` skipped. finale_g.mp4 on the release before it. The venue zip on this workstation is
   of this commit (457.9 MB); not yet on the Mac. Not heard on speakers here.
@@ -798,7 +801,7 @@ scheduler."
     (`finale_g.mp4`, lowbang.py) and in the music (`starfire_finale_tokyo_c.m4a`, videos/music/starfire_breath.py, set
     sample by sample; the first try fell in 0.15 s, a frame at a time, almost to nothing). Deployed 30a171f had no breath.
 
-20. 14 Nov (the owner): the people's two lists come with the thanks on the finale slide (16), on the flags ("last I am
+20. 13 Nov, late (the owner): the people's two lists come with the thanks on the finale slide (16), on the flags ("last I am
     not going to show"); they stay on the last page too. The finale's low sound, `finale_h.mp4`: one voice after the
     crossing (a sine from 64 Hz to 34 Hz over 3 s, a little octave, up in 60 ms, ringing 20 s), the swell gone 0.3 s
     after it, no thump, no noise, no clipper ("without vibration, a bit smoother": three low voices close in pitch had
