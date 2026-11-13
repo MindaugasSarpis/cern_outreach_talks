@@ -9,7 +9,9 @@ function audio() {
   if (ctx.state === 'suspended') ctx.resume().catch(() => {})
   return ctx.state === 'running' ? ctx : null
 }
-export function heartbeat(level = 0.9) {
+// heartbeat(level, beats, gap, slow): `beats` of them, the first `gap` s apart and each next gap `slow` times longer
+// (14 Nov, the owner, slide 7: "do 4 slow (ar slightly slowing) hearbeats")
+export function heartbeat(level = 0.9, beats = 1, gap = 1.3, slow = 1.12) {
   if (typeof window === 'undefined' || /\/presenter/.test(location.pathname + location.hash)) return
   const ac = audio(); if (!ac) return
   const out = ac.createGain(); out.gain.value = level
@@ -23,8 +25,11 @@ export function heartbeat(level = 0.9) {
       o.connect(v).connect(out); o.start(t); o.stop(t + dur + 0.05)
     }
   }
-  const t = ac.currentTime + 0.03
-  thump(t, 58, 36, 0.42, 1.0)
-  thump(t + 0.46, 66, 42, 0.32, 0.72)
-  setTimeout(() => { try { out.disconnect(); lp.disconnect() } catch { /* gone */ } }, 1500)
+  let t = ac.currentTime + 0.03, g = gap
+  for (let i = 0; i < beats; i++) {
+    thump(t, 58, 36, 0.42, 1.0)
+    thump(t + 0.46, 66, 42, 0.32, 0.72)
+    t += g; g *= slow
+  }
+  setTimeout(() => { try { out.disconnect(); lp.disconnect() } catch { /* gone */ } }, (t - ac.currentTime + 1.5) * 1000)
 }

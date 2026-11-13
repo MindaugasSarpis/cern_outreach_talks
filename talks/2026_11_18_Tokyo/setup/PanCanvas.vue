@@ -11,6 +11,7 @@ import { useIsSlideActive, useNav, useSlideContext } from '@slidev/client'
 
 const props = defineProps({
   src: { type: String, required: true },
+  from: { type: Number, default: 1 },                  // the zoom at the start (over `to`: the picture draws back)
   to: { type: Number, default: 1.11 },                 // the zoom at the end
   drift: { type: Array, default: () => [-1.6, -0.6] }, // the picture's shift at the end, per cent of the frame
   focus: { type: Array, default: () => [50, 55] },     // the point the push goes to, per cent
@@ -29,7 +30,7 @@ function draw(u) {
   const c = cv.value; if (!c || !img?.naturalWidth) return
   const g = c.getContext('2d')
   const e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2          // ease in and out
-  const z = 1 + (props.to - 1) * e
+  const z = props.from + (props.to - props.from) * e
   // cover fit at zoom z about the focus, shifted by the drift
   const s = Math.max(W / img.naturalWidth, H / img.naturalHeight) * z
   const w = img.naturalWidth * s, h = img.naturalHeight * s

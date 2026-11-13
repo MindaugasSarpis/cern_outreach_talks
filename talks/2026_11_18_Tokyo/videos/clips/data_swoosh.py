@@ -31,7 +31,9 @@ from scipy.signal import butter, sosfilt
 SR = 48000
 # the clip's seconds (takes.md slide 2, cut from the take's 1.5 s; 13 Nov)
 DUR = 36.5
-TC = 15.9                 # the crossing's flash (read from the take's frames: its 17.4 s)
+TC = 12.95                # the crossing: the two bunches meet (read frame by frame, 14 Nov; 15.9 s, used before, is the
+                          # debris reaching the first detector plane: the owner, "not on particle collission but on colliison
+                          # with first detector plane. It needs to be more expressed and on particle collision and slower")
 FILL = (20.5, 31.0)       # the data landing
 FLY = (26.0, 31.0)        # the last of the camera's way to the histogram (it moves from 21 s on)
 GLINTS = (33.8, 34.25, 34.7)
@@ -65,18 +67,18 @@ def add(x, pan=0.5):   # pan: 0 left … 1 right, a number or an array
     L += x * np.cos(p); R += x * np.sin(p)
 
 # the opening: the hall's low air while the camera draws back from the detector, past the person
-room = (low(white(), 90) * 4 + 0.6 * sine(np.full(n, 41.0)) + 0.3 * sine(np.full(n, 61.5))) * sm(t / 3.0) * (1 - sm((t - (TC - 4.5)) / 3.0)) * (0.55 + 0.45 * sm((t - 3) / 6))
+room = (low(white(), 90) * 4 + 0.6 * sine(np.full(n, 41.0)) + 0.3 * sine(np.full(n, 61.5))) * sm(t / 3.0) * (1 - sm((t - (TC - 6.0)) / 3.0)) * (0.55 + 0.45 * sm((t - 3) / 6))
 add(0.22 * room)
 # the run-in: a swell into the crossing
-swell = env(TC - 3.2, TC, TC, TC + 0.5) * (sine(np.interp(t, [TC - 3.2, TC, TC + 1], [34, 44, 31])) + 0.3 * sine(np.interp(t, [TC - 3.2, TC, TC + 1], [68, 88, 62])) + 0.5 * low(white(), 130) * 3)
-add(0.55 * swell)
+swell = env(TC - 5.0, TC, TC, TC + 0.5) * (sine(np.interp(t, [TC - 5.0, TC, TC + 1], [32, 44, 31])) + 0.3 * sine(np.interp(t, [TC - 5.0, TC, TC + 1], [64, 88, 62])) + 0.5 * low(white(), 130) * 3)
+add(0.6 * swell)
 # the crossing (13 Nov, the owner: "collision effect substantial, louder than the music"): the clip's loudest thing by
 # far: a hard low hit (62 -> 30 Hz), a body under it falling from 85 Hz to 29 Hz over 2 s and ringing 5 s (the picture
 # runs slow), a burst of low noise
-add(1.5 * hit(TC, 0.012, 0.5) * sine(np.where(t < TC, 62, 30 + 32 * np.exp(-(t - TC) / 0.12))))
-bf = np.where(t < TC, 85, 29 + 56 * np.exp(-(t - TC) / 0.7))
-add(1.7 * hit(TC, 0.012, 1.7) * (sine(bf) + 0.45 * sine(2 * bf)))
-add(0.9 * hit(TC, 0.01, 0.45) * low(white(), 240) * 3)
+add(1.6 * hit(TC, 0.012, 0.8) * sine(np.where(t < TC, 62, 30 + 32 * np.exp(-(t - TC) / 0.2))))
+bf = np.where(t < TC, 85, 28 + 57 * np.exp(-(t - TC) / 1.3))     # slower: the fall takes three seconds, the ring nine
+add(2.0 * hit(TC, 0.012, 3.0) * (sine(bf) + 0.45 * sine(2 * bf)))
+add(1.0 * hit(TC, 0.01, 0.9) * low(white(), 240) * 3)
 # the data landing: a faint trickle, left to right, thinning as the histogram fills
 f0, f1 = FILL
 trickle = band(white(), 1400, 5200) * (0.5 + 0.5 * low(np.abs(white()), 14) * 6) * env(f0, f0 + 2.0, f1 - 4.0, f1)

@@ -263,7 +263,7 @@ function update(t) {
     const fr = easeIO((t - T_FRONT) / 4.2), k = ease((fr - 0.25) / 0.5)
     pin.points.position.copy(pq.g.position)
     pin.points.visible = k > 0.001
-    pin.uniforms.uAlpha.value = 0.86 * k
+    pin.uniforms.uAlpha.value = 0.8 * k
     pin.move(t)
     if (k > 0.05) {
       pin.points.updateMatrixWorld()
@@ -309,7 +309,9 @@ function build() {
   pq = makeHadron([...PENTA, W * 0.6, H * 0.5, 13], 'penta'); hadrons.push(pq)
   // (13 Nov, the owner: "also needs to be better resolved": two and a half times the grains at well under two thirds the
   // size, so each ball is made of fine points and not of soft discs)
-  pin = createInterior({ kind: 'spread', quark: 0.78, grains: 18000, shell: 30000, size: 0.92, alpha: 0, display: true })
+  // (14 Nov, the owner: "better resolve, I don't like the fuzzyness but the overall view is good": the same picture from
+  // hard-edged points (`crisp`), more of them and smaller)
+  pin = createInterior({ kind: 'spread', quark: 0.78, grains: 32000, shell: 52000, size: 0.6, alpha: 0, display: true, crisp: true })
   pin.points.scale.setScalar(PIN); pin.points.renderOrder = 1e4; pin.points.visible = false
   world.add(pin.points)
   schedule()
@@ -343,7 +345,9 @@ function start() {
   later(T_BAR, () => { phase.value = 'Baryons: three quarks' })
   later(T_PENTA, () => { phase.value = 'Pentaquark: five quarks' })
   later(T_FRONT + 0.6, () => { frameOut.value = true })
-  later(T_FRONT + 3.0, () => { if ($renderContext?.value === 'slide') heartbeat() })   // 13 Nov: one heartbeat as the pentaquark fills the screen
+  // 13 Nov: a heartbeat as the pentaquark fills the screen; 14 Nov (the owner: "delay to hearbear 5s, also do 4 slow (ar
+  // slightly slowing) hearbeats"): 8 s after it starts forward, four of them, 1.3 s apart at first and each gap an eighth longer
+  later(T_FRONT + 8.0, () => { if ($renderContext?.value === 'slide') heartbeat(0.9, 4, 1.3, 1.12) })
   t0 = performance.now(); running = true
   raf = requestAnimationFrame(frame)
 }

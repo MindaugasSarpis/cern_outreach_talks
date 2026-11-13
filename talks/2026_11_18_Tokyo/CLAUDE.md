@@ -722,6 +722,29 @@ scheduler."
 13. 14 Nov (the owner: "quantum chromodynamics - the very frontier of human knowledge"): slide 6's caption, his own
    words and his exception to the no-marketing-lines rule of 10 Nov; with a colon, as the other captions.
 
+14. 14 Nov, the owner's run: slide 7 "delay to hearbear 5s, also do 4 slow (ar slightly slowing) hearbeats … also better
+   resolve, I don't like the fuzzyness but the overall view is good"; "KEK picture should zoom out slowly"; "Slide 10
+   captions appear, dissapear and appear again, only need to appear some time after video starts"; "on slide 12 the low
+   boom is in the wrong place, not on particle collission but on colliison with first detector plane. It needs to be
+   more expressed and on particle collision and slower"; "examine uzsikrauk karjerai finale … we still miss the
+   soundtrack on this finale".
+   - **Where a collision is, in these clips**: the frame where the two bunches meet, not the flash that follows.
+     The world runs slow from the crossing, so the debris lights the first detector plane two to four seconds
+     later, and that bloom is what a brightness curve finds. Read frame by frame: data2019c.mp4 12.95 s (the bloom
+     15.9 s), finalec.mp4 14.3 s (the bloom 18.1 s). Both hits were on the bloom until now.
+   - Slide 7: four heartbeats, 8 s after the pentaquark starts forward, 1.3 s apart at first and each gap an eighth
+     longer; the pentaquark from hard-edged points (`crisp`), 32 000 a quark and 52 000 in the skin at size 0.6.
+   - Slide 8: the Belle photo drawn on a canvas over itself, from 1.16× back to its frame over 40 s (`PanCanvas`
+     `from`). Slide 10: the numbers and the caption come once, 2.5 s into the clip.
+   - Slide 12: the hit on 12.95 s, heavier and slower (the swell 5 s, the body's fall 3 s and its ring 9 s);
+     data2019c.mp4 (the picture is data2019b's).
+   - The finale: finalec.mp4, the hit on 14.3 s; its music is Karjera's: Scott Buckley's „Starfire“,
+     `starfire_finale_tokyo.m4a` (that talk's starfire_finale.m4a from 1.72 s in: the crescendo, the arrival 14.3 s
+     from its start), entered by a 2 s cross-fade from the „Age of Wonder“ bed, level 0.5, no duck, the arrival on
+     the crossing by the clip's clock; it runs on over the loop and the last page. Credited on the last page.
+     `wonder_peak*.m4a` left.
+   - Names again for what changed under a name (data2019c, finalec, the new audio file).
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

@@ -81,7 +81,7 @@ space: { at: proton, dim: 0.2 }
      here to the end, building: one bed (audio/wonder_bed.m4a, 16 min; videos/music/wonder_bed.py: the piece played
      forward, stepping back whole four-bar phrases on its own bar grid where length is needed, never to its opening;
      the owner, 13 Nov: "the sountrack was just restarted … it went better in uzsikrauk karjerai"), its level a little
-     up from slide to slide (0.16 … 0.45). The finale times the piece's climax on its collision (wonder_peak.m4a; the finale's comment).
+     up from slide to slide (0.16 … 0.45). The finale has „Starfire“'s crescendo and arrival on its collision (the finale's comment).
      `+` / `-` set the level in the talk. The cover has the collision's own sound and no music. -->
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.3" start keys />
 
@@ -268,7 +268,10 @@ space: { at: km, dim: 0.6 }
      Nagoya, Tokyo and RIKEN): the Japanese thread goes on from Kobayashi and Maskawa to the experiment that
      confirmed them and then found the X(3872). The caption follows the facts bank: a candidate, never
      "the first exotic hadron". -->
+<!-- 14 Nov (the owner: "KEK picture should zoom out slowly"): the photo drawn on a canvas over itself, from 1.16 times back
+     to its full frame over 40 s (setup/PanCanvas.vue) -->
 <StagePhoto src="figures/belle.jpg" alt="The Belle detector at KEK, Tsukuba" focus="50% 50%">
+<PanCanvas src="figures/belle.jpg" :from="1.16" :to="1" :drift="[0, 0]" :focus="[50, 50]" :delay="0.5" :seconds="40" />
 <div class="shade tr strong"></div>
 <div class="num tr">2003<span class="name">KEK</span></div>
 <div class="cap">Belle discovers the X(3872), an exotic hadron candidate</div>
@@ -314,6 +317,10 @@ space: { at: lhc, dim: 0.25 }
 ---
 
 <VideoPlayer src="cern_footage_2022_013_001_tunnel_cut.mp4" muted />
+<!-- 14 Nov (the owner: "Slide 10 captions appear, dissapear and appear again, only need to appear some time after video
+     starts"): they stood over the world, went under the clip as it condensed and came back. Now they come once, 2.5 s
+     into the clip (<AtClipEnd> counts from the clip's end: 18 s less 15.5 s) -->
+<AtClipEnd :lead="15.5">
 <div class="veil top"></div>
 <div class="nums3">
   <div class="num">27 km<span class="name">LHC ring</span></div>
@@ -321,6 +328,7 @@ space: { at: lhc, dim: 0.25 }
   <div class="num">−271.3 °C<span class="name">magnets</span></div>
 </div>
 <div class="cap">The Large Hadron Collider, 100 m underground</div>
+</AtClipEnd>
 <StageSoundtrack src="audio/wonder_bed.m4a" :level="0.28" start keys />
 
 <!-- facts: lhc-geneva-27km-100m-four-experiments, cern-lhc-size-cost, cern-lhc-energy, cern-lhc-cold, gave-cryo-lhc, cern-lithuania, cern-members-2026, lhc-turns-per-second, japan-lhc-contribution -->
@@ -369,7 +377,7 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
 ---
 
 <!-- recorded (the owner, 10 Nov: "we want to have a peak from the fit. Also building up the histogram could be a bit
-     more substantial, maybe like in uzsikrauk karjerai … (even involving the detector)"): data2019b.mp4 is the data
+     more substantial, maybe like in uzsikrauk karjerai … (even involving the detector)"): data2019c.mp4 is the data
      take of takes.md (takes/README.md): a collision in LHCb, its grains landing as the 2019 histogram, the fit drawn
      over it, the three peaks lit. The axis and the names are HTML over the clip's settled end, so they stay sharp:
      the positions are the histogram's in the clip's last frame, in slide units; move them if the take's camera moves. -->
@@ -377,7 +385,7 @@ space: { at: lhcb, dim: 0.97, recorded: clip }   # the world nearly dark under t
      (videos/clips/data_swoosh.py: the run-in's swell, the crossing's thump, the grains' trickle, a low swoosh from left to
      right as the camera flies to the histogram, a deep landing as it arrives, three glints as the peaks light), so it
      plays unmuted, over the music -->
-<VideoPlayer src="data2019b.mp4" :controls="false" transition="fade" />
+<VideoPlayer src="data2019c.mp4" :controls="false" transition="fade" />
 <!-- 13 Nov (the owner: "histogram stays dynamic, slowly zooming in line maybe running trough from time to time, orbiting"):
      as the clip ends its loop takes over (data_loopb.mp4: a light runs along the fit every 6 s, the peaks breathe), and
      clip, loop and the labels over them drift together: a slow zoom in and a gentle turn to and fro (setup/EndDrift.vue) -->
@@ -407,7 +415,7 @@ beside them.
 The pentaquarks came out of the decays of the Λb, a baryon that carries a b
 quark: Kobayashi and Maskawa's quark.
 
-The clip (data2019b.mp4, 24 s, no sound; 10 Nov): LHCb's detector, a collision in it, grains leaving the
+The clip (data2019c.mp4, 24 s, no sound; 10 Nov): LHCb's detector, a collision in it, grains leaving the
 detector and landing as the histogram of the J/ψ p mass, 4250–4600 MeV; the camera comes to the histogram
 (18.7 s), the fit is drawn over it in white and the three peaks light; then the axis and the names.
 The plot: HEPData ins1728691, Table 3 (the cos θ-weighted candidates of the paper's Fig. 6, 2 MeV bins), and a
@@ -809,12 +817,12 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <!-- recorded (owner, 10 Nov: "Reimagine the finale, now it's not good. Use the LHCb collision, use the world rendered,
      maybe the world turns into a pentaquark when zoomed out and then thank you appears in japanese and lithuanian"):
      then, on the first cut, "just need a smoother transition from the collision (maybe show more of it, particles
-     propagating through detector, something like that)"): finaleb.mp4 is cut from two takes (videos/finale/segments.sh;
+     propagating through detector, something like that)"): finalec.mp4 is cut from two takes (videos/finale/segments.sh;
      takes.md slides 3 and 5): LHCb's collision, its particles going through the detector as the camera turns round
      it and draws back, a dissolve into the world of grains on Japan, drawing back, the Earth's grains gathering
      into the cover's pentaquark. It carries its own sound, the low bang, so it plays unmuted; it ends on the
      pentaquark and waits, and the thanks come up over its last 4.5 s (from 27.5 s, as before the cut grew by 2 s). -->
-<VideoPlayer src="finaleb.mp4" :controls="false" transition="fade" />
+<VideoPlayer src="finalec.mp4" :controls="false" transition="fade" />
 <!-- 12 Nov (the owner: "Slide 17 should continue playing, also we should have some soundtrack"): as the clip ends
      finale_loop.mp4 takes over, the pentaquark turning on (a 30 s loop that begins on the frame after the clip's
      last; setup/ClipLoop.vue); the music cross-fades on arrival into „Age of Wonder“ from 3:54 (its arrival at 4:16.5 as the
@@ -823,18 +831,19 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1, recorded:
 <!-- 12 Nov, evening (the owner: "japanese and lithuanian flags appearing in the background joined in the middle behind
      the pentaquark"): from 22.5 s, the pentaquark formed (setup/BehindFlags.vue); they stay over the loop and the last page -->
 <BehindFlags :at="37.0" />
-<!-- The music's timing (13 Nov, the owner: "18 collision is not timed and the music is not timed to the correct peak";
-     "for the finale, see what timing was used in uzsikrauk karjerai"). That talk's close: on arriving, a 2 s cross-fade
-     from the bed into the piece's own run-up, cut so many seconds before its arrival as the collision is into the slide,
-     played on without a duck, the arrival on the crossing. Here the same: wonder_peak.m4a is „Age of Wonder“ from 18.1 s
-     before the arrival after its quiet middle (the piece's 230th second: the hush from its 214th, the pick-up, the low
-     end coming in; read from its loudness, not heard), and the collision's flash is 18.1 s into the clip (read from the
-     take's frames); `drop` counts on the clip's own clock, so the two stay together whatever the frames do. -->
-<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.8" start keys :drop="{ at: 18.1, file: 'audio/wonder_peak.m4a', hit: 18.1, duck: 99, xfade: 2000, quiet: 0.85 }" />
+<!-- The finale's music (14 Nov, the owner: "examine uzsikrauk karjerai finale … we still miss the soundtrack on this
+     finale"; before it, three times, "see what timing was used in uzsikrauk karjerai"). That talk's close is Scott
+     Buckley's „Starfire“: its collision crosses 16.36 s in, on the piece's arrival at 1:37.38, the 16 s of crescendo
+     before it played under the build-up at half level, entered by a 2 s cross-fade from the bed (`drop` with no duck).
+     „Age of Wonder“ has no such crescendo into an arrival, and three of its moments were tried here. So this finale has
+     Starfire's, as that one: starfire_finale_tokyo.m4a is Karjera's starfire_finale.m4a from 1.72 s in, so its arrival is
+     14.3 s from its start, and the two bunches meet 14.3 s into the clip (read frame by frame); `drop` counts on the
+     clip's own clock. „Age of Wonder“ runs up to this slide and cross-fades out here. -->
+<StageSoundtrack src="audio/wonder_bed.m4a" :level="0.5" start keys :drop="{ at: 14.3, file: 'audio/starfire_finale_tokyo.m4a', hit: 14.3, duck: 99, xfade: 2000, quiet: 0.8 }" />
 <AtClipEnd :lead="4.5"><div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div></AtClipEnd>
 
 <!--
-The finale (finaleb.mp4, 32 s since 12 Nov, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
+The finale (finalec.mp4, 32 s since 12 Nov, with its sound; 10 Nov): LHCb at eye level and one of its collisions, a low bang
 on the crossing (3.9 s); the particles go through the detector as the camera turns round it and draws back; at
 12 s the picture dissolves (1.6 s) into the Earth in grains, Japan in the middle; the camera draws back to the
 whole Earth, and from 17.5 s its grains leave the globe and gather into a pentaquark (u u d c c̄), the cover's
@@ -855,9 +864,9 @@ space: { at: [-31.5, 0.4, 0], dist: 12, yaw: -30, pitch: 14, dim: 0.1 }   # the 
 <!-- 12 Nov: the loop of the turning pentaquark in place of the still (<CloseStill>), the music going on -->
 <VideoPlayer src="finale_loop.mp4" muted loop :controls="false" transition="fade" />
 <BehindFlags />
-<StageSoundtrack src="audio/wonder_peak.m4a" :level="0.8" keys />
+<StageSoundtrack src="audio/starfire_finale_tokyo.m4a" :level="0.5" keys />
 <div class="thanks low">ありがとうございました<span class="sep">·</span>Ačiū</div>
-<div class="credits credit">Photos: S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; the Belle detector, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Globe: Natural Earth. Music: „Age of Wonder“ by Scott Buckley, released under CC-BY 4.0, www.scottbuckley.com.au. J/ψ p spectrum and Dalitz plot: LHCb, Phys. Rev. Lett. 122 (2019) 222001, CC BY 4.0 (HEPData ins1728691). CMS collision on the cover: CERN open data.</div>
+<div class="credits credit">Photos: S. Sakata, Ken Domon (public domain); M. Kobayashi, The Japan Academy, CC BY 4.0; T. Maskawa, OIST, CC BY 2.0; the Belle detector, yellow_bird_woodstock, CC BY-SA 2.0; Vilnius University, Diliff, CC BY-SA 3.0; Nagoya University, DrKssn, CC BY-SA 3.0; all via Wikimedia Commons, cropped. LHCb model: © CERN for the benefit of the LHCb collaboration (GPL-3.0), HSF Phoenix (Apache-2.0); human model: Blender Human Base Meshes (CC0); LHCb collision: CERN open data. LHC tunnel: CERN-FOOTAGE-2022-013-001. Globe: Natural Earth. Music: „Age of Wonder“ and „Starfire“ by Scott Buckley, released under CC-BY 4.0, www.scottbuckley.com.au. J/ψ p spectrum and Dalitz plot: LHCb, Phys. Rev. Lett. 122 (2019) 222001, CC BY 4.0 (HEPData ins1728691). CMS collision on the cover: CERN open data.</div>
 
 <!--
 Credits (house rule: the credits a licence asks for, tiny print, on the last page). The finale's

@@ -151,7 +151,7 @@ export function createInterior(o) {
   })
   // `display` (slide 7's own scene, which has no stage behind it to turn linear light into the screen's): the grain's
   // colour as it is, not raised to 2.2
-  if (o.display) mat.fragmentShader = DISPLAY_FRAG
+  if (o.display) mat.fragmentShader = o.crisp ? DISPLAY_FRAG.replace('smoothstep(0.04, 0.5, d)', 'smoothstep(0.34, 0.5, d)') : DISPLAY_FRAG   // crisp: a point with an edge, not a soft disc
   const pts = new Points(geo, mat); pts.frustumCulled = false
   const u = mat.uniforms
   K.move(0, uN, uSh, uEx)
