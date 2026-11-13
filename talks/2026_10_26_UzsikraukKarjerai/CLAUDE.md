@@ -96,6 +96,8 @@ greitintuvas“, „FCC – jūsų greitintuvas“. One music bed, Scott Buckley
 
 ## Status
 
+- 2026-11-13: no ZIP on the landing page any more (`videos/venue.json` removed; the owner: "keep just web versions,
+  don't need zips anymore"). The zip itself is still an asset of the talk's release.
 - 2026-10-26 (final): **filmed** in the Delfi studio from the venue ZIP (the release's, the last built from
   fbe9feb, 315.2 MB) in Chrome on the owner's MacBook Pro M2, on the v0.8.3 pin. The sound went choppy, then
   slide 16 (the live close) went white; the stage's fallback did not trigger, and the studio captured the
