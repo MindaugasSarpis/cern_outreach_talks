@@ -58,6 +58,9 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-14: **Deployed:** commit a40416b (Decisions 21), Pages run 43636119472 (success), URL 200, the live walk
+  passed; `safe` skipped. finale_i.mp4 and the venue zip of b4c54fc (457.7 MB) on the release before it. Not heard
+  on speakers here.
 - 2026-11-13, late: the venue zip of ac57d57 (458 MB) is on the release `videos-2026-11-18-tokyo` and on the landing page
   (`videos/venue.json`; the owner: "Add a zip to the landing page"). A re-cut means a new zip, upload and venue.json.
   Never `videos:publish --prune` on this release without listing the zip: prune drops what the manifest does not name.
