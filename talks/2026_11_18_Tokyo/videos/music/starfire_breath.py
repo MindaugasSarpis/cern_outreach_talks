@@ -2,10 +2,11 @@
 """Starfire for the Tokyo finale with a breath before its arrival (13 Nov; the owner: "breath sounds like a good idea, but
 needs to be implemented smoothly"). The level eases down on a raised cosine from 12.9 s to a third at 14.1 s, holds, and
 is back within 60 ms on the arrival at 14.3 s; set sample by sample (the first try stepped a frame at a time over 0.15 s).
-  usage: starfire_breath.py IN.wav OUT.wav   (48 kHz 16-bit stereo, the file from its 1.72 s)"""
+  usage: starfire_breath.py IN.wav OUT.wav   (48 kHz 16-bit stereo, the file from its 5.72 s)"""
 import sys, wave
 import numpy as np
-A, B, C, LOW = 12.9, 14.1, 14.3, 0.33
+# 14 Nov: the file starts 4 s later in the piece (from its 5.72 s), so the arrival is 10.3 s in: the bed fades out first
+A, B, C, LOW = 8.9, 10.1, 10.3, 0.33
 w = wave.open(sys.argv[1]); sr, ch = w.getframerate(), w.getnchannels()
 x = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float64).reshape(-1, ch)
 t = np.arange(len(x)) / sr

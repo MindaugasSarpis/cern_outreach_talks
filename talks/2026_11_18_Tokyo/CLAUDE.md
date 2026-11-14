@@ -810,6 +810,15 @@ scheduler."
     after it, no thump, no noise, no clipper ("without vibration, a bit smoother": three low voices close in pitch had
     been beating). The smooth breath before it stays.
 
+21. 14 Nov (the owner: "the jump in audio going to the finale is still a bit too strict, also the on-collision effect could
+    be better. Other than that it's good"): (a) no cross-fade of the two pieces on entering the finale: „Age of Wonder“
+    fades out over 4.5 s (`duck: 0, out: 0, fade: 4500`), Starfire comes up from nothing over 6.5 s from the clip's
+    4 s (`starfire_finale_tokyo_d.m4a` starts 4 s later in the piece, `hit: 10.3`), its arrival still on 14.3 s
+    (checked in a browser: the file's 10.9 s at the clip's 14.9 s); (b) the hit, `finale_i.mp4`: the glide from 92 Hz
+    to 36 Hz with its own harmonics (exact multiples, fading over 2 s) and a soft low rush of air: most of its first
+    second is now between 80 and 200 Hz, where small speakers play; the pure sine was nearly all below 80 Hz. Taken
+    as the sound; the picture of the crossing is the take's, unchanged.
+
 ### For the toolkit (for the Scheduler, 12 Nov)
 
 What this talk had to build or work round, and what it would be as a part of slidev-videos:

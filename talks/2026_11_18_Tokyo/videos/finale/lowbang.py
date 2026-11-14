@@ -92,10 +92,16 @@ def voice(n, tc, tf, rng):
     # low noise under them, and the soft clipper on a mix that loud. Now one voice after the crossing: a sine gliding
     # from 64 Hz to 34 Hz over 3 s and staying there, a little of its octave, up in 60 ms, ringing 20 s; the swell is
     # gone 0.3 s after the crossing, no thump, no noise, and the mix is not clipped (main)
-    sf = np.where(t < tc, 64, ramp_exp(t, tc, tc + 3.0, 64, 34))
+    # 14 Nov (the owner: "the on-collision effect could be better"): a pure 64 to 34 Hz sine is felt on a subwoofer and
+    # nearly silent on small speakers. The glide now starts at 92 Hz, and it carries its own harmonics (exact multiples, so
+    # nothing beats) for the first seconds, with a soft low rush of air over the first two: heard anywhere, still smooth
+    sf = np.where(t < tc, 92, ramp_exp(t, tc, tc + 3.0, 92, 36))
     sph = 2 * np.pi * np.cumsum(np.where(t < tc, 0, sf)) / SR
     sg = np.where(t < tc, 0, np.where(t < tc + 0.06, 0.5 * (1 - np.cos(np.pi * (t - tc) / 0.06)), ramp_exp(t, tc + 0.06, tc + 20.0, 1.0, 2e-3)))
-    smooth = sg * (np.sin(sph) + 0.22 * np.sin(2 * sph))
+    hg = np.where(t < tc, 0, np.exp(-np.maximum(t - tc, 0) / 2.2))
+    air_g = np.where(t < tc, 0, np.where(t < tc + 0.09, 0.5 * (1 - np.cos(np.pi * (t - tc) / 0.09)), np.exp(-np.maximum(t - tc - 0.09, 0) / 0.9)))
+    air = air_g * (onepole_lp(b, np.full(n, 520.0)) - onepole_lp(b, np.full(n, 90.0)))
+    smooth = sg * (np.sin(sph) + (0.22 + 0.4 * hg) * np.sin(2 * sph) + 0.26 * hg * np.sin(3 * sph) + 0.12 * hg * np.sin(4 * sph)) + 1.4 * air
     swell = swell * np.where(t < tc, 1.0, np.exp(-np.maximum(t - tc, 0) / 0.08))
     return 0.3 * swell + 1.0 * smooth
 
