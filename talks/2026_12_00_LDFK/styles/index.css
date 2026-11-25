@@ -97,6 +97,7 @@
 .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .split { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
 .split-r { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+.split-wide { display: grid; gap: 0.75em; align-items: start; grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); }
 .stretch { align-items: stretch; }
 .stack { display: grid; gap: 0.6em; align-content: start; }
 
@@ -179,3 +180,23 @@
   color: rgba(184, 201, 222, 0.75);
   font-variant-numeric: tabular-nums;
 }
+
+/* the budget table */
+.money { width: 100%; border-collapse: collapse; font-size: 0.8em; }
+.money th {
+  text-align: left;
+  font-weight: 400;
+  font-size: 0.82em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  padding: 0 0.5em 0.3em 0;
+  border-bottom: 1px solid var(--line);
+}
+.money td { padding: 0.32em 0.5em 0.32em 0; vertical-align: top; border-bottom: 1px solid rgba(125, 211, 252, 0.12); }
+.money td.n, .money th:nth-child(3) { text-align: right; white-space: nowrap; }
+.money td.n { color: #fff; font-variant-numeric: tabular-nums; }
+.money td:last-child, .money th:last-child { white-space: nowrap; padding-right: 0; padding-left: 0.6em; color: var(--soft); }
+.money tr.sum td { border-bottom: 0; border-top: 1px solid var(--line); font-weight: 700; color: #fff; }
+/* the theme and UnoCSS give tables their own borders and stripes */
+.slidev-layout .money tr { background: none; border: 0; }

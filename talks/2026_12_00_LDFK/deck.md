@@ -36,31 +36,28 @@ Kalbėtojui. Titulinė skaidrė. Ataskaitos tvarka: metai trumpai, grupė, LHCb 
 -->
 
 ---
-class: roomy
+class: airy
 ---
 
-<div class="kick">2026 m. trumpai</div>
+<div class="kick">Apžvalga</div>
 
-# Metai, kai LHCb atvyko į Vilnių
+# 2026 m. skaičiais
 
 <div class="g3 stretch">
-  <div class="panel kpi"><div class="n">~600</div><div class="l">LHCb savaitės Vilniuje dalyvių, iš jų apie 200 atvyko gyvai (VU duomenys)</div></div>
-  <div class="panel kpi"><div class="n">37</div><div class="l">publikacijos ir laidos apie LHCb savaitę rugsėjo 8–20 d.</div></div>
-  <div class="panel kpi"><div class="n">1</div><div class="l">LHCb koordinatoriaus pareigos: analizių išsaugojimas ir atvirieji duomenys</div></div>
-  <div class="panel kpi"><div class="n">100<small>tūkst. EUR</small></div><div class="l">Lietuvos ir Japonijos projektas „Penta-Charm“, 2026–2028 m.</div></div>
-  <div class="panel kpi"><div class="n">2</div><div class="l">pateiktos ERC paraiškos, iš viso 4 mln. EUR</div></div>
-  <div class="panel kpi"><div class="n">140</div><div class="l">studentų dalyke „CERN duomenų analizės metodai“</div></div>
   <div class="panel kpi"><div class="n">13</div><div class="l">grupės narių: 5 tyrėjai, 2 doktorantai, 5 studentai ir vadovo pavaduotojas</div></div>
+  <div class="panel kpi"><div class="n">~200</div><div class="l">LHCb savaitės dalyvių Vilniuje (VU duomenys)</div></div>
   <div class="panel kpi"><div class="n">3</div><div class="l">rengiami straipsniai: ECC metodas ir du Run 2 analizės</div></div>
-  <div class="panel kpi"><div class="n">71</div><div class="l">paminėjimas žiniasklaidoje per dešimt mėnesių</div></div>
+  <div class="panel kpi"><div class="n">2</div><div class="l">Run 3 analizės, kurias veda doktorantai</div></div>
+  <div class="panel kpi"><div class="n">140</div><div class="l">studentų dalyke „CERN duomenų analizės metodai“</div></div>
+  <div class="panel kpi"><div class="n">71</div><div class="l">paminėjimas žiniasklaidoje sausio–spalio mėn.</div></div>
 </div>
 
 <!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources, lhcb-open-data-coordinator-2026 -->
 
 <!--
-Kalbėtojui. Devyni metų skaičiai; kiekvienas toliau turi savo skaidrę.
+Kalbėtojui. Šeši metų skaičiai; kiekvienas toliau turi savo skaidrę. Lėšos – vienoje skaidrėje „Biudžetas ir pritrauktos lėšos“.
 Dalyvių skaičiai – VU pranešimo prognozė (apie 200 gyvai, apie 600 iš viso); galutinio skaičiaus viešai nėra. [PATIKSLINTI: galutinis užsiregistravusių skaičius iš Indico.]
-37 – Fizikos fakulteto žiniasklaidos suvestinės įrašai apie LHCb savaitę ir narystę CERN, rugsėjo 8–20 d.
+71 – Fizikos fakulteto žiniasklaidos suvestinės įrašai apie grupę ir LHCb iki spalio 28 d.
 Šaltiniai: vu.lt (2026 09 08, 2026 07 30); Fizikos fakulteto žiniasklaidos suvestinė (iki 2026 10 28); grupės pasitarimų skaidrės (2026 04 14, 2026 10 14); VU edukacinės iniciatyvos ataskaita (2026 10 28).
 (~1 min)
 -->
@@ -167,6 +164,8 @@ Kalbėtojui. Grupės darbų pasiskirstymas pagal 2026 m. spalio komandos lentą:
 -->
 
 ---
+class: roomy
+---
 
 <div class="kick"><span class="nc">LHCb</span> savaitė Vilniuje</div>
 
@@ -182,13 +181,10 @@ Kalbėtojui. Grupės darbų pasiskirstymas pagal 2026 m. spalio komandos lentą:
     <div class="panel">
       <ul>
         <li>Visos LHCb kolaboracijos susitikimas: 1 891 narys, 112 institutų, 28 šalys</li>
-        <li>Globėjas: Lietuvos Respublikos Prezidentas Gitanas Nausėda</li>
         <li>VU Gyvybės mokslų centras ir Verslo mokykla, Saulėtekis</li>
-        <li>Grupė konkursą laimėjo 2024 m., praėjus keliems mėnesiams po įstojimo į LHCb</li>
+        <li>Paraiška rengti savaitę pateikta 2024 m. lapkritį</li>
       </ul>
     </div>
-    <div class="quote">„Didžiausias dalelių fizikų susitikimas Lietuvos istorijoje“</div>
-    <div class="cap">LRT, 2026 m. rugsėjo 14 d.</div>
   </div>
   <div>
     <img class="ph" src="/figures/lw_hall.jpg" alt="Pilna salė LHCb savaitės atidaryme">
@@ -199,7 +195,7 @@ Kalbėtojui. Grupės darbų pasiskirstymas pagal 2026 m. spalio komandos lentą:
 <!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources, lhcb-collaboration-sep-2026 -->
 
 <!--
-Kalbėtojui. LHCb savaitė – svarbiausias metų įvykis. Tai eilinis visos kolaboracijos susitikimas, kuris kartą per metus vyksta ne CERN; Vilnius jį gavo vos tapęs LHCb institutu.
+Kalbėtojui. LHCb savaitė – svarbiausias metų įvykis. Tai eilinis visos kolaboracijos susitikimas, kuris kartą per metus vyksta ne CERN. Vilniaus paraiška pateikta 2024 m. lapkritį, praėjus dviem mėnesiams po priėmimo į LHCb.
 Dalyvių skaičiai – prognozės ir nesutampa: VU pranešime apie 200 gyvai ir apie 600 iš viso, grupės puslapyje 300 gyvai ir 300 nuotoliu iš 128 institutų 28 šalyse. [PATIKSLINTI: galutinis dalyvių skaičius iš Indico registracijos; kiek šalių ir institutų.]
 [PATIKSLINTI, neprivaloma: kada tiksliai LHCb patvirtino Vilnių; paraiška teikta 2024 11 29.]
 Šaltiniai: lrt.lt/naujienos/mokslas-ir-it/11/3052140; vu.lt (2026 09 08 ir 09 14); indico.cern.ch/event/1696594; T. Gershon ataskaita CERN SPC (2026 09 22).
@@ -223,12 +219,12 @@ Vaizdas: LHCb savaitės filmas, Nebula Moments (Rimantas Unkevičius).
 -->
 
 ---
-class: dense
+class: snug
 ---
 
 <div class="kick"><span class="nc">LHCb</span> savaitė Vilniuje</div>
 
-# Programa: mokslas, valstybė, kultūra
+# Savaitės programa
 
 <div class="ph-row">
   <div><img class="ph" src="/figures/lw_president.jpg" alt="Prezidento sveikinimas ekranuose"><div class="cap">Prezidento sveikinimas atidaryme</div></div>
@@ -246,11 +242,10 @@ class: dense
     </ul>
   </div>
   <div class="panel">
-    <h3>Valstybė</h3>
+    <h3>Atidarymas</h3>
     <ul>
       <li>Prezidento ir VU rektoriaus sveikinimai</li>
       <li>Diskusija su CERN tyrimų direktoriumi, LHCb vadovu, ŠMSM ir EIMIN atstovais</li>
-      <li>Lietuvos siekis tapti visateise CERN nare</li>
     </ul>
   </div>
   <div class="panel">
@@ -264,7 +259,7 @@ class: dense
 </div>
 
 <!--
-Kalbėtojui. Trys savaitės sluoksniai. Mokslinė dalis – įprasta LHCb savaitė. Atidarymas tapo valstybės lygio renginiu: Prezidento sveikinimas (vaizdo įrašu), rektoriaus kalba, diskusija „Lithuania's AI Factory: Connecting Science, Industry and Global Research Infrastructures“ (moderatorė prof. S. Mačiukaitė-Žvinienė; G. Hamel de Monchenault, CERN; T. Gershon, LHCb; prof. P. Treigys; viceministrė R. Valutytė; B. Girdvainis, EIMIN). Kultūrinę programą LHCb vadovybė iš anksto įvardijo kaip svarbiausią išvažiuojamosios savaitės dalį.
+Kalbėtojui. Mokslinė dalis – įprasta LHCb savaitė. Atidaryme: Prezidento sveikinimas (vaizdo įrašu), rektoriaus kalba, diskusija „Lithuania's AI Factory: Connecting Science, Industry and Global Research Infrastructures“ (moderatorė prof. S. Mačiukaitė-Žvinienė; G. Hamel de Monchenault, CERN; T. Gershon, LHCb; prof. P. Treigys; viceministrė R. Valutytė; B. Girdvainis, EIMIN). LHCb vadovybė iš anksto prašė autentiškos kultūrinės programos.
 [PATIKSLINTI, neprivaloma: stendinių pranešimų skaičius (21) paimtas iš registracijos sąrašo; apdovanojimų – iš sąmatos.]
 Šaltiniai: LHCb savaitės atidarymo ir vakarų programos (2026 09); indico.cern.ch/event/1696594.
 Vaizdas: kadrai iš LHCb savaitės filmo (Nebula Moments).
@@ -272,7 +267,7 @@ Vaizdas: kadrai iš LHCb savaitės filmo (Nebula Moments).
 -->
 
 ---
-class: dense
+class: snug
 ---
 
 <div class="kick"><span class="nc">LHCb</span> savaitė Vilniuje</div>
@@ -289,7 +284,6 @@ class: dense
       <h3>Apie ką</h3>
       <ul>
         <li>„Vilniuje – didžiausias dalelių fizikų susitikimas Lietuvos istorijoje“ (LRT)</li>
-        <li>„Lietuva sieks visateisės narystės CERN“ (Delfi)</li>
         <li>„Lithuania seeks full CERN membership as Vilnius hosts particle physics community“ (LRT English)</li>
       </ul>
     </div>
@@ -334,7 +328,7 @@ Skaičiai suskaičiuoti iš suvestinės eilučių apie LHCb, grupės narius ir n
 -->
 
 ---
-class: roomy
+class: airy
 ---
 
 <div class="kick"><span class="nc">LHCb</span> savaitė Vilniuje</div>
@@ -360,15 +354,6 @@ class: roomy
     <div class="panel">
       <h3>Rėmėjai</h3>
       <span class="tag">Light Conversion</span><span class="tag">EKSPLA</span><span class="tag">Standa</span><span class="tag">Brolis</span><span class="tag">Akoneer</span><span class="tag">Mono Spektra</span><span class="tag">Direct Machining Control</span><span class="tag">Humbility</span><span class="tag">Klaipėdos LEZ</span><span class="tag">Konica Minolta</span><span class="tag">Scienced</span>
-      <p class="small muted" style="margin-top: 0.4rem">Lietuvos lazerių ir aukštųjų technologijų įmonės savaitę pasitiko kaip progą prisistatyti CERN bendruomenei.</p>
-    </div>
-    <div class="panel">
-      <h3>Finansavimas</h3>
-      <ul>
-        <li>ŠMSM: 100 tūkst. EUR</li>
-        <li>„Go Vilnius“: 20 tūkst. EUR</li>
-        <li>Dalyvio mokesčiai ir rėmėjai: <span class="todo">[PATIKSLINTI: sumos ir bendras biudžetas]</span></li>
-      </ul>
     </div>
   </div>
 </div>
@@ -376,7 +361,6 @@ class: roomy
 <!--
 Kalbėtojui. Padėka konsorciumui: LDFK buvo savaitės partneris. Rėmėjų sąrašas – iš renginio logotipų tinklelio (2026 08 25).
 [PATIKSLINTI: rėmėjų sąrašas ir jų lygiai; tinklelyje dar buvo vienas logotipas, kurio neperskaičiau („VVT“?).]
-[PATIKSLINTI: galutinis biudžetas ir kiek surinkta iš dalyvio mokesčių bei rėmėjų. 2025 m. ataskaitoje planuota po 100 tūkst. EUR iš ministerijos, mokesčių ir rėmėjų. Galutinė sąmata yra pašto priede „LHCB_Week_2026_Galutine“, čia jos skaičių nerašiau.]
 Šaltiniai: LHCb savaitės logotipų tinklelis (2026 08 25); grupės pasitarimų skaidrės (2026 01 13, 2026 04 14).
 (~0,7 min)
 -->
@@ -385,15 +369,14 @@ Kalbėtojui. Padėka konsorciumui: LDFK buvo savaitės partneris. Rėmėjų sąr
 class: airy
 ---
 
-<div class="kick">Lietuva ir CERN</div>
+<div class="kick">Narystė</div>
 
-# 2026 m.: kelias į visateisę narystę
+# Lietuva ir CERN 2026 m.
 
 <div class="split stretch">
   <div class="panel">
     <div class="tl">
       <div class="d">01 19</div><div>Prezidentas lankosi CERN ir susitinka su Lietuvos bendruomene</div>
-      <div class="d">08 01</div><div>Mindaugas Šarpis pradeda eiti LHCb analizių išsaugojimo ir atvirųjų duomenų koordinatoriaus pareigas</div>
       <div class="d">08 21</div><div>Ministras Pirmininkas nusprendžia oficialiai kreiptis dėl visateisės narystės CERN</div>
       <div class="d">09 04</div><div>Lietuvos nuolatinis atstovas Ženevoje lankosi CERN dėl narystės</div>
       <div class="d">09 14–18</div><div><strong>LHCb savaitė Vilniuje</strong></div>
@@ -406,11 +389,9 @@ class: airy
       <div class="cap">Gautier Hamel de Monchenault, CERN tyrimų ir skaičiavimų direktorius, LRT, 2026 m. rugsėjo 20 d.</div>
     </div>
     <div class="panel">
-      <h3>LHCb vaidmuo</h3>
-      <ul>
-        <li>Lietuvos dalyvavimas CERN eksperimentuose: CMS 35, <strong>LHCb 15</strong>, DRD3 11 dalyvių</li>
-        <li>LHCb savaitė parodė, kad Lietuva gali priimti visą kolaboraciją</li>
-      </ul>
+      <h3>Lietuvos dalyviai CERN eksperimentuose</h3>
+      <p>CMS 35, <strong>LHCb 15</strong>, DRD3 11</p>
+      <div class="cap">CERN „Grey Book“, 2026 m. spalio 7 d.</div>
     </div>
   </div>
 </div>
@@ -439,7 +420,7 @@ class: snug
     <ul>
       <li>Prarastos neutralios dalelės (<Tex v="\pi^0" />, <Tex v="\gamma" />) judesio kiekio atkūrimas</li>
       <li>Baigiamas iki gruodžio</li>
-      <li>Pagrindas visoms tolesnėms analizėms</li>
+      <li>Taikomas Run 2 ir Run 3 analizėse</li>
     </ul>
   </div>
   <div class="panel">
@@ -485,7 +466,7 @@ Kalbėtojui. Grupės fizikos programa: Pc pentakvarkų paieška skilimuose į at
 -->
 
 ---
-class: roomy
+class: airy
 ---
 
 <div class="kick">Doktorantai</div>
@@ -503,7 +484,6 @@ class: roomy
       <li>ECC straipsnio bendraautorė</li>
       <li>Detektoriaus stebėsenos budėjimai LHCb valdymo centre</li>
       <li>Vasarį išlaikė teorijos egzaminą</li>
-      <li>LRT, Delfi, „Verslo žinios“: „pirmoji lietuvė, CERN ieškanti pentakvarkų“</li>
     </ul>
   </div>
   <div class="panel">
@@ -513,8 +493,7 @@ class: roomy
     </div>
     <ul class="small" style="margin-top: 0.5rem">
       <li>Run 3 analizė <Tex v="\Lambda_b^0 \to \Sigma_c^+ \bar{D}^{0} K^-" /></li>
-      <li>Pranešimas Nagojos darbo seminare: „Pentaquark search in <Tex v="\Lambda_b^0 \to \Sigma_c^+ \bar{D}^{0} K^-" /> decays using LHCb Run 3 data“</li>
-      <li>Pranešimas „Open Readings 2026“</li>
+      <li>Pranešimas darbo seminare Nagojoje, lapkričio 25 d.</li>
       <li>Analizių dokumentacija ir stebėsena „GitLab“</li>
       <li>LHCb savaitės ir meistriškumo pamokos organizavimas</li>
     </ul>
@@ -528,14 +507,13 @@ class: roomy
       <li>Tema: pentakvarkų femtoskopija LHCb eksperimente</li>
       <li>Nauja grupei metodika: dalelių koreliacijos mažuose santykiniuose judesio kiekiuose</li>
     </ul>
-    <p class="small muted" style="margin-top: 0.6rem">Doktorantai dalyvauja Lietuvos ir Japonijos projekte ir lankosi Nagojos universitete.</p>
   </div>
 </div>
 
 <!-- facts: lhcb-vilnius-racz -->
 
 <!--
-Kalbėtojui. Doktorantai veda po Run 3 analizę; abu dirba su didžiausiais duomenų kiekiais, kokie tirti Lietuvos fizikoje. Rūta taip pat budi LHCb valdymo centre – tai tiesioginis indėlis į eksperimento darbą. Šarūnas lapkričio 25 d. skaitė pranešimą tarptautiniame darbo seminare Nagojoje.
+Kalbėtojui. Doktorantai veda po Run 3 analizę. Rūta taip pat budi LHCb valdymo centre. Šarūnas lapkričio 25 d. skaitė pranešimą tarptautiniame darbo seminare Nagojoje.
 [PATIKSLINTI: Gustės pavardė ir ar tema jau patvirtinta.]
 [PATIKSLINTI, neprivaloma: doktorantų mokyklos ir stažuotės 2026 m.; 2025 m. ataskaitoje buvo ESHEP (Rūta) ir Osakos mokykla (Šarūnas).]
 Šaltiniai: vu.lt (R. Racz, 2026 02); grupės pasitarimų skaidrės (2026 02 03, 2026 05 05, 2026 10 14); Nagojos darbo seminaro programa (indico.rcnp.osaka-u.ac.jp/event/2981).
@@ -561,10 +539,6 @@ class: snug
         <li><strong>Meda, Neilas, Eliza</strong>: bakalauro darbai</li>
       </ul>
     </div>
-    <div class="panel">
-      <h3>Pranešimai</h3>
-      <p>„Open Readings 2026“: Meda, Neilas ir Šarūnas</p>
-    </div>
   </div>
   <div class="stack">
     <div class="panel">
@@ -573,13 +547,13 @@ class: snug
         <li><strong>Neilas</strong>: CERN vasaros studentų programa (ALICE)</li>
         <li><strong>Margarita</strong>: LHCb finansuojama vieta prie VELO</li>
         <li><strong>Meda, Eliza, Dominykas</strong>: „Erasmus+“ praktika</li>
-        <li>Iš viso 2026 m. vasarą CERN stažavosi 13 VU studentų: rekordas</li>
+        <li>Iš viso 2026 m. vasarą CERN stažavosi 13 VU studentų (VU duomenys)</li>
       </ul>
     </div>
     <div class="panel">
       <h3>Atsakomybės grupėje</h3>
       <ul>
-        <li>LHCb meistriškumo pamoka: organizavimas ir programos atnaujinimas (Neilas, LMT finansuota 3 savaičių stažuotė CERN)</li>
+        <li>LHCb meistriškumo pamokos organizavimas; Neilas tam skyrė LMT finansuotą 3 savaičių stažuotę CERN</li>
         <li>LHCb savaitė: „Indico“ puslapis (Dominykas), savanoriai</li>
         <li>Kiekvienas studentas dirba poroje su doktorantu arba tyrėju</li>
       </ul>
@@ -635,10 +609,7 @@ class: snug
 </div>
 
 <div class="panel" style="margin-top: 0.8rem">
-  <div class="g2">
-    <div><strong>Atvirieji duomenys.</strong> LHCb Run 1 duomenų atvėrimą vedė Mindaugas; 2026 m. rugsėjį pasirodė pirmasis nepriklausomos grupės darbas, patikrintas su atvirais LHCb susidūrimų duomenimis (Brauno universitetas, arXiv:2609.09275).</div>
-    <div><strong>Kryptis ateičiai.</strong> Lietuvos lazerių ir fotonikos technologijos LHCb atnaujinimui „Upgrade II“. <span class="todo">[PATIKSLINTI: konkretūs įsipareigojimai]</span></div>
-  </div>
+  <strong>Atvirieji duomenys.</strong> LHCb Run 1 duomenų atvėrimą vedė Mindaugas. 2026 m. rugsėjį Brauno universiteto grupė paskelbė darbą, patikrintą su atvirais LHCb 2017 m. susidūrimų duomenimis (arXiv:2609.09275).
 </div>
 
 <!-- facts: lhcb-open-data-coordinator-2026, lhcb-vilnius-scifi-lis, lhcb-opendata-brown-2026 -->
@@ -646,7 +617,6 @@ class: snug
 <!--
 Kalbėtojui. Trys indėlio sritys. Pirma, duomenų apdorojimas ir analizė (DPA projektas): nuo rugpjūčio 1 d. Mindaugas koordinuoja visos kolaboracijos analizių išsaugojimą ir atviruosius duomenis; Olegas vasarį pristatė grupės darbus DPA ir RTA posėdyje, jo FSR („File Summary Record“) darbas įtrauktas į bendrą programinę įrangą. Antra, detektorius: SciFi šviesos įvedimo sistema, apšvitintų šviesolaidžių tyrimai Vilniuje, VELO. Trečia, bendri kolaboracijos darbai.
 [PATIKSLINTI: tikslūs paslaugų darbų pavadinimai ir būklė (SciFi LIS, VELO); kiek budėjimų atliko grupė 2026 m.]
-[PATIKSLINTI: „Upgrade II“ – ar yra sutartų grupės įsipareigojimų; rektoriaus kalboje minėti lazeriai.]
 Šaltiniai: vu.lt (2026 07 30); indico.cern.ch/event/1635603; grupės pasitarimų skaidrės (2026 01 13, 2026 02 03, 2026 10 14); DPA ataskaita LHCb savaitėje (2026 09); arxiv.org/abs/2609.09275.
 (~1,2 min)
 -->
@@ -682,6 +652,8 @@ Kalbėtojui. Metų pranešimai. Du kviestiniai tarptautiniai: CHEP 2026 Bankoke 
 -->
 
 ---
+class: full
+---
 
 <div class="kick">Projektai</div>
 
@@ -689,16 +661,12 @@ Kalbėtojui. Metų pranešimai. Du kviestiniai tarptautiniai: CHEP 2026 Bankoke 
 
 <div class="split-r stretch">
   <div class="stack">
-    <div class="g2">
-      <div class="panel kpi"><div class="n">100<small>tūkst. EUR</small></div><div class="l">LMT ir JSPS dvišalė programa</div></div>
-      <div class="panel kpi"><div class="n">2<small>metai</small></div><div class="l">2026 m. balandis – 2028 m. kovas</div></div>
-    </div>
     <div class="panel">
       <ul>
+        <li>LMT ir JSPS dvišalė programa, 2026 m. balandis – 2028 m. kovas</li>
         <li>LHCb eksperimentinė analizė Vilniuje ir teoriniai modeliai Japonijoje: Nagoja, RIKEN, „HAL QCD“</li>
         <li>Tikslas: nustatyti <Tex v="P_c" /> pentakvarkų sandarą</li>
         <li>Dalyviai iš Vilniaus: Mindaugas, Adam, Olegas, Rūta, Šarūnas ir magistrantai</li>
-        <li>Lapkritį: forumas Lietuvos ambasadoje Tokijuje ir darbo seminaras Nagojoje</li>
       </ul>
     </div>
   </div>
@@ -717,54 +685,55 @@ Vaizdas: darbo seminaro dalyvių nuotrauka (organizatorių).
 -->
 
 ---
-class: roomy
----
 
-<div class="kick">Projektai</div>
+<div class="kick">Biudžetas</div>
 
-# Finansavimas ir paraiškos
+# Biudžetas ir pritrauktos lėšos
 
-<div class="g2 stretch">
-  <div class="stack">
-    <div class="panel">
-      <h3>Vykdomi</h3>
-      <ul>
-        <li><strong>PHANTOM</strong>: Europos Komisijos „Horizon Europe“ stipendija (ERA Fellowships), pentakvarkų paieška ECC metodu</li>
-        <li><strong>„Penta-Charm“</strong>: LMT ir JSPS, 100 tūkst. EUR, 2026–2028 m.</li>
-        <li><strong>CERN-LT programa</strong>: LMT finansuojami LDFK projektai, 2024–2027 m.</li>
-        <li><strong>VU edukacinė iniciatyva</strong>: dalyko „CERN duomenų analizės metodai“ atnaujinimas</li>
-      </ul>
-    </div>
+<div class="split-wide stretch">
+  <div class="panel">
+    <h3>Pritrauktos lėšos</h3>
+    <table class="money">
+      <tr><th>Šaltinis</th><th>Kam</th><th>Suma</th><th>Laikotarpis</th></tr>
+      <tr><td>Europos Komisija, „Horizon Europe“</td><td>PHANTOM</td><td class="n">197 tūkst. EUR</td><td>2025 08 – 2027 07</td></tr>
+      <tr><td>LMT ir JSPS</td><td>„Penta-Charm“</td><td class="n">100 tūkst. EUR</td><td>2026 04 – 2028 03</td></tr>
+      <tr><td>ŠMSM</td><td>LHCb savaitė Vilniuje</td><td class="n">100 tūkst. EUR</td><td>2026</td></tr>
+      <tr><td>„Go Vilnius“</td><td>LHCb savaitė Vilniuje</td><td class="n">20 tūkst. EUR</td><td>2026</td></tr>
+      <tr><td>Rėmėjai ir dalyvio mokesčiai</td><td>LHCb savaitė Vilniuje</td><td class="n"><span class="todo">[PATIKSLINTI]</span></td><td>2026</td></tr>
+      <tr><td>VU edukacinių iniciatyvų lėšos</td><td>Dalyko atnaujinimas</td><td class="n"><span class="todo">[PATIKSLINTI]</span></td><td>2025 10 – 2026 10</td></tr>
+      <tr class="sum"><td colspan="2">Iš viso be nepatikslintų eilučių</td><td class="n">417 tūkst. EUR</td><td></td></tr>
+    </table>
   </div>
   <div class="stack">
     <div class="panel">
-      <h3>Pateikta 2026 m.</h3>
-      <ul>
-        <li><strong>Dvi ERC paraiškos</strong>, iš viso 4 mln. EUR; sėkmės atveju grupė išaugtų kelis kartus</li>
-        <li>LMT stažuotės ir vardinės stipendijos studentams</li>
-      </ul>
+      <h3>LDFK lėšos grupei, 2026 m.</h3>
+      <p><span class="todo">[PATIKSLINTI: skirta ir panaudota suma, pagrindinės išlaidų eilutės]</span></p>
     </div>
     <div class="panel">
-      <h3>LDFK lėšos grupei</h3>
-      <p><span class="todo">[PATIKSLINTI: 2026 m. skirta ir panaudota suma, pagrindinės išlaidų eilutės]</span></p>
+      <h3>LHCb savaitės biudžetas</h3>
+      <p><span class="todo">[PATIKSLINTI: bendra suma]</span></p>
+    </div>
+    <div class="panel">
+      <h3>Pateiktos paraiškos</h3>
+      <p>Dvi ERC paraiškos, iš viso 4 mln. EUR</p>
     </div>
   </div>
 </div>
 
-<!-- facts: lt-consortium -->
-
 <!--
-Kalbėtojui. Finansavimo šaltiniai. PHANTOM – pirmasis Europos Komisijos finansuojamas dalelių fizikos projektas Lietuvoje, tęsiasi. Japonijos projektas prasidėjo šiemet. Dvi ERC paraiškos pateiktos rudenį; sprendimai – 2027 m.
-[PATIKSLINTI: ERC paraiškų tipai ir sprendimų datos; LDFK lėšų skaičiai; ar minėti kitas paraiškas (pvz., LMT Mokslo skatinimo fondas).]
-Šaltiniai: grupės pasitarimų skaidrės (2026 04 14, 2026 10 14); 2025 m. ataskaita LDFK (2026 01 06); lmt.lrv.lt (2026 01).
+Kalbėtojui. Visos lėšos vienoje skaidrėje: kas jau pritraukta, ką grupė gavo iš konsorciumo ir kas pateikta. PHANTOM tęsiasi iki 2027 m. liepos, Japonijos projektas prasidėjo šiemet, LHCb savaitę finansavo ministerija, „Go Vilnius“, rėmėjai ir dalyviai.
+417 tūkst. EUR – keturių eilučių su žinomomis sumomis suma (197 + 100 + 100 + 20); PHANTOM ir „Penta-Charm“ sumos skirtos visam projekto laikotarpiui, ne vieniems metams.
+[PATIKSLINTI: PHANTOM suma (197 tūkst. EUR) paimta iš dotacijos sutarties; ar rodyti ją viešai.]
+[PATIKSLINTI: LDFK 2026 m. lėšos grupei; LHCb savaitės galutinis biudžetas, rėmėjų ir dalyvio mokesčių sumos (galutinė sąmata – privačiame apraše); VU edukacinės iniciatyvos suma; ERC paraiškų tipai ir sprendimų datos; ar rodyti LMT stažuotes ir stipendijas studentams.]
+Šaltiniai: PHANTOM dotacijos sutartis (projektas 101244743); grupės pasitarimų skaidrės (2026 01 13, 2026 04 14, 2026 10 14); pranešimas Lietuvos ambasadoje Tokijuje (2026 11 18); VU edukacinės iniciatyvos ataskaita (2026 10 28).
 (~0,8 min)
 -->
 
 ---
 
-<div class="kick">Dėstymas ir sklaida</div>
+<div class="kick">Sklaida</div>
 
-# Studentams, mokykloms, visuomenei
+# Dėstymas ir sklaida
 
 <div class="g3 stretch">
   <div class="panel">
@@ -831,7 +800,7 @@ class: full
     <h3>Žmonės</h3>
     <ul>
       <li>Podoktorantė Anni, doktorantė Gustė</li>
-      <li>ERC sprendimai: iki 4 mln. EUR</li>
+      <li>ERC sprendimai</li>
       <li>Magistrantai lieka doktorantūroje su savo temomis</li>
       <li>Olegas perima savarankišką analizės temą</li>
     </ul>
@@ -852,7 +821,7 @@ class: full
 </div>
 
 <!--
-Kalbėtojui. 2027 m. – rezultatų metai: trys straipsniai ir pirmieji Run 3 rezultatai. Grupė auga: atvyksta podoktorantė, spalį – trečioji doktorantė; ERC sprendimai gali grupę padidinti kelis kartus. Valstybės lygiu – narystės procedūra, kurioje LHCb yra matomiausias Lietuvos dalyvavimo pavyzdys.
+Kalbėtojui. 2027 m. laukiami trys straipsniai ir pirmieji Run 3 rezultatai. Atvyksta podoktorantė, spalį – trečioji doktorantė; laukiama ERC sprendimų. Tęsiasi narystės CERN procedūra.
 [PATIKSLINTI: ko prašoma iš konsorciumo; ar minėti LHCb „Upgrade II“ įsipareigojimus ir M&O įnašus.]
 Šaltiniai: grupės pasitarimo skaidrės (2026 10 14); lrt.lt/en (2026 09 20).
 (~1 min)

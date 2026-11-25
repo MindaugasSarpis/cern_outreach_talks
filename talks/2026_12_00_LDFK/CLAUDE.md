@@ -38,6 +38,9 @@ makes them, Figures as they are checked. The repo is public: private context
   lint step skipped (`--ready-skip lint`, the owner's word, given after
   being told ready would refuse); check, shots, pages, preflight and venue
   passed.
+- 25 Nov 2026, later: the copy pass the owner asked for ("a bit marketing-like, some repetition as
+  well") and the one budget slide. Not deployed: the live deck is still 2ea428c. The PDF in
+  `public/` is of this version. What changed is under Decisions.
 - Branch `talk/ldfk`, worktree `.claude/worktrees/ldfk` (`pnpm talk open ldfk`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_12_00_LDFK/
   (the PDF: `…/2026_12_00_LDFK/LHCb_Vilnius_2026_ataskaita.pdf`)
@@ -54,7 +57,7 @@ makes them, Figures as they are checked. The repo is public: private context
 ## Arc
 
 1. Title.
-2. The year in nine numbers.
+2. The year in six numbers (no money).
 3. The group as a honeycomb, four clicks: 2024, 2025, 2026, 2027.
 4. Who does what, by level.
 5. LHCb Week: the facts and the full hall.
@@ -62,7 +65,7 @@ makes them, Figures as they are checked. The repo is public: private context
 7. LHCb Week's programme: science, state, culture.
 8. Media: 37 items in two weeks, the year's mentions by month, the open
    question of audience reach.
-9. Patron, organisers, partners, sponsors, funding.
+9. Patron, organisers, partners, sponsors.
 10. Lithuania and CERN in 2026: the road to full membership.
 11. Research: the ECC paper, two Run 2 papers, two Run 3 analyses.
 12. What the PhD students do.
@@ -70,7 +73,7 @@ makes them, Figures as they are checked. The repo is public: private context
 14. What the group gives LHCb.
 15. Conferences and talks.
 16. The Lithuania–Japan project.
-17. Funding and proposals.
+17. Budget and attracted funds: the only slide with money on it.
 18. Teaching and outreach.
 19. 2027.
 20. Thanks, credits.
@@ -87,6 +90,8 @@ source line in its slide's notes.
 | 71 | media items on the group and LHCb, Jan–Oct 2026 | the same list; CMS and other groups' rows left out | OK as a count of that list |
 | 21, 3 | posters at LHCb Week, poster prizes | the poster registration list; the event's cost sheet | CHECK |
 | 100 k EUR, 20 k EUR | ministry and Go Vilnius funding for LHCb Week | the group briefings of 13 Jan and 14 Apr 2026 | CHECK |
+| 197 k EUR, Aug 2025 – Jul 2027 | PHANTOM's maximum grant amount and dates | the grant agreement (project 101244743) | CHECK (show it publicly?) |
+| 417 k EUR | the sum of the four budget rows with known amounts (197 + 100 + 100 + 20) | arithmetic on the rows above | OK as a sum |
 | 100 k EUR, Apr 2026 – Mar 2028 | the Lithuania–Japan project | the group briefing of 14 Apr 2026; the Tokyo talk | OK |
 | 2, 4 M EUR | ERC proposals | the group briefing of 14 Oct 2026 | OK |
 | 140, 16, 1 231, 15 | the course's students, lectures, slides, seminars | VU's educational-initiative report, 28 Oct 2026 | OK |
@@ -132,6 +137,20 @@ source line in its slide's notes.
   people on last year's board who are not on the team board of 14 Oct 2026;
   the event's budget total is left as an open mark, not copied from the cost
   sheet; no e-mail address on the last slide.
+
+- 25 Nov 2026, the owner: "unslop the ldfk talk, it's a bit marketing-like, some repetition as well, need
+  a slide of budgets / attracted funds (only one)". Done by `docs/unslop-lt.md`:
+  - Money is on slide 17 only. It left the numbers slide, the partners slide, the Japan slide and the
+    outlook ("ERC sprendimai" without the sum).
+  - Cut as promotion or unsupported: the title „Metai, kai LHCb atvyko į Vilnių“; „kelias į visateisę
+    narystę“; the sponsors line about companies presenting themselves; „LHCb savaitė parodė, kad Lietuva
+    gali priimti visą kolaboraciją“; „Pagrindas visoms tolesnėms analizėms“; „rekordas“; the media line
+    on Rūta's card; the speculative „Kryptis ateičiai“ on lasers; in the notes, „valstybės lygio
+    renginiu“, „didžiausiais duomenų kiekiais“, „rezultatų metai“, „matomiausias pavyzdys“.
+  - A claim corrected: the Brown University preprint was called the first independent work on LHCb open
+    data; the facts bank does not say first, so the word is gone.
+  - Said once now: LRT's headline (the media slide), the patron (the partners slide), the membership
+    bid (slide 10), the coordinator post (slide 14), Open Readings and the Nagoya talks (slide 15).
 
 ## Verify
 
