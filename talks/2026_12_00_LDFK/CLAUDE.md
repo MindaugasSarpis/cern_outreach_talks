@@ -32,11 +32,15 @@ makes them, Figures as they are checked. The repo is public: private context
 - The PDF is `public/LHCb_Vilnius_2026_ataskaita.pdf`, made with
   `pnpm export --with-clicks` and moved there, so the site serves it beside
   the deck. It is a snapshot: export again after the slides change.
-- 25 Nov 2026, the owner: "deploy". The open marks stay on the slides in this
-  version, so the deploy runs with ready's lint step skipped (the owner's
-  word, given after being told ready would refuse); every other step runs.
+- 25 Nov 2026, the owner: "deploy". Deployed: commit 2ea428c, Pages run
+  45568416486 green, the URL and the PDF answer 200, the live walk passed.
+  The open marks stay on the slides in this version, so ready ran with its
+  lint step skipped (`--ready-skip lint`, the owner's word, given after
+  being told ready would refuse); check, shots, pages, preflight and venue
+  passed.
 - Branch `talk/ldfk`, worktree `.claude/worktrees/ldfk` (`pnpm talk open ldfk`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_12_00_LDFK/
+  (the PDF: `…/2026_12_00_LDFK/LHCb_Vilnius_2026_ataskaita.pdf`)
 - The aftermovie `lhcb_week_aftermovie.mp4` (Innoday's web encode, copied
   from its venue bundle on this machine) is published on this talk's release
   `videos-2026-12-00-ldfk` (25 Nov 2026).
