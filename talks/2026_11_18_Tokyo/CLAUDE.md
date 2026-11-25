@@ -58,6 +58,9 @@ Private context (sources, people, budget): `~/.local/share/outreach_talks/briefs
 
 ## Status
 
+- 2026-11-25: the venue zip is gone (the owner, after the talk: "don't need that zip anymore for tokyo talk"):
+  `videos/venue.json` removed, so the landing page no longer links it, and the asset deleted from the release
+  `videos-2026-11-18-tokyo`. `pnpm venue` makes a new one if the talk is given again.
 - 2026-11-13, late: the venue zip of ac57d57 (458 MB) is on the release `videos-2026-11-18-tokyo` and on the landing page
   (`videos/venue.json`; the owner: "Add a zip to the landing page"). A re-cut means a new zip, upload and venue.json.
   Never `videos:publish --prune` on this release without listing the zip: prune drops what the manifest does not name.
