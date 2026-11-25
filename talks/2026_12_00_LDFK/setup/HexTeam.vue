@@ -1,0 +1,133 @@
+<script setup lang="ts">
+// The group as a honeycomb, year by year: <HexTeam :year="2026" />.
+//
+// Every tile has a fixed place (setup/team.ts). A tile whose year has not come
+// waits far off the board, turned and transparent; when the year arrives it
+// flies to its place. The board is tilted in 3D and sways slowly. In print and
+// PDF export nothing moves: each page shows the year's board at rest.
+import { computed, ref, onMounted } from 'vue'
+import { onSlideEnter, onSlideLeave, useNav } from '@slidev/client'
+import HexTile from './HexTile.vue'
+import { members, openSlots, openFrom } from './team'
+
+const props = withDefaults(defineProps<{ year: number; size?: number; gap?: number }>(), { size: 100, gap: 7 })
+
+const { isPrintMode } = useNav()
+const printing = computed(() => !!isPrintMode?.value
+  || (typeof document !== 'undefined' && document.documentElement.classList.contains('print'))
+  || (typeof location !== 'undefined' && /[?&]print\b/.test(location.search)))
+
+// `on` is false until the slide is entered, so the first year's tiles fly in too
+const on = ref(false)
+onMounted(() => { if (printing.value) on.value = true })
+onSlideEnter(() => { requestAnimationFrame(() => requestAnimationFrame(() => { on.value = true })) })
+onSlideLeave(() => { if (!printing.value) on.value = false })
+
+const W = computed(() => props.size)
+const H = computed(() => props.size * 0.866)
+const dx = computed(() => W.value * 0.75 + props.gap)
+const dy = computed(() => H.value + props.gap)
+
+function place([c, r]: [number, number]) {
+  return { x: c * dx.value, y: r * dy.value + (c % 2 ? dy.value / 2 : 0) }
+}
+// a repeatable starting point for tile i: a ring around the board's middle, deep behind it and
+// turned. It stays inside the slide's frame, so the waiting tiles never count as overflow.
+function away(i: number) {
+  const a = (i * 137.5 * Math.PI) / 180
+  const z = -520 - (i % 5) * 70
+  return {
+    x: boardW.value / 2 - W.value / 2 + Math.cos(a) * boardW.value * 0.42,
+    // the plane is tipped back, so depth alone would carry a tile down the screen: lift it by as much
+    y: boardH.value / 2 - H.value / 2 + Math.sin(a) * boardH.value * 0.3 + z * 0.42,
+    z,
+    rot: (i % 2 ? 1 : -1) * (50 + (i * 23) % 80),
+  }
+}
+
+const boardW = computed(() => 6 * dx.value + W.value)
+const boardH = computed(() => 3 * dy.value + H.value)
+
+const tiles = computed(() => [
+  ...members.map((m, i) => ({
+    key: m.id, who: m.id, open: false, i,
+    here: on.value && m.from <= props.year,
+    dim: !!m.left && m.left <= props.year,
+    slot: place(m.slot),
+  })),
+  ...openSlots.map((s, k) => ({
+    key: `open-${k}`, who: undefined, open: true, i: members.length + k,
+    here: on.value && openFrom <= props.year,
+    dim: false,
+    slot: place(s),
+  })),
+])
+
+function style(t: (typeof tiles.value)[number]) {
+  if (t.here) {
+    return {
+      transform: `translate3d(${t.slot.x}px, ${t.slot.y}px, ${t.dim ? -14 : 0}px) scale(${t.dim ? 0.86 : 1})`,
+      opacity: t.dim ? 0.55 : 1,
+      transitionDelay: `${(t.i % 9) * 45}ms`,
+    }
+  }
+  const a = away(t.i)
+  return {
+    transform: `translate3d(${a.x}px, ${a.y}px, ${a.z}px) rotateZ(${a.rot}deg) rotateY(${a.rot}deg) scale(0.5)`,
+    opacity: 0,
+    visibility: 'hidden' as const,
+    transitionDelay: '0ms',
+  }
+}
+</script>
+
+<template>
+  <div class="hexboard" :class="{ still: printing }" :style="{ width: `${boardW}px`, height: `${boardH}px` }">
+    <div class="hexplane">
+      <div v-for="t in tiles" :key="t.key" class="hexslot" :style="style(t)">
+        <HexTile :who="t.who" :open="t.open" :dim="t.dim" :size="size" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.hexboard {
+  position: relative;
+  perspective: 1300px;
+  perspective-origin: 50% 40%;
+}
+.hexplane {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(24deg) rotateY(-16deg);
+  animation: hex-sway 13s ease-in-out infinite alternate;
+}
+.hexslot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
+  /* visibility flips at once on the way in and after the fade on the way out */
+  transition:
+    transform 1.25s cubic-bezier(0.18, 0.84, 0.24, 1),
+    opacity 0.9s ease,
+    visibility 0s linear 0s;
+  will-change: transform, opacity;
+}
+.hexslot:hover { z-index: 2; }
+
+@keyframes hex-sway {
+  from { transform: rotateX(26deg) rotateY(-18deg); }
+  to   { transform: rotateX(18deg) rotateY(-6deg); }
+}
+
+/* print, PDF export and reduced motion: the board at rest */
+.still .hexplane { animation: none; }
+.still .hexslot { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .hexplane { animation: none; }
+  .hexslot { transition: opacity 0.3s ease; }
+}
+</style>

@@ -1,0 +1,59 @@
+// The group's honeycomb (setup/HexTeam.vue) and the single tiles (setup/HexTile.vue).
+//
+// One entry per person. `slot` is the tile's place on the board as [column, row]
+// (flat-top hexagons, odd columns sit half a row lower). `from` is the first year
+// the person is on the board, `left` the year they are shown as alumni from
+// (dimmed, still in place). `photo` is a file in public/team/ (square, 360 px);
+// without it the tile shows the initial.
+//
+// Sources: last year's report deck (2024 and 2025 boards) and the group's team
+// board of 14 October 2026 (group_briefing/data/team.ts). The `left` years of
+// Dainius, Karolina, Venera and Mikas are read off that board, not confirmed:
+// [PATIKSLINTI, neprivaloma: kas iš jų tebėra grupėje].
+
+export interface Member {
+  id: string
+  name: string
+  role: string
+  photo?: string
+  slot: [number, number]
+  from: number
+  left?: number
+  lead?: boolean
+  note?: string
+}
+
+export const members: Member[] = [
+  { id: 'mindaugas', name: 'Mindaugas', role: 'Grupės vadovas', photo: 'mindaugas.jpg', slot: [3, 1], from: 2024, lead: true },
+  { id: 'ramunas', name: 'Ramūnas', role: 'Vadovo pavaduotojas, LDFK', photo: 'ramunas.jpg', slot: [3, 0], from: 2024 },
+  { id: 'olegas', name: 'Olegas', role: 'Tyrėjas', photo: 'olegas.jpg', slot: [2, 1], from: 2024 },
+  { id: 'augustas', name: 'Augustas', role: 'Tyrėjas', photo: 'augustas.jpg', slot: [4, 1], from: 2024 },
+  { id: 'ruta', name: 'Rūta', role: 'Doktorantė', photo: 'ruta.jpg', slot: [4, 2], from: 2024 },
+  { id: 'dainius', name: 'Dainius', role: 'Programinė įranga', photo: 'dainius.jpg', slot: [2, 2], from: 2024, left: 2026 },
+  { id: 'sophia', name: 'Sophia', role: 'Magistrantė', photo: 'sophia.jpg', slot: [3, 2], from: 2024, left: 2026, note: 'Groningenas' },
+  { id: 'karolina', name: 'Karolina', role: 'Magistrantė', photo: 'karolina.jpg', slot: [2, 0], from: 2024, left: 2026 },
+  { id: 'venera', name: 'Venera', role: 'Studentė', photo: 'venera.jpg', slot: [4, 0], from: 2024, left: 2026 },
+  { id: 'meda', name: 'Meda', role: 'Bakalaurė', photo: 'meda.jpg', slot: [1, 1], from: 2024 },
+  { id: 'eliza', name: 'Eliza', role: 'Bakalaurė', photo: 'eliza.jpg', slot: [5, 1], from: 2024 },
+  { id: 'neilas', name: 'Neilas', role: 'Bakalauras', photo: 'neilas.jpg', slot: [1, 0], from: 2024 },
+
+  { id: 'adam', name: 'Adam', role: 'Tyrėjas', photo: 'adam.jpg', slot: [5, 0], from: 2025 },
+  { id: 'sarunas', name: 'Šarūnas', role: 'Doktorantas', photo: 'sarunas.jpg', slot: [1, 2], from: 2025 },
+  { id: 'mikas', name: 'Mikas', role: 'Magistrantas', photo: 'mikas.jpg', slot: [2, 3], from: 2025, left: 2026 },
+  { id: 'dominykas', name: 'Dominykas', role: 'Magistrantas', photo: 'dominykas.jpg', slot: [4, 3], from: 2025 },
+  { id: 'margarita', name: 'Margarita', role: 'Magistrantė', photo: 'margarita.jpg', slot: [5, 2], from: 2025 },
+
+  { id: 'anni', name: 'Anni', role: 'Podoktorantė', photo: 'anni.jpg', slot: [6, 1], from: 2026 },
+  { id: 'guste', name: 'Gustė', role: 'Doktorantė', photo: 'guste.jpg', slot: [6, 2], from: 2027 },
+]
+
+// Open places shown in the last step: outlined tiles with a plus.
+export const openSlots: [number, number][] = [[0, 1], [0, 2], [6, 0], [6, 3]]
+export const openFrom = 2027
+
+export const byId = Object.fromEntries(members.map(m => [m.id, m])) as Record<string, Member>
+
+/** People on the board in `year`, alumni left out. */
+export function activeIn(year: number): Member[] {
+  return members.filter(m => m.from <= year && !(m.left && m.left <= year))
+}
