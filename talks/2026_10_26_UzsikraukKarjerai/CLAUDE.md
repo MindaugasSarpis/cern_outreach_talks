@@ -3,6 +3,11 @@
 Delivered: filmed 26 Oct 2026 at Delfi for the stream on 27 Oct. The full notes of the build are in
 `notes/history.md`.
 
+25 Nov 2026, the release tidied (the owner, after the talk): the 1.9 GB slides zip and the three
+`repair_Slide*.mp4` are deleted from `videos-2026-10-26-uzsikraukkarjerai`, and `vilnius_zoom.mp4` is now
+inherited from the library (the release's copy was the same file). `videos:preflight --mode remote-first`
+serves all 17 clips.
+
 ## Brief
 
 - Event: „Užsikrauk karjerai“, Delfi conferences team with Lietuvos Junior
