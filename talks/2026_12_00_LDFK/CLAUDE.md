@@ -39,8 +39,10 @@ makes them, Figures as they are checked. The repo is public: private context
   being told ready would refuse); check, shots, pages, preflight and venue
   passed.
 - 25 Nov 2026, later: the copy pass the owner asked for ("a bit marketing-like, some repetition as
-  well") and the one budget slide. Not deployed: the live deck is still 2ea428c. The PDF in
-  `public/` is of this version. What changed is under Decisions.
+  well") and the one budget slide. Deployed on the owner's word: commit e3e04c3, Pages run
+  45573691789 green, the URL and the PDF answer 200, the live walk passed; ready's lint step skipped
+  again (the open marks stay on the slides). The PDF in `public/` is of this version. What changed is
+  under Decisions.
 - Branch `talk/ldfk`, worktree `.claude/worktrees/ldfk` (`pnpm talk open ldfk`)
 - URL: https://mindaugassarpis.github.io/cern_outreach_talks/2026_12_00_LDFK/
   (the PDF: `…/2026_12_00_LDFK/LHCb_Vilnius_2026_ataskaita.pdf`)
