@@ -94,18 +94,18 @@ const layers = computed(() => Array.from({ length: props.depth }, (_, i) => i + 
   inset: var(--rim);
   clip-path: var(--hex);
   background:
-    linear-gradient(180deg, rgba(3, 12, 30, 0) 58%, rgba(3, 12, 30, 0.82) 100%),
+    linear-gradient(180deg, rgba(3, 12, 30, 0) 50%, rgba(3, 12, 30, 0.82) 100%),
     linear-gradient(140deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 30%, rgba(0, 0, 0, 0) 68%, rgba(0, 0, 0, 0.34) 100%);
 }
 .hx-name {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 7%;
+  bottom: 13%;
   text-align: center;
-  font-size: calc(var(--w) * 0.118);
+  font-size: calc(var(--w) * 0.108);
   line-height: 1;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }

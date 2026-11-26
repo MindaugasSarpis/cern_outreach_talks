@@ -46,10 +46,19 @@ makes them, Figures as they are checked. The repo is public: private context
 ## Status
 
 - 26 Nov 2026: reworked on the owner's word and the consortium's structure
-  (Decisions, 26 Nov). 18 slides (20 PDF pages), 13.9 of 15 min. Not
+  (Decisions, 26 Nov). 18 slides (25 PDF pages with the clicks), 13.9 of 15 min. Not
   deployed: the live site and the PDF in `public/` before this commit's
   export are of e3e04c3. Open with the owner: the list under "Open
   questions" below.
+  Checked: `talk lint` 0 errors (25 CHECK, 7 optional, 12 WORDS, one
+  LT-THOUSANDS on the article number 100478, which is not a count);
+  `talk check` ok; shots of all 18 slides and of every click of slides 3,
+  12 and 16 without overflow or page errors; two sheet reviews by
+  subagents, their findings applied. Not applied: recrops of
+  `public/team/mikas.jpg`, `sophia.jpg` and `adam.jpg` (the faces sit low
+  or off-centre at the larger tile). The PDF in `public/` is of this
+  version, 25 pages. Committed on `talk/ldfk`, not pushed: the session's
+  permission check refused the push, so it is the owner's to run.
 
 - 25 Nov 2026: first version, 20 slides (23 PDF pages with the group slide's
   clicks). `pnpm talk check ldfk` passes; `pnpm talk lint ldfk` gives 0 errors
@@ -88,8 +97,8 @@ The kicker of each slide carries the number of the consortium's point.
 
 1. Title.
 2. The year in six numbers (no money).
-3. Point 1, the group: the honeycomb, two clicks (2024, 2025, 2026), with
-   the direction in one sentence and the leader.
+3. Point 1, the group: the honeycomb, two clicks (2024, 2025, 2026). The
+   direction in one sentence and the leader are on the cover.
 4. Point 2, organisational: LHCb Week, the facts and the full hall.
 5. The aftermovie, whole (2:28); may be skipped with a press.
 6. LHCb Week: patron, organisers, partners, sponsors; 37 media items.
@@ -98,12 +107,13 @@ The kicker of each slide carries the number of the consortium's point.
 9. Data, software, open data, shifts and VELO.
 10. Point 4, projects: the Lithuania–Japan project.
 11. Projects and attracted funds: the only slide with money on it.
-12. Point 5, science: the three directions, with who works in each.
+12. Point 5, science: the three directions on the honeycomb, three clicks,
+    the people of each picked out.
 13. Pentaquark searches: the ECC paper, two Run 2 papers, two Run 3 analyses.
 14. Papers and talks: the Physics Open review, the year's talks.
 15. Outreach, one slide: schools, public and business, the year's media
     mentions by month, recognition (the LRT nomination).
-16. Point 6, young researchers: two PhD students and the postdoc.
+16. Point 6, young researchers: the honeycomb, two clicks: Rūta, Šarūnas, Anni.
 17. Students and teaching.
 18. Thanks, credits.
 
@@ -161,7 +171,11 @@ For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its 
 - `setup/HexTile.vue`: one hexagonal photo tile with thickness (stacked
   clipped layers in a preserve-3d box). `<HexTile who="ruta" :size="96" />`.
 - `setup/HexTeam.vue`: the honeycomb. `<HexTeam :year="2026" />`; tiles whose
-  year has not come wait behind the board and fly to their place. CSS 3D, no
+  year has not come wait behind the board and fly to their place. `:focus`
+  takes ids from `team.ts`: those tiles come forward and the rest fade (who
+  does what, a click at a time); `:until` is the last year the deck shows, so
+  the board is no wider than the columns in use; `settled` puts the tiles
+  in place at once. CSS 3D, no
   WebGL, so the PDF shows what the screen shows; in print nothing moves.
 - `setup/Tex.vue`: inline maths inside HTML blocks, `<Tex v="\pi^0" />`
   (KaTeX; Markdown's `$…$` is not read there). `katex` is a dependency of
@@ -177,9 +191,10 @@ For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its 
 - `public/figures/lw_*.jpg`: stills from the aftermovie (only `lw_hall` is
   used now); `nagoya_workshop.jpg`: the workshop's group photo; `scifi.jpg`:
   CERN's photo of a SciFi frame going into the cavern (`assets/photos/photos.toml`).
-- Kit classes added 26 Nov: `.kick b` (the point's number), `.lead` (a
-  sentence under a title), `.faces` (a row of small hexagons), `.kpi.long`
-  (a long number in a narrow panel), `.ref` (a paper).
+- Kit classes added 26 Nov: `.kick b` (the point's number), `.kpi.long`
+  (a long number in a narrow panel), `.ref` (a paper), `.team-side h3`, `.rl`,
+  `.after` (the text beside a honeycomb with people picked out),
+  `.cover-rep .d` (the direction on the cover).
 
 ## Decisions
 
@@ -225,9 +240,8 @@ For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its 
     line under the PhD slide and one under new topics.
   - LHCb Week: five slides became three (facts with the programme folded in, the film, partners
     with the media). The programme's three stills and the audience-reach panel are gone.
-  - The directions: a slide of three (spectroscopy; data and software; detector) with the people
-    of each as hexagons, the same three as last year's report; one sentence of them on the group
-    slide and a key number on slide 2.
+  - The directions: a slide of three (spectroscopy; data and software; detector), the same three
+    as last year's report; one sentence of them on the cover and a key number on slide 2.
   - The light injection system has its own slide, first under point 3, with CERN's SciFi photo.
     What the group did on it in 2026 is an open mark: no source at hand says.
   - „Kas ką daro“ and „Ką grupė duoda LHCb“ are gone; their content is on the directions slide and
@@ -238,6 +252,13 @@ For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its 
     could be confirmed from a public page.
   - Cut from the talks list for room: the DPA and RTA meeting (it is on slide 9) and the Japan
     project's kick-off.
+
+- 26 Nov 2026, the owner: "The hexes with pictures should be larger, and then we can use the same
+  layout to focus on who's doing what, select one or few people at a time". The honeycomb is 112 px a
+  tile (88 before, 106 on 25 Nov) and no wider than the six columns in use; `HexTeam` has `focus`. The
+  directions slide and the PhD slide are the honeycomb with clicks (Claude's choice of slides); the
+  students' slide keeps its panels, for the theses and the placements. The direction's sentence
+  moved to the cover to give the tiles the height.
 
 ## Verify
 

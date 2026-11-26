@@ -25,11 +25,12 @@ layout: default
   <div class="kick">Lietuvos dalelių fizikos konsorciumui</div>
   <div class="t">LHCb Vilnius</div>
   <div class="s">2026 m. ataskaita</div>
+  <div class="d">Vilniaus universiteto grupė CERN LHCb eksperimente: pentakvarkų paieškos, analizių išsaugojimas ir atvirieji duomenys, SciFi detektoriaus šviesos įvedimo sistema.</div>
   <div class="w">Dr. Mindaugas Šarpis, LHCb Vilnius vadovas<br>Vilniaus universitetas, Fizikos fakultetas</div>
 </div>
 
 <!--
-Kalbėtojui. Titulinė skaidrė. Ataskaita sudėta pagal šešis konsorciumo plano punktus: grupė, organizacinė veikla, dalyvavimas eksperimente, projektai, mokslinė veikla, jaunieji tyrėjai ir studentai. Skaidrių kampe – punkto numeris.
+Kalbėtojui. Titulinė skaidrė; joje ir pirmas plano punktas: grupės pavadinimas, vadovas, veiklos kryptis. Ataskaita sudėta pagal šešis konsorciumo plano punktus: grupė, organizacinė veikla, dalyvavimas eksperimente, projektai, mokslinė veikla, jaunieji tyrėjai ir studentai. Skaidrių kampe – punkto numeris.
 [PATIKSLINTI, neprivaloma: posėdžio data; aplanko pavadinime diena pažymėta 00.]
 Šaltiniai: nėra, titulinė skaidrė.
 (~0,2 min)
@@ -71,10 +72,8 @@ clicks: 2
 
 # LHCb Vilnius {{ [2024, 2025, 2026][$clicks] }} m.
 
-<p class="lead">Vilniaus universiteto grupė CERN LHCb eksperimente: ieškome pentakvarkų LHCb duomenyse, kuriame analizių išsaugojimo ir atvirųjų duomenų įrankius, dirbame su SciFi detektoriaus šviesos įvedimo sistema. Vadovas – dr. Mindaugas Šarpis, pavaduotojas – prof. Ramūnas Aleksiejūnas.</p>
-
 <div class="team">
-  <HexTeam :year="[2024, 2025, 2026][$clicks]" :size="88" />
+  <HexTeam :year="[2024, 2025, 2026][$clicks]" :until="2026" :size="112" />
   <div class="team-side">
     <div v-if="$clicks === 0">
       <div class="n">12<small>narių</small></div>
@@ -104,7 +103,7 @@ clicks: 2
 <!-- facts: lhcb-vilnius-joined, lhcb-vilnius-scifi-lis -->
 
 <!--
-Kalbėtojui. Pirmas plano punktas: grupė, vadovas, veiklos kryptis. Du paspaudimai: 2024, 2025, 2026 m.; kiekvienu atskrenda tų metų nariai, 2026 m. buvę nariai papilkėja.
+Kalbėtojui. Pirmas plano punktas: grupė. Du paspaudimai: 2024, 2025, 2026 m.; kiekvienu atskrenda tų metų nariai, 2026 m. buvę nariai papilkėja.
 Ministerijos svečiams: LHCb – vienas iš keturių didžiųjų CERN Didžiojo hadronų greitintuvo eksperimentų; VU jo narys nuo 2024 m. rugsėjo.
 2024 m. (12): Mindaugas, Ramūnas, Olegas, Augustas, Dainius, Rūta, Sophia, Karolina, Venera, Meda, Eliza, Neilas. 2025 m. prisijungė Adam, Šarūnas, Mikas, Dominykas, Margarita.
 2026 m. (13): Mindaugas, Ramūnas, Adam, Olegas, Augustas, Anni, Rūta, Šarūnas, Margarita, Dominykas, Meda, Neilas, Eliza.
@@ -122,24 +121,23 @@ class: full
 
 # 121-oji LHCb savaitė: pirmą kartą Lietuvoje
 
+<div class="g3 stretch" style="margin-bottom: 0.75em">
+  <div class="panel kpi"><div class="n">~200</div><div class="l">fizikų Vilniuje</div></div>
+  <div class="panel kpi"><div class="n">~600</div><div class="l">dalyvių su nuotoliniais</div></div>
+  <div class="panel kpi"><div class="n">5</div><div class="l">dienos, rugsėjo 14–18</div></div>
+</div>
+
 <div class="split stretch">
-  <div class="stack">
-    <div class="g3">
-      <div class="panel kpi"><div class="n">~200</div><div class="l">fizikų Vilniuje</div></div>
-      <div class="panel kpi"><div class="n">~600</div><div class="l">dalyvių su nuotoliniais</div></div>
-      <div class="panel kpi"><div class="n">5</div><div class="l">dienos, rugsėjo 14–18</div></div>
-    </div>
-    <div class="panel">
-      <ul>
-        <li>Visos LHCb kolaboracijos susitikimas: 1 891 narys, 112 institutų, 28 šalys</li>
-        <li>Atidaryme – Prezidento ir VU rektoriaus sveikinimai, diskusija su CERN tyrimų direktoriumi, LHCb vadovu, ŠMSM ir EIMIN atstovais</li>
-        <li>„Collaboration Board“ posėdis VU Auloje, 21 stendinis pranešimas</li>
-        <li>Kultūrinė programa „Threads of Lithuania“</li>
-      </ul>
-    </div>
+  <div class="panel">
+    <ul>
+      <li>Visos LHCb kolaboracijos susitikimas: 1 891 narys, 112 institutų, 28 šalys</li>
+      <li>Atidaryme – Prezidento ir VU rektoriaus sveikinimai, diskusija su CERN tyrimų direktoriumi, LHCb vadovu, ŠMSM ir EIMIN atstovais</li>
+      <li>„Collaboration Board“ posėdis VU Auloje, 21 stendinis pranešimas</li>
+      <li>Kultūrinė programa „Threads of Lithuania“</li>
+    </ul>
   </div>
   <div>
-    <img class="ph" src="/figures/lw_hall.jpg" alt="Pilna salė LHCb savaitės atidaryme">
+    <img class="ph" src="/figures/lw_hall.jpg" alt="Pilna salė LHCb savaitės atidaryme" style="aspect-ratio: 4 / 3">
     <div class="cap">Atidarymas VU Gyvybės mokslų centre, rugsėjo 14 d.</div>
   </div>
 </div>
@@ -172,8 +170,6 @@ Vaizdas: LHCb savaitės filmas, Nebula Moments (Rimantas Unkevičius).
 -->
 
 ---
-class: snug
----
 
 <div class="kick"><b>2</b>Organizacinė veikla</div>
 
@@ -188,7 +184,7 @@ class: snug
     <div class="panel">
       <h3>Organizatoriai ir partneriai</h3>
       <p>Vilniaus universitetas · Švietimo, mokslo ir sporto ministerija</p>
-      <p class="muted">Lietuvos mokslo taryba · „Go Vilnius“ · Lietuvos dalelių fizikos konsorciumas</p>
+      <p>Lietuvos mokslo taryba · „Go Vilnius“ · Lietuvos dalelių fizikos konsorciumas</p>
     </div>
     <div class="panel">
       <h3>Rėmėjai</h3>
@@ -222,7 +218,7 @@ Kalbėtojui. Padėka ministerijai ir konsorciumui: ŠMSM kartu su VU buvo savait
 -->
 
 ---
-class: roomy
+class: airy
 ---
 
 <div class="kick"><b>2</b>Organizacinė veikla</div>
@@ -272,15 +268,15 @@ class: snug
 
 <div class="split-wide stretch">
   <div class="stack">
-    <div class="g3">
-      <div class="panel kpi long"><div class="n">11 000 km</div><div class="l">scintiliacinių skaidulų detektoriuje</div></div>
+    <div class="g3 stretch">
+      <div class="panel kpi long"><div class="n">11 000 km</div><div class="l">scintiliacinių skaidulų</div></div>
       <div class="panel kpi long"><div class="n">524 288</div><div class="l">šviesos jutiklių kanalai</div></div>
       <div class="panel kpi long"><div class="n">670 nm</div><div class="l">kalibravimo lazerių bangos ilgis</div></div>
     </div>
     <div class="panel">
       <h3>Kas tai</h3>
       <ul>
-        <li>SciFi – LHCb pėdsakų detektorius už magneto: 12 sluoksnių, maždaug 6 m × 5 m</li>
+        <li>SciFi – LHCb pėdsakų detektorius už magneto: 12 sluoksnių, maždaug 6 × 5 m</li>
         <li>Šviesos įvedimo sistema (LIS) siunčia į skaidulas trumpus lazerio impulsus; pagal juos kalibruojamas kiekvienas kanalas</li>
       </ul>
     </div>
@@ -295,8 +291,8 @@ class: snug
     </div>
   </div>
   <div>
-    <img class="ph" src="/figures/scifi.jpg" alt="SciFi detektoriaus rėmas su skaidulų moduliais leidžiamas į LHCb šachtą" style="aspect-ratio: 1 / 1">
-    <div class="cap">SciFi detektoriaus rėmas su skaidulų moduliais leidžiamas į LHCb šachtą, 2021 m. gegužė</div>
+    <img class="ph" src="/figures/scifi.jpg" alt="SciFi detektoriaus rėmas su skaidulų moduliais leidžiamas į LHCb šachtą" style="aspect-ratio: 5 / 6; object-position: right center">
+    <div class="cap">SciFi rėmas leidžiamas į LHCb šachtą, 2021 m.</div>
   </div>
 </div>
 
@@ -331,16 +327,14 @@ class: snug
   </div>
   <div class="panel">
     <h3>Programinė įranga (DPA projektas)</h3>
-    <div class="who">Olegas, Adam</div>
     <ul>
-      <li>Olegas: darbas su failų suvestinėmis (FSR) įtrauktas į LHCb programinę įrangą; pranešimas DPA ir RTA bendrame posėdyje</li>
+      <li>Olegas: darbas su failų suvestinėmis (FSR) įtrauktas į LHCb programinę įrangą</li>
       <li>Adam: simuliacijos ir analizių atkuriamumas</li>
       <li>Analizių darbo eigos įrankiai („Snakemake“, analizių produkcijos)</li>
     </ul>
   </div>
   <div class="panel">
     <h3>Eksperimento darbas</h3>
-    <div class="who">Rūta, Margarita, Neilas</div>
     <ul>
       <li>Rūta: budėjimai LHCb valdymo centre</li>
       <li>Margarita: VELO detektoriaus kūrimas CERN</li>
@@ -368,15 +362,13 @@ class: full
 # Lietuvos ir Japonijos projektas „Penta-Charm“
 
 <div class="split-r stretch">
-  <div class="stack">
-    <div class="panel">
-      <ul>
-        <li>LMT ir JSPS dvišalė programa, 2026 m. balandis – 2028 m. kovas</li>
-        <li>LHCb eksperimentinė analizė Vilniuje ir teoriniai modeliai Japonijoje: Nagoja, RIKEN, „HAL QCD“</li>
-        <li>Tikslas: nustatyti <Tex v="P_c" /> pentakvarkų sandarą</li>
-        <li>Dalyviai iš Vilniaus: Mindaugas, Adam, Olegas, Rūta, Šarūnas ir magistrantai</li>
-      </ul>
-    </div>
+  <div class="panel">
+    <ul>
+      <li>LMT ir JSPS dvišalė programa, 2026 m. balandis – 2028 m. kovas</li>
+      <li>LHCb eksperimentinė analizė Vilniuje ir teoriniai modeliai Japonijoje: Nagoja, RIKEN, „HAL QCD“</li>
+      <li>Tikslas: nustatyti <Tex v="P_c" /> pentakvarkų sandarą</li>
+      <li>Dalyviai iš Vilniaus: Mindaugas, Adam, Olegas, Rūta, Šarūnas ir magistrantai</li>
+    </ul>
   </div>
   <div>
     <img class="ph" src="/figures/nagoya_workshop.jpg" alt="Nagojos darbo seminaro dalyviai" style="aspect-ratio: 4 / 3">
@@ -398,33 +390,31 @@ Vaizdas: darbo seminaro dalyvių nuotrauka (organizatorių).
 
 # Projektai ir pritrauktos lėšos
 
-<div class="split-wide stretch">
+<div class="panel">
+  <table class="money">
+    <tr><th>Šaltinis</th><th>Kam</th><th>Suma, tūkst. EUR</th><th>Laikotarpis</th></tr>
+    <tr><td>Europos Komisija, „Horizon Europe“</td><td>PHANTOM</td><td class="n">197</td><td>2025 08 – 2027 07</td></tr>
+    <tr><td>LMT ir JSPS</td><td>„Penta-Charm“</td><td class="n">100</td><td>2026 04 – 2028 03</td></tr>
+    <tr><td>ŠMSM</td><td>LHCb savaitė</td><td class="n">100</td><td>2026</td></tr>
+    <tr><td>„Go Vilnius“</td><td>LHCb savaitė</td><td class="n">20</td><td>2026</td></tr>
+    <tr><td>Rėmėjai ir dalyvio mokesčiai</td><td>LHCb savaitė</td><td class="n"><span class="todo">[PATIKSLINTI]</span></td><td>2026</td></tr>
+    <tr><td>VU edukacinių iniciatyvų lėšos</td><td>Dalyko atnaujinimas</td><td class="n"><span class="todo">[PATIKSLINTI]</span></td><td>2025 10 – 2026 10</td></tr>
+    <tr class="sum"><td colspan="2">Iš viso be nepatikslintų eilučių</td><td class="n">417</td><td></td></tr>
+  </table>
+</div>
+
+<div class="g3 stretch" style="margin-top: 0.75em">
   <div class="panel">
-    <h3>Pritrauktos lėšos</h3>
-    <table class="money">
-      <tr><th>Šaltinis</th><th>Kam</th><th>Suma</th><th>Laikotarpis</th></tr>
-      <tr><td>Europos Komisija, „Horizon Europe“</td><td>PHANTOM</td><td class="n">197 tūkst. EUR</td><td>2025 08 – 2027 07</td></tr>
-      <tr><td>LMT ir JSPS</td><td>„Penta-Charm“</td><td class="n">100 tūkst. EUR</td><td>2026 04 – 2028 03</td></tr>
-      <tr><td>ŠMSM</td><td>LHCb savaitė Vilniuje</td><td class="n">100 tūkst. EUR</td><td>2026</td></tr>
-      <tr><td>„Go Vilnius“</td><td>LHCb savaitė Vilniuje</td><td class="n">20 tūkst. EUR</td><td>2026</td></tr>
-      <tr><td>Rėmėjai ir dalyvio mokesčiai</td><td>LHCb savaitė Vilniuje</td><td class="n"><span class="todo">[PATIKSLINTI]</span></td><td>2026</td></tr>
-      <tr><td>VU edukacinių iniciatyvų lėšos</td><td>Dalyko atnaujinimas</td><td class="n"><span class="todo">[PATIKSLINTI]</span></td><td>2025 10 – 2026 10</td></tr>
-      <tr class="sum"><td colspan="2">Iš viso be nepatikslintų eilučių</td><td class="n">417 tūkst. EUR</td><td></td></tr>
-    </table>
+    <h3>LDFK lėšos grupei, 2026 m.</h3>
+    <p><span class="todo">[PATIKSLINTI: skirta ir panaudota suma]</span></p>
   </div>
-  <div class="stack">
-    <div class="panel">
-      <h3>LDFK lėšos grupei, 2026 m.</h3>
-      <p><span class="todo">[PATIKSLINTI: skirta ir panaudota suma, pagrindinės išlaidų eilutės]</span></p>
-    </div>
-    <div class="panel">
-      <h3>LHCb savaitės biudžetas</h3>
-      <p><span class="todo">[PATIKSLINTI: bendra suma]</span></p>
-    </div>
-    <div class="panel">
-      <h3>Pateiktos paraiškos</h3>
-      <p>Dvi ERC paraiškos, iš viso 4 mln. EUR</p>
-    </div>
+  <div class="panel">
+    <h3>LHCb savaitės biudžetas</h3>
+    <p><span class="todo">[PATIKSLINTI: bendra suma]</span></p>
+  </div>
+  <div class="panel">
+    <h3>Pateiktos paraiškos</h3>
+    <p>Dvi ERC paraiškos, iš viso 4 mln. EUR</p>
   </div>
 </div>
 
@@ -438,50 +428,58 @@ Kalbėtojui. Visos lėšos vienoje skaidrėje: kas pritraukta, ką grupė gavo i
 -->
 
 ---
-class: snug
+clicks: 3
 ---
 
 <div class="kick"><b>5</b>Mokslinė veikla</div>
 
 # Trys mokslinės kryptys
 
-<div class="g3 stretch">
-  <div class="panel">
-    <h3>Egzotinių hadronų spektroskopija</h3>
-    <div class="faces"><HexTile who="mindaugas" :size="44" label="" /><HexTile who="adam" :size="44" label="" /><HexTile who="olegas" :size="44" label="" /><HexTile who="ruta" :size="44" label="" /><HexTile who="sarunas" :size="44" label="" /><HexTile who="anni" :size="44" label="" /></div>
-    <p>Pentakvarkų, dalelių iš penkių kvarkų, paieškos LHCb duomenyse.</p>
-    <ul>
-      <li>ECC metodas prarastoms neutralioms dalelėms atkurti</li>
-      <li>Du Run 2 straipsniai, dvi Run 3 analizės</li>
-      <li>Teoriniai modeliai su Japonijos partneriais</li>
-    </ul>
-  </div>
-  <div class="panel">
-    <h3>Duomenys ir programinė įranga</h3>
-    <div class="faces"><HexTile who="mindaugas" :size="44" label="" /><HexTile who="olegas" :size="44" label="" /><HexTile who="adam" :size="44" label="" /></div>
-    <p>Kaip LHCb analizės atliekamos, išsaugomos ir atveriamos.</p>
-    <ul>
-      <li>Analizių išsaugojimas ir atvirieji duomenys</li>
-      <li>Analizių automatizavimas</li>
-      <li>Simuliacijos</li>
-    </ul>
-  </div>
-  <div class="panel">
-    <h3>Detektoriaus technologijos</h3>
-    <div class="faces"><HexTile who="augustas" :size="44" label="" /><HexTile who="margarita" :size="44" label="" /></div>
-    <p>Darbas su LHCb detektoriaus sistemomis.</p>
-    <ul>
-      <li>SciFi šviesos įvedimo sistema</li>
-      <li>Scintiliacinių skaidulų charakterizavimas</li>
-      <li>VELO detektorius</li>
-    </ul>
+<div class="team">
+  <HexTeam :year="2026" :until="2026" :size="112" settled :focus="[null, ['mindaugas', 'adam', 'olegas', 'ruta', 'sarunas', 'anni', 'dominykas'], ['mindaugas', 'olegas', 'adam'], ['augustas', 'margarita']][$clicks]" />
+  <div class="team-side">
+    <div v-if="$clicks === 0">
+      <div class="n">3<small>kryptys</small></div>
+      <ul>
+        <li>Egzotinių hadronų spektroskopija</li>
+        <li>Duomenys ir programinė įranga</li>
+        <li>Detektoriaus technologijos</li>
+      </ul>
+    </div>
+    <div v-else-if="$clicks === 1">
+      <h3>Egzotinių hadronų spektroskopija</h3>
+      <p>Pentakvarkų, dalelių iš penkių kvarkų, paieškos LHCb duomenyse.</p>
+      <ul>
+        <li>ECC metodas prarastoms neutralioms dalelėms atkurti</li>
+        <li>Du Run 2 straipsniai, dvi Run 3 analizės</li>
+        <li>Teoriniai modeliai su Japonijos partneriais</li>
+      </ul>
+    </div>
+    <div v-else-if="$clicks === 2">
+      <h3>Duomenys ir programinė įranga</h3>
+      <p>Kaip LHCb analizės atliekamos, išsaugomos ir atveriamos.</p>
+      <ul>
+        <li>Analizių išsaugojimas ir atvirieji duomenys</li>
+        <li>Analizių automatizavimas</li>
+        <li>Simuliacijos</li>
+      </ul>
+    </div>
+    <div v-else>
+      <h3>Detektoriaus technologijos</h3>
+      <p>Darbas su LHCb detektoriaus sistemomis.</p>
+      <ul>
+        <li>SciFi šviesos įvedimo sistema</li>
+        <li>Scintiliacinių skaidulų charakterizavimas</li>
+        <li>VELO detektorius</li>
+      </ul>
+    </div>
   </div>
 </div>
 
 <!-- facts: lhcb-vilnius-work, lhcb-vilnius-scifi-lis -->
 
 <!--
-Kalbėtojui. Penktas punktas: mokslinė veikla. Grupė dirba trimis kryptimis. Pirmoji – fizikos analizė: pentakvarkų paieškos; apie ją kita skaidrė. Antroji – duomenys ir programinė įranga: analizių išsaugojimas, automatizavimas, simuliacijos, atvirieji duomenys. Trečioji – detektorius: SciFi šviesos įvedimo sistema, skaidulų tyrimai, VELO. Antrą ir trečią kryptis jau rodžiau kaip indėlį į eksperimentą; jos kartu yra ir mokslinė veikla, su savo publikacijomis ir baigiamaisiais darbais.
+Kalbėtojui. Penktas punktas: mokslinė veikla. Grupė dirba trimis kryptimis; trys paspaudimai, kiekvienu išryškėja tos krypties žmonės. Pirmoji – fizikos analizė: pentakvarkų paieškos; apie ją kita skaidrė. Antroji – duomenys ir programinė įranga: analizių išsaugojimas, automatizavimas, simuliacijos, atvirieji duomenys. Trečioji – detektorius: SciFi šviesos įvedimo sistema, skaidulų tyrimai, VELO. Antrą ir trečią kryptis jau rodžiau kaip indėlį į eksperimentą; jos kartu yra ir mokslinė veikla, su savo publikacijomis ir baigiamaisiais darbais.
 Tos pačios trys kryptys buvo ir 2025 m. ataskaitoje: analizė, programiniai įrankiai, instrumentuotė.
 Šaltiniai: vu.lt (2026 04 03); 2025 m. ataskaita LDFK (2026 01 06); grupės pasitarimo skaidrės ir komandos lenta (2026 10 14).
 (~0,9 min)
@@ -494,6 +492,10 @@ class: snug
 <div class="kick"><b>5</b>Mokslinė veikla</div>
 
 # Pentakvarkų paieškos atviro žavesio kanaluose
+
+<div class="panel" style="margin-bottom: 0.75em">
+  <p>LHCb pentakvarkus atrado 2015 m. Ar <Tex v="P_c" /> pentakvarkai yra kompaktiški penkių kvarkų dariniai, ar bariono ir mezono molekulės? Atviro žavesio kanalai <Tex v="\Lambda_c^+ \bar{D}^{(*)0}" /> ir <Tex v="\Sigma_c^+ \bar{D}^{0}" /> leidžia šias hipotezes atskirti.</p>
+</div>
 
 <div class="g3 stretch">
   <div class="panel">
@@ -525,19 +527,8 @@ class: snug
   </div>
 </div>
 
-<div class="g2 stretch" style="margin-top: 0.8rem">
-  <div class="panel">
-    <h3>Klausimas</h3>
-    <p>LHCb pentakvarkus atrado 2015 m. Ar <Tex v="P_c" /> pentakvarkai yra kompaktiški penkių kvarkų dariniai, ar bariono ir mezono molekulės? Atviro žavesio kanalai <Tex v="\Lambda_c^+ \bar{D}^{(*)0}" /> ir <Tex v="\Sigma_c^+ \bar{D}^{0}" /> leidžia šias hipotezes atskirti.</p>
-  </div>
-  <div class="panel">
-    <h3>Naujos temos</h3>
-    <ul>
-      <li>Kanalai su dviem prarastomis neutraliomis dalelėmis (Anni)</li>
-      <li>Linijų formų modeliai su Japonijos teoretikais</li>
-      <li>Pentakvarkų femtoskopija (būsima doktorantė Gustė)</li>
-    </ul>
-  </div>
+<div class="panel" style="margin-top: 0.75em">
+  <strong>Naujos temos.</strong> Kanalai su dviem prarastomis neutraliomis dalelėmis · linijų formų modeliai su Japonijos teoretikais · pentakvarkų femtoskopija
 </div>
 
 <!-- facts: lhcb-pentaquark-2015 -->
@@ -629,7 +620,7 @@ class: snug
         <div class="bar"><b>37</b><i style="height: 100%"></i><span>09</span></div>
         <div class="bar"><b>11</b><i style="height: 30%"></i><span>10</span></div>
       </div>
-      <div class="cap">71 įrašas sausio–spalio mėn. Fizikos fakulteto žiniasklaidos suvestinėje; rugsėjį – LHCb savaitė</div>
+      <div class="cap">71 įrašas sausio–spalio mėn.; rugsėjį – LHCb savaitė</div>
     </div>
     <div class="panel">
       <h3>Pripažinimas</h3>
@@ -653,56 +644,52 @@ Skaičiai suskaičiuoti iš suvestinės eilučių apie LHCb, grupės narius ir n
 -->
 
 ---
-class: airy
+clicks: 2
 ---
 
 <div class="kick"><b>6</b>Jaunieji tyrėjai ir studentai</div>
 
 # Doktorantai ir podoktorantė
 
-<div class="g3 stretch">
-  <div class="panel">
-    <div class="person">
-      <HexTile who="ruta" :size="104" label="" />
-      <div class="t"><div class="nm">Rūta Racz</div><div class="rl">pirmoji grupės doktorantė</div></div>
+<div class="team">
+  <HexTeam :year="2026" :until="2026" :size="112" settled :focus="[['ruta'], ['sarunas'], ['anni']][$clicks]" />
+  <div class="team-side">
+    <div v-if="$clicks === 0">
+      <h3>Rūta Racz</h3>
+      <div class="rl">pirmoji grupės doktorantė</div>
+      <ul>
+        <li>Run 3 analizė <Tex v="\Lambda_b^0 \to \Lambda_c^+ \bar{D}^{*0} K^-" />: atranka, fono tyrimai</li>
+        <li>ECC straipsnio bendraautorė</li>
+        <li>Budėjimai LHCb valdymo centre</li>
+        <li>Vasarį išlaikė teorijos egzaminą</li>
+      </ul>
     </div>
-    <ul class="small" style="margin-top: 0.5rem">
-      <li>Run 3 analizė <Tex v="\Lambda_b^0 \to \Lambda_c^+ \bar{D}^{*0} K^-" />: atranka, fono tyrimai</li>
-      <li>ECC straipsnio bendraautorė</li>
-      <li>Budėjimai LHCb valdymo centre</li>
-      <li>Vasarį išlaikė teorijos egzaminą</li>
-    </ul>
-  </div>
-  <div class="panel">
-    <div class="person">
-      <HexTile who="sarunas" :size="104" label="" />
-      <div class="t"><div class="nm">Šarūnas Jacevičius</div><div class="rl">antrasis doktorantas</div></div>
+    <div v-else-if="$clicks === 1">
+      <h3>Šarūnas Jacevičius</h3>
+      <div class="rl">antrasis doktorantas</div>
+      <ul>
+        <li>Run 3 analizė <Tex v="\Lambda_b^0 \to \Sigma_c^+ \bar{D}^{0} K^-" /></li>
+        <li>Pranešimas darbo seminare Nagojoje, lapkričio 25 d.</li>
+        <li>Analizių dokumentacija ir stebėsena „GitLab“</li>
+        <li>LHCb savaitės ir meistriškumo pamokos organizavimas</li>
+      </ul>
     </div>
-    <ul class="small" style="margin-top: 0.5rem">
-      <li>Run 3 analizė <Tex v="\Lambda_b^0 \to \Sigma_c^+ \bar{D}^{0} K^-" /></li>
-      <li>Pranešimas darbo seminare Nagojoje, lapkričio 25 d.</li>
-      <li>Analizių dokumentacija ir stebėsena „GitLab“</li>
-      <li>LHCb savaitės ir meistriškumo pamokos organizavimas</li>
-    </ul>
-  </div>
-  <div class="panel">
-    <div class="person">
-      <HexTile who="anni" :size="104" label="" />
-      <div class="t"><div class="nm">Anni Kauniskangas</div><div class="rl">podoktorantė</div></div>
+    <div v-else>
+      <h3>Anni Kauniskangas</h3>
+      <div class="rl">podoktorantė</div>
+      <ul>
+        <li>Daktaro laipsnis EPFL: reto B mezono skilimo matavimas LHCb duomenyse</li>
+        <li>Vilniuje: pentakvarkų paieškos kanaluose su dviem prarastomis neutraliomis dalelėmis</li>
+      </ul>
+      <div class="after">Trečioji doktorantė Gustė priimama nuo 2027 m. spalio; tema – pentakvarkų femtoskopija.</div>
     </div>
-    <ul class="small" style="margin-top: 0.5rem">
-      <li>Daktaro laipsnis EPFL: reto B mezono skilimo matavimas LHCb duomenyse</li>
-      <li>Vilniuje: pentakvarkų paieškos kanaluose su dviem prarastomis neutraliomis dalelėmis</li>
-    </ul>
   </div>
 </div>
-
-<p class="small muted">Trečioji doktorantė Gustė priimama nuo 2027 m. spalio; tema – pentakvarkų femtoskopija.</p>
 
 <!-- facts: lhcb-vilnius-racz -->
 
 <!--
-Kalbėtojui. Šeštas punktas: jaunieji tyrėjai. Doktorantai veda po Run 3 analizę. Rūta taip pat budi LHCb valdymo centre. Šarūnas lapkričio 25 d. skaitė pranešimą tarptautiniame darbo seminare Nagojoje. Šiemet prie grupės prisijungia podoktorantė Anni Kauniskangas, apgynusi disertaciją EPFL.
+Kalbėtojui. Šeštas punktas: jaunieji tyrėjai; du paspaudimai: Rūta, Šarūnas, Anni. Doktorantai veda po Run 3 analizę. Rūta taip pat budi LHCb valdymo centre. Šarūnas lapkričio 25 d. skaitė pranešimą tarptautiniame darbo seminare Nagojoje. Šiemet prie grupės prisijungia podoktorantė Anni Kauniskangas, apgynusi disertaciją EPFL.
 [PATIKSLINTI: kada pradeda Anni; Gustės pavardė ir ar tema jau patvirtinta.]
 [PATIKSLINTI, neprivaloma: doktorantų mokyklos ir stažuotės 2026 m.; 2025 m. ataskaitoje buvo ESHEP (Rūta) ir Osakos mokykla (Šarūnas).]
 Šaltiniai: vu.lt (R. Racz, 2026 02); grupės pasitarimų skaidrės (2026 02 03, 2026 05 05, 2026 10 14); Nagojos darbo seminaro programa (indico.rcnp.osaka-u.ac.jp/event/2981).
@@ -722,7 +709,7 @@ class: snug
     <div class="panel">
       <h3>Baigiamieji darbai</h3>
       <ul>
-        <li><strong>Sophia</strong>: magistro darbas „Development of a Kinematic Over-Constraint Method for Pentaquark Search in <Tex v="\Lambda_b^0" /> decays at LHCb in Run 3“; tęsia Groningeno LHCb grupėje</li>
+        <li><strong>Sophia</strong>: magistro darbas apie pentakvarkų paieškos metodą Run 3 duomenims; tęsia Groningeno LHCb grupėje</li>
         <li><strong>Dominykas</strong>: magistro darbas; Japonijos projektas</li>
         <li><strong>Margarita</strong>: magistro darbas apie VELO detektorių</li>
         <li><strong>Meda, Neilas, Eliza</strong>: bakalauro darbai</li>
@@ -744,14 +731,8 @@ class: snug
         <li><strong>Neilas</strong>: CERN vasaros studentų programa (ALICE); LMT finansuota 3 savaičių stažuotė meistriškumo pamokai atnaujinti</li>
         <li><strong>Margarita</strong>: LHCb finansuojama vieta prie VELO</li>
         <li><strong>Meda, Eliza, Dominykas</strong>: „Erasmus+“ praktika</li>
-        <li>Iš viso 2026 m. vasarą CERN stažavosi 13 VU studentų (VU duomenys)</li>
-      </ul>
-    </div>
-    <div class="panel">
-      <h3>Darbas grupėje</h3>
-      <ul>
+        <li>Iš viso 2026 m. vasarą CERN stažavosi 13 VU studentų</li>
         <li>Kiekvienas studentas dirba poroje su doktorantu arba tyrėju</li>
-        <li>LHCb savaitė: „Indico“ puslapis (Dominykas), savanoriai</li>
       </ul>
     </div>
   </div>
@@ -760,7 +741,7 @@ class: snug
 <!-- facts: lhcb-vilnius-students -->
 
 <!--
-Kalbėtojui. Studentai – didžioji grupės dalis. Jie rašo baigiamuosius darbus iš tų pačių analizių, vasarą dirba CERN ir patys rengia meistriškumo pamoką. Sophia – pirmoji grupės magistrė, dabar doktorantė Groningeno LHCb grupėje. Neilas vasarį tris savaites CERN su B. Couturier ir S. Ponce atnaujino LHCb meistriškumo pamokos programą.
+Kalbėtojui. Studentai – didžioji grupės dalis. Jie rašo baigiamuosius darbus iš tų pačių analizių, vasarą dirba CERN ir patys rengia meistriškumo pamoką. Sophia – pirmoji grupės magistrė, dabar doktorantė Groningeno LHCb grupėje; jos darbas – „Development of a Kinematic Over-Constraint Method for Pentaquark Search in Λb0 decays at LHCb in Run 3“. Neilas vasarį tris savaites CERN su B. Couturier ir S. Ponce atnaujino LHCb meistriškumo pamokos programą.
 Dėstymas: dalykas „CERN duomenų analizės metodai“ per metus dėstytas trijuose semestruose dviejuose padaliniuose, iš viso 140 studentų.
 [PATIKSLINTI: bakalauro ir magistro darbų temos, kas ir kada ginasi; ar Dominykas 2026 m. apgynė bakalauro darbą ir įstojo į magistrantūrą.]
 [PATIKSLINTI, neprivaloma: vasaros praktikos pagal gegužės 5 d. pasitarimo sąrašą; jame dar Rūta Lomsargytė („Erasmus+“).]
