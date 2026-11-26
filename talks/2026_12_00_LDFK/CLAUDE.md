@@ -21,7 +21,7 @@ makes them, Figures as they are checked. The repo is public: private context
   them. The owner, the same day: "now only report for 2026", so this deck
   is the report, laid out by the six points; the 2027 plan is not in it.
 - Slot: up to 10 min and a few minutes of questions, "a little more" for
-  the LHCb group. `duration: 15min`; the deck is 11.4 min spoken and the
+  the LHCb group. `duration: 15min`; the deck is 11.2 min spoken and the
   2:28 film.
 - Date: not fixed. The directory carries `2026_12_00` as a placeholder.
 - Delivery: the consortium wants the file in its MS Teams folder „2026 m.
@@ -44,6 +44,18 @@ makes them, Figures as they are checked. The repo is public: private context
   LRT nomination for an award.
 
 ## Status
+
+- 26 Nov 2026, second round: the owner's list after reading the rework (Decisions, 26 Nov, the
+  last two entries). 17 slides (25 PDF pages with the clicks), 13.7 of 15 min. Not deployed: the
+  live site and its PDF are of e3e04c3. Open with the owner: "Open questions" below, first the
+  embassy photo and the light injection system's 2026 work.
+  Checked: `talk lint` 0 errors (16 CHECK, 13 optional, 14 WORDS, the LT-THOUSANDS on the article
+  number); `talk check` ok; shots of all 17 slides and every click of slides 2, 3 and 15 (25
+  frames) without overflow or page errors; three subagent passes (the tiles' framing, a sheet
+  review, a check of its fixes), their findings applied. Left as they are: Mikas', Adam's,
+  Dainius' and Gustė's chins meet the name on their tiles (the photos end there), Anni sits left
+  of centre. The PDF in `public/` is of this version, 25 pages. Committed on `talk/ldfk`, not
+  pushed (the push is the owner's, as below).
 
 - 26 Nov 2026: reworked on the owner's word and the consortium's structure
   (Decisions, 26 Nov). 18 slides (25 PDF pages with the clicks), 13.9 of 15 min. Not
@@ -95,27 +107,29 @@ makes them, Figures as they are checked. The repo is public: private context
 
 The kicker of each slide carries the number of the consortium's point.
 
-1. Title.
-2. The year in six numbers (no money).
-3. Point 1, the group: the honeycomb, two clicks (2024, 2025, 2026). The
-   direction in one sentence and the leader are on the cover.
+1. Title: the group's name, leader and direction in one sentence.
+2. Point 1, the group: the honeycomb, three clicks (2024, 2025, 2026, 2027).
+   The 2027 step: Gustė and two open places.
+3. Point 1, the three directions on the honeycomb, three clicks, the people
+   of each picked out.
 4. Point 2, organisational: LHCb Week, the facts and the full hall.
 5. The aftermovie, whole (2:28); may be skipped with a press.
 6. LHCb Week: patron, organisers, partners, sponsors; 37 media items.
 7. Lithuania and CERN in 2026: a dated list, the coordinator post on it.
 8. Point 3, participation in the experiment: the SciFi light injection system.
 9. Data, software, open data, shifts and VELO.
-10. Point 4, projects: the Lithuania–Japan project.
+10. Point 4, projects: the Lithuania–Japan project, the embassy event of
+    18 Nov and the Nagoya workshop.
 11. Projects and attracted funds: the only slide with money on it.
-12. Point 5, science: the three directions on the honeycomb, three clicks,
-    the people of each picked out.
-13. Pentaquark searches: the ECC paper, two Run 2 papers, two Run 3 analyses.
-14. Papers and talks: the Physics Open review, the year's talks.
-15. Outreach, one slide: schools, public and business, the year's media
+12. Point 5, science: pentaquark searches (the ECC paper, two Run 2 papers,
+    two Run 3 analyses).
+13. Papers and talks: the Physics Open review with the Veritasium frame, the
+    year's talks.
+14. Outreach, one slide: schools, public and business, the year's media
     mentions by month, recognition (the LRT nomination).
-16. Point 6, young researchers: the honeycomb, two clicks: Rūta, Šarūnas, Anni.
-17. Students and teaching.
-18. Thanks, credits.
+15. Point 6, young researchers: the honeycomb, two clicks: Rūta, Šarūnas, Anni.
+16. Students and teaching.
+17. Thanks, credits.
 
 ## Figures
 
@@ -137,7 +151,9 @@ source line in its slide's notes.
 | 12, 17, 13 | the group by year | last year's report; the team board of 14 Oct 2026 | CHECK (who left) |
 
 | Physics Open 29 (2026) 100478 | the review with Rapševičiūtė, Šilalė and Rapševičius | Crossref's record of DOI 10.1016/j.physo.2026.100478 (fact `physics-open-mc-overview-2026`) | OK |
-| "paminėtas „Veritasium“ kanale" | the review was mentioned on Veritasium | the owner's word (26 Nov 2026); no public trace found | CHECK (which video) |
+| "parodytas „Veritasium“ vaizdo įraše", 4,4 mln., 21,5 mln. | the review's first page is shown in Veritasium's "Randomness is a lie. Let me explain"; 4.4 M views "7d ago", 21.5 M subscribers | the owner's screenshot of the YouTube page, 26 Nov 2026 (`public/figures/veritasium.jpg` is its video frame) | OK as of that screenshot |
+| 18 Nov 2026, the embassy | the project's presentation at the Embassy of Lithuania in Tokyo: the Ambassador's welcome, the two project leaders (15 min each), RIKEN researchers; scientists of both countries and the embassy's guests | the Tokyo talk's Brief (`talks/2026_11_18_Tokyo/CLAUDE.md`: the owner, 5 and 11 Nov) | OK; no public page found; the event's name and a photo: CHECK |
+| Sophia and Mikas | MSc theses defended in 2026; Margarita's thesis is not on VELO; Dominykas is in MSc year 1 | the owner's word (26 Nov 2026) | OK |
 | "Nominacija LRT apdovanojimams" | an LRT award nomination | the owner's word (26 Nov 2026); LRT's page of 25 Nov 2026 names categories, no nominees | CHECK (award, category, who) |
 | 11 000 km, 524 288, 670 nm, 12 layers, 6 m × 5 m | the SciFi and its light injection system | facts `lhcb-scifi`, `lhcb-scifi-channels`, `lhcb-scifi-lis-vcsel`, `lhcb-scifi-layout` | OK |
 | "nuo 2026 m. sausio tiriamos Vilniuje" | irradiated SciFi fibres in Vilnius | the group briefing of 13 Jan 2026 | OK |
@@ -149,25 +165,29 @@ For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its 
 1. Slide 8: what was done on the light injection system in 2026 and what
    comes next; the fibre measurements' results. Publicly confirmed is only
    that SciFi and LIS are the group's service work.
-2. Slide 14: which Veritasium video mentions the review, and how.
-3. Slide 15: which LRT award and category, and who is nominated; the result
-   of VU's 2026 open-science competition.
+2. Slide 10: a photo of the embassy event of 18 Nov (the slide has its
+   place: save it as `public/figures/embassy.jpg` and swap the `.ph.slot`
+   box for an `<img class="ph">`); the event's name and who else spoke.
+3. Slide 14: which LRT award and category, and who is nominated.
 4. Slide 11: LDFK's funds to the group in 2026, LHCb Week's total budget,
    sponsors' and fees' sums, the VU educational-initiative sum; whether
    PHANTOM's 197 k EUR may be shown.
-5. Slide 3: whether Dainius, Karolina, Venera and Mikas left; when Anni starts.
-6. Slides 2 and 4: the final attendance of LHCb Week from Indico.
-7. Slide 14: who gave the Reinterpretation talk; summer talks; Confinement 2026.
+5. Slide 2 (optional): whether Dainius, Karolina and Venera left; when Anni
+   starts.
+6. Slide 4: the final attendance of LHCb Week from Indico.
+7. Slide 13 (optional): summer talks; Confinement 2026.
 8. Slide 6: the sponsor list and the unread logo.
-9. Slide 17: thesis topics and defence dates.
-10. Whether a 2027 plan by the six points is wanted in this deck after all
-    (the consortium's note asks for one; the owner said report only).
+9. Slide 16 (optional): Mikas' and Margarita's thesis topics; the BSc
+   theses' topics and dates.
+10. Slides 9 and 12: the state of the VELO work and of the three papers on
+    the day of the talk.
 
 ## Talk-owned code
 
 - `setup/team.ts`: the people, their tile's place on the board, the year they
-  join and the year they are shown as alumni from. Edit this to change the
-  honeycomb.
+  join and the year they are shown as alumni from; `pos` and `zoom` frame a
+  person's photo inside the tile; `openSlots` are the outlined places of the
+  2027 step. Edit this to change the honeycomb.
 - `setup/HexTile.vue`: one hexagonal photo tile with thickness (stacked
   clipped layers in a preserve-3d box). `<HexTile who="ruta" :size="96" />`.
 - `setup/HexTeam.vue`: the honeycomb. `<HexTeam :year="2026" />`; tiles whose
@@ -188,6 +208,8 @@ For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its 
 - `slide-top.vue`: the page number, on screen and in the PDF.
 - `public/team/`: 360 px square portraits, from the group briefing's
   `public/team/` and last year's deck.
+- `public/figures/veritasium.jpg`: the video frame cut from the owner's
+  screenshot (26 Nov 2026), credited on the last slide.
 - `public/figures/lw_*.jpg`: stills from the aftermovie (only `lw_hall` is
   used now); `nagoya_workshop.jpg`: the workshop's group photo; `scifi.jpg`:
   CERN's photo of a SciFi frame going into the cavern (`assets/photos/photos.toml`).
@@ -195,6 +217,12 @@ For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its 
   (a long number in a narrow panel), `.ref` (a paper), `.team-side h3`, `.rl`,
   `.after` (the text beside a honeycomb with people picked out),
   `.cover-rep .d` (the direction on the cover).
+- Kit changes of 26 Nov, second round: list items have their own line-height
+  (1.36; the theme's 1.8 made a wrapped bullet read as two); panel headings
+  are in rem; `.ph.slot` is the place of a photo still owed; `.team-side` has
+  one height, so the text beside the board starts at the same line at every
+  click. A slide whose extra item does not fit a column puts it in a
+  full-width strip under the row of panels (slides 9, 12, 13, 16).
 
 ## Decisions
 
@@ -259,6 +287,47 @@ For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its 
   directions slide and the PhD slide are the honeycomb with clicks (Claude's choice of slides); the
   students' slide keeps its panels, for the theses and the placements. The direction's sentence
   moved to the cover to give the tiles the height.
+
+- 26 Nov 2026, the owner, after reading the reworked deck: "Don't need slide 2. My photo is a
+  incorrectly cropped in 3. Mikas also defended MSc thesis. It's clear what grey ones are, don't
+  need to state it. Moksline veikla with these hexes should go directly after the group
+  introduction. atviro žavesio - open charm in italic. veritasium need a screenshot, on randomness.
+  11 11 we didn't do. need more info on 11 18 event in the embassy, a photo. VU atvirojo mokslo we
+  din't get, don't mention. mention Guste only in growth in 2027. margarita MSc not on Velo,
+  Dominykas still in year 1. Rework the style / flow / wording a bit." Then the owner's screenshot
+  of the Veritasium video. Done:
+  - The numbers slide is gone: 17 slides.
+  - The directions slide follows the group slide and carries point 1's kicker (the consortium's
+    point 1 asks for the group's direction); point 5 opens with the pentaquark slide.
+  - Gustė is on the group slide's new 2027 step only, with two open places (Claude's reading of
+    "only in growth in 2027": the step the deployed e3e04c3 had). With the October workshop
+    (below) it is the deck's only look ahead; to drop it, set the group slide back to `clicks: 2` and three years. Her line on the PhD slide
+    is gone.
+  - „atviro žavesio“ is *open charm*, in italics, in the title and the text of slide 12 (Claude's
+    reading: the English term in place of the calque; the notes explain it in a sentence).
+  - The Veritasium frame is on slide 13 with the video's title and its views; the open mark is
+    closed. The frame is cut from the owner's screenshot and credited on the last slide.
+  - The Reinterpretation workshop (11 Nov) and VU's open-science competition are off the slides
+    and the notes.
+  - The embassy event has its own panel on slide 10 (from the Tokyo talk's Brief) and a marked
+    place for its photo: none was found in Drive, Gmail or on this Mac, and no public page
+    reports the event. The talks list names it as the project's presentation, not as a "forum"
+    (a name an earlier draft had without a source).
+  - Sophia and Mikas: MSc theses defended. Margarita: writing hers, no topic on the slide (not
+    VELO; her VELO placement at CERN stays under the placements). Dominykas: MSc year 1.
+  - The grey tiles' legend is gone.
+  - The owner's tile uses the OpenData talk's portrait (`2026_10_21_OpenData/public/figures/people/
+    mindaugas-sarpis.jpg`): the old square was a stage shot from below, face low and turned.
+    Twelve other tiles are reframed with `pos`/`zoom` in `setup/team.ts`.
+  - Style, from a sheet review by a subagent: the list line-height, uneven panels evened out on
+    slides 7, 9, 10, 14 and 16, the tiles' names at the type floor, the leader's rim fading with
+    his tile, slides 9, 12, 14 and 16 at the default type size. Not taken: abbreviated month names
+    in the dated lists (the numeric „09 15“ is the Lithuanian form) and moving „Lietuva ir CERN“
+    before LHCb Week.
+
+- 26 Nov 2026, the owner: "workshop with japanese colleagues will be held in October". One line
+  on slide 10, „Kitas bendras darbo seminaras: 2027 m. spalį“ (Claude's reading: the next October,
+  2027; no place given, so none is named).
 
 ## Verify
 

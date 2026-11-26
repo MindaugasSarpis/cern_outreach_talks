@@ -40,9 +40,10 @@
   font-weight: 700;
 }
 .slidev-layout h1 + p { margin-top: 0; opacity: 1; }
-.slidev-layout p { margin: 0.3rem 0; }
+.slidev-layout p { margin: 0.3rem 0; text-wrap: pretty; }
 .slidev-layout ul { margin: 0.2rem 0; padding-left: 1.05rem; list-style: disc; }
-.slidev-layout li { margin: 0.16rem 0; padding: 0; }
+/* the theme gives list items a line-height of 1.8: a wrapped bullet then reads as two */
+.slidev-layout li { margin: 0.34rem 0; padding: 0; line-height: 1.36; text-wrap: pretty; }
 .slidev-layout li::marker { color: var(--blue); }
 .slidev-layout strong { color: #fff; }
 .slidev-layout a { color: var(--blue); border: 0; }
@@ -79,7 +80,7 @@
   padding: 0.65em 0.85em;
 }
 .panel h3 {
-  font-size: 0.98em;
+  font-size: 1.02rem;  /* in rem, like the kicker: the same on a dense slide and an airy one */
   line-height: 1.2;
   margin: 0 0 0.3rem;
   color: #fff;
@@ -99,7 +100,7 @@
 .split-r { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
 .split-wide { display: grid; gap: 0.75em; align-items: start; grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); }
 .stretch { align-items: stretch; }
-.stack { display: grid; gap: 0.6em; align-content: start; }
+.stack { display: grid; gap: 0.75em; align-content: start; }
 
 /* key numbers */
 .kpi { text-align: left; }
@@ -145,7 +146,9 @@
 .cap { font-size: 0.9rem; color: var(--soft); margin-top: 0.2rem; }
 
 /* the group slide */
-.team { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.6rem; align-items: center; margin-top: 0; }
+.team { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2rem; align-items: center; margin-top: 0; }
+/* one height for the text beside the board, so its first line stays put from click to click */
+.team-side { min-height: 15rem; }
 .team-side .n { font-size: 3.4em; line-height: 1; font-weight: 700; }
 .team-side .n small { font-size: 0.3em; font-weight: 400; color: var(--blue); margin-left: 0.25em; }
 .team-side ul { font-size: 0.92em; margin-top: 0.6rem; }
@@ -215,3 +218,5 @@
 .kpi.long .n { font-size: 1.75em; white-space: nowrap; }
 /* a panel that is one reference: a paper */
 .ref .ttl { font-style: italic; color: #fff; }
+/* a photograph still owed: its place, with the open mark in it */
+.ph.slot { display: grid; place-items: center; aspect-ratio: 5 / 2; border-style: dashed; background: rgba(4, 14, 36, 0.4); }

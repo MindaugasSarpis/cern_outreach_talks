@@ -18,6 +18,7 @@ const props = withDefaults(defineProps<{
   lead?: boolean
   dim?: boolean
   open?: boolean
+  back?: boolean
   depth?: number
 }>(), { size: 100, depth: 9 })
 
@@ -25,17 +26,26 @@ const m = computed(() => (props.who ? byId[props.who] : undefined))
 const name = computed(() => props.label ?? m.value?.name ?? '')
 const file = computed(() => props.photo ?? m.value?.photo)
 const src = computed(() => (file.value ? `${import.meta.env.BASE_URL}team/${file.value}` : ''))
+// a person's own framing of the photo (setup/team.ts: pos, zoom)
+const frame = computed(() => {
+  const pos = m.value?.pos
+  const zoom = m.value?.zoom
+  return {
+    ...(pos ? { objectPosition: pos } : {}),
+    ...(zoom && zoom !== 1 ? { transform: `scale(${zoom})`, transformOrigin: pos ?? '50% 22%' } : {}),
+  }
+})
 const isLead = computed(() => props.lead || !!m.value?.lead)
 const layers = computed(() => Array.from({ length: props.depth }, (_, i) => i + 1))
 </script>
 
 <template>
-  <div class="hx" :class="{ lead: isLead, dim, open }" :style="{ '--w': `${size}px` }">
+  <div class="hx" :class="{ lead: isLead && !back, dim, open }" :style="{ '--w': `${size}px` }">
     <i class="hx-shadow" />
     <i v-for="n in layers" :key="n" class="hx-side" :style="{ transform: `translateZ(${-n * 2.6}px)` }" />
     <div class="hx-face">
       <template v-if="!open">
-        <img v-if="src" class="hx-img" :src="src" :alt="name">
+        <span v-if="src" class="hx-img hx-crop"><img :src="src" :alt="name" :style="frame"></span>
         <span v-else class="hx-img hx-initial">{{ name.slice(0, 1) }}</span>
         <i class="hx-gloss" />
         <span v-if="name" class="hx-name">{{ name }}</span>
@@ -81,6 +91,9 @@ const layers = computed(() => Array.from({ length: props.depth }, (_, i) => i + 
   object-position: 50% 22%;
   clip-path: var(--hex);
 }
+/* the photo sits in a clipped box of its own, so a zoomed photo stays inside the hexagon */
+.hx-crop { overflow: hidden; }
+.hx-crop img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
 .hx-initial {
   display: grid;
   place-items: center;
@@ -103,7 +116,7 @@ const layers = computed(() => Array.from({ length: props.depth }, (_, i) => i + 
   right: 0;
   bottom: 13%;
   text-align: center;
-  font-size: calc(var(--w) * 0.108);
+  font-size: calc(var(--w) * 0.125);  /* 14 px at a 112 px tile: the deck's type floor */
   line-height: 1;
   letter-spacing: 0;
   color: #fff;

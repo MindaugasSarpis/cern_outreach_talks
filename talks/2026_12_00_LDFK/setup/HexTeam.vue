@@ -117,7 +117,7 @@ function style(t: (typeof tiles.value)[number]) {
   <div class="hexboard" :class="{ still: printing }" :style="{ width: `${boardW}px`, height: `${boardH}px` }">
     <div class="hexplane">
       <div v-for="t in tiles" :key="t.key" class="hexslot" :style="style(t)">
-        <HexTile :who="t.who" :open="t.open" :dim="t.dim" :size="size" />
+        <HexTile :who="t.who" :open="t.open" :dim="t.dim" :back="t.lit < 0" :size="size" />
       </div>
     </div>
   </div>
