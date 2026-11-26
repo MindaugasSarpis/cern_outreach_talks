@@ -9,21 +9,47 @@ makes them, Figures as they are checked. The repo is public: private context
 ## Brief
 
 - Event: the LHCb Vilnius group's annual report to the Lithuanian Particle
-  Physics Consortium (LDFK), covering 2026, with the outlook for 2027. Last
-  year's report was given on 6 January 2026 (a PowerPoint deck, 37 slides).
-- Date and slot: not fixed. The directory carries `2026_12_00` as a
-  placeholder; 20 min assumed.
+  Physics Consortium (LDFK) council, covering 2026. Last year's report was
+  given on 6 January 2026 (a PowerPoint deck, 37 slides).
+- Structure asked by the consortium (26 Nov 2026, "as last year"): a report
+  by the points of the 2026 plan, and a plan for 2027 by six points: 1 the
+  group's name, leader and direction (one or two sentences); 2 organisational
+  activity (cooperation with CERN's units and bodies); 3 direct participation
+  in CERN's research, in running or upgrading an experiment; 4 projects on
+  CERN topics; 5 scientific activity (directions, expected results, their
+  publicity); 6 attracting young researchers and students, and work with
+  them. The owner, the same day: "now only report for 2026", so this deck
+  is the report, laid out by the six points; the 2027 plan is not in it.
+- Slot: up to 10 min and a few minutes of questions, "a little more" for
+  the LHCb group. `duration: 15min`; the deck is 11.4 min spoken and the
+  2:28 film.
+- Date: not fixed. The directory carries `2026_12_00` as a placeholder.
+- Delivery: the consortium wants the file in its MS Teams folder „2026 m.
+  grupių ataskaitos“ (the owner uploads the PDF).
 - Venue and screen: unknown; 16:9.
-- Audience: the consortium's members and board; they know CERN and the group.
+- Audience: the consortium's council, and people from the ministry (the
+  owner, 26 Nov 2026). The council knows CERN and the group; the ministry's
+  people do not know the physics, so the notes carry a plain sentence for
+  each term.
 - Language: Lithuanian for slides and notes (`lang: lt`); chat with the owner in English
 - Look: the shared theme with this talk's own kit (`styles/index.css`), no stage.
 - Must-haves (owner, 25 Nov 2026): the composition of the group; talks, papers,
-  analysis and events; prospects; LHCb Week first, with the media reach and
-  the aftermovie; what the students do, what the PhD students do, the group's
+  analysis and events; LHCb Week with the media reach and the aftermovie;
+  what the students do, what the PhD students do, the group's
   contributions to the experiment; the hexagonal group picture of last year's
   deck, animated; a PDF as well.
+- Must-haves (owner, 26 Nov 2026): the scientific directions highlighted; the
+  light injection system highlighted; outreach on one slide; LHCb Week on a
+  few slides; the paper with Rapševičiūtė, "highlighted in veritasium"; the
+  LRT nomination for an award.
 
 ## Status
+
+- 26 Nov 2026: reworked on the owner's word and the consortium's structure
+  (Decisions, 26 Nov). 18 slides (20 PDF pages), 13.9 of 15 min. Not
+  deployed: the live site and the PDF in `public/` before this commit's
+  export are of e3e04c3. Open with the owner: the list under "Open
+  questions" below.
 
 - 25 Nov 2026: first version, 20 slides (23 PDF pages with the group slide's
   clicks). `pnpm talk check ldfk` passes; `pnpm talk lint ldfk` gives 0 errors
@@ -58,27 +84,28 @@ makes them, Figures as they are checked. The repo is public: private context
 
 ## Arc
 
+The kicker of each slide carries the number of the consortium's point.
+
 1. Title.
 2. The year in six numbers (no money).
-3. The group as a honeycomb, four clicks: 2024, 2025, 2026, 2027.
-4. Who does what, by level.
-5. LHCb Week: the facts and the full hall.
-6. The aftermovie, whole (2:28).
-7. LHCb Week's programme: science, state, culture.
-8. Media: 37 items in two weeks, the year's mentions by month, the open
-   question of audience reach.
-9. Patron, organisers, partners, sponsors.
-10. Lithuania and CERN in 2026: the road to full membership.
-11. Research: the ECC paper, two Run 2 papers, two Run 3 analyses.
-12. What the PhD students do.
-13. What the students do.
-14. What the group gives LHCb.
-15. Conferences and talks.
-16. The Lithuania–Japan project.
-17. Budget and attracted funds: the only slide with money on it.
-18. Teaching and outreach.
-19. 2027.
-20. Thanks, credits.
+3. Point 1, the group: the honeycomb, two clicks (2024, 2025, 2026), with
+   the direction in one sentence and the leader.
+4. Point 2, organisational: LHCb Week, the facts and the full hall.
+5. The aftermovie, whole (2:28); may be skipped with a press.
+6. LHCb Week: patron, organisers, partners, sponsors; 37 media items.
+7. Lithuania and CERN in 2026: a dated list, the coordinator post on it.
+8. Point 3, participation in the experiment: the SciFi light injection system.
+9. Data, software, open data, shifts and VELO.
+10. Point 4, projects: the Lithuania–Japan project.
+11. Projects and attracted funds: the only slide with money on it.
+12. Point 5, science: the three directions, with who works in each.
+13. Pentaquark searches: the ECC paper, two Run 2 papers, two Run 3 analyses.
+14. Papers and talks: the Physics Open review, the year's talks.
+15. Outreach, one slide: schools, public and business, the year's media
+    mentions by month, recognition (the LRT nomination).
+16. Point 6, young researchers: two PhD students and the postdoc.
+17. Students and teaching.
+18. Thanks, credits.
 
 ## Figures
 
@@ -97,7 +124,34 @@ source line in its slide's notes.
 | 100 k EUR, Apr 2026 – Mar 2028 | the Lithuania–Japan project | the group briefing of 14 Apr 2026; the Tokyo talk | OK |
 | 2, 4 M EUR | ERC proposals | the group briefing of 14 Oct 2026 | OK |
 | 140, 16, 1 231, 15 | the course's students, lectures, slides, seminars | VU's educational-initiative report, 28 Oct 2026 | OK |
-| 12, 17, 13, 14+ | the group by year | last year's report; the team board of 14 Oct 2026 | CHECK (who left) |
+| 12, 17, 13 | the group by year | last year's report; the team board of 14 Oct 2026 | CHECK (who left) |
+
+| Physics Open 29 (2026) 100478 | the review with Rapševičiūtė, Šilalė and Rapševičius | Crossref's record of DOI 10.1016/j.physo.2026.100478 (fact `physics-open-mc-overview-2026`) | OK |
+| "paminėtas „Veritasium“ kanale" | the review was mentioned on Veritasium | the owner's word (26 Nov 2026); no public trace found | CHECK (which video) |
+| "Nominacija LRT apdovanojimams" | an LRT award nomination | the owner's word (26 Nov 2026); LRT's page of 25 Nov 2026 names categories, no nominees | CHECK (award, category, who) |
+| 11 000 km, 524 288, 670 nm, 12 layers, 6 m × 5 m | the SciFi and its light injection system | facts `lhcb-scifi`, `lhcb-scifi-channels`, `lhcb-scifi-lis-vcsel`, `lhcb-scifi-layout` | OK |
+| "nuo 2026 m. sausio tiriamos Vilniuje" | irradiated SciFi fibres in Vilnius | the group briefing of 13 Jan 2026 | OK |
+
+## Open questions
+
+For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its notes):
+
+1. Slide 8: what was done on the light injection system in 2026 and what
+   comes next; the fibre measurements' results. Publicly confirmed is only
+   that SciFi and LIS are the group's service work.
+2. Slide 14: which Veritasium video mentions the review, and how.
+3. Slide 15: which LRT award and category, and who is nominated; the result
+   of VU's 2026 open-science competition.
+4. Slide 11: LDFK's funds to the group in 2026, LHCb Week's total budget,
+   sponsors' and fees' sums, the VU educational-initiative sum; whether
+   PHANTOM's 197 k EUR may be shown.
+5. Slide 3: whether Dainius, Karolina, Venera and Mikas left; when Anni starts.
+6. Slides 2 and 4: the final attendance of LHCb Week from Indico.
+7. Slide 14: who gave the Reinterpretation talk; summer talks; Confinement 2026.
+8. Slide 6: the sponsor list and the unread logo.
+9. Slide 17: thesis topics and defence dates.
+10. Whether a 2027 plan by the six points is wanted in this deck after all
+    (the consortium's note asks for one; the owner said report only).
 
 ## Talk-owned code
 
@@ -120,9 +174,12 @@ source line in its slide's notes.
 - `slide-top.vue`: the page number, on screen and in the PDF.
 - `public/team/`: 360 px square portraits, from the group briefing's
   `public/team/` and last year's deck.
-- `public/figures/lw_*.jpg`: stills from the aftermovie (campus, gala and
-  reception are not used yet); `nagoya_workshop.jpg`: the workshop's group
-  photo.
+- `public/figures/lw_*.jpg`: stills from the aftermovie (only `lw_hall` is
+  used now); `nagoya_workshop.jpg`: the workshop's group photo; `scifi.jpg`:
+  CERN's photo of a SciFi frame going into the cavern (`assets/photos/photos.toml`).
+- Kit classes added 26 Nov: `.kick b` (the point's number), `.lead` (a
+  sentence under a title), `.faces` (a row of small hexagons), `.kpi.long`
+  (a long number in a narrow panel), `.ref` (a paper).
 
 ## Decisions
 
@@ -153,6 +210,34 @@ source line in its slide's notes.
     data; the facts bank does not say first, so the word is gone.
   - Said once now: LRT's headline (the media slide), the patron (the partners slide), the membership
     bid (slide 10), the coordinator post (slide 14), Open Readings and the Nagoya talks (slide 15).
+
+- 26 Nov 2026, the owner: "the ldfk talk needs reworking, now only report for 2026, outreach should be
+  one slide, lhcb week a few slides, our scientific directions are not highlighted, light injection
+  system is not highlighted, there will be people from the ministry as well"; then "mention the paper
+  with Rapseviciute, it was highlighted in veritasium, mention LRT nomination for award"; then the
+  consortium's structure (Brief). Done:
+  - The order follows the consortium's six points, the point's number in each kicker. Yesterday's
+    "LHCb Week first" gave way to it: LHCb Week is under point 2, after the group. To undo, move
+    slides 4 to 7 before slide 3.
+  - Report only (Claude's reading of "now only report for 2026"): the 2027 slide, the honeycomb's
+    2027 step and „ir 2027 m. perspektyvos“ on the cover are gone. They are in e3e04c3
+    (`git show e3e04c3:talks/2026_12_00_LDFK/deck.md`). Gustė (from October 2027) stays as one
+    line under the PhD slide and one under new topics.
+  - LHCb Week: five slides became three (facts with the programme folded in, the film, partners
+    with the media). The programme's three stills and the audience-reach panel are gone.
+  - The directions: a slide of three (spectroscopy; data and software; detector) with the people
+    of each as hexagons, the same three as last year's report; one sentence of them on the group
+    slide and a key number on slide 2.
+  - The light injection system has its own slide, first under point 3, with CERN's SciFi photo.
+    What the group did on it in 2026 is an open mark: no source at hand says.
+  - „Kas ką daro“ and „Ką grupė duoda LHCb“ are gone; their content is on the directions slide and
+    on the two slides of point 3.
+  - Outreach is one slide and holds the year's media chart; teaching moved to the students' slide.
+  - The paper with Rapševičiūtė is on „Straipsniai ir pranešimai“; the Veritasium mention and the
+    LRT nomination are on the slides in the owner's words, each with an open mark, since neither
+    could be confirmed from a public page.
+  - Cut from the talks list for room: the DPA and RTA meeting (it is on slide 9) and the Japan
+    project's kick-off.
 
 ## Verify
 

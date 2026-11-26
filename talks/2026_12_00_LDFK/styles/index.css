@@ -200,3 +200,14 @@
 .money tr.sum td { border-bottom: 0; border-top: 1px solid var(--line); font-weight: 700; color: #fff; }
 /* the theme and UnoCSS give tables their own borders and stripes */
 .slidev-layout .money tr { background: none; border: 0; }
+
+/* the six points of the consortium's structure: the kicker carries the number */
+.kick b { font-weight: 700; color: #fff; margin-right: 0.35em; }
+/* one or two sentences under a title */
+.lead { font-size: 0.86em; line-height: 1.4; color: var(--soft); margin: -0.3rem 0 0.5rem; max-width: 62em; }
+/* a row of small hexagons: who works in a direction */
+.faces { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.35rem 0 0.5rem; }
+/* a long number in a narrow panel */
+.kpi.long .n { font-size: 1.75em; white-space: nowrap; }
+/* a panel that is one reference: a paper */
+.ref .ttl { font-style: italic; color: #fff; }
