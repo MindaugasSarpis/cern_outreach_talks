@@ -46,6 +46,14 @@ makes them, Figures as they are checked. The repo is public: private context
 
 ## Status
 
+- 27 Nov 2026, later: the owner's four follow-ups (Decisions, 27 Nov, the two entries after the
+  first): Go Vilnius merged into 65 k EUR from the private sector, the communication report's
+  media figures, no PhD slide, the aftermovie as the opener. 19 slides (25 PDF pages with the
+  clicks), 14.2 of 15 min. Deployed on the owner's word: commit 6c63883, `talk ready` passed with
+  nothing skipped, Pages run 45924086927 green, the URL and the PDF answer 200, the live walk
+  passed all 19 slides. Shots of all 25 frames without overflow or page errors; two short
+  subagent checks of the changed slides against the PDF, their findings applied.
+
 - 27 Nov 2026: the owner's "improve it, and deploy", with a moving background, more on the light
   injection system and no sound (Decisions, 27 Nov). 20 slides (28 PDF pages with the clicks),
   14.7 of 15 min. Toolkit v0.11.0, the stage added. The open marks are off the slides: "Open
