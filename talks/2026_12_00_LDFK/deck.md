@@ -244,8 +244,7 @@ space: { at: lhc, dist: 22, yaw: 12, pitch: 38, dim: 0.6 }
     </div>
     <div class="panel">
       <h3>Organizatoriai ir partneriai</h3>
-      <p>Vilniaus universitetas · Švietimo, mokslo ir sporto ministerija</p>
-      <p>Lietuvos mokslo taryba · „Go Vilnius“ · Lietuvos dalelių fizikos konsorciumas</p>
+      <p>Vilniaus universitetas<br>Švietimo, mokslo ir sporto ministerija<br>Lietuvos mokslo taryba · „Go Vilnius“<br>Lietuvos dalelių fizikos konsorciumas</p>
     </div>
     <div class="panel">
       <h3>Rėmėjai</h3>
@@ -709,7 +708,7 @@ space: { at: hero, dist: 26, yaw: 8, pitch: 24, dim: 0.62 }
       </ul>
     </div>
   </div>
-  <div class="stack">
+  <div class="stack" style="grid-template-rows: auto 1fr">
     <div class="panel">
       <h3>Grupė ir LHCb žiniasklaidoje, 2026 m.</h3>
       <div class="bars" style="height: 14.5rem">
@@ -724,9 +723,9 @@ space: { at: hero, dist: 26, yaw: 8, pitch: 24, dim: 0.62 }
         <div class="bar"><b>37</b><i style="height: 100%"></i><span>09</span></div>
         <div class="bar"><b>11</b><i style="height: 30%"></i><span>10</span></div>
       </div>
-      <div class="cap">Fizikos fakulteto suvestinė: 71 straipsnis ir laida sausio–spalio mėn.</div>
+      <div class="cap">Fizikos fakulteto suvestinė: 71&nbsp;straipsnis ir laida sausio–spalio mėn.</div>
     </div>
-    <div class="panel">
+    <div class="panel" style="display: grid; align-content: center">
       <h3>Pripažinimas</h3>
       <p>Nominacija LRT apdovanojimams</p>
     </div>
