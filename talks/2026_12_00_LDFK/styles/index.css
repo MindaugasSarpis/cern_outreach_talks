@@ -143,10 +143,10 @@
 }
 .ph-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; }
 .ph-row .ph { aspect-ratio: 16 / 9; }
-.cap { font-size: 0.9rem; color: var(--soft); margin-top: 0.2rem; }
+.cap { font-size: 0.9rem; color: var(--soft); margin-top: 0.2rem; text-wrap: balance; }
 
 /* the group slide */
-.team { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2rem; align-items: center; margin-top: 0; }
+.team { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2rem; align-items: center; margin-top: -0.4rem; }
 /* one height for the text beside the board, so its first line stays put from click to click */
 .team-side { min-height: 15rem; }
 .team-side .n { font-size: 3.4em; line-height: 1; font-weight: 700; }
@@ -169,7 +169,7 @@
 .quote + .cap { font-style: normal; }
 
 /* the cover */
-.cover-rep { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+.cover-rep { height: 100%; display: flex; flex-direction: column; justify-content: center; max-width: 56%; }
 .cover-rep .t { font-size: 3.2rem; line-height: 1.05; font-weight: 700; color: #fff; }
 .cover-rep .s { font-size: 1.5rem; margin-top: 0.5rem; color: var(--blue); }
 .cover-rep .w { margin-top: 2rem; font-size: 0.95rem; color: var(--soft); }
@@ -178,10 +178,12 @@
 .rep-page {
   position: absolute;
   pointer-events: none;
-  right: 1.1rem;
-  bottom: 0.6rem;
-  font-size: 0.62em;
-  color: rgba(184, 201, 222, 0.75);
+  /* on the kicker's line, which is free at the right on every slide: at the foot it met the panels' borders */
+  right: 2.5rem;
+  top: 1.75rem;
+  font-size: 0.8rem;
+  font-family: 'PT Serif', Georgia, serif;
+  color: rgba(184, 201, 222, 0.8);
   font-variant-numeric: tabular-nums;
 }
 
@@ -220,3 +222,79 @@
 .ref .ttl { font-style: italic; color: #fff; }
 /* a photograph still owed: its place, with the open mark in it */
 .ph.slot { display: grid; place-items: center; aspect-ratio: 5 / 2; border-style: dashed; background: rgba(4, 14, 36, 0.4); }
+
+/* ---- The stage: the moving world behind the report (the owner, 27 Nov 2026) ----
+   slidev-addon-stage keys its kit on html[data-stage] and sets its own typeface and a 42 px title;
+   this deck keeps the theme's PT Serif and its own title size. The veil that darkened the theme's
+   photograph goes: the world is the ground now, dimmed per slide (`space: { dim }`). In print and in
+   the PDF the same rules hold over each slide's still (public/stills). */
+html[data-stage] .slidev-layout,
+html[data-stage] .slidev-layout table,
+html[data-stage] .slidev-layout .panel {
+  font-family: 'PT Serif', ui-serif, Georgia, serif;
+  color: var(--ink);
+}
+html[data-stage] .slidev-layout h1 {
+  font-size: 1.85rem !important;
+  letter-spacing: 0;
+  line-height: 1.15;
+  margin: 0 0 0.75rem;
+  color: var(--ink);
+}
+html[data-stage] .slidev-layout::before { display: none; }
+.slidev-layout em, .quote { font-family: inherit; }
+/* text that stands on the world without a panel under it keeps a dark edge */
+html[data-stage] .slidev-layout h1,
+html[data-stage] .kick,
+html[data-stage] .cap,
+html[data-stage] .team-side,
+html[data-stage] .cover-rep,
+html[data-stage] .world-nums,
+html[data-stage] .world-cap,
+html[data-stage] .rep-page {
+  text-shadow: 0 0 10px rgba(2, 6, 18, 0.95), 0 0 3px rgba(2, 6, 18, 1);
+}
+/* panels: a little more of their own ground, so lists read over a moving world */
+html[data-stage] .panel { background: rgba(4, 12, 32, 0.74); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+
+/* the detector slide: the world is the picture; three numbers down the left, one line at the foot */
+.world-nums { position: absolute; left: 2.5rem; top: 30%; display: grid; gap: 1.5rem; }
+.world-nums .kpi .n { font-size: 2.5rem; white-space: nowrap; }
+.world-nums .kpi .l { font-size: 1.05rem; color: var(--ink); margin-top: 0.3rem; }
+.world-cap { position: absolute; left: 2.5rem; bottom: 1.6rem; font-size: 1.05rem; color: var(--ink); }
+
+/* how the light injection system works: a chain of steps, left to right */
+.chain { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.5em; }
+.chain .st {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.55em 0.7em;
+}
+html[data-stage] .chain .st { background: rgba(4, 12, 32, 0.74); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.chain .st b { display: block; color: #fff; font-size: 1rem; line-height: 1.2; min-height: 2.4em; margin-bottom: 0.25rem; }
+.chain .st span { display: block; font-size: 0.92rem; line-height: 1.3; color: var(--soft); text-wrap: pretty; }
+.chain .st + .st::before {
+  content: '';
+  position: absolute;
+  left: -1.08em;
+  top: 50%;
+  width: 0.55em;
+  height: 0.55em;
+  border-top: 2px solid var(--blue);
+  border-right: 2px solid var(--blue);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* the credits a licence asks for: tiny print at the foot of the last slide */
+.credits { position: absolute; left: 2.5rem; right: 2.5rem; bottom: 1.2rem; font-size: 0.8rem; line-height: 1.35; color: var(--soft); }
+
+/* the module slide: what the colours of the grains are */
+.world-legend { position: absolute; left: 2.5rem; top: 32%; display: grid; gap: 0.7rem; font-size: 1.15rem; color: var(--ink); }
+.world-legend div { display: flex; align-items: center; gap: 0.7rem; }
+.world-legend i { display: block; width: 0.8rem; height: 0.8rem; border-radius: 50%; flex: none; }
+.world-legend .k1 { background: #fff; box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
+.world-legend .k2 { background: #8fb4f5; }
+.world-legend .k3 { background: #2f4fd6; }
+html[data-stage] .world-legend { text-shadow: 0 0 10px rgba(2, 6, 18, 0.95), 0 0 3px rgba(2, 6, 18, 1); }

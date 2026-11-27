@@ -116,7 +116,7 @@ const layers = computed(() => Array.from({ length: props.depth }, (_, i) => i + 
   right: 0;
   bottom: 13%;
   text-align: center;
-  font-size: calc(var(--w) * 0.125);  /* 14 px at a 112 px tile: the deck's type floor */
+  font-size: calc(var(--w) * 0.13);  /* 14 px at a 108 px tile: the deck's type floor */
   line-height: 1;
   letter-spacing: 0;
   color: #fff;

@@ -11,7 +11,7 @@
 // Sources: last year's report deck (2024 and 2025 boards) and the group's team
 // board of 14 October 2026 (group_briefing/data/team.ts). The `left` years of
 // Dainius, Karolina and Venera are read off that board, not confirmed:
-// [PATIKSLINTI, neprivaloma: kas iš jų tebėra grupėje]. Mikas defended his MSc thesis in 2026
+// an open question in the talk's CLAUDE.md (who of them is still in the group). Mikas defended his MSc thesis in 2026
 // (the owner, 26 Nov 2026).
 
 export interface Member {
@@ -29,11 +29,11 @@ export interface Member {
 }
 
 export const members: Member[] = [
-  { id: 'mindaugas', name: 'Mindaugas', role: 'Grupės vadovas', photo: 'mindaugas.jpg', pos: '50% 100%', slot: [3, 1], from: 2024, lead: true },
-  { id: 'ramunas', name: 'Ramūnas', role: 'Vadovo pavaduotojas, LDFK', photo: 'ramunas.jpg', slot: [3, 0], from: 2024 },
+  { id: 'mindaugas', name: 'Mindaugas', role: 'Grupės vadovas', photo: 'mindaugas.jpg', pos: '50% 100%', zoom: 1, slot: [3, 1], from: 2024, lead: true },
+  { id: 'ramunas', name: 'Ramūnas', role: 'Vadovo pavaduotojas, LDFK', photo: 'ramunas.jpg', pos: '50% 49%', zoom: 1.38, slot: [3, 0], from: 2024 },
   { id: 'olegas', name: 'Olegas', role: 'Tyrėjas', photo: 'olegas.jpg', pos: '50% 70%', slot: [2, 1], from: 2024 },
   { id: 'augustas', name: 'Augustas', role: 'Tyrėjas', photo: 'augustas.jpg', slot: [4, 1], from: 2024 },
-  { id: 'ruta', name: 'Rūta', role: 'Doktorantė', photo: 'ruta.jpg', pos: '93% 24%', zoom: 1.3, slot: [4, 2], from: 2024 },
+  { id: 'ruta', name: 'Rūta', role: 'Doktorantė', photo: 'ruta.jpg', pos: '93% 24%', zoom: 1.6, slot: [4, 2], from: 2024 },
   { id: 'dainius', name: 'Dainius', role: 'Programinė įranga', photo: 'dainius.jpg', pos: '50% 100%', zoom: 1.1, slot: [2, 2], from: 2024, left: 2026 },
   { id: 'sophia', name: 'Sophia', role: 'Magistrantė', photo: 'sophia.jpg', pos: '49% 100%', zoom: 1.15, slot: [3, 2], from: 2024, left: 2026, note: 'Groningenas' },
   { id: 'karolina', name: 'Karolina', role: 'Magistrantė', photo: 'karolina.jpg', slot: [2, 0], from: 2024, left: 2026 },
@@ -42,7 +42,7 @@ export const members: Member[] = [
   { id: 'eliza', name: 'Eliza', role: 'Bakalaurė', photo: 'eliza.jpg', slot: [5, 1], from: 2024 },
   { id: 'neilas', name: 'Neilas', role: 'Bakalauras', photo: 'neilas.jpg', pos: '50% 100%', slot: [1, 0], from: 2024 },
 
-  { id: 'adam', name: 'Adam', role: 'Tyrėjas', photo: 'adam.jpg', pos: '100% 85%', zoom: 1.08, slot: [5, 0], from: 2025 },
+  { id: 'adam', name: 'Adam', role: 'Tyrėjas', photo: 'adam.jpg', pos: '100% 60%', zoom: 1, slot: [5, 0], from: 2025 },
   { id: 'sarunas', name: 'Šarūnas', role: 'Doktorantas', photo: 'sarunas.jpg', pos: '50% 100%', slot: [1, 2], from: 2025 },
   { id: 'mikas', name: 'Mikas', role: 'Magistrantas', photo: 'mikas.jpg', pos: '50% 100%', slot: [2, 3], from: 2025, left: 2026 },
   { id: 'dominykas', name: 'Dominykas', role: 'Magistrantas', photo: 'dominykas.jpg', pos: '0% 69%', zoom: 1.2, slot: [4, 3], from: 2025 },

@@ -14,13 +14,17 @@
     "videos:check": "slidev-videos check",
     "videos:clean": "slidev-videos clean",
     "videos:preflight": "slidev-videos preflight",
-    "venue": "slidev-videos venue"
+    "venue": "slidev-videos venue",
+    "videos:frames": "slidev-videos frames",
+    "stage:check": "slidev-stage-check ."
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2",
-    "katex": "^0.16.45"
+    "katex": "^0.16.45",
+    "@fontsource/pt-serif": "^5.2.0"
   },
   "devDependencies": {
-    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.8.1"
+    "slidev-addon-videos": "github:MindaugasSarpis/slidev-videos#v0.11.0",
+    "slidev-addon-stage": "github:MindaugasSarpis/slidev-videos#v0.11.0&path:/packages/stage"
   }
 }

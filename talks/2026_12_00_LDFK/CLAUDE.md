@@ -21,8 +21,8 @@ makes them, Figures as they are checked. The repo is public: private context
   them. The owner, the same day: "now only report for 2026", so this deck
   is the report, laid out by the six points; the 2027 plan is not in it.
 - Slot: up to 10 min and a few minutes of questions, "a little more" for
-  the LHCb group. `duration: 15min`; the deck is 11.2 min spoken and the
-  2:28 film.
+  the LHCb group. `duration: 15min`; `pnpm talk map ldfk` gives the minutes,
+  the 2:28 film and the 16 s module clip in them (14.7 on 27 Nov).
 - Date: not fixed. The directory carries `2026_12_00` as a placeholder.
 - Delivery: the consortium wants the file in its MS Teams folder „2026 m.
   grupių ataskaitos“ (the owner uploads the PDF).
@@ -32,7 +32,8 @@ makes them, Figures as they are checked. The repo is public: private context
   people do not know the physics, so the notes carry a plain sentence for
   each term.
 - Language: Lithuanian for slides and notes (`lang: lt`); chat with the owner in English
-- Look: the shared theme with this talk's own kit (`styles/index.css`), no stage.
+- Look: the shared theme with this talk's own kit (`styles/index.css`), over the stage: a silent
+  world behind the report (the owner, 27 Nov 2026), a still of it under each PDF page.
 - Must-haves (owner, 25 Nov 2026): the composition of the group; talks, papers,
   analysis and events; LHCb Week with the media reach and the aftermovie;
   what the students do, what the PhD students do, the group's
@@ -44,6 +45,20 @@ makes them, Figures as they are checked. The repo is public: private context
   LRT nomination for an award.
 
 ## Status
+
+- 27 Nov 2026: the owner's "improve it, and deploy", with a moving background, more on the light
+  injection system and no sound (Decisions, 27 Nov). 20 slides (28 PDF pages with the clicks),
+  14.7 of 15 min. Toolkit v0.11.0, the stage added. The open marks are off the slides: "Open
+  questions" below is the list.
+  Checked: `talk lint --release` 0 errors (14 WORDS, the LT-THOUSANDS on the article number);
+  `talk check` ok (lockfile, videos:check, stage:check, build); shots of all 20 slides and every
+  click of slides 2, 3 and 18 (28 frames) with the world running, none overflowing, no page or
+  HTTP errors; the PDF's 28 pages each over the world's still, in PT Serif. Five subagent passes
+  (two sheet reviews, two framing rounds for the detector, the module, the cover and three tiles,
+  one check of screen against PDF), their findings applied. Left as they are: Adam's and
+  Mindaugas' tiles (tight head shots: they need wider crops of the photographs); the cover's five
+  nodes drift and at moments two of them meet; KaTeX indices at 12 to 13 px.
+  The module clip `lis_flag_50.mp4` is on this talk's release (published 27 Nov).
 
 - 26 Nov 2026, second round: the owner's list after reading the rework (Decisions, 26 Nov, the
   last two entries). 17 slides (25 PDF pages with the clicks), 13.7 of 15 min. Not deployed: the
@@ -105,31 +120,37 @@ makes them, Figures as they are checked. The repo is public: private context
 
 ## Arc
 
-The kicker of each slide carries the number of the consortium's point.
+The kicker of each slide carries the number of the consortium's point. The world's station is in
+brackets (`public/data/space.json`).
 
-1. Title: the group's name, leader and direction in one sentence.
-2. Point 1, the group: the honeycomb, three clicks (2024, 2025, 2026, 2027).
-   The 2027 step: Gustė and two open places.
-3. Point 1, the three directions on the honeycomb, three clicks, the people
-   of each picked out.
-4. Point 2, organisational: LHCb Week, the facts and the full hall.
+1. Title: the group's name, leader and direction in one sentence. [hero: the pentaquark]
+2. Point 1, the group: the honeycomb, three clicks (2024, 2025, 2026, 2027). The 2027 step:
+   Gustė and two open places. [group: open dust]
+3. Point 1, the three directions on the honeycomb, three clicks, the people of each picked out.
+4. Point 2, organisational: LHCb Week, the facts and the full hall. [lhc: a collider ring]
 5. The aftermovie, whole (2:28); may be skipped with a press.
 6. LHCb Week: patron, organisers, partners, sponsors; 37 media items.
 7. Lithuania and CERN in 2026: a dated list, the coordinator post on it.
-8. Point 3, participation in the experiment: the SciFi light injection system.
-9. Data, software, open data, shifts and VELO.
-10. Point 4, projects: the Lithuania–Japan project, the embassy event of
-    18 Nov and the Nagoya workshop.
-11. Projects and attracted funds: the only slide with money on it.
-12. Point 5, science: pentaquark searches (the ECC paper, two Run 2 papers,
-    two Run 3 analyses).
-13. Papers and talks: the Physics Open review with the Veritasium frame, the
-    year's talks.
-14. Outreach, one slide: schools, public and business, the year's media
-    mentions by month, recognition (the LRT nomination).
-15. Point 6, young researchers: the honeycomb, two clicks: Rūta, Šarūnas, Anni.
-16. Students and teaching.
-17. Thanks, credits.
+8. Point 3, participation in the experiment: SciFi inside LHCb. The world is the picture: LHCb's
+   real geometry as grains, SciFi brightest; three numbers. [det]
+9. A SciFi module, the Blender clip of Užsikrauk karjerai (16 s): down the module to the cold
+   box, the flag.
+10. The module's end from its CAD model as grains, the light injection parts white; a legend.
+    [lis]
+11. How the light injection system works (a chain of five steps), what it is for, what Vilnius
+    does; CERN's SciFi photo.
+12. Data, software, open data, shifts and VELO. [det, from afar]
+13. Point 4, projects: the Lithuania–Japan project, the embassy event of 18 Nov and the Nagoya
+    workshop. [projects: open dust]
+14. Projects and attracted funds: the only slide with money on it.
+15. Point 5, science: pentaquark searches (the ECC paper, two Run 2 papers, two Run 3 analyses).
+    [hero]
+16. Papers and talks: the Physics Open review with the Veritasium frame, the year's talks.
+17. Outreach, one slide: schools, public and business, the year's media mentions by month,
+    recognition (the LRT nomination).
+18. Point 6, young researchers: the honeycomb, two clicks: Rūta, Šarūnas, Anni. [group]
+19. Students and teaching.
+20. Thanks, credits. [hero]
 
 ## Figures
 
@@ -160,27 +181,40 @@ source line in its slide's notes.
 
 ## Open questions
 
-For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its notes):
+For the owner, one list. Since 27 Nov 2026 the open marks are here and no longer on the slides or
+in their notes (`docs/talk-quality.md` §3, rule 11): the slides say only what a source supports,
+and `pnpm talk ready` runs with its lint step.
 
-1. Slide 8: what was done on the light injection system in 2026 and what
-   comes next; the fibre measurements' results. Publicly confirmed is only
-   that SciFi and LIS are the group's service work.
-2. Slide 10: a photo of the embassy event of 18 Nov (the slide has its
-   place: save it as `public/figures/embassy.jpg` and swap the `.ph.slot`
-   box for an `<img class="ph">`); the event's name and who else spoke.
-3. Slide 14: which LRT award and category, and who is nominated.
-4. Slide 11: LDFK's funds to the group in 2026, LHCb Week's total budget,
-   sponsors' and fees' sums, the VU educational-initiative sum; whether
-   PHANTOM's 197 k EUR may be shown.
-5. Slide 2 (optional): whether Dainius, Karolina and Venera left; when Anni
-   starts.
-6. Slide 4: the final attendance of LHCb Week from Indico.
-7. Slide 13 (optional): summer talks; Confinement 2026.
-8. Slide 6: the sponsor list and the unread logo.
-9. Slide 16 (optional): Mikas' and Margarita's thesis topics; the BSc
-   theses' topics and dates.
-10. Slides 9 and 12: the state of the VELO work and of the three papers on
-    the day of the talk.
+1. Slides 10 and 11: what the group did on the light injection system in 2026 and what comes
+   next; the results of the fibre measurements; what the prototype module of slide 10 is (the CAD
+   names a prototype with a cold box; the slide calls it „SciFi modulio prototipas“ and no more),
+   and whether its geometry may be shown publicly as grains. Publicly confirmed is only that SciFi
+   and the LIS are the group's service work.
+2. Slide 13: a photo of the embassy event of 18 Nov (none in Drive, Gmail or on this Mac on
+   27 Nov; the workshop's photos are in Drive, `Photos/2026-11-24_Nagoya_Japan/Workshop`); the
+   event's name and who else spoke. The slide's place for the photo is gone: the Nagoya group
+   photo stands whole in its column.
+3. Slide 17: which LRT award and category, and who is nominated. LRT's page lists the categories
+   (the science one is „Metų atradimas“), no nominees in its text (27 Nov); the slide says
+   „Nominacija LRT apdovanojimams“.
+4. Slide 14: LDFK's funds to the group in 2026, LHCb Week's total budget, the sponsors' and the
+   fees' sums, the VU educational-initiative sum (the last three are named under the table
+   without a sum); whether PHANTOM's 197 k EUR may be shown.
+5. Slide 2 (optional): whether Dainius, Karolina and Venera left; when Anni starts; Gustė's
+   surname.
+6. Slide 4: the final attendance of LHCb Week from Indico (the slide's ~200 and ~600 are the
+   forecasts of VU's news item); the poster count (21) is from the registration list.
+7. Slide 16 (optional): summer talks; Confinement 2026; the students' talk titles.
+8. Slide 6: the sponsor list and its tiers; one logo of the grid was not read („VVT“?); reach
+   figures.
+9. Slide 19 (optional): Mikas' and Margarita's thesis topics; the BSc theses' topics and dates.
+10. Slides 12 and 15: the state of the VELO work and of the three papers on the day of the talk;
+    how many shifts the group took in 2026.
+11. Slide 7 (optional): the dates of the October visit and whether U. Bassler came with
+    C. Fountas.
+12. Slide 13 (optional): the place and dates of the October 2027 workshop; the project's start
+    (1 May in the briefing, April 2026 in the Tokyo talk).
+13. Slide 1 (optional): the date of the council's meeting (a Doodle was open on 24 Nov).
 
 ## Talk-owned code
 
@@ -213,6 +247,10 @@ For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its 
 - `public/figures/lw_*.jpg`: stills from the aftermovie (only `lw_hall` is
   used now); `nagoya_workshop.jpg`: the workshop's group photo; `scifi.jpg`:
   CERN's photo of a SciFi frame going into the cavern (`assets/photos/photos.toml`).
+- Kit classes added 27 Nov: `.world-nums`, `.world-legend`, `.world-cap` (numbers, a legend and one
+  line on a slide whose picture is the world), `.chain` (steps left to right, an arrowhead between
+  them), `.credits` (the foot of the last slide); the `html[data-stage]` rules at the file's end.
+- `bake/lis_module.py`: the module's grains from the CAD's STEP file (FreeCAD).
 - Kit classes added 26 Nov: `.kick b` (the point's number), `.kpi.long`
   (a long number in a narrow panel), `.ref` (a paper), `.team-side h3`, `.rl`,
   `.after` (the text beside a honeycomb with people picked out),
@@ -224,7 +262,59 @@ For the owner, one list (each is a `[PATIKSLINTI…]` mark on a slide or in its 
   click. A slide whose extra item does not fit a column puts it in a
   full-width strip under the row of panels (slides 9, 12, 13, 16).
 
+## The world
+
+- `stage:` in the headmatter: palette `blue`, `plugins: [lhcb]`, no sound, no halo, no film grain,
+  `motion: floor`. Five stations in `public/data/space.json`: `hero` (a five-node constellation,
+  the pentaquark, in white and light blue), `group` and `projects` (open dust), `lhc` (a collider
+  ring), `det` (LHCb's Run 3 geometry, the plugin's `detector`, SciFi white and the rest faint),
+  `lis` (the module's end: the same builder on this talk's own grains, `public/data/lis-module.bin`).
+- Every slide has a `space:` pose; `steps: { det, lis }` in the frontmatter of slides 8 to 13
+  lights the two forms and puts them out.
+- The grains of the module: `bake/lis_module.py` (FreeCAD reads the CAD's STEP file, which is not
+  in the repository). Groups: fibre mats, panels, cold box, electronics, cooling, light injection.
+- The PDF and print take `public/stills/NN.jpg`, the world alone at each slide's pose:
+  `node talks/2026_12_00_LDFK/node_modules/slidev-addon-stage/bin/shots.mjs /tmp/talk-ldfk/site
+  talks/2026_12_00_LDFK/public/stills --stills` through `pnpm talk render --`, after a build; make
+  them again after a pose or the space file changes, then export the PDF.
+- Without WebGL the stage shows the still, drifting (no plates recorded: `pnpm talk record ldfk
+  --plates` and a publish would add them).
+- The stage's kit sets its own typeface and title size on `html[data-stage]`; the end of
+  `styles/index.css` puts the deck's back and drops the veil the theme's photograph needed.
+
 ## Decisions
+
+- 27 Nov 2026, the owner: "was working on ldfk talk, improve it, and deploy"; then "Can have some
+  dynammic background like in tokyo embassy talk, but should also look good on pdf"; "also need to
+  expand on LIS, can take some ideas from uzsikrauk karjerai"; "just no soundtrack"; "this is the
+  real geometry if you need it" (a STEP file of a SciFi module). Done:
+  - The open marks left the slides and the notes for "Open questions" above. Slide 14 lists only
+    rows with a sum; what has none is named under the table. The embassy photo's empty place is
+    gone. To put a mark back on a slide: `<span class="todo">…</span>` (the kit keeps the class).
+  - The stage, silent, as the background (The world, above). The deck keeps its PT Serif and its
+    panels (Claude's call: the owner asked for the background, not for Tokyo's wordless slides).
+    To undo: drop `slidev-addon-stage` from `addons`, the `stage:` block and the last section of
+    `styles/index.css`; the `space:` lines are then ignored.
+  - The light injection system has four slides, 8 to 11, where it had one: LHCb's real geometry
+    with SciFi lit; Užsikrauk karjerai's module clip (a second copy on this talk's release, as the
+    aftermovie is; a third talk using it says it belongs in the library); the module's end from
+    the owner's CAD file as grains; how the system works, in five steps from the facts bank
+    (`lhcb-scifi-lis`, `lhcb-scifi-lis-vcsel`). What the group did on it in 2026 is still not on a
+    slide: no source at hand says (Open questions, 1).
+  - Claude's reading of the CAD file: its part names say a prototype module with a cold box, LEDs
+    and light-injection fibres across the mats' ends. The slide says „SciFi modulio prototipo
+    galas pagal konstrukcinį (CAD) modelį“ and nothing about what the prototype is for. The site
+    carries 167 000 points sampled from its surfaces, not the model.
+  - Layout, from two sheet reviews by subagents: the page number on the kicker's line (at the
+    foot it met the panels' borders), none on the last slide; the open-data strip of slide 12
+    folded into its first panel; one-line panel headings and one way of naming people there; the
+    Veritasium frame cut lower; the media chart as tall as its column; the honeycomb at 108 px and
+    its side text at the `roomy` size; credits at the foot of the last slide, with the licence
+    line of LHCb's geometry (GPL-3.0, HSF Phoenix).
+  - Wording: „Rankraštis baigiamas“ for the ECC paper (the slide said „iki gruodžio“, which goes
+    stale in December); „pirmiausia, LHCb fizikos koordinatoriaus prašymu“ for the first Run 2
+    paper.
+
 
 - 25 Nov 2026, the owner: build it in outreach_talks; it may be deployed, the
   content is public ("it's public so can deploy, not a problem").

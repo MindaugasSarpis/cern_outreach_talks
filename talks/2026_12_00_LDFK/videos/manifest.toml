@@ -26,3 +26,14 @@ source and the cue points). Source: the owner's Drive, \
 2026-09-14_LHCb_Week_Vilnius/CERN Aftermovie_4K_HQ_final.mp4. The web copy on this talk's release \
 (1920x1080 H.264, AAC) is Innoday's encode, taken from its venue bundle and \
 published on 25 Nov 2026; the raw is not in this machine's raw bank."""
+
+[[videos]]
+name    = "lis_flag_50.mp4"
+profile = "high-motion"
+used_in = ["deck"]
+notes   = """\
+A Blender render of one SciFi module: the camera pans down it to the cold box that holds the \
+light injection system, and a laser draws the Lithuanian flag on the box (16,4 s, silent, 50 fps). \
+Užsikrauk karjerai's cut of Innoday's lis_flag.mp4 (its manifest has the source and the ffmpeg \
+line); the web copy on this talk's release is that talk's encode, downloaded from its release \
+videos-2026-10-26-uzsikraukkarjerai on 27 Nov 2026. The raw is not in this machine's raw bank."""
