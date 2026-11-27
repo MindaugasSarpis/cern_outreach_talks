@@ -46,6 +46,13 @@ makes them, Figures as they are checked. The repo is public: private context
 
 ## Status
 
+- 27 Nov 2026, the cover: Tokyo's three pictures of the pentaquark at station `hero` (Decisions,
+  27 Nov, the last entry). 19 slides, 25 PDF pages, 14.2 of 15 min. Deployed on the owner's word:
+  commit 9483cac, `talk ready` passed with nothing skipped, Pages run 45927837857 green, the URL
+  and the PDF answer 200, the live walk passed all 19 slides. A framing pass by a subagent set the
+  forms and the poses of slides 1, 2, 15 to 17 and 19; shots of all 25 frames without overflow or
+  page errors. Not looked at by a reviewer after the last render: the PDF's first page.
+
 - 27 Nov 2026, later: the owner's four follow-ups (Decisions, 27 Nov, the two entries after the
   first): Go Vilnius merged into 65 k EUR from the private sector, the communication report's
   media figures, no PhD slide, the aftermovie as the opener. 19 slides (25 PDF pages with the
