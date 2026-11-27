@@ -46,6 +46,12 @@ makes them, Figures as they are checked. The repo is public: private context
 
 ## Status
 
+- 27 Nov 2026, the EOSC study on slide 16 (Decisions, 27 Nov, the last entry). 19 slides, 25 PDF
+  pages, 14.2 of 15 min. Deployed on the owner's word: commit 2b5f849, `talk ready` passed with
+  nothing skipped, Pages run 45931716965 green, the URL and the PDF answer 200, the live walk
+  passed all 19 slides. Slide 16 shot without overflow and looked at by a subagent, its findings
+  applied; in the PDF the study's title stands on one line.
+
 - 27 Nov 2026, the cover: Tokyo's three pictures of the pentaquark at station `hero` (Decisions,
   27 Nov, the last entry). 19 slides, 25 PDF pages, 14.2 of 15 min. Deployed on the owner's word:
   commit 9483cac, `talk ready` passed with nothing skipped, Pages run 45927837857 green, the URL
