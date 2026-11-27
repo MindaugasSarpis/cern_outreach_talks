@@ -166,7 +166,8 @@ brackets (`public/data/space.json`).
 14. Projects and attracted funds: the only slide with money on it.
 15. Point 5, science: pentaquark searches (the ECC paper, two Run 2 papers, two Run 3 analyses).
     [hero]
-16. Papers and talks: the Physics Open review with the Veritasium frame, the year's talks.
+16. Papers and talks: the Physics Open review with the Veritasium frame, the EOSC feasibility
+    study, the year's talks.
 17. Outreach, one slide: schools, public and business, the year's media items by month (the
     Faculty's list), recognition (the LRT nomination).
 18. Point 6, young researchers: students and teaching. [group]
@@ -193,6 +194,7 @@ source line in its slide's notes.
 | 140, 16, 1 231, 15 | the course's students, lectures, slides, seminars | VU's educational-initiative report, 28 Oct 2026 | OK |
 | 12, 17, 13 | the group by year | last year's report; the team board of 14 Oct 2026 | CHECK (who left) |
 
+| „Būtini pokyčiai ir investicijų kryptys siekiant Lietuvos įsijungimo į Europos atvirojo mokslo debesį: galimybių studija“, Vilnius, 2026, ISBN 978-609-95905-7-8; 12 experts | the Research Council's feasibility study on Lithuania joining EOSC; the owner is one of the twelve experts of its group | the study's PDF on lmt.lrv.lt (fact `lt-eosc-feasibility-study-2026`) | OK |
 | Physics Open 29 (2026) 100478 | the review with Rapševičiūtė, Šilalė and Rapševičius | Crossref's record of DOI 10.1016/j.physo.2026.100478 (fact `physics-open-mc-overview-2026`) | OK |
 | "parodytas „Veritasium“ vaizdo įraše", 4,4 mln., 21,5 mln. | the review's first page is shown in Veritasium's "Randomness is a lie. Let me explain"; 4.4 M views "7d ago", 21.5 M subscribers | the owner's screenshot of the YouTube page, 26 Nov 2026 (`public/figures/veritasium.jpg` is its video frame) | OK as of that screenshot |
 | 18 Nov 2026, the embassy | the project's presentation at the Embassy of Lithuania in Tokyo: the Ambassador's welcome, the two project leaders (15 min each), RIKEN researchers; scientists of both countries and the embassy's guests | the Tokyo talk's Brief (`talks/2026_11_18_Tokyo/CLAUDE.md`: the owner, 5 and 11 Nov) | OK; no public page found; the event's name and a photo: CHECK |
@@ -315,6 +317,13 @@ and `pnpm talk ready` runs with its lint step.
   place of the five-node constellation: a triangle at the right of the cover and of the last
   slide, behind the panels of slides 15 to 17. No labels on them (the cover is a title; the notes
   of slides 1 and 15 name the three). Their colours are Tokyo's: light blue, cyan, rose, violet.
+
+- 27 Nov 2026, the owner: "We want to measure this feasibility study of EOSC node in Lithuania which
+  I am a coauthor of" (Claude's reading: "mention"; no file came with the message, the study was
+  found on the Research Council's site). Slide 16 names it on a line of its own, with the publisher,
+  the year and „M. Šarpis – vienas iš 12 studijos ekspertų“; the notes carry its recommendation (a
+  national EOSC-LT node). For room on that slide: the Veritasium frame is cut lower, the talks list
+  lost the embassy event (it is on slide 13), the slide is at the default type size.
 
 ## The world
 

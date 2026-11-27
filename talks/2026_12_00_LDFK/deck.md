@@ -639,7 +639,6 @@ Kalbėtojui. Penktas punktas: mokslinė veikla; pirmoji kryptis išsamiau. Penta
 -->
 
 ---
-class: full
 space: { at: [-18.52, 1.74, -3.48], dist: 24, yaw: 28, pitch: 8, dim: 0.75 }
 ---
 
@@ -650,32 +649,36 @@ space: { at: [-18.52, 1.74, -3.48], dist: 24, yaw: 28, pitch: 8, dim: 0.75 }
 <div class="split stretch">
   <div class="panel ref">
     <h3>Paskelbta 2026 m.</h3>
-    <p><span class="ttl">„Monte Carlo simulation for the LHC experiments at CERN: A comprehensive overview“</span></p>
-    <p>„Physics Open“ 29 (2026) 100478 · M. Rapševičiūtė, A. Šilalė, M. Šarpis, V. Rapševičius</p>
-    <p class="muted">Apžvalga, kaip keturi LHC eksperimentai simuliuoja duomenis. Straipsnis parodytas „Veritasium“ vaizdo įraše apie atsitiktinumą.</p>
+    <p><span class="ttl">„Monte Carlo simulation for the LHC experiments at CERN: A&nbsp;comprehensive overview“</span></p>
+    <p>„Physics Open“ 29 (2026) 100478<br>M.&nbsp;Rapševičiūtė, A.&nbsp;Šilalė, M.&nbsp;Šarpis, V.&nbsp;Rapševičius</p>
+    <p class="muted">Apžvalga, kaip keturi LHC eksperimentai simuliuoja duomenis.</p>
   </div>
   <div>
-    <img class="ph" src="/figures/veritasium.jpg" alt="Straipsnio pirmas puslapis „Veritasium“ vaizdo įraše" style="aspect-ratio: 1500 / 700; object-position: left top">
+    <img class="ph" src="/figures/veritasium.jpg" alt="Straipsnio pirmas puslapis „Veritasium“ vaizdo įraše" style="aspect-ratio: 1500 / 574; object-position: left top">
     <div class="cap">„Veritasium“: „Randomness is a lie. Let me explain“, 2026&nbsp;m.&nbsp;lapkritis; 4,4 mln. peržiūrų per savaitę</div>
   </div>
 </div>
 
+<div class="panel ref" style="margin-top: 0.75em; font-size: 0.97em">
+  <span class="ttl">„Būtini pokyčiai ir investicijų kryptys siekiant Lietuvos įsijungimo į Europos atvirojo mokslo debesį: galimybių studija“</span><br>Lietuvos mokslo taryba, 2026 · M.&nbsp;Šarpis – vienas iš 12&nbsp;studijos ekspertų
+</div>
+
 <div class="panel" style="margin-top: 0.75em">
-  <div class="tl" style="font-size: 0.9em">
+  <div class="tl">
     <div class="d">pavasaris</div><div><strong>„Open Readings 2026“, Vilnius</strong> · Meda, Neilas, Šarūnas</div>
     <div class="d">05</div><div><strong>CHEP 2026, Bankokas</strong> · Mindaugas: „Towards fully reproducible physics analyses“</div>
     <div class="d">09 15</div><div><strong>LHCb savaitė, Vilnius</strong> · Mindaugas: „Pentaquarks at LHCb“</div>
-    <div class="d">11 18</div><div><strong>Projekto „Penta-Charm“ pristatymas, Lietuvos ambasada Tokijuje</strong> · Mindaugas</div>
     <div class="d">11 25</div><div><strong>„Exotic Hadrons“, Nagoja</strong> · Mindaugas: „Overview of pentaquark results in LHCb and future prospects“; Šarūnas</div>
   </div>
 </div>
 
-<!-- facts: physics-open-mc-overview-2026 -->
+<!-- facts: physics-open-mc-overview-2026, lt-eosc-feasibility-study-2026 -->
 
 <!--
 Kalbėtojui. Rezultatai ir jų viešinimas. Šiemet žurnale „Physics Open“ paskelbta apžvalga apie Monte Karlo simuliacijas LHC eksperimentuose, parašyta kartu su Matematikos ir informatikos fakulteto kolegomis M. Rapševičiūte, A. Šilale ir V. Rapševičiumi. Lapkritį jos pirmas puslapis parodytas „Veritasium“ vaizdo įraše apie atsitiktinumą „Randomness is a lie. Let me explain“; tai vienas didžiausių mokslo populiarinimo kanalų „YouTube“, 21,5 mln. prenumeratorių, įrašas per savaitę peržiūrėtas 4,4 mln. kartų. Trys LHCb straipsniai rengiami, apie juos – ankstesnėje skaidrėje.
+Antras šių metų leidinys – Lietuvos mokslo tarybos galimybių studija, kaip Lietuvai įsijungti į Europos atvirojo mokslo debesį (EOSC): 170 puslapių, dvylikos ekspertų grupė, vadovė – prof. Rūta Petrauskaitė (VDU); grupės vadovas – vienas iš jos narių. Ministerijos svečiams: EOSC – bendra Europos erdvė mokslinių tyrimų duomenims rasti ir pakartotinai naudoti. Iš trijų alternatyvų studija tinkamiausia pripažįsta nacionalinį EOSC-LT mazgą; sprendimą priims ministerija.
 Pranešimai: du kviestiniai tarptautiniai – CHEP 2026 Bankoke ir Nagojos darbo seminaras, kuriame Mindaugas kalbėjo LHCb vardu ir buvo mokslinio komiteto narys. Vasarį Olegas pristatė grupės darbus DPA ir RTA posėdyje CERN.
-Šaltiniai: doi.org/10.1016/j.physo.2026.100478; „Veritasium“, „Randomness is a lie. Let me explain“ („YouTube“, ekrano nuotrauka 2026 11 26: 4,4 mln. peržiūrų, „prieš 7 d.“); indico.cern.ch/event/1635603; indico.rcnp.osaka-u.ac.jp/event/2981; grupės pasitarimų skaidrės (2026 05 05, 2026 10 14).
+Šaltiniai: doi.org/10.1016/j.physo.2026.100478; Lietuvos mokslo taryba, ISBN 978-609-95905-7-8 (lmt.lrv.lt, 2026 04 28; lmt.lrv.lt/news, 2026 05 04); „Veritasium“, „Randomness is a lie. Let me explain“ („YouTube“, ekrano nuotrauka 2026 11 26: 4,4 mln. peržiūrų, „prieš 7 d.“); indico.cern.ch/event/1635603; indico.rcnp.osaka-u.ac.jp/event/2981; grupės pasitarimų skaidrės (2026 05 05, 2026 10 14).
 Vaizdas: kadras iš „Veritasium“ vaizdo įrašo (grupės vadovo ekrano nuotrauka).
 (~0,7 min)
 -->
