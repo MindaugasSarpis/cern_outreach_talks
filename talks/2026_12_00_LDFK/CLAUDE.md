@@ -264,8 +264,9 @@ and `pnpm talk ready` runs with its lint step.
 
 ## The world
 
-- `stage:` in the headmatter: palette `blue`, `plugins: [lhcb]`, no sound, no halo, no film grain,
-  `motion: floor`. Five stations in `public/data/space.json`: `hero` (a five-node constellation,
+- `stage:` in the headmatter: palette `blue`, `plugins: [lhcb]`, no sound, no halo, a faint film
+  grain (0.006; `grain: 0` would make `talk ready` treat the deck as a broadcast talk and run the TV
+  safe-area check), `motion: floor`. Five stations in `public/data/space.json`: `hero` (a five-node constellation,
   the pentaquark, in white and light blue), `group` and `projects` (open dust), `lhc` (a collider
   ring), `det` (LHCb's Run 3 geometry, the plugin's `detector`, SciFi white and the rest faint),
   `lis` (the module's end: the same builder on this talk's own grains, `public/data/lis-module.bin`).

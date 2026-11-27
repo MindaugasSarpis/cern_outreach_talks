@@ -13,7 +13,7 @@ videos:
   fit: contain
 stage:
   # the owner, 27 Nov: "some dynamic background like in tokyo embassy talk, but should also look good on pdf";
-  # "just no soundtrack". The world is the background of a report: no sound, no halo, no film grain or fringes.
+  # "just no soundtrack". The world is the background of a report: no sound, no halo, no colour fringes.
   # Print and the PDF take public/stills/NN.jpg (slidev-stage-shots --stills), one per slide.
   space: data/space.json
   palette: blue
@@ -21,7 +21,9 @@ stage:
   sound: false
   halo: false
   motion: floor             # a venue PC's reduced-motion setting is the venue's, not the audience's choice
-  options: { maxBufferWidth: 1920, grain: 0, aberration: 0, bloom: 0.36, density: 0.7 }
+  # a faint film grain, not none: `grain: 0` is how `pnpm talk ready` tells a broadcast talk, and it then holds the
+  # deck to the TV safe box; this is a projector report
+  options: { maxBufferWidth: 1920, grain: 0.006, aberration: 0, bloom: 0.36, density: 0.7 }
 title: LHCb Vilnius 2026 m. ataskaita
 fonts: { sans: 'PT Serif', serif: 'PT Serif', mono: 'PT Mono', provider: none }   # the faces are in the build (@fontsource, setup/main.ts): a venue PC without a network keeps them
 lang: lt                  # slides and notes; `pnpm talk lint` reads it
