@@ -34,7 +34,7 @@ htmlAttrs:
 duration: 15min           # the council: up to 10 min, "a little more" for LHCb; the notes' minutes and the 2:28 film: `pnpm talk map`
 exportFilename: LHCb_Vilnius_2026_ataskaita
 layout: default
-space: { at: [-31.85, -0.35, 1.09], dist: 12.6, yaw: 10, pitch: 10, sway: 4, dim: 0.12, steady: true }
+space: { at: [-34, -1, 0], dist: 22.5, yaw: 10, pitch: 4, sway: 2, dim: 0.12 }
 ---
 
 <div class="cover-rep">
@@ -48,6 +48,7 @@ space: { at: [-31.85, -0.35, 1.09], dist: 12.6, yaw: 10, pitch: 10, sway: 4, dim
 <!--
 Kalbėtojui. Titulinė skaidrė; joje ir pirmas plano punktas: grupės pavadinimas, vadovas, veiklos kryptis. Ataskaita sudėta pagal šešis konsorciumo plano punktus: grupė ir jos kryptys, organizacinė veikla, dalyvavimas eksperimente, projektai, mokslinė veikla, jaunieji tyrėjai ir studentai. Punkto numeris – virš kiekvienos skaidrės pavadinimo.
 Titulinė skaidrė rodoma, kol renkamasi; pirmu paspaudimu paleidžiamas LHCb savaitės filmas, kalbėti pradedama po jo.
+Dešinėje – trys galimos pentakvarko sandaros, kurias grupė tiria: bariono ir mezono molekulė (du apvalkalai, besisukantys vienas apie kitą), kompaktiškas penkių kvarkų darinys (vienas apvalkalas) ir „hadroquarkonium“ – c ir anti-c kvarkų pora viduje, trys lengvieji kvarkai aplink ją.
 Šaltiniai: nėra, titulinė skaidrė.
 (~0,2 min)
 -->
@@ -55,7 +56,7 @@ Titulinė skaidrė rodoma, kol renkamasi; pirmu paspaudimu paleidžiamas LHCb sa
 ---
 bare: true
 class: p-0
-space: { at: [-31.85, -0.35, 1.09], dist: 12.6, yaw: 10, pitch: 10, sway: 4, steady: true }
+space: { at: [-34, -1, 0], dist: 22.5, yaw: 10, pitch: 4, sway: 2 }
 ---
 
 <VideoPlayer src="lhcb_week_aftermovie.mp4" />
@@ -584,7 +585,7 @@ Kalbėtojui. Visos lėšos vienoje skaidrėje: kas pritraukta ir kas pateikta. P
 -->
 
 ---
-space: { at: hero, dist: 11, yaw: 24, pitch: 10, dim: 0.75 }
+space: { at: [-25.59, 1.85, 0.41], dist: 30, yaw: -24, pitch: 6, dim: 0.75 }
 ---
 
 <div class="kick"><b>5</b>Mokslinė veikla</div>
@@ -632,14 +633,14 @@ space: { at: hero, dist: 11, yaw: 24, pitch: 10, dim: 0.75 }
 <!-- facts: lhcb-pentaquark-2015 -->
 
 <!--
-Kalbėtojui. Penktas punktas: mokslinė veikla; pirmoji kryptis išsamiau. Pentakvarkas – dalelė iš penkių kvarkų; LHCb pirmuosius atrado 2015 m., bet iki šiol neaišku, kaip jie sudaryti. Mes jų ieškome „open charm“ kanaluose: skilimuose į du hadronus, kurių kiekvienas turi po žavųjį kvarką. Juose prarandama minkšta neutrali dalelė, π0 arba γ. Tam sukurtas ECC („Extended Cone Closure“) metodas; jo straipsnio rankraštis baigiamas. Run 2 analizė virsta dviem straipsniais; pirmojo prašo LHCb fizikos koordinatorius. Run 3 analizes atlieka doktorantai.
+Kalbėtojui. Penktas punktas: mokslinė veikla; pirmoji kryptis išsamiau. Pentakvarkas – dalelė iš penkių kvarkų; LHCb pirmuosius atrado 2015 m., bet iki šiol neaišku, kaip jie sudaryti. Fone – tos pačios trys galimos sandaros kaip titulinėje skaidrėje: molekulė, kompaktiškas darinys ir „hadroquarkonium“. Mes pentakvarkų ieškome „open charm“ kanaluose: skilimuose į du hadronus, kurių kiekvienas turi po žavųjį kvarką. Juose prarandama minkšta neutrali dalelė, π0 arba γ. Tam sukurtas ECC („Extended Cone Closure“) metodas; jo straipsnio rankraštis baigiamas. Run 2 analizė virsta dviem straipsniais; pirmojo prašo LHCb fizikos koordinatorius. Run 3 analizes atlieka doktorantai.
 Šaltiniai: grupės pasitarimo skaidrės (2026 10 14); pranešimas Nagojos darbo seminare (2026 11 25); lhcb-outreach.web.cern.ch (2015 07 14).
 (~1 min)
 -->
 
 ---
 class: full
-space: { at: hero, dist: 19, yaw: -44, pitch: 4, dim: 0.75 }
+space: { at: [-18.52, 1.74, -3.48], dist: 24, yaw: 28, pitch: 8, dim: 0.75 }
 ---
 
 <div class="kick"><b>5</b>Mokslinė veikla</div>
@@ -680,7 +681,7 @@ Vaizdas: kadras iš „Veritasium“ vaizdo įrašo (grupės vadovo ekrano nuotr
 -->
 
 ---
-space: { at: hero, dist: 26, yaw: 8, pitch: 24, dim: 0.62 }
+space: { at: [-16.91, 1.85, 5.63], dist: 26, yaw: -32, pitch: 12, dim: 0.75 }
 ---
 
 <div class="kick"><b>5</b>Mokslinė veikla</div>
@@ -795,7 +796,7 @@ Dėstymas: dalykas „CERN duomenų analizės metodai“ per metus dėstytas tri
 -->
 
 ---
-space: { at: [-31.85, -0.35, 1.09], dist: 12.6, yaw: 10, pitch: 10, sway: 4, dim: 0.12, steady: true }
+space: { at: [-34, -1, 0], dist: 22.5, yaw: 10, pitch: 4, sway: 2, dim: 0.12 }
 ---
 
 <div class="cover-rep">

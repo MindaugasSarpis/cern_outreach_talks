@@ -7,11 +7,14 @@ import '@fontsource/pt-serif/400.css'
 import '@fontsource/pt-serif/700.css'
 import '@fontsource/pt-serif/400-italic.css'
 import '@fontsource/pt-serif/700-italic.css'
+import { registerBuilder } from 'slidev-addon-stage'
+import { installInteriors } from './interiors.js'
 import HexTile from './HexTile.vue'
 import HexTeam from './HexTeam.vue'
 import Tex from './Tex.vue'
 
 export default ({ app }: { app: import('vue').App }) => {
+  installInteriors(registerBuilder)   // `interior`: the three pictures of the pentaquark (molecule, compact, hadroquarkonium), station `hero`
   app.component('HexTile', HexTile)
   app.component('HexTeam', HexTeam)
   app.component('Tex', Tex)

@@ -64,8 +64,7 @@ makes them, Figures as they are checked. The repo is public: private context
   HTTP errors; the PDF's 28 pages each over the world's still, in PT Serif. Five subagent passes
   (two sheet reviews, two framing rounds for the detector, the module, the cover and three tiles,
   one check of screen against PDF), their findings applied. Left as they are: Adam's and
-  Mindaugas' tiles (tight head shots: they need wider crops of the photographs); the cover's five
-  nodes drift and at moments two of them meet; KaTeX indices at 12 to 13 px.
+  Mindaugas' tiles (tight head shots: they need wider crops of the photographs); KaTeX indices at 12 to 13 px.
   The module clip `lis_flag_50.mp4` is on this talk's release (published 27 Nov).
   Deployed on the owner's word: commit 370b103, `talk ready` passed with nothing skipped, Pages
   run 45921620805 green, the URL, the PDF and the module's grains answer 200, the live walk passed
@@ -135,7 +134,7 @@ The kicker of each slide carries the number of the consortium's point. The world
 brackets (`public/data/space.json`).
 
 1. Title: the group's name, leader and direction in one sentence; it stands while the room
-   settles. [hero: the pentaquark]
+   settles. [hero: the three pictures of the pentaquark]
 2. The opener: the LHCb Week aftermovie, whole (2:28), on the first press; the first words come
    after it. May be skipped with a press.
 3. Point 1, the group: the honeycomb, three clicks (2024, 2025, 2026, 2027). The 2027 step:
@@ -267,6 +266,10 @@ and `pnpm talk ready` runs with its lint step.
   line on a slide whose picture is the world), `.chain` (steps left to right, an arrowhead between
   them), `.credits` (the foot of the last slide); the `html[data-stage]` rules at the file's end.
 - `bake/lis_module.py`: the module's grains from the CAD's STEP file (FreeCAD).
+- `setup/interiors.js` and `setup/grains.js`: the Tokyo talk's `interior` builder (the molecule,
+  the compact particle, the hadroquarkonium, each moving) and the grains' material it needs, copied
+  as they are on 27 Nov; `setup/main.ts` registers the builder; `vite.config.ts` is Tokyo's (one
+  `three` for setup/ and the engine under `slidev dev`).
 - Kit classes added 26 Nov: `.kick b` (the point's number), `.kpi.long`
   (a long number in a narrow panel), `.ref` (a paper), `.team-side h3`, `.rl`,
   `.after` (the text beside a honeycomb with people picked out),
@@ -300,12 +303,18 @@ and `pnpm talk ready` runs with its lint step.
     play its sound. To open on the film itself, move the film's slide above the cover's content
     (the headmatter stays first) and give it `:autoplay="false"`.
 
+- 27 Nov 2026, the owner: "The cover pentaquark can be the one from tokyo embassy, where we have 3
+  different types (can show all three)". Station `hero` holds Tokyo's three `interior` forms in
+  place of the five-node constellation: a triangle at the right of the cover and of the last
+  slide, behind the panels of slides 15 to 17. No labels on them (the cover is a title; the notes
+  of slides 1 and 15 name the three). Their colours are Tokyo's: light blue, cyan, rose, violet.
+
 ## The world
 
 - `stage:` in the headmatter: palette `blue`, `plugins: [lhcb]`, no sound, no halo, a faint film
   grain (0.006; `grain: 0` would make `talk ready` treat the deck as a broadcast talk and run the TV
-  safe-area check), `motion: floor`. Five stations in `public/data/space.json`: `hero` (a five-node constellation,
-  the pentaquark, in white and light blue), `group` and `projects` (open dust), `lhc` (a collider
+  safe-area check), `motion: floor`. Five stations in `public/data/space.json`: `hero` (the three pictures of the pentaquark, Tokyo's `interior` forms:
+  molecule, compact, hadroquarkonium), `group` and `projects` (open dust), `lhc` (a collider
   ring), `det` (LHCb's Run 3 geometry, the plugin's `detector`, SciFi white and the rest faint),
   `lis` (the module's end: the same builder on this talk's own grains, `public/data/lis-module.bin`).
 - Every slide has a `space:` pose; `steps: { det, lis }` in the frontmatter of slides 8 to 13
