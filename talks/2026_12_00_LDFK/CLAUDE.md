@@ -166,9 +166,10 @@ source line in its slide's notes.
 | 37 | media items on LHCb Week, 8–20 Sep 2026 | the Faculty of Physics media list (to 28 Oct 2026), counted by script | OK as a count of that list |
 | 71 | media items on the group and LHCb, Jan–Oct 2026 | the same list; CMS and other groups' rows left out | OK as a count of that list |
 | 21, 3 | posters at LHCb Week, poster prizes | the poster registration list; the event's cost sheet | CHECK |
-| 100 k EUR, 20 k EUR | ministry and Go Vilnius funding for LHCb Week | the group briefings of 13 Jan and 14 Apr 2026 | CHECK |
+| 100 k EUR | the ministry's funding for LHCb Week | the group briefings of 13 Jan and 14 Apr 2026 | CHECK |
+| 65 k EUR | LHCb Week's funds from the private sector, Go Vilnius' contribution merged into it (20 k EUR in the briefings) | the owner's word (27 Nov 2026) | OK |
 | 197 k EUR, Aug 2025 – Jul 2027 | PHANTOM's maximum grant amount and dates | the grant agreement (project 101244743) | CHECK (show it publicly?) |
-| 417 k EUR | the sum of the four budget rows with known amounts (197 + 100 + 100 + 20) | arithmetic on the rows above | OK as a sum |
+| 462 k EUR | the sum of the four budget rows (197 + 100 + 100 + 65) | arithmetic on the rows above | OK as a sum |
 | 100 k EUR, Apr 2026 – Mar 2028 | the Lithuania–Japan project | the group briefing of 14 Apr 2026; the Tokyo talk | OK |
 | 2, 4 M EUR | ERC proposals | the group briefing of 14 Oct 2026 | OK |
 | 140, 16, 1 231, 15 | the course's students, lectures, slides, seminars | VU's educational-initiative report, 28 Oct 2026 | OK |
@@ -200,9 +201,9 @@ and `pnpm talk ready` runs with its lint step.
 3. Slide 17: which LRT award and category, and who is nominated. LRT's page lists the categories
    (the science one is „Metų atradimas“), no nominees in its text (27 Nov); the slide says
    „Nominacija LRT apdovanojimams“.
-4. Slide 14: LDFK's funds to the group in 2026, LHCb Week's total budget, the sponsors' and the
-   fees' sums, the VU educational-initiative sum (the last three are named under the table
-   without a sum); whether PHANTOM's 197 k EUR may be shown.
+4. Slide 14: LDFK's funds to the group in 2026, LHCb Week's total budget, the fees' sum, the VU
+   educational-initiative sum (the last two are named under the table without a sum); whether
+   PHANTOM's 197 k EUR may be shown.
 5. Slide 2 (optional): whether Dainius, Karolina and Venera left; when Anni starts; Gustė's
    surname.
 6. Slide 4: the final attendance of LHCb Week from Indico (the slide's ~200 and ~600 are the
@@ -264,6 +265,12 @@ and `pnpm talk ready` runs with its lint step.
   one height, so the text beside the board starts at the same line at every
   click. A slide whose extra item does not fit a column puts it in a
   full-width strip under the row of panels (slides 9, 12, 13, 16).
+
+- 27 Nov 2026, the owner, after the deploy of 370b103: "Go Vilnius contribution can be merged in
+  65kEUR from private sector". Slide 14: the row „Go Vilnius“ (20) became „Privatus sektorius“,
+  65 k EUR for LHCb Week, and the total 462 (was 417); the sponsors left the line under the table,
+  the fees stay there. Claude's reading: 65 is the whole private-sector sum with Go Vilnius' 20 in
+  it, not 65 beside it. Go Vilnius stays among the partners on slide 6.
 
 ## The world
 

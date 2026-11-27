@@ -551,8 +551,8 @@ space: { at: projects, yaw: 40, pitch: 14, dim: 0.45 }
     <tr><td>Europos Komisija, „Horizon Europe“</td><td>PHANTOM</td><td class="n">197</td><td>2025 08 – 2027 07</td></tr>
     <tr><td>LMT ir JSPS</td><td>„Penta-Charm“</td><td class="n">100</td><td>2026 04 – 2028 03</td></tr>
     <tr><td>ŠMSM</td><td>LHCb savaitė</td><td class="n">100</td><td>2026</td></tr>
-    <tr><td>„Go Vilnius“</td><td>LHCb savaitė</td><td class="n">20</td><td>2026</td></tr>
-    <tr class="sum"><td colspan="2">Iš viso per projektų laikotarpį</td><td class="n">417</td><td></td></tr>
+    <tr><td>Privatus sektorius</td><td>LHCb savaitė</td><td class="n">65</td><td>2026</td></tr>
+    <tr class="sum"><td colspan="2">Iš viso per projektų laikotarpį</td><td class="n">462</td><td></td></tr>
     </tbody>
   </table>
 </div>
@@ -561,7 +561,7 @@ space: { at: projects, yaw: 40, pitch: 14, dim: 0.45 }
   <div class="panel">
     <h3>Į lentelę neįtraukta</h3>
     <ul>
-      <li>LHCb savaitės rėmėjų lėšos ir dalyvio mokesčiai</li>
+      <li>LHCb savaitės dalyvio mokesčiai</li>
       <li>VU edukacinių iniciatyvų lėšos dalykui atnaujinti</li>
     </ul>
   </div>
@@ -572,8 +572,8 @@ space: { at: projects, yaw: 40, pitch: 14, dim: 0.45 }
 </div>
 
 <!--
-Kalbėtojui. Visos lėšos vienoje skaidrėje: kas pritraukta ir kas pateikta. PHANTOM – Europos Komisijos finansuojamas projektas, tęsiasi iki 2027 m. liepos; Japonijos projektas prasidėjo šiemet; LHCb savaitę finansavo ministerija, „Go Vilnius“, rėmėjai ir dalyviai. Šiemet pateiktos dvi ERC paraiškos.
-417 tūkst. EUR – keturių lentelės eilučių suma (197 + 100 + 100 + 20); PHANTOM ir „Penta-Charm“ sumos skirtos visam projekto laikotarpiui, ne vieniems metams. Rėmėjų lėšų, dalyvio mokesčių ir VU edukacinių iniciatyvų lėšų sumos į lentelę neįtrauktos.
+Kalbėtojui. Visos lėšos vienoje skaidrėje: kas pritraukta ir kas pateikta. PHANTOM – Europos Komisijos finansuojamas projektas, tęsiasi iki 2027 m. liepos; Japonijos projektas prasidėjo šiemet; LHCb savaitę finansavo ministerija, privatus sektorius ir dalyviai. Šiemet pateiktos dvi ERC paraiškos.
+462 tūkst. EUR – keturių lentelės eilučių suma (197 + 100 + 100 + 65); PHANTOM ir „Penta-Charm“ sumos skirtos visam projekto laikotarpiui, ne vieniems metams. 65 tūkst. EUR iš privataus sektoriaus – LHCb savaitės rėmėjų lėšos; į šią eilutę įtrauktas ir „Go Vilnius“ įnašas. Dalyvio mokesčių ir VU edukacinių iniciatyvų lėšų sumos į lentelę neįtrauktos.
 Šaltiniai: PHANTOM dotacijos sutartis (projektas 101244743); grupės pasitarimų skaidrės (2026 01 13, 2026 04 14, 2026 10 14); pranešimas Lietuvos ambasadoje Tokijuje (2026 11 18); VU edukacinės iniciatyvos ataskaita (2026 10 28).
 (~0,6 min)
 -->
