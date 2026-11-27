@@ -126,13 +126,17 @@ makes them, Figures as they are checked. The repo is public: private context
 The kicker of each slide carries the number of the consortium's point. The world's station is in
 brackets (`public/data/space.json`).
 
-1. Title: the group's name, leader and direction in one sentence. [hero: the pentaquark]
-2. Point 1, the group: the honeycomb, three clicks (2024, 2025, 2026, 2027). The 2027 step:
+1. Title: the group's name, leader and direction in one sentence; it stands while the room
+   settles. [hero: the pentaquark]
+2. The opener: the LHCb Week aftermovie, whole (2:28), on the first press; the first words come
+   after it. May be skipped with a press.
+3. Point 1, the group: the honeycomb, three clicks (2024, 2025, 2026, 2027). The 2027 step:
    Gustė and two open places. [group: open dust]
-3. Point 1, the three directions on the honeycomb, three clicks, the people of each picked out.
-4. Point 2, organisational: LHCb Week, the facts and the full hall. [lhc: a collider ring]
-5. The aftermovie, whole (2:28); may be skipped with a press.
-6. LHCb Week: patron, organisers, partners, sponsors; 37 media items.
+4. Point 1, the three directions on the honeycomb, three clicks, the people of each picked out;
+   the PhD students and the postdoc are spoken here (the notes carry what each does).
+5. Point 2, organisational: LHCb Week, the facts and the full hall. [lhc: a collider ring]
+6. LHCb Week: patron, organisers, partners, sponsors; the media figures of the communication
+   report (52 mentions, 11.9 M potential audience).
 7. Lithuania and CERN in 2026: a dated list, the coordinator post on it.
 8. Point 3, participation in the experiment: SciFi inside LHCb. The world is the picture: LHCb's
    real geometry as grains, SciFi brightest; three numbers. [det]
@@ -149,11 +153,10 @@ brackets (`public/data/space.json`).
 15. Point 5, science: pentaquark searches (the ECC paper, two Run 2 papers, two Run 3 analyses).
     [hero]
 16. Papers and talks: the Physics Open review with the Veritasium frame, the year's talks.
-17. Outreach, one slide: schools, public and business, the year's media mentions by month,
-    recognition (the LRT nomination).
-18. Point 6, young researchers: the honeycomb, two clicks: Rūta, Šarūnas, Anni. [group]
-19. Students and teaching.
-20. Thanks, credits. [hero]
+17. Outreach, one slide: schools, public and business, the year's media items by month (the
+    Faculty's list), recognition (the LRT nomination).
+18. Point 6, young researchers: students and teaching. [group]
+19. Thanks, credits. [hero]
 
 ## Figures
 
@@ -163,7 +166,8 @@ source line in its slide's notes.
 
 | Value | Claim | Source | OK / CHECK |
 | ----- | ----- | ------ | ---------- |
-| 37 | media items on LHCb Week, 8–20 Sep 2026 | the Faculty of Physics media list (to 28 Oct 2026), counted by script | OK as a count of that list |
+| 37 | media items on LHCb Week, 8–20 Sep 2026 | the Faculty of Physics media list (to 28 Oct 2026), counted by script | OK as a count of that list; now only the September bar of slide 17's chart |
+| 52, 11.9 M, 35, 16, 7 | mentions of LHCb Week in the media on 10–17 Sep 2026; the week's potential audience; items on the opening day, 14 Sep; LRT's and Delfi's mentions | „CERN „LHCb Week Vilnius“ renginio komunikacijos ataskaita“ (VU communications, the owner's file, 27 Nov 2026) | OK |
 | 71 | media items on the group and LHCb, Jan–Oct 2026 | the same list; CMS and other groups' rows left out | OK as a count of that list |
 | 21, 3 | posters at LHCb Week, poster prizes | the poster registration list; the event's cost sheet | CHECK |
 | 100 k EUR | the ministry's funding for LHCb Week | the group briefings of 13 Jan and 14 Apr 2026 | CHECK |
@@ -204,14 +208,14 @@ and `pnpm talk ready` runs with its lint step.
 4. Slide 14: LDFK's funds to the group in 2026, LHCb Week's total budget, the fees' sum, the VU
    educational-initiative sum (the last two are named under the table without a sum); whether
    PHANTOM's 197 k EUR may be shown.
-5. Slide 2 (optional): whether Dainius, Karolina and Venera left; when Anni starts; Gustė's
+5. Slide 3 (optional): whether Dainius, Karolina and Venera left; when Anni starts; Gustė's
    surname.
-6. Slide 4: the final attendance of LHCb Week from Indico (the slide's ~200 and ~600 are the
+6. Slide 5: the final attendance of LHCb Week from Indico (the slide's ~200 and ~600 are the
    forecasts of VU's news item); the poster count (21) is from the registration list.
 7. Slide 16 (optional): summer talks; Confinement 2026; the students' talk titles.
-8. Slide 6: the sponsor list and its tiers; one logo of the grid was not read („VVT“?); reach
-   figures.
-9. Slide 19 (optional): Mikas' and Margarita's thesis topics; the BSc theses' topics and dates.
+8. Slide 6: the sponsor list and its tiers; one logo of the grid was not read („VVT“?). The reach
+   figures are settled (the communication report, 27 Nov).
+9. Slide 18 (optional): Mikas' and Margarita's thesis topics; the BSc theses' topics and dates.
 10. Slides 12 and 15: the state of the VELO work and of the three papers on the day of the talk;
     how many shifts the group took in 2026.
 11. Slide 7 (optional): the dates of the October visit and whether U. Bassler came with
@@ -271,6 +275,22 @@ and `pnpm talk ready` runs with its lint step.
   65 k EUR for LHCb Week, and the total 462 (was 417); the sponsors left the line under the table,
   the fees stay there. Claude's reading: 65 is the whole private-sector sum with Go Vilnius' 20 in
   it, not 65 beside it. Go Vilnius stays among the partners on slide 6.
+
+- 27 Nov 2026, the owner, three more: the communication report on LHCb Week's media coverage
+  (a file); "Don't need to show another 3 slides on PhDs and Anni, I will already cover at the
+  start"; "maybe we start with a cold-starter - LHCb week aftermoview?". Done:
+  - Slide 6 carries the report's figures (52 mentions on 10–17 Sep, 11.9 M potential audience, 35
+    on the opening day, LRT 16 and Delfi 7) in place of the Faculty list's 37. Slide 17's chart is
+    still the Faculty's list, and says so, because the report covers one week: its September bar
+    (37) counts articles and programmes, the report every mention.
+  - The slide „Doktorantai ir podoktorantė“ (three steps) is gone; what it said of Rūta, Šarūnas
+    and Anni is in the notes of the directions slide. It is in 370b103
+    (`git show 370b103:talks/2026_12_00_LDFK/deck.md`).
+  - The aftermovie is slide 2, straight after the title, and no longer sits between the LHCb Week
+    slides. Claude's call: the title stays slide 1 and not the film, so that the PDF opens on the
+    title, the film has a slide before it to buffer, and the press that starts it lets the browser
+    play its sound. To open on the film itself, move the film's slide above the cover's content
+    (the headmatter stays first) and give it `:autoplay="false"`.
 
 ## The world
 

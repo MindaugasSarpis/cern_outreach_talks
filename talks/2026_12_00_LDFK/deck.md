@@ -47,8 +47,25 @@ space: { at: [-31.85, -0.35, 1.09], dist: 12.6, yaw: 10, pitch: 10, sway: 4, dim
 
 <!--
 Kalbėtojui. Titulinė skaidrė; joje ir pirmas plano punktas: grupės pavadinimas, vadovas, veiklos kryptis. Ataskaita sudėta pagal šešis konsorciumo plano punktus: grupė ir jos kryptys, organizacinė veikla, dalyvavimas eksperimente, projektai, mokslinė veikla, jaunieji tyrėjai ir studentai. Punkto numeris – virš kiekvienos skaidrės pavadinimo.
+Titulinė skaidrė rodoma, kol renkamasi; pirmu paspaudimu paleidžiamas LHCb savaitės filmas, kalbėti pradedama po jo.
 Šaltiniai: nėra, titulinė skaidrė.
 (~0,2 min)
+-->
+
+---
+bare: true
+class: p-0
+space: { at: [-31.85, -0.35, 1.09], dist: 12.6, yaw: 10, pitch: 10, sway: 4, steady: true }
+---
+
+<VideoPlayer src="lhcb_week_aftermovie.mp4" />
+
+<!--
+Kalbėtojui. Pradžia be įžangos: po titulinės skaidrės – visas LHCb savaitės Vilniuje filmas su savo muzika, 2:28. Jis prasideda skaidrei atsivėrus ir pasibaigęs laukia paspaudimo. Per filmą nekalbėti; pirmieji žodžiai – jam pasibaigus, prie grupės skaidrės. Jei laiko mažai, skaidrę galima praleisti paspaudimu.
+Filme: 0:16 Saulėtekio miestelis iš oro, 0:25 pilna salė atidaryme, 0:26 Prezidento sveikinimas, 0:30 atidarymo diskusija, 0:55 priėmimas Universiteto kieme, 1:15 ugnies šou, 1:27 vakarienė.
+PDF versijoje vietoj filmo – jo kadras.
+Vaizdas: LHCb savaitės filmas, Nebula Moments (Rimantas Unkevičius).
+(~0,1 min)
 -->
 
 ---
@@ -100,7 +117,7 @@ space: { at: group, dim: 0.5 }
 <!-- facts: lhcb-vilnius-joined -->
 
 <!--
-Kalbėtojui. Pirmas plano punktas: grupė. Trys paspaudimai: 2024, 2025, 2026 ir 2027 m. Kiekvienu atskrenda tų metų nariai; 2026 m. išvykusieji papilkėja, 2027 m. atsiranda Gustė ir dvi tuščios vietos.
+Kalbėtojui. Pirmieji žodžiai po filmo: tai, ką matėte, – 121-oji LHCb savaitė, rugsėjį vykusi Vilniuje; apie ją – antrame punkte. Pirmas plano punktas: grupė. Trys paspaudimai: 2024, 2025, 2026 ir 2027 m. Kiekvienu atskrenda tų metų nariai; 2026 m. išvykusieji papilkėja, 2027 m. atsiranda Gustė ir dvi tuščios vietos.
 Ministerijos svečiams: LHCb – vienas iš keturių didžiųjų CERN Didžiojo hadronų greitintuvo eksperimentų; VU jo narys nuo 2024 m. rugsėjo.
 2024 m. (12): Mindaugas, Ramūnas, Olegas, Augustas, Dainius, Rūta, Sophia, Karolina, Venera, Meda, Eliza, Neilas. 2025 m. prisijungė Adam, Šarūnas, Mikas, Dominykas, Margarita.
 2026 m. (13): Mindaugas, Ramūnas, Adam, Olegas, Augustas, Anni, Rūta, Šarūnas, Margarita, Dominykas, Meda, Neilas, Eliza. Sophia ir Mikas šiemet apgynė magistro darbus.
@@ -160,13 +177,14 @@ space: { at: group, yaw: 14, pitch: 10, dim: 0.5 }
   </div>
 </div>
 
-<!-- facts: lhcb-vilnius-work, lhcb-vilnius-scifi-lis -->
+<!-- facts: lhcb-vilnius-work, lhcb-vilnius-scifi-lis, lhcb-vilnius-racz -->
 
 <!--
 Kalbėtojui. Vis dar pirmas punktas: veiklos kryptys. Grupė dirba trimis kryptimis; trys paspaudimai, kiekvienu išryškėja tos krypties žmonės. Pirmoji – fizikos analizė: pentakvarkų paieškos; jos rezultatai – penktame punkte. Antroji – duomenys ir programinė įranga: analizių išsaugojimas, automatizavimas, simuliacijos, atvirieji duomenys. Trečioji – detektorius: SciFi šviesos įvedimo sistema, skaidulų tyrimai, VELO. Antrą ir trečią kryptis išsamiau rodysiu trečiame punkte, kaip grupės indėlį į eksperimentą.
 Tos pačios trys kryptys buvo ir 2025 m. ataskaitoje: analizė, programiniai įrankiai, instrumentuotė.
-Šaltiniai: vu.lt (2026 04 03); 2025 m. ataskaita LDFK (2026 01 06); grupės pasitarimo skaidrės ir komandos lenta (2026 10 14).
-(~0,9 min)
+Doktorantai ir podoktorantė – čia, prie pirmosios krypties (atskiros skaidrės apie juos nebėra). Rūta Racz, pirmoji grupės doktorantė: Run 3 analizė Λb0 → Λc+ D̄*0 K−, atranka ir fono tyrimai; ECC straipsnio bendraautorė; budi LHCb valdymo centre; vasarį išlaikė teorijos egzaminą. Šarūnas Jacevičius, antrasis doktorantas: Run 3 analizė Λb0 → Σc+ D̄0 K−; lapkričio 25 d. skaitė pranešimą darbo seminare Nagojoje; analizių dokumentacija ir stebėsena „GitLab“; LHCb savaitės ir meistriškumo pamokos organizavimas. Anni Kauniskangas, podoktorantė: disertacija EPFL apie reto B mezono skilimo matavimą LHCb duomenyse; Vilniuje – pentakvarkų paieškos kanaluose su dviem prarastomis neutraliomis dalelėmis.
+Šaltiniai: vu.lt (2026 04 03); vu.lt (R. Racz, 2026 02); 2025 m. ataskaita LDFK (2026 01 06); grupės pasitarimų skaidrės (2026 02 03, 2026 05 05) ir komandos lenta (2026 10 14); Nagojos darbo seminaro programa (indico.rcnp.osaka-u.ac.jp/event/2981).
+(~1,1 min)
 -->
 
 ---
@@ -202,7 +220,7 @@ space: { at: lhc, dim: 0.55 }
 <!-- facts: lhcb-week-vilnius, lhcb-week-vilnius-attendance-sources, lhcb-collaboration-sep-2026 -->
 
 <!--
-Kalbėtojui. Antras punktas: bendradarbiavimo su CERN dariniais plėtra. Svarbiausias metų įvykis – LHCb savaitė: eilinis visos kolaboracijos susitikimas, kuris kartą per metus vyksta ne CERN. Vilniaus paraiška pateikta 2024 m. lapkritį, praėjus dviem mėnesiams po priėmimo į LHCb.
+Kalbėtojui. Antras punktas: bendradarbiavimo su CERN dariniais plėtra. Svarbiausias metų įvykis – LHCb savaitė, kurios filmą matėte pradžioje: eilinis visos kolaboracijos susitikimas, kuris kartą per metus vyksta ne CERN. Vilniaus paraiška pateikta 2024 m. lapkritį, praėjus dviem mėnesiams po priėmimo į LHCb.
 Atidaryme: Prezidento sveikinimas (vaizdo įrašu), rektoriaus kalba, diskusija „Lithuania's AI Factory: Connecting Science, Industry and Global Research Infrastructures“ (moderatorė prof. S. Mačiukaitė-Žvinienė; G. Hamel de Monchenault, CERN; T. Gershon, LHCb; prof. P. Treigys; viceministrė R. Valutytė; B. Girdvainis, EIMIN).
 Dalyvių skaičiai – prognozės ir nesutampa: VU pranešime apie 200 gyvai ir apie 600 iš viso, grupės puslapyje 300 gyvai ir 300 nuotoliu.
 Šaltiniai: lrt.lt/naujienos/mokslas-ir-it/11/3052140; vu.lt (2026 09 08 ir 09 14); indico.cern.ch/event/1696594; T. Gershon ataskaita CERN SPC (2026 09 22); LHCb savaitės atidarymo programa (2026 09).
@@ -211,23 +229,6 @@ Vaizdas: kadras iš LHCb savaitės filmo (Nebula Moments).
 -->
 
 ---
-bare: true
-class: p-0
-space: { at: lhc, dist: 13, yaw: -12, pitch: 34 }
----
-
-<VideoPlayer src="lhcb_week_aftermovie.mp4" />
-
-<!--
-Kalbėtojui. Visas LHCb savaitės Vilniuje filmas su savo muzika, 2:28. Filmas prasideda skaidrei atsivėrus ir pasibaigęs laukia paspaudimo. Per filmą nekalbėti. Jei laiko mažai, skaidrę galima praleisti paspaudimu.
-Filme: 0:16 Saulėtekio miestelis iš oro, 0:25 pilna salė atidaryme, 0:26 Prezidento sveikinimas, 0:30 atidarymo diskusija, 0:55 priėmimas Universiteto kieme, 1:15 ugnies šou, 1:27 vakarienė.
-PDF versijoje vietoj filmo – jo kadras.
-Vaizdas: LHCb savaitės filmas, Nebula Moments (Rimantas Unkevičius).
-(~0,1 min)
--->
-
----
-class: full
 space: { at: lhc, dist: 22, yaw: 12, pitch: 38, dim: 0.6 }
 ---
 
@@ -253,15 +254,19 @@ space: { at: lhc, dist: 22, yaw: 12, pitch: 38, dim: 0.6 }
   </div>
   <div class="stack" style="grid-template-rows: auto 1fr">
     <div class="panel">
-      <div class="kpi"><div class="n">37<small>publikacijos ir laidos per dvi savaites</small></div></div>
+      <div class="g2">
+        <div class="kpi"><div class="n">52</div><div class="l">paminėjimai žiniasklaidoje rugsėjo 10–17&nbsp;d.</div></div>
+        <div class="kpi"><div class="n">11,9<small>mln.</small></div><div class="l">potenciali auditorija</div></div>
+      </div>
       <div style="margin-top: 0.45rem">
-        <span class="tag">LRT „Panorama“</span><span class="tag">LRT „Labas rytas“</span><span class="tag">LRT English</span><span class="tag">„Delfi diena“</span><span class="tag">15min</span><span class="tag">Lrytas</span><span class="tag">TV3</span><span class="tag">BNS</span>
+        <span class="tag">LRT „Panorama“</span><span class="tag">LRT „Labas rytas, Lietuva“</span><span class="tag">LRT radijas</span><span class="tag">LRT.lt</span><span class="tag">„Delfi diena“</span><span class="tag">15min</span><span class="tag">Lrytas</span><span class="tag">TV3</span><span class="tag">BNS</span>
       </div>
     </div>
     <div class="panel" style="display: grid; align-content: center">
       <ul>
+        <li>Atidarymo dieną, rugsėjo 14-ąją, – 35 pranešimai</li>
+        <li>Daugiausia: LRT (16 kartų) ir „Delfi“ (7 kartai)</li>
         <li>„Vilniuje – didžiausias dalelių fizikų susitikimas Lietuvos istorijoje“ (LRT)</li>
-        <li>„Lithuania seeks full CERN membership as Vilnius hosts particle physics community“ (LRT English)</li>
         <li>CERN troleibusas Vilniaus gatvėse, ekranai ir stendas oro uoste</li>
       </ul>
     </div>
@@ -270,8 +275,9 @@ space: { at: lhc, dist: 22, yaw: 12, pitch: 38, dim: 0.6 }
 
 <!--
 Kalbėtojui. Padėka ministerijai ir konsorciumui: ŠMSM kartu su VU buvo savaitės organizatorė, LDFK – partneris. Rėmėjai – daugiausia Lietuvos lazerių ir fotonikos įmonės.
-Žiniasklaida: 37 įrašai apie LHCb savaitę rugsėjo 8–20 d. devyniolikoje kanalų, tarp jų trys LRT televizijos laidos, „Delfi diena“, TV3 ir BNS.
-Šaltiniai: LHCb savaitės logotipų tinklelis (2026 08 25); Fizikos fakulteto žiniasklaidos suvestinė (2026 10 28); lrt.lt/naujienos/mokslas-ir-it/11/3052140; lrt.lt/en (2026 09 20); LHCb savaitės viešinimo planas.
+Žiniasklaida, pagal renginio komunikacijos ataskaitą: rugsėjo 10–17 d. LHCb savaitė žiniasklaidoje paminėta 52 kartus, potenciali tos savaitės auditorija – 11,9 mln. (tai paminėjimų auditorijų suma, ne skirtingų žmonių skaičius). Daugiausia pranešimų – atidarymo dieną, rugsėjo 14-ąją: 35. Pokalbiai su VU ir CERN atstovais – LRT „Panoramoje“, „Labas rytas, Lietuva“, LRT portale (du interviu), LRT radijo žiniose ir „Delfi dienoje“. Dažniausiai rašė ir kalbėjo LRT (16 kartų) ir „Delfi“ (7 kartai).
+Fizikos fakulteto suvestinėje (rugsėjo 8–20 d.) – 37 įrašai; ji skaičiuoja straipsnius ir laidas, stebėsenos ataskaita – kiekvieną paminėjimą, todėl skaičiai skiriasi. Sklaidos skaidrės diagrama sudaryta iš fakulteto suvestinės.
+Šaltiniai: „CERN „LHCb Week Vilnius“ renginio komunikacijos ataskaita“ (VU, 2026); LHCb savaitės logotipų tinklelis (2026 08 25); Fizikos fakulteto žiniasklaidos suvestinė (2026 10 28); lrt.lt/naujienos/mokslas-ir-it/11/3052140; lrt.lt/en (2026 09 20); LHCb savaitės viešinimo planas.
 (~0,6 min)
 -->
 
@@ -706,7 +712,7 @@ space: { at: hero, dist: 26, yaw: 8, pitch: 24, dim: 0.62 }
   <div class="stack">
     <div class="panel">
       <h3>Grupė ir LHCb žiniasklaidoje, 2026 m.</h3>
-      <div class="bars" style="height: 16rem">
+      <div class="bars" style="height: 14.5rem">
         <div class="bar"><b>0</b><i style="height: 0%"></i><span>01</span></div>
         <div class="bar"><b>6</b><i style="height: 16%"></i><span>02</span></div>
         <div class="bar"><b>1</b><i style="height: 3%"></i><span>03</span></div>
@@ -718,7 +724,7 @@ space: { at: hero, dist: 26, yaw: 8, pitch: 24, dim: 0.62 }
         <div class="bar"><b>37</b><i style="height: 100%"></i><span>09</span></div>
         <div class="bar"><b>11</b><i style="height: 30%"></i><span>10</span></div>
       </div>
-      <div class="cap">71 įrašas sausio–spalio mėn.; rugsėjį – LHCb savaitė</div>
+      <div class="cap">Fizikos fakulteto suvestinė: 71 straipsnis ir laida sausio–spalio mėn.</div>
     </div>
     <div class="panel">
       <h3>Pripažinimas</h3>
@@ -734,58 +740,6 @@ Kalbėtojui. Visa sklaida vienoje skaidrėje. Mokykloms – antroji LHCb meistri
 Skaičiai suskaičiuoti iš suvestinės eilučių apie LHCb, grupės narius ir narystę CERN; CMS ir kitų grupių eilutės neįtrauktos. Suvestinė baigiasi 2026 10 28.
 Šaltiniai: indico.cern.ch/event/1648092; Fizikos fakulteto žiniasklaidos suvestinė (2026 10 28); lrt.lt/naujienos/tavo-lrt/15/3125037.
 (~0,6 min)
--->
-
----
-clicks: 2
-class: roomy
-space: { at: group, yaw: -34, pitch: 4, dim: 0.5 }
----
-
-<div class="kick"><b>6</b>Jaunieji tyrėjai ir studentai</div>
-
-# Doktorantai ir podoktorantė
-
-<div class="team">
-  <HexTeam :year="2026" :until="2027" :size="108" settled :focus="[['ruta'], ['sarunas'], ['anni']][$clicks]" />
-  <div class="team-side">
-    <div v-if="$clicks === 0">
-      <h3>Rūta Racz</h3>
-      <div class="rl">pirmoji grupės doktorantė</div>
-      <ul>
-        <li>Run 3 analizė <Tex v="\Lambda_b^0 \to \Lambda_c^+ \bar{D}^{*0} K^-" />: atranka, fono tyrimai</li>
-        <li>ECC straipsnio bendraautorė</li>
-        <li>Budėjimai LHCb valdymo centre</li>
-        <li>Vasarį išlaikė teorijos egzaminą</li>
-      </ul>
-    </div>
-    <div v-else-if="$clicks === 1">
-      <h3>Šarūnas Jacevičius</h3>
-      <div class="rl">antrasis doktorantas</div>
-      <ul>
-        <li>Run 3 analizė <Tex v="\Lambda_b^0 \to \Sigma_c^+ \bar{D}^{0} K^-" /></li>
-        <li>Pranešimas darbo seminare Nagojoje, lapkričio 25 d.</li>
-        <li>Analizių dokumentacija ir stebėsena „GitLab“</li>
-        <li>LHCb savaitės ir meistriškumo pamokos organizavimas</li>
-      </ul>
-    </div>
-    <div v-else>
-      <h3>Anni Kauniskangas</h3>
-      <div class="rl">podoktorantė</div>
-      <ul>
-        <li>Daktaro laipsnis EPFL: reto B mezono skilimo matavimas LHCb duomenyse</li>
-        <li>Vilniuje: pentakvarkų paieškos kanaluose su dviem prarastomis neutraliomis dalelėmis</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<!-- facts: lhcb-vilnius-racz -->
-
-<!--
-Kalbėtojui. Šeštas punktas: jaunieji tyrėjai; du paspaudimai: Rūta, Šarūnas, Anni. Kiekvienas doktorantas atlieka savo Run 3 analizę. Rūta taip pat budi LHCb valdymo centre. Šarūnas lapkričio 25 d. skaitė pranešimą tarptautiniame darbo seminare Nagojoje. Šiemet prie grupės prisijungia podoktorantė Anni Kauniskangas, apgynusi disertaciją EPFL.
-Šaltiniai: vu.lt (R. Racz, 2026 02); grupės pasitarimų skaidrės (2026 02 03, 2026 05 05, 2026 10 14); Nagojos darbo seminaro programa (indico.rcnp.osaka-u.ac.jp/event/2981).
-(~0,7 min)
 -->
 
 ---
