@@ -59,6 +59,9 @@ makes them, Figures as they are checked. The repo is public: private context
   Mindaugas' tiles (tight head shots: they need wider crops of the photographs); the cover's five
   nodes drift and at moments two of them meet; KaTeX indices at 12 to 13 px.
   The module clip `lis_flag_50.mp4` is on this talk's release (published 27 Nov).
+  Deployed on the owner's word: commit 370b103, `talk ready` passed with nothing skipped, Pages
+  run 45921620805 green, the URL, the PDF and the module's grains answer 200, the live walk passed
+  all 20 slides (tier 0, no lost context).
 
 - 26 Nov 2026, second round: the owner's list after reading the rework (Decisions, 26 Nov, the
   last two entries). 17 slides (25 PDF pages with the clicks), 13.7 of 15 min. Not deployed: the
